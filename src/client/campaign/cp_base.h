@@ -62,14 +62,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
 
 /**
- * @param[in] usedArray must be an array of the size MAX_BUILDINGS
+ * @brief Macro sets a building used
+ * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
+ * @param[in] buildingIDX Index of building to set used
  */
 #define B_BuildingSetUsed(usedArray, buildingIDX) { (usedArray)[buildingIDX] = qtrue; }
 /**
- * @param[in] usedArray must be an array of the size MAX_BUILDINGS
+ * @brief Macro returns if a building is used
+ * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
+ * @param[in] buildingIDX Index of building to check
  */
 #define B_BuildingGetUsed(usedArray, buildingIDX) ((usedArray)[buildingIDX])
-
 
 /**
  * @brief Possible base states

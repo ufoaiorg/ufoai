@@ -248,8 +248,11 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 
 /**
  * @brief This function parses a list of items that should be set to researchable = true after campaign start
- * @param researchable Mark them researchable or not researchable
+ * @param[in] name Name of the techlist
+ * @param[in,out] text Script to parse
+ * @param[in] researchable Mark them researchable or not researchable
  * @sa CL_ParseScriptFirst
+ * @todo Mark unresearchable
  */
 static void CL_ParseResearchableCampaignStates (const char *name, const char **text, qboolean researchable)
 {

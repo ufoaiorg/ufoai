@@ -576,6 +576,7 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS];
  * @brief Draws a graph for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
  * @param[in] node A pointer to a "linestrip" node that we want to draw in.
+ * @param[out] funding Funding graph data in a lineStrip_t
  * @param[in] maxFunding The upper limit of the graph - all values will be scaled to this one.
  * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isn't really correct right now (straight line :-/)

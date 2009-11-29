@@ -2,7 +2,7 @@ window basedefence
 {
 	{
 		pos			"100 150"
-		size		"700 435"
+		size		"824 435"
 		dragbutton	true
 		closebutton	true
 		modal		true
@@ -39,7 +39,7 @@ window basedefence
 
 	tab defencetype {
 		pos		"17 75"
-		size	"667 38"
+		size	"791 38"
 		cvar	*cvar:mn_bdef_type
 		onChange {
 			if ( *cvar:mn_bdef_type ne "info" ) {
@@ -69,7 +69,7 @@ window basedefence
 	panel equippanel {
 		{
 			pos			"15 115"
-			size		"670 305"
+			size		"794 305"
 			invis		true
 		}
 	
@@ -96,19 +96,19 @@ window basedefence
 		panel slots {
 			{
 				pos		"5 5"
-				size	"335 115"
+				size	"435 115"
 			}
 			
 			string slotlist_title
 			{
 				string		"_Weapon slots"
 				pos			"5 5"
-				size		"300 25"
+				size		"400 25"
 				font		f_small_bold
 			}
 			rows slotback {
 				pos			"5 30"
-				size		"300 80"
+				size		"400 80"
 				color1		"0 0.08 0 1"
 				color2		"0 0.16 0 1"
 				lineheight	20
@@ -119,16 +119,16 @@ window basedefence
 			{
 				dataid		TEXT_BASEDEFENCE_LIST
 				pos			"5 30"
-				size		"300 80"
+				size		"400 80"
 				lineheight	20
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
 				rows		"4"
 				mousefx		true
-				tabwidth	50
 				longlines	prettychop
 				onClick		{
 					call *node:root.equippanel.update_buttons
+					cmd "basedef_selectitem <cvar:mn_bdef_type> <lineselected> -1;"
 				}
 				onViewChange {
 					*node:(abstractscrollbar)parent.slotlist_scroll@fullsize = <fullsize>
@@ -139,7 +139,7 @@ window basedefence
 			vscrollbar slotlist_scroll
 			{
 				image		ui/scrollbar_v_green
-				pos			"310 30"
+				pos			"410 30"
 				height		"80"
 				current		0
 				viewsize	4
@@ -156,7 +156,7 @@ window basedefence
 			tooltip		"_Equip the selected slot with this weapon"
 			image		ui/button_green_small
 			pos			"10 130"
-			size		"150 32"
+			size		"200 32"
 			onClick		{
 				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected> <node:parent.store.storelist@lineselected>;"
 			}
@@ -167,8 +167,8 @@ window basedefence
 			string		"_Remove"
 			tooltip		"_Remove weapon from the selected slot"
 			image		ui/button_green_small
-			pos			"180 130"
-			size		"150 32"
+			pos			"230 130"
+			size		"200 32"
 			onClick		{
 				cmd "basedef_removeitem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
 			}
@@ -177,19 +177,19 @@ window basedefence
 		panel store {
 			{
 				pos		"5 175"
-				size	"335 115"
+				size	"435 115"
 			}
 
 			string storelist_title
 			{
 				string		"_Stores"
 				pos			"5 5"
-				size		"300 25"
+				size		"400 25"
 				font		f_small_bold
 			}
 			rows storeback {
 				pos			"5 30"
-				size		"300 80"
+				size		"400 80"
 				color1		"0 0.08 0 1"
 				color2		"0 0.16 0 1"
 				lineheight	20
@@ -198,14 +198,14 @@ window basedefence
 			{
 				dataid		TEXT_LIST
 				pos			"5 30"
-				size		"300 80"
+				size		"400 80"
 				lineheight	20
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
 				rows		"4"
 				onClick		{
 					call *node:root.equippanel.update_buttons
-					cmd "basedef_list_click <lineselected>;"
+					cmd "basedef_selectitem <cvar:mn_bdef_type> -1 <lineselected>;"
 				}
 				onViewChange {
 					*node:(abstractscrollbar)parent.storelist_scroll@fullsize = <fullsize>
@@ -216,7 +216,7 @@ window basedefence
 			vscrollbar storelist_scroll
 			{
 				image		ui/scrollbar_v_green
-				pos			"310 30"
+				pos			"410 30"
 				height		"80"
 				current		0
 				viewsize	4
@@ -228,8 +228,8 @@ window basedefence
 
 		panel descpanel {
 			{
-				pos		"355 5"
-				size	"310 285"
+				pos		"455 5"
+				size	"334 285"
 				image	ui/panel_green
 			}
 	
@@ -237,7 +237,7 @@ window basedefence
 			{
 				string		"_Selected Item"
 				pos			"10 5"
-				size		"290 25"
+				size		"314 25"
 				textalign	uc
 				font		f_small_bold
 			}
@@ -245,24 +245,22 @@ window basedefence
 			{
 				string		*cvar:mn_itemname
 				pos			"10 25"
-				size		"290 25"
+				size		"314 25"
 				textalign	uc
 			}
 	
 			model item_model
 			{
 				model		*cvar:mn_upmodel_top
-				angles		"0 0 120"
-				pos			"786 500"
-				size		"200 175"
-				origin		"0 -42 0"
+				pos			"10 50"
+				size		"314 100"
 			}
 
 			text description
 			{
 				dataid		TEXT_STANDARD
 				pos			"10 155"
-				size		"260 120"
+				size		"284 120"
 				lineheight	20
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
@@ -276,7 +274,7 @@ window basedefence
 			vscrollbar description_scroll
 			{
 				image		ui/scrollbar_v_green
-				pos			"280 155"
+				pos			"304 155"
 				height		"120"
 				current		0
 				viewsize	6
@@ -284,26 +282,20 @@ window basedefence
 				hidewhenunused	true
 				onChange	{ *node:parent.description@viewpos = <current> }
 			}
-
-			todo descript
-			{
-				pos			"30 155"
-				string		"Base defence weapon descriptions not yet shown"
-			}
 		}
 	}
 
 	panel infopanel {
 		{
 			pos			"15 115"
-			size		"670 305"
+			size		"794 305"
 		}
 
 		string infopanel_title
 		{
 			string		"_Surface to Air defences"
 			pos			"50 30"
-			size		"300 35"
+			size		"570 35"
 			font		f_normal_bold
 		}
 
@@ -311,13 +303,13 @@ window basedefence
 		{
 			string		"Name:"
 			pos			"50 95"
-			size		"200 25"
+			size		"250 25"
 			font		f_small_bold
 		}
 		textentry name
 		{
 			string		*cvar:mn_installation_title
-			pos			"260 90"
+			pos			"310 90"
 			size		"256 34"
 			image		ui/button_green_verysmall
 			color		"0 .78 0 1"
@@ -333,12 +325,12 @@ window basedefence
 		{
 			string		"_Targetted UFO:"
 			pos			"50 150"
-			size		"150 25"
+			size		"250 25"
 		}
 		string target_value
 		{
 			string		*cvar:mn_target
-			pos			"260 150"
+			pos			"310 150"
 			size		"150 25"
 		}
 
@@ -346,12 +338,12 @@ window basedefence
 		{
 			string		"_Time to build:"
 			pos			"50 175"
-			size		"159 20"
+			size		"250 20"
 		}
 		string buildtime
 		{
 			string		*cvar:mn_installation_timetobuild
-			pos			"260 175"
+			pos			"310 175"
 			size		"100 20"
 		}
 		
@@ -359,12 +351,12 @@ window basedefence
 		{
 			string		"_Autofire"
 			pos			"50 200"
-			size		"150 25"
+			size		"250 25"
 		}
 		checkbox autofire
 		{
 			image		ui/checkbox_green
-			pos			"260 200"
+			pos			"310 200"
 			size		"20 20"
 			current		0
 			disabled	true
@@ -379,7 +371,7 @@ window basedefence
 			font		f_menu
 			image		ui/button_green_small
 			pos			"50 250"
-			size		"176 32"
+			size		"200 32"
 			onClick		{ cmd "mn_pop; mn_destroyinstallation;" }
 		}
 		button close
@@ -388,8 +380,8 @@ window basedefence
 			color		"0 0.5 0 1"
 			font		f_menu
 			image		ui/button_green_small
-			pos			"425 250"
-			size		"176 32"
+			pos			"549 250"
+			size		"200 32"
 			onClick		{ cmd "mn_pop;" }
 		}
 		
