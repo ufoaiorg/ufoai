@@ -97,7 +97,7 @@ static qboolean SV_SetPlayer (void)
 
 	/* check for a name match */
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (!cl->state)
+		if (cl->state == cs_free)
 			continue;
 		if (!strcmp(cl->name, s)) {
 			sv_client = cl;
@@ -222,7 +222,7 @@ static void SV_StartGame_f (void)
 	int i;
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-		if (cl && cl->state != cs_free)
+		if (cl->state != cs_free)
 			cl->player->isReady = qtrue;
 }
 
