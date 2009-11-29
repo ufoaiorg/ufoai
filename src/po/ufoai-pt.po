@@ -1777,7 +1777,6 @@ msgstr ""
 "--Cmd. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr "<TODO>"
 
@@ -5336,66 +5335,8 @@ msgstr ""
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr ""
-"Aircraft Evaluation -- Firebird-class Dropship\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 17 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
-"\n"
-"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
-"\n"
-"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
-"\n"
-"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
-"\n"
-"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
-"\n"
-"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
-"\n"
-"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
-"\n"
-"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None.\n"
-"\n"
-"\n"
-"Aircraft statistics:\n"
-"\n"
-"\n"
-"Size: 8m x 30m x 5m\n"
-"\n"
-"Cruising speed: 785 km/h\n"
-"\n"
-"Top speed: 1,083km/h\n"
-"\n"
-"Operational range: 18,000km\n"
-"\n"
-"Crew capacity: 3 crew, 8 soldiers max.\n"
-"\n"
-"Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -5460,9 +5401,8 @@ msgstr ""
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
-msgstr "plasma"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3449
 msgid "inter_stiletto_txt"
@@ -5970,7 +5910,6 @@ msgstr ""
 "Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr "<TODO>"
 
@@ -6011,7 +5950,6 @@ msgstr ""
 "Weapon capacity: None"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "<TODO>"
 
@@ -6062,7 +6000,6 @@ msgid "ufo_mothership_txt"
 msgstr "Faca de Combate"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "<TODO>"
 
@@ -6364,7 +6301,6 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4200
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"

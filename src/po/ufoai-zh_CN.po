@@ -730,7 +730,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "秘书长塞纳，联合国，纽约"
+msgstr ""
+"秘书长塞纳，联合国，纽约"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -816,7 +817,8 @@ msgstr "秘书长塞纳，联合国，纽约"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "基地指挥官，PHALANX，大西洋作战司令部"
+msgstr ""
+"基地指挥官，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -900,7 +902,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
+msgstr ""
+"司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -984,7 +987,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "霍华德阿贝尔，司令部，PHALANX，大西洋作战司令部"
+msgstr ""
+"霍华德阿贝尔，司令部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1171,7 +1175,8 @@ msgstr "发现外星人基地 -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
+msgstr ""
+"先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -1194,7 +1199,8 @@ msgstr "<TODO: mail_new_radar_contact>"
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
+msgstr ""
+"英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1229,7 +1235,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "空军司令官萨巴阿库汗，空军部队，PHALANX，大西洋作战司令部"
+msgstr ""
+"空军司令官萨巴阿库汗，空军部队，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1960,40 +1967,34 @@ msgid "Base-Defence Laser Turret"
 msgstr "激光步枪"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
-"指挥官，我非常高兴地向您报告，我们的项目成功了。附上我们激光武器原型的图片，那是在一个便携包中实现连续波输出。\n"
+"Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
 "\n"
-"实际方案并不在于无谓的尝试更大的电池组,而是用彻底的小型化技术去减轻和缩小化学能激光组件。化学激光器已经应用了非常长的时间，20实际晚期他就成为实验性武器计划的一部分，但是它总是遇到一些问题。作为符合真实军事承诺的化学激光器的唯一类型，对一个步兵来说将它带到战场上过于庞大和笨重。直到现在它们的作战应用仅限于那些坦克激光炮或者海基反导弹电池。\n"
+"Here are the highlights.\n"
 "\n"
-"然而，现在我们在PHALANX建造了一台小型常规激光炮。尽管它尺寸小，它却完全具有处理氟化氘反应和容纳有毒废料制品的能力，而没有污染的危险。请允许我向各位简要介绍一下内部工作原理。\n"
+"What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.\n"
 "\n"
-"在燃烧室内，乙烯在三氟化氮中燃烧。这种反应产生活跃的氟自由基，然后带入并与氦和氘的气体混合物接触。氘与氟反应，产生活跃的氟化氘分子。这些在武器的光学物理共振器中经过激发，产生光束。一系列智能镜头对射手的瞄准点进行聚焦和控制光束，甚至能对射手或目标的微小振动做出修正。通过我们定制的高压过滤系统，氘的废料被冲压，有毒的或者放射性分子在剩余无害蒸汽排放到大气前被全部捕获。\n"
+"The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.\n"
 "\n"
-"每次任务后过滤器需更换，不过我们已经设计了能轻松容易的做这项工作的系统。如果过滤系统在运转期间莫名其妙的受损，为了防止造成污染，武器将立即停止运作。\n"
+"Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.\n"
 "\n"
-"激光器工作在中红外波段，因此他产生不可见光束，除非带上红外护目镜。\n"
+"Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.\n"
 "\n"
-"不幸的是，对于人们更精确和平衡的使用要求，我们建造的原型机尚未准备作为步兵武器而全面生产，但是通过创新，我们也已经能将它应用到车辆武器上——甚至是航空炮。我已经提交了几个关于我们制定的主要思路的新建议到您的收件箱。\n"
-"\n"
-"什么时候您要我们开始这些工作，请告诉我，指挥官。\n"
-"\n"
-"--指挥官：纳瓦拉"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr ""
-"自本世纪初，我们收集联合国的研究档案已经取得了很多关于在地球上完成的武器研制的有价值的情报。其中一个最有趣的题目是生产DEWs（受控能量武器），一种不同于依靠载体的方法将能量传递到目标的武器。我们特别对关于连续波激光器的档案感兴趣。\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
-"多年以来，很多国家和公司试图制造武器级激光器，但是至今没有人能够制造出便携的并且输出功率足以与普通枪支竞争的激光器。然而，我们现在已经获得了所有这些联合研究，整个实验室都充斥着地球上最先进的技术。我相信，我们不仅能生产出有效的便携激光武器，我们还能将它做成前所未有的适用于受控能量武器的尺寸。\n"
+"Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.\n"
 "\n"
-"指挥官，我们应该尽快从事这项研究，多样化我们的武器库使其更难于抵御，并且，我们的经验可以引领我们发展可行的航空激光器，它能比常规武器更加有效的对付高速飞碟。\n"
+"Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.\n"
 "\n"
-"就我而言，我们要在PHALANX做这不可能的任务，您一批准这个建议我们就开始工作。\n"
+"Please approve this program at your discretion, Commander.\n"
 "\n"
-"--指挥官：纳瓦拉"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:210 ../base/ufos/research.ufo:248
 msgid "antimatter_txt"
@@ -2114,7 +2115,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "康纳博士，生物工程部，PHALANX，大西洋作战司令部"
+msgstr ""
+"康纳博士，生物工程部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -4029,7 +4031,7 @@ msgstr ""
 "\n"
 "The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
 "\n"
-"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
 "\n"
 "Please let me know when you want us to start, Commander.\n"
 "\n"
@@ -5773,66 +5775,8 @@ msgstr ""
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr ""
-"Aircraft Evaluation -- Firebird-class Dropship\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 17 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
-"\n"
-"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
-"\n"
-"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
-"\n"
-"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
-"\n"
-"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
-"\n"
-"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
-"\n"
-"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
-"\n"
-"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None.\n"
-"\n"
-"\n"
-"Aircraft statistics:\n"
-"\n"
-"\n"
-"Size: 8m x 30m x 5m\n"
-"\n"
-"Cruising speed: 785 km/h\n"
-"\n"
-"Top speed: 1,083km/h\n"
-"\n"
-"Operational range: 18,000km\n"
-"\n"
-"Crew capacity: 3 crew, 8 soldiers max.\n"
-"\n"
-"Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
+msgstr "没有可用的资料。"
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -5895,7 +5839,6 @@ msgstr ""
 "武器挂载： 1个中型武器槽，2个设备槽，1个防护装甲槽"
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "没有可用的资料。"
 
@@ -6075,7 +6018,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6258,46 +6202,32 @@ msgstr ""
 "---司令官纳瓦拉"
 
 #: ../base/ufos/research.ufo:3853
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
-"我们的雷达和光学系统能发现这么小的UFO还是头一次。好像这个UFO似乎没有参加实际作战行动，也构不成威胁。迄今为止，他们已经多次帮忙铺平外星入侵的道路。\n"
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
-"我们称这一类UFO为'侦察兵'，因为这是它在地球上活动的目的。这很重要。现代军事往往需要非常多的情报资料。\n"
+"We've dubbed this UFO the 'Gunboat', and the name tells you a great deal about its intended function. Its weapons and armour exceed that of UFOs twice its size. As near as we can tell it was designed for the role of heavy fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"这里是分析出的主要技术细节：\n"
+"The UFO is armed with two particle beam weapons as well as -- very interestingly -- two additional modular hardpoints of a design almost identical to the weapon hardpoints on our own aircraft. It seems like the aliens have actually adapted our design for their own use and may begin using different loadouts on individual craft. If the aliens are actually learning from us, we could be in for a hell of a ride . . .\n"
 "\n"
-"--飞行器只有一个小燃料箱和少数几个船员。似乎只是做简短飞行，很快就会返回。\n"
+"Even more interesting is the Gunboat's armour, an improvement over the standard skin of alien materials we saw on the first wave of invading UFOs. This new armour is a composite layer-cake of alien materials and various other substances designed to slow and stop projectiles from penetrating. The basic principle is simple enough but the new compounds have interesting properties which we're not sure we fully understand. I'll see if my team can make anything of it and, if so, I'll have a new research proposal ready for you soon.\n"
 "\n"
-"--我们没有发现任何起落装置或悬停能力，这意味着它的设计目的并不包括着地。如果失去两个引擎，它就会坠毁。\n"
+"The fuselage design of the Gunboat is still ostensibly that of a spacecraft, but it has certain adaptations that make it much easier to handle in atmosphere. It has actual wing surface generating lift, unlike the small claw-winged designs which relied on brute engine power to stay airborne. Furthermore, mobile flaps on the wings and stabilisers -- much like on human aircraft -- allow the Gunboat to use the airflow over its surfaces, giving it a much tighter turning circle, a far higher angle of attack and a tremendous rate of climb compared to a UFO moving on engine power alone.\n"
 "\n"
-"--我们已确定了这个航空器没有武器装备，它配备了四个带有传感器的突起舱。奇怪的是，它似乎没有安装我们可以识别的通讯设备，这好像不符合它的侦察兵身份，您是不是也觉得比较奇怪。\n"
+"Overall the Gunboat is fast, manoeuvrable and utterly deadly. It seems to outperform previously-observed UFOs on every level; faster, tougher, better-armed and more nimble. The only positive is that it would take three or four times as much material to build a Gunboat compared to a small attack craft and twice as much fuel to keep it flying, so it's unlikely we'll see Gunboats in large numbers. My only worry is that they won't need very many of these to pound us into dust. Extreme caution is advised, Commander, and I recommend we spend some time and money upgrading our airfleet as soon as we can.\n"
 "\n"
-"除此之外，没有什么其他的特殊地方。\n"
-"\n"
-"正如我所说，这种UFO主要用作侦察和给大型飞行器探路。虽然手无寸铁，我们也应该打掉这些东西，不管怎么说异形的任何活动都会对我们不利。\n"
-"\n"
-"---司令官纳瓦拉\n"
-"\n"
-"UFO性能：\n"
-"\n"
-"尺寸： 小 (6m x 14m x 3m)\n"
-"\n"
-"巡航速度： +/- 1,600 km/h\n"
-"\n"
-"最高速度： +/- 3,000km/h\n"
-"\n"
-"机舱容纳： 3\n"
-"\n"
-"武器挂载： 无"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
-"长官，我们收回了一架新型的UFO正在等着我们拆卸。我们已准备好研究和拆解这架外星飞船，不过需要占用一些实验室和资金，请您批准。\n"
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
 "\n"
-"---司令官纳瓦拉"
+"This is the first alien craft we've seen that is unmistakably purpose-built for combat. What's even more disturbing is that it has certain features, innovations, which we theorise make the craft more suited for atmospheric flight. I think we need to have a look at this right away as it may represent a significant shift in alien goals and tactics.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3896
 #, fuzzy
@@ -6305,7 +6235,6 @@ msgid "ufo_ripper_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "没有可用的资料。"
 
@@ -6359,7 +6288,6 @@ msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "没有可用的资料。"
 
@@ -6877,32 +6805,32 @@ msgstr ""
 #: ../base/ufos/research.ufo:4454
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
-"长官，现在我们可以制造和使用外星材料，这给我们的工作提供了更多的选择。这些材料是如此完美几乎可以用于任何东西。尤其是在航空机外壳上，它们可以发挥很好的作用。\n"
+"Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
 "\n"
-"UFO的外壳就是因为使用了外星材料，所以我们才会很难击落它。而不幸的是外星材料无法直接用在我们自己的航空机上，它的份量太沉重了。如果直接用外星材料作机壳可能航空机都飞不起来。不过事情还有希望。\n"
+"We've had an extremely difficult time shooting down UFOs thanks to the resilient outer skin of alien materials. Unfortunately we can't simply slap this same kind of skin onto our own craft because the alien materials are far too heavy. Our craft would struggle to even get off the ground. That needn't be the end of it, though.\n"
 "\n"
-"长官，如果你让我们花一些研究它，我相信我们可以拿出一个可行的方案使外星材料可以应用在我们的航空机上，可能会使航空机速度降低并且会增加油耗，但是这会大大提高我们的航空机生存率。根据我们的计算，外星材料制造的装甲可以承受好几次粒子束攻击。\n"
+"Commander, if you let us do some research on it, I believe we can come up with an armouring scheme that -- while it might decrease speed and increase fuel consumption a bit -- should give our aircraft a far better survival chance against the alien weapons during interceptions. According to our calculations, aircraft with this kind of armour could withstand several particle beam hits and still remain combat effective.\n"
 "\n"
-"这个研究会很有前途，长官，请批准这个项目开始运作。\n"
+"It's a very promising possibility, Commander, one that definitely deserves investigation.\n"
 "\n"
-"---司令官纳瓦拉"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4457
 msgid "craft_shield_plating_txt"
 msgstr ""
-"长官。我很高兴的告诉你我们已经完成了新的航空机装甲研究，现在已经可以在PHALANX全面生产。\n"
+"Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
 "\n"
-"这个项目一开始很困难。我们在设计遇到主要挑战是如何使外星材料在人工控制变形的时候可以弯曲成我们想要的形状。最终，我们还是克服了这个问题，不过变形还是会有一定的自然限制。\n"
+"This has been a difficult project from the start. We've faced several major challenges in designing equipment capable of bending the alien materials into the shapes we want, and 'programming' the materials to change when we want and how we want them to do so. Ultimately we overcame these problems, but then we had to deal with the natural limitations of the material.\n"
 "\n"
-"外星材料的主要缺点是它的重量。它的比重大大超出人类常用的机身材料。UFO的引擎功率很高，所以才能携带如此重的机壳在空中飞行。而对我们来说，这样的比重会直接影响航空机的空速，操纵性和燃料消耗以及作战范围。\n"
+"The main drawback of these alien materials is their weight. They are significantly heftier than modern human aircraft materials, and anything we make from them will suffer from the extra weight. The only way the aliens manage to keep their wingless UFOs in the sky is through overwhelming engine power. Airspeed, manoeuvrability, fuel consumption, maximum operational range -- all these will be negatively affected by putting alien materials onto our aircraft.\n"
 "\n"
-"然而，我们似乎没有其它任何选择。即使是一个非常薄的外星材料装甲也能大大提高航空机的抗击打能力。我们做过试验，使用我们自己的麻雀式飞弹对试验模型进行了一次攻击，结果试验模型飞机安然无恙。我不是在开玩笑，有试验录像可以证明我刚才所说的。\n"
+"However, it's a sacrifice we don't seem to have any choice in making. Even a very thin skin of alien materials offers a substantial protective benefit, shrugging off hits that would turn our Polymer Aircraft Armour to paste. During air trials of the new armour, one of our own \"Sparrowhawk\" missiles -- which can bring down most Earth-built aircraft in a single hit -- failed to inflict significant harm to the test craft. I'm not even joking. We've got half an hour of compiled test footage that will confirm everything I just said.\n"
 "\n"
-"新的航空机装甲我们设计的时候充分发挥了外星材料的韧性强度。装甲甚至可以承受粒子束武器的攻击。这是我们航空机第一次可以像UFO一样能在被击中后还继续飞行。我不是说我们的航空机可以达到UFO的水平，但我们对未来充满了信心。\n"
+"The new aircraft plating we've designed takes full advantage of these capabilities and shows the supreme toughness of the alien materials. The armour can take Particle Beam Weapon hits at point blank range without breaking up. For the very first time, our aircraft will be able to soak up tremendous amounts of damage and still keep flying like the aliens do. I wouldn't say we're quite in the same league yet, but we're getting there.\n"
 "\n"
-"这个外星材料装甲只能用在配备有新式引擎或外星引擎的航空机上，毕竟这个重量对于老式引擎来说还是太重了。你我都知道新航空机的价格不菲，长官，我们最好不要在航空机上有任何损失，安装外星材料装甲的价格远远低于航空机的价格。\n"
+"It may only be feasible to use this armour on aircraft equipped with alien propulsion or otherwise upgraded engines, due to the increased weight and reduced speed and range. Still, even if that turns out to be the case, the new plating will be essential in keeping our current airfleet effective against the mounting alien threat. You and I both know the price tag of new aircraft, Commander -- we cannot afford to let any of our planes become obsolete.\n"
 "\n"
-"---司令官纳瓦拉"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4491
 msgid "craft_alien_astrogation_pre_txt"
@@ -8064,35 +7992,43 @@ msgstr "<TODO: seq_alienbase_sentence3>"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "公元2084年。我们所认识的地球在长久以来，虽然不是一个非常和平的地方，但也享受了一段相当长的和平。21世纪初期所爆发的战争，虽然已经过了许久，但仍然记忆犹新。对于大多数人来说，第二次的冷战，只是过去的阴影。战争的记忆就像20世纪末出生的人一样，模糊的记得有过第一次世界大战。---Sirine 07: 33, 23 June 2009 (UTC)"
+msgstr ""
+"公元2084年。我们所认识的地球在长久以来，虽然不是一个非常和平的地方，但也享受了一段相当长的和平。21世纪初期所爆发的战争，虽然已经过了许久，但仍然记忆犹新。对于大多数人来说，第二次的冷战，只是过去的阴影。战争的记忆就像20世纪末出生的人一样，模糊的记得有过第一次世界大战。"
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "新科技和医疗知识以及技术，终于普及到了贫困国家，令这世纪末的战争和暴力冲突变得很罕见。旧美国以及印度群国所恐惧的恐怖活动，在第二次《冷战》平静过后也渐渐减少了。每一个国家在联合国里，都被保证拥有着公平的代表权，促使国以国之间的战场转移到政治平台，全球的生活水准已经在逐渐上升，连最贫困角落的人，对生活也有显著的改善。在改组后的联合国的监督下，世界各国，都成功的迈向繁荣和稳定。中国和欧盟的强大和权威，让一些零星小国深感危惧，而纷纷的团结起来，组织自己的政治立场，--最终发觉他们已经没有可以轻易侵略的邻国。这使得在人类的历史上，首次拥有了超过四分之三的国家，都尊奉法律和秩序。---Sirine 07: 33, 23 June 2009 (UTC)"
+msgstr ""
+"新科技和医疗知识以及技术，终于普及到了贫困国家，令这世纪末的战争和暴力冲突变得很罕见。旧美国以及印度群国所恐惧的恐怖活动，在第二次《冷战》平静过后也渐渐减少了。每一个国家在联合国里，都被保证拥有着公平的代表权，促使国以国之间的战场转移到政治平台，全球的生活水准已经在逐渐上升，连最贫困角落的人，对生活也有显著的改善。在改组后的联合国的监督下，世界各国，都成功的迈向繁荣和稳定。中国和欧盟的强大和权威，让一些零星小国深感危惧，而纷纷的团结起来，组织自己的政治立场，－－最终发觉他们已经没有可以轻易侵略的邻国。这使得在人类的历史上，首次拥有了超过四分之三的国家，都尊奉法律和秩序。"
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "人权也得到了广泛的普及。"
+msgstr ""
+"人权也得到了广泛的普及。"
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "第一次袭击发生在2084年3月3号，孟买这个人口最多的城市。 6个小UFO出现了，呼啸着从孟买天空划过，雷达设施都未能及时预警。没有任何预兆，突如其来，12小时内两万名无辜平民和三个营的精锐部队被屠杀。直到大部分英联邦士兵集结过来以后，异形才停止了屠杀。然后，他们突然消失的无影无踪，只留下被蹂躏后的孟买街道。"
+msgstr ""
+"第一次袭击发生在2084年3月3号，孟买这个人口最多的城市。 6个小UFO出现了，呼啸着从孟买天空划过，雷达设施都未能及时预警。没有任何预兆，突如其来，12小时内两万名无辜平民和三个营的精锐部队被屠杀。直到大部分英联邦士兵集结过来以后，异形才停止了屠杀。然后，他们突然消失的无影无踪，只留下被蹂躏后的孟买街道。"
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "联合国的紧急会议根本没有任何有效的措施。入侵仍在继续，比以前更残酷，这一次是在波恩、约翰内斯堡和曼谷。一些国家试图展开外交活动，用一千种不同的语言向肆虐整个地区的异形发送信息。但完全没有效果。在几个小时内，这三个城市变成了空城。当时的军队也毫无作用。所有的UFO又消失无踪了--但没有人会怀疑他们不会再次回来。"
+msgstr ""
+"联合国的紧急会议根本没有任何有效的措施。入侵仍在继续，比以前更残酷，这一次是在波恩、约翰内斯堡和曼谷。一些国家试图展开外交活动，用一千种不同的语言向肆虐整个地区的异形发送信息。但完全没有效果。在几个小时内，这三个城市变成了空城。当时的军队也毫无作用。所有的UFO又消失无踪了--但没有人会怀疑他们不会再次回来。"
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "在最初的孟买袭击过去87个小时后，地球正式宣战。两个星期以来，军队用他们最好的武器来尝试抵御每一次到来的外星神秘来客。他们只获得了屈指可数的成功经验。"
+msgstr ""
+"在最初的孟买袭击过去87个小时后，地球正式宣战。两个星期以来，军队用他们最好的武器来尝试抵御每一次到来的外星神秘来客。他们只获得了屈指可数的成功经验。"
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "只剩下一个选择，联合国采取了行动。被尘封一个多世纪的古老档案被打开了，美国长期暂停的外星快速反应机构--PHALANX--复活了。根据新的宣誓，该机构由联合国掌管，他的责任就是打击外星威胁，不惜一切代价确保人类的生存。"
+msgstr ""
+"只剩下一个选择，联合国采取了行动。被尘封一个多世纪的古老档案被打开了，美国长期暂停的外星快速反应机构－PHALANX－复活了。根据新的宣誓，该机构由联合国掌管，他的责任就是打击外星威胁，不惜一切代价确保人类的生存。"
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "所有八个政治联盟都出资参与这个项目，并提供最精锐的士兵。PHALANX是集结了最优秀的力量。它是地球上第一个也是唯一的一道防线。它只能成功，不能失败，人类没有其他选择。"
+msgstr ""
+"所有八个政治联盟都出资参与这个项目，并提供最精锐的士兵。PHALANX是集结了最优秀的力量。它是地球上第一个也是唯一的一道防线。它只能成功，不能失败，人类没有其他选择。"
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

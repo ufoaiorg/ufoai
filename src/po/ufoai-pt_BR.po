@@ -725,7 +725,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
+msgstr ""
+"2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -811,7 +812,8 @@ msgstr "2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Comandante da Base, FALANGE, Comando de Operações do Atlântico"
+msgstr ""
+"Comandante da Base, FALANGE, Comando de Operações do Atlântico"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -884,7 +886,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Cmd. Paul Navarre, P&D: Divisão de Engenharia, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Cmd. Paul Navarre, P&D: Divisão de Engenharia, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -959,7 +962,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Maj. Abel S. Howard, Comando & Controle, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Maj. Abel S. Howard, Comando & Controle, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1054,7 +1058,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Cel. Ingrid Falkland, Divisão de Inteligência, FALANGE,Comando de Operações Atlânticas"
+msgstr ""
+"Cel. Ingrid Falkland, Divisão de Inteligência, FALANGE,Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1084,7 +1089,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cmd. Subakh al-Kuhar, Asa Aérea, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Cmd. Subakh al-Kuhar, Asa Aérea, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1819,40 +1825,34 @@ msgid "Base-Defence Laser Turret"
 msgstr "Rifle Laser"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
-"Comandante, estou muito satisfeito em anunciar que nosso projeto foi um sucesso. Eu incluí fotos do protótipo portátil de nossa arma laser, que mantém um saída de onda contínua.\n"
+"Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
 "\n"
-"A solução prática não estava em criar baterias maiores, mas em usar tecnologias radicais de miniaturização para melhorar e diminuir os componentes existentes. Os lasers químicos estiveram em uso por um bom tempo, e fizeram parte de programas de armas experimentais desde o final do século XX, mas sempre apresentaram muitos problemas. Os únicos tipos de lasers químicos com uma promessa militar real eram muito grandes e incómodos para que um soldado de infantaria pudesse carregar em batalha. Até agora suas aplicações de combate eram limitadas a canhões laser montados em veículos de combate ou em baterias anti-mísseis.\n"
+"Here are the highlights.\n"
 "\n"
-"Porém, nós da FALANGE construímos um canhão laser convencional em miniatura. Apesar de seu tamanho reduzido, ele é inteiramente capaz de garantir a reação do fluoreto de deutério e de conter os elementos tóxicos eliminados sem perigo de contaminação. Deixe-me dar uma breve descrição de seu funcionamento interno.\n"
+"What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.\n"
 "\n"
-"Dentro da câmara de combustão, o etileno é queimado em trifluoreto de nitrogênio. Esta reação produz radicais ativos de fluorino, que então são colocados em contato com uma mistura de hélio e gás deutério. O deutério reage com o fluorino, produzindo moléculas ativas de fluoreto de deutério. Estes reagem à emissão estimulada no ressonador ótico da arma, gerando o feixe. Então uma série de lentes inteligentes focaliza e dirige o feixe ao ponto de mira do atirador e corrige pequenos movimentos do atirador ou do alvo. O gás eliminado pelo deutério é forçado através de nosso sistema personalizado de filtragem de alta pressão, que capta todas as moléculas tóxicas ou radioativas antes de expelir o restante do vapor na atmosferaa sem perigo pela parte traseira.\n"
+"The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.\n"
 "\n"
-"O filtro precisa ser substituído após cada missão, mas nós projetamos o sistema para fazer isso de maneira simples e sem sacrifícios. Se o sistema do filtro for danificado durante uma operação, a arma irá parar de funcionar imediatamente a fim de impedir a contaminação.\n"
+"Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.\n"
 "\n"
-"O laser opera numa freqüência de onda infravermelha, não produzindo nenhum feixe visível a olho nu, exceto para aqueles que estiverem usando óculos de proteção IR.\n"
+"Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.\n"
 "\n"
-"O protótipo que construímos infelizmente ainda não está pronto para a produção em larga-escala como arma de infantaria, já que ainda precisa de mais refinamento e balanceamento para o uso humano, mas as melhorias que fizemos poderão também ser aplicadas em armas montadas em veículos -- talvez como armas das naves. Eu enviei várias propostas para seu email com as novas idéias que nós imaginamos.\n"
-"\n"
-"Deixe-me saber quando você quer que comecemos a trabalhar nelas, comandante.\n"
-"\n"
-"--Cmd. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr ""
-"Nossa pesquisa nos arquivos coletados da ONU nos rendeu muitas informações valiosas sobre o desenvolvimento de armas feitas na Terra desde o começo deste século. Um dos tópicos mais interessantes foi o da produção de AEDs (Armas de Energia Direcionada), armas que transferem energia para um alvo sem utilizar projéteis. Nós estamos particularmente interessados nos arquivos sobre Lasers de Onda Contínua.\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
-"Muitos países e empresas tentaram criar laser da classe de armas por anos, mas ninguém conseguiu criar um laser que fosse portátil e com uma saída de energia forte o bastante para competir com as armas de fogo comuns. Agora, entretanto, nós tivemos acesso a toda esta pesquisa combinada, assim como a bibliotecas inteiras cheias da mais alta tecnologia na Terra. Eu acredito que podemos não apenas criar uma arma laser portátil eficiente, como também podemos fazê-la em tamanhos previamente impossíveis para uma AED.\n"
+"Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.\n"
 "\n"
-"Comandante, nós deveríamos iniciar esta pesquisa o mais rápido possível. A diversificação de nosso arsenal o tornará muito mais difícil de se defender contra, e nossa experiência pode nos levar ao desenvolvimento de lasers viáveis para aeronaves, que poderiam alvejar os velozes OVNIs de forma mais eficaz que as armas de fogo convencionais.\n"
+"Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.\n"
 "\n"
-"Até onde sei, nós da FALANGE estamos para fazer o impossível, e podemos começar tão logo você aprove esta proposta.\n"
+"Please approve this program at your discretion, Commander.\n"
 "\n"
-"--Com. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:210 ../base/ufos/research.ufo:248
 msgid "antimatter_txt"
@@ -1990,7 +1990,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, P&D: Divisão Biológica e de Contenção, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Dr. Connor, P&D: Divisão Biológica e de Contenção, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -3916,7 +3917,7 @@ msgstr ""
 "\n"
 "The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
 "\n"
-"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
 "\n"
 "Please let me know when you want us to start, Commander.\n"
 "\n"
@@ -5518,18 +5519,8 @@ msgid "drop_herakles_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
-"\n"
-"Thanks to the experience we've gained from our Continuous Wave Laser research, my team and I have figured out one or two possible ways to further amplify the damage output of our infantry lasers. However, this will require significant research and refining of our prototype, as well as enlarging several of the components. The result will be a strictly heavy-infantry weapon of about the same size and weight as our HPML Rocket Launcher.\n"
-"\n"
-"We estimate that this weapon could be invaluable in a fire support role or as a direct-fire blockade breaker, capable of dissolving enemy strongpoints with powerful, pinpoint accurate fire. It would have attributes and capabilities which may be lacking in our current heavy weapons arsenal. Accuracy at range is generally abysmal in Earth-built heavy weapons, and they can be difficult to employ in situations where we need to avoid collateral damage. The heavy laser would avoid these issues altogether.\n"
-"\n"
-"It's certainly worth looking into, Commander.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Nenhuma informação pré-pesquisa disponível"
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -5578,7 +5569,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "Nenhuma informação pré-pesquisa disponível"
 
@@ -5774,7 +5764,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -5907,32 +5898,30 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3853
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
-"This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
-"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It makes sense. Every modern military force needs intelligence more than anything.\n"
+"We've dubbed this UFO the 'Gunboat', and the name tells you a great deal about its intended function. Its weapons and armour exceed that of UFOs twice its size. As near as we can tell it was designed for the role of heavy fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"Here are the major technical details:\n"
+"The UFO is armed with two particle beam weapons as well as -- very interestingly -- two additional modular hardpoints of a design almost identical to the weapon hardpoints on our own aircraft. It seems like the aliens have actually adapted our design for their own use and may begin using different loadouts on individual craft. If the aliens are actually learning from us, we could be in for a hell of a ride . . .\n"
 "\n"
-"-- The craft has only a small fuel tank and few provisions for a crew. It seems designed for little more than coming down from orbit, flying around a bit, and then returning.\n"
+"Even more interesting is the Gunboat's armour, an improvement over the standard skin of alien materials we saw on the first wave of invading UFOs. This new armour is a composite layer-cake of alien materials and various other substances designed to slow and stop projectiles from penetrating. The basic principle is simple enough but the new compounds have interesting properties which we're not sure we fully understand. I'll see if my team can make anything of it and, if so, I'll have a new research proposal ready for you soon.\n"
 "\n"
-"-- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down and won't come back up.\n"
+"The fuselage design of the Gunboat is still ostensibly that of a spacecraft, but it has certain adaptations that make it much easier to handle in atmosphere. It has actual wing surface generating lift, unlike the small claw-winged designs which relied on brute engine power to stay airborne. Furthermore, mobile flaps on the wings and stabilisers -- much like on human aircraft -- allow the Gunboat to use the airflow over its surfaces, giving it a much tighter turning circle, a far higher angle of attack and a tremendous rate of climb compared to a UFO moving on engine power alone.\n"
 "\n"
-"-- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment that we can identify, which would defeat the purpose of a scout. Your guess is as good as ours, sir.\n"
-"\n"
-"Beyond that the craft has no particular distinguishing characteristics.\n"
-"\n"
-"As I said, this UFO type is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these things down whenever we're not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
+"Overall the Gunboat is fast, manoeuvrable and utterly deadly. It seems to outperform previously-observed UFOs on every level; faster, tougher, better-armed and more nimble. The only positive is that it would take three or four times as much material to build a Gunboat compared to a small attack craft and twice as much fuel to keep it flying, so it's unlikely we'll see Gunboats in large numbers. My only worry is that they won't need very many of these to pound us into dust. Extreme caution is advised, Commander, and I recommend we spend some time and money upgrading our airfleet as soon as we can.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
+"\n"
+"This is the first alien craft we've seen that is unmistakably purpose-built for combat. What's even more disturbing is that it has certain features, innovations, which we theorise make the craft more suited for atmospheric flight. I think we need to have a look at this right away as it may represent a significant shift in alien goals and tactics.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -5957,7 +5946,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Nenhuma informação pré-pesquisa disponível"
 
@@ -6014,7 +6002,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Nenhuma informação pré-pesquisa disponível"
 
@@ -6365,7 +6352,6 @@ msgstr ""
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
@@ -6429,7 +6415,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -7134,7 +7121,6 @@ msgstr ""
 "A guerra civil que veio a seguir foi algo que a Terra nunca havia visto. Oficiais geralmente se referem a ela como a filha bastarda do Vietnam com a Primeira Guerra Mundial. Foi visto bombardeamento de populações inteiras, execuções em massa de prisioneiros de guerra, em operações táticas nucleares em várias cidades -- incluindo Xangai, Seul e Nova Deli -- em 7 de Junho de 2034. Os leais ao governo jogaram um total de 6 peças de 50 quilotons em posições rebeldes altamente protegidas, incluindo as populações civis que os rebeldes protegiam.\n"
 "\n"
 "O exército leal sofreu massivas deserções nos dias que se seguiram; foi o único evento que eventualmente causou a ruína do governo. Mais de seis milhões de vidas foram perdidas antes da rendição das forças leais em 15 de Agosto de 2036, que lutaram com unhas e dentes em largas táticas terrestres enquanto os rebeldes, devagar, os empurravam para dentro do Oceano Índico. Este foi, oficialmente, o fim da Segunda Guerra Fria."
-
 # possivelmente pós-guerra
 #: ../base/ufos/research.ufo:4952
 msgid "After The War"
@@ -7287,7 +7273,6 @@ msgstr ""
 "Por unanimidade, foi decidido manter o projeto o mais secreto possível, sendo conhecido apenas pelos mais altos políticos e comandantes militares do mundo. O público foi confortado com ações e palavras de efeito enquanto uma equipe altamente qualificada, vinda de toda parte do mundo, operacionalizava a ressurreição da FALANGE para colocá-la de volta à ativa. Velhos equipamentos foram reativados e recuperados do estoque, a poeira retirada dos manuais e pilhas de armas foram preparadas para o uso. Com o suporte secreto de todas as oito potências mundiais, o projeto obteve recursos, suporte e os homens necessários para a guerra.\n"
 "\n"
 "Tudo o que faltava era um líder."
-
 # revisar...
 #: ../base/ufos/research.ufo:4977
 msgid "A New Twist"
@@ -7679,35 +7664,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "O ano é 2084. A Terra, um lugar estável como jamais se viu, desfruta de um período de relativa paz. O início violento do século 21 está longe agora; memórias distantes, mas não tão distantes ao ponto de serem esquecidas. Para a maioria das pessoas da Terra, a Segunda Guerra Fria é uma sombra negra do passado, assim como foram as Guerras Mundiais no início do século 20."
+msgstr ""
+"O ano é 2084. A Terra, um lugar estável como jamais se viu, desfruta de um período de relativa paz. O início violento do século 21 está longe agora; memórias distantes, mas não tão distantes ao ponto de serem esquecidas. Para a maioria das pessoas da Terra, a Segunda Guerra Fria é uma sombra negra do passado, assim como foram as Guerras Mundiais no início do século 20."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Conflitos se tornaram raros ao final do século, à medida que novas tecnologias e cuidados universais de saúde finalmente tornaram-se disponíveis para o terceiro mundo. Mesmo os eventos terroristas pararam assim que a Segunda Guerra Fria começou, com seus horrores e atrocidades ainda vivas nas mentes das pessoas, dos antigos Estados Unidos ao roubado subcontinente Indiano. Lutas de classes elevam-se ao campo de batalha político, já que agora cada nação tem representação garantida e justa nas Nações Unidas, e o padrão de vida global cresce lentamente em razão do empobrecimento dos vários cantos do planeta. Países solidificaram-se, mantendo-se em volta de uma Nações Unidas reestruturada que, com sucesso, policia os governos mundiais. Blocos fragmentados de países menores, assustados a princípio pelo vasto poder acumulado em volta da China e da União Européia, formaram poderosas ligas políticas -- e então se viram sem vizinhos com os quais pudessem lutar pela segurança. Pela primeira vez na história da humanidade, há lei e ordem por mais de três quartos do mundo."
+msgstr ""
+"Conflitos se tornaram raros ao final do século, à medida que novas tecnologias e cuidados universais de saúde finalmente tornaram-se disponíveis para o terceiro mundo. Mesmo os eventos terroristas pararam assim que a Segunda Guerra Fria começou, com seus horrores e atrocidades ainda vivas nas mentes das pessoas, dos antigos Estados Unidos ao roubado subcontinente Indiano. Lutas de classes elevam-se ao campo de batalha político, já que agora cada nação tem representação garantida e justa nas Nações Unidas, e o padrão de vida global cresce lentamente em razão do empobrecimento dos vários cantos do planeta. Países solidificaram-se, mantendo-se em volta de uma Nações Unidas reestruturada que, com sucesso, policia os governos mundiais. Blocos fragmentados de países menores, assustados a princípio pelo vasto poder acumulado em volta da China e da União Européia, formaram poderosas ligas políticas -- e então se viram sem vizinhos com os quais pudessem lutar pela segurança. Pela primeira vez na história da humanidade, há lei e ordem por mais de três quartos do mundo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Para muitas pessoas na Terra, tudo está indo muito bem."
+msgstr ""
+"Para muitas pessoas na Terra, tudo está indo muito bem."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "O primeiro ataque ocorre na cidade de Mumbai em 3 de março de 2084. Seis pequenos OVNIs aparecem do nada, descem da órbita, indetectáveis pelas vastas instalações de radares que cobrem os céus de Mumbai, e eliminam a cidade com maior densidade populacional da Terra. Eles não dão nenhum aviso, nenhuma explicação. Vinte mil civis inocentes e três batalhões de tropas de elite são massacrados por brutais vinte horas antes que os soldados das Confederações conseguissem interromper o avanço dos alienígenas. Então, assim como apareceram, eles entram em sua espaçonave e sobem para órbita desaparecendo, deixando apenas as ruas arruinadas de Mumbai como evidência."
+msgstr ""
+"O primeiro ataque ocorre na cidade de Mumbai em 3 de março de 2084. Seis pequenos OVNIs aparecem do nada, descem da órbita, indetectáveis pelas vastas instalações de radares que cobrem os céus de Mumbai, e eliminam a cidade com maior densidade populacional da Terra. Eles não dão nenhum aviso, nenhuma explicação. Vinte mil civis inocentes e três batalhões de tropas de elite são massacrados por brutais vinte horas antes que os soldados das Confederações conseguissem interromper o avanço dos alienígenas. Então, assim como apareceram, eles entram em sua espaçonave e sobem para órbita desaparecendo, deixando apenas as ruas arruinadas de Mumbai como evidência."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Um encontro de emergência das Nações unidades não obtém nenhuma direção conclusiva. As invasões continuam mais rápidas, maiores e mais selvagens que antes. Desta vez em Bonn, Johannesburg e Bongkok. Algumas nações tentam diplomacia, enviando mensagens em centenas de idiomas aos alienígenas através dos países. Suas palavras são ignoradas. Dentro de horas, todas as três cidades são esvaziadas de vida humana. O ataque pára quando os vários militares recebem permissão para atacá-los. Os alienígenas deixam para trás apenas concreto e sangue. Todos os OVNIs desaparecem sem rastros -- mas ninguém duvida que eles voltem."
+msgstr ""
+"Um encontro de emergência das Nações unidades não obtém nenhuma direção conclusiva. As invasões continuam mais rápidas, maiores e mais selvagens que antes. Desta vez em Bonn, Johannesburg e Bongkok. Algumas nações tentam diplomacia, enviando mensagens em centenas de idiomas aos alienígenas através dos países. Suas palavras são ignoradas. Dentro de horas, todas as três cidades são esvaziadas de vida humana. O ataque pára quando os vários militares recebem permissão para atacá-los. Os alienígenas deixam para trás apenas concreto e sangue. Todos os OVNIs desaparecem sem rastros -- mas ninguém duvida que eles voltem."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Oitenta e sete horas após o ataque inicial em Mumbai, a Terra declara guerra. Por duas semanas, cada um dos exércitos da humanidade usa suas melhores habilidades, tentando se defender dos misteriosos atacantes alienígenas. Eles alcançam alguns preciosos sucessos."
+msgstr ""
+"Oitenta e sete horas após o ataque inicial em Mumbai, a Terra declara guerra. Por duas semanas, cada um dos exércitos da humanidade usa suas melhores habilidades, tentando se defender dos misteriosos atacantes alienígenas. Eles alcançam alguns preciosos sucessos."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Com apenas uma alternativa, as Nações Unidas reage. Equipamentos antigos são reavaliados, alguns com mais de um século de idade, e uma agência antiextraterrestre há muito desativada -- FALANGE --, dos antigos Estados Unidos, é ressuscitada sob uma nova bandeira das Nações Unidas. Seu trabalho é combater a ameaça alienígena, e garantir a sobrevivência da raça humana a qualquer custo."
+msgstr ""
+"Com apenas uma alternativa, as Nações Unidas reage. Equipamentos antigos são reavaliados, alguns com mais de um século de idade, e uma agência antiextraterrestre há muito desativada -- FALANGE --, dos antigos Estados Unidos, é ressuscitada sob uma nova bandeira das Nações Unidas. Seu trabalho é combater a ameaça alienígena, e garantir a sobrevivência da raça humana a qualquer custo."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Mantida por todos os oito blocos políticos da Terra e composta pelos soldados de elite de seus exércitos, a FALANGE é a melhor das melhores. É a primeira e única linha de defesa da Terra. Ela não pode falhar; porque se falhar, a humanidade não terá nenhuma chance."
+msgstr ""
+"Mantida por todos os oito blocos políticos da Terra e composta pelos soldados de elite de seus exércitos, a FALANGE é a melhor das melhores. É a primeira e única linha de defesa da Terra. Ela não pode falhar; porque se falhar, a humanidade não terá nenhuma chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

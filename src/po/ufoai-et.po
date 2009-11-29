@@ -1825,18 +1825,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
-msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
-"\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
-"\n"
-"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
-"\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:210 ../base/ufos/research.ufo:248
 msgid "antimatter_txt"
@@ -3927,7 +3917,7 @@ msgstr ""
 "\n"
 "The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
 "\n"
-"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
 "\n"
 "Please let me know when you want us to start, Commander.\n"
 "\n"
@@ -4902,9 +4892,8 @@ msgid "drop_herakles_txt"
 msgstr "Transpordi laev Herakles on palju suurem ja võimsam kui Firebird."
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr "Transpordi laev Herakles on palju suurem ja võimsam kui Firebird."
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -4912,9 +4901,8 @@ msgid "drop_raptor_txt"
 msgstr "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid suutsid toota paremad raketid, mis ei sihi ainult õhus olevaid sihtmärke vaid ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast täpsusest kui jägimise süsteemil oli piisavalt aega, et sihtmärk lukustada, on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata sihtmärkidel, kuna lukustamiseks pole aega."
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
-msgstr "Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. Kasutades radari ruumis saadud infot on võimalik kindlaks teha kus asuvad ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe missioone või evakueerida baas Baasi rünnaku ohu korral."
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:3449
 #, fuzzy
@@ -5036,7 +5024,6 @@ msgid "ufo_gunboat_txt"
 msgstr "Ufo skaut on kõige väiksem ja nõrgem vaenlase masin, selle meeskond on väike ja ka masina relvastus ei ole suureks ohuks Phalanxi hävitajatele."
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
@@ -5046,7 +5033,6 @@ msgid "ufo_ripper_txt"
 msgstr "Ufo kandja on vaenlase suur emalaev."
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
@@ -5065,9 +5051,8 @@ msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
-msgstr "Ufo hangaaris hoitakse vallutatud UFOsid. Kuna on ohtlik uurida vallutatud ufot kohapeal kuna see kutsuks tulnukaid seda tagasi vallutama. Seega pärast UFO vallutamist tuuakse see lähimasse UFO hangaari. Seda tehakse tavaliste sõdurite abiga seega pole see Phalanxi mure. UFO hangaar pakub kohta igale ufole kuni transport UFO klassini."
+msgstr "Eelnev informatsioon uuringu kohta puudub."
 
 #: ../base/ufos/research.ufo:4027
 msgid "Live Specimen - Bloodspider"

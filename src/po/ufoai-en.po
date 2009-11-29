@@ -737,7 +737,8 @@ msgstr "Wichita"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, United Nations, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/events.ufo:34
 #: ../base/ufos/events.ufo:44
@@ -905,7 +906,8 @@ msgstr "SecGen. Mahouf Serra, United Nations, New York City"
 #: ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Base Commander, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -1046,7 +1048,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -1137,7 +1140,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
+msgstr ""
+"XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1209,7 +1213,8 @@ msgstr "Alien Base Discovered -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -1235,7 +1240,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1274,7 +1280,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2038,38 +2045,32 @@ msgid "Base-Defence Laser Turret"
 msgstr "Base-Defence Laser Turret"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
-"Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+"Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
 "\n"
-"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+"Here are the highlights.\n"
 "\n"
-"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+"What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.\n"
 "\n"
-"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+"The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.\n"
 "\n"
-"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+"Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.\n"
 "\n"
-"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
-"\n"
-"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
-"\n"
-"Let me know when you want us to start working on them, Commander.\n"
+"Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
+"Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.\n"
 "\n"
-"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
+"Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.\n"
 "\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
+"Please approve this program at your discretion, Commander.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -2206,7 +2207,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:345
 #: ../base/ufos/research.ufo:385
@@ -2350,7 +2352,9 @@ msgstr ""
 "\n"
 "That is all I have to report, Commander. However, as a final note, I would like to request your permission to look into methods we could use to more effectively persuade our captives. I must also stress that we require a healthy influx of new alien specimens in order to replace losses. We have to maintain the isolated hive mind we have in Containment. Losing it now would be a significant setback to our research.\n"
 "\n"
-"Sincerely,Dr. Connor"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:486
 msgid "alien_communication_pre_txt"
@@ -4188,7 +4192,7 @@ msgstr ""
 "\n"
 "The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
 "\n"
-"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
 "\n"
 "Please let me know when you want us to start, Commander.\n"
 "\n"
@@ -5787,9 +5791,8 @@ msgid "drop_herakles_txt"
 msgstr "drop_herakles_txt"
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr "drop_herakles_txt"
+msgstr "No pre research info available"
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -5838,7 +5841,6 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "No pre research info available"
 
@@ -6034,7 +6036,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6167,32 +6170,30 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3853
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
-"This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
-"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It makes sense. Every modern military force needs intelligence more than anything.\n"
+"We've dubbed this UFO the 'Gunboat', and the name tells you a great deal about its intended function. Its weapons and armour exceed that of UFOs twice its size. As near as we can tell it was designed for the role of heavy fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"Here are the major technical details:\n"
+"The UFO is armed with two particle beam weapons as well as -- very interestingly -- two additional modular hardpoints of a design almost identical to the weapon hardpoints on our own aircraft. It seems like the aliens have actually adapted our design for their own use and may begin using different loadouts on individual craft. If the aliens are actually learning from us, we could be in for a hell of a ride . . .\n"
 "\n"
-"-- The craft has only a small fuel tank and few provisions for a crew. It seems designed for little more than coming down from orbit, flying around a bit, and then returning.\n"
+"Even more interesting is the Gunboat's armour, an improvement over the standard skin of alien materials we saw on the first wave of invading UFOs. This new armour is a composite layer-cake of alien materials and various other substances designed to slow and stop projectiles from penetrating. The basic principle is simple enough but the new compounds have interesting properties which we're not sure we fully understand. I'll see if my team can make anything of it and, if so, I'll have a new research proposal ready for you soon.\n"
 "\n"
-"-- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down and won't come back up.\n"
+"The fuselage design of the Gunboat is still ostensibly that of a spacecraft, but it has certain adaptations that make it much easier to handle in atmosphere. It has actual wing surface generating lift, unlike the small claw-winged designs which relied on brute engine power to stay airborne. Furthermore, mobile flaps on the wings and stabilisers -- much like on human aircraft -- allow the Gunboat to use the airflow over its surfaces, giving it a much tighter turning circle, a far higher angle of attack and a tremendous rate of climb compared to a UFO moving on engine power alone.\n"
 "\n"
-"-- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment that we can identify, which would defeat the purpose of a scout. Your guess is as good as ours, sir.\n"
-"\n"
-"Beyond that the craft has no particular distinguishing characteristics.\n"
-"\n"
-"As I said, this UFO type is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these things down whenever we're not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
+"Overall the Gunboat is fast, manoeuvrable and utterly deadly. It seems to outperform previously-observed UFOs on every level; faster, tougher, better-armed and more nimble. The only positive is that it would take three or four times as much material to build a Gunboat compared to a small attack craft and twice as much fuel to keep it flying, so it's unlikely we'll see Gunboats in large numbers. My only worry is that they won't need very many of these to pound us into dust. Extreme caution is advised, Commander, and I recommend we spend some time and money upgrading our airfleet as soon as we can.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
+"\n"
+"This is the first alien craft we've seen that is unmistakably purpose-built for combat. What's even more disturbing is that it has certain features, innovations, which we theorise make the craft more suited for atmospheric flight. I think we need to have a look at this right away as it may represent a significant shift in alien goals and tactics.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6202,7 +6203,6 @@ msgid "ufo_ripper_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "No pre research info available"
 
@@ -6244,7 +6244,6 @@ msgid "ufo_mothership_txt"
 msgstr "ufo_bomber_txt"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "No pre research info available"
 
@@ -6676,7 +6675,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -7976,35 +7976,43 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr ""
+"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "To many people on Earth, it seems like things are going all right."
+msgstr ""
+"To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr ""
+"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr ""
+"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

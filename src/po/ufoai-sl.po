@@ -1857,7 +1857,6 @@ msgid "b_baselaser_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr "<TODO>"
 
@@ -2715,7 +2714,6 @@ msgid "drop_herakles_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
 msgstr "<TODO>"
 
@@ -2725,7 +2723,6 @@ msgid "drop_raptor_txt"
 msgstr "Plazemski atomar"
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "<TODO>"
 
@@ -2824,7 +2821,6 @@ msgid "ufo_gunboat_txt"
 msgstr "Bojni nož"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr "<TODO>"
 
@@ -2834,7 +2830,6 @@ msgid "ufo_ripper_txt"
 msgstr "Plazemski atomar"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "<TODO>"
 
@@ -2852,7 +2847,6 @@ msgid "ufo_mothership_txt"
 msgstr "Bojni nož"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "<TODO>"
 

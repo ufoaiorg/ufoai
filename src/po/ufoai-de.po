@@ -752,7 +752,8 @@ msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/events.ufo:34
 #: ../base/ufos/events.ufo:44
@@ -920,7 +921,8 @@ msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 #: ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Basiskommandeur, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Basiskommandeur, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -1061,7 +1063,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -1160,7 +1163,8 @@ msgstr "<TODO>"
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1269,7 +1273,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1308,7 +1313,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2070,38 +2076,32 @@ msgid "Base-Defence Laser Turret"
 msgstr "Lasergeschütz"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
-"Herr Kommandant, ich bin in der glücklichen Lage, Ihnen mitteilen zu können, dass unser Projekt von Erfolg gekrönt war. Ich habe Bilder unseres Prototyps eingefügt, der einen kontinuierlichen Energiestrom in einem tragbaren Paket verwirklicht.\n"
+"Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
 "\n"
-"Statt immer größere Batterien zu entwickeln lag die praktische Lösung eher darin, radikale Miniaturisierungstechnologien zu nutzen, um die bereits existierenden chemiebetriebenen Laserkomponenten leichter und kleiner zu machen. Chemische Laser werden schon seit langer Zeit benutzt und waren seit dem späten 20. Jahrhundert Teil von experimentellen Waffenprogrammen, wiesen aber viele Probleme auf. Die einzigen chemischen Laser mit militärischem Nutzen waren zu groß und sperrig, um von einem Soldaten getragen zu werden. Bis jetzt war ihr Einsatz auf panzergestützte Laserkanonen und auf Schiffen installierte Raketenabwehr beschränkt.\n"
+"Here are the highlights.\n"
 "\n"
-"Nun aber haben wir bei PHALANX eine konventionelle Laserkanone in Miniaturform gebaut. Trotz der geringen Größe ist sie in der Lage, die Deuterium-Fluor-Reaktion zu bewältigen und die giftigen Abfallprodukte ohne die Gefahr einer Vergiftung zu speichern. Ich möchte Ihnen kurz die genaue Funktionsweise erläutern.\n"
+"What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.\n"
 "\n"
-"Innerhalb der Brennkammer wird Ethylen in Stickstofftrifluorid verbrannt. Dabei entstehen angeregte Fluorradikale, die dann mit einer Helium-Deuterium-Mixtur in Kontakt gebracht werden. Das Deuterium reagiert mit dem Fluor zu angeregten Deuteriumfluoridmolekülen. Durch stimulierte Emissionen im optischen Resonator der Waffe wird schlussendlich der Strahl generiert. Eine Serie intelligenter Linsen fokussiert und lenkt den Strahl zum Zielpunkt des Schützen und korrigiert sogar kleine Bewegungen des Schützen oder des Ziels. Die Reste des Deuteriumgases werden durch unseren speziell entwickelten Hochleistungsfilter gepresst, welcher alle giftigen und radioaktiven Moleküle abfängt und die restlichen harmlosen Abgase zurück in die Atmosphäre entlässt.\n"
+"The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.\n"
 "\n"
-"Der Filter muss nach jeder Mission ersetzt werden, aber wir haben das System so entwickelt, dass dies kein Problem darstellt. Sollte der Filter während einer Mission beschädigt werden, so schaltet sich die Waffe automatisch ab, um eine Kontaminierung zu vermeiden.\n"
+"Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.\n"
 "\n"
-"Der Laser arbeitet im mittleren Infrarotbereich, daher sieht man den Strahl nicht, außer man trägt eine Infrarotbrille.\n"
-"\n"
-"Der von uns gebaute Prototyp ist leider noch nicht für die Massenproduktion geeignet, da noch Verfeinerungen für die menschliche Nutzung nötig sind. Jedoch können die Fortschritte, die wir hier gemacht haben, ebenfalls an Fahrzeugwaffen angewandt werden -- vielleicht sogar an Flugzeugkanonen. Ich habe Ihnen mehrere Anträge geschickt, die unsere Ideen darlegen.\n"
-"\n"
-"Lassen Sie es mich wissen, wenn wir mit der Arbeit beginnen sollen, Herr Kommandant.\n"
+"Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
 msgstr ""
-"Die gesammelten Forschungsdaten der Vereinten Nationen haben eine Menge wertvoller Erkenntnisse über die Waffenforschung auf der Erde zu Anfang dieses Jahrhunderts erbracht. Eines der interessantesten Themen war die Produktion von GEW (gesteuerten Energiewaffen), die Energie auf anderem Wege als mittels eines Projektils auf ein Ziel übertragen können. Wir sind besonders interessiert an den Dateien über beständige Wellenlaser, oder auch nur kurz: Laser.\n"
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
-"Viele Länder und Firmen haben über die Jahre versucht, Laserwaffen herzustellen. Aber niemand vermochte, einen tragbaren Laser zu fertigen, der einen ausreichenden Energieausstoß hat, um mit herkömmlichen Feuerwaffen zu konkurrieren. Nun aber haben wir Zugang zu all dieser kombinierten Forschung und ganzen Bibliotheken über die am weitesten entwickelten Technologien der Erde. Ich glaube, wir können nicht nur eine tragbare Laserwaffe herstellen, sondern sie auch zu einer Größe reduzieren, die noch nie für eine GEW in Betracht gezogen wurde.\n"
+"Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.\n"
 "\n"
-"Herr Kommandant, wir sollten diese Forschung so schnell wie möglich beginnen. Ein vielseitigeres Waffenarsenal erschwert es den Außerirdischen, sich dagegen zu verteidigen. Darüber hinaus könnten uns unsere Erfahrungen zu der Entwicklung von brauchbaren Flugzeuglasern führen, die gegen sehr schnelle UFOs weit effektiver sein sollten als konventionelle Feuerwaffen.\n"
+"Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.\n"
 "\n"
-"Soweit es mich betrifft, können wir bei PHALANX das Unmögliche vollbringen und wir werden damit anfangen, sobald Sie diesen Antrag bestätigen.\n"
+"Please approve this program at your discretion, Commander.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -2254,7 +2254,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:345
 #: ../base/ufos/research.ufo:385
@@ -2450,7 +2451,7 @@ msgstr ""
 "\n"
 "Natürlich wird diese Mission hochgradig gefährlich werden. Die Basis ist im Zentrum eines Infektionsherdes, so dass die gesamte Gegend feindliches Territorium ist. Wir können sowohl mit Boden-Luft Artillerie als auch mit hinzugefunkten UFOs rechnen, die ihre Basis verteidigen. Eine schwere Eskorte ist sicherlich erforderlich. Und... es wird noch schlimmer.\n"
 "\n"
-"Satelittenbilder und Aufnahmen aus der Luft deuten an, dass infizierte Menschen aktiv mit den Außerirdischen zusammenarbeiten. Es besteht daher eine hohe Wahrscheinlichkeit, dass unsere Truppen auch feindlichen Menschen beim Angriff begegnen werden. Das wird zwar einige belasten, aber falls man das Feuer auf unsere Truppen eröffnet, müssen wir bereit sein, zurückzuschlagen.\n"
+"Satellitenbilder und Aufnahmen aus der Luft deuten an, dass infizierte Menschen aktiv mit den Außerirdischen zusammenarbeiten. Es besteht daher eine hohe Wahrscheinlichkeit, dass unsere Truppen auch feindlichen Menschen beim Angriff begegnen werden. Das wird zwar einige belasten, aber falls man das Feuer auf unsere Truppen eröffnet, müssen wir bereit sein, zurückzuschlagen.\n"
 "\n"
 "Das ist alles, was ich Ihnen derzeit berichten kann, Kommandant. Viel Glück - und erfolgreiche Jagd.\n"
 "\n"
@@ -4101,7 +4102,7 @@ msgstr ""
 "\n"
 "Eine der Hauptkomponenten, die meine Aufmerksamkeit erregt hat, sind die starken Elektromagnete. Sie sind gebaut, wie bei einem Gaußgewehr (auch bekannt als 'Coilgun'): Viele Spulen der Elektromagnete sind um das Rohr herum gelegt, eine Anordnung, die wir bisher als zu energie-ineffizient gehalten hatten, als dass man sie auf dem Schlachtfeld verwenden könnte. Die Außerirdischen scheinen das Prinzip durch intelligenten Einsatz von Supraleitern und außerirdischer Technologie anwendbar gemacht zu haben. Möglicherweise können wir diese Technologie für unsere eigenen EM Waffen Forschungen verwenden. Ich werde das genauer untersuchen und mich wieder bei Ihnen melden, sobald ich konkrete Anhaltspunkte habe.\n"
 "\n"
-"Anstelle unserer oben angebrachten Zielfernrohre haben die Außerirdischen ein hoch effizientes holographisches Zielsystem mir Entfernungsmesser implementiert, welches direkt in das Zielauge des Schützen projiziert. Ziele werden mit absoluter Klarheit bei jeder Entfernung gezeigt, die Zieleinrichtung kompensiert natürliche Körperbewegungen und gibt sogar die exakte Zielwahrscheinlichkeit zu jedem beliebigen Zeitpunkt an. Wir haben das Zielsystem unseren eigenen Soldaten vorgeführt und -- sobald sie sich an das System gewöhnt hatten, bevorzugte jeder, aber auch wirklich jeder unserer Soldaten die außerirdische Zielvorrichtung. Wenn wir die Optik in eine anpassen und in einen eigenständige Einheit einbauen könnten, so könnten wir die ultimative Optik für unsere Gewehre bauen, möglicherweise sogar für einige Handfeuerwaffen.\n"
+"Anstelle unserer oben angebrachten Zielfernrohre haben die Außerirdischen ein hoch effizientes holographisches Zielsystem mir Entfernungsmesser implementiert, welches direkt in das Zielauge des Schützen projiziert. Ziele werden mit absoluter Klarheit bei jeder Entfernung gezeigt, die Zieleinrichtung kompensiert natürliche Körperbewegungen und gibt sogar die exakte Zielwahrscheinlichkeit zu jedem beliebigen Zeitpunkt an. Wir haben das Zielsystem unseren eigenen Soldaten vorgeführt und -- sobald sie sich an das System gewöhnt hatten, bevorzugte jeder, aber auch wirklich jeder unserer Soldaten die außerirdische Zielvorrichtung. Wenn wir die Optik anpassen und in einen eigenständige Einheit einbauen könnten, so könnten wir die ultimative Optik für unsere Gewehre bauen, möglicherweise sogar für einige Handfeuerwaffen.\n"
 "\n"
 "Ausgestattet mit einem Zweibein um das Gewehr im liegen abfeuern zu können ist der Nadler eine wirkliche Bedrohung für unsere Truppen. Scharfschützen können schwere Verluste unter exponierten Truppenteilen hervorrufen und das können wir uns nicht leisten. Wenn ein Nadler entdeckt wird, sollten unsere Soldaten unter optimaler Ausnutzung jeglicher Deckung den Feind von der Seite angreifen, während sie selber außer seiner Sicht bleiben. Ein Frontalangriff auf einen eingegrabenen Nadler würde sich mit hoher Wahrscheinlichkeit als Selbstmordversuch herausstellen und ich empfehle dass niemand das ausprobiert.\n"
 "\n"
@@ -4146,32 +4147,32 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:1996
 msgid "coilgun_txt"
 msgstr ""
-"Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
+"Kommandant, ich würde ihnen gerne die fertigen Pläne und den Prototypen des Gaußgewehrs präsentieren.\n"
 "\n"
-"Combining an alien-inspired power pack and coil arrangement with some of our Bolter technology has solved many of the coilgun design's inherent problems. A hundred years ago, the energy efficiency of coilguns measured less than 2%; meaning, the energy of the projectile at the time of impact was less than 2% of the energy used to fire it. Even with today's technology coilgun efficiency is limited to single digits, but the alien Needler manages efficiency ratings as high as 70%. It may take us years to get to that level, but with the Coilgun we've developed something that is both practical and effective for the war effort.\n"
+"Die Kombination einer von der außerirdischen Technologie inspirierten Energiequelle und Spulenanordnung mit unserer eigenen Bolter-Technologie hat einige der dem ursprünglichen Design des Gaußgewehrs innewohnenden Probleme gelöst. Vor mehr als hundert Jahren maß die Energieeffizienz eines Gaußgewehrs weniger als 2%; was bedeutete, dass die Energie die das Projektil letztendlich auf das Ziel übertrug weniger als 2 % der Energie darstellte die dum Abfeuern des Projektils verwendet wurde. Selbst die aktuelle Gaußgewehr-Technologie beschränkt sich in ihrer Effizienz auf einstellige Bereiche, wogegen der außerirdische Nadler in einen Effizienzbereich von über 70% vordringt. Es wird uns vermutlich noch Jahre kosten selber in solche Bereiche vor zu dringen, aber trotzdem haben wir mit dem vorliegenden Gaußgewehr etwas in der Hand, was sowohl praktisch als auch ausreichen effektiv ist um in diesem Krieg hilfreich zu sein.\n"
 "\n"
-"In order to get better acceleration out of the coils, we've created a new kind of ammunition, based on the aliens' needle alloy. In shape it's a fairly standard fin-stabilised penetrator inside a discarding sabot, but it's made from materials never before seen on Earth. Discarding sabot rounds are normally used for much larger calibres -- we've effectively scaled down an anti-tank round -- but the armour-piercing potential is phenomenal, higher than any other weapon we have. In fact, the Coilgun is now the highest-calibre infantry weapon on the planet.\n"
+"Um eine bessere Beschleunigung des Projektils durch die Spulen zu erreichen entwickelten wir eine neue Art von Munition die auf einer Legierung basiert, die die Außerirdischen für ihre Nadlermunition verwenden. Die Form entspricht einem standart, flügelstabilisierten Kern innerhalb eines Treibkäfigs, welcher jedoch aus Materielien besteht die niemals zuvor auf der Erde Verwendung fanden. Munition mit einem Treibkäfig findet sich normalerweise nur bei deutlich größerem Kaliber -- wir orientierten uns an Panzer-Abwehrmunition und verkleinerten sie -- und das panzerbrechende Potential ist phänomenal, höher als bei jeder anderen Waffe in unserem Besitz. Tatsächlich ist das Gaußgewehr damit nun die größt-kalibrigste tragbare Waffe auf diesem Planeten.\n"
 "\n"
-"We've also incorporated a Needler-style holographic sight, making the Coilgun extremely accurate and comfortable to fire.\n"
+"Zudem verwendeten wir eine holografische Sicht nach Nadler-Art, was das Gaußgewehr extrem akkurat und einfach zu benutzen macht.\n"
 "\n"
-"The advantages of a coilgun as a sniper rifle are obvious. There's no rush of propellant to make noise, no muzzle flash spitting out light and heat. Unlike even our Bolter, nothing comes out the barrel except the bullet -- there's no spray of hot metal from the rails to light up the sniper on infrared. With nothing to reveal the sniper's position except the noise of the bullet itself breaking the sound barrier, it's possible to fire and stay undetected, even against alien technology. Best of all, ballistics tests confirm that it should be able to bring down most aliens in a single shot.\n"
+"Die Vorteile einer Verwendung des Gausgewehrs als Scharfschützengewehr sind offensichtlich. Es gibt weder Lärm noch einen Lichtblitz oder Hitzeausbruch durch eine Treibladung. Selbst verglichen mit unserem Bolter verlässt mit Ausnahme des Projektils nichts den Lauf -- es gibt keinen Nebel heißen Metalls als Folge von Schienenabnutzung, welches den Scharfschützen im Infrarotbereich aufleuchten lässt. Nichts mit Ausnahme des Geräusches wenn das Projektil die Schallmauer durchbricht weißt auf die Position des Schützen hin, womit es möglich ist trotz Feuer unentdeckt zu bleiben, selbst gegen die außerirdische Technologie. Und das Beste, ballistische Tests zeigen, dass die Waffe so gut wie alle Außerirdischen mit einem einzigen Schuss erledigen sollte.\n"
 "\n"
-"Of course we've had to make some sacrifices -- high weight due to the coils and electrical equipment contained in the barrel, low ammunition capacity due to the high calibre, large and heavy magazines/power packs. Despite this, I believe the Coilgun should replace most of our SR-1 Sniper Rifles, as it's proving difficult for our conventional weapons to compete with new enemy armour designs.\n"
+"Selbstverständlich mussten wir bei der Realisierung einer solchen Waffe auch einige Opfer bringen -- hohes Gewicht als Folge der Spulen und der elektrischen Ausstattung im Lauf der Waffe, niedrige Munitionskapazität aufgrund des großen Kalibers, große und schwere Magazine und Energiequellen. Demzutrotz bin ich der Meinung, dass das Gaußgewehr die meisten unserer SR-1 Scharfschützengewehre ablösen sollte, da es sich mittlerweile als schwierig erweist mit unseren konventionellen Waffen gegen die neue Panzerung der Außerirdischen zu bestehen.\n"
 "\n"
-"Keep the SR-1 in light sniper and anti-infantry roles and move the Coilgun forward as our main long-range threat. The aliens will come to fear it.\n"
+"Halten sie die SR-1 in leichten Scharfschützen und in gegen die feindliche Infanterie gerichteten Rollen und verwenden sie die mit dem neuen Gaußgewehr ausgestatteten Truppen als stetige Bedrohung über größere Entfernungen. Die Außerirdischen werden sie zu fürchten lernen.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1999
 msgid "coilgun_pre_txt"
 msgstr ""
-"Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
+"Herr Kommandant, unsere Forscher kamen auf eine interessante neu Idee die auf der außerirdischen Nadlertechnologie basiert. Falls man die zu einer schnellen Wechselpolung fähigen außerirdischen Magnetgeneratoren sowie die leistungsfähigen außerirdischen Energiequellen mit der menschlichen elektomagnetischen Waffentechnologie kombinieren könnte, wäre eine neue, unglaubliche Waffe möglich. Ich möchte hiermit die Entwicklung eines neuen Designs für ein Gaußgewehr anregen, welches dann die Rolle eines Scharfschützengewehrs einnehmen würde.\n"
 "\n"
-"The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
+"Der Nadler ist eine hervorragende Waffe, aber es hat unzweifelbar einige Vorteile eine massives Projektil anstelle einer Vielzahl von kleinen Nadeln zu verwenden; größere Flugstabilität, ein größeres panzerbrechendes Potential und vor allem eine größere Mannstoppwirkung. Schließlich gibt es Gründe für die Scharfschützen-Doktrin \"Ein Schuss und Schluss\"; das Ziel sollte tot sein, bevor es überhaupt weiß, dass ein Scharfschütze anwesend ist.\n"
 "\n"
-"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"Daher planen wir den elektromagnetischen Aufbau und die Energiequelle des Nadlers zu übernehmen und mit einem größeren Magazin zu versehen, die Waffe in eine Form zu bringen die dem menschlichen Körperbau angepasst ist und die Entwicklung von Munition die das Schadenspotential maximiert. Dieses Gesamtpaket sollte eine signifikante Verbesserung unseres alten S-1 Scharfschützengewehrs darstellen, größere Genauigkeit als der Bolter und mehr Durchschlagskraft als der Nadler besitzen.\n"
 "\n"
-"Please let me know when you want us to start, Commander.\n"
+"Bitte lassen sie uns wissen wann wir beginnen können, Kommandant.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -5860,64 +5861,8 @@ msgstr ""
 "Waffenkapazität: 1 Waffenschacht (Nase)"
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr ""
-"Flugzeugbewertung -- Firebird-Klasse Landungsschiff\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE SCHWARZ\n"
-"\n"
-"PHALANX außerirdische Reaktionseinheit\n"
-"\n"
-"Technisches Dokument, Freigabe Sigma -- Nur für den Kommandanten\n"
-"\n"
-"Gespeichert: 17. März 2084\n"
-"\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Herr Kommandant, ich habe vor Ihnen bereits einen Blick auf diese Unterlagen geworfen und entschieden, sie mit meiner eigenen Beurteilung und Schlussfolgerung über unser gewähltes Landungsschiff zu ersetzen. Entschuldigen Sie, wenn ich jetzt meine Befugnisse überschreite, aber die alten verfügbaren PHALANX-Landungsschiffe sind einfach nicht modern genug. Sogar als sie neu waren kam keines von ihnen über den Prototyp-Status hinaus. Es gibt nur zwei 'überlebende' Exemplare. Beide waren in den letzten 60 Jahren in Regierungswarenhäusern eingemottet und waren es nicht wert herausgeholt zu werden. Wir haben ein großes Durcheinander an Equipment geerbt. Ich kann nicht mal die Hälfte von dem finden, was wir bekommen sollten. Ich tue mein Bestes, um überlegene Alternativen für unsere Ausrüstung zu finden.\n"
-"\n"
-"Das einzig Gute in diesem Landungsschiff-Durcheinander ist, dass ich es geschafft habe, unseren UN-Vertretern ein bisschen mehr Geld abzuverlangen, um ein neues Landungsschiff zu bauen, und ich denke, dass Sie es mögen werden.\n"
-"\n"
-"Das Galeoth Firebird VTOL (Vertical Take-Off and Landing) ist das beste Luftfahrzeug, das wir als Landungsschiff einsetzen können. Es ist eigentlich als Frachtschlepper gedacht, aber es wurde schnell in einen Truppentransporter umgewandelt. Seitdem ist es im militärischen wie auch im zivilen Bereich eine beliebte Alternative zu Helikoptern geworden. Seine vier HM-5600 Sprengtriebwerke geben dem Firebird VTOL-Fähigkeiten und erreiche einen bessere Treibstoffeffizienz; und das bei viel weniger beweglichen Teilen als bei irgendeinem Helikoptermotor. Zudem wird dadurch die Zuverlässigkeit in allen Bereichen erhöht, und das Fehlen von Rotorblättern macht es deutlich schneller. Das HM-5600 ist dennoch ein sehr durstiges Triebwerk, und der Hochleistungstreibstoff ist zu teuer für eine zivile Nutzung.\n"
-"\n"
-"Die Reisegeschwindigkeit des Firebird ist Mach 0.74. Mit seiner Maximalgeschwindigkeit von Mach 1.03 kann es sich gerade mal so durch die Schallmauer drücken. Aber das verursacht einen großen Druck auf die Hülle und sollte, abgesehen von Notfällen, vermieden werden. Es hat nur einen Waffenschacht an der Nase, in den Luftabwehrwaffen wie Luftkanonen oder Raketenbatterien eingebaut werden können. Es kann auch Zusatzausrüstung aufnehmen, um z.B. die Flugeigenschaften oder Kampfperformance zu verbessern. Es gibt Beschleunigungshaltegurte für 8 Soldaten und einen Laderaum, der kleine Kampffahrzeuge aufnehmen und absetzen kann.\n"
-"\n"
-"Es gibt nichts besser geeignetes im Himmel, das unseren Bedarf als Landungsschiff deckt, als den Firebird. Schneller als jeder Helikopter, manövrierfähiger als jeder Starrflügler und es kann schnell und effizient auf Bedrohungen auf der ganzen Welt reagieren.\n"
-"\n"
-"Der Firebird braucht einen großen Hangar für Lagerung, Wartung und Einsatz. Er hat einen mittleren Waffenschacht in der Nase.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Das Landungsschiff trägt unsere Soldaten über die ganze Welt, um auf Alienangriffe am Boden zu reagieren oder um UFO-Absturzstellen für eine Bergung zu säubern. Es sollte sofort an Punkte mit Aliensichtung gebracht werden, um abgeschossene UFOs zu bergen.\n"
-"\n"
-"Ist eine Absturzstelle erst einmal von lebenden Aliens gesäubert, werden schwer verletzte Soldaten sofort zur medizinischen Behandlung geschickt. Die verbleibenden Soldaten sichern das Gebiet, bis ein PHALANX Bergungsteam übernimmt und die Lieferung aller und jedes Artefaktes in unsere Basen sicherstellt. Das ist wichtig, da versuchtes Plündern von liegengelassenen Sachen ein Problem in dicht besiedelten Gebieten werden könnte. Wir können uns nicht leisten, wertvolle Alientechnologie zu verlieren, nur weil irgendein Idiot glaubt, er müsse ein Souvenir mitnehmen.\n"
-"\n"
-"Obwohl bewaffnet, ist der Firebird nicht in der Lage gegen richtige Kampfschiffe anzukommen und sollte nie als Abfangjäger eingesetzt werden.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner.\n"
-"\n"
-"Flugzeug Statistiken:\n"
-"\n"
-"Größe: 8m x 30m x 5m\n"
-"\n"
-"Reisegeschwindigkeit: 785 km/h\n"
-"\n"
-"Höchstgeschwindigkeit: 1083km/h\n"
-"\n"
-"Operative Reichweite: 18,000km\n"
-"\n"
-"Besatzung: 3 Besatzung, max. 8 Soldaten\n"
-"\n"
-"Waffenkapazität: 1 Waffenschacht (Nase)"
+msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -5925,7 +5870,6 @@ msgid "drop_raptor_txt"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
@@ -6179,7 +6123,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6254,7 +6199,7 @@ msgid "ufo_supply_txt"
 msgstr ""
 "Herr Kommandant, mein Team hat soeben einen weiteren UFO-Bericht für Sie abgeschlossen. Hier ist meine Zusammenfassung zu Ihrer Kenntnisnahme: Soweit wir es bestimmen konnten, ist dieses Schiff in der Tat eine Art Transporter, der in seinem großen Laderaum Material und bis zu 12 Aliens in einer kleinen, hinter dem Cockpit gelegenen Kabine aufnehmen kann. Satellitenüberwachung hat diese Schiffe beobachtet, wie sie in von Aliens kontrollierten Gebieten landen und Material und Passagiere ausladen. Dies ist ein deutliches Indiz für die \"Versorgungsschiff-Theorie\" und wir sind uns sicher das dies korrekt ist.\n"
 "\n"
-"Wir können aus der Konstruktion des Schiffes und dem Inhalt des Lagerraums einige Rückschlüsse ziehen. Anders als die UFOs die wir bisher geborgen haben, ist das Versorgungsschiff eher für das Transportieren schwerer Güter, als für das Überleben im Kampf konstruiert. Es ist schlecht zu manövrieren, der Antrieb ist weniger stark und gröber eingestellt und das Flugwerk ist durch einen Treffer leicht außer Gefecht zu setzen. Aus diesem Grund werden Versorgungsschiffe meist von grösseren Geschwadern kampftauglicher Ufos abgeschirmt, falls es abgefangen wird.\n"
+"Wir können aus der Konstruktion des Schiffes und dem Inhalt des Lagerraums einige Rückschlüsse ziehen. Anders als die UFOs die wir bisher geborgen haben, ist das Versorgungsschiff eher für das Transportieren schwerer Güter, als für das Überleben im Kampf konstruiert. Es ist schlecht zu manövrieren, der Antrieb ist weniger stark und gröber eingestellt und das Leitwerk ist durch einen Treffer leicht außer Gefecht zu setzen. Aus diesem Grund werden Versorgungsschiffe meist von grösseren Geschwadern kampftauglicher Ufos abgeschirmt, falls es abgefangen wird.\n"
 "\n"
 "Es gibt nicht viel was ein Versorgungsschiff auf der Erde tun kann außer Nachschub und Unterstützung zu liefern. Es wird Waffen, Ersatzteile und andere Güter von der Heimatwelt der Außerirdischen hier auf die Erde bringen um die außerirdischen Operationen auf der Oberfläche zu unterstützen. Dies muss unter allen Umständen verhindern werden -- Permanente außerirdische Einrichtungen auf der Erde würde eine enorme Gefahr für die Zivilbevölkerung in der Gegend darstellen. Eine starke Präsenz der Außerirdischen würde außerdem unsere Operationen empfindlich behindern, möglicherweise so subtil das es kaum bewusst wird. Regelmäßige Operationen von Versorgungsschiffen können auf eine außerirdische Einrichtung hinweisen, die sich im Bau befindet oder schlimmer noch .. bereits in Betrieb genommen wurde.\n"
 "\n"
@@ -6386,44 +6331,30 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3853
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
-"Dieses kleine UFO ist der erste Typ, den wir sowohl auf dem Radar als auch optisch gesichtet hatten. Obwohl sie anscheinend bei den aktuellen Überfällen nicht mehr beteiligt sind, sind sie ebenso eine Bedrohung; bisher haben sie den Weg für jede Art von außerirdischer Aktivität auf der Erde geebnet.\n"
+"Kommandant, mein Team und ich haben einen weiteren UFO Bericht fertiggestellt. Hier ist eine Zusammenfassung für sie zur Übersicht.\n"
 "\n"
-"Wir haben diese Klasse von UFO als 'Kundschafter' bezeichnet, da es den Anschein hat als wäre dies sein Zweck auf der Erde. Das ergibt Sinn. Jede moderne Streitkraft benötigt Aufklärung mehr als alles andere.\n"
+"Wir haben den UFO-Typ 'Kanonenboot' genannt und der Name sagt bereits welche Funktion es erfüllt. Seine Waffen und Panzerung überschreiten die anderer UFOs bei weitem um das doppelte. Soweit wir das sagen können, wurde dieser Schiffstyp für die Rolle als schweres Kampfschiff und Abfangjäger entworfen, eine Rolle die es hervorragend ausfüllt.\n"
 "\n"
-"Hier sind die wichtigsten technischen Details:\n"
+"Das UFO ist ausgestattet mit zwei Partikelstrahlenwaffen als auch – höchst interessant – zwei zusätzlichen modularen Waffenaufnahmen, ähnlich denen unserer eigenen Schiffe. Es scheint als hätten die Außerirdischen Teile unseres Designs für ihre eigenen Zwecke übernommen und wären nun fähig ihre Schiffe ebenfalls individuell anzupassen. Falls die Außerirdischen tatsächlich von uns lernen, könnte das bedeuten, dass wir uns in Zukunft auf einiges gefasst machen müssen...\n"
 "\n"
-"-- Das Schiff selbst besitzt nur einen kleinen Treibstofftank und ein wenig Verpflegung für die Besatzung. Es scheint so als wäre es für nicht viel mehr als für einen Anflug aus dem Orbit, ein wenig umher- und zurückfliegen konstruiert.\n"
+"Noch interessanter als seine Bewaffnung ist die Panzerung des Kanonenbootes. Es handelt sich um eine Verbesserung gegenüber dem Standardüberzug aus außerirdischen Materialien, wie wir ihn bei der ersten Welle der UFOs fanden. Dieser neue Panzer besteht aus einem Verbundstoff außerirdischer Materialien und verschiedener anderen Substanzen die darauf ausgelegt sind Projektile abzubremsen und zu verhindern, dass sie die Außenhaut des Schiffes durchdringen. Das zugrunde liegende Prinzip ist recht simpel, doch die neuartigen Komponenten haben interessante Eigenschaften welche wir noch nicht völlig verstanden haben. Ich werde mein Team dazu anhalten weiter am Ball zu bleiben und falls sich noch etwas ergeben sollte, werde ich sofort mit einem neuen Forschungsanliegen an sie herantreten.\n"
 "\n"
-"-- Wir haben keine Beweise für ein Fahrwerk oder Schwebefähigkeit in ihm gefunden, was darauf hinweist, dass es nicht für Landungen gedacht ist. Wenn es beide Triebwerke verliert, schmiert es ab und wird nicht wieder hochkommen.\n"
+"Der Rumpf des Kanonenbootes entspricht noch immer dem eines Raumschiffes, aber es wurden einige Veränderungen vorgenommen um das Verhalten des Schiffs im atmosphärischen Flug zu verbessern. Durch seine angepasste aerodynamische Form erhält es einen gewissen Auftrieb, ganz anders als beim bisher bekannten Design, bei dem das Schiff allein schlicht durch eine exzessive Nutzung von Maschinenkraft in der Luft gehalten wurde. Zudem finden sich bewegliche Klappen so wie Stabilisatoren an den Flügeln – ganz ähnlich wie bei von Menschen entworfenen Flugzeugen – welche es dem Kanonenboot, durch die Anpassung an den Luftwiederstand, erlauben deutlich engere Kurven zu fliegen, steile Angriffswinkel zu wählen und zu einer enormen Verbesserung der Steigraten führen, verglichen mit der bisherigen Taktik schlicht mit Hilfe des Antriebs zu manövrieren.\n"
 "\n"
-"-- Wir haben festgestellt, dass das Fluggerät unbewaffnet ist, aber es ist mit etwas ausgerüstet, das wie eine große Gruppe Sensoren aussieht, eingebaut in die vier Vorsprünge am Cockpit. Seltsamerweise sieht es so aus, als würde es mit keiner Kommunikationsanlage ausgerüstet sein, die wir identifizieren könnten, was den Zweck eines Aufklärers verfehlen würde. Ihre Einschätzung ist genauso wie unsere, Sir.\n"
+"Insgesamt ist das Kanonenboot schnell, wendig und absolut tödlich. Es scheint in allen Bereichen bisher den beobachteten UFOs weit überlegen zu sein; es ist schneller, flinker, widerstandsfähiger und besser bewaffnet. Der einzige Vorteil für uns ist, dass es drei bis vier mal so viel Material benötigt ein Kanonenboot zu bauen wie ein kleines Kampfschiff und es mindestens doppelt so viel Treibstoff verbraucht. Von daher werden wir wohl nie mit einer größeren Zahl an Kanonenbooten zu rechnen haben. Zu bedenken ist dabei aber, dass die Außerirdischen vermutlich auch gar keine größere Zahl dieses Schifftyps benötigen werden um uns 'in den Staub zu schicken'. Extreme Vorsicht ist angeraten, Kommandant. Ich empfehle, dass wir sobald wir können Zeit und Geld darauf verwenden um unsere Luftflotte aufzubessern..\n"
 "\n"
-"Darüber hinaus hat das UFO keinerlei charakteristische Merkmale.\n"
-"\n"
-"Wie ich bereits sagte, wird dieser UFO-Typ hauptsächlich als Aufklärungseinheit und als Vorhut für die größeren Schiffe verwendet. Obwohl unbewaffnet, sollten wir diese Dinger abschießen, soweit wir nicht anderweitig beschäftigt sind, da alles was die Außerirdischen vorhaben, sicherlich schlecht für uns ist.\n"
-"\n"
-"--Cdr. Navarre\n"
-"\n"
-"Geschätzte Scout Statistiken:\n"
-"\n"
-"Größe: Klein (6m x 14m x 3m)\n"
-"\n"
-"Reisegeschwindigkeit: +/- 1600 km/h\n"
-"\n"
-"Höchstgeschwindigkeit: +/- 3000km/h\n"
-"\n"
-"Besatzung: max. 3\n"
-"\n"
-"Waffenkapazität: Keine"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
-"Herr Kommandant, wir haben einen neuen UFO-Typ geborgen, welcher sich in unserem Hangar befindet und auf Zerlegung wartet. Wir sind bereit, ihn zu studieren und auseinanderzunehmen, aber wir brauchen etwas Laborplatz und Geld, um eine genaue Einschätzung seiner Funktionen und Fähigkeiten zu machen.\n"
+"Kommandant, wir haben einen neuen UFO-Typ gefunden, der nun in unserem Hangar auf seine Zerlegung wartet. Der extrem schweren Bewaffnung nach, scheint es sich um ein schweres Kampfschiff oder einen Typ der zur Feuerunterstützung gedacht ist zu handeln, seine Größenklasse liegt im selben Bereich der UFOs die wir bisher beobachtet haben.\n"
+"\n"
+"Es ist das erste Schiff der Außerirdischen dass wir entdeckt haben, das unverkennbar für den Kampf gebaut wurde. Was zusätzlich beunruhigt ist die Tatsache, dass es einige Eigenschaften, Weiterentwicklungen, aufweist, die es, wie wir glauben, im Besonderen für den atmosphärischen Flug geeignet erscheinen lassen. Ich denke wir sollten es unverzüglich genauer in Augenschein nehmen, da es eine signifikante Weiterentwicklung in den Zielen und Taktiken der Außerirdischen darstellt.\n"
+"\n"
+"Wir sind bereit das Schiff zu zerlegen und zu studieren wann immer sie den Befehl dazu erteilen, aber wir benötigen einiges an Laborstunden und finanzieller Unterstützung um eine genauere Beurteilung über seinen Funktionen und Fähigkeiten zu erstellen.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6460,7 +6391,6 @@ msgstr ""
 "Waffenkapazität: 2 Partikelstrahlen Waffenschächte, 1 Alien Raketenwerfer"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
@@ -6504,7 +6434,6 @@ msgstr ""
 "limited."
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
@@ -6936,7 +6865,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -8217,35 +8147,43 @@ msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
+msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr ""
+"Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
+msgstr ""
+"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
+msgstr ""
+"Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr ""
+"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

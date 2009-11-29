@@ -836,7 +836,8 @@ msgstr "mejl_från_fn"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -909,7 +910,8 @@ msgstr "mejl_prolog"
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -985,7 +987,8 @@ msgstr "mejl_produktion_klar"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1080,7 +1083,8 @@ msgstr "mejl_ny_radarkontakt"
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1110,7 +1114,8 @@ msgstr "mejl_utomjordisk_aktivitet_rapporterad"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1836,31 +1841,34 @@ msgid "Base-Defence Laser Turret"
 msgstr "Lasergevär"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
-"Det är med mycket stor stolthet jag rapporterar att vårt projekt har varit framgångsrikt. Jag har inkluderat bilder på vårat prototyplaservapen som åstadkommer kontinuerlig vågformsutgång och ändå är litet nog att bära med sig för en enskild person.\n"
+"Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
 "\n"
-"Den praktiska lösningen låg inte i lönlösa försök att tillverka större batterier, utan i stället använde vi radikala miniatyriseringstekniker för att kunna göra existerande kemiskt drivna laserkomponenter mindre och lättare. Kemisk laser har använts länge, och har funnits i experimentella vapenprogram sedan slutet av 1900-talet, men tekniken har alltid lidit av många problem. De enda typer av kemisk laser där militära tillämpningar har varit aktuella har varit alldeles för stora och klumpiga för att infanterister ska kunna bära med sig dem i strid. Fram tills nu har lasertillämpningar i strid varit begränsade till laserkanoner monterade på stridsvagnar eller missilvärnsbatterier på fartyg.\n"
+"Here are the highlights.\n"
 "\n"
-"Nu har vi inom PHALANX byggt en miniatyr av en konventionell laserkanon. Trots dess ringa storlek är den fullt kapabel att hantera deuteriumflouridreaktionen och det giftiga avfallet utan risk för förorening. Låt mig kort beskriva hur det fungerar.\n"
+"What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.\n"
 "\n"
-"Inuti förbränningskammeren förbränns eten i kvävetrifluorid. Reaktionen producerar exciterade fluorinradikaler, som sedan förs in i en blandning av helium- och deuteriumgas. Deuteriumet reagerar med fluorinet och producerar exciterad molekyler av deuteriumfluorid. Molekylerna utsätts sedan för stimulerad emission i vapnets optiska resonator, och där genereras strålen. En rad intelligenta linser fokuserar och riktar strålen dit användaren siktar och korrigerar dessutom för mindre rörelser hos användaren eller målet. Avgaserna av deuterium körs genom vårt specialbyggda högtrycksfilter, som fångar upp alla giftiga och radioaktiva molekyler innan den kvarvarande ofarliga ångan släpps tillbaka ut i atmosfären.\n"
+"The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.\n"
 "\n"
-"Filtret måste bytas ut efter varje uppdrag, men vi har designat systemet för att det ska vara lätt och smärtfritt. Om filtersystemet på något sätt skadas under ett uppdrag, kommer vapnet omedelbart att sluta fungera för att förhindra förorening.\n"
+"Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.\n"
 "\n"
-"Lasern använder infraröda våglängder, så den ger ingen synlig stråle förutom för dem som bär IR-glasögon.\n"
+"Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.\n"
 "\n"
-"Tyvärr är prototypen som vi har konstruerat inte redo för fullskalig produktion som infanterivapen än. Mer förfining och balansering behövs innan den kan användas av människor, men uppfinningarna som vi har gjort kan också användas för fordonsmonterade vapen -- kanske till och med på flygande fordon. Jag har skickat Er ett flertal nya förslag på huvudidéerna som vi har tagit fram.\n"
-"\n"
-"Låt mig veta när Ni vill att vi ska börja arbeta med dem.\n"
-"\n"
-"--Kommendör Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
-#, fuzzy
 msgid "b_baselaser_pre_txt"
-msgstr "Ingen information om tidigare forskning tillgänglig"
+msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.\n"
+"\n"
+"Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.\n"
+"\n"
+"Please approve this program at your discretion, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:210 ../base/ufos/research.ufo:248
 msgid "antimatter_txt"
@@ -1997,7 +2005,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -2140,7 +2149,9 @@ msgstr ""
 "\n"
 "That is all I have to report, Commander. However, as a final note, I would like to request your permission to look into methods we could use to more effectively persuade our captives. I must also stress that we require a healthy influx of new alien specimens in order to replace losses. We have to maintain the isolated hive mind we have in Containment. Losing it now would be a significant setback to our research.\n"
 "\n"
-"Sincerely,Dr. Connor"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:486
 msgid "alien_communication_pre_txt"
@@ -3985,7 +3996,7 @@ msgstr ""
 "\n"
 "The Needler is a terrific weapon, but there are undeniable advantages to delivering one large slug compared to a number of smaller flechettes; greater stability in flight, better armour-piercing ability, and above all superior stopping power. There's a reason why our sniper doctrine calls for one shot to a kill, that the target should be dead before he even knows the sniper is there.\n"
 "\n"
-"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
+"To this end we plan to adapt the electromagnetic equipment and power source from the Needler to a larger barrel and a more human-friendly shape, as well as developing a new slug to maximise damage potential. The whole package together would be a significant upgrade from our old S-1 Sniper Rifle, more accurate than the Bolter and with far more kick than the Needler.\n"
 "\n"
 "Please let me know when you want us to start, Commander.\n"
 "\n"
@@ -4604,7 +4615,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2582
 msgid "combat_armour_txt"
 msgstr ""
-"Tekniska specifikationer: Stridsväst\n"
+"Tekniska specifikationer: Stridsrustning\n"
 "\n"
 "KLASSIFICERINGSNIVÅ GUL\n"
 "\n"
@@ -4638,7 +4649,7 @@ msgstr ""
 "\n"
 "The first widespread use of military combat armour made from spider silk came as a joint effort by NATO in 2023, after ballistic tests proved that Chinese rounds tore right through their aging standard-issue kevlar vests. The armour itself is a layercake of spider silk and treated ultra high molecular weight polyethylene, giving it astonishing strength and flexibility. The resulting fabric is about 18 times stronger than steel and provides a performance increase over kevlar that is estimated between 300 and 400%. Suits made primarily from polyethylene became obsolete after artificial spider silk was released into the wider market, and the new composite armour soon replaced it in military use throughout the world. The armour has been upgraded to move with the times, being so effective that it is still in common use today. It features pockets on the front and back that can take ceramic or metal inserts to further protect vital areas.\n"
 "\n"
-"Den första utbredda användningen av militära rustningar gjorda av spindelsiden kom från en förenad insats av NATO år 2023, efter att testskjutningar visat att kinesisk ammunition skör rakt igenom deras standardkevlarvästar. Rustningen i sig är gjord av flera lager spindelsilke och behandlat hög molekylärviktspolyeten, vilket ger en otrolig styrka och flexibilitet. Materialet är runt 18 gånger starkare än stål och medför en förbättring gämfört med kevlar på mellan 300 och 400%. Dräkter gjorda av endast polyeten blev omoderna när spindelsilke blev vanligt på marknaden, och den nya kompositrusningen ersatte snart den inom militärt bruk över hela världen. Rustningen har följd med tiden, och forsatt utvecklats så att den är modern än i dag. Den har fickor på fram- och baksidan där keramiska peller metallplattor kan användas för att ytterligare skydda vitala områden.\n"
+"Den första utbredda användningen av militära rustningar gjorda av spindelsiden kom från en förenad insats av NATO år 2023, efter att testskjutningar visat att kinesisk ammunition skör rakt igenom deras ordinarie stridsrustningar. Rustningen i sig är gjord av flera lager spindelsilke och behandlat hög molekylärviktspolyeten, vilket ger en otrolig styrka och flexibilitet. Materialet är runt 18 gånger starkare än stål och medför en förbättring gämfört med kevlar på mellan 300 och 400%. Dräkter gjorda av endast polyeten blev omoderna när spindelsilke blev vanligt på marknaden, och den nya kompositrusningen ersatte snart den inom militärt bruk över hela världen. Rustningen har följd med tiden, och forsatt utvecklats så att den är modern än i dag. Den har fickor på fram- och baksidan där keramiska peller metallplattor kan användas för att ytterligare skydda vitala områden.\n"
 "\n"
 "The Combat Armour's only disadvantage is its relatively high weight compared to older suits, but this is mainly due to the number of layers required to properly protect against modern weapons. The weight is evenly distributed, making it quite comfortable to wear and much less bulky than experimental nanocomposite armours. This armour will save lives while preserving the soldier's all-important mobility.\n"
 "\n"
@@ -5471,8 +5482,7 @@ msgstr ""
 "\n"
 "Det är fullständigt klart att soldater i krig lever under en väldig stress. För att bibehålla moralen så behöver de en plats att trappa ner och umgås i en rangfri miljö. Vi har försökt att förse denna sort av vila och rekreation i form av en samlingssal.\n"
 "\n"
-"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n"
-"\n"
+"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n\n"
 "\n"
 "All vår utrustning kräver underhåll, och jag skulle kunna hävda att våra soldater behöver mest underhåll. Samlingsalen är det bästa för att hålla dom mentalt hälsosamma och i stridbart skick.\n"
 "\n"
@@ -5768,66 +5778,8 @@ msgstr ""
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3378
-#, fuzzy
 msgid "drop_herakles_pre_txt"
-msgstr ""
-"Aircraft Evaluation -- Firebird-class Dropship\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 17 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
-"\n"
-"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
-"\n"
-"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
-"\n"
-"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
-"\n"
-"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
-"\n"
-"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
-"\n"
-"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
-"\n"
-"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None.\n"
-"\n"
-"\n"
-"Aircraft statistics:\n"
-"\n"
-"\n"
-"Size: 8m x 30m x 5m\n"
-"\n"
-"Cruising speed: 785 km/h\n"
-"\n"
-"Top speed: 1,083km/h\n"
-"\n"
-"Operational range: 18,000km\n"
-"\n"
-"Crew capacity: 3 crew, 8 soldiers max.\n"
-"\n"
-"Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
+msgstr "Ingen information om tidigare forskning tillgänglig"
 
 #: ../base/ufos/research.ufo:3412
 #, fuzzy
@@ -5892,7 +5844,6 @@ msgstr ""
 "Hardpoints: 1 Medium hardpoint (nose), 2 Equipment bays, 1 Armour slot"
 
 #: ../base/ufos/research.ufo:3415
-#, fuzzy
 msgid "drop_raptor_pre_txt"
 msgstr "Ingen information om tidigare forskning tillgänglig"
 
@@ -6118,7 +6069,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6325,48 +6277,30 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3853
-#, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
-"Commander, my team and I have finished our analysis of the small UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
+"Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
-"The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look 'under the hood' and test the alien hull materials under laboratory conditions, we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
+"We've dubbed this UFO the 'Gunboat', and the name tells you a great deal about its intended function. Its weapons and armour exceed that of UFOs twice its size. As near as we can tell it was designed for the role of heavy fighter/interceptor, and it fulfills that role magnificently.\n"
 "\n"
-"- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\n"
+"The UFO is armed with two particle beam weapons as well as -- very interestingly -- two additional modular hardpoints of a design almost identical to the weapon hardpoints on our own aircraft. It seems like the aliens have actually adapted our design for their own use and may begin using different loadouts on individual craft. If the aliens are actually learning from us, we could be in for a hell of a ride . . .\n"
 "\n"
-"- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down.\n"
+"Even more interesting is the Gunboat's armour, an improvement over the standard skin of alien materials we saw on the first wave of invading UFOs. This new armour is a composite layer-cake of alien materials and various other substances designed to slow and stop projectiles from penetrating. The basic principle is simple enough but the new compounds have interesting properties which we're not sure we fully understand. I'll see if my team can make anything of it and, if so, I'll have a new research proposal ready for you soon.\n"
 "\n"
-"- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when I found out what was in there. The maximum load -- two tenths of a gramme -- could create a blast yield of more than 8 kilotons. By comparison the bomb at Hiroshima was 13 kilotons. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that antimatter explosions create little to no radioactive fallout.\n"
+"The fuselage design of the Gunboat is still ostensibly that of a spacecraft, but it has certain adaptations that make it much easier to handle in atmosphere. It has actual wing surface generating lift, unlike the small claw-winged designs which relied on brute engine power to stay airborne. Furthermore, mobile flaps on the wings and stabilisers -- much like on human aircraft -- allow the Gunboat to use the airflow over its surfaces, giving it a much tighter turning circle, a far higher angle of attack and a tremendous rate of climb compared to a UFO moving on engine power alone.\n"
 "\n"
-"- The craft is extremely hard to see with our detection equipment. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with infrared and gamma ray detection, as the antimatter-based engines produce quite a lot of both.\n"
+"Overall the Gunboat is fast, manoeuvrable and utterly deadly. It seems to outperform previously-observed UFOs on every level; faster, tougher, better-armed and more nimble. The only positive is that it would take three or four times as much material to build a Gunboat compared to a small attack craft and twice as much fuel to keep it flying, so it's unlikely we'll see Gunboats in large numbers. My only worry is that they won't need very many of these to pound us into dust. Extreme caution is advised, Commander, and I recommend we spend some time and money upgrading our airfleet as soon as we can.\n"
 "\n"
-"- The slim design (generating poor lift and being difficult to handle in air) is partly due to the heavy weight of the hull materials. Every gramme of excess matter has been stripped, and the craft moves fast enough to need very little wing surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's far stronger and tougher than anything we've ever known. More research is definitely required.\n"
-"\n"
-"- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment whatsoever, but that would defeat its apparent role as a scout. Your guess is as good as ours, sir.\n"
-"\n"
-"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these craft down if we are not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
-"\n"
-"--Cdr. Navarre\n"
-"\n"
-"\n"
-"Estimated Scout statistics:\n"
-"\n"
-"\n"
-"Size: Small (6m x 14m x 3m)\n"
-"\n"
-"Cruising speed: +/- 1,600 km/h\n"
-"\n"
-"Top speed: +/- 3,000km/h\n"
-"\n"
-"Crew capacity: 3 max.\n"
-"\n"
-"Weapon capacity: None"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3856
-#, fuzzy
 msgid "ufo_gunboat_pre_txt"
 msgstr ""
-"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
+"Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Going by the extremely heavy armament it seems to be some kind of heavy fighter or fire support model, its size class somewhere in between those of the UFOs we've observed so far.\n"
+"\n"
+"This is the first alien craft we've seen that is unmistakably purpose-built for combat. What's even more disturbing is that it has certain features, innovations, which we theorise make the craft more suited for atmospheric flight. I think we need to have a look at this right away as it may represent a significant shift in alien goals and tactics.\n"
+"\n"
+"We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -6391,7 +6325,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3899
-#, fuzzy
 msgid "ufo_ripper_pre_txt"
 msgstr "Ingen information om tidigare forskning tillgänglig"
 
@@ -6474,7 +6407,6 @@ msgstr ""
 "Weapon capacity: 1 Particle Beam hardpoint"
 
 #: ../base/ufos/research.ufo:3985
-#, fuzzy
 msgid "ufo_mothership_pre_txt"
 msgstr "Ingen information om tidigare forskning tillgänglig"
 
@@ -6906,7 +6838,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -7777,15 +7710,13 @@ msgstr ""
 "\n"
 "Den enklaste förklaringen är detta: Det är två typer av DNA i våra blodprover. Det främmande DNA: ts förekommst är total; denna sekvens kan hittas i alla medlemmar av Tamanrasen, och en närmare studie har bekräftat att en liknande sekvens finns i blodet på andra raser vi hittat. Källan verkar vara en sorts encellig organism som finns i stor mängd i det utomjordiska blodomloppet. Det finns flera olika versioner av den, en för varje utomjordisk ras, och alla delar otroliga DNA likheter. Intressant nog så även om alla dessa organismer har lika många kromosomer, så kan ingen av dom överleva i en kropp som inte är medlem av den ursprungliga rasen. Underligt nog så är det helt klart att det är absolut ingen som helst variation på DNA: t mellan organismer från samma version. Detta leder till att vi tror att olika versioner kan ha tillverkats -- helt eller delvis -- för att passa den individuella rasen.\n"
 "\n"
-"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n"
-"\n"
+"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n\n"
 "\n"
 "Vi har namngett denna organism XVI (EXtraterrestrial Virus Infektion). Detta kan vara en felbeteckning i microbiologiska termer; XVI är långt mer komplicerad än något virus på jorden, men den beter och kopierar sig precis som ett vanligt virus. Därför känner vi att termen är försvarbar. När varje utomjordisk ras bär en unik sträng av infektionen, så har vi gett dem ett alfabetiskt designering efter den ursprungliga ras som strängen hittas i. Tamanerna har XVI-T, Shevaar har XVI-S, osv.\n"
 "\n"
 "Infektionens syfte kvarstår suddig just nu, men det är det enda vi har hittat än så länge som binder ihop dessa olika raser fysiskt. Vi kan bara gissa att olika strängar av infektionen skapades för att passa varje ras.\n"
 "\n"
-"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n"
-"\n"
+"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n\n"
 "\n"
 "Vi tror för närvarande inta att XVI organismen utgör något hot för våra soldater på slagfältet. Men vi kommer forsätta att forska och hålla dig underrättad om något utvecklas. En grundlig blodtestning utförs nu på all vår personal, som en säkerhetsåtgärd, och vanliga karantän procedurer kommer upprätthållas alltigenom laboratoriumet.\n"
 "\n"
@@ -8224,35 +8155,43 @@ msgstr "För många människor på jorden verkar det äntligen som allt är bra.
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
+msgstr ""
+"Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
+msgstr ""
+"Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "För många människor på jorden verkar det äntligen som allt är bra."
+msgstr ""
+"För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
+msgstr ""
+"Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
+msgstr ""
+"Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
+msgstr ""
+"87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
+msgstr ""
+"När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
+msgstr ""
+"Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
