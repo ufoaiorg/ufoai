@@ -132,6 +132,7 @@ static void SV_Begin_f (void)
 		SV_DropClient(sv_client, "'begin' failed\n");
 		return;
 	}
+	SV_SetClientState(sv_client, cs_began);
 
 	Cbuf_InsertFromDefer();
 }
@@ -143,13 +144,13 @@ static void SV_Spawn_f (void)
 {
 	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", sv_client->name);
 
-	if (sv_client->state != cs_spawning) {
+	if (sv_client->state != cs_began) {
 		SV_DropClient(sv_client, "Invalid state\n");
 		return;
 	}
 
-	if (ge->ClientSpawn(sv_player))
-		SV_SetClientState(sv_client, cs_spawned);
+	ge->ClientSpawn(sv_player);
+	SV_SetClientState(sv_client, cs_spawned);
 
 	Cbuf_InsertFromDefer();
 }

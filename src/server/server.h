@@ -70,7 +70,8 @@ typedef struct {
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */
 	cs_connected,				/**< has been assigned to a client_t, but not in game yet */
-	cs_spawning,				/**< received new, not begin yet - in this stage the player is an spectator
+	cs_spawning,				/**< received new, not begin yet */
+	cs_began,					/**< began was received, client side rendering is active - in this stage the player is an spectator
 								 * and still has to spawn his soldiers */
 	cs_spawned					/**< client is fully in game and soldiers were spawned */
 } client_state_t;

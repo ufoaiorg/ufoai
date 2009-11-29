@@ -729,10 +729,14 @@ static void SV_CheckGameStart (void)
 		return;
 
 	if (sv_maxclients->integer > 1) {
-		/* check that every player has set the isReady flag */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-			if (cl && cl->state != cs_free && !cl->player->isReady)
+			/* all players must be connected and all of them must have set
+			 * the ready flag */
+			if (cl->state != cs_began || !cl->player->isReady)
 				return;
+	} else if (svs.clients[0].state != cs_began) {
+		/* in single player mode we must have received the 'begin' */
+		return;
 	}
 
 	sv.started = qtrue;

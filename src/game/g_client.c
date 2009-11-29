@@ -1236,18 +1236,10 @@ qboolean G_ClientBegin (player_t* player)
  * @sa G_ClientBegin
  * @sa CL_Reset
  */
-qboolean G_ClientSpawn (player_t * player)
+void G_ClientSpawn (player_t * player)
 {
 	edict_t *ent;
 	int i;
-
-	if (player->spawned) {
-		gi.BroadcastPrintf(PRINT_CONSOLE, "%s already spawned.\n", player->pers.netname);
-		G_ClientDisconnect(player);
-		return qfalse;
-	}
-
-	player->spawned = qtrue;
 
 	G_GetStartingTeam(player);
 
@@ -1283,8 +1275,6 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* inform all clients */
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
-
-	return qtrue;
 }
 
 /**
@@ -1409,7 +1399,6 @@ void G_ClientDisconnect (player_t * player)
 #endif
 
 	player->began = qfalse;
-	player->spawned = qfalse;
 	player->roundDone = qfalse;
 	player->isReady = qfalse;
 

@@ -258,6 +258,8 @@ static void SV_Status_f (void)
 			state = "CONNECT"; break;
 		case cs_spawning:
 			state = "SPAWNIN"; break;
+		case cs_began:
+			state = "BEGAN  "; break;
 
 		default:
 			sprintf(state_buf, "%7i", cl->state);

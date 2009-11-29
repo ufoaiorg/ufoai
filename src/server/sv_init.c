@@ -109,7 +109,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	/* leave slots at start for clients only */
 	for (i = 0; i < sv_maxclients->integer; i++) {
 		/* needs to reconnect */
-		if (svs.clients[i].state > cs_connected)
+		if (svs.clients[i].state >= cs_spawning)
 			SV_SetClientState(&svs.clients[i], cs_connected);
 	}
 
