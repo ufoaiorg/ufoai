@@ -522,16 +522,6 @@ void CL_RequestNextDownload (void)
 
 	V_LoadMedia();
 
-	{
-		struct dbuffer *msg = new_dbuffer();
-		/* send begin */
-		/* this will activate the render process (see client state ca_active) */
-		NET_WriteByte(msg, clc_stringcmd);
-		/* see CL_StartGame */
-		NET_WriteString(msg, "begin\n");
-		NET_WriteMsg(cls.netStream, msg);
-	}
-
 	cls.waitingForStart = cls.realtime;
 }
 

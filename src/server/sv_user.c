@@ -114,30 +114,8 @@ static void SV_New_f (void)
 }
 
 /**
- * @sa SV_Spawn_f
- */
-static void SV_Begin_f (void)
-{
-	Com_DPrintf(DEBUG_SERVER, "Begin() from %s\n", sv_client->name);
-
-	/* could be abused to respawn or cause spam/other mod-specific problems */
-	if (sv_client->state != cs_spawning) {
-		Com_Printf("EXPLOIT: Illegal 'begin' from %s (already spawned), client dropped.\n", sv_client->name);
-		SV_DropClient(sv_client, "Illegal begin\n");
-		return;
-	}
-
-	/* call the game begin function */
-	if (!ge->ClientBegin(sv_player)) {
-		SV_DropClient(sv_client, "'begin' failed\n");
-		return;
-	}
-
-	Cbuf_InsertFromDefer();
-}
-
-/**
- * @sa SV_Begin_f
+ * @brief Prepare the client as spawned and allow him now to trigger the actor spawning.
+ * @sa SV_CheckGameStart
  */
 static void SV_Spawn_f (void)
 {
@@ -145,6 +123,12 @@ static void SV_Spawn_f (void)
 
 	if (sv_client->state != cs_spawning) {
 		SV_DropClient(sv_client, "Invalid state\n");
+		return;
+	}
+
+	/* call the game begin function */
+	if (!ge->ClientBegin(sv_player)) {
+		SV_DropClient(sv_client, "'begin' failed\n");
 		return;
 	}
 
@@ -182,7 +166,6 @@ typedef struct {
 static const ucmd_t ucmds[] = {
 	/* auto issued */
 	{"new", SV_New_f},
-	{"begin", SV_Begin_f},
 	{"spawn", SV_Spawn_f},
 
 	{"disconnect", SV_Disconnect_f},

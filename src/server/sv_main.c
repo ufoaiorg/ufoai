@@ -155,7 +155,6 @@ static void SVC_Status (struct net_stream *s)
 {
 	char player[1024];
 	int i;
-	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
 	NET_WriteByte(msg, clc_oob);
 	NET_WriteRawString(msg, "print\n");
@@ -164,7 +163,7 @@ static void SVC_Status (struct net_stream *s)
 	NET_WriteRawString(msg, "\n");
 
 	for (i = 0; i < sv_maxclients->integer; i++) {
-		cl = &svs.clients[i];
+		const client_t *cl = &svs.clients[i];
 		if (cl->state > cs_free) {
 			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
 			NET_WriteRawString(msg, player);
@@ -229,8 +228,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 {
 	char userinfo[MAX_INFO_STRING];
 	int i;
-	client_t *cl, *newcl;
-	client_t temp;
+	client_t *cl;
 	player_t *player;
 	int playernum;
 	int version;
@@ -276,50 +274,24 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	/* force the IP key/value pair so the game can filter based on ip */
 	Info_SetValueForKey(userinfo, sizeof(userinfo), "ip", peername);
 
-	newcl = &temp;
-	memset(newcl, 0, sizeof(*newcl));
-
-	/* if there is already a slot for this ip, reuse it */
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl->state == cs_free)
-			continue;
-		if (strcmp(peername, cl->peername) == 0) {
-			if (!NET_StreamIsLoopback(stream) && (svs.realtime - cl->lastconnect) < (sv_reconnect_limit->integer * 1000)) {
-				Com_Printf("%s:reconnect rejected : too soon\n", peername);
-				return;
-			}
-			Com_Printf("%s:reconnect\n", peername);
-			NET_StreamFree(cl->stream);
-			newcl = cl;
-			goto gotnewcl;
-		}
-	}
-
 	/* find a client slot */
-	newcl = NULL;
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl->state == cs_free) {
-			newcl = cl;
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+		if (cl->state == cs_free)
 			break;
-		}
-	}
-	if (!newcl) {
+	if (i == sv_maxclients->integer) {
 		NET_OOB_Printf(stream, "print\nServer is full.\n");
 		Com_Printf("Rejected a connection - server is full.\n");
-
 		return;
 	}
 
-	gotnewcl:
-	/* build a new connection */
-	/* accept the new client */
-	/* this is the only place a client_t is ever initialized */
-	*newcl = temp;
-	sv_client = newcl;
-	playernum = newcl - svs.clients;
+	/* build a new connection - accept the new client
+	 * this is the only place a client_t is ever initialized */
+	memset(cl, 0, sizeof(*cl));
+	sv_client = cl;
+	playernum = cl - svs.clients;
 	player = PLAYER_NUM(playernum);
-	newcl->player = player;
-	newcl->player->num = playernum;
+	cl->player = player;
+	cl->player->num = playernum;
 
 	/* get the game a chance to reject this connection or modify the userinfo */
 	if (!ge->ClientConnect(player, userinfo)) {
@@ -335,11 +307,11 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 
 	/* new player */
-	newcl->player->inuse = qtrue;
+	cl->player->inuse = qtrue;
 
 	/* parse some info from the info strings */
-	strncpy(newcl->userinfo, userinfo, sizeof(newcl->userinfo) - 1);
-	SV_UserinfoChanged(newcl);
+	strncpy(cl->userinfo, userinfo, sizeof(cl->userinfo) - 1);
+	SV_UserinfoChanged(cl);
 
 	/* send the connect packet to the client */
 	if (sv_http_downloadserver->string[0])
@@ -347,12 +319,12 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	else
 		NET_OOB_Printf(stream, "client_connect");
 
-	SV_SetClientState(newcl, cs_connected);
+	SV_SetClientState(cl, cs_connected);
 
-	newcl->lastconnect = svs.realtime;
-	Q_strncpyz(newcl->peername, peername, sizeof(newcl->peername));
-	newcl->stream = stream;
-	NET_StreamSetData(stream, newcl);
+	cl->lastconnect = svs.realtime;
+	Q_strncpyz(cl->peername, peername, sizeof(cl->peername));
+	cl->stream = stream;
+	NET_StreamSetData(stream, cl);
 }
 
 /**
@@ -745,6 +717,7 @@ static void Master_Heartbeat (void)
 /**
  * @brief If all connected clients have set their ready flag the server will spawn the clients
  * and that change the client state.
+ * @sa SV_Spawn_f
  */
 static void SV_CheckGameStart (void)
 {
@@ -758,14 +731,14 @@ static void SV_CheckGameStart (void)
 	if (sv_maxclients->integer > 1) {
 		/* check that every player has set the isReady flag */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-			if (cl && cl->state != cs_free && !cl->player->isReady)
+			if (cl->state != cs_free && !cl->player->isReady)
 				return;
 	}
 
 	sv.started = qtrue;
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-		if (cl && cl->state != cs_free)
+		if (cl->state == cs_spawning)
 			SV_ClientCommand(cl, "spawnsoldiers\n");
 }
 
