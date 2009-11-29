@@ -229,7 +229,6 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
  * @param[in] scale Scaling of the model (how it should be scaled after adding to map).
  * @param[in] entnum Entity number.
  * @note misc_model
- * @todo we memset() such model here - find if we release such memory after removing an model, I can't find it out ( Zenerka)
  * @sa CL_ParseEntitystring
  * @sa LM_AddToScene
  */

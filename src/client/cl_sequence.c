@@ -363,7 +363,7 @@ void CL_Sequence2D (void)
 			R_Color(s2d->color);
 
 			/* image can be background */
-			if (*s2d->image) {
+			if (s2d->image[0] != '\0') {
 				const image_t *image = R_FindImage(s2d->image, it_pic);
 				R_DrawImage(s2d->pos[0], s2d->pos[1], image);
 			}
