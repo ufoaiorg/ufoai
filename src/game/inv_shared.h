@@ -57,7 +57,7 @@ typedef enum {
 
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	char name[MAX_VAR];			/**< script id */
+	char name[MAX_VAR];			/**< fire defintion name (translatable) */
 	char projectile[MAX_VAR];	/**< projectile particle */
 	char impact[MAX_VAR];		/**< impact particle */
 	char hitBody[MAX_VAR];		/**< hit the body particles */
