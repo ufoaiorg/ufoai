@@ -1145,7 +1145,7 @@ static const char* EntityInspector_getTooltipForKey (const std::string& key)
 	if (attrib != NULL)
 		return attrib->m_description.c_str();
 	else
-		return "";
+		return NULL;
 }
 
 /**
@@ -1271,7 +1271,7 @@ static void EntityInspector_addKeyValue (GtkButton *button, gpointer user_data)
 	}
 
 	gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, "", KEYVALLIST_COLUMN_VALUE, "", KEYVALLIST_COLUMN_STYLE,
-			PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, TRUE, KEYVALLIST_COLUMN_TOOLTIP, "", -1);
+			PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, TRUE, KEYVALLIST_COLUMN_TOOLTIP, NULL, -1);
 	/* expand to have added line visible (for the case parent was not yet expanded because it had no children */
 	gtk_tree_view_expand_all(m_viewKeyValues);
 
@@ -1451,7 +1451,8 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		if (valueConverted.empty())
 			valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(), KEYVALLIST_COLUMN_VALUE,
-				valueConverted.c_str(), -1);
+				valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(
+						keyConverted.c_str()), -1);
 		g_currentSelectedKey = std::string(keyConverted.c_str());
 		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
 		GtkTreeViewColumn *column = gtk_tree_view_get_column(view, KEYVALLIST_COLUMN_VALUE);
