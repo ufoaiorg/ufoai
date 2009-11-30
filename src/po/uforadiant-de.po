@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-08-20 08:23+0100\n"
+"PO-Revision-Date: 2009-11-30 08:15+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -45,9 +45,8 @@ msgstr "In Bearbeitung..."
 
 #: src/tools/radiant/radiant/mainframe.cpp:277
 #: src/tools/radiant/radiant/mainframe.cpp:274
-#, fuzzy
 msgid "Changing Engine Path"
-msgstr "--%s benötigt <Name> <Pfad>"
+msgstr "Ändere den Engine Pfad"
 
 #: src/tools/radiant/radiant/map.cpp:695
 #: src/tools/radiant/radiant/map.cpp:1164
@@ -105,17 +104,15 @@ msgstr "Lade Shader"
 #: src/tools/radiant/radiant/autosave.cpp:169
 #: src/tools/radiant/radiant/autosave.cpp:176
 msgid "Autosave"
-msgstr ""
+msgstr "Automatisches Speichern"
 
 #: src/tools/radiant/radiant/autosave.cpp:169
-#, fuzzy
 msgid "Enable Autosave"
-msgstr "Aktiviere CABAC"
+msgstr "Automatisches Speichern aktivieren"
 
 #: src/tools/radiant/radiant/autosave.cpp:170
-#, fuzzy
 msgid "Autosave Frequency (minutes)"
-msgstr "Hohe Bandbreiten-Frequenz:"
+msgstr "Frequenz des automatisches Speicherns (in Minuten)"
 
 #: src/tools/radiant/radiant/autosave.cpp:172
 #, fuzzy
@@ -180,7 +177,7 @@ msgstr "Geschwindigkeit ändern"
 #: src/tools/radiant/radiant/camwindow.cpp:1791
 #: src/tools/radiant/radiant/camwindow.cpp:1787
 msgid "Invert mouse vertical axis"
-msgstr ""
+msgstr "Invertiere Maus an der vertikalen Achse"
 
 #: src/tools/radiant/radiant/camwindow.cpp:1792
 #: src/tools/radiant/radiant/camwindow.cpp:1788
@@ -202,13 +199,13 @@ msgstr "Gitternetz"
 #: src/tools/radiant/radiant/camwindow.cpp:1793
 msgctxt "Render Mode"
 msgid "Flatshade"
-msgstr ""
+msgstr "Grundschattiert"
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
 #: src/tools/radiant/radiant/camwindow.cpp:1793
 msgctxt "Render Mode"
 msgid "Textured"
-msgstr ""
+msgstr "Texturiert"
 
 #: src/tools/radiant/radiant/camwindow.cpp:1798
 #: src/tools/radiant/radiant/camwindow.cpp:1794
@@ -647,15 +644,13 @@ msgstr "Auswahl umkehren"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1445
 #: src/tools/radiant/radiant/mainframe.cpp:1452
-#, fuzzy
 msgid "Select i_nside"
-msgstr "Wähle das Spiel:"
+msgstr "Alles ei_ngeschlossene auswählen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1446
 #: src/tools/radiant/radiant/mainframe.cpp:1453
-#, fuzzy
 msgid "Select _touching"
-msgstr "Wähle das Spiel:"
+msgstr "Alles berührende auswählen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1448
 #: src/tools/radiant/radiant/mainframe.cpp:1449
@@ -664,9 +659,8 @@ msgstr "Erweitere Auswahl"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1451
 #: src/tools/radiant/radiant/mainframe.cpp:1454
-#, fuzzy
 msgid "To Whole _Entities"
-msgstr "Zeige Entities als"
+msgstr "Auf gesamte Entität erweitern"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1455
 #: src/tools/radiant/radiant/mainframe.cpp:1459
@@ -943,13 +937,13 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1573
 #: src/tools/radiant/radiant/mainframe.cpp:1576
 msgid "M_odify"
-msgstr ""
+msgstr "M_odifizieren"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1575
 #: src/tools/radiant/radiant/mainframe.cpp:1579
 #: src/tools/radiant/radiant/mainframe.cpp:1582
 msgid "Components"
-msgstr ""
+msgstr "Komponenten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1578
 #: src/tools/radiant/radiant/mainframe.cpp:1582
@@ -961,7 +955,7 @@ msgstr "Kant_en"
 #: src/tools/radiant/radiant/mainframe.cpp:1583
 #: src/tools/radiant/radiant/mainframe.cpp:1586
 msgid "_Vertices"
-msgstr ""
+msgstr "Eckpunkte"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1580
 #: src/tools/radiant/radiant/mainframe.cpp:1584
@@ -1116,9 +1110,8 @@ msgstr "Kompiliere die Map"
 #: src/tools/radiant/radiant/mainframe.cpp:1659
 #: src/tools/radiant/radiant/mainframe.cpp:1663
 #: src/tools/radiant/radiant/mainframe.cpp:1666
-#, fuzzy
 msgid "Show pathfinding info"
-msgstr "Kopfzeilen-Info-Element"
+msgstr "Zeige Routeninformationen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1666
 #: src/tools/radiant/radiant/mainframe.cpp:1667
@@ -1241,7 +1234,7 @@ msgstr "An Gitter anpassen"
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:655
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:657
 msgid "Texturing"
-msgstr ""
+msgstr "Texturierung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:669
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:671
@@ -1671,15 +1664,13 @@ msgstr "UFORadiant - Konsolen Log"
 
 #: src/tools/radiant/radiant/mainframe.cpp:315
 #: src/tools/radiant/radiant/mainframe.cpp:318
-#, fuzzy
 msgid "Engine Path"
-msgstr "doppelter Pfad %s"
+msgstr "Engine Pfad"
 
 #: src/tools/radiant/radiant/mainframe.cpp:317
 #: src/tools/radiant/radiant/mainframe.cpp:320
-#, fuzzy
 msgid "Compiler Binary"
-msgstr "_Binärdatei hinzufügen"
+msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:321
 #: src/tools/radiant/radiant/mainframe.cpp:324
@@ -1972,6 +1963,8 @@ msgid ""
 "The current map has changed since it was last saved.\n"
 "Do you want to save the current map before continuing?"
 msgstr ""
+"Die Datei wurde geändert seit sie das letzte Mal gespeichert wurde.\n"
+"Soll gespeichert werden bevor fortgefahren wird?"
 
 #: src/tools/radiant/radiant/textures.cpp:635
 msgid "Texture Quality"
@@ -2007,7 +2000,7 @@ msgstr "<b>%(plugin)s</b> wird von den Plugins <b>%(plugin_list)s</b> benötigt.
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:67
 msgid "Collapse mesh"
-msgstr ""
+msgstr "Zusammenlegen"
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:69
 msgid "Collapse all brushes into a single group"
@@ -2281,41 +2274,36 @@ msgid "Redo (CTRL + Y)"
 msgstr "Wiederholen (CTRL + Y)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:46
-#, fuzzy
 msgid "x-axis Flip"
-msgstr "Vertikal spiegeln"
+msgstr "An x-Achse spiegeln"
 
 #: src/tools/radiant/radiant/toolbars.cpp:47
 msgid "x-axis Rotate"
 msgstr "x-Achsen Rotation"
 
 #: src/tools/radiant/radiant/toolbars.cpp:48
-#, fuzzy
 msgid "y-axis Flip"
-msgstr "Vertikal spiegeln"
+msgstr "An y-Achse spiegeln"
 
 #: src/tools/radiant/radiant/toolbars.cpp:49
 msgid "y-axis Rotate"
 msgstr "y-Achsen Rotation"
 
 #: src/tools/radiant/radiant/toolbars.cpp:50
-#, fuzzy
 msgid "z-axis Flip"
-msgstr "Vertikal spiegeln"
+msgstr "An z-Achse spiegeln"
 
 #: src/tools/radiant/radiant/toolbars.cpp:51
 msgid "z-axis Rotate"
 msgstr "z-Achsen Rotation"
 
 #: src/tools/radiant/radiant/toolbars.cpp:56
-#, fuzzy
 msgid "Select touching"
-msgstr "Wähle das Spiel:"
+msgstr "Alles berührende auswählen"
 
 #: src/tools/radiant/radiant/toolbars.cpp:57
-#, fuzzy
 msgid "Select inside"
-msgstr "Wähle das Spiel:"
+msgstr "Alles eingeschlossene auswählen"
 
 #: src/tools/radiant/radiant/toolbars.cpp:58
 msgid "Select whole entity"
@@ -2383,7 +2371,7 @@ msgstr "Ändern in"
 #: src/tools/radiant/radiant/toolbars.cpp:95
 #: src/tools/radiant/radiant/toolbars.cpp:96
 msgid "Translate (W)"
-msgstr ""
+msgstr "Verschieben (W)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:96
 #: src/tools/radiant/radiant/toolbars.cpp:97
@@ -2673,18 +2661,16 @@ msgid "Reset filters"
 msgstr "Deaktiviere Filter"
 
 #: src/tools/radiant/plugins/brushexport/callbacks.cpp:24
-#, fuzzy
 msgid "Save as Obj"
-msgstr "Speichern unter..."
+msgstr "Als Obj speichern"
 
 #: src/tools/radiant/radiant/dialogs/light.cpp:39
 msgid "Light intensity"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/prism.cpp:40
-#, fuzzy
 msgid "Arbitrary sides"
-msgstr "Beliebig skalieren"
+msgstr "Beliebige Seiten"
 
 #: src/tools/radiant/radiant/camwindow.cpp:1646
 msgid "Cubic clip the camera view (\\)"
@@ -2698,9 +2684,8 @@ msgstr "Kommando"
 
 #: src/tools/radiant/radiant/lastused.cpp:169
 #: src/tools/radiant/radiant/lastused.cpp:171
-#, fuzzy
 msgid "Recent Files"
-msgstr "Deaktiviere Filter"
+msgstr "Zuletzt geöffnet"
 
 #: src/tools/radiant/radiant/lastused.cpp:185
 #: src/tools/radiant/radiant/lastused.cpp:187
@@ -2747,7 +2732,7 @@ msgstr "Wähle Seiten"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:119
 msgid "Image formats:"
-msgstr ""
+msgstr "Bildformate:"
 
 #: src/tools/radiant/radiant/eclass_def.cpp:331
 #: src/tools/radiant/radiant/eclass_def.cpp:185
@@ -2781,9 +2766,8 @@ msgid "Deselect before insert"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/prefabs.cpp:237
-#, fuzzy
 msgid "Replace current selection"
-msgstr "Deckel Auswahl"
+msgstr "Aktuelle Auswahl ersetzen"
 
 #: src/tools/radiant/radiant/sidebar/sidebar.cpp:28
 msgid "Prefabs"
@@ -2798,9 +2782,8 @@ msgid "Open Sound File"
 msgstr "Öffne Sound Datei"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1457
-#, fuzzy
 msgid "Select all Faces of same te_xture"
-msgstr "(De)Selektiere alles"
+msgstr "Alle Flächen mit gleicher Textur auswählen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1494
 msgid "Toggle Prefabs"
@@ -2808,7 +2791,7 @@ msgstr "Prefabs umschalten"
 
 #: src/tools/radiant/radiant/map.cpp:794
 msgid "Error during load of map."
-msgstr ""
+msgstr "Fehler beim Laden der Map."
 
 #: src/tools/radiant/radiant/map.cpp:1540
 msgid "Import Map"
