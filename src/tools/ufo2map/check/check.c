@@ -544,7 +544,7 @@ static void Check_FindCompositeSides (void)
 /**
  * @brief 	calculate where an edge (defined by the vertices) intersects a plane.
  *			http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
- * @param[out] the position of the intersection, if the edge is not too close to parallel.
+ * @param[out] intersection the position of the intersection, if the edge is not too close to parallel.
  * @return 	zero if the edge is within an epsilon angle of parallel to the plane, or the edge is near zero length.
  * @note	an epsilon is used to exclude the actual vertices from passing the test.
  */
