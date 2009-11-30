@@ -16,24 +16,24 @@
 }
 // brush 1
 {
-( 64 128 46 ) ( 64 0 46 ) ( 32 128 46 ) tex_common/actorclip 0 0 0 1 1
-( 64 128 64 ) ( 32 128 64 ) ( 64 128 0 ) tex_common/actorclip 0 -0 0 1 1
-( 64 128 64 ) ( 64 128 0 ) ( 64 0 64 ) tex_common/actorclip 0 -0 0 1 1
-( 32 0 0 ) ( 64 0 0 ) ( 32 128 0 ) tex_common/actorclip 0 0 0 1 1
-( 32 0 0 ) ( 32 0 64 ) ( 64 0 0 ) tex_common/actorclip 0 -0 0 1 1
-( 0 0 0 ) ( 0 128 0 ) ( 0 0 64 ) tex_common/actorclip 0 -0 0 1 1
+( 64 128 46 ) ( 64 0 46 ) ( 32 128 46 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 64 128 64 ) ( 32 128 64 ) ( 64 128 0 ) tex_common/actorclip 0 -0 0 1 1 65536 0 0
+( 64 128 64 ) ( 64 128 0 ) ( 64 0 64 ) tex_common/actorclip 0 -0 0 1 1 65536 0 0
+( 32 0 0 ) ( 64 0 0 ) ( 32 128 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
+( 32 0 0 ) ( 32 0 64 ) ( 64 0 0 ) tex_common/actorclip 0 -0 0 1 1 65536 0 0
+( 0 0 0 ) ( 0 128 0 ) ( 0 0 64 ) tex_common/actorclip 0 -0 0 1 1 65536 0 0
 }
 // brush 2
 {
-( 56 128 62 ) ( 56 128 -2 ) ( 56 0 62 ) tex_common/weaponclip 0 62 0 1 1
-( 8 0 -2 ) ( 8 128 -2 ) ( 8 0 62 ) tex_common/weaponclip 0 62 0 1 1
-( -64 5 30 ) ( -64 51 43 ) ( 64 5 30 ) tex_common/weaponclip 0 0 0 1 1
-( -64 51 43 ) ( -64 121 44 ) ( 64 51 43 ) tex_common/weaponclip 0 0 0 1 1
-( -64 121 44 ) ( -64 122 22 ) ( 64 121 44 ) tex_common/weaponclip 0 62 0 1 1
-( -64 122 22 ) ( -64 117 13 ) ( 64 122 22 ) tex_common/weaponclip 0 62 0 1 1
-( -64 117 13 ) ( -64 11 13 ) ( 64 117 13 ) tex_common/weaponclip 0 0 0 1 1
-( -64 11 13 ) ( -64 3 21 ) ( 64 11 13 ) tex_common/weaponclip 0 0 0 1 1
-( -64 3 21 ) ( -64 5 30 ) ( 64 3 21 ) tex_common/weaponclip 0 62 0 1 1
+( 56 128 62 ) ( 56 128 -2 ) ( 56 0 62 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
+( 8 0 -2 ) ( 8 128 -2 ) ( 8 0 62 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
+( -64 5 30 ) ( -64 51 43 ) ( 64 5 30 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( -64 51 43 ) ( -64 121 44 ) ( 64 51 43 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( -64 121 44 ) ( -64 122 22 ) ( 64 121 44 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
+( -64 122 22 ) ( -64 117 13 ) ( 64 122 22 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
+( -64 117 13 ) ( -64 11 13 ) ( 64 117 13 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( -64 11 13 ) ( -64 3 21 ) ( 64 11 13 ) tex_common/weaponclip 0 0 0 1 1 33554432 0 0
+( -64 3 21 ) ( -64 5 30 ) ( 64 3 21 ) tex_common/weaponclip 0 62 0 1 1 33554432 0 0
 }
 }
 // entity 1

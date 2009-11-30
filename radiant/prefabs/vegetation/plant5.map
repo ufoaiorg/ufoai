@@ -4,12 +4,12 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 0 0 0 ) ( 0 32 0 ) ( 0 0 32 ) tex_common/actorclip 32 0 0 1 1 65537 0 0
-( 32 32 32 ) ( 32 32 0 ) ( 32 0 32 ) tex_common/actorclip 32 0 0 1 1 65537 0 0
-( 428 0 131 ) ( 436 0 131 ) ( 436 0 3 ) tex_common/actorclip 32 0 0 1 1 65537 0 0
-( 437 32 131 ) ( 429 32 131 ) ( 429 32 3 ) tex_common/actorclip 32 0 0 1 1 65537 0 0
-( 1120 608 0 ) ( 1152 608 0 ) ( 1120 640 0 ) tex_common/actorclip 32 32 0 1 1 65537 0 0
-( 1152 640 64 ) ( 1152 608 64 ) ( 1120 640 64 ) tex_common/actorclip 32 32 0 1 1 65537 0 0
+( 0 0 0 ) ( 0 32 0 ) ( 0 0 32 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 32 32 32 ) ( 32 32 0 ) ( 32 0 32 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 428 0 131 ) ( 436 0 131 ) ( 436 0 3 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 437 32 131 ) ( 429 32 131 ) ( 429 32 3 ) tex_common/actorclip 32 0 0 1 1 65536 0 0
+( 1120 608 0 ) ( 1152 608 0 ) ( 1120 640 0 ) tex_common/actorclip 32 32 0 1 1 65536 0 0
+( 1152 640 64 ) ( 1152 608 64 ) ( 1120 640 64 ) tex_common/actorclip 32 32 0 1 1 65536 0 0
 }
 }
 // entity 1
