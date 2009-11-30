@@ -363,6 +363,7 @@ void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int d
 void G_ActorInvMove(int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
+void G_ActorTurnEvent(const edict_t* ent);
 
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);

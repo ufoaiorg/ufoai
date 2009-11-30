@@ -97,12 +97,23 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 
 	if (status & VIS_STOP) {
 		/* send the turn */
-		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-		gi.WriteShort(ent->number);
-		gi.WriteByte(ent->dir);
+		G_ActorTurnEvent(ent);
 	}
 
 	return status;
+}
+
+/**
+ * @brief Send the turn event for the given entity
+ * @param ent The entity to send the turn event for
+ * @note Every player that can see this ent will reveive the turn event data
+ * @note Make sure that the direction to turn into is already set
+ */
+void G_ActorTurnEvent (const edict_t* ent)
+{
+	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->dir);
 }
 
 /**

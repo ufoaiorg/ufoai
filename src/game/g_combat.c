@@ -1211,10 +1211,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 
 	if (!mock) {
 		G_CheckVisTeam(ent->team, NULL, qfalse, ent);
-
-		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-		gi.WriteShort(entnum);
-		gi.WriteByte(ent->dir);
+		G_ActorTurnEvent(ent);
 	}
 
 	/* calculate visibility */

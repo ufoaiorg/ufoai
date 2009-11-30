@@ -365,9 +365,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	ent->TU -= TU_TURN;
 
 	/* send the turn */
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-	gi.WriteShort(ent->number);
-	gi.WriteByte(ent->dir);
+	G_ActorTurnEvent(ent);
 
 	/* send the new TUs */
 	G_SendStats(ent);
