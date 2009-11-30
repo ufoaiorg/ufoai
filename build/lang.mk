@@ -57,7 +57,7 @@ po-check:
 
 po-sync:
 	@echo "This will sync all po files with the wiki articles - run update-po before this step"
-	@echo "Gamers don't have to do this - translators should use ./src/po/update_po_from_wiki <lang> directly"
+	@echo "Gamers don't have to do this - translators should use ./src/po/update_po_from_wiki.sh <lang> directly"
 	@echo "Hit any key if you are sure you really want to start the sync"
 	@pofiles='$(UFOAI_POFILES)'; \
 	read enter; cd src/po; \
