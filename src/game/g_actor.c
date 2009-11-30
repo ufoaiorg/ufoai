@@ -95,7 +95,7 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 		status |= G_CheckVisTeam(ent->team, NULL, qfalse, ent);
 	}
 
-	if (status) {
+	if (status & VIS_STOP) {
 		/* send the turn */
 		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 		gi.WriteShort(ent->number);
