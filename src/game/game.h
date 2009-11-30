@@ -198,9 +198,6 @@ typedef struct {
 
 	void (IMPORT *AbortEvents) (void);
 	void (IMPORT *EndEvents) (void);
-	/**
-	 * @param[in] mask The player bitmask to send the events to. Use @c PM_ALL to send to every connected player.
-	 */
 	void (IMPORT *AddEvent) (unsigned int mask, int eType);
 	int (IMPORT *GetEvent) (void);
 
