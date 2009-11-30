@@ -61,6 +61,7 @@ namespace ui
 	{
 		// Create the treeview
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(_treeView), FALSE);
+		gtk_tree_view_set_enable_search(GTK_TREE_VIEW(_treeView), FALSE);
 		g_signal_connect(G_OBJECT(_treeView), "expose-event", G_CALLBACK(_onExpose), this);
 		g_signal_connect(G_OBJECT(_treeView), "button-release-event", G_CALLBACK(_onRightClick), this);
 
@@ -145,15 +146,18 @@ namespace ui
 		self->_modelPreview.setModel("");
 		self->_imagePreview.setTexture("");
 
-		const std::string& image = self->getSelectedParticle()->getImage();
-		const std::string& model = self->getSelectedParticle()->getModel();
-		if (!image.empty()) {
-			// Update the preview if a texture is selected
-			self->_imagePreview.setTexture("pics/" + image);
-		} else if (!model.empty()) {
-			// Update the preview if a model is selected
-			self->_modelPreview.initialisePreview();
-			self->_modelPreview.setModel("models/" + model);
+		ParticleDefinition *currentDefinition = self->getSelectedParticle();
+		if (currentDefinition != (ParticleDefinition*) 0) {
+			const std::string& image = currentDefinition->getImage();
+			const std::string& model = currentDefinition->getModel();
+			if (!image.empty()) {
+				// Update the preview if a texture is selected
+				self->_imagePreview.setTexture("pics/" + image);
+			} else if (!model.empty()) {
+				// Update the preview if a model is selected
+				self->_modelPreview.initialisePreview();
+				self->_modelPreview.setModel("models/" + model);
+			}
 		}
 	}
 }
