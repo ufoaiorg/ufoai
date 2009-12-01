@@ -201,6 +201,14 @@ void Filters_constructMenu (GtkMenu* menu_in_menu)
 	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Hints"), "FilterHintsSkips");
 	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Models"), "FilterModels");
 	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Triggers"), "FilterTriggers");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Particles"), "FilterParticles");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info"), "FilterInfo");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info player start"), "FilterInfoPlayerStart");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info human start"), "FilterInfoHumanStart");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info 2x2 start"), "FilterInfo2x2Start");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info alien start"), "FilterInfoAlienStart");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info civilian start"), "FilterInfoCivilianStart");
+
 	// filter manipulation
 	menu_separator(menu_in_menu);
 	create_menu_item_with_mnemonic(menu_in_menu, _("Invert filters"), "InvertFilters");
@@ -241,6 +249,14 @@ void ConstructFilters ()
 			| GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_NO_FOOTSTEPS, "FilterNoFootsteps", Accelerator('F', (GdkModifierType) (GDK_SHIFT_MASK
 			| GDK_CONTROL_MASK)));
+
+	add_filter_command(EXCLUDE_PARTICLE, "FilterParticles", accelerator_null());
+	add_filter_command(EXCLUDE_INFO_2x2_START, "FilterInfo2x2Start", accelerator_null());
+	add_filter_command(EXCLUDE_INFO_ALIEN_START, "FilterInfoAlienStart", accelerator_null());
+	add_filter_command(EXCLUDE_INFO_CIVILIAN_START, "FilterInfoCivilianStart", accelerator_null());
+	add_filter_command(EXCLUDE_INFO_HUMAN_START, "FilterInfoHumanStart", accelerator_null());
+	add_filter_command(EXCLUDE_INFO_PLAYER_START, "FilterInfoPlayerStart", accelerator_null());
+	add_filter_command(EXCLUDE_INFO, "FilterInfo", accelerator_null());
 
 	PerformFiltering();
 }

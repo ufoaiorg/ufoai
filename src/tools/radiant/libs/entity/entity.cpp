@@ -253,7 +253,14 @@ FilterEntityClassname g_filter_entity_world("worldspawn");
 FilterEntityClassname g_filter_entity_func_group("func_group");
 FilterEntityClassname g_filter_entity_light("light");
 FilterEntityClassname g_filter_entity_misc_model("misc_model");
+FilterEntityClassname g_filter_entity_misc_particle("misc_particle");
 FilterEntityClassgroup g_filter_entity_trigger("trigger_");
+FilterEntityClassname g_filter_info_player_start("info_player_start");
+FilterEntityClassname g_filter_info_human_start("info_human_start");
+FilterEntityClassname g_filter_info_alien_start("info_alien_start");
+FilterEntityClassname g_filter_info_2x2_start("info_2x2_start");
+FilterEntityClassname g_filter_info_civilian_start("info_civilian_start");
+FilterEntityClassgroup g_filter_info("info_");
 
 void Entity_InitFilters ()
 {
@@ -265,6 +272,13 @@ void Entity_InitFilters ()
 	add_entity_filter(g_filter_entity_light, EXCLUDE_LIGHTS);
 	add_entity_filter(g_filter_entity_world, EXCLUDE_NO_FOOTSTEPS, true);
 	add_entity_filter(g_filter_entity_world, EXCLUDE_NO_SURFLIGHTS, true);
+	add_entity_filter(g_filter_entity_misc_particle, EXCLUDE_PARTICLE);
+	add_entity_filter(g_filter_info_player_start, EXCLUDE_INFO_PLAYER_START);
+	add_entity_filter(g_filter_info_2x2_start, EXCLUDE_INFO_2x2_START);
+	add_entity_filter(g_filter_info_alien_start, EXCLUDE_INFO_ALIEN_START);
+	add_entity_filter(g_filter_info_civilian_start, EXCLUDE_INFO_CIVILIAN_START);
+	add_entity_filter(g_filter_info_human_start, EXCLUDE_INFO_HUMAN_START);
+	add_entity_filter(g_filter_info, EXCLUDE_INFO);
 }
 
 #include "preferencesystem.h"
