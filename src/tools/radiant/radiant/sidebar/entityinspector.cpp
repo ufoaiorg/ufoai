@@ -271,7 +271,8 @@ class ModelAttribute: public EntityAttribute
 		{
 			ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
 			if (!modelAndSkin.model.empty()) {
-				// TODO: apply skin
+				if (modelAndSkin.skin != -1)
+					Scene_EntitySetKeyValue_Selected_Undoable(m_classname, "skin", string::toString(modelAndSkin.skin));
 				setPath(modelAndSkin.model);
 				apply();
 			}

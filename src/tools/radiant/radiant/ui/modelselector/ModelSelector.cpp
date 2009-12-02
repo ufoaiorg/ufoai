@@ -10,7 +10,6 @@
 #include "os/path.h"
 #include "../Icons.h"
 #include "../../mainframe.h" // ScopeDisableScreenUpdates
-
 #include <cmath>
 #include <iostream>
 #include <vector>
@@ -34,8 +33,8 @@ namespace ui
 		{
 			NAME_COLUMN, // e.g. "chair1.md2"
 			FULLNAME_COLUMN, // e.g. "models/objects/chair1.md2"
-			// TODO: Fix skins
 			SKIN_COLUMN, // e.e. "chair1_brown_wood", or "" for no skin
+			SKIN_INDEX,
 			IMAGE_COLUMN, // icon to display
 			N_COLUMNS
 		};
@@ -45,8 +44,8 @@ namespace ui
 
 	ModelSelector::ModelSelector () :
 		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING,
-				G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2, G_TYPE_STRING,
-				G_TYPE_STRING)), _lastModel(""), _lastSkin("0")
+				G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_PIXBUF)), _infoStore(gtk_list_store_new(2,
+				G_TYPE_STRING, G_TYPE_STRING)), _lastModel(""), _lastSkin(-1)
 	{
 		// Window properties
 		gtk_window_set_transient_for(GTK_WINDOW(_widget), GlobalRadiant().getMainWindow());
@@ -215,13 +214,14 @@ namespace ui
 
 								// Determine if this model has any associated skins, and add them as
 								// children. We also set the fullpath column to the model name for each skin.
-
+								int index = 0;
 								for (ModelSkinList::iterator i = skins.begin(); i != skins.end(); ++i) {
 									GtkTreeIter skIter;
 									gtk_tree_store_append(_store, &skIter, &iter);
 									gtk_tree_store_set(_store, &skIter, NAME_COLUMN, i->c_str(), FULLNAME_COLUMN,
-											(MODELS_FOLDER + dirPath).c_str(), SKIN_COLUMN, i->c_str(), IMAGE_COLUMN,
-											gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), -1);
+											(MODELS_FOLDER + dirPath).c_str(), SKIN_COLUMN, i->c_str(), SKIN_INDEX,
+											index, IMAGE_COLUMN, gtkutil::getLocalPixbuf(ui::icons::ICON_SKIN), -1);
+									index++;
 								}
 							}
 						}
@@ -349,7 +349,7 @@ namespace ui
 	}
 
 	// Get the value from the selected column
-	std::string ModelSelector::getSelectedValue (gint colNum)
+	std::string ModelSelector::getSelectedString (gint colNum)
 	{
 		// Get the selection
 		GtkTreeIter iter;
@@ -368,6 +368,26 @@ namespace ui
 		}
 	}
 
+	// Get the value from the selected column
+	int ModelSelector::getSelectedInteger (gint colNum)
+	{
+		// Get the selection
+		GtkTreeIter iter;
+		GtkTreeModel* model;
+
+		if (gtk_tree_selection_get_selected(_selection, &model, &iter)) {
+			// Get the value
+			GValue val;
+			memset(&val, 0, sizeof(val));
+			gtk_tree_model_get_value(model, &iter, colNum, &val);
+			// Get the integer
+			return g_value_get_int(&val);
+		} else {
+			// Nothing selected, return empty string
+			return -1;
+		}
+	}
+
 	// Update the info table and model preview based on the current selection
 	void ModelSelector::updateSelected ()
 	{
@@ -377,12 +397,12 @@ namespace ui
 
 		// Get the model name, if this is blank we are looking at a directory,
 		// so leave the table empty
-		std::string mName = getSelectedValue(FULLNAME_COLUMN);
+		std::string mName = getSelectedString(FULLNAME_COLUMN);
 		if (mName.empty())
 			return;
 
 		// Get the skin if set
-		std::string skinName = getSelectedValue(SKIN_COLUMN);
+		std::string skinName = getSelectedString(SKIN_COLUMN);
 
 		// Pass the model and skin to the preview widget
 		_modelPreview.setModel(mName);
@@ -411,7 +431,7 @@ namespace ui
 	void ModelSelector::callbackHide (GtkWidget* widget, GdkEvent* ev, ModelSelector* self)
 	{
 		self->_lastModel = "";
-		self->_lastSkin = "0";
+		self->_lastSkin = -1;
 		gtk_main_quit(); // exit recursive main loop
 		gtk_widget_hide(self->_widget);
 	}
@@ -424,9 +444,9 @@ namespace ui
 	void ModelSelector::callbackOK (GtkWidget* widget, ModelSelector* self)
 	{
 		// Remember the selected model then exit from the recursive main loop
-		self->_lastModel = self->getSelectedValue(FULLNAME_COLUMN);
+		self->_lastModel = self->getSelectedString(FULLNAME_COLUMN);
 		// TODO: This must not be the name, but the skin index
-		self->_lastSkin = self->getSelectedValue(SKIN_COLUMN);
+		self->_lastSkin = self->getSelectedInteger(SKIN_INDEX);
 		gtk_main_quit();
 		gtk_widget_hide(self->_widget);
 	}
@@ -434,7 +454,7 @@ namespace ui
 	void ModelSelector::callbackCancel (GtkWidget* widget, ModelSelector* self)
 	{
 		self->_lastModel = "";
-		self->_lastSkin = "";
+		self->_lastSkin = -1;
 		gtk_main_quit();
 		gtk_widget_hide(self->_widget);
 	}

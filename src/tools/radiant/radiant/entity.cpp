@@ -378,7 +378,8 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 		ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
 		if (!modelAndSkin.model.empty()) {
 			entity->setKeyValue("model", modelAndSkin.model);
-			entity->setKeyValue("skin", modelAndSkin.skin);
+			if (modelAndSkin.skin != -1)
+				entity->setKeyValue("skin", string::toString(modelAndSkin.skin));
 		} else
 			revert = true;
 	} else if (isSound) {

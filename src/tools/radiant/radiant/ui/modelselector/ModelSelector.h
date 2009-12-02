@@ -18,10 +18,10 @@ namespace ui
 	{
 			// Model and skin strings
 			std::string model;
-			std::string skin;
+			int skin;
 
 			// Constructor
-			ModelAndSkin (const std::string& m, const std::string& s) :
+			ModelAndSkin (const std::string& m, const int& s) :
 				model(m), skin(s)
 			{
 			}
@@ -52,7 +52,7 @@ namespace ui
 			// Last selected model, which will be returned by showAndBlock() once the
 			// recursive main loop exits.
 			std::string _lastModel;
-			std::string _lastSkin;
+			int _lastSkin;
 
 		private:
 
@@ -75,7 +75,9 @@ namespace ui
 			void updateSelected ();
 
 			// Return the value from the selected column, or an empty string if nothing selected
-			std::string getSelectedValue (gint col);
+			std::string getSelectedString (gint col);
+			// Return the value from the selected column, or -1 if nothing was selected
+			int getSelectedInteger (gint col);
 
 			/* GTK CALLBACKS */
 			static void callbackHide (GtkWidget*, GdkEvent*, ModelSelector*);
