@@ -3899,6 +3899,10 @@ base/textures/tex_streets/2lnh_endlft_g.tga | GNU General Public License 2.0 or 
 base/textures/tex_streets/2lnh_endrgt.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_endrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_trnlft.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_trnlft_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_trnrgt.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2lnh_trnrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/base.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/base_blend.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
