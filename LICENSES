@@ -4046,6 +4046,8 @@ base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "SparX" Bey
 base/textures/tex_ufo/ufo2_17_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_medic01.jpg |  | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.jpg |  | "SparX" Beyeler
+base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
 base/ufos/aircraftmanagement.ufo | GNU General Public License 2.0
 base/ufos/armour.ufo | GNU General Public License 2.0
