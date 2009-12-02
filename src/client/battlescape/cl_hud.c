@@ -145,7 +145,7 @@ static void HUD_ActorGlobalCvars (void)
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {
 			invList_t *invList;
-			char tooltip[80] = "";
+			char tooltip[256] = "";
 			const character_t *chr = CL_GetActorChr(le);
 			assert(chr);
 
