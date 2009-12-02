@@ -385,7 +385,7 @@ void G_TouchSolids (edict_t *ent)
 		if (!hit->inuse)
 			continue;
 		if (ent->touch)
-			ent->touch(hit, ent);
+			ent->touch(ent, hit);
 		if (!ent->inuse)
 			break;
 	}

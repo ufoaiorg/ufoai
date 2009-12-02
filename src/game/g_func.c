@@ -29,6 +29,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/**
+ * @brief If an actor was standing on the breakable that is going to get destroyed, we have to let him fall to the ground
+ * @param self The breakable edict
+ * @param activator The touching edict
+ * @note This touch function is only executed if the func_breakable edict has a HP level of 0 (e.g. it is already destroyed)
+ * @return false because this is no client action
+ */
+static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
+{
+	/* not yet broken */
+	if (self->HP != 0)
+		return qfalse;
+
+	if (G_IsActor(activator)) {
+		activator->pos[2] = gi.GridFall(gi.routingMap, activator->fieldSize, activator->pos);
+		gi.GridPosToVec(gi.routingMap, activator->fieldSize, activator->pos, activator->origin);
+		gi.LinkEdict(activator);
+		G_CheckVis(activator, qtrue);
+		/** @todo send client movement event - otherwise the edict is updated in the server */
+	}
+
+	return qfalse;
+}
+
 static qboolean Destroy_Breakable (edict_t *self)
 {
 	vec3_t origin;
@@ -61,10 +85,13 @@ static qboolean Destroy_Breakable (edict_t *self)
 	case MAT_MAX:
 		break;
 	}
+
+	self->HP = 0;
+	G_TouchSolids(self);
+
 	/* unlink to update the routing */
 	gi.UnlinkEdict(self);
 	self->inuse = qfalse;
-	self->HP = 0;
 	G_RecalcRouting(self);
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
@@ -101,6 +128,7 @@ void SP_func_breakable (edict_t *ent)
 			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
 
 	ent->destroy = Destroy_Breakable;
+	ent->touch = Touch_Breakable;
 }
 
 /*
