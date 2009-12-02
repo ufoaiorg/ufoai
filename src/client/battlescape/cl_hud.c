@@ -247,6 +247,7 @@ void HUD_HideFiremodes (void)
  * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
  * @param[in] hand What list to display: 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
+ * @todo Put the most of this function into the scripts
  */
 static void HUD_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, const qboolean status)
 {
