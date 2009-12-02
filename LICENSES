@@ -3692,7 +3692,9 @@ base/textures/tex_misc/rail_noticeb01.tga | GNU General Public License 2.0 or la
 base/textures/tex_misc/rail_noticeb02.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_noticeb1.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_overlay.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_route0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/rail_route0.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_route1.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_route2.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/rail_route3.tga | GNU General Public License 2.0 or later | Nate Wright
@@ -3708,7 +3710,6 @@ base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner "hoeh
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_misc/vendor_cart.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/yellowcamelcrossing.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/yellowroadcrossingsign.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/yellowtwowaysign.jpg | Public Domain |  | Public Domain Golgotha
