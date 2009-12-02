@@ -75,6 +75,20 @@ afv34    +a      +a       afv12
 }
 
 
+tile +craft_ufo_harvester
+{
+7 6
+0      0      ah14   ah14   ah14   ah14   0
+0      a4     +a     +a     +a     +a     afv12
+afv34  +a     +a     +a     +a     +a     afv12
+afv34  +a     +a     +a     +a     +a     afv12
+0      a3     +a     +a     +a     +a     afv12
+0      0      ah23   ah23   ah23   ah23   0
+
+}
+
+
+
 tile +h1
 {
 4 5
@@ -290,4 +304,31 @@ title "_Small eastern park."
 +fill3    "0 10"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
+}
+
+assembly big
+{
+size "11 5"
+title         "_Harvester"
++arc          "1 1"
++h1           "1 1"
++h2           "0 1"
++h3           "0 1"
++h4           "0 1"
++f1           "0 2"
++f2           "0 2"
++f3           "0 2"
++bridge       "0 1"
++w1           "0 1"
++p_tr         "0 5"
++p_tl         "0 5"
++p_br         "0 5"
++p_bl         "0 5"
++p_h          "0 10"
++p_v          "0 10"
++fill1        "0 1"
++fill2        "0 10"
++fill3        "0 10"
+*rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
 }
