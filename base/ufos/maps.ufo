@@ -131,7 +131,7 @@ mapdef or_small
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	8
 
 	aircraft 
 	{
@@ -170,7 +170,7 @@ mapdef or_medium
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	8
 
 	aircraft 
 	{
@@ -210,7 +210,7 @@ mapdef or_big
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	14
 
 	aircraft 
 	{
@@ -297,7 +297,7 @@ mapdef farm_medium
 	size		"medium"
 	teams		4
 	multiplayer	false
-	maxaliens	11
+	maxaliens	14
 
 	aircraft 
 	{
@@ -336,7 +336,7 @@ mapdef farm_large
 	size		"large"
 	teams		4
 	multiplayer	false
-	maxaliens	16
+	maxaliens	25
 
 	aircraft 
 	{
@@ -382,7 +382,7 @@ mapdef frozen_alienlandingindustrial
 	param		alienlandingindustrial
 	multiplayer	false
 	description	"_An industrial area in a cold region."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	14
 
 	aircraft 
 	{
@@ -463,7 +463,7 @@ mapdef frozen_alienlandingnature
 	param		alienlandingnature
 	multiplayer	false
 	description	"_An industrial area in a cold region."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	8
 
 	aircraft 
 	{
@@ -554,7 +554,7 @@ mapdef alienlandingindustrial_fix
 		coop3
 		coop4
 	}
-	maxaliens		20
+	maxaliens   10
 
 	aircraft 
 	{
@@ -609,7 +609,7 @@ mapdef cemetery_main
 		coop3
 		coop4
 	}
-	maxaliens		6
+	maxaliens		6 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -651,7 +651,7 @@ mapdef tropic_river
 	description	"_A river runs through this piece of jungle."
 	param		river
 	multiplayer	false
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	6
 
 	aircraft 
 	{
@@ -693,7 +693,7 @@ mapdef tropic_drug
 	description	"_A cleared stretch of land in the middle of the jungle."
 	param		drug
 	multiplayer	false
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	14
 
 	aircraft 
 	{
@@ -736,7 +736,7 @@ mapdef tropic_bigufo
 	description	"_A cleared stretch of land in the middle of the jungle."
 	param		bigufo
 	multiplayer	false
-	maxaliens	18 //TODO: This is an arbitrary value right now.
+	maxaliens	25
 
 	aircraft 
 	{
@@ -780,7 +780,7 @@ mapdef vil_lille
 	multiplayer	false
 	size "small"
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	6
 
 	aircraft 
 	{
@@ -819,7 +819,7 @@ mapdef vil_commercial
 	param		commercial
 	multiplayer	false
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	16
 
 	aircraft 
 	{
@@ -940,7 +940,7 @@ mapdef forest_small
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"small"
-	maxaliens	8 //TODO: This is an arbitrary value right now.
+	maxaliens	6
 
 	aircraft 
 	{
@@ -982,7 +982,7 @@ mapdef forest_large
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
-	maxaliens	15 //TODO: This is an arbitrary value right now.
+	maxaliens	15
 
 	aircraft 
 	{
@@ -1024,7 +1024,7 @@ mapdef country_large
 	multiplayer	false
 	description	"_Some houses in desert"
 	size		"large"
-	maxaliens	10 //TODO: This is an arbitrary value right now.
+	maxaliens	6
 
 	aircraft 
 	{
@@ -1066,7 +1066,7 @@ mapdef country_street
 	multiplayer	false
 	description	"_Some houses in desert"
 	size		"large"
-	maxaliens	15 //TODO: This is an arbitrary value right now.
+	maxaliens	15
 
 	aircraft 
 	{
@@ -1108,7 +1108,8 @@ mapdef excavation
 	description	"_An excavation site that has fallen under alien attack."
 	multiplayer	true
 	teams		2
-	maxaliens	5
+	maxaliens	5 //TODO: This is an arbitrary value right now.
+	maxaliens	17 // TODO: check what value is correct?
 	gametypes {
 		1on1
 		1on1on1
@@ -1119,7 +1120,6 @@ mapdef excavation
 		coop4
 	}
 
-	maxaliens	17
 
 	aircraft 
 	{
@@ -1165,7 +1165,7 @@ mapdef estate
 		coop4
 	}
 
-	maxaliens		12
+	maxaliens		12 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1209,7 +1209,7 @@ mapdef england
 		coop4
 	}
 
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1255,7 +1255,7 @@ mapdef italy
 		coop4
 	}
 
-	maxaliens		22
+	maxaliens		22 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1303,7 +1303,7 @@ mapdef mart
 		coop4
 	}
 
-	maxaliens		16
+	maxaliens		16 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1354,7 +1354,7 @@ mapdef mine
 		coop3
 		coop4
 	}
-	maxaliens	15
+	maxaliens	15 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1400,7 +1400,7 @@ mapdef transport
 		coop3
 		coop4
 	}
-	maxaliens	19
+	maxaliens	19 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1446,7 +1446,7 @@ mapdef bunker
 		coop3
 		coop4
 	}
-	maxaliens	8
+	maxaliens	8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1492,7 +1492,7 @@ mapdef dam
 		coop3
 		coop4
 	}
-	maxaliens	10
+	maxaliens	10 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1538,7 +1538,7 @@ mapdef japan
 		coop3
 		coop4
 	}
-	maxaliens	16
+	maxaliens	16 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1587,7 +1587,7 @@ mapdef japan_small
 		coop3
 		coop4
 	}
-	maxaliens	8
+	maxaliens	6
 
 	aircraft 
 	{
@@ -1620,7 +1620,7 @@ mapdef japan_small
 	}
 }
 
-mapdef japan_small
+mapdef japan_big
 {
 	map			+japan
 	param		big
@@ -1685,7 +1685,7 @@ mapdef spedition
 		coop3
 		coop4
 	}
-	maxaliens	7
+	maxaliens	7 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1732,7 +1732,7 @@ mapdef stadium
 		coop4
 	}
 
-	maxaliens		5
+	maxaliens		5 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1780,7 +1780,7 @@ mapdef druglord
 		coop3
 		coop4
 	}
-	maxaliens		11
+	maxaliens		11 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -1825,7 +1825,7 @@ mapdef eaglenest
 		coop3
 		coop4
 	}
-	maxaliens		9
+	maxaliens		9 //TODO: This is an arbitrary value right now.
 	description		"_A small estate in the mountains"
 
 	aircraft 
@@ -1923,7 +1923,7 @@ mapdef farm
 		coop3
 		coop4
 	}
-	maxaliens		12
+	maxaliens		6
 
 	aircraft 
 	{
@@ -1970,7 +1970,7 @@ mapdef ferry
 		coop3
 		coop4
 	}
-	maxaliens		12
+	maxaliens		12 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2021,7 +2021,7 @@ mapdef rivertown
 		coop3
 		coop4
 	}
-	maxaliens		16
+	maxaliens		16 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2066,7 +2066,7 @@ mapdef city_disco
 		coop3
 		coop4
 	}
-	maxaliens		6
+	maxaliens		6 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2113,7 +2113,7 @@ mapdef city_train
 		coop3
 		coop4
 	}
-	maxaliens		6
+	maxaliens		6 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2161,7 +2161,7 @@ mapdef gasstation
 		coop3
 		coop4
 	}
-	maxaliens		4
+	maxaliens		4 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2210,7 +2210,7 @@ mapdef oriental
 		coop3
 		coop4
 	}
-	maxaliens		16
+	maxaliens		16 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2254,7 +2254,7 @@ mapdef oriental_mosque
 		coop3
 		coop4
 	}
-	maxaliens		16
+	maxaliens		16 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2300,7 +2300,7 @@ mapdef pipes_const
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft
 	{
@@ -2345,7 +2345,7 @@ mapdef subway
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2393,7 +2393,7 @@ mapdef tower
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2439,7 +2439,7 @@ mapdef village
 		coop3
 		coop4
 	}
-	maxaliens		11
+	maxaliens		11 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2484,7 +2484,7 @@ mapdef military_convoy
 		coop3
 		coop4
 	}
-	maxaliens		11
+	maxaliens		11 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2531,7 +2531,7 @@ mapdef fighter_crash
 		coop3
 		coop4
 	}
-	maxaliens		19
+	maxaliens		6
 
 	aircraft 
 	{
@@ -2579,7 +2579,7 @@ mapdef bridge
 		coop3
 		coop4
 	}
-	maxaliens		19
+	maxaliens		6
 
 	aircraft 
 	{
@@ -2626,7 +2626,7 @@ mapdef construction
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2673,7 +2673,7 @@ mapdef harbour
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2718,7 +2718,7 @@ mapdef office
 		coop3
 		coop4
 	}
-	maxaliens		18
+	maxaliens		18 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2763,7 +2763,7 @@ mapdef resort
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -2809,7 +2809,7 @@ mapdef africa_common
 		coop4
 	}
 	description		"_A suburb that has been visited by UFO."
-	maxaliens		24
+	maxaliens		6
 
 	aircraft 
 	{
@@ -2861,7 +2861,7 @@ mapdef africa
 		coop4
 	}
 	description		"_A suburb that has received a visit from a Harvester."
-	maxaliens		24
+	maxaliens		16
 
 	aircraft 
 	{
@@ -2912,7 +2912,7 @@ mapdef harvester_crash
 		coop4
 	}
 	description		"_An alien Harvester has crashed in the wastelands."
-	maxaliens		24
+	maxaliens		14
 
 	aircraft 
 	{
@@ -2958,7 +2958,7 @@ mapdef lake_ice
 		coop4
 	}
 	description		"_A small settlement in winter."
-	maxaliens		16
+	maxaliens		16 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -3047,7 +3047,7 @@ mapdef shelter
 		coop3
 		coop4
 	}
-	maxaliens		21
+	maxaliens		21 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -3094,7 +3094,7 @@ mapdef bomber_city
 		coop3
 		coop4
 	}
-	maxaliens		16
+	maxaliens		30
 
 	aircraft 
 	{
@@ -3143,7 +3143,7 @@ mapdef community_centre
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -3191,7 +3191,7 @@ mapdef laboratory
 		coop3
 		coop4
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -3236,7 +3236,7 @@ mapdef fueldump
 		2on2
 		2on2on2
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -3276,7 +3276,7 @@ mapdef wilderness
 		2on2on2
 		coop2
 	}
-	maxaliens		8
+	maxaliens		8 //TODO: This is an arbitrary value right now.
 
 	aircraft 
 	{
@@ -3314,7 +3314,7 @@ mapdef ufocrash
 	multiplayer		false
 	description		"_UFO Crashsite."
 	storyrelated	true
-	maxaliens		8
+	maxaliens		30
 	ufos
 	{
 		craft_crash_scout
@@ -3344,7 +3344,7 @@ mapdef alienbase
 	multiplayer		false
 	description		"_An alien base."
 	storyrelated	true
-	maxaliens		8
+	maxaliens		30
 	// TODO: The first alien base is the end of the campaign currently
 	onwin			"cp_endgame"
 }
@@ -3358,5 +3358,5 @@ mapdef baseattack
 	map			".baseattack"
 	multiplayer	false
 	description	"_Base is under attack."
-	maxaliens	9
+	maxaliens	16
 }
