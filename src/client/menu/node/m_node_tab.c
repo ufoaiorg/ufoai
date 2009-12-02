@@ -248,9 +248,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		textPos = currentX;
 		if (drawIcon) {
-			int iconStatus = 0;
+			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (status == MN_TAB_DISABLED) {
-				iconStatus = 2;
+				iconStatus = ICON_STATUS_DISABLED;
 			}
 			MN_DrawIconInBox(option->icon, iconStatus, currentX, pos[1], option->icon->size[0], TILE_HEIGHT);
 			textPos += option->icon->size[0];

@@ -55,23 +55,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_RadioButtonNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
-	int status = 0;
+	iconStatus_t iconStatus;
 	const float current = MN_GetReferenceFloat(node, node->cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	int texY;
 	const char *image;
 
 	if (disabled) {
-		status = 2;
+		iconStatus = ICON_STATUS_DISABLED;
 		texY = MN_4STATUS_TEX_HEIGHT * 2;
 	} else if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON) {
-		status = 3;
+		iconStatus = ICON_STATUS_CLICKED;
 		texY = MN_4STATUS_TEX_HEIGHT * 3;
 	} else if (node->state) {
-		status = 1;
+		iconStatus = ICON_STATUS_HOVER;
 		texY = MN_4STATUS_TEX_HEIGHT;
 	} else {
-		status = 0;
+		iconStatus = ICON_STATUS_NORMAL;
 		texY = 0;
 	}
 
@@ -86,7 +86,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 	}
 
 	if (node->icon) {
-		MN_DrawIconInBox(node->icon, status, pos[0], pos[1], node->size[0], node->size[1]);
+		MN_DrawIconInBox(node->icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 }
 

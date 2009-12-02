@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_CheckError() R_CheckErrorDebug(__FILE__, __LINE__, __PRETTY_FUNCTION__)
 #define GL_ERROR_TRANSLATE(e) case e: return #e;
 
-static inline const char* R_TranslateError (GLenum error)
+static const char* R_TranslateError (GLenum error)
 {
 	switch (error) {
 	GL_ERROR_TRANSLATE(GL_INVALID_ENUM)
@@ -45,7 +45,7 @@ static inline const char* R_TranslateError (GLenum error)
 /**
  * @brief Checks for opengl errors
  */
-static inline void R_CheckErrorDebug (const char *file, int line, const char *function)
+static void R_CheckErrorDebug (const char *file, int line, const char *function)
 {
 	if (r_checkerror && r_checkerror->integer) {
 		/* can return multiple errors */

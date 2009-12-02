@@ -40,10 +40,19 @@ typedef struct menuIcon_s {
 	vec4_t clickColor;
 } menuIcon_t;
 
+typedef enum {
+	ICON_STATUS_NORMAL,
+	ICON_STATUS_HOVER,
+	ICON_STATUS_DISABLED,
+	ICON_STATUS_CLICKED,
+
+	ICON_STATUS_MAX
+} iconStatus_t;
+
 extern const value_t mn_iconProperties[];
 
 menuIcon_t* MN_GetIconByName(const char* name);
 menuIcon_t* MN_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));
-void MN_DrawIconInBox(const menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY);
+void MN_DrawIconInBox(const menuIcon_t* icon, iconStatus_t status, int posX, int posY, int sizeX, int sizeY);
 
 #endif

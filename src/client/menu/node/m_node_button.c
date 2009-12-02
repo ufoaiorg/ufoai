@@ -72,7 +72,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int iconPadding = 0;
-	int iconStatus = 0;
+	iconStatus_t iconStatus = ICON_STATUS_NORMAL;
 	const char *font = MN_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
@@ -80,12 +80,12 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;
-		iconStatus = 2;
+		iconStatus = ICON_STATUS_DISABLED;
 	} else if (node->state) {
 		textColor = node->selectedColor;
 		texX = TILE_SIZE;
 		texY = 0;
-		iconStatus = 1;
+		iconStatus = ICON_STATUS_HOVER;
 	} else {
 		textColor = node->color;
 		texX = 0;

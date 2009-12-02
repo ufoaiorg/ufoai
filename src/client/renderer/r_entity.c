@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_entity.h"
 #include "r_mesh_anim.h"
-#include "r_error.h"
 
 #define	MAX_ENTITIES	2048
 

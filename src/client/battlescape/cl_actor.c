@@ -1908,7 +1908,7 @@ static const float lookupdiff[30]= {
  * @param[in] z the number to calculate the erf of.
  * @return for positive arg, returns approximate erf. for -ve arg returns 0.0f.
  */
-static inline float lookup_erf (float z)
+static float CL_LookupErrorFunction (float z)
 {
 	float ifloat;
 	int iint;
@@ -1973,8 +1973,8 @@ static float CL_TargetingToHit (pos3_t toPos)
 	commonfactor = crouch * torad * distance * GET_INJURY_MULT(selChr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
 	stdevupdown = (selFD->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	stdevleftright = (selFD->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	hitchance = (stdevupdown > LOOKUP_EPSILON ? lookup_erf(height * 0.3536f / stdevupdown) : 1.0f)
-			  * (stdevleftright > LOOKUP_EPSILON ? lookup_erf(width * 0.3536f / stdevleftright) : 1.0f);
+	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
+			  * (stdevleftright > LOOKUP_EPSILON ? CL_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
 
 	/* Calculate cover: */

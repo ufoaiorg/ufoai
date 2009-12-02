@@ -179,15 +179,15 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			menuIcon_t *icon = option->collapsed ? systemExpand : systemCollapse;
-			MN_DrawIconInBox(icon, 0, decX, currentY, icon->size[0], fontHeight);
+			MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
 
 		if (option->icon) {
-			int iconStatus = 0;
+			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (option->disabled)
-				iconStatus = 2;
+				iconStatus = ICON_STATUS_DISABLED;
 			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], fontHeight);
 			decX += option->icon->size[0] + fontHeight / 4;
 		}

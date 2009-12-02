@@ -138,7 +138,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	LE_SetThink(le, LET_StartIdle);
 
 	/* count spotted aliens */
-	if (!LE_IsDead(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if (LE_IsLivingActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
 	assert(cls.state == ca_active);

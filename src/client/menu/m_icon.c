@@ -87,7 +87,7 @@ menuIcon_t* MN_AllocStaticIcon (const char* name)
 }
 
 /**
- * @param[in] status 0:normal, 1:hover, 2:disabled, 3:clicked
+ * @param[in] status The state of the icon node
  * @param[in] icon Context icon
  * @param[in] posX Absolute X position of the top-left corner
  * @param[in] posY Absolute Y position of the top-left corner
@@ -95,7 +95,7 @@ menuIcon_t* MN_AllocStaticIcon (const char* name)
  * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
-void MN_DrawIconInBox (const menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY)
+void MN_DrawIconInBox (const menuIcon_t* icon, iconStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
 	const int texX = icon->pos[0];
 	int texY;
@@ -113,18 +113,20 @@ void MN_DrawIconInBox (const menuIcon_t* icon, int status, int posX, int posY, i
 	if (icon->blend) {
 		const vec_t *color;
 		switch (status) {
-		case 0:
+		case ICON_STATUS_NORMAL:
 			color = icon->normalColor;
 			break;
-		case 1:
+		case ICON_STATUS_HOVER:
 			color = icon->selectedColor;
 			break;
-		case 2:
+		case ICON_STATUS_DISABLED:
 			color = icon->disabledColor;
 			break;
-		case 3:
+		case ICON_STATUS_CLICKED:
 			color = icon->clickColor;
 			break;
+		default:
+			return;
 		}
 		R_Color(color);
 	}

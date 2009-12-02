@@ -149,7 +149,7 @@ static void MN_MessageDraw(const menuNode_t *node, message_t *message, const cha
 	if (lines2 >= 0) {
 		const menuIcon_t *icon;
 		icon = MN_MessageGetIcon(message);
-		MN_DrawIconInBox(icon, 0, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */

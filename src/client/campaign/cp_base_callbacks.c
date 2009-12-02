@@ -557,10 +557,6 @@ static void B_AssembleMap_f (void)
 		base = B_GetBaseByIDX(baseID);
 	}
 
-	/* reset menu text */
-	/** @todo which one? */
-	MN_ResetData(TEXT_STANDARD);
-
 	B_AssembleMap(base);
 }
 

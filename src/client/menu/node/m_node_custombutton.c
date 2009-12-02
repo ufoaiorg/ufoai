@@ -64,18 +64,18 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
-	int status = 0;
+	iconStatus_t iconStatus = ICON_STATUS_NORMAL;
 	const char *font = MN_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
 		textColor = disabledColor;
 		texY = MN_CUSTOMBUTTON_TEX_HEIGHT * 2;
-		status = 2;
+		iconStatus = ICON_STATUS_DISABLED;
 	} else if (node->state) {
 		textColor = node->selectedColor;
 		texY = MN_CUSTOMBUTTON_TEX_HEIGHT;
-		status = 1;
+		iconStatus = ICON_STATUS_HOVER;
 	} else {
 		textColor = node->color;
 		texY = 0;
@@ -92,7 +92,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	}
 
 	if (node->icon) {
-		MN_DrawIconInBox(node->icon, status, pos[0], pos[1], node->size[0], node->size[1]);
+		MN_DrawIconInBox(node->icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	text = MN_GetReferenceString(node, node->text);

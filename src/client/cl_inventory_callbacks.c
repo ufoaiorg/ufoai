@@ -98,8 +98,6 @@ void INV_ItemDescription (const objDef_t *od)
 					_(od->weapons[itemIndex]->name));
 		}
 	} else if (od->weapon && od->reload) {
-		/* We have a weapon that uses ammos */
-		const objDef_t *odAmmo;
 
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
 		 * we are counting the number of ammo that is usable with this weapon */
@@ -113,8 +111,9 @@ void INV_ItemDescription (const objDef_t *od)
 
 		/* Only display ammos if at least one has been researched */
 		if (count > 0) {
-			const char *name;
-			odAmmo = od->ammos[itemIndex];
+			/* We have a weapon that uses ammos */
+			const objDef_t *odAmmo = od->ammos[itemIndex];
+			const char *name = _(odAmmo->name);
 			if (!GAME_ItemIsUseable(odAmmo)) {
 				for (i = 0; i < od->numWeapons; i++) {
 					itemIndex++;
@@ -124,14 +123,12 @@ void INV_ItemDescription (const objDef_t *od)
 						break;
 					}
 				}
-			} else {
-				name = _(odAmmo->name);
 			}
 
 			MN_ExecuteConfunc("mn_item_change_view weapon \"%s\"", name);
 		}
 	} else {
-			MN_ExecuteConfunc("mn_item_change_view other");	
+		MN_ExecuteConfunc("mn_item_change_view other");
 	}
 
 
