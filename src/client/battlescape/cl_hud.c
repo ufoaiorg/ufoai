@@ -145,7 +145,7 @@ static void HUD_ActorGlobalCvars (void)
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {
 			invList_t *invList;
-			char tooltip[256] = "";
+			const char* tooltip;
 			const character_t *chr = CL_GetActorChr(le);
 			assert(chr);
 
@@ -163,7 +163,7 @@ static void HUD_ActorGlobalCvars (void)
 			if ((!invList || !invList->item.t || !invList->item.t->holdTwoHanded) && LEFT(le))
 				invList = LEFT(le);
 
-			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n%s",
+			tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
 				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.t) ? _(invList->item.t->name) : "");
 			Cvar_Set(va("mn_soldier%i_tt", i), tooltip);
 		} else {
