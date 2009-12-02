@@ -506,10 +506,7 @@ void GAME_Drop (void)
 		} else {
 			list->drop();
 		}
-		return;
 	}
-
-	Com_Error(ERR_FATAL, "GAME_Drop: Could not determine gamemode");
 }
 
 /**
