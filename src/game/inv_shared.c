@@ -1341,6 +1341,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	item.t = obj;
 	item.m = item.t;
+	item.a = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
 		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded!\n", obj->id, chr->teamDef->id);
@@ -1366,6 +1367,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 
 	/* Prepare weapon in item. */
 	item.t = weapon;
+	item.a = NONE_AMMO;
 
 	/* Get ammo for item/weapon. */
 	assert(weapon->numAmmos > 0);	/* There _has_ to be at least one ammo-type. */
