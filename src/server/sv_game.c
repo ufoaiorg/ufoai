@@ -440,6 +440,7 @@ void SV_InitGameProgs (void)
 	import.LinkEdict = SV_LinkEdict;
 	import.UnlinkEdict = SV_UnlinkEdict;
 	import.BoxEdicts = SV_AreaEdicts;
+	import.TouchEdicts = SV_TouchEdicts;
 
 	import.TestLine = TR_TestLine;
 	import.TestLineWithEnt = CM_TestLineWithEnt;

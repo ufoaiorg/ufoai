@@ -43,10 +43,12 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 		return qfalse;
 
 	if (G_IsActor(activator)) {
+		const int old = activator->pos[2];
 		activator->pos[2] = gi.GridFall(gi.routingMap, activator->fieldSize, activator->pos);
 		gi.GridPosToVec(gi.routingMap, activator->fieldSize, activator->pos, activator->origin);
 		gi.LinkEdict(activator);
 		G_CheckVis(activator, qtrue);
+		Com_Printf("destroy old: %i new:%i\n", old, activator->pos[2]);
 		/** @todo send client movement event - otherwise the edict is updated in the server */
 	}
 
@@ -87,7 +89,7 @@ static qboolean Destroy_Breakable (edict_t *self)
 	}
 
 	self->HP = 0;
-	G_TouchSolids(self);
+	G_TouchEdicts(self);
 
 	/* unlink to update the routing */
 	gi.UnlinkEdict(self);

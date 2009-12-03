@@ -271,6 +271,45 @@ void SV_LinkEdict (edict_t * ent)
 	}
 }
 
+/**
+ * @brief Checks whether the bounding box of the given edict will intersect with the given bbox
+ * @param mins The mins of the bounding box
+ * @param maxs The maxs of the bounding box
+ * @param ent The edict to check the intersection for
+ * @note for none solid edicts the origin and the mins, maxs are used, for solid edict the absmins and absmaxs are used.
+ * @return @c true if intersect, @c false otherwise
+ */
+static qboolean SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs, const edict_t *ent)
+{
+	if (ent->solid == SOLID_NOT) {
+		vec3_t absmin, absmax;
+		int i;
+
+		VectorAdd(ent->origin, ent->mins, absmin);
+		VectorAdd(ent->origin, ent->maxs, absmax);
+		/* spread the mins, maxs by one unit */
+		for (i = 0; i < 3; i++) {
+			absmin[i] -= 1.0f;
+			absmax[i] += 1.0f;
+		}
+		if (absmin[0] > maxs[0]
+			|| absmin[1] > maxs[1]
+			|| absmin[2] > maxs[2]
+			|| absmax[0] < mins[0]
+			|| absmax[1] < mins[1]
+			|| absmax[2] < mins[2])
+			return qfalse; /* not touching */
+	} else {
+		if (ent->absmin[0] > maxs[0]
+			|| ent->absmin[1] > maxs[1]
+			|| ent->absmin[2] > maxs[2]
+			|| ent->absmax[0] < mins[0]
+			|| ent->absmax[1] < mins[1]
+			|| ent->absmax[2] < mins[2])
+			return qfalse; /* not touching */
+	}
+	return qtrue;
+}
 
 /**
  * @brief fills in a table of edict pointers with edicts that have bounding boxes
@@ -301,12 +340,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 
 		if (check->solid == SOLID_NOT)
 			continue;			/* deactivated */
-		if (check->absmin[0] > areaMaxs[0]
-			|| check->absmin[1] > areaMaxs[1]
-			|| check->absmin[2] > areaMaxs[2]
-			|| check->absmax[0] < areaMins[0]
-			|| check->absmax[1] < areaMins[1]
-			|| check->absmax[2] < areaMins[2])
+		if (!SV_BoundingBoxesIntersect(areaMins, areaMaxs, check))
 			continue;			/* not touching */
 
 		if (areaEdictListCount == areaEdictListMaxCount) {
@@ -350,6 +384,31 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, int a
 	return areaEdictListCount;
 }
 
+
+/**
+ * @brief Fills a list with edicts that are in use and are touching the given bounding box
+ * @param[in] mins The mins of the bounding box
+ * @param[in] maxs The maxs of the bounding box
+ * @param[out] list The edict list that this trace is hitting
+ * @param[in] maxCount The size of the given @c list
+ * @return the number of pointers filled in
+ */
+int SV_TouchEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount)
+{
+	int num = 0;
+	const int max = min(maxCount, ge->num_edicts);
+	int i;
+
+	for (i = 0; i < max; i++) {
+		edict_t *e = &ge->edicts[i];
+		if (!e->inuse)
+			continue;
+		if (SV_BoundingBoxesIntersect(mins, maxs, e))
+			list[num++] = e;
+	}
+
+	return num;
+}
 
 /** @brief Server side moveclip - see cmodel.c */
 typedef struct {

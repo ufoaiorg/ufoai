@@ -160,6 +160,7 @@ typedef struct {
 	void (IMPORT *LinkEdict) (edict_t * ent);
 	void (IMPORT *UnlinkEdict) (edict_t * ent);	/* call before removing an interactive edict */
 	int (IMPORT *BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
+	int (IMPORT *TouchEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount);
 
 	qboolean (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);

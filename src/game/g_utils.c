@@ -390,3 +390,27 @@ void G_TouchSolids (edict_t *ent)
 			break;
 	}
 }
+
+/**
+ * @brief Call after linking a new trigger in or destroying a bmodel
+ * during gameplay to force all entities it covers to immediately touch it
+ */
+void G_TouchEdicts (edict_t *ent)
+{
+	int i, num;
+	edict_t *touch[MAX_EDICTS];
+
+	num = gi.TouchEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
+
+	/* be careful, it is possible to have an entity in this
+	 * list removed before we get to it(killtriggered) */
+	for (i = 0; i < num; i++) {
+		edict_t* hit = touch[i];
+		if (!hit->inuse)
+			continue;
+		if (ent->touch)
+			ent->touch(ent, hit);
+		if (!ent->inuse)
+			break;
+	}
+}
