@@ -326,7 +326,8 @@ qboolean R_CullMeshModel (entity_t *e)
 {
 	int i;
 	uint32_t aggregatemask;
-	vec3_t mins, maxs, origin;
+	vec3_t mins, maxs, origin, angles;
+	vec3_t vectors[3];
 	vec4_t bbox[8];
 
 	if (e->tagent)
@@ -345,7 +346,12 @@ qboolean R_CullMeshModel (entity_t *e)
 		}
 	}
 
-	/* compute translated bounding box */
+	/* rotate the bounding box */
+	VectorCopy(e->angles, angles);
+	angles[YAW] = -angles[YAW];
+	AngleVectors(angles, vectors[0], vectors[1], vectors[2]);
+
+	/* compute translated and rotate bounding box */
 	for (i = 0; i < 8; i++) {
 		vec3_t tmp;
 
@@ -353,7 +359,11 @@ qboolean R_CullMeshModel (entity_t *e)
 		tmp[1] = (i & 2) ? mins[1] : maxs[1];
 		tmp[2] = (i & 4) ? mins[2] : maxs[2];
 
-		VectorAdd(origin, tmp, bbox[i]);
+		bbox[i][0] = DotProduct(vectors[0], tmp);
+		bbox[i][1] = -DotProduct(vectors[1], tmp);
+		bbox[i][2] = DotProduct(vectors[2], tmp);
+
+		VectorAdd(e->origin, bbox[i], bbox[i]);
 	}
 
 	/* compute a full bounding box */

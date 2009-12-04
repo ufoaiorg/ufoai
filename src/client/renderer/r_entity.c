@@ -566,7 +566,7 @@ static float *R_CalcTransform (entity_t * e)
 /**
  * @brief Perform a frustum cull check for a given entity
  * @param[in,out] e The entity to perform the frustum cull check for
- * @returns qfalse if visible, qtrue is the origin of the entity is outside the
+ * @return @c false if visible, @c true is the origin of the entity is outside the
  * current frustum view
  */
 static qboolean R_CullEntity (entity_t *e)
