@@ -87,13 +87,14 @@ static qboolean Destroy_Breakable (edict_t *self)
 		break;
 	}
 
-	self->HP = 0;
-	G_TouchEdicts(self, 10.0f);
 
 	/* unlink to update the routing */
 	gi.UnlinkEdict(self);
 	self->inuse = qfalse;
+	self->HP = 0;
 	G_RecalcRouting(self);
+	G_TouchEdicts(self, 10.0f);
+
 	/* now we can destroy the edict completely */
 	G_FreeEdict(self);
 
