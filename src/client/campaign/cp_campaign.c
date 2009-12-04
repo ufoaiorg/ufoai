@@ -1607,6 +1607,32 @@ void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean w
 }
 
 /**
+ * @brief Checks whether a soldier should be promoted
+ * @param[in] rank The rank to check for
+ * @param[in] chr The character to check a potential promotion for
+ * @todo (Zenerka 20080301) extend ranks and change calculations here.
+ */
+static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_t* chr)
+{
+	if (rank->type != EMPL_SOLDIER)
+		return qfalse;
+
+	/* mind is not yet enough */
+	if (chr->score.skills[ABILITY_MIND] < rank->mind)
+		return qfalse;
+
+	/* not enough killed enemies yet */
+	if (chr->score.kills[KILLED_ALIENS] < rank->killedEnemies)
+		return qfalse;
+
+	/* too many civilians and team kills */
+	if (chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM] >= rank->killedOthers)
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Update employeer stats after mission.
  * @param[in] base The base where the team lives.
  * @param[in] won Determines whether we won the mission or not.
@@ -1648,10 +1674,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 			if (ccs.numRanks >= 2) {
 				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = CL_GetRankByIdx(j);
-					/** @todo (Zenerka 20080301) extend ranks and change calculations here. */
-					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
-					 && (chr->score.kills[KILLED_ALIENS] >= rank->killedEnemies)
-					 && ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killedOthers)) {
+					if (CL_ShouldUpdateSoldierRank(rank, chr)) {
 						chr->score.rank = j;
 						if (chr->HP > 0)
 							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
