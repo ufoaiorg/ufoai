@@ -100,6 +100,17 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
 			forbiddenList, forbiddenListLength);
 }
 
+void G_ClientFall (const edict_t *ent)
+{
+	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(1);
+	gi.WriteByte(ent->pos[0]);
+	gi.WriteByte(ent->pos[1]);
+	gi.WriteByte(ent->pos[2]);
+	gi.EndEvents();
+}
+
 /**
  * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor

@@ -48,7 +48,7 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 		gi.LinkEdict(activator);
 
 		G_CheckVis(activator, qtrue);
-		/** @todo send client movement event - otherwise the edict is updated in the server */
+		G_ClientFall(activator);
 	}
 
 	return qfalse;
@@ -86,7 +86,6 @@ static qboolean Destroy_Breakable (edict_t *self)
 	case MAT_MAX:
 		break;
 	}
-
 
 	/* unlink to update the routing */
 	gi.UnlinkEdict(self);
