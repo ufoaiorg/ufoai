@@ -294,7 +294,7 @@ void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fir
 void G_PrintStats(const char *buffer);
 int G_TouchTriggers(edict_t *ent);
 void G_TouchSolids(edict_t *ent);
-void G_TouchEdicts(edict_t *ent);
+void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
 edict_t *G_ParticleSpawn(vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
@@ -416,7 +416,6 @@ void G_MatchEndCheck(void);
 qboolean G_MatchDoEnd(void);
 
 /* g_trigger.c */
-void G_SendTriggerBoundingBoxes(const int mask, const edict_t *ent);
 edict_t* G_TriggerSpawn(edict_t *owner);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);

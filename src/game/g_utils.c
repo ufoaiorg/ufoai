@@ -394,13 +394,20 @@ void G_TouchSolids (edict_t *ent)
 /**
  * @brief Call after linking a new trigger in or destroying a bmodel
  * during gameplay to force all entities it covers to immediately touch it
+ * @param[in] extend Extend value for the bounding box
  */
-void G_TouchEdicts (edict_t *ent)
+void G_TouchEdicts (edict_t *ent, float extend)
 {
 	int i, num;
 	edict_t *touch[MAX_EDICTS];
+	vec3_t absmin, absmax;
 
-	num = gi.TouchEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, ent);
+	for (i = 0; i < 3; i++) {
+		absmin[i] = ent->absmin[i] - extend;
+		absmax[i] = ent->absmax[i] + extend;
+	}
+
+	num = gi.TouchEdicts(absmin, absmax, touch, MAX_EDICTS, ent);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it(killtriggered) */

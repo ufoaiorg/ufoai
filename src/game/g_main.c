@@ -163,7 +163,7 @@ static void G_Init (void)
 	sv_reaction_leftover = gi.Cvar_Get("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
-	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_LATCH, "Send server side edicts for client display like triggers");
+	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
 	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");
@@ -359,6 +359,24 @@ static void CheckNeedPass (void)
 	}
 }
 
+static void G_SendBoundingBoxes (void)
+{
+	if (sv_send_edicts->integer) {
+		int i;
+		/* skip the world */
+		for (i = 1; i < globals.num_edicts; i++) {
+			const edict_t *ent = &globals.edicts[i];
+			if (!ent->inuse)
+				continue;
+			gi.AddEvent(PM_ALL, EV_ADD_EDICT);
+			gi.WriteShort(ent->type);
+			gi.WriteShort(ent->number);
+			gi.WritePos(ent->absmin);
+			gi.WritePos(ent->absmax);
+		}
+	}
+}
+
 /**
  * @sa SV_RunGameFrame
  * @sa G_MatchEndTrigger
@@ -403,6 +421,8 @@ qboolean G_RunFrame (void)
 	/* run ai */
 	AI_Run();
 	G_PhysicsRun();
+
+	G_SendBoundingBoxes();
 
 	return qfalse;
 }

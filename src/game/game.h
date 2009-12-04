@@ -159,8 +159,8 @@ typedef struct {
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (IMPORT *LinkEdict) (edict_t * ent);
 	void (IMPORT *UnlinkEdict) (edict_t * ent);	/* call before removing an interactive edict */
-	int (IMPORT *BoxEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, int areatype);
-	int (IMPORT *TouchEdicts) (vec3_t mins, vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
+	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, int areatype);
+	int (IMPORT *TouchEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
 
 	qboolean (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);

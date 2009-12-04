@@ -65,7 +65,7 @@ typedef struct areanode_s {
 static areanode_t sv_areaNodes[AREA_NODES];
 static int sv_numAreaNodes;
 
-static float *areaMins, *areaMaxs;
+static vec3_t areaMins, areaMaxs;
 static edict_t **areaEdictList;
 static int areaEdictListCount, areaEdictListMaxCount;
 
@@ -276,38 +276,14 @@ void SV_LinkEdict (edict_t * ent)
  * @param mins The mins of the bounding box
  * @param maxs The maxs of the bounding box
  * @param ent The edict to check the intersection for
- * @note for none solid edicts the origin and the mins, maxs are used, for solid edict the absmins and absmaxs are used.
  * @return @c true if intersect, @c false otherwise
  */
 static qboolean SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs, const edict_t *ent)
 {
-	if (ent->solid == SOLID_NOT) {
-		vec3_t absmin, absmax;
-		int i;
-
-		VectorAdd(ent->origin, ent->mins, absmin);
-		VectorAdd(ent->origin, ent->maxs, absmax);
-		/* spread the mins, maxs by one unit */
-		for (i = 0; i < 3; i++) {
-			absmin[i] -= 1.0f;
-			absmax[i] += 1.0f;
-		}
-		if (absmin[0] > maxs[0]
-			|| absmin[1] > maxs[1]
-			|| absmin[2] > maxs[2]
-			|| absmax[0] < mins[0]
-			|| absmax[1] < mins[1]
-			|| absmax[2] < mins[2])
-			return qfalse; /* not touching */
-	} else {
-		if (ent->absmin[0] > maxs[0]
-			|| ent->absmin[1] > maxs[1]
-			|| ent->absmin[2] > maxs[2]
-			|| ent->absmax[0] < mins[0]
-			|| ent->absmax[1] < mins[1]
-			|| ent->absmax[2] < mins[2])
-			return qfalse; /* not touching */
-	}
+	const qboolean outsideMaxs = ent->absmin[0] > maxs[0] || ent->absmin[1] > maxs[1] || ent->absmin[2] > maxs[2];
+	const qboolean outsideMins = ent->absmax[0] < mins[0] || ent->absmax[1] < mins[1] || ent->absmax[2] < mins[2];
+	if (outsideMaxs || outsideMins)
+		return qfalse; /* not touching */
 	return qtrue;
 }
 
@@ -322,7 +298,6 @@ static qboolean SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs,
 static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 {
 	link_t *l, *next, *start;
-	edict_t *check;
 	int count;
 
 	count = 0;
@@ -334,12 +309,14 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 		start = &node->triggerEdicts;
 
 	for (l = start->next; l != start; l = next) {
+		edict_t *check;
 		next = l->next;
 		check = EDICT_FROM_AREA(l);
-		/*Com_Printf("check->number: %i - headnode: %i\n", check->number, check->headnode);*/
 
+		/* deactivated */
 		if (check->solid == SOLID_NOT)
-			continue;			/* deactivated */
+			continue;
+
 		if (!SV_BoundingBoxesIntersect(areaMins, areaMaxs, check))
 			continue;			/* not touching */
 
@@ -371,10 +348,10 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
  * @param[in] areaType @c AREA_TRIGGERS or @ AREA_SOLID
  * @return the number of pointers filled in
  */
-int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, int areaType)
+int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, int areaType)
 {
-	areaMins = mins;
-	areaMaxs = maxs;
+	VectorCopy(mins, areaMins);
+	VectorCopy(maxs, areaMaxs);
 	areaEdictList = list;
 	areaEdictListCount = 0;
 	areaEdictListMaxCount = maxCount;
@@ -394,7 +371,7 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, int a
  * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-int SV_TouchEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
+int SV_TouchEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
 	const int max = min(maxCount, ge->num_edicts);
@@ -402,8 +379,9 @@ int SV_TouchEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, edic
 
 	/* skip the world */
 	for (i = 1; i < max; i++) {
-		edict_t *e = &ge->edicts[i];
-		if (!e->inuse)
+		edict_t *e = EDICT_NUM(i);
+		/* deactivated */
+		if (e->solid == SOLID_NOT)
 			continue;
 		if (e == skip)
 			continue;

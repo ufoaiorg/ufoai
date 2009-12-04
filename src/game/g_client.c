@@ -1153,32 +1153,22 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 		/* brush models that have a type - not the world - keep in
 		 * mind that there are several world edicts in the list in case of
 		 * a map assembly */
-		switch (ent->solid) {
-		case SOLID_BSP:
-			/* skip the world(s) in case of map assembly */
-			if (ent->type) {
-				gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
-				gi.WriteShort(ent->type);
-				gi.WriteShort(ent->number);
-				gi.WriteShort(ent->modelindex);
-				/* strip the higher bits - only send levelflags */
-				gi.WriteByte(ent->spawnflags & 0xFF);
-				gi.WritePos(ent->origin);
-				gi.WritePos(ent->angles);
-				gi.WriteShort(ent->speed);
-				gi.WriteByte(ent->angle);
-				ent->visflags |= ~ent->visflags;
-			}
-			break;
+		if (ent->solid != SOLID_BSP)
+			continue;
 
-			/* send trigger entities to the client to display them (needs mins, maxs set) */
-		case SOLID_TRIGGER:
-			G_SendTriggerBoundingBoxes(mask, ent);
-			break;
-
-		case SOLID_NOT:
-		case SOLID_BBOX:
-			break;
+		/* skip the world(s) in case of map assembly */
+		if (ent->type) {
+			gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
+			gi.WriteShort(ent->type);
+			gi.WriteShort(ent->number);
+			gi.WriteShort(ent->modelindex);
+			/* strip the higher bits - only send levelflags */
+			gi.WriteByte(ent->spawnflags & 0xFF);
+			gi.WritePos(ent->origin);
+			gi.WritePos(ent->angles);
+			gi.WriteShort(ent->speed);
+			gi.WriteByte(ent->angle);
+			ent->visflags |= ~ent->visflags;
 		}
 	}
 }

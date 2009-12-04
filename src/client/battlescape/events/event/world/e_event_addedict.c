@@ -54,9 +54,10 @@ void CL_AddEdict (const eventRegister_t *self, struct dbuffer * msg)
 
 	NET_ReadFormat(msg, self->formatString, &type, &entnum, &mins, &maxs);
 
-	le = LE_Get(entnum);
+	/* use an offset to ensure that we don't conflict with any other solid edict that is already spawned */
+	le = LE_Get(entnum + MAX_EDICTS);
 	if (!le) {
-		le = LE_Add(entnum);
+		le = LE_Add(entnum + MAX_EDICTS);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_AddEdict: Entity appearing already visible... overwriting the old one\n");
 		le->inuse = qtrue;
