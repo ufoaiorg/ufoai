@@ -2172,7 +2172,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	int randomNum;
 
 	/* RASTER might reduce amount of tested locations to get a better performance */
-	/**< Number of points in latitude and longitude that will be tested. Therefore, the total number of position tried
+	/* Number of points in latitude and longitude that will be tested. Therefore, the total number of position tried
 	 * will be numPoints * numPoints */
 	const float numPoints = 360.0 / RASTER;
 	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */

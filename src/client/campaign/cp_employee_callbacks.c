@@ -192,6 +192,7 @@ static void E_EmployeeList_f (void)
 	 * 1 == all is displayed
 	 * 2 == only stuff wanted for scientists/workers/pilots are displayed
 	 */
+	/** @todo replace magic numbers - use confuncs */
 	if (employeesInCurrentList == 0) {
 		Cvar_Set("mn_show_employee", "0");
 	} else {
