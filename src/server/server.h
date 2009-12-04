@@ -185,7 +185,7 @@ void SV_ClearWorld(void);
 void SV_UnlinkEdict(edict_t * ent);
 void SV_LinkEdict(edict_t * ent);
 int SV_AreaEdicts(vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype);
-int SV_TouchEdicts(vec3_t mins, vec3_t maxs, edict_t **list, int maxCount);
+int SV_TouchEdicts(vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, edict_t *skip);
 
 /*=================================================================== */
 

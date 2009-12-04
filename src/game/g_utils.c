@@ -400,7 +400,7 @@ void G_TouchEdicts (edict_t *ent)
 	int i, num;
 	edict_t *touch[MAX_EDICTS];
 
-	num = gi.TouchEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
+	num = gi.TouchEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, ent);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it(killtriggered) */

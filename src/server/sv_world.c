@@ -391,17 +391,21 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, int a
  * @param[in] maxs The maxs of the bounding box
  * @param[out] list The edict list that this trace is hitting
  * @param[in] maxCount The size of the given @c list
+ * @param[in] skip An edict to skip (e.g. pointer to the calling edict)
  * @return the number of pointers filled in
  */
-int SV_TouchEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount)
+int SV_TouchEdicts (vec3_t mins, vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
 	const int max = min(maxCount, ge->num_edicts);
 	int i;
 
-	for (i = 0; i < max; i++) {
+	/* skip the world */
+	for (i = 1; i < max; i++) {
 		edict_t *e = &ge->edicts[i];
 		if (!e->inuse)
+			continue;
+		if (e == skip)
 			continue;
 		if (SV_BoundingBoxesIntersect(mins, maxs, e))
 			list[num++] = e;
