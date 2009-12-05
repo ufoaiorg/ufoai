@@ -404,7 +404,7 @@ static qboolean GAME_Spawn (void)
 
 	/* If there is no active gametype we create a team with default values.
 	 * This is e.g. the case when someone starts a map with the map command */
-	if (GAME_GetCurrentType() == NULL) {
+	if (GAME_GetCurrentType() == NULL || chrDisplayList.num == 0) {
 		const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 		GAME_GenerateTeam(teamDefID, ed);
