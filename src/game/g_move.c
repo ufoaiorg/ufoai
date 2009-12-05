@@ -102,12 +102,17 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
 
 void G_ClientFall (const edict_t *ent)
 {
+	/** @todo see dvecs, PosSubDV and NewDVZ */
+	int dv = 13;
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(1);
 	gi.WriteByte(ent->pos[0]);
 	gi.WriteByte(ent->pos[1]);
 	gi.WriteByte(ent->pos[2]);
+	gi.WriteByte(dv);
+	gi.WriteShort(800); /* gravity */
+	gi.WriteShort(0);
 	gi.EndEvents();
 }
 
