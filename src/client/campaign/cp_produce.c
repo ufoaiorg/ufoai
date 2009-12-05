@@ -147,20 +147,16 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
  */
 void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 {
-	const objDef_t *od;
-	production_t *prod;
 	int i;
-
-	prod = &queue->items[index];
-
-	assert(base);
+	production_t *prod = &queue->items[index];
 
 	if (prod->ufo) {
 		prod->ufo->disassembly = NULL;
 	} else if (prod->itemsCached && !prod->aircraft) {
 		/* Get technology of the item in the selected queue-entry. */
-		od = prod->item;
+		const objDef_t *od = prod->item;
 		if (od->tech) {
+			assert(base);
 			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
 			PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &od->tech->requireForProduction);
 		} else {
@@ -308,6 +304,135 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 	return size;
 }
 
+static void PR_ProductionFrame (base_t* base, production_t *prod)
+{
+	const objDef_t *od;
+	const aircraft_t *aircraft;
+
+	if (!prod->production)
+		return;
+
+	if (!prod->item && !prod->aircraft)
+		return;
+
+	if (prod->item) {
+		od = prod->item;
+		aircraft = NULL;
+	} else if (prod->aircraft) {
+		od = NULL;
+		aircraft = prod->aircraft;
+	}
+
+	if (od) {
+		/* Not enough money to produce more items in this base. */
+		if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
+			if (!prod->creditMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s.\n"), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->creditMessage = qtrue;
+			}
+			PR_ProductionRollBottom_f();
+			return;
+		}
+		/* Not enough free space in base storage for this item. */
+		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
+			if (!prod->spaceMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed.\n"), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->spaceMessage = qtrue;
+			}
+			PR_ProductionRollBottom_f();
+			return;
+		}
+		prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, NULL) / MINUTES_PER_HOUR);
+	} else if (aircraft) {
+		/* Not enough money to produce more items in this base. */
+		if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
+			if (!prod->creditMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s.\n"), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->creditMessage = qtrue;
+			}
+			PR_ProductionRollBottom_f();
+			return;
+		}
+		/* Not enough free space in hangars for this aircraft. */
+		if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
+			if (!prod->spaceMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed.\n"), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->spaceMessage = qtrue;
+			}
+			PR_ProductionRollBottom_f();
+			return;
+		}
+		prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL) / MINUTES_PER_HOUR);
+	}
+
+	if (prod->percentDone >= 1.0f) {
+		const char *name;
+		technology_t *tech;
+
+		prod->percentDone = 0.0f;
+		prod->amount--;
+
+		if (od) {
+			CL_UpdateCredits(ccs.credits - (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+			/* Now add it to equipment and update capacity. */
+			B_UpdateStorageAndCapacity(base, prod->item, 1, qfalse, qfalse);
+			name = _(od->name);
+			tech = od->tech;
+		} else if (aircraft) {
+			CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+			/* Now add new aircraft. */
+			AIR_NewAircraft(base, aircraft->id);
+			name = _(aircraft->tpl->name);
+			tech = NULL;
+		}
+
+		/* queue the next production */
+		if (prod->amount <= 0) {
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), name, base->name);
+			MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, tech);
+			PR_QueueNext(base);
+		}
+	}
+}
+
+static void PR_DisassemblingFrame (base_t* base, production_t* prod)
+{
+	storedUFO_t *ufo;
+
+	if (prod->production)
+		return;
+
+	if (!prod->ufo)
+		return;
+
+	ufo = prod->ufo;
+
+	if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, ufo->comp, ufo->condition, qtrue)) {
+		if (!prod->spaceMessage) {
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed.\n"), base->name);
+			MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+			prod->spaceMessage = qtrue;
+		}
+		PR_ProductionRollBottom_f();
+		return;
+	}
+	prod->percentDone += (PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo->comp) / MINUTES_PER_HOUR);
+
+	if (prod->percentDone >= 1.0f) {
+		base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
+
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
+		MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
+
+		/* Removing UFO will remove the production too */
+		US_RemoveStoredUFO(ufo);
+	}
+}
+
 /**
  * @brief Checks whether an item is finished.
  * @sa CL_CampaignRun
@@ -315,9 +440,6 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 void PR_ProductionRun (void)
 {
 	int i;
-	const objDef_t *od;
-	const aircraft_t *aircraft;
-	storedUFO_t *ufo;
 	production_t *prod;
 
 	/* Loop through all founded bases. Then check productions
@@ -338,123 +460,8 @@ void PR_ProductionRun (void)
 
 		prod = &ccs.productions[i].items[0];
 
-		if (prod->item) {
-			od = prod->item;
-			aircraft = NULL;
-			ufo = NULL;
-		} else if (prod->aircraft) {
-			assert(prod->aircraft);
-			od = NULL;
-			aircraft = prod->aircraft;
-			ufo = NULL;
-		} else {
-			od = NULL;
-			aircraft = NULL;
-			ufo = prod->ufo;
-		}
-
-		if (prod->production) {	/* This is production, not disassembling. */
-			if (od) {
-				/* Not enough money to produce more items in this base. */
-				if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
-					if (!prod->creditMessage) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->creditMessage = qtrue;
-					}
-					PR_ProductionRollBottom_f();
-					continue;
-				}
-				/* Not enough free space in base storage for this item. */
-				if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
-					if (!prod->spaceMessage) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->spaceMessage = qtrue;
-					}
-					PR_ProductionRollBottom_f();
-					continue;
-				}
-			} else {
-				/* Not enough money to produce more items in this base. */
-				if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
-					if (!prod->creditMessage) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->creditMessage = qtrue;
-					}
-					PR_ProductionRollBottom_f();
-					continue;
-				}
-				/* Not enough free space in hangars for this aircraft. */
-				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
-					if (!prod->spaceMessage) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-						prod->spaceMessage = qtrue;
-					}
-					PR_ProductionRollBottom_f();
-					continue;
-				}
-			}
-		} else {		/* This is disassembling. */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, ufo->comp, ufo->condition, qtrue)) {
-				if (!prod->spaceMessage) {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed.\n"), base->name);
-					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-					prod->spaceMessage = qtrue;
-				}
-				PR_ProductionRollBottom_f();
-				continue;
-			}
-		}
-
-		if (prod->production) {	/* This is production, not disassembling. */
-			if (!prod->aircraft)
-				prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, NULL) / MINUTES_PER_HOUR);
-			else
-				prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL) / MINUTES_PER_HOUR);
-		} else /* This is disassembling. */
-			prod->percentDone += (PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo->comp) / MINUTES_PER_HOUR);
-
-		if (prod->percentDone >= 1.0f) {
-			if (prod->production) {	/* This is production, not disassembling. */
-				if (!prod->aircraft) {
-					CL_UpdateCredits(ccs.credits - (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
-					prod->percentDone = 0.0f;
-					prod->amount--;
-					/* Now add it to equipment and update capacity. */
-					B_UpdateStorageAndCapacity(base, prod->item, 1, qfalse, qfalse);
-
-					/* queue the next production */
-					if (prod->amount <= 0) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), _(od->name), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-						PR_QueueNext(base);
-					}
-				} else {
-					CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
-					prod->percentDone = 0.0f;
-					prod->amount--;
-					/* Now add new aircraft. */
-					AIR_NewAircraft(base, aircraft->id);
-					/* queue the next production */
-					if (prod->amount <= 0) {
-						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s at %s has finished."), _(aircraft->tpl->name), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
-						PR_QueueNext(base);
-					}
-				}
-			} else {	/* This is disassembling. */
-				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
-
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s at %s has finished."), UFO_TypeToName(ufo->ufoTemplate->ufotype), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
-
-				/* Removing UFO will remove the production too */
-				US_RemoveStoredUFO(ufo);
-			}
-		}
+		PR_ProductionFrame(base, prod);
+		PR_DisassemblingFrame(base, prod);
 	}
 }
 

@@ -61,7 +61,7 @@ typedef struct production_s
 	qboolean production;	/**< True if this is real production, false when disassembling. */
 	qboolean itemsCached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
 				 * They need to be added to the storage again if this queue is stopped or removed.
-				 * The item-numbers from the requirement need to be multipled with 'amount' in order to get the overall number of cached items. */
+				 * The item-numbers from the requirement need to be multiplied with 'amount' in order to get the overall number of cached items. */
 } production_t;
 
 /**
