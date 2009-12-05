@@ -9,11 +9,14 @@
 window objectinfo
 {
 	{ }
+
+	/* HACK these are needed for node order :( */
+	pic  background { }
+	panel content { }
+
 	/*
 	 * dummy nodes
 	 */
-	pic  background { }
-
 	panel itemdescription {
 		{ }
 		string header_item { }
