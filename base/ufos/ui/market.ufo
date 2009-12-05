@@ -770,7 +770,7 @@ window market extends objectinfo
 
 		text description
 		{
-			dataid		TEXT_STANDARD
+			dataid		TEXT_ITEMDESCRIPTION
 			pos			"32 257"
 			size		"336 120"
 			rows		"8"

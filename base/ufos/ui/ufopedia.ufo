@@ -156,9 +156,9 @@ window ufopedia extends objectinfo
 
 		text description
 		{
-			dataid		TEXT_UFOPEDIA_METADATA
+			dataid		TEXT_ITEMDESCRIPTION
 			pos			"10 61"
-			size		"412 400"
+			size		"390 400"
 			lineheight	20
 			tabwidth	230
 			rows		20
@@ -171,7 +171,7 @@ window ufopedia extends objectinfo
 
 		vscrollbar description_scroll {
 			image		ui/scrollbar_v_green
-			pos			"425 61"
+			pos			"405 61"
 			height		"400"
 			current		0
 			viewsize	20
@@ -228,8 +228,8 @@ window ufopedia extends objectinfo
 
 	panel itemdescription {
 		{
-			pos		"360 420"
-			size	"350 336"
+			pos		"360 530"
+			size	"350 60"
 		}
 
 		// ======================

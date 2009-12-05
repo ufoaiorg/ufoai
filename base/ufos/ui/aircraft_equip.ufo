@@ -107,7 +107,7 @@ window aircraft_equip extends iaircraft
 
 		text description
 		{
-			dataid		TEXT_UFOPEDIA_METADATA
+			dataid		TEXT_ITEMDESCRIPTION
 			pos			"14 182"
 			size		"204 85"
 			tabwidth	130

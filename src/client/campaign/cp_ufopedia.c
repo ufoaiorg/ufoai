@@ -100,7 +100,7 @@ static void UP_ChangeDisplay (int newDisplay)
 	MN_ResetData(TEXT_UFOPEDIA_MAILHEADER);
 	MN_ResetData(TEXT_UFOPEDIA_MAIL);
 	MN_ResetData(TEXT_UFOPEDIA_REQUIREMENT);
-	MN_ResetData(TEXT_UFOPEDIA_METADATA);
+	MN_ResetData(TEXT_ITEMDESCRIPTION);
 	MN_ResetData(TEXT_UFOPEDIA);
 
 	switch (upDisplay) {
@@ -227,7 +227,7 @@ static void UP_BuildingDescription (const technology_t* t)
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
-	MN_RegisterText(TEXT_UFOPEDIA_METADATA, upBuffer);
+	MN_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -252,7 +252,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Cvar_Set("mn_item", "");
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_upmodel_top", "");
-		MN_ResetData(TEXT_UFOPEDIA_METADATA);
+		MN_ResetData(TEXT_ITEMDESCRIPTION);
 		return;
 	}
 
@@ -304,7 +304,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
-	MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
+	MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 }
 
 /**
@@ -363,7 +363,7 @@ void UP_AircraftDescription (const technology_t* tech)
 	}
 
 	Cvar_Set("mn_upmetadata", "1");
-	MN_RegisterText(TEXT_UFOPEDIA_METADATA, upBuffer);
+	MN_RegisterText(TEXT_ITEMDESCRIPTION, upBuffer);
 	UP_DisplayTechTree(tech);
 }
 
@@ -392,15 +392,13 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	if (RS_IsResearched_ptr(tech)) {
 		/** @todo make me shiny */
 		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
-		MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		MN_RegisterText(TEXT_UFOPEDIA_METADATA, itemText);
 	}
+	MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 }
 
 /**
@@ -629,14 +627,9 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
 					if (!strcmp(tech->provides, csi.ods[i].id)) {
-						const char *text;
 						INV_ItemDescription(&csi.ods[i]);
 						UP_DisplayTechTree(tech);
-						/* translate info */
-						text = MN_GetText(TEXT_STANDARD);
-						MN_RegisterText(TEXT_UFOPEDIA_METADATA, text);
-						if (text != NULL)
-							Cvar_Set("mn_upmetadata", "1");
+						Cvar_Set("mn_upmetadata", "1");
 						break;
 					}
 				}

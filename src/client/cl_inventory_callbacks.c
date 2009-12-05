@@ -71,7 +71,7 @@ void INV_ItemDescription (const objDef_t *od)
 	if (!od) {	/* If nothing selected return */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
-		MN_ResetData(TEXT_STANDARD);
+		MN_ResetData(TEXT_ITEMDESCRIPTION);
 		itemIndex = fireModeIndex = 0;
 		return;
 	}
@@ -200,10 +200,10 @@ void INV_ItemDescription (const objDef_t *od)
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
 		}
 
-		MN_RegisterText(TEXT_STANDARD, itemText);
+		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - not useable"));
-		MN_RegisterText(TEXT_STANDARD, itemText);
+		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
 	}
 }
 

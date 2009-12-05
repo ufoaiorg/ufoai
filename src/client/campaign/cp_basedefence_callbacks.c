@@ -165,7 +165,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* don't let old links appear on this menu */
 	MN_ResetData(TEXT_BASEDEFENCE_LIST);
 	MN_ResetData(TEXT_LIST);
-	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_ITEMDESCRIPTION);
 
 	/* base or installation should not be NULL because we are in the menu of this base or installation */
 	if (!base && !installation)

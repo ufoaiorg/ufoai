@@ -258,7 +258,7 @@ window basedefence extends objectinfo
 
 			text description
 			{
-				dataid		TEXT_STANDARD
+				dataid		TEXT_ITEMDESCRIPTION
 				pos			"10 155"
 				size		"284 120"
 				lineheight	20

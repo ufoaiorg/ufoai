@@ -290,7 +290,7 @@ static void BS_BuyType (const base_t *base)
 	bsMarketStorage = NULL;
 	bsMarketMarket = NULL;
 	bsMarketPrices = NULL;
-	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_ITEMDESCRIPTION);
 
 	/* 'normal' items */
 	switch (buyCat) {

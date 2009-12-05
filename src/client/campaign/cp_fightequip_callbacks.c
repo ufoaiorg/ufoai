@@ -362,9 +362,9 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 		return;
 
 	/* don't let old links appear on this menu */
-	MN_ResetData(TEXT_UFOPEDIA_METADATA);
 	MN_ResetData(TEXT_AIREQUIP_1);
 	MN_ResetData(TEXT_AIREQUIP_2);
+	MN_ResetData(TEXT_ITEMDESCRIPTION);
 	MN_ResetData(TEXT_LIST);
 
 	aircraft = base->aircraftCurrent;

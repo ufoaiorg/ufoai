@@ -362,7 +362,7 @@ window equipment extends objectinfo
 			lineheight	20
 			tabwidth	190
 			rows		"7"
-			dataid		TEXT_STANDARD
+			dataid		TEXT_ITEMDESCRIPTION
 			onViewChange {
 				*(abstractscrollbar)itemdescription.description_scroll@fullsize <fullsize>
 				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
