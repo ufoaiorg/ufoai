@@ -66,18 +66,12 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 	/* Check how many workers hired in this base. */
 	allworkers = E_CountHired(base, EMPL_WORKER);
 	/* We will not use more workers than base capacity. */
-	if (allworkers > base->capacities[CAP_WORKSPACE].max) {
-		maxworkers = base->capacities[CAP_WORKSPACE].max;
-	} else {
-		maxworkers = allworkers;
-	}
+	maxworkers = min(allworkers, base->capacities[CAP_WORKSPACE].max);
 
-	if (!comp) {
-		assert(tech);
+	if (!comp)
 		timeDefault = tech->produceTime;	/* This is the default production time for 10 workers. */
-	} else {
+	else
 		timeDefault = comp->time;		/* This is the default disassembly time for 10 workers. */
-	}
 
 	if (maxworkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
@@ -94,10 +88,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxworkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
-		if (fraction > 1.0f)
-			return 1.0f;
-		else
-			return fraction;
+		return min(fraction, 1.0f);
 	}
 }
 
@@ -127,7 +118,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 		requirement_t *req = &reqs->links[i];
 		if (req->type == RS_LINK_ITEM) {
 			const objDef_t *item = req->link;
-			assert(req->link);
+			assert(item);
 			if (amount > 0) {
 				/* Add items to the base-storage. */
 				ed->num[item->idx] += (req->amount * amount);
@@ -282,10 +273,10 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 	int i;
 	int size = 0;
 
-	assert(comp);
 	if (!calculate && !base)	/* We need base only if this is real disassembling. */
 		Com_Error(ERR_DROP, "PR_DisassembleItem: No base given");
 
+	assert(comp);
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
 		const int amount = (condition < 1 && comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? comp->itemAmount2[i] : round(comp->itemAmount[i] * condition);
@@ -624,7 +615,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
 			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
 
-			if (s1 && s1[0] != '\0')
+			if (s1[0] != '\0')
 				pq->items[j].item = INVSH_GetItemByID(s1);
 
 			if (pq->items[j].amount <= 0) {
@@ -651,12 +642,12 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			}
 
 			s2 = mxml_GetString(ssnode, "aircraftid");
-			if (s2 && s2[0] != '\0')
+			if (s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);
 			pq->items[j].itemsCached = mxml_GetBool(ssnode, "items_cached", qfalse);
-			if (!pq->items[j].item && *s1)
+			if (!pq->items[j].item && s1[0] != '\0')
 				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
-			if (!pq->items[j].aircraft && *s2)
+			if (!pq->items[j].aircraft && s2[0] != '\0')
 				Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
 		}
 	}
