@@ -41,7 +41,7 @@ void MN_PopMenu(qboolean all);
 void MN_PopMenuWithEscKey(void);
 void MN_CloseMenu(const char* name);
 struct menuNode_s* MN_GetActiveMenu(void);
-int MN_CompleteWithMenu(const char *partial, const char **match);
+int MN_CompleteWithWindow(const char *partial, const char **match);
 qboolean MN_IsMenuOnStack(const char* name);
 qboolean MN_IsPointOnMenu(int x, int y);
 void MN_InvalidateStack(void);

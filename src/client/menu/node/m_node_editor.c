@@ -367,5 +367,5 @@ void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->properties = properties;
 
 	Cmd_AddCommand("mn_extract", MN_EditorNodeExtract_f, "Extract position and size of nodes into a file");
-	Cmd_AddParamCompleteFunction("mn_extract", MN_CompleteWithMenu);
+	Cmd_AddParamCompleteFunction("mn_extract", MN_CompleteWithWindow);
 }

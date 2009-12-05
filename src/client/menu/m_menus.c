@@ -208,7 +208,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
  * @sa MN_PushMenu
  * @note Does not really complete the input - but shows at least all parsed menus
  */
-int MN_CompleteWithMenu (const char *partial, const char **match)
+int MN_CompleteWithWindow (const char *partial, const char **match)
 {
 	int i;
 	int matches = 0;
@@ -227,7 +227,7 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
 			Com_Printf("%s\n", mn.windows[i]->name);
 			localMatch[matches++] = mn.windows[i]->name;
 			if (matches >= MAX_COMPLETE) {
-				Com_Printf("MN_CompleteWithMenu: hit MAX_COMPLETE\n");
+				Com_Printf("MN_CompleteWithWindow: hit MAX_COMPLETE\n");
 				break;
 			}
 		}
@@ -782,6 +782,40 @@ static void MN_InitStack_f (void) {
 	MN_InitStack(mainWindow, optionWindow, qtrue, qtrue);
 }
 
+/**
+ * @brief Display in the conde the tree of nodes
+ */
+static void MN_DebugTree(const menuNode_t *node, int depth)
+{
+	const menuNode_t *child = node->firstChild;
+	int i;
+
+	for (i = 0; i < depth; i++) {
+		Com_Printf("    ");
+	}
+	Com_Printf("+ %s %s\n", node->behaviour->name, node->name);
+
+	while (child) {
+		MN_DebugTree(child, depth + 1);
+		child = child->next;
+	}
+}
+
+static void MN_DebugTree_f (void)
+{
+	const char *window;
+	const menuNode_t *node;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <mainwindow>\n", Cmd_Argv(0));
+		return;
+	}
+
+	window = Cmd_Argv(1);
+	node = MN_GetMenu(window);
+	MN_DebugTree(node, 0);
+}
+
 void MN_InitMenus (void)
 {
 	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_sys_active");
@@ -790,13 +824,16 @@ void MN_InitMenus (void)
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
-	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithMenu);
+	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithWindow);
 	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownMenu_f, "Push a dropdown menu at a position");
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("mn_close", MN_CloseMenu_f, "Close a menu");
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
 	Cmd_AddCommand("mn_initstack", MN_InitStack_f, "Initialize the window stack with a main and an option window.");
+
+	Cmd_AddCommand("mn_tree", MN_DebugTree_f, "Display a tree of nodes fropm a window into the console.");
+	Cmd_AddParamCompleteFunction("mn_tree", MN_CompleteWithWindow);
 
 	/** @todo move it outside */
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
