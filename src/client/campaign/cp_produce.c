@@ -304,6 +304,13 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 	return size;
 }
 
+/**
+ * @brief Runs the production of an item or an aircraft
+ * @sa PR_DisassemblingFrame
+ * @sa PR_ProductionRun
+ * @param base The base to produce in
+ * @param prod The production that is running
+ */
 static void PR_ProductionFrame (base_t* base, production_t *prod)
 {
 	const objDef_t *od;
@@ -399,6 +406,13 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 	}
 }
 
+/**
+ * @brief Runs the disassembling of a ufo
+ * @sa PR_ProductionFrame
+ * @sa PR_ProductionRun
+ * @param base The base to produce in
+ * @param prod The production that is running
+ */
 static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 {
 	storedUFO_t *ufo;
@@ -436,6 +450,8 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 /**
  * @brief Checks whether an item is finished.
  * @sa CL_CampaignRun
+ * @sa PR_DisassemblingFrame
+ * @sa PR_ProductionFrame
  */
 void PR_ProductionRun (void)
 {
