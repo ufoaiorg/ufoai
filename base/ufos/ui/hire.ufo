@@ -329,7 +329,7 @@ window employees
 		}
 	}
 
-	string	rank_lbl
+	string rank_lbl
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		*cvar:mn_chrrank

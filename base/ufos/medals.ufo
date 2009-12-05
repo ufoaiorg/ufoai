@@ -71,9 +71,9 @@ rank lancecorp
 	name			"_Lance-Corporal"
 	shortname		"_LCpl"
 	image			"ranks/rank_02"
-	mind			50
-	killed_enemies	3
-	killed_others	3
+	mind			32
+	killed_enemies	4
+	killed_others	7
 	type			EMPL_SOLDIER
 	factor			0.4
 }
@@ -83,8 +83,8 @@ rank corporal
 	name			"_Corporal"
 	shortname		"_Cpl"
 	image			"ranks/rank_03"
-	mind			55
-	killed_enemies	5
+	mind			37
+	killed_enemies	8
 	killed_others	5
 	type			EMPL_SOLDIER
 	factor			0.5
@@ -95,9 +95,9 @@ rank sergeant
 	name			"_Sergeant"
 	shortname		"_Sgt"
 	image			"ranks/rank_04"
-	mind			60
-	killed_enemies	10
-	killed_others	7
+	mind			45
+	killed_enemies	12
+	killed_others	3
 	type			EMPL_SOLDIER
 	factor			0.5
 }
@@ -107,9 +107,9 @@ rank warrant
 	name			"_Warrant Officer"
 	shortname		"_WO"
 	image			"ranks/rank_05"
-	mind			65
+	mind			51
 	killed_enemies	18
-	killed_others	7
+	killed_others	2
 	type			EMPL_SOLDIER
 	factor			0.5
 }
@@ -119,8 +119,8 @@ rank senwarrant
 	name			"_Senior Warrant Officer"
 	shortname		"_SWO"
 	image			"ranks/rank_06"
-	mind			70
-	killed_enemies	25
+	mind			57
+	killed_enemies	24
 	type			EMPL_SOLDIER
 	factor			0.6
 }
@@ -130,8 +130,8 @@ rank seclieut
 	name			"_Second Lieutenant"
 	shortname		"_2Lt"
 	image			"ranks/rank_07"
-	mind			75
-	killed_enemies	32
+	mind			63
+	killed_enemies	30
 	type			EMPL_SOLDIER
 	factor			0.6
 }
@@ -141,8 +141,8 @@ rank lieut
 	name			"_Lieutenant"
 	shortname		"_Lt"
 	image			"ranks/rank_08"
-	mind			80
-	killed_enemies	38
+	mind			69
+	killed_enemies	36
 	type			EMPL_SOLDIER
 	factor			0.6
 }
@@ -152,8 +152,8 @@ rank captain
 	name			"_Captain"
 	shortname		"_Capt"
 	image			"ranks/rank_09"
-	mind			85
-	killed_enemies	45
+	mind		        75
+	killed_enemies	42
 	type			EMPL_SOLDIER
 	factor			0.7
 }
@@ -163,8 +163,8 @@ rank major
 	name			"_Major"
 	shortname		"_Maj"
 	image			"ranks/rank_10"
-	mind			90
-	killed_enemies	55
+	mind			81
+	killed_enemies	48
 	type			EMPL_SOLDIER
 	factor			0.7
 }
@@ -174,8 +174,8 @@ rank ltcol
 	name			"_Lieutenant-Colonel"
 	shortname		"_Lt Col"
 	image			"ranks/rank_11"
-	mind			95
-	killed_enemies	60
+	mind			87
+	killed_enemies	54
 	type			EMPL_SOLDIER
 	factor			0.8
 }
@@ -185,8 +185,8 @@ rank col
 	name			"_Colonel"
 	shortname		"_Col"
 	image			"ranks/rank_12"
-	mind			100
-	killed_enemies	70
+	mind			93
+	killed_enemies	60
 	type			EMPL_SOLDIER
 	factor			0.9
 }
