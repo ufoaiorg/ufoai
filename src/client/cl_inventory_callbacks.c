@@ -96,15 +96,15 @@ void INV_ItemDescription (const objDef_t *od)
 			/* Display the name of the associated weapon */
 			MN_ExecuteConfunc("mn_item_change_view ammo \"%s\"",
 					_(od->weapons[itemIndex]->name));
+		} else {
+			MN_ExecuteConfunc("mn_item_change_view other");
 		}
 	} else if (od->weapon && od->reload) {
-
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
 		 * we are counting the number of ammo that is usable with this weapon */
-		for (i = 0; i < od->numAmmos; i++) {
+		for (i = 0; i < od->numAmmos; i++)
 			if (GAME_ItemIsUseable(od->ammos[i]))
 				count++;
-		}
 
 		if (itemIndex >= od->numAmmos || itemIndex < 0)
 			itemIndex = count - 1;
@@ -131,12 +131,13 @@ void INV_ItemDescription (const objDef_t *od)
 		MN_ExecuteConfunc("mn_item_change_view other");
 	}
 
-
 	/* set description text if item has been researched or one of its ammo/weapon has been researched */
 	if (count > 0 || GAME_ItemIsUseable(od)) {
 		*itemText = '\0';
 		if (INV_IsArmour(od)) {
-			Q_strcat(itemText, _("Type:\tProtection:\n"), sizeof(itemText));
+			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
+			Q_strcat(itemText, "\n", sizeof(itemText));
+			Q_strcat(itemText, _("^BDamage type:\tProtection:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++) {
 				if (!csi.dts[i].showInMenu)
 					continue;
@@ -164,7 +165,6 @@ void INV_ItemDescription (const objDef_t *od)
 				const int numFiredefs = odAmmo->numFiredefs[weaponIndex];
 
 				/* This contains everything common for weapons and ammos */
-
 				/* We check if the wanted firemode to display exists. */
 				if (fireModeIndex > numFiredefs - 1)
 					fireModeIndex = 0;

@@ -210,39 +210,6 @@ static void UP_DisplayTechTree (const technology_t* t)
 }
 
 /**
- * @brief Prints the UFOpaedia description for armour
- * @sa UP_Article
- * @todo This is not ufopedia only - no? We could use it in the equip menu, too (object info tab)
- */
-static void UP_ArmourDescription (const technology_t* t)
-{
-	int i;
-	const objDef_t *od = INVSH_GetItemByID(t->provides);
-	if (!od)
-		Com_Error(ERR_DROP, "Could not find armour definition '%s' which should have been provided by '%s'", t->provides, t->id);
-
-	/* select item */
-	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_upmodel_bottom", "");
-	Cvar_Set("mn_upimage_top", t->image);
-
-	upBuffer[0] = '\0';
-	Com_sprintf(upBuffer, sizeof(upBuffer), _("Size:\t%i\n"), od->size);
-	Q_strcat(upBuffer, "\n", sizeof(upBuffer));
-
-	Q_strcat(upBuffer, _("^BDamage type\tProtection\n"), sizeof(upBuffer));
-	for (i = 0; i < csi.numDTs; i++) {
-		if (!csi.dts[i].showInMenu)
-			continue;
-		Q_strcat(upBuffer, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
-	}
-
-	Cvar_Set("mn_upmetadata", "1");
-	MN_RegisterText(TEXT_UFOPEDIA_METADATA, upBuffer);
-	UP_DisplayTechTree(t);
-}
-
-/**
  * @brief Prints the UFOpaedia description for buildings
  * @sa UP_Article
  */
@@ -636,6 +603,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		currentChapter = tech->upChapter;
 		upCurrentTech = tech;
 
+		MN_ExecuteConfunc("mn_item_change_view other");
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
 			/* If researched -> display research text */
@@ -658,8 +626,6 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 
 			switch (tech->type) {
 			case RS_ARMOUR:
-				UP_ArmourDescription(tech);
-				break;
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
 					if (!strcmp(tech->provides, csi.ods[i].id)) {
