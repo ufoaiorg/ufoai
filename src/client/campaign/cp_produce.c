@@ -460,7 +460,7 @@ void PR_ProductionRun (void)
 
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
-	 * wheter an item is produced. Then add to base storage. */
+	 * whether an item is produced. Then add to base storage. */
 	for (i = 0; i < MAX_BASES; i++) {
 		base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
