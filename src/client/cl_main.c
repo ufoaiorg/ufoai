@@ -951,6 +951,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
 	/* forward commands again */
+	Cmd_AddCommand("debug_edictdestroy", NULL, "Call the 'destroy' function of a given edict");
 	Cmd_AddCommand("debug_edictuse", NULL, "Call the 'use' function of a given edict");
 	Cmd_AddCommand("debug_edicttouch", NULL, "Call the 'touch' function of a given edict");
 	Cmd_AddCommand("debug_killteam", NULL, "Kills a given team");

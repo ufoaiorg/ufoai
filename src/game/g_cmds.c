@@ -357,6 +357,30 @@ static void G_UseEdict_f (void)
 	e->use(e);
 }
 
+static void G_DestroyEdict_f (void)
+{
+	edict_t *e;
+	int i;
+
+	if (gi.Cmd_Argc() < 2) {
+		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		return;
+	}
+
+	i = atoi(gi.Cmd_Argv(1));
+	if (i < 0 || i >= globals.num_edicts)
+		return;
+
+	e = &g_edicts[i];
+	if (!e->destroy) {
+		gi.dprintf("No destroy function for entity %s\n", e->classname);
+		return;
+	}
+
+	gi.dprintf("Call destroy function for %s\n", e->classname);
+	e->destroy(e);
+}
+
 #endif
 
 void G_ClientCommand (player_t * player)
@@ -387,6 +411,8 @@ void G_ClientCommand (player_t * player)
 		G_TouchEdict_f();
 	else if (Q_strcasecmp(cmd, "debug_edictuse") == 0)
 		G_UseEdict_f();
+	else if (Q_strcasecmp(cmd, "debug_edictdestroy") == 0)
+		G_DestroyEdict_f();
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
