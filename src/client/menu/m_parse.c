@@ -1061,8 +1061,8 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 			MN_AppendNode(parent, node);
 	}
 
-	/* throw to the node, we begin to read attributes */
-	if (node->behaviour->loading)
+	/* initialize default properties */
+	if (node->super == NULL && node->behaviour->loading)
 		node->behaviour->loading(node);
 
 	/* get body */
