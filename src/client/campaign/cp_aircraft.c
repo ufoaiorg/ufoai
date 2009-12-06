@@ -570,7 +570,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
 {
 	base_t *base;
-	float distance = 0;
+	float distance;
 
 	assert(aircraft);
 	base = (base_t *) aircraft->homebase;
@@ -583,10 +583,7 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 	distance += GetDistanceOnGlobe(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR)
-		return qtrue;
-
-	return qfalse;
+	return (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR);
 }
 
 /**
@@ -605,11 +602,8 @@ qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, cons
 	/* Calculate the line that the aircraft should follow to go to destination */
 	distance = GetDistanceOnGlobe(aircraft->pos, destination);
 
-	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f)
-		return qtrue;
-
-	return qfalse;
+	/* Check if the aircraft has enough fuel to go to destination */
+	return (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR);
 }
 
 /**
