@@ -409,6 +409,33 @@ static void R_ModelViewTransform (const vec3_t in, vec3_t out)
 }
 
 /**
+ * @brief Searches an appropriate level-of-detail mesh for the given model
+ * @param origin The origin the model should be placed to in the world
+ * @param mod The model where we are searching an appropriate level-of-detail mesh for
+ * @return The mesh to render
+ */
+static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAliasModel_t* mod)
+{
+    if (mod->num_meshes == 1) {
+    	return &mod->meshes[0];
+    } else {
+		vec3_t dist;
+
+		/* get distance, set lod if available */
+		VectorSubtract(refdef.viewOrigin, origin, dist);
+		if (mod->num_meshes > 3 && VectorLength(dist) > 1500) {
+			return &mod->meshes[3];
+		} if (mod->num_meshes > 2 && VectorLength(dist) > 1000) {
+			return &mod->meshes[2];
+		} else if (VectorLength(dist) > 500) {
+			return &mod->meshes[1];
+		}
+
+		return &mod->meshes[0];
+    }
+}
+
+/**
  * @brief Draw the models in the entity list
  * @note this is only called in ca_active or ca_sequence mode
  * @sa R_DrawEntities
@@ -419,6 +446,7 @@ void R_DrawAliasModel (entity_t *e)
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
+	mAliasMesh_t* lodMesh;
 
 	mod = (mAliasModel_t *)&e->model->alias;
 
@@ -482,14 +510,12 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_ResetArrayState();
 
-	for (i = 0; i < mod->num_meshes; i++) {
-		const mAliasMesh_t *mesh = &mod->meshes[i];
-		refdef.aliasCount += mesh->num_tris;
-		if (mesh->verts != NULL)
-			R_DrawAliasStatic(mesh);
-		else
-			R_DrawAliasFrameLerp(mod, &mod->meshes[i], e->as.backlerp, e->as.frame, e->as.oldframe);
-	}
+	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
+	refdef.aliasCount += lodMesh->num_tris;
+	if (lodMesh->verts != NULL)
+		R_DrawAliasStatic(lodMesh);
+	else
+		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	/* show model bounding box */
 	if (r_showbox->integer) {
