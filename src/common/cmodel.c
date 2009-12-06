@@ -661,7 +661,8 @@ qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int le
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
- * @param[in] levelmask
+ * @param[out] end The position where the trace hits something
+ * @param[in] levelmask The bsp level that is used for tracing in (see @c TL_FLAG_*)
  * @param[in] entlist of entities that might be on this line
  * @sa CM_EntTestLineDM
  * @return qtrue - hit something
