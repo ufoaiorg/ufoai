@@ -417,7 +417,5 @@ void G_TouchEdicts (edict_t *ent, float extend)
 			continue;
 		if (ent->touch)
 			ent->touch(ent, hit);
-		if (!ent->inuse)
-			break;
 	}
 }
