@@ -43,6 +43,7 @@
 #include "gtkutil/menu.h"
 #include "gtkutil/toolbar.h"
 #include "commands.h"
+#include "gtkutil/IConv.h"
 
 // =============================================================================
 // Misc stuff
@@ -148,27 +149,41 @@ void button_clicked_entry_browse_file (GtkWidget* widget, GtkEntry* entry)
 {
 	std::string filename = gtk_entry_get_text(entry);
 
-	gtkutil::FileChooser fileChooser(gtk_widget_get_toplevel(widget), _("Choose File"), true);
+	gtkutil::FileChooser fileChooser(gtk_widget_get_toplevel(widget), _("Choose File"), true, false);
 	if (!filename.empty()) {
 		fileChooser.setCurrentPath(os::stripFilename(filename));
 		fileChooser.setCurrentFile(filename);
 	}
 
 	std::string file = fileChooser.display();
-	if (!file.empty())
+
+	if (GTK_IS_WINDOW(gtk_widget_get_toplevel(widget))) {
+		gtk_window_present(GTK_WINDOW(gtk_widget_get_toplevel(widget)));
+	}
+
+	if (!file.empty()) {
+		file = gtkutil::IConv::filenameToUTF8(file);
 		gtk_entry_set_text(entry, file.c_str());
+	}
 }
 
 void button_clicked_entry_browse_directory (GtkWidget* widget, GtkEntry* entry)
 {
-	const char* text = gtk_entry_get_text(entry);
-	char *dir =
-			dir_dialog(gtk_widget_get_toplevel(widget), _("Choose Directory"), g_path_is_absolute(text) ? text : "");
+	gtkutil::FileChooser dirChooser(gtk_widget_get_toplevel(widget), _("Choose Directory"), true, true);
+	std::string curEntry = gtk_entry_get_text(entry);
 
-	if (dir != 0) {
-		gchar* converted = g_filename_to_utf8(dir, -1, 0, 0, 0);
-		gtk_entry_set_text(entry, converted);
-		g_free(dir);
-		g_free(converted);
+	if (g_path_is_absolute(curEntry.c_str()))
+		curEntry.clear();
+	dirChooser.setCurrentPath(curEntry);
+
+	std::string filename = dirChooser.display();
+
+	if (GTK_IS_WINDOW(gtk_widget_get_toplevel(widget))) {
+		gtk_window_present(GTK_WINDOW(gtk_widget_get_toplevel(widget)));
+	}
+
+	if (!filename.empty()) {
+		filename = gtkutil::IConv::filenameToUTF8(filename);
+		gtk_entry_set_text(entry, filename.c_str());
 	}
 }

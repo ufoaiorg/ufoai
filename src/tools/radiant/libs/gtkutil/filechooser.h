@@ -32,12 +32,6 @@ typedef struct _GtkWidget GtkWidget;
 const char* file_dialog (GtkWidget *parent, bool open, const std::string& title, const std::string& path = "",
 		const std::string& pattern = "");
 
-/// \brief Prompts the user to browse for a directory.
-/// The prompt window will be transient to \p parent.
-/// The directory will initially default to \p path, which must be an absolute path.
-/// The returned string is allocated with \c g_malloc and must be freed with \c g_free.
-char* dir_dialog (GtkWidget *parent, const std::string& title = _("Choose Directory"), const std::string& path = "");
-
 namespace gtkutil
 {
 
@@ -93,14 +87,15 @@ namespace gtkutil
 			 * Construct a new filechooser with the given parameters.
 			 *
 			 * @param parent The parent GtkWidget
-			 * @param title: The dialog title.
-			 * @param open: if TRUE this is asking for "Open" files, FALSE generates a "Save" dialog.
-			 * @param pattern: the type "map", "prefab", this determines the file extensions.
-			 * @param defaultExt: The default extension appended when the user enters
+			 * @param title The dialog title.
+			 * @param open if TRUE this is asking for "Open" files, FALSE generates a "Save" dialog.
+			 * @param browseFolders if TRUE the dialog is asking the user for directories only.
+			 * @param pattern the type "map", "prefab", this determines the file extensions.
+			 * @param defaultExt The default extension appended when the user enters
 			 *              filenames without extension. (Including the dot as seperator character.)
 			 */
-			FileChooser (GtkWidget* parent, const std::string& title, bool open, const std::string& pattern = "",
-					const std::string& defaultExt = "");
+			FileChooser (GtkWidget* parent, const std::string& title, bool open, bool browseFolders,
+					const std::string& pattern = "", const std::string& defaultExt = "");
 
 			virtual ~FileChooser ();
 

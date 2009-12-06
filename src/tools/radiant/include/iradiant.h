@@ -66,9 +66,6 @@ typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const st
 typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const std::string& title,
 		const std::string& path, const std::string& pattern);
 
-// returns a gchar* string that must be g_free'd by the user
-typedef char* (* PFN_QERAPP_DIRDIALOG) (GtkWidget *parent, const std::string& title, const std::string& path);
-
 // return true if the user closed the dialog with 'Ok'
 // 'color' is used to set the initial value and store the selected value
 template<typename Element> class BasicVector3;
@@ -153,7 +150,6 @@ struct IRadiant
 		// GTK+ functions
 		PFN_QERAPP_MESSAGEBOX m_pfnMessageBox;
 		PFN_QERAPP_FILEDIALOG m_pfnFileDialog;
-		PFN_QERAPP_DIRDIALOG m_pfnDirDialog;
 		PFN_QERAPP_COLORDIALOG m_pfnColorDialog;
 		PFN_QERAPP_NEWIMAGE m_pfnNewImage;
 };

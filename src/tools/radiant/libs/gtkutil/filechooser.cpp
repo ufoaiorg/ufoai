@@ -224,28 +224,6 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const std::st
 	return g_file_dialog_file;
 }
 
-char* dir_dialog (GtkWidget* parent, const std::string& title, const std::string& path)
-{
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(title.c_str(), GTK_WINDOW(parent),
-			GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN,
-			GTK_RESPONSE_ACCEPT, (char const*) 0);
-
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER_ON_PARENT);
-
-	if (!path.empty())
-		gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), path.c_str());
-
-	char* filename = 0;
-	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
-		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-	}
-
-	gtk_widget_destroy(dialog);
-
-	return filename;
-}
-
 /**
  * @brief Show a new file dialog with given parameters and returns the selected path in a clean manner.
  * @note this will pop up new dialogs if an existing file was chosen and it was chosen to not overwrite it in save mode.
@@ -279,8 +257,8 @@ const char* file_dialog (GtkWidget* parent, bool open, const std::string& title,
 namespace gtkutil
 {
 
-	FileChooser::FileChooser (GtkWidget* parent, const std::string& title, bool open, const std::string& pattern,
-			const std::string& defaultExt) :
+	FileChooser::FileChooser (GtkWidget* parent, const std::string& title, bool open, bool browseFolders,
+			const std::string& pattern, const std::string& defaultExt) :
 		_parent(parent), _dialog(NULL), _title(title), _pattern(pattern), _defaultExt(defaultExt), _open(open),
 				_preview(NULL)
 	{
@@ -293,10 +271,12 @@ namespace gtkutil
 		}
 
 		if (_open) {
-			_dialog = gtk_file_chooser_dialog_new(_title.c_str(), GTK_WINDOW(_parent), GTK_FILE_CHOOSER_ACTION_OPEN,
+			_dialog = gtk_file_chooser_dialog_new(_title.c_str(), GTK_WINDOW(_parent),
+					browseFolders ? GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER : GTK_FILE_CHOOSER_ACTION_OPEN,
 					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, NULL);
 		} else {
-			_dialog = gtk_file_chooser_dialog_new(title.c_str(), GTK_WINDOW(_parent), GTK_FILE_CHOOSER_ACTION_SAVE,
+			_dialog = gtk_file_chooser_dialog_new(title.c_str(), GTK_WINDOW(_parent),
+					browseFolders ? GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER : GTK_FILE_CHOOSER_ACTION_SAVE,
 					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT, NULL);
 		}
 

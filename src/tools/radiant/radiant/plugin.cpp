@@ -172,7 +172,6 @@ class RadiantCoreAPI
 			m_radiantcore.m_pfnMessageBox = &gtk_MessageBox;
 			m_radiantcore.m_pfnFileDialog = &file_dialog;
 			m_radiantcore.m_pfnColorDialog = &color_dialog;
-			m_radiantcore.m_pfnDirDialog = &dir_dialog;
 			m_radiantcore.m_pfnNewImage = &gtkutil::getImage;
 		}
 		IRadiant* getTable ()

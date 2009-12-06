@@ -549,7 +549,7 @@ void WXY_Print (void)
 	unsigned char* img;
 
 	gtkutil::FileChooser
-			fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, "bmp", ".bmp");
+			fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, false, "bmp", ".bmp");
 	std::string filename = fileChooser.display();
 	if (filename.empty())
 		return;
@@ -1357,7 +1357,7 @@ void XYWnd::loadBackgroundImage (const std::string& name)
 		g_warning("Could not extract the relative path, using full path instead\n");
 
 	std::string fileNameWithoutExt = os::stripExtension(relative);
-	Image *image = QERApp_LoadImage(0, fileNameWithoutExt.c_str());
+	Image *image = QERApp_LoadImage(0, fileNameWithoutExt);
 	if (!image) {
 		g_warning("Could not load texture %s\n", fileNameWithoutExt.c_str());
 		return;
@@ -1410,9 +1410,10 @@ void WXY_BackgroundSelect (void)
 		return;
 	}
 
-	const char* filename = file_dialog(GTK_WIDGET(GlobalRadiant().getMainWindow()), TRUE, _("Background Image"));
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Background Image"), true, false);
+	std::string filename = fileChooser.display();
 	g_pParentWnd->ActiveXY()->disableBackground();
-	if (filename)
+	if (!filename.empty())
 		g_pParentWnd->ActiveXY()->loadBackgroundImage(filename);
 }
 

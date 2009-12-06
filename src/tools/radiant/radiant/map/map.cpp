@@ -1461,7 +1461,7 @@ const std::string& getMapsPath (void)
 
 const std::string map_open (const std::string& title)
 {
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, true, "map", "map");
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, true, false, "map", "map");
 	if (map::isUnnamed()) {
 		fileChooser.setCurrentPath(getMapsPath());
 	} else {
@@ -1480,7 +1480,7 @@ const std::string map_open (const std::string& title)
 
 const std::string map_save (const std::string& title)
 {
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, false, "map", "map");
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, false, false, "map", "map");
 	if (map::isUnnamed()) {
 		fileChooser.setCurrentPath(getMapsPath());
 	} else {
