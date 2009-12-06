@@ -103,11 +103,11 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
-static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth, int skinHeight)
+static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2)
 {
 	int i, j;
-	dMD2Triangle_t *pintri;
-	dMD2Coord_t *pincoord;
+	const dMD2Triangle_t *pintri;
+	const dMD2Coord_t *pincoord;
 	mAliasMesh_t *outMesh;
 	mAliasFrame_t *outFrame;
 	mAliasVertex_t *outVertex;
@@ -117,10 +117,24 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts;
+	int skinWidth, skinHeight;
 	double isw, ish;
 	const char *md2Path;
+	size_t size;
 
-	mod->alias.meshes = outMesh = Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
+	skinHeight = LittleLong(md2->skinheight);
+	skinWidth = LittleLong(md2->skinwidth);
+	if (skinHeight <= 0 || skinWidth <= 0)
+		Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
+
+	mod->alias.num_meshes++;
+	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
+
+	if (mod->alias.meshes == NULL)
+		mod->alias.meshes = outMesh = Mem_PoolAlloc(size, vid_modelPool, 0);
+	else
+		mod->alias.meshes = outMesh = Mem_ReAlloc(mod->alias.meshes, size);
+
 	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
 	outMesh->num_verts = LittleLong(md2->num_verts);
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
@@ -138,7 +152,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth
 		return;
 	}
 	outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
-	md2Path = (char *) md2 + LittleLong(md2->ofs_skins);
+	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 	for (i = 0; i < outMesh->num_skins; i++) {
 		outMesh->skins[i].skin = R_AliasModelGetSkin(mod, md2Path + i * MD2_MAX_SKINNAME);
 		Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
@@ -150,8 +164,8 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth
 	ish = 1.0 / (double)outMesh->skinHeight;
 
 	/* load triangle lists */
-	pintri = (dMD2Triangle_t *) ((byte *) md2 + LittleLong(md2->ofs_tris));
-	pincoord = (dMD2Coord_t *) ((byte *) md2 + LittleLong(md2->ofs_st));
+	pintri = (const dMD2Triangle_t *) ((const byte *) md2 + LittleLong(md2->ofs_tris));
+	pincoord = (const dMD2Coord_t *) ((const byte *) md2 + LittleLong(md2->ofs_st));
 
 	for (i = 0; i < outMesh->num_tris; i++) {
 		for (j = 0; j < 3; j++) {
@@ -218,7 +232,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth
 
 	ClearBounds(mod->mins, mod->maxs);
 	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
-		const dMD2Frame_t *pinframe = (dMD2Frame_t *) ((byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+		const dMD2Frame_t *pinframe = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
 
 		for (j = 0; j < 3; j++) {
 			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);
@@ -247,11 +261,39 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth
 static void R_ModLoadLevelOfDetailData (model_t* mod)
 {
 	char base[MAX_QPATH];
+	int i;
 
 	Com_StripExtension(mod->name, base, sizeof(base));
 
-	if (FS_CheckFile("%s_1.md2", base)) {
+	for (i = 1; i <= 3; i++) {
+		if (FS_CheckFile("%s-lod%02i.md2", base, i)) {
+			byte *buf;
+			int bufSize, version;
+			int skinWidth, skinHeight;
+			char fileName[MAX_QPATH];
+			const dMD2Model_t *md2;
 
+			Com_sprintf(fileName, sizeof(fileName), "%s-lod%02i.md2", base, i);
+			/* load the file */
+			bufSize = FS_LoadFile(fileName, &buf);
+			if (!buf)
+				return;
+
+			/* get the disk data */
+			md2 = (const dMD2Model_t *) buf;
+
+			/* sanity checks */
+			version = LittleLong(md2->version);
+			if (version != MD2_ALIAS_VERSION)
+				Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
+
+			if (bufSize != LittleLong(md2->ofs_end))
+				Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
+
+			R_ModLoadAliasMD2Mesh(mod, md2);
+
+			FS_FreeFile(buf);
+		}
 	}
 }
 
@@ -263,12 +305,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	dMD2Model_t *md2;
 	int version, size;
 	byte *tagbuf = NULL, *animbuf = NULL;
-	int skinWidth, skinHeight;
 	size_t l;
-
-	/* fixed values */
-	mod->type = mod_alias_md2;
-	mod->alias.num_meshes = 1;
 
 	/* get the disk data */
 	md2 = (dMD2Model_t *) buffer;
@@ -281,17 +318,15 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	if (bufSize != LittleLong(md2->ofs_end))
 		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
 
-	skinHeight = LittleLong(md2->skinheight);
-	skinWidth = LittleLong(md2->skinwidth);
-	if (skinHeight <= 0 || skinWidth <= 0)
-		Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
-
 	/* only one mesh for md2 models */
 	mod->alias.num_frames = LittleLong(md2->num_frames);
 	if (mod->alias.num_frames <= 0 || mod->alias.num_frames >= MD2_MAX_FRAMES)
 		Com_Error(ERR_DROP, "model %s has too many (or no) frames", mod->name);
 
-	R_ModLoadAliasMD2Mesh(mod, md2, skinWidth, skinHeight);
+	/* fixed values */
+	mod->type = mod_alias_md2;
+
+	R_ModLoadAliasMD2Mesh(mod, md2);
 
 	/* load the tags */
 	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));

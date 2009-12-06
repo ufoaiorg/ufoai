@@ -330,10 +330,13 @@ qboolean R_CullMeshModel (entity_t *e)
 	vec3_t vectors[3];
 	vec4_t bbox[8];
 
-	if (e->tagent)
+	if (e->tagent) {
 		VectorCopy(e->tagent->origin, origin);
-	else
+		VectorCopy(e->tagent->angles, angles);
+	} else {
 		VectorCopy(e->origin, origin);
+		VectorCopy(e->angles, angles);
+	}
 
 	/* determine scaled mins/maxs */
 	for (i = 0; i < 3; i++) {
@@ -347,7 +350,6 @@ qboolean R_CullMeshModel (entity_t *e)
 	}
 
 	/* rotate the bounding box */
-	VectorCopy(e->angles, angles);
 	angles[YAW] = -angles[YAW];
 	AngleVectors(angles, vectors[0], vectors[1], vectors[2]);
 
@@ -363,7 +365,7 @@ qboolean R_CullMeshModel (entity_t *e)
 		bbox[i][1] = -DotProduct(vectors[1], tmp);
 		bbox[i][2] = DotProduct(vectors[2], tmp);
 
-		VectorAdd(e->origin, bbox[i], bbox[i]);
+		VectorAdd(origin, bbox[i], bbox[i]);
 	}
 
 	/* compute a full bounding box */
