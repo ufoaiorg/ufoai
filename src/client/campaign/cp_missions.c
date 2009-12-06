@@ -269,7 +269,9 @@ static void CP_CreateAlienTeam (mission_t *mission)
 
 	assert(mission->posAssigned);
 
-	numAliens = 4 + (int) ccs.overallInterest / 50;
+	numAliens = 4 + (int) ccs.overallInterest / 50; // TODO: Should it be scripted too?
+	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
+		numAliens=mission->ufo->maxTeamSize;
 	if (numAliens > mission->mapDef->maxAliens)
 		numAliens = mission->mapDef->maxAliens;
 	ccs.battleParameters.aliens = numAliens;
@@ -1698,4 +1700,3 @@ void CP_MissionsInit (void)
 	Cmd_AddCommand("debug_setinterest", CP_SetAlienInterest_f, "Set overall interest level.");
 #endif
 }
-
