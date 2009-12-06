@@ -772,7 +772,7 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	else if (!strcmp(type, "ugv"))
 		CL_ParseUGVs(name, text);
 	else if (!strcmp(type, "window"))
-		MN_ParseMenu(type, name, text);
+		MN_ParseWindow(type, name, text);
 	else if (!strcmp(type, "component"))
 		MN_ParseComponent(type, text);
 }

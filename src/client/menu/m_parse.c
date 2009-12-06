@@ -981,7 +981,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 /**
  * @brief parse a node and complet the menu with it
- * @sa MN_ParseMenuBody
  * @sa MN_ParseNodeProperties
  * @todo we can think about merging MN_ParseNodeProperties here
  * @note first token already read
@@ -1273,9 +1272,12 @@ void MN_ParseIcon (const char *name, const char **text)
 }
 
 /**
+ * @brief Parse a component
+ * @sa CL_ParseClientData
  * @code
  * component panel componentName {
  * }
+ * @endcode
  */
 void MN_ParseComponent (const char *type, const char **text)
 {
@@ -1299,23 +1301,28 @@ void MN_ParseComponent (const char *type, const char **text)
 
 
 /**
+ * @brief Parse a window
  * @sa CL_ParseClientData
+ * @code
+ * window windowName {
+ * }
+ * @endcode
  */
-void MN_ParseMenu (const char *type, const char *name, const char **text)
+void MN_ParseWindow (const char *type, const char *name, const char **text)
 {
-	const char *errhead = "MN_ParseMenu: unexpected end of file (menu";
+	const char *errhead = "MN_ParseWindow: unexpected end of file (menu";
 	menuNode_t *menu;
 	const char *token;
 	qboolean result;
 	int i;
 
 	if (strcmp(type, "window") != 0) {
-		Com_Error(ERR_FATAL, "MN_ParseMenu: '%s %s' is not a window node\n", type, name);
+		Com_Error(ERR_FATAL, "MN_ParseWindow: '%s %s' is not a window node\n", type, name);
 		return;	/* never reached */
 	}
 
 	if (MN_IsReservedToken(name)) {
-		Com_Printf("MN_ParseMenu: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
+		Com_Printf("MN_ParseWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
 		return;
 	}
 
@@ -1325,11 +1332,11 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 			break;
 
 	if (i < mn.numWindows) {
-		Com_Printf("MN_ParseMenus: %s \"%s\" with same name found, second ignored\n", type, name);
+		Com_Printf("MN_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
 	if (mn.numWindows >= MAX_MENUS) {
-		Com_Error(ERR_FATAL, "MN_ParseMenu: max menus exceeded (%i) - ignore '%s'\n", MAX_MENUS, name);
+		Com_Error(ERR_FATAL, "MN_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_MENUS, name);
 		return;	/* never reached */
 	}
 
@@ -1351,7 +1358,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 		menu->behaviour->loading(menu);
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 		if (strlen(menu->name) != strlen(name))
-			Com_Printf("MN_ParseMenu: Menu name \"%s\" truncated. New name is \"%s\"\n", name, menu->name);
+			Com_Printf("MN_ParseWindow: Menu name \"%s\" truncated. New name is \"%s\"\n", name, menu->name);
 	}
 
 	MN_InsertMenu(menu);
@@ -1359,7 +1366,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	/* parse it's body */
 	result = MN_ParseNodeBody(menu, text, &token, errhead);
 	if (!result) {
-		Com_Error(ERR_FATAL, "MN_ParseMenu: menu \"%s\" has a bad body\n", menu->name);
+		Com_Error(ERR_FATAL, "MN_ParseWindow: menu \"%s\" has a bad body\n", menu->name);
 		return;	/* never reached */
 	}
 
