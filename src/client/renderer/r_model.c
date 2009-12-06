@@ -87,6 +87,7 @@ void R_ModModellist_f (void)
 
 /**
  * @brief Loads in a model for the given name
+ * @param[in] name Filename relative to base dir and with extension (models/model.md2)
  */
 static model_t *R_ModForName (const char *name, qboolean crash)
 {

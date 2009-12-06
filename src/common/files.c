@@ -286,10 +286,16 @@ int FS_OpenFile (const char *filename, qFILE * file, filemode_t mode)
  * @note Won't print any errors
  * @sa FS_FileExists
  */
-int FS_CheckFile (const char *filename)
+int FS_CheckFile (const char *fmt, ...)
 {
 	int result;
 	qFILE file;
+	va_list ap;
+	char filename[MAX_QPATH];
+
+	va_start(ap, fmt);
+	Q_vsnprintf(filename, sizeof(filename), fmt, ap);
+	va_end(ap);
 
 	result = FS_OpenFileSingle(filename, &file, FILE_READ);
 	if (result != -1)

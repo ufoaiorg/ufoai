@@ -144,7 +144,7 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 	} else {
 		for (shotNum = 0; shotNum < 1000; shotNum++) {
 			Com_sprintf(checkName, sizeof(checkName), "scrnshot/ufo%i%i.%s", shotNum / 10, shotNum % 10, ext);
-			if (FS_CheckFile(checkName) == -1)
+			if (FS_CheckFile("%s", checkName) == -1)
 				break;
 		}
 		if (shotNum == 1000) {

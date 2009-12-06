@@ -103,17 +103,11 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
-/**
- * @brief Load MD2 models from file.
- */
-void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
+static void R_ModLoadAliasMD2Mesh (model_t *mod, dMD2Model_t *md2, int skinWidth, int skinHeight)
 {
 	int i, j;
-	dMD2Model_t *md2;
 	dMD2Triangle_t *pintri;
 	dMD2Coord_t *pincoord;
-	int version, size;
-	byte *tagbuf = NULL, *animbuf = NULL;
 	mAliasMesh_t *outMesh;
 	mAliasFrame_t *outFrame;
 	mAliasVertex_t *outVertex;
@@ -122,35 +116,9 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
-	int frameSize, numIndexes, numVerts, skinWidth, skinHeight;
+	int frameSize, numIndexes, numVerts;
 	double isw, ish;
 	const char *md2Path;
-	size_t l;
-
-	/* fixed values */
-	mod->type = mod_alias_md2;
-	mod->alias.num_meshes = 1;
-
-	/* get the disk data */
-	md2 = (dMD2Model_t *) buffer;
-
-	/* sanity checks */
-	version = LittleLong(md2->version);
-	if (version != MD2_ALIAS_VERSION)
-		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
-
-	if (bufSize != LittleLong(md2->ofs_end))
-		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
-
-	skinHeight = LittleLong(md2->skinheight);
-	skinWidth = LittleLong(md2->skinwidth);
-	if (skinHeight <= 0 || skinWidth <= 0)
-		Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
-
-	/* only one mesh for md2 models */
-	mod->alias.num_frames = LittleLong(md2->num_frames);
-	if (mod->alias.num_frames <= 0 || mod->alias.num_frames >= MD2_MAX_FRAMES)
-		Com_Error(ERR_DROP, "model %s has too many (or no) frames", mod->name);
 
 	mod->alias.meshes = outMesh = Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
 	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
@@ -269,6 +237,61 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[2] * outFrame->scale[2];
 		}
 	}
+}
+
+/**
+ * @brief Adds new meshes to md2 models for different level of detail meshes
+ * @param mod The model to load the lod models for
+ * @note We support three different levels here
+ */
+static void R_ModLoadLevelOfDetailData (model_t* mod)
+{
+	char base[MAX_QPATH];
+
+	Com_StripExtension(mod->name, base, sizeof(base));
+
+	if (FS_CheckFile("%s_1.md2", base)) {
+
+	}
+}
+
+/**
+ * @brief Load MD2 models from file.
+ */
+void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
+{
+	dMD2Model_t *md2;
+	int version, size;
+	byte *tagbuf = NULL, *animbuf = NULL;
+	int skinWidth, skinHeight;
+	size_t l;
+
+	/* fixed values */
+	mod->type = mod_alias_md2;
+	mod->alias.num_meshes = 1;
+
+	/* get the disk data */
+	md2 = (dMD2Model_t *) buffer;
+
+	/* sanity checks */
+	version = LittleLong(md2->version);
+	if (version != MD2_ALIAS_VERSION)
+		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
+
+	if (bufSize != LittleLong(md2->ofs_end))
+		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
+
+	skinHeight = LittleLong(md2->skinheight);
+	skinWidth = LittleLong(md2->skinwidth);
+	if (skinHeight <= 0 || skinWidth <= 0)
+		Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'", mod->name, skinHeight, skinWidth);
+
+	/* only one mesh for md2 models */
+	mod->alias.num_frames = LittleLong(md2->num_frames);
+	if (mod->alias.num_frames <= 0 || mod->alias.num_frames >= MD2_MAX_FRAMES)
+		Com_Error(ERR_DROP, "model %s has too many (or no) frames", mod->name);
+
+	R_ModLoadAliasMD2Mesh(mod, md2, skinWidth, skinHeight);
 
 	/* load the tags */
 	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));
@@ -277,7 +300,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	strcpy(&(mod->alias.tagname[l]), ".tag");
 
 	/* try to load the tag file */
-	if (FS_CheckFile(mod->alias.tagname) != -1) {
+	if (FS_CheckFile("%s", mod->alias.tagname) != -1) {
 		/* load the tags */
 		size = FS_LoadFile(mod->alias.tagname, &tagbuf);
 		R_ModLoadTags(mod, tagbuf, size);
@@ -290,12 +313,14 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	strcpy(&(mod->alias.animname[l]), ".anm");
 
 	/* try to load the animation file */
-	if (FS_CheckFile(mod->alias.animname) != -1) {
+	if (FS_CheckFile("%s", mod->alias.animname) != -1) {
 		/* load the tags */
 		FS_LoadFile(mod->alias.animname, &animbuf);
 		R_ModLoadAnims(&mod->alias, animbuf);
 		FS_FreeFile(animbuf);
 	}
+
+	R_ModLoadLevelOfDetailData(mod);
 
 	R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes);
 }

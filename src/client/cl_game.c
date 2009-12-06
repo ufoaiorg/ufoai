@@ -189,20 +189,20 @@ static void MN_MapInfo (int step)
 		Cvar_Set("mn_svmapname", md->map);
 	}
 
-	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", mapname)) != -1)
+	if (FS_CheckFile("pics/maps/shots/%s.jpg", mapname) != -1)
 		Cvar_Set("mn_mappic", va("maps/shots/%s", mapname));
 	else
-		Cvar_Set("mn_mappic", va("maps/shots/default"));
+		Cvar_Set("mn_mappic", "maps/shots/default");
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", mapname)) != -1)
+	if (FS_CheckFile("pics/maps/shots/%s_2.jpg", mapname) != -1)
 		Cvar_Set("mn_mappic2", va("maps/shots/%s_2", mapname));
 	else
-		Cvar_Set("mn_mappic2", va("maps/shots/default"));
+		Cvar_Set("mn_mappic2", "maps/shots/default");
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", mapname)) != -1)
+	if (FS_CheckFile("pics/maps/shots/%s_3.jpg", mapname) != -1)
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3", mapname));
 	else
-		Cvar_Set("mn_mappic3", va("maps/shots/default"));
+		Cvar_Set("mn_mappic3", "maps/shots/default");
 }
 
 static void MN_GetMaps_f (void)

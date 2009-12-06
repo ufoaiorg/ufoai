@@ -906,21 +906,21 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 	/* Check if there is any image at this path. */
 
 	strcpy(ename, ".tga");
-	if (FS_CheckFile(filename_temp) != -1) {
+	if (FS_CheckFile("%s", filename_temp) != -1) {
 		R_LoadTGA(filename_temp, pic, width, height);
 		if (pic)
 			return;
 	}
 
 	strcpy(ename, ".jpg");
-	if (FS_CheckFile(filename_temp) != -1) {
+	if (FS_CheckFile("%s", filename_temp) != -1) {
 		R_LoadJPG(filename_temp, pic, width, height);
 		if (pic)
 			return;
 	}
 
 	strcpy(ename, ".png");
-	if (FS_CheckFile(filename_temp) != -1) {
+	if (FS_CheckFile("%s", filename_temp) != -1) {
 		R_LoadPNG(filename_temp, pic, width, height);
 	}
 }
@@ -1467,7 +1467,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	loader = imageLoader;
 	while (loader->load) {
 		strcpy(ename, loader->extension);
-		if (FS_CheckFile(lname) != -1) {
+		if (FS_CheckFile("%s", lname) != -1) {
 			byte *pic = NULL;
 			int width, height;
 			loader->load(lname, &pic, &width, &height);

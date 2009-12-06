@@ -122,7 +122,7 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map + 1);
 
 		/* check for ump file */
-		if (FS_CheckFile(expanded) < 0) {
+		if (FS_CheckFile("%s", expanded) < 0) {
 			Com_Printf("Can't find %s\n", expanded);
 			return qfalse;
 		}
@@ -130,7 +130,7 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
 		/* check for bsp file */
-		if (FS_CheckFile(expanded) < 0) {
+		if (FS_CheckFile("%s", expanded) < 0) {
 			Com_Printf("Can't find %s\n", expanded);
 			return qfalse;
 		}

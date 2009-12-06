@@ -252,13 +252,10 @@ static const char *imageExtensions[] = {
 
 static qboolean MN_CheckRadarImage (const char *imageName, const int level)
 {
-	char imagePath[MAX_QPATH];
 	const char **ext = imageExtensions;
 
 	while (*ext) {
-		Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i.%s", imageName, level, *ext);
-
-		if (FS_CheckFile(va("pics/%s", imagePath)) > 0)
+		if (FS_CheckFile("pics/radars/%s_%i.%s", imageName, level, *ext) > 0)
 			return qtrue;
 		ext++;
 	}

@@ -506,7 +506,7 @@ void SV_NextMapcycle (void)
 					Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
 					/* check for bsp file */
-					if (map[0] != '+' && FS_CheckFile(expanded) < 0) {
+					if (map[0] != '+' && FS_CheckFile("%s", expanded) < 0) {
 						Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
 							"Use the 'maplist' command to get a list of valid maps\n", expanded);
 						map = NULL;
@@ -528,7 +528,7 @@ void SV_NextMapcycle (void)
 				Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
 				/* check for bsp file */
-				if (FS_CheckFile(expanded) < 0) {
+				if (FS_CheckFile("%s", expanded) < 0) {
 					Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
 						"Use the 'maplist' command to get a list of valid maps\n", expanded);
 					return;

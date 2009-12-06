@@ -56,7 +56,7 @@ static void MN_RegisterFont (const menuFont_t *font)
 	if (!path)
 		Com_Error(ERR_FATAL, "...font without path (font %s)", font->name);
 
-	if (FS_CheckFile(path) == -1)
+	if (FS_CheckFile("%s", path) == -1)
 		Com_Error(ERR_FATAL, "...font file %s does not exist (font %s)", path, font->name);
 
 	R_FontRegister(font->name, font->size, path, font->style);

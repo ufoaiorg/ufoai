@@ -307,7 +307,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 			token++;
 
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", token)) != -1) {
+		if (FS_CheckFile("pics/maps/shots/%s.jpg", token) != -1) {
 			/* store it relative to pics/ dir - not relative to game dir */
 			Cvar_Set("mn_mappic", va("maps/shots/%s", token));
 		}

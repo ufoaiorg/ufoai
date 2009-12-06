@@ -98,9 +98,9 @@ void CIN_PlayCinematic (const char *fileName)
 	/* If already playing a cinematic, stop it */
 	CIN_StopCinematic();
 
-	if (FS_CheckFile(va("%s.roq", name)) >= 0)
+	if (FS_CheckFile("%s.roq", name) >= 0)
 		CIN_ROQ_PlayCinematic(va("%s.roq", name));
-	else if (FS_CheckFile(va("%s.ogm", name)) >= 0)
+	else if (FS_CheckFile("%s.ogm", name) >= 0)
 		CIN_OGM_PlayCinematic(va("%s.ogm", name));
 	else
 		Com_Printf("Could not find cinematic '%s'\n", name);

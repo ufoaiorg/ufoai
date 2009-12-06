@@ -503,7 +503,7 @@ static void CL_CheckAndQueueDownload (char *path)
 				fclose(f);
 			}
 		} else
-			exists = FS_CheckFile(path);
+			exists = FS_CheckFile("%s", path);
 
 		if (!exists) {
 			if (CL_QueueHTTPDownload(path)) {
