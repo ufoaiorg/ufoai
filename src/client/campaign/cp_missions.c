@@ -269,7 +269,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 
 	assert(mission->posAssigned);
 
-	numAliens = 4 + (int) ccs.overallInterest / 50; // TODO: Should it be scripted too?
+	numAliens = 4 + (int) ccs.overallInterest / 50; /** @todo Should it be scripted too? */
 	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
 		numAliens=mission->ufo->maxTeamSize;
 	if (numAliens > mission->mapDef->maxAliens)
