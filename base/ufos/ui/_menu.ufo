@@ -1,0 +1,15 @@
+// ==================
+// Some components for the main user interface
+// ==================
+
+/**
+ * Big green button used in all main menu UI
+ * We should only use it into the main UI (outside game)
+ */
+component button cmpMenuButton {
+	size "256 64"
+	image	ui/button_green_big
+	font	f_menubig
+	color	"0 0.5 0 1"
+	selectcolor "1 1 1 1"
+}

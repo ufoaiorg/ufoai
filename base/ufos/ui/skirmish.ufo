@@ -13,30 +13,20 @@ window skirmish
 		image		ui/skirmish_bg
 	}
 
-	button button_back
+	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"90 200"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ====================
 	// start game button
 	// ====================
-	button button_start
+	cmpMenuButton button_start
 	{
 		string		"_Start game"
 		pos			"90 80"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "sk_start;" }
 	}
 

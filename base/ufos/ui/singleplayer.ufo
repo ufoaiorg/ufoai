@@ -24,39 +24,24 @@ window singleplayer
 	// buttons
 	// ==================
 
-	button button_campaign
+	cmpMenuButton button_campaign
 	{
 		string		"_Campaign"
 		pos			"640 170"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_push campaigns;" }
 	}
 
-	button button_skirmish
+	cmpMenuButton button_skirmish
 	{
 		string	"_Skirmish"
 		pos	"640 240"
-		size "256 64"
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		onClick	{ cmd "mn_push skirmish;" }
 	}
 
-	button button_back
+	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"640 520"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 }
@@ -87,64 +72,39 @@ window singleplayermission
 	// buttons
 	// ==================
 
-	button button_continue
+	cmpMenuButton button_continue
 	{
 		string		"_Continue"
 		pos			"640 170"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	button button_abort
+	cmpMenuButton button_abort
 	{
 		string		"_Abort"
 		pos			"640 240"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "game_abort;" }
 	}
 
 	// @todo only works for campaign mode games - not for skirmish
-	button button_retry
+	cmpMenuButton button_retry
 	{
 		string		"_Retry"
 		pos			"640 310"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "game_go;" }
 	}
 
-	button button_options
+	cmpMenuButton button_options
 	{
 		string		"_Options"
 		pos			"640 380"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_push options;" }
 	}
 
-	button button_exit
+	cmpMenuButton button_exit
 	{
 		string		"_Exit"
 		pos			"640 520"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "game_exit;mn_pop;" }
 	}
 }

@@ -32,64 +32,39 @@ window abstract_multiplayer {
 	// main navigation
 	// ==================
 
-	button button_team
+	cmpMenuButton button_team
 	{
 		string		"_Team"
 		pos			"80 160"
-		size		"256 60"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop; mn_push mp_team;" }
 	}
 
-	button button_join
+	cmpMenuButton button_join
 	{
 		string		"_Join"
 		pos			"80 225"
-		size		"256 60"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop; mn_push mp_serverbrowser;" }
 	}
 
-	button button_create
+	cmpMenuButton button_create
 	{
 		string		"_Create"
 		pos			"80 290"
-		size		"256 60"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		onClick		{ cmd "mn_pop; mn_push mp_create_server;" }
 	}
 
-	button button_lobby
+	cmpMenuButton button_lobby
 	{
 		string		"_Lobby"
 		pos			"80 385"
-		size		"256 60"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "irc_connect; mn_push irc;" }
 	}
 
 
-	button button_exit
+	cmpMenuButton button_exit
 	{
 		string		"_Back"
 		pos			"80 480"
-		size		"256 60"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 
@@ -217,15 +192,10 @@ window serverinfo
 		texh		"128 96"
 	}
 
-	button button_connect
+	cmpMenuButton button_connect
 	{
 		string		"_Connect"
 		pos			"70 580"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "connect *cvar:mn_server_ip;" }
 	}
 
@@ -1045,15 +1015,10 @@ window mp_create_server extends abstract_multiplayer
 	// create_server button
 	// ====================
 
-	button button_server
+	cmpMenuButton button_server
 	{
 		string		"_Start server"
 		pos			"570 630"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mp_startserver;" }
 	}
 

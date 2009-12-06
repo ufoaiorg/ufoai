@@ -29,54 +29,34 @@ window campaigns
 	// ==================
 	// buttons
 	// ==================
-	button c_button_start
+	cmpMenuButton c_button_start
 	{
 		pos	"80 170"
-		size "256 64"
 		onClick	{ cmd "cp_start;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		string	"_Start campaign"
 	}
 
-	button button_load
+	cmpMenuButton button_load
 	{
 		string		"_Load"
 		pos			"80 240"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_push load;" }
 	}
 
-	button button_continue
+	cmpMenuButton button_continue
 	{
 		visiblewhen "exists *cvar:mn_lastsave"
 
 		string		"_Continue"
 		tooltip		"_Load last saved game or continue playing"
 		pos			"640 380"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "game_continue;" }
 	}
 
-	button c_button_exit
+	cmpMenuButton c_button_exit
 	{
 		pos	"80 470"
-		size "256 64"
 		onClick	{ cmd "mn_pop;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		string	"_Back"
 	}
 
@@ -163,63 +143,38 @@ window campaign_main
 	// buttons
 	// ==================
 
-	button button_continue
+	cmpMenuButton button_continue
 	{
 		string		"_Continue"
 		pos			"640 170"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "game_continue;" }
 	}
 
-	button button_load
+	cmpMenuButton button_load
 	{
 		string		"_Load"
 		pos			"640 240"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_push load;" }
 	}
 
-	button button_save
+	cmpMenuButton button_save
 	{
 		string		"_Save"
 		pos			"640 310"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_push save;" }
 	}
 
-	button button_options
+	cmpMenuButton button_options
 	{
 		string		"_Options"
 		pos			"640 380"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_push options;" }
 	}
 
-	button button_back
+	cmpMenuButton button_back
 	{
 		string		"_Exit"
 		pos			"640 520"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "game_exit;" }
 	}
 }
@@ -410,15 +365,10 @@ window load
 	// buttons
 	// ==================
 
-	button button_back
+	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"640 520"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 
@@ -597,15 +547,10 @@ window save
 	// buttons
 	// ==================
 
-	button button_back
+	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"640 520"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 

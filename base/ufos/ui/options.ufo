@@ -29,30 +29,20 @@ window options
 	// buttons
 	// ==================
 
-	button button_game
+	cmpMenuButton button_game
 	{
 		string		"_Game"
 		pos			"80 170"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_game@invis = false
 		}
 	}
 
-	button button_video
+	cmpMenuButton button_video
 	{
 		string		"_Video"
 		pos			"80 240"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_video@invis = false
@@ -60,45 +50,30 @@ window options
 		}
 	}
 
-	button button_sound
+	cmpMenuButton button_sound
 	{
 		string		"_Sound"
 		pos			"80 310"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_sound@invis = false
 		}
 	}
 
-	button button_input
+	cmpMenuButton button_input
 	{
 		string		"_Input"
 		pos			"80 380"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_input@invis = false
 		}
 	}
 
-	button button_back
+	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"80 470"
-		size		"256 64"
-		image		ui/button_green_big
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;" }
 	}
 
@@ -1178,15 +1153,10 @@ window options
 		// ===================
 		// KEY BINDINGS
 		// ===================
-		button button_keys
+		cmpMenuButton button_keys
 		{
 			string		"_Keys"
 			pos			"85 620"
-			size		"256 64"
-			image		ui/button_green_big
-			font		f_menubig
-			color		"0 0.5 0 1"
-			selectcolor	"1 1 1 1"
 			onClick		{
 				*(panel)options_input@invis = true
 				*(panel)options_keys@invis = false

@@ -23,52 +23,32 @@ window multiplayerInGame
 	// buttons
 	// ==================
 
-	button button_continue
+	cmpMenuButton button_continue
 	{
 		pos	"640 170"
-		size "256 64"
 		onClick	{ cmd "mn_pop;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		string	"_Continue"
 	}
 
-	button button_options
+	cmpMenuButton button_options
 	{
 		pos	"640 240"
-		size "256 64"
 		onClick	{ cmd "mn_push options;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		string	"_Options"
 	}
 
-	button button_irc
+	cmpMenuButton button_irc
 	{
 		visiblewhen "exists *cvar:irc_defaultChannel"
 		pos	"640 310"
-		size "256 64"
 		onClick	{ cmd "mn_push irc;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		string	"_Lobby"
 	}
 
-	button button_abort
+	cmpMenuButton button_abort
 	{
 		pos	"640 520"
-		size "256 64"
 		onClick	{ cmd "game_exit;mn_pop;" }
-		image	ui/button_green_big
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
 		string	"_Abort Game"
 	}
 }
