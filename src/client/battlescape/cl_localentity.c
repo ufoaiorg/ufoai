@@ -43,7 +43,7 @@ le_t LEs[MAX_EDICTS];
 Local Model (LM) handling
 =========================================================================== */
 
-static const char *leInlineModelList[MAX_EDICTS + 1];
+const char *leInlineModelList[MAX_EDICTS + 1] = {NULL};
 
 static inline void LE_GenerateInlineModelList (void)
 {

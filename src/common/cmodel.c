@@ -658,6 +658,31 @@ qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int le
 
 
 /**
+ * @brief Checks traces against the world and all inline models
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[in] levelmask
+ * @param[in] entlist of entities that might be on this line
+ * @sa CM_EntTestLineDM
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
+ */
+qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
+{
+	qboolean hit;
+
+	/* set the list of entities to check */
+	inlineList = entlist;
+	/* do the line test */
+	hit = CM_EntTestLineDM(start, stop, end, levelmask);
+	/* zero the list */
+	inlineList = NULL;
+
+	return hit;
+}
+
+
+/**
  * @brief Checks traces against the world and all inline models, gives the hit position back
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.

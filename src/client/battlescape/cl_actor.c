@@ -1663,7 +1663,7 @@ void CL_ActorMouseTrace (void)
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		TR_TestLineDM(from, stop, end, TL_FLAG_ACTORCLIP);
+		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, leInlineModelList);
 	}
 
 	VecToPos(end, testPos);
@@ -1685,7 +1685,7 @@ void CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	TR_TestLineDM(pA, pB, pC, TL_FLAG_ACTORCLIP);
+	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, leInlineModelList);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
 
@@ -1693,7 +1693,7 @@ void CL_ActorMouseTrace (void)
 	if (restingLevel < cl_worldlevel->integer) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		TR_TestLineDM(from, stop, end, TL_FLAG_ACTORCLIP);
+		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, leInlineModelList);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 	}
