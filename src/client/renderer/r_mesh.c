@@ -187,8 +187,8 @@ static inline void R_DrawAliasStatic (const mAliasMesh_t *mesh)
  */
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
 {
-	int i;
 	image_t *skin;
+	const mAliasMesh_t *mesh;
 
 	if (!mi->name || mi->name[0] == '\0')
 		return;
@@ -226,6 +226,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 			dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
 			/* find the right tag */
 			const char *name = (const char *) taghdr + taghdr->ofs_names;
+			int i;
 
 			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
 				if (!strcmp(name, tagname)) {
@@ -260,14 +261,12 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	R_BindTexture(skin->texnum);
 
 	/* draw the model */
-	for (i = 0; i < mi->model->alias.num_meshes; i++) {
-		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
-		refdef.aliasCount += mesh->num_tris;
-		if (mesh->verts != NULL)
-			R_DrawAliasStatic(mesh);
-		else
-			R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
-	}
+	mesh = &mi->model->alias.meshes[0];
+	refdef.aliasCount += mesh->num_tris;
+	if (mesh->verts != NULL)
+		R_DrawAliasStatic(mesh);
+	else
+		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -281,8 +280,8 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
  */
 void R_DrawModelParticle (modelInfo_t * mi)
 {
-	int i;
 	image_t *skin;
+	const mAliasMesh_t *mesh;
 
 	/* check if the model exists */
 	if (!mi->model)
@@ -308,14 +307,12 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_BindTexture(skin->texnum);
 
 	/* draw the model */
-	for (i = 0; i < mi->model->alias.num_meshes; i++) {
-		const mAliasMesh_t *mesh = &mi->model->alias.meshes[i];
-		refdef.aliasCount += mesh->num_tris;
-		if (mesh->verts != NULL)
-			R_DrawAliasStatic(mesh);
-		else
-			R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
-	}
+	mesh = &mi->model->alias.meshes[0];
+	refdef.aliasCount += mesh->num_tris;
+	if (mesh->verts != NULL)
+		R_DrawAliasStatic(mesh);
+	else
+		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 
 	glPopMatrix();
 
@@ -418,18 +415,21 @@ static void R_ModelViewTransform (const vec3_t in, vec3_t out)
  */
 static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAliasModel_t* mod)
 {
-    if (mod->num_meshes == 1) {
+    if (mod->num_meshes == 1 || (refdef.rendererFlags & RDF_NOWORLDMODEL)) {
     	return &mod->meshes[0];
     } else {
 		vec3_t dist;
+		vec_t length;
 
 		/* get distance, set lod if available */
 		VectorSubtract(refdef.viewOrigin, origin, dist);
-		if (mod->num_meshes > 3 && VectorLength(dist) > 1500) {
+		length = VectorLength(dist);
+		Com_Printf("length: %f\n", length);
+		if (mod->num_meshes > 3 && length > 700) {
 			return &mod->meshes[3];
-		} if (mod->num_meshes > 2 && VectorLength(dist) > 1000) {
+		} if (mod->num_meshes > 2 && length > 600) {
 			return &mod->meshes[2];
-		} else if (VectorLength(dist) > 500) {
+		} else if (length > 500) {
 			return &mod->meshes[1];
 		}
 
