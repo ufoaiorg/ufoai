@@ -626,7 +626,8 @@ static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
-	EXTRADATA(node).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
+	if (EXTRADATA(node).oldRefValue == NULL)
+		EXTRADATA(node).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
 	EXTRADATA(node).clipOverflow = qtrue;
 }
