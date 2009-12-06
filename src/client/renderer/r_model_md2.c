@@ -103,7 +103,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
-static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2)
+static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize)
 {
 	int i, j;
 	const dMD2Triangle_t *pintri;
@@ -117,10 +117,18 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2)
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts;
-	int skinWidth, skinHeight;
+	int skinWidth, skinHeight, version;
 	double isw, ish;
 	const char *md2Path;
 	size_t size;
+
+	/* sanity checks */
+	version = LittleLong(md2->version);
+	if (version != MD2_ALIAS_VERSION)
+		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
+
+	if (bufSize != LittleLong(md2->ofs_end))
+		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
 
 	skinHeight = LittleLong(md2->skinheight);
 	skinWidth = LittleLong(md2->skinwidth);
@@ -207,11 +215,9 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2)
 	if (outMesh->num_verts >= 4096)
 		Com_Printf("model %s has more than 4096 verts\n", mod->name);
 
-	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 8192) {
-		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Model: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 8192)
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
 			mod->name, outMesh->num_verts, outMesh->num_tris);
-		return;
-	}
 
 	for (i = 0; i < numIndexes; i++) {
 		if (indRemap[i] == i)
@@ -227,23 +233,30 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2)
 	}
 
 	/* load the frames */
-	mod->alias.frames = outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
+	outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
 	outMesh->vertexes = outVertex = Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, vid_modelPool, 0);
+	if (mod->alias.num_meshes == 1)
+		mod->alias.frames = outFrame;
+	else if (mod->alias.num_frames != LittleLong(md2->num_frames))
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of frames for lod model for '%s'\n", mod->name);
 
 	ClearBounds(mod->mins, mod->maxs);
 	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
 		const dMD2Frame_t *pinframe = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
 
-		for (j = 0; j < 3; j++) {
+		for (j = 0; j < 3; j++)
 			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);
-			outFrame->translate[j] = LittleFloat(pinframe->translate[j]);
+
+		if (mod->alias.num_meshes == 1) {
+			for (j = 0; j < 3; j++)
+				outFrame->translate[j] = LittleFloat(pinframe->translate[j]);
+
+			VectorCopy(outFrame->translate, outFrame->mins);
+			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
+
+			AddPointToBounds(outFrame->mins, mod->mins, mod->maxs);
+			AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
 		}
-
-		VectorCopy(outFrame->translate, outFrame->mins);
-		VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
-
-		AddPointToBounds(outFrame->mins, mod->mins, mod->maxs);
-		AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
 
 		for (j = 0; j < numIndexes; j++) {
 			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[0] * outFrame->scale[0];
@@ -268,8 +281,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod)
 	for (i = 1; i <= 3; i++) {
 		if (FS_CheckFile("%s-lod%02i.md2", base, i)) {
 			byte *buf;
-			int bufSize, version;
-			int skinWidth, skinHeight;
+			int bufSize;
 			char fileName[MAX_QPATH];
 			const dMD2Model_t *md2;
 
@@ -282,15 +294,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod)
 			/* get the disk data */
 			md2 = (const dMD2Model_t *) buf;
 
-			/* sanity checks */
-			version = LittleLong(md2->version);
-			if (version != MD2_ALIAS_VERSION)
-				Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
-
-			if (bufSize != LittleLong(md2->ofs_end))
-				Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
-
-			R_ModLoadAliasMD2Mesh(mod, md2);
+			R_ModLoadAliasMD2Mesh(mod, md2, bufSize);
 
 			FS_FreeFile(buf);
 		}
@@ -303,20 +307,12 @@ static void R_ModLoadLevelOfDetailData (model_t* mod)
 void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 {
 	dMD2Model_t *md2;
-	int version, size;
+	int size;
 	byte *tagbuf = NULL, *animbuf = NULL;
 	size_t l;
 
 	/* get the disk data */
 	md2 = (dMD2Model_t *) buffer;
-
-	/* sanity checks */
-	version = LittleLong(md2->version);
-	if (version != MD2_ALIAS_VERSION)
-		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
-
-	if (bufSize != LittleLong(md2->ofs_end))
-		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
 
 	/* only one mesh for md2 models */
 	mod->alias.num_frames = LittleLong(md2->num_frames);
@@ -326,7 +322,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 	/* fixed values */
 	mod->type = mod_alias_md2;
 
-	R_ModLoadAliasMD2Mesh(mod, md2);
+	R_ModLoadAliasMD2Mesh(mod, md2, bufSize);
 
 	/* load the tags */
 	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));
