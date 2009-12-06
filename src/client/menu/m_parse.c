@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_internal.h"
 #include "m_actions.h"
 #include "m_icon.h"
+#include "m_components.h"
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
 #include "node/m_node_abstractnode.h"
@@ -39,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** prototypes */
 static qboolean MN_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
 static menuAction_t *MN_ParseActionList(menuNode_t *menuNode, const char **text, const const char **token);
-static qboolean MN_ParseNode(menuNode_t * parent, const char **text, const char **token, const char *errhead);
+static menuNode_t *MN_ParseNode(menuNode_t * parent, const char **text, const char **token, const char *errhead);
 
 /** @brief valid properties for options (selectbox, tab...) */
 static const value_t optionProperties[] = {
@@ -943,8 +944,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 			/* and then read all nodes */
 			while (*token[0] != '}') {
-				result = MN_ParseNode(node, text, token, errhead);
-				if (!result)
+				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
+				if (!new)
 					return qfalse;
 
 				*token = Com_EParse(text, errhead, node->name);
@@ -957,8 +958,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		} else {
 			/* we should have a block with nodes only */
 			while (*token[0] != '}') {
-				result = MN_ParseNode(node, text, token, errhead);
-				if (!result)
+				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
+				if (!new)
 					return qfalse;
 
 				*token = Com_EParse(text, errhead, node->name);
@@ -986,42 +987,47 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
  * @note first token already read
  * @note dont read more than the need token (last right token is '}' of end of node)
  */
-static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char **token, const char *errhead)
+static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const char **token, const char *errhead)
 {
-	menuNode_t *node;
+	menuNode_t *node = NULL;
 	nodeBehaviour_t *behaviour;
+	menuNode_t *component = NULL;
 	qboolean result;
 
 	/* allow to begin with the identifier "node" before the behaviour name */
 	if (!Q_strcasecmp(*token, "node")) {
-		*token = Com_EParse(text, errhead, parent->name);
+		*token = Com_EParse(text, errhead, "");
 		if (!*text)
-			return qfalse;
+			return NULL;
 	}
 
 	/* get the behaviour */
 	behaviour = MN_GetNodeBehaviour(*token);
-	if (behaviour == NULL) {
-		Com_Printf("MN_ParseNode: node behaviour '%s' doesn't exist (into \"%s\")\n", *token, MN_GetPath(parent));
-		return qfalse;
+	if (!behaviour) {
+		component = MN_GetComponent(*token);
+	}
+	if (behaviour == NULL && component == NULL) {
+		Com_Printf("MN_ParseNode: node behaviour/component '%s' doesn't exists\n", *token);
+		return NULL;
 	}
 
 	/* get the name */
-	*token = Com_EParse(text, errhead, parent->name);
+	*token = Com_EParse(text, errhead, "");
 	if (!*text)
-		return qfalse;
+		return NULL;
 	if (MN_IsReservedToken(*token)) {
-		Com_Printf("MN_ParseNode: \"%s\" is a reserved token, we can't call a node with it (node \"%s.%s\")\n", *token, MN_GetPath(parent), *token);
-		return qfalse;
+		Com_Printf("MN_ParseNode: \"%s\" is a reserved token, we can't call a node with it\n", *token);
+		return NULL;
 	}
 
 	/* test if node already exists */
 	/** Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
-	node = MN_GetNode(parent, *token);
+	if (parent)
+		node = MN_GetNode(parent, *token);
 	if (node) {
 		if (node->behaviour != behaviour) {
 			Com_Printf("MN_ParseNode: we can't change node type (node \"%s\")\n", MN_GetPath(node));
-			return qfalse;
+			return NULL;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", MN_GetPath(node));
 		/* reset action list of node */
@@ -1036,14 +1042,24 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 #endif
 
 	/* else initialize node */
+	} else if (component) {
+		node = MN_CloneNode(component, NULL, qtrue, *token);
+		if (parent) {
+			if (parent->root)
+				MN_UpdateRoot(node, parent->root);
+			MN_AppendNode(parent, node);
+		}
 	} else {
 		node = MN_AllocStaticNode(behaviour->name);
 		node->parent = parent;
-		node->root = parent->root;
+		if (parent)
+			node->root = parent->root;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
 		if (strlen(node->name) != strlen(*token))
 			Com_Printf("MN_ParseNode: Node name \"%s\" truncated. New name is \"%s\"\n", *token, node->name);
-		MN_AppendNode(parent, node);
+		/** @todo move it into caller */
+		if (parent)
+			MN_AppendNode(parent, node);
 	}
 
 	/* throw to the node, we begin to read attributes */
@@ -1053,13 +1069,13 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	/* get body */
 	result = MN_ParseNodeBody(node, text, token, errhead);
 	if (!result)
-		return qfalse;
+		return NULL;
 
 	/* initialize the node according to its behaviour */
 	if (node->behaviour->loaded) {
 		node->behaviour->loaded(node);
 	}
-	return qtrue;
+	return node;
 }
 
 /**
@@ -1255,6 +1271,32 @@ void MN_ParseIcon (const char *name, const char **text)
 
 	return;
 }
+
+/**
+ * @code
+ * component panel componentName {
+ * }
+ */
+void MN_ParseComponent (const char *type, const char **text)
+{
+	const char *errhead = "MN_ParseComponent: unexpected end of file (component";
+	menuNode_t *component;
+	const char *token;
+
+	if (strcmp(type, "component") != 0) {
+		Com_Error(ERR_FATAL, "MN_ParseComponent: \"component\" expected but \"%s\" found.\n", type);
+		return;	/* never reached */
+	}
+
+	/* CL_ParseClientData read the real type as name */
+	Com_UnParseLastToken();
+	token = Com_Parse(text);
+
+	component = MN_ParseNode(NULL, text, &token, errhead);
+	if (component)
+		MN_InsertComponent(component);
+}
+
 
 /**
  * @sa CL_ParseClientData

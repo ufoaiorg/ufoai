@@ -143,6 +143,7 @@ CLIENT_SRCS = \
 	client/multiplayer/mp_team.c \
 	\
 	client/menu/m_actions.c \
+	client/menu/m_components.c \
 	client/menu/m_data.c \
 	client/menu/m_dragndrop.c \
 	client/menu/m_draw.c \

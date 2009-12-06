@@ -29,6 +29,7 @@ struct menuNode_s;
 struct menuAction_s;
 
 void MN_ParseMenu(const char *type, const char *name, const char **text);
+void MN_ParseComponent(const char *type, const char **text);
 void MN_ParseIcon(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const struct menuNode_s* const node, const void *ref);

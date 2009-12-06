@@ -773,6 +773,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseUGVs(name, text);
 	else if (!strcmp(type, "window"))
 		MN_ParseMenu(type, name, text);
+	else if (!strcmp(type, "component"))
+		MN_ParseComponent(type, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */

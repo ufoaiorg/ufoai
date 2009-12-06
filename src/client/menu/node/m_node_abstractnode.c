@@ -370,6 +370,16 @@ menuNode_t* const MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 	return child;
 }
 
+void MN_UpdateRoot (menuNode_t *node, menuNode_t *newRoot)
+{
+	node->root = newRoot;
+	node = node->firstChild;
+	while (node) {
+		MN_UpdateRoot(node, newRoot);
+		node = node->next;
+	}
+}
+
 /**
  * @brief add a node at the end of the node child
  */

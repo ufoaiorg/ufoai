@@ -757,6 +757,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/m_actions.h" />
+		<Unit filename="../../src/client/menu/m_components.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/m_components.h" />
 		<Unit filename="../../src/client/menu/m_data.c">
 			<Option compilerVar="CC" />
 		</Unit>
