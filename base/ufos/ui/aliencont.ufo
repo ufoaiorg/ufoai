@@ -1,6 +1,50 @@
 // ======================
 // ALIEN CONTAINMENU MENU
 // ======================
+
+component pic cmpAlienContainment {
+	{
+		image		ui/hosp_button_green
+		onClick			{ cmd "aliencont_click <num>;" }
+		onRClick		{ cmd "aliencont_pedia <num>;" }
+	}
+	pic icon			{
+		pos "247  11"
+		image icons/health_unused
+	}
+	zone kill_zone		{
+		pos			"247  11"
+		size		"40 40"
+		tooltip		"_Kill this alien"
+		onClick		{ cmd "aliencont_killone <node:parent@num>;" }
+	}
+	zone autopsy_zone	{
+		pos			"247  11"
+		size		"40 40"
+		tooltip		"_Start autopsy"
+		onClick		{ cmd "aliencont_research <node:parent@num>;" }
+	}
+	string name			{
+		pos			"15  10"
+		color		"1 1 1 1"
+		size		"220 16"
+		ghost		true
+	}
+	string status {
+		pos			"15  35"
+		color		"1 1 1 1"
+		size		"220 16"
+		ghost		true
+	}
+	bar tech_progress	{
+		pos			"22  65"
+		size		"263 6"
+		color		"0 .8 0 1"
+		max			"100"
+		disabled	true
+	}
+}
+
 window aliencont
 {
 	// ==================
@@ -73,70 +117,28 @@ window aliencont
 
 	confunc aliencont_clear
 	{
-		*ac.button0@image ui/hosp_button_green
-		*ac.button1@image ui/hosp_button_green
-		*ac.button2@image ui/hosp_button_green
-		*ac.button3@image ui/hosp_button_green
-		*ac.button4@image ui/hosp_button_green
-		*ac.button5@image ui/hosp_button_green
-		*ac.button6@image ui/hosp_button_green
-		*ac.button7@image ui/hosp_button_green
-		*ac.button8@image ui/hosp_button_green
-		*ac.button9@image ui/hosp_button_green
-		*ac.button10@image ui/hosp_button_green
-		*ac.button11@image ui/hosp_button_green
-
-		*ac.icon0@image	icons/health_unused
-		*ac.icon1@image	icons/health_unused
-		*ac.icon2@image	icons/health_unused
-		*ac.icon3@image	icons/health_unused
-		*ac.icon4@image	icons/health_unused
-		*ac.icon5@image	icons/health_unused
-		*ac.icon6@image	icons/health_unused
-		*ac.icon7@image	icons/health_unused
-		*ac.icon8@image	icons/health_unused
-		*ac.icon9@image	icons/health_unused
-		*ac.icon10@image	icons/health_unused
-		*ac.icon11@image	icons/health_unused
-
-		*ac.kill_zone0@invis true
-		*ac.kill_zone1@invis true
-		*ac.kill_zone2@invis true
-		*ac.kill_zone3@invis true
-		*ac.kill_zone4@invis true
-		*ac.kill_zone5@invis true
-		*ac.kill_zone6@invis true
-		*ac.kill_zone7@invis true
-		*ac.kill_zone8@invis true
-		*ac.kill_zone9@invis true
-		*ac.kill_zone10@invis true
-		*ac.kill_zone11@invis true
-
-		*ac.autopsy_zone0@invis true
-		*ac.autopsy_zone1@invis true
-		*ac.autopsy_zone2@invis true
-		*ac.autopsy_zone3@invis true
-		*ac.autopsy_zone4@invis true
-		*ac.autopsy_zone5@invis true
-		*ac.autopsy_zone6@invis true
-		*ac.autopsy_zone7@invis true
-		*ac.autopsy_zone8@invis true
-		*ac.autopsy_zone9@invis true
-		*ac.autopsy_zone10@invis true
-		*ac.autopsy_zone11@invis true
+		*cvar:i = 0
+		while ( *cvar:i < 12 ) {
+			*ac.ac<cvar:i>@image ui/hosp_button_green
+			*ac.ac<cvar:i>.icon@image	icons/health_unused
+			*ac.ac<cvar:i>.kill_zone@invis true
+			*ac.ac<cvar:i>.autopsy_zone@invis true
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
 	}
 
 	/**
 	 * @param[in] <1> index of the field
 	 */
 	confunc aliencontneedautopsy {
-		*ac.icon<1>@image icons/surgery
-		*ac.button<1>@image ui/hosp_button_light
-		*ac.icon<1>@tooltip "_Start autopsy"
+		*ac.ac<1>@image ui/hosp_button_light
+		*ac.ac<1>.icon@image icons/surgery
+		*ac.ac<1>.icon@tooltip "_Start autopsy"
 
 		/* hide kill */
-		*ac.kill_zone<1>@invis true
-		*ac.autopsy_zone<1>@invis false
+		*ac.ac<1>.kill_zone@invis true
+		*ac.ac<1>.autopsy_zone@invis false
 	}
 
 	/**
@@ -144,13 +146,13 @@ window aliencont
 	 */
 	confunc aliencontkill
 	{
-		*ac.icon<1>@image icons/kill
-		*ac.button<1>@image ui/hosp_button_light
-		*ac.icon<1>@tooltip "_Kill this alien"
+		*ac.ac<1>.icon@image icons/kill
+		*ac.ac<1>.icon@tooltip "_Kill this alien"
+		*ac.ac<1>@image ui/hosp_button_light
 
 		/* hide_autopsy */
-		*ac.kill_zone<1>@invis false
-		*ac.autopsy_zone<1>@invis true
+		*ac.ac<1>.kill_zone@invis false
+		*ac.ac<1>.autopsy_zone@invis true
 	}
 
 	panel ac {
@@ -160,156 +162,125 @@ window aliencont
 			image	ui/panel_grey_green_large
 		}
 
-		pic button0 {
-			image		ui/hosp_button_green
-			pos			"25  25"
-			onClick		{ cmd "aliencont_click 0;" }
-			onRClick		{ cmd "aliencont_pedia 0;" }
-		}
-		pic button1 {
-			image		ui/hosp_button_green
-			pos			"345  25"
-			onClick		{ cmd "aliencont_click 1;" }
-			onRClick		{ cmd "aliencont_pedia 1;" }
-		}
-		pic button2 {
-			image		ui/hosp_button_green
-			pos			"25 120"
-			onClick		{ cmd "aliencont_click 2;" }
-			onRClick		{ cmd "aliencont_pedia 2;" }
-		}
-		pic button3 {
-			image		ui/hosp_button_green
-			pos			"345 120"
-			onClick		{ cmd "aliencont_click 3;" }
-			onRClick		{ cmd "aliencont_pedia 3;" }
-		}
-		pic button4 {
-			image		ui/hosp_button_green
-			pos			"25 215"
-			onClick		{ cmd "aliencont_click 4;" }
-			onRClick		{ cmd "aliencont_pedia 4;" }
-		}
-		pic button5 {
-			image		ui/hosp_button_green
-			pos			"345 215"
-			onClick		{ cmd "aliencont_click 5;" }
-			onRClick		{ cmd "aliencont_pedia 5;" }
-		}
-		pic button6 {
-			image		ui/hosp_button_green
-			pos			"25 310"
-			onClick		{ cmd "aliencont_click 6;" }
-			onRClick		{ cmd "aliencont_pedia 6;" }
-		}
-		pic button7 {
-			image		ui/hosp_button_green
-			pos			"345 310"
-			onClick		{ cmd "aliencont_click 7;" }
-			onRClick		{ cmd "aliencont_pedia 7;" }
-		}
-		pic button8 {
-			image		ui/hosp_button_green
-			pos			"25 405"
-			onClick		{ cmd "aliencont_click 8;" }
-			onRClick		{ cmd "aliencont_pedia 8;" }
-		}
-		pic button9 {
-			image		ui/hosp_button_green
-			pos			"345 405"
-			onClick		{ cmd "aliencont_click 9;" }
-			onRClick		{ cmd "aliencont_pedia 9;" }
-		}
-		pic button10 {
-			image		ui/hosp_button_green
-			pos			"25 500"
-			onClick		{ cmd "aliencont_click 10;" }
-			onRClick		{ cmd "aliencont_pedia 10;" }
-		}
-		pic button11 {
-			image		ui/hosp_button_green
-			pos			"345 500"
-			onClick		{ cmd "aliencont_click 11;" }
-			onRClick		{ cmd "aliencont_pedia 11;" }
+		cmpAlienContainment ac0 {
+			{
+				pos				"25 25"
+				num				0
+			}
+			string name			{ string *cvar:mn_ac_name0 }
+			string status		{ string *cvar:mn_ac_statusstr0 }
+			bar tech_progress	{ current *cvar:mn_ac_progress0 }
 		}
 
-		pic icon0	{ image icons/health_unused 	pos "272  36" }
-		pic icon1	{ image icons/health_unused 	pos "592  36" }
-		pic icon2	{ image icons/health_unused 	pos "272 131" }
-		pic icon3	{ image icons/health_unused 	pos "592 131" }
-		pic icon4	{ image icons/health_unused 	pos "272 226" }
-		pic icon5	{ image icons/health_unused 	pos "592 226" }
-		pic icon6	{ image icons/health_unused 	pos "272 321" }
-		pic icon7	{ image icons/health_unused 	pos "592 321" }
-		pic icon8	{ image icons/health_unused 	pos "272 416" }
-		pic icon9	{ image icons/health_unused 	pos "592 416" }
-		pic icon10	{ image icons/health_unused 	pos "272 511" }
-		pic icon11	{ image icons/health_unused 	pos "592 511" }
+		cmpAlienContainment ac1 {
+			{
+				pos				"345  25"
+				num				1
+			}
+			string name			{ string *cvar:mn_ac_name1 }
+			string status		{ string *cvar:mn_ac_statusstr1 }
+			bar tech_progress	{ current *cvar:mn_ac_progress1 }
+		}
 
-		zone kill_zone0	{ pos "272  36" size "40 40" onClick { cmd "aliencont_killone 0;" } tooltip "_Kill this alien" }
-		zone kill_zone1	{ pos "592  36" size "40 40" onClick { cmd "aliencont_killone 1;" } tooltip "_Kill this alien" }
-		zone kill_zone2	{ pos "272 131" size "40 40" onClick { cmd "aliencont_killone 2;" } tooltip "_Kill this alien" }
-		zone kill_zone3	{ pos "592 131" size "40 40" onClick { cmd "aliencont_killone 3;" } tooltip "_Kill this alien" }
-		zone kill_zone4	{ pos "272 226" size "40 40" onClick { cmd "aliencont_killone 4;" } tooltip "_Kill this alien" }
-		zone kill_zone5	{ pos "592 226" size "40 40" onClick { cmd "aliencont_killone 5;" } tooltip "_Kill this alien" }
-		zone kill_zone6	{ pos "272 321" size "40 40" onClick { cmd "aliencont_killone 6;" } tooltip "_Kill this alien" }
-		zone kill_zone7	{ pos "592 321" size "40 40" onClick { cmd "aliencont_killone 7;" } tooltip "_Kill this alien" }
-		zone kill_zone8	{ pos "272 416" size "40 40" onClick { cmd "aliencont_killone 8;" } tooltip "_Kill this alien" }
-		zone kill_zone9	{ pos "592 416" size "40 40" onClick { cmd "aliencont_killone 9;" } tooltip "_Kill this alien" }
-		zone kill_zone10	{ pos "272 511" size "40 40" onClick { cmd "aliencont_killone 10;" } tooltip "_Kill this alien" }
-		zone kill_zone11	{ pos "592 511" size "40 40" onClick { cmd "aliencont_killone 11;" } tooltip "_Kill this alien" }
+		cmpAlienContainment ac2 {
+			{
+				pos				"25 120"
+				num				2
+			}
+			string name			{ string *cvar:mn_ac_name2 }
+			string status		{ string *cvar:mn_ac_statusstr2 }
+			bar tech_progress	{ current *cvar:mn_ac_progress2 }
+		}
 
-		zone autopsy_zone0	{ pos "272  36" size "40 40" onClick { cmd "aliencont_research 0;" } tooltip "_Start autopsy" }
-		zone autopsy_zone1	{ pos "592  36" size "40 40" onClick { cmd "aliencont_research 1;" } tooltip "_Start autopsy" }
-		zone autopsy_zone2	{ pos "272 131" size "40 40" onClick { cmd "aliencont_research 2;" } tooltip "_Start autopsy" }
-		zone autopsy_zone3	{ pos "592 131" size "40 40" onClick { cmd "aliencont_research 3;" } tooltip "_Start autopsy" }
-		zone autopsy_zone4	{ pos "272 226" size "40 40" onClick { cmd "aliencont_research 4;" } tooltip "_Start autopsy" }
-		zone autopsy_zone5	{ pos "592 226" size "40 40" onClick { cmd "aliencont_research 5;" } tooltip "_Start autopsy" }
-		zone autopsy_zone6	{ pos "272 321" size "40 40" onClick { cmd "aliencont_research 6;" } tooltip "_Start autopsy" }
-		zone autopsy_zone7	{ pos "592 321" size "40 40" onClick { cmd "aliencont_research 7;" } tooltip "_Start autopsy" }
-		zone autopsy_zone8	{ pos "272 416" size "40 40" onClick { cmd "aliencont_research 8;" } tooltip "_Start autopsy" }
-		zone autopsy_zone9	{ pos "592 416" size "40 40" onClick { cmd "aliencont_research 9;" } tooltip "_Start autopsy" }
-		zone autopsy_zone10	{ pos "272 511" size "40 40" onClick { cmd "aliencont_research 10;" } tooltip "_Start autopsy" }
-		zone autopsy_zone11	{ pos "592 511" size "40 40" onClick { cmd "aliencont_research 11;" } tooltip "_Start autopsy" }
+		cmpAlienContainment ac3 {
+			{
+				pos				"345 120"
+				num				3
+			}
+			string name			{ string *cvar:mn_ac_name3 }
+			string status		{ string *cvar:mn_ac_statusstr3 }
+			bar tech_progress	{ current *cvar:mn_ac_progress3 }
+		}
 
-		string name0	{ string *cvar:mn_ac_name0		pos "40  35"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name1	{ string *cvar:mn_ac_name1		pos "360  35"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name2	{ string *cvar:mn_ac_name2		pos "40 130"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name3	{ string *cvar:mn_ac_name3		pos "360 130"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name4	{ string *cvar:mn_ac_name4		pos "40 225"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name5	{ string *cvar:mn_ac_name5  	 	pos "360 225"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name6	{ string *cvar:mn_ac_name6		pos "40 320"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name7	{ string *cvar:mn_ac_name7		pos "360 320"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name8	{ string *cvar:mn_ac_name8		pos "40 415"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name9	{ string *cvar:mn_ac_name9		pos "360 415"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name10	{ string *cvar:mn_ac_name10		pos "40 510"	color "1 1 1 1"	size "220 16"	ghost true }
-		string name11	{ string *cvar:mn_ac_name11		pos "360 510"	color "1 1 1 1"	size "220 16"	ghost true }
+		cmpAlienContainment ac4 {
+			{
+				pos				"25 215"
+				num				4
+			}
+			string name			{ string *cvar:mn_ac_name4 }
+			string status		{ string *cvar:mn_ac_statusstr4 }
+			bar tech_progress	{ current *cvar:mn_ac_progress4 }
+		}
 
-		string status0	{ string *cvar:mn_ac_statusstr0		pos "40  60"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status1	{ string *cvar:mn_ac_statusstr1		pos "360  60"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status2	{ string *cvar:mn_ac_statusstr2		pos "40 155"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status3	{ string *cvar:mn_ac_statusstr3		pos "360 155"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status4	{ string *cvar:mn_ac_statusstr4		pos "40 250"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status5 	{ string *cvar:mn_ac_statusstr5   	pos "360 250"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status6 	{ string *cvar:mn_ac_statusstr6		pos "40 345"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status7	{ string *cvar:mn_ac_statusstr7		pos "360 345"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status8	{ string *cvar:mn_ac_statusstr8		pos "40 440"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status9	{ string *cvar:mn_ac_statusstr9		pos "360 440"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status10	{ string *cvar:mn_ac_statusstr10		pos "40 535"	color "1 1 1 1"	size "220 16"	ghost true }
-		string status11	{ string *cvar:mn_ac_statusstr11		pos "360 535"	color "1 1 1 1"	size "220 16"	ghost true }
+		cmpAlienContainment ac5 {
+			{
+				pos				"345 215"
+				num				5
+			}
+			string name			{ string *cvar:mn_ac_name5 }
+			string status		{ string *cvar:mn_ac_statusstr5 }
+			bar tech_progress	{ current *cvar:mn_ac_progress5 }
+		}
 
-		bar tech_progress0	{ pos "47  90" 	current *cvar:mn_ac_progress0		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress1	{ pos "367  90" current *cvar:mn_ac_progress1		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress2	{ pos "47 185" 	current *cvar:mn_ac_progress2		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress3	{ pos "367 185" current *cvar:mn_ac_progress3		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress4	{ pos "47 280" 	current *cvar:mn_ac_progress4		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress5	{ pos "367 280" current *cvar:mn_ac_progress5		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress6	{ pos "47 375" 	current *cvar:mn_ac_progress6		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress7	{ pos "367 375" current *cvar:mn_ac_progress7		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress8	{ pos "367 375" current *cvar:mn_ac_progress8		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress9	{ pos "367 375" current *cvar:mn_ac_progress9		size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress10	{ pos "367 375" current *cvar:mn_ac_progress10	size "263 6" color "0 .8 0 1" max "100" disabled true }
-		bar tech_progress11	{ pos "367 375" current *cvar:mn_ac_progress11	size "263 6" color "0 .8 0 1" max "100" disabled true }
+		cmpAlienContainment ac6 {
+			{
+				pos				"25 310"
+				num				6
+			}
+			string name			{ string *cvar:mn_ac_name6 }
+			string status		{ string *cvar:mn_ac_statusstr6 }
+			bar tech_progress	{ current *cvar:mn_ac_progress6 }
+		}
+
+		cmpAlienContainment ac7 {
+			{
+				pos				"345 310"
+				num				7
+			}
+			string name			{ string *cvar:mn_ac_name7 }
+			string status		{ string *cvar:mn_ac_statusstr7 }
+			bar tech_progress	{ current *cvar:mn_ac_progress7 }
+		}
+
+		cmpAlienContainment ac8 {
+			{
+				pos				"25 405"
+				num				8
+			}
+			string name			{ string *cvar:mn_ac_name8 }
+			string status		{ string *cvar:mn_ac_statusstr8 }
+			bar tech_progress	{ current *cvar:mn_ac_progress8 }
+		}
+
+		cmpAlienContainment ac9 {
+			{
+				pos				"345 405"
+				num				9
+			}
+			string name			{ string *cvar:mn_ac_name9 }
+			string status		{ string *cvar:mn_ac_statusstr9 }
+			bar tech_progress	{ current *cvar:mn_ac_progress9 }
+		}
+
+		cmpAlienContainment ac10 {
+			{
+				pos				"25 500"
+				num				10
+			}
+			string name			{ string *cvar:mn_ac_name10 }
+			string status		{ string *cvar:mn_ac_statusstr10 }
+			bar tech_progress	{ current *cvar:mn_ac_progress10 }
+		}
+
+		cmpAlienContainment ac11 {
+			{
+				pos				"345 500"
+				num				11
+			}
+			string name			{ string *cvar:mn_ac_name11 }
+			string status		{ string *cvar:mn_ac_statusstr11 }
+			bar tech_progress	{ current *cvar:mn_ac_progress11 }
+		}
 	}
 
 	// ================================================================================
