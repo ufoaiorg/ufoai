@@ -335,6 +335,42 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
 }
 
 /**
+ * @brief Remove a node from a parent node
+ * @return The removed node, else NULL
+ * @param[in] node Node where is the child
+ * @param[in] child Node we want to remove
+ */
+menuNode_t* const MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
+{
+	assert(node);
+	assert(child);
+	assert(child->parent == node);
+	assert(node->firstChild);
+
+	/** remove the 'child' node */
+	if (child == node->firstChild) {
+		node->firstChild = child->next;
+	} else {
+		/** find node before 'child' node */
+		menuNode_t *previous = node->firstChild;
+		while (previous != NULL) {
+			if (previous->next == child)
+				break;
+			previous = previous->next;
+		}
+		previous->next = child->next;
+		if (previous == NULL)
+			return NULL;
+	}
+
+	/** update cache */
+	if (node->lastChild == child)
+		node->lastChild = child->next;
+	child->next = NULL;
+	return child;
+}
+
+/**
  * @brief add a node at the end of the node child
  */
 void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)

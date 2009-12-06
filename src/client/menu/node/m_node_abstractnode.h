@@ -53,5 +53,6 @@ void MN_NodeGetPoint(const menuNode_t* node, vec2_t pos, byte pointDirection);
 struct menuNode_s *MN_GetNode(const struct menuNode_s* const node, const char *name);
 void MN_InsertNode(struct menuNode_s* const node, struct menuNode_s *prevNode, struct menuNode_s *newNode);
 void MN_AppendNode(struct menuNode_s* const node, struct menuNode_s *newNode);
+menuNode_t* const MN_RemoveNode(menuNode_t* const node, menuNode_t *child);
 
 #endif

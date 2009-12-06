@@ -1016,6 +1016,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	}
 
 	/* test if node already exists */
+	/** Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
 	node = MN_GetNode(parent, *token);
 	if (node) {
 		if (node->behaviour != behaviour) {
@@ -1024,7 +1025,15 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", MN_GetPath(node));
 		/* reset action list of node */
+		/* maybe it mean "reset the code when it is an inherited function" */
 		node->onClick = NULL;	/**< @todo understand why this strange hack exists (there is a lot of over actions) */
+
+#if 0
+		/* reordering the node to the end */
+		/* finally not a good idea... */
+		MN_RemoveNode(node->parent, node);
+		MN_AppendNode(node->parent, node);
+#endif
 
 	/* else initialize node */
 	} else {
