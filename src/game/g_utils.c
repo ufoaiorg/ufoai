@@ -44,6 +44,28 @@ void G_FreeEdict (edict_t *ent)
 }
 
 /**
+ * @brief Searches an edict of the given type at the given grid location.
+ * @param pos The grid location to look for an edict.
+ * @param type The type of the edict to look for or @c -1 to look for any type in the search.
+ * @return @c NULL if nothing was found, otherwise the entity located at the given grid position.
+ */
+edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
+{
+	edict_t *floor;
+
+	for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
+		if (!floor->inuse || (type > 0 && floor->type != type))
+			continue;
+		if (!VectorCompare(pos, floor->pos))
+			continue;
+
+		return floor;
+	}
+	/* nothing found at this pos */
+	return NULL;
+}
+
+/**
  * @brief Call the 'use' function for the given edict and all its group members
  * @param[in] ent The edict to call the use function for
  * @sa G_ClientUseEdict

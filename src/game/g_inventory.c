@@ -29,18 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
 {
-	edict_t *floor;
-
-	for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-		if (!floor->inuse || floor->type != ET_ITEM)
-			continue;
-		if (!VectorCompare(pos, floor->pos))
-			continue;
-
-		return floor;
-	}
-	/* nothing found at this pos */
-	return NULL;
+	return G_GetEdictFromPos(pos, ET_ITEM);
 }
 
 /**

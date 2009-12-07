@@ -42,14 +42,8 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 	if (self->HP != 0)
 		return qfalse;
 
-	if (G_IsActor(activator)) {
-		activator->pos[2] = gi.GridFall(gi.routingMap, activator->fieldSize, activator->pos);
-		gi.GridPosToVec(gi.routingMap, activator->fieldSize, activator->pos, activator->origin);
-		gi.LinkEdict(activator);
-
-		G_CheckVis(activator, qtrue);
-		G_ClientFall(activator);
-	}
+	if (G_IsActor(activator))
+		G_ActorFall(activator);
 
 	return qfalse;
 }

@@ -100,17 +100,35 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
 			forbiddenList, forbiddenListLength);
 }
 
-void G_ClientFall (const edict_t *ent)
+/**
+ * @brief Let an actor fall down if e.g. the func_breakable the actor was standing on was destroyed.
+ * @param ent The actor that should fall down
+ * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.
+ */
+void G_ActorFall (edict_t *ent)
 {
-	/** @todo see dvecs, PosSubDV and NewDVZ */
-	int dv = 13;
+	const edict_t* entAtPos;
+
+	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
+
+	entAtPos = G_GetEdictFromPos(ent->pos, -1);
+	if (entAtPos != NULL) {
+		/** @todo search a grid field besides the found edict */
+	}
+
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	gi.LinkEdict(ent);
+
+	G_CheckVis(ent, qtrue);
+
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(1);
 	gi.WriteByte(ent->pos[0]);
 	gi.WriteByte(ent->pos[1]);
 	gi.WriteByte(ent->pos[2]);
-	gi.WriteByte(dv);
+	/** @todo see dvecs, PosSubDV and NewDVZ */
+	gi.WriteByte(DIRECTION_FALL);
 	gi.WriteShort(800); /* gravity */
 	gi.WriteShort(0);
 	gi.EndEvents();

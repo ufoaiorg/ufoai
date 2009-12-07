@@ -299,6 +299,7 @@ edict_t *G_Spawn(void);
 edict_t *G_ParticleSpawn(vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent);
+edict_t *G_GetEdictFromPos(const pos3_t pos, const int type);
 
 /* g_reaction.c */
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
@@ -361,7 +362,7 @@ void G_ActorReload(int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
 void G_ClientMove(player_t * player, int visTeam, const int num, pos3_t to, qboolean stop, qboolean quiet);
-void G_ClientFall(const edict_t *ent);
+void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
 void G_ActorInvMove(int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
