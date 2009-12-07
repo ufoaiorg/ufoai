@@ -150,6 +150,20 @@ player_t* G_GetPlayerForTeam (int team)
 }
 
 /**
+ * @brief Applies the given damage value to an edict that is either an actor or has
+ * the @c FL_DESTROYABLE flag set.
+ * @param ent The edict to apply the damage to.
+ * @param damage The damage value.
+ * @note This function assures, that the health points of the edict are never
+ * getting negative.
+ */
+void G_TakeDamage (edict_t *ent, int damage)
+{
+	if (G_IsBreakable(ent) || G_IsActor(ent))
+		ent->HP = max(ent->HP - damage, 0);
+}
+
+/**
  * @brief Returns the player name for a give player number
  */
 const char* G_GetPlayerName (int pnum)

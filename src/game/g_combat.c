@@ -297,6 +297,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  * @param[in] attacker The attacker.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @sa G_SplashDamage
+ * @sa G_TakeDamage
  * @sa G_PrintActorStats
  */
 static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
@@ -307,10 +308,10 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	qboolean isRobot;
 
 	assert(target);
-	assert(G_IsActor(target) || target->type == ET_BREAKABLE || target->type == ET_DOOR);
+	assert(G_IsActor(target) || G_IsBrushModel(target));
 
 	/* Breakables */
-	if (target->type == ET_BREAKABLE || target->type == ET_DOOR) {
+	if (G_IsBrushModel(target)) {
 		/* Breakables are immune to stun & shock damage. */
 		if (stunEl || stunGas || shock || mock)
  			return;
@@ -327,7 +328,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			/* check if attacker appears/perishes for any other team */
 			G_CheckVis(attacker, qtrue);
 		} else {
-			target->HP = max(target->HP - damage, 0);
+			G_TakeDamage(target, damage);
 		}
 		return;
 	}
@@ -388,7 +389,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				return;
 			}
 		} else {
-			target->HP = max(target->HP - damage, 0);
+			G_TakeDamage(target, damage);
 			if (damage < 0) {
 				/* The 'attacker' is healing the target. */
 				/* Update stats here to get info on how many TUs the target received. */
@@ -412,11 +413,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	if (mock)
 		return;
-
-	/* HP shouldn't become negative.
-	 * Note: This check needs to be done for every assignment to HP above anyway since a "return" could pop up in between.
-	 * I'll leave this one in here just in case. */
-	target->HP = max(target->HP, 0);
 
 	/* Check death/knockout. */
 	if (target->HP == 0 || target->HP <= target->STUN) {
@@ -504,10 +500,10 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		if (shock && !G_FrustumVis(check, impact))
 			continue;
 
-		if (G_IsActor(check))
-			VectorCopy(check->origin, center);
-		else if (check->type == ET_BREAKABLE || check->type == ET_DOOR)
+		if (G_IsBrushModel(check) && G_IsBreakable(check))
 			VectorCenterFromMinsMaxs(check->absmin, check->absmax, center);
+		else if (G_IsLivingActor(check) || G_IsBreakable(check))
+			VectorCopy(check->origin, center);
 		else
 			continue;
 
@@ -529,7 +525,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 		}
 
 		/* check for walls */
-		if (G_IsActor(check) && !G_ActorVis(impact, check, qfalse))
+		if (G_IsLivingActor(check) && !G_ActorVis(impact, check, qfalse))
 			continue;
 
 		/* do damage */

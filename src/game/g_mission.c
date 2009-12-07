@@ -91,6 +91,14 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 }
 
 /**
+ * @brief Mission trigger destroy function
+ */
+qboolean G_MissionDestroy (edict_t *self)
+{
+	return qtrue;
+}
+
+/**
  * @brief Mission trigger use function
  */
 qboolean G_MissionUse (edict_t *self)

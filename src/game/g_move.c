@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define ACTOR_SPEED_NORMAL 100
 #define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
+static const float FALLING_DAMAGE_FACTOR = 10.0f;
 
 /**
  * @brief The forbidden list is a list of entity positions that are occupied by an entity.
@@ -107,12 +108,15 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
  */
 void G_ActorFall (edict_t *ent)
 {
-	const edict_t* entAtPos;
+	edict_t* entAtPos;
+	const int oldZ = ent->pos[2];
 
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 
 	entAtPos = G_GetEdictFromPos(ent->pos, -1);
-	if (entAtPos != NULL) {
+	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsActor(entAtPos))) {
+		const int diff = oldZ - ent->pos[2];
+		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 		/** @todo search a grid field besides the found edict */
 	}
 
@@ -129,7 +133,7 @@ void G_ActorFall (edict_t *ent)
 	gi.WriteByte(ent->pos[2]);
 	/** @todo see dvecs, PosSubDV and NewDVZ */
 	gi.WriteByte(DIRECTION_FALL);
-	gi.WriteShort(800); /* gravity */
+	gi.WriteShort(GRAVITY);
 	gi.WriteShort(0);
 	gi.EndEvents();
 }

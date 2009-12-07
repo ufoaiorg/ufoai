@@ -168,6 +168,8 @@ extern edict_t *g_edicts;
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
 #define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsBreakable(ent)	((ent)->flags & FL_DESTROYABLE)
+#define G_IsBrushModel(ent)	((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
 #define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
@@ -280,6 +282,7 @@ void G_PhysicsStep(edict_t *ent);
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
 qboolean G_MissionUse(edict_t *self);
+qboolean G_MissionDestroy(edict_t *self);
 void G_MissionThink(edict_t *self);
 
 /* g_utils.c */
@@ -300,6 +303,7 @@ edict_t *G_ParticleSpawn(vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const int type);
+void G_TakeDamage(edict_t *ent, int damage);
 
 /* g_reaction.c */
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
@@ -495,6 +499,7 @@ struct player_s {
  * @brief If an edict is destroyable (like ET_BREAKABLE, ET_DOOR [if health set]
  * or maybe a ET_MISSION [if health set])
  * @note e.g. misc_mission, func_breakable, func_door
+ * @note If you mark an edict as breakable, you have to provide a destroy callback, too
  */
 #define FL_DESTROYABLE	0x00000004
 /**

@@ -691,8 +691,10 @@ static void SP_misc_mission (edict_t *ent)
 
 	ent->solid = SOLID_BBOX;
 
-	if (ent->HP)
+	if (ent->HP) {
 		ent->flags |= FL_DESTROYABLE;
+		ent->destroy = G_MissionDestroy;
+	}
 
 	if (!ent->HP && !ent->time && !ent->target) {
 		G_FreeEdict(ent);
