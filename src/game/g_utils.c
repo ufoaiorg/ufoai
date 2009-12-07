@@ -401,6 +401,7 @@ void G_TouchEdicts (edict_t *ent, float extend)
 	int i, num;
 	edict_t *touch[MAX_EDICTS];
 	vec3_t absmin, absmax;
+	const char *entName = (ent->model) ? ent->model : ent->chr.name;
 
 	for (i = 0; i < 3; i++) {
 		absmin[i] = ent->absmin[i] - extend;
@@ -408,11 +409,14 @@ void G_TouchEdicts (edict_t *ent, float extend)
 	}
 
 	num = gi.TouchEdicts(absmin, absmax, touch, MAX_EDICTS, ent);
+	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it(killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
+        const char *hitName = (hit->model) ? hit->model : hit->chr.name;
+        Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: %s touching %s.\n", entName, hitName);
 		if (!hit->inuse)
 			continue;
 		if (ent->touch)
