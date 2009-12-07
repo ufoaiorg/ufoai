@@ -156,6 +156,7 @@ player_t* G_GetPlayerForTeam (int team)
  * @param damage The damage value.
  * @note This function assures, that the health points of the edict are never
  * getting negative.
+ * @sa G_Damage
  */
 void G_TakeDamage (edict_t *ent, int damage)
 {
@@ -384,7 +385,7 @@ int G_TouchTriggers (edict_t *ent)
 	int i, num, usedNum = 0;
 	edict_t *touch[MAX_EDICTS];
 
-	if (ent->type != ET_ACTOR || G_IsDead(ent))
+	if (!G_IsLivingActor(ent))
 		return 0;
 
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
