@@ -116,7 +116,7 @@ item plasrifle
 	center			"9.3 0 1.5"
 	scale			1.25
 	ammo			20
-	reload			15
+	reload			16
 	price			2500
 	size			40
 	is_primary		true
@@ -187,13 +187,13 @@ item plasrifle_ammo
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma_s
 			speed				1700
-			spread				"1.8 1.8"
+			spread				"1.9 1.9"
 			crouch				0.7
 			range				70
 			shots				3
 			ammo				3
-			delaybetweenshots	5
-			time				18
+			delaybetweenshots	8
+			time				16
 			damage				"70 4"
 			dmgweight			plasma_medium
 			reaction			true
@@ -212,8 +212,8 @@ item plasrifle_ammo
 			range				70
 			shots				6
 			ammo				6
-			delaybetweenshots	10
-			time				25
+			delaybetweenshots	8
+			time				22
 			damage				"70 4"
 			dmgweight			plasma_medium
 			reaction			true

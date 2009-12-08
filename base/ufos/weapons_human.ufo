@@ -736,7 +736,7 @@ item smg_ammo
 			range				50
 			shots				5
 			ammo				5
-			delaybetweenshots	10
+			delaybetweenshots	8
 			time				10
 			damage				"20 4"
 			dmgweight			normal_light
@@ -756,8 +756,8 @@ item smg_ammo
 			range				50
 			shots				15
 			ammo				15
-			delaybetweenshots	10
-			time				20
+			delaybetweenshots	8
+			time				18
 			damage				"20 4"
 			dmgweight			normal_light
 			reaction			true
@@ -800,8 +800,8 @@ item shotgun2
 	shape			"0 1 4 1"
 	center			"1.5 0 3.8"
 	scale			0.98
-	ammo			7
-	reload			20
+	ammo			10
+	reload			14
 	price			1500
 	size			25
 	is_primary		true
@@ -835,12 +835,12 @@ item shotgun2_slug_ammo
 			speed				0
 			spread				"1.5 1.5"
 			crouch				0.8
-			range				30
+			range				26
 			shots				1
 			ammo				1
 			delaybetweenshots	0
-			time				8
-			damage				"50 10"
+			time				7
+			damage				"55 5"
 			dmgweight			normal_heavy
 			reaction			true
 		}
@@ -855,14 +855,14 @@ item shotgun2_slug_ammo
 			firesnd				weapons/riotshotgun
 			sndonce				false
 			speed				0
-			spread				"2.5 2.5"
-			crouch				0.8
-			range				30
+			spread				"2.4 2.4"
+			crouch				0.7
+			range				26
 			shots				3
 			ammo				3
 			delaybetweenshots	5
 			time				12
-			damage				"50 10"
+			damage				"55 5"
 			dmgweight			normal_heavy
 			reaction			true
 		}
@@ -917,14 +917,14 @@ item shotgun_micro_ammo
 			firesnd				weapons/microshotgun2
 			sndonce				true
 			speed				0
-			spread				"1.3 1.3"
+			spread				"1.6 1.6"
 			crouch				0.9
 			range				20
-			shots				7
+			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				6
-			damage				"15 5"
+			time				7
+			damage				"14 2"
 			dmgweight			normal_spray
 			reaction			true
 		}
@@ -939,14 +939,14 @@ item shotgun_micro_ammo
 			firesnd				weapons/microshotgun2
 			sndonce				false
 			speed				0
-			spread				"2.8 2.8"
+			spread				"2.6 2.6"
 			crouch				0.9
 			range				20
-			shots				21
+			shots				24
 			ammo				3
-			delaybetweenshots	15
-			time				10
-			damage				"15 5"
+			delaybetweenshots	        5
+			time				12
+			damage				"14 2"
 			dmgweight			normal_spray
 			reaction			true
 		}
@@ -964,15 +964,15 @@ item shotgun_micro_ammo
 			firesnd				weapons/riotshotgun
 			sndonce				true
 			speed				0
-			spread				"1.8 1.8"
+			spread				"1.7 1.7"
 			crouch				1.0
-			range				15
+			range				16
 			shots				8
 			ammo				1
 			delaybetweenshots	0
-			time				8
-			damage				"15 5"
-			dmgweight			blast
+			time				7
+			damage				"15 2"
+			dmgweight			normal_spray
 			reaction			true
 		}
 
@@ -986,15 +986,15 @@ item shotgun_micro_ammo
 			firesnd				weapons/riotshotgun
 			sndonce				false
 			speed				0
-			spread				"2.8 2.8"
+			spread				"2.5 2.5"
 			crouch				1.0
-			range				15
+			range				16
 			shots				24
 			ammo				3
-			delaybetweenshots	15
+			delaybetweenshots	        5
 			time				12
-			damage				"15 5"
-			dmgweight			blast
+			damage				"15 2"
+			dmgweight			normal_spray
 			reaction			true
 		}
 
@@ -1010,13 +1010,13 @@ item shotgun_micro_ammo
 			speed				0
 			spread				"3 3"
 			crouch				1.0
-			range				15
+			range				16
 			shots				56
 			ammo				7
-			delaybetweenshots	30
+			delaybetweenshots	        5
 			time				20
-			damage				"15 5"
-			dmgweight			blast
+			damage				"15 2"
+			dmgweight			normal_spray
 			reaction			true
 		}
 	}
@@ -1877,7 +1877,7 @@ item bolterrifle
 	shape			"0 0 5 2"
 	center			"4 1 1.1"
 	scale			1.2
-	ammo			12
+	ammo			8
 	reload			15
 	price			2000
 	size			45
@@ -1916,8 +1916,8 @@ item bolterrifle_ammo
 			range		80
 			shots		1
 			ammo		1
-			time		8
-			damage		"80 16"
+			time		9
+			damage		"75 10"
 			dmgweight	normal_heavy
 			reaction	true
 		}
@@ -1931,13 +1931,13 @@ item bolterrifle_ammo
 			hitbody		null
 			firesnd		weapons/boltercannonade
 			speed		0
-			spread		"2.1 2.1"
+			spread		"2.4 2.4"
 			crouch		0.8
 			range		80
 			shots		3
 			ammo		3
-			time		13
-			damage		"80 16"
+			time		14
+			damage		"75 10"
 			dmgweight	normal_heavy
 			reaction	true
 		}
@@ -1952,13 +1952,13 @@ item bolterrifle_ammo
 			firesnd				weapons/bolter2
 			speed				0
 			spread				"1.1 1.1"
-			crouch				0.5
+			crouch				0.70
 			range				80
 			shots				1
 			ammo				1
 			delaybetweenshots	2
 			time				16
-			damage				"80 16"
+			damage				"75 10"
 			dmgweight			normal_heavy
 		}
 	}

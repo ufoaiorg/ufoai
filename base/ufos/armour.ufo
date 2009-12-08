@@ -79,8 +79,8 @@ item armour_light
 	protection {
 		normal_light		20
 		normal_medium		18
-		normal_heavy		11
-		normal_spray        9
+		normal_heavy		12
+		normal_spray            9
 
 		normal_steelblade			10
 		normal_monomolecularblade	5
@@ -89,7 +89,7 @@ item armour_light
 
 		fire_medium			15
 		fire_heavy			15
-		fire_flamer         2
+		fire_flamer         1
 
 		shock				0
 
@@ -138,10 +138,10 @@ item armour_lightadv
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		29
-		normal_medium		24
-		normal_heavy		19
-		normal_spray        10
+		normal_light		25
+		normal_medium		20
+		normal_heavy		15
+		normal_spray            10
 
 		normal_steelblade			18
 		normal_monomolecularblade	12
@@ -150,7 +150,7 @@ item armour_lightadv
 
 		fire_medium			19
 		fire_heavy			19
-		fire_flamer         3
+		fire_flamer         2
 
 		shock				10
 
@@ -199,12 +199,12 @@ item armour_medium
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		31
-		normal_medium		29
-		normal_heavy		16
-		normal_spray        12
+		normal_light		29
+		normal_medium		24
+		normal_heavy		15
+		normal_spray            11
 
-		normal_steelblade			20
+		normal_steelblade		20
 		normal_monomolecularblade	12
 
 		blast				38
@@ -500,10 +500,10 @@ item armour_light_alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light	7
-		normal_medium	6
-		normal_heavy	5
-		normal_spray	9
+		normal_light	20
+		normal_medium	16
+		normal_heavy	12
+		normal_spray	10
 
 		normal_steelblade			10
 		normal_monomolecularblade	5
@@ -516,12 +516,12 @@ item armour_light_alien
 
 		shock			0
 
-		plasma_light	20
-		plasma_medium	17
+		plasma_light	24
+		plasma_medium	19
 		plasma_heavy	15
 
-		laser_light		12
-		laser_medium	10
+		laser_light		15
+		laser_medium	12
 		laser_heavy		10
 
 		particlebeam_light	21
@@ -561,10 +561,10 @@ item armour_medium_alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light	21
-		normal_medium	19
-		normal_heavy	16
-		normal_spray	12
+		normal_light	31
+		normal_medium	27
+		normal_heavy	22
+		normal_spray	11
 
 		normal_steelblade			20
 		normal_monomolecularblade	12
@@ -579,7 +579,7 @@ item armour_medium_alien
 
 		plasma_light	35
 		plasma_medium	29
-		plasma_heavy	26
+		plasma_heavy	22
 
 		laser_light		26
 		laser_medium	25
