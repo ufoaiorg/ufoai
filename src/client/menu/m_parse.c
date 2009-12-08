@@ -1021,11 +1021,8 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 			return NULL;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", MN_GetPath(node));
-		/* reset action list of node */
-		/* maybe it mean "reset the code when it is an inherited function" */
-		node->onClick = NULL;	/**< @todo understand why this strange hack exists (there is a lot of over actions) */
 
-	/* else initialize check component */
+	/* else initialize a component */
 	} else if (component) {
 		node = MN_CloneNode(component, NULL, qtrue, *token);
 		if (parent) {
@@ -1034,7 +1031,7 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 			MN_AppendNode(parent, node);
 		}
 
-	/* else initialize new node */
+	/* else initialize a new node */
 	} else {
 		node = MN_AllocStaticNode(*token, behaviour->name);
 		node->parent = parent;
