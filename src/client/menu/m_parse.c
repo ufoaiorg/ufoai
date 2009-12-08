@@ -1054,10 +1054,10 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 	if (!result)
 		return NULL;
 
-	/* initialize propertiesthe node according to its behaviour */
-	if (node->behaviour->loaded) {
+	/* validate properties */
+	if (node->behaviour->loaded)
 		node->behaviour->loaded(node);
-	}
+
 	return node;
 }
 
