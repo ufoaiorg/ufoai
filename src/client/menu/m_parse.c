@@ -180,7 +180,6 @@ menuAction_t *MN_AllocStaticAction (void)
 
 /**
  * @brief Parser for setter command
- * @todo Clean up the code after merge of setter without @
  */
 static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
