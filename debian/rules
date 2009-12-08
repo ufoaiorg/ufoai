@@ -49,8 +49,8 @@ build-arch: stamps/build-arch
 stamps/build-arch: config.status
 	dh_testdir
 
-	$(MAKE) BUILDDIR=$(CURDIR)/BUILD
-	$(MAKE) BUILDDIR=$(CURDIR)/BUILD radiant
+	$(MAKE) 
+	$(MAKE) radiant
 
 	mkdir -p stamps
 	touch $@
@@ -59,7 +59,8 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	$(MAKE) BUILDDIR=$(CURDIR)/BUILD lang maps pk3
+	./contrib/scripts/map-get.py upgrade
+	$(MAKE) lang maps pk3
 	$(MAKE) -C src/docs/tex
 
 	mkdir -p stamps
@@ -78,7 +79,7 @@ really_clean:
 	dh_testroot
 	rm -rf stamps
 
-	[ ! -f Makefile ] || $(MAKE) BUILDDIR=$(CURDIR)/BUILD clean
+	[ ! -f Makefile ] || $(MAKE) clean
 	$(MAKE) -C src/docs/tex clean
 	# WARNING: building maps takes ages
 	# find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
