@@ -199,10 +199,12 @@ static void CL_Connect (void)
 
 	if (cls.servername[0]) {
 		assert(cls.serverport[0]);
+		Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
 		cls.netStream = NET_Connect(cls.servername, cls.serverport);
 	} else
 		cls.netStream = NET_ConnectToLoopBack();
 	if (cls.netStream) {
+		Com_Printf("Connecting to localhost...\n");
 		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = cls.realtime;
 	} else {
@@ -1116,12 +1118,6 @@ void CL_SetClientState (int state)
 		cls.waitingForStart = 0;
 		break;
 	case ca_connecting:
-		if (cls.servername[0]) {
-			assert(cls.serverport[0]);
-			Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
-		} else {
-			Com_Printf("Connecting to localhost...\n");
-		}
 		CL_Connect();
 		break;
 	case ca_disconnected:
