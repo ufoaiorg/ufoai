@@ -197,12 +197,13 @@ static void CL_Connect (void)
 
 	assert(!cls.netStream);
 
-	if (cls.servername[0]) {
-		assert(cls.serverport[0]);
+	if (cls.servername[0] != '\0') {
+		assert(cls.serverport[0] != '\0');
 		Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
 		cls.netStream = NET_Connect(cls.servername, cls.serverport);
 	} else
 		cls.netStream = NET_ConnectToLoopBack();
+
 	if (cls.netStream) {
 		Com_Printf("Connecting to localhost...\n");
 		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
@@ -1031,14 +1032,13 @@ static void CL_SendCommand (void)
 	/* fix any cheating cvars */
 	Cvar_FixCheatVars();
 
-	/* if the local server is running and we aren't connected then connect */
 	switch (cls.state) {
 	case ca_disconnected:
+		/* if the local server is running and we aren't connected then connect */
 		if (Com_ServerState()) {
 			cls.servername[0] = '\0';
 			cls.serverport[0] = '\0';
 			CL_SetClientState(ca_connecting);
-			userinfoModified = qfalse;
 			return;
 		}
 		break;
