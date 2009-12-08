@@ -1023,6 +1023,8 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 	/** Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
 	if (parent)
 		node = MN_GetNode(parent, *token);
+
+	/* reuse a node */
 	if (node) {
 		if (node->behaviour != behaviour) {
 			Com_Printf("MN_ParseNode: we can't change node type (node \"%s\")\n", MN_GetPath(node));
@@ -1033,14 +1035,7 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 		/* maybe it mean "reset the code when it is an inherited function" */
 		node->onClick = NULL;	/**< @todo understand why this strange hack exists (there is a lot of over actions) */
 
-#if 0
-		/* reordering the node to the end */
-		/* finally not a good idea... */
-		MN_RemoveNode(node->parent, node);
-		MN_AppendNode(node->parent, node);
-#endif
-
-	/* else initialize node */
+	/* else initialize check component */
 	} else if (component) {
 		node = MN_CloneNode(component, NULL, qtrue, *token);
 		if (parent) {
@@ -1048,6 +1043,8 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 				MN_UpdateRoot(node, parent->root);
 			MN_AppendNode(parent, node);
 		}
+
+	/* else initialize new node */
 	} else {
 		node = MN_AllocStaticNode(behaviour->name);
 		node->parent = parent;
@@ -1059,18 +1056,18 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 		/** @todo move it into caller */
 		if (parent)
 			MN_AppendNode(parent, node);
-	}
 
-	/* initialize default properties */
-	if (node->super == NULL && node->behaviour->loading)
-		node->behaviour->loading(node);
+		/* initialize default properties */
+		if (node->behaviour->loading)
+			node->behaviour->loading(node);
+	}
 
 	/* get body */
 	result = MN_ParseNodeBody(node, text, token, errhead);
 	if (!result)
 		return NULL;
 
-	/* initialize the node according to its behaviour */
+	/* initialize propertiesthe node according to its behaviour */
 	if (node->behaviour->loaded) {
 		node->behaviour->loaded(node);
 	}
