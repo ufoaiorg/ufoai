@@ -1046,13 +1046,10 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 
 	/* else initialize new node */
 	} else {
-		node = MN_AllocStaticNode(behaviour->name);
+		node = MN_AllocStaticNode(*token, behaviour->name);
 		node->parent = parent;
 		if (parent)
 			node->root = parent->root;
-		Q_strncpyz(node->name, *token, sizeof(node->name));
-		if (strlen(node->name) != strlen(*token))
-			Com_Printf("MN_ParseNode: Node name \"%s\" truncated. New name is \"%s\"\n", *token, node->name);
 		/** @todo move it into caller */
 		if (parent)
 			MN_AppendNode(parent, node);
@@ -1350,12 +1347,9 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
 		token = Com_Parse(text);
 	} else {
-		menu = MN_AllocStaticNode(type);
+		menu = MN_AllocStaticNode(name, type);
 		menu->root = menu;
 		menu->behaviour->loading(menu);
-		Q_strncpyz(menu->name, name, sizeof(menu->name));
-		if (strlen(menu->name) != strlen(name))
-			Com_Printf("MN_ParseWindow: Menu name \"%s\" truncated. New name is \"%s\"\n", name, menu->name);
 	}
 
 	MN_InsertMenu(menu);

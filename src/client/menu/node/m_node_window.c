@@ -229,8 +229,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if it need, construct the drag button */
 	if (EXTRADATA(node).dragButton) {
-		menuNode_t *control = MN_AllocStaticNode("controls");
-		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
+		menuNode_t *control = MN_AllocStaticNode("move_window_button", "controls");
 		control->root = node;
 		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
@@ -244,9 +243,8 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if the menu should have a close button, add it here */
 	if (EXTRADATA(node).closeButton) {
-		menuNode_t *button = MN_AllocStaticNode("pic");
+		menuNode_t *button = MN_AllocStaticNode("close_window_button", "pic");
 		const int positionFromRight = CONTROLS_PADDING;
-		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->root = node;
 		button->image = "ui/close";
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */

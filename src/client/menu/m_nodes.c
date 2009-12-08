@@ -310,11 +310,13 @@ menuNode_t* MN_GetNodeByPath (const char* path)
 }
 
 /**
- * @brief Allocate a node into the menu memory
- * @note Its not a dynamic memory allocation. Please only use it at the loading time
+ * @brief Allocate a node into the UI memory
+ * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
+ * @param[in] name Name of the new node, else NULL if we dont want to edit it.
+ * @param[in] type Name of the node behavior
  */
-menuNode_t* MN_AllocStaticNode (const char* type)
+menuNode_t* MN_AllocStaticNode (const char* name, const char* type)
 {
 	menuNode_t* node = &mn.nodes[mn.numNodes++];
 	if (mn.numNodes >= MAX_MENUNODES)
@@ -328,6 +330,13 @@ menuNode_t* MN_AllocStaticNode (const char* type)
 #endif
 	if (node->behaviour->isAbstract)
 		Com_Error(ERR_FATAL, "MN_AllocStaticNode: We can't allocate the abstract node behaviour '%s'", type);
+
+	if (name != NULL) {
+		Q_strncpyz(node->name, name, sizeof(node->name));
+		if (strlen(node->name) != strlen(name))
+			Com_Printf("MN_AllocStaticNode: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
+	}
+
 	return node;
 }
 
@@ -467,7 +476,7 @@ int MN_GetNodeBehaviourCount(void)
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName)
 {
-	menuNode_t* newNode = MN_AllocStaticNode(node->behaviour->name);
+	menuNode_t* newNode = MN_AllocStaticNode(NULL, node->behaviour->name);
 
 	/* clone all data */
 	*newNode = *node;
