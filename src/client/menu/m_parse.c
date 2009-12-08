@@ -808,17 +808,7 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	menuAction_t **action;
 	assert (node->behaviour->isFunction);
 
-	/* add new actions to end of list */
-	/** @todo [begin] this code look stange */
 	action = &node->onClick;
-	for (; *action; action = &(*action)->next) {}
-
-	if (mn.numActions >= MAX_MENUACTIONS)
-		Com_Error(ERR_FATAL, "MN_ParseFunction: MAX_MENUACTIONS exceeded (%i)", mn.numActions);
-	*action = &mn.actions[mn.numActions++];
-	memset(*action, 0, sizeof(**action));
-	/** @todo [end] this code look strange */
-
 	*action = MN_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return qfalse;
