@@ -30,7 +30,7 @@
 
 #include "iradiant.h"
 #include "ifilesystem.h"
-#include "ishaders.h"
+#include "ishadersystem.h"
 #include "ientity.h"
 #include "ieclass.h"
 #include "irender.h"

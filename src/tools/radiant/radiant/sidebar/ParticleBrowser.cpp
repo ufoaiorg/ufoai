@@ -25,7 +25,7 @@
 #include "ParticleBrowser.h"
 #include "radiant_i18n.h"
 
-#include "ishaders.h"
+#include "ishadersystem.h"
 #include "generic/callback.h"
 #include "gtkutil/image.h"
 

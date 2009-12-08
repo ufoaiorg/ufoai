@@ -25,7 +25,8 @@
 
 #include "debugging/debugging.h"
 
-#include "ishaders.h"
+#include "ishadersystem.h"
+#include "imaterial.h"
 #include "irender.h"
 #include "itextures.h"
 #include "igl.h"
@@ -1162,7 +1163,9 @@ void OpenGLShader::construct (const std::string& shaderName)
 		break;
 	default:
 		// construction from IShader
-		m_shader = GlobalShaderSystem().getShaderForName(name);
+		m_shader = GlobalMaterialSystem()->getMaterialForName(name);
+		if (m_shader == (IShader*)0)
+			m_shader = GlobalShaderSystem().getShaderForName(name);
 
 		state.m_texture = m_shader->getTexture()->texture_number;
 

@@ -19,7 +19,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "ishaders.h"
+#include "ishadersystem.h"
 #include "ifilesystem.h"
 #include "itextures.h"
 #include "iscriplib.h"

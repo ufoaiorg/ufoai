@@ -43,7 +43,7 @@
 #include "itoolbar.h"
 #include "editable.h"
 #include "ientity.h"
-#include "ishaders.h"
+#include "ishadersystem.h"
 #include "igl.h"
 #include "moduleobserver.h"
 #include "server.h"

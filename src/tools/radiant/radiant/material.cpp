@@ -46,6 +46,116 @@
 #include "modulesystem/moduleregistry.h"
 #include "modulesystem/singletonmodule.h"
 #include "ui/materialeditor/MaterialEditor.h"
+#include "itextures.h"
+
+MaterialShader::MaterialShader (const std::string& fileName) :
+	_refcount(0), _fileName(fileName), _blendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA), _inUse(false)
+{
+	_texture = 0;
+	_notfound = 0;
+
+	realise();
+}
+
+MaterialShader::~MaterialShader ()
+{
+	unrealise();
+}
+
+// IShaders implementation -----------------
+void MaterialShader::IncRef ()
+{
+	++_refcount;
+}
+void MaterialShader::DecRef ()
+{
+	if (--_refcount == 0) {
+		delete this;
+	}
+}
+
+std::size_t MaterialShader::refcount ()
+{
+	return _refcount;
+}
+
+// get/set the qtexture_t* Radiant uses to represent this shader object
+qtexture_t* MaterialShader::getTexture () const
+{
+	return _texture;
+}
+
+// get shader name
+const char* MaterialShader::getName () const
+{
+	return _fileName.c_str();
+}
+
+bool MaterialShader::IsInUse () const
+{
+	return _inUse;
+}
+
+void MaterialShader::SetInUse (bool inUse)
+{
+	_inUse = inUse;
+}
+
+// get the shader flags
+int MaterialShader::getFlags () const
+{
+	return QER_TRANS | QER_ALPHATEST;
+}
+
+// get the transparency value
+float MaterialShader::getTrans () const
+{
+	return 0.5f;
+}
+
+// test if it's a true shader, or a default shader created to wrap around a texture
+bool MaterialShader::IsDefault () const
+{
+	return _fileName.empty();
+}
+
+// get the alphaFunc
+void MaterialShader::getAlphaFunc (MaterialShader::EAlphaFunc *func, float *ref)
+{
+	*func = eAlways;
+	*ref = 0.5f;
+}
+
+BlendFunc MaterialShader::getBlendFunc () const
+{
+	return _blendFunc;
+}
+
+// get the cull type
+MaterialShader::ECull MaterialShader::getCull ()
+{
+	return eCullNone;
+}
+
+void MaterialShader::realise ()
+{
+	const LoadImageCallback& loader = GlobalTexturesCache().defaultLoader();
+	_texture = GlobalTexturesCache().capture(loader, _fileName.c_str());
+
+	if (_texture->texture_number == 0) {
+		_notfound = _texture;
+		_texture = GlobalTexturesCache().capture("textures/tex_common/nodraw");
+	}
+}
+
+void MaterialShader::unrealise ()
+{
+	GlobalTexturesCache().release(_texture);
+
+	if (_notfound != 0) {
+		GlobalTexturesCache().release(_notfound);
+	}
+}
 
 MaterialSystem::MaterialSystem ()
 {
@@ -160,6 +270,23 @@ const std::string MaterialSystem::getMaterialFilename () const
 		materialFilename = os::getFilenameFromPath(umpname);
 	std::string relativePath = "materials/" + os::stripExtension(materialFilename) + ".mat";
 	return relativePath;
+}
+
+IShader* MaterialSystem::getMaterialForName (const std::string& name)
+{
+#if 0
+	MaterialShaders::iterator i = _activeMaterialShaders.find(name);
+	if (i != _activeMaterialShaders.end())
+	return (*i).second;
+
+	MaterialShader *shader = new MaterialShader(name);
+	_activeMaterialShaders.insert(MaterialShaders::value_type(name, shader));
+	return shader;
+#else
+	g_warning("get shader for material of texture: %s from material file: %s\n", name.c_str(),
+			getMaterialFilename().c_str());
+	return (IShader*) 0;
+#endif
 }
 
 class MaterialSystemAPI

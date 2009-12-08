@@ -53,6 +53,7 @@
 #include "../texmanip.h"
 #include "../textures.h"
 #include "convert.h"
+#include "imaterial.h"
 
 #include "gtkutil/menu.h"
 #include "gtkutil/nonmodal.h"
@@ -274,7 +275,9 @@ const char* TextureBrowser_GetSelectedShader (TextureBrowser& textureBrowser)
  */
 void TextureBrowser_SetStatus (TextureBrowser& textureBrowser, const std::string& name)
 {
-	IShader* shader = GlobalShaderSystem().getShaderForName(name);
+	IShader* shader = GlobalMaterialSystem()->getMaterialForName(name);
+	if (shader == (IShader*)0)
+		shader = GlobalShaderSystem().getShaderForName(name);
 	qtexture_t* q = shader->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);

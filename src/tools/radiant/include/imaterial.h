@@ -29,15 +29,83 @@
 
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
+#include "moduleobserver.h"
 #include "generic/constant.h"
 #include <string>
+#include <map>
 #include "ifilesystem.h"
+#include "ishader.h"
+
+class MaterialShader: public IShader
+{
+	private:
+
+		std::size_t _refcount;
+
+		std::string _fileName;
+
+		BlendFunc _blendFunc;
+
+		bool _inUse;
+
+		qtexture_t* _texture;
+
+		qtexture_t* _notfound;
+
+	public:
+
+		MaterialShader (const std::string& fileName);
+
+		virtual ~MaterialShader ();
+
+		// IShaders implementation -----------------
+		void IncRef ();
+		void DecRef ();
+
+		std::size_t refcount ();
+
+		// get/set the qtexture_t* Radiant uses to represent this shader object
+		qtexture_t* getTexture () const;
+
+		// get shader name
+		const char* getName () const;
+
+		bool IsInUse () const;
+
+		void SetInUse (bool inUse);
+
+		// get the shader flags
+		int getFlags () const;
+
+		// get the transparency value
+		float getTrans () const;
+
+		// test if it's a true shader, or a default shader created to wrap around a texture
+		bool IsDefault () const;
+
+		// get the alphaFunc
+		void getAlphaFunc (EAlphaFunc *func, float *ref);
+
+		BlendFunc getBlendFunc () const;
+
+		// get the cull type
+		ECull getCull ();
+
+		void realise ();
+
+		void unrealise ();
+};
+
 
 class MaterialSystem
 {
 	private:
 
-		void generateMaterialForFace(int contentFlags, int surfaceFlags, std::string& textureName, std::stringstream& stream);
+		void generateMaterialForFace (int contentFlags, int surfaceFlags, std::string& textureName,
+				std::stringstream& stream);
+
+		typedef std::map<std::string, MaterialShader*> MaterialShaders;
+		MaterialShaders _activeMaterialShaders;
 
 	public:
 		INTEGER_CONSTANT(Version, 1);
@@ -67,6 +135,12 @@ class MaterialSystem
 		 * Generates material for the current selected textures
 		 */
 		void generateMaterialFromTexture ();
+
+		/**
+		 * activate the material for a given name and return it
+		 * will return the default shader if name is not found
+		 */
+		IShader* getMaterialForName (const std::string& name);
 };
 
 class MaterialSystemDependencies: public GlobalFileSystemModuleRef

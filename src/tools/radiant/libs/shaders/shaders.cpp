@@ -45,7 +45,7 @@
 #include <list>
 
 #include "ifilesystem.h"
-#include "ishaders.h"
+#include "ishadersystem.h"
 #include "iscriplib.h"
 #include "itextures.h"
 #include "iradiant.h"

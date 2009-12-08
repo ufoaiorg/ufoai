@@ -24,7 +24,7 @@
 
 #include "string/string.h"
 #include "character.h"
-#include "ishaders.h"
+#include "ishadersystem.h"
 
 //! @deprecated - use string compare directory. Shaders are only equal if filenames and shader ids are matching
 inline bool shader_equal (const std::string& shader, const std::string& other)

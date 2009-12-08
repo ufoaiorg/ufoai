@@ -30,7 +30,7 @@
 
 #include "debugging/debugging.h"
 
-#include "ishaders.h"
+#include "ishadersystem.h"
 
 #include "gtkutil/window.h"
 #include "stream/stringstream.h"

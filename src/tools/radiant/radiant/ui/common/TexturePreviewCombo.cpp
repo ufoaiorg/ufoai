@@ -7,7 +7,7 @@
 #include "AutoPtr.h"
 #include "radiant_i18n.h"
 #include "igl.h"
-#include "ishaders.h"
+#include "ishadersystem.h"
 
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkframe.h>
