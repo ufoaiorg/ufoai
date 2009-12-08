@@ -2981,6 +2981,8 @@ base/textures/tex_buildings/mtl_midwrn.jpg | GNU General Public License 2.0 | Ne
 base/textures/tex_buildings/mtl_midwrn_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/pent_metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/pewter.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/pipe_flat.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/pipe_tall.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/plat.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/platside.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/platstep1.png | GNU General Public License 2.0 or later | Nate Wright
