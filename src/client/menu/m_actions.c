@@ -389,7 +389,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 					actionsRef = callNode->onClick;
 				else
 					actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
-				MN_ExecuteInjectedActions(callNode, qfalse, actionsRef);
+				MN_ExecuteInjectedActions(callNode, useCmdParam, actionsRef);
 			} else if (callProperty->type == V_UI_NODEMETHOD) {
 				menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
 				func(callNode);
