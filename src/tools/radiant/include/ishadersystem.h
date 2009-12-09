@@ -40,35 +40,49 @@ typedef Callback1<const char*> ShaderNameCallback;
 
 class ModuleObserver;
 
+/**
+ * @note shader and texture names used must be full path.
+ * Shaders usable as textures have prefix equal to @c getTexturePrefix()
+ */
 class ShaderSystem
 {
 	public:
 		INTEGER_CONSTANT(Version, 1);
 		STRING_CONSTANT(Name, "shaders");
-		// NOTE: shader and texture names used must be full path.
-		// Shaders usable as textures have prefix equal to getTexturePrefix()
 
 		virtual ~ShaderSystem ()
 		{
 		}
+
 		virtual void realise () = 0;
+
 		virtual void unrealise () = 0;
+
 		virtual void refresh () = 0;
-		// activate the shader for a given name and return it
-		// will return the default shader if name is not found
+
+		/**
+		 * activate the shader for a given name and return it
+		 * will return the default shader if name is not found
+		 */
 		virtual IShader* getShaderForName (const std::string& name) = 0;
 
 		virtual void foreachShaderName (const ShaderNameCallback& callback) = 0;
 
-		// iterate over the list of active shaders
+		/**
+		 * iterate over the list of active shaders
+		 */
 		virtual void beginActiveShadersIterator () = 0;
+
 		virtual bool endActiveShadersIterator () = 0;
+
 		virtual IShader* dereferenceActiveShadersIterator () = 0;
+
 		virtual void incrementActiveShadersIterator () = 0;
 
 		virtual void setActiveShadersChangedNotify (const Callback& notify) = 0;
 
 		virtual void attach (ModuleObserver& observer) = 0;
+
 		virtual void detach (ModuleObserver& observer) = 0;
 
 		virtual const std::string& getTexturePrefix () const = 0;
