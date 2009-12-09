@@ -198,58 +198,6 @@ class ShaderTemplate
 			m_textureName = name;
 			setName(name);
 		}
-
-		class MapLayerTemplate
-		{
-				std::string m_texture;
-				BlendFuncExpression m_blendFunc;
-				bool m_clampToBorder;
-				ShaderValue m_alphaTest;
-			public:
-				MapLayerTemplate (const std::string& texture, const BlendFuncExpression& blendFunc, bool clampToBorder,
-						const ShaderValue& alphaTest) :
-					m_texture(texture), m_blendFunc(blendFunc), m_clampToBorder(false), m_alphaTest(alphaTest)
-				{
-				}
-				const std::string& texture () const
-				{
-					return m_texture;
-				}
-				const BlendFuncExpression& blendFunc () const
-				{
-					return m_blendFunc;
-				}
-				bool clampToBorder () const
-				{
-					return m_clampToBorder;
-				}
-				const ShaderValue& alphaTest () const
-				{
-					return m_alphaTest;
-				}
-		};
-		typedef std::vector<MapLayerTemplate> MapLayers;
-		MapLayers m_layers;
-};
-
-enum LayerTypeId
-{
-	LAYER_NONE, LAYER_BLEND, LAYER_DIFFUSEMAP, LAYER_SPECULARMAP
-};
-
-class LayerTemplate
-{
-	public:
-		LayerTypeId m_type;
-		std::string m_texture;
-		BlendFuncExpression m_blendFunc;
-		bool m_clampToBorder;
-		ShaderValue m_alphaTest;
-
-		LayerTemplate () :
-			m_type(LAYER_NONE), m_blendFunc("GL_ONE", "GL_ZERO"), m_clampToBorder(false), m_alphaTest("-1")
-		{
-		}
 };
 
 bool parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params)
@@ -550,21 +498,6 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 	return true;
 }
 
-class Layer
-{
-	public:
-		LayerTypeId m_type;
-		std::string m_texture;
-		BlendFunc m_blendFunc;
-		bool m_clampToBorder;
-		float m_alphaTest;
-
-		Layer () :
-			m_type(LAYER_NONE), m_blendFunc(BLEND_ONE, BLEND_ZERO), m_clampToBorder(false), m_alphaTest(-1)
-		{
-		}
-};
-
 void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 {
 	for (;;) {
@@ -603,12 +536,12 @@ static void LoadShaderFile (const std::string& filename)
 	const std::string& appPath = GlobalRadiant().getAppPath();
 	std::string shadername = appPath + filename;
 
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername.c_str()));
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername));
 	if (file) {
 		g_message("Parsing shaderfile '%s'\n", shadername.c_str());
 
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
-		ParseShaderFile(*tokeniser, shadername.c_str());
+		ParseShaderFile(*tokeniser, shadername);
 	} else {
 		g_warning("Unable to read shaderfile '%s'\n", shadername.c_str());
 	}
