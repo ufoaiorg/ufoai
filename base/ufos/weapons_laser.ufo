@@ -14,7 +14,7 @@ item laserpistol
 	center			"2.5 0 1.2"
 	scale			1.7
 	ammo			26
-	reload			8
+	reload			12
 	price			2000
 	size			10
 	is_secondary	true
@@ -37,7 +37,7 @@ item laserrifle
 	center			"4.5 0 .5"
 	scale			1.26
 	ammo			16
-	reload			12
+	reload			16
 	price			2500
 	size			35
 	is_primary		true
@@ -122,7 +122,7 @@ item laser_ammo
 			shots		1
 			ammo		1
 			time		5
-			damage		"40 6"
+			damage		"36 6"
 			dmgweight	laser_light
 			reaction	true
 		}
@@ -134,7 +134,7 @@ item laser_ammo
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser
-			delaybetweenshots	8
+			delaybetweenshots	6
 			speed				0
 			spread				"0.75 0.75"
 			crouch				0.9
@@ -142,7 +142,7 @@ item laser_ammo
 			shots				3
 			ammo				3
 			time				8
-			damage				"30 6"
+			damage				"36 6"
 			dmgweight			laser_light
 			reaction			true
 		}
@@ -165,7 +165,7 @@ item laser_ammo
 			shots		1
 			ammo		2
 			time		7
-			damage		"55 6"
+			damage		"42 6"
 			dmgweight	laser_medium
 			reaction	true
 		}
@@ -177,15 +177,15 @@ item laser_ammo
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser
-			delaybetweenshots	8
+			delaybetweenshots	        6
 			speed				0
 			spread				"0.5 0.5"
 			crouch				0.8
 			range				90
 			shots				3
 			ammo				3
-			time				10
-			damage				"35 5"
+			time				12
+			damage				"42 5"
 			dmgweight			laser_medium
 			reaction			true
 		}
@@ -206,9 +206,9 @@ item laser_ammo
 			crouch		0.7
 			range		120
 			shots		1
-			ammo		2
+			ammo		1
 			time		10
-			damage		"60 18"
+			damage		"55 6"
 			dmgweight	laser_heavy
 			reaction	true
 		}
@@ -220,7 +220,7 @@ item laser_ammo
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser
-			delaybetweenshots	8
+			delaybetweenshots	        6
 			speed				0
 			spread				"0.5 0.5"
 			crouch				0.7
@@ -228,7 +228,7 @@ item laser_ammo
 			shots				3
 			ammo				3
 			time				15
-			damage				"40 12"
+			damage				"52 6"
 			dmgweight			laser_heavy
 			reaction			true
 		}

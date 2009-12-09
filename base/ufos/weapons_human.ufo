@@ -991,7 +991,7 @@ item shotgun_micro_ammo
 			range				16
 			shots				24
 			ammo				3
-			delaybetweenshots	        5
+			delaybetweenshots	        36
 			time				12
 			damage				"15 2"
 			dmgweight			normal_spray
@@ -1013,7 +1013,7 @@ item shotgun_micro_ammo
 			range				16
 			shots				56
 			ammo				7
-			delaybetweenshots	        5
+			delaybetweenshots	        36
 			time				20
 			damage				"15 2"
 			dmgweight			normal_spray
@@ -1180,7 +1180,7 @@ item rpg_ammo
 			firesnd		weapons/rpg
 			impsnd		misc/big_boom
 			bodysnd		misc/big_boom
-			speed		250
+			speed		450
 			spread		"0.2 0.6"
 			crouch		0.6
 			range		250
@@ -1222,7 +1222,7 @@ item rpg_incendiary_ammo
 			firesnd		weapons/rpg
 			impsnd		weapons/incendiary_rocket
 			bodysnd		weapons/incendiary_rocket
-			speed		250
+			speed		450
 			spread		"0.2 0.6"
 			crouch		0.6
 			range		250

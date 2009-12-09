@@ -97,9 +97,9 @@ item armour_light
 		plasma_medium		6
 		plasma_heavy		5
 
-		laser_light			12
-		laser_medium		10
-		laser_heavy			10
+		laser_light			18
+		laser_medium		16
+		laser_heavy			12
 
 		particlebeam_light	7
 		particlebeam_medium	6
@@ -199,9 +199,9 @@ item armour_medium
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		29
-		normal_medium		24
-		normal_heavy		15
+		normal_light		31
+		normal_medium		26
+		normal_heavy		20
 		normal_spray            11
 
 		normal_steelblade		20
@@ -221,7 +221,7 @@ item armour_medium
 
 		laser_light			29
 		laser_medium		26
-		laser_heavy			25
+		laser_heavy			22
 
 		particlebeam_light	21
 		particlebeam_medium	17
@@ -520,9 +520,9 @@ item armour_light_alien
 		plasma_medium	19
 		plasma_heavy	15
 
-		laser_light		15
-		laser_medium	12
-		laser_heavy		10
+		laser_light		18
+		laser_medium	16
+		laser_heavy		12
 
 		particlebeam_light	21
 		particlebeam_medium	19
@@ -581,9 +581,9 @@ item armour_medium_alien
 		plasma_medium	29
 		plasma_heavy	22
 
-		laser_light		26
-		laser_medium	25
-		laser_heavy		22
+		laser_light		28
+		laser_medium	26
+		laser_heavy		24
 
 		particlebeam_light	31
 		particlebeam_medium	27
