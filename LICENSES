@@ -2589,6 +2589,8 @@ base/sound/ambience/droning_short.ogg | GNU General Public License 2.0 | Karen R
 base/sound/ambience/fire1.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
 base/sound/ambience/fire2.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
 base/sound/ambience/firesoft.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/hum.ogg | GNU General Public 2.0 or later | Max Neave
+base/sound/ambience/hum2.ogg | GNU General Public 2.0 or later | Max Neave
 base/sound/ambience/jingle.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/jingle2.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/lights_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
