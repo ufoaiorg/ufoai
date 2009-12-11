@@ -1624,6 +1624,9 @@ item grenl_incendiary_ammo
 	}
 }
 
+// NOTE: The flechette shells are NOT supposed to act like other grenades.
+// They are meant to be a direct-fire application of the grenade launcher.
+// See http://ufoai.ninex.info/wiki/index.php/Equipment/Ammunition/25mm_Flechette_Grenades
 item grenl_fle_ammo
 {
 	name			"_25mm Flechette Grenades"
