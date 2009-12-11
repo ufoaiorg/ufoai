@@ -1643,44 +1643,164 @@ item grenl_fle_ammo
 	{
 		firedef
 		{
-			name				"_Single Shot"
-			skill				heavy
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/shotgun
-			sndonce				true
-			speed				0
-			spread				"4 4.5"
-			range				10
-			shots				24
+			name				"_Snap Shot - Airburst"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 2"
+			range				15
+			shots				1
 			ammo				1
-			delaybetweenshots	0
+			delaybetweenshots	1
 			time				8
-			damage				"6 2"
-			dmgweight			normal_light
-			reaction			true
+			damage				"20 2"
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			normal_spray
+			reaction			false
 		}
 
 		firedef
 		{
-			name				"_3-Round Burst"
-			skill				heavy
-			projtl				bullet
-			impact				bulletImpact
-			hitbody				null
-			firesnd				weapons/grenl_fle_3shot
-			sndonce				true
-			speed				0
-			spread				"5 5.5"
-			range				10
-			shots				72
+			name				"_Aimed Shot - Airburst"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			damage				"20 2"
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			normal_spray
+			reaction			false
+		}
+
+		firedef
+		{
+			name				"_3-Round Burst - Airburst"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			spread				"0 4"
+			range				15
+			shots				3
 			ammo				3
-			delaybetweenshots	0
-			time				14
-			damage				"6 2"
-			dmgweight			normal_light
-			reaction			true
+			delaybetweenshots	3
+			time				15
+			damage				"20 2"
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			normal_spray
+			reaction			false
+		}
+
+		firedef
+		{
+			name				"_Snap Shot - Timed"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 2"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				8
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			normal_spray
+			reaction			false
+		}
+
+		firedef
+		{
+			name				"_Aimed Shot - Timed"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 1.5"
+			range				15
+			shots				1
+			ammo				1
+			delaybetweenshots	1
+			time				12
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			normal_spray
+			reaction			false
+		}
+
+		firedef
+		{
+			name				"_3-Round Burst - Timed"
+			skill				explosive
+			projtl				grenl_ammo
+			impact				frag_explosion
+			hitbody				frag_explosion
+			firesnd				weapons/grenade_launcher
+			impsnd				weapons/deepexplosion
+			bodysnd				weapons/deepexplosion
+			bncsnd				misc/klonk03
+			gravity				true
+			launched			true
+			delay				1
+			bounce				5
+			bncfac				0.6
+			spread				"0 4"
+			range				15
+			shots				3
+			ammo				3
+			delaybetweenshots	3
+			time				15
+			spldmg				"100 10"
+			splrad				4
+			dmgweight			normal_spray
+			reaction			false
 		}
 	}
 }
