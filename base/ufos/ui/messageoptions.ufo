@@ -8,22 +8,22 @@ component panel cmpMessageOptions {
 		invis	true
 	}
 
-	checkbox pause {
-		tooltip		"_enable or disable game stopping"
+	checkbox notify {
+		tooltip		"_enable or disable displaying a notification message"
 		pos			"0 0"
 		size		"20 18"
 		image		"ui/checkbox_blue"
 		current		0
-		onChange	{ cmd "msgoptions_toggle <node:parent@num> pause;" }
+		onChange	{ cmd "msgoptions_toggle <node:parent@num> notify;" }
 	}
 
-	checkbox notify {
-		tooltip		"_enable or disable displaying a notification message"
+	checkbox pause {
+		tooltip		"_enable or disable game stopping"
 		pos			"30 0"
 		size		"20 18"
 		image		"ui/checkbox_blue"
 		current		0
-		onChange	{ cmd "msgoptions_toggle <node:parent@num> notify;" }
+		onChange	{ cmd "msgoptions_toggle <node:parent@num> pause;" }
 	}
 
 	checkbox sound {
@@ -82,27 +82,22 @@ window messageoptions
 		font		f_small_bold
 	}
 
-	pic header_pause
-	{
-		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
-		pos			"356 60"
-		image		ui/notify_pause
-		onClick		{ cmd "msgoptions_setall pause 1;" }
-		onRClick		{ cmd "msgoptions_setall pause 0;" }
-	}
-
-	todo position {
-		pos		"386 45"
-		string	"'Notify' should be the first check"
-	}
-
 	pic header_notify
 	{
 		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
-		pos			"386 60"
+		pos			"356 60"
 		image		ui/notify_notice
 		onClick		{ cmd "msgoptions_setall notify 1;" }
 		onRClick		{ cmd "msgoptions_setall notify 0;" }
+	}
+
+	pic header_pause
+	{
+		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
+		pos			"386 60"
+		image		ui/notify_pause
+		onClick		{ cmd "msgoptions_setall pause 1;" }
+		onRClick		{ cmd "msgoptions_setall pause 0;" }
 	}
 
 	pic header_sound
