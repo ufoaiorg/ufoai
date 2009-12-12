@@ -35,7 +35,7 @@ window aircraft_equip extends iaircraft
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
-			*iemlist@image = "ui/panel_grey_green"
+			*itemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
