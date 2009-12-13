@@ -601,7 +601,8 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		currentChapter = tech->upChapter;
 		upCurrentTech = tech;
 
-		MN_ExecuteConfunc("mn_item_change_view other");
+		/* Reset itemdescription */
+		MN_ExecuteConfunc("itemdesc_view 0 0;");
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
 			/* If researched -> display research text */

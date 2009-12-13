@@ -64,7 +64,8 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 void INV_ItemDescription (const objDef_t *od)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	int i, count;
+	int i;
+	int count;
 
 	currentDisplayedObject = od;
 
@@ -73,6 +74,7 @@ void INV_ItemDescription (const objDef_t *od)
 		Cvar_Set("mn_item", "");
 		MN_ResetData(TEXT_ITEMDESCRIPTION);
 		itemIndex = fireModeIndex = 0;
+		MN_ExecuteConfunc("itemdesc_view 0 0;");
 		return;
 	}
 
@@ -87,18 +89,10 @@ void INV_ItemDescription (const objDef_t *od)
 		for (i = 0; i < od->numWeapons; i++)
 			if (GAME_ItemIsUseable(od->weapons[i]))
 				count++;
-
 		if (itemIndex >= od->numWeapons || itemIndex < 0)
 			itemIndex = count - 1;
-
-		/* Only display weapons if at least one is usable */
-		if (count > 0) {
-			/* Display the name of the associated weapon */
-			MN_ExecuteConfunc("mn_item_change_view ammo \"%s\"",
-					_(od->weapons[itemIndex]->name));
-		} else {
-			MN_ExecuteConfunc("mn_item_change_view other");
-		}
+		if (count > 0)
+			Cvar_ForceSet("mn_linkname", _(od->weapons[itemIndex]->name));
 	} else if (od->weapon && od->reload) {
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
 		 * we are counting the number of ammo that is usable with this weapon */
@@ -124,15 +118,14 @@ void INV_ItemDescription (const objDef_t *od)
 					}
 				}
 			}
-
-			MN_ExecuteConfunc("mn_item_change_view weapon \"%s\"", name);
+			Cvar_ForceSet("mn_linkname", name);
 		}
-	} else {
-		MN_ExecuteConfunc("mn_item_change_view other");
 	}
 
 	/* set description text if item has been researched or one of its ammo/weapon has been researched */
 	if (count > 0 || GAME_ItemIsUseable(od)) {
+		int numFiredefs = 0;
+
 		*itemText = '\0';
 		if (INV_IsArmour(od)) {
 			Com_sprintf(itemText, sizeof(itemText), _("Size:\t%i\n"), od->size);
@@ -162,7 +155,7 @@ void INV_ItemDescription (const objDef_t *od)
 			/** @todo is there ammo with no firedefs? */
 			if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
 				const fireDef_t *fd;
-				const int numFiredefs = odAmmo->numFiredefs[weaponIndex];
+				numFiredefs = odAmmo->numFiredefs[weaponIndex];
 
 				/* This contains everything common for weapons and ammos */
 				/* We check if the wanted firemode to display exists. */
@@ -201,9 +194,11 @@ void INV_ItemDescription (const objDef_t *od)
 		}
 
 		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+		MN_ExecuteConfunc("itemdesc_view %i %i;", count, numFiredefs);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - not useable"));
 		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+		MN_ExecuteConfunc("itemdesc_view 0 0;");
 	}
 }
 

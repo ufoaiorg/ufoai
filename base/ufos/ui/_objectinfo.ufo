@@ -31,51 +31,50 @@ window objectinfo
 	}
 
 	/**
-	 * @param[in] <1> true or false to hide or show the firemode nodes
+	 * @brief shows/hides weapons/ammos/firemodes and switches in itemdescriptions
+	 * @param[in] <1> number of weapons/ammos for this equipment
+	 * @param[in] <2> number of firemodes for this equipment
 	 */
-	confunc mn_item_hide_firemode {
-		*node:this.parent.itemdescription.firemode_dec@invis <1>
-		*node:this.parent.itemdescription.firemode_inc@invis <1>
-		*node:this.parent.itemdescription.header_firemode@invis <1>
-		*node:this.parent.itemdescription.firemode_name@invis <1>
-	}
+	confunc itemdesc_view {
+		*cvar:mn_numweapons = <1>
+		*cvar:mn_numfiremodes = <2>
 
-	/**
-	 * @param[in] <1> true or false to hide or show the firemode nodes
-	 */
-	confunc mn_item_hide_weaponammo {
-		*node:this.parent.itemdescription.header_item@invis <1>
-		*node:this.parent.itemdescription.action_dec@invis <1>
-		*node:this.parent.itemdescription.item_name@invis <1>
-		*node:this.parent.itemdescription.action_inc@invis <1>
-	}
-
-	/**
-	 * @param[in] <1> ammo, weapon or none to deactivate
-	 * @param[in] <2> the link object name
-	 */
-	confunc mn_item_change_view {
-		*cvar:tmp <1>
-		*cvar:mn_linkname <2>
-
-		if ( *cvar:tmp ne "none" ) {
-			*cvar:mn_changeitem *cvar:tmp
-			if ( *node:this.parent.itemdescription@invis == 0 ) {
-				if ( *cvar:mn_changeitem eq "weapon" ) {
-					cmd "mn_item_hide_firemode false;"
-					cmd "mn_item_hide_weaponammo false;"
-				} elif ( *cvar:mn_changeitem eq "ammo" ) {
-					cmd "mn_item_hide_firemode false;"
-					cmd "mn_item_hide_weaponammo false;"
-				} else {
-					cmd "mn_item_hide_firemode true;"
-					cmd "mn_item_hide_weaponammo true;"
-				}
+		if ( *cvar:mn_numweapons > 0 ) {
+			*node:this.parent.itemdescription.header_item@invis false
+			*node:this.parent.itemdescription.item_name@invis false
+			if ( *cvar:mn_numweapons > 1 ) {
+				*node:this.parent.itemdescription.action_dec@invis false
+				*node:this.parent.itemdescription.action_inc@invis false
+			} else {
+				*node:this.parent.itemdescription.action_dec@invis true
+				*node:this.parent.itemdescription.action_inc@invis true
 			}
 		} else {
-			*node:this.parent.itemdescription@invis true
+			*node:this.parent.itemdescription.header_item@invis true
+			*node:this.parent.itemdescription.item_name@invis true
+			*node:this.parent.itemdescription.action_dec@invis true
+			*node:this.parent.itemdescription.action_inc@invis true
 		}
-		delete *cvar:tmp
+
+		if ( *cvar:mn_numfiremodes > 0 ) {
+			*node:this.parent.itemdescription.header_firemode@invis false
+			*node:this.parent.itemdescription.firemode_name@invis false
+			if ( *cvar:mn_numfiremodes > 1 ) {
+				*node:this.parent.itemdescription.firemode_dec@invis false
+				*node:this.parent.itemdescription.firemode_inc@invis false
+			} else {
+				*node:this.parent.itemdescription.firemode_dec@invis true
+				*node:this.parent.itemdescription.firemode_inc@invis true
+			}
+		} else {
+			*node:this.parent.itemdescription.header_firemode@invis true
+			*node:this.parent.itemdescription.firemode_name@invis true
+			*node:this.parent.itemdescription.firemode_dec@invis true
+			*node:this.parent.itemdescription.firemode_inc@invis true
+		}
+
+		delete *cvar:mn_numweapons
+		delete *cvar:mn_numfiremodes
 	}
 }
 

@@ -524,8 +524,6 @@ window equipment extends objectinfo
 		if ( *cvar:mn_itemname ne "" ) {
 			*itemdescription@invis false
 	
-			cmd "mn_item_change_view <cvar:mn_changeitem> \"<cvar:mn_linkname>\""
-	
 			*pwr_lbl@invis true *pwr_val@invis true *pwr_bdr@invis true *pwr_bar@invis true
 			*spd_lbl@invis true *spd_val@invis true *spd_bdr@invis true *spd_bar@invis true
 			*acc_lbl@invis true *acc_val@invis true *acc_bdr@invis true *acc_bar@invis true
@@ -544,7 +542,7 @@ window equipment extends objectinfo
 	// @todo merge with confunc mp_actor_stats?
 	func actor_stats
 	{
-		cmd "mn_item_change_view none \"<cvar:mn_linkname>\""
+		*itemdescription@invis true
 
 		*pwr_lbl@invis false *pwr_val@invis false *pwr_bdr@invis false *pwr_bar@invis false
 		*spd_lbl@invis false *spd_val@invis false *spd_bdr@invis false *spd_bar@invis false
