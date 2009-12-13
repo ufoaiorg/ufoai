@@ -587,7 +587,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 		keySpace = battleKeyBindings;
 		break;
 	default:
-		return "";
+		Sys_Error("Unknown key space (%i) given", space);
 	}
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
@@ -608,7 +608,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  * @sa Key_StringToKeynum
  * @note If command is empty, this function will only remove the actual key binding instead of setting empty string.
  */
-static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
+void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 {
 	char *new;
 	char **keySpace = NULL;
@@ -692,7 +692,6 @@ static void Key_Unbindall_f (void)
 		}
 }
 
-
 /**
  * @brief Binds a key to a given script command
  * @sa Key_SetBinding
@@ -730,9 +729,9 @@ static void Key_Bind_f (void)
 			Q_strcat(cmd, " ", sizeof(cmd));
 	}
 
-	if (!strcmp(Cmd_Argv(0), "bindui")) {
+	if (!strcmp(Cmd_Argv(0), "bindui"))
 		MN_SetKeyBinding(cmd, b);
-	} else if (!strcmp(Cmd_Argv(0), "bindmenu"))
+	else if (!strcmp(Cmd_Argv(0), "bindmenu"))
 		Key_SetBinding(b, cmd, KEYSPACE_MENU);
 	else if (!strcmp(Cmd_Argv(0), "bindbattle"))
 		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);

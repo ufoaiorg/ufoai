@@ -1352,7 +1352,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 
 /**
  * @sa Com_MacroExpandString
- * @todo should review this code, '*' dont check very well every things
+ * @todo we should review this code, '*' doesn't work very well for all the needed things
  */
 const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref)
 {
@@ -1402,7 +1402,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 #endif
 		}
 
-	/* traslatable string */
+	/* translatable string */
 	} else if (ref[0] == '_') {
 		ref++;
 		return _(ref);
