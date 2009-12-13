@@ -42,7 +42,6 @@ int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 {
 	const char *font = "f_small";
 	int height = 0, width = 0;
-	int lines = 5;
 
 	if (!string || string[0] == '\0' || !font)
 		return 0;
@@ -63,7 +62,7 @@ int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 
 	MN_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
 	R_Color(tooltipColor);
-	MN_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	MN_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 
 	return width;
