@@ -788,13 +788,13 @@ static void UP_GenerateSummary (void)
 {
 	int i;
 	menuOption_t *chapters = NULL;
-	menuOption_t *chapter;
 	int num = 0;
 
 	numChaptersDisplayList = 0;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
+		menuOption_t *chapter;
 		qboolean researchedEntries = qfalse;
 		upCurrentTech = ccs.upChapters[i].first;
 		do {
