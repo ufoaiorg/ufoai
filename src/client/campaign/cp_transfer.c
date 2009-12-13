@@ -36,6 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_aliencont.h"
 
+/**
+ * @brief transfer types
+ */
 typedef enum {
 	TRANS_TYPE_INVALID = -1,
 	TRANS_TYPE_ITEM,
@@ -46,6 +49,9 @@ typedef enum {
 	TRANS_TYPE_MAX
 } transferType_t;
 
+/**
+ * @brief transfer typeID strings
+ */
 static const char* transferTypeIDs[] = {
 	"item",
 	"employee",
@@ -87,11 +93,14 @@ static transferData_t td;
 
 /** @brief Max values for transfer factors. */
 static const int MAX_TR_FACTORS = 500;
-
-
+/** @brief number of entries on menu */
 static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
 
-
+/**
+ * @brief Returns the transfer type
+ * @param[in] id Transfer type Id
+ * @sa transferType_t
+ */
 static transferType_t TR_GetTransferType (const char *id)
 {
 	int i;
@@ -431,6 +440,14 @@ static qboolean TR_AircraftListSelect (int i)
 	return qtrue;
 }
 
+/**
+ * @brief Fills the items-in-base list with stuff available for transfer.
+ * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
+ * @param[in] srcbase Pointer to the base the transfer starts from
+ * @param[in] destbase Pointer to the base to transfer
+ * @param[in] transferType Transfer category
+ * @sa transferType_t
+ */
 static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t transferType)
 {
 	linkedList_t *transferList = NULL;
@@ -617,8 +634,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 }
 
 /**
- * @brief Fills the items-in-base list with stuff available for transfer.
- * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
+ * @brief Function displays the transferable item/employee/aircraft/alien list
  * @sa TR_TransferStart_f
  * @sa TR_TransferInit_f
  */
@@ -1350,6 +1366,9 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 
 static menuOption_t *baseList;
 
+/**
+ * @brief Fills the optionlist with available bases to transfer to
+ */
 static void TR_InitBaseList (void)
 {
 	int baseIdx;
@@ -1380,6 +1399,9 @@ static void TR_InitBaseList (void)
 	MN_RegisterOption(OPTION_BASELIST, first);
 }
 
+/**
+ * @brief Callback to select destination base
+ */
 static void TR_SelectBase_f (void)
 {
 	int baseIdx;
@@ -1395,84 +1417,6 @@ static void TR_SelectBase_f (void)
 	destbase = B_GetFoundedBaseByIDX(baseIdx);
 
 	TR_TransferBaseSelect(base, destbase);
-}
-
-/**
- * @brief Selects next base.
- * @sa TR_PrevBase_f
- * @note Command to call this: trans_nextbase
- */
-static void TR_NextBase_f (void)
-{
-	int baseIdx, counter;
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	if (!td.transferBase)
-		counter = base->idx;
-	else
-		counter = td.transferBase->idx;
-
-	for (baseIdx = counter + 1; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
-		if (!destbase)
-			continue;
-		if (destbase == base)
-			continue;
-		TR_TransferBaseSelect(base, destbase);
-		return;
-	}
-	/* At this point we are at "last" base, so we will select first. */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
-		if (!destbase)
-			continue;
-		if (destbase == base)
-			continue;
-		TR_TransferBaseSelect(base, destbase);
-		return;
-	}
-}
-
-/**
- * @brief Selects previous base.
- * @sa TR_NextBase_f
- * @note Command to call this: trans_prevbase
- */
-static void TR_PrevBase_f (void)
-{
-	int baseIdx, counter;
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base)
-		return;
-
-	if (!td.transferBase)
-		counter = base->idx;
-	else
-		counter = td.transferBase->idx;
-
-	for (baseIdx = counter - 1; baseIdx >= 0; baseIdx--) {
-		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
-		if (!destbase)
-			continue;
-		if (base == destbase)
-			continue;
-		TR_TransferBaseSelect(base, destbase);
-		return;
-	}
-	/* At this point we are at "first" base, so we will select last. */
-	for (baseIdx = MAX_BASES - 1; baseIdx >= 0; baseIdx--) {
-		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
-		if (!destbase)
-			continue;
-		if (base == destbase)
-			continue;
-		TR_TransferBaseSelect(base, destbase);
-		return;
-	}
 }
 
 /**
@@ -1715,6 +1659,8 @@ void TR_TransferCheck (void)
  */
 static void TR_Init_f (void)
 {
+	base_t *base = B_GetCurrentSelectedBase();
+
 	/* Clear employees temp array. */
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
 	/* Clear aircraft temp array. */
@@ -1724,8 +1670,8 @@ static void TR_Init_f (void)
 	TR_InitBaseList();
 
 	/* Select first available base. */
-	td.transferBase = NULL;
-	TR_NextBase_f();
+	td.transferBase = B_GetFoundedBaseByIDX((base->idx + 1) % ccs.numBases);
+	TR_TransferBaseSelect(base, td.transferBase);
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase) {
 		Cvar_Set("mn_trans_base_name", td.transferBase->name);
@@ -2091,8 +2037,6 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
 	Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
-	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
-	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
 	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "");
 #ifdef DEBUG
