@@ -452,51 +452,57 @@ window mp_team_edit extends objectinfo
 	// ==================
 	// actor stats
 	// ==================
+	panel actor_statpanel {
+		{
+			pos		"30 405"
+			size	"350 336"
+		}
 
-	string pwr_lbl { pos "34 414" size "200 20" string "_Strength:" }
-	string pwr_val { pos "220 414" size "150 20" string *cvar:mn_tpwr textalign ur }
-	pic pwr_bdr    { pos "67 431"  image ui/bar_border }
-	tbar pwr_bar   { pos "70 431"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
+		string pwr_lbl { pos "4 9" size "200 20" string "_Strength:" }
+		string pwr_val { pos "190 9" size "150 20" string *cvar:mn_tpwr textalign ur }
+		pic pwr_bdr    { pos "37 26"  image ui/bar_border }
+		tbar pwr_bar   { pos "40 26"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
 
-	string spd_lbl { pos "34 449"  size "200 20" string "_Speed:" }
-	string spd_val { pos "220 449" size "150 20" string *cvar:mn_tspd textalign ur }
-	pic spd_bdr    { pos "67 466"  image ui/bar_border }
-	tbar spd_bar   { pos "70 466"  current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		string spd_lbl { pos "4 44"  size "200 20" string "_Speed:" }
+		string spd_val { pos "190 44" size "150 20" string *cvar:mn_tspd textalign ur }
+		pic spd_bdr    { pos "37 61"  image ui/bar_border }
+		tbar spd_bar   { pos "40 61"  current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
-	string acc_lbl { pos "34 484"  size "200 20" string "_Accuracy:" }
-	string acc_val { pos "220 484" size "150 20" string *cvar:mn_tacc textalign ur }
-	pic acc_bdr    { pos "67 501"  image ui/bar_border }
-	tbar acc_bar   { pos "70 501"  current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		string acc_lbl { pos "4 79"  size "200 20" string "_Accuracy:" }
+		string acc_val { pos "190 79" size "150 20" string *cvar:mn_tacc textalign ur }
+		pic acc_bdr    { pos "37 96"  image ui/bar_border }
+		tbar acc_bar   { pos "40 96"  current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
-	string mnd_lbl { pos "34 519"  size "200 20" string "_Mind:" }
-	string mnd_val { pos "220 519" size "150 20" string *cvar:mn_tmnd textalign ur }
-	pic mnd_bdr    { pos "67 536"  image ui/bar_border }
-	tbar mnd_bar   { pos "70 536"  current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		string mnd_lbl { pos "4 114"  size "200 20" string "_Mind:" }
+		string mnd_val { pos "190 114" size "150 20" string *cvar:mn_tmnd textalign ur }
+		pic mnd_bdr    { pos "37 131"  image ui/bar_border }
+		tbar mnd_bar   { pos "40 131"  current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
-	string cls_lbl { pos "34 562"  size "200 20" string "_Close Combat:" }
-	string cls_val { pos "220 562" size "150 20" string *cvar:mn_tcls textalign ur }
-	pic cls_bdr    { pos "67 579"  image ui/bar_border }
-	tbar cls_bar   { pos "70 579"  current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		string cls_lbl { pos "4 157"  size "200 20" string "_Close Combat:" }
+		string cls_val { pos "190 157" size "150 20" string *cvar:mn_tcls textalign ur }
+		pic cls_bdr    { pos "37 174"  image ui/bar_border }
+		tbar cls_bar   { pos "40 174"  current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
-	string hvy_lbl { pos "34 597"  size "200 20" string "_Heavy Weapons:" }
-	string hvy_val { pos "220 597" size "150 20" string *cvar:mn_thvy textalign ur }
-	pic hvy_bdr    { pos "67 614"  image ui/bar_border }
-	tbar hvy_bar   { pos "70 614"  current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		string hvy_lbl { pos "4 192"  size "200 20" string "_Heavy Weapons:" }
+		string hvy_val { pos "190 192" size "150 20" string *cvar:mn_thvy textalign ur }
+		pic hvy_bdr    { pos "37 209"  image ui/bar_border }
+		tbar hvy_bar   { pos "40 209"  current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
-	string ass_lbl { pos "34 632" size "200 20" string "_Assault Weapons:" }
-	string ass_val { pos "220 632" size "150 20" string *cvar:mn_tass textalign ur }
-	pic ass_bdr    { pos "67 649"  image ui/bar_border }
-	tbar ass_bar   { pos "70 649"  current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		string ass_lbl { pos "4 227" size "200 20" string "_Assault Weapons:" }
+		string ass_val { pos "190 227" size "150 20" string *cvar:mn_tass textalign ur }
+		pic ass_bdr    { pos "37 244"  image ui/bar_border }
+		tbar ass_bar   { pos "40 244"  current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
-	string snp_lbl { pos "34 667" size "200 20" string "_Sniper Rifles:" }
-	string snp_val { pos "220 667" size "150 20" string *cvar:mn_tsnp textalign ur }
-	pic snp_bdr    { pos "67 684"  image ui/bar_border }
-	tbar snp_bar   { pos "70 684"  current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		string snp_lbl { pos "4 262" size "200 20" string "_Sniper Rifles:" }
+		string snp_val { pos "190 262" size "150 20" string *cvar:mn_tsnp textalign ur }
+		pic snp_bdr    { pos "37 279"  image ui/bar_border }
+		tbar snp_bar   { pos "40 279"  current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
-	string exp_lbl { pos "34 702" size "200 20" string "_High-Explosives:" }
-	string exp_val { pos "220 702" size "150 20" string *cvar:mn_texp textalign ur }
-	pic exp_bdr    { pos "67 719"  image ui/bar_border }
-	tbar exp_bar   { pos "70 719"  current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		string exp_lbl { pos "4 297" size "200 20" string "_High-Explosives:" }
+		string exp_val { pos "190 297" size "150 20" string *cvar:mn_texp textalign ur }
+		pic exp_bdr    { pos "37 314"  image ui/bar_border }
+		tbar exp_bar   { pos "40 314"  current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	}
 
 	// ==================
 	// switch
@@ -507,16 +513,7 @@ window mp_team_edit extends objectinfo
 	{
 		if ( *cvar:mn_itemname ne "" ) {
 			*itemdescription@invis false
-			
-			*pwr_lbl@invis true *pwr_val@invis true *pwr_bdr@invis true *pwr_bar@invis true
-			*spd_lbl@invis true *spd_val@invis true *spd_bdr@invis true *spd_bar@invis true
-			*acc_lbl@invis true *acc_val@invis true *acc_bdr@invis true *acc_bar@invis true
-			*mnd_lbl@invis true *mnd_val@invis true *mnd_bdr@invis true *mnd_bar@invis true
-			*cls_lbl@invis true *cls_val@invis true *cls_bdr@invis true *cls_bar@invis true
-			*hvy_lbl@invis true *hvy_val@invis true *hvy_bdr@invis true *hvy_bar@invis true
-			*ass_lbl@invis true *ass_val@invis true *ass_bdr@invis true *ass_bar@invis true
-			*snp_lbl@invis true *snp_val@invis true *snp_bdr@invis true *snp_bar@invis true
-			*exp_lbl@invis true *exp_val@invis true *exp_bdr@invis true *exp_bar@invis true
+			*actor_statpanel@invis = true
 		} else {
 			// switch back to actor view
 			*cvar:mn_infotype 0
@@ -527,16 +524,7 @@ window mp_team_edit extends objectinfo
 	func mp_actor_stats
 	{
 		*itemdescription@invis true
-
-		*pwr_lbl@invis false *pwr_val@invis false *pwr_bdr@invis false *pwr_bar@invis false
-		*spd_lbl@invis false *spd_val@invis false *spd_bdr@invis false *spd_bar@invis false
-		*acc_lbl@invis false *acc_val@invis false *acc_bdr@invis false *acc_bar@invis false
-		*mnd_lbl@invis false *mnd_val@invis false *mnd_bdr@invis false *mnd_bar@invis false
-		*cls_lbl@invis false *cls_val@invis false *cls_bdr@invis false *cls_bar@invis false
-		*hvy_lbl@invis false *hvy_val@invis false *hvy_bdr@invis false *hvy_bar@invis false
-		*ass_lbl@invis false *ass_val@invis false *ass_bdr@invis false *ass_bar@invis false
-		*snp_lbl@invis false *snp_val@invis false *snp_bdr@invis false *snp_bar@invis false
-		*exp_lbl@invis false *exp_val@invis false *exp_bdr@invis false *exp_bar@invis false
+		*actor_statpanel@invis = false
 	}
 
 	tab info {
