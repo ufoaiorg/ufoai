@@ -73,7 +73,6 @@ static void MN_KeyBindingNodeClick (menuNode_t *node, int x, int y)
 static qboolean MN_KeyBindingNodeKeyPressed (menuNode_t *node, unsigned int key, unsigned short unicode)
 {
 	const char *command;
-	char keyStr[MAX_VAR];
 	const char *binding;
 
 	MN_RemoveFocus();
@@ -82,7 +81,6 @@ static qboolean MN_KeyBindingNodeKeyPressed (menuNode_t *node, unsigned int key,
 	if (strncmp(node->text, "*binding:", 9))
 		return qfalse;
 
-	Q_strncpyz(keyStr, Key_KeynumToString(key), sizeof(keyStr));
 	command = node->text + 9;
 
 	/** @todo ensure that the binding for the key command is not executed */
@@ -91,8 +89,10 @@ static qboolean MN_KeyBindingNodeKeyPressed (menuNode_t *node, unsigned int key,
 	if (binding[0] != '\0') {
 		/* if it's the same command, do not change anything, otherwise
 		 * show the reason why nothing was changed */
-		if (strcmp(binding, command))
+		if (strcmp(binding, command)) {
+			const char *keyStr = Key_KeynumToString(key);
 			MN_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, NULL);
+		}
 		return qfalse;
 	}
 
