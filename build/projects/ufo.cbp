@@ -966,6 +966,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_textentry.h" />
+		<Unit filename="../../src/client/menu/node/m_node_keybinding.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/node/m_node_keybinding.h" />
 		<Unit filename="../../src/client/menu/node/m_node_textlist.c">
 			<Option compilerVar="CC" />
 		</Unit>

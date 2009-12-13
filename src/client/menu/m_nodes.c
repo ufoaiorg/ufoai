@@ -63,6 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_text.h"
 #include "node/m_node_textlist.h"
 #include "node/m_node_textentry.h"
+#include "node/m_node_keybinding.h"
 #include "node/m_node_todo.h"
 #include "node/m_node_vscrollbar.h"
 #include "node/m_node_zone.h"
@@ -96,6 +97,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterEKGNode,
 	MN_RegisterFuncNode,
 	MN_RegisterItemNode,
+	MN_RegisterKeyBindingNode,
 	MN_RegisterLineChartNode,
 	MN_RegisterMapNode,
 	MN_RegisterMaterialEditorNode,

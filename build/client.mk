@@ -176,6 +176,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_ekg.c \
 	client/menu/node/m_node_image.c \
 	client/menu/node/m_node_item.c \
+	client/menu/node/m_node_keybinding.c \
 	client/menu/node/m_node_linechart.c \
 	client/menu/node/m_node_map.c \
 	client/menu/node/m_node_material_editor.c \
