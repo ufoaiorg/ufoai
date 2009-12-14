@@ -310,6 +310,7 @@ void MN_SortOptions (menuOption_t **first)
 
 /**
  * @brief Unhide those options that are stored in the linked list and hide the others
+ * @todo We should use option name for IDs, not option label
  */
 void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList)
 {
