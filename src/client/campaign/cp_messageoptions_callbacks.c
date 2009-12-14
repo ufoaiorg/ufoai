@@ -37,49 +37,34 @@ static int messageList_scroll = 0; /**< actual messageSettings list begin index 
 static int visibleMSOEntries = 0; /**< actual visible entry count */
 messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding backup message settings (used for restore function in options popup) */
 
-menuOption_t *messageSettingOptions;
-
 /**
  * @brief Initializes menu texts for scrollable area
  * @sa MSO_Init_f
  */
 static void MSO_InitList (void)
 {
-	menuOption_t *current;
+	menuOption_t *messageSetting = NULL;
 	menuOption_t *lastCategory = NULL;
-	menuOption_t *lastElement = NULL;
 	int idx;
 
 	/* option already allocated, nothing to do */
-	if (messageSettingOptions)
+	if (MN_GetOption(TEXT_MESSAGEOPTIONS) != NULL)
 		return;
-
-	messageSettingOptions = (menuOption_t *) Mem_PoolAlloc(sizeof(*messageSettingOptions) * ccs.numMsgCategoryEntries, cp_campaignPool, 0);
-	current = messageSettingOptions;
 
 	MN_ResetData(TEXT_MESSAGEOPTIONS);
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
 		const char *id = va("%d", idx);
-		MN_InitOption(current, id, entry->notifyType, id);
 
 		if (entry->isCategory) {
-			if (lastCategory)
-				lastCategory->next = current;
-			lastCategory = current;
-			lastElement = NULL;
+			lastCategory = MN_AddOption(&messageSetting, id, entry->notifyType, id);
 		} else {
-			if (lastElement)
-				lastElement->next = current;
-			else if (lastCategory)
-				lastCategory->firstChild = current;
-			else
+			if (!lastCategory)
 				Sys_Error("MSO_InitList: The first entry must be a category");
-			lastElement = current;
+			MN_AddOption(&lastCategory->firstChild, id, entry->notifyType, id);
 		}
-		current++;
 	}
-	MN_RegisterOption(TEXT_MESSAGEOPTIONS, messageSettingOptions);
+	MN_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
 	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
 }
 
@@ -91,8 +76,9 @@ static void MSO_UpdateVisibleButtons (void)
 {
 	int visible;/* current line */
 	menuOptionIterator_t iterator;
+	menuOption_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
 
-	MN_InitOptionIteratorAtIndex(messageList_scroll, messageSettingOptions, &iterator);
+	MN_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
 
 	/* update visible button lines based on current displayed values */
 	for (visible = 0; visible < messageList_size; visible++) {
@@ -174,8 +160,9 @@ static void MSO_Toggle_f (void)
 		int optionType;
 		qboolean activate;
 		notify_t type;
+		menuOption_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
 
-		MN_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSettingOptions, &iterator);
+		MN_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
 		if (!iterator.option)
 			return;
 
@@ -274,8 +261,5 @@ void MSO_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("msgoptions_init");
 	Cmd_RemoveCommand("msgoptions_backup");
 	Cmd_RemoveCommand("msgoptions_restore");
-	if (messageSettingOptions) {
-		Mem_Free(messageSettingOptions);
-		messageSettingOptions = NULL;
-	}
+	MN_ResetData(TEXT_MESSAGEOPTIONS);
 }
