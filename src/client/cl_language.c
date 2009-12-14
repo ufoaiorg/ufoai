@@ -245,14 +245,7 @@ void CL_LanguageInit (void)
 
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || !strcmp(language->localeID, "none")) {
-			menuOption_t* option = MN_AllocStaticOption(1);
-			if (!option)
-				break;
-
-			/* init and link to list */
-			MN_InitOption(option, "", language->localeString, language->localeID);
-			option->next = languageOption;
-			languageOption = option;
+			MN_AddOption(&languageOption, "", language->localeString, language->localeID);
 		}
 	}
 
