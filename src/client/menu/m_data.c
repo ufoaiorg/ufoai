@@ -310,7 +310,8 @@ void MN_SortOptions (menuOption_t **first)
 
 /**
  * @brief Unhide those options that are stored in the linked list and hide the others
- * @todo We should use option name for IDs, not option label
+ * @param[inout] option Option list we want to update
+ * @param[in] stringList List of option name (ID) we want to display
  */
 void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList)
 {
@@ -318,7 +319,7 @@ void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList
 		return;
 
 	while (option) {
-		if (LIST_ContainsString(stringList, option->label))
+		if (LIST_ContainsString(stringList, option->id))
 			option->invis = qfalse;
 		else
 			option->invis = qtrue;

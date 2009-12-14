@@ -525,17 +525,17 @@ static void GAME_InitMenuOptions (void)
 
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
-		MN_AddOption(&ufoOptions, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		MN_AddOption(&ufoOptions, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	MN_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
-		MN_AddOption(&aircraftOptions, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		MN_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	MN_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
