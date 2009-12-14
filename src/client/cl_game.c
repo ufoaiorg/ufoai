@@ -519,47 +519,23 @@ static void GAME_Exit_f (void)
 
 static void GAME_InitMenuOptions (void)
 {
-	int i, cnt;
-	menuOption_t* ufoOptions = MN_AllocStaticOption(UFO_MAX * 2);
-	menuOption_t* aircraftOptions = MN_AllocStaticOption(DROPSHIP_MAX);
-	menuOption_t *last = NULL;
-	if (ufoOptions == NULL || aircraftOptions == NULL)
-		return;
+	int i;
+	menuOption_t* ufoOptions = NULL;
+	menuOption_t* aircraftOptions = NULL;
 
-	cnt = 0;
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
-		menuOption_t *entry = &ufoOptions[cnt++];
-		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
-
-		/* link together */
-		if (last)
-			last->next = entry;
-		last = entry;
+		MN_AddOption(&ufoOptions, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		menuOption_t *entry = &ufoOptions[cnt++];
-		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
-
-		/* link together */
-		if (last)
-			last->next = entry;
-		last = entry;
+		MN_AddOption(&ufoOptions, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	MN_RegisterOption(OPTION_UFOS, ufoOptions);
 
-	cnt = 0;
-	last = NULL;
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
-		menuOption_t *entry = &aircraftOptions[cnt++];
-		MN_InitOption(entry, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
-
-		/* link together */
-		if (last)
-			last->next = entry;
-		last = entry;
+		MN_AddOption(&aircraftOptions, "", shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	MN_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
