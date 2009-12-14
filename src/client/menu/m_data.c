@@ -327,6 +327,11 @@ void MN_InitOption (menuOption_t* option, const char* nameID, const char* label,
 
 void MN_RegisterOption (int dataId, menuOption_t *option)
 {
+	/** Hack to disable release option memory, if we only want to update the same option */
+	if (mn.sharedData[dataId].type == MN_SHARED_OPTION && mn.sharedData[dataId].data.option == option) {
+		mn.sharedData[dataId].versionId++;
+		return;
+	}
 	MN_ResetData(dataId);
 	mn.sharedData[dataId].type = MN_SHARED_OPTION;
 	mn.sharedData[dataId].data.option = option;
