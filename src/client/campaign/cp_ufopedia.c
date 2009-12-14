@@ -854,6 +854,9 @@ static void UP_Click_f (void)
 		if (tech)
 			UP_Article(tech, NULL);
 		return;
+	} else {
+		/* Reset itemdescription */
+		MN_ExecuteConfunc("itemdesc_view 0 0;");
 	}
 
 	/* it clean up the display */
