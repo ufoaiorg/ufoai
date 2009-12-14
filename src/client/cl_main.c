@@ -634,7 +634,7 @@ static void CL_PrecacheModels (void)
 	}
 }
 
-static menuOption_t* vidModesOptions;
+static menuOption_t* vidModesOptions = NULL;
 
 static void CL_SetRatioFilter_f (void)
 {
@@ -711,19 +711,14 @@ void CL_InitAfter (void)
 	cls.loadingPercent = 100.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
-	vidModesOptions = MN_AllocStaticOption(VID_GetModeNums());
-	if (vidModesOptions == NULL)
-		return;
-
-	for (i = 0; i < VID_GetModeNums(); i++) {
-		menuOption_t *option = &vidModesOptions[i];
-		MN_InitOption(option, "",
-			va("%i x %i", vid_modes[i].width, vid_modes[i].height),
-			va("%i", vid_modes[i].mode));
-		if (i > 0)
-			(&vidModesOptions[i - 1])->next = option;
+	if (vidModesOptions == NULL) {
+		for (i = 0; i < VID_GetModeNums(); i++) {
+			MN_AddOption(&vidModesOptions, "",
+				va("%i x %i", vid_modes[i].width, vid_modes[i].height),
+				va("%i", vid_modes[i].mode));
+		}
+		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
 	}
-	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, &vidModesOptions[0]);
 
 	IN_JoystickInitMenu();
 
