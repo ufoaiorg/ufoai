@@ -502,22 +502,6 @@ menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 }
 
 /**
- * @brief Link an option array together (first element to second, second to third...)
- */
-void MN_OptionLinkArray (menuOption_t* array, int count)
-{
-	menuOption_t *prev = NULL;
-	menuOption_t *current = array;
-	while (count) {
-		if (prev != NULL)
-			prev->next = current;
-		prev = current;
-		current++;
-		count--;
-	}
-}
-
-/**
  * @brief Resets the mn.menuText pointers from a func node
  * @note You can give this function a parameter to only delete a specific data
  * @sa menutextid_names

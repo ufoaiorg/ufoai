@@ -194,7 +194,6 @@ int MN_OptionUpdateCache (menuOption_t* option);
 menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
 menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
 void MN_UpdateInvisOptions(menuOption_t *option, const struct linkedList_s *stringList);
-void MN_OptionLinkArray(menuOption_t* array, int count);
 
 /* option tree */
 struct menuOption_s* MN_AddOption(struct menuOption_s**tree, const char* name, const char* label, const char* value);
