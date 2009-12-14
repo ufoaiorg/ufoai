@@ -365,32 +365,26 @@ static void CL_InitSkin_f (void)
 	/* create singleplayer skins */
 	if (MN_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
 		int i;
-		menuOption_t *skins;
+		menuOption_t *skins = NULL;
 		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
-		skins = MN_AllocStaticOption(NUM_TEAMSKINS_SINGLEPLAYER);
-		MN_InitOption(&skins[0], "urban", N_("Urban"), "0");
-		MN_InitOption(&skins[1], "jungle", N_("Jungle"), "1");
-		MN_InitOption(&skins[2], "desert", N_("Desert"), "2");
-		MN_InitOption(&skins[3], "arctic", N_("Arctic"), "3");
-		for (i = 0; i < NUM_TEAMSKINS_SINGLEPLAYER - 1; i++)
-			skins[i].next = &skins[i + 1];
+		MN_AddOption(&skins, "urban", N_("Urban"), "0");
+		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
+		MN_AddOption(&skins, "desert", N_("Desert"), "2");
+		MN_AddOption(&skins, "arctic", N_("Arctic"), "3");
 		MN_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
 	}
 
 	/* create multiplayer skins */
 	if (MN_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
 		int i;
-		menuOption_t *skins;
+		menuOption_t *skins = NULL;
 		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
-		skins = MN_AllocStaticOption(NUM_TEAMSKINS);
-		MN_InitOption(&skins[0], "urban", N_("Urban"), "0");
-		MN_InitOption(&skins[1], "jungle", N_("Jungle"), "1");
-		MN_InitOption(&skins[2], "desert", N_("Desert"), "2");
-		MN_InitOption(&skins[3], "arctic", N_("Arctic"), "3");
-		MN_InitOption(&skins[4], "multionly_yellow", N_("Yellow"), "4");
-		MN_InitOption(&skins[5], "multionly_cccp", N_("CCCP"), "5");
-		for (i = 0; i < NUM_TEAMSKINS - 1; i++)
-			skins[i].next = &skins[i + 1];
+		MN_AddOption(&skins, "urban", N_("Urban"), "0");
+		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
+		MN_AddOption(&skins, "desert", N_("Desert"), "2");
+		MN_AddOption(&skins, "arctic", N_("Arctic"), "3");
+		MN_AddOption(&skins, "multionly_yellow", N_("Yellow"), "4");
+		MN_AddOption(&skins, "multionly_cccp", N_("CCCP"), "5");
 		MN_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
 	}
 }
