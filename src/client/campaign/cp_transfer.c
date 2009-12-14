@@ -1364,39 +1364,26 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	TR_TransferSelect(srcbase, destbase, td.currentTransferType);
 }
 
-static menuOption_t *baseList;
-
 /**
  * @brief Fills the optionlist with available bases to transfer to
  */
 static void TR_InitBaseList (void)
 {
 	int baseIdx;
-	const base_t *currentBase = B_GetCurrentSelectedBase();
-	int previous = -1;
-	menuOption_t *first = NULL;
+	const base_t const *currentBase = B_GetCurrentSelectedBase();
+	menuOption_t *baseList = NULL;
 
-	if (baseList == NULL) {
-		baseList = (menuOption_t *) Mem_PoolAlloc(sizeof(*baseList) * MAX_BASES, cp_campaignPool, 0);
-	}
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
+		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		if (base == currentBase)
 			continue;
 
-		if (first == NULL)
-			first = &baseList[baseIdx];
-
-		MN_InitOption(&baseList[baseIdx], va("base%i", baseIdx), base->name, va("%i", baseIdx));
-		if (previous != -1)
-			baseList[previous].next = &baseList[baseIdx];
-		previous = baseIdx;
+		MN_AddOption(&baseList, va("base%i", baseIdx), base->name, va("%i", baseIdx));
 	}
 
-	MN_RegisterOption(OPTION_BASELIST, first);
+	MN_RegisterOption(OPTION_BASELIST, baseList);
 }
 
 /**
@@ -1707,9 +1694,6 @@ static void TR_TransferClose_f (void)
 	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
-
-	Mem_Free(baseList);
-	baseList = NULL;
 }
 
 #ifdef DEBUG
