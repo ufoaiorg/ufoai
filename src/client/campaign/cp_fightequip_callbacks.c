@@ -37,8 +37,6 @@ static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu *
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *AIM_selectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
-static menuOption_t *AIM_items = NULL;
-
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
  */
@@ -222,9 +220,9 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	linkedList_t *amountList = NULL;
 	technology_t **techList;
 	technology_t **currentTech;
-	menuOption_t *option;
 	const base_t *base = slot->aircraft->homebase;
 	int count = 0;
+	menuOption_t *AIM_items = NULL;
 
 	assert(slot);
 
@@ -239,33 +237,23 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 		currentTech++;
 	}
 
-	/* Alloc options */
-	if (AIM_items)
-		Mem_Free(AIM_items);
-	if (count)
-		AIM_items = (menuOption_t *) Mem_PoolAlloc(sizeof(*AIM_items) * count, cp_campaignPool, 0);
-	else
-		AIM_items = NULL;
-
 	/* List only those which are researched to buffer */
-	option = AIM_items;
 	currentTech = techList;
 	while (*currentTech) {
 		if (AIM_CrafttypeFilter(base, slot, airequipID, *currentTech)) {
 			int amount;
+			menuOption_t *option;
 			objDef_t *item = AII_GetAircraftItemByID((*currentTech)->provides);
 			assert(item);
 			amount = base->storage.num[item->idx];
 
 			LIST_AddString(&amountList, va("%d", amount));
-			MN_InitOption(option, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
+			option = MN_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));
 			if (!AIM_SelectableCraftItem(slot, *currentTech))
 				option->disabled = qtrue;
-			option++;
 		}
 		currentTech++;
 	}
-	MN_OptionLinkArray(AIM_items, count);
 
 	MN_RegisterOption(TEXT_LIST, AIM_items);
 	MN_RegisterLinkedListText(TEXT_LIST2, amountList);
@@ -997,8 +985,4 @@ void AIM_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("airequip_add_item");
 	Cmd_RemoveCommand("airequip_remove_item");
 	Cmd_RemoveCommand("airequip_zone_select");
-	if (AIM_items) {
-		Mem_Free(AIM_items);
-		AIM_items = NULL;
-	}
 }
