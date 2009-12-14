@@ -275,27 +275,11 @@ void IN_JoystickInitMenu (void)
 	const int total = SDL_NumJoysticks();
 
 	if (total == 0) {
-		menuOption_t *option = MN_AllocStaticOption(1);
-		if (option) {
-			MN_InitOption(option, "", _("None"), "0");
-			joystickOptions = option;
-		}
+		MN_AddOption(&joystickOptions, "", _("None"), "0");
 	} else {
 		int i;
-		menuOption_t* optionArray;
-		optionArray = MN_AllocStaticOption(total);
-		if (optionArray == NULL)
-			return;
-
-		for (i = 0; i < total; i++) {
-			menuOption_t *option = &optionArray[i];
-
-			/* init and link */
-			MN_InitOption(option, "", SDL_JoystickName(i), va("%i", i));
-			if (i > 0)
-				optionArray[i - 1].next = option;
-		}
-		joystickOptions = &optionArray[0];
+		for (i = 0; i < total; i++)
+			MN_AddOption(&joystickOptions, "", SDL_JoystickName(i), va("%i", i));
 	}
 	MN_RegisterOption(OPTION_JOYSTICKS, joystickOptions);
 }
