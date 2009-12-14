@@ -189,7 +189,6 @@ struct menuOption_s* MN_AllocStaticOption(int count) __attribute__ ((warn_unused
 void MN_RegisterOption(int dataId, struct menuOption_s *option);
 struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void MN_SortOptions(struct menuOption_s **option);
-void MN_InitOption(struct menuOption_s *option, const char* name, const char* label, const char* value);
 int MN_OptionUpdateCache (menuOption_t* option);
 menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
 menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);

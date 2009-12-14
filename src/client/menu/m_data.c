@@ -160,6 +160,22 @@ int MN_GetDataVersion (int textId)
 }
 
 /**
+ * @brief Initializes an option with a very little set of values.
+ * @param[in] option Context option
+ * @param[in] nameID name of the option (should be unique in the option list)
+ * @param[in] label label displayed
+ * @param[in] value value used when this option is selected
+ */
+static void MN_InitOption (menuOption_t* option, const char* nameID, const char* label, const char* value)
+{
+	assert(option);
+	memset(option, 0, sizeof(*option));
+	Q_strncpyz(option->id, nameID, sizeof(option->id));
+	Q_strncpyz(option->label, label, sizeof(option->label));
+	Q_strncpyz(option->value, value, sizeof(option->value));
+}
+
+/**
  * @brief Append an option to an option list.
  * @param[in,out] tree first option of the list/tree of options
  * @param[in] name name of the option (should be unique in the option list)
@@ -307,22 +323,6 @@ void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList
 			option->invis = qtrue;
 		option = option->next;
 	}
-}
-
-/**
- * @brief Initializes an option with a very little set of values.
- * @param[in] option Context option
- * @param[in] nameID name of the option (should be unique in the option list)
- * @param[in] label label displayed
- * @param[in] value value used when this option is selected
- */
-void MN_InitOption (menuOption_t* option, const char* nameID, const char* label, const char* value)
-{
-	assert(option);
-	memset(option, 0, sizeof(*option));
-	Q_strncpyz(option->id, nameID, sizeof(option->id));
-	Q_strncpyz(option->label, label, sizeof(option->label));
-	Q_strncpyz(option->value, value, sizeof(option->value));
 }
 
 void MN_RegisterOption (int dataId, menuOption_t *option)
