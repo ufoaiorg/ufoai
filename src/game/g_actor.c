@@ -318,12 +318,12 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			/* Add the item to an already existing floor edict - the floor container that
 			 * is already linked might be from a different entity */
 			FLOOR(floor) = FLOOR(ent);
-			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags));
+			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
 			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}
 	} else {
-		G_EventInventoryAdd(floor, G_TeamToPM(ent->team));
+		G_EventInventoryAdd(floor, G_TeamToPM(ent->team), 1);
 		assert(item.t);
 		G_WriteItem(item, to, tx, ty);
 	}
@@ -342,7 +342,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			G_EventInventoryDelete(ent, mask, from, fx, fy);
 		}
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
-			G_EventInventoryAdd(ent, mask);
+			G_EventInventoryAdd(ent, mask, 1);
 			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}

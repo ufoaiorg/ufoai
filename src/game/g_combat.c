@@ -922,25 +922,10 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		if (!mock) {
 			/* send shot */
-			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(tr.ent && tr.ent->number > 0 ? tr.ent->number : SKIP_LOCAL_ENTITY);
-			gi.WriteShort(fd->obj->idx);
-			gi.WriteByte(fd->weapFdsIdx);
-			gi.WriteByte(fd->fdIdx);
-			gi.WriteByte(shootType);
-			gi.WriteByte(flags);
-			gi.WriteByte(tr.contentFlags);
-			gi.WritePos(tracefrom);
-			gi.WritePos(impact);
-			gi.WriteDir(tr.plane.normal);
+			G_EventShoot(ent, mask, fd, shootType, flags, &tr, tracefrom, impact);
 
 			/* send shot sound to the others */
-			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
-			gi.WriteByte(qfalse);
-			gi.WriteShort(fd->obj->idx);
-			gi.WriteByte(fd->weapFdsIdx);
-			gi.WriteByte(fd->fdIdx);
+			G_EventShootHidden(mask, fd, qfalse);
 
 			if (i == 0 && G_FireAffectedSurface(tr.surface, fd)) {
 				vec3_t origin;
@@ -1231,61 +1216,32 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 		}
 
 		/* start shoot */
-		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
-		gi.WriteShort(ent->number);
-		gi.WriteShort(fd->obj->idx);
-		gi.WriteByte(fd->weapFdsIdx);
-		gi.WriteByte(fd->fdIdx);
-		gi.WriteByte(shootType);
-		gi.WriteGPos(ent->pos);
-		gi.WriteGPos(at);
+		G_EventStartShoot(ent, mask, fd, shootType, at);
 
 		/* send shot sound to the others */
-		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
-		gi.WriteByte(qtrue);
-		gi.WriteShort(fd->obj->idx);
-		gi.WriteByte(fd->weapFdsIdx);
-		gi.WriteByte(fd->fdIdx);
+		G_EventShootHidden(mask, fd, qtrue);
 
 		/* ammo... */
 		if (fd->ammo) {
 			if (ammo > 0 || !weapon->t->thrown) {
-				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
-				gi.WriteShort(entnum);
-				gi.WriteByte(ammo);
-				gi.WriteByte(weapon->m->idx);
+				G_EventInventoryAmmo(ent, weapon->m, ammo, shootType);
 				weapon->a = ammo;
-				if (IS_SHOT_RIGHT(shootType))
-					gi.WriteByte(gi.csi->idRight);
-				else
-					gi.WriteByte(gi.csi->idLeft);
 			} else { /* delete the knife or the rifle without ammo */
 				const invDef_t *invDef = INVDEF(container);
-				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
-				gi.WriteShort(entnum);
-				gi.WriteByte(container);
 				assert(invDef->single);
+				itemAlreadyRemoved = qtrue;	/* for assert only */
 				INVSH_EmptyContainer(&ent->i, invDef);
-
-				itemAlreadyRemoved = qtrue;	/**< for assert only */
+				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 			}
-			/* x and y value */
-			gi.WriteByte(0);
-			gi.WriteByte(0);
 		}
 
 		/* remove throwable oneshot && deplete weapon from inventory */
 		if (weapon->t->thrown && weapon->t->oneshot && weapon->t->deplete) {
 			const invDef_t *invDef = INVDEF(container);
 			assert(!itemAlreadyRemoved);
-			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
-			gi.WriteShort(entnum);
-			gi.WriteByte(container);
 			assert(invDef->single);
 			INVSH_EmptyContainer(&ent->i, invDef);
-			/* x and y value */
-			gi.WriteByte(0);
-			gi.WriteByte(0);
+			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 		}
 	}
 

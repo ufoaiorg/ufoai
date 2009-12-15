@@ -318,9 +318,13 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
 void G_EventInventoryDelete(const edict_t* ent, int mask, const invDef_t* invDef, int x, int y);
-void G_EventInventoryAdd(const edict_t* ent, int mask);
+void G_EventInventoryAdd(const edict_t* ent, int mask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventReactionFireHandChange(const edict_t* ent, int hand);
+void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
+void G_EventStartShoot(const edict_t* ent, int mask, const fireDef_t* fd, int shootType, const pos3_t at);
+void G_EventShootHidden(int mask, const fireDef_t* fd, qboolean firstShoot);
+void G_EventShoot(const edict_t* ent, int mask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
 
 /* g_client.c */
 /** the visibile changed - if it was visible - it's (the edict) now invisible */

@@ -89,8 +89,7 @@ void G_InventoryToFloor (edict_t *ent)
 		floor = G_SpawnFloor(ent->pos);
 	} else {
 		/* destroy this edict (send this event to all clients that see the edict) */
-		gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-		gi.WriteShort(floor->number);
+		G_EventPerish(floor);
 		floor->visflags = 0;
 	}
 
@@ -231,11 +230,7 @@ void G_SendInventory (unsigned int playerMask, edict_t *ent)
 	if (nr == 0 && ent->type != ET_ITEM)
 		return;
 
-	gi.AddEvent(playerMask, EV_INV_ADD);
-	gi.WriteShort(ent->number);
-
-	/* size of inventory */
-	gi.WriteShort(nr * INV_INVENTORY_BYTES);
+	G_EventInventoryAdd(ent, playerMask, nr);
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
