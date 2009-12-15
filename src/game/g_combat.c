@@ -99,10 +99,10 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 						mod *= mof_enemy->value;
 				}
 				/* seeing a civi die is more "acceptable" */
-				if (victim->team == TEAM_CIVILIAN)
+				if (G_IsCivilian(victim))
 					mod *= mof_civilian->value;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
-				if (victim->team == ent->team || (victim->team == TEAM_CIVILIAN && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
+				if (victim->team == ent->team || (G_IsCivilian(victim) && ent->team != TEAM_ALIEN && sv_maxclients->integer == 1))
 					mod *= -1;
 				/* if you stand near to the attacker or the victim, the morale change is higher. */
 				mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
@@ -144,11 +144,11 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 	assert(struck->number != shooter->number || mock->allow_self);
 
 	if (damage > 0) {
-		if (!struck || !struck->inuse || G_IsDead(struck))
+		if (!struck->inuse || G_IsDead(struck))
 			return;
 		else if (!G_IsVisibleForTeam(struck, shooter->team))
 			return;
-		else if (struck->team == TEAM_CIVILIAN)
+		else if (G_IsCivilian(struck))
 			mock->civilian += 1;
 		else if (struck->team == shooter->team)
 			mock->friendCount += 1;
@@ -569,9 +569,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 				break;
 			}
 	} else {
-		gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-		gi.WriteShort(floor->number);
 		floor->visflags = 0;
+		G_EventPerish(floor);
 	}
 	Com_TryAddToInventory(&floor->i, *item, INVDEF(gi.csi->idFloor));
 
@@ -854,7 +853,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
 	commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
-	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
+	if (G_IsCrouched(ent) && fd->crouch) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
 	} else {
@@ -878,7 +877,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
-	if (tr.ent && (tr.ent->team == ent->team || tr.ent->team == TEAM_CIVILIAN) && (tr.ent->state & STATE_CROUCHED))
+	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
 	VectorCopy(cur_loc, tracefrom);
@@ -956,7 +955,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (G_IsActor(tr.ent) || (tr.ent->flags & FL_DESTROYABLE))) {
+		if (tr.ent && (G_IsActor(tr.ent) || G_IsBreakable(tr.ent))) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */

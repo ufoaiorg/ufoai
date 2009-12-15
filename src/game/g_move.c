@@ -62,15 +62,10 @@ static void G_BuildForbiddenList (int team)
 		if (!ent->inuse)
 			continue;
 		/* Dead 2x2 unit will stop walking, too. */
-		/**
-		 * @todo Just a note for the future.
-		 * If we get any that does not block the map when dead this is the place to look.
-		 */
-		if (((ent->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2) && (ent->visflags & visMask)) {
+		if (G_IsBlockingMovementActor(ent) && (ent->visflags & visMask)) {
 			forbiddenList[forbiddenListLength++] = ent->pos;
 			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
-			/* they should always be solid */
 			int j;
 			for (j = 0; j < ent->forbiddenListSize; j++) {
 				forbiddenList[forbiddenListLength++] = ent->forbiddenListPos[j];
@@ -125,16 +120,8 @@ void G_ActorFall (edict_t *ent)
 
 	G_CheckVis(ent, qtrue);
 
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-	gi.WriteShort(ent->number);
-	gi.WriteByte(1);
-	gi.WriteByte(ent->pos[0]);
-	gi.WriteByte(ent->pos[1]);
-	gi.WriteByte(ent->pos[2]);
-	/** @todo see dvecs, PosSubDV and NewDVZ */
-	gi.WriteByte(DIRECTION_FALL);
-	gi.WriteShort(GRAVITY);
-	gi.WriteShort(0);
+	G_EventActorFall(ent);
+
 	gi.EndEvents();
 }
 
@@ -171,7 +158,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 	byte crouchingState;
 
 	ent = g_edicts + num;
-	crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	oldState = 0;
 
 	/* check if action is possible */
@@ -195,7 +182,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			 * Uses the threshold at which standing, moving and crouching again takes
 			 * fewer TU than just crawling while crouched. */
 			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
-			crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
 				G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
 				length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
@@ -249,14 +236,14 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			/* decrease TUs */
 			div = gi.TUsUsed(dir);
 			truediv = div;
-			if ((ent->state & STATE_CROUCHED) && dir < CORE_DIRECTIONS)
+			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
 				div *= TU_CROUCH_MOVING_FACTOR;
 			if ((int) (tu + div) > ent->TU)
 				break;
 			tu += div;
 
 			/* slower if crouched */
-			if (ent->state & STATE_CROUCHED)
+			if (G_IsCrouched(ent))
 				ent->speed = ACTOR_SPEED_CROUCHED;
 			else
 				ent->speed = ACTOR_SPEED_NORMAL;
@@ -280,7 +267,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 
 				/* Only the PHALANX team has these stats right now. */
 				if (ent->chr.scoreMission) {
-					if (ent->state & STATE_CROUCHED)
+					if (G_IsCrouched(ent))
 						ent->chr.scoreMission->movedCrouched += truediv;
 					else
 						ent->chr.scoreMission->movedNormal += truediv;
@@ -373,7 +360,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			ent->TU = initTU;
 
 			/* check for death */
-			if (oldState != ent->state && !(ent->state & STATE_DAZED)) {
+			if (oldState != ent->state && !G_IsDazed(ent)) {
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
 				if (!G_IsDead(ent))
@@ -400,8 +387,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 		if (!triggers && ent->clientAction) {
 			/* no triggers, no client action */
 			ent->clientAction = NULL;
-			gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
-			gi.WriteShort(ent->number);
+			G_EventResetClientAction(ent);
 		}
 
 		/* end the move */

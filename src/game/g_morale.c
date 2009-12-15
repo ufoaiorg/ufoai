@@ -141,7 +141,7 @@ void G_MoraleBehaviour (int team, qboolean quiet)
 			/* singleplayer has this in every case */
 			if ((sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1) || sv_maxclients->integer == 1) {
 				/* if panic, determine what kind of panic happens: */
-				if (ent->morale <= mor_panic->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
+				if (ent->morale <= mor_panic->value && !G_IsPaniced(ent) && !G_IsRaged(ent)) {
 					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
 						sanity = qtrue;
 					else
@@ -151,17 +151,17 @@ void G_MoraleBehaviour (int team, qboolean quiet)
 					else
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
-				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC)
-						&& !(ent->state & STATE_RAGE)) {
+				} else if (ent->morale <= mor_shaken->value && !G_IsPaniced(ent)
+						&& !G_IsRaged(ent)) {
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
 					G_PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s is currently shaken.\n"),
 							ent->chr.name);
 				} else {
-					if (ent->state & STATE_PANIC)
+					if (G_IsPaniced(ent))
 						G_MoraleStopPanic(ent, quiet);
-					else if (ent->state & STATE_RAGE)
+					else if (G_IsRaged(ent))
 						G_MoraleStopRage(ent, quiet);
 				}
 			}

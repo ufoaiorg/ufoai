@@ -194,8 +194,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	level.actualRound++;
 
 	/* communicate next player in row to clients */
-	gi.AddEvent(PM_ALL, EV_ENDROUND);
-	gi.WriteByte(level.activeTeam);
+	G_EventEndRound();
 
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;

@@ -81,7 +81,7 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 		return qfalse;
 
 	/* check FF */
-	if (!(ent->state & STATE_INSANE) && AI_CheckFF(ent, check->origin, fd->spread[0]))
+	if (!G_IsInsane(ent) && AI_CheckFF(ent, check->origin, fd->spread[0]))
 		return qfalse;
 
 	return qtrue;
@@ -171,7 +171,7 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 		if (!check->inuse)
 			continue;
 		/* don't check for civilians or aliens */
-		if (check->team == ent->team || check->team == TEAM_CIVILIAN)
+		if (check->team == ent->team || G_IsCivilian(check))
 			continue;
 		/* if it's an actor and he's still living */
 		if (G_IsLivingActor(check)) {
@@ -269,7 +269,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
 	move = gi.MoveLength(gi.pathingMap, to,
-			(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+			G_IsCrouched(ent) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -308,10 +308,10 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				/* search best target */
 				for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 					if (check->inuse && G_IsLivingActor(check) && ent != check
-						&& (check->team != ent->team || ent->state & STATE_INSANE)) {
+						&& (check->team != ent->team || G_IsInsane(ent))) {
 
 						/* don't shoot civilians in mp */
-						if (check->team == TEAM_CIVILIAN && sv_maxclients->integer > 1 && !(ent->state & STATE_INSANE))
+						if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
 							continue;
 
 						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
@@ -347,7 +347,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							continue;
 
 						/* civilian malus */
-						if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
+						if (G_IsCivilian(check) && !G_IsInsane(ent))
 							dmg *= GUETE_CIV_FACTOR;
 
 						/* add random effects */
@@ -373,7 +373,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (!aia->target) {
 					/* search best none human target */
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-						if (check->inuse && (check->flags & FL_DESTROYABLE)) {
+						if (check->inuse && G_IsBreakable(check)) {
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;
 
@@ -401,7 +401,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		tu -= bestTime;
 	}
 
-	if (!(ent->state & STATE_RAGE)) {
+	if (!G_IsRaged(ent)) {
 		/* hide */
 		/** @todo Only hide if the visible actors have long range weapons in their hands
 		 * otherwise make it depended on the mood (or some skill) of the alien whether
@@ -411,7 +411,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			byte minX, maxX, minY, maxY;
-			const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+			const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			qboolean stillSearching = qtrue;
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
@@ -493,7 +493,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	float bestActionPoints;
 	float reaction_trap = 0.0;
 	float delta = 0.0;
-	const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -577,7 +577,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
 		if (!check->inuse || ent == check)
 			continue;
-		if (!(check->team == TEAM_ALIEN || ent->state & STATE_INSANE))
+		if (!(check->team == TEAM_ALIEN || G_IsInsane(ent)))
 			continue;
 		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
 			reaction_trap += 25.0;
@@ -603,7 +603,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
-	const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
@@ -681,7 +681,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	float bestActionPoints, best;
-	const byte crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
 	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
@@ -714,7 +714,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				const pos_t move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
-					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
+					if (G_IsCivilian(ent) || G_IsPaniced(ent))
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
 					else
 						bestActionPoints = AI_FighterCalcBestAction(ent, to, &aia);
@@ -742,7 +742,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	}
 
 	/* check if the actor is in crouched state and try to stand up before doing the move */
-	if (ent->state & STATE_CROUCHED)
+	if (G_IsCrouched(ent))
 		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
 
 	/* do the move */
@@ -782,7 +782,7 @@ void G_AddToWayPointList (edict_t *ent)
 void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 {
 	int dv;
-	const byte crouchingState = aiActor->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(aiActor) ? 1 : 0;
 
 	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouchingState, MAX_ROUTE);
 
@@ -809,7 +809,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	aiAction_t bestAia;
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
-	if (!(ent->state & STATE_PANIC)) {
+	if (!G_IsPaniced(ent)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
 				G_ActorReload(ent->number, ST_RIGHT_RELOAD, QUIET);

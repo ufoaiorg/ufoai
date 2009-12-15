@@ -159,7 +159,7 @@ float G_Vis (int team, const edict_t *from, const edict_t *check, int flags)
 		return ACTOR_VIS_0;
 
 	/* inverse team rules */
-	if (team < 0 && (from->team == -team || from->team == TEAM_CIVILIAN || check->team != -team))
+	if (team < 0 && (from->team == -team || G_IsCivilian(from) || check->team != -team))
 		return ACTOR_VIS_0;
 
 	/* check for same pos */
@@ -179,7 +179,7 @@ float G_Vis (int team, const edict_t *from, const edict_t *check, int flags)
 
 	/* get viewers eye height */
 	VectorCopy(from->origin, eye);
-	if (from->state & (STATE_CROUCHED | STATE_PANIC))
+	if (G_IsCrouched(from) || G_IsPaniced(from))
 		eye[2] += EYE_CROUCH;
 	else
 		eye[2] += EYE_STAND;

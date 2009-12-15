@@ -789,15 +789,16 @@ static void G_BuildForbiddenListForEntity (edict_t *ent)
 static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
-		if (ent->model && *ent->model) {
+		if (ent->model && ent->model[0] != '\0') {
 			vec3_t modelMins, modelMaxs;
 			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
 				ent->classname = "model";
 				VectorCopy(modelMaxs, ent->absmax);
 				VectorCopy(modelMins, ent->absmin);
 				ent->type = ET_SOLID;
-				ent->fieldSize = ACTOR_SIZE_NORMAL;
 				ent->solid = SOLID_BBOX;
+				/** @todo is fieldsize and forbidden list update really needed here? */
+				ent->fieldSize = ACTOR_SIZE_NORMAL;
 				G_BuildForbiddenListForEntity(ent);
 				gi.LinkEdict(ent);
 			} else {
@@ -854,8 +855,8 @@ static void SP_misc_item (edict_t *ent)
  */
 static void SP_dummy (edict_t *ent)
 {
-	/* particles aren't client-server communicated items */
-	/* they are completely client side */
+	/* particles aren't client-server communicated items
+	 * they are completely client side */
 	G_FreeEdict(ent);
 }
 

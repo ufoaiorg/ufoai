@@ -164,7 +164,13 @@ extern edict_t *g_edicts;
 #define random()	((rand() & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
+#define G_IsShaken(ent)		((ent)->state & STATE_SHAKEN)
 #define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
+#define G_IsPaniced(ent)	((ent)->state & STATE_PANIC)
+#define G_IsRaged(ent)		((ent)->state & STATE_RAGE)
+#define G_IsInsane(ent)		((ent)->state & STATE_INSANE)
+#define G_IsDazed(ent)		((ent)->state & STATE_DAZED)
+#define G_IsCrouched(ent)	((ent)->state & STATE_CROUCHED)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
 #define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
 #define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
@@ -178,6 +184,7 @@ extern edict_t *g_edicts;
 #define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))
 /** @note check for actor first */
 #define G_IsCivilian(ent)		((ent)->team == TEAM_CIVILIAN)
+#define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
 
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
@@ -316,6 +323,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 /* g_events.c */
 void G_EventActorTurn(const edict_t* ent);
+void G_EventActorFall(const edict_t* ent);
 void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
 void G_EventInventoryDelete(const edict_t* ent, int mask, const invDef_t* invDef, int x, int y);
 void G_EventInventoryAdd(const edict_t* ent, int mask, int itemAmount);
@@ -325,6 +333,10 @@ void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, 
 void G_EventStartShoot(const edict_t* ent, int mask, const fireDef_t* fd, int shootType, const pos3_t at);
 void G_EventShootHidden(int mask, const fireDef_t* fd, qboolean firstShoot);
 void G_EventShoot(const edict_t* ent, int mask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventResetClientAction(const edict_t* ent);
+void G_EventActorStats(const edict_t* ent);
+void G_EventEndRound(void);
+void G_EventInventoryReload(const edict_t* ent, int mask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 
 /* g_client.c */
 /** the visibile changed - if it was visible - it's (the edict) now invisible */

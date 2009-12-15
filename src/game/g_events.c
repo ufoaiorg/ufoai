@@ -89,6 +89,8 @@ void G_EventPerish (const edict_t* ent)
 
 /**
  * @brief Update reaction firemode when something is moved from/to a hand.
+ * @param[in] ent The entity to change the reaction fire hand for
+ * @param[in] hand The hand that should be used for the reaction fire.
  */
 void G_EventReactionFireHandChange (const edict_t* ent, int hand)
 {
@@ -184,4 +186,60 @@ void G_EventShoot (const edict_t* ent, int mask, const fireDef_t* fd, int shootT
 	gi.WritePos(from);
 	gi.WritePos(impact);
 	gi.WriteDir(trace->plane.normal);
+}
+
+void G_EventActorFall (const edict_t* ent)
+{
+	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(1);
+	gi.WriteByte(ent->pos[0]);
+	gi.WriteByte(ent->pos[1]);
+	gi.WriteByte(ent->pos[2]);
+	/** @todo see dvecs, PosSubDV and NewDVZ */
+	gi.WriteByte(DIRECTION_FALL);
+	gi.WriteShort(GRAVITY);
+	gi.WriteShort(0);
+}
+
+/**
+ * @brief Reset the client actions for the given entity
+ * @param ent The entity to reset the client action for
+ * @note This event is send to all the clients that belong that the edict's team
+ */
+void G_EventResetClientAction (const edict_t* ent)
+{
+	gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
+	gi.WriteShort(ent->number);
+}
+
+void G_EventActorStats (const edict_t* ent)
+{
+	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATS);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->TU);
+	gi.WriteShort(ent->HP);
+	gi.WriteByte(ent->STUN);
+	gi.WriteByte(ent->morale);
+}
+
+/**
+ * @brief End of round event for the current active team
+ * @note This event is send to every connected client
+ */
+void G_EventEndRound (void)
+{
+	gi.AddEvent(PM_ALL, EV_ENDROUND);
+	gi.WriteByte(level.activeTeam);
+}
+
+void G_EventInventoryReload (const edict_t* ent, int mask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
+{
+	gi.AddEvent(mask, EV_INV_RELOAD);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(item->t->ammo);
+	gi.WriteByte(item->m->idx);
+	gi.WriteByte(invDef->id);
+	gi.WriteByte(ic->x);
+	gi.WriteByte(ic->y);
 }

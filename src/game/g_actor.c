@@ -163,8 +163,8 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 {
 	player_t *player;
 	edict_t *ent, *floor;
-	invList_t *ic;
 	qboolean newFloor;
+	invList_t *ic;
 	item_t item;
 	int mask;
 	inventory_action_t ia;
@@ -279,14 +279,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			mask = G_TeamToPM(ent->team);
 		}
 
-		/* send ammo message to all --- it's fun to hear that sound */
-		gi.AddEvent(PM_ALL, EV_INV_RELOAD);
-		gi.WriteShort(INV_IsFloorDef(to) ? floor->number : entNum);
-		gi.WriteByte(item.t->ammo);
-		gi.WriteByte(item.m->idx);
-		gi.WriteByte(to->id);
-		gi.WriteByte(ic->x);
-		gi.WriteByte(ic->y);
+		G_EventInventoryReload(INV_IsFloorDef(to) ? floor : ent, mask, &item, to, ic);
 
 		if (ia == IA_RELOAD) {
 			gi.EndEvents();

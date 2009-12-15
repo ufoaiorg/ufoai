@@ -403,7 +403,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 			ent->state ^= STATE_CROUCHED;
 			ent->TU -= TU_CROUCH;
 			/* Link it. */
-			if (ent->state & STATE_CROUCHED)
+			if (G_IsCrouched(ent))
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
 			else
 				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
@@ -412,7 +412,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
-			if (ent->state & STATE_SHAKEN) {
+			if (G_IsShaken(ent)) {
 				G_PlayerPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */

@@ -36,12 +36,7 @@ void G_SendStats (edict_t * ent)
 	ent->STUN = min(ent->STUN, 255);
 	ent->morale = max(ent->morale, 0);
 
-	gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATS);
-	gi.WriteShort(ent->number);
-	gi.WriteByte(ent->TU);
-	gi.WriteShort(ent->HP);
-	gi.WriteByte(ent->STUN);
-	gi.WriteByte(ent->morale);
+	G_EventActorStats(ent);
 }
 
 /**

@@ -195,7 +195,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 	if (!self->owner)
 		return qfalse;
 
-	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
+	if (G_IsCivilian(activator) || activator->team == TEAM_ALIEN) {
 		/* let the ai interact with the door */
 		if (self->flags & FL_GROUPSLAVE)
 			self = self->groupMaster;

@@ -108,7 +108,7 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 		return qfalse;
 
 	/* check ent has reaction fire enabled */
-	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION))
+	if (!G_IsShaken(ent) && !(ent->state & STATE_REACTION))
 		return qfalse;
 
 	/* check in range and visible */
@@ -123,8 +123,8 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	/* If reaction fire is triggered by a friendly unit
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
-	if (target->team == TEAM_CIVILIAN || target->team == ent->team)
-		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
+	if (G_IsCivilian(target) || target->team == ent->team)
+		if (!G_IsShaken(ent) || (float) ent->morale / mor_shaken->value > frand())
 			return qfalse;
 
 	/* okay do it then */
@@ -193,13 +193,13 @@ static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos
 	shot_mock_t mock;
 	int ff, i, maxff;
 
-	if (shooter->state & STATE_INSANE)
+	if (G_IsInsane(shooter))
 		maxff = 100;
-	else if (shooter->state & STATE_RAGE)
+	else if (G_IsRaged(shooter))
 		maxff = 60;
-	else if (shooter->state & STATE_PANIC)
+	else if (G_IsPaniced(shooter))
 		maxff = 30;
-	else if (shooter->state & STATE_SHAKEN)
+	else if (G_IsShaken(shooter))
 		maxff = 15;
 	else
 		maxff = 5;
@@ -233,7 +233,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		return qfalse;
 
 	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
-	if (ent->state & STATE_DAZED)
+	if (G_IsDazed(ent))
 		return qfalse;
 
 	/* ent can't take a reaction shot if it's not possible - and check that

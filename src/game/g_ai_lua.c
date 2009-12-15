@@ -467,7 +467,7 @@ static int pos3L_tostring (lua_State *L)
 static int pos3L_goto (lua_State *L)
 {
 	pos3_t *pos;
-	const byte crouchingState = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
 
 	assert(lua_ispos3(L, 1));
 
@@ -657,7 +657,7 @@ static int AIL_crouch (lua_State *L)
 			AIL_invalidparameter(1);
 	}
 
-	lua_pushboolean(L, AIL_ent->state & STATE_CROUCHED);
+	lua_pushboolean(L, G_IsCrouched(AIL_ent));
 	return 1;
 }
 
@@ -757,7 +757,7 @@ static int AIL_positionshoot (lua_State *L)
 	int xl, yl, xh, yh;
 	int min_tu;
 	aiActor_t *target;
-	const byte crouchingState = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
 
 	/* We need a target. */
 	assert(lua_isactor(L, 1));
@@ -795,7 +795,7 @@ static int AIL_positionshoot (lua_State *L)
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
 				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
 					const pos_t tu = gi.MoveLength(gi.pathingMap, to,
-							(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+							G_IsCrouched(ent) ? 1 : 0, qtrue);
 
 					if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 						continue;
@@ -829,7 +829,7 @@ static int AIL_positionhide (lua_State *L)
 	int dist;
 	int xl, yl, xh, yh;
 	int min_tu;
-	const byte crouchingState = AIL_ent->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
 
 	/* Make things more simple. */
 	ent = AIL_ent;
@@ -860,7 +860,7 @@ static int AIL_positionhide (lua_State *L)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
 				const pos_t tu = gi.MoveLength(gi.pathingMap, to,
-						(ent->state & STATE_CROUCHED) ? 1 : 0, qtrue);
+						G_IsCrouched(ent) ? 1 : 0, qtrue);
 
 				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 					continue;
