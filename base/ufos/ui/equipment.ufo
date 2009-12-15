@@ -274,24 +274,24 @@ window equipment extends objectinfo
 
 	confunc update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
-			*(container)equip@filter 0
-			*(container)equip_ammo@filter 0
+			*(container)equip@filter FILTER_S_PRIMARY
+			*(container)equip_ammo@filter FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
-			*(container)equip@filter 1
-			*(container)equip_ammo@filter 1
+			*(container)equip@filter FILTER_S_SECONDARY
+			*(container)equip_ammo@filter FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
-			*(container)equip@filter 2
-			*(container)equip_ammo@filter 2
+			*(container)equip@filter FILTER_S_HEAVY
+			*(container)equip_ammo@filter FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
-			*(container)equip@filter 3
-			*(container)equip_ammo@filter 3
+			*(container)equip@filter FILTER_S_MISC
+			*(container)equip_ammo@filter FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
-			*(container)equip@filter 4
-			*(container)equip_ammo@filter 4
+			*(container)equip@filter FILTER_S_ARMOUR
+			*(container)equip_ammo@filter FILTER_S_ARMOUR
 		}
 		*(container)equip@scrollpos 0
 		*(container)equip_ammo@scrollpos 0

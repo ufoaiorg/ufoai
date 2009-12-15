@@ -50,6 +50,56 @@ void INVSH_InitCSI (csi_t * import)
 }
 
 /**
+ * @brief Checks whether a given inventory definition is of special type
+ * @param invDef The inventory definition to check
+ * @return @c true if the given inventory definition is of type floor
+ */
+qboolean INV_IsFloorDef (const invDef_t* invDef)
+{
+	return invDef->id == CSI->idFloor;
+}
+
+/**
+ * @brief Checks whether a given inventory definition is of special type
+ * @param invDef The inventory definition to check
+ * @return @c true if the given inventory definition is of type right
+ */
+qboolean INV_IsRightDef (const invDef_t* invDef)
+{
+	return invDef->id == CSI->idRight;
+}
+
+/**
+ * @brief Checks whether a given inventory definition is of special type
+ * @param invDef The inventory definition to check
+ * @return @c true if the given inventory definition is of type left
+ */
+qboolean INV_IsLeftDef (const invDef_t* invDef)
+{
+	return invDef->id == CSI->idLeft;
+}
+
+/**
+ * @brief Checks whether a given inventory definition is of special type
+ * @param invDef The inventory definition to check
+ * @return @c true if the given inventory definition is of type equip
+ */
+qboolean INV_IsEquipDef (const invDef_t* invDef)
+{
+	return invDef->id == CSI->idEquip;
+}
+
+/**
+ * @brief Checks whether a given inventory definition is of special type
+ * @param invDef The inventory definition to check
+ * @return @c true if the given inventory definition is of type armour
+ */
+qboolean INV_IsArmourDef (const invDef_t* invDef)
+{
+	return invDef->id == CSI->idArmour;
+}
+
+/**
  * @brief Get the fire definitions for a given object
  * @param[in] obj The object to get the firedef for
  * @param[in] weapFdsIdx the weapon index in the fire definition array
@@ -241,12 +291,12 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((container->id == CSI->idRight && i->c[CSI->idLeft]) || container->id == CSI->idLeft)
+		if ((INV_IsRightDef(container) && i->c[CSI->idLeft]) || INV_IsLeftDef(container))
 			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
-	if (container->id == CSI->idLeft) {
+	if (INV_IsLeftDef(container)) {
 		if (i->c[CSI->idRight] && i->c[CSI->idRight]->item.t->holdTwoHanded)
 			return INV_DOES_NOT_FIT;
 
@@ -285,7 +335,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 	if (Com_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
 	if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y, ignoredItem)
-	 && container->id != CSI->idEquip && container->id != CSI->idFloor)
+	 && !INV_IsEquipDef(container) && !INV_IsFloorDef(container))
 		fits |= INV_FITS_ONLY_ROTATED;
 
 	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
@@ -459,13 +509,13 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 	/* heavy weapons may be primary too. check heavy first */
 	if (obj->isHeavy)
 		return FILTER_S_HEAVY;
-	if (obj->isPrimary)
+	else if (obj->isPrimary)
 		return FILTER_S_PRIMARY;
-	if (obj->isSecondary)
+	else if (obj->isSecondary)
 		return FILTER_S_SECONDARY;
-	if (obj->isMisc)
+	else if (obj->isMisc)
 		return FILTER_S_MISC;
-	if (INV_IsArmour(obj))
+	else if (INV_IsArmour(obj))
 		return FILTER_S_ARMOUR;
 
 	/** @todo need to implement everything */
@@ -514,7 +564,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			if (obj->weapons[i] && obj->weapons[i] != obj  && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
 				return qtrue;
 		}
 		break;
@@ -829,7 +879,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 	time = from->out + to->in;
 	if (from == to) {
-		if (from->id == CSI->idFloor)
+		if (INV_IsFloorDef(from))
 			time = 0;
 		else
 			time /= 2;
@@ -866,7 +916,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 	/* If weapon is twohanded and is moved from hand to hand do nothing. */
 	/* Twohanded weapon are only in CSI->idRight. */
-	if (fItem->item.t->fireTwoHanded && to->id == CSI->idLeft && from->id == CSI->idRight) {
+	if (fItem->item.t->fireTwoHanded && INV_IsLeftDef(to) && INV_IsRightDef(from)) {
 		return IA_NONE;
 	}
 
@@ -919,7 +969,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		 * scroll because checkedTo is always true here. */
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
-		if (ic && to->id != CSI->idEquip && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t)) {
+		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t)) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
 			if (ic->item.a >= ic->item.t->ammo && ic->item.m == fItem->item.t) {
@@ -979,7 +1029,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
-	if (fItem->item.t->fireTwoHanded && to->id == CSI->idLeft) {
+	if (fItem->item.t->fireTwoHanded && INV_IsLeftDef(to)) {
 #ifdef DEBUG
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - don't move the item to CSI->idLeft it's fireTwoHanded\n");
 #endif
@@ -1000,7 +1050,6 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		fItem->item.rotated = qfalse;
 	}
 
-
 	/* Actually remove the item from the 'from' container (if it wasn't already removed). */
 	if (!alreadyRemovedSource)
 		if (!Com_RemoveFromInventory(i, from, fItem))
@@ -1019,7 +1068,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		*icp = ic;
 	}
 
-	if (to->id == CSI->idArmour) {
+	if (INV_IsArmourDef(to)) {
 		assert(INV_IsArmour(cacheItem.t));
 		return IA_ARMOUR;
 	} else
@@ -1215,11 +1264,9 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 	objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	int i;
-	objDef_t *obj;
 	qboolean allowLeft;
 	qboolean packed;
 	int ammoMult = 1;
-	int randNumber, totalAvailableAmmo;
 
 #ifdef PARANOID
 	if (weapon == NULL) {
@@ -1244,17 +1291,17 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 		} else {
 			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 			 * weapon in equipment definition) */
-			totalAvailableAmmo = 0;
+			int totalAvailableAmmo = 0;
 			for (i = 0; i < CSI->numODs; i++) {
-				obj = &CSI->ods[i];
+				objDef_t *obj = &CSI->ods[i];
 				if (ed->num[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 					totalAvailableAmmo++;
 				}
 			}
 			if (totalAvailableAmmo) {
-				randNumber = rand() % totalAvailableAmmo;
+				int randNumber = rand() % totalAvailableAmmo;
 				for (i = 0; i < CSI->numODs; i++) {
-					obj = &CSI->ods[i];
+					objDef_t *obj = &CSI->ods[i];
 					if (ed->num[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 						randNumber--;
 						if (randNumber < 0) {

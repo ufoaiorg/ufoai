@@ -490,14 +490,20 @@ typedef struct csi_s {
 #define ACTOR_HAND_RIGHT 0
 #define ACTOR_HAND_LEFT 1
 
+qboolean INV_IsFloorDef(const invDef_t* invDef);
+qboolean INV_IsRightDef(const invDef_t* invDef);
+qboolean INV_IsLeftDef(const invDef_t* invDef);
+qboolean INV_IsEquipDef(const invDef_t* invDef);
+qboolean INV_IsArmourDef(const invDef_t* invDef);
+
 /**
  * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
  * For this see also g_combat.c:G_UpdateCharacterScore
 */
 typedef enum {
-	KILLED_ALIENS,		/**< Killed aliens @todo maybe generally "enemies" in the future? */
-	KILLED_CIVILIANS,	/**< Civilians, animals @todo maybe also scientists and workers in the future? */
-	KILLED_TEAM,	/**< Friendly fire, own team, partner-teams. */
+	KILLED_ALIENS,		/**< Killed aliens */
+	KILLED_CIVILIANS,	/**< Civilians, animals */
+	KILLED_TEAM,		/**< Friendly fire, own team, partner-teams. */
 
 	KILLED_NUM_TYPES
 } killtypes_t;
@@ -673,11 +679,11 @@ typedef struct character_s {
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 
-	AI_t AI; /*< The character's artificial intelligence */
+	AI_t AI; /**< The character's artificial intelligence */
 } character_t;
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)
-#define SANE_FIREMODE(fm)	((((fm)->hand >= 0) && ((fm)->fmIdx >=0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON) && ((fm)->fmIdx >= 0)))
+#define SANE_FIREMODE(fm)	((((fm)->hand >= 0) && ((fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON) && ((fm)->fmIdx >= 0)))
 
 #define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
 #define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))

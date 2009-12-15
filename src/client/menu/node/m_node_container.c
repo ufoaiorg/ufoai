@@ -593,7 +593,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
-	if (EXTRADATA(node).container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
+	if (INV_IsLeftDef(EXTRADATA(node).container) && !menuInventory->c[csi.idLeft]) {
 		if (menuInventory->c[csi.idRight]) {
 			const item_t *item = &menuInventory->c[csi.idRight]->item;
 			assert(item);
@@ -618,7 +618,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 			 * fireTwoHanded weapon. */
 			assert(item);
 			assert(item->t);
-			if (EXTRADATA(node).container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
+			if (INV_IsRightDef(EXTRADATA(node).container) && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
 				disabled = qtrue;
 				MN_DrawDisabled(node);
 			}
@@ -1422,8 +1422,8 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	/** Check if the items already exists in the container. i.e. there is already at least one item.
 	 * @sa Com_AddToInventory */
 	exists = qfalse;
-	if ((EXTRADATA(target).container->id == csi.idFloor || EXTRADATA(target).container->id == csi.idEquip)
-		&& (dragInfoToX  < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
+	if ((INV_IsFloorDef(EXTRADATA(target).container) || INV_IsEquipDef(EXTRADATA(target).container))
+		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
 		&& Com_ExistsInInventory(menuInventory, EXTRADATA(target).container, *dragItem)) {
 		exists = qtrue;
 	}
@@ -1432,7 +1432,7 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	 * the container is "single", the cursor is out of bound of the container.
 	 */
 	if (!exists && dragItem->t && (EXTRADATA(target).container->single
-		|| dragInfoToX  < 0 || dragInfoToY < 0
+		|| dragInfoToX < 0 || dragInfoToY < 0
 		|| dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
 #if 0
 /* ... or there is something in the way. */
@@ -1493,9 +1493,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		assert(target);
 		assert(EXTRADATA(target).container);
 		assert(selActor);
-		/** @todo not sure whether a network event belongs into the menu code... */
-		MSG_Write_PA(PA_INVMOVE, selActor->entnum,
-			EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
+		CL_ActorInvMove(selActor, EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATA(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
 		menuNode_t *target = MN_DNDGetTargetNode();
@@ -1514,7 +1512,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 			assert(fItem);
 
 			/* Remove ammo on removing weapon from a soldier */
-			if (MN_IsScrollContainerNode(MN_DNDGetTargetNode()) && fItem->item.m && fItem->item.m != fItem->item.t)
+			if (MN_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t)
 				INV_UnloadWeapon(fItem, menuInventory, EXTRADATA(target).container);
 			/* move the item */
 			INV_MoveItem(menuInventory,
@@ -1551,10 +1549,7 @@ static const value_t properties[] = {
 	{"displayunavailableammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
 	/* Base container only. Custom the number of column we must use to display items. */
 	{"columns", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
-	/* Base container only. Filter items by a category.
-	 * @todo Document category values
-	 * @todo Use understandable const string
-	 */
+	/* Base container only. Filter items by a category. */
 	{"filter", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */
@@ -1593,4 +1588,15 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->mouseWheel = MN_ContainerNodeWheel;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(containerExtraData_t);
+
+	Com_RegisterConstInt("FILTER_S_PRIMARY", FILTER_S_PRIMARY);
+	Com_RegisterConstInt("FILTER_S_SECONDARY", FILTER_S_SECONDARY);
+	Com_RegisterConstInt("FILTER_S_HEAVY", FILTER_S_HEAVY);
+	Com_RegisterConstInt("FILTER_S_MISC", FILTER_S_MISC);
+	Com_RegisterConstInt("FILTER_S_ARMOUR", FILTER_S_ARMOUR);
+	Com_RegisterConstInt("FILTER_CRAFTITEM", FILTER_CRAFTITEM);
+	Com_RegisterConstInt("FILTER_UGVITEM", FILTER_UGVITEM);
+	Com_RegisterConstInt("FILTER_AIRCRAFT", FILTER_AIRCRAFT);
+	Com_RegisterConstInt("FILTER_DUMMY", FILTER_DUMMY);
+	Com_RegisterConstInt("FILTER_DISASSEMBLY", FILTER_DISASSEMBLY);
 }

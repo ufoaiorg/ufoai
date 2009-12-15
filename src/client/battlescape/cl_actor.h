@@ -86,7 +86,7 @@ const fireDef_t *CL_GetWeaponAndAmmo(const le_t * actor, const char hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
 qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
-
+void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
 int CL_UsableReactionTUs(const le_t * le);
 void CL_SetReactionFiremode(le_t *actor, const int handidx, const objDef_t *od, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);

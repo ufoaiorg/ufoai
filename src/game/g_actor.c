@@ -210,14 +210,14 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
 		return;
 
-	/* "get floor ready" - searching for existing floor-edict*/
-	floor = G_GetFloorItems(ent); /* Also sets FLOOR(ent) to correct value. */
-	if (to->id == gi.csi->idFloor && !floor) {
+	/* "get floor ready" - searching for existing floor-edict */
+	floor = G_GetFloorItems(ent);
+	if (INV_IsFloorDef(to) && !floor) {
 		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = qtrue;
-	} else if (from->id == gi.csi->idFloor && !floor) {
-		/* We are moving from the floor, but no existing edict for this floor-tile found -> thi should never be the case. */
+	} else if (INV_IsFloorDef(from) && !floor) {
+		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
 		gi.dprintf("G_ClientInvMove: No source-floor found.\n");
 		return;
 	} else {
@@ -259,10 +259,8 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 		break;
 	}
 
-	assert(gi.csi->idFloor >= 0 && gi.csi->idFloor < MAX_CONTAINERS);
-
 	/* successful inventory change; remove the item in clients */
-	if (from->id == gi.csi->idFloor) {
+	if (INV_IsFloorDef(from)) {
 		/* We removed an item from the floor - check how the client
 		 * needs to be updated. */
 		assert(!newFloor);
@@ -278,7 +276,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
-			if (to->id != gi.csi->idFloor) {
+			if (!INV_IsFloorDef(to)) {
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 				gi.WriteShort(floor->number);
 				G_FreeEdict(floor);
@@ -300,7 +298,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
-		if (to->id == gi.csi->idFloor) {
+		if (INV_IsFloorDef(to)) {
 			assert(!newFloor);
 			assert(FLOOR(floor) == FLOOR(ent));
 			mask = G_VisToPM(floor->visflags);
@@ -310,7 +308,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 
 		/* send ammo message to all --- it's fun to hear that sound */
 		gi.AddEvent(PM_ALL, EV_INV_RELOAD);
-		gi.WriteShort(to->id == gi.csi->idFloor ? floor->number : entNum);
+		gi.WriteShort(INV_IsFloorDef(to) ? floor->number : entNum);
 		gi.WriteByte(item.t->ammo);
 		gi.WriteByte(item.m->idx);
 		gi.WriteByte(to->id);
@@ -334,7 +332,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 	}
 
 	/* add it */
-	if (to->id == gi.csi->idFloor) {
+	if (INV_IsFloorDef(to)) {
 		/* We moved an item to the floor - check how the client needs to be updated. */
 		if (newFloor) {
 			/* A new container was created for the floor. */
@@ -364,11 +362,11 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 	}
 
 	/* Update reaction firemode when something is moved from/to a hand. */
-	if (from->id == gi.csi->idRight || to->id == gi.csi->idRight) {
+	if (INV_IsRightDef(from) || INV_IsRightDef(to)) {
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(entNum);
 		gi.WriteShort(ACTOR_HAND_RIGHT);
-	} else if (from->id == gi.csi->idLeft || to->id == gi.csi->idLeft) {
+	} else if (INV_IsLeftDef(from) || INV_IsLeftDef(to)) {
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(entNum);
 		gi.WriteShort(ACTOR_HAND_LEFT);
@@ -377,14 +375,14 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
-		if (from->id == gi.csi->idRight || from->id == gi.csi->idLeft) {
+		if (INV_IsRightDef(from) || INV_IsLeftDef(from)) {
 			gi.AddEvent(mask, EV_INV_DEL);
 			gi.WriteShort(entNum);
 			gi.WriteByte(from->id);
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
 		}
-		if (to->id == gi.csi->idRight || to->id == gi.csi->idLeft) {
+		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			gi.AddEvent(mask, EV_INV_ADD);
 			gi.WriteShort(entNum);
 			gi.WriteShort(INV_INVENTORY_BYTES);
@@ -421,7 +419,7 @@ void G_ActorReload (int entnum, shoot_types_t st, qboolean quiet)
 	if (CONTAINER(ent, hand->id)) {
 		weapon = CONTAINER(ent, hand->id)->item.t;
 	/** @todo What if there is no item in the right hand - this would segfault then */
-	} else if (hand->id == gi.csi->idLeft && RIGHT(ent)->item.t->holdTwoHanded) {
+	} else if (INV_IsLeftDef(hand) && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = INVDEF(gi.csi->idRight);
 		weapon = CONTAINER(ent, hand->id)->item.t;

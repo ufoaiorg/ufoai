@@ -1298,9 +1298,25 @@ void CL_ActorReload (le_t *le, int hand)
 
 	/* send request */
 	if (bestContainer != NONE)
-		MSG_Write_PA(PA_INVMOVE, le->entnum, bestContainer, x, y, hand, 0, 0);
-	else
-		Com_Printf("No (researched) clip left.\n");
+		CL_ActorInvMove(le, bestContainer, x, y, hand, 0, 0);
+}
+
+/**
+ *
+ * @param le The le that is doing the inventory move (an actor)
+ * @param fromContainer The container to fetch the item from
+ * @param fromX The x position in the container to get the item from
+ * @param fromY The y position in the container to get the item from
+ * @param toContainer The container to store the item in
+ * @param toX The x position in the container to move the item to
+ * @param toY The y position in the container to move the item to
+ */
+void CL_ActorInvMove (const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY)
+{
+	assert(CL_BattlescapeRunning());
+	assert(le);
+	assert(LE_IsActor(le));
+	MSG_Write_PA(PA_INVMOVE, le->entnum, fromContainer, fromX, fromY, toContainer, toX, toY);
 }
 
 /**
