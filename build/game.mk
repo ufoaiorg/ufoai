@@ -13,6 +13,7 @@ GAME_SRCS=\
 	game/g_client.c \
 	game/g_combat.c \
 	game/g_cmds.c \
+	game/g_events.c \
 	game/g_func.c \
 	game/g_inventory.c \
 	game/g_main.c \

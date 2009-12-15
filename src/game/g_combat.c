@@ -1207,7 +1207,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 
 	if (!mock) {
 		G_CheckVisTeam(ent->team, NULL, qfalse, ent);
-		G_ActorTurnEvent(ent);
+		G_EventActorTurn(ent);
 	}
 
 	/* calculate visibility */

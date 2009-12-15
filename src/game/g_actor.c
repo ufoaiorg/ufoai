@@ -97,23 +97,10 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 
 	if (status & VIS_STOP) {
 		/* send the turn */
-		G_ActorTurnEvent(ent);
+		G_EventActorTurn(ent);
 	}
 
 	return status;
-}
-
-/**
- * @brief Send the turn event for the given entity
- * @param ent The entity to send the turn event for
- * @note Every player that can see this ent will reveive the turn event data
- * @note Make sure that the direction to turn into is already set
- */
-void G_ActorTurnEvent (const edict_t* ent)
-{
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-	gi.WriteShort(ent->number);
-	gi.WriteByte(ent->dir);
 }
 
 /**
@@ -142,10 +129,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	gi.LinkEdict(ent);
 	level.num_alive[ent->team]--;
 	/* send death */
-	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(attacker ? attacker->number : SKIP_LOCAL_ENTITY);
-	gi.WriteShort(ent->state);
+	G_EventActorDie(ent, attacker);
 
 	/* handle inventory - drop everything to floor edict (but not the armour) */
 	G_InventoryToFloor(ent);
@@ -267,28 +251,17 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
 			FLOOR(floor) = FLOOR(ent);
-			/* Tell the client to remove the item from the container */
-			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
-			gi.WriteShort(floor->number);
-			gi.WriteByte(from->id);
-			gi.WriteByte(fx);
-			gi.WriteByte(fy);
+			G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
 			if (!INV_IsFloorDef(to)) {
-				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-				gi.WriteShort(floor->number);
+				G_EventPerish(floor);
 				G_FreeEdict(floor);
 			}
 		}
 	} else {
-		/* Tell the client to remove the item from the container */
-		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
-		gi.WriteShort(entNum);
-		gi.WriteByte(from->id);
-		gi.WriteByte(fx);
-		gi.WriteByte(fy);
+		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from, fx, fy);
 	}
 
 	/* send tu's */
@@ -345,47 +318,31 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			/* Add the item to an already existing floor edict - the floor container that
 			 * is already linked might be from a different entity */
 			FLOOR(floor) = FLOOR(ent);
-			/* Tell the client to add the item to the container. */
-			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
-			gi.WriteShort(floor->number);
-			gi.WriteShort(INV_INVENTORY_BYTES);
+			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags));
 			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}
 	} else {
-		/* Tell the client to add the item to the container. */
-		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
-		gi.WriteShort(entNum);
-		gi.WriteShort(INV_INVENTORY_BYTES);
+		G_EventInventoryAdd(floor, G_TeamToPM(ent->team));
 		assert(item.t);
 		G_WriteItem(item, to, tx, ty);
 	}
 
 	/* Update reaction firemode when something is moved from/to a hand. */
 	if (INV_IsRightDef(from) || INV_IsRightDef(to)) {
-		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-		gi.WriteShort(entNum);
-		gi.WriteShort(ACTOR_HAND_RIGHT);
+		G_EventReactionFireHandChange(ent, ACTOR_HAND_RIGHT);
 	} else if (INV_IsLeftDef(from) || INV_IsLeftDef(to)) {
-		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-		gi.WriteShort(entNum);
-		gi.WriteShort(ACTOR_HAND_LEFT);
+		G_EventReactionFireHandChange(ent, ACTOR_HAND_LEFT);
 	}
 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 	if (mask) {
 		if (INV_IsRightDef(from) || INV_IsLeftDef(from)) {
-			gi.AddEvent(mask, EV_INV_DEL);
-			gi.WriteShort(entNum);
-			gi.WriteByte(from->id);
-			gi.WriteByte(fx);
-			gi.WriteByte(fy);
+			G_EventInventoryDelete(ent, mask, from, fx, fy);
 		}
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
-			gi.AddEvent(mask, EV_INV_ADD);
-			gi.WriteShort(entNum);
-			gi.WriteShort(INV_INVENTORY_BYTES);
+			G_EventInventoryAdd(ent, mask);
 			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}

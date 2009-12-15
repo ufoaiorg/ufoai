@@ -365,7 +365,7 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	ent->TU -= TU_TURN;
 
 	/* send the turn */
-	G_ActorTurnEvent(ent);
+	G_EventActorTurn(ent);
 
 	/* send the new TUs */
 	G_SendStats(ent);

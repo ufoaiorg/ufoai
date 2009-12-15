@@ -314,6 +314,14 @@ void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
+/* g_events.c */
+void G_EventActorTurn(const edict_t* ent);
+void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
+void G_EventInventoryDelete(const edict_t* ent, int mask, const invDef_t* invDef, int x, int y);
+void G_EventInventoryAdd(const edict_t* ent, int mask);
+void G_EventPerish(const edict_t* ent);
+void G_EventReactionFireHandChange(const edict_t* ent, int hand);
+
 /* g_client.c */
 /** the visibile changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
@@ -371,7 +379,6 @@ void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int d
 void G_ActorInvMove(int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
-void G_ActorTurnEvent(const edict_t* ent);
 
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
