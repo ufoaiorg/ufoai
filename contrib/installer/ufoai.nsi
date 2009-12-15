@@ -249,7 +249,7 @@ Function .onSelChange
   IntOP $GAMETEST $GAMEFLAGS & ${SF_SELECTED} ; tests the activation bit
   IntOP $MAPTEST $MAPFLAGS & ${SF_SELECTED} ; tests the activation bit
 
-  IntCmp? $GAMETEST 1 done
+  IntCmp $GAMETEST 1 done
     SectionGetFlags ${SEC01B} $GAMEICONFLAGS
     IntOp $GAMEICONFLAGS $GAMEICONFLAGS & 510 ; Forces to zero the activation bit
     SectionSetFlags ${SEC01B} $GAMEICONFLAGS
