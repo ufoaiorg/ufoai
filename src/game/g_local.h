@@ -325,18 +325,19 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventActorFall(const edict_t* ent);
 void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
-void G_EventInventoryDelete(const edict_t* ent, int mask, const invDef_t* invDef, int x, int y);
-void G_EventInventoryAdd(const edict_t* ent, int mask, int itemAmount);
+void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y);
+void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventReactionFireHandChange(const edict_t* ent, int hand);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
-void G_EventStartShoot(const edict_t* ent, int mask, const fireDef_t* fd, int shootType, const pos3_t at);
-void G_EventShootHidden(int mask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int mask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
+void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
+void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
 void G_EventEndRound(void);
-void G_EventInventoryReload(const edict_t* ent, int mask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
+void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
+void G_EventThrow(int visMask, const fireDef_t *fd, int dt, int flags, const vec3_t position, const vec3_t velocity);
 
 /* g_client.c */
 /** the visibile changed - if it was visible - it's (the edict) now invisible */

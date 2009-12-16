@@ -606,10 +606,8 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 	byte flags;
 
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
-	if (G_IsDead(ent)) {
-		Com_DPrintf(DEBUG_GAME, "G_ShootGrenade: Shooter is dead, shot not possible.\n");
+	if (G_IsDead(ent))
 		return;
-	}
 
 	/* get positional data */
 	VectorCopy(from, last);
@@ -683,17 +681,12 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 
 				if (!mock) {
 					/* explode */
-					gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
-					gi.WriteShort(dt * 1000);
-					gi.WriteShort(fd->obj->idx);
-					gi.WriteByte(fd->weapFdsIdx);
-					gi.WriteByte(fd->fdIdx);
+					int impactFlags = flags;
 					if (tr.ent && G_IsActor(tr.ent))
-						gi.WriteByte(flags | SF_BODY);
+						impactFlags |= SF_BODY;
 					else
-						gi.WriteByte(flags | SF_IMPACT);
-					gi.WritePos(last);
-					gi.WritePos(startV);
+						impactFlags |= SF_IMPACT;
+					G_EventThrow(mask, fd, dt, impactFlags, last, startV);
 				}
 
 				tr.endpos[2] += 10;
@@ -714,14 +707,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 
 			if (!mock) {
 				/* send */
-				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
-				gi.WriteShort(dt * 1000);
-				gi.WriteShort(fd->obj->idx);
-				gi.WriteByte(fd->weapFdsIdx);
-				gi.WriteByte(fd->fdIdx);
-				gi.WriteByte(flags);
-				gi.WritePos(last);
-				gi.WritePos(startV);
+				G_EventThrow(mask, fd, dt, flags, last, startV);
 			}
 			flags |= SF_BOUNCED;
 

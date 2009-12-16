@@ -296,10 +296,10 @@ typedef enum {
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
 /* shoot flags */
-#define SF_IMPACT	1
-#define SF_BODY		2
-#define SF_BOUNCING	4
-#define SF_BOUNCED	8
+#define SF_IMPACT	1	/**< impact on none actor objects */
+#define SF_BODY		2	/**< impact on actors */
+#define SF_BOUNCING	4	/**< item should bounce around (like grenades) */
+#define SF_BOUNCED	8	/**< at least hit the ground once and can now start to bounce */
 
 /* is used in events where two edicts can be send, one actor and one receiver - but one of them can
  * be NULL, e.g. in a case where the actor is a trigger */

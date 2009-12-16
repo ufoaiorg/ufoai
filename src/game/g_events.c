@@ -54,11 +54,11 @@ void G_EventActorDie (const edict_t* ent, const edict_t* attacker)
 
 /**
  * @brief Tell the client to remove the item from the container
- * @param[in] mask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
+ * @param[in] playerMask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
  */
-void G_EventInventoryDelete (const edict_t* ent, int mask, const invDef_t* invDef, int x, int y)
+void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y)
 {
-	gi.AddEvent(mask, EV_INV_DEL);
+	gi.AddEvent(playerMask, EV_INV_DEL);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(invDef->id);
 	gi.WriteByte(x);
@@ -67,12 +67,12 @@ void G_EventInventoryDelete (const edict_t* ent, int mask, const invDef_t* invDe
 
 /**
  * @brief Tell the client to add the item from the container
- * @param[in] mask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
+ * @param[in] playerMask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
  * @note This event must be followed by a @c G_WriteItem call
  */
-void G_EventInventoryAdd (const edict_t* ent, int mask, int itemAmount)
+void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
 {
-	gi.AddEvent(mask, EV_INV_ADD);
+	gi.AddEvent(playerMask, EV_INV_ADD);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(itemAmount * INV_INVENTORY_BYTES);
 }
@@ -124,14 +124,14 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
 /**
  * @brief Start the shooting event
  * @param ent The entity that starts the shooting
- * @param mask the vis mask to determine the clients from this event is send to
+ * @param visMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, int mask, const fireDef_t* fd, int shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at)
 {
-	gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
+	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_START_SHOOT);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
@@ -143,13 +143,13 @@ void G_EventStartShoot (const edict_t* ent, int mask, const fireDef_t* fd, int s
 
 /**
  * @brief Start the shooting event for hidden actors
- * @param mask the vis mask to determine the clients from this event is send to
+ * @param visMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param firstShoot Is this the first shoot
  */
-void G_EventShootHidden (int mask, const fireDef_t* fd, qboolean firstShoot)
+void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
 {
-	gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
+	gi.AddEvent(~G_VisToPM(visMask), EV_ACTOR_SHOOT_HIDDEN);
 	gi.WriteByte(firstShoot);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
@@ -159,7 +159,7 @@ void G_EventShootHidden (int mask, const fireDef_t* fd, qboolean firstShoot)
 /**
  * @brief Do the shooting
  * @param ent The entity that is doing the shooting
- * @param mask the vis mask to determine the clients from this event is send to
+ * @param visMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param shootType The type of the shoot
  * @param flags Define some flags in a bitmask: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCING
@@ -167,11 +167,11 @@ void G_EventShootHidden (int mask, const fireDef_t* fd, qboolean firstShoot)
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int mask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
-	gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
+	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_SHOOT);
 	gi.WriteShort(ent->number);
 	if (targetEdict && G_IsBreakable(targetEdict))
 		gi.WriteShort(targetEdict->number);
@@ -233,13 +233,33 @@ void G_EventEndRound (void)
 	gi.WriteByte(level.activeTeam);
 }
 
-void G_EventInventoryReload (const edict_t* ent, int mask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
+void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic)
 {
-	gi.AddEvent(mask, EV_INV_RELOAD);
+	gi.AddEvent(playerMask, EV_INV_RELOAD);
 	gi.WriteShort(ent->number);
 	gi.WriteByte(item->t->ammo);
 	gi.WriteByte(item->m->idx);
 	gi.WriteByte(invDef->id);
 	gi.WriteByte(ic->x);
 	gi.WriteByte(ic->y);
+}
+
+/**
+ * @param[in] visMask the vis mask to determine the clients from this event is send to
+ * @param[in] fd The firedefinition to use
+ * @param[in] dt Delta time
+ * @param[in] flags bitmask of the following values: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCED
+ * @param[in] position The current position
+ * @param[in] velocity The velocity of the throw
+ */
+void G_EventThrow (int visMask, const fireDef_t *fd, int dt, int flags, const vec3_t position, const vec3_t velocity)
+{
+	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_THROW);
+	gi.WriteShort(dt * 1000);
+	gi.WriteShort(fd->obj->idx);
+	gi.WriteByte(fd->weapFdsIdx);
+	gi.WriteByte(fd->fdIdx);
+	gi.WriteByte(flags);
+	gi.WritePos(position);
+	gi.WritePos(velocity);
 }

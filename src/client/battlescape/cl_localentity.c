@@ -858,7 +858,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	if (flags & SF_BODY) {
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
-	} else if (flags & SF_IMPACT || (fd->splrad && !fd-> bounce)) {
+	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
 	} else {
