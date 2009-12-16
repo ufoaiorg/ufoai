@@ -716,7 +716,7 @@ sequence credits
 	{
 		image	pics/ufoai
 		align	uc
-		pos		"512 800"
+		pos		"384 800"
 		speed	"0 -128"
 	}
 	wait 3.5
@@ -757,24 +757,28 @@ sequence credits
 		model	aircraft/ufo_fighter/ufo_fighter_hull
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
+		angles	"0 90 0"
 	}
 	model ship_wings
 	{
 		model	aircraft/ufo_fighter/ufo_fighter_wings
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
+		angles	"0 90 0"
 	}
 	model ship_engine1
 	{
 		model	aircraft/ufo_fighter/ufo_fighter_engines_1
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
+		angles	"0 90 0"
 	}
 	model ship_engine2
 	{
 		model	aircraft/ufo_fighter/ufo_fighter_engines_2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
+		angles	"0 90 0"
 	}
 
 	wait 1.0
@@ -784,6 +788,7 @@ sequence credits
 		model	aircraft/inter_starchaser/starchaser
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
+		angles	"0 90 0"
 	}
 	wait 4.0
 

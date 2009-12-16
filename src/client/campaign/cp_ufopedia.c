@@ -259,8 +259,6 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	/* select item */
 	assert(item->craftitem.type >= 0);
 	assert(item->tech);
-	/** @todo Is this actually _used_ in the ufopedia?
-	 * No, but in buy and production - and they are using these functions, too, no? (mattn) */
 	Cvar_Set("mn_item", item->id);
 	Cvar_Set("mn_itemname", _(item->tech->name));
 	if (item->tech->mdl)
