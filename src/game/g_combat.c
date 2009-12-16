@@ -673,12 +673,9 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 				if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
 
-			if
-				/* enough bouncing around */
-				(VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
-				 /* or we have sensors that tell us enemy is near */
-				 || (!fd->delay && tr.ent && G_IsActor(tr.ent))) {
-
+			/* enough bouncing around or we have hit an actor */
+			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
+			 || (!fd->delay && tr.ent && G_IsActor(tr.ent))) {
 				if (!mock) {
 					/* explode */
 					byte impactFlags = flags;
