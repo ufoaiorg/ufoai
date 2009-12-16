@@ -569,8 +569,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 				break;
 			}
 	} else {
-		floor->visflags = 0;
 		G_EventPerish(floor);
+		floor->visflags = 0;
 	}
 	Com_TryAddToInventory(&floor->i, *item, INVDEF(gi.csi->idFloor));
 

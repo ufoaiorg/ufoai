@@ -133,8 +133,8 @@ void G_InventoryToFloor (edict_t *ent)
 						floorAdjacent = G_SpawnFloor(ent->pos);
 					} else {
 						/* destroy this edict (send this event to all clients that see the edict) */
-						floorAdjacent->visflags = 0;
 						G_EventPerish(floorAdjacent);
+						floorAdjacent->visflags = 0;
 					}
 
 					Com_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
