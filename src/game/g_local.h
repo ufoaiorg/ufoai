@@ -337,7 +337,7 @@ void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
 void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
-void G_EventThrow(int visMask, const fireDef_t *fd, int dt, byte flags, const vec3_t position, const vec3_t velocity);
+void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 
 /* g_client.c */
 /** the visibile changed - if it was visible - it's (the edict) now invisible */
