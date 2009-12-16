@@ -681,7 +681,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 
 				if (!mock) {
 					/* explode */
-					int impactFlags = flags;
+					byte impactFlags = flags;
 					if (tr.ent && G_IsActor(tr.ent))
 						impactFlags |= SF_BODY;
 					else
@@ -705,10 +705,10 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 				return;
 			}
 
-			if (!mock) {
-				/* send */
+			/* send */
+			if (!mock)
 				G_EventThrow(mask, fd, dt, flags, last, startV);
-			}
+
 			flags |= SF_BOUNCED;
 
 			/* bounce */

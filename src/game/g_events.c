@@ -252,7 +252,7 @@ void G_EventInventoryReload (const edict_t* ent, int playerMask, const item_t* i
  * @param[in] position The current position
  * @param[in] velocity The velocity of the throw
  */
-void G_EventThrow (int visMask, const fireDef_t *fd, int dt, int flags, const vec3_t position, const vec3_t velocity)
+void G_EventThrow (int visMask, const fireDef_t *fd, int dt, byte flags, const vec3_t position, const vec3_t velocity)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_THROW);
 	gi.WriteShort(dt * 1000);
