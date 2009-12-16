@@ -511,7 +511,7 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
  * @param[in] od Pointer to objDef_t for which we set up firemode.
  * @param[in] fdIdx Index of firedefinition for an item in given hand.
  */
-void CL_SetReactionFiremode (le_t * actor, const int handidx, const objDef_t *od, const int fdIdx)
+void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef_t *od, const int fdIdx)
 {
 	character_t *chr;
 	int usableTusForRF = 0;
