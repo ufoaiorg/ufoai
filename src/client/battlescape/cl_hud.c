@@ -1469,39 +1469,33 @@ static void CL_ActorToggleReaction_f (void)
 	}
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
-	if (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)) {
-		/* At least one weapon is RF capable. */
+	if (!CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT)
+	 && !CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT))
+	 	state = ~STATE_REACTION;
 
-		if (state & STATE_REACTION) {
-			if (!CL_WorkingFiremode(selActor, qtrue)) {
-				CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
-			} else {
-				/* We would reserve more TUs than are available - reserve nothing and abort. */
-				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
-					return;
-			}
+	if (state & STATE_REACTION) {
+		if (!CL_WorkingFiremode(selActor, qtrue)) {
+			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
+		} else {
+			/* We would reserve more TUs than are available - reserve nothing and abort. */
+			if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+				state = ~STATE_REACTION;
 		}
-
-		/* Send request to update actor's reaction state to the server. */
-		MSG_Write_PA(PA_STATE, selActor->entnum, state);
-		selChr->reservedTus.reserveReaction = state;
-		/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
-		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.weapon, selChr->RFmode.fmIdx);
-
-		/* Update RF list if it is visible. */
-		if (visibleFiremodeListLeft || visibleFiremodeListRight)
-			HUD_DisplayFiremodes_f();
-	} else {
-		/* No usable RF weapon. */
-
-		/* Send request to update actor's reaction state to the server. */
-		MSG_Write_PA(PA_STATE, selActor->entnum, state);
-
-		selChr->reservedTus.reserveReaction = state;
-
-		/* Set RF-mode info to undef. */
-		CL_SetReactionFiremode(selActor, -1, NULL, -1); /* Includes PA_RESERVE_STATE */
 	}
+
+	/* Send request to update actor's reaction state to the server. */
+	MSG_Write_PA(PA_STATE, selActor->entnum, state);
+	selChr->reservedTus.reserveReaction = state;
+
+	/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
+	if (state & STATE_REACTION)
+		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.weapon, selChr->RFmode.fmIdx);
+	else
+		CL_SetReactionFiremode(selActor, -1, NULL, -1); /* Includes PA_RESERVE_STATE */
+
+	/* Update RF list if it is visible. */
+	if (visibleFiremodeListLeft || visibleFiremodeListRight)
+		HUD_DisplayFiremodes_f();
 }
 
 /**
