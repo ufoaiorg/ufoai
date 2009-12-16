@@ -153,7 +153,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			NET_ReadByte(msg);
 
 			VectorCopy(le->pos, pos);
-			crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+			crouchingState = LE_IsCrouched(le) ? 1 : 0;
 
 			for (i = 0; i < pathLength; i++) {
 				const byte fulldv = NET_ReadByte(msg);

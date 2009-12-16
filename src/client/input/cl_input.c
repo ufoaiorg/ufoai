@@ -570,16 +570,16 @@ static void CL_NextAlienVisibleFromActor_f (void)
 			i = 0;
 		le = &LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
-		 && le->team != TEAM_CIVILIAN) {
+		 && !LE_IsCivilian(le)) {
 			VectorCopy(watcher->origin, from);
 			VectorCopy(le->origin, at);
 			/* actor eye height */
-			if (watcher->state & STATE_CROUCHED)
+			if (LE_IsCrouched(watcher))
 				from[2] += EYE_HT_CROUCH;
 			else
 				from[2] += EYE_HT_STAND;
 			/* target height */
-			if (le->state & STATE_CROUCHED)
+			if (LE_IsCrouched(le))
 				at[2] += EYE_HT_CROUCH; /** @todo */
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */

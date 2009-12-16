@@ -404,7 +404,7 @@ static void MN_RadarNodeGetActorColor (const le_t *le, vec4_t color)
 		color[3] = 0.3;
 
 	/* use different colors for different teams */
-	if (le->team == TEAM_CIVILIAN) {
+	if (LE_IsCivilian(le)) {
 		color[0] = 1;
 	} else if (le->team != cls.team) {
 		color[1] = 0;

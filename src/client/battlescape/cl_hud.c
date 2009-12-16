@@ -962,7 +962,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 		weaponl = NULL;
 
 	/* Crouch/stand button. */
-	if (le->state & STATE_CROUCHED) {
+	if (LE_IsCrouched(le)) {
 		weaponButtonState[BT_STAND] = BT_STATE_DISABLE;
 		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));

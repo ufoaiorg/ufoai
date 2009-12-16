@@ -137,7 +137,7 @@ const char *CL_GetSkillString (const int skill)
 int CL_MoveMode (const le_t *le, int length)
 {
 	assert(le);
-	if (le->state & STATE_CROUCHED) {
+	if (LE_IsCrouched(le)) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
 			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
 				return WALKTYPE_AUTOSTAND_BEING_USED;
@@ -1012,7 +1012,7 @@ void CL_ConditionalMoveCalcActor (le_t *le)
 {
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
-		const byte crouchingState = (le->state & STATE_CROUCHED) ? 1 : 0;
+		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength(le);
 	}
@@ -1050,7 +1050,7 @@ int CL_CheckAction (const le_t *le)
  */
 static byte CL_MoveLength (const le_t *le, pos3_t to)
 {
-	const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 	const byte length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
 	return length;
 }
@@ -1089,7 +1089,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	if (!length || length >= 0x3F)
 		return qfalse;
 
-	crouchingState = selActor->state & STATE_CROUCHED ? 1 : 0;
+	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 
 	Grid_PosToVec(clMap, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
@@ -1099,7 +1099,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
 		if (++counter > 100) {
-			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], selActor->state & STATE_CROUCHED ? 1 : 0);
+			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], LE_IsCrouched(selActor) ? 1 : 0);
 			Com_Printf("Last pos: (%i, %i, %i, %i).\n", pos[0], pos[1], pos[2], crouchingState);
 			Grid_DumpDVTable(selActor->pathMap);
 			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
@@ -1131,11 +1131,12 @@ static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
 {
 	byte length;
 	int dv;
-	byte crouchingState = le && (le->state & STATE_CROUCHED) ? 1 : 0;
+	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
 	const int tus = CL_UsableTUs(le);
 	/* vec3_t vec; */
 
 	length = CL_MoveLength(le, to);
+	/** @todo fix magic number */
 	if (!length || length >= 0x3F)
 		return;
 
@@ -1979,12 +1980,12 @@ static float CL_TargetingToHit (pos3_t toPos)
 	else
 		pseudosin = distance / disty;
 	width = 2 * PLAYER_WIDTH * pseudosin;
-	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT);
+	height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
 
 	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
 			selFD->weaponSkill ? selChr->score.skills[selFD->weaponSkill] : 0);
 
-	crouch = ((selActor->state & STATE_CROUCHED) && selFD->crouch) ? selFD->crouch : 1;
+	crouch = (LE_IsCrouched(selActor) && selFD->crouch) ? selFD->crouch : 1;
 
 	commonfactor = crouch * torad * distance * GET_INJURY_MULT(selChr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
 	stdevupdown = (selFD->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
@@ -2131,7 +2132,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT);
-	if (tr.le && (tr.le->team == cls.team || tr.le->team == TEAM_CIVILIAN) && (tr.le->state & STATE_CROUCHED))
+	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
 		VectorCopy(start, temp);
@@ -2517,7 +2518,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	const byte crouchingState = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
+	const byte crouchingState = selActor && LE_IsCrouched(selActor) ? 1 : 0;
 	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 	const int TUhave = CL_UsableTUs(selActor);
 
@@ -2650,9 +2651,7 @@ void CL_DumpMoveMark_f (void)
 	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
-	const byte crouchingState = selActor
-		? (selActor->state & STATE_CROUCHED ? 1 : 0)
-		: 0;
+	const byte crouchingState = selActor ? (LE_IsCrouched(selActor) ? 1 : 0) : 0;
 	const int temp = developer->integer;
 
 	if (!selActor)
@@ -2681,7 +2680,7 @@ void CL_DumpTUs_f (void)
 	if (!selActor)
 		return;
 
-	crouchingState = selActor->state & STATE_CROUCHED ? 1 : 0;
+	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 	VectorCopy(selActor->pos, pos);
 
 	Com_Printf("TUs around (%i, %i, %i)\n", pos[0], pos[1], pos[2]);

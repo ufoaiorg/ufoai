@@ -398,7 +398,7 @@ void LET_StartIdle (le_t * le)
 	if (le->type != ET_ACTORHIDDEN) {
 		if (LE_IsDead(le))
 			R_AnimChange(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
-		else if (le->state & STATE_PANIC)
+		else if (LE_IsPaniced(le))
 			R_AnimChange(&le->as, le->model1, "panic0");
 		else
 			R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
@@ -544,7 +544,7 @@ static void LE_DoPathMove (le_t *le)
 	/* next part */
 	const byte fulldv = le->path[le->pathPos];
 	const byte dir = getDVdir(fulldv);
-	const byte crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 	/* newCrouchingState needs to be set to the current crouching state
 	 * and is possibly updated by PosAddDV. */
 	byte newCrouchingState = crouchingState;

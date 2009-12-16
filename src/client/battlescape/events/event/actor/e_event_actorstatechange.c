@@ -50,8 +50,8 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	}
 
 	/* If standing up or crouching down remove the reserved-state for crouching. */
-	if (((state & STATE_CROUCHED) && !(le->state & STATE_CROUCHED)) ||
-		 (!(state & STATE_CROUCHED) && (le->state & STATE_CROUCHED))) {
+	if (((state & STATE_CROUCHED) && !LE_IsCrouched(le)) ||
+		 (!(state & STATE_CROUCHED) && LE_IsCrouched(le))) {
 		if (CL_UsableTUs(le) < TU_CROUCH && CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
 			/* We have not enough non-reserved TUs,
 			 * but some reserved for crouching/standing up.

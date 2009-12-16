@@ -284,7 +284,7 @@ static void SCR_DrawCursor (void)
 			le_t *le = selActor;
 			if (le) {
 				/* Display 'crouch' icon if actor is crouched. */
-				if (le->state & STATE_CROUCHED) {
+				if (LE_IsCrouched(le)) {
 					image = R_FindImage("pics/cursors/ducked", it_pic);
 					if (image)
 						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);

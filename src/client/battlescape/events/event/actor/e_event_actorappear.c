@@ -52,14 +52,14 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
 
 	/* start is the watchers origin */
 	VectorCopy(watcher->origin, eyes);
-	if (watcher->state & STATE_CROUCHED)
+	if (LE_IsCrouched(watcher))
 		eyes[2] += EYE_HT_CROUCH;
 	else
 		eyes[2] += EYE_HT_STAND;
 
 	ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin, NULL);
 
-	if (target->team == TEAM_CIVILIAN)
+	if (LE_IsCivilian(target))
 		VectorSet(ptl->color, 0.2, 0.2, 1);
 }
 
