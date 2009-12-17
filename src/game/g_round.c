@@ -213,12 +213,14 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* start ai - there is only one player for ai teams, and the last pointer must only
 	 * be updated for ai players */
 	p = G_GetPlayerForTeam(level.activeTeam);
+	if (p == NULL)
+		gi.error("Could not find player for team %i", level.activeTeam);
 	p->pers.last = NULL;
 
 	/* finish off events */
 	gi.EndEvents();
-
-	/* reset ready flag (even ai players) */
+	
+	/* reset ready flag for every player on the current team (even ai players) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
 			p->roundDone = qfalse;
