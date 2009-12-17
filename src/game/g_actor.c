@@ -316,7 +316,7 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 			G_WriteItem(item, to, tx, ty);
 		}
 	} else {
-		G_EventInventoryAdd(floor, G_TeamToPM(ent->team), 1);
+		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
 		assert(item.t);
 		G_WriteItem(item, to, tx, ty);
 	}
