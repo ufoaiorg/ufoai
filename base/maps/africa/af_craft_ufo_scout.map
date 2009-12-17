@@ -352,7 +352,7 @@
 // entity 8
 {
 "classname" "info_alien_start"
-"origin" "432 48 28"
+"origin" "400 112 28"
 }
 // entity 9
 {
