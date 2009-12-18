@@ -136,7 +136,7 @@ void INV_ItemDescription (const objDef_t *od)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if ((od->weapon && (od->reload || od->thrown)) || INV_IsAmmo(od)) {
+		} else if ((od->weapon && (od->numAmmos || od->numFiredefs)) || INV_IsAmmo(od)) {
 			const objDef_t *odAmmo;
 			int weaponIndex;
 
