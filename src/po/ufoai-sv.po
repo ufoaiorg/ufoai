@@ -841,7 +841,8 @@ msgstr "mejl_från_fn"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -914,7 +915,8 @@ msgstr "mejl_prolog"
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -990,7 +992,8 @@ msgstr "mejl_produktion_klar"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1085,7 +1088,8 @@ msgstr "mejl_ny_radarkontakt"
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1115,7 +1119,8 @@ msgstr "mejl_utomjordisk_aktivitet_rapporterad"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2006,7 +2011,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -5482,8 +5488,7 @@ msgstr ""
 "\n"
 "Det är fullständigt klart att soldater i krig lever under en väldig stress. För att bibehålla moralen så behöver de en plats att trappa ner och umgås i en rangfri miljö. Vi har försökt att förse denna sort av vila och rekreation i form av en samlingssal.\n"
 "\n"
-"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n"
-"\n"
+"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n\n"
 "\n"
 "All vår utrustning kräver underhåll, och jag skulle kunna hävda att våra soldater behöver mest underhåll. Samlingsalen är det bästa för att hålla dom mentalt hälsosamma och i stridbart skick.\n"
 "\n"
@@ -6070,7 +6075,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6838,7 +6844,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -7709,15 +7716,13 @@ msgstr ""
 "\n"
 "Den enklaste förklaringen är detta: Det är två typer av DNA i våra blodprover. Det främmande DNA: ts förekommst är total; denna sekvens kan hittas i alla medlemmar av Tamanrasen, och en närmare studie har bekräftat att en liknande sekvens finns i blodet på andra raser vi hittat. Källan verkar vara en sorts encellig organism som finns i stor mängd i det utomjordiska blodomloppet. Det finns flera olika versioner av den, en för varje utomjordisk ras, och alla delar otroliga DNA likheter. Intressant nog så även om alla dessa organismer har lika många kromosomer, så kan ingen av dom överleva i en kropp som inte är medlem av den ursprungliga rasen. Underligt nog så är det helt klart att det är absolut ingen som helst variation på DNA: t mellan organismer från samma version. Detta leder till att vi tror att olika versioner kan ha tillverkats -- helt eller delvis -- för att passa den individuella rasen.\n"
 "\n"
-"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n"
-"\n"
+"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n\n"
 "\n"
 "Vi har namngett denna organism XVI (EXtraterrestrial Virus Infektion). Detta kan vara en felbeteckning i microbiologiska termer; XVI är långt mer komplicerad än något virus på jorden, men den beter och kopierar sig precis som ett vanligt virus. Därför känner vi att termen är försvarbar. När varje utomjordisk ras bär en unik sträng av infektionen, så har vi gett dem ett alfabetiskt designering efter den ursprungliga ras som strängen hittas i. Tamanerna har XVI-T, Shevaar har XVI-S, osv.\n"
 "\n"
 "Infektionens syfte kvarstår suddig just nu, men det är det enda vi har hittat än så länge som binder ihop dessa olika raser fysiskt. Vi kan bara gissa att olika strängar av infektionen skapades för att passa varje ras.\n"
 "\n"
-"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n"
-"\n"
+"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n\n"
 "\n"
 "Vi tror för närvarande inta att XVI organismen utgör något hot för våra soldater på slagfältet. Men vi kommer forsätta att forska och hålla dig underrättad om något utvecklas. En grundlig blodtestning utförs nu på all vår personal, som en säkerhetsåtgärd, och vanliga karantän procedurer kommer upprätthållas alltigenom laboratoriumet.\n"
 "\n"
@@ -8156,35 +8161,43 @@ msgstr "För många människor på jorden verkar det äntligen som allt är bra.
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
+msgstr ""
+"Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
+msgstr ""
+"Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "För många människor på jorden verkar det äntligen som allt är bra."
+msgstr ""
+"För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
+msgstr ""
+"Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
+msgstr ""
+"Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
+msgstr ""
+"87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
+msgstr ""
+"När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
+msgstr ""
+"Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

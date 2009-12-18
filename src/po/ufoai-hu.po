@@ -704,7 +704,8 @@ msgstr "Wichita"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Mahouf Serra főtitk., Egyesült Nemzetek, New York"
+msgstr ""
+"Mahouf Serra főtitk., Egyesült Nemzetek, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -790,7 +791,8 @@ msgstr "Mahouf Serra főtitk., Egyesült Nemzetek, New York"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "PHALANX Bázisparancsnok, PHALANX Atlanti Műveleti Parancsnokság"
+msgstr ""
+"PHALANX Bázisparancsnok, PHALANX Atlanti Műveleti Parancsnokság"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -863,7 +865,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre alezr., PHALANX Atlanti Műveleti Parancsnokság, K&F mérnöki részleg"
+msgstr ""
+"Paul Navarre alezr., PHALANX Atlanti Műveleti Parancsnokság, K&F mérnöki részleg"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -915,7 +918,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Abel S. Howard par. hely., PHALANX, Atlanti Műveleti Parancsnokság, Parancsnokság"
+msgstr ""
+"Abel S. Howard par. hely., PHALANX, Atlanti Műveleti Parancsnokság, Parancsnokság"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1010,7 +1014,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Ingrid Falkland ezr., PHALANX Atlanti Műveleti Parancsnokság, Felderítési részleg"
+msgstr ""
+"Ingrid Falkland ezr., PHALANX Atlanti Műveleti Parancsnokság, Felderítési részleg"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1040,7 +1045,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Subakh al-Kuhar rep. ezr., PHALANX Atlanti Műveleti Parancsnokság, Légierő"
+msgstr ""
+"Subakh al-Kuhar rep. ezr., PHALANX Atlanti Műveleti Parancsnokság, Légierő"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1720,36 +1726,36 @@ msgstr "Folytonos Hullámlézer"
 #: ../base/ufos/research.ufo:128
 msgid "laser_txt"
 msgstr ""
-"Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+"Parancsnok úr, rendkívül elégedetten jelentem, hogy a projekt sikeresen végződött. A levélhez képeket mellékeltem a lézerfegyver prototípusunkról, amellyel elérhető a folytonos hullámkibocsátás egy ember által hordozható méretben.\n"
 "\n"
-"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+"Nem az eddigi hiábavaló próbálkozásokat kellett folytatni egy nagyobb akkumulátor létrehozására, hanem radikális miniatűrizálási technológiákat kellett alkalmazni, hogy lecsökkentsük mind súlyban és méretben a már létező kémiailag előállított lézerkomponenseket. Már nagyon rég óta használnak kémiai lézereket, és már a 20. század vége óta szerepelnek kísérleti fegyverprogramokban, de mindig is számos problémától szenvedtek. Az egyetlen fajta kémiai lézerek, amelyek valódi katonai lehetőségeket rejtettek magukban, túl nagyok és túl nehezek voltak egy lövésznek a harctéren való használathoz. Mindeddig a harci alkalmazásuk le volt korlátozva a tankra szerelt lézerágyukra és az anyahajó-alapú anti-rakéta védelmekre.\n"
 "\n"
-"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+"Most, azonban, itt a PHALANX-nál sikerült megépítenünk egy hagyományos lézerágyút miniatűr méretezésben. Kicsiny mérete ellenére teljes mértékben képes kezelni a deutérium-fluorid reakciót és magában eltárolni a mérgező melléktermékeket a környezet beszennyezésének veszélye nélkül. Engedje meg hogy röviden ismertessem mi történik a szerkezet belsejében.\n"
 "\n"
-"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+"Az égéstérben nitrogén-trifluoriddal égetünk el etilént. Ez a reakció gerjesztett szabad fluorin-gyököket eredményez, amelyek hélium és deutériumgáz keverékével kerülnek kapcsolatba. A deutérium a fluorinnal lép reakcióba, így gerjesztett állapotú deutérium-fluorid keletkezik. Ezek stimuláltan kibocsátódnak a fegyver optikai rezonátorában, létrehozva a sugarat. Egy sor intelligens lencse a lövész célzási irányába fókuszálja és irányítja a sugarat, és még a lövész apróbb bemozdulásait is képes korrigálni. A melléktermékként hátramaradt deutériumgáz az egyedileg készített nagynyomású szűrőrendszerünkbe kerül, amely minden mérgező vagy radioaktív molekulát felfog mielőtt a maradék veszélytelen gőzt visszaengedi a légkörbe.\n"
 "\n"
-"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+"A szűrőt minden küldetés után le kell cserélni, de kidolgoztunk egy rendszert ennek a folyamatnak a gyorssá és kényelmessé tételére. Ha a szűrőrendszer bevetés közben valahogy meghibásodna, a fegyver egyből leáll a beszennyezés elkerülése végett.\n"
 "\n"
-"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
+"Az infravörös lézer középes hullámhosszon működik, tehát csak azok számára látható a sugárnyaláb, akik infravörös szemüveget hordanak.\n"
 "\n"
-"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
+"Az általunk megépített prototípus még nem áll készen a nagyszabású gyártásra mint lőfegyver, mivel még finomításra és kiegyensúlyozásra van szükség az ember általi használhatóság érdekében, azonban az általunk elért újításokat járműveken is van módunk alkalmazni - talán még légijárművek ágyúihoz is. Számos új javaslatot küldtem az Ön gépére az alapvető ötleteinkről.\n"
 "\n"
-"Let me know when you want us to start working on them, Commander.\n"
+"Parancsnok úr, kérem, tudassa velem, hogy mikor óhajtja hogy hozzákezdjünk a munkához.\n"
 "\n"
-"--Cdr. Navarre"
+"--Navarre alezr."
 
 #: ../base/ufos/research.ufo:131
 msgid "laser_pre_txt"
 msgstr ""
-"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
+"Az összegyűjtött ENSZ kutatási iratokban rengeteg értékes információt találtunk a század kezdete óta folyó földi fegyverfejlesztésről. Az egyik legérdekesebb téma az IEF-ek gyártása (Irányított Energia-Fegyverek); fegyverek, melyek nem lövedék segítségével adnak át energiát a célpontnak. Leginkább a Folytonos Hullámlézerekről szóló fájlok érdekelnek bennünket.\n"
 "\n"
-"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
+"Sok ország és cég kísérelte meg a lézerfegyverek készítését, de senkinek sem sikerült egy olyan lézert létrehoznia, amely ember által hordozható és elég energiát adjon le hogy a közönséges lőfegyverekkel is versenybe szálljon. Most, azonban hozzáférést kaptunk az összes effajta kutatási adathoz, és egyúttal egész könyvtárakhoz is, amelyek a legmagasabb szintű földi technológiával vannak feltöltve. Úgy hiszem, hogy nem csak hogy egy hatékony emberre szabott lézerfegyver létrehozására vagyunk képesek, hanem hogy olyan méretekben valósítjuk ezt meg, amely mindezidáig hallatlan volt egy IEF esetén.\n"
 "\n"
-"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
+"Parancsnok úr, javaslom hogy mihamarabb vágjunk bele ebbe a kutatásba. Az arzenálunk variálása megnehezíti az ellene való védekezést, és a tapasztalataink egy használható repülőgéplézer kifejlesztéséhez is elvezethetnek minket, amelyek hatékonyabban mérik be a nagy-sebességű UFO-kat mint a hagyományos lőfegyverek.\n"
 "\n"
-"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
+"Ha engem kérdez, mi itt a PHALANX-nál a lehetetlent fogjuk véghezvinni, és hozzá is látunk amint megkapjuk az engedélyét.\n"
 "\n"
-"--Cdr. Navarre"
+"--Navarre alezr."
 
 #: ../base/ufos/research.ufo:156
 #, fuzzy
@@ -1905,7 +1911,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, PHALANX Atlanti Műveleti Parancsnokság, K&F: Bio&Karantén részleg"
+msgstr ""
+"Dr. Connor, PHALANX Atlanti Műveleti Parancsnokság, K&F: Bio&Karantén részleg"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -2523,7 +2530,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:818
 msgid "machinegun_mag_txt"
 msgstr ""
-"Technical Specifications: Assault Rifle Magazine\n"
+"Technical Specifications: Machine Gun Drum\n"
 "\n"
 "CLASSIFIED LEVEL YELLOW\n"
 "\n"
@@ -5410,7 +5417,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6012,7 +6020,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -7235,35 +7244,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "2084. A Földre, amely sosem volt egy nyugodt hely, a viszonylagos béke ideje köszöntött. A 21. század véres kezdete messze volt már; távoli, bár még élő emlék volt a Föld népének nagy része számára. A Második Hidegháború is csak egy sötét árnyék volt a múltból, mint a késő huszadik század gyermekei szemében a két világháború."
+msgstr ""
+"2084. A Földre, amely sosem volt egy nyugodt hely, a viszonylagos béke ideje köszöntött. A 21. század véres kezdete messze volt már; távoli, bár még élő emlék volt a Föld népének nagy része számára. A Második Hidegháború is csak egy sötét árnyék volt a múltból, mint a késő huszadik század gyermekei szemében a két világháború."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "A konfliktusok egyre ritkábbak lettek, ahogy az új technológia és az egészségügy modern megoldásai a harmadik világban is elérhetőkké váltak. A terrorizmus lángjai is ellobbantak a Második Hidegháború tüzében. A hidegháború borzalma és embertelensége még friss volt az emberek emlékezetében, a régi Egyesült Államoktól a tönkretett Indiáig. Az osztályharcok a politikai küzdőtérre szorultak vissza, ahogy minden ország képviselethez jutott az ENSZ-ben, és a globális életszínvonal lassan növekedett a Föld legelmaradottabb részein is. A világ országai stabilizálódtak az újjászervezett ENSZ segítségével, amely sikeresen tartotta fenn a rendet a világban. Kisebb nemzetek szétszóródott csoportjai, megriadva a Kína és az Európai Unió körül megszilárduló hatalmi tömböktől, erős politikai szövetségekbe szerveződtek - és olyan szomszédok között találták magukat, amelyek egyikével szemben sem kockáztathattak meg egy kétes kimenetelű háborút. Az emberiség történelmében először béke és rend uralta a Föld több mint háromnegyedét."
+msgstr ""
+"A konfliktusok egyre ritkábbak lettek, ahogy az új technológia és az egészségügy modern megoldásai a harmadik világban is elérhetőkké váltak. A terrorizmus lángjai is ellobbantak a Második Hidegháború tüzében. A hidegháború borzalma és embertelensége még friss volt az emberek emlékezetében, a régi Egyesült Államoktól a tönkretett Indiáig. Az osztályharcok a politikai küzdőtérre szorultak vissza, ahogy minden ország képviselethez jutott az ENSZ-ben, és a globális életszínvonal lassan növekedett a Föld legelmaradottabb részein is. A világ országai stabilizálódtak az újjászervezett ENSZ segítségével, amely sikeresen tartotta fenn a rendet a világban. Kisebb nemzetek szétszóródott csoportjai, megriadva a Kína és az Európai Unió körül megszilárduló hatalmi tömböktől, erős politikai szövetségekbe szerveződtek - és olyan szomszédok között találták magukat, amelyek egyikével szemben sem kockáztathattak meg egy kétes kimenetelű háborút. Az emberiség történelmében először béke és rend uralta a Föld több mint háromnegyedét."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "A legtöbb ember számára úgy tűnt, a dolgok a lehető legnagyobb rendben mennek."
+msgstr ""
+"A legtöbb ember számára úgy tűnt, a dolgok a lehető legnagyobb rendben mennek."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Az első támadás Bombayt érte, 2084. március 3-án. Hat kis UFO tűnt fel az égen a semmiből, a Bombayt védelmező radarrendszerek számára észrevétlenül, és leszálltak a Föld legnépesebb városában. Az idegenek nem figyelmeztettek, nem magyarázkodtak. Húszezer ártatlan civilt és három elit zászlóaljat mészároltak le húsz rettenetes óra alatt, mielőtt a Nemzetközösség katonáinak sikerült megállítaniuk az előrenyomulást; aztán amilyen hirtelen érkeztek, eltűntek a hajóikban és távoztak, csak Bombay porig rombolt utcáit hagyva maguk után bizonyítékul."
+msgstr ""
+"Az első támadás Bombayt érte, 2084. március 3-án. Hat kis UFO tűnt fel az égen a semmiből, a Bombayt védelmező radarrendszerek számára észrevétlenül, és leszálltak a Föld legnépesebb városában. Az idegenek nem figyelmeztettek, nem magyarázkodtak. Húszezer ártatlan civilt és három elit zászlóaljat mészároltak le húsz rettenetes óra alatt, mielőtt a Nemzetközösség katonáinak sikerült megállítaniuk az előrenyomulást; aztán amilyen hirtelen érkeztek, eltűntek a hajóikban és távoztak, csak Bombay porig rombolt utcáit hagyva maguk után bizonyítékul."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Az ENSZ vésztanácsa képtelen volt megoldást találni a helyzetre. A következő betörés Bonnt, Johannesburgot és Bangkokot érte, még gyorsabban, még pusztítóbban, még kegyetlenebbül. Néhány állam megpróbálkozott a diplomáciával, ezer különböző nyelven küldve üzenetet a földet dúló idegeneknek. Válasz nem érkezett. Órákon belül mindhárom városból eltűnt az emberi élet. A támadásnak már vége volt, mire a hadseregek megkapták az engedélyt a visszavágásra. Az idegenek semmit sem hagytak maguk után, csak betont és vért. Az UFO-k nyom nélkül eltűntek - és senkiben sem maradt kétség afelől, hogy vissza fognak-e térni."
+msgstr ""
+"Az ENSZ vésztanácsa képtelen volt megoldást találni a helyzetre. A következő betörés Bonnt, Johannesburgot és Bangkokot érte, még gyorsabban, még pusztítóbban, még kegyetlenebbül. Néhány állam megpróbálkozott a diplomáciával, ezer különböző nyelven küldve üzenetet a földet dúló idegeneknek. Válasz nem érkezett. Órákon belül mindhárom városból eltűnt az emberi élet. A támadásnak már vége volt, mire a hadseregek megkapták az engedélyt a visszavágásra. Az idegenek semmit sem hagytak maguk után, csak betont és vért. Az UFO-k nyom nélkül eltűntek - és senkiben sem maradt kétség afelől, hogy vissza fognak-e térni."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Nyolcvanhét órával a Bombayt érő támadás után a Föld deklarálta a háborút. A földi országok haderői két hétig minden erejüket latba vetve próbálták megállítani az idegen támadókat, viszonylag kevés - ám annál értékesebb - sikerrel."
+msgstr ""
+"Nyolcvanhét órával a Bombayt érő támadás után a Föld deklarálta a háborút. A földi országok haderői két hétig minden erejüket latba vetve próbálták megállítani az idegen támadókat, viszonylag kevés - ám annál értékesebb - sikerrel."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Az ENSZ számára egyetlen lehetőség maradt hátra. A régi - több mint százéves - felszerelést leporolva újjászervezték az USA régen megszüntetett földönkívüli-ellenes ügynökségét, a PHALANX-ot, ezúttal ENSZ-zászló alatt. Feladatául az idegen fenyegetés elhárítását, az emberi faj túlélésének bármi áron való biztosítását tűzték ki."
+msgstr ""
+"Az ENSZ számára egyetlen lehetőség maradt hátra. A régi - több mint százéves - felszerelést leporolva újjászervezték az USA régen megszüntetett földönkívüli-ellenes ügynökségét, a PHALANX-ot, ezúttal ENSZ-zászló alatt. Feladatául az idegen fenyegetés elhárítását, az emberi faj túlélésének bármi áron való biztosítását tűzték ki."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "A PHALANX-ot a Föld nyolc politikai ereje támogatja, katonáikat azok elitcsapataiból válogatják. A legjobbak legjobbjait. A PHALANX a bolygó első és egyetlen védvonala - nem veszíthet, mert az emberiségnek nincsen több esélye."
+msgstr ""
+"A PHALANX-ot a Föld nyolc politikai ereje támogatja, katonáikat azok elitcsapataiból válogatják. A legjobbak legjobbjait. A PHALANX a bolygó első és egyetlen védvonala - nem veszíthet, mert az emberiségnek nincsen több esélye."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

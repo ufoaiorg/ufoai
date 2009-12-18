@@ -5798,7 +5798,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"

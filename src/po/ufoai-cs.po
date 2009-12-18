@@ -734,7 +734,8 @@ msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
+msgstr ""
+"Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -820,7 +821,8 @@ msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Velitel základny, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -904,8 +906,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací"
-
+msgstr ""
+"Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací"
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -969,7 +971,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Náčelník štábu Abel S. Howard, příkazy a řízení, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Náčelník štábu Abel S. Howard, příkazy a řízení, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1086,7 +1089,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořských operací"
+msgstr ""
+"plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1122,7 +1126,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Velitel letectva Subakh al-Kuhar, letecká peruť, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Velitel letectva Subakh al-Kuhar, letecká peruť, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2004,7 +2009,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -2169,7 +2175,6 @@ msgstr ""
 "Upřímně zdraví,\n"
 "\n"
 "Dr. Connor"
-
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
 #: ../base/ufos/research.ufo:517 client/campaign/cp_alienbase.c:169
 #: client/campaign/cp_missions.c:439
@@ -5656,7 +5661,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6241,7 +6247,6 @@ msgstr ""
 "S pozdravem,\n"
 "\n"
 "Dr. Connor"
-
 # Bezpilotní Pozemní Vozidlo
 #: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
@@ -6256,7 +6261,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:4294
 msgid "ugv_phoenix_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
-
 # Bezpilotní Pozemní Vozidlo
 #: ../base/ufos/research.ufo:4309 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
@@ -6300,8 +6304,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 # EPO=Elektronické ProtiOpatření
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -6669,7 +6673,6 @@ msgstr ""
 "Dodatky\n"
 "\n"
 "Žádné"
-
 # VV = Vzduch-Vzduch
 #: ../base/ufos/research.ufo:4709
 msgid "'Sparrowhawk' AA Missile Rack"
@@ -7576,35 +7579,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá období relativního míru. Násilnické začátky 21. století jsou již historií. Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně jako byly Světové války pro děti konce století dvacátého."
+msgstr ""
+"Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá období relativního míru. Násilnické začátky 21. století jsou již historií. Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně jako byly Světové války pro děti konce století dvacátého."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Ke konci století se spory stávaly méně častými, ruku v ruce s tím, jak se do zemí třetího světa dostávaly nové technologie a všeobecná zdravotní péče. Dokonce i ohně terorismu pohasly při nástupu Druhé studené války, jejíž hrůzy a nelidskost jsou stále pevně vryty do myslí všech, od původních Spojených států až po zpustošený indický kontinent. Nyní má každý stát zaručeno rovnocenné zastoupení ve Spojených Národech a třídní boje se přesunuly na politická bojiště. Celosvětová životní úroveň se tak pomalu dostává i do nejchudších koutů planety. Státy se semkly kolem přeorganizovaných Spojených Národů, které úspěšně dozírají na světové vlády. Roztříštěné skupinky malých států, které byly nejprve vystrašeny ohromnou silou v rukou Číny a Evropské unie, se spojily a vytvořily společně vlastní vlivný politický svaz -- poté zjistili, že jsou bez sousedů se kterými by mohly bezpečně bojovat. Poprvé v celé historii lidstva je právo a řád ve více než třech čtvrtinách světa."
+msgstr ""
+"Ke konci století se spory stávaly méně častými, ruku v ruce s tím, jak se do zemí třetího světa dostávaly nové technologie a všeobecná zdravotní péče. Dokonce i ohně terorismu pohasly při nástupu Druhé studené války, jejíž hrůzy a nelidskost jsou stále pevně vryty do myslí všech, od původních Spojených států až po zpustošený indický kontinent. Nyní má každý stát zaručeno rovnocenné zastoupení ve Spojených Národech a třídní boje se přesunuly na politická bojiště. Celosvětová životní úroveň se tak pomalu dostává i do nejchudších koutů planety. Státy se semkly kolem přeorganizovaných Spojených Národů, které úspěšně dozírají na světové vlády. Roztříštěné skupinky malých států, které byly nejprve vystrašeny ohromnou silou v rukou Číny a Evropské unie, se spojily a vytvořily společně vlastní vlivný politický svaz -- poté zjistili, že jsou bez sousedů se kterými by mohly bezpečně bojovat. Poprvé v celé historii lidstva je právo a řád ve více než třech čtvrtinách světa."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Mnoha lidem na Zemi se zdá, že všechno jde naprosto skvěle."
+msgstr ""
+"Mnoha lidem na Zemi se zdá, že všechno jde naprosto skvěle."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjevilo šest malých cizáckých plavidel. S jekotem se přiřítila z oběžné dráhy nezjištěna rozsáhlým radarovým systémem, který pokrývá vzdušný prostor nad Bombají, a napadla nejlidnatější město na Zemi. Bez varování, bez vysvětlení. Dvacet tisíc nevinných civilistů a tři prapory elitních vojsk byly zmasakrovány v průběhu dvanácti strašlivých hodin, než se vojákům Společenství podařilo cizácký postup zastavit. Poté cizáci ustoupili do svých plavidel a stejně nečekaně jako se objevili zmizeli zpět na oběžnou dráhu, nechávajíc za sebou pouze zpustošené ulice Bombaje jako důkaz."
+msgstr ""
+"První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjevilo šest malých cizáckých plavidel. S jekotem se přiřítila z oběžné dráhy nezjištěna rozsáhlým radarovým systémem, který pokrývá vzdušný prostor nad Bombají, a napadla nejlidnatější město na Zemi. Bez varování, bez vysvětlení. Dvacet tisíc nevinných civilistů a tři prapory elitních vojsk byly zmasakrovány v průběhu dvanácti strašlivých hodin, než se vojákům Společenství podařilo cizácký postup zastavit. Poté cizáci ustoupili do svých plavidel a stejně nečekaně jako se objevili zmizeli zpět na oběžnou dráhu, nechávajíc za sebou pouze zpustošené ulice Bombaje jako důkaz."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se vrátí."
+msgstr ""
+"Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se vrátí."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Země vyhlásila válku osmdesát sedm hodin po prvotním útoku v Bombaji. Dva týdny každá z armád lidstva zkoušela zastavit nevyzpytatelné cizácké útočníky všemi svými dostupnými prostředky. Zaznamenaly žalostně málo úspěchů."
+msgstr ""
+"Země vyhlásila válku osmdesát sedm hodin po prvotním útoku v Bombaji. Dva týdny každá z armád lidstva zkoušela zastavit nevyzpytatelné cizácké útočníky všemi svými dostupnými prostředky. Zaznamenaly žalostně málo úspěchů."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Spojené Národy se uchýlily k poslední možnosti která jim zbývala. Bylo oprášeno letité vybavení, některé přes století staré, a dávno zrušená anti-mimozemská agentura dřívějších Spojených Států -- PHALANX -- byla vzkříšena nově pod vlajkou SN. Její místopřísežnou povinností je boj proti cizácké hrozbě a musí za každou cenu zaručit přežití lidské rasy."
+msgstr ""
+"Spojené Národy se uchýlily k poslední možnosti která jim zbývala. Bylo oprášeno letité vybavení, některé přes století staré, a dávno zrušená anti-mimozemská agentura dřívějších Spojených Států -- PHALANX -- byla vzkříšena nově pod vlajkou SN. Její místopřísežnou povinností je boj proti cizácké hrozbě a musí za každou cenu zaručit přežití lidské rasy."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Financována všemi osmi vládními silami a získávající elitní vojáky jejich armád je PHALANX tím nejlepším z nejlepších. Je to první a jediná pozemská obranná linie. Nemůže si dovolit selhat. Pokud by se tak stalo, lidstvo by ztratilo jakoukoliv naději."
+msgstr ""
+"Financována všemi osmi vládními silami a získávající elitní vojáky jejich armád je PHALANX tím nejlepším z nejlepších. Je to první a jediná pozemská obranná linie. Nemůže si dovolit selhat. Pokud by se tak stalo, lidstvo by ztratilo jakoukoliv naději."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

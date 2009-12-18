@@ -854,7 +854,8 @@ msgstr "Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro 
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -928,7 +929,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Cmte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -1008,7 +1010,8 @@ msgstr "Construcción finalizada"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1146,7 +1149,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Cor. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cor. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1178,7 +1182,8 @@ msgstr "Informe de actividad alienígena: '%s'"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cmte. (Aire) Subakh al-Kuhar, Fuerza Aérea, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmte. (Aire) Subakh al-Kuhar, Fuerza Aérea, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2102,7 +2107,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -2761,7 +2767,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:818
 msgid "machinegun_mag_txt"
 msgstr ""
-"Technical Specifications: Assault Rifle Magazine\n"
+"Technical Specifications: Machine Gun Drum\n"
 "\n"
 "CLASSIFIED LEVEL YELLOW\n"
 "\n"
@@ -6132,7 +6138,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6930,7 +6937,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 #, fuzzy
@@ -8303,35 +8311,43 @@ msgstr "Para gran parte de los habitantes de la Tierra las cosas simplemente van
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Es el año 2084. La Tierra, conocida por su inestabilidad política, disfruta de unos momentos de relativa paz. Los violentos inicios del siglo XXI son ahora recuerdos lejanos, aunque no tan lejanos como para haber sido olvidados. Para la mayor parte de la población de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, tal y como lo fueron las guerras mundiales para los nacidos a finales del siglo XX."
+msgstr ""
+"Es el año 2084. La Tierra, conocida por su inestabilidad política, disfruta de unos momentos de relativa paz. Los violentos inicios del siglo XXI son ahora recuerdos lejanos, aunque no tan lejanos como para haber sido olvidados. Para la mayor parte de la población de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, tal y como lo fueron las guerras mundiales para los nacidos a finales del siglo XX."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Los conflictos armados se han hecho cada vez más raros gracias a las nuevas tecnologías y a que el sistema de salud pública universal por fin ha llegado al tercer mundo. Incluso los fuegos del terrorismo se apagaron en el comienzo de la Segunda Guerra Fría, con sus horrores todavía frescos en la memoria de la gente, desde los antiguos Estados Unidos hasta el lejano subcontinente Indio. Las luchas de clases están girando al campo de batalla político ahora que cada nación tiene garantizada una representación similar en la ONU, y el nivel de riqueza estandar ha alcanzado hasta los lugares más pobres del planeta. Los países se han establecido alrededor de una nueva y reestructurada Organización de las Naciones Unidas, que vigila eficazmente a todos los gobiernos del mundo. Grupos fragmentados de pequeñas naciones, asustados en principio por el poder de bloques políticos como China y la Unión Europea, se han unido en ligas comunes -- descubriendo por fín que ya no se puede combatir de manera segura contra ningún otro vecino. Por primera vez en la historia de la humanidad la ley y el orden recorren más de las tres cuartas partes del mundo."
+msgstr ""
+"Los conflictos armados se han hecho cada vez más raros gracias a las nuevas tecnologías y a que el sistema de salud pública universal por fin ha llegado al tercer mundo. Incluso los fuegos del terrorismo se apagaron en el comienzo de la Segunda Guerra Fría, con sus horrores todavía frescos en la memoria de la gente, desde los antiguos Estados Unidos hasta el lejano subcontinente Indio. Las luchas de clases están girando al campo de batalla político ahora que cada nación tiene garantizada una representación similar en la ONU, y el nivel de riqueza estandar ha alcanzado hasta los lugares más pobres del planeta. Los países se han establecido alrededor de una nueva y reestructurada Organización de las Naciones Unidas, que vigila eficazmente a todos los gobiernos del mundo. Grupos fragmentados de pequeñas naciones, asustados en principio por el poder de bloques políticos como China y la Unión Europea, se han unido en ligas comunes -- descubriendo por fín que ya no se puede combatir de manera segura contra ningún otro vecino. Por primera vez en la historia de la humanidad la ley y el orden recorren más de las tres cuartas partes del mundo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Para gran parte de los habitantes de la Tierra las cosas simplemente van bien."
+msgstr ""
+"Para gran parte de los habitantes de la Tierra las cosas simplemente van bien."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "El primer ataque tuvo como objetivo la ciudad de Mumbai el 3 de marzo de 2084. Seis pequeños OVNIs aparecieron de la nada y descendieron ruidosamente de sus orbitas, sin ser detectados por las inmensas instalaciones de radar que vigilaban el cielo de Mumbai, y aterrizaron en la ciudad más densamente poblada de la Tierra. No dieron ninguna advertencia, ninguna explicacion. Veinte mil civiles inocentes y tres batallones de élite fueron masacrados en el transcurso de doce horas brutales combates, antes de que el grueso de los soldados de la Commonwealth pudiera llevar el avance de los alienígenas a un punto muerto. Entonces, tan súbitamente como habían aparecido, los alienígenas se retiraron a sus naves y se desvanecieron otra vez en orbita, dejando sólo las destrozadas calles de Mumbai como prueba de su estancia."
+msgstr ""
+"El primer ataque tuvo como objetivo la ciudad de Mumbai el 3 de marzo de 2084. Seis pequeños OVNIs aparecieron de la nada y descendieron ruidosamente de sus orbitas, sin ser detectados por las inmensas instalaciones de radar que vigilaban el cielo de Mumbai, y aterrizaron en la ciudad más densamente poblada de la Tierra. No dieron ninguna advertencia, ninguna explicacion. Veinte mil civiles inocentes y tres batallones de élite fueron masacrados en el transcurso de doce horas brutales combates, antes de que el grueso de los soldados de la Commonwealth pudiera llevar el avance de los alienígenas a un punto muerto. Entonces, tan súbitamente como habían aparecido, los alienígenas se retiraron a sus naves y se desvanecieron otra vez en orbita, dejando sólo las destrozadas calles de Mumbai como prueba de su estancia."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "La reunion de emergencia de la ONU no llevó a ninguna conclusión. Las incursiones continuaron, mas rápidas, más grandes y más salvajes, esta vez en Bonn, Johanesburgo y Bangkok. Algunas naciones intentaron usar la diplomacia mandando mensajes en miles de idiomas diferentes a los alienígenas que destruían sus paises. Fueron ignorados. En cuestión de horas, las tres ciudades fueron desprovistas de vida humana. El ataque había terminado para el momento en el que a los militares se les dio permiso de contraatacar. Los alienígenas sólo dejaron atrás escombros y sangre. Todos los OVNIs desaparecieron, pero nadie duda de que volverán."
+msgstr ""
+"La reunion de emergencia de la ONU no llevó a ninguna conclusión. Las incursiones continuaron, mas rápidas, más grandes y más salvajes, esta vez en Bonn, Johanesburgo y Bangkok. Algunas naciones intentaron usar la diplomacia mandando mensajes en miles de idiomas diferentes a los alienígenas que destruían sus paises. Fueron ignorados. En cuestión de horas, las tres ciudades fueron desprovistas de vida humana. El ataque había terminado para el momento en el que a los militares se les dio permiso de contraatacar. Los alienígenas sólo dejaron atrás escombros y sangre. Todos los OVNIs desaparecieron, pero nadie duda de que volverán."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Ochenta y siete horas despues el primer ataque a Mumbai, la tierra declaró la guerra. Durante dos semanas los ejercitos de la Tierra intentaron repeler los misteriosos ataques con lo mejor de su artilleria, pero consiguieron sólo unas pocas victorias."
+msgstr ""
+"Ochenta y siete horas despues el primer ataque a Mumbai, la tierra declaró la guerra. Durante dos semanas los ejercitos de la Tierra intentaron repeler los misteriosos ataques con lo mejor de su artilleria, pero consiguieron sólo unas pocas victorias."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Con sólo una alternativa, la ONU entró en acción. Se desempolvó el antiguo equipamiento, alguno con más de un siglo de existencia, y la casi olvidada agencia anti-extraterrestre de los antiguos Estados Unidos -- PHALANX -- fue resucitada bajo bandera de la ONU."
+msgstr ""
+"Con sólo una alternativa, la ONU entró en acción. Se desempolvó el antiguo equipamiento, alguno con más de un siglo de existencia, y la casi olvidada agencia anti-extraterrestre de los antiguos Estados Unidos -- PHALANX -- fue resucitada bajo bandera de la ONU."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fundada por la unanimidad de los ocho bloques políticos más importantes, y eligiendo a sus soldados de entre la élite de sus tropas, PHALANX es lo mejor de lo mejor. La primera y única linea de defensa de la Tierra. No puede permitirse fallar; porque si lo hace la humanidad no tendrá ninguna oportunidad."
+msgstr ""
+"Fundada por la unanimidad de los ocho bloques políticos más importantes, y eligiendo a sus soldados de entre la élite de sus tropas, PHALANX es lo mejor de lo mejor. La primera y única linea de defensa de la Tierra. No puede permitirse fallar; porque si lo hace la humanidad no tendrá ninguna oportunidad."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

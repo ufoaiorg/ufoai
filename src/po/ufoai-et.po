@@ -2640,7 +2640,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:818
 msgid "machinegun_mag_txt"
 msgstr ""
-"Technical Specifications: Assault Rifle Magazine\n"
+"Technical Specifications: Machine Gun Drum\n"
 "\n"
 "CLASSIFIED LEVEL YELLOW\n"
 "\n"

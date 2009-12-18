@@ -735,7 +735,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "秘书长塞纳，联合国，纽约"
+msgstr ""
+"秘书长塞纳，联合国，纽约"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -821,7 +822,8 @@ msgstr "秘书长塞纳，联合国，纽约"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "基地指挥官，PHALANX，大西洋作战司令部"
+msgstr ""
+"基地指挥官，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -905,7 +907,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
+msgstr ""
+"司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -989,7 +992,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "霍华德阿贝尔，司令部，PHALANX，大西洋作战司令部"
+msgstr ""
+"霍华德阿贝尔，司令部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1176,7 +1180,8 @@ msgstr "发现外星人基地 -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
+msgstr ""
+"先生，我们的特工在%s发现有个巨大的外星人基地。这个在地球上的基地对PHALANX对人类都是个巨大的威胁，我们必须马上行动。"
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -1199,7 +1204,8 @@ msgstr "<TODO: mail_new_radar_contact>"
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
+msgstr ""
+"英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1234,7 +1240,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "空军司令官萨巴阿库汗，空军部队，PHALANX，大西洋作战司令部"
+msgstr ""
+"空军司令官萨巴阿库汗，空军部队，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2114,7 +2121,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "康纳博士，生物工程部，PHALANX，大西洋作战司令部"
+msgstr ""
+"康纳博士，生物工程部，PHALANX，大西洋作战司令部"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -6016,7 +6024,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -7989,35 +7998,43 @@ msgstr "<TODO: seq_alienbase_sentence3>"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "公元2084年。我们所认识的地球在长久以来，虽然不是一个非常和平的地方，但也享受了一段相当长的和平。21世纪初期所爆发的战争，虽然已经过了许久，但仍然记忆犹新。对于大多数人来说，第二次的冷战，只是过去的阴影。战争的记忆就像20世纪末出生的人一样，模糊的记得有过第一次世界大战。"
+msgstr ""
+"公元2084年。我们所认识的地球在长久以来，虽然不是一个非常和平的地方，但也享受了一段相当长的和平。21世纪初期所爆发的战争，虽然已经过了许久，但仍然记忆犹新。对于大多数人来说，第二次的冷战，只是过去的阴影。战争的记忆就像20世纪末出生的人一样，模糊的记得有过第一次世界大战。"
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "新科技和医疗知识以及技术，终于普及到了贫困国家，令这世纪末的战争和暴力冲突变得很罕见。旧美国以及印度群国所恐惧的恐怖活动，在第二次《冷战》平静过后也渐渐减少了。每一个国家在联合国里，都被保证拥有着公平的代表权，促使国以国之间的战场转移到政治平台，全球的生活水准已经在逐渐上升，连最贫困角落的人，对生活也有显著的改善。在改组后的联合国的监督下，世界各国，都成功的迈向繁荣和稳定。中国和欧盟的强大和权威，让一些零星小国深感危惧，而纷纷的团结起来，组织自己的政治立场，－－最终发觉他们已经没有可以轻易侵略的邻国。这使得在人类的历史上，首次拥有了超过四分之三的国家，都尊奉法律和秩序。"
+msgstr ""
+"新科技和医疗知识以及技术，终于普及到了贫困国家，令这世纪末的战争和暴力冲突变得很罕见。旧美国以及印度群国所恐惧的恐怖活动，在第二次《冷战》平静过后也渐渐减少了。每一个国家在联合国里，都被保证拥有着公平的代表权，促使国以国之间的战场转移到政治平台，全球的生活水准已经在逐渐上升，连最贫困角落的人，对生活也有显著的改善。在改组后的联合国的监督下，世界各国，都成功的迈向繁荣和稳定。中国和欧盟的强大和权威，让一些零星小国深感危惧，而纷纷的团结起来，组织自己的政治立场，－－最终发觉他们已经没有可以轻易侵略的邻国。这使得在人类的历史上，首次拥有了超过四分之三的国家，都尊奉法律和秩序。"
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "人权也得到了广泛的普及。"
+msgstr ""
+"人权也得到了广泛的普及。"
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "第一次袭击发生在2084年3月3号，孟买这个人口最多的城市。 6个小UFO出现了，呼啸着从孟买天空划过，雷达设施都未能及时预警。没有任何预兆，突如其来，12小时内两万名无辜平民和三个营的精锐部队被屠杀。直到大部分英联邦士兵集结过来以后，异形才停止了屠杀。然后，他们突然消失的无影无踪，只留下被蹂躏后的孟买街道。"
+msgstr ""
+"第一次袭击发生在2084年3月3号，孟买这个人口最多的城市。 6个小UFO出现了，呼啸着从孟买天空划过，雷达设施都未能及时预警。没有任何预兆，突如其来，12小时内两万名无辜平民和三个营的精锐部队被屠杀。直到大部分英联邦士兵集结过来以后，异形才停止了屠杀。然后，他们突然消失的无影无踪，只留下被蹂躏后的孟买街道。"
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "联合国的紧急会议根本没有任何有效的措施。入侵仍在继续，比以前更残酷，这一次是在波恩、约翰内斯堡和曼谷。一些国家试图展开外交活动，用一千种不同的语言向肆虐整个地区的异形发送信息。但完全没有效果。在几个小时内，这三个城市变成了空城。当时的军队也毫无作用。所有的UFO又消失无踪了--但没有人会怀疑他们不会再次回来。"
+msgstr ""
+"联合国的紧急会议根本没有任何有效的措施。入侵仍在继续，比以前更残酷，这一次是在波恩、约翰内斯堡和曼谷。一些国家试图展开外交活动，用一千种不同的语言向肆虐整个地区的异形发送信息。但完全没有效果。在几个小时内，这三个城市变成了空城。当时的军队也毫无作用。所有的UFO又消失无踪了--但没有人会怀疑他们不会再次回来。"
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "在最初的孟买袭击过去87个小时后，地球正式宣战。两个星期以来，军队用他们最好的武器来尝试抵御每一次到来的外星神秘来客。他们只获得了屈指可数的成功经验。"
+msgstr ""
+"在最初的孟买袭击过去87个小时后，地球正式宣战。两个星期以来，军队用他们最好的武器来尝试抵御每一次到来的外星神秘来客。他们只获得了屈指可数的成功经验。"
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "只剩下一个选择，联合国采取了行动。被尘封一个多世纪的古老档案被打开了，美国长期暂停的外星快速反应机构－PHALANX－复活了。根据新的宣誓，该机构由联合国掌管，他的责任就是打击外星威胁，不惜一切代价确保人类的生存。"
+msgstr ""
+"只剩下一个选择，联合国采取了行动。被尘封一个多世纪的古老档案被打开了，美国长期暂停的外星快速反应机构－PHALANX－复活了。根据新的宣誓，该机构由联合国掌管，他的责任就是打击外星威胁，不惜一切代价确保人类的生存。"
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "所有八个政治联盟都出资参与这个项目，并提供最精锐的士兵。PHALANX是集结了最优秀的力量。它是地球上第一个也是唯一的一道防线。它只能成功，不能失败，人类没有其他选择。"
+msgstr ""
+"所有八个政治联盟都出资参与这个项目，并提供最精锐的士兵。PHALANX是集结了最优秀的力量。它是地球上第一个也是唯一的一道防线。它只能成功，不能失败，人类没有其他选择。"
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

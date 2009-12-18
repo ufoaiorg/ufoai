@@ -724,7 +724,8 @@ msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
+msgstr ""
+"Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -810,7 +811,8 @@ msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 #: ../base/ufos/research.ufo:5066 ../base/ufos/research.ufo:5098
 #: ../base/ufos/research.ufo:5105
 msgid "mail_to_base_commander"
-msgstr "Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -883,7 +885,8 @@ msgstr "mail_prolog"
 #: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4891
 #: ../base/ufos/research.ufo:4899
 msgid "mail_from_paul_navarre"
-msgstr "Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -956,7 +959,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Ufficiale Esecutivo Abel S. Howard, Comando e Controllo, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Ufficiale Esecutivo Abel S. Howard, Comando e Controllo, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1089,7 +1093,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:5056
 #: ../base/ufos/research.ufo:5065
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1119,7 +1124,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Com. (Aria) Subakh al-Kuhar, Aviazione, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Com. (Aria) Subakh al-Kuhar, Aviazione, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1999,7 +2005,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5097
 #: ../base/ufos/research.ufo:5104
 msgid "mail_from_dr_connor"
-msgstr "Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:385
 msgid "alien_breathing_txt"
@@ -2651,7 +2658,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:818
 msgid "machinegun_mag_txt"
 msgstr ""
-"Technical Specifications: Assault Rifle Magazine\n"
+"Technical Specifications: Machine Gun Drum\n"
 "\n"
 "CLASSIFIED LEVEL YELLOW\n"
 "\n"
@@ -3036,9 +3043,49 @@ msgstr ""
 #: ../base/ufos/research.ufo:1154
 msgid "flamer_txt"
 msgstr ""
-"Collegamenti\n"
+"Specifiche Tecniche: Lanciafiamme\n"
 "\n"
-"Serbatoio C90"
+"CLASSIFICAZIONE LIVELLO: GIALLO\n"
+"\n"
+"Unità di Risposta Extraterrestre PHALANX\n"
+"\n"
+"Documento tecnico, codice di accesso alla sicurezza Delta\n"
+"\n"
+"Data di registrazione: 20 Marzo 2084\n"
+"\n"
+"Operatore: C.te Paul Navarre, R&S: Divisione Genio, PHALANX, Comando Operazioni Atlantiche\n"
+"\n"
+"\n"
+"\n"
+"Quadro Generale\n"
+"\n"
+"L'attacco alieno a Mumbai ha reso la nostra situazione dolorosamente chiara: la loro tecnologia è molto più avanzata della nostra. La completa incapacità delle truppe del Commonwealth di intaccare l'offensiva a Mumbai ha rivelato debolezze critiche nell'addestramento e equipaggiamento corrente; Le nostre truppe hanno perso 3 battaglioni solamente per portare gli alieni a un punto fermo, senza riuscire tra l'altro a infliggere perdite significative. PHALANX deve superare questa disparità, e per fare ciò abbiamo bisogno del meglio che la tecnologia umana ha da offrire.\n"
+"\n"
+"Il programma Excalibur è stato creato per trovare le armi più efficaci sulla terra controllando le loro norme di produzione, le testimonianze degli operativi, e le loro prestazioni quando impiegate contro gli alieni.\n"
+"\n"
+"Dalla nostra esperienza in Mumbai e altre città colpite, abbiamo concluso che gli alieni sembrano concentrare i loro sforzi sui centri popolati, soprattutto aree densamente urbanizzate. La maggior parte degli scontri avvengono a corto raggio. Per gli scopi del programma Excalibur, abbiamo scelto alcune armi ad alta efficacia per il nostro equipaggiamento da Combattimento Ravvicinato.\n"
+"\n"
+"Il lanciafiamme Iraniano ADA 22 (chiamato \"La fiamma di Dio\" dai soldati dell'Alleanza) è una meraviglia dell'ingegneria moderna. Diversamente dai lanciafiamme del 20esimo secolo, non richiede serbatoi ad alta pressione per essere trasportato da un soldato -- l' ADA è una singola unità trasportata a mano, senza alcun tubo o ingombrante zainetto. Semplicemente racchiude il relativamente piccolo serbatoio di gas da 200mm nell'imboccatura, spara la sua spruzzata letale, e poi espelle il serbatoio vuoto per far spazio alla ricarica. Il sistema è ingegnoso e soprendetemente affidabile.\n"
+"\n"
+"L'imboccatura dell'arma è una potentissima pompa che vaporizza il gas nell'aria, quindi incendia la miscela di gas e aria grazie a quattro inniettori elettrici, uno principale e tre di riserva. Ognuno di questi inniettori emette circa una decina di scintille al secondo al fine di incendiare il combustibile prima che si disperda. Gli inniettori di riserva sono particolarmente importanti per prevenire esplosioni dato lo speciale combustibile che l'ADA usa, una sostanza chiamata Composto 90 (C90).\n"
+"\n"
+"Il Composto 90 è un nuovo carburante per lanciafiamme che, quando esposto all'aria, crea una reazione termobarica -- la combustione del composto aria-carburante, invece che l'esplosione -- che può carbonizzare i tessuti viventi in pochi secondi. Il C90 infligge danni enormi a bersagli organici; il calore che genera supera i 1700 gradi Celsius, abbastanza per fondere il titanio. Comunque, grazie alla sua natura gassosa, non lascia residui ardenti sul bersaglio (come il Napalm) o sull'area circostante, inoltre disperde il proprio calore in fretta. Questo rende il C90 significativamente più sicuro per l'utilizzo in aree urbane, rispetto ai derivati del Napalm.\n"
+"\n"
+"I principali difetti dell'ADA 22 sono il suo corto raggio e la meccanica complessa, che è difficile da riparare. Comunque i nostri esperti tecnici non dovrebbero avere problemi nella sua manutenzione.\n"
+"\n"
+"Per l'impiego in PHALANX, questo lanciafiamme è stato classificato come CRC-FL (Close-Range Combat Flamethrower).\n"
+"\n"
+"\n"
+"Utilizzo raccomandato\n"
+"\n"
+"Il CRC-FL è un'arma a corto raggio; l'operatore deve essere veloce nel portare l'arma a portata e rilasciare quante più fiamme possibili. Inoltre è un'arma abbasstanza pesante, nonostante il suo relativamente slanciato design. La forza come la velocità sono essenziali per impiegarlo efficacemente.\n"
+"\n"
+"I lanciafiamme inoltre sono ottime armi da imboscata -- basta assicurarsi che nessuno dei propri soldati sia nella linea di fuoco.\n"
+"\n"
+"\n"
+"Appendice\n"
+"\n"
+"Quest'arma non dovrebbe essere utilizzata se ci sono civili a contatto, o nelle vicinanze, del bersaglio."
 
 #: ../base/ufos/research.ufo:1173
 msgid "flamer_mag_txt"
@@ -5996,7 +6043,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -6683,7 +6731,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4418
 msgid "'Raven' ECM Unit"
@@ -7711,7 +7760,7 @@ msgstr ""
 "\n"
 "Any area where XVI seems to be gaining ground should be posted with additional air patrols, and we should be on the lookout for any attempts by the aliens to solidify their hold on the ground. Alien activity reports in this area should be investigated and responded to with extreme prejudice.\n"
 "\n"
-"With kind regards,\n"
+"Distinti saluti,\n"
 "\n"
 "Col. Falkland"
 
@@ -7722,13 +7771,15 @@ msgstr ""
 "\n"
 "Dopo i nuovi sviluppi dell'infezione aliena sulla popolazione civile terrestre, dobbiamo trovare un metodo per determinare, nelle varie zone della terra, quante persone sono state contaggiate e il tasso di infezione. Il più è fatto, lo so, ma può essere importante trovare una cura. Non possiamo aiutare nessuno se non sappiamo quali persone sono infette.\n"
 "\n"
-"Quello che propongo è realizzare un cesimento planetrarioWhat I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
+"Quello che propongo è realizzare un cesimento planetrario, eseguito con un piccolo test del sangue, che registri tutti gli individui infetti da XVI. Tutti dovranno sottoporsi al test una volta alla settimana per essere sicuri che siano sani -- il test sarà eseguito in modo più frequente se vi saranno i presupposti per un'eventuale infezione. Una goccia di sangue verrà usata come campione, verrà presa casualmente da una vena per evitare manomissioni. Fortunatamente l'organismo XVI è grosso e occupa la maggior parte del campione di sangue così da rendere i risultati molto vicini al 100%\n"
+"\n"
+"Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
 "\n"
 "This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
 "\n"
-"All we need is your signature on the dotted line, Sir.\n"
+"Abbiamo solo bisogno di una sua firma sulla linea tratteggiata, Signore.\n"
 "\n"
-"With kind regards,\n"
+"Distinti saluti,\n"
 "\n"
 "Col. Falkland"
 
@@ -7981,35 +8032,43 @@ msgstr "A molta gente sulla Terra, sembrava che le cose stessero andando molto b
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
+msgstr ""
+"È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Gruppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storia del genere umano, c'è legge e ordine in più di tre quarti del mondo."
+msgstr ""
+"I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Gruppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storia del genere umano, c'è legge e ordine in più di tre quarti del mondo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
+msgstr ""
+"A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'élite vengono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
+msgstr ""
+"Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'élite vengono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna decisione conclusiva. Le incursioni continuano più veloci, grandi e selvagge di prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
+msgstr ""
+"Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna decisione conclusiva. Le incursioni continuano più veloci, grandi e selvagge di prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
+msgstr ""
+"Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-extraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
+msgstr ""
+"Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-extraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perché se fallisce, l'umanità non ha speranze."
+msgstr ""
+"Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perché se fallisce, l'umanità non ha speranze."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

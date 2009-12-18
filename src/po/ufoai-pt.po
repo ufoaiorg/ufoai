@@ -6307,7 +6307,6 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4200
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
-
 # como traduzir isso?
 #: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
