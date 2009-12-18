@@ -415,13 +415,6 @@ void GAME_CP_InitStartup (void)
 	Cvar_ForceSet("sv_maxclients", "1");
 	Cvar_ForceSet("sv_ai", "1");
 
-	/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
-	/** @todo do we have to set sv_maxsoldiersperteam for campaign mode? */
-	if (Cvar_GetInteger("sv_maxsoldiersperteam") != MAX_ACTIVETEAM / 2)
-		Cvar_SetValue("sv_maxsoldiersperteam", MAX_ACTIVETEAM / 2);
-	if (Cvar_GetInteger("sv_maxsoldiersperplayer") != MAX_ACTIVETEAM)
-		Cvar_SetValue("sv_maxsoldiersperplayer", MAX_ACTIVETEAM);
-
 	/* reset campaign data */
 	CL_ResetSinglePlayerData();
 	CL_ReadSinglePlayerData();
