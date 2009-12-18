@@ -68,8 +68,10 @@ po-sync:
 	  ./update_po_from_wiki.sh $$po; \
 	done
 
+# call this after po-sync and log file checks
 po-move:
-	for i in `ls updated_*.po`; do \
-		mv $$i `echo $$i | sed 's/^updated_\(.*\)\.po$/ufoai-\1\.po/'`; \
+	cd src/po; \
+	for po in `ls updated_*.po`; do \
+	  new=`echo $$po | cut -b 9-`; \
+	  mv $$po ufoai-$$new; \
 	done
-
