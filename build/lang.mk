@@ -67,3 +67,9 @@ po-sync:
 	  echo $$po; \
 	  ./update_po_from_wiki.sh $$po; \
 	done
+
+po-move:
+	for i in `ls updated_*.po`; do \
+		mv $$i `echo $$i | sed 's/^updated_\(.*\)\.po$/ufoai-\1\.po/'`; \
+	done
+
