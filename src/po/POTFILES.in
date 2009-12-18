@@ -64,12 +64,14 @@
 ./client/menu/m_tooltip.c
 ./client/menu/node/m_node_base.c
 ./client/menu/node/m_node_container.c
+./client/menu/node/m_node_keybinding.c
 ./client/menu/node/m_node_window.c
 ./client/multiplayer/mp_callbacks.c
 ./client/multiplayer/mp_serverlist.c
 ./client/multiplayer/mp_team.c
 ./game/g_actor.c
 ./game/g_client.c
+./game/g_cmds.c
 ./game/g_combat.c
 ./game/g_mission.c
 ./game/g_morale.c
