@@ -48,7 +48,7 @@ static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 	if (r_nocull->integer)
 		return qfalse;
 
-	for (i = lengthof(r_locals.frustum); i > 0; i--)
+	for (i = lengthof(r_locals.frustum) - 1; i >= 0; i--)
 		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
 			return qtrue;
 	return qfalse;
