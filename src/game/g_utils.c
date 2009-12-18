@@ -70,7 +70,7 @@ edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
  * @param[in] ent The edict to call the use function for
  * @sa G_ClientUseEdict
  */
-qboolean G_UseEdict (edict_t *ent)
+qboolean G_UseEdict (edict_t *ent, edict_t* activator)
 {
 	if (!ent)
 		return qfalse;
@@ -79,14 +79,14 @@ qboolean G_UseEdict (edict_t *ent)
 	if (!ent->use)
 		return qfalse;
 
-	if (!ent->use(ent))
+	if (!ent->use(ent, activator))
 		return qfalse;
 
 	/* only the master edict is calling the opening for the other group parts */
 	if (!(ent->flags & FL_GROUPSLAVE)) {
 		edict_t* chain = ent->groupChain;
 		while (chain) {
-			G_UseEdict(chain);
+			G_UseEdict(chain, activator);
 			chain = chain->groupChain;
 		}
 	}

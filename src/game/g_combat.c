@@ -385,7 +385,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				/** @todo there should be a possible protection, too */
 				target->TU = 0; /* flashbangs kill TUs */
 				target->state |= STATE_DAZED; /* entity is dazed */
-				G_PlayerPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
+				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
 				return;
 			}
 		} else {
@@ -622,7 +622,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
 	if (!dt) {
 		if (!mock)
-			G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - impossible throw!\n"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - impossible throw!\n"));
 		return;
 	}
 
@@ -1078,7 +1078,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 	container = 0;
 	if (!G_GetShotFromType(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
-			G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - object not activateable!\n"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activateable!\n"));
 		return qfalse;
 	}
 
@@ -1096,14 +1096,14 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 	/* check that we're not firing a twohanded weapon with one hand! */
 	if (weapon->t->fireTwoHanded &&	LEFT(ent)) {
 		if (!quiet)
-			G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!\n"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!\n"));
 		return qfalse;
 	}
 
 	/* check we're not out of ammo */
 	if (!ammo && fd->ammo && !weapon->t->thrown) {
 		if (!quiet)
-			G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - no ammo!\n"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no ammo!\n"));
 		return qfalse;
 	}
 
@@ -1111,7 +1111,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, target);
 	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
-			G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - target out of range!\n"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - target out of range!\n"));
 		return qfalse;
 	}
 
@@ -1157,7 +1157,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 		}
 		if (shots < 1) {
 			if (!quiet)
-				G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - not enough ammo!\n"));
+				G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough ammo!\n"));
 			return qfalse;
 		}
 	}

@@ -288,7 +288,7 @@ void G_PhysicsStep(edict_t *ent);
 
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
-qboolean G_MissionUse(edict_t *self);
+qboolean G_MissionUse(edict_t *self, edict_t *activator);
 qboolean G_MissionDestroy(edict_t *self);
 void G_MissionThink(edict_t *self);
 
@@ -308,7 +308,7 @@ void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
 edict_t *G_ParticleSpawn(vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
-qboolean G_UseEdict(edict_t *ent);
+qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const int type);
 void G_TakeDamage(edict_t *ent, int damage);
 
@@ -377,7 +377,7 @@ void G_ClientTeamInfo(player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
 qboolean G_ClientIsReady(const player_t * player);
-void G_PlayerPrintf(const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+void G_ClientPrintf(const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 void G_ResetClientData(void);
 
 void G_ClientCommand(player_t * player);
@@ -637,6 +637,7 @@ struct edict_s {
 	const char *targetname;	/**< name pointed to by target */
 	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
+	const char *message; /**< misc_message */
 	const char *noise;	/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
@@ -653,8 +654,9 @@ struct edict_s {
 	float nextthink;
 	void (*think)(edict_t *self);
 	/** general use function that is called when the triggered client action is executed
-	 * or when the server has to 'use' the entity */
-	qboolean (*use)(edict_t *self);
+	 * or when the server has to 'use' the entity
+	 * @param activator Might be @c NULL if there is no activator */
+	qboolean (*use)(edict_t *self, edict_t *activator);
 	qboolean (*destroy)(edict_t *self);
 
 	int doorState;	/**< open or closed */

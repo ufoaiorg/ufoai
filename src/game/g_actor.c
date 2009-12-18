@@ -231,10 +231,10 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 		/* No action possible - abort */
 		return;
 	case IA_NOTIME:
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		G_PlayerPrintf(player, msglevel,
+		G_ClientPrintf(player, msglevel,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:

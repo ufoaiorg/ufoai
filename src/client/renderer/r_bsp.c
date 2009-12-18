@@ -48,9 +48,32 @@ static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 	if (r_nocull->integer)
 		return qfalse;
 
-	for (i = 0; i < 4; i++)
+	for (i = lengthof(r_locals.frustum); i > 0; i--)
 		if (TR_BoxOnPlaneSide(mins, maxs, &r_locals.frustum[i]) == PSIDE_BACK)
 			return qtrue;
+	return qfalse;
+}
+
+
+/**
+ * @return @c true if the sphere is completely outside the frustum, @c false otherwise
+ */
+qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned int clipflags)
+{
+	unsigned int i;
+	unsigned int bit;
+	const cBspPlane_t *p;
+
+	if (r_nocull->integer)
+		return qfalse;
+
+	for (i = lengthof(r_locals.frustum), bit = 1, p = r_locals.frustum; i > 0; i--, bit <<= 1, p++) {
+		if (!(clipflags & bit))
+			continue;
+		if (DotProduct(centre, p->normal) - p->dist <= -radius)
+			return qtrue;
+	}
+
 	return qfalse;
 }
 

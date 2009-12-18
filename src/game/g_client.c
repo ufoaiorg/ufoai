@@ -75,7 +75,7 @@ unsigned int G_VisToPM (unsigned int vis_mask)
  * Send messages to human players
  * @param player A player (AI players are ignored here)
  */
-void G_PlayerPrintf (const player_t *player, int printLevel, const char *fmt, ...)
+void G_ClientPrintf (const player_t *player, int printLevel, const char *fmt, ...)
 {
 	va_list ap;
 
@@ -300,39 +300,39 @@ qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
 		return qfalse;
 	}
 
 	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	if (!ent || !ent->inuse) {
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - object not present!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - object not present!\n"));
 		return qfalse;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - not an actor!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
 
 	if (G_IsStunned(ent)) {
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
 		return qfalse;
 	}
 
 	if (G_IsDead(ent)) {
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
 		return qfalse;
 	}
 
 	if (ent->team != player->pers.team) {
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - not on same team!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - not on same team!\n"));
 		return qfalse;
 	}
 
 	if (ent->pnum != player->num) {
-		G_PlayerPrintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
+		G_ClientPrintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
 		return qfalse;
 	}
 
@@ -413,7 +413,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
 			if (G_IsShaken(ent)) {
-				G_PlayerPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
+				G_ClientPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
@@ -569,7 +569,7 @@ qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict)
 	if (!G_ActionCheck(player, actor, edict->TU, qfalse))
 		return qfalse;
 
-	if (!G_UseEdict(edict))
+	if (!G_UseEdict(edict, actor))
 		return qfalse;
 
 	/* using a group of edicts only costs TUs once (for the master) */

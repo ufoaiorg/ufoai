@@ -101,7 +101,7 @@ qboolean G_MissionDestroy (edict_t *self)
 /**
  * @brief Mission trigger use function
  */
-qboolean G_MissionUse (edict_t *self)
+qboolean G_MissionUse (edict_t *self, edict_t *activator)
 {
 	edict_t *target = G_FindTargetEntity(self->target);
 	if (!target) {
@@ -118,7 +118,7 @@ qboolean G_MissionUse (edict_t *self)
 		self->target = NULL;
 		self->use = NULL;
 	} else if (target->use)
-		target->use(target);
+		target->use(target, activator);
 
 	return qtrue;
 }
@@ -185,7 +185,7 @@ void G_MissionThink (edict_t *self)
 	}
 
 	if (self->use)
-		self->use(self);
+		self->use(self, NULL);
 
 	team = self->team;
 	chain = self->groupMaster;

@@ -45,6 +45,7 @@ static void SP_misc_model(edict_t *ent);
 static void SP_misc_item(edict_t *ent);
 static void SP_misc_mission(edict_t *ent);
 static void SP_misc_mission_aliens(edict_t *ent);
+static void SP_misc_message(edict_t *ent);
 
 typedef struct {
 	const char *name;
@@ -72,6 +73,7 @@ static const spawn_t spawns[] = {
 	{"func_rotating", SP_func_rotating},
 	{"trigger_hurt", SP_trigger_hurt},
 	{"trigger_touch", SP_trigger_touch},
+	{"misc_message", SP_misc_message},
 
 	{NULL, NULL}
 };
@@ -119,8 +121,8 @@ static const field_t fields[] = {
 	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
 	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
+	{"message", offsetof(edict_t, message), F_LSTRING, 0},
 
-	/* need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
 	{"randomspawn", offsetof(spawn_temp_t, randomSpawn), F_INT, FFL_SPAWNTEMP},
 
@@ -848,6 +850,40 @@ static void SP_misc_item (edict_t *ent)
 
 	/* now we can free the original edict */
 	G_FreeEdict(ent);
+}
+
+static qboolean Message_Use (edict_t *self, edict_t *activator)
+{
+	if (!activator || !G_IsActor(activator)) {
+		return qfalse;
+	} else {
+		player_t *player = G_PLAYER_FROM_ENT(activator);
+		const char *msg = self->message;
+		/* remove gettext marker */
+		if (msg[0] == '_')
+			msg++;
+		G_ClientPrintf(player, PRINT_HUD, "%s", msg);
+
+		if (self->spawnflags & 1)
+			G_FreeEdict(self);
+
+		return qfalse;
+	}
+}
+
+static void SP_misc_message (edict_t *ent)
+{
+	if (!ent->message) {
+		G_FreeEdict(ent);
+		return;
+	}
+
+	if (ent->message[0] != '_')
+		gi.dprintf("No translation marker for misc_message set\n");
+	ent->use = Message_Use;
+	ent->classname = "misc_message";
+	ent->type = ET_MESSAGE;
+	ent->solid = SOLID_NOT;
 }
 
 /**

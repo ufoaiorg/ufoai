@@ -544,6 +544,17 @@ entity trigger_touch {
 	}
 }
 
+entity misc_message {
+	description	"A message that is send to the client when the edict get executed (e.g. by trigger_touch)."
+	color		".3 .3 1"
+	size		"-16 -16 -16 16 16 16"
+	spawnflags	"once"
+
+	mandatory {
+		message	"The message that is send to the client - should contain an underscore as first character to be translatable"
+	}
+}
+
 entity misc_item {
 	description	"-------- MODEL FOR RADIANT ONLY - DO NOT SET THIS AS A KEY --------"
 	color		".3 .3 1"

@@ -130,7 +130,7 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 		return qfalse;
 	}
 
-	self->owner->use(self->owner);
+	self->owner->use(self->owner, activator);
 
 	return qtrue;
 }

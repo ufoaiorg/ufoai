@@ -43,6 +43,7 @@ void Cmd_ForwardToServer(void);
 typedef struct cmd_alias_s {
 	char name[MAX_ALIAS_NAME];
 	char *value;
+	qboolean archive;	/**< store the alias and reload it on the next game start */
 	struct cmd_alias_s *hash_next;
 	struct cmd_alias_s *next;
 } cmd_alias_t;
@@ -401,7 +402,7 @@ static void Cmd_Alias_f (void)
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey(s, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
-		if (!strncmp(s, a->name, MAX_ALIAS_NAME)) {
+		if (!strcmp(s, a->name)) {
 			Mem_Free(a->value);
 			break;
 		}
@@ -425,9 +426,34 @@ static void Cmd_Alias_f (void)
 		if (i != (c - 1))
 			Q_strcat(cmd, " ", sizeof(cmd));
 	}
-	Q_strcat(cmd, "\n", sizeof(cmd));
+
+	if (!strcmp(Cmd_Argv(0), "aliasa"))
+		a->archive = qtrue;
 
 	a->value = Mem_PoolStrDup(cmd, com_aliasSysPool, 0);
+}
+
+/**
+ * @brief Write lines containing "aliasa alias value" for all aliases
+ * with the archive flag set to true
+ * @param f Filehandle to write the aliases to
+ */
+void Cmd_WriteAliases (qFILE *f)
+{
+	cmd_alias_t *a;
+
+	for (a = cmd_alias; a; a = a->next)
+		if (a->archive) {
+			int i;
+			FS_Printf(f, "aliasa %s \"", a->name);
+			for (i = 0; i < strlen(a->value); i++) {
+				if (a->value[i] == '"')
+					FS_Printf(f, "\\\"");
+				else
+					FS_Printf(f, "%c", a->value[i]);
+			}
+			FS_Printf(f, "\"\n");
+		}
 }
 
 /*
@@ -1057,6 +1083,7 @@ void Cmd_Init (void)
 	Cmd_AddParamCompleteFunction("exec", Cmd_CompleteExecCommand);
 	Cmd_AddCommand("echo", Cmd_Echo_f, "Print to game console");
 	Cmd_AddCommand("alias", Cmd_Alias_f, "Creates a new command that executes a command string");
+	Cmd_AddCommand("aliasa", Cmd_Alias_f, "Creates a new, persistent command that executes a command string");
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, "Close the command buffer");
 	Cmd_AddCommand("cmdopen", Cmd_Open_f, "Open the command buffer again");
 #ifdef DEBUG

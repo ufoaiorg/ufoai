@@ -73,7 +73,7 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
-			G_PlayerPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
+			G_ClientPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
 			return qfalse;
 		}
 

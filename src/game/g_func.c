@@ -138,7 +138,7 @@ DOOR FUNCTIONS
  * @todo Check if the door can be opened or closed - there should not be
  * anything in the way (e.g. an actor)
  */
-static qboolean Door_Use (edict_t *door)
+static qboolean Door_Use (edict_t *door, edict_t *activator)
 {
 	if (door->doorState == STATE_CLOSED) {
 		door->doorState = STATE_OPENED;
@@ -252,7 +252,7 @@ void SP_func_door (edict_t *ent)
 
 	/* the door should start opened */
 	if (ent->spawnflags & FL_TRIGGERED)
-		G_UseEdict(ent);
+		G_UseEdict(ent, NULL);
 
 	Com_DPrintf(DEBUG_GAME, "func_door: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
 			ent->model, ent->mapNum, ent->solid,
