@@ -119,9 +119,11 @@ typedef struct mBspSurface_s {
 									 * in ufo2map and removed from the bsp later) */
 } mBspSurface_t;
 
-/* surfaces are assigned to arrays based on their primary rendering type
- * and then sorted by world texnum to reduce binds */
-typedef struct msurfaces_s {
+/**
+ * @brief surfaces are assigned to arrays based on their primary rendering type
+ * and then sorted by world texnum to reduce binds
+ */
+typedef struct mBspSurfaces_s {
 	mBspSurface_t **surfaces;
 	int count;
 } mBspSurfaces_t;

@@ -45,14 +45,6 @@ void R_DrawBlendWarpSurfaces(mBspSurfaces_t *surfs);
 void R_DrawAlphaTestSurfaces(mBspSurfaces_t *surfs);
 void R_DrawMaterialSurfaces(mBspSurfaces_t *surfs);
 
-/* surface lists */
-extern mBspSurfaces_t r_opaque_surfaces;
-extern mBspSurfaces_t r_opaque_warp_surfaces;
-extern mBspSurfaces_t r_blend_surfaces;
-extern mBspSurfaces_t r_blend_warp_surfaces;
-extern mBspSurfaces_t r_alpha_test_surfaces;
-extern mBspSurfaces_t r_material_surfaces;
-
 /*==================================================== */
 
 extern cvar_t *r_brightness;
