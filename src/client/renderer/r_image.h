@@ -53,6 +53,11 @@ typedef enum {
 	it_skin
 } imagetype_t;
 
+typedef enum {
+	if_framebuffer	= 1 << 0,
+	if_depth		= 1 << 1
+} imageflags_t;
+
 typedef struct image_s {
 	char name[MAX_QPATH];				/**< game path, including extension, must be first */
 	imagetype_t type;
@@ -62,6 +67,8 @@ typedef struct image_s {
 	unsigned int texnum;				/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
+	int fbo;							/**< frame buffer object texture is attached to */
+	imageflags_t flags;
 	struct image_s *normalmap;			/**< normalmap texture  */
 	struct image_s *hashNext;			/**< hash map next pointer in case of collision */
 	struct image_s *hashPrev;			/**< hash map prev pointer for easier removing */

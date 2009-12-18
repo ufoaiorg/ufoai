@@ -68,4 +68,23 @@ void (APIENTRY *qglUniform3fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform4fv)(GLint location, int count, GLfloat *f);
 GLint(APIENTRY *qglGetAttribLocation)(GLuint id, const GLchar *name);
 
+/* frame buffer objects (fbo) */
+GLboolean (APIENTRY *qglIsRenderbufferEXT) (GLuint);
+void (APIENTRY *qglBindRenderbufferEXT) (GLenum, GLuint);
+void (APIENTRY *qglDeleteRenderbuffersEXT) (GLsizei, const GLuint *);
+void (APIENTRY *qglGenRenderbuffersEXT) (GLsizei, GLuint *);
+void (APIENTRY *qglRenderbufferStorageEXT) (GLenum, GLenum, GLsizei, GLsizei);
+void (APIENTRY *qglGetRenderbufferParameterivEXT) (GLenum, GLenum, GLint *);
+GLboolean (APIENTRY *qglIsFramebufferEXT) (GLuint);
+void (APIENTRY *qglBindFramebufferEXT) (GLenum, GLuint);
+void (APIENTRY *qglDeleteFramebuffersEXT) (GLsizei, const GLuint *);
+void (APIENTRY *qglGenFramebuffersEXT) (GLsizei, GLuint *);
+GLenum (APIENTRY *qglCheckFramebufferStatusEXT) (GLenum);
+void (APIENTRY *qglFramebufferTexture1DEXT) (GLenum, GLenum, GLenum, GLuint, GLint);
+void (APIENTRY *qglFramebufferTexture2DEXT) (GLenum, GLenum, GLenum, GLuint, GLint);
+void (APIENTRY *qglFramebufferTexture3DEXT) (GLenum, GLenum, GLenum, GLuint, GLint, GLint);
+void (APIENTRY *qglFramebufferRenderbufferEXT) (GLenum, GLenum, GLenum, GLuint);
+void (APIENTRY *qglGetFramebufferAttachmentParameterivEXT) (GLenum, GLenum, GLenum, GLint *);
+void (APIENTRY *qglGenerateMipmapEXT) (GLenum);
+
 #endif

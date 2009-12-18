@@ -640,6 +640,32 @@ static qboolean R_InitExtensions (void)
 		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
 	}
 
+	/* framebuffer objects */
+	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")) {
+		qglIsRenderbufferEXT = SDL_GL_GetProcAddress("glIsRenderbufferEXT");
+		qglBindRenderbufferEXT = SDL_GL_GetProcAddress("glBindRenderbufferEXT");
+		qglDeleteRenderbuffersEXT = SDL_GL_GetProcAddress("glDeleteRenderbuffersEXT");
+		qglGenRenderbuffersEXT = SDL_GL_GetProcAddress("glGenRenderbuffersEXT");
+		qglRenderbufferStorageEXT = SDL_GL_GetProcAddress("glRenderbufferStorageEXT");
+		qglGetRenderbufferParameterivEXT = SDL_GL_GetProcAddress("glGetRenderbufferParameterivEXT");
+		qglIsFramebufferEXT = SDL_GL_GetProcAddress("glIsFramebufferEXT");
+		qglBindFramebufferEXT = SDL_GL_GetProcAddress("glBindFramebufferEXT");
+		qglDeleteFramebuffersEXT = SDL_GL_GetProcAddress("glDeleteFramebuffersEXT");
+		qglGenFramebuffersEXT = SDL_GL_GetProcAddress("glGenFramebuffersEXT");
+		qglCheckFramebufferStatusEXT = SDL_GL_GetProcAddress("glCheckFramebufferStatusEXT");
+		qglFramebufferTexture1DEXT = SDL_GL_GetProcAddress("glFramebufferTexture1DEXT");
+		qglFramebufferTexture2DEXT = SDL_GL_GetProcAddress("glFramebufferTexture2DEXT");
+		qglFramebufferTexture3DEXT = SDL_GL_GetProcAddress("glFramebufferTexture3DEXT");
+		qglFramebufferRenderbufferEXT = SDL_GL_GetProcAddress("glFramebufferRenderbufferEXT");
+		qglGetFramebufferAttachmentParameterivEXT = SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
+		qglGenerateMipmapEXT = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
+
+		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
+		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
+		 && qglCheckFramebufferStatusEXT)
+			r_config.frameBufferObject = qtrue;
+	}
+
 	/* reset gl error state */
 	R_CheckError();
 
@@ -797,6 +823,7 @@ qboolean R_Init (void)
 	R_DrawInitLocal();
 	R_SphereInit();
 	R_FontInit();
+	R_InitFBObjects();
 
 	R_CheckError();
 

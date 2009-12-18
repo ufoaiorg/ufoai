@@ -250,6 +250,7 @@ CLIENT_SRCS = \
 	client/renderer/r_draw.c \
 	client/renderer/r_entity.c \
 	client/renderer/r_font.c \
+	client/renderer/r_framebuffer.c \
 	client/renderer/r_image.c \
 	client/renderer/r_light.c \
 	client/renderer/r_lightmap.c \

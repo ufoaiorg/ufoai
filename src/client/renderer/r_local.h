@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_image.h"
 #include "r_model.h"
 #include "r_thread.h"
+#include "r_framebuffer.h"
 
 void R_DrawBlendSurfaces(const mBspSurfaces_t *list);
 void R_DrawOpaqueSurfaces(const mBspSurfaces_t *surfs);
@@ -159,6 +160,7 @@ typedef struct {
 
 	int32_t maxAnisotropic;
 	qboolean anisotropic;
+	qboolean frameBufferObject;
 
 	int gl_solid_format;
 	int gl_alpha_format;

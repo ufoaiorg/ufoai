@@ -1060,6 +1060,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_font.h" />
+		<Unit filename="../../src/client/renderer/r_framebuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_framebuffer.h" />
 		<Unit filename="../../src/client/renderer/r_gl.h" />
 		<Unit filename="../../src/client/renderer/r_image.c">
 			<Option compilerVar="CC" />
