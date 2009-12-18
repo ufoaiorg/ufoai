@@ -99,6 +99,31 @@ int R_ActiveFBObject (void)
 	return r_bound_framebuffer_object;
 }
 
+
+/**
+ * @return @c false in case of error
+ */
+static qboolean R_CheckFBObjectStatus (void)
+{
+	GLenum status;
+
+	if (!r_frambuffer_objects_initialized)
+		return qfalse;
+
+	status = qglCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	switch (status) {
+	case GL_FRAMEBUFFER_COMPLETE_EXT:
+		return qtrue;
+	case GL_FRAMEBUFFER_UNSUPPORTED_EXT:
+		return qfalse;
+	default:
+		/* programming error; will fail on all hardware */
+		assert(0);
+	}
+
+	return qfalse;
+}
+
 qboolean R_UseFBObject (int object)
 {
 	qboolean status;
@@ -178,30 +203,6 @@ qboolean R_AttachTextureToFBOject (int object, image_t *image)
 		qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
 	return status;
-}
-
-/**
- * @return @c false in case of error
- */
-qboolean R_CheckFBObjectStatus (void)
-{
-	GLenum status;
-
-	if (!r_frambuffer_objects_initialized)
-		return qfalse;
-
-	status = qglCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
-	switch (status) {
-	case GL_FRAMEBUFFER_COMPLETE_EXT:
-		return qtrue;
-	case GL_FRAMEBUFFER_UNSUPPORTED_EXT:
-		return qfalse;
-	default:
-		/* programming error; will fail on all hardware */
-		assert(0);
-	}
-
-	return qfalse;
 }
 
 /**

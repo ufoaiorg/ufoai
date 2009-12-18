@@ -29,7 +29,6 @@ int R_RegisterFBObject(void);
 qboolean R_UseFBObject(int object);
 int R_ActiveFBObject(void);
 qboolean R_AttachTextureToFBOject(int object, image_t *texture);
-qboolean R_CheckFBObjectStatus(void);
 void R_ShutdownFBObjects(void);
 
 #endif
