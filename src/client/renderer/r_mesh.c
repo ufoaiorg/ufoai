@@ -156,7 +156,7 @@ void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *m
  * @brief Animated model render function
  * @see R_DrawAliasStatic
  */
-static inline void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
+static void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
 {
 	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum);
 
@@ -169,7 +169,7 @@ static inline void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasM
  * @brief Static model render function
  * @sa R_DrawAliasFrameLerp
  */
-static inline void R_DrawAliasStatic (const mAliasMesh_t *mesh)
+static void R_DrawAliasStatic (const mAliasMesh_t *mesh)
 {
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
