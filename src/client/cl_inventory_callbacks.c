@@ -141,7 +141,7 @@ void INV_ItemDescription (const objDef_t *od)
 			int weaponIndex;
 
 			if (od->weapon) {
-				Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+				Com_sprintf(itemText, sizeof(itemText), _("%s weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 				if (od->ammo > 0)
 					Q_strcat(itemText, va(_("Max ammo:\t%i\n"), od->ammo), sizeof(itemText));
 				odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od;
@@ -177,7 +177,7 @@ void INV_ItemDescription (const objDef_t *od)
 				Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
 			}
 		} else if (od->weapon) {
-			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
 			/** @todo move this into the campaign mode only code */
 			/* This is a weapon for base, can be displayed in equip menu */
@@ -187,10 +187,12 @@ void INV_ItemDescription (const objDef_t *od)
 			/* This is an item for aircraft or ammos for bases -- do nothing */
 		} else {
 			/* just an item - only primary definition */
-			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, va(_("Action:\t%s\n"), _(od->fd[0][0].name)), sizeof(itemText));
-			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
+			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
+				Q_strcat(itemText, va(_("Action:\t%s\n"), _(od->fd[0][0].name)), sizeof(itemText));
+				Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
+				Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
+			}
 		}
 
 		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
