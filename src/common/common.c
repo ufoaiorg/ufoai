@@ -255,7 +255,9 @@ void Com_Error (int code, const char *fmt, ...)
 		recursive = qfalse;
 		Com_Drop();
 	case ERR_DROP:
-		Com_Printf("********************\nERROR: %s\n********************\n", msg);
+		Com_Printf("********************\n");
+		Com_Printf("ERROR: %s\n", msg);
+		Com_Printf("********************\n");
 		SV_Shutdown("Server crashed.", qfalse);
 		CL_Drop();
 		recursive = qfalse;
@@ -943,7 +945,8 @@ void Qcommon_Init (int argc, const char **argv)
 	/** @todo This line wants to be removed */
 	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL);
 
-	Com_Printf("====== UFO Initialized ======\n\n");
+	Com_Printf("====== UFO Initialized ======\n");
+	Com_Printf("=============================\n");
 }
 
 static void tick_timer (int now, void *data)
