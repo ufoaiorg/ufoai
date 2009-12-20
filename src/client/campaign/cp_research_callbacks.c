@@ -408,7 +408,7 @@ static void RS_ChangeScientist_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_ChangeScientist_f: num %i, diff %i\n", num, (int) diff);
 	if (diff > 0) {
-		RS_AssignScientist(researchList2[num].tech, base);
+		RS_AssignScientist(researchList2[num].tech, base, NULL);
 	} else {
 		RS_RemoveScientist(researchList2[num].tech, NULL);
 	}
@@ -436,7 +436,7 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 			const employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 			if (!employee)
 				break;
-			RS_AssignScientist(tech, base);
+			RS_AssignScientist(tech, base, NULL);
 		} else {
 			/* No free lab-space left. */
 			break;
@@ -467,7 +467,7 @@ static void RS_AssignScientist_f (void)
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist_f: num %i\n", num);
-	RS_AssignScientist(researchList2[num].tech, base);
+	RS_AssignScientist(researchList2[num].tech, base, NULL);
 
 	/* Update display-list and display-info. */
 	RS_InitGUI(base, qtrue);

@@ -653,12 +653,13 @@ void RS_InitTree (qboolean load)
  * @note The lab will be automatically selected (the first one that has still free space).
  * @param[in] tech What technology you want to assign the scientist to.
  * @param[in] base Pointer to base where the research is ongoing.
+ * @param[in] employee Pointer to the scientist to assign. It can be NULL! That means "any".
+ * @note if employee is NULL, te system selects an unassigned scientist on the selected (or tech-) base
  * @sa RS_AssignScientist_f
  * @sa RS_RemoveScientist
  */
-void RS_AssignScientist (technology_t* tech, base_t *base)
+void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 {
-	employee_t *employee;
 
 	assert(tech);
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
@@ -669,10 +670,20 @@ void RS_AssignScientist (technology_t* tech, base_t *base)
 
 	assert(base);
 
-	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+	if (!employee)
+		employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 	if (!employee) {
 		/* No scientists are free in this base. */
 		Com_DPrintf(DEBUG_CLIENT, "No free scientists in this base (%s) to assign to tech '%s'\n", base->name, tech->id);
+		return;
+	}
+	if (employee->type != EMPL_SCIENTIST) {
+		Com_Error(ERR_DROP, "Trying to assign a non-scientist to research tech: %s, at base %s\n", tech->id, base->name);
+		return;
+	}
+	if (employee->building) {
+		/** @todo make reassign possible with this. */
+		Com_Printf("RS_AssignScientist: Scientist %i is already assigned\n", employee->idx);
 		return;
 	}
 
@@ -758,6 +769,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 {
 	technology_t *tech;
+	employee_t *freeScientist = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 
 	assert(base);
 	assert(employee);
@@ -765,18 +777,13 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 	/* Get a tech where there is at least one scientist working on (unless no scientist working in this base) */
 	tech = RS_GetTechWithMostScientists(base);
 
-	/* if there is at least one scientist not working on a project, make this one replace removed employee */
-	if (E_CountUnassigned(base, EMPL_SCIENTIST)) {
-		if (employee->building) {
-			RS_AssignScientist(tech, base);
-			RS_RemoveScientist(tech, employee);
-		}
-		return;
-	}
-
 	/* tech should never be NULL, as there is at least 1 scientist working in base */
 	assert(tech);
 	RS_RemoveScientist(tech, employee);
+
+	/* if there is at least one scientist not working on a project, make this one replace removed employee */
+	if (freeScientist)
+		RS_AssignScientist(tech, base, freeScientist);
 }
 
 /**
