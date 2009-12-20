@@ -102,7 +102,6 @@ employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t typ
 employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
 employee_t* E_GetEmployeeFromChrUCN(int ucn);
-qboolean E_EmployeeIsCurrentlyInBase(const employee_t * employee);
 qboolean E_MoveIntoNewBase(employee_t *employee, base_t *newBase);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
