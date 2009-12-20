@@ -134,12 +134,29 @@ void Com_EndRedirect (void)
 }
 
 /**
+ * @brief Creates a timestamp with date and time at the specified location
+ * @param ts ptr to the resulting string
+ * @param tslen length of target buffer
+ */
+void Com_MakeTimestamp (char* ts, size_t tslen)
+{
+	struct tm *t;
+	time_t aclock;
+
+	time(&aclock);
+	t = localtime(&aclock);
+
+	Com_sprintf(ts, tslen, "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+}
+
+/**
  * @note Both client and server can use this, and it will output
  * to the appropriate place.
  */
 void Com_vPrintf (const char *fmt, va_list ap)
 {
 	char msg[MAXPRINTMSG];
+	char timestamp[40];
 
 	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 
@@ -161,6 +178,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 	Sys_ConsoleOutput(msg);
 
 	/* logfile */
+	Com_MakeTimestamp(timestamp, sizeof(timestamp));
 	if (logfile_active && logfile_active->integer) {
 		char name[MAX_OSPATH];
 
@@ -176,7 +194,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 			const char *output = msg;
 			if (output[0] < 32)
 				output++;
-			fprintf(logfile, "%s", output);
+			fprintf(logfile, "%s %s", timestamp, output);
 		}
 		if (logfile_active->integer > 1)
 			fflush(logfile);	/* force it to save every time */
