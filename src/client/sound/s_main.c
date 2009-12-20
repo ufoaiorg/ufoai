@@ -250,7 +250,8 @@ void S_Init (void)
 
 	Mix_ChannelFinished(S_FreeChannel);
 
-	Com_Printf("... audio rate: %i\n... audio channels: %i\n", s_env.rate, s_env.numChannels);
+	Com_Printf("... audio rate: %i\n", s_env.rate);
+	Com_Printf("... audio channels: %i\n", s_env.numChannels);
 
 	s_env.initialized = qtrue;
 
