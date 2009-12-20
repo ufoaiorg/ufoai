@@ -138,7 +138,7 @@ void Com_EndRedirect (void)
  * @param ts ptr to the resulting string
  * @param tslen length of target buffer
  */
-void Com_MakeTimestamp (char* ts, size_t tslen)
+void Com_MakeTimestamp (char* ts, const size_t tslen)
 {
 	struct tm *t;
 	time_t aclock;

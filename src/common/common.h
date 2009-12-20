@@ -215,6 +215,7 @@ MISC
 
 void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
 void Com_EndRedirect(void);
+void Com_MakeTimestamp (char* ts, const size_t tslen);
 void Com_vPrintf(const char *fmt, va_list);
 void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
