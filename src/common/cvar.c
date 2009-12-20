@@ -376,15 +376,8 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	var->integer = atoi(var->string);
 	var->description = desc;
 
+	HASH_Add(cvarVarsHash, var, hash);
 	/* link the variable in */
-	/* cvar_vars_hash should be null on the first run */
-	var->hash_next = cvarVarsHash[hash];
-	/* set the cvar_vars_hash pointer to the current cvar */
-	/* if there were already others in cvar_vars_hash at position hash, they are
-	 * now accessible via var->hash_next - loop until var->hash_next is null (the first
-	 * cvar at that position)
-	 */
-	cvarVarsHash[hash] = var;
 	var->next = cvarVars;
 	cvarVars = var;
 	if (var->next)

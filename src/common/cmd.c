@@ -768,9 +768,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 	cmd->description = desc;
 	cmd->function = function;
 	cmd->completeParam = NULL;
-	/* cmd_functions_hash should be null on the first run */
-	cmd->hash_next = cmd_functions_hash[hash];
-	cmd_functions_hash[hash] = cmd;
+	HASH_Add(cmd_functions_hash, cmd, hash);
 	cmd->next = cmd_functions;
 	cmd_functions = cmd;
 }

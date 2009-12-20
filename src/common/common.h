@@ -438,4 +438,10 @@ do {                                            \
 		--(array)[i__].idx;                         \
 } while (0)
 
+#define HASH_Add(hash, elem, index) \
+do { \
+	elem->hash_next = hash[index]; \
+	hash[index] = elem; \
+} while (0)
+
 #endif
