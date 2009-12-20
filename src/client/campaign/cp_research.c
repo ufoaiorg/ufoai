@@ -679,7 +679,6 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 	}
 	if (employee->type != EMPL_SCIENTIST) {
 		Com_Error(ERR_DROP, "Trying to assign a non-scientist to research tech: %s, at base %s\n", tech->id, base->name);
-		return;
 	}
 	if (employee->building) {
 		/** @todo make reassign possible with this. */
