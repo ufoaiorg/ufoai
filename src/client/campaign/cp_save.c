@@ -394,10 +394,7 @@ static void SAV_GameReadGameComment (const int idx)
 		if (!SAV_VerifyXMLHeader(&headerXML)) {
 			Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", idx);
 		} else {
-			char comment[MAX_VAR];
-			/** @todo show the headerXML.realDate */
-			Com_sprintf(comment, sizeof(comment), "%s - %s", headerXML.name, headerXML.gameDate);
-			Cvar_Set(va("mn_slot%i", idx), comment);
+			MN_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, headerXML.name, headerXML.gameDate, headerXML.realDate);
 			FS_CloseFile(&f);
 		}
 	}

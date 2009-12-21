@@ -258,7 +258,7 @@ window load
 
 	button slot0
 	{
-		string		*cvar:mn_slot0
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 200"
 		size		"256 32"
@@ -271,7 +271,7 @@ window load
 	}
 	button slot1
 	{
-		string		*cvar:mn_slot1
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 235"
 		size		"256 34"
@@ -284,7 +284,7 @@ window load
 	}
 	button slot2
 	{
-		string		*cvar:mn_slot2
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 270"
 		size		"256 34"
@@ -297,7 +297,7 @@ window load
 	}
 	button slot3
 	{
-		string		*cvar:mn_slot3
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 305"
 		size		"256 34"
@@ -310,7 +310,7 @@ window load
 	}
 	button slot4
 	{
-		string		*cvar:mn_slot4
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 340"
 		size		"256 34"
@@ -323,7 +323,7 @@ window load
 	}
 	button slot5
 	{
-		string		*cvar:mn_slot5
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 375"
 		size		"256 34"
@@ -336,7 +336,7 @@ window load
 	}
 	button slot6
 	{
-		string		*cvar:mn_slot6
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 410"
 		size		"256 34"
@@ -349,7 +349,7 @@ window load
 	}
 	button slot7
 	{
-		string		*cvar:mn_slot7
+		string		""
 		image		ui/button_green_verysmall
 		pos			"640 445"
 		size		"256 34"
@@ -365,6 +365,18 @@ window load
 	// buttons
 	// ==================
 
+	/**
+	 * @param[in] <1> id of the savegame slot
+	 * @param[in] <2> name of the savegame slot
+	 * @param[in] <3> game date of the savegame slot
+	 * @param[in] <4> real date of the savegame slot
+	 */
+	confunc update_save_game_info {
+		cmd "set mn_slot<1> \"<2> - <3>\";"
+		*node:root.slot<1>@string	*cvar:mn_slot<1>	
+		*node:root.slot<1>@tooltip	"<4>"
+	}
+
 	cmpMenuButton button_back
 	{
 		string		"_Back"
@@ -377,7 +389,6 @@ window load
 		cmd "game_comments;"
 	}
 }
-
 
 // ==================
 // SAVE MENU
