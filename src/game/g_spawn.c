@@ -405,6 +405,7 @@ edict_t *G_Spawn (void)
 	int i;
 	edict_t *e;
 
+	/* start at 1 to skip the world */
 	e = &g_edicts[1];
 	for (i = 1; i < globals.num_edicts; i++, e++)
 		if (!e->inuse) {

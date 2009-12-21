@@ -254,7 +254,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		return;
 	default:
 		/* Continue below. */
-		assert(ic);
 		break;
 	}
 
@@ -282,17 +281,15 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* send tu's */
 	G_SendStats(ent);
 
+	assert(ic);
 	item = ic->item;
 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
-		if (INV_IsFloorDef(to)) {
-			assert(!newFloor);
-			assert(FLOOR(floor) == FLOOR(ent));
+		if (INV_IsFloorDef(to))
 			mask = G_VisToPM(floor->visflags);
-		} else {
+		else
 			mask = G_TeamToPM(ent->team);
-		}
 
 		G_EventInventoryReload(INV_IsFloorDef(to) ? floor : ent, mask, &item, to, ic);
 
@@ -327,12 +324,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			 * is already linked might be from a different entity */
 			FLOOR(floor) = FLOOR(ent);
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
-		assert(item.t);
 		G_WriteItem(item, to, tx, ty);
 	}
 
@@ -351,7 +346,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		}
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);
-			assert(item.t);
 			G_WriteItem(item, to, tx, ty);
 		}
 	}
