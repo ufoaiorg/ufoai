@@ -568,14 +568,20 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 				FLOOR(actor) = FLOOR(floor);
 				break;
 			}
+		if (!Com_TryAddToInventory(&floor->i, *item, INVDEF(gi.csi->idFloor)))
+			G_FreeEdict(floor);
+		else
+			/* send the inventory */
+			G_CheckVis(floor, qtrue);
 	} else {
-		G_EventPerish(floor);
-		floor->visflags = 0;
+		if (Com_TryAddToInventory(&floor->i, *item, INVDEF(gi.csi->idFloor))) {
+			/* make it invisible to send the inventory in the below vis check */
+			G_EventPerish(floor);
+			floor->visflags = 0;
+			G_CheckVis(floor, qtrue);
+		}
 	}
-	Com_TryAddToInventory(&floor->i, *item, INVDEF(gi.csi->idFloor));
 
-	/* send item info to the clients */
-	G_CheckVis(floor, qtrue);
 }
 
 #define GRENADE_DT			0.1
