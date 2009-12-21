@@ -340,7 +340,7 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
  * @param[in] node Node where is the child
  * @param[in] child Node we want to remove
  */
-menuNode_t* const MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
+menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 {
 	assert(node);
 	assert(child);

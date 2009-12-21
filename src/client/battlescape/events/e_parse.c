@@ -142,7 +142,7 @@ static qboolean CL_FilterBattlescapeEvents (int when, event_func *func, event_ch
 	return (func != &CL_ExecuteBattlescapeEvent);
 }
 
-inline void CL_ClearBattlescapeEvents (void)
+void CL_ClearBattlescapeEvents (void)
 {
 	CL_FilterEventQueue(&CL_FilterBattlescapeEvents);
 }

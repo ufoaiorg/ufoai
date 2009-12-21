@@ -186,7 +186,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	inventory_action_t ia;
 	int msglevel;
 	invList_t fItemBackup;
-	const invList_t* fItemBackupPtr;
 	int fx, fy;
 
 	player = G_PLAYER_FROM_ENT(ent);
@@ -197,7 +196,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* Store the location/item of 'from' BEFORE actually moving items with Com_MoveInInventory. */
 	fItemBackup = *fItem;
-	fItemBackupPtr = fItem;
 
 	/* Get first used bit in item. */
 	Com_GetFirstShapePosition(fItem, &fx, &fy);
@@ -291,11 +289,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			gi.EndEvents();
 			return;
 		} else { /* ia == IA_RELOAD_SWAP */
-			if (!fItemBackupPtr) {
-				gi.dprintf("G_ClientInvMove: Didn't find invList of the item you're moving\n");
-				gi.EndEvents();
-				return;
-			}
 			item = fItemBackup.item;
 			to = from;
 			tx = fItemBackup.x;
