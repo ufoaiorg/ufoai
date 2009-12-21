@@ -98,7 +98,7 @@ static qboolean SAV_VerifyXMLHeader (saveFileHeader_t const * const header)
 	}
 	len = strlen(header->realDate);
 	if (len < 0 || len > sizeof(header->realDate)) {
-		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
+		Com_DPrintf(DEBUG_CLIENT, "realDate is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
 		return qfalse;
 	}
 
