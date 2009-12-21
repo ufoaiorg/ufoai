@@ -50,6 +50,7 @@ static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 /**
  * @brief Array bound check for the base index. Will also return unfounded bases as
  * long as the index is in the valid ranges,
+ * @param[in] baseIdx Index to check
  * @return Pointer to the base corresponding to baseIdx.
  */
 base_t* B_GetBaseByIDX (int baseIdx)
@@ -61,6 +62,7 @@ base_t* B_GetBaseByIDX (int baseIdx)
 
 /**
  * @brief Array bound check for the base index.
+ * @param[in] baseIdx Index to check
  * @return Pointer to the base corresponding to baseIdx if base is founded, NULL else.
  */
 base_t* B_GetFoundedBaseByIDX (int baseIdx)
@@ -221,7 +223,7 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 /**
  * @brief Check that the dependences of a building is operationnal
  * @param[in] base Base to check
- * @param[in] building
+ * @param[in] building Pointer to the building to check
  * @return true if base contains needed dependence for entering building
  */
 qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const building_t* building)
@@ -239,6 +241,8 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const build
 }
 
 /**
+ * @brief Resets the buildingCurrent variable and baseAction
+ * @param[in,out] base Pointer to the base needs buildingCurrent to be reseted
  * @note Make sure you are not doing anything with the buildingCurrent pointer
  * in this function, the pointer might already be invalid
  */
@@ -304,8 +308,7 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 }
 
 /**
- * @todo Improve this function!
- * @return A random founded base
+ * @brief Returns a random founded base
  */
 base_t* B_GetRandomBase (void)
 {
