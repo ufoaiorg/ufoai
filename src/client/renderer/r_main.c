@@ -480,7 +480,7 @@ qboolean R_SetMode (void)
 {
 	qboolean result;
 
-	Com_Printf("I: setting mode %d:", vid_mode->integer);
+	Com_Printf("I: setting mode %d\n", vid_mode->integer);
 
 	/* store old values if new ones will fail */
 	viddef.prev_width = viddef.width;
@@ -494,7 +494,7 @@ qboolean R_SetMode (void)
 	viddef.fullscreen = vid_fullscreen->integer;
 	viddef.strech = vid_strech->integer;
 	if (!VID_GetModeInfo()) {
-		Com_Printf(" invalid mode\n");
+		Com_Printf("I: invalid mode\n");
 		return qfalse;
 	}
 
@@ -502,7 +502,7 @@ qboolean R_SetMode (void)
 	R_UpdateVidDef();
 	MN_InvalidateStack();
 
-	Com_Printf(" %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
+	Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
 	if (result)
 		return qtrue;
 
