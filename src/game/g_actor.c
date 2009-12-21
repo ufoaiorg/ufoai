@@ -226,17 +226,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* search for space */
 	if (tx == NONE) {
-		if (ty != NONE)
-			gi.dprintf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
-
 		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
 			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
-	}
-	if (tx == NONE) {
-		if (ty != NONE)
-			gi.error("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
-		return;
+		if (tx == NONE)
+			return;
 	}
 
 	/* Try to actually move the item and check the return value */
@@ -356,9 +350,8 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
  * @brief Reload weapon with actor.
  * @sa AI_ActorThink
  */
-void G_ActorReload (int entnum, shoot_types_t st, qboolean quiet)
+void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)
 {
-	edict_t *ent;
 	invList_t *ic;
 	invList_t *icFinal;
 	invDef_t * hand;
@@ -366,8 +359,6 @@ void G_ActorReload (int entnum, shoot_types_t st, qboolean quiet)
 	int tu;
 	int containerID;
 	invDef_t *bestContainer;
-
-	ent = g_edicts + entnum;
 
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;

@@ -240,6 +240,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			 * untranslated with BroadcastPrintf or PlayerPrintf */
 			/* see src/po/OTHER_STRINGS */
 			HUD_DisplayMessage(_(s));
+			break;
 		default:
 			break;
 		}
