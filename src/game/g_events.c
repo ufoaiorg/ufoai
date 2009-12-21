@@ -88,6 +88,16 @@ void G_EventPerish (const edict_t* ent)
 }
 
 /**
+ * @brief Unregister an edict at the client
+ * @param ent The edict to unregister
+ */
+void G_EventDestroyEdict (const edict_t* ent)
+{
+	gi.AddEvent(PM_ALL, EV_ENT_DESTROY);
+	gi.WriteShort(ent->number);
+}
+
+/**
  * @brief Update reaction firemode when something is moved from/to a hand.
  * @param[in] ent The entity to change the reaction fire hand for
  * @param[in] hand The hand that should be used for the reaction fire.

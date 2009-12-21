@@ -69,6 +69,7 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/world/e_event_doorclose.c \
 	client/battlescape/events/event/world/e_event_dooropen.c \
 	client/battlescape/events/event/world/e_event_entappear.c \
+	client/battlescape/events/event/world/e_event_entdestroy.c \
 	client/battlescape/events/event/world/e_event_entperish.c \
 	client/battlescape/events/event/world/e_event_explode.c \
 	client/battlescape/events/event/world/e_event_particleappear.c \

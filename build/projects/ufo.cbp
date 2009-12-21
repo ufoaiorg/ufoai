@@ -416,6 +416,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entperish.h" />
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entdestroy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_entdestroy.h" />
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_explode.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/player/e_event_centerview.h"
 #include "event/world/e_event_entappear.h"
 #include "event/world/e_event_entperish.h"
+#include "event/world/e_event_entdestroy.h"
 #include "event/world/e_event_addbrushmodel.h"
 #include "event/world/e_event_addedict.h"
 #include "event/world/e_event_explode.h"
@@ -92,6 +93,7 @@ const eventRegister_t events[] = {
 
 	{E(EV_ENT_APPEAR), "sbg", CL_EntAppear, NULL, NULL},
 	{E(EV_ENT_PERISH), "s", CL_EntPerish, NULL, NULL},
+	{E(EV_ENT_DESTROY), "s", CL_EntDestroy, NULL, NULL},
 	{E(EV_ADD_BRUSH_MODEL), "sssbppsb", CL_AddBrushModel, NULL, NULL},
 	{E(EV_ADD_EDICT), "sspp", CL_AddEdict, NULL, NULL},
 
