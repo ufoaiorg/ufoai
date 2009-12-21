@@ -836,7 +836,7 @@ qboolean Cmd_Exists (const char *cmd_name)
  * @brief Unix like tab completion for console commands parameters
  * @param[in] command The command we try to complete the parameter for
  * @param[in] partial The beginning of the parameter we try to complete
- * @param[out] The command we are writing back (if something was found)
+ * @param[out] match The command we are writing back (if something was found)
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
