@@ -74,7 +74,7 @@ void UR_ProcessActive (void)
 
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was transfered to %s."), UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->installation->name);
 		MSO_CheckAddNewMessage(NT_TRANSFER_UFORECOVERY_FINISHED, _("UFO Recovered"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
-		
+
 		if (!ufo->ufoTemplate->tech->statusCollected)
 			RS_MarkCollected(ufo->ufoTemplate->tech);
 	}

@@ -907,15 +907,14 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 	radarOverlayWasSet = mxml_GetBool(campaignNode, "radaroverlaywasset", qfalse);
 
+	/* read credits */
 	CL_UpdateCredits(mxml_GetLong(n_ccs, "credits", 0));
 
-	/* read credits */
 	/* store interest values */
 	ccs.lastInterestIncreaseDelay = mxml_GetInt(n_ccs, "lastinterestincreasedelay", 0);
 	ccs.lastMissionSpawnedDelay = mxml_GetInt(n_ccs, "lastmissionspawneddelay", 0);
 
 	ccs.overallInterest = mxml_GetInt(n_ccs, "overall", 0);
-	/*mxml_GetInt(interest, "count", INTERESTCATEGORY_MAX);*/
 
 	for (i = 0, act_node = mxml_GetNode(n_ccs, "interest"); i < INTERESTCATEGORY_MAX && act_node;
 			i++, (act_node = mxml_GetNextNode(act_node, n_ccs, "interest"))) {

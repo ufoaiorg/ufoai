@@ -99,6 +99,9 @@ installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const cha
 
 /**
  * @brief Setup new installation
+ * @param[in,out] installation Pointer to the installation to set up
+ * @param[in] installationTemplate Template pointer
+ * @param[in] pos Position on Globe to build at
  * @sa INS_NewInstallation
  */
 void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
@@ -147,7 +150,7 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
 
 /**
  * @brief Destroys an installation
- * @param[in] installation Pointer to the installation to be destroyed
+ * @param[in,out] installation Pointer to the installation to be destroyed
  */
 void INS_DestroyInstallation (installation_t *installation)
 {
@@ -184,6 +187,9 @@ void INS_DestroyInstallation (installation_t *installation)
 	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 }
 
+/**
+ * @brief Returns the current selected installation
+ */
 installation_t *INS_GetCurrentSelectedInstallation (void)
 {
 	int i;
@@ -198,8 +204,9 @@ installation_t *INS_GetCurrentSelectedInstallation (void)
 }
 
 /**
- * @sa INS_SelectInstallation
+ * @brief Sets the currently selected intallation
  * @param installation Pointer to the installation ot select
+ * @sa INS_SelectInstallation
  */
 void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 {
@@ -227,7 +234,7 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 
 /**
  * @brief Finishes an installation
- * @param[in, out] installation Pointer to the installation to be finished
+ * @param[in,out] installation Pointer to the installation to be finished
  * @sa INS_UpdateInstallationData
  * @sa INS_ConstructionFinished_f
  */
