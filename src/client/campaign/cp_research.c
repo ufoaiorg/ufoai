@@ -581,6 +581,8 @@ void RS_InitTree (qboolean load)
 			for (j = 0; j < ccs.numAircraftTemplates; j++) {
 				aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
+				if (!tech->provides)
+					Com_Error(ERR_FATAL, "RS_InitTree: \"%s\" - No linked aircraft or craft-upgrade.\n", tech->id);
 				if (!strcmp(tech->provides, aircraftTemplate->id)) {
 					found = qtrue;
 					if (!tech->name)
