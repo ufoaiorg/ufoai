@@ -80,7 +80,7 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 	if (G_IsDead(check)) {
 		test[2] += PLAYER_DEAD;
 		delta = 0;
-	} else if (check->state & (STATE_CROUCHED | STATE_PANIC)) {
+	} else if (G_IsCrouched(check)) {
 		test[2] += PLAYER_CROUCH - 2;
 		delta = (PLAYER_CROUCH - PLAYER_MIN) / 2 - 2;
 	} else {

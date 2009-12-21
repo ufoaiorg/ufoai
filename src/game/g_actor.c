@@ -104,6 +104,22 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 }
 
 /**
+ * @brief set correct bounding box for actor (state dependent)
+ * @note Also re-links the actor edict - because the server must know about the
+ * changed bounding box for tracing to work.
+ */
+void G_ActorSetMaxs (edict_t* ent)
+{
+	if (G_IsCrouched(ent))
+		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
+	else
+		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+
+	/* Link it. */
+	gi.LinkEdict(ent);
+}
+
+/**
  * @brief Report and handle death of an actor
  */
 void G_ActorDie (edict_t * ent, int state, edict_t *attacker)

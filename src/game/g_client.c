@@ -402,12 +402,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
 			ent->state ^= STATE_CROUCHED;
 			ent->TU -= TU_CROUCH;
-			/* Link it. */
-			if (G_IsCrouched(ent))
-				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
-			else
-				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
-			gi.LinkEdict(ent);
+			G_ActorSetMaxs(ent);
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
@@ -765,7 +760,7 @@ static void G_GetTeam (player_t * player)
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			G_SetTeamForPlayer(player, i);
-			gi.BroadcastPrintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
+			gi.BroadcastPrintf(PRINT_CONSOLE, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
 			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			G_SetTeamForPlayer(player, TEAM_DEFAULT);
@@ -1352,7 +1347,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	memset(&player->pers, 0, sizeof(player->pers));
 	G_ClientUserinfoChanged(player, userinfo);
 
-	gi.BroadcastPrintf(PRINT_CHAT, "%s is connecting...\n", player->pers.netname);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s is connecting...\n", player->pers.netname);
 	return qtrue;
 }
 
@@ -1390,7 +1385,7 @@ void G_ClientDisconnect (player_t * player)
 	player->roundDone = qfalse;
 	player->isReady = qfalse;
 
-	gi.BroadcastPrintf(PRINT_CHAT, "%s disconnected.\n", player->pers.netname);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
 }
 
 /**

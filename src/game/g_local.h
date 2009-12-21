@@ -371,6 +371,7 @@ void G_CenterView(const edict_t *ent);
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
+void G_ActorSetMaxs(edict_t* ent);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);

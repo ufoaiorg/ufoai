@@ -47,7 +47,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 
 	/* get up */
 	ent->state &= ~STATE_CROUCHED;
-	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+	G_ActorSetMaxs(ent);
 
 	/* send panic */
 	ent->state |= STATE_PANIC;
@@ -94,9 +94,9 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
 	if (sanity)
-		gi.BroadcastPrintf(PRINT_CONSOLE, _("%s is on a rampage.\n"), ent->chr.name);
+		gi.BroadcastPrintf(PRINT_HUD, _("%s is on a rampage.\n"), ent->chr.name);
 	else
-		gi.BroadcastPrintf(PRINT_CONSOLE, _("%s is consumed by mad rage!\n"), ent->chr.name);
+		gi.BroadcastPrintf(PRINT_HUD, _("%s is consumed by mad rage!\n"), ent->chr.name);
 	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);
 }
 
@@ -114,7 +114,23 @@ static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
 		ent->state &= ~STATE_INSANE;
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
-		G_MoralePanic(ent, qtrue, quiet); /*regains sanity */
+		G_MoralePanic(ent, qtrue, quiet); /* regains sanity */
+}
+
+/**
+ * @brief Checks whether the morale handling is activated for this game. This is always
+ * the case in singleplayer matches, and might be disabled for multiplayer matches.
+ * @return @c true if the morale is activated for this game.
+ */
+static qboolean G_IsMoraleEnabled (void)
+{
+	if (sv_maxclients->integer == 1)
+		return qtrue;
+
+	if (sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1)
+		return qtrue;
+
+	return qfalse;
 }
 
 /**
@@ -139,7 +155,7 @@ void G_MoraleBehaviour (int team, qboolean quiet)
 				G_MoralePanic(ent, qfalse, quiet);
 			/* multiplayer needs enabled sv_enablemorale */
 			/* singleplayer has this in every case */
-			if ((sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1) || sv_maxclients->integer == 1) {
+			if (G_IsMoraleEnabled()) {
 				/* if panic, determine what kind of panic happens: */
 				if (ent->morale <= mor_panic->value && !G_IsPaniced(ent) && !G_IsRaged(ent)) {
 					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
@@ -165,11 +181,8 @@ void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleStopRage(ent, quiet);
 				}
 			}
-			/* set correct bounding box */
-			if (ent->state & (STATE_CROUCHED | STATE_PANIC))
-				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
-			else
-				VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
+
+			G_ActorSetMaxs(ent);
 
 			/* morale-regeneration, capped at max: */
 			newMorale = ent->morale + MORALE_RANDOM(mor_regeneration->value);

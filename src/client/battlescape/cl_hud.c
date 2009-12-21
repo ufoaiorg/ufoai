@@ -1310,7 +1310,7 @@ void HUD_ActorUpdateCvars (void)
 		}
 
 		/* handle actor in a panic */
-		if (selActor->state & STATE_PANIC) {
+		if (LE_IsPaniced(selActor)) {
 			Com_sprintf(infoText, lengthof(infoText), _("Currently panics!\n"));
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 		}

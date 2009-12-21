@@ -48,7 +48,7 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 		if (from->inuse && from->team == team && G_IsLivingActor(from) && G_FrustumVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
-			if (from->state & (STATE_CROUCHED | STATE_PANIC))
+			if (G_IsCrouched(from))
 				eye[2] += EYE_CROUCH;
 			else
 				eye[2] += EYE_STAND;

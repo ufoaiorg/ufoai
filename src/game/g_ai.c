@@ -513,7 +513,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	/* check whether this civilian can use weapons */
 	if (ent->chr.teamDef) {
 		const teamDef_t* teamDef = ent->chr.teamDef;
-		if (ent->state & ~STATE_PANIC && teamDef->weapons)
+		if (!G_IsPaniced(ent) && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
 		gi.dprintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
