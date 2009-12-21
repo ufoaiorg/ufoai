@@ -344,7 +344,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
  */
 static void SAV_GameSave_f (void)
 {
-	char comment[MAX_COMMENTLENGTH] = "";
+	char comment[MAX_VAR] = "";
 	char *error = NULL;
 	qboolean result;
 
