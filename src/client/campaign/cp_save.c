@@ -273,7 +273,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	mxml_AddInt(node, "saveversion", SAVE_FILE_VERSION);
 	mxml_AddString(node, "comment", comment);
 	mxml_AddString(node, "version", UFO_VERSION);
-	mxml_AddString(node, "savedate", timeStampBuffer);
+	mxml_AddString(node, "realdate", timeStampBuffer);
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
