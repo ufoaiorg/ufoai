@@ -38,10 +38,10 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
 		if (RIGHT(ent))
-			G_ActorInvMove(ent->number, INVDEF(gi.csi->idRight), RIGHT(ent),
+			G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent),
 					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ActorInvMove(ent->number, INVDEF(gi.csi->idLeft), LEFT(ent),
+			G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent),
 					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, quiet);
 	}
 

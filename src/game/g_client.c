@@ -545,7 +545,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
 }
 
 /**
@@ -646,7 +646,7 @@ int G_ClientAction (player_t * player)
 			if (!fromItem)
 				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);
-			G_ActorInvMove(num, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
+			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
 		}
 		break;
 

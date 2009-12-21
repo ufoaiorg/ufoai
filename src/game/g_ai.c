@@ -812,16 +812,16 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	if (!G_IsPaniced(ent)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
-				G_ActorReload(ent->number, ST_RIGHT_RELOAD, QUIET);
+				G_ActorReload(ent, ST_RIGHT_RELOAD, QUIET);
 			} else {
-				G_ActorInvMove(ent->number, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ActorReload(ent->number, ST_LEFT_RELOAD, QUIET);
+				G_ActorReload(ent, ST_LEFT_RELOAD, QUIET);
 			} else {
-				G_ActorInvMove(ent->number, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
 			}
 		}
 	}

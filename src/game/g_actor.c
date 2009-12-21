@@ -174,11 +174,11 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
+void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
 		int ty, qboolean checkaction, qboolean quiet)
 {
 	player_t *player;
-	edict_t *ent, *floor;
+	edict_t *floor;
 	qboolean newFloor;
 	invList_t *ic;
 	item_t item;
@@ -189,7 +189,6 @@ void G_ActorInvMove (int entNum, const invDef_t * from, invList_t *fItem, const 
 	const invList_t* fItemBackupPtr;
 	int fx, fy;
 
-	ent = g_edicts + entNum;
 	player = G_PLAYER_FROM_ENT(ent);
 	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
@@ -416,5 +415,5 @@ void G_ActorReload (int entnum, shoot_types_t st, qboolean quiet)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(entnum, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
 }
