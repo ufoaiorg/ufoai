@@ -234,10 +234,10 @@ static qboolean SAV_GameLoad (const char *file, char **error)
  */
 static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
 {
-	mxml_node_t *top_node, *node;
+	mxml_node_t *topNode, *node;
 	char savegame[MAX_OSPATH];
 	int res;
-	int requiredbuflen;
+	int requiredBufferLength;
 	byte *buf, *fbuf;
 	uLongf bufLen;
 	saveFileHeader_t header;
@@ -245,6 +245,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	int i;
 	dateLong_t date;
 	char message[30];
+	char timeStampBuffer[32];
 #ifdef DEBUG
 	char savegame_debug[MAX_OSPATH];
 #endif
@@ -261,16 +262,18 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 		return qfalse;
 	}
 
+	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
 	Com_sprintf(savegame, sizeof(savegame), "save/%s.xml", filename);
 #ifdef DEBUG
 	Com_sprintf(savegame_debug, sizeof(savegame_debug), "save/%s.lint", filename);
 #endif
-	top_node = mxmlNewXML("1.0");
-	node = mxml_AddNode(top_node, "savegame");
+	topNode = mxmlNewXML("1.0");
+	node = mxml_AddNode(topNode, "savegame");
 	/* writing  Header */
 	mxml_AddInt(node, "saveversion", SAVE_FILE_VERSION);
 	mxml_AddString(node, "comment", comment);
 	mxml_AddString(node, "version", UFO_VERSION);
+	mxml_AddString(node, "savedate", timeStampBuffer);
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
@@ -285,7 +288,6 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	}
 
 	/* calculate the needed buffer size */
-
 	memset(&header, 0, sizeof(header));
 	header.compressed = LittleLong(save_compressed->integer);
 	header.version = LittleLong(SAVE_FILE_VERSION);
@@ -294,30 +296,30 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
-	/** @todo fill real date string */
+	Q_strncpyz(header.realDate, timeStampBuffer, sizeof(header.realDate));
 
-	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
+	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 
-	header.xmlSize = LittleLong(requiredbuflen);
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, 0);
+	header.xmlSize = LittleLong(requiredBufferLength);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
 	if (!buf) {
 		*error = _("Could not allocate enough memory to save this game");
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
-	res = mxmlSaveString(top_node, (char*)buf, requiredbuflen + 1, MXML_NO_CALLBACK);
+	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
-	bufLen = (uLongf) (24 + 1.02 * requiredbuflen);
+	bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
 	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
 #ifdef DEBUG
 	/* In debugmode we will also write a uncompressed {filename}.lint file without header information */
-	res = FS_WriteFile(buf, requiredbuflen, savegame_debug);
+	res = FS_WriteFile(buf, requiredBufferLength, savegame_debug);
 #endif
 	if (header.compressed) {
-		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen + 1);
+		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredBufferLength + 1);
 		Mem_Free(buf);
 
 		if (res != Z_OK) {
@@ -327,7 +329,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 			return qfalse;
 		}
 	} else {
-		memcpy(fbuf + sizeof(header), buf, requiredbuflen + 1);
+		memcpy(fbuf + sizeof(header), buf, requiredBufferLength + 1);
 		Mem_Free(buf);
 	}
 
