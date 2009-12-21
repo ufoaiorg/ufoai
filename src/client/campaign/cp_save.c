@@ -391,12 +391,13 @@ static void SAV_GameReadGameComment (const int idx)
 	if (f.f || f.z) {
 		if (FS_Read(&headerXML, sizeof(headerXML), &f) != sizeof(headerXML))
 			Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
-		if (!SAV_VerifyXMLHeader(&headerXML)) {
+
+		if (!SAV_VerifyXMLHeader(&headerXML))
 			Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", idx);
-		} else {
+		else
 			MN_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, headerXML.name, headerXML.gameDate, headerXML.realDate);
-			FS_CloseFile(&f);
-		}
+
+		FS_CloseFile(&f);
 	}
 }
 
