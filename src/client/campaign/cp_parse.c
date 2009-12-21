@@ -549,8 +549,9 @@ static void CL_ParseComponents (const char *name, const char **text)
 
 	/* set standard values */
 	Q_strncpyz(comp->assemblyId, name, sizeof(comp->assemblyId));
-	comp->assemblyItem = INVSH_GetItemByID(comp->assemblyId);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ParseComponents: linked item: %s with components: %s\n", name, comp->assemblyId);
+	comp->assemblyItem = INVSH_GetItemByIDSilent(comp->assemblyId);
+	if (comp->assemblyItem)
+		Com_DPrintf(DEBUG_CLIENT, "CL_ParseComponents: linked item: %s with components: %s\n", name, comp->assemblyId);
 
 	do {
 		/* get the name type */
