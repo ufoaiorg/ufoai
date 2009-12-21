@@ -181,8 +181,6 @@ ELEMENTS COMMUNICATED ACROSS THE NET
  * @brief Possible event values
  * @sa cl_parse.c for event bindings
  * @sa ev_func
- * @sa ev_names
- * @sa ev_format
  */
 typedef enum {
 	EV_NULL,
@@ -196,7 +194,7 @@ typedef enum {
 	EV_CENTERVIEW,
 
 	EV_ENT_APPEAR,
-	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le inuse to qfalse
+	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le invis to qtrue
 		* see CL_EntPerish */
 	EV_ADD_BRUSH_MODEL,
 	EV_ADD_EDICT,

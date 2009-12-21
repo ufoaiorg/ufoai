@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PARSE_EVENTS_H
 #define CLIENT_CL_PARSE_EVENTS_H
 
-extern const char *ev_format[EV_NUM_EVENTS];
 extern cvar_t *cl_log_battlescape_events;
 
 void CL_ParseEvent(struct dbuffer *msg);
