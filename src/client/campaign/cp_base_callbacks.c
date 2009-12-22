@@ -820,6 +820,28 @@ static void BaseSummary_SelectBase_f (void)
 	}
 }
 
+/**
+ * @brief Makes a mapshot - called by basemapshot script command
+ * @note Load a basemap and execute 'basemapshot' in console
+ */
+static void B_MakeBaseMapShot_f (void)
+{
+	if (cls.state != ca_active) {
+		Com_Printf("Load the base map before you try to use this function\n");
+		return;
+	}
+
+	cl.cam.angles[0] = 60.0f;
+	cl.cam.angles[1] = 90.0f;
+	Cvar_SetValue("r_isometric", 1);
+	/* we are interested in the second level only */
+	Cvar_SetValue("cl_worldlevel", 1);
+	MN_PushMenu("nohud", NULL);
+	/* hide any active console */
+	Key_SetDest(key_game);
+	Cmd_ExecuteString("r_screenshot tga");
+}
+
 /** Init/Shutdown functions */
 
 /** @todo unify the names into mn_base_* */
@@ -831,6 +853,7 @@ void B_InitCallbacks (void)
 	Cvar_SetValue("mn_base_count", ccs.numBases);
 	Cvar_SetValue("mn_base_max", MAX_BASES);
 
+	Cmd_AddCommand("basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
@@ -854,6 +877,7 @@ void B_InitCallbacks (void)
 /** @todo unify the names into mn_base_* */
 void B_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("basemapshot");
 	Cmd_RemoveCommand("basesummary_selectbase");
 	Cmd_RemoveCommand("mn_prev_base");
 	Cmd_RemoveCommand("mn_next_base");

@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sound/s_main.h"
 #include "input/cl_input.h"
 #include "input/cl_keys.h"
+#include "battlescape/cl_camera.h"
 
 /* Map debugging constants */
 /** @brief cvar debug_map options:

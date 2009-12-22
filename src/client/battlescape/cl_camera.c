@@ -26,13 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "cl_camera.h"
 #include "cl_view.h"
 #include "../input/cl_input.h"
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
 static float routeDist;
+
+const float MIN_ZOOM = 0.5;
+const float MAX_ZOOM = 32.0;
 
 #define MIN_CAMROT_SPEED	50
 #define MIN_CAMROT_ACCEL	50
@@ -45,6 +47,8 @@ static float routeDist;
 #define LEVEL_MIN			0.05
 #define LEVEL_SPEED			3.0
 #define ZOOM_SPEED			2.0
+#define MIN_CAMZOOM_QUANT	0.05
+#define MAX_CAMZOOM_QUANT	1.0
 
 static cvar_t *cl_camrotspeed;
 static cvar_t *cl_cammovespeed;
@@ -54,6 +58,7 @@ static cvar_t *cl_campitchmax;
 cvar_t *cl_camzoommax;
 cvar_t *cl_camzoomquant;
 cvar_t *cl_camzoommin;
+cvar_t *cl_centerview;
 
 /**
  * @brief forces the camera to stay within the horizontal bounds of the
@@ -245,6 +250,87 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 	cameraRoute = qtrue;
 }
 
+void CL_CameraZoomIn (void)
+{
+	float quant;
+
+	/* check zoom quant */
+	if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
+		quant = 1 + MIN_CAMZOOM_QUANT;
+	else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
+		quant = 1 + MAX_CAMZOOM_QUANT;
+	else
+		quant = 1 + cl_camzoomquant->value;
+
+	/* change zoom */
+	cl.cam.zoom *= quant;
+
+	/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
+	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	V_CalcFovX();
+}
+
+void CL_CameraZoomOut (void)
+{
+	float quant;
+
+	/* check zoom quant */
+	if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
+		quant = 1 + MIN_CAMZOOM_QUANT;
+	else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
+		quant = 1 + MAX_CAMZOOM_QUANT;
+	else
+		quant = 1 + cl_camzoomquant->value;
+
+	/* change zoom */
+	cl.cam.zoom /= quant;
+
+	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
+	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+	V_CalcFovX();
+}
+
+#ifdef DEBUG
+/**
+ * @brief Prints the current camera angles
+ * @note Only available in debug mode
+ * Accessable via console command camangles
+ */
+static void CL_CamPrintAngles_f (void)
+{
+	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2]);
+}
+#endif /* DEBUG */
+
+static void CL_CamSetAngles_f (void)
+{
+	int c = Cmd_Argc();
+
+	if (c < 3) {
+		Com_Printf("Usage %s <value> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cl.cam.angles[PITCH] = atof(Cmd_Argv(1));
+	cl.cam.angles[YAW] = atof(Cmd_Argv(2));
+	cl.cam.angles[ROLL] = 0.0f;
+}
+
+static void CL_CamSetZoom_f (void)
+{
+	int c = Cmd_Argc();
+
+	if (c < 2) {
+		Com_Printf("Usage %s <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	Com_Printf("old zoom value: %.2f\n", cl.cam.zoom);
+	cl.cam.zoom = atof(Cmd_Argv(1));
+	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
+	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
+}
+
 void CL_CameraInit (void)
 {
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
@@ -256,4 +342,10 @@ void CL_CameraInit (void)
 	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
 	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
+#endif /* DEBUG */
+	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
+	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
 }

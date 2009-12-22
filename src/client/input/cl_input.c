@@ -45,7 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_localentity.h"
 #include "../cl_console.h"
 #include "../battlescape/cl_actor.h"
-#include "../battlescape/cl_camera.h"
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
 #include "../menu/m_main.h"
@@ -67,6 +66,7 @@ static int keyq_head = 0;
 static int keyq_tail = 0;
 
 static cvar_t *in_debug;
+cvar_t *cl_isometric;
 
 int mouseSpace;
 int mousePosX, mousePosY;
@@ -261,16 +261,6 @@ static void IN_ZoomOutUp_f (void)
 	IN_KeyUp(&in_zoomout);
 }
 
-const float MIN_ZOOM = 0.5;
-const float MAX_ZOOM = 32.0;
-
-cvar_t *cl_centerview;
-cvar_t *cl_isometric;
-
-#define MIN_CAMZOOM_QUANT	0.05
-#define MAX_CAMZOOM_QUANT	1.0
-
-/*========================================================================== */
 
 /**
  * @brief Switch one worldlevel up
@@ -297,48 +287,16 @@ static void CL_ZoomInQuant_f (void)
 {
 	if (mouseSpace == MS_MENU)
 		MN_MouseWheel(qfalse, mousePosX, mousePosY);
-	else {
-		float quant;
-
-		/* check zoom quant */
-		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
-			quant = 1 + MIN_CAMZOOM_QUANT;
-		else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
-			quant = 1 + MAX_CAMZOOM_QUANT;
-		else
-			quant = 1 + cl_camzoomquant->value;
-
-		/* change zoom */
-		cl.cam.zoom *= quant;
-
-		/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
-		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-		V_CalcFovX();
-	}
+	else
+		CL_CameraZoomIn();
 }
 
 static void CL_ZoomOutQuant_f (void)
 {
 	if (mouseSpace == MS_MENU)
 		MN_MouseWheel(qtrue, mousePosX, mousePosY);
-	else {
-		float quant;
-
-		/* check zoom quant */
-		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
-			quant = 1 + MIN_CAMZOOM_QUANT;
-		else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
-			quant = 1 + MAX_CAMZOOM_QUANT;
-		else
-			quant = 1 + cl_camzoomquant->value;
-
-		/* change zoom */
-		cl.cam.zoom /= quant;
-
-		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
-		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-		V_CalcFovX();
-	}
+	else
+		CL_CameraZoomOut();
 }
 
 /**
@@ -528,8 +486,6 @@ static int lastAlien = 0;
  */
 static void CL_NextAlienVisibleFromActor_f (void)
 {
-	le_t *watcher; /** @todo make this a parameter for use in other functions? */
-	le_t *le;
 	int i;
 	trace_t tr;
 	vec3_t from, at;
@@ -537,33 +493,30 @@ static void CL_NextAlienVisibleFromActor_f (void)
 	if (!selActor)
 		return;
 
-	watcher = selActor;
-
 	if (lastAlien >= cl.numLEs)
 		lastAlien = 0;
 
 	i = lastAlien;
 	do {
+		le_t *le;
 		if (++i >= cl.numLEs)
 			i = 0;
 		le = &LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
-			VectorCopy(watcher->origin, from);
+			VectorCopy(selActor->origin, from);
 			VectorCopy(le->origin, at);
 			/* actor eye height */
-			if (LE_IsCrouched(watcher))
+			if (LE_IsCrouched(selActor))
 				from[2] += EYE_HT_CROUCH;
 			else
 				from[2] += EYE_HT_STAND;
 			/* target height */
 			if (LE_IsCrouched(le))
-				at[2] += EYE_HT_CROUCH; /** @todo */
+				at[2] += EYE_HT_CROUCH;
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			/** @todo check the facing of the actor: watcher->dir
-			 * maybe doing more than one trace to different target heights */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
 				continue;
@@ -602,70 +555,6 @@ static void CL_NextAlien_f (void)
 	} while (i != lastAlien);
 }
 
-/*========================================================================== */
-
-#ifdef DEBUG
-/**
- * @brief Prints the current camera angles
- * @note Only available in debug mode
- * Accessable via console command camangles
- */
-static void CL_CamPrintAngles_f (void)
-{
-	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2]);
-}
-#endif /* DEBUG */
-
-static void CL_CamSetAngles_f (void)
-{
-	int c = Cmd_Argc();
-
-	if (c < 3) {
-		Com_Printf("Usage %s <value> <value>\n", Cmd_Argv(0));
-		return;
-	}
-
-	cl.cam.angles[PITCH] = atof(Cmd_Argv(1));
-	cl.cam.angles[YAW] = atof(Cmd_Argv(2));
-	cl.cam.angles[ROLL] = 0.0f;
-}
-
-static void CL_CamSetZoom_f (void)
-{
-	int c = Cmd_Argc();
-
-	if (c < 2) {
-		Com_Printf("Usage %s <value>\n", Cmd_Argv(0));
-		return;
-	}
-
-	Com_Printf("old zoom value: %.2f\n", cl.cam.zoom);
-	cl.cam.zoom = atof(Cmd_Argv(1));
-	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-}
-
-/**
- * @brief Makes a mapshot - called by basemapshot script command
- * @note Load a basemap and execute 'basemapshot' in console
- */
-static void CL_MakeBaseMapShot_f (void)
-{
-	if (cls.state != ca_active) {
-		Com_Printf("Load the base map before you try to use this function\n");
-		return;
-	}
-
-	cl.cam.angles[0] = 60.0f;
-	cl.cam.angles[1] = 90.0f;
-	Cvar_SetValue("r_isometric", 1);
-	/* we are interested in the second level only */
-	Cvar_SetValue("cl_worldlevel", 1);
-	MN_PushMenu("nohud", NULL);
-	/* hide any active console */
-	Key_SetDest(key_game);
-	Cmd_ExecuteString("r_screenshot tga");
-}
 
 #define SCROLL_BORDER	4
 
@@ -1179,12 +1068,8 @@ void IN_Init (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
 	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
-	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
-	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
-	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
-	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 
 	mousePosX = mousePosY = 0.0;
 
