@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sound/s_mix.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
+#include "cl_camera.h"
 #include "cl_parse.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../../common/tracing.h"
@@ -229,7 +230,7 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
  * @param[in] scale Scaling of the model (how it should be scaled after adding to map).
  * @param[in] entnum Entity number.
  * @note misc_model
- * @sa CL_ParseEntitystring
+ * @sa V_ParseEntitystring
  * @sa LM_AddToScene
  */
 localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
@@ -915,7 +916,7 @@ void LET_BrushModel (le_t *le)
 
 /**
  * @brief Adds ambient sounds from misc_sound entities
- * @sa CL_ParseEntitystring
+ * @sa V_ParseEntitystring
  */
 void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
 {

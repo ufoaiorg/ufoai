@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_particle.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_hud.h"
+#include "battlescape/cl_camera.h"
 #include "cl_sequence.h"
 #include "battlescape/cl_parse.h"
 #include "battlescape/events/e_parse.h"
@@ -869,6 +870,7 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	IN_Init();
+	CL_CameraInit();
 
 	CLMN_InitStartup();
 	TUT_InitStartup();

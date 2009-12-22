@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorstartshoot.h"
+#include "../../../cl_camera.h"
 
 int CL_ActorStartShootTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
 {

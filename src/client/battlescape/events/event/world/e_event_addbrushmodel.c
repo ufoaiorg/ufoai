@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note func_breakable, func_door
  * @sa G_SendEdictsAndBrushModels
  * @sa EV_ADD_BRUSH_MODEL
- * @sa CL_ParseEntitystring
+ * @sa V_ParseEntitystring
  */
 void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 {
