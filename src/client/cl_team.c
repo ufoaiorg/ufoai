@@ -97,7 +97,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 			mxml_AddInt(s, SAVE_CHARACTER_SKILL, chr.score.skills[k]);
 		if (k < SKILL_NUM_TYPES + 1) {
 			mxml_AddInt(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
-			/** @todo There is a Bug in storing the initial skills. Fix it in loading */
+			assert(chr.score.initialSkills[k]);
 			mxml_AddInt(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
 		}
 		if (k < KILLED_NUM_TYPES) {
@@ -148,20 +148,14 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->morale = mxml_GetInt(p, SAVE_CHARACTER_MORALE, 0);
 	chr->fieldSize = mxml_GetInt(p, SAVE_CHARACTER_FIELDSIZE, 1);
 
-	/** Load character stats/score
-	 * @sa chrScoreGlobal_t */
+	/* Load character stats/score */
 	count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
 	for (k = 0, s = mxml_GetNode(p, SAVE_CHARACTER_SCORE); s && k < count; k++, s = mxml_GetNextNode(s, p, SAVE_CHARACTER_SCORE)) {
 		if (k < SKILL_NUM_TYPES)
 			chr->score.skills[k] = mxml_GetInt(s, SAVE_CHARACTER_SKILL, 0);
 		if (k < SKILL_NUM_TYPES + 1) {
 			chr->score.experience[k] = mxml_GetInt(s, SAVE_CHARACTER_EXPERIENCE, 0);
-			/** @todo There was a Bug in storing the initial skills. Zero Values will be set to max(hp,max_hp)*/
 			chr->score.initialSkills[k] = mxml_GetInt(s, SAVE_CHARACTER_INITSKILL, 0);
-			if (k == SKILL_NUM_TYPES && chr->score.initialSkills[k] == 0) {
-				Com_DPrintf(DEBUG_CLIENT, "Skill was zero!");
-				chr->score.initialSkills[k] = max(chr->HP, chr->maxHP);
-			}
 		}
 		if (k < KILLED_NUM_TYPES) {
 			chr->score.kills[k] = mxml_GetInt(s, SAVE_CHARACTER_KILLS, 0);
