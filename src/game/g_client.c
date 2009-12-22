@@ -401,37 +401,22 @@ void G_ClientStateChange (player_t* player, edict_t* ent, int reqState, qboolean
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
-		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
+		if (ent->state & STATE_REACTION) {
 			if (G_IsShaken(ent)) {
 				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
-
-				if (G_IsAIPlayer(player) && checkaction)
-					gi.error("AI reaction fire is server side only");
 			}
 		}
 		break;
-	case STATE_REACTION_MANY: /* Request to turn on multi-reaction fire mode. */
+	/* Request to turn on multi- or single-reaction fire mode. */
+	case STATE_REACTION_MANY:
+	case STATE_REACTION_ONCE:
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
-
-		if (G_IsAIPlayer(player) && checkaction)
-			gi.error("AI reaction fire is server side only");
-
-		/* Enable multi reaction fire. */
-		ent->state |= STATE_REACTION_MANY;
-		break;
-	case STATE_REACTION_ONCE: /* Request to turn on single-reaction fire mode. */
-		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
-
-		if (G_IsAIPlayer(player) && checkaction)
-			gi.error("AI reaction fire is server side only");
-
-		/* Turn on single reaction fire. */
-		ent->state |= STATE_REACTION_ONCE;
+		/* Enable requested reaction fire. */
+		ent->state |= reqState;
 		break;
 	default:
 		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
