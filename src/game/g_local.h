@@ -392,11 +392,11 @@ void G_ClientDisconnect(player_t * player);
 void G_ActorReload(edict_t* ent, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
-void G_ClientMove(player_t * player, int visTeam, const int num, pos3_t to, qboolean stop, qboolean quiet);
+void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to, qboolean stop, qboolean quiet);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
 void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
-void G_ClientStateChange(player_t * player, int num, int reqState, qboolean checkaction);
+void G_ClientStateChange(player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
 
 void G_SendInvisible(player_t *player);

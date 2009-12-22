@@ -477,7 +477,7 @@ static int pos3L_goto (lua_State *L)
 
 	/* Move. */
 	pos = lua_topos3(L, 1);
-	G_ClientMove(AIL_player, 0, AIL_ent->number, *pos, qfalse, QUIET);
+	G_ClientMove(AIL_player, 0, AIL_ent, *pos, qfalse, QUIET);
 
 	lua_pushboolean(L, 1);
 	return 1;
@@ -651,7 +651,7 @@ static int AIL_crouch (lua_State *L)
 	if (lua_gettop(L) > 0) {
 		if (lua_isboolean(L, 1)) {
 			const int state = lua_toboolean(L, 1);
-			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_CROUCHED,
+			G_ClientStateChange(AIL_player, AIL_ent, STATE_CROUCHED,
 				(state) ? qtrue : qfalse);
 		} else
 			AIL_invalidparameter(1);
@@ -678,7 +678,7 @@ static int AIL_reactionfire (lua_State *L)
 	if (lua_gettop(L) > 0) {
 		if (lua_isboolean(L, 1)) {
 			const int state = lua_toboolean(L, 1);
-			G_ClientStateChange(AIL_player, AIL_ent->number, STATE_REACTION_ONCE,
+			G_ClientStateChange(AIL_player, AIL_ent, STATE_REACTION_ONCE,
 				(state) ? qtrue : qfalse);
 		} else
 			AIL_invalidparameter(1);
