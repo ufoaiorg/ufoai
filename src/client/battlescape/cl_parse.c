@@ -211,7 +211,6 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		s = NET_ReadString(msg);
 		Com_Printf("%s\n", s);
 		CL_Drop();	/* ensure the right menu cvars are set */
-		MN_PopMenu(qfalse);	/* leave the hud mode */
 		break;
 
 	case svc_reconnect:

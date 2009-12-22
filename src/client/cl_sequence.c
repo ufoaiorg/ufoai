@@ -169,7 +169,8 @@ static cvar_t *seq_animspeed;
  */
 static void CL_SequenceEnd_f (void)
 {
-	CL_SetClientState(ca_disconnected);
+	if (cls.state == ca_sequence)
+		CL_SetClientState(ca_disconnected);
 }
 
 

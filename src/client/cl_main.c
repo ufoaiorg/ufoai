@@ -175,7 +175,7 @@ static void CL_Quit_f (void)
  */
 void CL_Drop (void)
 {
-	CL_SetClientState(ca_disconnected);
+	CL_Disconnect();
 
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
