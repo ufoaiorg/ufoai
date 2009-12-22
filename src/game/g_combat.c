@@ -1070,7 +1070,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 	ent = g_edicts + entnum;
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
-	quiet = (mock != NULL) || player->pers.ai;
+	quiet = (mock != NULL) || G_IsAIPlayer(player);
 
 	weapon = NULL;
 	fd = NULL;

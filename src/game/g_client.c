@@ -81,7 +81,7 @@ void G_ClientPrintf (const player_t *player, int printLevel, const char *fmt, ..
 
 	/* there is no client for an AI controlled player on the server where we
 	 * could send the message to */
-	if (player->pers.ai)
+	if (G_IsAIPlayer(player))
 		return;
 
 	va_start(ap, fmt);
@@ -413,7 +413,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
 
-				if (player->pers.ai && checkaction)
+				if (G_IsAIPlayer(player) && checkaction)
 					gi.error("AI reaction fire is server side only");
 			}
 		}
@@ -422,7 +422,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
-		if (player->pers.ai && checkaction)
+		if (G_IsAIPlayer(player) && checkaction)
 			gi.error("AI reaction fire is server side only");
 
 		/* Enable multi reaction fire. */
@@ -432,7 +432,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
-		if (player->pers.ai && checkaction)
+		if (G_IsAIPlayer(player) && checkaction)
 			gi.error("AI reaction fire is server side only");
 
 		/* Turn on single reaction fire. */

@@ -120,7 +120,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 }
 
 /**
- * Triggers the end of the game. Will be executed in the next server (or game) frame.
+ * @brief Triggers the end of the game. Will be executed in the next server (or game) frame.
  * @param team The winning team
  * @param timeGap Second to wait before really ending the game. Useful if you want to allow a last view on the scene
  */

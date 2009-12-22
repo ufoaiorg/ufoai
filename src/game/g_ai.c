@@ -892,7 +892,7 @@ void AI_Run (void)
 
 	/* set players to ai players and cycle over all of them */
 	for (i = 0, player = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, player++)
-		if (player->inuse && player->pers.ai && level.activeTeam == player->pers.team) {
+		if (player->inuse && G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
 			/* find next actor to handle */
 			if (!player->pers.last)
 				ent = g_edicts;
