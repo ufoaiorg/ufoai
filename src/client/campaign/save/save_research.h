@@ -12,7 +12,7 @@
 #define SAVE_RESEARCH_PRESEC "presec"
 #define SAVE_RESEARCH_DAY "day"
 #define SAVE_RESEARCH_SEC "sec"
-#define SAVE_RESEARCH_MAILSENT"mailsent"
+#define SAVE_RESEARCH_MAILSENT "mailsent"
 #define SAVE_RESEARCH_MAIL "mail"
 #define SAVE_RESEARCH_MAIL_ID "id"
 #define SAVE_RESEARCH_READ "read"

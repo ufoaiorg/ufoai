@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_nodes.h"
 #include "battlescape/events/e_main.h"
+#include "campaign/save/save_character.h"
 
 /** @brief List of currently displayed or equipeable characters. */
 chrList_t chrDisplayList;
@@ -66,6 +67,7 @@ const char* CL_GetTeamSkinName (int id)
  * @brief saves a character to a given xml node
  * @param[in] p The node to which we should save the character
  * @param[in] chr The charcter we should save
+ * @todo move into campaign only code
  */
 qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 {
@@ -180,6 +182,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 
 /**
  * @sa CL_LoadItemXML
+ * @todo move into campaign only code
  */
 static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, int y)
 {
@@ -210,6 +213,7 @@ static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int 
 /**
  * @sa CL_SaveItemXML
  * @sa CL_LoadInventoryXML
+ * @todo move into campaign only code
  */
 void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 {
@@ -246,6 +250,7 @@ void CL_SaveInventory (sizebuf_t *buf, const inventory_t *i)
 
 /**
  * @sa CL_SaveItemXML
+ * @todo move into campaign only code
  */
 static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x, int *y)
 {
