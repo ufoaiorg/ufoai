@@ -174,19 +174,19 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
 	if (message->type == MSG_INFO)
 		return;
 
-	n = mxml_AddNode(p, "message");
-	mxml_AddString(n, "title", message->title);
-	mxml_AddString(n, "text", message->text);
-	mxml_AddInt(n, "type", message->type);
+	n = mxml_AddNode(p, SAVE_MESSAGES_MESSAGE);
+	mxml_AddString(n, SAVE_MESSAGES_TITLE, message->title);
+	mxml_AddString(n, SAVE_MESSAGES_TEXT, message->text);
+	mxml_AddInt(n, SAVE_MESSAGES_TYPE, message->type);
 	/* store script id of event mail */
 	if (message->type == MSG_EVENT) {
-		mxml_AddString(n, "eventmailid", message->eventMail->id);
-		mxml_AddBool(n, "eventmailread", message->eventMail->read);
+		mxml_AddString(n, SAVE_MESSAGES_EVENTMAILID, message->eventMail->id);
+		mxml_AddBool(n, SAVE_MESSAGES_EVENTMAILREAD, message->eventMail->read);
 	}
 	if (message->pedia)
-		mxml_AddString(n, "id", message->pedia->id);
-	mxml_AddInt(n, "day", message->date.day);
-	mxml_AddInt(n, "sec", message->date.sec);
+		mxml_AddString(n, SAVE_MESSAGES_ID, message->pedia->id);
+	mxml_AddInt(n, SAVE_MESSAGES_DAY, message->date.day);
+	mxml_AddInt(n, SAVE_MESSAGES_SEC, message->date.sec);
 }
 
 /**
@@ -196,7 +196,7 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
  */
 qboolean MS_SaveXML (mxml_node_t *p)
 {
-	mxml_node_t *n = mxml_AddNode(p, "messages");
+	mxml_node_t *n = mxml_AddNode(p, SAVE_MESSAGES_MESSAGES);
 
 	/* store message system items */
 	MS_MessageSaveXML(n, cp_messageStack);
@@ -211,22 +211,22 @@ qboolean MS_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *sn;
-	n = mxml_GetNode(p, "messages");
+	n = mxml_GetNode(p, SAVE_MESSAGES_MESSAGES);
 	if (!n)
 		return qfalse;
 
-	for (sn = mxml_GetNode(n, "message"), i = 0; sn; sn = mxml_GetNextNode(sn, n, "message"), i++) {
+	for (sn = mxml_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = mxml_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
 		int mtype;
 		char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 		/* can contain high bits due to utf8 */
-		Q_strncpyz(title, mxml_GetString(sn, "title"), sizeof(title));
-		Q_strncpyz(text,  mxml_GetString(sn, "text"),  sizeof(text));
-		mtype = mxml_GetInt(sn, "type", MSG_DEBUG);
+		Q_strncpyz(title, mxml_GetString(sn, SAVE_MESSAGES_TITLE), sizeof(title));
+		Q_strncpyz(text,  mxml_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
+		mtype = mxml_GetInt(sn, SAVE_MESSAGES_TYPE, MSG_DEBUG);
 		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(mxml_GetString(sn, "eventmailid"), qfalse);
+			mail = CL_GetEventMail(mxml_GetString(sn, SAVE_MESSAGES_EVENTMAILID), qfalse);
 			if (mail)
-				mail->read = mxml_GetBool(sn, "eventmailread", qfalse);
+				mail->read = mxml_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, qfalse);
 		} else
 			mail = NULL;
 
@@ -236,7 +236,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 			technology_t *tech;
 			message_t *mess;
 
-			Q_strncpyz(id, mxml_GetString(sn, "id"), sizeof(id));
+			Q_strncpyz(id, mxml_GetString(sn, SAVE_MESSAGES_ID), sizeof(id));
 			if (id[0] == '\0')
 				/** Invalid tech found drop message. */
 				continue;
@@ -248,8 +248,8 @@ qboolean MS_LoadXML (mxml_node_t *p)
 			}
 			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
 			mess->eventMail = mail;
-			mess->date.day = mxml_GetInt(sn, "day", 0);
-			mess->date.sec = mxml_GetInt(sn, "sec", 0);
+			mess->date.day = mxml_GetInt(sn, SAVE_MESSAGES_DAY, 0);
+			mess->date.sec = mxml_GetInt(sn, SAVE_MESSAGES_SEC, 0);
 			/* redo timestamp text after setting date */
 			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 		}

@@ -193,16 +193,16 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
-	n = mxml_AddNode(p, "nations");
+	n = mxml_AddNode(p, SAVE_NATION_NATIONS);
 	for (i = 0; i < ccs.numNations; i++) {
 		int j;
-		mxml_node_t *s = mxml_AddNode(n, "nation");
+		mxml_node_t *s = mxml_AddNode(n, SAVE_NATION_NATION);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			mxml_node_t *ss = mxml_AddNode(s, "month");
-			mxml_AddBool(ss, "inuse", ccs.nations[i].stats[j].inuse);
-			mxml_AddFloat(ss, "happiness", ccs.nations[i].stats[j].happiness);
-			mxml_AddInt(ss, "xvi", ccs.nations[i].stats[j].xviInfection);
-			mxml_AddFloat(ss, "alienfriendly", ccs.nations[i].stats[j].alienFriendly);
+			mxml_node_t *ss = mxml_AddNode(s, SAVE_NATION_MONTH);
+			mxml_AddBool(ss, SAVE_NATION_INUSE, ccs.nations[i].stats[j].inuse);
+			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, ccs.nations[i].stats[j].happiness);
+			mxml_AddInt(ss, SAVE_NATION_XVI, ccs.nations[i].stats[j].xviInfection);
+			mxml_AddFloat(ss, SAVE_NATION_ALIENFRIENDLY, ccs.nations[i].stats[j].alienFriendly);
 		}
 	}
 	return qtrue;
@@ -216,18 +216,18 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 	int i;
 	mxml_node_t *n, *s;
 
-	n = mxml_GetNode(p, "nations");
+	n = mxml_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, "nation"); s && i < ccs.numNations; i++, s = mxml_GetNextNode(s, n, "nation")) {
+	for (i = 0, s = mxml_GetNode(n, SAVE_NATION_NATION); s && i < ccs.numNations; i++, s = mxml_GetNextNode(s, n, SAVE_NATION_NATION)) {
 		mxml_node_t *ss;
 		int j;
-		for (j = 0, ss = mxml_GetNode(s, "month"); ss && j < MONTHS_PER_YEAR; j++, ss = mxml_GetNextNode(ss, s, "month")) {
-			ccs.nations[i].stats[j].inuse = mxml_GetBool(ss, "inuse", qfalse);
-			ccs.nations[i].stats[j].happiness = mxml_GetFloat(ss, "happiness", 0.0);
-			ccs.nations[i].stats[j].xviInfection = mxml_GetInt(ss, "xvi", 0);
-			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienfriendly", 0.0);
+		for (j = 0, ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss && j < MONTHS_PER_YEAR; j++, ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
+			ccs.nations[i].stats[j].inuse = mxml_GetBool(ss, SAVE_NATION_INUSE, qfalse);
+			ccs.nations[i].stats[j].happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
+			ccs.nations[i].stats[j].xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
+			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, SAVE_NATION_ALIENFRIENDLY, 0.0);
 		}
 	}
 	return qtrue;
