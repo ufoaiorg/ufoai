@@ -1,0 +1,8 @@
+#define SAVE_UFORECOVERY_STOREDUFOS "storedufos"
+#define SAVE_UFORECOVERY_UFO "ufo"
+#define SAVE_UFORECOVERY_UFOID "ufoid"
+#define SAVE_UFORECOVERY_DAY "day"
+#define SAVE_UFORECOVERY_SEC "sec"
+#define SAVE_UFORECOVERY_STATUS "status"
+#define SAVE_UFORECOVERY_CONDITION "condition"
+#define SAVE_UFORECOVERY_INSTALLATIONIDX "installationidx"

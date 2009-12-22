@@ -541,7 +541,7 @@ qboolean INS_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
-	n = mxml_AddNode(p, "installations");
+	n = mxml_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		mxml_node_t *s, *ss;
@@ -549,17 +549,17 @@ qboolean INS_SaveXML (mxml_node_t *p)
 		if (!inst->founded)
 			continue;
 
-		s = mxml_AddNode(n, "installation");
-		mxml_AddString(s, "templateid", inst->installationTemplate->id);
-		mxml_AddString(s, "name", inst->name);
-		mxml_AddPos3(s, "pos", inst->pos);
-		mxml_AddInt(s, "status", inst->installationStatus);
-		mxml_AddInt(s, "damage", inst->installationDamage);
-		mxml_AddFloat(s, "alieninterest", inst->alienInterest);
-		mxml_AddInt(s, "buildstart", inst->buildStart);
+		s = mxml_AddNode(n, SAVE_INSTALLATION_INSTALLATION);
+		mxml_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
+		mxml_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
+		mxml_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
+		mxml_AddInt(s, SAVE_INSTALLATION_STATUS, inst->installationStatus);
+		mxml_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
+		mxml_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
+		mxml_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
 
-		ss = mxml_AddNode(s, "batteries");
-		mxml_AddInt(ss, "num", inst->numBatteries);
+		ss = mxml_AddNode(s, SAVE_INSTALLATION_BATTERIES);
+		mxml_AddInt(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 	}
 	return qtrue;
@@ -574,31 +574,31 @@ qboolean INS_SaveXML (mxml_node_t *p)
 qboolean INS_LoadXML (mxml_node_t *p)
 {
 	mxml_node_t *s;
-	mxml_node_t *n = mxml_GetNode(p, "installations");
+	mxml_node_t *n = mxml_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	int i;
 
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, "installation"); s && i < MAX_INSTALLATIONS; s = mxml_GetNextNode(s,n, "installation"), i++) {
+	for (i = 0, s = mxml_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s && i < MAX_INSTALLATIONS; s = mxml_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
 		mxml_node_t *ss;
 		installation_t *inst = INS_GetInstallationByIDX(i);
 		inst->idx = INS_GetInstallationIDX(inst);
 		inst->founded = qtrue;
 
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(mxml_GetString(s, "templateid"));
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(mxml_GetString(s, SAVE_INSTALLATION_TEMPLATEID));
 		if (!inst->installationTemplate) {
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
 
-		Q_strncpyz(inst->name, mxml_GetString(s, "name"), sizeof(inst->name));
-		mxml_GetPos3(s, "pos", inst->pos);
+		Q_strncpyz(inst->name, mxml_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst->name));
+		mxml_GetPos3(s, SAVE_INSTALLATION_POS, inst->pos);
 
-		inst->installationStatus = mxml_GetInt(s, "status", 0);
-		inst->installationDamage = mxml_GetInt(s, "damage", 0);
-		inst->alienInterest = mxml_GetFloat(s, "alieninterest", 0.0);
-		inst->buildStart = mxml_GetInt(s, "buildstart", 0);
+		inst->installationStatus = mxml_GetInt(s, SAVE_INSTALLATION_STATUS, 0);
+		inst->installationDamage = mxml_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
+		inst->alienInterest = mxml_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
+		inst->buildStart = mxml_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
 
 		/* Radar */
 		RADAR_InitialiseUFOs(&inst->radar);
@@ -614,12 +614,12 @@ qboolean INS_LoadXML (mxml_node_t *p)
 
 		/* read battery slots */
 		BDEF_InitialiseInstallationSlots(inst);
-		ss = mxml_GetNode(s, "batteries");
+		ss = mxml_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
 			return qfalse;
 		}
-		inst->numBatteries = mxml_GetInt(ss, "num", 0);
+		inst->numBatteries = mxml_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
 		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
 			inst->numBatteries = inst->installationTemplate->maxBatteries;

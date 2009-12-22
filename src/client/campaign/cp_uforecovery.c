@@ -338,19 +338,19 @@ storedUFOStatus_t US_UFOStatusByID (const char *id)
 qboolean US_SaveXML (mxml_node_t *p)
 {
 	int i;
-	mxml_node_t *node = mxml_AddNode(p, "storedufos");
+	mxml_node_t *node = mxml_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 	for (i = 0; i < ccs.numStoredUFOs; i++) {
 		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-		mxml_node_t * snode = mxml_AddNode(node, "ufo");
+		mxml_node_t * snode = mxml_AddNode(node, SAVE_UFORECOVERY_UFO);
 
-		mxml_AddString(snode, "ufoid", ufo->id);
-		mxml_AddInt(snode, "day", ufo->arrive.day);
-		mxml_AddInt(snode, "sec", ufo->arrive.sec);
-		mxml_AddString(snode, "status", ufostatus_strings[ufo->status]);
-		mxml_AddFloat(snode, "condition", ufo->condition);
+		mxml_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
+		mxml_AddInt(snode, SAVE_UFORECOVERY_DAY, ufo->arrive.day);
+		mxml_AddInt(snode, SAVE_UFORECOVERY_SEC, ufo->arrive.sec);
+		mxml_AddString(snode, SAVE_UFORECOVERY_STATUS, ufostatus_strings[ufo->status]);
+		mxml_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
 		if (ufo->installation)
-			mxml_AddInt(snode, "installationidx", ufo->installation->idx);
+			mxml_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
 	}
 	return qtrue;
 }
@@ -365,20 +365,20 @@ qboolean US_LoadXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *node, *snode;
 
-	node = mxml_GetNode(p, "storedufos");
+	node = mxml_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
-	for (i = 0, snode = mxml_GetNode(node, "ufo"); i < MAX_STOREDUFOS && snode;
-			i++, snode = mxml_GetNextNode(snode, node, "ufo")) {
+	for (i = 0, snode = mxml_GetNode(node, SAVE_UFORECOVERY_UFO); i < MAX_STOREDUFOS && snode;
+			i++, snode = mxml_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
 
-		aircraft_t *ufoTemplate = AIR_GetAircraft(mxml_GetString(snode, "ufoid"));
-		installation_t *inst = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, "installationidx", MAX_INSTALLATIONS));
-		storedUFOStatus_t status = US_UFOStatusByID(mxml_GetString(snode, "status"));
+		aircraft_t *ufoTemplate = AIR_GetAircraft(mxml_GetString(snode, SAVE_UFORECOVERY_UFOID));
+		installation_t *inst = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
+		storedUFOStatus_t status = US_UFOStatusByID(mxml_GetString(snode, SAVE_UFORECOVERY_STATUS));
 		date_t arrive;
 		storedUFO_t *ufo;
-		float condition = mxml_GetFloat(snode, "condition", 1.0f);
+		float condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 
-		arrive.day = mxml_GetInt(snode, "day", 0);
-		arrive.sec = mxml_GetInt(snode, "sec", 0);
+		arrive.day = mxml_GetInt(snode, SAVE_UFORECOVERY_DAY, 0);
+		arrive.sec = mxml_GetInt(snode, SAVE_UFORECOVERY_SEC, 0);
 
 		if (!ufoTemplate)
 			return qfalse;

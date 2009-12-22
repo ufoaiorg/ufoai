@@ -386,19 +386,19 @@ qboolean AB_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *s;
-	n = mxml_GetNode(p, "alienbases");
+	n = mxml_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
 	if (!n)
 		return qfalse;
-	ccs.numAlienBases = mxml_GetInt(n, "num", 0);
-	for (i = 0, s = mxml_GetNode(n, "base"); i < MAX_ALIEN_BASES && s; i++, s = mxml_GetNextNode(s, n, "base")) {
+	ccs.numAlienBases = mxml_GetInt(n, SAVE_ALIENBASE_NUM, 0);
+	for (i = 0, s = mxml_GetNode(n, SAVE_ALIENBASE_BASE); i < MAX_ALIEN_BASES && s; i++, s = mxml_GetNextNode(s, n, SAVE_ALIENBASE_BASE)) {
 		alienBase_t *base = &ccs.alienBases[i];
 		base->idx = (ptrdiff_t)(base - ccs.alienBases);
-		if (!mxml_GetPos2(s, "pos", base->pos)) {
+		if (!mxml_GetPos2(s, SAVE_ALIENBASE_POS, base->pos)) {
 			Com_Printf("Position is invalid for Alienbase %d (idx %d)\n", i, base->idx);
 			return qfalse;
 		}
-		base->supply = mxml_GetInt(s, "supply", 0);
-		base->stealth = mxml_GetFloat(s, "stealth", 0.0);
+		base->supply = mxml_GetInt(s, SAVE_ALIENBASE_SUPPLY, 0);
+		base->stealth = mxml_GetFloat(s, SAVE_ALIENBASE_STEALTH, 0.0);
 	}
 	return qtrue;
 }
@@ -410,15 +410,15 @@ qboolean AB_LoadXML (mxml_node_t *p)
 qboolean AB_SaveXML (mxml_node_t *p)
 {
 	int i;
-	mxml_node_t *n = mxml_AddNode(p, "alienbases");
+	mxml_node_t *n = mxml_AddNode(p, SAVE_ALIENBASE_ALIENBASES);
 
-	mxml_AddInt(n, "num", ccs.numAlienBases);
+	mxml_AddInt(n, SAVE_ALIENBASE_NUM, ccs.numAlienBases);
 	for (i = 0; i < MAX_ALIEN_BASES; i++) {
 		const alienBase_t *base = &ccs.alienBases[i];
-		mxml_node_t *s = mxml_AddNode(n, "base");
-		mxml_AddPos2(s, "pos", base->pos);
-		mxml_AddInt(s, "supply", base->supply);
-		mxml_AddFloat(s, "stealth", base->stealth);
+		mxml_node_t *s = mxml_AddNode(n, SAVE_ALIENBASE_BASE);
+		mxml_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
+		mxml_AddInt(s, SAVE_ALIENBASE_SUPPLY, base->supply);
+		mxml_AddFloat(s, SAVE_ALIENBASE_STEALTH, base->stealth);
 	}
 	return qtrue;
 }

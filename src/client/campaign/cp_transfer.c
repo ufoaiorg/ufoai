@@ -1807,20 +1807,20 @@ qboolean TR_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
-	n = mxml_AddNode(p, "transfers");
+	n = mxml_AddNode(p, SAVE_TRANSFER_TRANSFERS);
 
 	for (i = 0; i < ccs.numTransfers; i++) {
 		int j;
 		const transfer_t *transfer = &ccs.transfers[i];
 		mxml_node_t *s;
 
-		s = mxml_AddNode(n, "transfer");
+		s = mxml_AddNode(n, SAVE_TRANSFER_TRANSFER);
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
 				if (transfer->itemAmount[j] >0) {
-					mxml_node_t *ss = mxml_AddNode(s, "item");
-					mxml_AddInt(ss, "itemid", j);
-					mxml_AddInt(ss, "amount", transfer->itemAmount[j]);
+					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_ITEM);
+					mxml_AddInt(ss, SAVE_TRANSFER_ITEMID, j);
+					mxml_AddInt(ss, SAVE_TRANSFER_AMOUNT, transfer->itemAmount[j]);
 				}
 			}
 		}
@@ -1828,12 +1828,12 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0 || transfer->alienAmount[j][TRANS_ALIEN_DEAD]> 0)
 				{
-					mxml_node_t *ss = mxml_AddNode(s, "alien");
-					mxml_AddInt(ss, "alienid", j);
+					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_ALIEN);
+					mxml_AddInt(ss, SAVE_TRANSFER_ALIENID, j);
 					if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] > 0)
-						mxml_AddInt(ss, "aliveamount", transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
+						mxml_AddInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
 					if (transfer->alienAmount[j][TRANS_ALIEN_DEAD] > 0)
-						mxml_AddInt(ss, "deadamount", transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+						mxml_AddInt(ss, SAVE_TRANSFER_DEADAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 				}
 			}
 		}
@@ -1842,32 +1842,32 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				int k;
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
 					if (transfer->employeeArray[j][k]) {
-						mxml_node_t *ss = mxml_AddNode(s, "employee");
-						mxml_AddInt(ss, "group", j);
-						mxml_AddInt(ss, "empl", k);
-						mxml_AddInt(ss, "idx", transfer->employeeArray[j][k]->idx);
+						mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
+						mxml_AddInt(ss, SAVE_TRANSFER_GROUP, j);
+						mxml_AddInt(ss, SAVE_TRANSFER_EMPL, k);
+						mxml_AddInt(ss, SAVE_TRANSFER_IDX, transfer->employeeArray[j][k]->idx);
 					}
 				}
 			}
 		}
 		if (transfer->hasAircraft) {
 			for (j = 0; j < MAX_AIRCRAFT; j++) {
-				mxml_node_t *ss = mxml_AddNode(s, "aircraft");
-				mxml_AddInt(ss, "id", j);
-				mxml_AddInt(ss, "air", transfer->aircraftArray[j]);
+				mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
+				mxml_AddInt(ss, SAVE_TRANSFER_ID, j);
+				mxml_AddInt(ss, SAVE_TRANSFER_AIR, transfer->aircraftArray[j]);
 			}
 		}
 		if (transfer->destBase)
-			mxml_AddInt(s, "destbase", transfer->destBase->idx);
+			mxml_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
 		if (transfer->srcBase)
-			mxml_AddInt(s, "srcbase", transfer->srcBase->idx);
+			mxml_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
 		if (transfer->active && !transfer->destBase) {
 			Com_Printf("Could not save transfer, active is true, but no destBase is set\n");
 			return qfalse;
 		}
-		mxml_AddBool(s, "active", transfer->active);
-		mxml_AddInt(s, "day", transfer->event.day);
-		mxml_AddInt(s, "sec", transfer->event.sec);
+		mxml_AddBool(s, SAVE_TRANSFER_ACTIVE, transfer->active);
+		mxml_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
+		mxml_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
 	}
 	return qtrue;
 }
@@ -1881,18 +1881,18 @@ qboolean TR_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *s;
-	n = mxml_GetNode(p, "transfers");
+	n = mxml_GetNode(p, SAVE_TRANSFER_TRANSFERS);
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, "transfer"); s && i < MAX_TRANSFERS; i++, s = mxml_GetNextNode(s, n, "transfer")) {
+	for (i = 0, s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && i < MAX_TRANSFERS; i++, s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
 		byte destBase, srcBase;
 		mxml_node_t *ss;
 		transfer_t *transfer = &ccs.transfers[i];
 
-		transfer->event.day = mxml_GetInt(s, "day", 0);
-		transfer->event.sec = mxml_GetInt(s, "sec", 0);
-		transfer->active = mxml_GetBool(s, "active", qfalse);
+		transfer->event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
+		transfer->event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
+		transfer->active = mxml_GetBool(s, SAVE_TRANSFER_ACTIVE, qfalse);
 		if (transfer->active)
 			ccs.numTransfers++;
 		/* Initializing some variables */
@@ -1906,23 +1906,23 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
 
 		/* If there is at last one element, hasItems is true */
-		ss = mxml_GetNode(s, "item");
+		ss = mxml_GetNode(s, SAVE_TRANSFER_ITEM);
 		if (ss) {
-			transfer->hasItems=qtrue;
-			for (; ss; ss = mxml_GetNextNode(ss, s, "item")) {
-				const int itemId = mxml_GetInt(ss, "itemid", 0);
+			transfer->hasItems = qtrue;
+			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
+				const int itemId = mxml_GetInt(ss, SAVE_TRANSFER_ITEMID, 0);
 				if (itemId < MAX_OBJDEFS)
-					transfer->itemAmount[itemId] = mxml_GetInt(ss, "amount", 1);
+					transfer->itemAmount[itemId] = mxml_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
 			}
 		}
 
-		ss = mxml_GetNode(s, "alien");
+		ss = mxml_GetNode(s, SAVE_TRANSFER_ALIEN);
 		if (ss) {
 			transfer->hasAliens = qtrue;
-			for (; ss; ss = mxml_GetNextNode(ss, s, "alien")) {
-				const int alive = mxml_GetInt(ss, "aliveamount", 0);
-				const int dead  = mxml_GetInt(ss, "deadamount", 0);
-				const int id = mxml_GetInt(ss, "alienid", 0);
+			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
+				const int alive = mxml_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
+				const int dead  = mxml_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
+				const int id = mxml_GetInt(ss, SAVE_TRANSFER_ALIENID, 0);
 				if (id >= 0 && id < ccs.numAliensTD) {
 					transfer->alienAmount[id][TRANS_ALIEN_ALIVE] = alive;
 					transfer->alienAmount[id][TRANS_ALIEN_DEAD] = dead;
@@ -1931,13 +1931,13 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				}
 			}
 		}
-		ss = mxml_GetNode(s, "employee");
+		ss = mxml_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
 		if (ss) {
 			transfer->hasEmployees = qtrue;
-			for (; ss; ss = mxml_GetNextNode(ss, s, "employee")) {
-				const int emplIdx = mxml_GetInt(ss, "idx", 0);
-				const int group = mxml_GetInt(ss, "group", 0);
-				const int empl = mxml_GetInt(ss, "empl", 0);
+			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
+				const int emplIdx = mxml_GetInt(ss, SAVE_TRANSFER_IDX, 0);
+				const int group = mxml_GetInt(ss, SAVE_TRANSFER_GROUP, 0);
+				const int empl = mxml_GetInt(ss, SAVE_TRANSFER_EMPL, 0);
 				if (group >= 0 && group < MAX_EMPL && empl >= 0 && empl < MAX_EMPLOYEES) {
 					if (emplIdx >= 0) {
 						transfer->employeeArray[group][empl] = &ccs.employees[group][emplIdx];
@@ -1948,22 +1948,22 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				}
 			}
 		}
-		ss = mxml_GetNode(s, "aircraft");
+		ss = mxml_GetNode(s, SAVE_TRANSFER_AIRCRAFT);
 		if (ss) {
 			transfer->hasAircraft = qtrue;
-			for (; ss; ss = mxml_GetNextNode(ss, s, "aircraft")) {
-				const int j = mxml_GetInt(ss, "id", 0);
-				const int airc = mxml_GetInt(ss, "air", TRANS_LIST_EMPTY_SLOT);
+			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
+				const int j = mxml_GetInt(ss, SAVE_TRANSFER_ID, 0);
+				const int airc = mxml_GetInt(ss, SAVE_TRANSFER_AIR, TRANS_LIST_EMPTY_SLOT);
 				if (j >= 0 && j < MAX_AIRCRAFT)
 					transfer->aircraftArray[j] = airc;
 			}
 		}
 		assert(ccs.numBases);
-		destBase = mxml_GetInt(s, "destbase", BYTES_NONE);
+		destBase = mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE);
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
 		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
 		 * for transfer->destbase and return qfalse here */
-		srcBase = mxml_GetInt(s, "srcbase", BYTES_NONE);
+		srcBase = mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE);
 		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
 	}
 

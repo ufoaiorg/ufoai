@@ -245,20 +245,20 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 		return qtrue;
 
 	/* ok, do the saving... */
-	n = mxml_AddNode(p, "xvi");
-	mxml_AddInt(n, "width", width);
-	mxml_AddInt(n, "height", height);
-	mxml_AddInt(n, "default", defaultval);
+	n = mxml_AddNode(p, SAVE_XVI_XVI);
+	mxml_AddInt(n, SAVE_XVI_WIDTH, width);
+	mxml_AddInt(n, SAVE_XVI_HEIGHT, height);
+	mxml_AddInt(n, SAVE_XVI_DEFAULT, defaultval);
 
 	for (y = 0; y < height; y++) {
 		int x;
 		for (x = 0; x < width; x++) {
 			/* That saves many bytes in the savegame */
 			if (out[y * width + x] != defaultval) {
-				mxml_node_t *s = mxml_AddNode(n, "entry");
-				mxml_AddInt(s, "x", x);
-				mxml_AddInt(s, "y", y);
-				mxml_AddInt(s, "xv", out[y * width + x]);
+				mxml_node_t *s = mxml_AddNode(n, SAVE_XVI_ENTRY);
+				mxml_AddInt(s, SAVE_XVI_Y, x);
+				mxml_AddInt(s, SAVE_XVI_Y, y);
+				mxml_AddInt(s, SAVE_XVI_XV, out[y * width + x]);
 			}
 		}
 	}
@@ -277,16 +277,16 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	int width, height;
 	mxml_node_t *s;
 	int defaultval;
-	mxml_node_t *n = mxml_GetNode(p, "xvi");
+	mxml_node_t *n = mxml_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
 		R_InitializeXVIOverlay(NULL);
 		return qtrue;
 	}
 
-	width = mxml_GetInt(n, "width", 0);
-	height = mxml_GetInt(n, "height", 0);
-	defaultval = mxml_GetInt(n, "default", 0);
+	width = mxml_GetInt(n, SAVE_XVI_WIDTH, 0);
+	height = mxml_GetInt(n, SAVE_XVI_HEIGHT, 0);
+	defaultval = mxml_GetInt(n, SAVE_XVI_DEFAULT, 0);
 
 	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
 	if (!out)
@@ -294,11 +294,11 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 
 	memset(out, defaultval, sizeof(out)); /*setting the whole array to the defaultval. That saves much memory in saving */
 
-	for (s = mxml_GetNode(n, "entry"); s; s = mxml_GetNextNode(s, n, "entry")) {
-		const int x = mxml_GetInt(s, "x", 0);
-		const int y = mxml_GetInt(s, "y", 0);
+	for (s = mxml_GetNode(n, SAVE_XVI_ENTRY); s; s = mxml_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
+		const int x = mxml_GetInt(s, SAVE_XVI_X, 0);
+		const int y = mxml_GetInt(s, SAVE_XVI_Y, 0);
 		if (x >= 0 && x < width && y >= 0 && y <= height)
-			out[y * width + x] = mxml_GetInt(s, "xv", 0);
+			out[y * width + x] = mxml_GetInt(s, SAVE_XVI_XV, 0);
 	}
 
 	R_InitializeXVIOverlay(out);

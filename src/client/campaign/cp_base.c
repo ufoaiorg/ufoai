@@ -2736,11 +2736,11 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml
 	int i;
 
 	for (i = 0; i < numWeapons; i++) {
-		mxml_node_t *sub = mxml_AddNode(node, "weapon");
+		mxml_node_t *sub = mxml_AddNode(node, SAVE_BASES_WEAPON);
 		B_SaveOneSlotXML(&weapons[i].slot, sub, qtrue);
-		mxml_AddBool(sub, "autofire", weapons[i].autofire);
+		mxml_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
-			mxml_AddInt(sub, "target", weapons[i].target->idx);
+			mxml_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
 	}
 }
 
@@ -2749,7 +2749,7 @@ qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 	int k;
 	for (k = 0; k < MAX_OBJDEFS; k++) {
 		if (csi.ods[k].id[0] != '\0') {
-			mxml_node_t *node = mxml_AddNode(parent, "item");
+			mxml_node_t *node = mxml_AddNode(parent, SAVE_BASES_ITEM);
 			mxml_AddString(node, SAVE_BASES_ODS_ID, csi.ods[k].id);
 			mxml_AddInt(node, SAVE_BASES_NUM, equip.num[k]);
 			mxml_AddByte(node, SAVE_BASES_NUMLOOSE, equip.numLoose[k]);
