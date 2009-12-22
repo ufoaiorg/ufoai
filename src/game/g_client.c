@@ -403,7 +403,7 @@ void G_ClientStateChange (player_t* player, edict_t* ent, int reqState, qboolean
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
 			if (G_IsShaken(ent)) {
-				G_ClientPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
+				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
