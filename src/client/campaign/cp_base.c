@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
 #include "cp_ufo.h"
+#include "save/save_base.h"
 
 vec2_t newBasePos;
 static cvar_t *cp_initial_equipment;
@@ -2715,19 +2716,19 @@ static void B_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboole
 	const objDef_t *ammo = slot->ammo;
 	const objDef_t *nextAmmo = slot->nextAmmo;
 	if (slot->item)
-		mxml_AddString(p, "itemid", slot->item->id);
+		mxml_AddString(p, SAVE_BASES_ITEMID, slot->item->id);
 	if (weapon && ammo)
-		mxml_AddString(p, "ammoid", ammo->id);
+		mxml_AddString(p, SAVE_BASES_AMMOID, ammo->id);
 	if (slot->nextItem)
-		mxml_AddString(p, "nextitemid", slot->nextItem->id);
+		mxml_AddString(p, SAVE_BASES_NEXTITEMID, slot->nextItem->id);
 	if (weapon && nextAmmo)
-		mxml_AddString(p, "nextammoid", nextAmmo->id);
-	mxml_AddInt(p, "installationtime", slot->installationTime);
+		mxml_AddString(p, SAVE_BASES_NEXTAMMOID, nextAmmo->id);
+	mxml_AddInt(p, SAVE_BASES_INSTALLATIONTIME, slot->installationTime);
 	/* everything below is only for weapon */
 	if (!weapon)
 		return;
-	mxml_AddInt(p, "ammoleft", slot->ammoLeft);
-	mxml_AddInt(p, "delaynextshot", slot->delayNextShot);
+	mxml_AddInt(p, SAVE_BASES_AMMOLEFT, slot->ammoLeft);
+	mxml_AddInt(p, SAVE_BASES_DELAYNEXTSHOT, slot->delayNextShot);
 }
 
 void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml_node_t *node)
@@ -2749,9 +2750,9 @@ qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 	for (k = 0; k < MAX_OBJDEFS; k++) {
 		if (csi.ods[k].id[0] != '\0') {
 			mxml_node_t *node = mxml_AddNode(parent, "item");
-			mxml_AddString(node, "ods.id", csi.ods[k].id);
-			mxml_AddInt(node, "num", equip.num[k]);
-			mxml_AddByte(node, "numloose", equip.numLoose[k]);
+			mxml_AddString(node, SAVE_BASES_ODS_ID, csi.ods[k].id);
+			mxml_AddInt(node, SAVE_BASES_NUM, equip.num[k]);
+			mxml_AddByte(node, SAVE_BASES_NUMLOOSE, equip.numLoose[k]);
 		}
 	}
 	return qtrue;
@@ -2764,86 +2765,82 @@ qboolean B_SaveXML (mxml_node_t *parent)
 	int i;
 	mxml_node_t * bases;
 
-	bases = mxml_AddNode(parent, "bases");
-	mxml_AddInt(bases, "ccs.numaircrafts", ccs.numAircraft);
+	bases = mxml_AddNode(parent, SAVE_BASES_BASES);
+	mxml_AddInt(bases, SAVE_BASES_NUMAIRCRAFT, ccs.numAircraft);
 
 	for (i = 0; i < MAX_BASES; i++) {
 		int k;
 		mxml_node_t * act_base, *node;
 		const base_t *b = B_GetBaseByIDX(i);
-		act_base = mxml_AddNode(bases, "base");
-		mxml_AddBool(act_base, "founded", b->founded);
+		act_base = mxml_AddNode(bases, SAVE_BASES_BASE);
+		mxml_AddBool(act_base, SAVE_BASES_FOUNDED, b->founded);
 		if (!b->founded)
 			continue;
-		mxml_AddString(act_base, "name", b->name);
+		mxml_AddString(act_base, SAVE_BASES_NAME, b->name);
 
-		mxml_AddPos3(act_base, "pos", b->pos);
+		mxml_AddPos3(act_base, SAVE_BASES_POS, b->pos);
 
-		node = mxml_AddNode(act_base, "buildingspace");
+		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
 		for (k = 0; k < BASE_SIZE; k++) {
 			int l;
 			for (l = 0; l < BASE_SIZE; l++) {
-				/*basey = mxml_AddNode(basex, "y");*/
-				mxml_node_t * snode = mxml_AddNode(node, "building");
-				mxml_AddInt(snode, "k", k);
-				mxml_AddInt(snode, "l", l);
-				mxml_AddInt(snode, "buildingidx", b->map[k][l].building ? b->map[k][l].building->idx : BYTES_NONE);
-				mxml_AddBool(snode, "blocked", b->map[k][l].blocked);
-				mxml_AddInt(snode, "posx", b->map[k][l].posX);
-				mxml_AddInt(snode, "posy", b->map[k][l].posY);
+				mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
+				mxml_AddInt(snode, SAVE_BASES_K, k);
+				mxml_AddInt(snode, SAVE_BASES_L, l);
+				mxml_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building ? b->map[k][l].building->idx : BYTES_NONE);
+				mxml_AddBool(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
+				mxml_AddInt(snode, SAVE_BASES_POSX, b->map[k][l].posX);
+				mxml_AddInt(snode, SAVE_BASES_POSY, b->map[k][l].posY);
 			}
 		}
-		node = mxml_AddNode(act_base, "buildings");
+		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGS);
 		for (k = 0; k < MAX_BUILDINGS; k++) {
 			mxml_node_t * snode;
 			const building_t *building = &ccs.buildings[i][k];
 			if (!building->tpl)
 				continue;
-			snode = mxml_AddNode(node, "building");
-			mxml_AddString(snode, "buildingtype", building->tpl->id);
-			mxml_AddInt(snode, "building_place", k);
-			mxml_AddInt(snode, "buildingstatus", building->buildingStatus);
-			mxml_AddInt(snode, "buildingtimestart", building->timeStart);
-			mxml_AddInt(snode, "buildingbuildtime", building->buildTime);
-			mxml_AddFloat(snode, "buildinglevel", building->level);
-			mxml_AddPos2(snode, "pos", building->pos);
+			snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
+			mxml_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
+			mxml_AddInt(snode, SAVE_BASES_BUILDING_PLACE, k);
+			mxml_AddInt(snode, SAVE_BASES_BUILDINGSTATUS, building->buildingStatus);
+			mxml_AddInt(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart);
+			mxml_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
+			mxml_AddFloat(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
+			mxml_AddPos2(snode, SAVE_BASES_POS, building->pos);
 		}
-		mxml_AddInt(act_base, "numbuildings", ccs.numBuildings[i]);
-		mxml_AddShort(act_base, "basestatus", b->baseStatus);
-		mxml_AddFloat(act_base, "alieninterest", b->alienInterest);
+		mxml_AddInt(act_base, SAVE_BASES_NUMBUILDINGS, ccs.numBuildings[i]);
+		mxml_AddShort(act_base, SAVE_BASES_BASESTATUS, b->baseStatus);
+		mxml_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
 
-		node = mxml_AddNode(act_base, "batteries");
+		node = mxml_AddNode(act_base, SAVE_BASES_BATTERIES);
 		B_SaveBaseSlotsXML(b->batteries, b->numBatteries, node);
 
-		node = mxml_AddNode(act_base, "lasers");
+		node = mxml_AddNode(act_base, SAVE_BASES_LASERS);
 		B_SaveBaseSlotsXML(b->lasers, b->numLasers, node);
 
-		mxml_AddInt(act_base, "currentaircraftidx", AIR_GetAircraftIDXInBase(b->aircraftCurrent));
-		node = mxml_AddNode(act_base, "aircrafts");
+		mxml_AddInt(act_base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIR_GetAircraftIDXInBase(b->aircraftCurrent));
+		node = mxml_AddNode(act_base, SAVE_BASES_AIRCRAFTS);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			const aircraft_t* const aircraft = &b->aircraft[k];
-			mxml_node_t * snode;
-			/*const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);*/
-			snode = mxml_AddNode(node, "aircraft");
+			mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_AIRCRAFT);
 			AIR_SaveAircraftXML(snode, aircraft, qfalse);
 		}
 		/* store equipment */
-		node = mxml_AddNode(act_base, "storage");
+		node = mxml_AddNode(act_base, SAVE_BASES_STORAGE);
 		B_SaveStorageXML(node, b->storage);
-		mxml_AddInt(act_base, "radarrange", b->radar.range);
-		mxml_AddInt(act_base, "trackingrange", b->radar.trackingRange);
+		mxml_AddInt(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
+		mxml_AddInt(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
 
 		/* Alien Containment. */
-		node = mxml_AddNode(act_base, "alienscont");
+		node = mxml_AddNode(act_base, SAVE_BASES_ALIENCONT);
 		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
-			mxml_node_t * snode = mxml_AddNode(node, "alien");
+			mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_ALIEN);
 			assert(b->alienscont);
-			/*assert(b->alienscont[k]);*/
 			assert(b->alienscont[k].teamDef);
 			assert(b->alienscont[k].teamDef->id);
-			mxml_AddString(snode, "id", b->alienscont[k].teamDef->id);
-			mxml_AddInt(snode, "amountalive", b->alienscont[k].amountAlive);
-			mxml_AddInt(snode, "amountdead", b->alienscont[k].amountDead);
+			mxml_AddString(snode, SAVE_BASES_ID, b->alienscont[k].teamDef->id);
+			mxml_AddInt(snode, SAVE_BASES_AMOUNTALIVE, b->alienscont[k].amountAlive);
+			mxml_AddInt(snode, SAVE_BASES_AMOUNTDEAD, b->alienscont[k].amountDead);
 		}
 
 	}
@@ -2859,10 +2856,10 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *s;
-	for (i = 0, s = mxml_GetNode(p, "weapon"); s && i < max; i++, s = mxml_GetNextNode(s, p, "weapon")) {
-		const int target = mxml_GetInt(s, "target", -1);
+	for (i = 0, s = mxml_GetNode(p, SAVE_BASES_WEAPON); s && i < max; i++, s = mxml_GetNextNode(s, p, SAVE_BASES_WEAPON)) {
+		const int target = mxml_GetInt(s, SAVE_BASES_TARGET, -1);
 		AIR_LoadOneSlotXML(&weapons[i].slot, s, qtrue);
-		weapons[i].autofire = mxml_GetBool(s, "autofire", qtrue);
+		weapons[i].autofire = mxml_GetBool(s, SAVE_BASES_AUTOFIRE, qtrue);
 		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : NULL;
 	}
 	return i;
@@ -2897,15 +2894,14 @@ void B_PostLoadInit (void)
 qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 {
 	mxml_node_t *node;
-	for (node = mxml_GetNode(parent, "item"); node; node = mxml_GetNextNode(node, parent, "item")) {
-		const char *s = mxml_GetString(node, "ods.id");
+	for (node = mxml_GetNode(parent, SAVE_BASES_ITEM); node; node = mxml_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
+		const char *s = mxml_GetString(node, SAVE_BASES_ODS_ID);
 		objDef_t *od = INVSH_GetItemByID(s);
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);
 		} else {
-			equip->num[od->idx] = mxml_GetInt(node, "num", 0);
-			equip->numLoose[od->idx] = mxml_GetInt(node, "numloose", 0);
-			/*Com_Printf("B_LoadStorageXML: Loding %s Num %d, numLoose %d\n", s, equip->num[od->idx], equip->numLoose[od->idx]);*/
+			equip->num[od->idx] = mxml_GetInt(node, SAVE_BASES_NUM, 0);
+			equip->numLoose[od->idx] = mxml_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
 		}
 	}
 	return qtrue;
@@ -2922,38 +2918,39 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		Com_Printf("Error: Base Node wasn't found in savegame\n");
 		return qfalse;
 	}
-	ccs.numAircraft = mxml_GetInt(bases, "ccs.numaircrafts", 0);
+	ccs.numAircraft = mxml_GetInt(bases, SAVE_BASES_NUMAIRCRAFT, 0);
 
-	for (base = mxml_GetNode(bases, "base"), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, "base")) {
+	for (base = mxml_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		mxml_node_t * node, * snode;
 		int k;
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
 		b->idx = B_GetBaseIDX(b);
-		b->founded = mxml_GetBool(base, "founded", qfalse);
+		b->founded = mxml_GetBool(base, SAVE_BASES_FOUNDED, qfalse);
 		if (!b->founded)
 			continue;
 
-		Q_strncpyz(b->name, mxml_GetString(base, "name"), sizeof(b->name));
+		Q_strncpyz(b->name, mxml_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
 
-		mxml_GetPos3(base, "pos", b->pos);
+		mxml_GetPos3(base, SAVE_BASES_POS, b->pos);
 
-		node = mxml_GetNode(base, "buildingspace");
-		for (snode = mxml_GetNode(node, "building"); snode; snode = mxml_GetNextNode(snode, node, "building")) {
-			const int j = mxml_GetInt(snode, "k", 0);
-			const int l = mxml_GetInt(snode, "l", 0);
-			buildingIdx = mxml_GetInt(snode, "buildingidx", BYTES_NONE);
+		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
+		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
+			const int j = mxml_GetInt(snode, SAVE_BASES_K, 0);
+			const int l = mxml_GetInt(snode, SAVE_BASES_L, 0);
+			buildingIdx = mxml_GetInt(snode, SAVE_BASES_BUILDINGINDEX, BYTES_NONE);
 			if (buildingIdx != BYTES_NONE)
-				b->map[j][l].building = &ccs.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+				/* The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+				b->map[j][l].building = &ccs.buildings[i][buildingIdx];
 			else
 				b->map[j][l].building = NULL;
-			b->map[j][l].blocked = mxml_GetBool(snode, "blocked", qfalse);
-			b->map[j][l].posX = mxml_GetInt(snode, "posx", 0);
-			b->map[j][l].posY = mxml_GetInt(snode, "posy", 0);
+			b->map[j][l].blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
+			b->map[j][l].posX = mxml_GetInt(snode, SAVE_BASES_POSX, 0);
+			b->map[j][l].posY = mxml_GetInt(snode, SAVE_BASES_POSY, 0);
 		}
-		node = mxml_GetNode(base, "buildings");
-		for (snode = mxml_GetNode(node, "building"); snode; snode = mxml_GetNextNode(snode, node, "building")) {
-			const int buildId = mxml_GetInt(snode, "building_place", 0);
+		node = mxml_GetNode(base, SAVE_BASES_BUILDINGS);
+		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
+			const int buildId = mxml_GetInt(snode, SAVE_BASES_BUILDING_PLACE, 0);
 			building_t *building;
 			char buildingType[MAX_VAR];
 			if (buildId >= MAX_BUILDINGS) {
@@ -2962,7 +2959,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			}
 			building = &ccs.buildings[i][buildId];
 
-			Q_strncpyz(buildingType, mxml_GetString(snode, "buildingtype"), sizeof(buildingType));
+			Q_strncpyz(buildingType, mxml_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
 			if (buildingType[0] == '\0')
 				return qfalse;
 
@@ -2975,36 +2972,36 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				return qfalse;
 			}
 			building->base = b;
-			building->buildingStatus = mxml_GetInt(snode, "buildingstatus", 0);
-			building->timeStart = mxml_GetInt(snode, "buildingtimestart", 0);
-			building->buildTime = mxml_GetInt(snode, "buildingbuildtime", 0);
-			building->level = mxml_GetFloat(snode, "buildinglevel", 0);
-			mxml_GetPos2(snode, "pos", building->pos);
+			building->buildingStatus = mxml_GetInt(snode, SAVE_BASES_BUILDINGSTATUS, 0);
+			building->timeStart = mxml_GetInt(snode, SAVE_BASES_BUILDINGTIMESTART, 0);
+			building->buildTime = mxml_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
+			building->level = mxml_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
+			mxml_GetPos2(snode, SAVE_BASES_POS, building->pos);
 		}
 
-		ccs.numBuildings[i] = mxml_GetInt(base, "numbuildings", 0);
-		b->baseStatus = mxml_GetShort(base, "basestatus", 0);
-		b->alienInterest = mxml_GetFloat(base, "alieninterest", 0.0);
+		ccs.numBuildings[i] = mxml_GetInt(base, SAVE_BASES_NUMBUILDINGS, 0);
+		b->baseStatus = mxml_GetShort(base, SAVE_BASES_BASESTATUS, 0);
+		b->alienInterest = mxml_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
 		BDEF_InitialiseBaseSlots(b);
 
 		/* read missile battery slots */
-		node = mxml_GetNode(base, "batteries");
+		node = mxml_GetNode(base, SAVE_BASES_BATTERIES);
 		if (node)
 			b->numBatteries = B_LoadBaseSlotsXML(b->batteries, MAX_BASE_SLOT, node);
 		/* read laser battery slots */
-		node = mxml_GetNode(base, "lasers");
+		node = mxml_GetNode(base, SAVE_BASES_LASERS);
 		if (node)
 			b->numLasers = B_LoadBaseSlotsXML(b->lasers, MAX_BASE_SLOT, node);
 
 		b->aircraftCurrent = NULL;
-		aircraftIdxInBase = mxml_GetInt(base, "currentaircraftidx", AIRCRAFT_INBASE_INVALID);
+		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
 		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
 			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
 
-		node = mxml_GetNode(base, "aircrafts");
-		for (k = 0, snode = mxml_GetNode(node, "aircraft"); k < MAX_AIRCRAFT && snode;
-				snode = mxml_GetNextNode(snode, node, "aircraft"), k++) {
-			const aircraft_t *const model = AIR_GetAircraft(mxml_GetString(snode, "id"));
+		node = mxml_GetNode(base, SAVE_BASES_AIRCRAFTS);
+		for (k = 0, snode = mxml_GetNode(node, SAVE_BASES_AIRCRAFT); k < MAX_AIRCRAFT && snode;
+				snode = mxml_GetNextNode(snode, node, SAVE_BASES_AIRCRAFT), k++) {
+			const aircraft_t *const model = AIR_GetAircraft(mxml_GetString(snode, SAVE_BASES_ID));
 			aircraft_t *aircraft = &b->aircraft[k];
 			Com_DPrintf(DEBUG_CLIENT, "Adding Aircraft %d to base %d\n", k, i);
 			*aircraft = *model;
@@ -3014,25 +3011,25 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		b->numAircraftInBase = k;
 
 		/* read equipment */
-		node = mxml_GetNode(base, "storage");
+		node = mxml_GetNode(base, SAVE_BASES_STORAGE);
 		B_LoadStorageXML(node, &(b->storage));
 
 		RADAR_InitialiseUFOs(&b->radar);
-		RADAR_Initialise(&b->radar, mxml_GetInt(base, "radarrange", 0), mxml_GetInt(base, "trackingrange", 0), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
+		RADAR_Initialise(&b->radar, mxml_GetInt(base, SAVE_BASES_RADARRANGE, 0), mxml_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
 		/* Alien Containment. */
 		AL_FillInContainment(b);
-		node = mxml_GetNode(base, "alienscont");
+		node = mxml_GetNode(base, SAVE_BASES_ALIENCONT);
 		if (!node)
 			Com_Printf("No aliensCont found\n");
 		else{
-			for (k = 0, snode = mxml_GetNode(node, "alien"); snode && k < MAX_ALIENCONT_CAP;snode = mxml_GetNextNode(snode, node, "alien"), k++) {
-				const char *const s = mxml_GetString(snode, "id");
+			for (k = 0, snode = mxml_GetNode(node, SAVE_BASES_ALIEN); snode && k < MAX_ALIENCONT_CAP;snode = mxml_GetNextNode(snode, node, SAVE_BASES_ALIEN), k++) {
+				const char *const s = mxml_GetString(snode, SAVE_BASES_ID);
 				/* Fill Alien Containment with default values like the tech pointer. */
 				b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
 				if (b->alienscont[k].teamDef) {
-					b->alienscont[k].amountAlive = mxml_GetInt(snode, "amountalive", 0);
-					b->alienscont[k].amountDead = mxml_GetInt(snode, "amountdead", 0);
+					b->alienscont[k].amountAlive = mxml_GetInt(snode, SAVE_BASES_AMOUNTALIVE, 0);
+					b->alienscont[k].amountDead = mxml_GetInt(snode, SAVE_BASES_AMOUNTDEAD, 0);
 				}
 			}
 		}
