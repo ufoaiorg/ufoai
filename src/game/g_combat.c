@@ -1047,7 +1047,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 /**
  * @brief Setup for shooting, either real or mock
  * @param[in] player The player this action belongs to (i.e. either the ai or the player)
- * @param[in] entnum The index number of the edict that is doing the shot
+ * @param[in] ent the edict that is doing the shot
  * @param[in] at Position to fire on.
  * @param[in] shootType What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon.
@@ -1056,18 +1056,16 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
-qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shootType,
+qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, int shootType,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	const fireDef_t *fd;
-	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
 	int i, ammo, prevDir, reactionLeftover, shots;
 	int container, mask;
 	qboolean quiet;
 
-	ent = g_edicts + entnum;
 	/* just in 'test-whether-it's-possible'-mode or the player is an
 	 * ai - no readable feedback needed */
 	quiet = (mock != NULL) || G_IsAIPlayer(player);

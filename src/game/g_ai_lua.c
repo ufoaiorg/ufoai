@@ -314,7 +314,7 @@ static int actorL_shoot (lua_State *L)
 	while (shots > 0) {
 		shots--;
 		/** @todo actually handle fire modes */
-		G_ClientShoot(AIL_player, AIL_ent->number, target->ent->pos,
+		G_ClientShoot(AIL_player, AIL_ent, target->ent->pos,
 				0, 0, NULL, qtrue, 0);
 	}
 

@@ -603,6 +603,8 @@ int G_ClientAction (player_t * player)
 		return action;
 	}
 
+	ent = g_edicts + num;
+
 	switch (action) {
 	case PA_NULL:
 		/* do nothing on a null action */
@@ -625,13 +627,12 @@ int G_ClientAction (player_t * player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode, &from);
-		(void) G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue, from);
+		G_ClientShoot(player, ent, pos, i, firemode, NULL, qtrue, from);
 		break;
 
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-		ent = g_edicts + num;
 
 		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
 		 * the item up hasn't moved at all */

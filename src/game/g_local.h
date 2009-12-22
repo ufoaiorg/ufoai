@@ -424,7 +424,7 @@ int G_TestVis(int team, edict_t * check, int flags);
 float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
-qboolean G_ClientShoot(player_t *player, const int entnum, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 void G_ResetReactionFire(int team);
 qboolean G_ReactToMove(edict_t *target, qboolean mock);
 void G_ReactToEndTurn(void);
