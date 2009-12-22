@@ -146,16 +146,16 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	int i;
 	mxml_node_t *node;
 	/* store market */
-	node = mxml_AddNode(parent, "market");
+	node = mxml_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < MAX_OBJDEFS; i++) {
 		if (csi.ods[i].id[0] != '\0') {
-			mxml_node_t * snode = mxml_AddNode(node, "element");
-			mxml_AddString(snode, "id", csi.ods[i].id);
-			mxml_AddInt(snode, "num", ccs.eMarket.num[i]);
-			mxml_AddInt(snode, "bid", ccs.eMarket.bid[i]);
-			mxml_AddInt(snode, "ask", ccs.eMarket.ask[i]);
-			mxml_AddDouble(snode, "evo", ccs.eMarket.currentEvolution[i]);
-			mxml_AddBool(snode, "autosell", ccs.autosell[i]);
+			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ELEMENT);
+			mxml_AddString(snode, SAVE_MARKET_ID, csi.ods[i].id);
+			mxml_AddInt(snode, SAVE_MARKET_NUM, ccs.eMarket.num[i]);
+			mxml_AddInt(snode, SAVE_MARKET_BID, ccs.eMarket.bid[i]);
+			mxml_AddInt(snode, SAVE_MARKET_ASK, ccs.eMarket.ask[i]);
+			mxml_AddDouble(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolution[i]);
+			mxml_AddBool(snode, SAVE_MARKET_AUTOSELL, ccs.autosell[i]);
 		}
 	}
 
@@ -171,21 +171,21 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t *node, *snode;
-	node = mxml_GetNode(parent, "market");
+	node = mxml_GetNode(parent, SAVE_MARKET_MARKET);
 	if (!node)
 		return qfalse;
-	for(i = 0, snode = mxml_GetNode(node, "element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "element")) {
+	for(i = 0, snode = mxml_GetNode(node, SAVE_MARKET_ELEMENT); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, SAVE_MARKET_ELEMENT)) {
 		if (snode) {
-			const char *s = mxml_GetString(snode, "id");
+			const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
 			const objDef_t *od = INVSH_GetItemByID(s);
 			if (!od) {
 				Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			} else {
-				ccs.eMarket.num[od->idx] = mxml_GetInt(snode, "num", 0);
-				ccs.eMarket.bid[od->idx] = mxml_GetInt(snode, "bid", 0);
-				ccs.eMarket.ask[od->idx] = mxml_GetInt(snode, "ask", 0);
-				ccs.eMarket.currentEvolution[od->idx] = mxml_GetDouble(snode, "evo", 0.0);
-				ccs.autosell[od->idx] = mxml_GetBool(snode, "autosell", qfalse);
+				ccs.eMarket.num[od->idx] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
+				ccs.eMarket.bid[od->idx] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
+				ccs.eMarket.ask[od->idx] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
+				ccs.eMarket.currentEvolution[od->idx] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
+				ccs.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
 			}
 		}
 	}

@@ -1761,31 +1761,31 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t *node;
-	node = mxml_AddNode(parent, "research");
-	mxml_AddInt(node, "count", ccs.numTechnologies);
+	node = mxml_AddNode(parent, SAVE_RESEARCH_RESEARCH);
+	mxml_AddInt(node, SAVE_RESEARCH_COUNT, ccs.numTechnologies);
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		int j;
 		const technology_t *t = RS_GetTechByIDX(i);
-		mxml_node_t * snode = mxml_AddNode(node, "tech");
-		mxml_AddString(snode, "id", t->id);
-		mxml_AddBool(snode, "statuscollected", t->statusCollected);
-		mxml_AddFloat(snode, "time", t->time);
-		mxml_AddShort(snode, "statusresearch", t->statusResearch);
+		mxml_node_t * snode = mxml_AddNode(node, SAVE_RESEARCH_TECH);
+		mxml_AddString(snode, SAVE_RESEARCH_ID, t->id);
+		mxml_AddBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
+		mxml_AddFloat(snode, SAVE_RESEARCH_TIME, t->time);
+		mxml_AddShort(snode, SAVE_RESEARCH_STATUSRESEARCH, t->statusResearch);
 		if (t->base)
-			mxml_AddInt(snode, "base", t->base->idx);
-		mxml_AddInt(snode, "scientists", t->scientists);
-		mxml_AddInt(snode, "statusresearchable", t->statusResearchable);
-		mxml_AddInt(snode, "preday", t->preResearchedDate.day);
-		mxml_AddInt(snode, "presec", t->preResearchedDate.sec);
-		mxml_AddInt(snode, "day", t->researchedDate.day);
-		mxml_AddInt(snode, "sec", t->researchedDate.sec);
-		mxml_AddInt(snode, "mailsent", t->mailSent);
+			mxml_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
+		mxml_AddInt(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
+		mxml_AddInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
+		mxml_AddInt(snode, SAVE_RESEARCH_PREDAY, t->preResearchedDate.day);
+		mxml_AddInt(snode, SAVE_RESEARCH_PRESEC, t->preResearchedDate.sec);
+		mxml_AddInt(snode, SAVE_RESEARCH_DAY, t->researchedDate.day);
+		mxml_AddInt(snode, SAVE_RESEARCH_SEC, t->researchedDate.sec);
+		mxml_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			/* only save the already read mails */
 			if (t->mail[j].read) {
 				mxml_node_t * ssnode = mxml_AddNode(snode, "mail");
-				mxml_AddInt(ssnode, "id", j);
-				mxml_AddBool(ssnode, "read", t->mail[j].read);
+				mxml_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
+				mxml_AddBool(ssnode, SAVE_RESEARCH_READ, t->mail[j].read);
 			}
 		}
 	}
@@ -1797,12 +1797,12 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 {
 	int i, count;
 	mxml_node_t *topnode, *snode;
-	topnode = mxml_GetNode(parent, "research");
+	topnode = mxml_GetNode(parent, SAVE_RESEARCH_RESEARCH);
 	if (!topnode)
 		return qfalse;
-	count = mxml_GetInt(topnode, "count", 0);
-	for (i = 0, snode = mxml_GetNode(topnode, "tech"); i < count && snode; i++, snode = mxml_GetNextNode(snode, topnode, "tech")) {
-		const char *techString = mxml_GetString(snode, "id");
+	count = mxml_GetInt(topnode, SAVE_RESEARCH_COUNT, 0);
+	for (i = 0, snode = mxml_GetNode(topnode, SAVE_RESEARCH_TECH); i < count && snode; i++, snode = mxml_GetNextNode(snode, topnode, "tech")) {
+		const char *techString = mxml_GetString(snode, SAVE_RESEARCH_ID);
 		mxml_node_t * ssnode;
 		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
@@ -1810,27 +1810,27 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			continue;
 		}
-		t->statusCollected = mxml_GetBool(snode, "statuscollected", qfalse);
-		t->time = mxml_GetFloat(snode, "time", 0.0);
-		t->statusResearch = mxml_GetShort(snode, "statusresearch", 0);
+		t->statusCollected = mxml_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, qfalse);
+		t->time = mxml_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
+		t->statusResearch = mxml_GetShort(snode, SAVE_RESEARCH_STATUSRESEARCH, 0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
-		baseIdx = mxml_GetInt(snode, "base", -1);
+		baseIdx = mxml_GetInt(snode, SAVE_RESEARCH_BASE, -1);
 		if (baseIdx >= 0)
 			/* even if the base is not yet loaded we can set the pointer already */
 			t->base = B_GetBaseByIDX(baseIdx);
-		t->scientists = mxml_GetInt(snode, "scientists", 0);
-		t->statusResearchable = mxml_GetInt(snode, "statusresearchable", 0);
-		t->preResearchedDate.day = mxml_GetInt(snode, "preday", 0);
-		t->preResearchedDate.sec = mxml_GetInt(snode, "presec", 0);
-		t->researchedDate.day = mxml_GetInt(snode, "day", 0);
-		t->researchedDate.sec = mxml_GetInt(snode, "sec", 0);
-		t->mailSent = mxml_GetInt(snode, "mailsent", 0);
+		t->scientists = mxml_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
+		t->statusResearchable = mxml_GetInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, 0);
+		t->preResearchedDate.day = mxml_GetInt(snode, SAVE_RESEARCH_PREDAY, 0);
+		t->preResearchedDate.sec = mxml_GetInt(snode, SAVE_RESEARCH_PRESEC, 0);
+		t->researchedDate.day = mxml_GetInt(snode, SAVE_RESEARCH_DAY, 0);
+		t->researchedDate.sec = mxml_GetInt(snode, SAVE_RESEARCH_SEC, 0);
+		t->mailSent = mxml_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
-		for (ssnode = mxml_GetNode(snode, "mail"); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, "mail")) {
-			int j= mxml_GetInt(ssnode, "id", TECHMAIL_MAX);
-			if (j  < TECHMAIL_MAX) {
+		for (ssnode = mxml_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
+			const int j= mxml_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
+			if (j < TECHMAIL_MAX) {
 				const techMailType_t mailType = j;
-				t->mail[mailType].read = mxml_GetBool(ssnode, "read", qtrue);
+				t->mail[mailType].read = mxml_GetBool(ssnode, SAVE_RESEARCH_READ, qtrue);
 			} else
 				Com_Printf("......your save game contains unknown techmail ids... \n");
 		}
