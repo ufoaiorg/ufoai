@@ -373,8 +373,9 @@ window load
 	 */
 	confunc update_save_game_info {
 		cmd "set mn_slot<1> \"<2> - <3>\";"
-		*node:root.slot<1>@string	*cvar:mn_slot<1>	
-		*node:root.slot<1>@tooltip	"<4>"
+		*node:root.slot<1>@string = *cvar:mn_slot<1>	
+		*node:load.slot<1>@tooltip = "<4>"
+		*node:save.slot<1>@tooltip = "<4>"
 	}
 
 	cmpMenuButton button_back
