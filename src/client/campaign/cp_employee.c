@@ -1182,26 +1182,26 @@ qboolean E_SaveXML (mxml_node_t *p)
 	int j;
 	for (j = 0; j < MAX_EMPL; j++) {
 		int i;
-		mxml_node_t *snode = mxml_AddNode(p, "employees");
-		mxml_AddInt(snode, "count", ccs.numEmployees[j]);
+		mxml_node_t *snode = mxml_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
+		mxml_AddInt(snode, SAVE_EMPLOYEE_COUNT, ccs.numEmployees[j]);
 		for (i = 0; i < ccs.numEmployees[j]; i++) {
 			const employee_t *e = &ccs.employees[j][i];
-			mxml_node_t *ssnode = mxml_AddNode(snode, "employee");
-			mxml_AddInt(snode, "type", e->type);
-			mxml_AddBool(ssnode, "hired", e->hired);
+			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
+			mxml_AddInt(snode, SAVE_EMPLOYEE_TYPE, e->type);
+			mxml_AddBool(ssnode, SAVE_EMPLOYEE_HIRED, e->hired);
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
-			mxml_AddInt(ssnode, "idx", e->idx);
+			mxml_AddInt(ssnode, SAVE_EMPLOYEE_IDX, e->idx);
 			if (e->baseHired)
-				mxml_AddInt(ssnode, "basehired", e->baseHired->idx);
+				mxml_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, e->baseHired->idx);
 			if (e->building)
-				mxml_AddInt(ssnode, "building", e->building->idx);
+				mxml_AddInt(ssnode, SAVE_EMPLOYEE_BUILDING, e->building->idx);
 			/* Store the nations identifier string. */
 			assert(e->nation);
-			mxml_AddString(ssnode, "nation", e->nation->id);
+			mxml_AddString(ssnode, SAVE_EMPLOYEE_NATION, e->nation->id);
 
 			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
 			if (e->ugv)
-				mxml_AddString(ssnode, "ugv", e->ugv->id);
+				mxml_AddString(ssnode, SAVE_EMPLOYEE_UGV, e->ugv->id);
 			CL_SaveCharacterXML(ssnode, e->chr);
 		}
 	}
@@ -1215,38 +1215,39 @@ qboolean E_LoadXML (mxml_node_t *p)
 	mxml_node_t * snode;
 
 	/* load inventories */
-	for (snode = mxml_GetNode(p, "employees"), j = 0; j < MAX_EMPL && snode;
-			snode = mxml_GetNextNode(snode, p , "employees"), j++) {
+	for (snode = mxml_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES), j = 0; j < MAX_EMPL && snode;
+			snode = mxml_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES), j++) {
 		const char *string;
 		mxml_node_t * ssnode;
 		int i;
-		ccs.numEmployees[j] = mxml_GetInt(snode, "count", 0);
-		for (ssnode = mxml_GetNode(snode, "employee"), i = 0; i < ccs.numEmployees[j] && ssnode;
-				ssnode = mxml_GetNextNode(ssnode, snode, "employee"), i++) {
+		ccs.numEmployees[j] = mxml_GetInt(snode, SAVE_EMPLOYEE_COUNT, 0);
+		for (ssnode = mxml_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE), i = 0; i < ccs.numEmployees[j] && ssnode;
+				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE), i++) {
 			int base, building;
 			employee_t *e = &ccs.employees[j][i];
 			memset(e, 0, sizeof(*e));
 
-			e->type = mxml_GetInt(snode, "type", 0);
+			e->type = mxml_GetInt(snode, SAVE_EMPLOYEE_TYPE, 0);
 			if (e->type != j)
 				Com_Printf("......error in loading employee - type values doesn't match (%d, %d)\n", e->type, j);
-			e->hired = mxml_GetBool(ssnode, "hired", qfalse);
+			e->hired = mxml_GetBool(ssnode, SAVE_EMPLOYEE_HIRED, qfalse);
 
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
-			e->idx = mxml_GetInt(ssnode, "idx", 0);
+			e->idx = mxml_GetInt(ssnode, SAVE_EMPLOYEE_IDX, 0);
 			assert(ccs.numBases);	/* Just in case the order is ever changed. */
-			base = mxml_GetInt(ssnode, "basehired", -1);
+			base = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 
 			/** @todo: if research was removed we should free the scientists */
-			building = mxml_GetInt(ssnode, "building", -1);
+			building = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1);
 			e->building = (e->baseHired && building >= 0) ? &ccs.buildings[e->baseHired->idx][building] : NULL;
 
 			/* Read the nations identifier string, get the matching nation_t pointer.
 			 * We can do this because nations are already parsed .. will break if the parse-order is changed.
 			 * Same for the ugv string below.
 			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
-			string = mxml_GetString(ssnode, "nation");
+			string = mxml_GetString(ssnode, SAVE_EMPLOYEE_NATION);
+			/** @todo "NULL" comes from where? */
 			if (string[0] == '\0' && strcmp(string, "NULL"))
 				return qfalse;
 			e->nation = NAT_GetNationByID(string);
@@ -1254,7 +1255,8 @@ qboolean E_LoadXML (mxml_node_t *p)
 				return qfalse;
 
 			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
-			string = mxml_GetString(ssnode, "ugv");
+			string = mxml_GetString(ssnode, SAVE_EMPLOYEE_UGV);
+			/** @todo "NULL" comes from where? */
 			if (string[0] != '\0' && strcmp(string, "NULL"))
 				e->ugv = CL_GetUGVByID(string);
 			CL_LoadCharacterXML(ssnode, &e->chr);
