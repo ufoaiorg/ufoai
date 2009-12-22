@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_entity.h"
+#include "r_mesh.h"
 #include "r_mesh_anim.h"
 
 #define	MAX_ENTITIES	2048
@@ -486,11 +487,9 @@ static void R_DrawNullEntities (const entity_t *ents)
  */
 static float *R_CalcTransform (entity_t * e)
 {
-	vec3_t angles;
 	transform_t *t;
 	float *mp;
 	float mt[16], mc[16];
-	int i;
 
 	/* check if this entity is already transformed */
 	t = &e->transform;
@@ -507,48 +506,25 @@ static float *R_CalcTransform (entity_t * e)
 
 	/* do parent object transformations first */
 	if (e->tagent) {
-		/* parent transformation */
-		mp = R_CalcTransform(e->tagent);
-
 		/* tag transformation */
-		if (e->tagent->model && e->tagent->model->alias.tagdata) {
+		const float *tag = R_GetTagMatrix(e->tagent->model, e->tagname);
+		if (tag) {
 			const dMD2tag_t *taghdr = (const dMD2tag_t *) e->tagent->model->alias.tagdata;
-			/* find the right tag */
-			const char *name = (const char *) taghdr + taghdr->ofs_names;
-			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
-				if (!strcmp(name, e->tagname)) {
-					float interpolated[16];
-					/* found the tag (matrix) */
-					const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
-					tag += i * 16 * taghdr->num_frames;
+			float interpolated[16];
 
-					/* do interpolation */
-					R_InterpolateTransform(&e->tagent->as, taghdr->num_frames, tag, interpolated);
+			/* parent transformation */
+			mp = R_CalcTransform(e->tagent);
 
-					/* transform */
-					GLMatrixMultiply(mp, interpolated, mt);
-					mp = mt;
+			/* do interpolation */
+			R_InterpolateTransform(&e->tagent->as, taghdr->num_frames, tag, interpolated);
 
-					break;
-				}
-			}
+			/* transform */
+			GLMatrixMultiply(mp, interpolated, mt);
+			mp = mt;
 		}
 	}
 
-	/* fill in edge values */
-	mc[3] = mc[7] = mc[11] = 0.0;
-	mc[15] = 1.0;
-
-	/* add rotation */
-	VectorCopy(e->angles, angles);
-	AngleVectors(angles, &mc[0], &mc[4], &mc[8]);
-	/* flip an axis */
-	VectorInverse(&mc[4]);
-
-	/* add translation */
-	mc[12] = e->origin[0];
-	mc[13] = e->origin[1];
-	mc[14] = e->origin[2];
+	GLMatrixAssemble(e->origin, e->angles, mc);
 
 	/* combine transformations */
 	if (mp)

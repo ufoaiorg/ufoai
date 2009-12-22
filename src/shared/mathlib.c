@@ -292,6 +292,28 @@ void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 	c[2][2] = a[0][2] * b[2][0] + a[1][2] * b[2][1] + a[2][2] * b[2][2];
 }
 
+/**
+ * @brief Builds an opengl translation and rotation matrix
+ * @param origin The translation vector
+ * @param angles The angle vector that is used to calculate the rotation part of the matrix
+ * @param matrix The resulting matrix, must be of dimension 16
+ */
+void GLMatrixAssemble (const vec3_t origin, const vec3_t angles, float* matrix)
+{
+	/* fill in edge values */
+	matrix[3] = matrix[7] = matrix[11] = 0.0;
+	matrix[15] = 1.0;
+
+	/* add rotation */
+	AngleVectors(angles, &matrix[0], &matrix[4], &matrix[8]);
+	/* flip an axis */
+	VectorInverse(&matrix[4]);
+
+	/* add translation */
+	matrix[12] = origin[0];
+	matrix[13] = origin[1];
+	matrix[14] = origin[2];
+}
 
 /**
  * @brief Multiply 4*4 matrix by 4*4 matrix.
