@@ -560,7 +560,7 @@ qboolean SAV_QuickSave (void)
 	if (CL_OnBattlescape())
 		return qfalse;
 
-	result = SAV_GameSave("slotquick", "QuickSave", &error);
+	result = SAV_GameSave("slotquick", _("QuickSave"), &error);
 	if (!result)
 		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
 
