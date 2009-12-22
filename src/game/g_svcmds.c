@@ -263,7 +263,7 @@ static void SVCmd_Win_f (void)
 	}
 	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
-		G_MatchEndTrigger(team, 0);
+		G_MatchEndTrigger(team, 10);
 	else
 		gi.dprintf("Bad team number.\n");
 }

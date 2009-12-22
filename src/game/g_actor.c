@@ -130,12 +130,16 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	switch (state) {
 	case STATE_DEAD:
 		ent->state |= (1 + rand() % MAX_DEATH);
+		if (attacker != NULL)
+			level.num_kills[attacker->team][ent->team]++;
 		break;
 	case STATE_STUN:
 		/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
 		 * @sa CL_ActorDie */
 		ent->STUN = 0;
 		ent->state = state;
+		if (attacker != NULL)
+			level.num_stuns[attacker->team][ent->team]++;
 		break;
 	default:
 		Com_DPrintf(DEBUG_GAME, "G_ActorDie: unknown state %i\n", state);
@@ -143,6 +147,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	}
 	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
 	gi.LinkEdict(ent);
+
 	level.num_alive[ent->team]--;
 	/* send death */
 	G_EventActorDie(ent, attacker);

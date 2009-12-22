@@ -129,6 +129,8 @@ void G_MatchEndTrigger (int team, int timeGap)
 	const int realTimeGap = timeGap > 0 ? level.time + timeGap : 1;
 	level.winningTeam = team;
 	level.intermissionTime = realTimeGap;
+
+	gi.BroadcastPrintf(PRINT_HUD, _("Mission won for team %i\n"), level.winningTeam);
 }
 
 /**
@@ -170,31 +172,24 @@ static void G_SendCharacterData (const edict_t* ent)
  */
 static void G_MatchSendResults (int team)
 {
-	edict_t *ent;
+	edict_t *ent, *attacker;
 	int i, j = 0;
 
-	G_PrintStats(va("End of game - Team %i is the winner", team));
-
+	attacker = NULL;
 	/* Calculate new scores/skills for the soldiers. */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && !G_IsAI(ent))
-			G_UpdateCharacterSkills(&ent->chr);
+		if (ent->inuse && G_IsLivingActor(ent)) {
+			if (!G_IsAI(ent))
+				G_UpdateCharacterSkills(&ent->chr);
+			else if (ent->team == team)
+				attacker = ent;
+		}
 
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
-		level.num_alive[TEAM_PHALANX] = 0;
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX) {
-				ent->state = STATE_DEAD;
-				ent->HP = 0;
-				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
-				gi.WriteShort(ent->number);
-				gi.WriteShort(ent->state);
-				level.num_kills[team][ent->team]++;
-			}
-		/* also kill all civilians */
-		level.num_kills[team][TEAM_CIVILIAN] += level.num_alive[TEAM_CIVILIAN];
-		level.num_alive[TEAM_CIVILIAN] = 0;
+			if (ent->inuse && G_IsLivingActor(ent) && ent->team != team)
+				G_ActorDie(ent, STATE_DEAD, attacker);
 	}
 
 	/* Make everything visible to anyone who can't already see it */

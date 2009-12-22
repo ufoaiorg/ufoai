@@ -427,13 +427,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 		if (mor_panic->integer)
 			G_Morale(ML_DEATH, target, attacker, damage);
 
-		/* count kills */
-		if (target->HP == 0)
-			level.num_kills[attacker->team][target->team]++;
-		/* count stuns */
-		else
-			level.num_stuns[attacker->team][target->team]++;
-
 		/* Update number of killed/stunned actors for this attacker. */
 		G_UpdateCharacterBodycount(attacker, fd, target);
 
