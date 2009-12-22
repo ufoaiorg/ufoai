@@ -129,8 +129,6 @@ void G_MatchEndTrigger (int team, int timeGap)
 	const int realTimeGap = timeGap > 0 ? level.time + timeGap : 1;
 	level.winningTeam = team;
 	level.intermissionTime = realTimeGap;
-
-	gi.BroadcastPrintf(PRINT_HUD, _("Mission won for team %i\n"), level.winningTeam);
 }
 
 /**
