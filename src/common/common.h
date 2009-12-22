@@ -247,10 +247,6 @@ extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
 
-extern const int con_fontHeight;
-extern const int con_fontWidth;
-extern const int con_fontShift;
-
 /* host_speeds times */
 extern int time_before_game;
 extern int time_after_game;
