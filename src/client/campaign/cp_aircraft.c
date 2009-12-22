@@ -2461,7 +2461,7 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
 	mxml_node_t *sub;
 
 	for (i = 0; i < num; i++) {
-		sub = mxml_AddNode(p, "slot");
+		sub = mxml_AddNode(p, SAVE_AIRCRAFT_SLOT);
 		AIR_SaveOneSlotXML(&slot[i], sub, weapon);
 	}
 }

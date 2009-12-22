@@ -1783,7 +1783,7 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			/* only save the already read mails */
 			if (t->mail[j].read) {
-				mxml_node_t * ssnode = mxml_AddNode(snode, "mail");
+				mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_RESEARCH_MAIL);
 				mxml_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
 				mxml_AddBool(ssnode, SAVE_RESEARCH_READ, t->mail[j].read);
 			}

@@ -859,17 +859,17 @@ static void CL_StatsUpdate_f (void)
 
 qboolean CP_LoadXML (mxml_node_t *parent)
 {
-	mxml_node_t *campaignNode, *n_ccs, *act_node, *bparam;
+	mxml_node_t *campaignNode, *ccsNode, *node, *battleParamNode;
 	int i;
 	const char *name, *missionId;
 	campaign_t *campaign;
 
-	campaignNode = mxml_GetNode(parent, "campaign");
+	campaignNode = mxml_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
 		Com_Printf("Did not find campaign entry in xml!\n");
 		return qfalse;
 	}
-	if (!(name = mxml_GetString(campaignNode, "name"))) {
+	if (!(name = mxml_GetString(campaignNode, SAVE_CAMPAIGN_NAME))) {
 		Com_Printf("couldn't locate campaign name in savegame\n");
 		return qfalse;
 	}
@@ -888,17 +888,17 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	cls.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
 
 	/* read date */
-	n_ccs = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_CCS);
-	ccs.date.day = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_DATEDAY, 0);
-	ccs.date.sec = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_DATESEC, 0);
+	ccsNode = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_CCS);
+	ccs.date.day = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_DATEDAY, 0);
+	ccs.date.sec = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_DATESEC, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
 	/* read map view */
-	ccs.center[0] = mxml_GetFloat(n_ccs, SAVE_CAMPAIGN_CENTER0, 0.0);
-	ccs.center[1] = mxml_GetFloat(n_ccs, SAVE_CAMPAIGN_CENTER1, 0.0);
-	ccs.angles[0] = mxml_GetFloat(n_ccs, SAVE_CAMPAIGN_ANGLES0, 0.0);
-	ccs.angles[1] = mxml_GetFloat(n_ccs, SAVE_CAMPAIGN_ANGLES1, 0.0);
-	ccs.zoom = mxml_GetFloat(n_ccs, SAVE_CAMPAIGN_ZOOM, 0.0);
+	ccs.center[0] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_CENTER0, 0.0);
+	ccs.center[1] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_CENTER1, 0.0);
+	ccs.angles[0] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_ANGLES0, 0.0);
+	ccs.angles[1] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_ANGLES1, 0.0);
+	ccs.zoom = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 
 	/* restore the overlay.
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
@@ -909,61 +909,61 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	radarOverlayWasSet = mxml_GetBool(campaignNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
 
 	/* read credits */
-	CL_UpdateCredits(mxml_GetLong(n_ccs, SAVE_CAMPAIGN_CREDITS, 0));
+	CL_UpdateCredits(mxml_GetLong(ccsNode, SAVE_CAMPAIGN_CREDITS, 0));
 
 	/* store interest values */
-	ccs.lastInterestIncreaseDelay = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_LASTINTERESTINCREASEDELAY, 0);
-	ccs.lastMissionSpawnedDelay = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_LASTMISSIONSPAWNEDDELAY, 0);
+	ccs.lastInterestIncreaseDelay = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_LASTINTERESTINCREASEDELAY, 0);
+	ccs.lastMissionSpawnedDelay = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_LASTMISSIONSPAWNEDDELAY, 0);
 
-	ccs.overallInterest = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_OVERALL, 0);
+	ccs.overallInterest = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_OVERALL, 0);
 
-	for (i = 0, act_node = mxml_GetNode(n_ccs, SAVE_CAMPAIGN_INTEREST); i < INTERESTCATEGORY_MAX && act_node;
-			i++, (act_node = mxml_GetNextNode(act_node, n_ccs, SAVE_CAMPAIGN_INTEREST))) {
-		ccs.interest[i]= mxml_GetInt(act_node, SAVE_CAMPAIGN_VAL, 0);
+	for (i = 0, node = mxml_GetNode(ccsNode, SAVE_CAMPAIGN_INTEREST); i < INTERESTCATEGORY_MAX && node;
+			i++, (node = mxml_GetNextNode(node, ccsNode, SAVE_CAMPAIGN_INTEREST))) {
+		ccs.interest[i]= mxml_GetInt(node, SAVE_CAMPAIGN_VAL, 0);
 	}
 
 	/* read other campaign data */
-	ccs.civiliansKilled = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
-	ccs.aliensKilled = mxml_GetInt(n_ccs, SAVE_CAMPAIGN_ALIENSKILLED, 0);
+	ccs.civiliansKilled = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
+	ccs.aliensKilled = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
 
- 	ccs.XVIShowMap = mxml_GetBool(n_ccs, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
+ 	ccs.XVIShowMap = mxml_GetBool(ccsNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
 
 	CP_UpdateXVIMapButton();
 
 	/* read missions */
-	for (act_node = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MISSION), i = 0; act_node;
-			act_node = mxml_GetNextNode(act_node, campaignNode, SAVE_CAMPAIGN_MISSION), i++) {
+	for (node = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MISSION), i = 0; node;
+			node = mxml_GetNextNode(node, campaignNode, SAVE_CAMPAIGN_MISSION), i++) {
 		mission_t mission;
 		int ufoIdx;
 		qboolean defaultAssigned = qfalse;
 
 		memset(&mission, 0, sizeof(mission));
-		name = mxml_GetString(act_node, SAVE_CAMPAIGN_MAPDEF_ID);
+		name = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
 				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
 				return qfalse;
 			}
-			mission.mapDef->timesAlreadyUsed = mxml_GetInt(act_node, SAVE_CAMPAIGN_MAPDEFTIMES, 0);
+			mission.mapDef->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEFTIMES, 0);
 		} else
 			mission.mapDef = NULL;
 
-		Q_strncpyz(mission.id, mxml_GetString(act_node, SAVE_CAMPAIGN_ID), sizeof(mission.id));
-		mission.active = mxml_GetBool(act_node, SAVE_CAMPAIGN_ACTIVE, qfalse);
-		Q_strncpyz(mission.onwin, mxml_GetString(act_node, SAVE_CAMPAIGN_ONWIN), sizeof(mission.onwin));
-		Q_strncpyz(mission.onlose, mxml_GetString(act_node, SAVE_CAMPAIGN_ONLOSE), sizeof(mission.onlose));
-		mission.category = mxml_GetInt(act_node, SAVE_CAMPAIGN_CATEGORY, 0);
-		mission.stage = mxml_GetShort(act_node, SAVE_CAMPAIGN_STAGE, 0);
+		Q_strncpyz(mission.id, mxml_GetString(node, SAVE_CAMPAIGN_ID), sizeof(mission.id));
+		mission.active = mxml_GetBool(node, SAVE_CAMPAIGN_ACTIVE, qfalse);
+		Q_strncpyz(mission.onwin, mxml_GetString(node, SAVE_CAMPAIGN_ONWIN), sizeof(mission.onwin));
+		Q_strncpyz(mission.onlose, mxml_GetString(node, SAVE_CAMPAIGN_ONLOSE), sizeof(mission.onlose));
+		mission.category = mxml_GetInt(node, SAVE_CAMPAIGN_CATEGORY, 0);
+		mission.stage = mxml_GetShort(node, SAVE_CAMPAIGN_STAGE, 0);
 
-		mission.initialOverallInterest = mxml_GetInt(act_node, SAVE_CAMPAIGN_INITIALOVERALLINTEREST, 0);
-		mission.initialIndividualInterest = mxml_GetInt(act_node, SAVE_CAMPAIGN_INITIALINDIVIDUALINTEREST, 0);
+		mission.initialOverallInterest = mxml_GetInt(node, SAVE_CAMPAIGN_INITIALOVERALLINTEREST, 0);
+		mission.initialIndividualInterest = mxml_GetInt(node, SAVE_CAMPAIGN_INITIALINDIVIDUALINTEREST, 0);
 
 		switch (mission.category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
-				const int baseidx = mxml_GetInt(act_node, SAVE_CAMPAIGN_BASEINDEX, BYTES_NONE);
+				const int baseidx = mxml_GetInt(node, SAVE_CAMPAIGN_BASEINDEX, BYTES_NONE);
 				if (baseidx != BYTES_NONE) {
 					base_t *base = B_GetBaseByIDX(baseidx);
 					assert(base);
@@ -976,7 +976,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
-				const int installationIdx = mxml_GetInt(act_node, SAVE_CAMPAIGN_INSTALLATIONINDEX, BYTES_NONE);
+				const int installationIdx = mxml_GetInt(node, SAVE_CAMPAIGN_INSTALLATIONINDEX, BYTES_NONE);
 				if (installationIdx != BYTES_NONE) {
 					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
 					if (installation)
@@ -991,7 +991,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			if (mission.stage >= STAGE_MISSION_GOTO) {
-				int baseIDX = mxml_GetInt(act_node, SAVE_CAMPAIGN_ALIENBASEINDEX, BYTES_NONE);
+				int baseIDX = mxml_GetInt(node, SAVE_CAMPAIGN_ALIENBASEINDEX, BYTES_NONE);
 				/* don't check baseidx value here: alien bases are not loaded yet */
 				if (baseIDX != BYTES_NONE) {
 					alienBase_t *alienBase = AB_GetBase(baseIDX, qfalse);
@@ -1008,27 +1008,27 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			break;
 		}
 
-		Q_strncpyz(mission.location, mxml_GetString(act_node, SAVE_CAMPAIGN_LOCATION), sizeof(mission.location));
+		Q_strncpyz(mission.location, mxml_GetString(node, SAVE_CAMPAIGN_LOCATION), sizeof(mission.location));
 
-		mission.startDate.day = mxml_GetInt(act_node, SAVE_CAMPAIGN_STARTDATE_DAY, 0);
-		mission.startDate.sec = mxml_GetInt(act_node, SAVE_CAMPAIGN_STARTDATE_SEC, 0);
-		mission.finalDate.day = mxml_GetInt(act_node, SAVE_CAMPAIGN_FINALDATE_DAY, 0);
-		mission.finalDate.sec = mxml_GetInt(act_node, SAVE_CAMPAIGN_FINALDATE_SEC, 0);
+		mission.startDate.day = mxml_GetInt(node, SAVE_CAMPAIGN_STARTDATE_DAY, 0);
+		mission.startDate.sec = mxml_GetInt(node, SAVE_CAMPAIGN_STARTDATE_SEC, 0);
+		mission.finalDate.day = mxml_GetInt(node, SAVE_CAMPAIGN_FINALDATE_DAY, 0);
+		mission.finalDate.sec = mxml_GetInt(node, SAVE_CAMPAIGN_FINALDATE_SEC, 0);
 
-		mxml_GetPos2(act_node, SAVE_CAMPAIGN_POS, mission.pos);
+		mxml_GetPos2(node, SAVE_CAMPAIGN_POS, mission.pos);
 
-		ufoIdx = mxml_GetInt(act_node, SAVE_CAMPAIGN_UFO, -1);
+		ufoIdx = mxml_GetInt(node, SAVE_CAMPAIGN_UFO, -1);
 		if (ufoIdx <= -1)
 			mission.ufo = NULL;
 		else
 			mission.ufo = ccs.ufos + ufoIdx;
 
-		mission.crashed = mxml_GetBool(act_node, SAVE_CAMPAIGN_CRASHED, qfalse);
-		mission.onGeoscape = mxml_GetBool(act_node, SAVE_CAMPAIGN_ONGEOSCAPE, qfalse);
+		mission.crashed = mxml_GetBool(node, SAVE_CAMPAIGN_CRASHED, qfalse);
+		mission.onGeoscape = mxml_GetBool(node, SAVE_CAMPAIGN_ONGEOSCAPE, qfalse);
 
 		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
 			defaultAssigned = qtrue;
-		mission.posAssigned = mxml_GetBool(act_node, SAVE_CAMPAIGN_POSASSIGNED, defaultAssigned);
+		mission.posAssigned = mxml_GetBool(node, SAVE_CAMPAIGN_POSASSIGNED, defaultAssigned);
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 	}
@@ -1037,10 +1037,10 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* read ccs.battleParameters */
 	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 
-	if ((bparam = mxml_GetNode(n_ccs, SAVE_CAMPAIGN_BATTLEPARAMETER))) {
+	if ((battleParamNode = mxml_GetNode(ccsNode, SAVE_CAMPAIGN_BATTLEPARAMETER))) {
 		int j;
-		ccs.battleParameters.mission = CP_GetMissionByID(mxml_GetString(bparam, SAVE_CAMPAIGN_MISSION_ID));
-		name = mxml_GetString(bparam, SAVE_CAMPAIGN_ALIENCATEGORIES_ID);
+		ccs.battleParameters.mission = CP_GetMissionByID(mxml_GetString(battleParamNode, SAVE_CAMPAIGN_MISSION_ID));
+		name = mxml_GetString(battleParamNode, SAVE_CAMPAIGN_ALIENCATEGORIES_ID);
 
 		/* get corresponding category */
 		for (i = 0; i < ccs.numAlienCategories; i++)
@@ -1052,28 +1052,28 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			return qfalse;
 		}
 
-		j = mxml_GetInt(bparam, SAVE_CAMPAIGN_ALIENTEAMGROUPIDX, 0);
+		j = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_ALIENTEAMGROUPIDX, 0);
 		if (j >= INTERESTCATEGORY_MAX) {
 			Com_Printf("CP_LoadXML: Undefined alien team (category '%s', group '%i')\n", name, j);
 			return qfalse;
 		}
 		ccs.battleParameters.alienTeamGroup = &ccs.alienCategories[i].alienTeamGroups[j];
-		name = mxml_GetString(bparam, SAVE_CAMPAIGN_PARAM);
+		name = mxml_GetString(battleParamNode, SAVE_CAMPAIGN_PARAM);
 		if (name && name[0] != '\0')
 			ccs.battleParameters.param = Mem_PoolStrDup(name, cp_campaignPool, 0);
 		else
 			ccs.battleParameters.param = NULL;
 
-		Q_strncpyz(ccs.battleParameters.alienEquipment, mxml_GetString(bparam, SAVE_CAMPAIGN_ALIENEQUIPMENT), sizeof(ccs.battleParameters.alienEquipment));
-		Q_strncpyz(ccs.battleParameters.civTeam, mxml_GetString(bparam, SAVE_CAMPAIGN_CIVTEAM), sizeof(ccs.battleParameters.civTeam));
+		Q_strncpyz(ccs.battleParameters.alienEquipment, mxml_GetString(battleParamNode, SAVE_CAMPAIGN_ALIENEQUIPMENT), sizeof(ccs.battleParameters.alienEquipment));
+		Q_strncpyz(ccs.battleParameters.civTeam, mxml_GetString(battleParamNode, SAVE_CAMPAIGN_CIVTEAM), sizeof(ccs.battleParameters.civTeam));
 
-		ccs.battleParameters.day = mxml_GetBool(bparam, SAVE_CAMPAIGN_DAY, qfalse);
-		ccs.battleParameters.ugv = mxml_GetInt(bparam, SAVE_CAMPAIGN_UGV, 0);
-		ccs.battleParameters.aliens = mxml_GetInt(bparam, SAVE_CAMPAIGN_ALIENS, 0);
-		ccs.battleParameters.civilians = mxml_GetInt(bparam, SAVE_CAMPAIGN_CIVILIANS, 0);
+		ccs.battleParameters.day = mxml_GetBool(battleParamNode, SAVE_CAMPAIGN_DAY, qfalse);
+		ccs.battleParameters.ugv = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_UGV, 0);
+		ccs.battleParameters.aliens = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_ALIENS, 0);
+		ccs.battleParameters.civilians = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_CIVILIANS, 0);
 	}
 
-	missionId = mxml_GetString(n_ccs, SAVE_CAMPAIGN_SELECTEDMISSION);
+	missionId = mxml_GetString(ccsNode, SAVE_CAMPAIGN_SELECTEDMISSION);
 	if (missionId && missionId[0] != '\0')
 		ccs.selectedMission = CP_GetMissionByID(missionId);
 	else
@@ -1144,7 +1144,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	mxml_AddShort(structure_ccs, SAVE_CAMPAIGN_OVERALL, ccs.overallInterest);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		mxml_node_t * substructure = mxml_AddNode(structure_ccs, "interest");
+		mxml_node_t * substructure = mxml_AddNode(structure_ccs, SAVE_CAMPAIGN_INTEREST);
 		mxml_AddShort(substructure, SAVE_CAMPAIGN_VAL, ccs.interest[i]);
 	}
 
