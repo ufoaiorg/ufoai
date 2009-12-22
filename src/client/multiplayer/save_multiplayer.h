@@ -1,0 +1,8 @@
+#define SAVE_MULTIPLAYER_ROOTNODE "multiplayer"
+#define SAVE_MULTIPLAYER_TEAM "team"
+#define SAVE_MULTIPLAYER_EQUIPMENT "equipment"
+#define SAVE_MULTIPLAYER_EMISSION "emission"
+#define SAVE_MULTIPLAYER_ID "id"
+#define SAVE_MULTIPLAYER_NUM "num"
+#define SAVE_MULTIPLAYER_NUMLOOSE "numloose"
+#define SAVE_MULTIPLAYER_CHARACTER "character"
