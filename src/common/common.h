@@ -235,10 +235,7 @@ extern cvar_t *http_proxy;
 extern cvar_t *http_timeout;
 extern cvar_t *developer;
 extern cvar_t *sv_dedicated;
-extern cvar_t *host_speeds;
 extern cvar_t *sv_maxclients;
-extern cvar_t *cl_maxfps;
-extern cvar_t *teamnum;
 extern cvar_t *sv_gametype;
 extern cvar_t *masterserver_url;
 extern cvar_t *port;
@@ -246,12 +243,6 @@ extern cvar_t *port;
 extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
-
-/* host_speeds times */
-extern int time_before_game;
-extern int time_after_game;
-extern int time_before_ref;
-extern int time_after_ref;
 
 extern csi_t csi;
 

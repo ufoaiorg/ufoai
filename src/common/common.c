@@ -44,7 +44,9 @@ cvar_t *http_proxy;
 cvar_t *http_timeout;
 static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
-cvar_t *cl_maxfps;
+#ifndef DEDICATED_ONLY
+static cvar_t *cl_maxfps;
+#endif
 cvar_t *sv_gametype;
 cvar_t *masterserver_url;
 cvar_t *port;
