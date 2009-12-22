@@ -237,8 +237,6 @@ extern cvar_t *developer;
 extern cvar_t *sv_dedicated;
 extern cvar_t *host_speeds;
 extern cvar_t *sv_maxclients;
-extern cvar_t *sv_reaction_leftover;
-extern cvar_t *sv_shot_origin;
 extern cvar_t *cl_maxfps;
 extern cvar_t *teamnum;
 extern cvar_t *sv_gametype;
