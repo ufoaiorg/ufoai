@@ -552,30 +552,30 @@ base_t *PR_ProductionBase (production_t *production) {
 qboolean PR_SaveXML (mxml_node_t *p)
 {
 	int i;
-	mxml_node_t *node = mxml_AddNode(p, "production");
+	mxml_node_t *node = mxml_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 	for (i = 0; i < MAX_BASES; i++) {
 		const production_queue_t *pq = &ccs.productions[i];
 		int j;
-		mxml_node_t *snode = mxml_AddNode(node, "queue");
+		mxml_node_t *snode = mxml_AddNode(node, SAVE_PRODUCE_QUEUE);
 
-		mxml_AddInt(snode, "numitems", pq->numItems);
+		mxml_AddInt(snode, SAVE_PRODUCE_NUMITEMS, pq->numItems);
 
 		for (j = 0; j < pq->numItems; j++) {
 			const objDef_t *item = pq->items[j].item;
 			const aircraft_t *aircraft = pq->items[j].aircraft;
 			const storedUFO_t *ufo = pq->items[j].ufo;
 
-			mxml_node_t * ssnode = mxml_AddNode(snode, "item");
+			mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_PRODUCE_ITEM);
 			assert(item || aircraft || ufo);
 			if (item)
-				mxml_AddString(ssnode, "itemid", item->id);
+				mxml_AddString(ssnode, SAVE_PRODUCE_ITEMID, item->id);
 			else if (aircraft)
-				mxml_AddString(ssnode, "aircraftid", aircraft->id);
+				mxml_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, aircraft->id);
 			else if (ufo)
-				mxml_AddInt(ssnode, "ufoidx", ufo->idx);
-			mxml_AddInt(ssnode, "amount", pq->items[j].amount);
-			mxml_AddFloat(ssnode, "percentdone", pq->items[j].percentDone);
-			mxml_AddBool(ssnode, "items_cached", pq->items[j].itemsCached);
+				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, ufo->idx);
+			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, pq->items[j].amount);
+			mxml_AddFloat(ssnode, SAVE_PRODUCE_PERCENTDONE, pq->items[j].percentDone);
+			mxml_AddBool(ssnode, SAVE_PRODUCE_ITEMS_CACHED, pq->items[j].itemsCached);
 		}
 	}
 	return qtrue;
@@ -591,30 +591,30 @@ qboolean PR_LoadXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *node, *snode;
 
-	node = mxml_GetNode(p, "production");
+	node = mxml_GetNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	for (i = 0, snode = mxml_GetNode(node, "queue"); i < MAX_BASES && snode;
-			i++, snode = mxml_GetNextNode(snode, node, "queue")) {
+	for (i = 0, snode = mxml_GetNode(node, SAVE_PRODUCE_QUEUE); i < MAX_BASES && snode;
+			i++, snode = mxml_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
 		int j;
 		mxml_node_t *ssnode;
 		production_queue_t *pq = &ccs.productions[i];
 
-		pq->numItems = mxml_GetInt(snode, "numitems", 0);
+		pq->numItems = mxml_GetInt(snode, SAVE_PRODUCE_NUMITEMS, 0);
 
 		if (pq->numItems > MAX_PRODUCTIONS) {
 			Com_Printf("PR_Load: Too much productions (%i), last %i dropped (baseidx=%i).\n", pq->numItems, pq->numItems - MAX_PRODUCTIONS, i);
 			pq->numItems = MAX_PRODUCTIONS;
 		}
 
-		for (j = 0, ssnode = mxml_GetNode(snode, "item"); j < pq->numItems && ssnode;
-				j++, ssnode = mxml_GetNextNode(ssnode, snode, "item")) {
-			const char *s1 = mxml_GetString(ssnode, "itemid");
+		for (j = 0, ssnode = mxml_GetNode(snode, SAVE_PRODUCE_ITEM); j < pq->numItems && ssnode;
+				j++, ssnode = mxml_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
+			const char *s1 = mxml_GetString(ssnode, SAVE_PRODUCE_ITEMID);
 			const char *s2;
 			int ufoIDX;
 
 			pq->items[j].idx = j;
-			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
-			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
+			pq->items[j].amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
+			pq->items[j].percentDone = mxml_GetFloat(ssnode, SAVE_PRODUCE_PERCENTDONE, 0.0);
 
 			if (s1[0] != '\0')
 				pq->items[j].item = INVSH_GetItemByID(s1);
@@ -626,7 +626,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				continue;
 			}
 
-			ufoIDX = mxml_GetInt(ssnode, "ufoidx", MAX_STOREDUFOS);
+			ufoIDX = mxml_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, MAX_STOREDUFOS);
 			if (ufoIDX != MAX_STOREDUFOS) {
 				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
 
@@ -642,10 +642,10 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				pq->items[j].production = qtrue;
 			}
 
-			s2 = mxml_GetString(ssnode, "aircraftid");
+			s2 = mxml_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);
-			pq->items[j].itemsCached = mxml_GetBool(ssnode, "items_cached", qfalse);
+			pq->items[j].itemsCached = mxml_GetBool(ssnode, SAVE_PRODUCE_ITEMS_CACHED, qfalse);
 			if (!pq->items[j].item && s1[0] != '\0')
 				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
 			if (!pq->items[j].aircraft && s2[0] != '\0')

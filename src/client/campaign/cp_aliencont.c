@@ -694,8 +694,8 @@ qboolean AC_SaveXML (mxml_node_t * parent)
 {
 	mxml_node_t *aliencont;
 
-	aliencont = mxml_AddNode(parent, "aliencont");
-	mxml_AddInt(aliencont, "ccs.breathingMailSent", ccs.breathingMailSent);
+	aliencont = mxml_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
+	mxml_AddInt(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
 
 	return qtrue;
 }
@@ -710,9 +710,9 @@ qboolean AC_LoadXML (mxml_node_t * parent)
 {
 	mxml_node_t *aliencont;
 
-	aliencont = mxml_GetNode(parent, "aliencont");
+	aliencont = mxml_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
 	if (aliencont) {
-		ccs.breathingMailSent = mxml_GetInt(aliencont, "ccs.breathingMailSent", 0);
+		ccs.breathingMailSent = mxml_GetInt(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, 0);
 	} else {
 		/** @todo Remove this once we release 2.3 */
 		/* set defaults, old savegame without aliencont node*/
