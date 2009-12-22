@@ -1,0 +1,6 @@
+#define SAVE_SAVEVERSION "saveversion"
+#define SAVE_UFOVERSION "version"
+#define SAVE_COMMENT "comment"
+#define SAVE_REALDATE "realdate"
+#define SAVE_GAMEDATE "gamedate"
+#define SAVE_ROOTNODE "savegame"

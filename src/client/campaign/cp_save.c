@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_alienbase.h"
 #include "cp_time.h"
+#include "save/save.h"
 
 typedef struct saveFileHeaderXML_s {
 	uint32_t version; /**< which savegame version */
@@ -268,16 +269,16 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Com_sprintf(savegame_debug, sizeof(savegame_debug), "save/%s.lint", filename);
 #endif
 	topNode = mxmlNewXML("1.0");
-	node = mxml_AddNode(topNode, "savegame");
+	node = mxml_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
-	mxml_AddInt(node, "saveversion", SAVE_FILE_VERSION);
-	mxml_AddString(node, "comment", comment);
-	mxml_AddString(node, "version", UFO_VERSION);
-	mxml_AddString(node, "realdate", timeStampBuffer);
+	mxml_AddInt(node, SAVE_SAVEVERSION, SAVE_FILE_VERSION);
+	mxml_AddString(node, SAVE_COMMENT, comment);
+	mxml_AddString(node, SAVE_UFOVERSION, UFO_VERSION);
+	mxml_AddString(node, SAVE_REALDATE, timeStampBuffer);
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		date.year, Date_GetMonthName(date.month - 1), date.day);
-	mxml_AddString(node, "gamedate", message);
+	mxml_AddString(node, SAVE_GAMEDATE, message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
 	for (i = 0; i < saveSubsystemsAmount; i++) {
