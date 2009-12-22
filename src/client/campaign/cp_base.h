@@ -115,8 +115,6 @@ typedef enum {
 	B_HANGAR,		/**< this building is a hangar */
 	B_ALIEN_CONTAINMENT,	/**< this building is an alien containment */
 	B_SMALL_HANGAR,		/**< this building is a small hangar */
-	B_UFO_HANGAR,		/**< this building is a UFO hangar */
-	B_UFO_SMALL_HANGAR,	/**< this building is a small UFO hangar */
 	B_POWER,		/**< this building is power plant */
 	B_COMMAND,		/**< this building is command centre */
 	B_ANTIMATTER,		/**< this building is antimatter storage */
@@ -124,7 +122,6 @@ typedef enum {
 	B_DEFENCE_MISSILE,		/**< this building is a missile rack */
 	B_DEFENCE_LASER,		/**< this building is a laser battery */
 	B_RADAR,			/**< this building is a radar */
-	B_TEAMROOM,			/**< this building is a Team Room */
 
 	MAX_BUILDING_TYPE
 } buildingType_t;
@@ -138,8 +135,6 @@ typedef enum {
 	CAP_ITEMS,		/**< Items in base. */
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
 	CAP_WORKSPACE,		/**< Space for workers in workshop. */
-	CAP_UFOHANGARS_SMALL,	/**< Space for small recovered UFOs. */
-	CAP_UFOHANGARS_LARGE,	/**< Space for small and large recovered UFOs. */
 	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
 
 	MAX_CAP

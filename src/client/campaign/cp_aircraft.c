@@ -2458,7 +2458,6 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
 {
 	int i;
 	mxml_node_t *sub;
-	/*MSG_WriteByte(sb, num);*/
 
 	for (i = 0; i < num; i++) {
 		sub = mxml_AddNode(p, "slot");
@@ -2947,10 +2946,6 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 			ccs.projectiles[i].angle = mxml_GetFloat(snode, "angle", 0.0);
 			ccs.projectiles[i].bullets = mxml_GetBool(snode, "bullet", qfalse);
 			ccs.projectiles[i].beam = mxml_GetBool(snode, "beam", qfalse);
-			/** Fallback: compatibility code for old saves
-			 * @todo remove this on release (or after time) */
-			if (!ccs.projectiles[i].beam)
-				ccs.projectiles[i].beam = mxml_GetBool(snode, "laser", qfalse);
 		} else {
 			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
 			return qfalse;

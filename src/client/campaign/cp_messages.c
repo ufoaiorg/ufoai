@@ -236,12 +236,10 @@ qboolean MS_LoadXML (mxml_node_t *p)
 			message_t *mess;
 
 			Q_strncpyz(id, mxml_GetString(sn, "id"), sizeof(id));
-			if (id[0] == '\0') {	/**< @todo: Fallback for old savegames. Remove it before release. */
-				const int idx = mxml_GetInt(sn, "idx", -1);
-				tech = RS_GetTechByIDX(idx);
-			} else {
-				tech = RS_GetTechByID(id);
-			}
+			if (id[0] == '\0')
+				/** Invalid tech found drop message. */
+				continue;
+			tech = RS_GetTechByID(id);
 
 			if (!tech && (mtype == MSG_RESEARCH_PROPOSAL || mtype == MSG_RESEARCH_FINISHED)) {
 				/** No tech found drop message. */

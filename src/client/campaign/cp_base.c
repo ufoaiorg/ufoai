@@ -130,10 +130,6 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 		return CAP_ALIENS;
 	case B_SMALL_HANGAR:
 		return CAP_AIRCRAFT_SMALL;
-	case B_UFO_HANGAR:
-		return CAP_UFOHANGARS_LARGE;
-	case B_UFO_SMALL_HANGAR:
-		return CAP_UFOHANGARS_SMALL;
 	case B_ANTIMATTER:
 		return CAP_ANTIMATTER;
 	default:
@@ -165,10 +161,6 @@ buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 		return B_LAB;
 	case CAP_WORKSPACE:
 		return B_WORKSHOP;
-	case CAP_UFOHANGARS_SMALL:
-		return B_UFO_SMALL_HANGAR;
-	case CAP_UFOHANGARS_LARGE:
-		return B_UFO_HANGAR;
 	case CAP_ANTIMATTER:
 		return B_ANTIMATTER;
 	default:
@@ -1635,10 +1627,6 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_HANGAR;
 	} else if (!strcmp(buildingID, "smallhangar")) {
 		return B_SMALL_HANGAR;
-	} else if (!strcmp(buildingID, "ufohangar")) {
-		return B_UFO_HANGAR;
-	} else if (!strcmp(buildingID, "smallufohangar")) {
-		return B_UFO_SMALL_HANGAR;
 	} else if (!strcmp(buildingID, "quarters")) {
 		return B_QUARTERS;
 	} else if (!strcmp(buildingID, "workshop")) {
@@ -1657,8 +1645,6 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_DEFENCE_LASER;
 	} else if (!strcmp(buildingID, "radar")) {
 		return B_RADAR;
-	} else if (!strcmp(buildingID, "teamroom")) {
-		return B_TEAMROOM;
 	}
 	return MAX_BUILDING_TYPE;
 }
@@ -2688,8 +2674,6 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_ITEMS:			/**< Update items capacity in base. */
 	case CAP_AIRCRAFT_SMALL:	/**< Update aircraft capacity in base. */
 	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
-	case CAP_UFOHANGARS_SMALL:      /**< Base capacities for UFO hangars. */
-	case CAP_UFOHANGARS_LARGE:      /**< Base capacities for UFO hangars. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;

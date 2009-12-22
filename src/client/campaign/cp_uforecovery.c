@@ -385,19 +385,14 @@ qboolean US_LoadXML (mxml_node_t *p)
 		if (!inst)
 			return qfalse;
 
+		if (status == MAX_SUFO_STATUS)
+			return qfalse;
+
 		ufo = US_StoreUFO(ufoTemplate, inst, arrive, condition);
 		if (!ufo)
 			Com_Printf("Cannot store ufo %s at installation idx=%i.\n", ufoTemplate->id, inst->idx);
-		else {
-			if (status != MAX_SUFO_STATUS) {
-				ufo->status = status;
-			} else {
-				/* falback code for compatibility.
-				 * @todo remove this before release */
-				if (arrive.day < ccs.date.day || (arrive.day == ccs.date.day && arrive.sec < ccs.date.sec))
-					ufo->status = SUFO_STORED;
-			}
-		}
+		else
+			ufo->status = status;
 	}
 	return qtrue;
 }

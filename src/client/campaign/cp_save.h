@@ -33,15 +33,7 @@ extern cvar_t *cl_lastsave;
 
 #define MAX_SAVESUBSYSTEMS 32
 
-/**
- * HISTORY
- * version id   | game version | compatible with trunk
- * ===================================================
- *          1   | 2.1.1        | no
- *          2   | 2.2          | yes
- *          3   | 2.3          | yes
- */
-#define SAVE_FILE_VERSION 3
+#define SAVE_FILE_VERSION 4
 
 #include <zlib.h>
 
