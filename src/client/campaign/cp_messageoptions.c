@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_messageoptions.h"
 #include "cp_messageoptions_callbacks.h"
 #include "cp_time.h"
+#include "save/save_messageoptions.h"
 
 /** @brief valid notification types that may cause pause / notice */
 const char *nt_strings[NT_NUM_NOTIFYTYPE] = {

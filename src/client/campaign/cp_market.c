@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_market_callbacks.h"
+#include "save/save_market.h"
 
 /** @brief Max amount of aircraft type calculated for the market. */
 static const int MAX_AIRCRAFT_SUPPLY = 8;

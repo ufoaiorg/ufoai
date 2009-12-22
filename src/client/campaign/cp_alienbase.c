@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_alienbase.h"
 #include "cp_map.h"
 #include "cp_missions.h"
+#include "save/save_alienbase.h"
 
 #define MAPDEF_ALIENBASE "alienbase"
 #define ALIENBASE_DISCOVERED_TECH "rs_alien_base_discovered_event"

@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery.h"
 #include "cp_map.h"
 #include "cp_aliencont.h"
+#include "save/save_transfer.h"
 
 /**
  * @brief transfer types

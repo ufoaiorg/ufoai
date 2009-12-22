@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_research.h"
+#include "save/save_research.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];

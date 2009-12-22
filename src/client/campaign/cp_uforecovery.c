@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
 #include "cp_aircraft.h"
+#include "save/save_uforecovery.h"
 
 /**
  * @brief status names for savegames

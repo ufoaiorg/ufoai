@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_messages.h"
 #include "cp_time.h"
+#include "save/save_messages.h"
 
 char cp_messageBuffer[MAX_MESSAGE_TEXT];
 message_t *cp_messageStack;

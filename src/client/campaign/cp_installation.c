@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "cp_installation.h"
 #include "cp_installation_callbacks.h"
+#include "save/save_installation.h"
 
 /**
  * @brief Get the type of an installation

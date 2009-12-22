@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_ufo.h"
 #include "cp_produce_callbacks.h"
+#include "save/save_produce.h"
 
 /** @brief Used in production costs (to allow reducing prices below 1x). */
 const int PRODUCE_FACTOR = 1;
