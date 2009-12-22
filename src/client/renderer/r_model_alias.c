@@ -44,7 +44,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
 
-	mod->animdata = (mAliasAnim_t *) Mem_PoolAlloc(n * sizeof(mAliasAnim_t), vid_modelPool, 0);
+	mod->animdata = (mAliasAnim_t *) Mem_PoolAlloc(n * sizeof(*mod->animdata), vid_modelPool, 0);
 	anim = mod->animdata;
 	text = buffer;
 	mod->num_anims = 0;
@@ -54,7 +54,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 		token = Com_Parse(&text);
 		if (!text)
 			break;
-		Q_strncpyz(anim->name, token, MAX_ANIMNAME);
+		Q_strncpyz(anim->name, token, sizeof(anim->name));
 
 		/* get the start */
 		token = Com_Parse(&text);
