@@ -228,6 +228,8 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
  * @param[in] angles Angles of the model (how it should be rotated after adding to map).
  * @param[in] scale Scaling of the model (how it should be scaled after adding to map).
  * @param[in] entnum Entity number.
+ * @param[in] levelflags The levels in which the entity resides/is visible.
+ * @param[in] renderFlags The flags for the renderer, eg. 'translucent'.
  * @note misc_model
  * @sa V_ParseEntitystring
  * @sa LM_AddToScene
