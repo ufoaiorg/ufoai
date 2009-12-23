@@ -310,7 +310,7 @@ void MN_SortOptions (menuOption_t **first)
 
 /**
  * @brief Unhide those options that are stored in the linked list and hide the others
- * @param[inout] option Option list we want to update
+ * @param[in,out] option Option list we want to update
  * @param[in] stringList List of option name (ID) we want to display
  */
 void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList)
