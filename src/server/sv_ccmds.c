@@ -364,6 +364,7 @@ static void SV_ServerCommand_f (void)
 
 /**
  * @brief Autocomplete function for the map command
+ * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @sa Cmd_AddParamCompleteFunction
  */
 static int SV_CompleteMapCommand (const char *partial, const char **match)

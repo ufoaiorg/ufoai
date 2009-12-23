@@ -861,6 +861,7 @@ int Cmd_CompleteCommandParameters (const char *command, const char *partial, con
 /**
  * @brief Unix like tab completion for console commands
  * @param[in] partial The beginning of the command we try to complete
+ * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
