@@ -738,6 +738,7 @@ void Cmd_AddUserdata (const char *cmd_name, void* userdata)
  * @brief Add a new command to the script interface
  * @param[in] cmd_name The name the command is available via script interface
  * @param[in] function The function pointer
+ * @param[in] desc A usually(?) one-line description of what the cmd does
  * @sa Cmd_RemoveCommand
  */
 void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc)
