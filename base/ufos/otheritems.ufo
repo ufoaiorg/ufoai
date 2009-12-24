@@ -144,10 +144,9 @@ item bloodspider_weapon
 	animationindex	2 //FIXME
 	scale			1.0
 	size			6
-	notonmarket		true
 	firetwohanded	true
-	nohand			true
 	dmgtype			normal
+	virtual			true
 
 	weapon_mod bloodspider_weapon
 	{

@@ -325,7 +325,7 @@ static void BS_BuyType (const base_t *base)
 	case FILTER_CRAFTITEM:	/* Aircraft items */
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->notOnMarket)
+			if (!BS_IsOnMarket(od))
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od->tech && (base->storage.num[i] || ccs.eMarket.num[i])
@@ -387,7 +387,7 @@ static void BS_BuyType (const base_t *base)
 		}
 
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->notOnMarket)
+			if (!BS_IsOnMarket(od))
 				continue;
 
 			/* Check whether the item matches the proper filter, storage in current base and market. */
@@ -418,7 +418,7 @@ static void BS_BuyType (const base_t *base)
 		if (buyCat < MAX_SOLDIER_FILTERTYPES || buyCat == FILTER_DUMMY) {
 			/* get item list */
 			for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-				if (od->notOnMarket)
+				if (!BS_IsOnMarket(od))
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
 				if (od->tech && (base->storage.num[i] || ccs.eMarket.num[i]) && INV_ItemMatchesFilter(od, buyCat)) {

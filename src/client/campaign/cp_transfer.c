@@ -475,7 +475,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++)
-				if (srcbase->storage.num[i] || td.trItemsTmp[i]) {
+				if ((srcbase->storage.num[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
 					if (td.trItemsTmp[i] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
 					else
@@ -1139,7 +1139,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if (base->storage.num[i] || td.trItemsTmp[i]) {
+			if ((base->storage.num[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {	
 				if (cnt == num) {
 					int amount;
 					const objDef_t *od = &csi.ods[i];
@@ -1996,7 +1996,7 @@ static void TR_TransferList_Scroll_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (srcBase->storage.num[i] || td.trItemsTmp[i]) {
+		if ((srcBase->storage.num[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
 			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
 				break;
 			if (cnt >= viewPos)

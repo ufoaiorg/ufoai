@@ -38,6 +38,7 @@ int BS_GetStorageSupply(const base_t *base, const char *aircraftID);
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
 void BS_ProcessCraftItemSale(const base_t *base, const objDef_t *craftitem, const int numItems);
 
+qboolean BS_IsOnMarket(const objDef_t const* item);
 void BS_InitMarket(qboolean load);
 void CL_CampaignRunMarket(void);
 

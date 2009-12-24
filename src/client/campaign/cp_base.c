@@ -2617,7 +2617,7 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
 	aliensTmp_t *cargo;
 
-	AII_ReloadWeapon(aircraft);				/**< Reload weapons */
+	AII_ReloadAircraftWeapons(aircraft);				/**< Reload weapons */
 
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
@@ -2639,6 +2639,18 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 }
 
 /**
+ * @brief Check if an item is available on a base
+ * @param[in] base Pointer to the base to check at
+ * @param[in] item Pointer to the item to check
+ */
+qboolean B_BaseHasItem (const base_t *base, const objDef_t *item)
+{
+	assert(base);
+	assert(item);
+	return (item->virtual || base->storage.num[item->idx] > 0);
+}
+
+/**
  * @brief Check if the item has been collected (i.e it is in the storage) in the given base.
  * @param[in] item The item to check
  * @param[in] base The base to search in.
@@ -2650,7 +2662,8 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
 
 	if (!item)
 		return -1;
-
+	if (item->virtual)
+		return -1;
 	if (!base)
 		return -1;
 
@@ -2658,8 +2671,6 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
 
 	if (!ed)
 		return -1;
-
-	/* Com_DPrintf(DEBUG_CLIENT, "B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].id); */
 
 	return ed->num[item->idx];
 }
@@ -3072,7 +3083,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (!strcmp(obj->id, ANTIMATTER_TECH_ID))
+	if (obj->virtual || !strcmp(obj->id, ANTIMATTER_TECH_ID))
 		return qfalse;
 
 	return qtrue;
@@ -3092,6 +3103,10 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 {
 	assert(base);
 	assert(obj);
+
+	if (obj->virtual)
+		return qtrue;
+
 	if (reset) {
 		base->storage.num[obj->idx] = 0;
 		base->storage.numLoose[obj->idx] = 0; /** @todo needed? */

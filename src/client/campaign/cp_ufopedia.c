@@ -76,11 +76,18 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
  */
 static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 {
-	return (RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
-	 || RS_Collected_(tech)	/* ... has collected items OR ... */
+	const objDef_t *item;
+
+	assert(tech);
+	/* virtual items are hidden */
+	item = INVSH_GetItemByIDSilent(tech->provides);
+	if (item && item->virtual)
+		return qfalse;
+	/* Is already researched OR has collected items OR (researchable AND have description)
+	 * AND not a logical block AND not redirected */
+	return (RS_IsResearched_ptr(tech) || RS_Collected_(tech) 
 	 || (tech->statusResearchable && tech->preDescription.numDescriptions > 0))
-	 && tech->type != RS_LOGIC	/* Is no logic block. */
-	 && !tech->redirect;		/* Another technology will get displayed instead of this one. */
+	 && tech->type != RS_LOGIC && !tech->redirect;
 }
 
 /**
@@ -274,8 +281,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
 		else if (item->craftitem.type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */
-			if (!item->craftitem.unlimitedAmmo)
-				Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
+			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
 			if (!equal(item->craftitem.weaponDamage, 0))
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));

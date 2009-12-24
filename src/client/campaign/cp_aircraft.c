@@ -1284,12 +1284,13 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
 					}
 
-					/* Update delay to launch next projectile */
-					if (AIR_IsAircraftOnGeoscape(aircraft)) {
-						for (k = 0; k < aircraft->maxWeapons; k++) {
-							if (aircraft->weapons[k].delayNextShot > 0)
-								aircraft->weapons[k].delayNextShot -= dt;
-						}
+					for (k = 0; k < aircraft->maxWeapons; k++) {
+						/* Update delay to launch next projectile */
+						if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
+							aircraft->weapons[k].delayNextShot -= dt;
+						/* Reload if needed */
+						if (aircraft->weapons[k].ammoLeft <= 0)
+							AII_ReloadWeapon(&aircraft->weapons[k]);
 					}
 				} else {
 					Com_Error(ERR_DROP, "CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')",
@@ -1385,7 +1386,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
 		/* reload its ammunition */
-		AII_ReloadWeapon(aircraft);
+		AII_ReloadAircraftWeapons(aircraft);
 	}
 
 	/* ensure interceptAircraft is set correctly */
@@ -1831,36 +1832,6 @@ void AIR_ListAircraftSamples_f (void)
 }
 #endif
 
-/**
- * @brief Reload the weapon of an aircraft
- * @param[in] aircraft Pointer to the aircraft to reload
- * @sa AIRFIGHT_AddProjectile for the basedefence reload code
- */
-void AII_ReloadWeapon (aircraft_t *aircraft)
-{
-	int i;
-
-	assert(aircraft);
-
-	/* Reload all ammos of aircraft */
-	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (AIR_IsUFO(aircraft)) {
-			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
-		} else if (aircraft->weapons[i].ammo && aircraft->weapons[i].ammoLeft < aircraft->weapons[i].ammo->ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
-			const objDef_t *ammo = aircraft->weapons[i].ammo;
-			base_t *base = aircraft->homebase;
-
-			assert(base);
-			if (B_ItemInBase(ammo, base) <= 0)
-				continue;
-
-			assert(AIR_IsAircraftInBase(aircraft));
-			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
-			aircraft->weapons[i].ammoLeft = ammo->ammo;
-		}
-	}
-}
-
 /*===============================================
 Aircraft functions related to UFOs or missions.
 ===============================================*/
@@ -2197,7 +2168,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
 		/* reload its ammunition */
-		AII_ReloadWeapon(aircraft);
+		AII_ReloadAircraftWeapons(aircraft);
 	}
 
 	AIR_GetDestinationWhilePursuing(aircraft, ufo, &dest);

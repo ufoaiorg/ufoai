@@ -655,7 +655,6 @@ void CL_CampaignRun (void)
 			B_UpdateBaseData();
 			INS_UpdateInstallationData();
 			HOS_HospitalRun();
-			BDEF_ReloadBattery();
 			CP_SpawnNewMissions();
 			CP_SpreadXVI();
 			NAT_UpdateHappinessForAllNations();

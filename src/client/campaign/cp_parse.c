@@ -719,13 +719,13 @@ static qboolean CP_ItemsSanityCheck (void)
 		const objDef_t *item = &csi.ods[i];
 
 		/* Warn if item has no size set. */
-		if (item->size <= 0 && !(item->notOnMarket && INV_ItemMatchesFilter(item, FILTER_DUMMY))) {
+		if (item->size <= 0 && !item->virtual) {
 			result = qfalse;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
 
 		/* Warn if no price is set. */
-		if (item->price <= 0 && !item->notOnMarket) {
+		if (item->price <= 0 && !(item->virtual || item->notOnMarket)) {
 			result = qfalse;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}

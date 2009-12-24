@@ -121,18 +121,12 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 
-	if (weaponSlot->item->craftitem.bullets)
-		projectile->bullets = qtrue;
-	else
-		projectile->bullets = qfalse;
+	projectile->bullets = (weaponSlot->item->craftitem.bullets) ? qtrue : qfalse;
+	projectile->beam = (weaponSlot->item->craftitem.beam) ? qtrue : qfalse;
 
-	if (weaponSlot->item->craftitem.beam)
-		projectile->beam = qtrue;
-	else
-		projectile->beam = qfalse;
-
-	if (weaponSlot->ammoLeft > AMMO_STATUS_NO_MORE_AMMO)
-		weaponSlot->ammoLeft--;
+	weaponSlot->ammoLeft--;
+	if (weaponSlot->ammoLeft <= 0)
+		AII_ReloadWeapon(weaponSlot);
 
 	ccs.numProjectiles++;
 
@@ -227,7 +221,7 @@ int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 	/* check if there is still ammo in this weapon */
-	if (!slot->ammo || (slot->ammoLeft <= 0 && slot->ammoLeft != AMMO_STATUS_UNLIMITED))
+	if (!slot->ammo || (slot->ammoLeft <= 0))
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 	/* check if the target is within range of this weapon */
@@ -345,7 +339,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		const objDef_t *ammo = shooter->weapons[slotIdx].ammo;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, shooter->weapons + slotIdx)) {
+		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, &(shooter->weapons[slotIdx]))) {
 			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
@@ -786,11 +780,15 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		for (idx = 0; idx < base->numBatteries; idx++) {
 			if (base->batteries[idx].slot.delayNextShot > 0)
 				base->batteries[idx].slot.delayNextShot -= dt;
+			if (base->batteries[idx].slot.ammoLeft <= 0)
+				AII_ReloadWeapon(&base->batteries[idx].slot);
 		}
 
 		for (idx = 0; idx < base->numLasers; idx++) {
 			if (base->lasers[idx].slot.delayNextShot > 0)
 				base->lasers[idx].slot.delayNextShot -= dt;
+			if (base->lasers[idx].slot.ammoLeft <= 0)
+				AII_ReloadWeapon(&base->lasers[idx].slot);
 		}
 
 		if (AII_BaseCanShoot(base)) {
@@ -815,6 +813,8 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		for (idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
 			if (installation->batteries[idx].slot.delayNextShot > 0)
 				installation->batteries[idx].slot.delayNextShot -= dt;
+			if (installation->batteries[idx].slot.ammoLeft <= 0)
+				AII_ReloadWeapon(&installation->batteries[idx].slot);
 		}
 
 		if (AII_InstallationCanShoot(installation)) {
@@ -832,3 +832,4 @@ void AIRFIGHT_InitStartup (void)
 	Cmd_AddCommand("debug_listprojectile", AIRFIGHT_ProjectileList_f, "Print Projectiles information to game console");
 #endif
 }
+

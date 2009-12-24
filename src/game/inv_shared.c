@@ -2019,6 +2019,8 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 {
 	int i;
 
+	if (!id)
+		return NULL;
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
 		objDef_t *item = &CSI->ods[i];
 		if (!strcmp(id, item->id)) {

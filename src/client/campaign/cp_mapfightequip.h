@@ -42,9 +42,9 @@ typedef enum {
 
 /**
  * @brief Different status for numAmmo.
+ * @todo do we still need this?
  */
 typedef enum {
-	AMMO_STATUS_UNLIMITED = -2,			/**< The weapon doesn't need ammo. */
 	AMMO_STATUS_NOT_SET = -1,			/**< This weapon can't shoot yet. */
 
 	AMMO_STATUS_NO_MORE_AMMO = 0		/**< This weapon has no ammo. */
@@ -89,12 +89,16 @@ qboolean AII_InstallationCanShoot(const installation_t *installation);
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
-void AIM_AutoAddAmmo(aircraftSlot_t *slot);
+void AII_AutoAddAmmo(aircraftSlot_t *slot);
 qboolean AIM_SelectableCraftItem(const aircraftSlot_t *slot, const technology_t *tech);
 
 aircraftSlot_t *BDEF_GetBaseSlotByIDX(base_t *base, aircraftItemType_t type, int idx);
 aircraftSlot_t *BDEF_GetInstallationSlotByIDX(installation_t *installation, aircraftItemType_t type, int idx);
 aircraftSlot_t *AII_GetAircraftSlotByIDX(aircraft_t *aircraft, aircraftItemType_t type, int idx);
 void AII_CorrectAircraftSlotPointers(aircraft_t *aircraft);
+
+qboolean AII_ReloadWeapon(aircraftSlot_t *slot);
+void AII_ReloadAircraftWeapons(aircraft_t *aircraft);
+void BDEF_ReloadBaseWeapons(base_t *base, installation_t *installation);
 
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

@@ -285,6 +285,17 @@ void CL_CampaignRunMarket (void)
 }
 
 /**
+ * @brief Check if an item is on market
+ * @param[in] item Pointer to the item to check
+ * @note this function doesn't check if the item is available on market (buyable > 0)
+ */
+qboolean BS_IsOnMarket (const objDef_t const* item)
+{
+	assert(item);
+	return !(item->virtual || item->notOnMarket);
+}
+
+/**
  * @brief Returns true if you can buy or sell equipment
  * @param[in] base Pointer to base to check on
  * @sa B_BaseInit_f
