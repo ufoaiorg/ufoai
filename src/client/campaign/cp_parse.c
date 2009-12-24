@@ -725,7 +725,7 @@ static qboolean CP_ItemsSanityCheck (void)
 		}
 
 		/* Warn if no price is set. */
-		if (item->price <= 0 && !(item->virtual || item->notOnMarket)) {
+		if (item->price <= 0 && !BS_IsOnMarket(item)) {
 			result = qfalse;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}

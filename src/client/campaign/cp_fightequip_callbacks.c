@@ -190,8 +190,9 @@ static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *s
 	item = AII_GetAircraftItemByID(tech->provides);
 	if (!item)
 		return qfalse;
-
-	if (base->storage.num[item->idx] <= 0)
+	if (item->virtual)
+		return qfalse;
+	if (!B_BaseHasItem(base, item))
 		return qfalse;
 
 	/* filter by type: special case for ammo because more than 1 type is an ammo type */
@@ -516,10 +517,10 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 	 * virtual ammo don't need to be possessed
 	 * installations always have weapon and ammo */
 	if (slot->aircraft) {
-		if (!item->virtual && slot->aircraft->homebase->storage.num[item->idx] <= 0)
+		if (!B_BaseHasItem(slot->aircraft->homebase, item))
 			return AIM_LOADING_UNKNOWNPROBLEM;
 	} else if (slot->base) {
-		if (!item->virtual && slot->base->storage.num[item->idx] <= 0)
+		if (!B_BaseHasItem(slot->base, item))
 			return AIM_LOADING_UNKNOWNPROBLEM;
 	}
 

@@ -577,7 +577,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 	if (slot->aircraft) {
 		/* PHALANX aircraft and UFO crafts */
 		if (AIR_IsUFO(slot->aircraft)) {
-			/* UFO - can alyways be reloaded */
+			/* UFO - can always be reloaded */
 			slot->ammoLeft = slot->ammo->ammo;
 			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * UFO_RELOAD_DELAY_MULTIPLIER;		
 		} else {
@@ -586,7 +586,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 			if (!AIR_IsAircraftInBase(slot->aircraft))
 				return qfalse;
 			/* no more ammo available */
-			if (!slot->ammo->virtual && (B_ItemInBase(slot->ammo, slot->aircraft->homebase) <= 0))
+			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo))
 				return qfalse;
 
 			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
@@ -596,7 +596,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 	} else if (slot->base) {
 		/* Base Defence weapons */
 		/* no more ammo available */
-		if (!slot->ammo->virtual && (B_ItemInBase(slot->ammo, slot->base) <= 0))
+		if (!B_BaseHasItem(slot->base, slot->ammo))
 			return qfalse;
 
 		B_UpdateStorageAndCapacity(slot->base, slot->ammo, -1, qfalse, qfalse);
@@ -695,7 +695,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO
 	 * and base ammo defence are not stored in storage */
 	if (base && ammo->craftitem.type <= AC_ITEM_AMMO) {
-		if ((!ammo->virtual) && base->storage.num[ammo->idx] <= 0) {
+		if (!B_BaseHasItem(base, ammo)) {
 			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", ammo->id);
 			return qfalse;
 		}
