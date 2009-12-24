@@ -168,7 +168,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
- * @param[in] entNum The edict number of the selected/used edict/soldier.
+ * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
  * @param[in] fItem The item you want to move.
  * @param[in] to The container (-id) the item should be moved to.
