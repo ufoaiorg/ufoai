@@ -287,11 +287,16 @@ void* Com_AlignPtr (void *memory, valueTypes_t type)
 }
 
 /**
- * Parse a value
+ * @brief Parse a value from a string
+ * @param[in] base The start pointer to a given data type (typedef, struct) where the parsed data is stored
+ * @param[in] token The data which should be parsed
+ * @param[in] type The data type that should be parsed
+ * @param[in] ofs The offset for the value
+ * @param[in] size The expected size of the data type. If 0, no checks are done
  * @param[out] writtenBytes
  * @return A resultStatus_t value
  * @note instead of , this function separate error message and write byte result
- * @todo better doxygen documentation
+ * @todo This function has much in common with Com_SetValue. Refactor them !
  */
 int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
 {
@@ -720,6 +725,7 @@ qboolean Com_ParseBoolean (const char *token)
  * @param[in] set The data which should be parsed
  * @param[in] type The data type that should be parsed
  * @param[in] ofs The offset for the value
+ * @param[in] size The expected size of the data type. If 0, no checks are done
  * @sa Com_ValueToStr
  * @note The offset is most likely given by the offsetof macro
  */
