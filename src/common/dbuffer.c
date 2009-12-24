@@ -205,7 +205,9 @@ struct dbuffer *dbuffer_merge (struct dbuffer *old, struct dbuffer *old2)
 
 /**
  * @brief Allocate a dbuffer and prepend the given data to it
- * @param[in] old the source buffer
+ * @param[in] old The source buffer
+ * @param[in] data The data to insert at the beginning
+ * @param[in] len The length of that data
  * @return the newly allocated buffer
  * Allocates a new dbuffer and initialises it to contain a copy of the
  * data in old
