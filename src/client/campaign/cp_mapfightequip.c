@@ -233,8 +233,9 @@ void BDEF_ReloadBattery (void)
 		if (!base)
 			continue;
 		for (j = 0; j < base->numBatteries; j++) {
-			if (base->batteries[j].slot.ammoLeft >= 0 && base->batteries[j].slot.ammoLeft < 20)
-				base->batteries[j].slot.ammoLeft++;
+			aircraftSlot_t* slot = &base->batteries[j].slot;
+			if (slot->ammoLeft >= 0 && slot->ammoLeft < 20)
+				slot->ammoLeft++;
 		}
 	}
 }
@@ -284,12 +285,14 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	int i;
 
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
-		AII_InitialiseSlot(&base->batteries[i].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
-		AII_InitialiseSlot(&base->lasers[i].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
-		base->batteries[i].autofire = qtrue;
-		base->batteries[i].target = NULL;
-		base->lasers[i].autofire = qtrue;
-		base->lasers[i].target = NULL;
+		baseWeapon_t* battery = &base->batteries[i];
+		baseWeapon_t* laser = &base->lasers[i];
+		AII_InitialiseSlot(&battery->slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(&laser->slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
+		battery->autofire = qtrue;
+		battery->target = NULL;
+		laser->autofire = qtrue;
+		laser->target = NULL;
 	}
 }
 
@@ -302,9 +305,10 @@ void BDEF_InitialiseInstallationSlots (installation_t *installation)
 	int i;
 
 	for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
-		AII_InitialiseSlot(&installation->batteries[i].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
-		installation->batteries[i].target = NULL;
-		installation->batteries[i].autofire = qtrue;
+		baseWeapon_t* battery = &installation->batteries[i];
+		AII_InitialiseSlot(&battery->slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
+		battery->target = NULL;
+		battery->autofire = qtrue;
 	}
 }
 
