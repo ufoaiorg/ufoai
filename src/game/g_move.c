@@ -366,8 +366,13 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (stopOnVisStop && (status & VIS_STOP))
+			if (stopOnVisStop && (status & VIS_STOP)) {
+				/* if something got visible in mid move that prevents us from walking
+				 * further, we should also not go into crouch mode, but let the decision
+				 * be made by the player to not waste TUs */
+				autoCrouchRequired = qfalse;
 				break;
+			}
 		}
 
 		/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
