@@ -301,20 +301,17 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		}
 	}
 
-	/* add it */
+	/* We moved an item to the floor - check how the client needs to be updated. */
 	if (INV_IsFloorDef(to)) {
-		/* We moved an item to the floor - check how the client needs to be updated. */
+		/* we have to link the temp floor container to the new floor edict or add
+		 * the item to an already existing floor edict - the floor container that
+		 * is already linked might be from a different entity */
+		FLOOR(floor) = FLOOR(ent);
+		/* A new container was created for the floor. */
 		if (newFloor) {
-			/* A new container was created for the floor. */
-			assert(FLOOR(ent));
-			/* we have to link the temp floor container to the new floor edict */
-			FLOOR(floor) = FLOOR(ent);
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
-			/* Add the item to an already existing floor edict - the floor container that
-			 * is already linked might be from a different entity */
-			FLOOR(floor) = FLOOR(ent);
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
 			G_WriteItem(item, to, tx, ty);
 		}

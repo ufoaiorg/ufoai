@@ -574,7 +574,6 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 			G_CheckVis(floor, qtrue);
 		}
 	}
-
 }
 
 #define GRENADE_DT			0.1
