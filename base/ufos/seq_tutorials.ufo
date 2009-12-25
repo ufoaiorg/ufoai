@@ -364,9 +364,9 @@ sequence tut_tacticalmission
 	// dark background for text
 	2dobj text_bg
 	{
-		pos	"100 360"
+		pos	"60 360"
 		align	lc
-		size	"824 50"
+		size	"904 50"
 		bgcolor	"0 0 0 0.7"
 		color	"1 1 1 1"
 	}
@@ -450,7 +450,7 @@ sequence tut_tacticalmission
 
 	2dobj switch_soldier_text2
 	{
-		text	"_Or via the keys 1-8"
+		text	"_Or via the keys 1-8 or Tab"
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
@@ -487,13 +487,13 @@ sequence tut_tacticalmission
 	2dobj bars_hover
 	{
 		pos	"374 657"
-		size	"366 40"
+		size	"366 50"
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
 	2dobj bars_text
 	{
-		text	"_Stats bars: movement and health"
+		text	"_Stats bars: movement, health and morale"
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
@@ -762,6 +762,278 @@ sequence tut_tacticalmission
 	rem text_bg
 }
 
+
+// ==============================================
+
+
+tutorial skirmish
+{
+	name "_How to play skirmish"
+	sequence tut_skirmish
+}
+
+sequence tut_skirmish
+{
+	// ==============================================
+	// precaching screenshot
+	precache pics
+	{
+	tutorial/skirmish1
+	}
+	2dobj skirmish_welcome
+	{
+		text	"_Skirmish tutorial"
+		pos	"512 0"
+		align	uc
+		color	"0 0.6 0 1"
+		speed	"0 40"
+		font	f_big
+	}
+	wait 4
+	2dobj skirmish_welcome { speed "0 0" }
+	2dobj skirmish_about
+	{
+		text	"_Skirmish is type of fast game."
+		pos	"512 250"
+		align	lc
+		color	"0 0.6 0 1"
+		font	f_big
+	}
+	wait 2
+	rem skirmish_welcome
+	rem skirmish_about
+
+
+	// ==============================================
+	// background image
+	2dobj skirmish_bg
+	{
+		image	pics/tutorial/skirmish1
+		align	ul
+		pos	"0 0"
+	}
+	// dark background for text
+	2dobj text_bg
+ {
+		pos	"50 375"
+		size	"300 250"
+		bgcolor	"0 0.3 0 0.7"
+		color	"1 1 1 1"
+	}
+
+	// ==============================================
+	// equipment
+	2dobj equipment_hover
+	{
+		pos	"480 210"
+		size	"310 35"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj equipment_text
+	{
+		text	"_Equipment selection"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem equipment_text
+	rem equipment_hover
+
+	2dobj day_hover
+	{
+		pos	"790 245"
+		size	"145 25"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+ 
+	2dobj day_text
+	{
+		text	"_Day or night version of map to play"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem day_hover
+	rem day_text
+
+	2dobj aliens_hover
+	{
+		pos	"790 270"
+		size	"145 25"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+ 
+	2dobj aliens_text
+	{
+		text	"_How many aliens will fight versus you"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem aliens_hover
+	rem aliens_text
+
+	2dobj team_hover
+	{
+		pos	"725 300"
+		size	"210 20"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+ 
+	2dobj team_text
+	{
+		text	"_Select your team"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem team_hover
+	rem team_text
+
+	2dobj _hover
+	{
+		pos	"725 325"
+		size	"210 20"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+ 
+	2dobj _text
+	{
+		text	"_Select UFO to secure \n(if possible for current map)"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem _hover
+	rem _text
+
+	2dobj _hover
+	{
+		pos	"725 350"
+		size	"210 20"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+ 
+	2dobj _text
+	{
+		text	"_Select dropship \n(if possible for current map)"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem _hover
+	rem _text
+
+	2dobj _hover
+	{
+		pos	"480 530"
+		size	"310 35"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+ 
+	2dobj _text
+	{
+		text	"_Select map to play"
+		pos	"205 380"
+		size	"290 250"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+	rem _hover
+	rem _text
+
+	2dobj and_text
+	{
+		text	"_And..."
+		pos	"205 380"
+		size	"290 50"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 2
+	2dobj _hover
+	{
+		pos	"90 80"
+		size	"260 70"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj start_text
+	{
+		text	"_Start the game!"
+		pos	"205 400"
+		size	"290 200"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 3
+	rem start_hover
+	wait 2
+	2dobj or_text
+	{
+		text	"_Or..."
+		pos	"205 450"
+		size	"290 50"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 2
+	rem and_text
+	rem start_text
+	2dobj _hover
+	{
+		pos	"90 200"
+		size	"260 70"
+		align	ul
+		bgcolor	"1 0 0 0.6"
+	}
+	2dobj exit_text
+	{
+		text	"_Exit to main menu"
+		pos	"205 500"
+		size	"290 150"
+		align	uc
+		color	"1 1 1 1"
+		font	f_big
+	}
+	wait 5
+  rem or_text
+  rem exit_text
+	rem skirmish_bg
+	rem text_bg
+
+
+}
 
 // ==============================================
 
