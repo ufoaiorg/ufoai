@@ -223,6 +223,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 
 /**
  * @brief Parses an edict out of the given string, returning the new position
+ * @param[in] data The string to parse from
  * @param[in] ent should be a properly initialized empty edict.
  */
 static const char *ED_ParseEdict (const char *data, edict_t * ent)
