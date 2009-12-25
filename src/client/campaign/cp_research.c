@@ -1654,7 +1654,8 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 	unsigned hash;
 	technology_t *tech;
 
-	assert(idProvided);
+	if (!idProvided)
+		return NULL;
 	/* catch empty strings */
 	if (idProvided[0] == '\0')
 		return NULL;

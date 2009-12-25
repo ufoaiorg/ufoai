@@ -414,7 +414,6 @@ window ufopedia extends objectinfo
 
 	func onClose
 	{
-		cmd "mn_fireinit ufopedia;"
-		cmd "del up_summary_selection"
+		delete *cvar:up_summary_selection
 	}
 }

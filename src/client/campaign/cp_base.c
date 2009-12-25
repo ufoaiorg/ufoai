@@ -3080,7 +3080,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
  * @param[in] obj Pointer to the item to check.
  * @return True if item is stored in storage.
  */
-static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
+qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
 	if (obj->virtual || !strcmp(obj->id, ANTIMATTER_TECH_ID))
@@ -3112,7 +3112,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 		base->storage.numLoose[obj->idx] = 0; /** @todo needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
-		if (!B_ItemsIsStoredInBaseStorage(obj)) {
+		if (!B_ItemIsStoredInBaseStorage(obj)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
 			return qfalse;
 		}
@@ -3196,7 +3196,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 	for (i = 0, num = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 
-		if (!B_ItemsIsStoredInBaseStorage(obj))
+		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
 
 		/* Don't count item that we don't have in base */
@@ -3253,7 +3253,7 @@ void B_UpdateStorageCap (base_t *base)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 
-		if (!B_ItemsIsStoredInBaseStorage(obj))
+		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
 
 		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * obj->size;

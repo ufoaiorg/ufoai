@@ -687,19 +687,35 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
  * @brief Searches the global array of aircraft types for a given aircraft.
  * @param[in] name Aircraft id.
  * @return aircraft_t pointer or NULL if not found.
+ * @note This function gives no warning on null name or if no aircraft found
  */
-aircraft_t *AIR_GetAircraft (const char *name)
+aircraft_t *AIR_GetAircraftSilent (const char *name)
 {
 	int i;
 
-	assert(name);
+	if (!name)
+		return NULL;
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
 		if (!strcmp(ccs.aircraftTemplates[i].id, name))
 			return &ccs.aircraftTemplates[i];
 	}
-
-	Com_Printf("Aircraft '%s' not found (%i).\n", name, ccs.numAircraftTemplates);
 	return NULL;
+}
+
+/**
+ * @brief Searches the global array of aircraft types for a given aircraft.
+ * @param[in] name Aircraft id.
+ * @return aircraft_t pointer or NULL if not found.
+ */
+aircraft_t *AIR_GetAircraft (const char *name)
+{
+	aircraft_t *aircraft = AIR_GetAircraftSilent(name);
+
+	if (!name)
+		Com_Printf("AIR_GetAircraft Called with NULL name!\n");
+	else if (!aircraft)
+		Com_Printf("Aircraft '%s' not found (%i).\n", name, ccs.numAircraftTemplates);
+	return aircraft;
 }
 
 /**
