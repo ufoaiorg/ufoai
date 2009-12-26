@@ -206,8 +206,7 @@ void G_EventActorFall (const edict_t* ent)
 	gi.WriteByte(ent->pos[0]);
 	gi.WriteByte(ent->pos[1]);
 	gi.WriteByte(ent->pos[2]);
-	/** @todo see dvecs, PosSubDV and NewDVZ */
-	gi.WriteByte(DIRECTION_FALL);
+	gi.WriteByte(makeDV(DIRECTION_FALL, ent->pos[2]));
 	gi.WriteShort(GRAVITY);
 	gi.WriteShort(0);
 }
