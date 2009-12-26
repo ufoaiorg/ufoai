@@ -228,8 +228,10 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
  * @param[in] angles Angles of the model (how it should be rotated after adding to map).
  * @param[in] scale Scaling of the model (how it should be scaled after adding to map).
  * @param[in] entnum Entity number.
+ * @param[in] levelflags The levels in which the entity resides/is visible.
+ * @param[in] renderFlags The flags for the renderer, eg. 'translucent'.
  * @note misc_model
- * @sa CL_ParseEntitystring
+ * @sa V_ParseEntitystring
  * @sa LM_AddToScene
  */
 localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
@@ -915,7 +917,7 @@ void LET_BrushModel (le_t *le)
 
 /**
  * @brief Adds ambient sounds from misc_sound entities
- * @sa CL_ParseEntitystring
+ * @sa V_ParseEntitystring
  */
 void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
 {

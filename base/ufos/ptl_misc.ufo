@@ -824,6 +824,18 @@ particle cross
 	}
 }
 
+// permanent debug marker particle
+particle debug-marker
+{
+	init
+	{
+		image  sfx/cross
+		blend  blend
+		style  facing
+		size   "24 24"
+	}
+}
+
 particle cross_no
 {
 	init

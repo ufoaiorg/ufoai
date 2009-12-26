@@ -229,7 +229,7 @@ static void BS_MarketClick_f (void)
 		break;
 	case FILTER_CRAFTITEM:
 		UP_AircraftItemDescription(buyList.l[num].item);
-		Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? */
+		Cvar_Set("mn_aircraftname", "");
 		break;
 	case FILTER_UGVITEM:
 		if (buyList.l[num].ugv) {
@@ -250,6 +250,18 @@ static void BS_MarketClick_f (void)
 
 	/* update selected element */
 	MN_ExecuteConfunc("buy_selectitem %i", num);
+}
+
+/**
+ * @brief Opens the UFOpedia for the current selected item/aircraft/ugv.
+ * @note called by market_openpedia
+ */
+static void BS_MarketInfoClick_f (void)
+{
+	const technology_t *tech = RS_GetTechByProvided(Cvar_GetString("mn_item"));
+	
+	if (tech)
+		UP_OpenWith(tech->id);
 }
 
 /** @brief Market text nodes buffers */
@@ -325,7 +337,7 @@ static void BS_BuyType (const base_t *base)
 	case FILTER_CRAFTITEM:	/* Aircraft items */
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->notOnMarket)
+			if (!BS_IsOnMarket(od))
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od->tech && (base->storage.num[i] || ccs.eMarket.num[i])
@@ -387,7 +399,7 @@ static void BS_BuyType (const base_t *base)
 		}
 
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->notOnMarket)
+			if (!BS_IsOnMarket(od))
 				continue;
 
 			/* Check whether the item matches the proper filter, storage in current base and market. */
@@ -418,7 +430,7 @@ static void BS_BuyType (const base_t *base)
 		if (buyCat < MAX_SOLDIER_FILTERTYPES || buyCat == FILTER_DUMMY) {
 			/* get item list */
 			for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-				if (od->notOnMarket)
+				if (!BS_IsOnMarket(od))
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
 				if (od->tech && (base->storage.num[i] || ccs.eMarket.num[i]) && INV_ItemMatchesFilter(od, buyCat)) {
@@ -906,6 +918,7 @@ void BS_InitCallbacks(void)
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
+	Cmd_AddCommand("market_openpedia", BS_MarketInfoClick_f, "Open UFOPedia entry for selected item");
 
 	memset(&buyList, 0, sizeof(buyList));
 	buyList.length = -1;
@@ -920,4 +933,5 @@ void BS_ShutdownCallbacks(void)
 	Cmd_RemoveCommand("mn_buy");
 	Cmd_RemoveCommand("mn_sell");
 	Cmd_RemoveCommand("buy_autosell");
+	Cmd_RemoveCommand("market_openpedia");
 }

@@ -1,7 +1,6 @@
 /**
  * @file cp_produce_callbacks.c
  * @brief Menu related callback functions used for production.
- * @todo Remove direct access to nodes
  */
 
 /*
@@ -303,6 +302,8 @@ static void PR_UpdateProductionList (const base_t* base)
 	} else {
 		objDef_t *od;
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			if (od->virtual)
+				continue;
 			assert(od->tech);
 			/* We will not show items with producetime = -1 - these are not producible.
 			 * We can produce what was researched before. */

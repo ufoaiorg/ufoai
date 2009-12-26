@@ -66,14 +66,11 @@ static int keyq_head = 0;
 static int keyq_tail = 0;
 
 static cvar_t *in_debug;
+cvar_t *cl_isometric;
 
 int mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
-
-static qboolean cameraRoute = qfalse;
-static vec3_t routeFrom, routeDelta;
-static float routeDist;
 
 /*
 ===============================================================================
@@ -264,35 +261,6 @@ static void IN_ZoomOutUp_f (void)
 	IN_KeyUp(&in_zoomout);
 }
 
-const float MIN_ZOOM = 0.5;
-const float MAX_ZOOM = 32.0;
-
-static cvar_t *cl_camrotspeed;
-static cvar_t *cl_cammovespeed;
-static cvar_t *cl_cammoveaccel;
-static cvar_t *cl_campitchmax;
-static cvar_t *cl_campitchmin;
-static cvar_t *cl_camzoomquant;
-static cvar_t *cl_camzoommax;
-cvar_t *cl_camzoommin;
-cvar_t *cl_centerview;
-cvar_t *cl_isometric;
-
-#define MIN_CAMROT_SPEED	50
-#define MIN_CAMROT_ACCEL	50
-#define MAX_CAMROT_SPEED	1000
-#define MAX_CAMROT_ACCEL	1000
-#define MIN_CAMMOVE_SPEED	150
-#define MIN_CAMMOVE_ACCEL	150
-#define MAX_CAMMOVE_SPEED	3000
-#define MAX_CAMMOVE_ACCEL	3000
-#define ZOOM_SPEED			2.0
-#define MIN_CAMZOOM_QUANT	0.05
-#define MAX_CAMZOOM_QUANT	1.0
-#define LEVEL_SPEED			3.0
-#define LEVEL_MIN			0.05
-
-/*========================================================================== */
 
 /**
  * @brief Switch one worldlevel up
@@ -319,48 +287,16 @@ static void CL_ZoomInQuant_f (void)
 {
 	if (mouseSpace == MS_MENU)
 		MN_MouseWheel(qfalse, mousePosX, mousePosY);
-	else {
-		float quant;
-
-		/* check zoom quant */
-		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
-			quant = 1 + MIN_CAMZOOM_QUANT;
-		else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
-			quant = 1 + MAX_CAMZOOM_QUANT;
-		else
-			quant = 1 + cl_camzoomquant->value;
-
-		/* change zoom */
-		cl.cam.zoom *= quant;
-
-		/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
-		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-		V_CalcFovX();
-	}
+	else
+		CL_CameraZoomIn();
 }
 
 static void CL_ZoomOutQuant_f (void)
 {
 	if (mouseSpace == MS_MENU)
 		MN_MouseWheel(qtrue, mousePosX, mousePosY);
-	else {
-		float quant;
-
-		/* check zoom quant */
-		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
-			quant = 1 + MIN_CAMZOOM_QUANT;
-		else if (cl_camzoomquant->value > MAX_CAMZOOM_QUANT)
-			quant = 1 + MAX_CAMZOOM_QUANT;
-		else
-			quant = 1 + cl_camzoomquant->value;
-
-		/* change zoom */
-		cl.cam.zoom /= quant;
-
-		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
-		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-		V_CalcFovX();
-	}
+	else
+		CL_CameraZoomOut();
 }
 
 /**
@@ -550,8 +486,6 @@ static int lastAlien = 0;
  */
 static void CL_NextAlienVisibleFromActor_f (void)
 {
-	le_t *watcher; /** @todo make this a parameter for use in other functions? */
-	le_t *le;
 	int i;
 	trace_t tr;
 	vec3_t from, at;
@@ -559,33 +493,30 @@ static void CL_NextAlienVisibleFromActor_f (void)
 	if (!selActor)
 		return;
 
-	watcher = selActor;
-
 	if (lastAlien >= cl.numLEs)
 		lastAlien = 0;
 
 	i = lastAlien;
 	do {
+		le_t *le;
 		if (++i >= cl.numLEs)
 			i = 0;
 		le = &LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
-			VectorCopy(watcher->origin, from);
+			VectorCopy(selActor->origin, from);
 			VectorCopy(le->origin, at);
 			/* actor eye height */
-			if (LE_IsCrouched(watcher))
+			if (LE_IsCrouched(selActor))
 				from[2] += EYE_HT_CROUCH;
 			else
 				from[2] += EYE_HT_STAND;
 			/* target height */
 			if (LE_IsCrouched(le))
-				at[2] += EYE_HT_CROUCH; /** @todo */
+				at[2] += EYE_HT_CROUCH;
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			/** @todo check the facing of the actor: watcher->dir
-			 * maybe doing more than one trace to different target heights */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
 				continue;
@@ -624,83 +555,13 @@ static void CL_NextAlien_f (void)
 	} while (i != lastAlien);
 }
 
-/*========================================================================== */
-
-#ifdef DEBUG
-/**
- * @brief Prints the current camera angles
- * @note Only available in debug mode
- * Accessable via console command camangles
- */
-static void CL_CamPrintAngles_f (void)
-{
-	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2]);
-}
-#endif /* DEBUG */
-
-static void CL_CamSetAngles_f (void)
-{
-	int c = Cmd_Argc();
-
-	if (c < 3) {
-		Com_Printf("Usage %s <value> <value>\n", Cmd_Argv(0));
-		return;
-	}
-
-	cl.cam.angles[PITCH] = atof(Cmd_Argv(1));
-	cl.cam.angles[YAW] = atof(Cmd_Argv(2));
-	cl.cam.angles[ROLL] = 0.0f;
-}
-
-static void CL_CamSetZoom_f (void)
-{
-	int c = Cmd_Argc();
-
-	if (c < 2) {
-		Com_Printf("Usage %s <value>\n", Cmd_Argv(0));
-		return;
-	}
-
-	Com_Printf("old zoom value: %.2f\n", cl.cam.zoom);
-	cl.cam.zoom = atof(Cmd_Argv(1));
-	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-}
-
-/**
- * @brief Makes a mapshot - called by basemapshot script command
- * @note Load a basemap and execute 'basemapshot' in console
- */
-static void CL_MakeBaseMapShot_f (void)
-{
-	if (cls.state != ca_active) {
-		Com_Printf("Load the base map before you try to use this function\n");
-		return;
-	}
-
-	cl.cam.angles[0] = 60.0f;
-	cl.cam.angles[1] = 90.0f;
-	Cvar_SetValue("r_isometric", 1);
-	/* we are interested in the second level only */
-	Cvar_SetValue("cl_worldlevel", 1);
-	MN_PushMenu("nohud", NULL);
-	/* hide any active console */
-	Key_SetDest(key_game);
-	Cmd_ExecuteString("r_screenshot tga");
-}
-
-#define STATE_FORWARD	1
-#define STATE_RIGHT		2
-#define STATE_ZOOM		3
-#define STATE_ROT		4
-#define STATE_TILT		5
 
 #define SCROLL_BORDER	4
 
 /**
  * @note see SCROLL_BORDER define
  */
-static float CL_GetKeyMouseState (int dir)
+float CL_GetKeyMouseState (int dir)
 {
 	float value;
 
@@ -728,196 +589,6 @@ static float CL_GetKeyMouseState (int dir)
 	}
 
 	return value;
-}
-
-/**
- * @brief forces the camera to stay within the horizontal bounds of the
- * map plus some border
- */
-static inline void CL_ClampCamToMap (const float border)
-{
-	if (cl.cam.origin[0] < mapMin[0] - border)
-		cl.cam.origin[0] = mapMin[0] - border;
-	else if (cl.cam.origin[0] > mapMax[0] + border)
-		cl.cam.origin[0] = mapMax[0] + border;
-
-	if (cl.cam.origin[1] < mapMin[1] - border)
-		cl.cam.origin[1] = mapMin[1] - border;
-	else if (cl.cam.origin[1] > mapMax[1] + border)
-		cl.cam.origin[1] = mapMax[1] + border;
-}
-
-void CL_CameraMove (void)
-{
-	float frac;
-	vec3_t g_forward, g_right, g_up;
-	vec3_t delta;
-	int i;
-
-	/* get relevant variables */
-	const float rotspeed =
-		(cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ((cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED) : MIN_CAMROT_SPEED;
-	const float movespeed =
-		(cl_cammovespeed->value > MIN_CAMMOVE_SPEED) ?
-		((cl_cammovespeed->value < MAX_CAMMOVE_SPEED) ? cl_cammovespeed->value / cl.cam.zoom : MAX_CAMMOVE_SPEED / cl.cam.zoom) : MIN_CAMMOVE_SPEED / cl.cam.zoom;
-	const float moveaccel =
-		(cl_cammoveaccel->value > MIN_CAMMOVE_ACCEL) ?
-		((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value / cl.cam.zoom : MAX_CAMMOVE_ACCEL / cl.cam.zoom) : MIN_CAMMOVE_ACCEL / cl.cam.zoom;
-
-	if (cls.state != ca_active)
-		return;
-
-	if (!viddef.viewWidth || !viddef.viewHeight)
-		return;
-
-	/* calculate camera omega */
-	/* stop acceleration */
-	frac = cls.frametime * moveaccel * 2.5;
-
-	for (i = 0; i < 2; i++) {
-		if (fabs(cl.cam.omega[i]) > frac) {
-			if (cl.cam.omega[i] > 0)
-				cl.cam.omega[i] -= frac;
-			else
-				cl.cam.omega[i] += frac;
-		} else
-			cl.cam.omega[i] = 0;
-
-		/* rotational acceleration */
-		if (i == YAW)
-			cl.cam.omega[i] += CL_GetKeyMouseState(STATE_ROT) * frac * 2;
-		else
-			cl.cam.omega[i] += CL_GetKeyMouseState(STATE_TILT) * frac * 2;
-
-		if (cl.cam.omega[i] > rotspeed)
-			cl.cam.omega[i] = rotspeed;
-		if (-cl.cam.omega[i] > rotspeed)
-			cl.cam.omega[i] = -rotspeed;
-	}
-
-	cl.cam.omega[ROLL] = 0;
-	/* calculate new camera angles for this frame */
-	VectorMA(cl.cam.angles, cls.frametime, cl.cam.omega, cl.cam.angles);
-
-	if (cl.cam.angles[PITCH] > cl_campitchmax->value)
-		cl.cam.angles[PITCH] = cl_campitchmax->value;
-	if (cl.cam.angles[PITCH] < cl_campitchmin->value)
-		cl.cam.angles[PITCH] = cl_campitchmin->value;
-
-	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-
-	/* camera route overrides user input */
-	if (cameraRoute) {
-		/* camera route */
-		frac = cls.frametime * moveaccel * 2;
-		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - 200) {
-			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
-			VectorNormalize2(cl.cam.speed, delta);
-			if (DotProduct(delta, routeDelta) < 0.05)
-				cameraRoute = qfalse;
-		} else
-			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
-	} else {
-		/* normal camera movement */
-		/* calculate ground-based movement vectors */
-		const float angle = cl.cam.angles[YAW] * torad;
-		const float sy = sin(angle);
-		const float cy = cos(angle);
-
-		VectorSet(g_forward, cy, sy, 0.0);
-		VectorSet(g_right, sy, -cy, 0.0);
-		VectorSet(g_up, 0.0, 0.0, 1.0);
-
-		/* calculate camera speed */
-		/* stop acceleration */
-		frac = cls.frametime * moveaccel;
-		if (VectorLength(cl.cam.speed) > frac) {
-			VectorNormalize2(cl.cam.speed, delta);
-			VectorMA(cl.cam.speed, -frac, delta, cl.cam.speed);
-		} else
-			VectorClear(cl.cam.speed);
-
-		/* acceleration */
-		frac = cls.frametime * moveaccel * 3.5;
-		VectorClear(delta);
-		VectorScale(g_forward, CL_GetKeyMouseState(STATE_FORWARD), delta);
-		VectorMA(delta, CL_GetKeyMouseState(STATE_RIGHT), g_right, delta);
-		VectorNormalize(delta);
-		VectorMA(cl.cam.speed, frac, delta, cl.cam.speed);
-
-		/* lerp the level change */
-		if (cl.cam.lerplevel < cl_worldlevel->value) {
-			cl.cam.lerplevel += LEVEL_SPEED * (cl_worldlevel->value - cl.cam.lerplevel + LEVEL_MIN) * cls.frametime;
-			if (cl.cam.lerplevel > cl_worldlevel->value)
-				cl.cam.lerplevel = cl_worldlevel->value;
-		} else if (cl.cam.lerplevel > cl_worldlevel->value) {
-			cl.cam.lerplevel -= LEVEL_SPEED * (cl.cam.lerplevel - cl_worldlevel->value + LEVEL_MIN) * cls.frametime;
-			if (cl.cam.lerplevel < cl_worldlevel->value)
-				cl.cam.lerplevel = cl_worldlevel->value;
-		}
-	}
-
-	/* clamp speed */
-	frac = VectorLength(cl.cam.speed) / movespeed;
-	if (frac > 1.0)
-		VectorScale(cl.cam.speed, 1.0 / frac, cl.cam.speed);
-
-	/* zoom change */
-	frac = CL_GetKeyMouseState(STATE_ZOOM);
-	if (frac > 0.1) {
-		cl.cam.zoom *= 1.0 + cls.frametime * ZOOM_SPEED * frac;
-		/* ensure zoom isn't greater than either MAX_ZOOM or cl_camzoommax */
-		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-	} else if (frac < -0.1) {
-		cl.cam.zoom /= 1.0 - cls.frametime * ZOOM_SPEED * frac;
-		/* ensure zoom isn't less than either MIN_ZOOM or cl_camzoommin */
-		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-	}
-	V_CalcFovX();
-
-	/* calc new camera reference and new camera real origin */
-	VectorMA(cl.cam.origin, cls.frametime, cl.cam.speed, cl.cam.origin);
-	cl.cam.origin[2] = 0.;
-	if (cl_isometric->integer) {
-		CL_ClampCamToMap(72.);
-		VectorMA(cl.cam.origin, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT, cl.cam.axis[0], cl.cam.camorg);
-		cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
-	} else {
-		CL_ClampCamToMap(min(144. * (cl.cam.zoom - cl_camzoommin->value - 0.4) / cl_camzoommax->value, 86));
-		VectorMA(cl.cam.origin, -CAMERA_START_DIST / cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
-		cl.cam.camorg[2] += CAMERA_START_HEIGHT / cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
-	}
-}
-
-/**
- * @brief Interpolates the camera movement from the given start point to the given end point
- * @sa CL_CameraMove
- * @sa V_CenterView
- * @param[in] from The grid position to start the camera movement from
- * @param[in] target The grid position to move the camera to
- */
-void CL_CameraRoute (const pos3_t from, const pos3_t target)
-{
-	if (!cl_centerview->integer)
-		return;
-
-	/* initialize the camera route variables */
-	PosToVec(from, routeFrom);
-	PosToVec(target, routeDelta);
-	VectorSubtract(routeDelta, routeFrom, routeDelta);
-	routeDelta[2] = 0;
-	routeDist = VectorLength(routeDelta);
-	VectorNormalize(routeDelta);
-
-	/* center the camera on the route starting position */
-	VectorCopy(routeFrom, cl.cam.origin);
-	/* set the world level to the z axis value of the camera target
-	 * the camera lerp will do a smooth translate from the old level
-	 * to the new one */
-	Cvar_SetValue("cl_worldlevel", target[2]);
-
-	VectorClear(cl.cam.speed);
-	cameraRoute = qtrue;
 }
 
 /**
@@ -1342,15 +1013,6 @@ void IN_Init (void)
 
 	/* cvars */
 	in_debug = Cvar_Get("in_debug", "0", 0, "Show input key codes on game console");
-	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
-	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, NULL);
-	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, NULL);
-	cl_campitchmax = Cvar_Get("cl_campitchmax", "89", 0, "Max camera pitch - over 90 presents apparent mouse inversion");
-	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
-	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", CVAR_ARCHIVE, NULL);
-	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
-	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
-	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	/* commands */
@@ -1406,12 +1068,8 @@ void IN_Init (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
 	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
-	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
-	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
-	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
-	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 
 	mousePosX = mousePosY = 0.0;
 

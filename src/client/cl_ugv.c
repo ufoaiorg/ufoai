@@ -37,19 +37,36 @@ int numUGV;
  * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
  * @param[in] ugvID The script id of the UGV definition you are looking for
  * @return ugv_t pointer or NULL if not found.
+ * @note This function gives no warning on null name or if no ugv found
  */
-ugv_t *CL_GetUGVByID (const char *ugvID)
+ugv_t *CL_GetUGVByIDSilent (const char *ugvID)
 {
 	int i;
 
+	if (!ugvID)
+		return NULL;
 	for (i = 0; i < numUGV; i++) {
 		if (!strcmp(ugvs[i].id, ugvID)) {
 			return &ugvs[i];
 		}
 	}
-
-	Com_Printf("CL_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, numUGV);
 	return NULL;
+}
+
+/**
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
+ * @return ugv_t pointer or NULL if not found.
+ */
+ugv_t *CL_GetUGVByID (const char *ugvID)
+{
+	ugv_t *ugv = CL_GetUGVByIDSilent(ugvID);
+
+	if (!ugvID)
+		Com_Printf("CL_GetUGVByID Called with NULL ugvID!\n");
+	if (!ugv)
+		Com_Printf("CL_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, numUGV);
+	return ugv;
 }
 
 /**

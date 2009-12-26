@@ -30,6 +30,7 @@ CLIENT_SRCS = \
 	client/cinematic/cl_cinematic_ogm.c \
 	\
 	client/battlescape/cl_actor.c \
+	client/battlescape/cl_camera.c \
 	client/battlescape/cl_hud.c \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \

@@ -57,6 +57,7 @@
 //		shield 1.50	means: the shield of the aircraft is 50% stronger
 //		shield +10	means: the shield of the aircraft is stronger by 10 points
 //		speed 0.75	means: the aircraft is 25% slower
+//	virtual		- the item is virtual it should not show in menus, no item needed for reload (in case of ammo)
 //
 //	--vv-- Parameters for craftitem specific to "crafttype ammo". --vv--
 //	craftweapon		- The weapon that can use this ammo.
@@ -66,7 +67,6 @@
 //	delay			- The delay between 2 shots of this ammunition.
 //	wdamage			- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
 //  accuracy		- Modifier to craft accuracy when firing this weapon
-//	unlimitedAmmo	- True if ammo is unlimited
 //	---------------------------------------------------------------------
 //
 //=========================================================================
@@ -743,10 +743,10 @@ craftitem craft_ammo_alc
 	name				"D-F Tank"
 	crafttype			ammo
 	craftweapon			craft_weapon_alc
-	notonmarket			true
+	virtual				true
 
 	beamcolor			"1 .874 .294 1"
-	unlimitedAmmo		true
+	ammo				10
 	wdamage				10
 	accuracy			0.7
 	wrange				1.8
@@ -887,10 +887,10 @@ craftitem craft_ammo_particle_beam
 	name				"Particle Beam Accelerator"
 	crafttype			ammo
 	craftweapon			craft_weapon_particle_beam
-	notonmarket			true
+	virtual				true
 
 	beamcolor			".590 .762 .738 1"
-	unlimitedAmmo		true
+	ammo				7
 	wdamage				21
 	accuracy			0.7
 	wrange				3
@@ -1001,10 +1001,10 @@ craftitem base_ammo_AA51
 	crafttype		base_ammo_missile
 	craftweapon		base_AA51_launcher
 	is_dummy		true
-	notonmarket		true
 	model			"geoscape/missile"
+	virtual			true
 
-	unlimitedAmmo	true
+	ammo			8
 	wdamage			20
 	accuracy		0.3
 	wrange			7
@@ -1033,10 +1033,10 @@ craftitem baselaser_ammo
 	crafttype			base_ammo_laser
 	craftweapon			baselaser
 	is_dummy			true
-	notonmarket			true
+	virtual				true
 
 	beamcolor			"1 .874 .294 1"
-	unlimitedAmmo		true
+	ammo				10
 	wdamage				10
 	accuracy			0.7
 	wrange				5
@@ -1044,3 +1044,4 @@ craftitem baselaser_ammo
 	delay				100
 	size				10 // light
 }
+

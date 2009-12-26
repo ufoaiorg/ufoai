@@ -287,11 +287,16 @@ void* Com_AlignPtr (void *memory, valueTypes_t type)
 }
 
 /**
- * Parse a value
+ * @brief Parse a value from a string
+ * @param[in] base The start pointer to a given data type (typedef, struct) where the parsed data is stored
+ * @param[in] token The data which should be parsed
+ * @param[in] type The data type that should be parsed
+ * @param[in] ofs The offset for the value
+ * @param[in] size The expected size of the data type. If 0, no checks are done
  * @param[out] writtenBytes
  * @return A resultStatus_t value
  * @note instead of , this function separate error message and write byte result
- * @todo better doxygen documentation
+ * @todo This function has much in common with Com_SetValue. Refactor them !
  */
 int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writtenBytes)
 {
@@ -720,6 +725,7 @@ qboolean Com_ParseBoolean (const char *token)
  * @param[in] set The data which should be parsed
  * @param[in] type The data type that should be parsed
  * @param[in] ofs The offset for the value
+ * @param[in] size The expected size of the data type. If 0, no checks are done
  * @sa Com_ValueToStr
  * @note The offset is most likely given by the offsetof macro
  */
@@ -1213,7 +1219,6 @@ static const value_t od_vals[] = {
 	{"bullets", V_BOOL, offsetof(objDef_t, craftitem.bullets), MEMBER_SIZEOF(objDef_t, craftitem.bullets)},
 	{"beam", V_BOOL, offsetof(objDef_t, craftitem.beam), MEMBER_SIZEOF(objDef_t, craftitem.beam)},
 	{"beamcolor", V_COLOR, offsetof(objDef_t, craftitem.beamColor), MEMBER_SIZEOF(objDef_t, craftitem.beamColor)},
-	{"unlimitedAmmo", V_BOOL, offsetof(objDef_t, craftitem.unlimitedAmmo), MEMBER_SIZEOF(objDef_t, craftitem.unlimitedAmmo)},
 	{"wdamage", V_FLOAT, offsetof(objDef_t, craftitem.weaponDamage), MEMBER_SIZEOF(objDef_t, craftitem.weaponDamage)},
 	{"wspeed", V_FLOAT, offsetof(objDef_t, craftitem.weaponSpeed), MEMBER_SIZEOF(objDef_t, craftitem.weaponSpeed)},
 	{"delay", V_FLOAT, offsetof(objDef_t, craftitem.weaponDelay), MEMBER_SIZEOF(objDef_t, craftitem.weaponDelay)},
@@ -1233,7 +1238,7 @@ static const value_t od_vals[] = {
 	{"is_misc", V_BOOL, offsetof(objDef_t, isMisc), MEMBER_SIZEOF(objDef_t, isMisc)},
 	{"is_ugvitem", V_BOOL, offsetof(objDef_t, isUGVitem), MEMBER_SIZEOF(objDef_t, isUGVitem)},
 	{"is_dummy", V_BOOL, offsetof(objDef_t, isDummy), MEMBER_SIZEOF(objDef_t, isDummy)},
-	{"nohand", V_BOOL, offsetof(objDef_t, doNotAddWeaponToHand), MEMBER_SIZEOF(objDef_t, doNotAddWeaponToHand)},
+	{"virtual", V_BOOL, offsetof(objDef_t, virtual), MEMBER_SIZEOF(objDef_t, virtual)},
 
 	{NULL, V_NULL, 0, 0}
 };

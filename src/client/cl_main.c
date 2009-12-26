@@ -869,6 +869,7 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	IN_Init();
+	CL_CameraInit();
 
 	CLMN_InitStartup();
 	TUT_InitStartup();

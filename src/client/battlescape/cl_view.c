@@ -50,7 +50,7 @@ cvar_t* cl_map_debug;
  * @sa G_SendEdictsAndBrushModels
  * @sa CL_AddBrushModel
  */
-static void CL_ParseEntitystring (void)
+static void V_ParseEntitystring (void)
 {
 	char keyname[256];
 	char classname[MAX_VAR];
@@ -81,7 +81,7 @@ static void CL_ParseEntitystring (void)
 			break;
 
 		if (entityToken[0] != '{')
-			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", entityToken);
+			Com_Error(ERR_DROP, "V_ParseEntitystring: found %s when expecting {", entityToken);
 
 		/* initialize */
 		VectorCopy(vec3_origin, origin);
@@ -99,17 +99,17 @@ static void CL_ParseEntitystring (void)
 			if (entityToken[0] == '}')
 				break;
 			if (!es)
-				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
+				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
 
 			Q_strncpyz(keyname, entityToken, sizeof(keyname));
 
 			/* parse value */
 			entityToken = Com_Parse(&es);
 			if (!es)
-				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
+				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
 
 			if (entityToken[0] == '}')
-				Com_Error(ERR_DROP, "CL_ParseEntitystring: closing brace without data");
+				Com_Error(ERR_DROP, "V_ParseEntitystring: closing brace without data");
 
 			/* filter interesting keys */
 			if (!strcmp(keyname, "classname"))
@@ -154,7 +154,7 @@ static void CL_ParseEntitystring (void)
 
 			if (GAME_IsMultiplayer() && (cl_teamnum->integer > maxMultiplayerTeams
 			 || cl_teamnum->integer <= TEAM_CIVILIAN)) {
-				Com_Printf("The selected team is not useable. "
+				Com_Printf("The selected team is not usable. "
 					"The map doesn't support %i teams but only %i teams\n",
 					cl_teamnum->integer, maxMultiplayerTeams);
 				Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
@@ -214,7 +214,7 @@ void V_LoadMedia (void)
 	/* register models, pics, and skins */
 	SCR_UpdateScreen();
 	R_ModBeginLoading(cl.configstrings[CS_TILES], atoi(cl.configstrings[CS_LIGHTMAP]), cl.configstrings[CS_POSITIONS], cl.configstrings[CS_NAME]);
-	CL_ParseEntitystring();
+	V_ParseEntitystring();
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
 	cls.loadingPercent += 10.0f;

@@ -81,7 +81,7 @@ void G_ClientPrintf (const player_t *player, int printLevel, const char *fmt, ..
 
 	/* there is no client for an AI controlled player on the server where we
 	 * could send the message to */
-	if (player->pers.ai)
+	if (G_IsAIPlayer(player))
 		return;
 
 	va_start(ap, fmt);
@@ -347,10 +347,9 @@ qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn (player_t * player, int num, byte dv)
+static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 {
 	const int dir = getDVdir(dv);
-	edict_t *ent = g_edicts + num;
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, TU_TURN, NOISY))
@@ -377,18 +376,14 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 /**
  * @brief Changes the state of a player/soldier.
  * @param[in,out] player The player who controlls the actor
- * @param[in] num The index of the edict in the global g_edicts array
+ * @param[in] ent the edict to perform the state change for
  * @param[in] reqState The bit-map of the requested state change
  * @param[in] checkaction only activate the events - network stuff is handled in the calling function
  * don't even use the G_ActionCheck function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (player_t * player, int num, int reqState, qboolean checkaction)
+void G_ClientStateChange (player_t* player, edict_t* ent, int reqState, qboolean checkaction)
 {
-	edict_t *ent;
-
-	ent = g_edicts + num;
-
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheck(player, ent, 0, NOISY))
 		return;
@@ -406,37 +401,22 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
-		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
+		if (ent->state & STATE_REACTION) {
 			if (G_IsShaken(ent)) {
-				G_ClientPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
+				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
-
-				if (player->pers.ai && checkaction)
-					gi.error("AI reaction fire is server side only");
 			}
 		}
 		break;
-	case STATE_REACTION_MANY: /* Request to turn on multi-reaction fire mode. */
+	/* Request to turn on multi- or single-reaction fire mode. */
+	case STATE_REACTION_MANY:
+	case STATE_REACTION_ONCE:
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
-
-		if (player->pers.ai && checkaction)
-			gi.error("AI reaction fire is server side only");
-
-		/* Enable multi reaction fire. */
-		ent->state |= STATE_REACTION_MANY;
-		break;
-	case STATE_REACTION_ONCE: /* Request to turn on single-reaction fire mode. */
-		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
-
-		if (player->pers.ai && checkaction)
-			gi.error("AI reaction fire is server side only");
-
-		/* Turn on single reaction fire. */
-		ent->state |= STATE_REACTION_ONCE;
+		/* Enable requested reaction fire. */
+		ent->state |= reqState;
 		break;
 	default:
 		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
@@ -603,6 +583,8 @@ int G_ClientAction (player_t * player)
 		return action;
 	}
 
+	ent = g_edicts + num;
+
 	switch (action) {
 	case PA_NULL:
 		/* do nothing on a null action */
@@ -610,28 +592,27 @@ int G_ClientAction (player_t * player)
 
 	case PA_TURN:
 		gi.ReadFormat(pa_format[PA_TURN], &i);
-		G_ClientTurn(player, num, (byte) i);
+		G_ClientTurn(player, ent, (byte) i);
 		break;
 
 	case PA_MOVE:
 		gi.ReadFormat(pa_format[PA_MOVE], &pos);
-		G_ClientMove(player, player->pers.team, num, pos, qtrue, NOISY);
+		G_ClientMove(player, player->pers.team, ent, pos, qtrue, NOISY);
 		break;
 
 	case PA_STATE:
 		gi.ReadFormat(pa_format[PA_STATE], &i);
-		G_ClientStateChange(player, num, i, qtrue);
+		G_ClientStateChange(player, ent, i, qtrue);
 		break;
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode, &from);
-		(void) G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue, from);
+		G_ClientShoot(player, ent, pos, i, firemode, NULL, qtrue, from);
 		break;
 
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-		ent = g_edicts + num;
 
 		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
 		 * the item up hasn't moved at all */
@@ -652,7 +633,6 @@ int G_ClientAction (player_t * player)
 
 	case PA_USE_DOOR: {
 		edict_t *door;
-		edict_t *actor = (g_edicts + num);
 
 		/* read the door the client wants to open */
 		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
@@ -660,14 +640,14 @@ int G_ClientAction (player_t * player)
 		/* get the door edict */
 		door = g_edicts + i;
 
-		if (actor->clientAction == door) {
+		if (ent->clientAction == door) {
 			/* check whether it's part of an edict group but not the master */
 			if (door->flags & FL_GROUPSLAVE)
 				door = door->groupMaster;
 
-			G_ClientUseEdict(player, actor, door);
+			G_ClientUseEdict(player, ent, door);
 		} else
-			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", actor->clientAction->number,
+			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", ent->clientAction->number,
 					door->number);
 	}
 		break;
@@ -675,7 +655,6 @@ int G_ClientAction (player_t * player)
 	case PA_REACT_SELECT:
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
 		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
-		ent = g_edicts + num;
 		ent->chr.RFmode.hand = hand;
 		ent->chr.RFmode.fmIdx = fdIdx;
 		ent->chr.RFmode.weapon = &gi.csi->ods[objIdx];
@@ -688,7 +667,6 @@ int G_ClientAction (player_t * player)
 			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n",
 					resType, resState, resValue);
 
-		ent = g_edicts + num;
 		switch (resType) {
 		case RES_REACTION:
 			ent->chr.reservedTus.reserveReaction = resState;
@@ -1243,7 +1221,7 @@ void G_ClientSpawn (player_t * player)
 		if (ent->inuse && ent->team == player->pers.team && G_IsActor(ent)) {
 			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",
 					ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
-			G_ClientStateChange(player, i, ent->chr.reservedTus.reserveReaction, qfalse);
+			G_ClientStateChange(player, ent, ent->chr.reservedTus.reserveReaction, qfalse);
 		}
 
 	/* submit stats */

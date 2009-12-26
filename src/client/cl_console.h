@@ -46,4 +46,8 @@ void Con_LoadConsoleHistory(void);
 #define CONSOLE_COLORED_TEXT_MASK 128
 #define CONSOLE_PROMPT_CHAR ']'
 
+extern const int con_fontHeight;
+extern const int con_fontWidth;
+extern const int con_fontShift;
+
 #endif /* CLIENT_CL_CONSOLE_H */

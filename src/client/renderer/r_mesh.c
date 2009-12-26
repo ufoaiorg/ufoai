@@ -183,6 +183,47 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh)
 }
 
 /**
+ * @brief Searches the tag data for the given name
+ * @param[in] mod The model to search the tag data. Can be @c NULL
+ * @param[in] tagName The name of the tag to get the matrix for. Might not be @c NULL
+ * @return The tag matrix. In case the model has no tag data assigned, @c NULL is returned. The same
+ * is true if the given tag name was not found in the assigned tag data.
+ * @note Matrix format:
+ * @li 0-11: rotation (forward, right, up)
+ * @li 12-14: translation
+ * @li 15:
+ */
+const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
+{
+	int i;
+	const dMD2tag_t *taghdr;
+	const char *name;
+
+	if (!mod)
+		return NULL;
+
+	taghdr = (const dMD2tag_t *) mod->alias.tagdata;
+
+	/* no tag data found for this model */
+	if (taghdr == NULL)
+		return NULL;
+
+	assert(tagName);
+
+	/* find the right tag */
+	name = (const char *) taghdr + taghdr->ofs_names;
+	for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
+		if (!strcmp(name, tagName)) {
+			/* found the tag (matrix) */
+			const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
+			tag += i * 16 * taghdr->num_frames;
+			return tag;
+		}
+	}
+	return NULL;
+}
+
+/**
  * @sa R_DrawAliasModel
  */
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
@@ -222,31 +263,22 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		R_TransformModelDirect(pmi);
 
 		/* tag trafo */
-		if (tagname && pmi->model && pmi->model->alias.tagdata) {
-			dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
-			/* find the right tag */
-			const char *name = (const char *) taghdr + taghdr->ofs_names;
-			int i;
+		if (tagname) {
+			const float *tag = R_GetTagMatrix(pmi->model, tagname);
+			if (tag) {
+				float interpolated[16];
+				animState_t as;
+				dMD2tag_t *taghdr = (dMD2tag_t *) pmi->model->alias.tagdata;
 
-			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
-				if (!strcmp(name, tagname)) {
-					float interpolated[16];
-					animState_t as;
-					/* found the tag (matrix) */
-					const float *tag = (const float *) ((const byte *) taghdr + taghdr->ofs_tags);
-					tag += i * 16 * taghdr->num_frames;
+				/* do interpolation */
+				as.frame = pmi->frame;
+				as.oldframe = pmi->oldframe;
+				as.backlerp = pmi->backlerp;
+				R_InterpolateTransform(&as, taghdr->num_frames, tag, interpolated);
 
-					/* do interpolation */
-					as.frame = pmi->frame;
-					as.oldframe = pmi->oldframe;
-					as.backlerp = pmi->backlerp;
-					R_InterpolateTransform(&as, taghdr->num_frames, tag, interpolated);
-
-					/* transform */
-					glMultMatrixf(interpolated);
-					R_CheckError();
-					break;
-				}
+				/* transform */
+				glMultMatrixf(interpolated);
+				R_CheckError();
 			}
 		}
 	}
@@ -424,7 +456,6 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 		/* get distance, set lod if available */
 		VectorSubtract(refdef.viewOrigin, origin, dist);
 		length = VectorLength(dist);
-		Com_Printf("length: %f\n", length);
 		if (mod->num_meshes > 3 && length > 700) {
 			return &mod->meshes[3];
 		} if (mod->num_meshes > 2 && length > 600) {

@@ -70,6 +70,7 @@ edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
 /**
  * @brief Call the 'use' function for the given edict and all its group members
  * @param[in] ent The edict to call the use function for
+ * @param[in] activator The edict that uses ent
  * @sa G_ClientUseEdict
  */
 qboolean G_UseEdict (edict_t *ent, edict_t* activator)
@@ -433,6 +434,7 @@ void G_TouchSolids (edict_t *ent)
 /**
  * @brief Call after linking a new trigger in or destroying a bmodel
  * during gameplay to force all entities it covers to immediately touch it
+ * @param[in] ent The edict to check.
  * @param[in] extend Extend value for the bounding box
  */
 void G_TouchEdicts (edict_t *ent, float extend)

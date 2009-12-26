@@ -388,7 +388,7 @@ static void BDEF_AddItem_f (void)
 		if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
 			AII_RemoveItemFromSlot(base, slot, qfalse);
 			AII_AddItemToSlot(base, itemTech, slot, qfalse); /* Aircraft stats are updated below */
-			AIM_AutoAddAmmo(slot);
+			AII_AutoAddAmmo(slot);
 		} else if (slot->item == AII_GetAircraftItemByID(itemTech->provides)) {
 			/* the added item is the same than the one in current slot */
 			if (slot->installationTime == -slot->item->craftitem.installationTime) {
@@ -401,13 +401,13 @@ static void BDEF_AddItem_f (void)
 			/* We start removing current item in slot, and the selected item will be installed afterwards */
 			slot->installationTime = -slot->item->craftitem.installationTime;
 			AII_AddItemToSlot(base, itemTech, slot, qtrue);
-			AIM_AutoAddAmmo(slot);
+			AII_AutoAddAmmo(slot);
 		}
 	} else {
 		/* remove weapon and ammo of next item */
 		AII_RemoveItemFromSlot(base, slot, qfalse);
 		AII_AddItemToSlot(base, itemTech, slot, qtrue);
-		AIM_AutoAddAmmo(slot);
+		AII_AutoAddAmmo(slot);
 	}
 
 	/* Reinit menu */

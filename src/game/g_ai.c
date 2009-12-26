@@ -743,10 +743,10 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	/* check if the actor is in crouched state and try to stand up before doing the move */
 	if (G_IsCrouched(ent))
-		G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
+		G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
+	G_ClientMove(player, 0, ent, bestAia.to, qfalse, QUIET);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
@@ -777,6 +777,7 @@ void G_AddToWayPointList (edict_t *ent)
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk
  * to the given location
+ * @param[in] aiActor The actor to turn
  * @param[in] pos The position to set the direction for
  */
 void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
@@ -837,7 +838,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		const int fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
+			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
 			if (G_IsDead(ent))
@@ -855,13 +856,13 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(player, ent->team, ent->number, bestAia.stop, qfalse, QUIET);
+		G_ClientMove(player, ent->team, ent, bestAia.stop, qfalse, QUIET);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
 		/* decide whether the actor maybe wants to go crouched */
 		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qfalse);
+			G_ClientStateChange(player, ent, STATE_CROUCHED, qfalse);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
@@ -892,7 +893,7 @@ void AI_Run (void)
 
 	/* set players to ai players and cycle over all of them */
 	for (i = 0, player = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, player++)
-		if (player->inuse && player->pers.ai && level.activeTeam == player->pers.team) {
+		if (player->inuse && G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
 			/* find next actor to handle */
 			if (!player->pers.last)
 				ent = g_edicts;
@@ -1010,7 +1011,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 		ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
 		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
-		G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
+		G_ClientStateChange(player, ent, ent->chr.reservedTus.reserveReaction, qfalse);
 	}
 
 	/* initialize the LUA AI now */

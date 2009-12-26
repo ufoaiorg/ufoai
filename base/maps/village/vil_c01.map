@@ -4145,7 +4145,7 @@
 // entity 55
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "255"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4161,7 +4161,7 @@
 // entity 56
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "255"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4177,7 +4177,7 @@
 // entity 57
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "255"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4193,7 +4193,7 @@
 // entity 58
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "254"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4209,7 +4209,7 @@
 // entity 59
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "254"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4225,7 +4225,7 @@
 // entity 60
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "254"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4241,7 +4241,7 @@
 // entity 61
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "254"
 "material" "0"
 "health" "10"
 // brush 0
@@ -4257,7 +4257,7 @@
 // entity 62
 {
 "classname" "func_breakable"
-"spawnflags" "7"
+"spawnflags" "254"
 "material" "0"
 "health" "10"
 // brush 0

@@ -1780,7 +1780,7 @@ static inline qboolean CL_AddActorWeapon (int objID)
 {
 	if (objID != NONE) {
 		const objDef_t *od = INVSH_GetItemByIDX(objID);
-		if (od->doNotAddWeaponToHand)
+		if (od->virtual)
 			return qfalse;
 		return qtrue;
 	}

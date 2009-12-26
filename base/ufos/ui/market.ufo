@@ -759,6 +759,16 @@ window market extends objectinfo
 			textalign	uc
 		}
 
+
+		custombutton ufopedia_link
+		{
+			icon		bordered_magnifying_glass
+			tooltip		"_UFOpaedia"
+			pos			"370 37"
+			size		"16 16"
+			onClick		{ cmd "market_openpedia;" }
+		}
+
 		item itemmodel
 		{
 			model		*cvar:mn_item

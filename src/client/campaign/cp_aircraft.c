@@ -48,16 +48,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftTemplate Aircraft template.
- * @param[in] base Pointer to base.
+ * @param[in,out] base Pointer to base.
  * @return AIRCRAFT_HANGAR_BIG if aircraft was placed in big hangar
  * @return AIRCRAFT_HANGAR_SMALL if small
  * @return AIRCRAFT_HANGAR_ERROR if error or not possible
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
-static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base)
+static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, base_t *base)
 {
-	int aircraftSize, freeSpace = 0;
+	int aircraftSize;
+	int freeSpace = 0;
 
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
@@ -107,7 +108,7 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 
 /**
  * @brief Updates current capacities for hangars in given base.
- * @param[in] base The base we want to update.
+ * @param[in,out] base The base we want to update.
  * @note Call this function whenever you sell/loss aircraft in given base.
  * @sa BS_SellAircraft_f
  */
@@ -254,6 +255,9 @@ static void AII_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
 
 /**
  * @brief Add an item to aircraft inventory.
+ * @param[in,out] aircraft Aircraft to load to
+ * @param[in] item Item to add
+ * @param amount Number of items to add
  * @sa AL_AddAliens
  * @sa AII_CollectingItems
  */
@@ -688,19 +692,35 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
  * @brief Searches the global array of aircraft types for a given aircraft.
  * @param[in] name Aircraft id.
  * @return aircraft_t pointer or NULL if not found.
+ * @note This function gives no warning on null name or if no aircraft found
  */
-aircraft_t *AIR_GetAircraft (const char *name)
+aircraft_t *AIR_GetAircraftSilent (const char *name)
 {
 	int i;
 
-	assert(name);
+	if (!name)
+		return NULL;
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
 		if (!strcmp(ccs.aircraftTemplates[i].id, name))
 			return &ccs.aircraftTemplates[i];
 	}
-
-	Com_Printf("Aircraft '%s' not found (%i).\n", name, ccs.numAircraftTemplates);
 	return NULL;
+}
+
+/**
+ * @brief Searches the global array of aircraft types for a given aircraft.
+ * @param[in] name Aircraft id.
+ * @return aircraft_t pointer or NULL if not found.
+ */
+aircraft_t *AIR_GetAircraft (const char *name)
+{
+	aircraft_t *aircraft = AIR_GetAircraftSilent(name);
+
+	if (!name)
+		Com_Printf("AIR_GetAircraft Called with NULL name!\n");
+	else if (!aircraft)
+		Com_Printf("Aircraft '%s' not found (%i).\n", name, ccs.numAircraftTemplates);
+	return aircraft;
 }
 
 /**
@@ -1285,12 +1305,13 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
 					}
 
-					/* Update delay to launch next projectile */
-					if (AIR_IsAircraftOnGeoscape(aircraft)) {
-						for (k = 0; k < aircraft->maxWeapons; k++) {
-							if (aircraft->weapons[k].delayNextShot > 0)
-								aircraft->weapons[k].delayNextShot -= dt;
-						}
+					for (k = 0; k < aircraft->maxWeapons; k++) {
+						/* Update delay to launch next projectile */
+						if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
+							aircraft->weapons[k].delayNextShot -= dt;
+						/* Reload if needed */
+						if (aircraft->weapons[k].ammoLeft <= 0)
+							AII_ReloadWeapon(&aircraft->weapons[k]);
 					}
 				} else {
 					Com_Error(ERR_DROP, "CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')",
@@ -1351,8 +1372,7 @@ aircraft_t* AIR_AircraftGetFromIDX (int idx)
 #endif
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		/* also get none founded bases for multiplayer here */
-		base_t *base = B_GetBaseByIDX(baseIdx);
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
@@ -1386,7 +1406,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
 		/* reload its ammunition */
-		AII_ReloadWeapon(aircraft);
+		AII_ReloadAircraftWeapons(aircraft);
 	}
 
 	/* ensure interceptAircraft is set correctly */
@@ -1832,36 +1852,6 @@ void AIR_ListAircraftSamples_f (void)
 }
 #endif
 
-/**
- * @brief Reload the weapon of an aircraft
- * @param[in] aircraft Pointer to the aircraft to reload
- * @sa AIRFIGHT_AddProjectile for the basedefence reload code
- */
-void AII_ReloadWeapon (aircraft_t *aircraft)
-{
-	int i;
-
-	assert(aircraft);
-
-	/* Reload all ammos of aircraft */
-	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (AIR_IsUFO(aircraft)) {
-			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
-		} else if (aircraft->weapons[i].ammo && aircraft->weapons[i].ammoLeft < aircraft->weapons[i].ammo->ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
-			const objDef_t *ammo = aircraft->weapons[i].ammo;
-			base_t *base = aircraft->homebase;
-
-			assert(base);
-			if (B_ItemInBase(ammo, base) <= 0)
-				continue;
-
-			assert(AIR_IsAircraftInBase(aircraft));
-			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
-			aircraft->weapons[i].ammoLeft = ammo->ammo;
-		}
-	}
-}
-
 /*===============================================
 Aircraft functions related to UFOs or missions.
 ===============================================*/
@@ -2198,7 +2188,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	/* if aircraft was in base */
 	if (AIR_IsAircraftInBase(aircraft)) {
 		/* reload its ammunition */
-		AII_ReloadWeapon(aircraft);
+		AII_ReloadAircraftWeapons(aircraft);
 	}
 
 	AIR_GetDestinationWhilePursuing(aircraft, ufo, &dest);
@@ -2911,7 +2901,6 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		ccs.ufos[i] = *craft;
 		craft = &ccs.ufos[i];	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 		craft->idx = i;
-		/* AIR_SaveAircraftXML(ssnode, ccs.ufos[i], qtrue); */
 		AIR_LoadAircraftXML(craft, qtrue, ssnode);
 	}
 	ccs.numUFOs = i;
@@ -2931,7 +2920,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 				if (mxml_GetBool(snode, SAVE_AIRCRAFT_ISUFO, qfalse))
 					ccs.projectiles[i].attackingAircraft = ccs.ufos + mxml_GetInt(snode, SAVE_AIRCRAFT_ATTACKINGAIRCRAFT, 0);
 				else
-					ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, SAVE_AIRCRAFT_ATTACKINGAIRCRAFT, 0));
+					ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, SAVE_AIRCRAFT_ATTACKINGAIRCRAFT, AIRCRAFT_INVALID));
 			} else
 				ccs.projectiles[i].attackingAircraft = NULL;
 
@@ -2939,7 +2928,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 				if (mxml_GetBool(snode, SAVE_AIRCRAFT_AIMEDAIRCRAFTISUFO, qfalse))
 					ccs.projectiles[i].aimedAircraft = ccs.ufos + mxml_GetInt(snode, SAVE_AIRCRAFT_AIMEDAIRCRAFT, 0);
 				else
-					ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, SAVE_AIRCRAFT_AIMEDAIRCRAFT, 0));
+					ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, SAVE_AIRCRAFT_AIMEDAIRCRAFT, AIRCRAFT_INVALID));
 			} else
 				ccs.projectiles[i].aimedAircraft = NULL;
 
@@ -3264,6 +3253,8 @@ static qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
 
 /**
  * @brief Adds or removes a soldier to/from an aircraft.
+ * @param[in,out] aircraft Aircraft to add to/remove from
+ * @param[in] num Index of Soldier (in menu) to add/remove
  * @sa E_EmployeeHire_f
  */
 void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
@@ -3293,7 +3284,7 @@ void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
 
 /**
  * @brief Assigns initial team of soldiers to aircraft
- * @param[in] aircraft soldiers to add to
+ * @param[in,out] aircraft soldiers to add to
  */
 void AIR_AssignInitial (aircraft_t *aircraft)
 {
@@ -3313,3 +3304,4 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 	for (i = 0; i < num; i++)
 		AIM_AddEmployeeFromMenu(aircraft, i);
 }
+

@@ -627,7 +627,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 
 	/* Initialise ufo data */
 	UFO_SetRandomPos(ufo);
-	AII_ReloadWeapon(ufo);					/* Load its weapons */
+	AII_ReloadAircraftWeapons(ufo);					/* Load its weapons */
 	ufo->landed = qfalse;
 	ufo->detected = qfalse;					/* Not visible in radars (just for now) */
 	ufo->mission = mission;

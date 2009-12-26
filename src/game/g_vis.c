@@ -293,6 +293,8 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @sa G_TestVis
  * @sa G_AppearPerishEvent
  * @sa G_CheckVisPlayer
+ * @note If something appears, the needed information for those clients that are affected
+ * are also send in @c G_AppearPerishEvent
  */
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 {
@@ -332,7 +334,9 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 }
 
 /**
- * @brief Check if the edict appears/perishes for the other teams
+ * @brief Check if the edict appears/perishes for the other teams. If they appear
+ * for other teams, the needed information for those clients are also send in
+ * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
  * @sa G_CheckVisTeam
  * @param[in] perish Also check for perishing events
  * @param[in] check The edict that is maybe seen by others

@@ -133,16 +133,15 @@ void G_ActorFall (edict_t *ent)
  * position that is not reachable because an invisible actor is standing there would not result in
  * a single step - as the movement is aborted before. For AI movement this is in general @c 0 - but
  * not if they e.g. hide.
- * @param[in] num Edict index to move
+ * @param[in] ent Edict to move
  * @param[in] to The grid position to walk to
  * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
  * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
+void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
 {
-	edict_t *ent;
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
 	int dv, dir;
@@ -157,7 +156,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
 
-	ent = g_edicts + num;
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	oldState = 0;
 
@@ -181,7 +179,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
 			 * fewer TU than just crawling while crouched. */
-			G_ClientStateChange(player, num, STATE_CROUCHED, qtrue); /* change to stand state */
+			G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
 				G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
@@ -276,7 +274,7 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				/* write move header if not yet done */
 				if (gi.GetEvent() != EV_ACTOR_MOVE) {
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-					gi.WriteShort(num);
+					gi.WriteShort(ent->number);
 					/* stepAmount is a pointer to a location in the netchannel
 					 * the value of this pointer depends on how far the actor walks
 					 * and this might be influenced at a later stage inside this
@@ -339,9 +337,9 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				if (oldState != ent->state)
 					status |= VIS_STOP;
 			} else if (crouchFlag == 1) { /* Actor is standing */
-				G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+				G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
 			} else if (crouchFlag == -1) { /* Actor is crouching and should stand up */
-				G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);
+				G_ClientStateChange(player, ent, STATE_CROUCHED, qfalse);
 			}
 
 			/* check for reaction fire */
@@ -368,8 +366,13 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 				return;
 			}
 
-			if (stopOnVisStop && (status & VIS_STOP))
+			if (stopOnVisStop && (status & VIS_STOP)) {
+				/* if something got visible in mid move that prevents us from walking
+				 * further, we should also not go into crouch mode, but let the decision
+				 * be made by the player to not waste TUs */
+				autoCrouchRequired = qfalse;
 				break;
+			}
 		}
 
 		/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
@@ -397,6 +400,6 @@ void G_ClientMove (player_t * player, int visTeam, const int num, pos3_t to, qbo
 
 	if (autoCrouchRequired) {
 		/* toggle back to crouched state */
-		G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
+		G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
 	}
 }

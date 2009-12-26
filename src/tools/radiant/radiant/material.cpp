@@ -283,8 +283,8 @@ IShader* MaterialSystem::getMaterialForName (const std::string& name)
 	_activeMaterialShaders.insert(MaterialShaders::value_type(name, shader));
 	return shader;
 #else
-	g_warning("get shader for material of texture: %s from material file: %s\n", name.c_str(),
-			getMaterialFilename().c_str());
+/*	g_warning("get shader for material of texture: %s from material file: %s\n", name.c_str(),
+			getMaterialFilename().c_str());*/
 	return (IShader*) 0;
 #endif
 }

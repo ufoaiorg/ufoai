@@ -190,7 +190,6 @@ typedef struct craftitem_s {
 	qboolean bullets;			/**< create bullets for the projectiles */
 	qboolean beam;				/**< create (laser/partivle) beam particles for the projectiles */
 	vec4_t beamColor;
-	qboolean unlimitedAmmo;		/**< Does this weapon have unlimited ammo? */
 } craftitem_t;
 
 /**
@@ -255,6 +254,7 @@ typedef struct objDef_s {
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
 
+	qboolean virtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
 	/** Item type used to check against buytypes.
 	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
 	 * @sa obj.craftitem.type == MAX_ACITEMS	equals "isCraftitem" */
@@ -264,7 +264,6 @@ typedef struct objDef_s {
 	qboolean isMisc;
 	qboolean isUGVitem;
 	qboolean isDummy;
-	qboolean doNotAddWeaponToHand;	/**< True if the weapon should not be visible when adding the actor to the battlescape - e.g. used for the bloodspider weapon definition */
 
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 

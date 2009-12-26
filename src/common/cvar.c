@@ -240,6 +240,7 @@ const char *Cvar_VariableStringOld (const char *varName)
 /**
  * @brief Unix like tab completion for console variables
  * @param partial The beginning of the variable we try to complete
+ * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */

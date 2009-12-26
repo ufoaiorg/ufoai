@@ -41,38 +41,20 @@ typedef enum {
 	key_message		/**< chatting */
 } keydest_t;
 
-#define FOV				75.0
-#define FOV_FPS			90.0
-#define CAMERA_START_DIST   600
-#define CAMERA_START_HEIGHT UNIT_HEIGHT * 1.5
-#define CAMERA_LEVEL_HEIGHT UNIT_HEIGHT
-
-typedef struct {
-	vec3_t origin;		/**< the reference origin used for rotating around and to look at */
-	vec3_t camorg;		/**< origin of the camera (look from) */
-	vec3_t speed;		/**< speed of camera movement */
-	vec3_t angles;		/**< current camera angle */
-	vec3_t omega;		/**< speed of rotation */
-	vec3_t axis[3];		/**< set when refdef.angles is set */
-
-	float lerplevel;	/**< linear interpolation between frames while changing the world level */
-	float zoom;			/**< the current zoom level (see MIN_ZOOM and MAX_ZOOM) */
-} camera_t;
+#define STATE_FORWARD	1
+#define STATE_RIGHT		2
+#define STATE_ZOOM		3
+#define STATE_ROT		4
+#define STATE_TILT		5
 
 extern int mouseSpace;
 extern int mousePosX, mousePosY;
-extern const float MIN_ZOOM, MAX_ZOOM;
-
-extern cvar_t *cl_centerview;
-extern cvar_t *cl_camzoommin;
 
 void IN_Init(void);
 void IN_Frame(void);
 void IN_SendKeyEvents(void);
 
 void IN_EventEnqueue(unsigned int key, unsigned short, qboolean down);
-
-void CL_CameraMove(void);
-void CL_CameraRoute(const pos3_t from, const pos3_t target);
+float CL_GetKeyMouseState(int dir);
 
 #endif /* CLIENT_INPUT_H */

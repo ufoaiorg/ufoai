@@ -190,8 +190,9 @@ static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *s
 	item = AII_GetAircraftItemByID(tech->provides);
 	if (!item)
 		return qfalse;
-
-	if (base->storage.num[item->idx] <= 0)
+	if (item->virtual)
+		return qfalse;
+	if (!B_BaseHasItem(base, item))
 		return qfalse;
 
 	/* filter by type: special case for ammo because more than 1 type is an ammo type */
@@ -426,15 +427,15 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 			AIM_NoEmphazeAmmoSlotText();
 			assert(slot->ammo->tech);
 			if (slot->nextAmmo) {
-				Q_strncpyz(smallbuffer2, _(slot->nextAmmo->tech->name), sizeof(smallbuffer2));
-				/* inform player that base missile are unlimited */
-				if (slot->nextAmmo->craftitem.unlimitedAmmo)
-					Q_strcat(smallbuffer2, _(" (unlimited ammos)"), sizeof(smallbuffer2));
+				if (!slot->nextAmmo->virtual)
+					Q_strncpyz(smallbuffer2, _(slot->nextAmmo->tech->name), sizeof(smallbuffer2));
+				else
+					Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));
 			} else {
-				Q_strncpyz(smallbuffer2, _(slot->ammo->tech->name), sizeof(smallbuffer2));
-				/* inform player that base missile are unlimited */
-				if (slot->ammo->craftitem.unlimitedAmmo)
-					Q_strcat(smallbuffer2, _(" (unlimited ammos)"), sizeof(smallbuffer2));
+				if (!slot->ammo->virtual)
+					Q_strncpyz(smallbuffer2, _(slot->ammo->tech->name), sizeof(smallbuffer2));
+				else
+					Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));
 			}
 		}
 	} else
@@ -513,13 +514,13 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 		return AIM_LOADING_TOOHEAVY;
 
 	/* you can't install an item that you don't possess
-	 * unlimited ammo don't need to be possessed
+	 * virtual ammo don't need to be possessed
 	 * installations always have weapon and ammo */
 	if (slot->aircraft) {
-		if (slot->aircraft->homebase->storage.num[item->idx] <= 0 && !item->notOnMarket  && !item->craftitem.unlimitedAmmo)
+		if (!B_BaseHasItem(slot->aircraft->homebase, item))
 			return AIM_LOADING_UNKNOWNPROBLEM;
 	} else if (slot->base) {
-		if (slot->base->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
+		if (!B_BaseHasItem(slot->base, item))
 			return AIM_LOADING_UNKNOWNPROBLEM;
 	}
 
@@ -807,7 +808,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 			if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
 				AII_RemoveItemFromSlot(base, slot, qfalse);
 				AII_AddItemToSlot(base, AIM_selectedTechnology, slot, qfalse); /* Aircraft stats are updated below */
-				AIM_AutoAddAmmo(slot);
+				AII_AutoAddAmmo(slot);
 				break;
 			} else if (slot->item == AII_GetAircraftItemByID(AIM_selectedTechnology->provides)) {
 				/* the added item is the same than the one in current slot */
@@ -833,7 +834,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
 		AII_AddItemToSlot(base, AIM_selectedTechnology, slot, qtrue);
-		AIM_AutoAddAmmo(slot);
+		AII_AutoAddAmmo(slot);
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
@@ -900,7 +901,10 @@ static void AIM_AircraftEquipRemoveItem_f (void)
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO) {
-			AII_RemoveItemFromSlot(base, slot, qtrue);
+			if (slot->nextAmmo)
+				AII_RemoveNextItemFromSlot(base, slot, qtrue);
+			else
+				AII_RemoveItemFromSlot(base, slot, qtrue);
 		}
 		break;
 	default:

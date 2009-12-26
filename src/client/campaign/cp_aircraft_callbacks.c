@@ -149,7 +149,7 @@ static void AIM_AircraftStart_f (void)
 
 	if (AIR_IsAircraftInBase(aircraft)) {
 		/* reload its ammunition */
-		AII_ReloadWeapon(aircraft);
+		AII_ReloadAircraftWeapons(aircraft);
 	}
 	MS_AddNewMessage(_("Notice"), _("Aircraft started"), qfalse, MSG_STANDARD, NULL);
 	aircraft->status = AIR_IDLE;

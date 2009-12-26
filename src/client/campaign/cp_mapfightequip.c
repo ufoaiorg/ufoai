@@ -2,7 +2,7 @@
  * @file cp_mapfightequip.c
  * @brief contains everything related to equiping slots of aircraft or base
  * @note Base defence functions prefix: BDEF_
- * @note Aircraft items slots functions prefix: AIM_
+ * @note Aircraft items slots functions prefix: AII_
  */
 
 /*
@@ -33,6 +33,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_fightequip_callbacks.h"
 #include "cp_ufo.h"
 #include "cp_map.h"
+
+#define UFO_RELOAD_DELAY_MULTIPLIER 2
+#define AIRCRAFT_RELOAD_DELAY_MULTIPLIER 2
+#define BASE_RELOAD_DELAY_MULTIPLIER 2
+#define INSTALLATION_RELOAD_DELAY_MULTIPLIER 2
 
 /**
  * @brief Returns a list of craftitem technologies for the given type.
@@ -137,13 +142,13 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 		return qfalse;
 
 	/* you can't install an item that you don't possess
-	 * unlimited ammo don't need to be possessed
+	 * virtual items don't need to be possessed
 	 * installations always have weapon and ammo */
 	if (slot->aircraft) {
-		if (slot->aircraft->homebase->storage.num[item->idx] <= 0 && !item->notOnMarket  && !item->craftitem.unlimitedAmmo)
+		if (!B_BaseHasItem(slot->aircraft->homebase, item))
 			return qfalse;
 	} else if (slot->base) {
-		if (slot->base->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
+		if (!B_BaseHasItem(slot->base, item))
 			return qfalse;
 	}
 
@@ -204,8 +209,7 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 			Com_Printf("BDEF_AddBattery: too many laser batteries in base\n");
 			return;
 		}
-		/* slots has unlimited ammo */
-		base->lasers[base->numLasers].slot.ammoLeft = AMMO_STATUS_UNLIMITED;
+		base->lasers[base->numLasers].slot.ammoLeft = AMMO_STATUS_NOT_SET;
 		if (base->numBatteries)
 			base->lasers[base->numLasers].autofire = base->batteries[0].autofire;
 		else if (base->numLasers)
@@ -216,26 +220,6 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 		break;
 	default:
 		Com_Printf("BDEF_AddBattery: unknown type of base defence system.\n");
-	}
-}
-
-/**
- * @brief Reload the battery of every bases
- * @todo we should define the number of ammo to reload and the period of reloading in the .ufo file
- */
-void BDEF_ReloadBattery (void)
-{
-	int i, j;
-
-	/* Reload all ammos of aircraft */
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-		for (j = 0; j < base->numBatteries; j++) {
-			if (base->batteries[j].slot.ammoLeft >= 0 && base->batteries[j].slot.ammoLeft < 20)
-				base->batteries[j].slot.ammoLeft++;
-		}
 	}
 }
 
@@ -284,12 +268,14 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	int i;
 
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
-		AII_InitialiseSlot(&base->batteries[i].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
-		AII_InitialiseSlot(&base->lasers[i].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
-		base->batteries[i].autofire = qtrue;
-		base->batteries[i].target = NULL;
-		base->lasers[i].autofire = qtrue;
-		base->lasers[i].target = NULL;
+		baseWeapon_t* battery = &base->batteries[i];
+		baseWeapon_t* laser = &base->lasers[i];
+		AII_InitialiseSlot(&battery->slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(&laser->slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
+		battery->autofire = qtrue;
+		battery->target = NULL;
+		laser->autofire = qtrue;
+		laser->target = NULL;
 	}
 }
 
@@ -302,9 +288,10 @@ void BDEF_InitialiseInstallationSlots (installation_t *installation)
 	int i;
 
 	for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
-		AII_InitialiseSlot(&installation->batteries[i].slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
-		installation->batteries[i].target = NULL;
-		installation->batteries[i].autofire = qtrue;
+		baseWeapon_t* battery = &installation->batteries[i];
+		AII_InitialiseSlot(&battery->slot, NULL, NULL, installation, AC_ITEM_BASE_MISSILE);
+		battery->target = NULL;
+		battery->autofire = qtrue;
 	}
 }
 
@@ -445,7 +432,7 @@ void AII_UpdateInstallationDelay (void)
  * @sa AIM_AircraftEquipAddItem_f
  * @sa AII_RemoveItemFromSlot
  */
-void AIM_AutoAddAmmo (aircraftSlot_t *slot)
+void AII_AutoAddAmmo (aircraftSlot_t *slot)
 {
 	int k;
 	const objDef_t *item;
@@ -454,24 +441,22 @@ void AIM_AutoAddAmmo (aircraftSlot_t *slot)
 
 	/* Get the weapon (either current weapon or weapon to install after this one is removed) */
 	item = (slot->nextItem) ? slot->nextItem : slot->item;
-
+	/* no items assigned */
 	if (!item)
 		return;
-
+	/* item not a weapon */
 	if (item->craftitem.type > AC_ITEM_WEAPON)
 		return;
-
 	/* don't try to add ammo to a slot that already has ammo */
 	if ((slot->nextItem) ? slot->nextAmmo : slot->ammo)
 		return;
-
 	/* Try every ammo usable with this weapon until we find one we have in storage */
 	for (k = 0; k < item->numAmmos; k++) {
 		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
 			const technology_t *ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableCraftItem(slot, ammo_tech)) {
-				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : (slot->aircraft) ? slot->aircraft->homebase : slot->base, ammo_tech, slot);
+				AII_AddAmmoToSlot((ammo->virtual) ? NULL : (slot->aircraft) ? slot->aircraft->homebase : slot->base, ammo_tech, slot);
 				break;
 			}
 		}
@@ -479,8 +464,9 @@ void AIM_AutoAddAmmo (aircraftSlot_t *slot)
 }
 
 /**
- * @brief Move the item in the slot (or optionally its ammo only) to the base storage.
+ * @brief Remove the item from the slot (or optionally its ammo only) and put it the base storage.
  * @note if there is another item to install after removal, begin this installation.
+ * @note virtual items cannot be removed!
  * @param[in] base The base to add the item to (may be NULL if item shouldn't be removed from any base).
  * @param[in] slot The slot to remove the item from.
  * @param[in] ammo qtrue if we want to remove only ammo. qfalse if the whole item should be removed.
@@ -495,33 +481,37 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 	if (ammo) {
 		/* only remove the ammo */
 		if (slot->ammo) {
-			if (base && !slot->ammo->craftitem.unlimitedAmmo)
-				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
-			slot->ammo = NULL;
+			/* Can only remove non-virtual ammo */
+			if (!slot->ammo->virtual) {
+				if (base)
+					B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
+				slot->ammo = NULL;
+			}
 		}
 	} else if (slot->item) {
 		/* remove ammo */
 		AII_RemoveItemFromSlot(base, slot, qtrue);
-		if (base)
-			B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
-		/* the removal is over */
-		if (slot->nextItem) {
-			/* there is anoter item to install after this one */
-			slot->item = slot->nextItem;
-			/* we already removed nextItem from storage when it has been added to slot: don't use B_UpdateStorageAndCapacity */
-			slot->ammo = slot->nextAmmo;
-			if (slot->ammo) {
-				if (!slot->ammo->craftitem.unlimitedAmmo)
+		if (!slot->item->virtual) {
+			if (base)
+				B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
+			/* the removal is over */
+			if (slot->nextItem) {
+				/* there is anoter item to install after this one */
+				slot->item = slot->nextItem;
+				/* we already removed nextItem from storage when it has been added to slot: don't use B_UpdateStorageAndCapacity */
+				slot->ammo = slot->nextAmmo;
+				if (slot->ammo)
 					slot->ammoLeft = slot->ammo->ammo;
-				else
-					slot->ammoLeft = AMMO_STATUS_UNLIMITED;
+				slot->installationTime = slot->item->craftitem.installationTime;
+				slot->nextItem = NULL;
+				slot->nextAmmo = NULL;
+			} else {
+				slot->item = NULL;
+				/* make sure nextAmmo is removed too
+				 * virtual ammos cannot be removed without the weapon itself */
+				slot->ammo = NULL;
+				slot->installationTime = 0;
 			}
-			slot->installationTime = slot->item->craftitem.installationTime;
-			slot->nextItem = NULL;
-			slot->nextAmmo = NULL;
-		} else {
-			slot->item = NULL;
-			slot->installationTime = 0;
 		}
 	}
 }
@@ -542,9 +532,11 @@ void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean am
 	if (ammo) {
 		/* only remove the ammo */
 		if (slot->nextAmmo) {
-			if (base && !slot->nextAmmo->craftitem.unlimitedAmmo)
-				B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
-			slot->nextAmmo = NULL;
+			if (!slot->nextAmmo->virtual) {
+				if (base)
+					B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
+				slot->nextAmmo = NULL;
+			}
 		}
 	} else if (slot->nextItem) {
 		/* Remove nextItem */
@@ -554,6 +546,113 @@ void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean am
 		/* also remove ammo if any */
 		if (slot->nextAmmo)
 			AII_RemoveNextItemFromSlot(base, slot, qtrue);
+		/* make sure nextAmmo is removed too
+		 * virtual ammos cannot be removed without the weapon itself */
+		slot->nextAmmo = NULL;
+	}
+}
+
+/**
+ * @brief Reloads an aircraft/defence-system weapon
+ * @param[in,out] slot Pointer to the aircraftSlot where weapon is attached to
+ * @returns qtrue on success - if the weapon was reloaded OR it didn't need reload
+ */
+qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
+{
+	assert(slot);
+
+	/* no weapon assigned - failure */
+	if (!slot->item)
+		return qfalse;
+	/* no ammo assigned - try adding one */
+	if (!slot->ammo)
+		AII_AutoAddAmmo(slot);
+	/* still no ammo assigned - failure */
+	if (!slot->ammo)
+		return qfalse;
+	/* no reload needed - success */
+	if (slot->ammoLeft >= slot->ammo->ammo)
+		return qtrue;
+
+	if (slot->aircraft) {
+		/* PHALANX aircraft and UFO crafts */
+		if (AIR_IsUFO(slot->aircraft)) {
+			/* UFO - can always be reloaded */
+			slot->ammoLeft = slot->ammo->ammo;
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * UFO_RELOAD_DELAY_MULTIPLIER;		
+		} else {
+			/* PHALANX aircraft */
+			/* not at home */
+			if (!AIR_IsAircraftInBase(slot->aircraft))
+				return qfalse;
+			/* no more ammo available */
+			if (!B_BaseHasItem(slot->aircraft->homebase, slot->ammo))
+				return qfalse;
+
+			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
+			slot->ammoLeft = slot->ammo->ammo;
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;		
+		}
+	} else if (slot->base) {
+		/* Base Defence weapons */
+		/* no more ammo available */
+		if (!B_BaseHasItem(slot->base, slot->ammo))
+			return qfalse;
+
+		B_UpdateStorageAndCapacity(slot->base, slot->ammo, -1, qfalse, qfalse);
+		slot->ammoLeft = slot->ammo->ammo;
+		slot->delayNextShot = slot->ammo->craftitem.weaponDelay * BASE_RELOAD_DELAY_MULTIPLIER;
+	} else if (slot->installation) {
+		/* Installations (SAM-Sites) - can always be reloaded. */
+		slot->ammoLeft = slot->ammo->ammo;
+		slot->delayNextShot = slot->ammo->craftitem.weaponDelay * INSTALLATION_RELOAD_DELAY_MULTIPLIER;
+	} else {
+		Com_Error(ERR_DROP, "AII_ReloadWeapon: AircraftSlot not linked anywhere (aircraft/base/installation)!\n");
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Reload the weapons of an aircraft
+ * @param[in,out] aircraft Pointer to the aircraft to reload
+ */
+void AII_ReloadAircraftWeapons (aircraft_t *aircraft)
+{
+	int i;
+
+	assert(aircraft);
+	/* Reload all ammos of aircraft */
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		AII_ReloadWeapon(&aircraft->weapons[i]);
+	}
+}
+
+/**
+ * @brief Reload the weapons of a base or intallation
+ * @param[in,out] base Pointer to the base to reload
+ * @param[in,out] installation Pointer to the samsite to reload
+ * @note only one of the parameters can be non-NULL
+ */
+void BDEF_ReloadBaseWeapons (base_t *base, installation_t *installation)
+{
+	int i;
+
+	if (base && installation)
+		Com_Error(ERR_DROP, "BDEF_ReloadBattery: Both base and Installation pointer set!\n");
+	if (!(base || installation))
+		Com_Error(ERR_DROP, "BDEF_ReloadBattery: Neither base nor Installation pointer set!\n");
+
+	if (base) {
+		for (i = 0; i < base->numBatteries; i++) {
+			AII_ReloadWeapon(&(base->batteries[i].slot));
+		}
+		for (i = 0; i < base->numLasers; i++) {
+			AII_ReloadWeapon(&(base->lasers[i].slot));
+		}
+	} else if (installation) {
+		for (i = 0; i < installation->numBatteries; i++) {
+			AII_ReloadWeapon(&(installation->batteries[i].slot));
+		}
 	}
 }
 
@@ -596,7 +695,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO
 	 * and base ammo defence are not stored in storage */
 	if (base && ammo->craftitem.type <= AC_ITEM_AMMO) {
-		if (base->storage.num[ammo->idx] <= 0) {
+		if (!B_BaseHasItem(base, ammo)) {
 			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", ammo->id);
 			return qfalse;
 		}
@@ -605,34 +704,36 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	/* remove any applied ammo in the current slot */
 	if (slot->nextItem) {
 		if (slot->nextAmmo)
-		AII_RemoveNextItemFromSlot(base, slot, qtrue);
+			AII_RemoveNextItemFromSlot(base, slot, qtrue);
+		/* ammo couldn't be removed (maybe it's virtual) */
+		if (slot->nextAmmo)
+			return qfalse;
 		slot->nextAmmo = ammo;
 	} else {
 		/* you shouldn't be able to have nextAmmo set if you don't have nextItem set */
 		assert(!slot->nextAmmo);
 		AII_RemoveItemFromSlot(base, slot, qtrue);
+		/* ammo couldn't be removed (maybe it's virtual) */
+		if (slot->ammo)
+			return qfalse;
 		slot->ammo = ammo;
 	}
 
 	/* proceed only if we are changing ammo of current weapon */
 	if (slot->nextItem) {
 		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-		if (base && !ammo->craftitem.unlimitedAmmo)
+		if (base)
 			B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
 		return qtrue;
 	}
-	/* some weapons have unlimited ammo */
-	if (ammo->craftitem.unlimitedAmmo) {
-		slot->ammoLeft = AMMO_STATUS_UNLIMITED;
-	} else if (slot->aircraft && base)
-		AII_ReloadWeapon(slot->aircraft);
+	AII_ReloadWeapon(slot);
 
 	return qtrue;
 }
 
 /**
  * @brief Add an item to an aircraft slot
- * @param[in] base Pointer to the base where item will be removed (NULL for ufos, unlimited ammos or while loading game)
+ * @param[in] base Pointer to the base where item will be removed (NULL for ufos, virtual ammos or while loading game)
  * @param[in] tech Pointer to the tech that will be added in this slot.
  * @param[in] slot Pointer to the aircraft, base, or installation slot.
  * @param[in] nextItem False if we are changing current item in slot, true if this is the item to install
@@ -654,12 +755,6 @@ qboolean AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot
 		return qfalse;
 	}
 
-	/* Sanity check : the type of the item should be the same than the slot type */
-	if (slot->type != item->craftitem.type) {
-		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", item->id, item->craftitem.type, slot->type);
-		return qfalse;
-	}
-
 #ifdef DEBUG
 	/* Sanity check : the type of the item cannot be an ammo */
 	/* note that this should never be reached because a slot type should never be an ammo
@@ -670,12 +765,16 @@ qboolean AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot
 	}
 #endif
 
+	/* Sanity check : the type of the item should be the same than the slot type */
+	if (slot->type != item->craftitem.type) {
+		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", item->id, item->craftitem.type, slot->type);
+		return qfalse;
+	}
+
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-	if (base) {
-		if (base->storage.num[item->idx] <= 0) {
-			Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", item->id);
-			return qfalse;
-		}
+	if (base && !B_BaseHasItem(base, item)) {
+		Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", item->id);
+		return qfalse;
 	}
 
 	if (slot->size >= AII_GetItemWeightBySize(item)) {
@@ -709,6 +808,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 {
 	int i;
 	objDef_t *item;
+	/** @todo Eliminate hardcoded techs here. */
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 
 	if (!tech)
@@ -725,10 +825,10 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		aircraftSlot_t *slot = &aircraft->weapons[i];
 		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
-		if (aircraft->homebase->storage.num[item->idx] <= 0)
+		if (!B_BaseHasItem(aircraft->homebase, item))
 			continue;
 		AII_AddItemToSlot(aircraft->homebase, tech, slot, qfalse);
-		AIM_AutoAddAmmo(slot);
+		AII_AutoAddAmmo(slot);
 		slot->installationTime = 0;
 	}
 
@@ -747,12 +847,12 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		aircraftSlot_t *slot = &aircraft->weapons[i];
 		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
-		if (aircraft->homebase->storage.num[item->idx] <= 0)
+		if (!B_BaseHasItem(aircraft->homebase, item))
 			continue;
 		if (slot->item)
 			continue;
 		AII_AddItemToSlot(aircraft->homebase, tech, slot, qfalse);
-		AIM_AutoAddAmmo(slot);
+		AII_AutoAddAmmo(slot);
 		slot->installationTime = 0;
 	}
 
@@ -1169,7 +1269,7 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 			continue;
 		/** skip if no more ammo left */
 		/** @note it's not really needed but it's cheaper not to check ufos in this case */
-		if (slot->ammoLeft <= 0 && slot->ammoLeft != AMMO_STATUS_UNLIMITED)
+		if (slot->ammoLeft <= 0)
 			continue;
 
 		if (closestAttacker) {
@@ -1188,6 +1288,9 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 	}
 }
 
+/**
+ * @brief Chooses target for all base defences and sam sites
+ */
 void BDEF_AutoSelectTarget (void)
 {
 	int i;
@@ -1257,3 +1360,4 @@ void AII_CorrectAircraftSlotPointers (aircraft_t *aircraft)
 	aircraft->shield.base = NULL;
 	aircraft->shield.installation = NULL;
 }
+
