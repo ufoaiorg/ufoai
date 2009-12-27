@@ -64,8 +64,8 @@ typedef struct fireDef_s {
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
-	int fireAttenuation;
-	int impactAttenuation;
+	int fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
+	int impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
@@ -77,28 +77,30 @@ typedef struct fireDef_s {
 						 */
 	int fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
 
-	qboolean soundOnce;
-	qboolean gravity;			/**< Does gravity has any influence on this item? */
-	qboolean launched;
-	qboolean rolled;			/**< Can it be rolled - e.g. grenades */
-	qboolean reaction;			/**< This firemode can be used/selected for reaction fire.*/
+	qboolean soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
+	qboolean gravity;		/**< Does gravity has any influence on this item? */
+	qboolean launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
+	qboolean rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
+	qboolean reaction;		/**< This firemode can be used/selected for reaction fire.*/
 	int throughWall;		/**< allow the shooting through a wall */
-	byte dmgweight;
-	float speed;
-	vec2_t shotOrg;
-	vec2_t spread;
-	int delay;
-	int bounce;				/**< Is this item bouncing? e.g. grenades */
-	float bounceFac;
-	float crouch;
-	float range;			/**< range of the weapon ammunition */
-	int shots;
-	int ammo;
-	/** the delay that the weapon needs to play sounds and particles
-	 * The higher the value, the less the delay (1000/delay) */
-	float delayBetweenShots;
-	int time;
-	vec2_t damage, spldmg;
+	byte dmgweight;			/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
+	float speed;			/**< projectile-related; zero value means unlimited speed (most of the cases).
+					     for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
+	vec2_t shotOrg;			/**< not set for any firedefinition, but called in CL_TargetingGrenade() and G_GetShotOrigin() */
+	vec2_t spread;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
+	int delay;			/**< applied on grenades and grenade launcher, but currently without any impact */
+	int bounce;			/**< amount of max possible bounces, for example grenades */
+	float bounceFac;		/**< used in G_ShootGrenade() to apply VectorScale() effect */
+	float crouch;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
+	float range;			/**< range of the weapon ammunition, defined per firemode */
+	int shots;			/**< how many shots this firemode will produce */
+	int ammo;			/**< how many ammo this firemode will use */
+	float delayBetweenShots;	/**< delay between shots (sounds and particles) for this firemode;
+					     the higher the value, the less the delay (1000/delay) */
+	int time;			/**< amount of TU used for this firemode */
+	vec2_t damage;			/**< G_Damage(), damage[0] is min value of damage, damage[1] is used for randomized calculations
+					     of additional damage; damage[0] < 0 means healing, not applying damage */
+	vec2_t spldmg;			/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
 	float splrad;			/**< splash damage radius */
 	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
 	int irgoggles;			/**< Is this an irgoogle? */
