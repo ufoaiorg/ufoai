@@ -731,6 +731,11 @@ window market extends objectinfo
 		}
 	}
 
+	confunc listen_openpedia {
+		cmd "market_click <node:root.market@lineselected>;"
+		cmd "mn_removelistener ufopedia@onClose <path:this>"
+	}
+
 	panel itemdescription {
 		{
 			pos		"588 303"
@@ -759,14 +764,16 @@ window market extends objectinfo
 			textalign	uc
 		}
 
-
 		custombutton ufopedia_link
 		{
 			icon		bordered_magnifying_glass
 			tooltip		"_UFOpaedia"
 			pos			"370 37"
 			size		"16 16"
-			onClick		{ cmd "market_openpedia;" }
+			onClick		{
+				cmd "mn_addlistener ufopedia@onClose <path:root>.listen_openpedia"
+				cmd "market_openpedia;"
+			}
 		}
 
 		item itemmodel
