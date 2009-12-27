@@ -285,6 +285,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			if (!equal(item->craftitem.weaponDamage, 0))
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));
+		} else if (item->craftitem.type < AC_ITEM_WEAPON) {
+			Q_strcat(itemText, _("Weapon for base defence system\n"), sizeof(itemText));
 		}
 		/* We write the range of the weapon */
 		if (!equal(item->craftitem.stats[AIR_STATS_WRANGE], 0))

@@ -119,7 +119,7 @@ static void BDEF_SelectItem_f (void)
 		const objDef_t *item;
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : NULL;
-		INV_ItemDescription(item);
+		UP_AircraftItemDescription(item);
 	} else if (itemIDX >= 0) {
 		technology_t **list;
 		technology_t *itemTech = NULL;
@@ -135,7 +135,7 @@ static void BDEF_SelectItem_f (void)
 			}
 			list++;
 		}
-		INV_ItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : NULL);
+		UP_AircraftItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : NULL);
 	} else {
 		Com_Printf("BDEF_AddItem_f: Invalid item-space.\n");
 	}

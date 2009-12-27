@@ -178,13 +178,6 @@ void INV_ItemDescription (const objDef_t *od)
 			}
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
-			/** @todo move this into the campaign mode only code */
-			/* This is a weapon for base, can be displayed in equip menu */
-			Com_sprintf(itemText, sizeof(itemText), _("Weapon for base defence system\n"));
-		} else if (od->craftitem.type != AIR_STATS_MAX) {
-			/** @todo move this into the campaign mode only code */
-			/* This is an item for aircraft or ammos for bases -- do nothing */
 		} else {
 			/* just an item - only primary definition */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
