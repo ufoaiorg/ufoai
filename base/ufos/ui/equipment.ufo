@@ -474,50 +474,86 @@ window equipment extends objectinfo
 			size	"350 336"
 		}
 
-		string pwr_lbl { pos "4 9" size "200 20" string "_Strength:" }
-		string pwr_val { pos "190 9" size "150 20" string *cvar:mn_tpwr textalign ur }
-		pic pwr_bdr    { pos "37 26"  image ui/bar_border }
-		tbar pwr_bar   { pos "40 26"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
+		cmpDefNamedTbar pwr {
+			{
+				pos "4 9"
+			}
+			tbar bar   { current *cvar:mn_vpwr }
+			string lbl { string "_Strength:" }
+			string val { string *cvar:mn_tpwr }
+		}
 
-		string spd_lbl { pos "4 44"  size "200 20" string "_Speed:" }
-		string spd_val { pos "190 44" size "150 20" string *cvar:mn_tspd textalign ur }
-		pic spd_bdr    { pos "37 61"  image ui/bar_border }
-		tbar spd_bar   { pos "40 61"  current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpDefNamedTbar spd {
+			{
+				pos "4 44"
+			}
+			tbar bar   { current *cvar:mn_vspd }
+			string lbl { string "_Speed:" }
+			string val { string *cvar:mn_tspd }
+		}
 
-		string acc_lbl { pos "4 79"  size "200 20" string "_Accuracy:" }
-		string acc_val { pos "190 79" size "150 20" string *cvar:mn_tacc textalign ur }
-		pic acc_bdr    { pos "37 96"  image ui/bar_border }
-		tbar acc_bar   { pos "40 96"  current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpDefNamedTbar acc {
+			{
+				pos "4 79"
+			}
+			tbar bar   { current *cvar:mn_vacc }
+			string lbl { string "_Accuracy:" }
+			string val { string *cvar:mn_tacc }
+		}
 
-		string mnd_lbl { pos "4 114"  size "200 20" string "_Mind:" }
-		string mnd_val { pos "190 114" size "150 20" string *cvar:mn_tmnd textalign ur }
-		pic mnd_bdr    { pos "37 131"  image ui/bar_border }
-		tbar mnd_bar   { pos "40 131"  current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpDefNamedTbar mnd {
+			{
+				pos "4 114"
+			}
+			tbar bar   { current *cvar:mn_vmnd }
+			string lbl { string "_Mind:" }
+			string val { string *cvar:mn_tmnd }
+		}
 
-		string cls_lbl { pos "4 157"  size "200 20" string "_Close Combat:" }
-		string cls_val { pos "190 157" size "150 20" string *cvar:mn_tcls textalign ur }
-		pic cls_bdr    { pos "37 174"  image ui/bar_border }
-		tbar cls_bar   { pos "40 174"  current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpDefNamedTbar cls {
+			{
+				pos "4 157"
+			}
+			tbar bar   { current *cvar:mn_vcls }
+			string lbl { string "_Close Combat:" }
+			string val { string *cvar:mn_tcls }
+		}
 
-		string hvy_lbl { pos "4 192"  size "200 20" string "_Heavy Weapons:" }
-		string hvy_val { pos "190 192" size "150 20" string *cvar:mn_thvy textalign ur }
-		pic hvy_bdr    { pos "37 209"  image ui/bar_border }
-		tbar hvy_bar   { pos "40 209"  current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpDefNamedTbar hvy {
+			{
+				pos "4 192"
+			}
+			tbar bar   { current *cvar:mn_vhvy }
+			string lbl { string "_Heavy Weapons:" }
+			string val { string *cvar:mn_thvy }
+		}
 
-		string ass_lbl { pos "4 227" size "200 20" string "_Assault Weapons:" }
-		string ass_val { pos "190 227" size "150 20" string *cvar:mn_tass textalign ur }
-		pic ass_bdr    { pos "37 244"  image ui/bar_border }
-		tbar ass_bar   { pos "40 244"  current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpDefNamedTbar ass {
+			{
+				pos "4 227"
+			}
+			tbar bar   { current *cvar:mn_vass }
+			string lbl { string "_Assault Weapons:" }
+			string val { string *cvar:mn_tass }
+		}
 
-		string snp_lbl { pos "4 262" size "200 20" string "_Sniper Rifles:" }
-		string snp_val { pos "190 262" size "150 20" string *cvar:mn_tsnp textalign ur }
-		pic snp_bdr    { pos "37 279"  image ui/bar_border }
-		tbar snp_bar   { pos "40 279"  current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpDefNamedTbar snp {
+			{
+				pos "4 262"
+			}
+			tbar bar   { current *cvar:mn_vsnp }
+			string lbl { string "_Sniper Rifles:" }
+			string val { string *cvar:mn_tsnp }
+		}
 
-		string exp_lbl { pos "4 297" size "200 20" string "_High-Explosives:" }
-		string exp_val { pos "190 297" size "150 20" string *cvar:mn_texp textalign ur }
-		pic exp_bdr    { pos "37 314"  image ui/bar_border }
-		tbar exp_bar   { pos "40 314"  current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpDefNamedTbar exp {
+			{
+				pos "4 297"
+			}
+			tbar bar   { current *cvar:mn_vexp }
+			string lbl { string "_High-Explosives:" }
+			string val { string *cvar:mn_texp }
+		}
 	}
 
 	// ==================

@@ -2,32 +2,19 @@
 // TEAM MENU
 // ==================
 
-component panel cmpNamedTbar {
+component cmpDefNamedTbar cmpNamedTbar {
 	{
 		size	"450 20"
-		bordercolor	"1 0 0 1"
-		border		2
 	}
 	pic			bdr { 
 		pos "165 2"
-		image ui/bar_border 
 	}
 	tbar		bar {
 		pos "167 2"
-		texl "3 0"
-		image ui/bar_attribute
-		size "250 16"
-		max 100
-	}
-	string	lbl {
-		pos "0 0"
-		size "200 20"
-		string ""
 	}
 	string	val {
 		pos "265 0"
 		size "150 20"
-		textalign ur
 	}
 }
 

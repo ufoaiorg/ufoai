@@ -13,3 +13,31 @@ component button cmpMenuButton {
 	color	"0 0.5 0 1"
 	selectcolor "1 1 1 1"
 }
+
+		/// hire, mp_team
+component panel cmpDefNamedTbar {
+	{
+		size	"450 32"
+	}
+	pic			bdr { 
+		pos "25 18"
+		image ui/bar_border 
+	}
+	tbar		bar {
+		pos "28 18"
+		texl "3 0"
+		image ui/bar_attribute
+		size "250 16"
+		max 100
+	}
+	string	lbl {
+		pos "0 0"
+		size "180 20"
+		string ""
+	}
+	string	val {
+		pos "190 0"
+		size "130 20"
+		textalign ur
+	}
+}

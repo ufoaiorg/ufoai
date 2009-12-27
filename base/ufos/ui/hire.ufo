@@ -1,6 +1,17 @@
 // ==================
 // HIRE MENU
 // ==================
+
+component checkbox cmpSelect
+{
+		tooltip		"_Hire/Unhire - Right click to remove"
+		current		0
+		image		ui/checkbox_green
+		size		"20 20"
+		onChange	{ cmd "employee_hire <num>;" }
+		onRClick		{ cmd "employee_delete <num>;" }
+}
+
 window employees
 {
 	// ==================
@@ -62,155 +73,94 @@ window employees
 		*bt_employee<1>@invis true
 	}
 
-	checkbox bt_employee0
+	cmpSelect bt_employee0
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 180"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 0;" }
-		onRClick		{ cmd "employee_delete 0;" }
+	num 0
+	pos "325 180"
 	}
-	checkbox bt_employee1
+
+	cmpSelect bt_employee1
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 218"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 1;" }
-		onRClick		{ cmd "employee_delete 1;" }
+	num 1
+	pos "325 218"
 	}
-	checkbox bt_employee2
+
+	cmpSelect bt_employee2
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 256"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 2;" }
-		onRClick		{ cmd "employee_delete 2;" }
+	num 2
+	pos "325 256"
 	}
-	checkbox bt_employee3
+
+	cmpSelect bt_employee3
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 294"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 3;" }
-		onRClick		{ cmd "employee_delete 3;" }
+	num 3
+	pos "325 294"
 	}
-	checkbox bt_employee4
+
+	cmpSelect bt_employee4
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 332"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 4;" }
-		onRClick		{ cmd "employee_delete 4;" }
+	num 4
+	pos "325 322"
 	}
-	checkbox bt_employee5
+
+	cmpSelect bt_employee5
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 370"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 5;" }
-		onRClick		{ cmd "employee_delete 5;" }
+	num 5
+	pos "325 374"
 	}
-	checkbox bt_employee6
+
+	cmpSelect bt_employee6
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 408"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 6;" }
-		onRClick		{ cmd "employee_delete 6;" }
+	num 6
+	pos "325 408"
 	}
-	checkbox bt_employee7
+
+	cmpSelect bt_employee7
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 446"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 7;" }
-		onRClick		{ cmd "employee_delete 7;" }
+	num 7
+	pos "325 446"
 	}
-	checkbox bt_employee8
+
+	cmpSelect bt_employee8
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 484"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 8;" }
-		onRClick		{ cmd "employee_delete 8;" }
+	num 8
+	pos "325 484"
 	}
-	checkbox bt_employee9
+
+	cmpSelect bt_employee9
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 522"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 9;" }
-		onRClick		{ cmd "employee_delete 9;" }
+	num 9
+	pos "325 522"
 	}
-	checkbox bt_employee10
+
+	cmpSelect bt_employee10
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 560"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 10;" }
-		onRClick		{ cmd "employee_delete 10;" }
+	num 10
+	pos "325 560"
 	}
-	checkbox bt_employee11
+
+	cmpSelect bt_employee11
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 598"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 11;" }
-		onRClick		{ cmd "employee_delete 11;" }
+	num 11
+	pos "325 598"
 	}
-	checkbox bt_employee12
+
+	cmpSelect bt_employee12
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 636"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 12;" }
-		onRClick		{ cmd "employee_delete 12;" }
+	num 12
+	pos "325 636"
 	}
-	checkbox bt_employee13
+
+	cmpSelect bt_employee13
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 674"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 13;" }
-		onRClick		{ cmd "employee_delete 13;" }
+	num 13
+	pos "325 674"
 	}
-	checkbox bt_employee14
+
+	cmpSelect bt_employee14
 	{
-		tooltip		"_Hire/Unhire - Right click to remove"
-		current		0
-		image		ui/checkbox_green
-		pos			"325 712"
-		size		"20 20"
-		onChange	{ cmd "employee_hire 14;" }
-		onRClick		{ cmd "employee_delete 14;" }
+	num 14
+	pos "325 712"
 	}
 
 	/**
@@ -344,95 +294,94 @@ window employees
 			pos		"670 380"
 			size	"330 360"
 		}
-
-		string pwr_lbl { pos "5 3" size "180 20" string "_Strength:" }
-		string pwr_val { pos "190 3" size "130 20" string *cvar:mn_tpwr textalign ur }
-		pic pwr_brd { pos "30 18"  image ui/bar_border }
-		tbar pwr_bar
-		{
-			pos "33 18"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute
-			size "250 16"	max 100
+		cmpDefNamedTbar pwr {
+			{
+				pos "5 3"
+			}
+			tbar bar   { current *cvar:mn_vpwr }
+			string lbl { string "_Strength:" }
+			string val { string *cvar:mn_tpwr }
 		}
 
-		string spd_lbl { pos "010 33" size "180 20" string "_Speed:" }
-		string spd_val { pos "190 33" size "130 20" string *cvar:mn_tspd textalign ur }
-		pic spd_bdr { pos "30 48" image ui/bar_border }
-		tbar spd_bar
-		{
-			pos "33 48" current *cvar:mn_vspd texl "3 0" image ui/bar_attribute
-			size "250 16"	max 100
+		cmpDefNamedTbar spd {
+			{
+				pos "5 33"
+			}
+			tbar bar   { current *cvar:mn_vspd }
+			string lbl { string "_Speed:" }
+			string val { string *cvar:mn_tspd }
 		}
 
-		string acc_lbl { pos "5 63" size "180 20" string "_Accuracy:" }
-		string acc_val { pos "190 63" size "130 20" string *cvar:mn_tacc textalign ur }
-		pic acc_bdr { pos "30 78" image ui/bar_border }
-		tbar acc_bar
-		{
-			pos "33 78" current *cvar:mn_vacc texl "3 0" image ui/bar_attribute
-			size "250 16"	max 100
+		cmpDefNamedTbar acc {
+			{
+				pos "5 63"
+			}
+			tbar bar   { current *cvar:mn_vacc }
+			string lbl { string "_Accuracy:" }
+			string val { string *cvar:mn_tacc }
 		}
 
-		string mnd_lbl { pos "5 93" size "180 20" string "_Mind:" }
-		string mnd_val { pos "190 93" size "130 20" string *cvar:mn_tmnd textalign ur }
-		pic mnd_bdr { pos "30 108" image ui/bar_border }
-		tbar mnd_bar
-		{
-			pos "33 108" current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute
-			size "250 16"	max 100
+		cmpDefNamedTbar mnd {
+			{
+				pos "5 93"
+			}
+			tbar bar   { current *cvar:mn_vmnd }
+			string lbl { string "_Mind:" }
+			string val { string *cvar:mn_tmnd }
 		}
 
-		string cls_lbl { pos "5 128" size "180 20" string "_Close Combat:" }
-		string cls_val { pos "190 128" size "130 20" string *cvar:mn_tcls textalign ur }
-		pic cls_bdr { pos "30 143" image ui/bar_border }
-		tbar cls_bar
-		{
-			pos "33 143" current *cvar:mn_vcls texl "3 0" image ui/bar_skill
-			size "250 16"	max 100
+		cmpDefNamedTbar cls {
+			{
+				pos "5 128"
+			}
+			tbar bar   { current *cvar:mn_vcls }
+			string lbl { string "_Close Combat:" }
+			string val { string *cvar:mn_tcls }
 		}
 
-		string hvy_lbl { pos "5 158" size "180 20" string "_Heavy Weapons:" }
-		string hvy_val { pos "190 158" size "130 20" string *cvar:mn_thvy textalign ur }
-		pic hvy_bdr { pos "30 173" image ui/bar_border }
-		tbar hvy_bar
-		{
-			pos "33 173" current *cvar:mn_vhvy texl "3 0" image ui/bar_skill
-			size "250 16"	max 100
+		cmpDefNamedTbar hvy {
+			{
+				pos "5 158"
+			}
+			tbar bar   { current *cvar:mn_vhvy }
+			string lbl { string "_Heavy Weapons:" }
+			string val { string *cvar:mn_thvy }
 		}
 
-		string ass_lbl { pos "5 188" size "180 20" string "_Assault Weapons:" }
-		string ass_val { pos "190 188" size "130 20" string *cvar:mn_tass textalign ur }
-		pic ass_bdr { pos "30 203" image ui/bar_border }
-		tbar ass_bar
-		{
-			pos "33 203" current *cvar:mn_vass texl "3 0" image ui/bar_skill
-			size "250 16"	max 100
+		cmpDefNamedTbar ass {
+			{
+				pos "5 188"
+			}
+			tbar bar   { current *cvar:mn_vass }
+			string lbl { string "_Assault Weapons:" }
+			string val { string *cvar:mn_tass }
 		}
 
-		string snp_lbl { pos "5 218" size "180 20" string "_Sniper Rifles:" }
-		string snp_val { pos "190 218" size "130 20" string *cvar:mn_tsnp textalign ur }
-		pic snp_bdr { pos "30 233" image ui/bar_border }
-		tbar snp_bar
-		{
-			pos "33 233" current *cvar:mn_vsnp texl "3 0" image ui/bar_skill
-			size "250 16"	max 100
+		cmpDefNamedTbar snp  {
+			{
+				pos "5 218"
+			}
+			tbar bar   { current *cvar:mn_vsnp }
+			string lbl { string "_Sniper Rifles:" }
+			string val { string *cvar:mn_tsnp }
 		}
 
-		string exp_lbl { pos "5 248" size "180 20" string "_High-Explosives:" }
-		string exp_val { pos "190 248" size "130 20" string *cvar:mn_texp textalign ur }
-		pic exp_bdr { pos "30 263" image ui/bar_border }
-		tbar exp_bar
-		{
-			pos "33 263" current *cvar:mn_vexp texl "3 0" image ui/bar_skill
-			size "250 16"	max 100
+		cmpDefNamedTbar exp  {
+			{
+				pos "5 248"
+			}
+			tbar bar   { current *cvar:mn_vexp }
+			string lbl { string "_High-Explosives:" }
+			string val { string *cvar:mn_texp }
 		}
 
-		string hp_lbl { pos "5 283" size "180 20" string "_Health:" }
-		string hp_val { pos "190 283" size "130 20" string *cvar:mn_thp textalign ur }
-		pic hp_bdr { pos "30 298"  image ui/bar_border }
-		tbar hp_bar
-		{
-			pos "33 298" current *cvar:mn_vhp max *cvar:mn_vhpmax texl "3 0" image ui/bar_health
-			size "250 16"
+		cmpDefNamedTbar hp {
+			{
+				pos "5 283"
+			}
+			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image ui/bar_health }
+			string lbl { string "_Health:" }
+			string val { string *cvar:mn_thp }
 		}
 
 		string	missions_lbl { pos "5 318" size "180 20" string "_Missions Performed:" }
