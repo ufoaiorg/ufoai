@@ -992,6 +992,7 @@ craftitem base_AA51_launcher
 	installationTime	12
 	price				5000
 	is_dummy			true
+	model				"objects/samlauncher/samlauncher"
 }
 
 craftitem base_ammo_AA51

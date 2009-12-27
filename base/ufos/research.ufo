@@ -4393,8 +4393,7 @@ tech rs_base_AA51_launcher
 	time		0
 	producetime	200
 
-	// TODO: Add a model for this
-	// image	"techs/base_AA51_launcher"
+	mdl			"objects/samlauncher/samlauncher"
 }
 
 tech rs_base_ammo_AA51
