@@ -391,6 +391,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
+	Cvar_Set("mn_item", tech->provides);
 
 	Cvar_Set("mn_upmetadata", "1");
 	if (RS_IsResearched_ptr(tech)) {
@@ -651,6 +652,9 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			case RS_BUILDING:
 				UP_BuildingDescription(tech);
 				break;
+			case RS_UGV:
+				UP_UGVDescription(CL_GetUGVByIDSilent(tech->provides));
+				break;
 			default:
 				break;
 			}
@@ -713,7 +717,7 @@ void UP_OpenWith (const char *techID)
 		return;
 
 	MN_PushMenu("ufopedia", NULL);
-	Cbuf_AddText(va("ufopedia %s\n", techID));
+	Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
 }
 
 /**
@@ -841,7 +845,7 @@ static void UP_Content_f (void)
 /**
  * @brief Callback when we click on the ufopedia summary
  * @note when we click on a chapter, param=chapterId,
- * when we click on an article, param='@'+techId
+ * when we click on an article, param='@'+techIdx
  */
 static void UP_Click_f (void)
 {

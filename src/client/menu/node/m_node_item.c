@@ -73,12 +73,16 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		}
 	} else {
 		/** @todo remove this - this is campaign mode only */
-		const aircraft_t *aircraft = AIR_GetAircraft(ref);
+		const aircraft_t *aircraft = AIR_GetAircraftSilent(ref);
 		if (aircraft) {
 			assert(aircraft->tech);
 			MN_DrawModelNode(node, aircraft->tech->mdl);
 		} else {
-			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", ref);
+			const technology_t *tech = RS_GetTechByProvided(ref);
+			if (tech)
+				MN_DrawModelNode(node, tech->mdl);
+			else
+				Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", ref);
 		}
 	}
 }
