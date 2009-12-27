@@ -2,6 +2,36 @@
 // TEAM MENU
 // ==================
 
+component panel cmpNamedTbar {
+	{
+		size	"450 20"
+		bordercolor	"1 0 0 1"
+		border		2
+	}
+	pic			bdr { 
+		pos "165 2"
+		image ui/bar_border 
+	}
+	tbar		bar {
+		pos "167 2"
+		texl "3 0"
+		image ui/bar_attribute
+		size "250 16"
+		max 100
+	}
+	string	lbl {
+		pos "0 0"
+		size "200 20"
+		string ""
+	}
+	string	val {
+		pos "265 0"
+		size "150 20"
+		textalign ur
+	}
+}
+
+
 /**
  * @todo rename the menu according to the file
  */
@@ -478,63 +508,95 @@ window team extends iaircraft
 	string	name { pos "380 700" size "165 20" string *cvar:mn_name }
 	string	rank_lbl { pos "380 720" size "165 20" string *cvar:mn_chrrank }
 
-	pic pwr_bdr    { pos "750 472"  image ui/bar_border }
-	tbar pwr_bar   { pos "752 472"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
-	string pwr_lbl { pos "585 470" size "200 20" string "_Strength:" }
-	string pwr_val { pos "850 470" size "150 20" string *cvar:mn_tpwr textalign ur }
-
-	pic spd_bdr    { pos "750 495" image ui/bar_border }
-	tbar spd_bar   { pos "752 495" current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
-	string spd_lbl { pos "585 493" size "200 20" string "_Speed:" }
-	string spd_val { pos "850 493" size "150 20" string *cvar:mn_tspd textalign ur }
-
-	pic acc_bdr    { pos "750 518" image ui/bar_border }
-	tbar acc_bar   { pos "752 518" current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
-	string acc_lbl { pos "585 516" size "200 20" string "_Accuracy:" }
-	string acc_val { pos "850 516" size "150 20" string *cvar:mn_tacc textalign ur }
-
-	pic mnd_bdr    { pos "750 541" image ui/bar_border }
-	tbar mnd_bar   { pos "752 541" current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
-	string mnd_lbl { pos "585 539" size "200 20" string "_Mind:" }
-	string mnd_val { pos "850 539" size "150 20" string *cvar:mn_tmnd textalign ur }
-
-	pic cls_bdr    { pos "750 564" image ui/bar_border }
-	tbar cls_bar   { pos "752 564" current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
-	string cls_lbl { pos "585 562" size "200 20" string "_Close Combat:" }
-	string cls_val { pos "850 562" size "150 20" string *cvar:mn_tcls textalign ur }
-
-	pic hvy_bdr    { pos "750 587" image ui/bar_border }
-	tbar hvy_bar   { pos "752 587" current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
-	string hvy_lbl { pos "585 585" size "200 20" string "_Heavy Weapons:" }
-	string hvy_val { pos "850 585" size "150 20" string *cvar:mn_thvy textalign ur }
-
-	pic ass_bdr    { pos "750 610" image ui/bar_border }
-	tbar ass_bar   { pos "752 610" current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
-	string ass_lbl { pos "585 608" size "200 20" string "_Assault Weapons:" }
-	string ass_val { pos "850 608" size "150 20" string *cvar:mn_tass textalign ur }
-
-	pic snp_bdr    { pos "750 633" image ui/bar_border }
-	tbar snp_bar   { pos "752 633" current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
-	string snp_lbl { pos "585 631" size "200 20" string "_Sniper Rifles:" }
-	string snp_val { pos "850 631" size "150 20" string *cvar:mn_tsnp textalign ur }
-
-	pic exp_bdr    { pos "750 656" image ui/bar_border }
-	tbar exp_bar   { pos "752 656" current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
-	string exp_lbl { pos "585 654" size "200 20" string "_High-Explosives:" }
-	string exp_val { pos "850 654" size "150 20" string *cvar:mn_texp textalign ur }
-
-	pic hp_bdr { pos "750 679" image ui/bar_border }
-	tbar hp_bar {
-		current	*cvar:mn_vhp
-		max	*cvar:mn_vhpmax
-		pos "752 679"
-		texl "3 0"
-		image ui/bar_health
-		size "250 16"
+	cmpNamedTbar pwr {
+		{
+			pos "585 470"
+		}
+		tbar bar   { current *cvar:mn_vpwr }
+		string lbl { string "_Strength:" }
+		string val { string *cvar:mn_tpwr }
 	}
-	string hp_lbl { pos "585 677" size "200 20" string "_Health:" }
-	string hp_val { pos "850 677" size "150 20" string *cvar:mn_thp textalign ur }
+	cmpNamedTbar spd {
+	{
+		pos "585 493"
+	}
+		tbar bar   { current *cvar:mn_vspd }
+		string lbl { string "_Speed:" }
+		string val { string *cvar:mn_tspd }
+	}
+	cmpNamedTbar acc {
+	{
+		pos "585 516"
+	}
+		tbar bar   { current *cvar:mn_vacc }
+		string lbl { string "_Accuracy:" }
+		string val { string *cvar:mn_tacc }
+	}
+	cmpNamedTbar mnd {
+	{
+		pos "585 539"
+	}
+		tbar bar   { current *cvar:mn_vmnd }
+		string lbl { string "_Mind:" }
+		string val { string *cvar:mn_tmnd }
+	}
+	cmpNamedTbar cls {
+	{
+		pos "585 562"
+	}
+		tbar bar   { current *cvar:mn_vcls }
+		string lbl { string "_Close Combat:" }
+		string val { string *cvar:mn_tcls }
+	}
 
+	cmpNamedTbar hvy {
+	{
+		pos "585 585"
+	}
+		tbar bar   { current *cvar:mn_vhvy }
+		string lbl { string "_Heavy Weapons:" }
+		string val { string *cvar:mn_thvy }
+	}
+
+	cmpNamedTbar ass {
+	{
+		pos "585 608"
+	}
+		tbar bar   { current *cvar:mn_vass }
+		string lbl { string "_Assault Weapons:" }
+		string val { string *cvar:mn_tass }
+	}
+
+	cmpNamedTbar snp {
+	{
+		pos "585 631"
+	}
+		tbar bar   { current *cvar:mn_vsnp }
+		string lbl { string "_Sniper Rifles:" }
+		string val { string *cvar:mn_tsnp }
+	}
+
+	cmpNamedTbar exp {
+	{
+		pos "585 654"
+	}
+		tbar bar   { current *cvar:mn_vexp }
+		string lbl { string "_High-Explosives:" }
+		string val { string *cvar:mn_texp }
+	}
+
+	cmpNamedTbar  {
+	{
+		pos "585 677"
+	}
+		tbar bar   {
+			current *cvar:mn_vhp
+			max *cvar:mn_vhpmax
+			image ui/bar_health
+			}
+		string lbl { string "_Health:" }
+		string val { string *cvar:mn_thp }
+	}
 	string	missions_lbl { pos "585 700" size "200 20" string "_Missions Performed:" }
 	string	missions_val { pos "850 700" size "150 20" string *cvar:mn_chrmis textalign ur }
 
