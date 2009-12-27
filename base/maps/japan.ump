@@ -122,8 +122,16 @@ tile +h4
 4 4
 0      a      v23    0
 h12    +ah    +av    abf12
-af      +a     +a     abfv12
+abf      +a     +a     abfv12
 0      abh23   abh23   0
+}
+
+tile +h5
+{
+3 3
+0       abh14    0
+abvf34   +ahv    abvf12
+0       abv    0
 }
 
 /// fillers:
@@ -288,6 +296,7 @@ title "_Small eastern park."
 +h2       "0 1"
 +h3       "0 1"
 +h4       "0 1"
++h5       "0 1"
 +f1       "0 2"
 +f2       "0 2"
 +f3       "0 2"
@@ -315,6 +324,7 @@ title         "_Harvester"
 +h2           "0 1"
 +h3           "0 1"
 +h4           "0 1"
++h5           "0 1"
 +f1           "0 2"
 +f2           "0 2"
 +f3           "0 2"
