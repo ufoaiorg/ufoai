@@ -1113,9 +1113,11 @@ base/models/objects/rubbish/tire.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/woodern_plank1.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/woodern_plank2.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/yellow_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/samlauncher/rocket.png | Willem Sitters | GNU General Public License 2.0 or later
-base/models/objects/samlauncher/samlauncher.png | Willem Sitters | GNU General Public License 2.0 or later
-base/models/objects/samlauncher/samlauncher_nm.png | Willem Sitters | GNU General Public License 2.0 or later
+base/models/objects/samlauncher/rocket.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher/rocket.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher/samlauncher.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher/samlauncher.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher/samlauncher_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
