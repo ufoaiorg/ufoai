@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game.h"
 #include "battlescape/cl_localentity.h"
 #include "menu/m_main.h"
+#include "menu/m_nodes.h"
 #include "cl_team.h"
 #include "battlescape/events/e_main.h"
 #include "cl_inventory.h"
@@ -48,6 +49,8 @@ typedef struct gameTypeList_s {
 	void (*results)(struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 	/** check whether the given item is usable in the current game mode */
 	qboolean (*itemIsUseable)(const objDef_t *od);
+	/** shows item info if not resolvable via objDef_t */
+	void (*displayiteminfo)(menuNode_t *node, const char *string);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t * (*getequipdef)(void);
 	/** update character display values for game type dependent stuff */
@@ -59,9 +62,9 @@ typedef struct gameTypeList_s {
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -111,6 +114,18 @@ void GAME_RestartMode (int gametype)
 {
 	GAME_SetMode(GAME_NONE);
 	GAME_SetMode(gametype);
+}
+
+/**
+ * @brief Shows game type specific item information (if it's not resolvable via @c objDef_t).
+ * @param[in] node The menu node to show the information in.
+ * @param[in] string The id of the 'thing' to show information for.
+ */
+void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
+{
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list != NULL && list->displayiteminfo)
+		list->displayiteminfo(node, string);
 }
 
 void GAME_SetMode (int gametype)

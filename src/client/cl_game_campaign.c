@@ -398,6 +398,21 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	}
 }
 
+void GAME_CP_DisplayItemInfo (menuNode_t *node, const char *string)
+{
+	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
+	if (aircraft) {
+		assert(aircraft->tech);
+		MN_DrawModelNode(node, aircraft->tech->mdl);
+	} else {
+		const technology_t *tech = RS_GetTechByProvided(string);
+		if (tech)
+			MN_DrawModelNode(node, tech->mdl);
+		else
+			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", string);
+	}
+}
+
 void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
