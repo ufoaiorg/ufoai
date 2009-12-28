@@ -94,8 +94,13 @@ namespace gtkutil
 			 *
 			 * @param callback
 			 * A callback function to be invoked when this menu item is activated.
+			 *
+			 * @param userData pointer to user data
+			 *
+			 * @param test SensitivityTest function object to determine whether this menu item is
+			 * currently visible.
 			 */
-			void addItem (GtkWidget* widget, GFunc callback, gpointer userData, SensitivityTest t = _alwaysVisible);
+			void addItem (GtkWidget* widget, GFunc callback, gpointer userData, SensitivityTest test = _alwaysVisible);
 
 			/**
 			 * Show this menu. Each menu item's SensitivityTest will be invoked to

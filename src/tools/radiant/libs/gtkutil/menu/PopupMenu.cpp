@@ -19,10 +19,10 @@ namespace gtkutil
 	}
 
 	// Add a named menu item
-	void PopupMenu::addItem (GtkWidget* widget, GFunc callback, gpointer userData, SensitivityTest t)
+	void PopupMenu::addItem (GtkWidget* widget, GFunc callback, gpointer userData, SensitivityTest test)
 	{
 		// Create a MenuItem and add it to the list
-		MenuItem item(widget, callback, userData, t);
+		MenuItem item(widget, callback, userData, test);
 		_menuItems.push_back(item);
 
 		// Connect up the activation callback to GTK.
