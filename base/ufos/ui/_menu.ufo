@@ -116,7 +116,6 @@ size "1024 90"
 		font		f_big
 		textalign	ur
 	}
-
 	custombutton bt_back
 	{
 		tooltip		"_Back to baseview"
@@ -131,6 +130,9 @@ size "1024 90"
 
 component cmpDefBaseHeader cmpBaseHeader
 {
+{
+	pos "0 0"
+}
 	string base_name
 	{
 		string		*cvar:mn_base_title
@@ -141,5 +143,4 @@ component cmpDefBaseHeader cmpBaseHeader
 		padding		8
 		font		f_big
 	}
-
 }
