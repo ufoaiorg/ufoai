@@ -74,6 +74,8 @@ unsigned int G_VisToPM (unsigned int vis_mask)
 /**
  * Send messages to human players
  * @param player A player (AI players are ignored here)
+ * @param printLevel A numeric value to restrict and channel the printing (CONSOLE, HUD, CHAT...)
+ * @param fmt A format string as in printf
  */
 void G_ClientPrintf (const player_t *player, int printLevel, const char *fmt, ...)
 {
