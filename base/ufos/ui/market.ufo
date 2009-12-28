@@ -2,6 +2,39 @@
 // MARKET MENU
 // ==================
 
+component panel cmpMarketItem
+{
+	{
+		size "425 24"
+		onClick	{ cmd "mn_buysell <num> <lastdiff>; market_click <num>;" }
+//		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
+	}
+	zone wz_buysell
+	{
+		pos			"302 0"
+		size		"120 24"
+		onWheelUp	{ cmd "mn_buy <node:parent@num>;" }
+		onWheelDown	{ cmd "mn_sell <node:parent@num>;" }
+	}
+	spinner bt_buysell
+	{
+		tooltip		"_Buy and sell item"
+		image		ui/spinner_blue
+		pos			"346 0"
+		onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
+	}
+	checkbox bt_autosell
+	{
+		current		0
+		image		ui/checkbox_blue
+//		pos			"30 180"
+		pos			"0 0"
+		size		"16 16"
+		onChange	{ cmd "buy_autosell <node:parent@num>;" }
+	}
+
+}
+
 window market extends objectinfo
 {
 	// ==================
@@ -102,7 +135,7 @@ window market extends objectinfo
 		color		"0 .78 0 1"
 		rows		"22"
 		lineheight	"25"
-		pos			"55 180"
+		pos			"55 177"
 		size		"265 550"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
@@ -113,7 +146,7 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		textalign	cr
-		pos			"330 180"
+		pos			"330 177"
 		rows		"22"
 		size		"40 550"
 		lineheight	"25"
@@ -126,7 +159,7 @@ window market extends objectinfo
 		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
 		textalign	cr
-		pos			"406 180"
+		pos			"406 177"
 		rows		"22"
 		size		"40 550"
 		lineheight	"25"
@@ -142,7 +175,7 @@ window market extends objectinfo
 		rows		"22"
 		size		"80 550"
 		lineheight	"25"
-		pos			"462 180"
+		pos			"462 177"
 		onChange	{ cmd "sync_market_scroll <lineselected> <viewpos>;market_click <lineselected>;" }
 		onWheel		{ cmd "sync_market_scroll <lineselected> <viewpos>;market_scroll <viewpos>;" }
 	}
@@ -171,489 +204,93 @@ window market extends objectinfo
 	 * @sa (confunc) buy_updateitem
 	 * @sa BS_UpdateItem
 	 */
-	zone wz_buysell0
+	cmpMarketItem item0
 	{
-		pos			"332 180"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 0;" }
-		onWheelDown	{ cmd "mn_sell 0;" }
-	}
-	spinner bt_buysell0
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 180"
-		onChange	{ cmd "mn_buysell 0 <lastdiff>; market_click 0;" }
-	}
-	checkbox bt_autosell0
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 180"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 0;" }
 	}
-	zone wz_buysell1
+	cmpMarketItem item1
 	{
-		pos			"332 205"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 1;" }
-		onWheelDown	{ cmd "mn_sell 1;" }
-	}
-	spinner bt_buysell1
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 205"
-		onChange	{ cmd "mn_buysell 1 <lastdiff>; market_click 1" }
-	}
-	checkbox bt_autosell1
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 205"
-		size		"16 16"
-		onChange	{	 cmd "buy_autosell 1;" }
 	}
-	zone wz_buysell2
+	cmpMarketItem item2
 	{
-		pos			"332 230"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 2;" }
-		onWheelDown	{ cmd "mn_sell 2;" }
-	}
-	spinner bt_buysell2
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 230"
-		onChange	{ cmd "mn_buysell 2 <lastdiff>; market_click 2" }
-	}
-	checkbox bt_autosell2
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 230"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 2;" }
 	}
-	zone wz_buysell3
+	cmpMarketItem item3
 	{
-		pos			"332 255"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 3;" }
-		onWheelDown	{ cmd "mn_sell 3;" }
-	}
-	spinner bt_buysell3
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 255"
-		onChange	{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
-	}
-	checkbox bt_autosell3
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 255"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 3;" }
 	}
-	zone wz_buysell4
+	cmpMarketItem item4
 	{
-		pos			"332 280"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 4;" }
-		onWheelDown	{ cmd "mn_sell 4;" }
-	}
-	spinner bt_buysell4
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 280"
-		onChange	{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
-	}
-	checkbox bt_autosell4
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 280"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 4;" }
 	}
-	zone wz_buysell5
+	cmpMarketItem item5
 	{
-		pos			"332 305"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 5;" }
-		onWheelDown	{ cmd "mn_sell 5;" }
-	}
-	spinner bt_buysell5
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 305"
-		onChange	{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
-	}
-	checkbox bt_autosell5
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 305"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 5;" }
 	}
-	zone wz_buysell6
+	cmpMarketItem item6
 	{
-		pos			"332 330"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 6;" }
-		onWheelDown	{ cmd "mn_sell 6;" }
-	}
-	spinner bt_buysell6
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 330"
-		onChange	{ cmd "mn_buysell 6 <lastdiff>; market_click 6" }
-	}
-	checkbox bt_autosell6
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 330"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 6;" }
 	}
-	zone wz_buysell7
+	cmpMarketItem item7
 	{
-		pos			"332 355"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 7;" }
-		onWheelDown	{ cmd "mn_sell 7;" }
-	}
-	spinner bt_buysell7
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 355"
-		onChange	{ cmd "mn_buysell 7 <lastdiff>; market_click 7" }
-	}
-	checkbox bt_autosell7
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 355"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 7;" }
 	}
-	zone wz_buysell8
+	cmpMarketItem item8
 	{
-		pos			"332 380"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 8;" }
-		onWheelDown	{ cmd "mn_sell 8;" }
-	}
-	spinner bt_buysell8
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 380"
-		onChange	{ cmd "mn_buysell 8 <lastdiff>; market_click 8" }
-	}
-	checkbox bt_autosell8
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 380"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 8;" }
 	}
-	zone wz_buysell9
+	cmpMarketItem item9
 	{
-		pos			"332 405"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 9;" }
-		onWheelDown	{ cmd "mn_sell 9;" }
-	}
-	spinner bt_buysell9
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 405"
-		onChange	{ cmd "mn_buysell 9 <lastdiff>; market_click 9" }
-	}
-	checkbox bt_autosell9
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 405"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 9;" }
 	}
-	zone wz_buysell10
+	cmpMarketItem item10
 	{
-		pos			"332 430"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 10;" }
-		onWheelDown	{ cmd "mn_sell 10;" }
-	}
-	spinner bt_buysell10
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 430"
-		onChange	{ cmd "mn_buysell 10 <lastdiff>; market_click 10" }
-	}
-	checkbox bt_autosell10
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 430"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 10;" }
 	}
-	zone wz_buysell11
+	cmpMarketItem item11
 	{
-		pos			"332 455"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 11;" }
-		onWheelDown	{ cmd "mn_sell 11;" }
-	}
-	spinner bt_buysell11
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 455"
-		onChange	{ cmd "mn_buysell 11 <lastdiff>; market_click 11" }
-	}
-	checkbox bt_autosell11
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 455"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 11;" }
 	}
-	zone wz_buysell12
+	cmpMarketItem item12
 	{
-		pos			"332 480"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 12;" }
-		onWheelDown	{ cmd "mn_sell 12;" }
-	}
-	spinner bt_buysell12
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 480"
-		onChange	{ cmd "mn_buysell 12 <lastdiff>; market_click 12" }
-	}
-	checkbox bt_autosell12
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 480"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 12;" }
 	}
-	zone wz_buysell13
+	cmpMarketItem item13
 	{
-		pos			"332 505"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 13;" }
-		onWheelDown	{ cmd "mn_sell 13;" }
-	}
-	spinner bt_buysell13
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 505"
-		onChange	{ cmd "mn_buysell 13 <lastdiff>; market_click 13" }
-	}
-	checkbox bt_autosell13
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 505"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 13;" }
 	}
-	zone wz_buysell14
+	cmpMarketItem item14
 	{
-		pos			"332 530"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 14;" }
-		onWheelDown	{ cmd "mn_sell 14;" }
-	}
-	spinner bt_buysell14
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 530"
-		onChange	{ cmd "mn_buysell 14 <lastdiff>; market_click 14" }
-	}
-	checkbox bt_autosell14
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 530"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 14;" }
 	}
-	zone wz_buysell15
+	cmpMarketItem item15
 	{
-		pos			"332 555"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 15;" }
-		onWheelDown	{ cmd "mn_sell 15;" }
-	}
-	spinner bt_buysell15
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 555"
-		onChange	{ cmd "mn_buysell 15 <lastdiff>; market_click 15" }
-	}
-	checkbox bt_autosell15
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 555"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 15;" }
 	}
-	zone wz_buysell16
+	cmpMarketItem item16
 	{
-		pos			"332 580"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 16;" }
-		onWheelDown	{ cmd "mn_sell 16;" }
-	}
-	spinner bt_buysell16
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 580"
-		onChange	{ cmd "mn_buysell 16 <lastdiff>; market_click 16" }
-	}
-	checkbox bt_autosell16
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 580"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 16;" }
 	}
-	zone wz_buysell17
+	cmpMarketItem item17
 	{
-		pos			"332 605"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 17;" }
-		onWheelDown	{ cmd "mn_sell 17;" }
-	}
-	spinner bt_buysell17
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 605"
-		onChange	{ cmd "mn_buysell 17 <lastdiff>; market_click 17" }
-	}
-	checkbox bt_autosell17
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 605"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 17;" }
 	}
-	zone wz_buysell18
+	cmpMarketItem item18
 	{
-		pos			"332 630"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 18;" }
-		onWheelDown	{ cmd "mn_sell 18;" }
-	}
-	spinner bt_buysell18
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 630"
-		onChange	{ cmd "mn_buysell 18 <lastdiff>; market_click 18" }
-	}
-	checkbox bt_autosell18
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 630"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 18;" }
 	}
-	zone wz_buysell19
+	cmpMarketItem item19
 	{
-		pos			"332 655"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 19;" }
-		onWheelDown	{ cmd "mn_sell 19;" }
-	}
-	spinner bt_buysell19
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 655"
-		onChange	{ cmd "mn_buysell 19 <lastdiff>; market_click 19" }
-	}
-	checkbox bt_autosell19
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 655"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 19;" }
 	}
-	zone wz_buysell20
+	cmpMarketItem item20
 	{
-		pos			"332 680"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 20;" }
-		onWheelDown	{ cmd "mn_sell 20;" }
-	}
-	spinner bt_buysell20
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 680"
-		onChange	{ cmd "mn_buysell 20 <lastdiff>; market_click 20" }
-	}
-	checkbox bt_autosell20
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 680"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 20;" }
 	}
-	zone wz_buysell21
+	cmpMarketItem item21
 	{
-		pos			"332 705"
-		size		"120 24"
-		onWheelUp	{ cmd "mn_buy 21;" }
-		onWheelDown	{ cmd "mn_sell 21;" }
-	}
-	spinner bt_buysell21
-	{
-		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
-		pos			"376 705"
-		onChange	{ cmd "mn_buysell 21 <lastdiff>; market_click 21" }
-	}
-	checkbox bt_autosell21
-	{
-		current		0
-		image		ui/checkbox_blue
 		pos			"30 705"
-		size		"16 16"
-		onChange	{ cmd "buy_autosell 21;" }
 	}
 
 	panel basedescription {
@@ -861,25 +498,25 @@ window market extends objectinfo
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselle {
-		*bt_autosell<1>@invis false
-		*(abstractvalue)bt_autosell<1>@current 1
-		*bt_autosell<1>@tooltip "_Item autosell enabled"
+		*item<1>.bt_autosell@invis false
+		*(abstractvalue)item<1>.bt_autosell@current 1
+		*item<1>.bt_autosell@tooltip "_Item autosell enabled"
 	}
 	/**
 	 * @brief unchecks an autosell checkbox and makes it visible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselld {
-		*bt_autosell<1>@invis false
-		*(abstractvalue)bt_autosell<1>@current 0
-		*bt_autosell<1>@tooltip "_Item autosell disabled"
+		*item<1>.bt_autosell@invis false
+		*(abstractvalue)item<1>.bt_autosell@current 0
+		*item<1>.bt_autosell@tooltip "_Item autosell disabled"
 	}
 	/**
 	 * @brief makes an autosell checkbox invisible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselli {
-		*bt_autosell<1>@invis true
+		*item<1>.bt_autosell@invis true
 	}
 
 	/**
@@ -898,9 +535,9 @@ window market extends objectinfo
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		*(abstractvalue)bt_buysell<1>@current <2>
-		*(abstractvalue)bt_buysell<1>@min <3>
-		*(abstractvalue)bt_buysell<1>@max <4>
+		*(abstractvalue)item<1>.bt_buysell@current <2>
+		*(abstractvalue)item<1>.bt_buysell@min <3>
+		*(abstractvalue)item<1>.bt_buysell@max <4>
 	}
 
 	/**
@@ -908,14 +545,14 @@ window market extends objectinfo
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_hide {
-		*bt_buysell<1>@invis true
+		*item<1>.bt_buysell@invis true
 	}
 	/**
 	 * @brief shows the buy/sell spinner control
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_show {
-		*bt_buysell<1>@invis false
+		*item<1>.bt_buysell@invis false
 	}
 
 	// ==================
@@ -925,5 +562,11 @@ window market extends objectinfo
 	func onInit
 	{
 		cmd "buy_type *cvar:mn_itemtype;"
+		*cvar:i = 0
+		while ( *cvar:i < 22 ) {
+			*item<cvar:i>@num <cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+	delete *cvar:i
 	}
 }

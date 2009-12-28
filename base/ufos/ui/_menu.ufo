@@ -24,7 +24,7 @@ component panel cmpDefNamedTbar {
 		image ui/bar_border 
 	}
 	tbar		bar {
-		pos "28 18"
+		pos "27 18"
 		texl "3 0"
 		image ui/bar_attribute
 		size "250 16"

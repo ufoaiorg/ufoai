@@ -7,7 +7,7 @@ component cmpDefNamedTbar cmpHospitalNamedTbar {
 		pos "17 18"
 	}
 	tbar		bar {
-		pos "17 18"
+		pos "19 18"
 	}
 	string	val {
 		pos "160 0"
