@@ -1459,11 +1459,24 @@ const std::string& getMapsPath (void)
 	return g_mapsPath;
 }
 
-const std::string map_open (const std::string& title)
+namespace ui {
+
+	/* Display a GTK file chooser and select a map file to open or close. The last
+	 * path used is set as the default the next time the dialog is displayed.
+	 * Parameters:
+	 * title -- the title to display in the dialog
+	 * open -- true to open, false to save
+	 *
+	 */
+const std::string selectMapFile(const std::string& title, bool open)
 {
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, true, false, "map", "map");
+	// Save the most recently-used path so that successive maps can be opened
+	// from the same directory.
+	static std::string lastPath = getMapsPath();
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/"map", "map");
+	/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
 	if (map::isUnnamed()) {
-		fileChooser.setCurrentPath(getMapsPath());
+		fileChooser.setCurrentPath(lastPath);
 	} else {
 		const std::string mapName = GlobalRadiant().getMapName();
 		fileChooser.setCurrentPath(os::stripFilename(mapName));
@@ -1475,27 +1488,17 @@ const std::string map_open (const std::string& title)
 	// attach the preview object
 	// fileChooser.attachPreview(&preview);
 
-	return fileChooser.display();
+	const std::string filePath = fileChooser.display();
+
+	// Update the lastPath static variable with the path to the last directory
+	// opened.
+	if (!filePath.empty())
+		lastPath = os::stripFilename(filePath);
+
+	return filePath;
 }
 
-const std::string map_save (const std::string& title)
-{
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, false, false, "map", "map");
-	if (map::isUnnamed()) {
-		fileChooser.setCurrentPath(getMapsPath());
-	} else {
-		const std::string mapName = GlobalRadiant().getMapName();
-		fileChooser.setCurrentPath(os::stripFilename(mapName));
-	}
-
-	// Instantiate a new preview object
-	//map::MapFileChooserPreview preview;
-
-	// attach the preview object
-	//fileChooser.attachPreview(&preview);
-
-	return fileChooser.display();
-}
+} //namespace ui
 
 void OpenMap (void)
 {
@@ -1517,7 +1520,7 @@ bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilena
 
 	std::string filename;
 	if (newFilename.empty())
-		filename = map_open(dialogTitle);
+		filename = ui::selectMapFile(dialogTitle, true);
 	else
 		filename = newFilename;
 	if (!filename.empty()) {
@@ -1533,7 +1536,7 @@ bool Map_ChangeMap (const std::string &dialogTitle, const std::string& newFilena
 
 void ImportMap (void)
 {
-	const std::string filename = map_open(_("Import Map"));
+	const std::string filename = ui::selectMapFile(_("Import Map"), true);
 	if (!filename.empty()) {
 		UndoableCommand undo("mapImport");
 		Map_ImportFile(filename);
@@ -1542,7 +1545,7 @@ void ImportMap (void)
 
 bool Map_SaveAs (void)
 {
-	const std::string filename = map_save(_("Save Map"));
+	const std::string filename = ui::selectMapFile(_("Save Map"), false);
 	if (!filename.empty()) {
 		MRU_AddFile(filename);
 		Map_Rename(filename.c_str());
@@ -1567,7 +1570,7 @@ void SaveMap (void)
 
 void ExportMap (void)
 {
-	const std::string filename = map_save(_("Export Selection"));
+	const std::string filename = ui::selectMapFile(_("Export Selection"), false);
 	if (!filename.empty()) {
 		Map_SaveSelected(filename.c_str());
 	}
@@ -1575,7 +1578,7 @@ void ExportMap (void)
 
 void SaveRegion (void)
 {
-	const std::string filename = map_save(_("Export Region"));
+	const std::string filename = ui::selectMapFile(_("Export Region"), false);
 	if (!filename.empty()) {
 		Map_SaveRegion(filename.c_str());
 	}
