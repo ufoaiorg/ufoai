@@ -41,3 +41,53 @@ component panel cmpDefNamedTbar {
 		textalign ur
 	}
 }
+
+component pic cmpMapPic {
+	texl		"0 0"
+	texh		"128 96"
+	onWheelUp	{ cmd "mn_prevmap;" }
+	onWheelDown	{ cmd "mn_nextmap;" }
+	onClick		{ cmd "mn_nextmap;" }
+	onRClick		{ cmd "mn_prevmap;" }
+}
+
+component panel cmpMapSlot
+{
+	{
+	size "315 35"
+	}
+		textentry slot_map
+		{
+			image		ui/button_green_verysmall
+			color 		"0 .78 0 1"
+			string		*cvar:mn_svmapname
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"32 0"
+			size		"256 34"
+			disabled	true
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
+		}
+
+		custombutton prev_map
+		{
+			pos			"0 0"
+			size		"35 35"
+			icon		prev
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
+			onClick		{ cmd "mn_prevmap;" }
+		}
+		custombutton next_map
+		{
+			pos			"285 0"
+			size		"35 35"
+			icon		next
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
+			onClick		{ cmd "mn_nextmap;" }
+		}
+}

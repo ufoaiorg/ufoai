@@ -645,38 +645,20 @@ window mp_create_server extends abstract_multiplayer
 			size		"256 20"
 		}
 
-		pic mappic
+		cmpMapPic mappic
 		{
 			image		*cvar:mn_mappic
 			pos			"85 30"
-			texl		"0 0"
-			texh		"128 96"
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-			onRClick		{ cmd "mn_prevmap;" }
 		}
-		pic mappic2
+		cmpMapPic mappic2
 		{
 			image		*cvar:mn_mappic2
 			pos			"225 30"
-			texl		"0 0"
-			texh		"128 96"
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-			onRClick		{ cmd "mn_prevmap;" }
 		}
-		pic mappic3
+		cmpMapPic mappic3
 		{
 			image		*cvar:mn_mappic3
 			pos			"365 30"
-			texl		"0 0"
-			texh		"128 96"
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-			onRClick		{ cmd "mn_prevmap;" }
 		}
 
 		// ===================
@@ -688,39 +670,10 @@ window mp_create_server extends abstract_multiplayer
 			pos			"85 155"
 			size		"256 20"
 		}
-		textentry slot_map
-		{
-			string		*cvar:mn_svmapname
-			image		ui/button_green_verysmall
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		8
-			font		"f_verysmall"
-			pos			"245 150"
-			size		"256 34"
-			disabled	true
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-		}
-
-		custombutton prev_map
-		{
-			pos			"223 155"
-			size		"16 16"
-			icon		prev
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_prevmap;" }
-		}
-		custombutton next_map
-		{
-			pos			"505 155"
-			size		"16 16"
-			icon		next
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
+		cmpMapSlot mapSlot {
+			{
+				pos "213 150"
+			}
 		}
 
 		// ===================
