@@ -2498,9 +2498,14 @@ TARGETING FUNCTIONS
  * @brief Calculates parabola-type shot.
  * @param[in] from Starting position for calculations.
  * @param[in] at Ending position for calculations.
+ * @param[in] speed Launch velocity.
  * @param[in] launched Set to true for grenade launchers.
  * @param[in] rolled Set to true for "roll" type shoot.
  * @param[in,out] v0 The velocity vector
+ * @todo refactor and move me
+ * @todo Com_GrenadeTarget() is called from CL_TargetingGrenade() with speed
+ * param as (fireDef_s) fd->range, while it is being used here for speed
+ * calculations - a bug or just misleading documentation?
  * @sa CL_TargetingGrenade
  */
 float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)

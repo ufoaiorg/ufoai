@@ -177,6 +177,8 @@ void G_InventoryToFloor (edict_t *ent)
  * @brief Read item from the network buffer
  * @param[in,out] item @c item_t being send through net.
  * @param[in,out] container Container which is being updated with item sent.
+ * @param[in] x Position of item in given container.
+ * @param[in] y Position of item in given container.
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
@@ -204,6 +206,8 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
  * @brief Write an item to the network buffer
  * @param[in,out] item @c item_t being send through net.
  * @param[in,out] container Container which is being updated with item sent.
+ * @param[in] x Position of item in given container.
+ * @param[in] y Position of item in given container.
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
