@@ -1775,6 +1775,9 @@ void MAP_ResetAction (void)
 	ccs.selectedMission = NULL;
 	selectedAircraft = NULL;
 	selectedUFO = NULL;
+
+	if (!radarOverlayWasSet)
+		MAP_DeactivateOverlay("radar");
 }
 
 /**
@@ -2466,6 +2469,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");

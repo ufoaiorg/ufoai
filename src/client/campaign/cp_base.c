@@ -1986,8 +1986,6 @@ void B_SelectBase (const base_t *base)
 		 * that means that player wants to quit this mode */
 		if (ccs.mapAction == MA_NEWBASE) {
 			MAP_ResetAction();
-			if (!radarOverlayWasSet)
-				MAP_DeactivateOverlay("radar");
 			return;
 		}
 

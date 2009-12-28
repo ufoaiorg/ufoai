@@ -47,8 +47,6 @@ void INS_SelectInstallation (installation_t *installation)
 		 * that means that player wants to quit this mode */
 		if (ccs.mapAction == MA_NEWINSTALLATION || ccs.numInstallations >= B_GetInstallationLimit()) {
 			MAP_ResetAction();
-			if (!radarOverlayWasSet)
-				MAP_DeactivateOverlay("radar");
 			return;
 		} else {
 			ccs.mapAction = MA_NEWINSTALLATION;

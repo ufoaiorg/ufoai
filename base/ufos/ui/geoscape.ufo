@@ -964,7 +964,7 @@ window popup_newbase
 		pos			"298 188"
 		size		"176 32"
 		onClick	{
-			cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;"
+			cmd "mn_pop;mn_mapaction_reset;"
 		}
 	}
 	button bt_build
@@ -1339,7 +1339,7 @@ window popup_newinstallation
 		image		ui/button_green_small
 		pos			"294 188"
 		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
+		onClick		{ cmd "mn_pop; mn_mapaction_reset;" }
 	}
 	button bt_build
 	{

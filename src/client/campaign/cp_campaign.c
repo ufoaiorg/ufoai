@@ -1827,7 +1827,6 @@ static const cmdList_t game_commands[] = {
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
 	{"game_settimeid", CL_SetGameTime_f, NULL},
-	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, NULL},
 	{"map_scroll", MAP_Scroll_f, NULL},
