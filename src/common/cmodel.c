@@ -2494,7 +2494,14 @@ TARGETING FUNCTIONS
  *        \/  \/ h  + d   - h
  *
  * as the minimum launch velocity for that angle.
- * @param[out] v0 The velocity vector
+ *
+ * @brief Calculates parabola-type shot.
+ * @param[in] from Starting position for calculations.
+ * @param[in] at Ending position for calculations.
+ * @param[in] launched Set to true for grenade launchers.
+ * @param[in] rolled Set to true for "roll" type shoot.
+ * @param[in,out] v0 The velocity vector
+ * @sa CL_TargetingGrenade
  */
 float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {

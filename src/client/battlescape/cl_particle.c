@@ -878,6 +878,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 }
 
 /**
+ * @brief General system for particle running during the game.
  * @sa CL_Frame
  */
 void CL_ParticleRun (void)
@@ -895,6 +896,8 @@ void CL_ParticleRun (void)
 
 
 /**
+ * @brief Parses particle used on maps.
+ * @param[in,out] ptl Pointer to particle being parsed and updated.
  * @param[in] es Entity string to parse the particle from
  * @param[in] afterwards If this is true you can modify the particle after the init
  * function for the particle was already called

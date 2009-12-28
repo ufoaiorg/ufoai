@@ -329,6 +329,7 @@ static char retAnim[MAX_VAR];
 
 /**
  * @brief Get the correct animation for the given actor state and weapons
+ * @param[in] anim Type of animation (for example "stand", "walk")
  * @param[in] right ods index to determine the weapon in the actors right hand
  * @param[in] left ods index to determine the weapon in the actors left hand
  * @param[in] state the actors state - e.g. STATE_CROUCHED (crounched animations)

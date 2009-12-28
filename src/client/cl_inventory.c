@@ -33,6 +33,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Collecting items functions.
  */
 
+/**
+ * @brief Gets equipment definition by id.
+ * @param[in] name An id taken from scripts.
+ * @return Found @c equipDef_t or @c NULL if no equipment definition found.
+ */
 equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
 	int i;

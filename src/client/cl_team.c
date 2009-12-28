@@ -114,6 +114,11 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	return qtrue;
 }
 
+/**
+ * @brief Loads a character from a given xml node.
+ * @param[in] p The node from which we should load the character.
+ * @param[in] chr Pointer to the charcter we should load.
+ */
 qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 {
 	mxml_node_t *s;
@@ -437,6 +442,10 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 }
 
 /**
+ * @brief Updates status of weapon (sets pointers, reloads, etc).
+ * @param[in] ed Pointer to equipment definition.
+ * @param[in] item An item to update.
+ * @return Updated item in any case, even if there was no update.
  * @sa CL_CleanupAircraftCrew
  * @todo Move it to a better place - has nothing to do with team code imo
  */

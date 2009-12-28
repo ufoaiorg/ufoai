@@ -83,6 +83,8 @@ void S_SpatializeChannel (const s_channel_t *ch)
  * @brief Validates the parms and queues the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
  * @param[in] sample The soundfile to play
+ * @param[in] atten Attenuation of sound to be played (for example, @c fireAttenuation
+ * or @c impactAttenuation from @c fireDef_s).
  * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
  * @sa S_StartLocalSample
  * @sa S_SetVolume
