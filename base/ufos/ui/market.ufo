@@ -13,30 +13,7 @@ window market extends objectinfo
 		image		ui/base_bg
 	}
 
-	string name
-	{
-		string		*cvar:mn_base_title
-		tooltip		"_Name of this base"
-		pos			"60 30"
-		size		"500 32"
-		textalign	cl
-		padding		8
-		font		f_big
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	custombutton back
-	{
-		tooltip		"_Back to baseview"
-		image		ui/button_background
-		texl		"1 1"
-		size		"59 55"
-		pos			"950 20"
-		icon		return
-		onClick		{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================
@@ -677,28 +654,6 @@ window market extends objectinfo
 		pos			"30 705"
 		size		"16 16"
 		onChange	{ cmd "buy_autosell 21;" }
-	}
-
-	// ==================
-	// credits
-	// ==================
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
 	}
 
 	panel basedescription {

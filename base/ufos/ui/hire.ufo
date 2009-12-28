@@ -511,44 +511,7 @@ window employees
 	// General info
 	// ==================
 
-	string base_name
-	{
-		string		*cvar:mn_base_title
-		tooltip		"_Name of this base"
-		pos			"60 30"
-		size		"500 32"
-		textalign	cl
-		padding		8
-		font		f_big
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
-	}
-
-	custombutton bt_continue
-	{
-		tooltip		"_Back to baseview"
-		image		ui/button_background
-		pos			"950 20"
-		size		"59 55"
-		texl		"1 1"
-		icon		"return"
-		onClick		{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================

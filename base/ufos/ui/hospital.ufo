@@ -39,24 +39,6 @@ component panel cmpHospitalPanel {
 	}
 }
 
-/*
-	pic hos_button0 {
-		image ui/hosp_button_green
-		pos "25 95"
-	}
-	pic hos_icon0	{ visiblewhen "exists *cvar:mn_hos_item0"		image icons/health_unused 	pos "272  106" }
-	string hos_item0	{ string *cvar:mn_hos_item0		pos "40 105"	color "1 1 1 1"	size "220 16" }
-	string hos_rank0	{ string *cvar:mn_hos_rank0		pos "40 130"	color "1 1 1 1"	size "220 16" }
-	bar hos_health0     { pos "47 160" 	current *cvar:mn_hos_hp0 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax0 }
-	zone click_hos_button0 {
-		pos "25 95"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 0;" }
-	}
-
-*/
-
 window hospital
 {
 	// ==================
@@ -420,20 +402,6 @@ window hospital
 	}
 }
 
-/*
-string item {
-	string *cvar:mn_hos_item0
-}
-string rank {
-	string *cvar:mn_hos_rank0
-}
-bar health  {
-	current *cvar:mn_hos_hp0
-	max *cvar:mn_hos_hpmax0 
-	}
-
-*/
-
 // ======================
 // HOSPITAL EMPLOYEE MENU
 // ======================
@@ -452,43 +420,7 @@ window hospital_employee
 	// Base header
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "240 32"
-		textalign	cl
-		padding	8
-		font	f_big
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
-	}
-
-	custombutton bt_continue
-	{
-		tooltip	"_Back"
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		pos		"950 20"
-		icon	"return"
-		onClick	{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================

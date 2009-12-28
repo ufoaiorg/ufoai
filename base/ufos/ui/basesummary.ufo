@@ -1,6 +1,19 @@
 // ======================
 // BASE STATISTICS MENU
 // ======================
+
+component baselayout cmpBase
+{
+	size		"67 72"
+	color		"1 0 0 0.4"
+	padding		2
+	onClick 		{
+		cmd "basesummary_selectbase <baseid>;"
+	}
+}
+
+
+
 window basesummary
 {
 	// ==================
@@ -13,14 +26,12 @@ window basesummary
 	}
 
 	func reset_color {
-		*basenavigation.base0@bgcolor "1 1 1 0.4"
-		*basenavigation.base1@bgcolor "1 1 1 0.4"
-		*basenavigation.base2@bgcolor "1 1 1 0.4"
-		*basenavigation.base3@bgcolor "1 1 1 0.4"
-		*basenavigation.base4@bgcolor "1 1 1 0.4"
-		*basenavigation.base5@bgcolor "1 1 1 0.4"
-		*basenavigation.base6@bgcolor "1 1 1 0.4"
-		*basenavigation.base7@bgcolor "1 1 1 0.4"
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			*basenavigation.base<cvar:i>@bgcolor "1 1 1 0.4"
+			*cvar:i = ( *cvar:i + 1 )
+		}
+	delete *cvar:i
 	}
 
 	confunc basesummary_change_color {
@@ -46,100 +57,52 @@ window basesummary
 		// ==================
 		// base layouts
 		// ==================
-		baselayout base0
+		cmpBase base0
 		{
 			pos			"29 30"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		0
-			onClick 		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base1
+		cmpBase base1
 		{
 			pos			"99 30"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		1
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base2
+		cmpBase base2
 		{
 			pos			"169 30"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		2
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base3
+		cmpBase base3
 		{
 			pos			"239 30"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		3
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base4
+		cmpBase base4
 		{
 			pos			"29 105"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		4
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base5
+		cmpBase base5
 		{
 			pos			"99 105"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		5
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base6
+		cmpBase base6
 		{
 			pos			"169 105"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		6
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 
-		baselayout base7
+		cmpBase base7
 		{
 			pos			"239 105"
-			size		"67 72"
-			color		"1 0 0 0.4"
-			padding		2
 			baseid		7
-			onClick		{
-				cmd "basesummary_selectbase <baseid>;"
-			}
 		}
 	}
 
@@ -222,43 +185,7 @@ window basesummary
 	// Base header
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "500 32"
-		textalign	cl
-		padding	8
-		font	f_big
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
-	}
-
-	custombutton bt_continue
-	{
-		tooltip	"_Back to baseview"
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		pos		"950 20"
-		icon	"return"
-		onClick	{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================
