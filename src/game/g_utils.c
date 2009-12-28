@@ -268,7 +268,17 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
  * @brief Searches all active entities for the next one that holds
  * the matching string at fieldofs (use the offsetof() macro) in the structure.
  *
+ * @param[in] from If this is @c NULL all edicts will be searched, otherwise the given
+ * edict will be the start of the search
+ * @param[in] fieldofs The field offset of the struct member (returned by the offsetof macro)
+ * of the field to search the given value for
+ * @param[in] match The value of the field
  * @note Searches beginning at the edict after from, or the beginning if NULL
+ * @code
+ * while ((spot = G_Find(spot, FOFS(classname), "misc_whatever")) != NULL) {
+ *   [..]
+ * }
+ * @endcode
  * @return NULL will be returned if the end of the list is reached.
  */
 edict_t *G_Find (edict_t * from, int fieldofs, char *match)
@@ -293,6 +303,12 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 	return NULL;
 }
 
+/**
+ * @brief Searches the edict that has the given target as @c targetname set
+ * @param target The target name of the edict that you are searching
+ * @return @c NULL if no edict with the given target name was found, otherwise
+ * the edict that has hte targetname set you were looking for.
+ */
 edict_t *G_FindTargetEntity (const char *target)
 {
 	int i;
