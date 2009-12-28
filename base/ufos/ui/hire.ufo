@@ -100,13 +100,13 @@ window employees
 	cmpSelect bt_employee4
 	{
 	num 4
-	pos "325 322"
+	pos "325 332"
 	}
 
 	cmpSelect bt_employee5
 	{
 	num 5
-	pos "325 374"
+	pos "325 370"
 	}
 
 	cmpSelect bt_employee6
