@@ -33,9 +33,10 @@ typedef enum {
 } morale_modifiers;
 
 /**
- * @brief test if point is "visible" from team
- * @param[in] team
- * @param[in] point
+ * @brief Test if point is "visible" from team.
+ * @param[in] team A team to test.
+ * @param[in] point A point to check.
+ * @return qtrue if point is "visible"
  */
 static qboolean G_TeamPointVis (int team, const vec3_t point)
 {
@@ -63,12 +64,13 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 }
 
 /**
- * @brief Applies morale changes to actors around a wounded or killed actor
+ * @brief Applies morale changes to actors around a wounded or killed actor.
  * @note only called when mor_panic is not zero
- * @param[in] type
- * @param[in] victim
- * @param[in] attacker
- * @param[in] param
+ * @param[in] type Type of morale modifier (@sa morale_modifiers)
+ * @param[in] victim An actor being a victim of the attack.
+ * @param[in] attacker An actor being attacker in this attack.
+ * @param[in] param Used to modify morale changes, for G_Damage() it is value of damage.
+ * @sa G_Damage
  */
 static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 {
@@ -136,7 +138,12 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 }
 
 /**
- * @param[in] mock pseudo action - only for calculating mock values - NULL for real action
+ * @brief Function to calculate possible damages for mock pseudoaction.
+ * @param[in,out] mock Pseudo action - only for calculating mock values - NULL for real action.
+ * @param[in] shooter Pointer to attacker for this mock pseudoaction.
+ * @param[in] struck Pointer to victim of this mock pseudoaction.
+ * @param[in] damage Updates mock value of damage.
+ * @note Called only from G_Damage().
  * @sa G_Damage
  */
 static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
@@ -444,10 +451,13 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 }
 
 /**
- * @returns True if the surface has the fireaffected flag set and the firedef
+ * @brief Checks surface vulnerability for firedefinition damagetype.
+ * @return True if the surface has the fireaffected flag set and the firedef
  * might produce fire (e.g. flamer)
  * @param[in] surface The collision surface to check the surface flag for
  * @param[in] fd The firedef to check the @c dmgtype for
+ * @todo Such function should check notonly fire - it should be generic function to check
+ * surface vulnerability for given damagetype.
  */
 static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, const fireDef_t *fd)
 {
@@ -579,6 +589,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 #define GRENADE_DT			0.1
 #define GRENADE_STOPSPEED	60.0
 /**
+ * @brief A parabola-type shoot (grenade, throw).
  * @sa G_ShootSingle
  * @sa Com_GrenadeTarget
  * @param[in] player The shooting player
@@ -997,6 +1008,15 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
 }
 
 /**
+ * @brief Prepares weapon, firemode and container used for shoot.
+ * @param[in] ent Pointer to attacker.
+ * @param[in] type Type of shot.
+ * @param[in] firemode An index of used firemode.
+ * @param[in,out] weapon Weapon being used. It is NULL when calling this function.
+ * @param[in,out] container Container with weapon being used. It is 0 when calling this function.
+ * @param[in,out] fd Firemode being used. It is NULL when calling this function.
+ * @return qtrue if function is able to check and set everything correctly.
+ * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
 static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, const fireDef_t **fd)
