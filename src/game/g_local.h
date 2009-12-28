@@ -635,8 +635,8 @@ struct edict_s {
 					 * then -1=up; -2=down is used additionally */
 
 	int speed;	/**< speed of entities - e.g. rotating or actors */
-	const char *target;	/**< name of the entity to trigger or move towards */
-	const char *targetname;	/**< name pointed to by target */
+	const char *target;	/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
+	const char *targetname;	/**< name pointed to by target - see the target of the parent edict */
 	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
 	const char *message; /**< misc_message */
