@@ -383,6 +383,11 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 			const char* path = action->d.nonTerminal.left->d.terminal.d1.constString;
 			MN_ReadNodePath(path, source, &callNode, &callProperty);
 
+			if (callNode == NULL) {
+				Com_Printf("MN_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, MN_GetPath(source));
+				return;
+			}
+
 			if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
 				menuAction_t *actionsRef = NULL;
 				if (callProperty == NULL)
