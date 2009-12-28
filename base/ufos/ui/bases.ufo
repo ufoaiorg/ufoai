@@ -44,7 +44,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		texh	"16 64"
 		onClick
 		{
-			call *node:root.name@edit
+			call *node:(textentry)parent.name@edit
 		}
 	}
 
