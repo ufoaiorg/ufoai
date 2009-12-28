@@ -104,7 +104,8 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 }
 
 /**
- * @brief set correct bounding box for actor (state dependent)
+ * @brief Sets correct bounding box for actor (state dependent).
+ * @param[in] ent Pointer to entity for which bounding box is being set.
  * @note Also re-links the actor edict - because the server must know about the
  * changed bounding box for tracing to work.
  */
@@ -120,7 +121,13 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 
 /**
- * @brief Report and handle death of an actor
+ * @brief Reports and handles death or stun of an actor.
+ * @param[in] ent Pointer to an entity being killed or stunned actor.
+ * @param[in] state Dead or stunned?
+ * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
+ * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
+ * it should drop only what he has in hands? Stunned actor can wake later during mission.
+ * @todo Renameme - stunned actor is not dead actor.
  */
 void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 {
@@ -343,6 +350,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 /**
  * @brief Reload weapon with actor.
+ * @param[in] ent Pointer to an actor reloading weapon.
+ * @param[in] st Reloading weapon in right or left hand.
+ * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa AI_ActorThink
  */
 void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)

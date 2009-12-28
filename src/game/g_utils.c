@@ -71,6 +71,7 @@ edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
  * @brief Call the 'use' function for the given edict and all its group members
  * @param[in] ent The edict to call the use function for
  * @param[in] activator The edict that uses ent
+ * @return qtrue when there is possibility to use edict being parameter.
  * @sa G_ClientUseEdict
  */
 qboolean G_UseEdict (edict_t *ent, edict_t* activator)
@@ -98,7 +99,9 @@ qboolean G_UseEdict (edict_t *ent, edict_t* activator)
 }
 
 /**
- * @brief Searches for the obj that has the given firedef
+ * @brief Searches for the obj that has the given firedef.
+ * @param[in] fd Pointer to fire definition, for which item is wanted.
+ * @return @c od to which fire definition belongs or @c NULL when no object found.
  */
 static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 {
@@ -122,7 +125,9 @@ static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 }
 
 /**
- * @brief Return the corresponding weapon name for a give firedef
+ * @brief Returns the corresponding weapon name for a given fire definition.
+ * @param[in] fd Pointer to fire definition, for which item is wanted.
+ * @return id of the item to which fire definition belongs or "unknown" when no object found.
  * @sa G_GetObjectForFiredef
  */
 const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
@@ -135,8 +140,9 @@ const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
 }
 
 /**
- * @param team The team the player data should be searched for
- * @return The inuse player for the given team
+ * @brief Gets player for given team.
+ * @param[in] team The team the player data should be searched for
+ * @return The inuse player for the given team or @c NULL when no player found.
  */
 player_t* G_GetPlayerForTeam (int team)
 {
@@ -199,6 +205,9 @@ void G_PrintStats (const char *buffer)
 
 /**
  * @brief Prints stats about who killed who with what and how
+ * @param[in] victim Pointer to edict being a victim.
+ * @param[in] attacker Pointer to edict being an attacker.
+ * @param[in] fd Pointer to fire definition used in attack.
  * @sa G_Damage
  * @sa G_PrintStats
  */

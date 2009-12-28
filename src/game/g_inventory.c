@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /**
+ * @brief Callback to G_GetEdictFromPos() for given position, used to get items from position.
+ * @param[in] pos A position for which items are wanted.
  * @sa G_GetFloorItems
  */
 edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
@@ -173,6 +175,8 @@ void G_InventoryToFloor (edict_t *ent)
 
 /**
  * @brief Read item from the network buffer
+ * @param[in,out] item @c item_t being send through net.
+ * @param[in,out] container Container which is being updated with item sent.
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
@@ -198,6 +202,8 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 
 /**
  * @brief Write an item to the network buffer
+ * @param[in,out] item @c item_t being send through net.
+ * @param[in,out] container Container which is being updated with item sent.
  * @sa CL_NetReceiveItem
  * @sa EV_INV_TRANSFER
  */
@@ -208,6 +214,9 @@ void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
 }
 
 /**
+ * @brief Sends whole inventory through the network buffer.
+ * @param[in] playerMask The player mask to determine which clients should receive the event (@c G_VisToPM(ent->visflags)).
+ * @param[in] ent Pointer to an actor with inventory to send.
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */

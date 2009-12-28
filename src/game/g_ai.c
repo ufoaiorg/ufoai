@@ -479,9 +479,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 }
 
 /**
+ * @brief Calculates possible actions for a civilian.
+ * @param[in] ent Pointer to an edict being civilian.
+ * @param[in] to The grid position to walk to.
+ * @param[in] aia Pointer to aiAction containing informations about possible action.
  * @sa AI_ActorThink
- * @param ent The civilian edict
- * @param to The grid position to walk to
  * @note Even civilians can use weapons if the teamdef allows this
  */
 static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)

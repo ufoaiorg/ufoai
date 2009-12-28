@@ -54,7 +54,11 @@ void G_EventActorDie (const edict_t* ent, const edict_t* attacker)
 
 /**
  * @brief Tell the client to remove the item from the container
+ * @param[in] ent Pointer to entity having given inventory.
  * @param[in] playerMask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
+ * @param[in] invDef Pointer to inventory definition having given container.
+ * @param[in] x Position of item in container.
+ * @param[in] y Position of item in container.
  */
 void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y)
 {
@@ -67,7 +71,9 @@ void G_EventInventoryDelete (const edict_t* ent, int playerMask, const invDef_t*
 
 /**
  * @brief Tell the client to add the item from the container
+ * @param[in] ent Pointer to entity having given inventory.
  * @param[in] playerMask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))
+ * @param[in] itemAmount How many items to add.
  * @note This event must be followed by a @c G_WriteItem call
  */
 void G_EventInventoryAdd (const edict_t* ent, int playerMask, int itemAmount)
