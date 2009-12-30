@@ -2800,8 +2800,6 @@ qboolean B_SaveXML (mxml_node_t *parent)
 				mxml_AddInt(snode, SAVE_BASES_L, l);
 				mxml_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building ? b->map[k][l].building->idx : BYTES_NONE);
 				mxml_AddBool(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
-				mxml_AddInt(snode, SAVE_BASES_POSX, b->map[k][l].posX);
-				mxml_AddInt(snode, SAVE_BASES_POSY, b->map[k][l].posY);
 			}
 		}
 		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGS);
@@ -2956,8 +2954,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			else
 				b->map[j][l].building = NULL;
 			b->map[j][l].blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
-			b->map[j][l].posX = mxml_GetInt(snode, SAVE_BASES_POSX, 0);
-			b->map[j][l].posY = mxml_GetInt(snode, SAVE_BASES_POSY, 0);
 		}
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGS);
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {

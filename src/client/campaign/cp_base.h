@@ -195,6 +195,7 @@ typedef struct building_s {
 typedef struct baseBuildingTile_s {
 	building_t *building;	/**< NULL if free spot */
 	qboolean	blocked;	/**< qtrue if the tile is usable for buildings otherwise it's qfalse (blocked somehow). */
+	/* These are only used for baseTemplates: */
 	int posX;	/**< The x screen coordinate for the building on the basemap. */
 	int posY;	/**< The y screen coordinate for the building on the basemap. */
 } baseBuildingTile_t;

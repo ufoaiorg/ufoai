@@ -10,8 +10,6 @@
 #define SAVE_BASES_L "l"
 #define SAVE_BASES_BUILDINGINDEX "buildingidx"
 #define SAVE_BASES_BLOCKED "blocked"
-#define SAVE_BASES_POSX "posx"
-#define SAVE_BASES_POSY "posy"
 #define SAVE_BASES_BUILDINGS "buildings"
 #define SAVE_BASES_BUILDINGTYPE "buildingtype"
 #define SAVE_BASES_BUILDING_PLACE "building_place"
