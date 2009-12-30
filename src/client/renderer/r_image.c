@@ -124,7 +124,7 @@ void R_ImageList_f (void)
 			break;
 		}
 
-		Com_Printf(" %3i %3i RGB: %5i idx: %s\n", image->upload_width, image->upload_height, image->texnum, image->name);
+		Com_Printf(" %4i %4i RGB: %5i idx: %s\n", image->upload_width, image->upload_height, image->texnum, image->name);
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", r_numImages, MAX_GL_TEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
