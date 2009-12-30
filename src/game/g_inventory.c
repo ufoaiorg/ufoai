@@ -187,7 +187,7 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 	int t, m;
 	int containerID;
 
-	gi.ReadFormat("sbsbbbb", &t, &item->a, &m, &containerID, x, y, &item->rotated);
+	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
 
 	assert(t != NONE);
 	item->t = &gi.csi->ods[t];
@@ -214,7 +214,7 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
 {
 	assert(item.t);
-	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE, container->id, x, y, item.rotated);
+	gi.WriteFormat("sbsbbbbs", item.t->idx, item.a, item.m ? item.m->idx : NONE, container->id, x, y, item.rotated, item.amount);
 }
 
 /**
