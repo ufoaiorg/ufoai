@@ -515,7 +515,7 @@ static qboolean CIN_ROQ_DecodeChunk (void)
 }
 
 /**
- * @sa R_DrawImagePixelData
+ * @sa R_UploadData
  */
 static void CIN_ROQ_DrawCinematic (void)
 {
@@ -525,7 +525,7 @@ static void CIN_ROQ_DrawCinematic (void)
 
 	if (!roqCin.frameBuffer[1])
 		return;
-	texnum = R_DrawImagePixelData("***cinematic***", roqCin.frameBuffer[1], roqCin.frameWidth, roqCin.frameHeight);
+	texnum = R_UploadData("***cinematic***", roqCin.frameBuffer[1], roqCin.frameWidth, roqCin.frameHeight);
 	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
 }
 

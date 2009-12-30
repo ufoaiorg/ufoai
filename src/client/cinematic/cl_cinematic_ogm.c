@@ -67,7 +67,7 @@ typedef struct
 #endif
 
 	byte* outputBuffer;
-	int outputWidht;
+	int outputWidth;
 	int outputHeight;
 	int outputBufferSize; /**< in pixel (so "real bytesize" = outputBufferSize * 4) */
 	int videoFrameCount; /**< output video-stream */
@@ -142,7 +142,7 @@ static int CIN_XVID_Decode (unsigned char *input, int inputSize)
 
 	/* Output frame structure */
 	xvid_dec_frame.output.plane[0] = ogmCin.outputBuffer;
-	xvid_dec_frame.output.stride[0] = ogmCin.outputWidht * OGM_CINEMATIC_BPP;
+	xvid_dec_frame.output.stride[0] = ogmCin.outputWidth * OGM_CINEMATIC_BPP;
 	if (ogmCin.outputBuffer == NULL)
 		xvid_dec_frame.output.csp = XVID_CSP_NULL;
 	else
@@ -289,11 +289,11 @@ static int CIN_XVID_LoadVideoFrame (void)
 	while (!r && (ogg_stream_packetout(&ogmCin.os_video, &op))) {
 		int usedBytes = CIN_XVID_Decode(op.packet, op.bytes);
 		if (ogmCin.xvidDecodeStats.type == XVID_TYPE_VOL) {
-			if (ogmCin.outputWidht != ogmCin.xvidDecodeStats.data.vol.width || ogmCin.outputHeight
+			if (ogmCin.outputWidth != ogmCin.xvidDecodeStats.data.vol.width || ogmCin.outputHeight
 					!= ogmCin.xvidDecodeStats.data.vol.height) {
-				ogmCin.outputWidht = ogmCin.xvidDecodeStats.data.vol.width;
+				ogmCin.outputWidth = ogmCin.xvidDecodeStats.data.vol.width;
 				ogmCin.outputHeight = ogmCin.xvidDecodeStats.data.vol.height;
-				Com_DPrintf(DEBUG_CLIENT, "[XVID]new resolution %dx%d\n", ogmCin.outputWidht, ogmCin.outputHeight);
+				Com_DPrintf(DEBUG_CLIENT, "[XVID]new resolution %dx%d\n", ogmCin.outputWidth, ogmCin.outputHeight);
 			}
 
 			if (ogmCin.outputBufferSize < ogmCin.xvidDecodeStats.data.vol.width * ogmCin.xvidDecodeStats.data.vol.height) {
@@ -409,10 +409,10 @@ static int CIN_THEORA_LoadVideoFrame (void)
 			if (theora_decode_YUVout(&ogmCin.th_state, &ogmCin.th_yuvbuffer))
 				continue;
 
-			if (ogmCin.outputWidht != ogmCin.th_info.width || ogmCin.outputHeight != ogmCin.th_info.height) {
-				ogmCin.outputWidht = ogmCin.th_info.width;
+			if (ogmCin.outputWidth != ogmCin.th_info.width || ogmCin.outputHeight != ogmCin.th_info.height) {
+				ogmCin.outputWidth = ogmCin.th_info.width;
 				ogmCin.outputHeight = ogmCin.th_info.height;
-				Com_DPrintf(DEBUG_CLIENT, "[Theora(ogg)]new resolution %dx%d\n", ogmCin.outputWidht, ogmCin.outputHeight);
+				Com_DPrintf(DEBUG_CLIENT, "[Theora(ogg)]new resolution %dx%d\n", ogmCin.outputWidth, ogmCin.outputHeight);
 			}
 
 			if (ogmCin.outputBufferSize < ogmCin.th_info.width * ogmCin.th_info.height) {
@@ -724,7 +724,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 }
 
 /**
- * @sa R_DrawImagePixelData
+ * @sa R_UploadData
  */
 static void CIN_OGM_DrawCinematic (void)
 {
@@ -734,7 +734,7 @@ static void CIN_OGM_DrawCinematic (void)
 
 	if (!ogmCin.outputBuffer)
 		return;
-	texnum = R_DrawImagePixelData("***cinematic***", ogmCin.outputBuffer, ogmCin.outputWidht, ogmCin.outputHeight);
+	texnum = R_UploadData("***cinematic***", ogmCin.outputBuffer, ogmCin.outputWidth, ogmCin.outputHeight);
 	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
 }
 
