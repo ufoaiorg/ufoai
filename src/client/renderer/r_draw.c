@@ -149,24 +149,39 @@ void R_DrawChars (void)
 int R_UploadData (const char *name, byte *frame, int width, int height)
 {
 	image_t *img;
+	unsigned *scaled;
+	int scaledWidth, scaledHeight;
+
+	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
 	img = R_FindImage(name, it_pic);
 	if (img == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not find the searched image: %s", name);
 
-	R_BindTexture(img->texnum);
+	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
+		scaled = (unsigned *)Mem_PoolAllocExt(scaledWidth * scaledHeight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+		R_ScaleTexture((unsigned *)frame, width, height, scaled, scaledWidth, scaledHeight);
+	} else {
+		scaled = (unsigned *)frame;
+	}
 
-	if (img->width == width && img->height == height) {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+	R_BindTexture(img->texnum);
+	if (img->upload_width == scaledWidth && img->upload_height == scaledHeight) {
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, scaledWidth, scaledHeight, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	} else {
 		/* Reallocate the texture */
 		img->width = width;
 		img->height = height;
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+		img->upload_width = scaledWidth;
+		img->upload_height = scaledHeight;
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	}
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
+
+	if (scaled != (unsigned *)frame)
+		Mem_Free(scaled);
 
 	return img->texnum;
 }

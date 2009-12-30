@@ -966,7 +966,7 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
-static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned frac;
@@ -1114,35 +1114,48 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 }
 
 /**
+ * @brief Calculates the texture size that should be used to upload the texture data
+ * @param[in] width The width of the source texture data
+ * @param[in] height The heigt of the source texture data
+ * @param[out] scaledWidth The resulting width - can be the same as the given @c width
+ * @param[out] scaledHeight The resulting height - can be the same as the given @c height
+ */
+void R_GetScaledTextureSize (int width, int height, int *scaledWidth, int *scaledHeight)
+{
+	for (*scaledWidth = 1; *scaledWidth < width; *scaledWidth <<= 1) {}
+	for (*scaledHeight = 1; *scaledHeight < height; *scaledHeight <<= 1) {}
+
+	while (*scaledWidth > r_config.maxTextureSize || *scaledHeight > r_config.maxTextureSize) {
+		*scaledWidth >>= 1;
+		*scaledHeight >>= 1;
+	}
+
+	if (*scaledWidth > MAX_TEXTURE_SIZE)
+		*scaledWidth = MAX_TEXTURE_SIZE;
+	else if (*scaledWidth < 1)
+		*scaledWidth = 1;
+
+	if (*scaledHeight > MAX_TEXTURE_SIZE)
+		*scaledHeight = MAX_TEXTURE_SIZE;
+	else if (*scaledHeight < 1)
+		*scaledHeight = 1;
+}
+
+/**
  * @brief Uploads the opengl texture to the server
  * @param[in] data Must be in RGBA format
  */
 void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
 	unsigned *scaled;
-	int samples;
 	int scaledWidth, scaledHeight;
+	int samples;
 	int i, c;
 	byte *scan;
 	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
 	qboolean clamp = (image->type == it_pic);
 
-	for (scaledWidth  = 1; scaledWidth  < width;  scaledWidth  <<= 1) {}
-	for (scaledHeight = 1; scaledHeight < height; scaledHeight <<= 1) {}
-
-	while (scaledWidth > r_config.maxTextureSize || scaledHeight > r_config.maxTextureSize) {
-		scaledWidth >>= 1;
-		scaledHeight >>= 1;
-	}
-
-	if (scaledWidth > MAX_TEXTURE_SIZE)
-		scaledWidth = MAX_TEXTURE_SIZE;
-	if (scaledHeight > MAX_TEXTURE_SIZE)
-		scaledHeight = MAX_TEXTURE_SIZE;
-	if (scaledWidth < 1)
-		scaledWidth = 1;
-	if (scaledHeight < 1)
-		scaledHeight = 1;
+	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
