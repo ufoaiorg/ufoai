@@ -97,7 +97,6 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 			mxml_AddInt(s, SAVE_CHARACTER_SKILL, chr.score.skills[k]);
 		if (k < SKILL_NUM_TYPES + 1) {
 			mxml_AddInt(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
-			assert(chr.score.initialSkills[k]);
 			mxml_AddInt(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
 		}
 		if (k < KILLED_NUM_TYPES) {
