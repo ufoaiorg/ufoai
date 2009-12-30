@@ -113,6 +113,11 @@ static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 static void CM_MakeTracingNodes(void);
 static void CM_InitBoxHull(void);
 
+static void CM_SetInlineList (const char **list)
+{
+	inlineList = list;
+}
+
 /*
 ===============================================================================
 MAP LOADING
@@ -673,11 +678,11 @@ qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end
 	qboolean hit;
 
 	/* set the list of entities to check */
-	inlineList = entlist;
+	CM_SetInlineList(entlist);
 	/* do the line test */
 	hit = CM_EntTestLineDM(start, stop, end, levelmask);
 	/* zero the list */
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	return hit;
 }
@@ -821,7 +826,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	double start, end;
 	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(tempMap);
 
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	start = time(NULL);
 
@@ -2331,7 +2336,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 		model->mins[0], model->mins[1], model->mins[2],
 		model->maxs[0], model->maxs[1], model->maxs[2]);
 
-	inlineList = list;
+	CM_SetInlineList(list);
 
 	/* get the target model's dimensions */
 	if (VectorNotEmpty(model->angles)) {
@@ -2378,7 +2383,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 	Grid_RecalcBoxRouting(map, min, max);
 
 	/* Reset the inlineList variable */
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n", name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
