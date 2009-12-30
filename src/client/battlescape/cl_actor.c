@@ -2509,49 +2509,48 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
  */
 static void CL_AddPathingBox (pos3_t pos)
 {
-	entity_t ent;
-	int height; /* The total opening size */
-	int base; /* The floor relative to this cell */
+	if (selActor) {
+		entity_t ent;
+		int height; /* The total opening size */
+		int base; /* The floor relative to this cell */
 
- 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
+		/* Get size of selected actor */
+		const int fieldSize = selActor->fieldSize;
+		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
+		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
+		const int TUhave = CL_UsableTUs(selActor);
 
-	const byte crouchingState = selActor && LE_IsCrouched(selActor) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
-	const int TUhave = CL_UsableTUs(selActor);
+		memset(&ent, 0, sizeof(ent));
+		ent.flags = RF_PATH;
 
-	memset(&ent, 0, sizeof(ent));
-	ent.flags = RF_PATH;
+		Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
+		VectorSubtract(ent.origin, boxShift, ent.origin);
 
-	Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
-	VectorSubtract(ent.origin, boxShift, ent.origin);
+		base = Grid_Floor(clMap, fieldSize, pos);
 
-	base = Grid_Floor(clMap, fieldSize, pos);
+		/* Paint the box green if it is reachable,
+		 * yellow if it can be entered but is too far,
+		 * or red if it cannot be entered ever. */
+		if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
+			VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
+		} else {
+			/* Can reach - green
+			 * Passable but unreachable - yellow
+			 * Not passable - red */
+			VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
+		}
 
-	/* Paint the box green if it is reachable,
-	 * yellow if it can be entered but is too far,
-	 * or red if it cannot be entered ever. */
-	if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
-		VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
-	} else {
-		/* Can reach - green
-		 * Passable but unreachable - yellow
-		 * Not passable - red */
-		VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
+		/* Set the box height to the ceiling value of the cell. */
+		height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
+		ent.oldorigin[2] = height;
+		ent.oldorigin[0] = TUneed;
+		ent.oldorigin[1] = TUhave;
+
+		ent.alpha = 0.25;
+
+		/* add it */
+		R_AddEntity(&ent);
 	}
-
-	/* Set the box height to the ceiling value of the cell. */
-	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
-	ent.oldorigin[2] = height;
-	ent.oldorigin[0] = TUneed;
-	ent.oldorigin[1] = TUhave;
-
-	ent.alpha = 0.25;
-
-	/* add it */
-	R_AddEntity(&ent);
 }
 
 /**
