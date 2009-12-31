@@ -447,9 +447,9 @@ static void R_ModelViewTransform (const vec3_t in, vec3_t out)
  */
 static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAliasModel_t* mod)
 {
-    if (mod->num_meshes == 1 || (refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-    	return &mod->meshes[0];
-    } else {
+	if (mod->num_meshes == 1 || (refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		return &mod->meshes[0];
+	} else {
 		vec3_t dist;
 		vec_t length;
 
@@ -465,7 +465,7 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 		}
 
 		return &mod->meshes[0];
-    }
+	}
 }
 
 /**
