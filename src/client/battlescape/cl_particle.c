@@ -1266,10 +1266,5 @@ int CL_ParseParticle (const char *name, const char **text)
  */
 void CL_InitParticles (void)
 {
-	ptlDef_t *pd;
-
-	pd = &ptlDef[numPtlDefs++];
-	memset(pd, 0, sizeof(*pd));
-	Q_strncpyz(pd->name, "*circle", sizeof(pd->name));
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 }

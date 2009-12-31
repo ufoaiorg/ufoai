@@ -2050,22 +2050,12 @@ static float CL_TargetingToHit (pos3_t toPos)
 /**
  * @brief Show weapon radius
  * @param[in] center The center of the circle
+ * @param[in] radius The radius of the damage circle
  */
-static void CL_TargetingRadius (vec3_t center)
+static void CL_TargetingRadius (const vec3_t center, const float radius)
 {
-	const vec4_t color = {0, 1, 0, 0.3};
-	ptl_t *particle;
-
-	assert(selFD);
-
-	particle = CL_ParticleSpawn("*circle", 0, center, NULL, NULL);
-	particle->size[0] = selFD->splrad; /* misuse size vector as radius */
-	particle->size[1] = 1; /* thickness */
-	particle->style = STYLE_CIRCLE;
-	particle->blend = BLEND_BLEND;
-	/* free the particle every frame */
-	particle->life = 0.0001;
-	Vector4Copy(color, particle->color);
+	ptl_t *particle = CL_ParticleSpawn("circle", 0, center, NULL, NULL);
+	particle->size[0] = radius;
 }
 
 
@@ -2261,7 +2251,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 
 	if (selFD->splrad) {
 		Grid_PosToVec(clMap, toActorSize, toPos, at);
-		CL_TargetingRadius(at);
+		CL_TargetingRadius(at, selFD->splrad);
 	}
 
 	hitProbability = 100 * CL_TargetingToHit(toPos);
