@@ -295,22 +295,37 @@ window uforecovery
 			size	"660 255"
 		}
 
-		string name_label
+		button name_label
 		{
 			string		"_Nation:"
+            tooltip		"_Sort nations by name"
 			pos			"25 30"
+			size		"250 20"
+			font		f_small_bold
+			color		"0 0.5 0 1"
+			onClick		{ cmd "cp_uforecovery_sort nation;" }
 		}
 
-		string price_label
+		button bt_price
 		{
 			string		"_Price:"
-			pos			"325 30"
+            tooltip		"_Sort nations by price"
+			pos			"275 30"
+            size		"125 20"
+			font		f_small_bold
+			color		"0 0.5 0 1"
+			onClick		{ cmd "cp_uforecovery_sort price;" }
 		}
 
-		string relation_label
+		button bt_relation
 		{
 			string		"_Relations:"
-			pos			"525 30"
+            tooltip		"_Sort nations by relation"
+			pos			"450 30"
+            size		"175 20"
+			font		f_small_bold
+			color		"0 0.5 0 1"
+			onClick		{ cmd "cp_uforecovery_sort happiness;" }
 		}
 
 		rows lines {
@@ -331,7 +346,7 @@ window uforecovery
 			tabwidth	100
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
-			rows		"8"		// max. nations
+			rows		"8"
 			mousefx		true
 			longlines	prettychop
 			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
@@ -403,7 +418,11 @@ window uforecovery
 		}
 		delete *cvar:tmp
 	}
-	
+
+	confunc cp_nationsel_select {
+		*sell_panel.cp_uforecovery_nationlist@lineselected <1>
+	}
+
 	confunc btbasesel {
 		*cvar:tmp = <1>
 		if ( *cvar:tmp eq "enable" ) {
@@ -413,7 +432,6 @@ window uforecovery
 		}
 		delete *cvar:tmp
 	}
-
 
 	confunc cp_basesel_select {
 		*store_panel.ur_ufoyards@lineselected <1>
