@@ -298,7 +298,7 @@ window uforecovery
 		button name_label
 		{
 			string		"_Nation:"
-            tooltip		"_Sort nations by name"
+			tooltip		"_Sort nations by name"
 			pos			"25 30"
 			size		"250 20"
 			font		f_small_bold
@@ -309,9 +309,9 @@ window uforecovery
 		button bt_price
 		{
 			string		"_Price:"
-            tooltip		"_Sort nations by price"
+			tooltip		"_Sort nations by price"
 			pos			"275 30"
-            size		"125 20"
+			size		"125 20"
 			font		f_small_bold
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort price;" }
@@ -320,9 +320,9 @@ window uforecovery
 		button bt_relation
 		{
 			string		"_Relations:"
-            tooltip		"_Sort nations by relation"
+			tooltip		"_Sort nations by relation"
 			pos			"450 30"
-            size		"175 20"
+			size		"175 20"
 			font		f_small_bold
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort happiness;" }
