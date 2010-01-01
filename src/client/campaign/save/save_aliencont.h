@@ -1,2 +1,2 @@
-#define SAVE_ALIENCONT_ALIENCONT "aliencont"
-#define SAVE_ALIENCONT_BREATHINGMAILSENT "ccs.breathingMailSent"
+#define SAVE_ALIENCONT_ALIENCONT "alienCont"
+#define SAVE_ALIENCONT_BREATHINGMAILSENT "breathingMailSent"

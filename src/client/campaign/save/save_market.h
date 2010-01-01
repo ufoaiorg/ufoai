@@ -5,4 +5,5 @@
 #define SAVE_MARKET_BID "bid"
 #define SAVE_MARKET_ASK "ask"
 #define SAVE_MARKET_EVO "evo"
-#define SAVE_MARKET_AUTOSELL "autosell"
+#define SAVE_MARKET_AUTOSELL "autoSell"
+

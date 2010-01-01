@@ -3,8 +3,9 @@
 #define SAVE_MESSAGES_TITLE "title"
 #define SAVE_MESSAGES_TEXT "text"
 #define SAVE_MESSAGES_TYPE "type"
-#define SAVE_MESSAGES_EVENTMAILID "eventmailid"
-#define SAVE_MESSAGES_EVENTMAILREAD "eventmailread"
+#define SAVE_MESSAGES_EVENTMAILID "eventMailid"
+#define SAVE_MESSAGES_EVENTMAILREAD "eventMailRead"
 #define SAVE_MESSAGES_ID "id"
 #define SAVE_MESSAGES_DAY "day"
 #define SAVE_MESSAGES_SEC "sec"
+

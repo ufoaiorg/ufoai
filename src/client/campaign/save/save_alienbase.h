@@ -1,4 +1,4 @@
-#define SAVE_ALIENBASE_ALIENBASES "alienbases"
+#define SAVE_ALIENBASE_ALIENBASES "alienBases"
 #define SAVE_ALIENBASE_NUM "num"
 #define SAVE_ALIENBASE_BASE "base"
 #define SAVE_ALIENBASE_POS "pos"

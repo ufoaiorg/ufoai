@@ -4,7 +4,7 @@
 #define SAVE_EMPLOYEE_TYPE "type"
 #define SAVE_EMPLOYEE_HIRED "hired"
 #define SAVE_EMPLOYEE_IDX "idx"
-#define SAVE_EMPLOYEE_BASEHIRED "basehired"
+#define SAVE_EMPLOYEE_BASEHIRED "baseHired"
 #define SAVE_EMPLOYEE_BUILDING "building"
 #define SAVE_EMPLOYEE_NATION "nation"
 #define SAVE_EMPLOYEE_UGV "ugv"
