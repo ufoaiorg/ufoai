@@ -135,7 +135,10 @@ typedef struct {
 } dMD2Model_t;
 
 
-/** @brief Tag file header structure - 32 byte */
+/** @brief Tag file header structure - 32 byte
+ * A tag for a model must have the same amount of frames as the model. A tag is
+ * nothing more than a coordinate. It's used to e.g. determine the hand of a model when
+ * the walking animation is played. The renderer has to know where to place the weapon. */
 typedef struct {
 	uint32_t ident;					/**< 844121162 */
 	uint32_t version;				/**< version of the tag file - @sa TAG_VERSION */
