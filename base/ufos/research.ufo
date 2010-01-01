@@ -373,7 +373,8 @@ tech rs_alien_breathing
 	}
 
 	time		2500
-	image	techs/alien_breathing
+	image		techs/alien_breathing
+	provides	"brapparatus"
 }
 
 // TODO check if we _really_ need the rs_item_brapparatus tech ... rs_alien_breathing seems to fulfill all the same function (except for the "provide" entry).
