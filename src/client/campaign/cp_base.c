@@ -2760,21 +2760,32 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml
 	}
 }
 
+/**
+ * @brief Saves base storage
+ * @param[out] parent XML Node structure, where we write the information to
+ * @param[in] equip Storage to save
+ */
 qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 {
 	int k;
 	for (k = 0; k < MAX_OBJDEFS; k++) {
-		if (csi.ods[k].id[0] != '\0') {
+		if (csi.ods[k].id[0] == '\0')
+			continue;
+		if (equip.num[k] || equip.numLoose[k]) {
 			mxml_node_t *node = mxml_AddNode(parent, SAVE_BASES_ITEM);
+
 			mxml_AddString(node, SAVE_BASES_ODS_ID, csi.ods[k].id);
-			mxml_AddInt(node, SAVE_BASES_NUM, equip.num[k]);
-			mxml_AddByte(node, SAVE_BASES_NUMLOOSE, equip.numLoose[k]);
+			if (equip.num[k])
+				mxml_AddInt(node, SAVE_BASES_NUM, equip.num[k]);
+			if (equip.numLoose[k])
+				mxml_AddByte(node, SAVE_BASES_NUMLOOSE, equip.numLoose[k]);
 		}
 	}
 	return qtrue;
 }
 /**
  * @brief Save callback for saving in xml format.
+ * @param[out] parent XML Node structure, where we write the information to
  */
 qboolean B_SaveXML (mxml_node_t *parent)
 {
@@ -2908,6 +2919,11 @@ void B_PostLoadInit (void)
 	B_PostLoadInitCapacity();
 }
 
+/**
+ * @brief Loads base storage
+ * @param[in] p XML Node structure, where we get the information from
+ * @param[out] equip Storage to load
+ */
 qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 {
 	mxml_node_t *node;
