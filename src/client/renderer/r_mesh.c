@@ -403,9 +403,10 @@ qboolean R_CullMeshModel (entity_t *e)
 	for (i = 0; i < 8; i++) {
 		int mask = 0;
 		int j;
+		const int size = lengthof(r_locals.frustum);
 
-		for (j = 0; j < 4; j++) {
-			/* get the distance between the frustom normal vector and the
+		for (j = 0; j < size; j++) {
+			/* get the distance between the frustum normal vector and the
 			 * current vector of the bounding box */
 			const float f = DotProduct(r_locals.frustum[j].normal, bbox[i]);
 			if ((f - r_locals.frustum[j].dist) < 0)
