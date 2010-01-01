@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_aliencont_callbacks.h"
 
+/** @todo remove harcoded tech */
+#define BREATHINGAPPARATUS_TECH "rs_alien_breathing"
+
 /**
  * Collecting aliens functions for aircraft
  */
@@ -172,44 +175,50 @@ void AL_CollectingAliens (aircraft_t *aircraft)
  */
 void AL_AddAliens (aircraft_t *aircraft)
 {
-	int i, j, k, alienCargoTypes;
-	const objDef_t *alienBreathingObjDef;
-	base_t *tobase;
+	base_t *toBase;
 	const aliensTmp_t *cargo;
-	qboolean messageAlreadySet = qfalse;
-	qboolean alienBreathing = qfalse;
+	int alienCargoTypes;
+	int i;
+	int j;
 	qboolean limit = qfalse;
+	qboolean messageAlreadySet = qfalse;
+	technology_t *breathingTech;
+	qboolean alienBreathing = qfalse;
+	const objDef_t *alienBreathingObjDef;
 
 	assert(aircraft);
-	tobase = aircraft->homebase;
-	assert(tobase);
+	toBase = aircraft->homebase;
+	assert(toBase);
 
-	if (!B_GetBuildingStatus(tobase, B_ALIEN_CONTAINMENT)) {
+	if (!B_GetBuildingStatus(toBase, B_ALIEN_CONTAINMENT)) {
 		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 
 	cargo = AL_GetAircraftAlienCargo(aircraft);
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-
-	alienBreathing = RS_IsResearched_ptr(RS_GetTechByID("rs_alien_breathing"));
-	alienBreathingObjDef = INVSH_GetItemByID("brapparatus");
+	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
+	if (!breathingTech)
+		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
+	alienBreathing = RS_IsResearched_ptr(breathingTech);
+	alienBreathingObjDef = INVSH_GetItemByID(breathingTech->provides);
 	if (!alienBreathingObjDef)
-		Com_Error(ERR_DROP, "AL_AddAliens: Could not get brapparatus item definition");
+		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus item definition");
 
 	for (i = 0; i < alienCargoTypes; i++) {
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			assert(tobase->alienscont[j].teamDef);
+			assert(toBase->alienscont[j].teamDef);
 			assert(cargo[i].teamDef);
-			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
-				tobase->alienscont[j].amountDead += cargo[i].amountDead;
+
+			if (toBase->alienscont[j].teamDef == cargo[i].teamDef) {
+				toBase->alienscont[j].amountDead += cargo[i].amountDead;
 				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
 				AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
 				if (cargo[i].amountAlive <= 0)
 					continue;
 				if (!alienBreathing && !cargo[i].teamDef->robot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
-					tobase->alienscont[j].amountDead += cargo[i].amountAlive;
+					toBase->alienscont[j].amountDead += cargo[i].amountAlive;
 					/* Add breathing apparatuses as well */
 					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountAlive);
 					/* only once */
@@ -222,20 +231,22 @@ void AL_AddAliens (aircraft_t *aircraft)
 						ccs.breathingMailSent = qtrue;
 					}
 				} else {
+					int k;
+
 					for (k = 0; k < cargo[i].amountAlive; k++) {
 						/* Check base capacity. */
-						if (AL_CheckAliveFreeSpace(tobase, NULL, 1)) {
-							AL_ChangeAliveAlienNumber(tobase, &(tobase->alienscont[j]), 1);
+						if (AL_CheckAliveFreeSpace(toBase, NULL, 1)) {
+							AL_ChangeAliveAlienNumber(toBase, &(toBase->alienscont[j]), 1);
 						} else {
 							/* Every exceeding alien is killed
 							 * Display a message only when first one is killed */
 							if (!limit) {
-								tobase->capacities[CAP_ALIENS].cur = tobase->capacities[CAP_ALIENS].max;
+								toBase->capacities[CAP_ALIENS].cur = toBase->capacities[CAP_ALIENS].max;
 								MS_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
 								limit = qtrue;
 							}
 							/* Just kill aliens which don't fit the limit. */
-							tobase->alienscont[j].amountDead++;
+							toBase->alienscont[j].amountDead++;
 							AII_CollectItem(aircraft, alienBreathingObjDef, 1);
 						}
 					}
@@ -251,20 +262,20 @@ void AL_AddAliens (aircraft_t *aircraft)
 	}
 
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		technology_t *tech = tobase->alienscont[i].tech;
+		technology_t *tech = toBase->alienscont[i].tech;
 #ifdef DEBUG
 		if (!tech)
-			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", tobase->alienscont[i].teamDef->name);
+			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", toBase->alienscont[i].teamDef->name);
 #endif
 		/* we need this to let RS_Collected_ return true */
-		if (tobase->alienscont[i].amountAlive + tobase->alienscont[i].amountDead > 0)
+		if (toBase->alienscont[i].amountAlive + toBase->alienscont[i].amountDead > 0)
 			RS_MarkCollected(tech);
 #ifdef DEBUG
 		/* print all of them */
-		if (tobase->alienscont[i].amountAlive > 0)
-			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amountAlive);
-		if (tobase->alienscont[i].amountDead > 0)
-			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].teamDef->name, tobase->alienscont[i].amountDead);
+		if (toBase->alienscont[i].amountAlive > 0)
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", toBase->alienscont[i].teamDef->name, toBase->alienscont[i].amountAlive);
+		if (toBase->alienscont[i].amountDead > 0)
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", toBase->alienscont[i].teamDef->name, toBase->alienscont[i].amountDead);
 #endif
 	}
 
