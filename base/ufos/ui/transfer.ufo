@@ -569,6 +569,7 @@ window transfer
 		*itemlist.trans_list@viewpos = 0
 		*itemlist.trans_list_amount@viewpos = 0
 		*itemlist.trans_list_transfered@viewpos = 0
+		cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
 	}
 
 	// ==================
