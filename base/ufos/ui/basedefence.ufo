@@ -254,18 +254,17 @@ window basedefence extends objectinfo
 				model		*cvar:mn_upmodel_top
 				angles		"-10 160 70"
 				pos			"10 50"
-				size		"314 100"
+				size		"314 140"
 			}
 
 			text description
 			{
 				dataid		TEXT_ITEMDESCRIPTION
-				pos			"10 155"
-				size		"284 120"
+				pos			"10 195"
+				size		"284 80"
 				lineheight	20
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
-				rows		"6"
 				onViewChange {
 					*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
 					*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
@@ -275,11 +274,11 @@ window basedefence extends objectinfo
 			vscrollbar description_scroll
 			{
 				image		ui/scrollbar_v_green
-				pos			"304 155"
-				height		"120"
+				pos			"304 195"
+				height		"80"
 				current		0
-				viewsize	6
-				fullsize	6
+				viewsize	4
+				fullsize	4
 				hidewhenunused	true
 				onChange	{ *node:parent.description@viewpos = <current> }
 			}
