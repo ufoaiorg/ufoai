@@ -14,6 +14,19 @@ particle null
 	}
 }
 
+// permanent marker that can be used to mark locations in battlescape
+// when you are debugging stuff
+particle debug_marker
+{
+	init
+	{
+		style	circle
+		blend	blend
+		size	"3 1"
+		color	"1 0 0 1"
+	}
+}
+
 particle circle
 {
 	init

@@ -262,7 +262,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		 * parent model location now */
 		R_TransformModelDirect(pmi);
 
-		/* tag trafo */
+		/* tag transformation */
 		if (tagname) {
 			const float *tag = R_GetTagMatrix(pmi->model, tagname);
 			if (tag) {
