@@ -49,6 +49,7 @@
 #include "transformlib.h"
 #include "traverselib.h"
 #include "render.h"
+#include "os/path.h"
 
 class PicoSurface: public OpenGLRenderable
 {
@@ -68,10 +69,14 @@ class PicoSurface: public OpenGLRenderable
 			constructNull();
 			CaptureShader();
 		}
-		PicoSurface (picoSurface_t* surface) :
+
+		/** Construct a PicoSurface with the given picoSurface_t from the picomodel
+		 * library, and a file extension (ASE or LWO) passed from the PicoModel.
+		 */
+		PicoSurface (picoSurface_t* surface, const std::string& fileExt) :
 			m_renderAABBWire(m_aabb_local)
 		{
-			CopyPicoSurface(surface);
+			CopyPicoSurface(surface, fileExt);
 			CaptureShader();
 		}
 		~PicoSurface ()
@@ -180,13 +185,33 @@ class PicoSurface: public OpenGLRenderable
 					m_indices.size())), best);
 		}
 
-		void CopyPicoSurface (picoSurface_t* surface)
+		/** Copy a picomodel surface struct into the C++ PicoSurface object.
+		 */
+		void CopyPicoSurface (picoSurface_t* surface, const std::string& fileExt)
 		{
+
+			// Get the shader from the picomodel struct. If this is a LWO model, use
+			// the material name to select the shader, while for an ASE model the
+			// bitmap path should be used.
 			picoShader_t* shader = PicoGetSurfaceShader(surface);
-			if (shader == NULL)
+			if (shader == NULL) {
 				m_shader = "";
-			else
-				m_shader = PicoGetShaderName(shader);
+			}
+			else {
+				if (fileExt == "lwo") {
+					m_shader = PicoGetShaderName(shader);
+				}
+				else if (fileExt == "ase") {
+					std::string rawMapName = PicoGetShaderMapName(shader);
+					rawMapName = os::standardPath(rawMapName);
+					// Take off everything before "base/", and everyting after
+					// the first period if it exists (i.e. strip off ".tga")
+					int basePos = rawMapName.find("base");
+					int dotPos = rawMapName.find(".");
+					m_shader = rawMapName.substr(basePos + 5, dotPos - basePos - 5);
+				}
+			}
+			g_message("  PicoSurface: using shader %s\n", m_shader.c_str());
 
 			m_vertices.resize(PicoGetSurfaceNumVertexes(surface));
 			m_indices.resize(PicoGetSurfaceNumIndexes(surface));
@@ -267,10 +292,14 @@ class PicoModel: public Cullable, public Bounded
 		{
 			constructNull();
 		}
-		PicoModel (picoModel_t* model)
-		{
-			CopyPicoModel(model);
+
+		/** Construct a PicoModel object from the provided picoModel_t struct and
+		* the given file extension.
+		*/
+		PicoModel(picoModel_t* model, const std::string& ext) {
+			CopyPicoModel(model, ext);
 		}
+
 		~PicoModel ()
 		{
 			for (surfaces_t::iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i)
@@ -322,7 +351,14 @@ class PicoModel: public Cullable, public Bounded
 		}
 
 	private:
-		void CopyPicoModel (picoModel_t* model)
+
+		/** Copy a picoModel_t struct returned from the picomodel library into
+		 * the required C++ objects for a PicoModel object. The file extension
+		 * is used to determine whether the Doom 3 shader is chosen from the
+		 * material name (LWO objects) or the bitmap patch (ASE objects).
+		 */
+
+		void CopyPicoModel (picoModel_t* model, const std::string& fileExt)
 		{
 			m_aabb_local = AABB();
 
@@ -341,7 +377,7 @@ class PicoModel: public Cullable, public Bounded
 				/* fix the surface's normals */
 				PicoFixSurfaceNormals(surface);
 
-				PicoSurface* picosurface = new PicoSurface(surface);
+				PicoSurface* picosurface = new PicoSurface(surface, fileExt);
 				m_aabb_local.includeAABB(picosurface->localAABB());
 				m_surfaces.push_back(picosurface);
 			}
@@ -489,8 +525,12 @@ class PicoModelNode: public scene::Node, public scene::Instantiable
 	public:
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		PicoModelNode (picoModel_t* model) :
-			scene::Node(this, StaticTypeCasts::instance().get()), m_picomodel(model)
+		/** Construct a PicoModelNode with the parsed picoModel_t struct and the
+		 * provided file extension.
+		 */
+		PicoModelNode (picoModel_t* model, const std::string& ext) :
+			scene::Node(this, StaticTypeCasts::instance().get()),
+			m_picomodel(model,ext) //pass extension down to the PicoModel
 		{
 		}
 
@@ -527,9 +567,14 @@ size_t picoInputStreamReam (void* inputStream, unsigned char* buffer, size_t len
  */
 scene::Node& loadPicoModel (const picoModule_t* module, ArchiveFile& file)
 {
+
+	//Determine the file extension (ASE or LWO) to pass down to the PicoModel
+	std::string fName = file.getName();
+	std::string fExt = string::toLower(os::getExtension(fName));
+
 	picoModel_t* model = PicoModuleLoadModelStream(module, file.getName().c_str(), &file.getInputStream(), picoInputStreamReam,
 			file.size(), 0);
-	PicoModelNode* modelNode = new PicoModelNode(model);
+	PicoModelNode* modelNode = new PicoModelNode(model, fExt);
 	PicoFreeModel(model);
 	return modelNode->node();
 }
