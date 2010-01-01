@@ -47,18 +47,19 @@ typedef enum {
 } installationStatus_t;
 
 typedef struct installationTemplate_s {
-	char *id;		/**< id of the installation. */
-	char *name;		/**< Name of the installation (as you see it ingame). */
+	char *id;							/**< id of the installation. */
+	char *name;							/**< Name of the installation (as you see it ingame). */
+	char *description;					/**< Short description in build dialog */
 
-	int cost;				/**< Price of the installation. */
-	int radarRange;			/**< The range of the installation's radar.  Units is the angle of the two points from center of earth. */
-	int trackingRange;		/**< The tracking range of the installation's radar. Units are degrees. */
-	int maxBatteries;		/**< The maximum number of battery slots that can be used in an installation. */
-	int maxUFOsStored;		/**< The maximum number of ufos that can be stored in an installation. */
-	int maxDamage;			/**< The maximum amount of damage an installation can sustain before it is destroyed. */
-	int buildTime;			/**< Time to build the installation, in days. */
-	char *model;			/**< Model used on 3D geoscape */
-	char *image;			/**< Image used on 2D geoscape */
+	int cost;							/**< Price of the installation. */
+	int radarRange;						/**< The range of the installation's radar.  Units is the angle of the two points from center of earth. */
+	int trackingRange;					/**< The tracking range of the installation's radar. Units are degrees. */
+	int maxBatteries;					/**< The maximum number of battery slots that can be used in an installation. */
+	int maxUFOsStored;					/**< The maximum number of ufos that can be stored in an installation. */
+	int maxDamage;						/**< The maximum amount of damage an installation can sustain before it is destroyed. */
+	int buildTime;						/**< Time to build the installation, in days. */
+	char *model;						/**< Model used on 3D geoscape */
+	char *image;						/**< Image used on 2D geoscape */
 } installationTemplate_t;
 
 typedef enum {

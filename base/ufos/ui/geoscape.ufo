@@ -1076,7 +1076,12 @@ window popup_newinstallation_type
 		size		"440 20"
 		onMouseEnter			{ *bt_highlight@invis false *bt_highlight@pos "26 76" }
 		onMouseLeave			{ *bt_highlight@invis true }
-		onClick		{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
+		onClick		{
+			*cvar:mn_installation_type = "radartower"
+			*cvar:mn_installation_timetobuild = *cvar:mn_installation_radartower_buildtime
+			cmd "mn_pop;"
+			cmd "mn_select_installation -1;"
+		}
 	}
 
 	pic sam_icon
@@ -1113,7 +1118,12 @@ window popup_newinstallation_type
 		size		"440 20"
 		onMouseEnter			{ *bt_highlight@invis false *bt_highlight@pos "26 96" }
 		onMouseLeave			{ *bt_highlight@invis true }
-		onClick		{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
+		onClick		{
+			*cvar:mn_installation_type = "samsite"
+			*cvar:mn_installation_timetobuild = *cvar:mn_installation_samsite_buildtime
+			cmd "mn_pop;"
+			cmd "mn_select_installation -1;"
+		}
 	}
 
 	pic ufoyard_icon
@@ -1150,7 +1160,12 @@ window popup_newinstallation_type
 		size		"440 20"
 		onMouseEnter			{ *bt_highlight@invis false *bt_highlight@pos "26 116" }
 		onMouseLeave			{ *bt_highlight@invis true }
-		onClick		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
+		onClick		{
+			*cvar:mn_installation_type = "ufoyard"
+			*cvar:mn_installation_timetobuild = *cvar:mn_installation_ufoyard_buildtime
+			cmd "mn_pop;"
+			cmd "mn_select_installation -1;"
+		}
 	}
 
 	//
@@ -1279,9 +1294,11 @@ window popup_newinstallation_type
 window popup_newinstallation
 {
 	{
-		pos			"264 262"
-		size		"496 247"
+		pos			"256 284"
+		size		"512 300"
 		dragbutton	true
+		closebutton	true
+		modal		true
 		image		ui/popup_alpha_tile
 	}
 
@@ -1295,39 +1312,67 @@ window popup_newinstallation
 	string name_label
 	{
 		string		"_Name:"
-		pos			"26 58"
-		size		"200 20"
+		pos			"25 60"
+		size		"120 25"
+		textalign	cl
 	}
 	textentry name
 	{
 		string		*cvar:mn_installation_title
-		pos			"46 73"
-		size		"420 32"
-		font		f_big
-	}
-
-	pic bt_nameedit
-	{
-		tooltip		"_Rename installation"
-		image		ui/buttons_small
-		pos			"26 78"
-		texl		"0 48"
-		texh		"16 64"
-		onClick		{ call *node:root.name@edit }
+		pos			"150 60"
+		size		"330 25"
+		border		3
+		bordercolor	"0 0.5 0 1"
+		font		f_normal
 	}
 
 	string cost_label
 	{
 		string		"_Cost:"
-		pos			"26 118"
-		size		"200 20"
+		pos			"25 90"
+		size		"120 20"
 	}
-
 	string cost
 	{
-		pos			"26 133"
-		size		"200 25"
-		font		f_big
+		pos			"150 90"
+		size		"150 20"
+	}
+
+	string buildtime_label
+	{
+		string		"_Time to build:"
+		pos			"25 110"
+		size		"120 20"
+	}
+	string buildtime
+	{
+		string		*cvar:mn_installation_timetobuild
+		pos			"150 110"
+		size		"150 20"
+	}
+
+	text description
+	{
+		dataid		TEXT_BUILDING_INFO
+		pos			"25 140"
+		size		"445 80"
+		lineheight	20
+		onViewChange {
+			*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
+			*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
+			*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
+		}
+	}
+	vscrollbar description_scroll
+	{
+		image		ui/scrollbar_v_green
+		pos			"470 140"
+		height		"80"
+		current		0
+		viewsize	4
+		fullsize	4
+		hidewhenunused	true
+		onChange	{ *node:parent.description@viewpos = <current> }
 	}
 
 	button bt_cancel
@@ -1337,9 +1382,9 @@ window popup_newinstallation
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		pos			"294 188"
+		pos			"294 240"
 		size		"176 32"
-		onClick		{ cmd "mn_pop; mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 	button bt_build
 	{
@@ -1348,9 +1393,14 @@ window popup_newinstallation
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		pos			"109 188"
+		pos			"109 240"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_build_installation *cvar:mn_installation_type;" }
+	}
+
+	func onClose
+	{
+		cmd "mn_mapaction_reset;"
 	}
 
 	func onInit

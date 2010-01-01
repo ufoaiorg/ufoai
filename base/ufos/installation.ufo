@@ -14,6 +14,8 @@ installation radartower
 	max_ufo_stored	0
 	max_damage		1
 	buildtime	7
+
+	description	"_The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
 }
 
 installation ufoyard
@@ -27,6 +29,8 @@ installation ufoyard
 	max_ufo_stored	6
 	max_damage		100
 	buildtime	11
+
+	description	"_The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
 }
 
 installation samsite
@@ -40,4 +44,7 @@ installation samsite
 	max_ufo_stored	0
 	max_damage		1
 	buildtime	3
+
+	description "_The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
 }
+

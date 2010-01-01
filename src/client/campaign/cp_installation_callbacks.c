@@ -158,6 +158,7 @@ static void INS_SelectInstallation_f (void)
 
 /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
+ * @note it also assigns description text
  */
 static void INS_SetInstallationTitle_f (void)
 {
@@ -175,6 +176,10 @@ static void INS_SetInstallationTitle_f (void)
 		} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
 
 		Cvar_Set("mn_installation_title", insName);
+		if (!insTemp || !insTemp->description || !strlen(insTemp->description))
+			MN_ResetData(TEXT_BUILDING_INFO);
+		else
+			MN_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);		/* remove the new installation popup */
