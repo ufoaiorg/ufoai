@@ -129,6 +129,11 @@ int MN_GetDataIDByName (const char* name)
  */
 void MN_RegisterText (int textId, const char *text)
 {
+	if (!text) {
+		MN_ResetData(textId);
+		return;
+	}
+
 	MN_ResetData(textId);
 	mn.sharedData[textId].type = MN_SHARED_TEXT;
 	mn.sharedData[textId].data.text = text;
