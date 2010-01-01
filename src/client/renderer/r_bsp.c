@@ -40,6 +40,8 @@ BRUSH MODELS
 /**
  * @brief Returns true if the specified bounding box is completely culled by the
  * view frustum, false otherwise.
+ * @param[in] mins The mins of the bounding box
+ * @param[in] maxs The maxs of the bounding box
  */
 static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
@@ -56,6 +58,10 @@ static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 
 
 /**
+ * @brief Performs a spherical frustum check
+ * @param[in] centre The world coordinate that is the center of the sphere
+ * @param[in] radius The radius of the sphere to check the frustum for
+ * @param[in] clipflags Can be used to skip sides of the frustum planes
  * @return @c true if the sphere is completely outside the frustum, @c false otherwise
  */
 qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned int clipflags)
@@ -80,6 +86,7 @@ qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned i
 /**
  * @brief Returns true if the specified entity is completely culled by the view
  * frustum, false otherwise.
+ * @param[in] e The entity to check
  * @sa R_CullBox
  */
 qboolean R_CullBspModel (const entity_t *e)
@@ -105,7 +112,8 @@ qboolean R_CullBspModel (const entity_t *e)
 }
 
 /**
- * @brief
+ * @brief Renders all the surfaces that belongs to an inline bsp model entity
+ * @param[in] e The inline bsp model entity
  * @param[in] modelorg relative to viewpoint
  */
 static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
@@ -163,6 +171,7 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 
 /**
  * @brief Draws a brush model
+ * @param[in] e The inline bsp model entity
  * @note E.g. a func_breakable or func_door
  */
 void R_DrawBrushModel (const entity_t * e)
@@ -212,7 +221,7 @@ WORLD MODEL
 */
 
 /**
- * @brief  Developer tool for viewing BSP vertex normals. Only Phong interpolated
+ * @brief Developer tool for viewing BSP vertex normals. Only Phong interpolated
  * surfaces show their normals when r_shownormals > 1.
  */
 void R_DrawBspNormals (int tile)
@@ -273,11 +282,14 @@ void R_DrawBspNormals (int tile)
 }
 
 /**
+ * @brief Recurse down the bsp tree and mark surfaces that are visible (not culled and in front)
+ * for being rendered
  * @sa R_DrawWorld
  * @sa R_RecurseWorld
+ * @param[in] node The bsp node to check
  * @param[in] tile The maptile (map assembly)
  */
-static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
+static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 {
 	int i, side, sidebit;
 	mBspSurface_t *surf;
@@ -329,11 +341,13 @@ static void R_RecursiveWorldNode (mBspNode_t * node, int tile)
 }
 
 /**
+ * @brief Wrapper that recurses the bsp nodes but skip the pathfinding nodes
  * @sa R_GetLevelSurfaceLists
+ * @param[in] node The bsp node to check
  * @param[in] tile The maptile (map assembly)
  * @sa R_ModLoadNodes about pathfinding nodes
  */
-static void R_RecurseWorld (mBspNode_t * node, int tile)
+static void R_RecurseWorld (const mBspNode_t * node, int tile)
 {
 	/* skip special pathfinding nodes */
 	if (node->contents == CONTENTS_PATHFINDING_NODE) {
