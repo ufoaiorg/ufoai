@@ -31,6 +31,7 @@
 #include <list>
 #include <vector>
 #include <algorithm>
+#include <cassert>
 
 class TraversableObserverInsertOutputIterator
 {
