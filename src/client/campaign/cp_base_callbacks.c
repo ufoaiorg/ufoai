@@ -288,19 +288,19 @@ static void B_BaseInit_f (void)
 	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
 
 	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
-		MN_ExecuteConfunc("update_aircraft false \"%s\"", _("Manage your aircraft"));
-	else {
-		if (base->numAircraftInBase == 0)
-			MN_ExecuteConfunc("update_aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
+	if (AIR_AircraftAllowed(base)) {
+		if (base->numAircraftInBase)
+			MN_ExecuteConfunc("update_aircraft false \"%s\"", _("Manage your aircraft"));
 		else
-			MN_ExecuteConfunc("update_aircraft true \"%s\"", va(_("Build a %s or %s first."), _("Small Hangar"), _("Large Hangar")));
+			MN_ExecuteConfunc("update_aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
+	} else {
+			MN_ExecuteConfunc("update_aircraft true \"%s\"", _("No Hangar functional in base."));
 	}
 
 	if (BS_BuySellAllowed(base))
 		MN_ExecuteConfunc("update_buysell false \"%s\"", _("Buy/Sell equipment"));
 	else
-		MN_ExecuteConfunc("update_buysell true \"%s\"", va(_("Build a %s first."), _("Storage")));
+		MN_ExecuteConfunc("update_buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
 	if (ccs.numBases > 1)
 		MN_ExecuteConfunc("update_transfer false \"%s\"", _("Transfer equipment or personnel"));
@@ -310,27 +310,27 @@ static void B_BaseInit_f (void)
 	if (RS_ResearchAllowed(base))
 		MN_ExecuteConfunc("update_research false \"%s\"", _("Research new technology"));
 	else
-		MN_ExecuteConfunc("update_research true \"%s\"", va(_("Build a %s first."), _("Laboratory")));
+		MN_ExecuteConfunc("update_research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
 
 	if (PR_ProductionAllowed(base))
 		MN_ExecuteConfunc("update_prod false \"%s\"", _("Produce new equipment"));
 	else
-		MN_ExecuteConfunc("update_prod true \"%s\"", va(_("Build a %s first."), _("Workshop")));
+		MN_ExecuteConfunc("update_prod true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
 
 	if (E_HireAllowed(base))
 		MN_ExecuteConfunc("update_hire false \"%s\"", _("Hire employees"));
 	else
-		MN_ExecuteConfunc("update_hire true \"%s\"", va(_("Build %s first."), _("Living Quarters")));
+		MN_ExecuteConfunc("update_hire true \"%s\"", va(_("No %s functional in base."), _("Living Quarters")));
 
 	if (AC_ContainmentAllowed(base))
 		MN_ExecuteConfunc("update_containment false \"%s\"", _("Deal with Aliens in Alien Containment"));
 	else
-		MN_ExecuteConfunc("update_containment true \"%s\"", va(_("Build a %s first."), _("Containment")));
+		MN_ExecuteConfunc("update_containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
 
 	if (HOS_HospitalAllowed(base))
 		MN_ExecuteConfunc("update_hospital false \"%s\"", _("Medical and Surgery operations"));
 	else
-		MN_ExecuteConfunc("update_hospital true \"%s\"", va(_("Build a %s first."), _("Hospital")));
+		MN_ExecuteConfunc("update_hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
 }
 
 /**
