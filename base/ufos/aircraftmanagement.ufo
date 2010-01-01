@@ -1025,6 +1025,7 @@ craftitem baselaser
 
 	bullets				false
 	beam				true
+	model				"objects/laserturret/laserturret"
 }
 
 craftitem baselaser_ammo

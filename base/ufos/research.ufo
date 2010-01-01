@@ -185,8 +185,8 @@ tech rs_baselaser
 		tech rs_laser
 	}
 	time	3000
-	image	techs/base_defence_laser_turret
 	provides baselaser
+	mdl		"objects/laserturret/laserturret"	
 	producetime	150
 }
 
