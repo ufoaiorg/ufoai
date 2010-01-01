@@ -2930,8 +2930,10 @@ qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 	for (node = mxml_GetNode(parent, SAVE_BASES_ITEM); node; node = mxml_GetNextNode(node, parent, SAVE_BASES_ITEM)) {
 		const char *s = mxml_GetString(node, SAVE_BASES_ODS_ID);
 		objDef_t *od = INVSH_GetItemByID(s);
+
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);
+			return qfalse;
 		} else {
 			equip->num[od->idx] = mxml_GetInt(node, SAVE_BASES_NUM, 0);
 			equip->numLoose[od->idx] = mxml_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
