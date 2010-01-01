@@ -812,6 +812,11 @@ void B_Destroy (base_t *base)
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
 		B_BuildingDestroy(base, &ccs.buildings[base->idx][buildingIdx]);
 	}
+
+	/** @todo Destroy the base if we solved aircraft transfer issue
+	 *	it should be done via moving other bases (and adjusting pointers
+	 *  where needed. We don't allow holes in baselist
+	 */
 }
 
 #ifdef DEBUG
@@ -2779,18 +2784,19 @@ qboolean B_SaveXML (mxml_node_t *parent)
 	bases = mxml_AddNode(parent, SAVE_BASES_BASES);
 	mxml_AddInt(bases, SAVE_BASES_NUMAIRCRAFT, ccs.numAircraft);
 
-	for (i = 0; i < MAX_BASES; i++) {
+	for (i = 0; i < ccs.numBases; i++) {
 		int k;
 		mxml_node_t * act_base, *node;
 		const base_t *b = B_GetBaseByIDX(i);
+
+		if (!b->founded) {
+			Com_Printf("B_SaveXML: Base (idx: %i) not founded!\n", b->idx);
+			return qfalse;
+		}
+
 		act_base = mxml_AddNode(bases, SAVE_BASES_BASE);
-		mxml_AddBool(act_base, SAVE_BASES_FOUNDED, b->founded);
-		if (!b->founded)
-			continue;
 		mxml_AddString(act_base, SAVE_BASES_NAME, b->name);
-
 		mxml_AddPos3(act_base, SAVE_BASES_POS, b->pos);
-
 		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
 		for (k = 0; k < BASE_SIZE; k++) {
 			int l;
@@ -2798,8 +2804,10 @@ qboolean B_SaveXML (mxml_node_t *parent)
 				mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
 				mxml_AddInt(snode, SAVE_BASES_K, k);
 				mxml_AddInt(snode, SAVE_BASES_L, l);
-				mxml_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building ? b->map[k][l].building->idx : BYTES_NONE);
-				mxml_AddBool(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
+				if (b->map[k][l].building)
+					mxml_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building->idx);
+				if (b->map[k][l].blocked)
+					mxml_AddBool(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
 			}
 		}
 		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGS);
@@ -2935,14 +2943,10 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
 		b->idx = B_GetBaseIDX(b);
-		b->founded = mxml_GetBool(base, SAVE_BASES_FOUNDED, qfalse);
-		if (!b->founded)
-			continue;
+		b->founded = qtrue;
 
 		Q_strncpyz(b->name, mxml_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
-
 		mxml_GetPos3(base, SAVE_BASES_POS, b->pos);
-
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
 			const int j = mxml_GetInt(snode, SAVE_BASES_K, 0);
@@ -3045,7 +3049,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 		/* reset capacities */
 	}
-
 	ccs.numBases = B_GetFoundedBaseCount();
 	B_UpdateBaseCount();
 

@@ -1,7 +1,6 @@
 #define SAVE_BASES_BASES "bases"
 #define SAVE_BASES_NUMAIRCRAFT "numAircraft"
 #define SAVE_BASES_BASE "base"
-#define SAVE_BASES_FOUNDED "founded"
 #define SAVE_BASES_NAME "name"
 #define SAVE_BASES_POS "pos"
 #define SAVE_BASES_BUILDINGSPACE "buildingSpace"
