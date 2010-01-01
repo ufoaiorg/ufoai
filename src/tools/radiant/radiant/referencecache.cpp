@@ -137,16 +137,20 @@ bool MapResource_save (const MapFormat& format, scene::Node& root, const std::st
 	std::string fullpath = path + name;
 
 	if (g_path_is_absolute(fullpath.c_str())) {
-		if (!file_exists(fullpath) || file_saveBackup(fullpath)) {
-			return MapResource_saveFile(format, root, Map_Traverse, fullpath);
+
+		// Save a backup if possible. This is done by renaming the original,
+		// which won't work if the existing map is currently open by another process
+		// in the background.
+		if (file_exists(fullpath.c_str()) && !file_saveBackup(fullpath.c_str())) {
+			g_warning("WARNING: could not rename '%s' to backup.\n", fullpath.c_str());
 		}
 
-		g_warning("failed to save a backup map file: '%s'\n", fullpath.c_str());
+		// Save the actual file
+		return MapResource_saveFile(format, root, Map_Traverse, fullpath);
+	} else {
+		g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
 		return false;
 	}
-
-	g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
-	return false;
 }
 
 namespace
