@@ -217,7 +217,7 @@ window hud extends ahud
 			value		0
 			cvar		*cvar:selected_soldier
 			icon		number_1
-			onChange	{ cmd "soldier_select 0;" }
+			onClick		{ cmd "soldier_select 0;" }
 		}
 
 		radiobutton bt_actor1
@@ -229,7 +229,7 @@ window hud extends ahud
 			value		1
 			cvar		*cvar:selected_soldier
 			icon		number_2
-			onChange	{ cmd "soldier_select 1;" }
+			onClick		{ cmd "soldier_select 1;" }
 		}
 
 		radiobutton bt_actor2
@@ -241,7 +241,7 @@ window hud extends ahud
 			value		2
 			cvar		*cvar:selected_soldier
 			icon		number_3
-			onChange	{ cmd "soldier_select 2;" }
+			onClick		{ cmd "soldier_select 2;" }
 		}
 
 		radiobutton bt_actor3
@@ -253,7 +253,7 @@ window hud extends ahud
 			value		3
 			cvar		*cvar:selected_soldier
 			icon		number_4
-			onChange	{ cmd "soldier_select 3;" }
+			onClick		{ cmd "soldier_select 3;" }
 		}
 
 		radiobutton bt_actor4
@@ -265,7 +265,7 @@ window hud extends ahud
 			value		4
 			cvar		*cvar:selected_soldier
 			icon		number_5
-			onChange	{ cmd "soldier_select 4;" }
+			onClick		{ cmd "soldier_select 4;" }
 		}
 
 		radiobutton bt_actor5
@@ -277,7 +277,7 @@ window hud extends ahud
 			value		5
 			cvar		*cvar:selected_soldier
 			icon		number_6
-			onChange	{ cmd "soldier_select 5;" }
+			onClick		{ cmd "soldier_select 5;" }
 		}
 
 		radiobutton bt_actor6
@@ -289,7 +289,7 @@ window hud extends ahud
 			value		6
 			cvar		*cvar:selected_soldier
 			icon		number_7
-			onChange	{ cmd "soldier_select 6;" }
+			onClick		{ cmd "soldier_select 6;" }
 		}
 
 		radiobutton bt_actor7
@@ -301,7 +301,7 @@ window hud extends ahud
 			value		7
 			cvar		*cvar:selected_soldier
 			icon		number_8
-			onChange	{ cmd "soldier_select 7;" }
+			onClick		{ cmd "soldier_select 7;" }
 		}
 	}
 
