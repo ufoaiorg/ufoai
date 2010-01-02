@@ -211,6 +211,7 @@ const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
  * @param[out] center The center of the model (center of the model's bounding box)
  * @note The scale and center vectors are parameters here because the @c modelInfo_t
  * struct only holds pointers to the vectors.
+ * @todo Take the rotation info from @c modelInfo_t into account
  */
 void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center)
 {
