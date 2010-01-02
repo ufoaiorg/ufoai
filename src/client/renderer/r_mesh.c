@@ -330,7 +330,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
 	glRotatef(mi->angles[YAW], 0, 0, 1);
-	glRotatef(mi->angles[YAW], 0, 1, 0);
+	glRotatef(mi->angles[PITCH], 0, 1, 0);
 	glRotatef(-mi->angles[ROLL], 1, 0, 0);
 
 	/* draw it */
