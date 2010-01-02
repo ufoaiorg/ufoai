@@ -407,8 +407,8 @@ base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.
 base/models/aircraft/craft_arm_plate/plating.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_arm_poly/polymer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_item_astro/craft_item_astrogation.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_item_astro/craft_item_astrogation.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_item_astro/astrogation.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_item_astro/astrogation.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_det/detection.tga | GNU General Public License 2.0 or later | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
 base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
