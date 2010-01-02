@@ -1119,6 +1119,12 @@ base/models/objects/samlauncher/rocket.png | GNU General Public License 2.0 or l
 base/models/objects/samlauncher/samlauncher.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/samlauncher/samlauncher.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/samlauncher/samlauncher_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher_big/rocket.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher_big/rocket.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher_big/rocket_nm.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher_big/sam.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher_big/sam.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/samlauncher_big/sam_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
