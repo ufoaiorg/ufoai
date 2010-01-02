@@ -306,56 +306,13 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 		mi->color = menuModel->color;
 		mi->scale = menuModel->scale;
 
-		/* no tag and no parent means - base model or single model */
-		if (!menuModel->tag && !menuModel->parent) {
-			const char *ref;
-			MN_InitModelInfoView(node, mi, menuModel);
-			Vector4Copy(node->color, mi->color);
-
-			/* compute the scale and center for the first model.
-			 * it think its the bigger of composite models.
-			 * All next elements use the same result
-			 */
-			if (EXTRADATA(node).autoscale) {
-				if (!autoScaleComputed) {
-					MN_AutoScale(node, mi, autoScale, autoCenter);
-					autoScaleComputed = qtrue;
-				}
-				mi->center = autoCenter;
-				mi->scale = autoScale;
-			}
-
-			/* get the animation given by menu node properties */
-			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
-				ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
-			/* otherwise use the standard animation from modelmenu definition */
-			} else
-				ref = menuModel->anim;
-
-			/* only base models have animations */
-			if (ref && *ref) {
-				animState_t *as = &menuModel->animState;
-				const char *anim = R_AnimGetName(as, mi->model);
-				/* initial animation or animation change */
-				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
-					R_AnimChange(as, mi->model, ref);
-				else
-					R_AnimRun(as, mi->model, cls.frametime * 1000);
-
-				mi->frame = as->frame;
-				mi->oldframe = as->oldframe;
-				mi->backlerp = as->backlerp;
-			}
-			R_DrawModelDirect(mi, NULL, NULL);
-		/* tag and parent defined */
-		} else {
+		if (menuModel->tag && menuModel->parent) {
+			/* tag and parent defined */
 			menuModel_t *menuModelParent;
 			modelInfo_t pmi;
 			vec3_t pmiorigin;
 			animState_t *as;
 			/* place this menumodel part on an already existing menumodel tag */
-			assert(menuModel->parent);
-			assert(menuModel->tag);
 			menuModelParent = MN_GetMenuModel(menuModel->parent);
 			if (!menuModelParent) {
 				Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
@@ -396,6 +353,47 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			pmi.backlerp = as->backlerp;
 
 			R_DrawModelDirect(mi, &pmi, menuModel->tag);
+		} else {
+			/* no tag and no parent means - base model or single model */
+			const char *ref;
+			MN_InitModelInfoView(node, mi, menuModel);
+			Vector4Copy(node->color, mi->color);
+
+			/* compute the scale and center for the first model.
+			 * it think its the bigger of composite models.
+			 * All next elements use the same result
+			 */
+			if (EXTRADATA(node).autoscale) {
+				if (!autoScaleComputed) {
+					MN_AutoScale(node, mi, autoScale, autoCenter);
+					autoScaleComputed = qtrue;
+				}
+				mi->center = autoCenter;
+				mi->scale = autoScale;
+			}
+
+			/* get the animation given by menu node properties */
+			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
+				ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
+			/* otherwise use the standard animation from modelmenu definition */
+			} else
+				ref = menuModel->anim;
+
+			/* only base models have animations */
+			if (ref && *ref) {
+				animState_t *as = &menuModel->animState;
+				const char *anim = R_AnimGetName(as, mi->model);
+				/* initial animation or animation change */
+				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
+					R_AnimChange(as, mi->model, ref);
+				else
+					R_AnimRun(as, mi->model, cls.frametime * 1000);
+
+				mi->frame = as->frame;
+				mi->oldframe = as->oldframe;
+				mi->backlerp = as->backlerp;
+			}
+			R_DrawModelDirect(mi, NULL, NULL);
 		}
 
 		/* next */
