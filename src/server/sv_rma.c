@@ -177,12 +177,14 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
 
 /**
  * @brief Parses an assembly block
+ * @param[in,out] map All we know about the map to assemble
+ * @param[in] filename The name of the .UMP file, used in error messages
+ * @param[out] a Pointer to the assembly to be initialized, must be allocated.
  * @sa SV_AssembleMap
  * @sa SV_ParseMapTile
  * @note: format of size: "size x y"
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
- * @param a Pointer to the assembly to be initialized, must be allocated.
  * @return 1 if it was parsed, 0 if not.
  */
 static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
@@ -336,20 +338,20 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 /**
  * @brief Combines the alternatives/connection info of a map with a tile and sets the rating
- * @param[in] mapAlts Pointer to the alternatives info field of the map which will be updated.
+ * @param[in,out] mapAlts Pointer to the alternatives info field of the map which will be updated.
  * @param[in] tileAlts Pointer to the alternatives info field of the tile.
- * @param[in] mapRating Pointer to the rating field of the map.
+ * @param[in,out] mapRating Pointer to the rating field of the map.
  * @sa SV_AssembleMap
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRating)
+static void SV_CombineAlternatives (uLong *mapAlts, const uLong tileAlts, char *mapRating)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
 	if (IS_SOLID(*mapAlts) || (tileAlts == ALL_TILES))
 		return;
 
-	/* for an empty map tile must the rating be zero */
+	/* for an empty map tile the rating must be zero */
 	assert((*mapAlts != ALL_TILES) || (*mapRating == 0));
 
 	/* copy if tile is solid */
@@ -379,6 +381,7 @@ static void SV_ClearMap (mapInfo_t *map)
 
 /**
  * @brief Checks if a given map-tile fits into the empty space (in a given location) of a map.
+ * @param[in,out] map All we know about the map to assemble
  * @param[in] tile The tile definition that should be fitted into the map.
  * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
@@ -387,7 +390,7 @@ static void SV_ClearMap (mapInfo_t *map)
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, int x, int y)
+static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, const int y)
 {
 	int tx, ty;
 	const uLong *spec = NULL;
@@ -413,7 +416,7 @@ static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, int x, int y)
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
 			const uLong combined = (*m) & (*spec);
 
-			/* quit if both are solid or no equal connection is found*/
+			/* quit if both are solid or no equal connection is found */
 			if (IS_SOLID(combined) || !combined)
 				return qfalse;
 		}
@@ -566,6 +569,7 @@ static void SV_AddTile (mapInfo_t *map, const mTile_t *tile, int x, int y, int i
 
 /**
  * @brief Rebuilds a assembled map up to the previous tile.
+ * @param[in,out] map All we know about the map to assemble
  * @param[out] idx Pointer to the location to store the index field of the removed tile
  * @param[out] pos Pointer to the location to store the position field of the removed tile
  * @sa SV_AssembleMap
@@ -771,7 +775,7 @@ static void SV_AddMapTiles (mapInfo_t *map)
 					break;
 				}
 			}
-			/* tile fits, try next tile */
+			/* tile fits, try another tile of the same type */
 			if (pos < mapSize)
 				continue;
 
