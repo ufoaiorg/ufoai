@@ -198,10 +198,7 @@ class PicoSurface: public OpenGLRenderable
 				m_shader = "";
 			}
 			else {
-				if (fileExt == "lwo") {
-					m_shader = PicoGetShaderName(shader);
-				}
-				else if (fileExt == "ase") {
+				if (fileExt == "ase") {
 					std::string rawMapName = PicoGetShaderMapName(shader);
 					rawMapName = os::standardPath(rawMapName);
 					// Take off everything before "base/", and everyting after
@@ -209,6 +206,8 @@ class PicoSurface: public OpenGLRenderable
 					int basePos = rawMapName.find("base");
 					int dotPos = rawMapName.find(".");
 					m_shader = rawMapName.substr(basePos + 5, dotPos - basePos - 5);
+				} else {
+					m_shader = PicoGetShaderName(shader);
 				}
 			}
 			g_message("  PicoSurface: using shader %s\n", m_shader.c_str());
