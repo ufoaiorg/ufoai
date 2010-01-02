@@ -67,6 +67,7 @@ window aircraft_equip extends iaircraft
 		size	"522 259"
 		angles	"0 0 180"
 		view	"aircraft_equip"
+		autoscale	true
 	}
 
 	// ==================

@@ -25,6 +25,7 @@ window aircraft extends iaircraft
 		origin		"-45 25 0"
 		angles		"160 20 -120"
 		view		"aircraft"
+		autoscale	true
 	}
 
 	string aircraft_name
