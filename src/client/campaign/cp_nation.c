@@ -216,7 +216,7 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 				continue;
 
 			ss = mxml_AddNode(s, SAVE_NATION_MONTH);
-			mxml_AddInt(ss, SAVE_NATION_MONTHIDX, j);
+			mxml_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
 			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, ccs.nations[i].stats[j].happiness);
 			mxml_AddInt(ss, SAVE_NATION_XVI, ccs.nations[i].stats[j].xviInfection);
 		}
@@ -247,7 +247,7 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 
 		/* month loop */
 		for (ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss; ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
-			int monthIDX = mxml_GetInt(ss, SAVE_NATION_MONTHIDX, MONTHS_PER_YEAR);
+			int monthIDX = mxml_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
 				return qfalse;
@@ -793,7 +793,7 @@ static void NAT_ListCities_f (void)
 
 /**
  * @brief Scriptfunction to list all parsed nations with their current values
- * @note called with debug_listnation
+ * @note called with debug_listnations
  */
 static void NAT_NationList_f (void)
 {
