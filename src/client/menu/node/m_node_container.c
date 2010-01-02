@@ -376,6 +376,9 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 			if (item->rotated)
 				angles[0] -= 90;
 
+			if (od->scale)
+				VectorScale(size, od->scale, size);
+
 			memset(&mi, 0, sizeof(mi));
 			mi.origin = origin;
 			mi.angles = angles;
@@ -383,8 +386,6 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 			mi.scale = size;
 			mi.color = col;
 			mi.name = modelName;
-			if (od->scale)
-				VectorScale(size, od->scale, size);
 
 			/* draw the model */
 			R_DrawModelDirect(&mi, NULL, NULL);
