@@ -52,6 +52,7 @@ window aircraft_equip extends iaircraft
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = ""
 			*itemlist@image = "ui/panel_grey_white"
+			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>" 
 		}
 	}
@@ -170,7 +171,7 @@ window aircraft_equip extends iaircraft
 			size		"200 25"
 			onClick		{
 				cmd "airequip_remove_item 1;"
-				cmd "airequip_select item -1" 
+				cmd "airequip_select item -1"
 			}
 			color		"0 0.5 0 1"
 		}
