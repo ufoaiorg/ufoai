@@ -1793,26 +1793,6 @@ static void CL_DebugNewEmployees_f (void)
 		/* Create a phoenix ugv. */
 		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_phoenix"));
 }
-
-/**
- * @brief Scriptfunction to list all parsed nations with their current values
- * @note called with debug_listnation
- */
-static void CL_NationList_f (void)
-{
-	int i;
-	for (i = 0; i < ccs.numNations; i++) {
-		Com_Printf("Nation ID: %s\n", ccs.nations[i].id);
-		Com_Printf("...max-funding %i c\n", ccs.nations[i].maxFunding);
-		Com_Printf("...alienFriendly %0.2f\n", ccs.nations[i].stats[0].alienFriendly);
-		Com_Printf("...happiness %0.2f\n", ccs.nations[i].stats[0].happiness);
-		Com_Printf("...xviInfection %i\n", ccs.nations[i].stats[0].xviInfection);
-		Com_Printf("...max-soldiers %i\n", ccs.nations[i].maxSoldiers);
-		Com_Printf("...max-scientists %i\n", ccs.nations[i].maxScientists);
-		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", ccs.nations[i].color[0], ccs.nations[i].color[1], ccs.nations[i].color[2], ccs.nations[i].color[3]);
-		Com_Printf("...pos x:%.0f y:%.0f\n", ccs.nations[i].pos[0], ccs.nations[i].pos[1]);
-	}
-}
 #endif
 
 /* ===================================================================== */
@@ -1834,7 +1814,6 @@ static const cmdList_t game_commands[] = {
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
 	{"debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console"},
-	{"debug_listnation", CL_NationList_f, "List all nations on the game console"},
 	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},

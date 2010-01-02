@@ -7,9 +7,6 @@
 //	Initial funding per month of this faction.
 // color
 //	Defines the color used to seperate the nations in the geoscape (internally)
-// alien_friendly (percentage 0-100)
-//	Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
-//	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
 // soldiers,scientists (number of people)
 //	The number of people (the best of the best ;)) you can hire (additionally) from this nation each month.
 //=================================================
@@ -19,7 +16,6 @@
 
 // TODO: tweak all parameters realistically, according to the wiki descriptions
 
-// please vary alien_friendly from 10 to 90
 // and soldiers/scientists/etc. from 1 to 5
 
 // NOTE: If you rename a nation, also rename the symbol in base/pics/nations
@@ -32,7 +28,6 @@ nation latin
 	color "0 255 128 1"
 	funding	56000
 	happiness 0.5
-	alien_friendly	0.15
 	soldiers 4
 	scientists 1
 	pos "60 -13"
@@ -44,7 +39,6 @@ nation states
 	color "0 128 0 1"
 	funding	90000
 	happiness 0.5
-	alien_friendly	0.40
 	soldiers 4
 	scientists 2
 	pos "103 48"
@@ -57,7 +51,6 @@ nation europe
 	pos "-7 49"
 	funding	84000
 	happiness 0.5
-	alien_friendly	0.45
 	soldiers 3
 	scientists 3
 }
@@ -68,7 +61,6 @@ nation asia
 	color "128 128 0 1"
 	funding	120000
 	happiness 0.5
-	alien_friendly	0.30
 	soldiers 5
 	scientists 1
 	pos "-100 33"
@@ -80,7 +72,6 @@ nation middle
 	color "255 255 0 1"
 	funding	44000
 	happiness 0.5
-	alien_friendly	0.25
 	soldiers 1
 	scientists 3
 	pos "-46 26"
@@ -92,7 +83,6 @@ nation africa
 	color "255 128 64 1"
 	funding	68000
 	happiness 0.5
-	alien_friendly	0.25
 	soldiers 5
 	scientists 1
 	pos "-20 5"
@@ -104,7 +94,6 @@ nation russia
 	color "128 0 0 1"
 	funding	58000
 	happiness 0.5
-	alien_friendly	0.70
 	soldiers 5
 	scientists 5
 	pos "-80 63"
@@ -116,8 +105,8 @@ nation oceania
 	color "128 0 128 1"
 	funding	80000
 	happiness 0.5
-	alien_friendly	0.85
 	soldiers 4
 	scientists 2
 	pos "-130 -25"
 }
+

@@ -37,11 +37,6 @@ typedef struct nationInfo_s {
 	/* Relationship */
 	float happiness;	/**< percentage (0.00 - 1.00) of how the nation appreciates PHALANX. 1.00 is the maximum happiness */
 	int xviInfection;	/**< Increase by one each time a XVI spread is done in this nation. */
-	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0.00 - 1.00)
-				 * @todo Check if this is still needed after XVI factors are in.
-				 * Pro: People can be alien-friendly without being affected after all.
-				 * Con: ?
-				 */
 } nationInfo_t;
 
 /**

@@ -52,6 +52,10 @@ nation_t *NAT_GetNationByID (const char *nationID)
 {
 	int i;
 
+	if (!nationID) {
+		Com_Printf("NAT_GetNationByID: NULL nationID\n");
+		return NULL;
+	}
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
 		if (!strcmp(nation->id, nationID))
@@ -188,21 +192,33 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 
 /**
  * @brief Nation saving callback
+ * @param[out] p XML Node structure, where we write the information to
  */
 qboolean NAT_SaveXML (mxml_node_t *p)
 {
 	int i;
-	mxml_node_t *n;
-	n = mxml_AddNode(p, SAVE_NATION_NATIONS);
+	mxml_node_t *n = mxml_AddNode(p, SAVE_NATION_NATIONS);
+
 	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *nation = NAT_GetNationByIDX(i);
+		mxml_node_t *s;
 		int j;
-		mxml_node_t *s = mxml_AddNode(n, SAVE_NATION_NATION);
+
+		if (!nation)
+			continue;
+
+		s = mxml_AddNode(n, SAVE_NATION_NATION);
+		mxml_AddString(s, SAVE_NATION_ID, nation->id);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			mxml_node_t *ss = mxml_AddNode(s, SAVE_NATION_MONTH);
-			mxml_AddBool(ss, SAVE_NATION_INUSE, ccs.nations[i].stats[j].inuse);
+			mxml_node_t *ss;
+
+			if (!nation->stats[j].inuse)
+				continue;
+
+			ss = mxml_AddNode(s, SAVE_NATION_MONTH);
+			mxml_AddInt(ss, SAVE_NATION_MONTHIDX, j);
 			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, ccs.nations[i].stats[j].happiness);
 			mxml_AddInt(ss, SAVE_NATION_XVI, ccs.nations[i].stats[j].xviInfection);
-			mxml_AddFloat(ss, SAVE_NATION_ALIENFRIENDLY, ccs.nations[i].stats[j].alienFriendly);
 		}
 	}
 	return qtrue;
@@ -210,24 +226,35 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 
 /**
  * @brief Nation loading xml callback
+ * @param[in] p XML Node structure, where we get the information from
  */
 qboolean NAT_LoadXML (mxml_node_t * p)
 {
-	int i;
-	mxml_node_t *n, *s;
+	mxml_node_t *n;
+	mxml_node_t *s;
 
 	n = mxml_GetNode(p, SAVE_NATION_NATIONS);
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, SAVE_NATION_NATION); s && i < ccs.numNations; i++, s = mxml_GetNextNode(s, n, SAVE_NATION_NATION)) {
+	/* nations loop */
+	for (s = mxml_GetNode(n, SAVE_NATION_NATION); s; s = mxml_GetNextNode(s, n, SAVE_NATION_NATION)) {
 		mxml_node_t *ss;
-		int j;
-		for (j = 0, ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss && j < MONTHS_PER_YEAR; j++, ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
-			ccs.nations[i].stats[j].inuse = mxml_GetBool(ss, SAVE_NATION_INUSE, qfalse);
-			ccs.nations[i].stats[j].happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
-			ccs.nations[i].stats[j].xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
-			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, SAVE_NATION_ALIENFRIENDLY, 0.0);
+		nation_t *nation = NAT_GetNationByID(mxml_GetString(s, SAVE_NATION_ID));
+
+		if (!nation)
+			return qfalse;
+
+		/* month loop */
+		for (ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss; ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
+			int monthIDX = mxml_GetInt(ss, SAVE_NATION_MONTHIDX, MONTHS_PER_YEAR);
+
+			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
+				return qfalse;
+
+			nation->stats[monthIDX].inuse = qtrue;
+			nation->stats[monthIDX].happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
+			nation->stats[monthIDX].xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
 		}
 	}
 	return qtrue;
@@ -243,7 +270,6 @@ static const value_t nation_vals[] = {
 	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
 	{"funding", V_INT, offsetof(nation_t, maxFunding), MEMBER_SIZEOF(nation_t, maxFunding)},
 	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
-	{"alien_friendly", V_FLOAT, offsetof(nation_t, stats[0].alienFriendly), MEMBER_SIZEOF(nation_t, stats[0].alienFriendly)},
 	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
 	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
 
@@ -753,7 +779,7 @@ static void CL_NationSelect_f (void)
  * @brief Debug function to list all cities in game.
  * @note Called with debug_listcities.
  */
-static void CL_ListCities_f (void)
+static void NAT_ListCities_f (void)
 {
 	int idx;
 
@@ -764,6 +790,25 @@ static void CL_ListCities_f (void)
 		MAP_PrintParameterStringByPos(city->pos);
 	}
 }
+
+/**
+ * @brief Scriptfunction to list all parsed nations with their current values
+ * @note called with debug_listnation
+ */
+static void NAT_NationList_f (void)
+{
+	int i;
+	for (i = 0; i < ccs.numNations; i++) {
+		Com_Printf("Nation ID: %s\n", ccs.nations[i].id);
+		Com_Printf("...max-funding %i c\n", ccs.nations[i].maxFunding);
+		Com_Printf("...happiness %0.2f\n", ccs.nations[i].stats[0].happiness);
+		Com_Printf("...xviInfection %i\n", ccs.nations[i].stats[0].xviInfection);
+		Com_Printf("...max-soldiers %i\n", ccs.nations[i].maxSoldiers);
+		Com_Printf("...max-scientists %i\n", ccs.nations[i].maxScientists);
+		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", ccs.nations[i].color[0], ccs.nations[i].color[1], ccs.nations[i].color[2], ccs.nations[i].color[3]);
+		Com_Printf("...pos x:%.0f y:%.0f\n", ccs.nations[i].pos[0], ccs.nations[i].pos[1]);
+	}
+}
 #endif
 
 void NAT_InitStartup (void)
@@ -772,6 +817,8 @@ void NAT_InitStartup (void)
 	Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
 	Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listcities", CL_ListCities_f, "Debug function to list all cities in game.");
+	Cmd_AddCommand("debug_listcities", NAT_ListCities_f, "Debug function to list all cities in game.");
+	Cmd_AddCommand("debug_listnations", NAT_NationList_f, "List all nations on the game console");
 #endif
 }
+
