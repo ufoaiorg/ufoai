@@ -215,7 +215,7 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
 {
 	const float width = mi->model->maxs[0] - mi->model->mins[0];
 	const float height = mi->model->maxs[1] - mi->model->mins[1];
-	const float size = (boxSize[0] < boxSize[1] ? boxSize[0] : boxSize[1]) / max(width, height);
+	const float size = min(boxSize[0], boxSize[1]) / max(width, height);
 
 	/* get center */
 	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);

@@ -421,9 +421,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.color = node->color;
 	mi.mesh = 0;
 
-	/* autoscale? */
-	if (EXTRADATA(node).autoscale)
-		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
 
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
@@ -432,6 +429,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			R_EndClipRect();
 		return;
 	}
+
+	/* autoscale? */
+	if (EXTRADATA(node).autoscale)
+		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
 
 	/* if the node is linked to a parent, the parent will display it */
 	if (EXTRADATA(node).tag) {
