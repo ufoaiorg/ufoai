@@ -60,6 +60,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 		}
 		size = (mi->center[0] < mi->center[1] ? mi->center[0] : mi->center[1]) / max;
 		VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
+		VectorNegate(center, center);
 
 		glScalef(size, size, size);
 		glTranslatef(center[0], center[1], center[2]);
