@@ -267,7 +267,6 @@ void CL_CampaignRunAircraft(int dt, qboolean updateRadarOverlay);
 aircraft_t *AIR_GetAircraftSilent(const char *name);
 aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
-objDef_t *AII_GetAircraftItemByID(const char *id);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);

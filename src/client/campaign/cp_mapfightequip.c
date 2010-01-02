@@ -102,7 +102,7 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
-	item = AII_GetAircraftItemByID(tech->provides);
+	item = INVSH_GetItemByID(tech->provides);
 	if (!item)
 		return qfalse;
 
@@ -675,7 +675,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 
 	assert(tech);
 
-	ammo = AII_GetAircraftItemByID(tech->provides);
+	ammo = INVSH_GetItemByID(tech->provides);
 	if (!ammo) {
 		Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return qfalse;
@@ -749,7 +749,7 @@ qboolean AII_AddItemToSlot (base_t *base, const technology_t *tech, aircraftSlot
 	assert(slot);
 	assert(tech);
 
-	item = AII_GetAircraftItemByID(tech->provides);
+	item = INVSH_GetItemByID(tech->provides);
 	if (!item) {
 		Com_Printf("AII_AddItemToSlot: Could not add item (%s) to slot\n", tech->provides);
 		return qfalse;
@@ -817,7 +817,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	assert(aircraft);
 	assert(aircraft->homebase);
 
-	item = AII_GetAircraftItemByID(tech->provides);
+	item = INVSH_GetItemByID(tech->provides);
 	if (!item)
 		return;
 
@@ -838,7 +838,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 	if (!tech)
 		Com_Error(ERR_DROP, "Could not get tech rs_craft_weapon_shiva");
 
-	item = AII_GetAircraftItemByID(tech->provides);
+	item = INVSH_GetItemByID(tech->provides);
 
 	if (!item)
 		return;

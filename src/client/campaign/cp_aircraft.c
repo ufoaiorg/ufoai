@@ -1322,30 +1322,6 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 }
 
 /**
- * @brief Returns the aircraft item in the list of aircraft Items.
- * @note id may not be null or empty
- * @param[in] id the item id in our csi.ods array
- */
-objDef_t *AII_GetAircraftItemByID (const char *id)
-{
-	int i;
-
-#ifdef DEBUG
-	if (!id || !*id) {
-		Com_Printf("AII_GetAircraftItemByID: Called with empty id\n");
-		return NULL;
-	}
-#endif
-
-	for (i = 0; i < csi.numODs; i++)	/* i = item index */
-		if (!strcmp(id, csi.ods[i].id))
-			return &csi.ods[i];
-
-	Com_Printf("AII_GetAircraftItemByID: Aircraft Item \"%s\" not found.\n", id);
-	return NULL;
-}
-
-/**
  * @brief Returns aircraft for a given global index.
  * @param[in] idx Global aircraft index.
  * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
@@ -1597,7 +1573,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftTemplate->id);
 				tech = RS_GetTechByID(token);
 				if (tech)
-					aircraftTemplate->shield.item = AII_GetAircraftItemByID(tech->provides);
+					aircraftTemplate->shield.item = INVSH_GetItemByID(tech->provides);
 			} else if (!strcmp(token, "slot")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
@@ -1662,11 +1638,11 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						if (tech) {
 							switch (itemType) {
 							case AC_ITEM_WEAPON:
-								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].item = AII_GetAircraftItemByID(tech->provides);
+								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].item = INVSH_GetItemByID(tech->provides);
 								Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, aircraftTemplate->id);
 								break;
 							case AC_ITEM_ELECTRONICS:
-								aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].item = AII_GetAircraftItemByID(tech->provides);
+								aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].item = INVSH_GetItemByID(tech->provides);
 								Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, aircraftTemplate->id);
 								break;
 							default:
@@ -1680,7 +1656,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						tech = RS_GetTechByID(token);
 						if (tech) {
 							if (itemType == AC_ITEM_WEAPON) {
-								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].ammo = AII_GetAircraftItemByID(tech->provides);
+								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].ammo = INVSH_GetItemByID(tech->provides);
 								Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, aircraftTemplate->id);
 							} else
 								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
@@ -2909,7 +2885,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		technology_t *tech = RS_GetTechByProvided(mxml_GetString(snode, "aircraftitemid"));
 		if (tech) {
 			int j;
-			ccs.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
+			ccs.projectiles[i].aircraftItem = INVSH_GetItemByID(tech->provides);
 			for (j = 0, ssnode=mxml_GetPos2(snode, "pos", ccs.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
 			     ssnode = mxml_GetNextPos2(ssnode, snode, "pos", ccs.projectiles[i].pos[j]), j++)
 				;

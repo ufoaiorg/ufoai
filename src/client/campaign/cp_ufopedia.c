@@ -649,7 +649,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				UP_AircraftDescription(tech);
 				break;
 			case RS_CRAFTITEM:
-				UP_AircraftItemDescription(AII_GetAircraftItemByID(tech->provides));
+				UP_AircraftItemDescription(INVSH_GetItemByID(tech->provides));
 				break;
 			case RS_BUILDING:
 				UP_BuildingDescription(tech);

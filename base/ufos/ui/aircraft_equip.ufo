@@ -208,6 +208,7 @@ window aircraft_equip extends iaircraft
 			}
 			onChange {
 				cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
+				cmd "airequip_select item -1" 
 			}
 		}
 

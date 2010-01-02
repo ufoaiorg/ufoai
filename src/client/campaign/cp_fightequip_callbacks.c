@@ -187,7 +187,7 @@ static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *s
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
-	item = AII_GetAircraftItemByID(tech->provides);
+	item = INVSH_GetItemByID(tech->provides);
 	if (!item)
 		return qfalse;
 	if (item->virtual)
@@ -244,7 +244,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 		if (AIM_CrafttypeFilter(base, slot, airequipID, *currentTech)) {
 			int amount;
 			menuOption_t *option;
-			objDef_t *item = AII_GetAircraftItemByID((*currentTech)->provides);
+			objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
 			assert(item);
 			amount = base->storage.num[item->idx];
 
@@ -476,7 +476,7 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 	if (!RS_IsResearched_ptr(tech))
 		return AIM_LOADING_TECHNOLOGYNOTRESEARCHED;
 
-	item = AII_GetAircraftItemByID(tech->provides);
+	item = INVSH_GetItemByID(tech->provides);
 	assert(item);
 
 	if (item->craftitem.type >= AC_ITEM_AMMO) {
@@ -550,7 +550,7 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 	/* update mini ufopedia */
 	/** @todo we should clone the text, and not using the ufopaedia text */
 	if (fromList)
-		UP_AircraftItemDescription(AII_GetAircraftItemByID(AIM_selectedTechnology->provides));
+		UP_AircraftItemDescription(INVSH_GetItemByIDSilent(AIM_selectedTechnology ? AIM_selectedTechnology->provides : NULL));
 	else if (fromSlot) {
 		if (airequipID == AC_ITEM_AMMO)
 			UP_AircraftItemDescription(slot->ammo);
@@ -810,7 +810,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 				AII_AddItemToSlot(base, AIM_selectedTechnology, slot, qfalse); /* Aircraft stats are updated below */
 				AII_AutoAddAmmo(slot);
 				break;
-			} else if (slot->item == AII_GetAircraftItemByID(AIM_selectedTechnology->provides)) {
+			} else if (slot->item == INVSH_GetItemByID(AIM_selectedTechnology->provides)) {
 				/* the added item is the same than the one in current slot */
 				if (slot->installationTime == -slot->item->craftitem.installationTime) {
 					/* player changed his mind: he just want to re-add the item he just removed */
@@ -933,7 +933,8 @@ static void AIM_AircraftEquipMenuClick_f (void)
 
 	/* Which tech? */
 	techIdx = atoi(Cmd_Argv(1));
-	AIM_selectedTechnology = &ccs.technologies[techIdx];
+
+	AIM_selectedTechnology = (techIdx >= 0) ? &ccs.technologies[techIdx] : NULL;
 	AIM_UpdateItemDescription(qtrue, qfalse);
 }
 
