@@ -758,9 +758,8 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 	}
 	airequipSelectedZone = zone;
 
-	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(slot);
-
+	/* update menu */
+	AIM_AircraftEquipMenuUpdate(qfalse);
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
 

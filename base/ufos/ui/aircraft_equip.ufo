@@ -149,8 +149,15 @@ window aircraft_equip extends iaircraft
 			image		ui/button_green_small
 			pos			"26 271"
 			size		"200 25"
-			onClick		{ cmd "airequip_add_item 1;" }
 			color		"0 0.5 0 1"
+			onClick		{
+				cmd "airequip_add_item 1;"
+				if ( *cvar:mn_equip_itemtype eq "ammo" ) {
+					cmd "airequip_select zone2;"
+				} else {
+					cmd "airequip_select zone1;"
+				}
+			}
 		}
 		
 		button button_remove
@@ -159,7 +166,10 @@ window aircraft_equip extends iaircraft
 			image		ui/button_green_small
 			pos			"26 271"
 			size		"200 25"
-			onClick		{ cmd "airequip_remove_item 1;" }
+			onClick		{
+				cmd "airequip_remove_item 1;"
+				cmd "airequip_select item -1" 
+			}
 			color		"0 0.5 0 1"
 		}
 	}
