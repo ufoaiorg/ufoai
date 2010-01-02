@@ -421,7 +421,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.color = node->color;
 	mi.mesh = 0;
 
-
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
 		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);

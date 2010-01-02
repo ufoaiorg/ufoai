@@ -204,12 +204,13 @@ const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
 }
 
 /**
- * @brief Compute scale and center for a node and a modelInfo
+ * @brief Compute scale and center for a model info data structure
  * @param[in] boxSize The size the model should fit into
- * @param[in,out] mi The model info that should be rendered
+ * @param[in,out] mi The model info that contains the model that should be scaled
  * @param[out] scale The scale vector
- * @param[out] center The center of the model (center of the model's bbox)
- * @todo Code and interface need improvement for composite models
+ * @param[out] center The center of the model (center of the model's bounding box)
+ * @note The scale and center vectors are parameters here because the @c modelInfo_t
+ * struct only holds pointers to the vectors.
  */
 void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center)
 {
