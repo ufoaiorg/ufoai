@@ -340,6 +340,9 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 				if (!autoScaleComputed) {
 					R_ModelAutoScale(node->size, mi, autoScale, autoCenter);
 					autoScaleComputed = qtrue;
+				} else {
+					mi->scale = autoScale;
+					mi->center = autoCenter;
 				}
 			}
 
