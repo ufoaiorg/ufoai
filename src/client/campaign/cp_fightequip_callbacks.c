@@ -477,7 +477,8 @@ static int AIM_CheckTechnologyIntoSlot (const aircraftSlot_t *slot, const techno
 		return AIM_LOADING_TECHNOLOGYNOTRESEARCHED;
 
 	item = INVSH_GetItemByID(tech->provides);
-	assert(item);
+	if (!item)
+		return AIM_LOADING_NOTECHNOLOGYSELECTED;
 
 	if (item->craftitem.type >= AC_ITEM_AMMO) {
 		const objDef_t *weapon = slot->item;
