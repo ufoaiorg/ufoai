@@ -246,35 +246,6 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 }
 
 /**
- * @brief Compute scale and center for a node and a modelInfo
- * @param[in] node The menu node to render the model for
- * @param[in] mi The model info that should be rendered
- * @param[out] scale The scale vector
- * @param[out] center The center of the model (center of the model's bbox)
- * @todo Code and interface need improvement for composite models
- */
-static void MN_AutoScale (const menuNode_t *node, const modelInfo_t *mi, vec3_t scale, vec3_t center)
-{
-	float max, size;
-	int i;
-
-	/* get scale */
-	for (max = 1.0, i = 0; i < 2; i++) {
-		size = mi->model->maxs[i] - mi->model->mins[i];
-		if (size > max)
-			max = size;
-	}
-	size = (node->size[0] < node->size[1] ? node->size[0] : node->size[1]) / max;
-
-	/* get center */
-	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
-
-	scale[0] = size;
-	scale[1] = size;
-	scale[2] = size;
-}
-
-/**
  * @brief Draw a model using "menu model" definition
  */
 static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
@@ -341,8 +312,10 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 			/* autoscale? */
 			if (EXTRADATA(node).autoscale) {
-				pmi.scale = NULL;
-				pmi.center = node->size;
+				if (!autoScaleComputed)
+					Sys_Error("Wrong order of model nodes - the tag and parent model node must be after the base model node");
+				pmi.scale = autoScale;
+				pmi.center = autoCenter;
 			}
 
 			as = &menuModelParent->animState;
@@ -365,11 +338,9 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			 */
 			if (EXTRADATA(node).autoscale) {
 				if (!autoScaleComputed) {
-					MN_AutoScale(node, mi, autoScale, autoCenter);
+					R_ModelAutoScale(node->size, mi, autoScale, autoCenter);
 					autoScaleComputed = qtrue;
 				}
-				mi->center = autoCenter;
-				mi->scale = autoScale;
 			}
 
 			/* get the animation given by menu node properties */
@@ -411,6 +382,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	modelInfo_t mi;
 	menuModel_t *menuModel;
 	vec3_t nodeorigin;
+	vec3_t autoScale;
+	vec3_t autoCenter;
 
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
@@ -446,10 +419,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.mesh = 0;
 
 	/* autoscale? */
-	if (EXTRADATA(node).autoscale) {
-		mi.scale = NULL;
-		mi.center = node->size;
-	}
+	if (EXTRADATA(node).autoscale)
+		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
 
 	/* special case to draw models with "menu model" */
 	if (menuModel) {

@@ -138,7 +138,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector4Copy(src,dest)       (dest[0]=src[0],dest[1]=src[1],dest[2]=src[2],dest[3]=src[3])
 #define Vector2Clear(a)            (a[0]=0,a[1]=0)
 #define VectorClear(a)          (a[0]=a[1]=a[2]=0)
-#define VectorNegate(a,b)       (b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])
+#define VectorNegate(src,dest)       (dest[0]=-src[0],dest[1]=-src[1],dest[2]=-src[2])
 #define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
 #define VectorSum(a)            ((a)[0]+(a)[1]+(a)[2])
 #define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))

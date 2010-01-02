@@ -692,7 +692,8 @@ void R_DrawPolygon (int points, int *verts)
 void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model, int skin)
 {
 	modelInfo_t mi;
-	vec3_t model_center;
+	vec2_t size;
+	vec3_t scale, center;
 
 	memset(&mi, 0, sizeof(mi));
 
@@ -701,17 +702,14 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 		Com_Printf("Could not find model '%s'\n", model);
 		return;
 	}
-	mi.name = model;
 
+	mi.name = model;
 	mi.origin = position;
 	mi.angles = angles;
-	mi.scale = NULL;
 	mi.skin = skin;
 
-	model_center[0] = MARKER_SIZE * zoom;
-	model_center[1] = MARKER_SIZE * zoom;
-	model_center[2] = MARKER_SIZE * zoom; /** @todo */
-	mi.center = model_center;
+	size[0] = size[1] = MARKER_SIZE * zoom;
+	R_ModelAutoScale(size, &mi, scale, center);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 }

@@ -80,11 +80,6 @@ typedef struct sustain_s {
 	float sustain;
 } sustain_t;
 
-/**
- * @note if @c scale is @c NULL and @c center is not, the @c center vector is used to autoscale the
- * model and the value of @c center is used as size.
- * @todo The above is more a hack - fix this.
- */
 typedef struct {
 	model_t *model;			/**< the loaded model */
 	const char *name;		/**< model path (resolved in the renderer on model loading time) */

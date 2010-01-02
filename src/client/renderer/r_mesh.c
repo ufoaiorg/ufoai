@@ -41,29 +41,11 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 	glRotatef(mi->angles[1], 0, 1, 0);
 	glRotatef(mi->angles[2], 1, 0, 0);
 
-	if (mi->scale) {
-		/* scale by parameters */
+	/* scale by parameters */
+	if (mi->scale)
 		glScalef(mi->scale[0], mi->scale[1], mi->scale[2]);
-		if (mi->center)
-			glTranslatef(-mi->center[0], -mi->center[1], -mi->center[2]);
-	} else if (mi->center) {
-		/* autoscale */
-		float max, size;
-		vec3_t center;
-		int i;
-
-		/* get center and scale */
-		for (max = 1.0, i = 0; i < 2; i++) {
-			size = mi->model->maxs[i] - mi->model->mins[i];
-			if (size > max)
-				max = size;
-		}
-		size = (mi->center[0] < mi->center[1] ? mi->center[0] : mi->center[1]) / max;
-		VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
-
-		glScalef(size, size, size);
-		glTranslatef(-center[0], -center[1], -center[2]);
-	}
+	if (mi->center)
+		glTranslatef(mi->center[0], mi->center[1], mi->center[2]);
 }
 
 static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
@@ -219,6 +201,39 @@ const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
 		}
 	}
 	return NULL;
+}
+
+/**
+ * @brief Compute scale and center for a node and a modelInfo
+ * @param[in] boxSize The size the model should fit into
+ * @param[in,out] mi The model info that should be rendered
+ * @param[out] scale The scale vector
+ * @param[out] center The center of the model (center of the model's bbox)
+ * @todo Code and interface need improvement for composite models
+ */
+void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center)
+{
+	float max, size;
+	int i;
+
+	/* get scale */
+	for (max = 1.0, i = 0; i < 2; i++) {
+		size = mi->model->maxs[i] - mi->model->mins[i];
+		if (size > max)
+			max = size;
+	}
+	size = (boxSize[0] < boxSize[1] ? boxSize[0] : boxSize[1]) / max;
+
+	/* get center */
+	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
+	VectorNegate(center, center);
+
+	scale[0] = size;
+	scale[1] = size;
+	scale[2] = size;
+
+	mi->center = center;
+	mi->scale = scale;
 }
 
 /**
