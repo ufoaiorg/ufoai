@@ -75,102 +75,6 @@ void MN_ListMenuModels_f (void)
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", mn.menuModels[i].id, mn.menuModels[i].model, mn.menuModels[i].need);
 }
 
-
-#ifdef DEBUG
-/**
- * @brief This function allows you inline transforming of models.
- * @note Changes you made are lost on quit
- */
-static void MN_SetModelTransform_f (void)
-{
-	menuNode_t *node;
-	menuModel_t *model;
-	const char *command, *nodeOrMenuID, *menuModel;
-	float x, y ,z;
-	vec3_t value;
-	const nodeBehaviour_t *modelBehaviour = MN_GetNodeBehaviour("model");
-
-	/* not initialized yet - commandline? */
-	if (mn.windowStackPos <= 0)
-		return;
-
-	if (Cmd_Argc() < 5) {
-		Com_Printf("Usage: %s [<model> <menu>] | [<node>] <x> <y> <z>\n", Cmd_Argv(0));
-		Com_Printf("<model> <menu> is needed for menumodel definitions\n");
-		Com_Printf("<node> is needed for 'normal' models\n");
-		return;
-	}
-
-	if (Cmd_Argc() == 5) {
-		command = Cmd_Argv(0);
-		menuModel = NULL;
-		nodeOrMenuID = Cmd_Argv(1);
-		x = atof(Cmd_Argv(2));
-		y = atof(Cmd_Argv(3));
-		z = atof(Cmd_Argv(4));
-	} else {
-		command = Cmd_Argv(0);
-		menuModel = Cmd_Argv(1);
-		nodeOrMenuID = Cmd_Argv(2);
-		x = atof(Cmd_Argv(3));
-		y = atof(Cmd_Argv(4));
-		z = atof(Cmd_Argv(5));
-	}
-
-	VectorSet(value, x, y, z);
-
-	if (menuModel) {
-		model = MN_GetMenuModel(menuModel);
-		if (!model) {
-			Com_Printf("MN_SetModelTransform_f: model \"%s\" wasn't found\n", menuModel);
-			return;
-		}
-
-		if (model->menuTransformCnt) {
-#if 0	/** @todo model is no more linked to menu; this code need an update */
-			const menuNode_t *menu = MN_GetActiveMenu();
-			int i;
-
-			for (i = 0; i < model->menuTransformCnt; i++) {
-				if (menu == model->menuTransform[i].menuPtr) {
-					if (!strcmp(command, "debug_mnscale")) {
-						VectorCopy(value, model->menuTransform[i].scale);
-					} else if (!strcmp(command, "debug_mnangles")) {
-						VectorCopy(value, model->menuTransform[i].angles);
-					} else if (!strcmp(command, "debug_mnorigin")) {
-						VectorCopy(value, model->menuTransform[i].origin);
-					}
-					break;
-				}
-			}
-#endif
-		} else {
-			Com_Printf("MN_SetModelTransform_f: no entry in menumodel '%s' for menu '%s'\n", menuModel, nodeOrMenuID);
-			return;
-		}
-	} else {
-		/* search the node */
-		node = MN_GetNode(MN_GetActiveMenu(), nodeOrMenuID);
-		if (!node) {
-			/* didn't find node -> "kill" action and print error */
-			Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeOrMenuID);
-			return;
-		} else if (node->behaviour != modelBehaviour) {
-			Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeOrMenuID);
-			return;
-		}
-
-		if (!strcmp(command, "debug_mnscale")) {
-			VectorCopy(value, EXTRADATA(node).scale);
-		} else if (!strcmp(command, "debug_mnangles")) {
-			VectorCopy(value, EXTRADATA(node).angles);
-		} else if (!strcmp(command, "debug_mnorigin")) {
-			VectorCopy(value, EXTRADATA(node).origin);
-		}
-	}
-}
-#endif
-
 static void MN_ModelNodeDraw (menuNode_t *node)
 {
 	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
@@ -189,58 +93,15 @@ static vec3_t nullVector = {0, 0, 0};
  */
 static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
 {
-	qboolean isInitialised = qfalse;
 	vec3_t nodeorigin;
 	MN_GetNodeAbsPos(node, nodeorigin);
 	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
 
-	if (menuModel->menuTransformCnt) {
-		int i;
-		/* search a menuTransforme */
-		for (i = 0; i < menuModel->menuTransformCnt; i++) {
-			if (EXTRADATA(node).viewName != NULL) {
-				/** @todo improve the test when its possible */
-				if (!strcmp(EXTRADATA(node).viewName, menuModel->menuTransform[i].menuID))
-					break;
-			}
-		}
-
-		/* menuTransforme found */
-		if (i != menuModel->menuTransformCnt) {
-			/* Use menu scale if defined. */
-			if (menuModel->menuTransform[i].useScale) {
-				VectorCopy(menuModel->menuTransform[i].scale, mi->scale);
-			} else {
-				VectorCopy(EXTRADATA(node).scale, mi->scale);
-			}
-
-			/* Use menu angles if defined. */
-			if (menuModel->menuTransform[i].useAngles) {
-				VectorCopy(menuModel->menuTransform[i].angles, mi->angles);
-			} else {
-				VectorCopy(EXTRADATA(node).angles, mi->angles);
-			}
-
-			/* Use menu origin if defined. */
-			if (menuModel->menuTransform[i].useOrigin) {
-				VectorAdd(nodeorigin, menuModel->menuTransform[i].origin, mi->origin);
-			} else {
-				VectorCopy(nodeorigin, mi->origin);
-			}
-			isInitialised = qtrue;
-		}
-		mi->angles[0] += EXTRADATA(node).angles[0];
-		mi->angles[1] += EXTRADATA(node).angles[1];
-		mi->angles[2] += EXTRADATA(node).angles[2];
-	}
-
-	if (!isInitialised) {
-		VectorCopy(EXTRADATA(node).scale, mi->scale);
-		VectorCopy(EXTRADATA(node).angles, mi->angles);
-		VectorCopy(nodeorigin, mi->origin);
-	}
+	VectorCopy(EXTRADATA(node).scale, mi->scale);
+	VectorCopy(EXTRADATA(node).angles, mi->angles);
+	VectorCopy(nodeorigin, mi->origin);
 
 	VectorCopy(nullVector, mi->center);
 }
@@ -373,7 +234,6 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 		/* next */
 		menuModel = menuModel->next;
 	}
-
 }
 
 /**
@@ -671,10 +531,5 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(modelExtraData_t);
 
-#ifdef DEBUG
-	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
-#endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }

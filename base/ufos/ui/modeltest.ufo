@@ -8,15 +8,6 @@
 //	mn_push model_test
 // Or start from command-line:
 //	./ufo +mn_push model_test
-//
-// Change model with e.g.:
-//	set mn_model model_name
-//
-// Change angles with e.g.:
-//	debug_mnangles mdl 0 90 0
-
-// Change scale with e.g.:
-//	debug_mnscale mdl 2.0 2.0 2.0
 // ==================
 
 window model_test

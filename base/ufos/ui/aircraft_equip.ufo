@@ -103,6 +103,7 @@ window aircraft_equip extends iaircraft
 			pos		"14 76"
 			size	"225 96"
 			view	aircraft_equip
+			angles	"-120 120 -30"
 		}
 
 		text description

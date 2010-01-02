@@ -57,13 +57,8 @@ static const value_t optionProperties[] = {
 static const value_t menuModelProperties[] = {
 	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
-	{"menutransform", V_NULL, 0, 0},
 	{"anim", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, anim), 0},
 	{"skin", V_INT, offsetof(menuModel_t, skin), sizeof(int)},
-	{"origin", V_VECTOR, offsetof(menuModel_t, origin), sizeof(vec3_t)},
-	{"center", V_VECTOR, offsetof(menuModel_t, center), sizeof(vec3_t)},
-	{"scale", V_VECTOR, offsetof(menuModel_t, scale), sizeof(vec3_t)},
-	{"angles", V_VECTOR, offsetof(menuModel_t, angles), sizeof(vec3_t)},
 	{"color", V_COLOR, offsetof(menuModel_t, color), sizeof(vec4_t)},
 	{"tag", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, tag), 0},
 	{"parent", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, parent), 0},
@@ -1058,74 +1053,6 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 }
 
 /**
- * @brief Parse menu transform
- */
-static qboolean MN_ParseMenuTransform (menuModel_t *menuModel, const char **text, const char **token, const char *errhead)
-{
-	*token = Com_EParse(text, errhead, menuModel->id);
-	if (!*text)
-		return qfalse;
-	if (*token[0] != '{') {
-		Com_Printf("Error in menumodel '%s' menutransform definition\n", menuModel->id);
-		return qfalse;
-	}
-	do {
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}')
-			break;
-		menuModel->menuTransform[menuModel->menuTransformCnt].menuID = Mem_PoolStrDup(*token, mn_sysPool, 0);
-
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}') {
-			Com_Printf("Error in menumodel '%s' menutransform definition - missing scale float value\n", menuModel->id);
-			break;
-		}
-		if (*token[0] == '#') {
-			menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qfalse;
-		} else {
-			Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].scale, *token, V_VECTOR, 0, sizeof(vec3_t));
-			menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qtrue;
-		}
-
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}') {
-			Com_Printf("Error in menumodel '%s' menutransform definition - missing angles float value\n", menuModel->id);
-			break;
-		}
-		if (*token[0] == '#') {
-			menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qfalse;
-		} else {
-			Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].angles, *token, V_VECTOR, 0, sizeof(vec3_t));
-			menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qtrue;
-		}
-
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}') {
-			Com_Printf("Error in menumodel '%s' menutransform definition - missing origin float value\n", menuModel->id);
-			break;
-		}
-		if (*token[0] == '#') {
-			menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qfalse;
-		} else {
-			Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].origin, *token, V_VECTOR, 0, sizeof(vec3_t));
-			menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qtrue;
-		}
-
-		menuModel->menuTransformCnt++;
-	} while (*token[0] != '}'); /* dummy condition - break is earlier here */
-
-	return qtrue;
-}
-
-/**
  * @brief parses the models.ufo and all files where menu_models are defined
  * @sa CL_ParseClientData
  */
@@ -1189,11 +1116,6 @@ void MN_ParseMenuModel (const char *name, const char **text)
 				if (!menuModel->next)
 					Com_Printf("Could not find menumodel %s", token);
 				menuModel->need = Mem_PoolStrDup(token, mn_sysPool, 0);
-			} else if (!strcmp(v->string, "menutransform")) {
-				qboolean result;
-				result = MN_ParseMenuTransform (menuModel, text, &token, errhead);
-				if (!result)
-					return;
 			}
 		} else {
 			token = Com_EParse(text, errhead, name);

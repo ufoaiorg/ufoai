@@ -72,7 +72,6 @@ image_t* R_AliasModelState(const model_t *mod, int *mesh, int *frame, int *oldFr
 image_t* R_AliasModelGetSkin(const model_t* mod, const char *skin);
 void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(qboolean complete);
-
 void R_ModReloadSurfacesArrays(void);
 
 /** @brief The world model(s) */
