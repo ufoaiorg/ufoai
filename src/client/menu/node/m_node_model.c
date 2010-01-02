@@ -243,11 +243,6 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 	}
 
 	VectorCopy(nullVector, mi->center);
-
-	if (EXTRADATA(node).autoscale) {
-		mi->scale = NULL;
-		mi->center = node->size;
-	}
 }
 
 /**
