@@ -88,7 +88,8 @@ typedef struct fireDef_s {
 					     for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
 	vec2_t shotOrg;			/**< not set for any firedefinition, but called in CL_TargetingGrenade() and G_GetShotOrigin() */
 	vec2_t spread;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
-	int delay;			/**< applied on grenades and grenade launcher, but currently without any impact */
+	int delay;			/**< applied on grenades and grenade launcher. If no delay is set, a touch with an actor will lead to
+						 * an explosion or a hit of the projectile. If a delay is set, the (e.g. grenade) may bounce away again. */
 	int bounce;			/**< amount of max possible bounces, for example grenades */
 	float bounceFac;		/**< used in G_ShootGrenade() to apply VectorScale() effect */
 	float crouch;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
