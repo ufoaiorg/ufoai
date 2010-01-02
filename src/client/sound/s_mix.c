@@ -109,9 +109,14 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 	if (!sample)
 		return;
 
+	/* if the last mix of this particular sample is less than half a second ago, skip it */
+	if (sample->lastPlayed > cls.realtime - 500)
+		return;
+
 	if ((i = S_AllocChannel()) == -1)
 		return;
 
+	sample->lastPlayed = cls.realtime;
 	ch = &s_env.channels[i];
 
 	ch->atten = atten;
@@ -160,6 +165,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 
 		ch = &s_env.channels[i];
 
+		sample->lastPlayed = cls.realtime;
 		VectorCopy(org, ch->org);
 		ch->count = 1;
 		ch->atten = SOUND_ATTN_IDLE;
