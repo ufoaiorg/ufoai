@@ -93,8 +93,7 @@ typedef struct entity_s {
 void R_AddEntity(entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
-void R_EntityComputeBoundingBox(const vec3_t mins, const vec3_t maxs, vec3_t bbox[8]);
-void R_EntityDrawBBox(vec3_t bbox[8]);
+void R_EntityDrawBBox(const vec3_t mins, const vec3_t maxs);
 void R_TransformForEntity(const entity_t *e);
 
 extern int r_numEntities;

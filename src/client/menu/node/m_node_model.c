@@ -251,27 +251,28 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 }
 
 /**
- * @brief Compute scape and center for a node and a modelInfo
- * @todo Code and interface need improvment for composite models
+ * @brief Compute scale and center for a node and a modelInfo
+ * @param[in] node The menu node to render the model for
+ * @param[in] mi The model info that should be rendered
+ * @param[out] scale The scale vector
+ * @param[out] center The center of the model (center of the model's bbox)
+ * @todo Code and interface need improvement for composite models
  */
-static void MN_AutoScale(menuNode_t *node, modelInfo_t *mi, vec3_t scale, vec3_t center)
+static void MN_AutoScale (const menuNode_t *node, const modelInfo_t *mi, vec3_t scale, vec3_t center)
 {
-	/* autoscale */
 	float max, size;
-	vec3_t mins, maxs;
 	int i;
-	mAliasFrame_t *frame = mi->model->alias.frames;
 
-	/* get center and scale */
-	for (max = 1.0, i = 0; i < 3; i++) {
-		mins[i] = frame->translate[i];
-		maxs[i] = mins[i] + frame->scale[i] * 255;
-		center[i] = (mins[i] + maxs[i]) / 2;
-		size = maxs[i] - mins[i];
+	/* get scale */
+	for (max = 1.0, i = 0; i < 2; i++) {
+		size = mi->model->maxs[i] - mi->model->mins[i];
 		if (size > max)
 			max = size;
 	}
 	size = (node->size[0] < node->size[1] ? node->size[0] : node->size[1]) / max;
+
+	/* get center */
+	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
 
 	scale[0] = size;
 	scale[1] = size;

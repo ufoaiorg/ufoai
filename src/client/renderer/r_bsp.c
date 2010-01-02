@@ -195,18 +195,8 @@ void R_DrawBrushModel (const entity_t * e)
 	R_DrawBspModelSurfaces(e, modelorg);
 
 	/* show model bounding box */
-	if (r_showbox->integer) {
-		vec3_t bbox[8];
-		int i;
-
-		/* compute a full bounding box */
-		for (i = 0; i < 8; i++) {
-			bbox[i][0] = (i & 1) ? e->model->mins[0] : e->model->maxs[0];
-			bbox[i][1] = (i & 2) ? e->model->mins[1] : e->model->maxs[1];
-			bbox[i][2] = (i & 4) ? e->model->mins[2] : e->model->maxs[2];
-		}
-		R_EntityDrawBBox(bbox);
-	}
+	if (r_showbox->integer)
+		R_EntityDrawBBox(e->model->mins, e->model->maxs);
 
 	glPopMatrix();
 

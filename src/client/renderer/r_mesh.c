@@ -49,20 +49,18 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 	} else if (mi->center) {
 		/* autoscale */
 		float max, size;
-		vec3_t mins, maxs, center;
+		vec3_t center;
 		int i;
-		mAliasFrame_t *frame = mi->model->alias.frames;
 
 		/* get center and scale */
-		for (max = 1.0, i = 0; i < 3; i++) {
-			mins[i] = frame->translate[i];
-			maxs[i] = mins[i] + frame->scale[i] * 255;
-			center[i] = -(mins[i] + maxs[i]) / 2;
-			size = maxs[i] - mins[i];
+		for (max = 1.0, i = 0; i < 2; i++) {
+			size = mi->model->maxs[i] - mi->model->mins[i];
 			if (size > max)
 				max = size;
 		}
 		size = (mi->center[0] < mi->center[1] ? mi->center[0] : mi->center[1]) / max;
+		VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
+
 		glScalef(size, size, size);
 		glTranslatef(center[0], center[1], center[2]);
 	}
@@ -331,9 +329,9 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	glPushMatrix();
 
 	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
-	glRotatef(mi->angles[1], 0, 0, 1);
-	glRotatef(mi->angles[0], 0, 1, 0);
-	glRotatef(-mi->angles[2], 1, 0, 0);
+	glRotatef(mi->angles[YAW], 0, 0, 1);
+	glRotatef(mi->angles[YAW], 0, 1, 0);
+	glRotatef(-mi->angles[ROLL], 1, 0, 0);
 
 	/* draw it */
 	R_BindTexture(skin->texnum);
@@ -552,11 +550,8 @@ void R_DrawAliasModel (entity_t *e)
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	/* show model bounding box */
-	if (r_showbox->integer) {
-		vec3_t bbox[8];
-		R_EntityComputeBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs, bbox);
-		R_EntityDrawBBox(bbox);
-	}
+	if (r_showbox->integer)
+		R_EntityDrawBBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
 
 	glPopMatrix();
 
