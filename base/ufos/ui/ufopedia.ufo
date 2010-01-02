@@ -330,7 +330,7 @@ window ufopedia extends objectinfo
 			cmd "mn_updateoption <path:root>.content.navigation preresearch display" 
 		} else {
 			cmd "mn_updateoption <path:root>.content.navigation preresearch hide"
-			// update the tab if the hiden one is selected
+			// update the tab if the hidden one is selected
 			if ( *cvar:ufopedia_content eq "preresearch" ) {
 				*cvar:ufopedia_content = "description"
 			} 
@@ -339,7 +339,7 @@ window ufopedia extends objectinfo
 			cmd "mn_updateoption <path:root>.content.navigation stats display" 
 		} else {
 			cmd "mn_updateoption <path:root>.content.navigation stats hide"
-			// update the tab if the hiden one is selected
+			// update the tab if the hidden one is selected
 			if ( *cvar:ufopedia_content eq "stats" ) {
 				*cvar:ufopedia_content = "description"
 			}
@@ -380,7 +380,7 @@ window ufopedia extends objectinfo
 			*itemdescription@invis = false
 		}
 
-		// we only show requirements if there are needed
+		// we only show requirements if they are needed
 		if ( *cvar:mn_uprequirement eq "" ) {
 			*content.requirement@invis = true
 		}
