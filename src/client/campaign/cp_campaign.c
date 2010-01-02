@@ -1333,6 +1333,7 @@ void CP_StartSelectedMission (void)
 	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
+	Cvar_SetValue("mn_autogo", 0);
 
 	/* manage inventory */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
@@ -1540,6 +1541,7 @@ void CL_GameAutoGo (mission_t *mis)
 		counts[MRC_ALIENS_KILLED] = ccs.battleParameters.aliens;
 		counts[MRC_CIVILIAN_SURVIVOR] = ccs.battleParameters.civilians;
 		CP_InitMissionResults(counts, won);
+		Cvar_SetValue("mn_autogo", 1);
 		MN_PushMenu("won", NULL);
 	}
 

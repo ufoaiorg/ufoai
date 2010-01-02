@@ -66,6 +66,11 @@ window won
 
 	func onInit
 	{
+		if ( *cvar:mn_autogo == 1 ) {
+			*node:root.bt_tryagain@invis = true
+		} else {
+			*node:root.bt_tryagain@invis = false
+		}
 		cmd "snd_music ufo2;"
 	}
 
