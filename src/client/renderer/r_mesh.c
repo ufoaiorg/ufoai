@@ -304,6 +304,10 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 
+	/* show model bounding box */
+	if (r_showbox->integer)
+		R_EntityDrawBBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
+
 	glDisable(GL_DEPTH_TEST);
 
 	glPopMatrix();
@@ -349,6 +353,10 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		R_DrawAliasStatic(mesh);
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
+
+	/* show model bounding box */
+	if (r_showbox->integer)
+		R_EntityDrawBBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
 
 	glPopMatrix();
 
