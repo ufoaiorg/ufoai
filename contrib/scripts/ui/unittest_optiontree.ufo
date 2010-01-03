@@ -12,7 +12,7 @@ window unittest_optiontree
 
 	optiontree tree {
 		cvar	*cvar:unittest_foo
-		dataid	OPTION_TEST
+//		dataid	OPTION_TEST		// no more in the code
 		pos "20 50"
 		size "240 430"
 		color		"0 .78 0 1"

@@ -22,7 +22,7 @@ window unittest_event
 		selectcolor "1 1 1 1"
 		string "Set 2000ms"
 		onClick {
-			*node:root@timeout 2000
+			*node:root@timeout = 2000
 		}
 	}
 
@@ -33,7 +33,7 @@ window unittest_event
 		selectcolor "1 1 1 1"
 		string "Set 1000ms"
 		onClick {
-			*node:root@timeout 1000
+			*node:root@timeout = 1000
 		}
 	}
 
@@ -44,7 +44,7 @@ window unittest_event
 		selectcolor "1 1 1 1"
 		string "Set 500ms"
 		onClick {
-			*node:root@timeout 500
+			*node:root@timeout = 500
 		}
 	}
 
@@ -55,7 +55,7 @@ window unittest_event
 		selectcolor "1 1 1 1"
 		string "Set 100ms"
 		onClick {
-			*node:root@timeout 100
+			*node:root@timeout = 100
 		}
 	}
 
@@ -66,7 +66,7 @@ window unittest_event
 		selectcolor "1 1 1 1"
 		string "Stop"
 		onClick {
-			*node:root@timeout 0
+			*node:root@timeout = 0
 		}
 	}
 
@@ -78,19 +78,19 @@ window unittest_event
 
 	func onEvent {
 		if ( *cvar:counter == 0 ) {
-			*cvar:counter 1
-			*node:root.test@bgcolor "1 0 0 1"
+			*cvar:counter = 1
+			*node:root.test@bgcolor = "1 0 0 1"
 		} elif ( *cvar:counter == 1 ) {
-			*cvar:counter 2
-			*node:root.test@bgcolor "0 1 0 1"
+			*cvar:counter = 2
+			*node:root.test@bgcolor = "0 1 0 1"
 		} else {
-			*cvar:counter 0
-			*node:root.test@bgcolor "0 0 1 1"
+			*cvar:counter = 0
+			*node:root.test@bgcolor = "0 0 1 1"
 		}
 	}
 
 	func onLoad {
-		*cvar:counter 0
+		*cvar:counter = 0
 	}
 
 	func onClose {

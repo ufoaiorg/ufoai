@@ -253,140 +253,140 @@ window unittest_condition
 		}
 		
 		confunc unittest_testRelativeConditions {
-			if ( *node:this.parent@current == 1 ) { *testNode6@color "0 1 0 1" }
-			else { *testNode6@color "1 0 0 1" }
-			if ( 1 == *node:parent@current ) { *testNode7@color "0 1 0 1" }
-			else { *testNode7@color "1 0 0 1" }
-			if ( *node:this.root.testNodeFoo2@max == 16 ) { *testNode8@color "0 1 0 1" }
-			else { *testNode8@color "1 0 0 1" }
-			if ( *node:root.testNodeFoo2@invis == 1 ) { *testNode9@color "0 1 0 1" }
-			else { *testNode9@color "1 0 0 1" }
-			if ( *node:this.parent.parent.testNodeFoo2.root.testNodeFoo2@disabled == 0 ) { *testNode10@color "0 1 0 1" }
-			else { *testNode10@color "1 0 0 1" }
+			if ( *node:this.parent@current == 1 ) { *testNode6@color = "0 1 0 1" }
+			else { *testNode6@color = "1 0 0 1" }
+			if ( 1 == *node:parent@current ) { *testNode7@color = "0 1 0 1" }
+			else { *testNode7@color = "1 0 0 1" }
+			if ( *node:this.root.testNodeFoo2@max == 16 ) { *testNode8@color = "0 1 0 1" }
+			else { *testNode8@color = "1 0 0 1" }
+			if ( *node:root.testNodeFoo2@invis == 1 ) { *testNode9@color = "0 1 0 1" }
+			else { *testNode9@color = "1 0 0 1" }
+			if ( *node:this.parent.parent.testNodeFoo2.root.testNodeFoo2@disabled == 0 ) { *testNode10@color = "0 1 0 1" }
+			else { *testNode10@color = "1 0 0 1" }
 		}
 	}
 	
 	confunc unittest_testNodeProperty {
-		if ( *node:unittest_condition.testNodeFoo@current == 1 ) { *testNode1@color "0 1 0 1" }
-		else { *testNode1@color "1 0 0 1" }
-		if ( 1 == *node:unittest_condition.testNodeFoo@current ) { *testNode2@color "0 1 0 1" }
-		else { *testNode2@color "1 0 0 1" }
-		if ( *node:unittest_condition.testNodeFoo@max == 16 ) { *testNode3@color "0 1 0 1" }
-		else { *testNode3@color "1 0 0 1" }
-		if ( *node:unittest_condition.testNodeFoo@invis == 1 ) { *testNode4@color "0 1 0 1" }
-		else { *testNode4@color "1 0 0 1" }
-		if ( *node:unittest_condition.testNodeFoo@disabled == 0 ) { *testNode5@color "0 1 0 1" }
-		else { *testNode5@color "1 0 0 1" }
+		if ( *node:unittest_condition.testNodeFoo@current == 1 ) { *testNode1@color = "0 1 0 1" }
+		else { *testNode1@color = "1 0 0 1" }
+		if ( 1 == *node:unittest_condition.testNodeFoo@current ) { *testNode2@color = "0 1 0 1" }
+		else { *testNode2@color = "1 0 0 1" }
+		if ( *node:unittest_condition.testNodeFoo@max == 16 ) { *testNode3@color = "0 1 0 1" }
+		else { *testNode3@color = "1 0 0 1" }
+		if ( *node:unittest_condition.testNodeFoo@invis == 1 ) { *testNode4@color = "0 1 0 1" }
+		else { *testNode4@color = "1 0 0 1" }
+		if ( *node:unittest_condition.testNodeFoo@disabled == 0 ) { *testNode5@color = "0 1 0 1" }
+		else { *testNode5@color = "1 0 0 1" }
 
 		cmd "unittest_testRelativeConditions"
 		cmd "echo node:root.testNodeFooString@string <node:root.testNodeFooString@string>" 
 		cmd "echo node:root.testNodeFooString2@string <node:root.testNodeFooString2@string>" 
 
-		if ( *node:root.testNodeFooString@string eq "aaabbb" ) { *testNode11@color "0 1 0 1" }
-		else { *testNode11@color "1 0 0 1" }
-		if ( *node:root.testNodeFooString2@string ne "aaabbbcc" ) { *testNode12@color "0 1 0 1" }
-		else { *testNode12@color "1 0 0 1" }
-		if ( "aaabbb" eq *node:root.testNodeFooString@string ) { *testNode13@color "0 1 0 1" }
-		else { *testNode13@color "1 0 0 1" }
+		if ( *node:root.testNodeFooString@string eq "aaabbb" ) { *testNode11@color = "0 1 0 1" }
+		else { *testNode11@color = "1 0 0 1" }
+		if ( *node:root.testNodeFooString2@string ne "aaabbbcc" ) { *testNode12@color = "0 1 0 1" }
+		else { *testNode12@color = "1 0 0 1" }
+		if ( "aaabbb" eq *node:root.testNodeFooString@string ) { *testNode13@color = "0 1 0 1" }
+		else { *testNode13@color = "1 0 0 1" }
 		/* @todo test string with space */
 	}
 	
 	confunc unittest_testIfControl {
 		/* if condition */
-		if ( 0 == 0 ) { *testControl1@color "0 1 0 1" }
-		elif ( 0 == 1 ) { *testControl1@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl1@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl1@color "1 0 0 1" }
-		else { *testControl1@color "1 0 0 1" }
+		if ( 0 == 0 ) { *testControl1@color = "0 1 0 1" }
+		elif ( 0 == 1 ) { *testControl1@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl1@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl1@color = "1 0 0 1" }
+		else { *testControl1@color = "1 0 0 1" }
 
 		/* first elif condition */
-		if ( 0 == 1 ) { *testControl2@color "1 0 0 1" }
-		elif ( 0 == 0 ) { *testControl2@color "0 1 0 1" }
-		elif ( 0 == 1 ) { *testControl2@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl2@color "1 0 0 1" }
-		else { *testControl2@color "1 0 0 1" }
+		if ( 0 == 1 ) { *testControl2@color = "1 0 0 1" }
+		elif ( 0 == 0 ) { *testControl2@color = "0 1 0 1" }
+		elif ( 0 == 1 ) { *testControl2@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl2@color = "1 0 0 1" }
+		else { *testControl2@color = "1 0 0 1" }
 
 		/* mid elif condition */
-		if ( 0 == 1 ) { *testControl3@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl3@color "1 0 0 1" }
-		elif ( 0 == 0 ) { *testControl3@color "0 1 0 1" }
-		elif ( 0 == 1 ) { *testControl3@color "1 0 0 1" }
-		else { *testControl3@color "1 0 0 1" }
+		if ( 0 == 1 ) { *testControl3@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl3@color = "1 0 0 1" }
+		elif ( 0 == 0 ) { *testControl3@color = "0 1 0 1" }
+		elif ( 0 == 1 ) { *testControl3@color = "1 0 0 1" }
+		else { *testControl3@color = "1 0 0 1" }
 
 		/* last elif condition */
-		if ( 0 == 1 ) { *testControl4@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl4@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl4@color "1 0 0 1" }
-		elif ( 0 == 0 ) { *testControl4@color "0 1 0 1" }
-		else { *testControl4@color "1 0 0 1" }
+		if ( 0 == 1 ) { *testControl4@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl4@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl4@color = "1 0 0 1" }
+		elif ( 0 == 0 ) { *testControl4@color = "0 1 0 1" }
+		else { *testControl4@color = "1 0 0 1" }
 
 		/* else condition */
-		if ( 0 == 1 ) { *testControl5@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl5@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl5@color "1 0 0 1" }
-		elif ( 0 == 1 ) { *testControl5@color "1 0 0 1" }
-		else { *testControl5@color "0 1 0 1" }
+		if ( 0 == 1 ) { *testControl5@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl5@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl5@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *testControl5@color = "1 0 0 1" }
+		else { *testControl5@color = "0 1 0 1" }
 	}
 	
 	func onInit {
-		*cvar:test_float0 "0"
-		*cvar:test_float1 "1"
-		*cvar:test_float0-2 "0"
-		*cvar:test_float314 "3.14"
+		*cvar:test_float0 = "0"
+		*cvar:test_float1 = "1"
+		*cvar:test_float0-2 = "0"
+		*cvar:test_float314 = "3.14"
 
 		/* const const */
-		if ( 0 == 0 ) { *testFloat1@color "0 1 0 1" }
-		else { *testFloat1@color "1 0 0 1" }
-		if ( 0 == 1 ) { *testFloat2@color "1 0 0 1" }
-		else { *testFloat2@color "0 1 0 1" }
-		if ( 0 < 1 ) { *testFloat3@color "0 1 0 1" }
-		else { *testFloat3@color "1 0 0 1" }
-		if ( -1 < 0 ) { *testFloat4@color "0 1 0 1" }
-		else { *testFloat4@color "1 0 0 1" }
+		if ( 0 == 0 ) { *testFloat1@color = "0 1 0 1" }
+		else { *testFloat1@color = "1 0 0 1" }
+		if ( 0 == 1 ) { *testFloat2@color = "1 0 0 1" }
+		else { *testFloat2@color = "0 1 0 1" }
+		if ( 0 < 1 ) { *testFloat3@color = "0 1 0 1" }
+		else { *testFloat3@color = "1 0 0 1" }
+		if ( -1 < 0 ) { *testFloat4@color = "0 1 0 1" }
+		else { *testFloat4@color = "1 0 0 1" }
 
 		/* cvar const */
-		if ( *cvar:test_float0 == 0 ) { *testFloat5@color "0 1 0 1" }
-		else { *testFloat5@color "1 0 0 1" }
-		if ( *cvar:test_float314 > 0 ) { *testFloat6@color "0 1 0 1" }
-		else { *testFloat6@color "1 0 0 1" }
-		if ( 0 <= *cvar:test_float314 ) { *testFloat7@color "0 1 0 1" }
-		else { *testFloat7@color "1 0 0 1" }
-		if ( 3.14 == *cvar:test_float314 ) { *testFloat8@color "0 1 0 1" }
-		else { *testFloat8@color "1 0 0 1" }
+		if ( *cvar:test_float0 == 0 ) { *testFloat5@color = "0 1 0 1" }
+		else { *testFloat5@color = "1 0 0 1" }
+		if ( *cvar:test_float314 > 0 ) { *testFloat6@color = "0 1 0 1" }
+		else { *testFloat6@color = "1 0 0 1" }
+		if ( 0 <= *cvar:test_float314 ) { *testFloat7@color = "0 1 0 1" }
+		else { *testFloat7@color = "1 0 0 1" }
+		if ( 3.14 == *cvar:test_float314 ) { *testFloat8@color = "0 1 0 1" }
+		else { *testFloat8@color = "1 0 0 1" }
 
 		/* cvar cvar */
-		if ( *cvar:test_float0 != *cvar:test_float1 ) { *testFloat9@color "0 1 0 1" }
-		else { *testFloat9@color "1 0 0 1" }
-		if ( *cvar:test_float0 == *cvar:test_float0-2 ) { *testFloat10@color "0 1 0 1" }
-		else { *testFloat10@color "1 0 0 1" }
+		if ( *cvar:test_float0 != *cvar:test_float1 ) { *testFloat9@color = "0 1 0 1" }
+		else { *testFloat9@color = "1 0 0 1" }
+		if ( *cvar:test_float0 == *cvar:test_float0-2 ) { *testFloat10@color = "0 1 0 1" }
+		else { *testFloat10@color = "1 0 0 1" }
 
-		*cvar:test_string1 "aaaa"
-		*cvar:test_string2 "aaaa"
-		*cvar:test_string3 "bbbbbbbb"
+		*cvar:test_string1 = "aaaa"
+		*cvar:test_string2 = "aaaa"
+		*cvar:test_string3 = "bbbbbbbb"
 		
-		if ( "0" eq "0" ) { *testString1@color "0 1 0 1" }
-		else { *testString1@color "1 0 0 1" }
-		if ( "0" eq "1" ) { *testString2@color "1 0 0 1" }
-		else { *testString2@color "0 1 0 1" }
-		if ( *cvar:test_string1 ne "aaa" ) { *testString3@color "0 1 0 1" }
-		else { *testString3@color "1 0 0 1" }
-		if ( *cvar:test_string1 eq *cvar:test_string2 ) { *testString4@color "0 1 0 1" }
-		else { *testString4@color "1 0 0 1" }
-		if ( *cvar:test_string1 ne *cvar:test_string3 ) { *testString5@color "0 1 0 1" }
-		else { *testString5@color "1 0 0 1" }
+		if ( "0" eq "0" ) { *testString1@color = "0 1 0 1" }
+		else { *testString1@color = "1 0 0 1" }
+		if ( "0" eq "1" ) { *testString2@color = "1 0 0 1" }
+		else { *testString2@color = "0 1 0 1" }
+		if ( *cvar:test_string1 ne "aaa" ) { *testString3@color = "0 1 0 1" }
+		else { *testString3@color = "1 0 0 1" }
+		if ( *cvar:test_string1 eq *cvar:test_string2 ) { *testString4@color = "0 1 0 1" }
+		else { *testString4@color = "1 0 0 1" }
+		if ( *cvar:test_string1 ne *cvar:test_string3 ) { *testString5@color = "0 1 0 1" }
+		else { *testString5@color = "1 0 0 1" }
 
-		*cvar:test_exists "aaaa"
+		*cvar:test_exists = "aaaa"
 
-		if ( exists *cvar:test_exists ) { *testExists1@color "0 1 0 1" }
-		else { *testExists1@color "1 0 0 1" }
-		if ( exists *cvar:test_not_exists ) { *testExists2@color "1 0 0 1" }
-		else { *testExists2@color "0 1 0 1" }
-		if ( not exists *cvar:test_exists ) { *testExists3@color "1 0 0 1" }
-		else { *testExists3@color "0 1 0 1" }
-		if ( not exists *cvar:test_not_exists ) { *testExists4@color "0 1 0 1" }
-		else { *testExists4@color "1 0 0 1" }
+		if ( exists *cvar:test_exists ) { *testExists1@color = "0 1 0 1" }
+		else { *testExists1@color = "1 0 0 1" }
+		if ( exists *cvar:test_not_exists ) { *testExists2@color = "1 0 0 1" }
+		else { *testExists2@color = "0 1 0 1" }
+		if ( not exists *cvar:test_exists ) { *testExists3@color = "1 0 0 1" }
+		else { *testExists3@color = "0 1 0 1" }
+		if ( not exists *cvar:test_not_exists ) { *testExists4@color = "0 1 0 1" }
+		else { *testExists4@color = "1 0 0 1" }
 		
-		*cvar:test_nodefoo 1
+		*cvar:test_nodefoo = 1
 		
 		cmd "unittest_testNodeProperty"
 		cmd "unittest_testIfControl"
