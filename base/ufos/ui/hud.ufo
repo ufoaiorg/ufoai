@@ -684,14 +684,14 @@ window hud extends ahud
 	confunc disstands { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
 	confunc discrouchs { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
 
-	confunc crouch_checkbox_disable_s {
+	confunc crouch_checkbox_disable {
 		*left.bt_crouch_reservation@disabled = true
 	}
-	confunc crouch_checkbox_clear_s	{
+	confunc crouch_checkbox_clear	{
 		*left.bt_crouch_reservation@disabled = false
 		*(checkbox)left.bt_crouch_reservation@current = 0
 	}
-	confunc crouch_checkbox_check_s	{
+	confunc crouch_checkbox_check	{
 		*left.bt_crouch_reservation@disabled = false
 		*(checkbox)left.bt_crouch_reservation@current = 1
 	}

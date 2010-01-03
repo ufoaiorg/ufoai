@@ -849,18 +849,6 @@ window althud extends ahud
 			onChange	{ cmd "togglecrouchreserve;" }
 		}
 	
-		confunc crouch_checkbox_disable_s {
-			*right.bt_crouch_reservation@disabled = true
-		}
-		confunc crouch_checkbox_clear_s	{
-			*right.bt_crouch_reservation@disabled = false
-			*(checkbox)right.bt_crouch_reservation@current = 0
-		}
-		confunc crouch_checkbox_check_s	{
-			*right.bt_crouch_reservation@disabled = false
-			*(checkbox)right.bt_crouch_reservation@current = 1
-		}
-	
 		pic bt_shot_reservation
 		{
 			tooltip	*cvar:mn_shot_reservation_tt
@@ -1200,6 +1188,22 @@ window althud extends ahud
 		}
 	}
 	
+	// ==================
+	// override ahud confunc
+	// ==================
+	
+	confunc crouch_checkbox_disable {
+		*right.bt_crouch_reservation@disabled = true
+	}
+	confunc crouch_checkbox_clear	{
+		*right.bt_crouch_reservation@disabled = false
+		*(checkbox)right.bt_crouch_reservation@current = 0
+	}
+	confunc crouch_checkbox_check	{
+		*right.bt_crouch_reservation@disabled = false
+		*(checkbox)right.bt_crouch_reservation@current = 1
+	}
+
 	// ==================
 	// init function
 	// ==================

@@ -8,11 +8,6 @@
  */
 window ahud {
 
-	/* Prevent time for crouch */
-	confunc crouch_checkbox_disable_s { }
-	confunc crouch_checkbox_clear_s	{ }
-	confunc crouch_checkbox_check_s	{ }
-
 	// ==================
 	// cmd forwarding
 	// @todo need to clean up that list, some cmd are not used
@@ -45,9 +40,10 @@ window ahud {
 	confunc disstand { cmd "disstands;disstanda;" }
 	confunc discrouch { cmd "discrouchs;discroucha;" }
 
-	confunc crouch_checkbox_disable { cmd "crouch_checkbox_disable_s;" }
-	confunc crouch_checkbox_clear	{ cmd "crouch_checkbox_clear_s;" }
-	confunc crouch_checkbox_check	{ cmd "crouch_checkbox_check_s;" }
+	/* Prevent time for crouch */
+	confunc crouch_checkbox_disable { }
+	confunc crouch_checkbox_clear	{ }
+	confunc crouch_checkbox_check	{ }
 
 	confunc reserve_shot_clear { 
 		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
