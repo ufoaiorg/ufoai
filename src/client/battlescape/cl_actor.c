@@ -1358,6 +1358,16 @@ void CL_ActorDoorAction_f (void)
 }
 
 /**
+ * @brief Checks whether we are in fire mode or node
+ * @param mode The actor mode
+ * @return @c true if we are in fire mode, @c false otherwise
+ */
+static qboolean CL_ActorFireModeActivated (const actorModes_t mode)
+{
+	return IS_MODE_FIRE_RIGHT(mode) || IS_MODE_FIRE_LEFT(mode) || IS_MODE_FIRE_HEADGEAR(mode);
+}
+
+/**
  * @brief Turns the actor around without moving
  */
 void CL_ActorTurnMouse (void)
@@ -1377,15 +1387,9 @@ void CL_ActorTurnMouse (void)
 	}
 
 	/* check for fire-modes, and cancel them */
-	switch (selActor->actorMode) {
-	case M_FIRE_R:
-	case M_FIRE_L:
-	case M_PEND_FIRE_R:
-	case M_PEND_FIRE_L:
-		selActor->actorMode = M_MOVE;
+	if (CL_ActorFireModeActivated(selActor->actorMode)) {
+		CL_ActorActionMouse();
 		return; /* and return without turning */
-	default:
-		break;
 	}
 
 	/* calculate dv */

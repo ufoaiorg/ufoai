@@ -1300,11 +1300,13 @@ void HUD_ActorUpdateCvars (void)
 								selActor->fd->ammo, hitProbability, selActor->fd->time);
 
 					/* Save the text for later display next to the cursor. */
-					Q_strncpyz(mouseText, infoText, sizeof(mouseText));
+					Q_strncpyz(mouseText, infoText, lengthof(mouseText));
 					MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 
 					time = selActor->fd->time;
-					/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
+					/* if no TUs left for this firing action
+					 * or if the weapon is reloadable and out of ammo,
+					 * then change to move mode */
 					if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time)
 						selActor->actorMode = M_MOVE;
 				} else if (selWeapon) {
