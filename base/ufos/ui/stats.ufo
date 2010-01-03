@@ -216,10 +216,10 @@ window nations
 	 * @note: Number of nations (0-7) defined by MAX_NATIONS
 	 */
 	confunc nation_marksel {
-		*node:parent.nation<1>@invis	false
-		*node:parent.nation<1>@color	"1 1 1 1"
-		*node:parent.nat_fund<1>@invis	false
-		*node:parent.nat_fund<1>@color	"1 1 1 1"
+		*node:parent.nation<1>@invis	= false
+		*node:parent.nation<1>@color	= "1 1 1 1"
+		*node:parent.nat_fund<1>@invis	= false
+		*node:parent.nat_fund<1>@color	= "1 1 1 1"
 	}
 
 	/**
@@ -228,10 +228,10 @@ window nations
 	 * @SA MAX_NATIONS
 	 */
 	confunc nation_markdesel {
-		*node:parent.nation<1>@invis	false
-		*node:parent.nation<1>@color	"0 .78 0 1"
-		*node:parent.nat_fund<1>@invis	false
-		*node:parent.nat_fund<1>@color	"0 .78 0 1"
+		*node:parent.nation<1>@invis	= false
+		*node:parent.nation<1>@color	= "0 .78 0 1"
+		*node:parent.nat_fund<1>@invis	= false
+		*node:parent.nat_fund<1>@color	= "0 .78 0 1"
 	}
 
 	/**
@@ -240,8 +240,8 @@ window nations
 	 * @SA MAX_NATIONS
 	 */
 	confunc nation_hide {
-		*node:parent.nation<1>@invis	true
-		*node:parent.nat_fund<1>@invis	true
+		*node:parent.nation<1>@invis	= true
+		*node:parent.nat_fund<1>@invis	= true
 	}
 
 	string nation {

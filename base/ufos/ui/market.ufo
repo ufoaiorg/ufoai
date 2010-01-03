@@ -185,14 +185,14 @@ window market extends objectinfo
 	 * @param <2> scroll position
 	 */
 	confunc sync_market_scroll {
-		*market@lineselected <1>
-		*market_storage@lineselected <1>
-		*market_market@lineselected <1>
-		*market_prices@lineselected <1>
-		*market@viewpos <2>
-		*market_storage@viewpos <2>
-		*market_market@viewpos <2>
-		*market_prices@viewpos <2>
+		*market@lineselected = <1>
+		*market_storage@lineselected = <1>
+		*market_market@lineselected = <1>
+		*market_prices@lineselected = <1>
+		*market@viewpos = <2>
+		*market_storage@viewpos = <2>
+		*market_market@viewpos = <2>
+		*market_prices@viewpos = <2>
 	}
 
 	// ==================
@@ -387,11 +387,11 @@ window market extends objectinfo
 			tabwidth	168
 			font		"f_verysmall"
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
@@ -403,7 +403,7 @@ window market extends objectinfo
 			fullsize	8
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@viewpos <current>
+				*itemdescription.description@viewpos = <current>
 			}
 		}
 
@@ -498,25 +498,25 @@ window market extends objectinfo
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselle {
-		*item<1>.bt_autosell@invis false
-		*(abstractvalue)item<1>.bt_autosell@current 1
-		*item<1>.bt_autosell@tooltip "_Item autosell enabled"
+		*item<1>.bt_autosell@invis = false
+		*(abstractvalue)item<1>.bt_autosell@current = 1
+		*item<1>.bt_autosell@tooltip = "_Item autosell enabled"
 	}
 	/**
 	 * @brief unchecks an autosell checkbox and makes it visible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselld {
-		*item<1>.bt_autosell@invis false
-		*(abstractvalue)item<1>.bt_autosell@current 0
-		*item<1>.bt_autosell@tooltip "_Item autosell disabled"
+		*item<1>.bt_autosell@invis = false
+		*(abstractvalue)item<1>.bt_autosell@current = 0
+		*item<1>.bt_autosell@tooltip = "_Item autosell disabled"
 	}
 	/**
 	 * @brief makes an autosell checkbox invisible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselli {
-		*item<1>.bt_autosell@invis true
+		*item<1>.bt_autosell@invis = true
 	}
 
 	/**
@@ -524,7 +524,7 @@ window market extends objectinfo
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_selectitem {
-		*market@lineselected <1>
+		*market@lineselected = <1>
 	}
 
 	/**
@@ -535,9 +535,9 @@ window market extends objectinfo
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		*(abstractvalue)item<1>.bt_buysell@current <2>
-		*(abstractvalue)item<1>.bt_buysell@min <3>
-		*(abstractvalue)item<1>.bt_buysell@max <4>
+		*(abstractvalue)item<1>.bt_buysell@current = <2>
+		*(abstractvalue)item<1>.bt_buysell@min = <3>
+		*(abstractvalue)item<1>.bt_buysell@max = <4>
 	}
 
 	/**
@@ -545,14 +545,14 @@ window market extends objectinfo
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_hide {
-		*item<1>.bt_buysell@invis true
+		*item<1>.bt_buysell@invis = true
 	}
 	/**
 	 * @brief shows the buy/sell spinner control
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_show {
-		*item<1>.bt_buysell@invis false
+		*item<1>.bt_buysell@invis = false
 	}
 
 	// ==================
@@ -564,7 +564,7 @@ window market extends objectinfo
 		cmd "buy_type *cvar:mn_itemtype;"
 		*cvar:i = 0
 		while ( *cvar:i < 22 ) {
-			*item<cvar:i>@num <cvar:i>
+			*item<cvar:i>@num = <cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i

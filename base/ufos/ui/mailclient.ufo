@@ -534,9 +534,9 @@ window mailclient
 		mousefx		true
 		onClick		{ cmd "mailclient_click <lineselected>" }
 		onViewChange	{
-			*(abstractscrollbar)mailclient_scroll@fullsize <fullsize>
-			*(abstractscrollbar)mailclient_scroll@current <viewpos>
-			*(abstractscrollbar)mailclient_scroll@viewsize <viewsize>
+			*(abstractscrollbar)mailclient_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)mailclient_scroll@current = <viewpos>
+			*(abstractscrollbar)mailclient_scroll@viewsize = <viewsize>
 			cmd "ufopedia_scrollmail <viewpos>;"
 		}
 	}

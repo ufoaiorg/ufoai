@@ -128,9 +128,9 @@ window messageoptions
 		pos			"30 90"
 		size		"325 325"
 		onViewChange {
-			*(abstractscrollbar)messagetypes_scroll@fullsize <fullsize>
-			*(abstractscrollbar)messagetypes_scroll@current <viewpos>
-			*(abstractscrollbar)messagetypes_scroll@viewsize <viewsize>
+			*(abstractscrollbar)messagetypes_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)messagetypes_scroll@current = <viewpos>
+			*(abstractscrollbar)messagetypes_scroll@viewsize = <viewsize>
 			cmd "msgoptions_scroll <viewpos>;"
 		}
 	}
@@ -233,7 +233,7 @@ window messageoptions
 	 * @param[in] <4> state for sound notification button
 	 */
 	confunc ms_btnstate {
-		*cvar:tmp <3>
+		*cvar:tmp = <3>
 		if ( *cvar:tmp == 0 ) {
 			*node:(checkbox)parent.option<1>.pause@disabled = true
 			*node:(checkbox)parent.option<1>.sound@disabled = true

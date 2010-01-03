@@ -52,8 +52,8 @@ window employees
 	 */
 	confunc employeedel
 	{
-		*(abstractvalue)bt_employee<1>@current 0
-		*bt_employee<1>@invis false
+		*(abstractvalue)bt_employee<1>@current = 0
+		*bt_employee<1>@invis = false
 	}
 
 	/**
@@ -61,8 +61,8 @@ window employees
 	 */
 	confunc employeeadd
 	{
-		*(abstractvalue)bt_employee<1>@current 1
-		*bt_employee<1>@invis false
+		*(abstractvalue)bt_employee<1>@current = 1
+		*bt_employee<1>@invis = false
 	}
 
 	/**
@@ -70,109 +70,109 @@ window employees
 	 */
 	confunc employeedisable
 	{
-		*bt_employee<1>@invis true
+		*bt_employee<1>@invis = true
 	}
 
 	cmpSelect bt_employee0
 	{
-	num 0
-	pos "325 180"
+		num 0
+		pos "325 180"
 	}
 
 	cmpSelect bt_employee1
 	{
-	num 1
-	pos "325 218"
+		num 1
+		pos "325 218"
 	}
 
 	cmpSelect bt_employee2
 	{
-	num 2
-	pos "325 256"
+		num 2
+		pos "325 256"
 	}
 
 	cmpSelect bt_employee3
 	{
-	num 3
-	pos "325 294"
+		num 3
+		pos "325 294"
 	}
 
 	cmpSelect bt_employee4
 	{
-	num 4
-	pos "325 332"
+		num 4
+		pos "325 332"
 	}
 
 	cmpSelect bt_employee5
 	{
-	num 5
-	pos "325 370"
+		num 5
+		pos "325 370"
 	}
 
 	cmpSelect bt_employee6
 	{
-	num 6
-	pos "325 408"
+		num 6
+		pos "325 408"
 	}
 
 	cmpSelect bt_employee7
 	{
-	num 7
-	pos "325 446"
+		num 7
+		pos "325 446"
 	}
 
 	cmpSelect bt_employee8
 	{
-	num 8
-	pos "325 484"
+		num 8
+		pos "325 484"
 	}
 
 	cmpSelect bt_employee9
 	{
-	num 9
-	pos "325 522"
+		num 9
+		pos "325 522"
 	}
 
 	cmpSelect bt_employee10
 	{
-	num 10
-	pos "325 560"
+		num 10
+		pos "325 560"
 	}
 
 	cmpSelect bt_employee11
 	{
-	num 11
-	pos "325 598"
+		num 11
+		pos "325 598"
 	}
 
 	cmpSelect bt_employee12
 	{
-	num 12
-	pos "325 636"
+		num 12
+		pos "325 636"
 	}
 
 	cmpSelect bt_employee13
 	{
-	num 13
-	pos "325 674"
+		num 13
+		pos "325 674"
 	}
 
 	cmpSelect bt_employee14
 	{
-	num 14
-	pos "325 712"
+		num 14
+		pos "325 712"
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc hire_update_number {
-		*(abstractscrollbar)scroll@fullsize <1>
+		*(abstractscrollbar)scroll@fullsize = <1>
 	}
 
 	confunc hire_fix_scroll {
-		*(abstractscrollbar)scroll@current <1>
-		*(rows)list_background@current <1>
+		*(abstractscrollbar)scroll@current = <1>
+		*(rows)list_background@current = <1>
 	}
 
 	textlist employee_list
@@ -187,9 +187,9 @@ window employees
 		selectcolor	"1 1 1 1"
 		onClick			{ cmd "employee_select <lineselected>" }
 		onViewChange	{
-			*(abstractscrollbar)scroll@fullsize <fullsize>
-			*(abstractscrollbar)scroll@current <viewpos>
-			*(abstractscrollbar)scroll@viewsize <viewsize>
+			*(abstractscrollbar)scroll@fullsize = <fullsize>
+			*(abstractscrollbar)scroll@current = <viewpos>
+			*(abstractscrollbar)scroll@viewsize = <viewsize>
 			cmd "employee_scroll <viewpos>;"
 		}
 	}
@@ -524,7 +524,7 @@ window employees
 		*node:root.employee_list@lineselected = 0
 		*node:root.scroll@current = 0
 		cmd "employee_init 0;"
-		*cvar:mn_hiretype 0
+		*cvar:mn_hiretype = 0
 		cmd "employee_update_count"
 	}
 

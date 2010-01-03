@@ -28,7 +28,7 @@ window basesummary
 	func reset_color {
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
-			*basenavigation.base<cvar:i>@bgcolor "1 1 1 0.4"
+			*basenavigation.base<cvar:i>@bgcolor = "1 1 1 0.4"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
@@ -36,7 +36,7 @@ window basesummary
 
 	confunc basesummary_change_color {
 		call *node:root.reset_color
-		*basenavigation.base<1>@bgcolor "1 1 1 0.7"
+		*basenavigation.base<1>@bgcolor = "1 1 1 0.7"
 	}
 
 	panel basenavigation {
@@ -127,9 +127,9 @@ window basesummary
 		rows		"38"
 		longlines	prettychop
 		onViewChange	{
-			*(abstractscrollbar)base_summary_scroll@fullsize <fullsize>
-			*(abstractscrollbar)base_summary_scroll@current <viewpos>
-			*(abstractscrollbar)base_summary_scroll@viewsize <viewsize>
+			*(abstractscrollbar)base_summary_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)base_summary_scroll@current = <viewpos>
+			*(abstractscrollbar)base_summary_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -141,7 +141,7 @@ window basesummary
 		viewsize	38
 		fullsize	38
 		hidewhenunused true
-		onChange	{ *txt_base_summary@viewpos <current> }
+		onChange	{ *txt_base_summary@viewpos = <current> }
 	}
 
 	// ==================
@@ -164,9 +164,9 @@ window basesummary
 		rows		"23"
 		dataid			TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)info_scroll@fullsize <fullsize>
-			*(abstractscrollbar)info_scroll@current <viewpos>
-			*(abstractscrollbar)info_scroll@viewsize <viewsize>
+			*(abstractscrollbar)info_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)info_scroll@current = <viewpos>
+			*(abstractscrollbar)info_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -178,7 +178,7 @@ window basesummary
 		viewsize	38
 		fullsize	38
 		hidewhenunused true
-		onChange	{ *txt_info@viewpos <current> }
+		onChange	{ *txt_info@viewpos = <current> }
 	}
 
 	// ==================

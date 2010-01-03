@@ -76,13 +76,13 @@ window althud extends ahud
 		pos			"960 64"
 		size		"64 64"
 		onMouseLeave			{
-			*bar_chat@image hud/bar_chat
-			*bar_chat@size "64 64"
+			*bar_chat@image = hud/bar_chat
+			*bar_chat@size = "64 64"
 			cmd "mn_showchatbuttons 0;"
 		}
 		onMouseEnter			{
-			*bar_chat@image hud/bar_chat_choice
-			*bar_chat@size "256 64"
+			*bar_chat@image = hud/bar_chat_choice
+			*bar_chat@size = "256 64"
 			cmd "mn_showchatbuttons 1;"
 		}
 	}
@@ -122,15 +122,15 @@ window althud extends ahud
 		texl		"64 0"
 		texh		"96 32"
 		onMouseLeave			{
-			*chatscreen@size "690 48"
-			*chatscreen@rows "3"
-			*node:root@timeout 10000
+			*chatscreen@size = "690 48"
+			*chatscreen@rows = "3"
+			*node:root@timeout = 10000
 		}
 		onMouseEnter			{
-			*chatscreen@size "690 400"
-			*chatscreen@rows "25"
-			*node:root@timeout 0
-			*chatscreen@invis false
+			*chatscreen@size = "690 400"
+			*chatscreen@rows = "25"
+			*node:root@timeout = 0
+			*chatscreen@invis = false
 		}
 	}
 
@@ -146,7 +146,7 @@ window althud extends ahud
 
 	func onEvent
 	{
-		*chatscreen@invis true
+		*chatscreen@invis = true
 	}
 
 	pic bar_floor
@@ -278,91 +278,91 @@ window althud extends ahud
 
 	confunc numonteam1
 	{
-		*bar_teambox1@invis true  *bar_teamsep1@invis true  *head1@invis true
-		*bar_teambox2@invis true  *bar_teamsep2@invis true  *head2@invis true
-		*bar_teambox3@invis true  *bar_teamsep3@invis true  *head3@invis true
-		*bar_teambox4@invis true  *bar_teamsep4@invis true  *head4@invis true
-		*bar_teambox5@invis true  *bar_teamsep5@invis true  *head5@invis true
-		*bar_teambox6@invis true  *bar_teamsep6@invis true  *head6@invis true
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "824 640"
+		*bar_teambox1@invis = true  *bar_teamsep1@invis = true  *head1@invis = true
+		*bar_teambox2@invis = true  *bar_teamsep2@invis = true  *head2@invis = true
+		*bar_teambox3@invis = true  *bar_teamsep3@invis = true  *head3@invis = true
+		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
+		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
+		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "824 640"
 	}
 	confunc numonteam2
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis true  *bar_teamsep2@invis true  *head2@invis true
-		*bar_teambox3@invis true  *bar_teamsep3@invis true  *head3@invis true
-		*bar_teambox4@invis true  *bar_teamsep4@invis true  *head4@invis true
-		*bar_teambox5@invis true  *bar_teamsep5@invis true  *head5@invis true
-		*bar_teambox6@invis true  *bar_teamsep6@invis true  *head6@invis true
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "744 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = true  *bar_teamsep2@invis = true  *head2@invis = true
+		*bar_teambox3@invis = true  *bar_teamsep3@invis = true  *head3@invis = true
+		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
+		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
+		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "744 640"
 	}
 	confunc numonteam3
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis false *bar_teamsep2@invis false *head2@invis false
-		*bar_teambox3@invis true  *bar_teamsep3@invis true  *head3@invis true
-		*bar_teambox4@invis true  *bar_teamsep4@invis true  *head4@invis true
-		*bar_teambox5@invis true  *bar_teamsep5@invis true  *head5@invis true
-		*bar_teambox6@invis true  *bar_teamsep6@invis true  *head6@invis true
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "664 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
+		*bar_teambox3@invis = true  *bar_teamsep3@invis = true  *head3@invis = true
+		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
+		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
+		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "664 640"
 	}
 	confunc numonteam4
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis false *bar_teamsep2@invis false *head2@invis false
-		*bar_teambox3@invis false *bar_teamsep3@invis false *head3@invis false
-		*bar_teambox4@invis true  *bar_teamsep4@invis true  *head4@invis true
-		*bar_teambox5@invis true  *bar_teamsep5@invis true  *head5@invis true
-		*bar_teambox6@invis true  *bar_teamsep6@invis true  *head6@invis true
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "584 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
+		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
+		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
+		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
+		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "584 640"
 	}
 	confunc numonteam5
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis false *bar_teamsep2@invis false *head2@invis false
-		*bar_teambox3@invis false *bar_teamsep3@invis false *head3@invis false
-		*bar_teambox4@invis false *bar_teamsep4@invis false *head4@invis false
-		*bar_teambox5@invis true  *bar_teamsep5@invis true  *head5@invis true
-		*bar_teambox6@invis true  *bar_teamsep6@invis true  *head6@invis true
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "504 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
+		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
+		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
+		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
+		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "504 640"
 	}
 	confunc numonteam6
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis false *bar_teamsep2@invis false *head2@invis false
-		*bar_teambox3@invis false *bar_teamsep3@invis false *head3@invis false
-		*bar_teambox4@invis false *bar_teamsep4@invis false *head4@invis false
-		*bar_teambox5@invis false *bar_teamsep5@invis false *head5@invis false
-		*bar_teambox6@invis true  *bar_teamsep6@invis true  *head6@invis true
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "424 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
+		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
+		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
+		*bar_teambox5@invis = false *bar_teamsep5@invis = false *head5@invis = false
+		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "424 640"
 	}
 	confunc numonteam7
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis false *bar_teamsep2@invis false *head2@invis false
-		*bar_teambox3@invis false *bar_teamsep3@invis false *head3@invis false
-		*bar_teambox4@invis false *bar_teamsep4@invis false *head4@invis false
-		*bar_teambox5@invis false *bar_teamsep5@invis false *head5@invis false
-		*bar_teambox6@invis false *bar_teamsep6@invis false *head6@invis false
-		*bar_teambox7@invis true  *bar_teamsep7@invis true  *head7@invis true
-		*bar_teamleft@pos "344 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
+		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
+		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
+		*bar_teambox5@invis = false *bar_teamsep5@invis = false *head5@invis = false
+		*bar_teambox6@invis = false *bar_teamsep6@invis = false *head6@invis = false
+		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
+		*bar_teamleft@pos = "344 640"
 	}
 	confunc numonteam8
 	{
-		*bar_teambox1@invis false *bar_teamsep1@invis false *head1@invis false
-		*bar_teambox2@invis false *bar_teamsep2@invis false *head2@invis false
-		*bar_teambox3@invis false *bar_teamsep3@invis false *head3@invis false
-		*bar_teambox4@invis false *bar_teamsep4@invis false *head4@invis false
-		*bar_teambox5@invis false *bar_teamsep5@invis false *head5@invis false
-		*bar_teambox6@invis false *bar_teamsep6@invis false *head6@invis false
-		*bar_teambox7@invis false *bar_teamsep7@invis false *head7@invis false
-		*bar_teamleft@pos "264 640"
+		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
+		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
+		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
+		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
+		*bar_teambox5@invis = false *bar_teamsep5@invis = false *head5@invis = false
+		*bar_teambox6@invis = false *bar_teamsep6@invis = false *head6@invis = false
+		*bar_teambox7@invis = false *bar_teamsep7@invis = false *head7@invis = false
+		*bar_teamleft@pos = "264 640"
 	}
 
 	pic bar_selbox
@@ -374,14 +374,14 @@ window althud extends ahud
 		texh		"78 90"
 	}
 
-	confunc hudselecta0 { *bar_selbox@left "849" }
-	confunc hudselecta1 { *bar_selbox@left "769" }
-	confunc hudselecta2 { *bar_selbox@left "689" }
-	confunc hudselecta3 { *bar_selbox@left "609" }
-	confunc hudselecta4 { *bar_selbox@left "529" }
-	confunc hudselecta5 { *bar_selbox@left "449" }
-	confunc hudselecta6 { *bar_selbox@left "369" }
-	confunc hudselecta7 { *bar_selbox@left "289" }
+	confunc hudselecta0 { *bar_selbox@left = "849" }
+	confunc hudselecta1 { *bar_selbox@left = "769" }
+	confunc hudselecta2 { *bar_selbox@left = "689" }
+	confunc hudselecta3 { *bar_selbox@left = "609" }
+	confunc hudselecta4 { *bar_selbox@left = "529" }
+	confunc hudselecta5 { *bar_selbox@left = "449" }
+	confunc hudselecta6 { *bar_selbox@left = "369" }
+	confunc hudselecta7 { *bar_selbox@left = "289" }
 
 
 	// ==================
@@ -546,18 +546,18 @@ window althud extends ahud
 		onClick		{ cmd "mn_pop;" }
 	}
 
-	confunc selpla { *bt_primaryleft@image	althud/buttons_althud1a }
-	confunc selpra { *bt_primaryright@image althud/buttons_althud1a }
+	confunc selpla { *bt_primaryleft@image	= althud/buttons_althud1a }
+	confunc selpra { *bt_primaryright@image = althud/buttons_althud1a }
 
-	confunc deselpla { *bt_primaryleft@image	althud/buttons_althud1 }
-	confunc deselpra { *bt_primaryright@image	althud/buttons_althud1 }
-	confunc deselrla { *bt_reloadleft@image		althud/buttons_althud1 }
-	confunc deselrra { *bt_reloadright@image	althud/buttons_althud1 }
+	confunc deselpla { *bt_primaryleft@image	= althud/buttons_althud1 }
+	confunc deselpra { *bt_primaryright@image	= althud/buttons_althud1 }
+	confunc deselrla { *bt_reloadleft@image		= althud/buttons_althud1 }
+	confunc deselrra { *bt_reloadright@image	= althud/buttons_althud1 }
 
-	confunc displa { *bt_primaryleft@image	althud/buttons_althud1g }
-	confunc dispra { *bt_primaryright@image	althud/buttons_althud1g }
-	confunc disrla { *bt_reloadleft@image	althud/buttons_althud1g }
-	confunc disrra { *bt_reloadright@image	althud/buttons_althud1g }
+	confunc displa { *bt_primaryleft@image	= althud/buttons_althud1g }
+	confunc dispra { *bt_primaryright@image	= althud/buttons_althud1g }
+	confunc disrla { *bt_reloadleft@image	= althud/buttons_althud1g }
+	confunc disrra { *bt_reloadright@image	= althud/buttons_althud1g }
 
 	// ==================
 	// round events
@@ -565,41 +565,41 @@ window althud extends ahud
 
 	confunc startrounda
 	{
-		*nextround@image althud/buttons_althud1
+		*nextround@image = althud/buttons_althud1
 	}
 	confunc endrounda
 	{
-		*nextround@image althud/buttons_althud1g
+		*nextround@image = althud/buttons_althud1g
 	}
 
 	confunc startreactionmanya
 	{
-		*bt_reaction_a@image althud/buttons_althud1b
-		*bt_reaction_a@tooltip "_Multiple-shot reaction fire"
+		*bt_reaction_a@image = althud/buttons_althud1b
+		*bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmanya_impos
 	{
-		*bt_reaction_a@image althud/buttons_althud1br
-		*bt_reaction_a@tooltip "_Multiple-shot reaction fire (not possible)"
+		*bt_reaction_a@image = althud/buttons_althud1br
+		*bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
 	}
 	confunc startreactiononcea
 	{
-		*bt_reaction_a@image althud/buttons_althud1a
-		*bt_reaction_a@tooltip "_One-shot reaction fire"
+		*bt_reaction_a@image = althud/buttons_althud1a
+		*bt_reaction_a@tooltip = "_One-shot reaction fire"
 	}
 	confunc startreactiononcea_impos
 	{
-		*bt_reaction_a@image althud/buttons_althud1ar
-		*bt_reaction_a@tooltip "_One-shot reaction fire (not possible)"
+		*bt_reaction_a@image = althud/buttons_althud1ar
+		*bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
 	}
 
 	confunc deselreactiona
 	{
-		*bt_reaction_a@image althud/buttons_althud1
-		*bt_reaction_a@tooltip "_No reaction fire"
+		*bt_reaction_a@image = althud/buttons_althud1
+		*bt_reaction_a@tooltip = "_No reaction fire"
 	}
 	confunc disreactiona {
-		*bt_reaction_a@image althud/buttons_althud1g
+		*bt_reaction_a@image = althud/buttons_althud1g
 	}
 
 	pic bt_reaction_a
@@ -612,8 +612,8 @@ window althud extends ahud
 		onClick		{ cmd "togglereaction;" }
 	}
 
-	confunc althud_deselheadgear { *althud_bt_use_headgear@image althud/buttons_althud1g }
-	confunc althud_disheadgear { *althud_bt_use_headgear@image althud/buttons_althud1g }
+	confunc althud_deselheadgear { *althud_bt_use_headgear@image = althud/buttons_althud1g }
+	confunc althud_disheadgear { *althud_bt_use_headgear@image = althud/buttons_althud1g }
 
 	pic althud_bt_use_headgear
 	{
@@ -666,10 +666,10 @@ window althud extends ahud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselstanda  { *bt_duck@texl "27 37" *bt_duck@texh "52 70" *bt_duck@image althud/buttons_althud1 }
-	confunc deselcroucha { *bt_duck@texl "54 37" *bt_duck@texh "79 70" *bt_duck@image althud/buttons_althud1 }
-	confunc disstanda    { *bt_duck@texl "27 37" *bt_duck@texh "52 70" *bt_duck@image althud/buttons_althud1g }
-	confunc discroucha   { *bt_duck@texl "54 37" *bt_duck@texh "79 70" *bt_duck@image althud/buttons_althud1g }
+	confunc deselstanda  { *bt_duck@texl = "27 37" *bt_duck@texh = "52 70" *bt_duck@image = althud/buttons_althud1 }
+	confunc deselcroucha { *bt_duck@texl = "54 37" *bt_duck@texh = "79 70" *bt_duck@image = althud/buttons_althud1 }
+	confunc disstanda    { *bt_duck@texl = "27 37" *bt_duck@texh = "52 70" *bt_duck@image = althud/buttons_althud1g }
+	confunc discroucha   { *bt_duck@texl = "54 37" *bt_duck@texh = "79 70" *bt_duck@image = althud/buttons_althud1g }
 
 	checkbox bt_crouch_reservation
 	{
@@ -682,15 +682,15 @@ window althud extends ahud
 	}
 
 	confunc crouch_checkbox_disable_s {
-		*bt_crouch_reservation@disabled true
+		*bt_crouch_reservation@disabled = true
 	}
 	confunc crouch_checkbox_clear_s	{
-		*bt_crouch_reservation@disabled false
-		*(checkbox)bt_crouch_reservation@current 0
+		*bt_crouch_reservation@disabled = false
+		*(checkbox)bt_crouch_reservation@current = 0
 	}
 	confunc crouch_checkbox_check_s	{
-		*bt_crouch_reservation@disabled false
-		*(checkbox)bt_crouch_reservation@current 1
+		*bt_crouch_reservation@disabled = false
+		*(checkbox)bt_crouch_reservation@current = 1
 	}
 
 	pic bt_shot_reservation
@@ -708,18 +708,18 @@ window althud extends ahud
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear_a
 	{
-		*bt_shot_reservation@texl	"0 0"
-		*bt_shot_reservation@texh	"51 32"
+		*bt_shot_reservation@texl	= "0 0"
+		*bt_shot_reservation@texh	= "51 32"
 	}
 	confunc reserve_shot_check_a
 	{
-		*bt_shot_reservation@texl	"0 32"
-		*bt_shot_reservation@texh	"51 64"
+		*bt_shot_reservation@texl	= "0 32"
+		*bt_shot_reservation@texh	= "51 64"
 	}
 	confunc reserve_shot_disable_a
 	{
-		*bt_shot_reservation@texl	"64 32"
-		*bt_shot_reservation@texh	"127 64"
+		*bt_shot_reservation@texl	= "64 32"
+		*bt_shot_reservation@texh	= "127 64"
 	}
 
 	pic bt_floorup
@@ -766,25 +766,25 @@ window althud extends ahud
 
 	func show_rightweapon
 	{
-		*right@invis false
-		*ammoright@invis false
-		*left@invis true
-		*ammoleft@invis true
-		*bt_primaryright@invis false
-		*bt_primaryleft@invis true
-		*bt_reloadright@invis false
-		*bt_reloadleft@invis true
+		*right@invis = false
+		*ammoright@invis = false
+		*left@invis = true
+		*ammoleft@invis = true
+		*bt_primaryright@invis = false
+		*bt_primaryleft@invis = true
+		*bt_reloadright@invis = false
+		*bt_reloadleft@invis = true
 	}
 	func show_leftweapon
 	{
-		*right@invis true
-		*ammoright@invis true
-		*left@invis false
-		*ammoleft@invis false
-		*bt_primaryright@invis true
-		*bt_primaryleft@invis false
-		*bt_reloadright@invis true
-		*bt_reloadleft@invis false
+		*right@invis = true
+		*ammoright@invis = true
+		*left@invis = false
+		*ammoleft@invis = false
+		*bt_primaryright@invis = true
+		*bt_primaryleft@invis = false
+		*bt_reloadright@invis = true
+		*bt_reloadleft@invis = false
 	}
 
 	pic switch_to_right_hand
@@ -1169,12 +1169,12 @@ window althud extends ahud
 	// ==================
 
 	confunc unhide_chatscreen {
-		*chatscreen@invis false
+		*chatscreen@invis = false
 	}
 
 	func onInit
 	{
-		*chatscreen@invis true
+		*chatscreen@invis = true
 		cmd "music_change battlescape;"
 		call *node:root.show_rightweapon
 		cmd "set mn_showchatbuttons 0;"

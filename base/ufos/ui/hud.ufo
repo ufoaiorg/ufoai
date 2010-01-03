@@ -360,12 +360,12 @@ window hud extends ahud
 
 	confunc startrounds
 	{
-		*next.bt_nextround@disabled false
+		*next.bt_nextround@disabled = false
 	}
 
 	confunc endrounds
 	{
-		*next.bt_nextround@disabled true
+		*next.bt_nextround@disabled = true
 	}
 
 	// ==================
@@ -516,21 +516,21 @@ window hud extends ahud
 		}
 	}
 
-	confunc selpls { *left.bt_pfire@image hud/buttons1a }
-	confunc selprs { *right.bt_pfire@image hud/buttons1a }
+	confunc selpls { *left.bt_pfire@image = hud/buttons1a }
+	confunc selprs { *right.bt_pfire@image = hud/buttons1a }
 
-	confunc deselpls { *left.bt_pfire@image hud/buttons1 }
-	confunc deselprs { *right.bt_pfire@image hud/buttons1 }
-	confunc deselrls { *left.bt_reload@image hud/buttons2 }
-	confunc deselrrs { *right.bt_reload@image hud/buttons2 }
+	confunc deselpls { *left.bt_pfire@image = hud/buttons1 }
+	confunc deselprs { *right.bt_pfire@image = hud/buttons1 }
+	confunc deselrls { *left.bt_reload@image = hud/buttons2 }
+	confunc deselrrs { *right.bt_reload@image = hud/buttons2 }
 
-	confunc displs { *left.bt_pfire@image hud/buttons1g }
-	confunc disprs { *right.bt_pfire@image hud/buttons1g }
-	confunc disrls { *left.bt_reload@image hud/buttons2g }
-	confunc disrrs { *right.bt_reload@image hud/buttons2g }
+	confunc displs { *left.bt_pfire@image = hud/buttons1g }
+	confunc disprs { *right.bt_pfire@image = hud/buttons1g }
+	confunc disrls { *left.bt_reload@image = hud/buttons2g }
+	confunc disrrs { *right.bt_reload@image = hud/buttons2g }
 
-	confunc hud_deselheadgear { *right.hud_bt_use_headgear@image hud/buttons2 }
-	confunc hud_disheadgear { *right.hud_bt_use_headgear@image hud/buttons2g }
+	confunc hud_deselheadgear { *right.hud_bt_use_headgear@image = hud/buttons2 }
+	confunc hud_disheadgear { *right.hud_bt_use_headgear@image = hud/buttons2g }
 
 	// ==================
 	// info bar
@@ -679,75 +679,75 @@ window hud extends ahud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselstands { *left.bt_duck@texl "52 75" *left.bt_duck@texh "104 112" *left.bt_duck@image hud/buttons2 }
-	confunc deselcrouchs { *left.bt_duck@texl "0 75" *left.bt_duck@texh "52 112" *left.bt_duck@image hud/buttons2 }
-	confunc disstands { *left.bt_duck@texl "52 75" *left.bt_duck@texh "104 112" *left.bt_duck@image hud/buttons2g }
-	confunc discrouchs { *left.bt_duck@texl "0 75" *left.bt_duck@texh "52 112" *left.bt_duck@image hud/buttons2g }
+	confunc deselstands { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
+	confunc deselcrouchs { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
+	confunc disstands { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
+	confunc discrouchs { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
 
 	confunc crouch_checkbox_disable_s {
-		*left.bt_crouch_reservation@disabled true
+		*left.bt_crouch_reservation@disabled = true
 	}
 	confunc crouch_checkbox_clear_s	{
-		*left.bt_crouch_reservation@disabled false
-		*(checkbox)left.bt_crouch_reservation@current 0
+		*left.bt_crouch_reservation@disabled = false
+		*(checkbox)left.bt_crouch_reservation@current = 0
 	}
 	confunc crouch_checkbox_check_s	{
-		*left.bt_crouch_reservation@disabled false
-		*(checkbox)left.bt_crouch_reservation@current 1
+		*left.bt_crouch_reservation@disabled = false
+		*(checkbox)left.bt_crouch_reservation@current = 1
 	}
 
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear_s
 	{
-		*info.bt_shot_reservation@texl	"0 0"
-		*info.bt_shot_reservation@texh	"51 32"
+		*info.bt_shot_reservation@texl	= "0 0"
+		*info.bt_shot_reservation@texh	= "51 32"
 	}
 	confunc reserve_shot_check_s
 	{
-		*info.bt_shot_reservation@texl	"0 32"
-		*info.bt_shot_reservation@texh	"51 64"
+		*info.bt_shot_reservation@texl	= "0 32"
+		*info.bt_shot_reservation@texh	= "51 64"
 	}
 	confunc reserve_shot_disable_s
 	{
-		*info.bt_shot_reservation@texl	"64 32"
-		*info.bt_shot_reservation@texh	"115 64"
+		*info.bt_shot_reservation@texl	= "64 32"
+		*info.bt_shot_reservation@texh	= "115 64"
 	}
 
 	// REACTION MODE BUTTON
 	confunc startreactionmanys
 	{
-		*info.bt_reaction_s@texl	"0 96"
-		*info.bt_reaction_s@texh	"31 127"
-		*info.bt_reaction_s@tooltip "_Multiple-shot reaction fire"
+		*info.bt_reaction_s@texl	= "0 96"
+		*info.bt_reaction_s@texh	= "31 127"
+		*info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmanys_impos
 	{
-		*info.bt_reaction_s@texl	"32 96"
-		*info.bt_reaction_s@texh	"63 127"
-		*info.bt_reaction_s@tooltip "_Multiple-shot reaction fire (Not possible)"
+		*info.bt_reaction_s@texl	= "32 96"
+		*info.bt_reaction_s@texh	= "63 127"
+		*info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire (Not possible)"
 	}
 	confunc startreactiononces
 	{
-		*info.bt_reaction_s@texl	"0 64"
-		*info.bt_reaction_s@texh	"31 95"
-		*info.bt_reaction_s@tooltip "_One-shot reaction fire"
+		*info.bt_reaction_s@texl	= "0 64"
+		*info.bt_reaction_s@texh	= "31 95"
+		*info.bt_reaction_s@tooltip = "_One-shot reaction fire"
 	}
 	confunc startreactiononces_impos
 	{
-		*info.bt_reaction_s@texl	"32 64"
-		*info.bt_reaction_s@texh	"63 95"
-		*info.bt_reaction_s@tooltip "_One-shot reaction fire (Not possible)"
+		*info.bt_reaction_s@texl	= "32 64"
+		*info.bt_reaction_s@texh	= "63 95"
+		*info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
 	}
 	confunc deselreactions
 	{
-		*info.bt_reaction_s@texl	"0 32"
-		*info.bt_reaction_s@texh	"31 63"
-		*info.bt_reaction_s@tooltip "_No reaction fire"
+		*info.bt_reaction_s@texl	= "0 32"
+		*info.bt_reaction_s@texh	= "31 63"
+		*info.bt_reaction_s@tooltip = "_No reaction fire"
 	}
 	confunc disreactions {
-		*info.bt_reaction_s@texl	"0 0"
-		*info.bt_reaction_s@texh	"31 31"
+		*info.bt_reaction_s@texl	= "0 0"
+		*info.bt_reaction_s@texh	= "31 31"
 	}
 
 	// ==================
@@ -873,15 +873,15 @@ window hud extends ahud
 			texl		"64 0"
 			texh		"96 32"
 			onMouseLeave			{
-				*chatscreen@size "690 48"
-				*chatscreen@rows "3"
-				*node:root@timeout 10000
+				*chatscreen@size = "690 48"
+				*chatscreen@rows = "3"
+				*node:root@timeout = 10000
 			}
 			onMouseEnter			{
-				*chatscreen@size "690 400"
-				*chatscreen@rows "25"
-				*node:root@timeout 0
-				*chatscreen@invis false
+				*chatscreen@size = "690 400"
+				*chatscreen@rows = "25"
+				*node:root@timeout = 0
+				*chatscreen@invis = false
 			}
 		}
 
@@ -893,24 +893,24 @@ window hud extends ahud
 			texl		"0 0"
 			texh		"32 36"
 			onMouseEnter {
-				*node:this@texl	"0 36"
-				*node:this@texh	"32 72"
+				*node:this@texl	= "0 36"
+				*node:this@texh	= "32 72"
 			}
 			onMouseLeave {
-				*node:this@texl	"0 0"
-				*node:this@texh	"32 36"
+				*node:this@texl	= "0 0"
+				*node:this@texh	= "32 36"
 			}
 			onClick		{
 				if ( *cvar:mn_showchatbuttons != 0 ) {
-					*node:parent.bar_chat_bg@image hud/bar_chat
-					*node:parent.bar_chat_bg@pos "192 0"
-					*node:parent.bar_chat_bg@size "64 64"
-					*cvar:mn_showchatbuttons 0
+					*node:parent.bar_chat_bg@image = hud/bar_chat
+					*node:parent.bar_chat_bg@pos = "192 0"
+					*node:parent.bar_chat_bg@size = "64 64"
+					*cvar:mn_showchatbuttons = 0
 				} else {
-					*node:parent.bar_chat_bg@image hud/bar_chat_choice
-					*node:parent.bar_chat_bg@pos "0 0"
-					*node:parent.bar_chat_bg@size "256 64"
-					*cvar:mn_showchatbuttons 1
+					*node:parent.bar_chat_bg@image = hud/bar_chat_choice
+					*node:parent.bar_chat_bg@pos = "0 0"
+					*node:parent.bar_chat_bg@size = "256 64"
+					*cvar:mn_showchatbuttons = 1
 				}
 			}
 		}
@@ -918,7 +918,7 @@ window hud extends ahud
 
 	func onEvent
 	{
-		*chatscreen@invis true
+		*chatscreen@invis = true
 	}
 
 	// ==================
@@ -926,12 +926,12 @@ window hud extends ahud
 	// ==================
 
 	confunc unhide_chatscreen {
-		*chatscreen@invis false
+		*chatscreen@invis = false
 	}
 
 	func onInit
 	{
-		*chatscreen@invis true
+		*chatscreen@invis = true
 		cmd "music_change battlescape;"
 		cmd "set mn_showchatbuttons 0;"
 	}

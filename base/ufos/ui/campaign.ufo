@@ -71,9 +71,9 @@ window campaigns
 		selectcolor	"1 1 1 1"
 		rows	"6"
 		onViewChange	{
-			*(abstractscrollbar)campaignlist_scroll@fullsize <fullsize>
-			*(abstractscrollbar)campaignlist_scroll@current <viewpos>
-			*(abstractscrollbar)campaignlist_scroll@viewsize <viewsize>
+			*(abstractscrollbar)campaignlist_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)campaignlist_scroll@current = <viewpos>
+			*(abstractscrollbar)campaignlist_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -85,7 +85,7 @@ window campaigns
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *campaignlist@viewpos <current> }
+		onChange	{ *campaignlist@viewpos = <current> }
 	}
 
 	text campaign_desc

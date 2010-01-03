@@ -243,50 +243,50 @@ window bases
 
 	confunc update_aircraft
 	{
-		*aircraft@disabled <1>
-		*aircraft@tooltip <2>
+		*aircraft@disabled = <1>
+		*aircraft@tooltip = <2>
 	}
 
 	confunc update_buysell
 	{
-		*buysell@disabled <1>
-		*buysell@tooltip <2>
+		*buysell@disabled = <1>
+		*buysell@tooltip = <2>
 	}
 
 	confunc update_transfer
 	{
-		*transfer@disabled <1>
-		*transfer@tooltip <2>
+		*transfer@disabled = <1>
+		*transfer@tooltip = <2>
 	}
 
 	confunc update_research
 	{
-		*research@disabled <1>
-		*research@tooltip <2>
+		*research@disabled = <1>
+		*research@tooltip = <2>
 	}
 
 	confunc update_prod
 	{
-		*production@disabled <1>
-		*production@tooltip <2>
+		*production@disabled = <1>
+		*production@tooltip = <2>
 	}
 
 	confunc update_hire
 	{
-		*hire@disabled <1>
-		*hire@tooltip <2>
+		*hire@disabled = <1>
+		*hire@tooltip = <2>
 	}
 
 	confunc update_containment
 	{
-		*containment@disabled <1>
-		*containment@tooltip <2>
+		*containment@disabled = <1>
+		*containment@tooltip = <2>
 	}
 
 	confunc update_hospital
 	{
-		*hospital@disabled <1>
-		*hospital@tooltip <2>
+		*hospital@disabled = <1>
+		*hospital@tooltip = <2>
 	}
 
 	func onInit

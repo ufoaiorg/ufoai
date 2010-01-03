@@ -89,30 +89,30 @@ window aircraft extends iaircraft
 	confunc aircraft_checkbuttons
 	{
 		if ( *cvar:mn_aircraftinbase > 0 ) {
-			*aircraft_navigation@disabled	false
+			*aircraft_navigation@disabled = false
 
-			*aircraft_return@tooltip	"_Start Aircraft"
-			*aircraft_return@onClick	{ cmd "aircraft_start;" }
-			*aircraft_return@texl		"0 32"
+			*aircraft_return@tooltip = "_Start Aircraft"
+			*aircraft_return@onClick = { cmd "aircraft_start;" }
+			*aircraft_return@texl = "0 32"
 		} else {
-			*aircraft_navigation@disabled	true
+			*aircraft_navigation@disabled = true
 
-			*aircraft_return@tooltip	"_Call back"
-			*aircraft_return@onClick	{ cmd "aircraft_return;" }
-			*aircraft_return@texl		"0 0"
+			*aircraft_return@tooltip = "_Call back"
+			*aircraft_return@onClick = { cmd "aircraft_return;" }
+			*aircraft_return@texl = "0 0"
 		}
 
 		// absent from base
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			*aircraft_navigation@disabled	true
+			*aircraft_navigation@disabled = true
 		}
 		// no soldiers
 		elif ( *cvar:mn_equipsoldierstate == 2 ) {
-			*aircraft_navigation@disabled	false
+			*aircraft_navigation@disabled = false
 		}
 		// normal
 		elif ( *cvar:mn_equipsoldierstate == 3 ) {
-			*aircraft_navigation@disabled	false
+			*aircraft_navigation@disabled = false
 		}
 	}
 
@@ -122,12 +122,12 @@ window aircraft extends iaircraft
 	confunc aircraft_change
 	{
 		call *node:root.aircraft_checkbuttons
-		*aircraft_list@lineselected <1>
+		*aircraft_list@lineselected = <1>
 	}
 
 	func onInit
 	{
-		*cvar:mn_aircrafttab "aircraft"
+		*cvar:mn_aircrafttab = "aircraft"
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 		cmd "aircraft_update_list;"
 	}

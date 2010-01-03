@@ -410,11 +410,11 @@ window transfer
 			*cvar:loop_max = 21
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
-			*itemlist.t_spinner<cvar:i>@invis false
+			*itemlist.t_spinner<cvar:i>@invis = false
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		while ( *cvar:i < 21 ) {
-			*itemlist.t_spinner<cvar:i>@invis true
+			*itemlist.t_spinner<cvar:i>@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	}
@@ -426,9 +426,9 @@ window transfer
 	 * @param[in] <4> max value allowed
 	 */
 	confunc trans_updatespinners {
-		*(abstractvalue)itemlist.t_spinner<1>@current <2>
-		*(abstractvalue)itemlist.t_spinner<1>@min <3>
-		*(abstractvalue)itemlist.t_spinner<1>@max <4>
+		*(abstractvalue)itemlist.t_spinner<1>@current = <2>
+		*(abstractvalue)itemlist.t_spinner<1>@min = <3>
+		*(abstractvalue)itemlist.t_spinner<1>@max = <4>
 	}
 
 	/**

@@ -37,14 +37,14 @@ window ufopedia extends objectinfo
 			selectcolor	"1 1 1 1"
 			onChange	{
 				cmd "ufopedia_click <cvar:up_summary_selection>"
-				*node:(abstractscrollbar)root.content.ufopedia_scroll@current 0
-				*node:(text)root.content.ufopedia@viewpos 0
+				*node:(abstractscrollbar)root.content.ufopedia_scroll@current = 0
+				*node:(text)root.content.ufopedia@viewpos = 0
 				cmd "update_ufopedia_layout"
 			}
 			onViewChange	{
-				*node:(abstractscrollbar)parent.list_scroll@current <viewpos>
-				*node:(abstractscrollbar)parent.list_scroll@fullsize <fullsize>
-				*node:(abstractscrollbar)parent.list_scroll@viewsize <viewsize>
+				*node:(abstractscrollbar)parent.list_scroll@current = <viewpos>
+				*node:(abstractscrollbar)parent.list_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.list_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -54,7 +54,7 @@ window ufopedia extends objectinfo
 			current		0
 			viewsize	16
 			fullsize	50
-			onChange	{ *node:parent.list@viewpos <current> }
+			onChange	{ *node:parent.list@viewpos = <current> }
 		}
 	}
 
@@ -138,9 +138,9 @@ window ufopedia extends objectinfo
 			tabwidth	100
 			rows		26
 			onViewChange	{
-				*node:(abstractscrollbar)parent.ufopedia_scroll@fullsize <fullsize>
-				*node:(abstractscrollbar)parent.ufopedia_scroll@current <viewpos>
-				*node:(abstractscrollbar)parent.ufopedia_scroll@viewsize <viewsize>
+				*node:(abstractscrollbar)parent.ufopedia_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.ufopedia_scroll@current = <viewpos>
+				*node:(abstractscrollbar)parent.ufopedia_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -151,7 +151,7 @@ window ufopedia extends objectinfo
 			current		0
 			viewsize	26
 			fullsize	50
-			onChange	{ *node:parent.ufopedia@viewpos <current> }
+			onChange	{ *node:parent.ufopedia@viewpos = <current> }
 		}
 
 		text description
@@ -163,9 +163,9 @@ window ufopedia extends objectinfo
 			tabwidth	230
 			rows		20
 			onViewChange	{
-				*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
-				*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
-				*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
+				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
+				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
+				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -177,7 +177,7 @@ window ufopedia extends objectinfo
 			viewsize	20
 			fullsize	20
 			hidewhenunused true
-			onChange	{ *node:parent.description@viewpos <current> }
+			onChange	{ *node:parent.description@viewpos = <current> }
 		}
 
 		panel requirement {
@@ -204,9 +204,9 @@ window ufopedia extends objectinfo
 				selectcolor	"0 .78 0 1"
 				onChange		{ cmd "techtree_click <lineselected>" }
 				onViewChange	{
-					*node:(abstractscrollbar)parent.techtree_scroll@fullsize <fullsize>
-					*node:(abstractscrollbar)parent.techtree_scroll@current <viewpos>
-					*node:(abstractscrollbar)parent.techtree_scroll@viewsize <viewsize>
+					*node:(abstractscrollbar)parent.techtree_scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.techtree_scroll@current = <viewpos>
+					*node:(abstractscrollbar)parent.techtree_scroll@viewsize = <viewsize>
 				}
 			}
 
@@ -217,7 +217,7 @@ window ufopedia extends objectinfo
 				height		"117"
 				current		0
 				hidewhenunused true
-				onChange	{ *node:parent.techtree@viewpos <current> }
+				onChange	{ *node:parent.techtree@viewpos = <current> }
 			}
 		}
 	}

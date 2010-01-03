@@ -82,25 +82,25 @@ window equipment extends objectinfo
 
 	func names_clear
 	{
-		*txt_actor0@color "0 .78 0 1"
-		*txt_actor1@color "0 .78 0 1"
-		*txt_actor2@color "0 .78 0 1"
-		*txt_actor3@color "0 .78 0 1"
-		*txt_actor4@color "0 .78 0 1"
-		*txt_actor5@color "0 .78 0 1"
-		*txt_actor6@color "0 .78 0 1"
-		*txt_actor7@color "0 .78 0 1"
+		*txt_actor0@color = "0 .78 0 1"
+		*txt_actor1@color = "0 .78 0 1"
+		*txt_actor2@color = "0 .78 0 1"
+		*txt_actor3@color = "0 .78 0 1"
+		*txt_actor4@color = "0 .78 0 1"
+		*txt_actor5@color = "0 .78 0 1"
+		*txt_actor6@color = "0 .78 0 1"
+		*txt_actor7@color = "0 .78 0 1"
 	}
 
 	confunc equipdeselect {
 		*bt_actor<1>@disabled = false
-		*txt_actor<1>@color "0 .78 0 1"
+		*txt_actor<1>@color = "0 .78 0 1"
 	}
 
 	confunc equipselect {
 		*bt_actor<1>@disabled = false
 		*cvar:selected_actor = <1>
-		*txt_actor<1>@color "1 1 1 1"
+		*txt_actor<1>@color = "1 1 1 1"
 	}
 
 	confunc equipdisable {
@@ -274,27 +274,27 @@ window equipment extends objectinfo
 
 	confunc update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
-			*(container)equip@filter FILTER_S_PRIMARY
-			*(container)equip_ammo@filter FILTER_S_PRIMARY
+			*(container)equip@filter = FILTER_S_PRIMARY
+			*(container)equip_ammo@filter = FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
-			*(container)equip@filter FILTER_S_SECONDARY
-			*(container)equip_ammo@filter FILTER_S_SECONDARY
+			*(container)equip@filter = FILTER_S_SECONDARY
+			*(container)equip_ammo@filter = FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
-			*(container)equip@filter FILTER_S_HEAVY
-			*(container)equip_ammo@filter FILTER_S_HEAVY
+			*(container)equip@filter = FILTER_S_HEAVY
+			*(container)equip_ammo@filter = FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
-			*(container)equip@filter FILTER_S_MISC
-			*(container)equip_ammo@filter FILTER_S_MISC
+			*(container)equip@filter = FILTER_S_MISC
+			*(container)equip_ammo@filter = FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
-			*(container)equip@filter FILTER_S_ARMOUR
-			*(container)equip_ammo@filter FILTER_S_ARMOUR
+			*(container)equip@filter = FILTER_S_ARMOUR
+			*(container)equip_ammo@filter = FILTER_S_ARMOUR
 		}
-		*(container)equip@scrollpos 0
-		*(container)equip_ammo@scrollpos 0
+		*(container)equip@scrollpos = 0
+		*(container)equip_ammo@scrollpos = 0
 	}
 
 	tab equip_type
@@ -364,11 +364,11 @@ window equipment extends objectinfo
 			rows		"7"
 			dataid		TEXT_ITEMDESCRIPTION
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
@@ -380,7 +380,7 @@ window equipment extends objectinfo
 			fullsize	7
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@viewpos <current>
+				*itemdescription.description@viewpos = <current>
 			}
 		}
 
@@ -568,14 +568,14 @@ window equipment extends objectinfo
 			*actor_statpanel@invis = true
 		} else {
 			// switch back to actor view
-			*cvar:mn_infotype 0
+			*cvar:mn_infotype = 0
 		}
 	}
 
 	// @todo merge with confunc mp_actor_stats?
 	func actor_stats
 	{
-		*itemdescription@invis true
+		*itemdescription@invis = true
 		*actor_statpanel@invis = false
 	}
 
@@ -675,9 +675,9 @@ window equipment extends objectinfo
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll@current <scrollpos>
-			*(abstractscrollbar)equip_scroll@viewsize <viewsize>
-			*(abstractscrollbar)equip_scroll@fullsize <fullsize>
+			*(abstractscrollbar)equip_scroll@current = <scrollpos>
+			*(abstractscrollbar)equip_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -688,9 +688,9 @@ window equipment extends objectinfo
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll@current <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll@viewsize <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll@fullsize <fullsize>
+			*(abstractscrollbar)equip_ammo_scroll@current = <scrollpos>
+			*(abstractscrollbar)equip_ammo_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -700,7 +700,7 @@ window equipment extends objectinfo
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip@scrollpos <current>
+			*equip@scrollpos = <current>
 		}
 	}
 
@@ -709,7 +709,7 @@ window equipment extends objectinfo
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip_ammo@scrollpos <current>
+			*equip_ammo@scrollpos = <current>
 		}
 	}
 
@@ -739,9 +739,9 @@ window equipment extends objectinfo
 	{
 		call *node:root.names_clear
 		call *node:root.actor_stats
-		*cvar:mn_infotype 0
-		*cvar:mn_equiptype 0		
-		*cvar:mn_linkname ""
+		*cvar:mn_infotype = 0
+		*cvar:mn_equiptype = 0		
+		*cvar:mn_linkname = ""
 		cmd "team_initskin;team_updateequip;update_item_list;equip_select 0;"
 	}
 }

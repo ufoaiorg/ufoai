@@ -234,13 +234,13 @@ window uforecovery
 			tabwidth	100
 			rows		"8"
 			onClick		{
-				*(textlist)store_panel.ur_capacities@lineselected <lineselected>
+				*(textlist)store_panel.ur_capacities@lineselected = <lineselected>
 			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize <fullsize>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current <viewpos>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize <viewsize>
-				*(textlist)store_panel.ur_capacities@viewpos <viewpos>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current = <viewpos>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
+				*(textlist)store_panel.ur_capacities@viewpos = <viewpos>
 			}
 		}
 		textlist ur_capacities
@@ -254,13 +254,13 @@ window uforecovery
 			rows		"8"
 			textalign	ur
 			onClick		{
-				*(textlist)store_panel.ur_ufoyards@lineselected <lineselected>
+				*(textlist)store_panel.ur_ufoyards@lineselected = <lineselected>
 			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize <fullsize>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current <viewpos>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize <viewsize>
-				*store_panel.ur_ufoyards@viewpos <viewpos>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current = <viewpos>
+				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
+				*store_panel.ur_ufoyards@viewpos = <viewpos>
 			}
 		}
 		vscrollbar ur_ufoyards_scroll {
@@ -272,8 +272,8 @@ window uforecovery
 			fullsize	8
 			hidewhenunused true
 			onChange	{
-				*store_panel.ur_ufoyards@viewpos <current>
-				*store_panel.ur_capacities@viewpos <current>
+				*store_panel.ur_ufoyards@viewpos = <current>
+				*store_panel.ur_capacities@viewpos = <current>
 			}
 		}
 
@@ -356,9 +356,9 @@ window uforecovery
 			longlines	prettychop
 			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
 			onViewChange	{
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize <fullsize>
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current <viewpos>
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@viewsize <viewsize>
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current = <viewpos>
+				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@viewsize = <viewsize>
 			}
 		}
 		vscrollbar cp_ur_nationlist_scroll {
@@ -369,7 +369,7 @@ window uforecovery
 			viewsize	8
 			fullsize	8
 			hidewhenunused true
-			onChange	{ *sell_panel.cp_uforecovery_nationlist@viewpos <current> }
+			onChange	{ *sell_panel.cp_uforecovery_nationlist@viewpos = <current> }
 		}
 
 		string selected_nation_str
@@ -405,42 +405,42 @@ window uforecovery
 	confunc uforecovery_tabselect {
 		*cvar:mn_uforecovery_tab = <1>
 		if ( *cvar:mn_uforecovery_tab eq "store" ) {
-			*store_panel@invis false
-			*sell_panel@invis true
+			*store_panel@invis = false
+			*sell_panel@invis = true
 		}
 		if ( *cvar:mn_uforecovery_tab eq "sell" ) {
-			*sell_panel@invis false
-			*store_panel@invis true
+			*sell_panel@invis = false
+			*store_panel@invis = true
 		}
 	}
 
 	confunc btnatsel {
 		*cvar:tmp = <1>
 		if ( *cvar:tmp eq "enable" ) {
-			*sell_panel.bt_natsel@disabled false
+			*sell_panel.bt_natsel@disabled = false
 		} else {
-			*sell_panel.bt_natsel@disabled true
+			*sell_panel.bt_natsel@disabled = true
 		}
 		delete *cvar:tmp
 	}
 
 	confunc cp_nationsel_select {
-		*sell_panel.cp_uforecovery_nationlist@lineselected <1>
+		*sell_panel.cp_uforecovery_nationlist@lineselected = <1>
 	}
 
 	confunc btbasesel {
 		*cvar:tmp = <1>
 		if ( *cvar:tmp eq "enable" ) {
-			*store_panel.bt_basesel@disabled false
+			*store_panel.bt_basesel@disabled = false
 		} else {
-			*store_panel.bt_basesel@disabled true
+			*store_panel.bt_basesel@disabled = true
 		}
 		delete *cvar:tmp
 	}
 
 	confunc cp_basesel_select {
-		*store_panel.ur_ufoyards@lineselected <1>
-		*store_panel.ur_capacities@lineselected <1>
+		*store_panel.ur_ufoyards@lineselected = <1>
+		*store_panel.ur_capacities@lineselected = <1>
 	}
 
 	func onInit {

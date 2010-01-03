@@ -162,8 +162,8 @@ window skirmish
 	 * @param<1> boolean to hide or show
 	 */
 	confunc skirmish_hide_ufos {
-		*ufos_str@invis <1>
-		*ufos_box@invis <1>
+		*ufos_str@invis = <1>
+		*ufos_box@invis = <1>
 	}
 
 	string ufos_str
@@ -192,8 +192,8 @@ window skirmish
 	 * @param<1> boolean to hide or show
 	 */
 	confunc skirmish_hide_dropships {
-		*dropships_str@invis <1>
-		*dropships_box@invis <1>
+		*dropships_str@invis = <1>
+		*dropships_box@invis = <1>
 	}
 
 	string dropships_str

@@ -166,26 +166,26 @@ window mp_team_edit extends objectinfo
 	 * @param[in] <1> number of soldier in the list
 	 */
 	confunc mp_soldier_unselect {
-		*txt_actor<1>@color "0 .78 0 1"
+		*txt_actor<1>@color = "0 .78 0 1"
 	}
 
 	/**
 	 * @param[in] <1> number of soldier in the list
 	 */
 	confunc mp_soldier_select {
-		*txt_actor<1>@color "1 1 1 1"
+		*txt_actor<1>@color = "1 1 1 1"
 	}
 
 	func mp_names_clear
 	{
-		*txt_actor0@color "0 .78 0 1"
-		*txt_actor1@color "0 .78 0 1"
-		*txt_actor2@color "0 .78 0 1"
-		*txt_actor3@color "0 .78 0 1"
-		*txt_actor4@color "0 .78 0 1"
-		*txt_actor5@color "0 .78 0 1"
-		*txt_actor6@color "0 .78 0 1"
-		*txt_actor7@color "0 .78 0 1"
+		*txt_actor0@color = "0 .78 0 1"
+		*txt_actor1@color = "0 .78 0 1"
+		*txt_actor2@color = "0 .78 0 1"
+		*txt_actor3@color = "0 .78 0 1"
+		*txt_actor4@color = "0 .78 0 1"
+		*txt_actor5@color = "0 .78 0 1"
+		*txt_actor6@color = "0 .78 0 1"
+		*txt_actor7@color = "0 .78 0 1"
 	}
 
 	string txt_actor0
@@ -259,27 +259,27 @@ window mp_team_edit extends objectinfo
 
 	confunc mp_update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
-			*(container)equip@filter FILTER_S_PRIMARY
-			*(container)equip_ammo@filter FILTER_S_PRIMARY
+			*(container)equip@filter = FILTER_S_PRIMARY
+			*(container)equip_ammo@filter = FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
-			*(container)equip@filter FILTER_S_SECONDARY
-			*(container)equip_ammo@filter FILTER_S_SECONDARY
+			*(container)equip@filter = FILTER_S_SECONDARY
+			*(container)equip_ammo@filter = FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
-			*(container)equip@filter FILTER_S_HEAVY
-			*(container)equip_ammo@filter FILTER_S_HEAVY
+			*(container)equip@filter = FILTER_S_HEAVY
+			*(container)equip_ammo@filter = FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
-			*(container)equip@filter FILTER_S_MISC
-			*(container)equip_ammo@filter FILTER_S_MISC
+			*(container)equip@filter = FILTER_S_MISC
+			*(container)equip_ammo@filter = FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
-			*(container)equip@filter FILTER_S_ARMOUR
-			*(container)equip_ammo@filter FILTER_S_ARMOUR
+			*(container)equip@filter = FILTER_S_ARMOUR
+			*(container)equip_ammo@filter = FILTER_S_ARMOUR
 		}
-		*(container)equip@scrollpos 0
-		*(container)equip_ammo@scrollpos 0
+		*(container)equip@scrollpos = 0
+		*(container)equip_ammo@scrollpos = 0
 	}
 
 	tab equip_type
@@ -348,11 +348,11 @@ window mp_team_edit extends objectinfo
 			rows		"7"
 			dataid		TEXT_ITEMDESCRIPTION
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current <viewpos>
+				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
@@ -364,7 +364,7 @@ window mp_team_edit extends objectinfo
 			fullsize	7
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@viewpos <current>
+				*itemdescription.description@viewpos = <current>
 			}
 		}
 
@@ -549,18 +549,18 @@ window mp_team_edit extends objectinfo
 	func mp_weapon_stats
 	{
 		if ( *cvar:mn_itemname ne "" ) {
-			*itemdescription@invis false
+			*itemdescription@invis = false
 			*actor_statpanel@invis = true
 		} else {
 			// switch back to actor view
-			*cvar:mn_infotype 0
+			*cvar:mn_infotype = 0
 		}
 	}
 
 	// @todo merge with confunc actor_stats?
 	func mp_actor_stats
 	{
-		*itemdescription@invis true
+		*itemdescription@invis = true
 		*actor_statpanel@invis = false
 	}
 
@@ -661,9 +661,9 @@ window mp_team_edit extends objectinfo
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll@current <scrollpos>
-			*(abstractscrollbar)equip_scroll@viewsize <viewsize>
-			*(abstractscrollbar)equip_scroll@fullsize <fullsize>
+			*(abstractscrollbar)equip_scroll@current = <scrollpos>
+			*(abstractscrollbar)equip_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -674,9 +674,9 @@ window mp_team_edit extends objectinfo
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll@current <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll@viewsize <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll@fullsize <fullsize>
+			*(abstractscrollbar)equip_ammo_scroll@current = <scrollpos>
+			*(abstractscrollbar)equip_ammo_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -686,7 +686,7 @@ window mp_team_edit extends objectinfo
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip@scrollpos <current>
+			*equip@scrollpos = <current>
 		}
 	}
 
@@ -695,7 +695,7 @@ window mp_team_edit extends objectinfo
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip_ammo@scrollpos <current>
+			*equip_ammo@scrollpos = <current>
 		}
 	}
 
@@ -746,7 +746,7 @@ window mp_team extends abstract_multiplayer
 		 */
 		confunc set_slotname {
 			cmd "set mn_slot<1> \"<3> (<2>)\";"
-			*content.slot_team<1>@disabled false
+			*content.slot_team<1>@disabled = false
 		}
 
 		button slot_team0

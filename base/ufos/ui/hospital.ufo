@@ -101,32 +101,32 @@ window hospital
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>.button@image ui/hosp_button_green
-			*hos<cvar:i>.click_button@tooltip "_Unused"
+			*hos<cvar:i>.button@image = ui/hosp_button_green
+			*hos<cvar:i>.click_button@tooltip = "_Unused"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
 	}
 
 	confunc hospitalserious	{
-		*hos<1>.icon@image				icons/health_critical
-		*hos<1>.button@image			ui/hosp_button_light
-		*hos<1>.click_button@tooltip	"_Heavily wounded"
+		*hos<1>.icon@image				= icons/health_critical
+		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*hos<1>.icon@image				icons/health_medium
-		*hos<1>.button@image			ui/hosp_button_light
-		*hos<1>.click_button@tooltip	"_Medium wounds"
+		*hos<1>.icon@image				= icons/health_medium
+		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*hos<1>.icon@image				icons/health_normal
-		*hos<1>.button@image			ui/hosp_button_light
-		*hos<1>.click_button@tooltip	"_Slightly wounded"
+		*hos<1>.icon@image				= icons/health_normal
+		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*hos<1>.icon@image				icons/health_unused
-		*hos<1>.button@image			ui/hosp_button_green
-		*hos<1>.click_button@tooltip	"_Unused"
+		*hos<1>.icon@image				= icons/health_unused
+		*hos<1>.button@image			= ui/hosp_button_green
+		*hos<1>.click_button@tooltip	= "_Unused"
 	}
 
 	zone hos_scroll_zone
@@ -138,202 +138,214 @@ window hospital
 	}
 
 	cmpHospitalPanel hos0 {
-	{
-		pos "25 95"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp0
-		max *cvar:mn_hos_hpmax0 
+		{
+			pos "25 95"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp0
+			max *cvar:mn_hos_hpmax0 
 		}
 	}
 	
 	cmpHospitalPanel hos1 {
-	{
-		pos "345 95"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp1
-		max *cvar:mn_hos_hpmax1
+		{
+			pos "345 95"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp1
+			max *cvar:mn_hos_hpmax1
 		}
 	}
 	
 	cmpHospitalPanel hos2 {
-	{
-		pos "665 95"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp2
-		max *cvar:mn_hos_hpmax2
+		{
+			pos "665 95"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp2
+			max *cvar:mn_hos_hpmax2
 		}
 	}
 	
 	cmpHospitalPanel hos3 {
-	{
-		pos "25 190"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp3
-		max *cvar:mn_hos_hpmax3
+		{
+			pos "25 190"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp3
+			max *cvar:mn_hos_hpmax3
 		}
 	}
 	
 	cmpHospitalPanel hos4 {
-	{
-		pos "345 190"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp4
-		max *cvar:mn_hos_hpmax4
+		{
+			pos "345 190"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp4
+			max *cvar:mn_hos_hpmax4
 		}
 	}
 	
 	cmpHospitalPanel hos5 {
-	{
-		pos "665 190"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp5
-		max *cvar:mn_hos_hpmax5
+		{
+			pos "665 190"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp5
+			max *cvar:mn_hos_hpmax5
 		}
 	}
 	
 	cmpHospitalPanel hos6 {
-	{
-		pos "25 285"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp6
-		max *cvar:mn_hos_hpmax6
+		{
+			pos "25 285"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp6
+			max *cvar:mn_hos_hpmax6
 		}
 	}
 	
 	cmpHospitalPanel hos7 {
-	{
-		pos "345 285"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp7
-		max *cvar:mn_hos_hpmax7
+		{
+			pos "345 285"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp7
+			max *cvar:mn_hos_hpmax7
 		}
 	}
 
 	cmpHospitalPanel hos8 {
-	{
-		pos "665 285"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp8
-		max *cvar:mn_hos_hpmax8
+		{
+			pos "665 285"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp8
+			max *cvar:mn_hos_hpmax8
+		}
+	}
+
 	cmpHospitalPanel hos9 {
-	{
-		pos "25 380"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp9
-		max *cvar:mn_hos_hpmax9
+		{
+			pos "25 380"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp9
+			max *cvar:mn_hos_hpmax9
+		}
+	}
+
 	cmpHospitalPanel hos10 {
-	{
-		pos "345 380"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp10
-		max *cvar:mn_hos_hpmax10
+		{
+			pos "345 380"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp10
+			max *cvar:mn_hos_hpmax10
+		}
+	}
+
 	cmpHospitalPanel hos11 {
-	{
-		pos "665 380"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp11
-		max *cvar:mn_hos_hpmax11
+		{
+			pos "665 380"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp11
+			max *cvar:mn_hos_hpmax11
+		}
+	}
+
 	cmpHospitalPanel hos12 {
-	{
-		pos "25 475"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp12
-		max *cvar:mn_hos_hpmax12
+		{
+			pos "25 475"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp12
+			max *cvar:mn_hos_hpmax12
+		}
+	}
+
 	cmpHospitalPanel hos13 {
-	{
-		pos "345 475"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp13
-		max *cvar:mn_hos_hpmax13
+		{
+			pos "345 475"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp13
+			max *cvar:mn_hos_hpmax13
+		}
+	}
+
 	cmpHospitalPanel hos14 {
-	{
-		pos "665 475"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp14
-		max *cvar:mn_hos_hpmax14
+		{
+			pos "665 475"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp14
+			max *cvar:mn_hos_hpmax14
+		}
+	}
+
 	cmpHospitalPanel hos15 {
-	{
-		pos "25 570"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp15
-		max *cvar:mn_hos_hpmax15
+		{
+			pos "25 570"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp15
+			max *cvar:mn_hos_hpmax15
+		}
+	}
+
 	cmpHospitalPanel hos16 {
-	{
-		pos "345 570"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp16
-		max *cvar:mn_hos_hpmax16
+		{
+			pos "345 570"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp16
+			max *cvar:mn_hos_hpmax16
+		}
+	}
+
 	cmpHospitalPanel hos17 {
-	{
-		pos "665 570"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp17
-		max *cvar:mn_hos_hpmax17
+		{
+			pos "665 570"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp17
+			max *cvar:mn_hos_hpmax17
+		}
+	}
+
 	cmpHospitalPanel hos18 {
-	{
-		pos "25 665"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp18
-		max *cvar:mn_hos_hpmax18
+		{
+			pos "25 665"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp18
+			max *cvar:mn_hos_hpmax18
+		}
+	}
+
 	cmpHospitalPanel hos19 {
-	{
-		pos "345 665"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp19
-		max *cvar:mn_hos_hpmax19
+		{
+			pos "345 665"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp19
+			max *cvar:mn_hos_hpmax19
+		}
+	}
+
 	cmpHospitalPanel hos20 {
-	{
-		pos "665 665"
-	}
-	bar health  {
-		current *cvar:mn_hos_hp20
-		max *cvar:mn_hos_hpmax20
+		{
+			pos "665 665"
 		}
-}
+		bar health  {
+			current *cvar:mn_hos_hp20
+			max *cvar:mn_hos_hpmax20
+		}
+	}
 
 	pic hos_button_scrollup
 	{
@@ -344,8 +356,8 @@ window hospital
 		texh	"48 48"
 		texl	"32 32"
 		onClick	{ cmd "hosp_list_up;" }
-		onMouseLeave		{ *node:this@texl "32 32" *node:this@texh "48 48" }
-		onMouseEnter		{ *node:this@texl "48 32" *node:this@texh "64 48" }
+		onMouseLeave		{ *node:this@texl = "32 32" *node:this@texh = "48 48" }
+		onMouseEnter		{ *node:this@texl = "48 32" *node:this@texh = "64 48" }
 	}
 
 	pic hos_button_scrolldown
@@ -357,8 +369,8 @@ window hospital
 		texl	"32 48"
 		texh	"48 64"
 		onClick	{ cmd "hosp_list_down;" }
-		onMouseLeave		{ *node:this@texl "32 48" *node:this@texh "48 64" }
-		onMouseEnter		{ *node:this@texl "48 48" *node:this@texh "64 64" }
+		onMouseLeave		{ *node:this@texl = "32 48" *node:this@texh = "48 64" }
+		onMouseEnter		{ *node:this@texl = "48 48" *node:this@texh = "64 64" }
 	}
 
 	// ==================
@@ -370,11 +382,11 @@ window hospital
 		cmd "hosp_init;"
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>@num <cvar:i>
-			*hos<cvar:i>.item@string *cvar:mn_hos_item<cvar:i>
-			*hos<cvar:i>.rank@string *cvar:mn_hos_rank<cvar:i>
-//			*hos<cvar:i>.health@current *cvar:mn_hos_hp<cvar:i>
-//			*hos<cvar:i>.health@max *cvar:mn_hos_hpmax<cvar:i>
+			*hos<cvar:i>@num = <cvar:i>
+			*hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
+			*hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
+//			*hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
+//			*hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
