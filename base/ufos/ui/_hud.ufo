@@ -13,6 +13,10 @@ window ahud {
 	// @todo need to clean up that list, some cmd are not used
 	// ==================
 
+	confunc hudselect { }
+	confunc huddeselect { }
+	confunc huddisable { }
+
 	confunc	hudselect0 { cmd "hudselects0;hudselecta0;" }
 	confunc	hudselect1 { cmd "hudselects1;hudselecta1;" }
 	confunc	hudselect2 { cmd "hudselects2;hudselecta2;" }
