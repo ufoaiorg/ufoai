@@ -152,33 +152,17 @@ static void HUD_ActorGlobalCvars (void)
 			const character_t *chr = CL_GetActorChr(le);
 			assert(chr);
 
-			/* the model name is the first entry in model_t */
-			Cvar_Set(va("mn_head%i", i), le->model2->name);
-			Cvar_SetValue(va("mn_hp%i", i), le->HP);
-			Cvar_SetValue(va("mn_hpmax%i", i), le->maxHP);
-			Cvar_SetValue(va("mn_tu%i", i), le->TU);
-			Cvar_SetValue(va("mn_tumax%i", i), le->maxTU);
-			Cvar_SetValue(va("mn_morale%i",i), le->morale);
-			Cvar_SetValue(va("mn_moralemax%i",i), le->maxMorale);
-			Cvar_SetValue(va("mn_stun%i", i), le->STUN);
-
 			invList = RIGHT(le);
 			if ((!invList || !invList->item.t || !invList->item.t->holdTwoHanded) && LEFT(le))
 				invList = LEFT(le);
 
 			tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
 				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.t) ? _(invList->item.t->name) : "");
-			Cvar_Set(va("mn_soldier%i_tt", i), tooltip);
+
+			MN_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
+					i, le->model2->name, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
 		} else {
-			Cvar_Set(va("mn_head%i", i), "");
-			Cvar_Set(va("mn_hp%i", i), "0");
-			Cvar_Set(va("mn_hpmax%i", i), "1");
-			Cvar_Set(va("mn_tu%i", i), "0");
-			Cvar_Set(va("mn_tumax%i", i), "1");
-			Cvar_Set(va("mn_morale%i",i), "0");
-			Cvar_Set(va("mn_moralemax%i",i), "1");
-			Cvar_Set(va("mn_stun%i", i), "0");
-			Cvar_Set(va("mn_soldier%i_tt", i), "");
+			MN_ExecuteConfunc("updateactorvalues %i \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\"", i);
 		}
 	}
 }
@@ -359,8 +343,6 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	if (reset) {
 		CL_ReserveTUs(selActor, RES_SHOT, 0);
 		CL_CharacterSetShotSettings(selChr, -1, -1, NULL);
-		/* Update server-side settings */
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot);
 		return;
 	}
 
@@ -478,8 +460,6 @@ static void HUD_ReserveShot_f (void)
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
 		CL_ReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
 		CL_CharacterSetShotSettings(selChr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
-		/* Update server-side settings */
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, max(0, selChr->reservedTus.shot));
 		if (popupListNode)
 			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 	}
@@ -1552,21 +1532,14 @@ void CL_ActorToggleCrouchReservation_f (void)
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
 
-	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH || selChr->reservedTus.reserveCrouch) {
+	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		/* Reset reserved TUs to 0 */
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
-		selChr->reservedTus.reserveCrouch = qfalse;
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
 		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)
 			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-
-		/* Player wants to reserve Tus for crouching - remember this. */
-		selChr->reservedTus.reserveCrouch = qtrue;
 	}
-
-	/** @todo Update shot-reservation popup if it is currently displayed.
-	 * Alternatively just hide it. */
 }
 
 /**
@@ -1580,6 +1553,8 @@ void CL_ActorToggleCrouchReservation_f (void)
 static void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
+
+	/** @todo most of this must be done on the server side */
 
 	if (!CL_CheckAction(selActor))
 		return;
@@ -1620,7 +1595,6 @@ static void CL_ActorToggleReaction_f (void)
 
 	/* Send request to update actor's reaction state to the server. */
 	MSG_Write_PA(PA_STATE, selActor->entnum, state);
-	selChr->reservedTus.reserveReaction = state;
 
 	/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
 	if (state & STATE_REACTION)
