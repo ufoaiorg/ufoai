@@ -1254,7 +1254,6 @@ void HUD_ActorUpdateCvars (void)
 	const char *animName;
 	int time, i;
 	pos3_t pos;
-	int dv;
 
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
@@ -1451,21 +1450,25 @@ void HUD_ActorUpdateCvars (void)
 		VectorCopy(mousePos, pos);
 		pos[2] = cl_worldlevel->integer;
 
-		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
-		/* Save the text for later display next to the cursor. */
-		MN_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
+		if (cl_map_debug->integer & MAPDEBUG_TEXT) {
+			int dv;
 
-		/* Display the floor and ceiling values for the current cell. */
-		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
-		/* Save the text for later display next to the cursor. */
-		MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
+			/* Display the floor and ceiling values for the current cell. */
+			Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
+			/* Save the text for later display next to the cursor. */
+			MN_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
 
-		/* Display the floor and ceiling values for the current cell. */
-		dv = Grid_MoveNext(clMap, fieldSize, selActor->pathMap, mousePos, 0);
-		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
-		/* Save the text for later display next to the cursor. */
-		MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
+			/* Display the floor and ceiling values for the current cell. */
+			Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
+			/* Save the text for later display next to the cursor. */
+			MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
+
+			/* Display the floor and ceiling values for the current cell. */
+			dv = Grid_MoveNext(clMap, fieldSize, selActor->pathMap, mousePos, 0);
+			Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
+			/* Save the text for later display next to the cursor. */
+			MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
+		}
 
 		/* Calculate remaining TUs. */
 		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
