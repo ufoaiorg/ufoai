@@ -139,7 +139,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 	qboolean used[MAX_BUILDINGS];
 
 	if (!base) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 

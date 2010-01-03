@@ -309,9 +309,9 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
-		MN_PushMenu("won", NULL);
+		MN_PushWindow("won", NULL);
 	} else
-		MN_PushMenu("lost", NULL);
+		MN_PushWindow("lost", NULL);
 
 	SV_Shutdown("Mission end", qfalse);
 	CL_Disconnect();

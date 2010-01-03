@@ -328,7 +328,7 @@ static void MN_EditorNodeExtract_f (void)
 		Com_Printf("Usage: %s <menuname>\n", Cmd_Argv(0));
 		return;
 	}
-	menu = MN_GetMenu(Cmd_Argv(1));
+	menu = MN_GetWindow(Cmd_Argv(1));
 	if (!menu) {
 		Com_Printf("Menu '%s' not found\n", Cmd_Argv(1));
 		return;

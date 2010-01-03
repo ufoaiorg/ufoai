@@ -66,7 +66,7 @@ void INS_SelectInstallation (installation_t *installation)
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
 		INS_SetCurrentSelectedInstallation(installation);
-		MN_PushMenu("popup_installationstatus", NULL);
+		MN_PushWindow("popup_installationstatus", NULL);
 	}
 }
 
@@ -182,7 +182,7 @@ static void INS_SetInstallationTitle_f (void)
 			MN_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopMenu(qfalse);		/* remove the new installation popup */
+		MN_PopWindow(qfalse);		/* remove the new installation popup */
 	}
 }
 

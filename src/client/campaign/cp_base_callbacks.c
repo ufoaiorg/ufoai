@@ -69,7 +69,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 
 	if (prob < atof(Cmd_Argv(1))) {
 		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name), qfalse, MSG_STANDARD, NULL);
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		B_Destroy(base);
 	}
 }
@@ -185,7 +185,7 @@ static void B_SetBaseTitle_f (void)
 		Cvar_Set("mn_base_title", baseName);
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopMenu(qfalse);		/* remove the new base popup */
+		MN_PopWindow(qfalse);		/* remove the new base popup */
 	}
 }
 
@@ -836,7 +836,7 @@ static void B_MakeBaseMapShot_f (void)
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
-	MN_PushMenu("nohud", NULL);
+	MN_PushWindow("nohud", NULL);
 	/* hide any active console */
 	Key_SetDest(key_game);
 	Cmd_ExecuteString("r_screenshot tga");

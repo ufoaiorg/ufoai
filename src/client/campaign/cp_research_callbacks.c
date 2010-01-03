@@ -817,10 +817,10 @@ static void CL_ResearchType_f (void)
 	/* Nothing to research here. */
 	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		MN_Popup(_("Notice"), _("Nothing to research"));
 	} else if (!B_GetBuildingStatus(base, B_LAB)) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
 	}
 }

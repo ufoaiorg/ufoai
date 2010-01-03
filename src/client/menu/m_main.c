@@ -317,7 +317,7 @@ void MN_Init (void)
 
 	MN_InitData();
 	MN_InitNodes();
-	MN_InitMenus();
+	MN_InitWindows();
 	MN_InitDraw();
 	MN_InitActions();
 }

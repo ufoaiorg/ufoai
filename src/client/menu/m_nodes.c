@@ -248,7 +248,7 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 					return;
 				node = relativeNode->root;
 			} else
-				node = MN_GetMenu(name);
+				node = MN_GetWindow(name);
 			break;
 		case '.':	/* child node */
 			if (!strcmp(name, "parent"))
@@ -300,7 +300,7 @@ menuNode_t* MN_GetNodeByPath (const char* path)
 		}
 
 		if (node == NULL)
-			node = MN_GetMenu(name);
+			node = MN_GetWindow(name);
 		else
 			node = MN_GetNode(node, name);
 

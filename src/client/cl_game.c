@@ -146,7 +146,7 @@ void GAME_SetMode (int gametype)
 		list->shutdown();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
-		if (!MN_IsMenuOnStack("main"))
+		if (!MN_IsWindowOnStack("main"))
 			MN_InitStack("main", "", qtrue, qtrue);
 	}
 
@@ -280,7 +280,7 @@ static void GAME_SetMode_f (void)
 	if (Cmd_Argc() == 2)
 		modeName = Cmd_Argv(1);
 	else
-		modeName = MN_GetActiveMenuName();
+		modeName = MN_GetActiveWindowName();
 
 	if (modeName[0] == '\0')
 		return;

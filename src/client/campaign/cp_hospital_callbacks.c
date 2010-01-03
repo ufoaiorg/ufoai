@@ -133,7 +133,7 @@ static void HOS_Init_f (void)
 		return;
 
 	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 
@@ -207,7 +207,7 @@ static void HOS_ListClick_f (void)
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
-		MN_PushMenu("hospital_employee", NULL);
+		MN_PushWindow("hospital_employee", NULL);
 }
 
 static char employeeDesc[512];

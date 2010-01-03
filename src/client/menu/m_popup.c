@@ -47,8 +47,8 @@ void MN_Popup (const char *title, const char *text)
 {
 	Cvar_Set("mn_sys_popup_title", title);
 	MN_RegisterText(TEXT_POPUP_INFO, text);
-	if (!MN_IsMenuOnStack(POPUP_MENU_NAME))
-		MN_PushMenu(POPUP_MENU_NAME, NULL);
+	if (!MN_IsWindowOnStack(POPUP_MENU_NAME))
+		MN_PushWindow(POPUP_MENU_NAME, NULL);
 }
 
 /**
@@ -70,7 +70,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	MN_ResetData(TEXT_LIST);
 	MN_RegisterLinkedListText(TEXT_LIST, entries);
 
-	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
+	popupListMenu = MN_GetWindow(POPUPLIST_MENU_NAME);
 	if (!popupListMenu)
 		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_MENU_NAME" menu");
 	listNode = MN_GetNode(popupListMenu, POPUPLIST_NODE_NAME);
@@ -93,8 +93,8 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 		listNode->onClick = NULL;
 	}
 
-	if (!MN_IsMenuOnStack(popupListMenu->name))
-		MN_PushMenu(popupListMenu->name, NULL);
+	if (!MN_IsWindowOnStack(popupListMenu->name))
+		MN_PushWindow(popupListMenu->name, NULL);
 	return listNode;
 }
 
@@ -160,7 +160,7 @@ void MN_PopupButton (const char *title, const char *text,
 	else
 		MN_RegisterText(TEXT_POPUP_INFO, popupText);
 
-	popupButtonMenu = MN_GetMenu(POPUPBUTTON_MENU_NAME);
+	popupButtonMenu = MN_GetWindow(POPUPBUTTON_MENU_NAME);
 	if (!popupButtonMenu)
 		Com_Error(ERR_FATAL, "Could not get "POPUPBUTTON_MENU_NAME" menu");
 
@@ -192,6 +192,6 @@ void MN_PopupButton (const char *title, const char *text,
 			clickAction3 ? clickAction3 : popupAction3);
 	}
 
-	if (!MN_IsMenuOnStack(popupButtonMenu->name))
-		MN_PushMenu(popupButtonMenu->name, NULL);
+	if (!MN_IsWindowOnStack(popupButtonMenu->name))
+		MN_PushWindow(popupButtonMenu->name, NULL);
 }

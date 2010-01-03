@@ -1028,8 +1028,8 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
-		const char* menuName = MN_GetActiveMenuName();
-		if (menuName[0] != '\0' && strstr(MN_GetActiveMenuName(), POPUPLIST_MENU_NAME)) {
+		const char* menuName = MN_GetActiveWindowName();
+		if (menuName[0] != '\0' && strstr(MN_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
 			Com_DPrintf(DEBUG_CLIENT, "HUD_RefreshWeaponButtons: reload popup\n");
 
 			/* Prevent firemode reservation popup from being closed if

@@ -1251,7 +1251,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 	if (!strcmp(token, "extends")) {
 		menuNode_t *superMenu;
 		token = Com_Parse(text);
-		superMenu = MN_GetMenu(token);
+		superMenu = MN_GetWindow(token);
 		if (superMenu == NULL)
 			Sys_Error("Could not get the super menu %s", token);
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
@@ -1262,7 +1262,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		menu->behaviour->loading(menu);
 	}
 
-	MN_InsertMenu(menu);
+	MN_InsertWindow(menu);
 
 	/* parse it's body */
 	result = MN_ParseNodeBody(menu, text, &token, errhead);

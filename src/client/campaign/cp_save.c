@@ -417,7 +417,7 @@ static void SAV_GameReadGameComments_f (void)
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
 		if (!GAME_CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
-			MN_PopMenu(qfalse);
+			MN_PopWindow(qfalse);
 			return;
 		}
 	}
@@ -476,7 +476,7 @@ static void SAV_GameContinue_f (void)
 	char *error = NULL;
 
 	if (CL_OnBattlescape()) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 
@@ -490,7 +490,7 @@ static void SAV_GameContinue_f (void)
 		}
 	} else {
 		/* just continue the current running game */
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 	}
 }
 
@@ -577,13 +577,13 @@ static void SAV_GameQuickLoadInit_f (void)
 
 	/* only allow quickload while there is already a running campaign */
 	if (!GAME_CP_IsRunning()) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 
 	FS_OpenFile("save/slotquick.xml", &f, FILE_READ);
 	if (!f.f && !f.z)
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 	else
 		FS_CloseFile(&f);
 }

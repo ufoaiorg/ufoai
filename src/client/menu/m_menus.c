@@ -97,16 +97,16 @@ void MN_MoveWindowOnTop (menuNode_t * window)
 /**
  * @brief Remove the menu from the menu stack
  * @param[in] menu The menu to remove from the stack
- * @sa MN_PushMenuDelete
+ * @sa MN_PushWindowDelete
  * @todo Why dont we call onClose?
  */
-static void MN_DeleteMenuFromStack (menuNode_t * menu)
+static void MN_DeleteWindowFromStack (menuNode_t * window)
 {
 	int i;
 
 	/* get window index */
 	for (i = 0; i < mn.windowStackPos; i++) {
-		if (mn.windowStack[i] == menu)
+		if (mn.windowStack[i] == window)
 			break;
 	}
 
@@ -120,10 +120,10 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 }
 
 /**
- * @brief Searches the position in the current menu stack for a given menu id
- * @return -1 if the menu is not on the stack
+ * @brief Searches the position in the current window stack for a given window id
+ * @return -1 if the window is not on the stack
  */
-static inline int MN_GetMenuPositionFromStackByName (const char *name)
+static inline int MN_GetWindowPositionFromStackByName (const char *name)
 {
 	int i;
 	for (i = 0; i < mn.windowStackPos; i++)
@@ -134,79 +134,79 @@ static inline int MN_GetMenuPositionFromStackByName (const char *name)
 }
 
 /**
- * @brief Insert a menu at a position of the stack
- * @param[in] menu The menu to insert
- * @param[in] position Where we want to add the menu (0 is the deeper element of the stack)
+ * @brief Insert a window at a position of the stack
+ * @param[in] window The window to insert
+ * @param[in] position Where we want to add the window (0 is the deeper element of the stack)
  */
-static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
+static inline void MN_InsertWindowIntoStack (menuNode_t *window, int position)
 {
 	int i;
 	assert(position <= mn.windowStackPos);
 	assert(position > 0);
-	assert(menu != NULL);
+	assert(window != NULL);
 
-	/* create space for the new menu */
+	/* create space for the new window */
 	for (i = mn.windowStackPos; i > position; i--) {
 		mn.windowStack[i] = mn.windowStack[i - 1];
 	}
 	/* insert */
-	mn.windowStack[position] = menu;
+	mn.windowStack[position] = window;
 	mn.windowStackPos++;
 }
 
 /**
- * @brief Push a menu onto the menu stack
- * @param[in] name Name of the menu to push onto menu stack
+ * @brief Push a window onto the window stack
+ * @param[in] name Name of the window to push onto window stack
  * @param[in] parent Window name to link as parent-child (else NULL)
- * @param[in] delete Delete the menu from the menu stack before adding it again
+ * @param[in] delete Delete the window from the window stack before adding it again
  * @return pointer to menuNode_t
  */
-static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean delete)
+static menuNode_t* MN_PushWindowDelete (const char *name, const char *parent, qboolean delete)
 {
-	menuNode_t *menu;
+	menuNode_t *window;
 
 	MN_ReleaseInput();
 
-	menu = MN_GetMenu(name);
-	if (menu == NULL) {
-		Com_Printf("Didn't find menu \"%s\"\n", name);
+	window = MN_GetWindow(name);
+	if (window == NULL) {
+		Com_Printf("Window \"%s\" not found.\n", name);
 		return NULL;
 	}
 
 	/* found the correct add it to stack or bring it on top */
 	if (delete)
-		MN_DeleteMenuFromStack(menu);
+		MN_DeleteWindowFromStack(window);
 
 	if (mn.windowStackPos < MAX_MENUSTACK)
 		if (parent) {
-			const int parentPos = MN_GetMenuPositionFromStackByName(parent);
+			const int parentPos = MN_GetWindowPositionFromStackByName(parent);
 			if (parentPos == -1) {
-				Com_Printf("Didn't find parent menu \"%s\" for menu push of \"%s\"\n", parent, name);
+				Com_Printf("Didn't find parent window \"%s\" for window push of \"%s\"\n", parent, name);
 				return NULL;
 			}
-			MN_InsertMenuIntoStack(menu, parentPos + 1);
-			menu->u.window.parent = mn.windowStack[parentPos];
+			MN_InsertWindowIntoStack(window, parentPos + 1);
+			window->u.window.parent = mn.windowStack[parentPos];
 		} else
-			mn.windowStack[mn.windowStackPos++] = menu;
+			mn.windowStack[mn.windowStackPos++] = window;
 	else
-		Com_Printf("Menu stack overflow\n");
+		Com_Printf("Window stack overflow\n");
 
-	if (menu->behaviour->init) {
-		menu->behaviour->init(menu);
+	if (window->behaviour->init) {
+		window->behaviour->init(window);
 	}
 
 	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
 
 	MN_InvalidateMouse();
-	return menu;
+	return window;
 }
 
 /**
  * @brief Complete function for mn_push
  * @sa Cmd_AddParamCompleteFunction
- * @sa MN_PushMenu
- * @note Does not really complete the input - but shows at least all parsed menus
+ * @sa MN_PushWindow
+ * @note Does not really complete the input - but shows at least all parsed windows
  */
 int MN_CompleteWithWindow (const char *partial, const char **match)
 {
@@ -241,44 +241,44 @@ int MN_CompleteWithWindow (const char *partial, const char **match)
  * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to menuNode_t
  */
-menuNode_t* MN_PushMenu (const char *name, const char *parentName)
+menuNode_t* MN_PushWindow (const char *name, const char *parentName)
 {
-	return MN_PushMenuDelete(name, parentName, qtrue);
+	return MN_PushWindowDelete(name, parentName, qtrue);
 }
 
 /**
- * @brief Console function to push a child menu onto the menu stack
- * @sa MN_PushMenu
+ * @brief Console function to push a child window onto the window stack
+ * @sa MN_PushWindow
  */
-static void MN_PushChildMenu_f (void)
+static void MN_PushChildWindow_f (void)
 {
 	if (Cmd_Argc() > 1)
-		MN_PushMenu(Cmd_Argv(1), Cmd_Argv(2));
+		MN_PushWindow(Cmd_Argv(1), Cmd_Argv(2));
 	else
 		Com_Printf("Usage: %s <name> <parentname>\n", Cmd_Argv(0));
 }
 
 /**
- * @brief Console function to push a menu onto the menu stack
- * @sa MN_PushMenu
+ * @brief Console function to push a window onto the window stack
+ * @sa MN_PushWindow
  */
-static void MN_PushMenu_f (void)
+static void MN_PushWindow_f (void)
 {
 	if (Cmd_Argc() > 1)
-		MN_PushMenu(Cmd_Argv(1), NULL);
+		MN_PushWindow(Cmd_Argv(1), NULL);
 	else
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 }
 
 /**
- * @brief Console function to push a dropdown menu at a position. It work like MN_PushMenu but move the menu at the right position
- * @sa MN_PushMenu
+ * @brief Console function to push a dropdown window at a position. It work like MN_PushWindow but move the window at the right position
+ * @sa MN_PushWindow
  * @note The usage is "mn_push_dropdown sourcenode pointposition destinationnode pointposition"
- * sourcenode must be a node into the menu we want to push,
- * we will move the menu to have sourcenode over destinationnode
+ * sourcenode must be a node into the window we want to push,
+ * we will move the window to have sourcenode over destinationnode
  * pointposition select for each node a position (like a corner).
  */
-static void MN_PushDropDownMenu_f (void)
+static void MN_PushDropDownWindow_f (void)
 {
 	vec2_t source;
 	vec2_t destination;
@@ -295,12 +295,12 @@ static void MN_PushDropDownMenu_f (void)
 	/* get the source anchor */
 	node = MN_GetNodeByPath(Cmd_Argv(1));
 	if (node == NULL) {
-		Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
+		Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
 	if (result != RESULT_OK) {
-		Com_Printf("MN_PushDropDownMenu_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
+		Com_Printf("MN_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
 		return;
 	}
 	MN_NodeGetPoint(node, source, pointPosition);
@@ -314,34 +314,34 @@ static void MN_PushDropDownMenu_f (void)
 		/* get the source anchor */
 		node = MN_GetNodeByPath(Cmd_Argv(3));
 		if (node == NULL) {
-			Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
+			Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
 			return;
 		}
 		result = Com_ParseValue(&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
 		if (result != RESULT_OK) {
-			Com_Printf("MN_PushDropDownMenu_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
+			Com_Printf("MN_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
 			return;
 		}
 		MN_NodeGetPoint(node, destination, pointPosition);
 		MN_NodeRelativeToAbsolutePoint(node, destination);
 	}
 
-	/* update the menu and push it */
+	/* update the window and push it */
 	node = MN_GetNodeByPath(Cmd_Argv(1));
 	if (node == NULL) {
-		Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
+		Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 	node = node->root;
 	node->pos[0] += destination[0] - source[0];
 	node->pos[1] += destination[1] - source[1];
-	MN_PushMenu(node->name, NULL);
+	MN_PushWindow(node->name, NULL);
 }
 
 /**
  * @brief Console function to hide the HUD in battlescape mode
- * Note: relies on a "nohud" menu existing
- * @sa MN_PushMenu
+ * Note: relies on a "nohud" window existing
+ * @sa MN_PushWindow
  */
 static void MN_PushNoHud_f (void)
 {
@@ -349,40 +349,40 @@ static void MN_PushNoHud_f (void)
 	if (!CL_BattlescapeRunning())
 		return;
 
-	MN_PushMenu("nohud", NULL);
+	MN_PushWindow("nohud", NULL);
 }
 
-static void MN_RemoveMenuAtPositionFromStack (int position)
+static void MN_RemoveWindowAtPositionFromStack (int position)
 {
 	int i;
 	assert(position < mn.windowStackPos);
 	assert(position >= 0);
 
-	/* create space for the new menu */
+	/* create space for the new window */
 	for (i = position; i < mn.windowStackPos; i++) {
 		mn.windowStack[i] = mn.windowStack[i + 1];
 	}
 	mn.windowStack[mn.windowStackPos--] = NULL;
 }
 
-static void MN_CloseAllMenu (void)
+static void MN_CloseAllWindow (void)
 {
 	int i;
 	for (i = mn.windowStackPos - 1; i >= 0; i--) {
-		menuNode_t *menu = mn.windowStack[i];
+		menuNode_t *window = mn.windowStack[i];
 
-		if (menu->u.window.onClose)
-			MN_ExecuteEventActions(menu, menu->u.window.onClose);
+		if (window->u.window.onClose)
+			MN_ExecuteEventActions(window, window->u.window.onClose);
 
 		/* safe: unlink window */
-		menu->u.window.parent = NULL;
+		window->u.window.parent = NULL;
 		mn.windowStackPos--;
 		mn.windowStack[mn.windowStackPos] = NULL;
 	}
 }
 
 /**
- * @brief Init the stack to start with a menu, and have an alternative menu with ESC
+ * @brief Init the stack to start with a window, and have an alternative window with ESC
  * @param[in] activeMenu The first active menu of the stack, else NULL
  * @param[in] mainMenu The alternative menu, else NULL if nothing
  * @param[in] popAll If true, clean up the stack first
@@ -397,13 +397,13 @@ static void MN_CloseAllMenu (void)
 void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive)
 {
 	if (popAll)
-		MN_PopMenu(qtrue);
+		MN_PopWindow(qtrue);
 	if (activeMenu) {
 		Cvar_Set("mn_sys_active", activeMenu);
 		/* prevent calls before UI script initialization */
 		if (mn.numWindows != 0) {
 			if (pushActive)
-				MN_PushMenu(activeMenu, NULL);
+				MN_PushWindow(activeMenu, NULL);
 		}
 	}
 
@@ -412,17 +412,17 @@ void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll
 }
 
 /**
- * @brief Check if a named menu is on the stack if active menus
+ * @brief Check if a named window is on the stack if active windows
  */
-qboolean MN_IsMenuOnStack(const char* name)
+qboolean MN_IsWindowOnStack(const char* name)
 {
-	return MN_GetMenuPositionFromStackByName(name) != -1;
+	return MN_GetWindowPositionFromStackByName(name) != -1;
 }
 
 /**
  * @todo Find  better name
  */
-static void MN_CloseMenuByRef (menuNode_t *menu)
+static void MN_CloseWindowByRef (menuNode_t *window)
 {
 	int i;
 
@@ -430,78 +430,78 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 	MN_ReleaseInput();
 
 	assert(mn.windowStackPos);
-	i = MN_GetMenuPositionFromStackByName(menu->name);
+	i = MN_GetWindowPositionFromStackByName(window->name);
 	if (i == -1) {
-		Com_Printf("Menu '%s' is not on the active stack\n", menu->name);
+		Com_Printf("Menu '%s' is not on the active stack\n", window->name);
 		return;
 	}
 
 	/* close child */
 	while (i + 1 < mn.windowStackPos) {
 		menuNode_t *m = mn.windowStack[i + 1];
-		if (m->u.window.parent != menu) {
+		if (m->u.window.parent != window) {
 			break;
 		}
 		if (m->u.window.onClose)
 			MN_ExecuteEventActions(m, m->u.window.onClose);
 		m->u.window.parent = NULL;
-		MN_RemoveMenuAtPositionFromStack(i + 1);
+		MN_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
-	/* close the menu */
-	if (menu->u.window.onClose)
-		MN_ExecuteEventActions(menu, menu->u.window.onClose);
-	menu->u.window.parent = NULL;
-	MN_RemoveMenuAtPositionFromStack(i);
+	/* close the window */
+	if (window->u.window.onClose)
+		MN_ExecuteEventActions(window, window->u.window.onClose);
+	window->u.window.parent = NULL;
+	MN_RemoveWindowAtPositionFromStack(i);
 
 	MN_InvalidateMouse();
 }
 
-void MN_CloseMenu (const char* name)
+void MN_CloseWindow (const char* name)
 {
-	menuNode_t *menu = MN_GetMenu(name);
-	if (menu == NULL) {
-		Com_Printf("Menu '%s' doesn't exist\n", name);
+	menuNode_t *window = MN_GetWindow(name);
+	if (window == NULL) {
+		Com_Printf("Window '%s' not found\n", name);
 		return;
 	}
 
 	/* found the correct add it to stack or bring it on top */
-	MN_CloseMenuByRef(menu);
+	MN_CloseWindowByRef(window);
 }
 
 /**
- * @brief Pops a menu from the menu stack
- * @param[in] all If true pop all menus from stack
- * @sa MN_PopMenu_f
+ * @brief Pops a window from the window stack
+ * @param[in] all If true pop all windows from stack
+ * @sa MN_PopWindow_f
  */
-void MN_PopMenu (qboolean all)
+void MN_PopWindow (qboolean all)
 {
 	menuNode_t *oldfirst = mn.windowStack[0];
 
 	if (all) {
-		MN_CloseAllMenu();
+		MN_CloseAllWindow();
 	} else {
 		menuNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
 		if (!mn.windowStackPos)
 			return;
 		if (mainMenu->u.window.parent)
 			mainMenu = mainMenu->u.window.parent;
-		MN_CloseMenuByRef(mainMenu);
+		MN_CloseWindowByRef(mainMenu);
 
 		if (mn.windowStackPos == 0) {
-			/* mn_main contains the menu that is the very first menu and should be
-			 * pushed back onto the stack (otherwise there would be no menu at all
+			/* mn_main contains the window that is the very first window and should be
+			 * pushed back onto the stack (otherwise there would be no window at all
 			 * right now) */
 			if (!strcmp(oldfirst->name, mn_sys_main->string)) {
 				if (mn_sys_active->string[0] != '\0')
-					MN_PushMenu(mn_sys_active->string, NULL);
+					MN_PushWindow(mn_sys_active->string, NULL);
 				if (!mn.windowStackPos)
-					MN_PushMenu(mn_sys_main->string, NULL);
+					MN_PushWindow(mn_sys_main->string, NULL);
 			} else {
 				if (mn_sys_main->string[0] != '\0')
-					MN_PushMenu(mn_sys_main->string, NULL);
+					MN_PushWindow(mn_sys_main->string, NULL);
 				if (!mn.windowStackPos)
-					MN_PushMenu(mn_sys_active->string, NULL);
+					MN_PushWindow(mn_sys_active->string, NULL);
 			}
 		}
 	}
@@ -516,53 +516,53 @@ void MN_PopMenu (qboolean all)
 
 /**
  * @brief Console function to close a named menu
- * @sa MN_PushMenu
+ * @sa MN_PushWindow
  */
-static void MN_CloseMenu_f (void)
+static void MN_CloseWindow_f (void)
 {
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 		return;
 	}
 
-	MN_CloseMenu(Cmd_Argv(1));
+	MN_CloseWindow(Cmd_Argv(1));
 }
 
-void MN_PopMenuWithEscKey (void)
+void MN_PopWindowWithEscKey (void)
 {
-	const menuNode_t *menu = mn.windowStack[mn.windowStackPos - 1];
+	const menuNode_t *window = mn.windowStack[mn.windowStackPos - 1];
 
 	/* nothing if stack is empty */
 	if (mn.windowStackPos == 0)
 		return;
 
 	/* some window can prevent escape */
-	if (menu->u.window.preventTypingEscape)
+	if (window->u.window.preventTypingEscape)
 		return;
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 }
 
 /**
  * @brief Console function to pop a menu from the menu stack
- * @sa MN_PopMenu
+ * @sa MN_PopWindow
  */
-static void MN_PopMenu_f (void)
+static void MN_PopWindow_f (void)
 {
 	if (Cmd_Argc() > 1) {
 		Com_Printf("Usage: %s\n", Cmd_Argv(0));
 		return;
 	}
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 }
 
 /**
  * @brief Returns the current active menu from the menu stack or NULL if there is none
  * @return menuNode_t pointer from menu stack
- * @sa MN_GetMenu
+ * @sa MN_GetWindow
  */
-menuNode_t* MN_GetActiveMenu (void)
+menuNode_t* MN_GetActiveWindow (void)
 {
 	return (mn.windowStackPos > 0 ? mn.windowStack[mn.windowStackPos - 1] : NULL);
 }
@@ -572,19 +572,19 @@ menuNode_t* MN_GetActiveMenu (void)
  */
 void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 {
-	menuNode_t *menu = MN_GetActiveMenu();
+	menuNode_t *window = MN_GetActiveWindow();
 
 	/** @todo the better way is to add a 'battlescape' node */
-	if (!menu || !menu->u.window.renderNode)
-		if (MN_IsMenuOnStack(mn_hud->string))
-			menu = MN_GetMenu(mn_hud->string);
+	if (!window || !window->u.window.renderNode)
+		if (MN_IsWindowOnStack(mn_hud->string))
+			window = MN_GetWindow(mn_hud->string);
 
-	if (menu && menu->u.window.renderNode) {
-		menuNode_t* node = menu->u.window.renderNode;
+	if (window && window->u.window.renderNode) {
+		menuNode_t* node = window->u.window.renderNode;
 		vec2_t pos;
 
 		/* update the layout */
-		menu->behaviour->doLayout(menu);
+		window->behaviour->doLayout(window);
 
 		MN_GetNodeAbsPos(node, pos);
 		viddef.x = pos[0] * viddef.rx;
@@ -599,23 +599,23 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 }
 
 /**
- * @brief Returns the name of the current menu
- * @return Active menu name, else empty string
- * @sa MN_GetActiveMenu
+ * @brief Returns the name of the current window
+ * @return Active window name, else empty string
+ * @sa MN_GetActiveWIndow
  */
-const char* MN_GetActiveMenuName (void)
+const char* MN_GetActiveWindowName (void)
 {
-	const menuNode_t* menu = MN_GetActiveMenu();
-	if (menu == NULL)
+	const menuNode_t* window = MN_GetActiveWindow();
+	if (window == NULL)
 		return "";
-	return menu->name;
+	return window->name;
 }
 
 /**
- * @brief Check if a point is over a menu from the stack
+ * @brief Check if a point is over a window from the stack
  * @sa IN_Parse
  */
-qboolean MN_IsPointOnMenu (int x, int y)
+qboolean MN_IsPointOnWindow (int x, int y)
 {
 	const menuNode_t *hovered;
 
@@ -640,13 +640,13 @@ qboolean MN_IsPointOnMenu (int x, int y)
 }
 
 /**
- * @brief Searches all menus for the specified one
- * @param[in] name Name of the menu we search
- * @return The menu found, else NULL
+ * @brief Searches all windows for the specified one
+ * @param[in] name Name of the window we search
+ * @return The window found, else NULL
  * @note Use dichotomic search
- * @sa MN_GetActiveMenu
+ * @sa MN_GetActiveWindow
  */
-menuNode_t *MN_GetMenu (const char *name)
+menuNode_t *MN_GetWindow (const char *name)
 {
 	unsigned char min = 0;
 	unsigned char max = mn.numWindows;
@@ -670,7 +670,7 @@ menuNode_t *MN_GetMenu (const char *name)
 }
 
 /**
- * @brief Invalidate all menus of the current stack.
+ * @brief Invalidate all windows of the current stack.
  */
 void MN_InvalidateStack (void)
 {
@@ -683,30 +683,31 @@ void MN_InvalidateStack (void)
 }
 
 /**
- * @brief Sets new x and y coordinates for a given menu
+ * @brief Sets new x and y coordinates for a given window
+ * @todo remove that
  */
-void MN_SetNewMenuPos (menuNode_t* menu, int x, int y)
+void MN_SetNewWindowPos (menuNode_t* window, int x, int y)
 {
-	if (menu)
-		Vector2Set(menu->pos, x, y);
+	if (window)
+		Vector2Set(window->pos, x, y);
 }
 
 /**
- * @brief Add a new menu to the list of all menus
- * @note Sort menus by alphabet
+ * @brief Add a new window to the list of all windows
+ * @note Sort windows by alphabet
  */
-void MN_InsertMenu(menuNode_t* menu)
+void MN_InsertWindow(menuNode_t* window)
 {
 	int pos = 0;
 	int i;
 
 	if (mn.numWindows >= MAX_WINDOWS)
-		Com_Error(ERR_FATAL, "MN_InsertMenu: hit MAX_WINDOWS");
+		Com_Error(ERR_FATAL, "MN_InsertWindow: hit MAX_WINDOWS");
 
 	/* search the insertion position */
 	for (pos = 0; pos < mn.numWindows; pos++) {
 		const menuNode_t* node = mn.windows[pos];
-		if (strcmp(menu->name, node->name) < 0)
+		if (strcmp(window->name, node->name) < 0)
 			break;
 	}
 
@@ -715,53 +716,53 @@ void MN_InsertMenu(menuNode_t* menu)
 		mn.windows[i + 1] = mn.windows[i];
 
 	/* insert */
-	mn.windows[pos] = menu;
+	mn.windows[pos] = window;
 	mn.numWindows++;
 }
 
 /**
- * @brief Console command for moving a menu
+ * @brief Console command for moving a window
  */
-void MN_SetNewMenuPos_f (void)
+static void MN_SetNewWindowPos_f (void)
 {
-	menuNode_t* menu = MN_GetActiveMenu();
+	menuNode_t* window = MN_GetActiveWindow();
 
 	if (Cmd_Argc() < 3)
 		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
 
-	MN_SetNewMenuPos(menu, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
+	MN_SetNewWindowPos(window, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
 }
 
 /**
- * @brief This will reinitialize the current visible menu
+ * @brief This will reinitialize the current visible window
  * @note also available as script command mn_reinit
  * @todo replace that by a common action "call *ufopedia.init"
  */
 static void MN_FireInit_f (void)
 {
-	const menuNode_t* menu;
+	const menuNode_t* window;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <menu>\n", Cmd_Argv(0));
 		return;
 	}
 
-	menu = MN_GetNodeByPath(Cmd_Argv(1));
-	if (menu == NULL) {
+	window = MN_GetNodeByPath(Cmd_Argv(1));
+	if (window == NULL) {
 		Com_Printf("MN_FireInit_f: Node '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
 
-	if (!MN_NodeInstanceOf(menu, "window")) {
+	if (!MN_NodeInstanceOf(window, "window")) {
 		Com_Printf("MN_FireInit_f: Node '%s' is not a 'window'\n", Cmd_Argv(1));
 		return;
 	}
 
 	/* initialize it */
-	if (menu) {
-		if (menu->u.window.onInit)
-			MN_ExecuteEventActions(menu, menu->u.window.onInit);
-		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", menu->name);
+	if (window) {
+		if (window->u.window.onInit)
+			MN_ExecuteEventActions(window, window->u.window.onInit);
+		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", window->name);
 	}
 }
 
@@ -812,24 +813,24 @@ static void MN_DebugTree_f (void)
 	}
 
 	window = Cmd_Argv(1);
-	node = MN_GetMenu(window);
+	node = MN_GetWindow(window);
 	MN_DebugTree(node, 0);
 }
 
-void MN_InitMenus (void)
+void MN_InitWindows (void)
 {
 	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_sys_active");
 	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_sys_main");
 
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
-	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
+	Cmd_AddCommand("mn_push", MN_PushWindow_f, "Push a menu to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithWindow);
-	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownMenu_f, "Push a dropdown menu at a position");
-	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
-	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
-	Cmd_AddCommand("mn_close", MN_CloseMenu_f, "Close a menu");
-	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
+	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownWindow_f, "Push a dropdown menu at a position");
+	Cmd_AddCommand("mn_push_child", MN_PushChildWindow_f, "Push a menu to the menustack with a big dependancy to a parent menu");
+	Cmd_AddCommand("mn_pop", MN_PopWindow_f, "Pops the current menu from the stack");
+	Cmd_AddCommand("mn_close", MN_CloseWindow_f, "Close a menu");
+	Cmd_AddCommand("mn_move", MN_SetNewWindowPos_f, "Moves the menu to a new position.");
 	Cmd_AddCommand("mn_initstack", MN_InitStack_f, "Initialize the window stack with a main and an option window.");
 
 	Cmd_AddCommand("mn_tree", MN_DebugTree_f, "Display a tree of nodes fropm a window into the console.");

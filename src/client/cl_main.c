@@ -398,7 +398,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		s = NET_ReadString(msg);
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
-			MN_PushMenu("serverpassword", NULL);
+			MN_PushWindow("serverpassword", NULL);
 		MN_Popup(_("Notice"), _(s));
 		return;
 	}
@@ -794,7 +794,7 @@ static void CL_CheckCvars_f (void)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
 		if (checkcvar[i].var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", checkcvar[i].var->name);
-			MN_PushMenu("checkcvars", NULL);
+			MN_PushWindow("checkcvars", NULL);
 			break;
 		}
 		i++;

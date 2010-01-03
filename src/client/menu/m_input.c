@@ -339,7 +339,7 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 			MN_MouseRelease();
 			return qtrue;
 		}
-		MN_PopMenuWithEscKey();
+		MN_PopWindowWithEscKey();
 		return qtrue;
 	}
 
@@ -508,7 +508,7 @@ static void MN_LeftClick (int x, int y)
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && mn.windowStackPos != 0) {
 		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown) {
-			MN_PopMenu(qfalse);
+			MN_PopWindow(qfalse);
 		}
 	}
 

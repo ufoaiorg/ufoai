@@ -156,8 +156,8 @@ static void AIM_AircraftStart_f (void)
 
 	MAP_SelectAircraft(aircraft);
 	/* Return to geoscape. */
-	MN_PopMenu(qfalse);
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
+	MN_PopWindow(qfalse);
 }
 
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1

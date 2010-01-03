@@ -245,7 +245,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa CL_Sequence2D
  * @sa V_RenderView
  * @sa CL_SequenceEnd_f
- * @sa MN_PopMenu
+ * @sa MN_PopWindow
  * @sa CL_SequenceFindEnt
  */
 void CL_SequenceRender (void)
@@ -269,7 +269,7 @@ void CL_SequenceRender (void)
 		/* test for finish */
 		if (seqCmd >= seqEndCmd) {
 			CL_SequenceEnd_f();
-			MN_PopMenu(qfalse);
+			MN_PopWindow(qfalse);
 			return;
 		}
 
@@ -428,7 +428,7 @@ static void CL_SequenceStart_f (void)
 	/* display the sequence menu */
 	/* the default is in menu_main.ufo - menu sequence */
 	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
-	menu = MN_PushMenu(menuName, NULL);
+	menu = MN_PushWindow(menuName, NULL);
 	if (!menu) {
 		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
 		return;

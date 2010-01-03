@@ -1515,7 +1515,7 @@ void CL_GameAutoGo (mission_t *mis)
 		winProbability = CP_GetWinProbabilty(mis, (base_t *)mis->data, NULL);
 	}
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 
 	won = frand() < winProbability;
 
@@ -1542,7 +1542,7 @@ void CL_GameAutoGo (mission_t *mis)
 		counts[MRC_CIVILIAN_SURVIVOR] = ccs.battleParameters.civilians;
 		CP_InitMissionResults(counts, won);
 		Cvar_SetValue("mn_autogo", 1);
-		MN_PushMenu("won", NULL);
+		MN_PushWindow("won", NULL);
 	}
 
 	/* handle base attack mission */

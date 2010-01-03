@@ -371,7 +371,7 @@ static void MN_MaterialEditorStart_f (void)
 #ifndef ANYIMAGES
 	if (cls.state != ca_active) {
 		Com_Printf("Material editor is only usable in battlescape mode\n");
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 #endif
