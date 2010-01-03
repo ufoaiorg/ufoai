@@ -422,9 +422,9 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	}
 
 	/* unsigned and signed number */
-	if ( (token[0] >= '0' && token[0] <= '9')
-		|| (token[0] == '-' && token[1] >= '0' && token[1] <= '9') ) {
-		/* @todo use a better check */
+	if ((token[0] >= '0' && token[0] <= '9')
+		|| (token[0] == '-' && token[1] >= '0' && token[1] <= '9')) {
+		/** @todo use a better check - e.g. Com_ParseValue with V_INT or V_FLOAT */
 		float f = atof(token);
 		expression->d.terminal.d1.number = f;
 		expression->type = EA_VALUE_FLOAT;
