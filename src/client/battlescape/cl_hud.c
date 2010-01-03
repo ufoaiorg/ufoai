@@ -1259,6 +1259,8 @@ void HUD_ActorUpdateCvars (void)
 			if (!selWeapon && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
 				selWeapon = RIGHT(selActor);
 
+			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+
 			if (selWeapon) {
 				if (!selWeapon->item.t) {
 					/* No valid weapon in the hand. */
@@ -1288,27 +1290,26 @@ void HUD_ActorUpdateCvars (void)
 						}
 					}
 				}
-			}
 
-			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
-			if (selWeapon && !GAME_ItemIsUseable(selWeapon->item.t)) {
-				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
-				selActor->actorMode = M_MOVE;
-			} else if (selWeapon && selActor->fd) {
-				Com_sprintf(infoText, lengthof(infoText),
-							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selActor->fd->name),
-							selActor->fd->ammo, hitProbability, selActor->fd->time);
-
-				/* Save the text for later display next to the cursor. */
-				Q_strncpyz(mouseText, infoText, sizeof(mouseText));
-				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
-
-				time = selActor->fd->time;
-				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
-				if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time)
+				if (!GAME_ItemIsUseable(selWeapon->item.t)) {
+					HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
 					selActor->actorMode = M_MOVE;
-			} else if (selWeapon) {
-				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
+				} else if (selActor->fd) {
+					Com_sprintf(infoText, lengthof(infoText),
+								"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selActor->fd->name),
+								selActor->fd->ammo, hitProbability, selActor->fd->time);
+
+					/* Save the text for later display next to the cursor. */
+					Q_strncpyz(mouseText, infoText, sizeof(mouseText));
+					MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+
+					time = selActor->fd->time;
+					/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
+					if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time)
+						selActor->actorMode = M_MOVE;
+				} else if (selWeapon) {
+					Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
+				}
 			} else {
 				selActor->actorMode = M_MOVE;
 			}

@@ -1752,7 +1752,6 @@ void CL_ActorMouseTrace (void)
 				break;
 			default:
 				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
-				break;
 		}
 
 	/* calculate move length */
@@ -2323,7 +2322,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
-					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
+					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.color, 1, 0, 0); /* Red */
@@ -2332,7 +2331,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		} else {
 			/* coop multiplayer games */
 			if (mouseActor->pnum != cl.pnum) {
-				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
+				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 			} else {
 				/* we know the names of our own actors */
 				character_t* chr = CL_GetActorChr(mouseActor);
