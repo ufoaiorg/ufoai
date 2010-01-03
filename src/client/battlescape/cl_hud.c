@@ -33,7 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"
 #include "../menu/m_draw.h"
+#include "../menu/m_render.h"
 #include "../renderer/r_mesh_anim.h"
+#include "../renderer/r_draw.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
 static qboolean firemodesChangeDisplay = qtrue;
@@ -46,6 +48,7 @@ static reactionmode_t selActorReactionState;
 static reactionmode_t selActorOldReactionState = R_FIRE_OFF;
 
 static cvar_t *cl_hud_message_timeout;
+static cvar_t *cl_show_cursor_tooltips;
 int hitProbability;
 
 enum {
@@ -1109,6 +1112,126 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	}
 }
 
+static const vec4_t cursorTextBg = { 0.0f, 0.0f, 0.0f, 0.7f };
+
+/**
+ * @brief Draw the mouse cursor tooltips in battlescape
+ * @param xOffset
+ * @param yOffset
+ * @param textId The text id to get the tooltip string from.
+ * @param drawBg If @c true, we add a background to the string.
+ */
+static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId, qboolean drawBg)
+{
+	const char *string = MN_GetText(textId);
+
+	if (string && cl_show_cursor_tooltips->integer) {
+		int width = 0;
+		int height = 0;
+
+		R_FontTextSize("f_verysmall", string, viddef.virtualWidth - mousePosX, LONGLINES_WRAP, &width, &height, NULL, NULL);
+
+		if (!width)
+			return;
+
+		if (drawBg)
+			R_DrawFill(mousePosX + xOffset - 2, mousePosY - yOffset - 1, width + 4, height + 2, cursorTextBg);
+		MN_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
+	}
+}
+
+/**
+ * @brief Updates the cursor texts when in battlescape
+ */
+void HUD_UpdateCursor (void)
+{
+	/* Offset of the first icon on the x-axis. */
+	int iconOffsetX = 16;
+	/* Offset of the first icon on the y-axis. */
+	int iconOffsetY = 16;
+	/* the space between different icons. */
+	const int iconSpacing = 2;
+	le_t *le = selActor;
+	if (le) {
+		image_t *image;
+		const int bgY = mousePosY + iconOffsetY / 2 - 2;
+		/* icon width */
+		int iconW = 16;
+		/* icon height. */
+		int iconH = 16;
+		int width = 0;
+		int bgX = mousePosX + iconOffsetX / 2 - 2;
+		int bgW = iconOffsetX / 2 + 4;
+		int bgH = iconOffsetY + 6;
+
+		/* checks if icons should be drawn */
+		if (LE_IsCrouched(le) || (le->state & STATE_REACTION))
+			bgW += iconW;
+		else
+			/* make place holder for icons */
+			bgX += iconW + 4;
+
+		/* if exists gets width of player name */
+		if (MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES))
+			R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
+
+		/* check if second line should be drawn */
+		if (width || (le->state & STATE_REACTION)) {
+			bgH += iconH;
+			bgW += width;
+		}
+
+		/* gets width of background */
+		if (width == 0 && MN_GetText(TEXT_MOUSECURSOR_RIGHT)) {
+			R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
+			bgW += width;
+		}
+
+		R_DrawFill(bgX, bgY, bgW, bgH, cursorTextBg);
+
+		/* Display 'crouch' icon if actor is crouched. */
+		if (LE_IsCrouched(le)) {
+			image = R_FindImage("pics/cursors/ducked", it_pic);
+			if (image)
+				R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
+		}
+
+		/* Height of 'crouched' icon. */
+		iconOffsetY += 16;
+		iconOffsetY += iconSpacing;
+
+		/* Display 'Reaction shot' icon if actor has it activated. */
+		if (le->state & STATE_REACTION_ONCE)
+			image = R_FindImage("pics/cursors/reactionfire", it_pic);
+		else if (le->state & STATE_REACTION_MANY)
+			image = R_FindImage("pics/cursors/reactionfiremany", it_pic);
+		else
+			image = NULL;
+
+		if (image)
+			R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
+
+		/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+		iconOffsetY += iconH;
+		iconOffsetY += iconSpacing;
+
+		/* Display weaponmode (text) heR_ */
+		HUD_DrawMouseCursorText(iconOffsetX + iconW, -10, TEXT_MOUSECURSOR_RIGHT, qfalse);
+	}
+
+	/* playernames */
+	HUD_DrawMouseCursorText(iconOffsetX + 16, -26, TEXT_MOUSECURSOR_PLAYERNAMES, qfalse);
+	MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
+
+	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
+		/* Display ceiling text */
+		HUD_DrawMouseCursorText(0, -64, TEXT_MOUSECURSOR_TOP, qtrue);
+		/* Display floor text */
+		HUD_DrawMouseCursorText(0, 64, TEXT_MOUSECURSOR_BOTTOM, qtrue);
+		/* Display left text */
+		HUD_DrawMouseCursorText(-64, 0, TEXT_MOUSECURSOR_LEFT, qtrue);
+	}
+}
 
 /**
  * @brief Updates console vars for an actor.
@@ -1566,4 +1689,5 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("centercamera", CL_CenterCameraIntoMap_f, "Center camera into the map.");
 
 	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
+	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 }

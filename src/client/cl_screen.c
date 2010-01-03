@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_view.h"
+#include "battlescape/cl_hud.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
 #include "menu/m_main.h"
@@ -61,7 +62,6 @@ static cvar_t *scr_consize;
 static cvar_t *scr_rspeed;
 static cvar_t *scr_cursor;
 static cvar_t *scr_showcursor;
-static cvar_t *cl_show_cursor_tooltips;
 
 static char cursorImage[MAX_QPATH];
 /**
@@ -80,34 +80,6 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 		}
 	} else
 		MN_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
-}
-
-static const vec4_t currsorTextBg = { 0.0f, 0.0f, 0.0f, 0.7f };
-
-/**
- * @brief Draw the mouse cursor tooltips in battlescape
- * @param xOffset
- * @param yOffset
- * @param textId The text id to get the tooltip string from.
- * @param drawBg If @c true, we add a background to the string.
- */
-static void SCR_DrawMouseCursorText (int xOffset, int yOffset, int textId, qboolean drawBg)
-{
-	const char *string = MN_GetText(textId);
-
-	if (string && cl_show_cursor_tooltips->integer) {
-		int width = 0;
-		int height = 0;
-
-		R_FontTextSize("f_verysmall", string, viddef.virtualWidth - mousePosX, LONGLINES_WRAP, &width, &height, NULL, NULL);
-
-		if (!width)
-			return;
-
-		if (drawBg)
-			MN_DrawFill(mousePosX + xOffset - 2, mousePosY - yOffset - 1, width + 4, height + 2, currsorTextBg);
-		SCR_DrawString(mousePosX + xOffset, mousePosY - yOffset, string, qfalse);
-	}
 }
 
 /**
@@ -304,91 +276,7 @@ static void SCR_DrawCursor (void)
 			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
 		if (mouseSpace == MS_WORLD && CL_BattlescapeRunning()) {
-			/* Offset of the first icon on the x-axis. */
-			int iconOffsetX = 16;
-			/* Offset of the first icon on the y-axis. */
-			int iconOffsetY = 16;
-			/* the space between different icons. */
-			const int iconSpacing = 2;
-			le_t *le = selActor;
-			if (le) {
-				const int bgY = mousePosY + iconOffsetY / 2 - 2;
-				/* icon width */
-				int iconW = 16;
-				/* icon height. */
-				int iconH = 16;
-				int width = 0;
-				int bgX = mousePosX + iconOffsetX / 2 - 2;
-				int bgW = iconOffsetX / 2 + 4;
-				int bgH = iconOffsetY + 6;
-
-				/* checks if icons should be drawn */
-				if (LE_IsCrouched(le) || (le->state & STATE_REACTION))
-					bgW += iconW;
-				else
-					/* make place holder for icons */
-					bgX += iconW + 4;
-
-				/* if exists gets width of player name */
-				if (MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES))
-					R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
-
-				/* check if second line should be drawn */
-				if (width || (le->state & STATE_REACTION)) {
-					bgH += iconH;
-					bgW += width;
-				}
-
-				/* gets width of background */
-				if (width == 0 && MN_GetText(TEXT_MOUSECURSOR_RIGHT)) {
-					R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
-					bgW += width;
-				}
-
-				MN_DrawFill(bgX, bgY, bgW, bgH, currsorTextBg);
-
-				/* Display 'crouch' icon if actor is crouched. */
-				if (LE_IsCrouched(le)) {
-					image = R_FindImage("pics/cursors/ducked", it_pic);
-					if (image)
-						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
-				}
-
-				/* Height of 'crouched' icon. */
-				iconOffsetY += 16;
-				iconOffsetY += iconSpacing;
-
-				/* Display 'Reaction shot' icon if actor has it activated. */
-				if (le->state & STATE_REACTION_ONCE)
-					image = R_FindImage("pics/cursors/reactionfire", it_pic);
-				else if (le->state & STATE_REACTION_MANY)
-					image = R_FindImage("pics/cursors/reactionfiremany", it_pic);
-				else
-					image = NULL;
-
-				if (image)
-					R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
-
-				/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
-				iconOffsetY += iconH;
-				iconOffsetY += iconSpacing;
-
-				/* Display weaponmode (text) heR_ */
-				SCR_DrawMouseCursorText(iconOffsetX + iconW, -10, TEXT_MOUSECURSOR_RIGHT, qfalse);
-			}
-
-			/* playernames */
-			SCR_DrawMouseCursorText(iconOffsetX + 16, -26, TEXT_MOUSECURSOR_PLAYERNAMES, qfalse);
-			MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
-
-			if (cl_map_debug->integer & MAPDEBUG_TEXT) {
-				/* Display ceiling text */
-				SCR_DrawMouseCursorText(0, -64, TEXT_MOUSECURSOR_TOP, qtrue);
-				/* Display floor text */
-				SCR_DrawMouseCursorText(0, 64, TEXT_MOUSECURSOR_BOTTOM, qtrue);
-				/* Display left text */
-				SCR_DrawMouseCursorText(-64, 0, TEXT_MOUSECURSOR_LEFT, qtrue);
-			}
+			HUD_UpdateCursor();
 		}
 	} else {
 		MN_DrawCursor();
@@ -585,7 +473,6 @@ void SCR_Init (void)
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
-	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 	scr_cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
 	scr_showcursor = Cvar_Get("scr_showcursor", "1", 0, "Show/hide mouse cursor- 0-1");
 
