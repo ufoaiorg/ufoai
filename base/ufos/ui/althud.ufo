@@ -783,25 +783,11 @@ window althud extends ahud
 			onClick		{ cmd "togglereaction;" }
 		}
 	
-		confunc althud_deselheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
-		confunc althud_disheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
-	
-		pic althud_bt_use_headgear
-		{
-			tooltip		"_Use headgear"
-			image		althud/buttons_althud1g
-			mousefx		true
-			pos			"162 433"
-			texl		"108 37"
-			texh		"134 70"
-			onClick		{ cmd "useheadgear;" }
-		}
-	
 		pic bt_reloadright
 		{
 			tooltip		*cvar:mn_reloadright_tt
 			image		althud/buttons_althud1g
-			pos			"223 433"
+			pos			"162 433"
 			texl		"0 37"
 			texh		"25 70"
 			mousefx		true
@@ -814,7 +800,7 @@ window althud extends ahud
 		{
 			tooltip		*cvar:mn_reloadleft_tt
 			image		althud/buttons_althud1g
-			pos			"223 433"
+			pos			"162 433"
 			texl		"0 37"
 			texh		"25 70"
 			mousefx		true
@@ -823,6 +809,20 @@ window althud extends ahud
 			onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
 		}
 	
+		confunc althud_deselheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+		confunc althud_disheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+	
+		pic althud_bt_use_headgear
+		{
+			tooltip		"_Use headgear"
+			image		althud/buttons_althud1g
+			mousefx		true
+			pos			"192 433"
+			texl		"108 37"
+			texh		"134 70"
+			onClick		{ cmd "useheadgear;" }
+		}
+		
 		pic bt_duck
 		{
 			tooltip		*cvar:mn_crouchstand_tt
@@ -867,13 +867,13 @@ window althud extends ahud
 		pic bt_shot_reservation
 		{
 			tooltip	*cvar:mn_shot_reservation_tt
-			image		hud/button_reserve_shot	// fixme
-			pos			"197 433"
-			texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
-			texh		"127 64"
+			image		althud/buttons_althud1g
+			pos			"222 433"
+			texl		"108 74"
+			texh		"134 107"
 			mousefx		true
 			onClick		{ cmd "sel_shotreservation;" }
-			onRClick		{ cmd "sel_shotreservation 0;" }
+			onRClick	{ cmd "sel_shotreservation 0;" }
 		}
 	
 		// "RESERVATION FOR SHOT" BUTTON
