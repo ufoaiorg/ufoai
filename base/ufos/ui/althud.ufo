@@ -583,7 +583,7 @@ window althud extends ahud
 				skin		*cvar:mn_skin
 				anim		*cvar:mn_anim
 				angles		"0 80 90"
-				pos			"96 16"
+				pos			"116 0"
 				size		"120 260"
 				scale		"4 4 4"
 		
