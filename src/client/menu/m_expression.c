@@ -411,7 +411,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 			/* do we ALREADY know this node? and his type */
 			MN_ReadNodePath(path, source, &node, &property);
 			if (!node)
-				Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", path);
+				Com_Printf("MN_ParseSetAction: node \"%s\" not yet known (in event), you can try to cast it\n", path);
 		}
 
 		if (property && property->type) {
