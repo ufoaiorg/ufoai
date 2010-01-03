@@ -5,26 +5,26 @@
 /**
  * @brief Define interface shared by all huds.
  * @note called "ahud" to be loaded before another huds
+ * @todo rename the interface confuncs
  */
 window ahud {
-
 
 	confunc hudselect { }
 	confunc huddeselect { }
 	confunc huddisable { }
 
-	confunc selpl { cmd "selpls;selpla;" }
-	confunc selpr { cmd "selprs;selpra;" }
+	confunc selpl { }
+	confunc selpr { }
 
-	confunc deselpl { cmd "deselpls;deselpla;" }
-	confunc deselpr { cmd "deselprs;deselpra;" }
-	confunc deselrl { cmd "deselrls;deselrla;" }
-	confunc deselrr { cmd "deselrrs;deselrra;" }
+	confunc deselpl { }
+	confunc deselpr { }
+	confunc deselrl { }
+	confunc deselrr { }
 
-	confunc displ { cmd "displs;displa;" }
-	confunc dispr { cmd "disprs;dispra;" }
-	confunc disrl { cmd "disrls;disrla;" }
-	confunc disrr { cmd "disrrs;disrra;" }
+	confunc displ { }
+	confunc dispr { }
+	confunc disrl { }
+	confunc disrr { }
 
 	confunc deselstand { }
 	confunc deselcrouch { }
@@ -36,31 +36,24 @@ window ahud {
 	confunc crouch_checkbox_clear	{ }
 	confunc crouch_checkbox_check	{ }
 
-	confunc reserve_shot_clear { 
-		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		cmd "reserve_shot_clear_s;reserve_shot_clear_a;"
-	}
+	confunc reserve_shot_clear { }
 	
-	confunc reserve_shot_check { 
-		cmd "reserve_shot_check_s;reserve_shot_check_a;"
-	}
+	confunc reserve_shot_check { }
 	
-	confunc reserve_shot_disable {
-		cmd "reserve_shot_disable_s;reserve_shot_disable_a;"
-	}
+	confunc reserve_shot_disable { }
 
-	confunc startreactionmany { cmd "startreactionmanys;startreactionmanya;" }
-	confunc startreactionmany_impos { cmd "startreactionmanys_impos;startreactionmanya_impos;" }
-	confunc startreactiononce { cmd "startreactiononces;startreactiononcea;" }
-	confunc startreactiononce_impos { cmd "startreactiononces_impos;startreactiononcea_impos;" }
-	confunc deselreaction { cmd "deselreactions;deselreactiona;" }
-	confunc disreaction { cmd "disreactions;disreactiona;" }
+	confunc startreactionmany { }
+	confunc startreactionmany_impos { }
+	confunc startreactiononce { }
+	confunc startreactiononce_impos { }
+	confunc deselreaction { }
+	confunc disreaction { }
 
-	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
-	confunc disheadgear { cmd "hud_disheadgear;althud_disheadgear;" }
+	confunc deselheadgear { }
+	confunc disheadgear { }
 
-	confunc startround { cmd "startrounds;startrounda;" }
-	confunc endround { cmd "endrounds;endrounda;" }
+	confunc startround { }
+	confunc endround { }
 	
 	confunc openradar { cmd "mn_push radarwindow;" }
 

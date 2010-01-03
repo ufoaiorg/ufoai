@@ -717,49 +717,6 @@ window althud extends ahud
 			size		"40 20"
 			textalign	uc
 		}
-		
-		confunc selpla { *right.bt_primaryleft@image	= althud/buttons_althud1a }
-		confunc selpra { *right.bt_primaryright@image = althud/buttons_althud1a }
-	
-		confunc deselpla { *right.bt_primaryleft@image	= althud/buttons_althud1 }
-		confunc deselpra { *right.bt_primaryright@image	= althud/buttons_althud1 }
-		confunc deselrla { *right.bt_reloadleft@image		= althud/buttons_althud1 }
-		confunc deselrra { *right.bt_reloadright@image	= althud/buttons_althud1 }
-	
-		confunc displa { *right.bt_primaryleft@image	= althud/buttons_althud1g }
-		confunc dispra { *right.bt_primaryright@image	= althud/buttons_althud1g }
-		confunc disrla { *right.bt_reloadleft@image	= althud/buttons_althud1g }
-		confunc disrra { *right.bt_reloadright@image	= althud/buttons_althud1g }
-	
-		confunc startreactionmanya
-		{
-			*right.bt_reaction_a@image = althud/buttons_althud1b
-			*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
-		}
-		confunc startreactionmanya_impos
-		{
-			*right.bt_reaction_a@image = althud/buttons_althud1br
-			*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
-		}
-		confunc startreactiononcea
-		{
-			*right.bt_reaction_a@image = althud/buttons_althud1a
-			*right.bt_reaction_a@tooltip = "_One-shot reaction fire"
-		}
-		confunc startreactiononcea_impos
-		{
-			*right.bt_reaction_a@image = althud/buttons_althud1ar
-			*right.bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
-		}
-	
-		confunc deselreactiona
-		{
-			*right.bt_reaction_a@image = althud/buttons_althud1
-			*right.bt_reaction_a@tooltip = "_No reaction fire"
-		}
-		confunc disreactiona {
-			*right.bt_reaction_a@image = althud/buttons_althud1g
-		}
 	
 		pic bt_reaction_a
 		{
@@ -796,9 +753,6 @@ window althud extends ahud
 			onMouseEnter			{ cmd "remaining_tus reload_l 1;" }
 			onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
 		}
-	
-		confunc althud_deselheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
-		confunc althud_disheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
 	
 		pic althud_bt_use_headgear
 		{
@@ -844,20 +798,6 @@ window althud extends ahud
 			mousefx		true
 			onClick		{ cmd "sel_shotreservation;" }
 			onRClick	{ cmd "sel_shotreservation 0;" }
-		}
-	
-		// "RESERVATION FOR SHOT" BUTTON
-		confunc reserve_shot_clear_a
-		{
-			*right.bt_shot_reservation@image = althud/buttons_althud1
-		}
-		confunc reserve_shot_check_a
-		{
-			*right.bt_shot_reservation@image = althud/buttons_althud1
-		}
-		confunc reserve_shot_disable_a
-		{
-			*right.bt_shot_reservation@image = althud/buttons_althud1g
 		}
 		
 		container right
@@ -1155,19 +1095,6 @@ window althud extends ahud
 			mousefx		true
 			onClick		{ cmd "mn_pop;" }
 		}
-			
-		// ==================
-		// round events
-		// ==================
-	
-		confunc startrounda
-		{
-			*upperright.nextround@image = althud/buttons_althud1
-		}
-		confunc endrounda
-		{
-			*upperright.nextround@image = althud/buttons_althud1g
-		}
 	}
 	
 	// ==================
@@ -1196,6 +1123,80 @@ window althud extends ahud
 	confunc disstand    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
 	confunc discrouch   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
 
+	confunc deselheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+	confunc disheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+
+	// ==================
+	// round events
+	// ==================
+
+	confunc startround
+	{
+		*upperright.nextround@image = althud/buttons_althud1
+	}
+	confunc endround
+	{
+		*upperright.nextround@image = althud/buttons_althud1g
+	}
+
+	confunc selpl { *right.bt_primaryleft@image	= althud/buttons_althud1a }
+	confunc selpr { *right.bt_primaryright@image = althud/buttons_althud1a }
+
+	confunc deselpl { *right.bt_primaryleft@image	= althud/buttons_althud1 }
+	confunc deselpr { *right.bt_primaryright@image	= althud/buttons_althud1 }
+	confunc deselrl { *right.bt_reloadleft@image		= althud/buttons_althud1 }
+	confunc deselrr { *right.bt_reloadright@image	= althud/buttons_althud1 }
+
+	confunc displ { *right.bt_primaryleft@image	= althud/buttons_althud1g }
+	confunc dispr { *right.bt_primaryright@image	= althud/buttons_althud1g }
+	confunc disrl { *right.bt_reloadleft@image	= althud/buttons_althud1g }
+	confunc disrr { *right.bt_reloadright@image	= althud/buttons_althud1g }
+
+	confunc startreactionmany
+	{
+		*right.bt_reaction_a@image = althud/buttons_althud1b
+		*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
+	}
+	confunc startreactionmany_impos
+	{
+		*right.bt_reaction_a@image = althud/buttons_althud1br
+		*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
+	}
+	confunc startreactiononce
+	{
+		*right.bt_reaction_a@image = althud/buttons_althud1a
+		*right.bt_reaction_a@tooltip = "_One-shot reaction fire"
+	}
+	confunc startreactiononce_impos
+	{
+		*right.bt_reaction_a@image = althud/buttons_althud1ar
+		*right.bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
+	}
+
+	confunc deselreaction
+	{
+		*right.bt_reaction_a@image = althud/buttons_althud1
+		*right.bt_reaction_a@tooltip = "_No reaction fire"
+	}
+	confunc disreaction {
+		*right.bt_reaction_a@image = althud/buttons_althud1g
+	}
+
+	// "RESERVATION FOR SHOT" BUTTON
+	confunc reserve_shot_clear
+	{
+		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
+		*right.bt_shot_reservation@image = althud/buttons_althud1
+	}
+	confunc reserve_shot_check
+	{
+		*right.bt_shot_reservation@image = althud/buttons_althud1
+	}
+	confunc reserve_shot_disable
+	{
+		*right.bt_shot_reservation@image = althud/buttons_althud1g
+	}
+	
 	// ==================
 	// init function
 	// ==================
