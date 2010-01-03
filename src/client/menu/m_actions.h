@@ -189,5 +189,7 @@ int MN_GetActionTokenType(const char* token, int group);
 void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
 menuAction_t* MN_AllocStaticCommandAction(char *command);
 void MN_InitActions(void);
+void MN_AddListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
+void MN_RemoveListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
 
 #endif

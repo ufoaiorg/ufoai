@@ -94,18 +94,51 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 		} else {
 			Com_Printf("MN_ParseNodeBody: Command name for confunc '%s' already registered\n", MN_GetPath(node));
 		}
+	} else {
+		menuNode_t *dummy;
+
+		/* convert a confunc to an "inherited" confunc if it is possible */
+		if (Cmd_Exists(node->name)) {
+			/* magic way to know if it is a dummy node (used for inherited confunc) */
+			dummy = (menuNode_t*) Cmd_GetUserdata(node->name);
+			if (dummy != NULL && dummy->parent == NULL)
+				return;
+		}
+
+		dummy = MN_AllocStaticNode(node->name, "confunc");
+		Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Inherited confunc callback");
+		Cmd_AddUserdata(dummy->name, dummy);
+	}
+}
+
+static void MN_ConFuncNodeClone (const menuNode_t *source, menuNode_t *clone)
+{
+	MN_ConFuncNodeLoaded(clone);
+}
+
+/**
+ * @brief Callback every time the parent window is opened (pushed into the active window stack)
+ */
+static void MN_ConFuncNodeInit (menuNode_t *node)
+{
+	/* magic way to know if it is a dummy node (used for inherited confunc) */
+	menuNode_t *dummy = (menuNode_t*) Cmd_GetUserdata(node->name);
+	if (dummy && dummy->parent == NULL) {
+		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
+		MN_AddListener(dummy, property, node);
 	}
 }
 
 /**
- * @brief Callback every time the parent menu is open (pushed into the active menu stack)
+ * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-static void MN_ConFuncNodeInit (menuNode_t *node)
+static void MN_ConFuncNodeClose (menuNode_t *node)
 {
-	/* override confunc only for inherited confunc node */
-	if (node->super) {
-		assert(Cmd_Exists(node->name));
-		Cmd_AddUserdata(node->name, node);
+	/* magic way to know if it is a dummy node (used for inherited confunc) */
+	menuNode_t *dummy = (menuNode_t*) Cmd_GetUserdata(node->name);
+	if (dummy && dummy->parent == NULL) {
+		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
+		MN_RemoveListener(dummy, property, node);
 	}
 }
 
@@ -117,6 +150,8 @@ void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
 	behaviour->isFunction = qtrue;
 	behaviour->loaded = MN_ConFuncNodeLoaded;
 	behaviour->init = MN_ConFuncNodeInit;
+	behaviour->close = MN_ConFuncNodeClose;
+	behaviour->clone = MN_ConFuncNodeClone;
 }
 
 void MN_RegisterCvarFuncNode (nodeBehaviour_t *behaviour)
