@@ -654,6 +654,7 @@ window althud extends ahud
 			current		*cvar:mn_tu
 			max			*cvar:mn_tumax
 			disabled	true
+			tooltip		"_TUs"
 		}
 		bar timeremain
 		{
@@ -663,6 +664,7 @@ window althud extends ahud
 			current		*cvar:mn_turemain
 			max			*cvar:mn_tumax
 			disabled	true
+			tooltip		"_TUs remaining"
 		}
 	
 		bar timereserved
@@ -673,6 +675,7 @@ window althud extends ahud
 			current		*cvar:mn_tureserved
 			max			*cvar:mn_tumax
 			disabled	true
+			tooltip		"_TUs reserved"
 		}
 	
 		bar morale
@@ -683,6 +686,7 @@ window althud extends ahud
 			current		*cvar:mn_morale
 			max			*cvar:mn_moralemax
 			disabled	true
+			tooltip		"_Morale"
 		}
 		
 		// ==================
@@ -702,6 +706,7 @@ window althud extends ahud
 			pos			"113 301"
 			size		"40 20"
 			textalign	uc
+			tooltip		"_Health"
 		}
 		string str_tu
 		{
@@ -709,6 +714,7 @@ window althud extends ahud
 			pos			"141 301"
 			size		"40 20"
 			textalign	uc
+			tooltip		"_TUs"
 		}
 		string str_morale
 		{
@@ -716,6 +722,7 @@ window althud extends ahud
 			pos			"170 301"
 			size		"40 20"
 			textalign	uc
+			tooltip		"_Morale"
 		}
 	
 		pic bt_reaction_a
