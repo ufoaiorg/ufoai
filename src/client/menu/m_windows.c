@@ -100,7 +100,7 @@ void MN_MoveWindowOnTop (menuNode_t * window)
  * @sa MN_PushWindowDelete
  * @todo Why dont we call onClose?
  */
-static void MN_DeleteWindowFromStack (menuNode_t * window)
+static void MN_DeleteWindowFromStack (menuNode_t *window)
 {
 	int i;
 
@@ -371,8 +371,8 @@ static void MN_CloseAllWindow (void)
 	for (i = mn.windowStackPos - 1; i >= 0; i--) {
 		menuNode_t *window = mn.windowStack[i];
 
-		if (window->u.window.onClose)
-			MN_ExecuteEventActions(window, window->u.window.onClose);
+		if (window->behaviour->close)
+			window->behaviour->close(window);
 
 		/* safe: unlink window */
 		window->u.window.parent = NULL;
@@ -442,15 +442,15 @@ static void MN_CloseWindowByRef (menuNode_t *window)
 		if (m->u.window.parent != window) {
 			break;
 		}
-		if (m->u.window.onClose)
-			MN_ExecuteEventActions(m, m->u.window.onClose);
+		if (window->behaviour->close)
+			window->behaviour->close(window);
 		m->u.window.parent = NULL;
 		MN_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
-	if (window->u.window.onClose)
-		MN_ExecuteEventActions(window, window->u.window.onClose);
+	if (window->behaviour->close)
+		window->behaviour->close(window);
 	window->u.window.parent = NULL;
 	MN_RemoveWindowAtPositionFromStack(i);
 

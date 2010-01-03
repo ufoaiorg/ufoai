@@ -531,6 +531,8 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, capturedMouseMove),
 	offsetof(nodeBehaviour_t, loading),
 	offsetof(nodeBehaviour_t, loaded),
+	offsetof(nodeBehaviour_t, init),
+	offsetof(nodeBehaviour_t, close),
 	offsetof(nodeBehaviour_t, clone),
 	offsetof(nodeBehaviour_t, activate),
 	offsetof(nodeBehaviour_t, doLayout),
