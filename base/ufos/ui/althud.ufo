@@ -166,7 +166,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
 			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "96"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox0@left> + <node:root.floor.bar_teambox0@width> ) 
 		}
 		confunc numonteam2
 		{
@@ -177,7 +177,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
 			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "176"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox1@left> + <node:root.floor.bar_teambox1@width> ) 
 		}
 		confunc numonteam3
 		{
@@ -188,7 +188,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
 			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "256"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox2@left> + <node:root.floor.bar_teambox2@width> ) 
 		}
 		confunc numonteam4
 		{
@@ -199,7 +199,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
 			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "336"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox3@left> + <node:root.floor.bar_teambox3@width> ) 
 		}
 		confunc numonteam5
 		{
@@ -210,7 +210,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
 			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "416"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox4@left> + <node:root.floor.bar_teambox4@width> ) 
 		}
 		confunc numonteam6
 		{
@@ -221,7 +221,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
 			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "496"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox5@left> + <node:root.floor.bar_teambox5@width> ) 
 		}
 		confunc numonteam7
 		{
@@ -232,7 +232,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
 			*floor.bar_teambox6@invis = false *floor.bar_teamsep6@invis = false *floor.head6@invis = false
 			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = "576"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox6@left> + <node:root.floor.bar_teambox6@width> ) 
 		}
 		confunc numonteam8
 		{
@@ -243,7 +243,7 @@ window althud extends ahud
 			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
 			*floor.bar_teambox6@invis = false *floor.bar_teamsep6@invis = false *floor.head6@invis = false
 			*floor.bar_teambox7@invis = false *floor.bar_teamsep7@invis = false *floor.head7@invis = false
-			*floor.bar_teamright@left = "656"
+			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox7@left> + <node:root.floor.bar_teambox7@width> ) 
 		}
 	
 		pic bar_selbox
