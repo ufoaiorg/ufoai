@@ -281,7 +281,7 @@ const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam
 
 	*cout++ = '\0';
 
-	return cmd;
+	return va("%s", cmd);
 }
 
 static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
