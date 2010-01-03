@@ -89,7 +89,6 @@ CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
 typedef enum {
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
 	BT_STATE_DESELECT,		/**< Normal display (blue) */
-	BT_STATE_HIGHLIGHT,		/**< Normal + highlight (blue + glow)*/
 	BT_STATE_UNUSABLE		/**< Normal + red (activated but unusable aka "impossible") */
 } weaponButtonState_t;
 
@@ -169,13 +168,12 @@ static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 
 	assert(button < BT_NUM_TYPES);
 
-	if (state == BT_STATE_DESELECT) {
+	if (state == BT_STATE_DESELECT)
 		prefix = "desel";
-	} else if (state == BT_STATE_DISABLE) {
+	else if (state == BT_STATE_DISABLE)
 		prefix = "dis";
-	} else {
+	else
 		prefix = "dis";
-	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
 	MN_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
