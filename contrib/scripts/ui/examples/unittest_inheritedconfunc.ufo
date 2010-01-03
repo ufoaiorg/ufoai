@@ -10,6 +10,8 @@ component panel myCrazyComponent {
 		string		""
 	}
 	
+	// this confunc is only called when his window is into the stack
+	// if no instance of this component is into the stack, nothing is called
 	confunc myCrazyComponentSetter {
 		*node:parent.text@string = <1>
 		cmd "echo \"<path:this> <1>\""
