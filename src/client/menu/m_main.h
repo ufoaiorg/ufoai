@@ -25,11 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_MAIN_H
 #define CLIENT_MENU_M_MAIN_H
 
-#define MAX_MENUS			128
-#define MAX_MENUNODES		8192
-#define MAX_MENUSTACK		32
-#define MAX_MENUACTIONS		8192
-
 #include "m_data.h"
 #include "m_menus.h"
 

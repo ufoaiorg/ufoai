@@ -1239,8 +1239,8 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		Com_Printf("MN_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
-	if (mn.numWindows >= MAX_MENUS) {
-		Com_Error(ERR_FATAL, "MN_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_MENUS, name);
+	if (mn.numWindows >= MAX_WINDOWS) {
+		Com_Error(ERR_FATAL, "MN_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_WINDOWS, name);
 		return;	/* never reached */
 	}
 
