@@ -800,7 +800,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const char **token)
 {
 	menuAction_t **action;
-	assert (node->behaviour->isFunction);
+	assert(node->behaviour->isFunction);
 
 	action = &node->onClick;
 	*action = MN_ParseActionList(node, text, token);
@@ -855,7 +855,6 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 		}
 
 		/* find the property */
-
 		val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 		if (!val) {
 			/* unknown token, print message and continue */
@@ -1004,7 +1003,7 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 	}
 
 	/* test if node already exists */
-	/** Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
+	/* Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
 	if (parent)
 		node = MN_GetNode(parent, *token);
 
