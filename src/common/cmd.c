@@ -717,6 +717,33 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  */
+void* Cmd_GetUserdata (const char *cmd_name)
+{
+	cmd_function_t *cmd;
+	unsigned int hash;
+
+	if (!cmd_name || !cmd_name[0]) {
+		Com_Printf("Cmd_GetUserdata: Invalide param");
+		return NULL;
+	}
+
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+		if (!strcmp(cmd_name, cmd->name)) {
+			return cmd->userdata;
+		}
+	}
+
+	Com_Printf("Cmd_GetUserdata: '%s' not found", cmd_name);
+	return NULL;
+}
+
+/**
+ * @param[in] cmd_name The name the command we want to add edit
+ * @param[in] userdata for this function
+ * @sa Cmd_AddCommand
+ * @sa Cmd_CompleteCommandParameters
+ */
 void Cmd_AddUserdata (const char *cmd_name, void* userdata)
 {
 	cmd_function_t *cmd;
