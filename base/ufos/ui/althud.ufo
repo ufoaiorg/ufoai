@@ -7,6 +7,8 @@ window althud extends ahud
 	{
 		noticepos	"400 100"
 		timeout	10000
+		starlayout	true
+		fill		true
 	}
 
 	func showinventory 
@@ -21,46 +23,957 @@ window althud extends ahud
 	{
 		pos			"0 0"
 		size		"1024 768"
+		align		LAYOUTALIGN_FILL
 	}
 
 	// ==================
-	// background
+	// floor
 	// ==================
 
-	pic bar_top
-	{
-		image		althud/bar_top
-		pos			"768 0"
-	}
-	zone zone_top
-	{
-		pos			"832 0"
-		size		"192 56"
-		onClick		{ }
+	panel floor {
+		{
+			pos		"256 640"
+			size	"688 128"
+			align	LAYOUTALIGN_BOTTOM
+		}
+
+		pic bar_teamleft
+		{
+			image		althud/bar_teamleft
+			pos			"0 0"
+			size		"32 128"
+		}
+		
+		pic bar_teambox0
+		{
+			image		althud/bar_teambox
+			pos			"32 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 0;" }
+		}
+	
+		pic bar_teamsep1
+		{
+			image		althud/bar_teamsep
+			pos			"96 0"
+			size		"16 128"
+		}
+		pic bar_teambox1
+		{
+			image		althud/bar_teambox
+			pos			"112 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 1;" }
+		}
+	
+		pic bar_teamsep2
+		{
+			image		althud/bar_teamsep
+			pos			"176 0"
+			size		"16 128"
+		}
+		pic bar_teambox2
+		{
+			image		althud/bar_teambox
+			pos			"192 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 2;" }
+		}
+	
+		pic bar_teamsep3
+		{
+			image		althud/bar_teamsep
+			pos			"256 0"
+			size		"16 128"
+		}
+		pic bar_teambox3
+		{
+			image		althud/bar_teambox
+			pos			"272 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 3;" }
+		}
+	
+		pic bar_teamsep4
+		{
+			image		althud/bar_teamsep
+			pos			"336 0"
+			size		"16 128"
+		}
+		pic bar_teambox4
+		{
+			image		althud/bar_teambox
+			pos			"352 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 4;" }
+		}
+	
+		pic bar_teamsep5
+		{
+			image		althud/bar_teamsep
+			pos			"416 0"
+			size		"16 128"
+		}
+		pic bar_teambox5
+		{
+			image		althud/bar_teambox
+			pos			"432 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 5;" }
+		}
+	
+		pic bar_teamsep6
+		{
+			image		althud/bar_teamsep
+			pos			"496 0"
+			size		"16 128"
+		}
+		pic bar_teambox6
+		{
+			image		althud/bar_teambox
+			pos			"512 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 6;" }
+		}
+	
+		pic bar_teamsep7
+		{
+			image		althud/bar_teamsep
+			pos			"576 0"
+			size		"16 128"
+		}
+		pic bar_teambox7
+		{
+			image		althud/bar_teambox
+			pos			"592 0"
+			size		"64 128"
+			onClick		{ cmd "soldier_select 7;" }
+		}
+	
+		pic bar_teamright
+		{
+			image		althud/bar_teamright
+			pos			"656 0"
+			size		"32 128"
+		}
+		
+		confunc numonteam1
+		{
+			*floor.bar_teambox1@invis = true  *floor.bar_teamsep1@invis = true  *floor.head1@invis = true
+			*floor.bar_teambox2@invis = true  *floor.bar_teamsep2@invis = true  *floor.head2@invis = true
+			*floor.bar_teambox3@invis = true  *floor.bar_teamsep3@invis = true  *floor.head3@invis = true
+			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
+			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
+			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "96"
+		}
+		confunc numonteam2
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = true  *floor.bar_teamsep2@invis = true  *floor.head2@invis = true
+			*floor.bar_teambox3@invis = true  *floor.bar_teamsep3@invis = true  *floor.head3@invis = true
+			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
+			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
+			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "176"
+		}
+		confunc numonteam3
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
+			*floor.bar_teambox3@invis = true  *floor.bar_teamsep3@invis = true  *floor.head3@invis = true
+			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
+			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
+			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "256"
+		}
+		confunc numonteam4
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
+			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
+			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
+			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
+			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "336"
+		}
+		confunc numonteam5
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
+			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
+			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
+			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
+			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "416"
+		}
+		confunc numonteam6
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
+			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
+			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
+			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
+			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "496"
+		}
+		confunc numonteam7
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
+			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
+			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
+			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
+			*floor.bar_teambox6@invis = false *floor.bar_teamsep6@invis = false *floor.head6@invis = false
+			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
+			*floor.bar_teamright@left = "576"
+		}
+		confunc numonteam8
+		{
+			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
+			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
+			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
+			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
+			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
+			*floor.bar_teambox6@invis = false *floor.bar_teamsep6@invis = false *floor.head6@invis = false
+			*floor.bar_teambox7@invis = false *floor.bar_teamsep7@invis = false *floor.head7@invis = false
+			*floor.bar_teamright@left = "656"
+		}
+	
+		pic bar_selbox
+		{
+			image		althud/bar_selbox
+			pos			"849 26"
+			size		"78 90"
+			texl		"0 38"
+			texh		"78 90"
+		}
+	
+		confunc hudselecta0 { *floor.bar_selbox@left = "32" }
+		confunc hudselecta1 { *floor.bar_selbox@left = "128" }
+		confunc hudselecta2 { *floor.bar_selbox@left = "224" }
+		confunc hudselecta3 { *floor.bar_selbox@left = "320" }
+		confunc hudselecta4 { *floor.bar_selbox@left = "416" }
+		confunc hudselecta5 { *floor.bar_selbox@left = "512" }
+		confunc hudselecta6 { *floor.bar_selbox@left = "608" }
+		confunc hudselecta7 { *floor.bar_selbox@left = "704" }
+
+		// ==================
+		// models
+		// ==================
+	
+		model head0
+		{
+			model		*cvar:mn_head0
+			angles		"15 60 100"
+			autoscale	true
+			pos			"40 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head1
+		{
+			model		*cvar:mn_head1
+			angles		"15 60 100"
+			autoscale	true
+			pos			"120 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head2
+		{
+			model		*cvar:mn_head2
+			angles		"15 60 100"
+			autoscale	true
+			pos			"200 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head3
+		{
+			model		*cvar:mn_head3
+			angles		"15 60 100"
+			autoscale	true
+			pos			"280 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head4
+		{
+			model		*cvar:mn_head4
+			angles		"15 60 100"
+			autoscale	true
+			pos			"360 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head5
+		{
+			model		*cvar:mn_head5
+			angles		"15 60 100"
+			autoscale	true
+			pos			"440 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head6
+		{
+			model		*cvar:mn_head6
+			angles		"15 60 100"
+			autoscale	true
+			pos			"520 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+		model head7
+		{
+			model		*cvar:mn_head7
+			angles		"15 60 100"
+			autoscale	true
+			pos			"592 20"
+			size		"50 78"
+			excluderect	{ pos	"0 0"	size	"50 78" }
+		}
+
+		bar morale0
+		{
+			pos			"32 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale0
+			max			*cvar:mn_moralemax0
+			disabled	true
+		}
+		bar health0
+		{
+			pos			"32 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp0
+			max			*cvar:mn_hpmax0
+			disabled	true
+		}
+		bar time0
+		{
+			pos			"32 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu0
+			max			*cvar:mn_tumax0
+			disabled	true
+		}
+
+		bar morale1
+		{
+			pos			"112 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale1
+			max			*cvar:mn_moralemax1
+			disabled	true
+		}
+		bar health1
+		{
+			pos			"112 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp1
+			max			*cvar:mn_hpmax1
+			disabled	true
+		}
+		bar time1
+		{
+			pos			"112 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu1
+			max			*cvar:mn_tumax1
+			disabled	true
+		}
+		bar morale2
+		{
+			pos			"192 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale2
+			max			*cvar:mn_moralemax2
+			disabled	true
+		}
+		bar health2
+		{
+			pos			"192 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp2
+			max			*cvar:mn_hpmax2
+			disabled	true
+		}
+		bar time2
+		{
+			pos			"192 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu2
+			max			*cvar:mn_tumax2
+			disabled	true
+		}
+		bar morale3
+		{
+			pos			"272 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale3
+			max			*cvar:mn_moralemax3
+			disabled	true
+		}
+		bar health3
+		{
+			pos			"272 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp3
+			max			*cvar:mn_hpmax3
+			disabled	true
+		}
+		bar time3
+		{
+			pos			"272 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu3
+			max			*cvar:mn_tumax3
+			disabled	true
+		}
+		bar morale4
+		{
+			pos			"352 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale4
+			max			*cvar:mn_moralemax4
+			disabled	true
+		}
+		bar health4
+		{
+			pos			"352 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp4
+			max			*cvar:mn_hpmax4
+			disabled	true
+		}
+		bar time4
+		{
+			pos			"352 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu4
+			max			*cvar:mn_tumax4
+			disabled	true
+		}
+		bar morale5
+		{
+			pos			"432 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale5
+			max			*cvar:mn_moralemax5
+			disabled	true
+		}
+		bar health5
+		{
+			pos			"432 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp5
+			max			*cvar:mn_hpmax5
+			disabled	true
+		}
+		bar time5
+		{
+			pos			"432 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu5
+			max			*cvar:mn_tumax5
+			disabled	true
+		}
+		bar morale6
+		{
+			pos			"512 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale6
+			max			*cvar:mn_moralemax6
+			disabled	true
+		}
+		bar health6
+		{
+			pos			"512 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp6
+			max			*cvar:mn_hpmax6
+			disabled	true
+		}
+		bar time6
+		{
+			pos			"512 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu6
+			max			*cvar:mn_tumax6
+			disabled	true
+		}
+		bar morale7
+		{
+			pos			"592 90"
+			size		"64 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale7
+			max			*cvar:mn_moralemax7
+			disabled	true
+		}
+		bar health7
+		{
+			pos			"592 97"
+			size		"64 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp7
+			max			*cvar:mn_hpmax7
+			disabled	true
+		}
+		bar time7
+		{
+			pos			"592 104"
+			size		"64 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_tu7
+			max			*cvar:mn_tumax7
+			disabled	true
+		}
 	}
 
-	pic bar_right
-	{
-		image		althud/bar_right
-		pos			"768 64"
-	}
-	zone zone_right
-	{
-		pos			"864 64"
-		size		"160 512"
-		onClick		{ }
+	// ==================
+	// right
+	// ==================
+
+	panel right {
+		{
+			pos		"768 64"
+			size	"256 512"
+			align	LAYOUTALIGN_RIGHT
+		}
+		
+		pic bar_right
+		{
+			image		althud/bar_right
+			pos			"0 0"
+		}
+
+		model right_actor
+		{
+			{
+				tooltip		"_Inventory and physical stats"
+		
+				model		*cvar:mn_body
+				skin		*cvar:mn_skin
+				anim		*cvar:mn_anim
+				angles		"0 80 90"
+				pos			"96 16"
+				size		"120 260"
+				scale		"4 4 4"
+		
+				onClick		{ call *node:root.showinventory }
+				onRClick		{ cmd "mn_push ahudphysdat;" }
+			}
+	
+			model right_head
+			{
+				model		*cvar:mn_head
+				skin		*cvar:mn_skin
+				tag			"tag_head"
+			}
+		
+			model right_rweapon
+			{
+				model		*cvar:mn_rweapon
+				tag			"tag_rweapon"
+			}
+		
+			model right_lweapon
+			{
+				model		*cvar:mn_lweapon
+				tag			"tag_lweapon"
+			}
+		}
+		
+		pic bt_primaryright
+		{
+			tooltip		"_Use Item"
+			image		althud/buttons_althud1g
+			pos			"102 433"
+			texl		"0 74"
+			texh		"25 107"
+			mousefx		true
+			onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
+		}
+		pic bt_primaryleft
+		{
+			tooltip		"_Use Item"
+			image		althud/buttons_althud1g
+			pos			"102 433"
+			texl		"0 74"
+			texh		"25 107"
+			mousefx		true
+			onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
+		}
+
+		// ==================
+		// status bars
+		// ==================
+	
+		bar health
+		{
+			pos			"118 260"
+			size		"120 4"
+			color		".7 0 0 1"
+			current		*cvar:mn_hp
+			max			*cvar:mn_hpmax
+			disabled	true
+		}
+	
+		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_hud.
+		string tu_tooltips
+		{
+			string		" "
+			tooltip		*cvar:mn_tu_tooltips
+			pos			"118 268"
+			size		"120 4"
+		}
+	
+		bar timeall
+		{
+			pos			"118 268"
+			size		"120 4"
+			color		".1 .1 .5 1"
+			current		*cvar:mn_tu
+			max			*cvar:mn_tumax
+			disabled	true
+		}
+		bar timeremain
+		{
+			pos			"118 268"
+			size		"120 4"
+			color		".2 .2 1 1"
+			current		*cvar:mn_turemain
+			max			*cvar:mn_tumax
+			disabled	true
+		}
+	
+		bar timereserved
+		{
+			pos			"118 268"
+			size		"120 2"
+			color		"0 .5 0 1"
+			current		*cvar:mn_tureserved
+			max			*cvar:mn_tumax
+			disabled	true
+		}
+	
+		bar morale
+		{
+			pos			"118 276"
+			size		"120 4"
+			color		".7 .7 0 1"
+			current		*cvar:mn_morale
+			max			*cvar:mn_moralemax
+			disabled	true
+		}
+		
+		// ==================
+		// strings
+		// ==================
+	
+		string str_name
+		{
+			string		*cvar:mn_name
+			pos			"115 20"
+			size		"125 20"
+		}
+	
+		string str_hp
+		{
+			string		*cvar:mn_hp
+			pos			"113 301"
+			size		"40 20"
+			textalign	uc
+		}
+		string str_tu
+		{
+			string		*cvar:mn_tu
+			pos			"141 301"
+			size		"40 20"
+			textalign	uc
+		}
+		string str_morale
+		{
+			string		*cvar:mn_morale
+			pos			"170 301"
+			size		"40 20"
+			textalign	uc
+		}
+		
+		confunc selpla { *right.bt_primaryleft@image	= althud/buttons_althud1a }
+		confunc selpra { *right.bt_primaryright@image = althud/buttons_althud1a }
+	
+		confunc deselpla { *right.bt_primaryleft@image	= althud/buttons_althud1 }
+		confunc deselpra { *right.bt_primaryright@image	= althud/buttons_althud1 }
+		confunc deselrla { *right.bt_reloadleft@image		= althud/buttons_althud1 }
+		confunc deselrra { *right.bt_reloadright@image	= althud/buttons_althud1 }
+	
+		confunc displa { *right.bt_primaryleft@image	= althud/buttons_althud1g }
+		confunc dispra { *right.bt_primaryright@image	= althud/buttons_althud1g }
+		confunc disrla { *right.bt_reloadleft@image	= althud/buttons_althud1g }
+		confunc disrra { *right.bt_reloadright@image	= althud/buttons_althud1g }
+	
+		confunc startreactionmanya
+		{
+			*right.bt_reaction_a@image = althud/buttons_althud1b
+			*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
+		}
+		confunc startreactionmanya_impos
+		{
+			*right.bt_reaction_a@image = althud/buttons_althud1br
+			*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
+		}
+		confunc startreactiononcea
+		{
+			*right.bt_reaction_a@image = althud/buttons_althud1a
+			*right.bt_reaction_a@tooltip = "_One-shot reaction fire"
+		}
+		confunc startreactiononcea_impos
+		{
+			*right.bt_reaction_a@image = althud/buttons_althud1ar
+			*right.bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
+		}
+	
+		confunc deselreactiona
+		{
+			*right.bt_reaction_a@image = althud/buttons_althud1
+			*right.bt_reaction_a@tooltip = "_No reaction fire"
+		}
+		confunc disreactiona {
+			*right.bt_reaction_a@image = althud/buttons_althud1g
+		}
+	
+		pic bt_reaction_a
+		{
+			image		althud/buttons_althud1g
+			pos			"132 433"
+			texl		"81 37"
+			texh		"106 70"
+			mousefx		true
+			onClick		{ cmd "togglereaction;" }
+		}
+	
+		confunc althud_deselheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+		confunc althud_disheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+	
+		pic althud_bt_use_headgear
+		{
+			tooltip		"_Use headgear"
+			image		althud/buttons_althud1g
+			mousefx		true
+			pos			"162 433"
+			texl		"108 37"
+			texh		"134 70"
+			onClick		{ cmd "useheadgear;" }
+		}
+	
+		pic bt_reloadright
+		{
+			tooltip		*cvar:mn_reloadright_tt
+			image		althud/buttons_althud1g
+			pos			"223 433"
+			texl		"0 37"
+			texh		"25 70"
+			mousefx		true
+			onClick		{ cmd "reloadright;" }
+			onMouseEnter			{ cmd "remaining_tus reload_r 1;" }
+			onMouseLeave			{ cmd "remaining_tus reload_r 0;" }
+		}
+	
+		pic bt_reloadleft
+		{
+			tooltip		*cvar:mn_reloadleft_tt
+			image		althud/buttons_althud1g
+			pos			"223 433"
+			texl		"0 37"
+			texh		"25 70"
+			mousefx		true
+			onClick		{ cmd "reloadleft;" }
+			onMouseEnter			{ cmd "remaining_tus reload_l 1;" }
+			onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
+		}
+	
+		pic bt_duck
+		{
+			tooltip		*cvar:mn_crouchstand_tt
+			image		althud/buttons_althud1g
+			mousefx		true
+			pos			"223 472"
+			texl		"27 37"
+			texh		"52 70"
+			onClick		{ cmd "standcrouch;" }
+			onMouseEnter			{ cmd "remaining_tus crouch 1;" }
+			onMouseLeave			{ cmd "remaining_tus crouch 0;" }
+		}
+	
+		// CROUCH/STAND UP BUTTON
+		confunc deselstanda  { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1 }
+		confunc deselcroucha { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1 }
+		confunc disstanda    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
+		confunc discroucha   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
+	
+		checkbox bt_crouch_reservation
+		{
+			tooltip		*cvar:mn_crouch_reservation_tt
+			image		"ui/checkbox_blue"
+			pos			"201 472"
+			size		"20 18"
+			current		0
+			onChange	{ cmd "togglecrouchreserve;" }
+		}
+	
+		confunc crouch_checkbox_disable_s {
+			*right.bt_crouch_reservation@disabled = true
+		}
+		confunc crouch_checkbox_clear_s	{
+			*right.bt_crouch_reservation@disabled = false
+			*(checkbox)right.bt_crouch_reservation@current = 0
+		}
+		confunc crouch_checkbox_check_s	{
+			*right.bt_crouch_reservation@disabled = false
+			*(checkbox)right.bt_crouch_reservation@current = 1
+		}
+	
+		pic bt_shot_reservation
+		{
+			tooltip	*cvar:mn_shot_reservation_tt
+			image		hud/button_reserve_shot	// fixme
+			pos			"197 433"
+			texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
+			texh		"127 64"
+			mousefx		true
+			onClick		{ cmd "sel_shotreservation;" }
+			onRClick		{ cmd "sel_shotreservation 0;" }
+		}
+	
+		// "RESERVATION FOR SHOT" BUTTON
+		confunc reserve_shot_clear_a
+		{
+			*right.bt_shot_reservation@texl	= "0 0"
+			*right.bt_shot_reservation@texh	= "51 32"
+		}
+		confunc reserve_shot_check_a
+		{
+			*right.bt_shot_reservation@texl	= "0 32"
+			*right.bt_shot_reservation@texh	= "51 64"
+		}
+		confunc reserve_shot_disable_a
+		{
+			*right.bt_shot_reservation@texl	= "64 32"
+			*right.bt_shot_reservation@texh	= "127 64"
+		}
+		
+		container right
+		{
+			pos			"114 340"
+		}
+		container left
+		{
+			pos			"114 340"
+		}
+		string ammoright
+		{
+			string		*cvar:mn_ammoright
+			pos			"117 401"
+			size		"40 20"
+		}
+		string ammoleft
+		{
+			string		*cvar:mn_ammoleft
+			pos			"117 401"
+			size		"40 20"
+		}
+	
+		func show_rightweapon
+		{
+			*right.right@invis = false
+			*right.ammoright@invis = false
+			*right.left@invis = true
+			*right.ammoleft@invis = true
+			*right.bt_primaryright@invis = false
+			*right.bt_primaryleft@invis = true
+			*right.bt_reloadright@invis = false
+			*right.bt_reloadleft@invis = true
+		}
+		func show_leftweapon
+		{
+			*right.right@invis = true
+			*right.ammoright@invis = true
+			*right.left@invis = false
+			*right.ammoleft@invis = false
+			*right.bt_primaryright@invis = true
+			*right.bt_primaryleft@invis = false
+			*right.bt_reloadright@invis = true
+			*right.bt_reloadleft@invis = false
+		}
+	
+		pic switch_to_right_hand
+		{
+			tooltip		"_Switch to right hand weapon"
+			image		ui/buttons_small
+			pos			"196 400"
+			texl		"0 0"
+			texh		"16 16"
+			mousefx		true
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
+			onClick		{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
+		}
+		pic switch_to_left_hand
+		{
+			tooltip		"_Switch to left hand weapon"
+			image		ui/buttons_small
+			pos			"212 400"
+			texl		"16 0"
+			texh		"32 16"
+			mousefx		true
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
+			onClick		{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
+		}
 	}
 
 	// ==================
 	// CHAT BUTTONS
 	// ==================
+
 	// the name must be the same in all huds
 	text chatscreen
 	{
 		dataid		TEXT_CHAT_WINDOW
-		pos			"130 2"
+		pos			"130 70"
 		size		"690 48"
-		font		"f_verysmall"
+		font		f_verysmall
 		rows		"3"
 		lineheight	"16"
 		padding		5
@@ -69,1114 +982,236 @@ window althud extends ahud
 		bgcolor		"0 0.1 0 0.8"
 	}
 
-	pic bar_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		image		hud/bar_chat
-		pos			"960 64"
-		size		"64 64"
-		onMouseLeave			{
-			*bar_chat@image = hud/bar_chat
-			*bar_chat@size = "64 64"
-			cmd "mn_showchatbuttons 0;"
+	panel chat {
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			pos		"768 64"
+			size	"256 463"	/* popup height 335+64*2*/
+			ghost	true
+			align	LAYOUTALIGN_RIGHT
 		}
-		onMouseEnter			{
-			*bar_chat@image = hud/bar_chat_choice
-			*bar_chat@size = "256 64"
-			cmd "mn_showchatbuttons 1;"
-		}
-	}
-	pic bar_chat_all
-	{
-		visiblewhen	"*cvar:mn_showchatbuttons == 1"
-		tooltip		"_Chat"
-		image		hud/button_chat
-		pos			"944 76"
-		size		"32 32"
-		texl		"0 0"
-		texh		"32 32"
-		onClick		{
-			cmd	"messagesay;"
-		}
-	}
-	pic bar_chat_team
-	{
-		visiblewhen	"*cvar:mn_showchatbuttons == 1"
-		tooltip		"_Teamchat"
-		image		hud/button_chat
-		pos			"906 592"
-		texl		"32 0"
-		texh		"64 32"
-		size		"32 32"
-		onClick		{
-			cmd	"messagesayteam;"
-		}
-	}
-	pic bar_chat_show
-	{
-		visiblewhen	"*cvar:mn_showchatbuttons == 1"
-		tooltip		"_Show chat history"
-		image		hud/button_chat
-		pos			"868 592"
-		size		"32 32"
-		texl		"64 0"
-		texh		"96 32"
-		onMouseLeave			{
-			*chatscreen@size = "690 48"
-			*chatscreen@rows = "3"
-			*node:root@timeout = 10000
-		}
-		onMouseEnter			{
-			*chatscreen@size = "690 400"
-			*chatscreen@rows = "25"
-			*node:root@timeout = 0
-			*chatscreen@invis = false
-		}
-	}
 
-	pic button_chat
-	{
-		visiblewhen	"*cvar:sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		image		hud/event_log
-		texl		"0 0"
-		texh		"32 36"
-		pos			"985 590"
+		pic bar_chat_bg
+		{
+			image		hud/bar_chat
+			pos			"192 0"
+			size		"64 64"
+		}
+		pic bar_chat_all
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+
+			tooltip		"_Chat"
+			image		hud/button_chat
+			pos			"176 12"
+			size		"32 32"
+			texl		"0 0"
+			texh		"32 32"
+			onClick		{ cmd "messagesay;" }
+		}
+		pic bar_chat_team
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+			tooltip		"_Teamchat"
+			image		hud/button_chat
+			pos			"138 12"
+			size		"32 32"
+			texl		"32 0"
+			texh		"64 32"
+			onClick		{ cmd "messagesayteam;" }
+		}
+		pic bar_chat_show
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+			tooltip		"_Show chat history"
+			image		hud/button_chat
+			pos			"100 12"
+			size		"32 32"
+			texl		"64 0"
+			texh		"96 32"
+			onMouseLeave			{
+				*chatscreen@size = "690 48"
+				*chatscreen@rows = "3"
+				*node:root@timeout = 10000
+			}
+			onMouseEnter			{
+				*chatscreen@size = "690 400"
+				*chatscreen@rows = "25"
+				*node:root@timeout = 0
+				*chatscreen@invis = false
+			}
+		}
+
+		pic button_chat
+		{
+			tooltip		"_Chat messages"
+			image		hud/event_log
+			pos			"217 6"
+			texl		"0 0"
+			texh		"32 36"
+			onMouseEnter {
+				*node:this@texl	= "0 36"
+				*node:this@texh	= "32 72"
+			}
+			onMouseLeave {
+				*node:this@texl	= "0 0"
+				*node:this@texh	= "32 36"
+			}
+			onClick		{
+				if ( *cvar:mn_showchatbuttons != 0 ) {
+					*node:parent.bar_chat_bg@image = hud/bar_chat
+					*node:parent.bar_chat_bg@pos = "192 0"
+					*node:parent.bar_chat_bg@size = "64 64"
+					*cvar:mn_showchatbuttons = 0
+				} else {
+					*node:parent.bar_chat_bg@image = hud/bar_chat_choice
+					*node:parent.bar_chat_bg@pos = "0 0"
+					*node:parent.bar_chat_bg@size = "256 64"
+					*cvar:mn_showchatbuttons = 1
+				}
+			}
+		}
 	}
 
 	func onEvent
 	{
 		*chatscreen@invis = true
 	}
-
-	pic bar_floor
-	{
-		image		althud/bar_floor
-		pos			"960 630"
-		onClick		{ }
-	}
-
-	pic bar_teamright
-	{
-		image		althud/bar_teamright
-		pos			"920 640"
-		onClick		{ }
-	}
-
-	pic bar_teambox0
-	{
-		image		althud/bar_teambox
-		pos			"856 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 0;" }
-	}
-
-	pic bar_teamsep1
-	{
-		image		althud/bar_teamsep
-		pos			"840 640"
-		onClick		{ }
-	}
-	pic bar_teambox1
-	{
-		image		althud/bar_teambox
-		pos			"776 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 1;" }
-	}
-
-	pic bar_teamsep2
-	{
-		image		althud/bar_teamsep
-		pos			"760 640"
-		onClick		{ }
-	}
-	pic bar_teambox2
-	{
-		image		althud/bar_teambox
-		pos			"696 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 2;" }
-	}
-
-	pic bar_teamsep3
-	{
-		image		althud/bar_teamsep
-		pos			"680 640"
-		onClick 		{ }
-	}
-	pic bar_teambox3
-	{
-		image		althud/bar_teambox
-		pos			"616 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 3;" }
-	}
-
-	pic bar_teamsep4
-	{
-		image		althud/bar_teamsep
-		pos			"600 640"
-		onClick		{ }
-	}
-	pic bar_teambox4
-	{
-		image		althud/bar_teambox
-		pos			"536 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 4;" }
-	}
-
-	pic bar_teamsep5
-	{
-		image		althud/bar_teamsep
-		pos			"520 640"
-		onClick		{ }
-	}
-	pic bar_teambox5
-	{
-		image		althud/bar_teambox
-		pos			"456 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 5;" }
-	}
-
-	pic bar_teamsep6
-	{
-		image		althud/bar_teamsep
-		pos			"440 640"
-		onClick		{ }
-	}
-	pic bar_teambox6
-	{
-		image		althud/bar_teambox
-		pos			"376 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 6;" }
-	}
-
-	pic bar_teamsep7
-	{
-		image		althud/bar_teamsep
-		pos			"360 640"
-		onClick		{ }
-	}
-	pic bar_teambox7
-	{
-		image		althud/bar_teambox
-		pos			"296 640"
-		size		"64 128"
-		onClick		{ cmd "soldier_select 7;" }
-	}
-
-	pic bar_teamleft
-	{
-		image		althud/bar_teamleft
-		pos			"264 640"
-		onClick		{ }
-	}
-
-	confunc numonteam1
-	{
-		*bar_teambox1@invis = true  *bar_teamsep1@invis = true  *head1@invis = true
-		*bar_teambox2@invis = true  *bar_teamsep2@invis = true  *head2@invis = true
-		*bar_teambox3@invis = true  *bar_teamsep3@invis = true  *head3@invis = true
-		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
-		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
-		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "824 640"
-	}
-	confunc numonteam2
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = true  *bar_teamsep2@invis = true  *head2@invis = true
-		*bar_teambox3@invis = true  *bar_teamsep3@invis = true  *head3@invis = true
-		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
-		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
-		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "744 640"
-	}
-	confunc numonteam3
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
-		*bar_teambox3@invis = true  *bar_teamsep3@invis = true  *head3@invis = true
-		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
-		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
-		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "664 640"
-	}
-	confunc numonteam4
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
-		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
-		*bar_teambox4@invis = true  *bar_teamsep4@invis = true  *head4@invis = true
-		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
-		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "584 640"
-	}
-	confunc numonteam5
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
-		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
-		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
-		*bar_teambox5@invis = true  *bar_teamsep5@invis = true  *head5@invis = true
-		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "504 640"
-	}
-	confunc numonteam6
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
-		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
-		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
-		*bar_teambox5@invis = false *bar_teamsep5@invis = false *head5@invis = false
-		*bar_teambox6@invis = true  *bar_teamsep6@invis = true  *head6@invis = true
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "424 640"
-	}
-	confunc numonteam7
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
-		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
-		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
-		*bar_teambox5@invis = false *bar_teamsep5@invis = false *head5@invis = false
-		*bar_teambox6@invis = false *bar_teamsep6@invis = false *head6@invis = false
-		*bar_teambox7@invis = true  *bar_teamsep7@invis = true  *head7@invis = true
-		*bar_teamleft@pos = "344 640"
-	}
-	confunc numonteam8
-	{
-		*bar_teambox1@invis = false *bar_teamsep1@invis = false *head1@invis = false
-		*bar_teambox2@invis = false *bar_teamsep2@invis = false *head2@invis = false
-		*bar_teambox3@invis = false *bar_teamsep3@invis = false *head3@invis = false
-		*bar_teambox4@invis = false *bar_teamsep4@invis = false *head4@invis = false
-		*bar_teambox5@invis = false *bar_teamsep5@invis = false *head5@invis = false
-		*bar_teambox6@invis = false *bar_teamsep6@invis = false *head6@invis = false
-		*bar_teambox7@invis = false *bar_teamsep7@invis = false *head7@invis = false
-		*bar_teamleft@pos = "264 640"
-	}
-
-	pic bar_selbox
-	{
-		image		althud/bar_selbox
-		pos			"849 666"
-		size		"78 90"
-		texl		"0 38"
-		texh		"78 90"
-	}
-
-	confunc hudselecta0 { *bar_selbox@left = "849" }
-	confunc hudselecta1 { *bar_selbox@left = "769" }
-	confunc hudselecta2 { *bar_selbox@left = "689" }
-	confunc hudselecta3 { *bar_selbox@left = "609" }
-	confunc hudselecta4 { *bar_selbox@left = "529" }
-	confunc hudselecta5 { *bar_selbox@left = "449" }
-	confunc hudselecta6 { *bar_selbox@left = "369" }
-	confunc hudselecta7 { *bar_selbox@left = "289" }
-
-
-	// ==================
-	// models
-	// ==================
-
-	model right_actor
-	{
+	
+	panel lowerright {
 		{
-			tooltip		"_Inventory and physical stats"
-	
-			model		*cvar:mn_body
-			skin		*cvar:mn_skin
-			anim		*cvar:mn_anim
-			angles		"0 80 90"
-			pos			"884 80"
-			size		"120 260"
-			scale		"4 4 4"
-	
-			onClick		{ call *node:root.showinventory }
-			onRClick		{ cmd "mn_push ahudphysdat;" }
+			pos		"960 640"
+			size	"64 128"
+			align	LAYOUTALIGN_BOTTOMRIGHT
+		}
+		
+		pic bar_floor
+		{
+			image		althud/bar_floor
+			pos			"0 0"
 		}
 
-		model right_head
+		pic bt_floorup
 		{
-			model		*cvar:mn_head
-			skin		*cvar:mn_skin
-			tag			"tag_head"
+			tooltip		"_Level up"
+			image		althud/buttons_althud1
+			mousefx		true
+			pos			"31 18"
+			texl		"54 74"
+			texh		"79 107"
+			onClick		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
+		}
+		pic bt_floordown
+		{
+			tooltip		"_Level down"
+			image		althud/buttons_althud1
+			mousefx		true
+			pos			"31 93"
+			texl		"81 74"
+			texh		"106 107"
+			onClick		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
 		}
 	
-		model right_rweapon
+		string str_floor
 		{
-			model		*cvar:mn_rweapon
-			tag			"tag_rweapon"
+			string		*cvar:cl_worldlevel
+			pos			"25 60"
+			size		"40 20"
+			textalign	cc
 		}
+	}
 	
-		model right_lweapon
+	panel lowerleft {
 		{
-			model		*cvar:mn_lweapon
-			tag			"tag_lweapon"
+			pos		"0 700"
+			size	"265 68"
+			align	LAYOUTALIGN_BOTTOMLEFT
+		}
+		text infoscreen
+		{
+			dataid		TEXT_STANDARD
+			pos			"9 9"
+			size		"265 50"
+			lineheight	20
+			tabwidth	100
+			color		"0 1 0 1"
+			rows		"2"
 		}
 	}
+	
+	panel upperright {
+		{
+			pos		"768 0"
+			size	"256 64"
+			align	LAYOUTALIGN_TOPRIGHT
+		}
 
-	model head0
-	{
-		model		*cvar:mn_head0
-		angles		"15 60 100"
-		autoscale	true
-		pos			"854 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head1
-	{
-		model		*cvar:mn_head1
-		angles		"15 60 100"
-		autoscale	true
-		pos			"774 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head2
-	{
-		model		*cvar:mn_head2
-		angles		"15 60 100"
-		autoscale	true
-		pos			"694 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head3
-	{
-		model		*cvar:mn_head3
-		angles		"15 60 100"
-		autoscale	true
-		pos			"614 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head4
-	{
-		model		*cvar:mn_head4
-		angles		"15 60 100"
-		autoscale	true
-		pos			"534 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head5
-	{
-		model		*cvar:mn_head5
-		angles		"15 60 100"
-		autoscale	true
-		pos			"454 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head6
-	{
-		model		*cvar:mn_head6
-		angles		"15 60 100"
-		autoscale	true
-		pos			"374 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
-	model head7
-	{
-		model		*cvar:mn_head7
-		angles		"15 60 100"
-		autoscale	true
-		pos			"294 672"
-		size		"50 78"
-		excluderect	{ pos	"0 0"	size	"50 78" }
-	}
+		pic bar_top
+		{
+			image		althud/bar_top
+			pos			"0 0"
+		}
 
-	// ==================
-	// buttons
-	// ==================
-
-	zone spotted
-	{
-		tooltip		"_Enemy spotted"
-		pos			"841 12"
-		size		"48 34"
-		onClick		{ cmd "nextalien;" }
-	}
-	string numspotted
-	{
-		string		*cvar:mn_numaliensspotted
-		tooltip		"_Click to cycle through spotted enemies"
-		pos			"841 13"
-		size	    "48 34"
-		textalign	cc
-	}
-	pic nextround
-	{
-		tooltip		"_Finish round"
-		image		althud/buttons_althud1g
-		pos			"888 11"
-		texl		"0 0"
-		texh		"40 34"
-		mousefx		true
-		onClick		{ cmd "nextround;" }
-	}
-	pic messagelog
-	{
-		image		althud/buttons_althud1g
-		pos			"932 11"
-		texl		"43 0"
-		texh		"83 34"
-		mousefx		true
-		onClick		{ }
-	}
-	pic menu
-	{
-		image		althud/buttons_althud1
-		pos			"976 11"
-		texl		"86 0"
-		texh		"126 34"
-		mousefx		true
-		onClick		{ cmd "mn_pop;" }
-	}
-
-	confunc selpla { *bt_primaryleft@image	= althud/buttons_althud1a }
-	confunc selpra { *bt_primaryright@image = althud/buttons_althud1a }
-
-	confunc deselpla { *bt_primaryleft@image	= althud/buttons_althud1 }
-	confunc deselpra { *bt_primaryright@image	= althud/buttons_althud1 }
-	confunc deselrla { *bt_reloadleft@image		= althud/buttons_althud1 }
-	confunc deselrra { *bt_reloadright@image	= althud/buttons_althud1 }
-
-	confunc displa { *bt_primaryleft@image	= althud/buttons_althud1g }
-	confunc dispra { *bt_primaryright@image	= althud/buttons_althud1g }
-	confunc disrla { *bt_reloadleft@image	= althud/buttons_althud1g }
-	confunc disrra { *bt_reloadright@image	= althud/buttons_althud1g }
-
-	// ==================
-	// round events
-	// ==================
-
-	confunc startrounda
-	{
-		*nextround@image = althud/buttons_althud1
-	}
-	confunc endrounda
-	{
-		*nextround@image = althud/buttons_althud1g
-	}
-
-	confunc startreactionmanya
-	{
-		*bt_reaction_a@image = althud/buttons_althud1b
-		*bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
-	}
-	confunc startreactionmanya_impos
-	{
-		*bt_reaction_a@image = althud/buttons_althud1br
-		*bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
-	}
-	confunc startreactiononcea
-	{
-		*bt_reaction_a@image = althud/buttons_althud1a
-		*bt_reaction_a@tooltip = "_One-shot reaction fire"
-	}
-	confunc startreactiononcea_impos
-	{
-		*bt_reaction_a@image = althud/buttons_althud1ar
-		*bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
-	}
-
-	confunc deselreactiona
-	{
-		*bt_reaction_a@image = althud/buttons_althud1
-		*bt_reaction_a@tooltip = "_No reaction fire"
-	}
-	confunc disreactiona {
-		*bt_reaction_a@image = althud/buttons_althud1g
-	}
-
-	pic bt_reaction_a
-	{
-		image		althud/buttons_althud1g
-		pos			"900 497"
-		texl		"81 37"
-		texh		"106 70"
-		mousefx		true
-		onClick		{ cmd "togglereaction;" }
-	}
-
-	confunc althud_deselheadgear { *althud_bt_use_headgear@image = althud/buttons_althud1g }
-	confunc althud_disheadgear { *althud_bt_use_headgear@image = althud/buttons_althud1g }
-
-	pic althud_bt_use_headgear
-	{
-		tooltip		"_Use headgear"
-		image		althud/buttons_althud1g
-		mousefx		true
-		pos			"930 497"
-		texl		"108 37"
-		texh		"134 70"
-		onClick		{ cmd "useheadgear;" }
-	}
-
-	pic bt_reloadright
-	{
-		tooltip		*cvar:mn_reloadright_tt
-		image		althud/buttons_althud1g
-		pos			"991 497"
-		texl		"0 37"
-		texh		"25 70"
-		mousefx		true
-		onClick		{ cmd "reloadright;" }
-		onMouseEnter			{ cmd "remaining_tus reload_r 1;" }
-		onMouseLeave			{ cmd "remaining_tus reload_r 0;" }
-	}
-
-	pic bt_reloadleft
-	{
-		tooltip		*cvar:mn_reloadleft_tt
-		image		althud/buttons_althud1g
-		pos			"991 497"
-		texl		"0 37"
-		texh		"25 70"
-		mousefx		true
-		onClick		{ cmd "reloadleft;" }
-		onMouseEnter			{ cmd "remaining_tus reload_l 1;" }
-		onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
-	}
-
-	pic bt_duck
-	{
-		tooltip		*cvar:mn_crouchstand_tt
-		image		althud/buttons_althud1g
-		mousefx		true
-		pos			"991 536"
-		texl		"27 37"
-		texh		"52 70"
-		onClick		{ cmd "standcrouch;" }
-		onMouseEnter			{ cmd "remaining_tus crouch 1;" }
-		onMouseLeave			{ cmd "remaining_tus crouch 0;" }
-	}
-
-	// CROUCH/STAND UP BUTTON
-	confunc deselstanda  { *bt_duck@texl = "27 37" *bt_duck@texh = "52 70" *bt_duck@image = althud/buttons_althud1 }
-	confunc deselcroucha { *bt_duck@texl = "54 37" *bt_duck@texh = "79 70" *bt_duck@image = althud/buttons_althud1 }
-	confunc disstanda    { *bt_duck@texl = "27 37" *bt_duck@texh = "52 70" *bt_duck@image = althud/buttons_althud1g }
-	confunc discroucha   { *bt_duck@texl = "54 37" *bt_duck@texh = "79 70" *bt_duck@image = althud/buttons_althud1g }
-
-	checkbox bt_crouch_reservation
-	{
-		tooltip		*cvar:mn_crouch_reservation_tt
-		image		"ui/checkbox_blue"
-		pos			"969 536"
-		size		"20 18"
-		current		0
-		onChange	{ cmd "togglecrouchreserve;" }
-	}
-
-	confunc crouch_checkbox_disable_s {
-		*bt_crouch_reservation@disabled = true
-	}
-	confunc crouch_checkbox_clear_s	{
-		*bt_crouch_reservation@disabled = false
-		*(checkbox)bt_crouch_reservation@current = 0
-	}
-	confunc crouch_checkbox_check_s	{
-		*bt_crouch_reservation@disabled = false
-		*(checkbox)bt_crouch_reservation@current = 1
-	}
-
-	pic bt_shot_reservation
-	{
-		tooltip	*cvar:mn_shot_reservation_tt
-		image		hud/button_reserve_shot	// fixme
-		pos			"965 497"
-		texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
-		texh		"127 64"
-		mousefx		true
-		onClick		{ cmd "sel_shotreservation;" }
-		onRClick		{ cmd "sel_shotreservation 0;" }
-	}
-
-	// "RESERVATION FOR SHOT" BUTTON
-	confunc reserve_shot_clear_a
-	{
-		*bt_shot_reservation@texl	= "0 0"
-		*bt_shot_reservation@texh	= "51 32"
-	}
-	confunc reserve_shot_check_a
-	{
-		*bt_shot_reservation@texl	= "0 32"
-		*bt_shot_reservation@texh	= "51 64"
-	}
-	confunc reserve_shot_disable_a
-	{
-		*bt_shot_reservation@texl	= "64 32"
-		*bt_shot_reservation@texh	= "127 64"
-	}
-
-	pic bt_floorup
-	{
-		tooltip		"_Level up"
-		image		althud/buttons_althud1
-		mousefx		true
-		pos			"991 648"
-		texl		"54 74"
-		texh		"79 107"
-		onClick		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
-	}
-	pic bt_floordown
-	{
-		tooltip		"_Level down"
-		image		althud/buttons_althud1
-		mousefx		true
-		pos			"991 723"
-		texl		"81 74"
-		texh		"106 107"
-		onClick		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
-	}
-
-	container right
-	{
-		pos			"882 404"
-	}
-	container left
-	{
-		pos			"882 404"
-	}
-	string ammoright
-	{
-		string		*cvar:mn_ammoright
-		pos			"885 465"
-		size		"40 20"
-	}
-	string ammoleft
-	{
-		string		*cvar:mn_ammoleft
-		pos			"885 465"
-		size		"40 20"
-	}
-
-	func show_rightweapon
-	{
-		*right@invis = false
-		*ammoright@invis = false
-		*left@invis = true
-		*ammoleft@invis = true
-		*bt_primaryright@invis = false
-		*bt_primaryleft@invis = true
-		*bt_reloadright@invis = false
-		*bt_reloadleft@invis = true
-	}
-	func show_leftweapon
-	{
-		*right@invis = true
-		*ammoright@invis = true
-		*left@invis = false
-		*ammoleft@invis = false
-		*bt_primaryright@invis = true
-		*bt_primaryleft@invis = false
-		*bt_reloadright@invis = true
-		*bt_reloadleft@invis = false
-	}
-
-	pic switch_to_right_hand
-	{
-		tooltip		"_Switch to right hand weapon"
-		image		ui/buttons_small
-		pos			"964 464"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		onWheelUp	{ call *node:root.show_rightweapon cmd "switch_firemode_list r;" }
-		onWheelDown	{ call *node:root.show_leftweapon cmd "switch_firemode_list l;" }
-		onClick		{ call *node:root.show_rightweapon cmd "switch_firemode_list r;" }
-	}
-	pic switch_to_left_hand
-	{
-		tooltip		"_Switch to left hand weapon"
-		image		ui/buttons_small
-		pos			"980 464"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		onWheelUp	{ call *node:root.show_rightweapon cmd "switch_firemode_list r;" }
-		onWheelDown	{ call *node:root.show_leftweapon cmd "switch_firemode_list l;" }
-		onClick		{ call *node:root.show_leftweapon cmd "switch_firemode_list l;" }
-	}
-
-	// ==================
-	// strings
-	// ==================
-
-	string str_name
-	{
-		string		*cvar:mn_name
-		pos			"883 84"
-		size		"125 20"
-	}
-
-	string str_hp
-	{
-		string		*cvar:mn_hp
-		pos			"881 365"
-		size		"40 20"
-		textalign	uc
-	}
-	string str_tu
-	{
-		string		*cvar:mn_tu
-		pos			"909 365"
-		size		"40 20"
-		textalign	uc
-	}
-	string str_crg
-	{
-		string		*cvar:mn_morale
-		pos			"938 365"
-		size		"40 20"
-		textalign	uc
-	}
-
-	string str_floor
-	{
-		string		*cvar:cl_worldlevel
-		pos			"985 690"
-		size		"40 20"
-		textalign	cc
-	}
-
-	// ==================
-	// status bars
-	// ==================
-
-	bar health
-	{
-		pos			"886 324"
-		size		"120 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp
-		max			*cvar:mn_hpmax
-		disabled	true
-	}
-
-	//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_hud.
-	string tu_tooltips
-	{
-		string		" "
-		tooltip		*cvar:mn_tu_tooltips
-		pos			"886 332"
-		size		"120 4"
-	}
-
-	bar timeall
-	{
-		pos			"886 332"
-		size		"120 4"
-		color		".1 .1 .5 1"
-		current		*cvar:mn_tu
-		max			*cvar:mn_tumax
-		disabled	true
-	}
-	bar timeremain
-	{
-		pos			"886 332"
-		size		"120 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_turemain
-		max			*cvar:mn_tumax
-		disabled	true
-	}
-
-	bar timereserved
-	{
-		pos			"886 332"
-		size		"120 2"
-		color		"0 .5 0 1"
-		current		*cvar:mn_tureserved
-		max			*cvar:mn_tumax
-		disabled	true
-	}
-
-	bar morale
-	{
-		pos			"886 340"
-		size		"120 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale
-		max			*cvar:mn_moralemax
-		disabled	true
-	}
-
-	bar morale0
-	{
-		pos			"907 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale0
-		max			*cvar:mn_moralemax0
-		disabled	true
-	}
-	bar health0
-	{
-		pos			"913 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp0
-		max			*cvar:mn_hpmax0
-		disabled	true
-	}
-	bar time0
-	{
-		pos			"919 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu0
-		max			*cvar:mn_tumax0
-		disabled	true
-	}
-	bar morale1
-	{
-		pos			"827 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale1
-		max			*cvar:mn_moralemax1
-		disabled	true
-	}
-	bar health1
-	{
-		pos			"833 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp1
-		max			*cvar:mn_hpmax1
-		disabled	true
-	}
-	bar time1
-	{
-		pos			"839 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu1
-		max			*cvar:mn_tumax1
-		disabled	true
-	}
-	bar morale2
-	{
-		pos			"747 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale2
-		max			*cvar:mn_moralemax2
-		disabled	true
-	}
-	bar health2
-	{
-		pos			"753 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp2
-		max			*cvar:mn_hpmax2
-		disabled	true
-	}
-	bar time2
-	{
-		pos			"759 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu2
-		max			*cvar:mn_tumax2
-		disabled	true
-	}
-	bar morale3
-	{
-		pos			"667 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale3
-		max			*cvar:mn_moralemax3
-		disabled	true
-	}
-	bar health3
-	{
-		pos			"673 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp3
-		max			*cvar:mn_hpmax3
-		disabled	true
-	}
-	bar time3
-	{
-		pos			"679 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu3
-		max			*cvar:mn_tumax3
-		disabled	true
-	}
-	bar morale4
-	{
-		pos			"587 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale4
-		max			*cvar:mn_moralemax4
-		disabled	true
-	}
-	bar health4
-	{
-		pos			"593 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp4
-		max			*cvar:mn_hpmax4
-		disabled	true
-	}
-	bar time4
-	{
-		pos			"599 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu4
-		max			*cvar:mn_tumax4
-		disabled	true
-	}
-	bar morale5
-	{
-		pos			"507 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale5
-		max			*cvar:mn_moralemax5
-		disabled	true
-	}
-	bar health5
-	{
-		pos			"513 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp5
-		max			*cvar:mn_hpmax5
-		disabled	true
-	}
-	bar time5
-	{
-		pos			"519 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu5
-		max			*cvar:mn_tumax5
-		disabled	true
-	}
-	bar morale6
-	{
-		pos			"427 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale6
-		max			*cvar:mn_moralemax6
-		disabled	true
-	}
-	bar health6
-	{
-		pos			"433 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp6
-		max			*cvar:mn_hpmax6
-		disabled	true
-	}
-	bar time6
-	{
-		pos			"439 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu6
-		max			*cvar:mn_tumax6
-		disabled	true
-	}
-	bar morale7
-	{
-		pos			"347 753"
-		size		"78 4"
-		color		".7 .7 0 1"
-		current		*cvar:mn_morale7
-		max			*cvar:mn_moralemax7
-		disabled	true
-	}
-	bar health7
-	{
-		pos			"353 753"
-		size		"78 4"
-		color		".7 0 0 1"
-		current		*cvar:mn_hp7
-		max			*cvar:mn_hpmax7
-		disabled	true
-	}
-	bar time7
-	{
-		pos			"359 753"
-		size		"78 4"
-		color		".2 .2 1 1"
-		current		*cvar:mn_tu7
-		max			*cvar:mn_tumax7
-		disabled	true
-	}
-
-	text infoscreen
-	{
-		dataid		TEXT_STANDARD
-		pos			"5 722"
-		size		"265 50"
-		lineheight	20
-		tabwidth	100
-		color		"0 1 0 1"
-		rows		"2"
-	}
-
-	pic bt_primaryright
-	{
-		tooltip		"_Use Item"
-		image		althud/buttons_althud1g
-		pos			"870 497"
-		texl		"0 74"
-		texh		"25 107"
-		mousefx		true
-		onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
-	}
-	pic bt_primaryleft
-	{
-		tooltip		"_Use Item"
-		image		althud/buttons_althud1g
-		pos			"870 497"
-		texl		"0 74"
-		texh		"25 107"
-		mousefx		true
-		onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
-	}
-
+		string numspotted
+		{
+			string		*cvar:mn_numaliensspotted
+			tooltip		"_Click to cycle through spotted enemies"
+			pos			"78 13"
+			size	    "48 34"
+			onClick		{ cmd "nextalien;" }
+			textalign	cc
+		}
+		pic nextround
+		{
+			tooltip		"_Finish round"
+			image		althud/buttons_althud1g
+			pos			"120 11"
+			texl		"0 0"
+			texh		"40 34"
+			mousefx		true
+			onClick		{ cmd "nextround;" }
+		}
+		pic messagelog
+		{
+			image		althud/buttons_althud1g
+			pos			"164 11"
+			texl		"43 0"
+			texh		"83 34"
+			mousefx		true
+		}
+		pic menu
+		{
+			image		althud/buttons_althud1
+			pos			"208 11"
+			texl		"86 0"
+			texh		"126 34"
+			mousefx		true
+			onClick		{ cmd "mn_pop;" }
+		}
+			
+		// ==================
+		// round events
+		// ==================
+	
+		confunc startrounda
+		{
+			*upperright.nextround@image = althud/buttons_althud1
+		}
+		confunc endrounda
+		{
+			*upperright.nextround@image = althud/buttons_althud1g
+		}
+	}
+	
 	// ==================
 	// init function
 	// ==================
-
-	confunc unhide_chatscreen {
-		*chatscreen@invis = false
-	}
 
 	func onInit
 	{
 		*chatscreen@invis = true
 		cmd "music_change battlescape;"
-		call *node:root.show_rightweapon
+		call *node:root.right.show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}
 }

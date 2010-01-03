@@ -13,8 +13,6 @@ window ahud {
 	confunc crouch_checkbox_clear_s	{ }
 	confunc crouch_checkbox_check_s	{ }
 
-	confunc unhide_chatscreen { }
-
 	// ==================
 	// cmd forwarding
 	// @todo need to clean up that list, some cmd are not used
@@ -51,9 +49,18 @@ window ahud {
 	confunc crouch_checkbox_clear	{ cmd "crouch_checkbox_clear_s;" }
 	confunc crouch_checkbox_check	{ cmd "crouch_checkbox_check_s;" }
 
-	confunc reserve_shot_clear	{ cmd "reserve_shot_clear_s;reserve_shot_clear_a;" }
-	confunc reserve_shot_check	{ cmd "reserve_shot_check_s;reserve_shot_check_a;" }
-	confunc reserve_shot_disable	{ cmd "reserve_shot_disable_s;reserve_shot_disable_a;" }
+	confunc reserve_shot_clear { 
+		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
+		cmd "reserve_shot_clear_s;reserve_shot_clear_a;"
+	}
+	
+	confunc reserve_shot_check { 
+		cmd "reserve_shot_check_s;reserve_shot_check_a;"
+	}
+	
+	confunc reserve_shot_disable {
+		cmd "reserve_shot_disable_s;reserve_shot_disable_a;"
+	}
 
 	confunc startreactionmany { cmd "startreactionmanys;startreactionmanya;" }
 	confunc startreactionmany_impos { cmd "startreactionmanys_impos;startreactionmanya_impos;" }
@@ -70,6 +77,10 @@ window ahud {
 	
 	confunc openradar { cmd "mn_push radarwindow;" }
 
+	confunc unhide_chatscreen {
+		*chatscreen@invis = false
+	}
+	
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
 	 * @param <2> the model path of the head model

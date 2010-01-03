@@ -925,10 +925,6 @@ window hud extends ahud
 	// init function
 	// ==================
 
-	confunc unhide_chatscreen {
-		*chatscreen@invis = false
-	}
-
 	func onInit
 	{
 		*chatscreen@invis = true
