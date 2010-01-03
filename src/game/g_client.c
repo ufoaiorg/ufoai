@@ -573,7 +573,7 @@ int G_ClientAction (player_t * player)
 	int firemode;
 	int from, fx, fy, to, tx, ty;
 	int hand, fdIdx, objIdx;
-	int resType, resState, resValue;
+	int resReaction, resCrouch, resShot;
 	edict_t *ent;
 
 	/* read the header */
@@ -663,20 +663,11 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_RESERVE_STATE:
-		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resType, &resState, &resValue);
+		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resReaction, &resShot, &resCrouch);
 
-		if (resValue < 0)
-			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n",
-					resType, resState, resValue);
-
-		switch (resType) {
-		case RES_REACTION:
-			ent->chr.reservedTus.reserveReaction = resState;
-			ent->chr.reservedTus.reaction = resValue;
-			break;
-		default:
-			gi.error("G_ClientAction: Unknown reservation type (on the server-side)!\n");
-		}
+		ent->chr.reservedTus.reaction = resReaction;
+		ent->chr.reservedTus.shot = resShot;
+		ent->chr.reservedTus.crouch = resCrouch;
 		break;
 
 	default:
@@ -1043,6 +1034,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.gender = gi.ReadByte();
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
+			ent->state = gi.ReadShort();
 
 			/** Scores @sa G_ClientSkipActorInfo */
 			for (k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
@@ -1056,9 +1048,6 @@ void G_ClientTeamInfo (player_t * player)
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				ent->chr.score.stuns[k] = gi.ReadShort();
 			ent->chr.score.assignedMissions = gi.ReadShort();
-
-			/* Read user-defined reaction-state. */
-			ent->chr.reservedTus.reserveReaction = gi.ReadShort();
 
 			/* Mission Scores */
 			memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
@@ -1201,9 +1190,6 @@ qboolean G_ClientBegin (player_t* player)
  */
 void G_ClientSpawn (player_t * player)
 {
-	edict_t *ent;
-	int i;
-
 	G_GetStartingTeam(player);
 
 	/* do all the init events here... */
@@ -1216,15 +1202,6 @@ void G_ClientSpawn (player_t * player)
 	G_ClearVisFlags(player->pers.team);
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
-
-	/* Set the initial state of reaction fire to previously stored state for all team-members.
-	 * This defines the default reaction-mode. */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->team == player->pers.team && G_IsActor(ent)) {
-			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",
-					ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
-			G_ClientStateChange(player, ent, ent->chr.reservedTus.reserveReaction, qfalse);
-		}
 
 	/* submit stats */
 	G_SendPlayerStats(player);

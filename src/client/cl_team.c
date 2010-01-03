@@ -81,6 +81,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	mxml_AddInt(p, "skin", chr.skin);
 	mxml_AddInt(p, "teamdefidx", chr.teamDef->idx);
 	mxml_AddInt(p, "gender", chr.gender);
+	mxml_AddInt(p, "state", chr.state);
 	mxml_AddInt(p, "ucn", chr.ucn);
 	mxml_AddInt(p, "maxhp", chr.maxHP);
 	mxml_AddInt(p, "hp", chr.HP);
@@ -144,6 +145,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 
 	/* Load the character data */
 	chr->gender = mxml_GetInt(p, "gender", 0);
+	chr->state = mxml_GetInt(p, "state", 0);
 	chr->ucn = mxml_GetInt(p, "ucn", 0);
 	chr->maxHP = mxml_GetInt(p, "maxhp", 0);
 	chr->HP = mxml_GetInt(p, "hp", 0);
@@ -173,7 +175,6 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	}
 	chr->score.assignedMissions = mxml_GetInt(p, "score.assignedmissions", 0);
 	chr->score.rank = mxml_GetInt(p, "score.rank", -1);
-	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
 	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
 	INVSH_DestroyInventory(&chr->inv);
@@ -277,10 +278,6 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
-
-	/* Set default reaction-mode for all character-types to "once".
-	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa G_SpawnAIPlayer */
-	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
 	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
 

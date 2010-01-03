@@ -407,13 +407,11 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 		return reservedReaction + reservedCrouch + reservedShot;
 	case RES_ALL_ACTIVE: {
 		/* A summary of ALL TUs that are reserved depending on their "status". */
-		const int crouch = (chr->reservedTus.reserveCrouch) ? reservedCrouch : 0;
-		/** @todo reserveReaction is not yet correct on the client side - at least not tested. */
 		/* Only use reaction-value if we are have RF activated. */
 		if ((le->state & STATE_REACTION))
-			return reservedReaction + reservedShot + crouch;
+			return reservedReaction + reservedShot + reservedCrouch;
 		else
-			return reservedShot + crouch;
+			return reservedShot + reservedCrouch;
 	}
 	case RES_REACTION:
 		return reservedReaction;
@@ -440,10 +438,7 @@ int CL_UsableTUs (const le_t * le)
 		return -1;
 	}
 
-	if (LE_IsCrouched(le) && cl_autostand->integer)
-		return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE) - TU_CROUCH;
-	else
-		return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE);
+	return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE);
 }
 
 /**
@@ -476,33 +471,21 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 {
 	character_t *chr;
 
-	if (!le || tus < 0) {
+	if (!le || tus < 0)
 		return;
-	}
 
 	chr = CL_GetActorChr(le);
-	if (!chr)
-		return;
+	if (chr) {
+		chrReservations_t *res = &chr->reservedTus;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Debug: Reservation type=%i, TUs=%i\n", type, tus);
+		if (type == RES_REACTION)
+			chr->reservedTus.reaction = tus;
+		else if (type == RES_CROUCH)
+			chr->reservedTus.crouch = tus;
+		else if (type == RES_SHOT)
+			chr->reservedTus.shot = tus;
 
-	switch (type) {
-	case RES_ALL:
-	case RES_ALL_ACTIVE:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: RES_ALL and RES_ALL_ACTIVE are not valid options.\n");
-		return;
-	case RES_REACTION:
-		chr->reservedTus.reaction = tus;
-		return;
-	case RES_CROUCH:
-		chr->reservedTus.crouch = tus;
-		return;
-	case RES_SHOT:
-		chr->reservedTus.shot = tus;
-		return;
-	default:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Bad reservation type given: %i\n", type);
-		return;
+		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res->reaction, res->shot, res->crouch);
 	}
 }
 
@@ -533,19 +516,18 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
 		const fireDef_t *fd = CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_CHAR(handidx));
 		if (fd) {
+			int time = fd[fdIdx].time;
 			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
-			if (chr->reservedTus.reserveReaction == STATE_REACTION_MANY)
-				CL_ReserveTUs(actor, RES_REACTION, fd[fdIdx].time * (usableTusForRF / fd[fdIdx].time));
-			else
-				CL_ReserveTUs(actor, RES_REACTION, fd[fdIdx].time);
+			if (actor->state & STATE_REACTION_MANY)
+				time *= (usableTusForRF / fd[fdIdx].time);
+
+			CL_ReserveTUs(actor, RES_REACTION, time);
 		}
 	}
 
 	CL_CharacterSetRFMode(chr, handidx, fdIdx, od);
 	/* Send RFmode[] to server-side storage as well. See g_local.h for more. */
 	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fdIdx, od ? od->idx : NONE);
-	/* Update server-side settings */
-	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction);
 }
 
 /**

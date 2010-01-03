@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief The server finished sending all init-data to the client. We can now run some client-side initialisation - mostly soldier-related.
  * @sa CL_StartGame
  * @note EV_START_DONE
- * @todo Is there more stuff to initialise when the client is "ready"?
  */
 void CL_StartingGameDone (const eventRegister_t *self, struct dbuffer *msg)
 {
@@ -48,16 +47,12 @@ void CL_StartingGameDone (const eventRegister_t *self, struct dbuffer *msg)
 				Com_Error(ERR_DROP, "No character struct assigned to actor");
 			CL_SetReactionFiremode(le, chr->RFmode.hand, chr->RFmode.weapon, chr->RFmode.fmIdx);
 
-			/* Reserve Tus for crouching/standing up if player selected this previously. */
-			if (chr->reservedTus.reserveCrouch) {
-				/** @sa CL_ActorToggleCrouchReservation_f */
-				/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
-				if (CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
-					CL_ReserveTUs(le, RES_CROUCH, TU_CROUCH);
-					MN_ExecuteConfunc("crouch_checkbox_check");
-				} else {
-					MN_ExecuteConfunc("crouch_checkbox_disable");
-				}
+			/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
+			if (CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
+				CL_ReserveTUs(le, RES_CROUCH, TU_CROUCH);
+				MN_ExecuteConfunc("crouch_checkbox_check");
+			} else {
+				MN_ExecuteConfunc("crouch_checkbox_disable");
 			}
 		} else {
 			CL_SetDefaultReactionFiremode(le, ACTOR_HAND_CHAR_RIGHT);

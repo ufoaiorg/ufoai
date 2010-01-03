@@ -45,16 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @param[in] hand Hand char (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
 #define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_CHAR_RIGHT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
 
-/**
- * @brief Reaction fire toggle state, don't mess with the order!!!
- */
-typedef enum {
-	R_FIRE_OFF,
-	R_FIRE_ONCE,
-	R_FIRE_MANY
-} reactionmode_t;
-
-
 /** @sa moveModeDescriptions */
 typedef enum {
 	WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH,

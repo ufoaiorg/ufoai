@@ -60,16 +60,12 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 			character_t *chr = &aircraft->acTeam[p]->chr;
 			assert(chr);
 
+			/* This is an UGV */
 			if (aircraft->acTeam[p]->ugv) {
-				/* This is an UGV */
-
 				/* Check if there is a weapon and add it if there isn't. */
 				if (!chr->inv.c[csi.idRight] || !chr->inv.c[csi.idRight]->item.t)
 					INVSH_EquipActorRobot(&chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
 			}
-
-			/* reset reserveReaction state to default */
-			chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 		}
 	}
 

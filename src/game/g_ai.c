@@ -1009,11 +1009,8 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 
 	/* More tweaks */
 	if (team != TEAM_CIVILIAN) {
-		/* Set default reaction mode. */
-		ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
-
 		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
-		G_ClientStateChange(player, ent, ent->chr.reservedTus.reserveReaction, qfalse);
+		G_ClientStateChange(player, ent, STATE_REACTION_ONCE, qfalse);
 	}
 
 	/* initialize the LUA AI now */

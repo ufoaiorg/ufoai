@@ -610,29 +610,19 @@ typedef struct chrFiremodeSettings_s {
  * @sa CL_UsableTUs
  * @sa CL_ReservedTUs
  * @sa CL_ReserveTUs
- * @todo Would a list be better here? See the enum reservation_types_t
  */
 typedef struct chrReservations_s {
 	/* Reaction fire reservation (for current round and next enemy round) */
-	int reserveReaction; /**< Stores if the player has activated or disabled reservation for RF. states can be 0, STATE_REACTION_ONCE or STATE_REACTION_MANY See also le_t->state. This is only for remembering over missions. @sa: g_client:G_ClientSpawn*/
-	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
+	int reaction;	/**< Did the player activate RF with a usable firemode?
+					 * (And at the same time storing the TU-costs of this firemode) */
 
 	/* Crouch reservation (for current round)	*/
-	qboolean reserveCrouch; /**< Stores if the player has activated or disabled reservation for crouching/standing up. @sa cl_parse:CL_StartingGameDone */
-	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH.
-			 * @sa cl_actor:CL_ActorStandCrouch_f
-			 * @sa cl_parse:CL_ActorStateChange
-			 */
+	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
 
-	/** Shot reservation (for current round)
-	 * @sa cl_actor.c:CL_PopupFiremodeReservation_f (sel_shotreservation) */
+	/* Shot reservation (for current round) */
 	int shot;	/**< If non-zero we reserved a shot in this turn. */
-	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon (and hand) was used for "shot" reservation. */
-
-/*
-	int reserveCustom;	**< Did the player activate reservation for the custom value?
-	int custom;	**< How many TUs the player has reserved by manual input. @todo My suggestion is to provide a numerical input-field.
-*/
+	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
+										 * (and hand) was used for "shot" reservation. */
 } chrReservations_t;
 
 typedef enum {
@@ -667,6 +657,8 @@ typedef struct character_s {
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
 	int STUN;
 	int morale;
+
+	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
 
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
 	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */

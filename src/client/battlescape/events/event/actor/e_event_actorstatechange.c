@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
+#include "../../../../menu/m_main.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
 #include "e_event_actorstatechange.h"
@@ -31,6 +32,7 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
 	int entnum, state;
+	character_t *chr;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &state);
 
@@ -38,12 +40,7 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("StateChange message ignored... LE is no actor (number: %i, state: %i, type: %i)\n",
 			entnum, state, le->type);
 		return;
@@ -71,6 +68,20 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	} else {
 		le->state = state;
 		LE_SetThink(le, LET_StartIdle);
+	}
+
+	/* save those states that the actor should also carry over to other missions */
+	chr = CL_GetActorChr(le);
+	chr->state = (le->state & STATE_REACTION);
+
+	if (!(le->state & STATE_REACTION)) {
+		MN_ExecuteConfunc("disreaction");
+	} else {
+		/* change reaction button state */
+		if (le->state & STATE_REACTION_MANY)
+			MN_ExecuteConfunc("startreactionmany");
+		else if (le->state & STATE_REACTION_ONCE)
+			MN_ExecuteConfunc("startreactiononce");
 	}
 
 	/* state change may have affected move length */

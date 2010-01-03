@@ -42,11 +42,6 @@ static qboolean firemodesChangeDisplay = qtrue;
 static qboolean visibleFiremodeListLeft = qfalse;
 static qboolean visibleFiremodeListRight = qfalse;
 
-/** keep track of reaction toggle */
-static reactionmode_t selActorReactionState;
-/** and another to help set buttons! */
-static reactionmode_t selActorOldReactionState = R_FIRE_OFF;
-
 static cvar_t *cl_hud_message_timeout;
 static cvar_t *cl_show_cursor_tooltips;
 int hitProbability;
@@ -97,8 +92,6 @@ typedef enum {
 	BT_STATE_HIGHLIGHT,		/**< Normal + highlight (blue + glow)*/
 	BT_STATE_UNUSABLE		/**< Normal + red (activated but unusable aka "impossible") */
 } weaponButtonState_t;
-
-static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
 
 /** @note Order of elements here must correspond to order of elements in walkType_t. */
 static const char *moveModeDescriptions[] = {
@@ -168,40 +161,15 @@ static void HUD_ActorGlobalCvars (void)
 }
 
 /**
- * @brief Get state of the reaction-fire button.
- * @param[in] le Pointer to local entity structure, a soldier.
- * @return R_FIRE_MANY when STATE_REACTION_MANY.
- * @return R_FIRE_ONCE when STATE_REACTION_ONCE.
- * @return R_FIRE_OFF when no reaction fiR_
- * @sa HUD_RefreshWeaponButtons
- * @sa CL_ActorUpdateCVars
- * @sa CL_ActorSelect
- */
-static int HUD_GetReactionState (const le_t * le)
-{
-	if (le->state & STATE_REACTION_MANY)
-		return R_FIRE_MANY;
-	else if (le->state & STATE_REACTION_ONCE)
-		return R_FIRE_ONCE;
-	else
-		return R_FIRE_OFF;
-}
-
-/**
  * @brief Sets the display for a single weapon/reload HUD button.
  */
 static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 {
-	const weaponButtonState_t currentState = weaponButtonState[button];
 	const char const* prefix;
 
 	assert(button < BT_NUM_TYPES);
 
-	if (state == currentState || state == BT_STATE_HIGHLIGHT) {
-		/* Don't reset if it already is in current state or if highlighted,
-		 * as HighlightWeaponButton deals with the highlighted state. */
-		return;
-	} else if (state == BT_STATE_DESELECT) {
+	if (state == BT_STATE_DESELECT) {
 		prefix = "desel";
 	} else if (state == BT_STATE_DISABLE) {
 		prefix = "dis";
@@ -211,7 +179,6 @@ static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
 	MN_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
-	weaponButtonState[button] = state;
 }
 
 /**
@@ -475,21 +442,16 @@ void HUD_DisplayPossibleReaction (const le_t * actor)
 	if (!actor)
 		return;
 
-	if (!actor->selected) {
-		/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
+	/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
+	if (!actor->selected)
 		return;
-	}
 
 	/* Display 'usable" (blue) reaction buttons
 	 * Code also used in CL_ActorToggleReaction_f */
-	switch (HUD_GetReactionState(actor)) {
-	case R_FIRE_ONCE:
+	if (actor->state & STATE_REACTION_ONCE)
 		MN_ExecuteConfunc("startreactiononce");
-		break;
-	case R_FIRE_MANY:
+	else if (actor->state & STATE_REACTION_MANY)
 		MN_ExecuteConfunc("startreactionmany");
-		break;
-	}
 }
 
 /**
@@ -502,24 +464,17 @@ qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 	if (!actor)
 		return qfalse;
 
-	if (!actor->selected) {
-		/* Given actor does not equal the currently selected actor. */
+	/* Given actor does not equal the currently selected actor. */
+	if (!actor->selected)
 		return qfalse;
-	}
 
 	/* Display 'impossible" (red) reaction buttons */
-	switch (HUD_GetReactionState(actor)) {
-	case R_FIRE_ONCE:
-		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;
+	if (actor->state & STATE_REACTION_ONCE)
 		MN_ExecuteConfunc("startreactiononce_impos");
-		break;
-	case R_FIRE_MANY:
-		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;
+	else if (actor->state & STATE_REACTION_MANY)
 		MN_ExecuteConfunc("startreactionmany_impos");
-		break;
-	default:
+	else
 		return qtrue;
-	}
 
 	return qfalse;
 }
@@ -950,7 +905,6 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 
 	/* Crouch/stand button. */
 	if (LE_IsCrouched(le)) {
-		weaponButtonState[BT_STAND] = BT_STATE_DISABLE;
 		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
@@ -959,7 +913,6 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 		}
 	} else {
-		weaponButtonState[BT_CROUCH] = BT_STATE_DISABLE;
 		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
@@ -996,7 +949,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	}
 
 	/* reaction-fire button */
-	if (HUD_GetReactionState(le) == R_FIRE_OFF) {
+	if (!(le->state & STATE_REACTION)) {
 		if (time >= CL_ReservedTUs(le, RES_REACTION)
 		 && (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT)))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
@@ -1251,8 +1204,6 @@ void HUD_ActorUpdateCvars (void)
 	Cvar_Set("mn_lweapon", "");
 
 	if (selActor) {
-		selActorReactionState = HUD_GetReactionState(selActor);
-
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
 		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
@@ -1470,23 +1421,6 @@ void HUD_ActorUpdateCvars (void)
 		if (!LEFT(selActor) && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
 			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
 
-		/* change stand-crouch & reaction button state */
-		selActorReactionState = HUD_GetReactionState(selActor);
-		if (selActorOldReactionState != selActorReactionState) {
-			selActorOldReactionState = selActorReactionState;
-			switch (selActorReactionState) {
-			case R_FIRE_MANY:
-				MN_ExecuteConfunc("startreactionmany");
-				break;
-			case R_FIRE_ONCE:
-				MN_ExecuteConfunc("startreactiononce");
-				break;
-			case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
-				weaponButtonState[BT_REACTION] = BT_STATE_DISABLE;
-				break;
-			}
-		}
-
 		selActor->oldstate = selActor->state;
 		/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
 		if (selActor->actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
@@ -1562,21 +1496,12 @@ static void CL_ActorToggleReaction_f (void)
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
 
-	selActorReactionState++;
-	if (selActorReactionState > R_FIRE_MANY)
-		selActorReactionState = R_FIRE_OFF;
-
-	switch (selActorReactionState) {
-	case R_FIRE_OFF:
+	if (selActor->state & STATE_REACTION_MANY)
 		state = ~STATE_REACTION;
-		break;
-	case R_FIRE_ONCE:
+	else if (!(selActor->state & STATE_REACTION))
 		state = STATE_REACTION_ONCE;
-		break;
-	case R_FIRE_MANY:
+	else if (selActor->state & STATE_REACTION_ONCE)
 		state = STATE_REACTION_MANY;
-		break;
-	}
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
 	if (!CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT)

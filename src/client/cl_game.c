@@ -391,6 +391,7 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 		NET_WriteByte(buf, chr->gender);
 		NET_WriteByte(buf, chr->STUN);
 		NET_WriteByte(buf, chr->morale);
+		NET_WriteShort(buf, chr->state);
 
 		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
@@ -404,9 +405,6 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			NET_WriteShort(buf, chr->score.stuns[j]);
 		NET_WriteShort(buf, chr->score.assignedMissions);
-
-		/* Send user-defined (default) reaction-state. */
-		NET_WriteShort(buf, chr->reservedTus.reserveReaction);
 
 		/* inventory */
 		CL_NetSendInventory(buf, &chr->inv);
