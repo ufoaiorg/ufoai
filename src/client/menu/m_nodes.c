@@ -157,9 +157,12 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
  */
 qboolean MN_CheckVisibility (menuNode_t *node)
 {
+	menuCallContext_t context;
 	if (!node->visibilityCondition)
 		return qtrue;
-	return MN_GetBooleanFromExpression(node->visibilityCondition, node);
+	context.source = node;
+	context.useCmdParam = qfalse;
+	return MN_GetBooleanFromExpression(node->visibilityCondition, &context);
 }
 
 /**
