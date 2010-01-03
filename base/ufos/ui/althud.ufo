@@ -855,18 +855,15 @@ window althud extends ahud
 		// "RESERVATION FOR SHOT" BUTTON
 		confunc reserve_shot_clear_a
 		{
-			*right.bt_shot_reservation@texl	= "0 0"
-			*right.bt_shot_reservation@texh	= "51 32"
+			*right.bt_shot_reservation@image = althud/buttons_althud1
 		}
 		confunc reserve_shot_check_a
 		{
-			*right.bt_shot_reservation@texl	= "0 32"
-			*right.bt_shot_reservation@texh	= "51 64"
+			*right.bt_shot_reservation@image = althud/buttons_althud1
 		}
 		confunc reserve_shot_disable_a
 		{
-			*right.bt_shot_reservation@texl	= "64 32"
-			*right.bt_shot_reservation@texh	= "127 64"
+			*right.bt_shot_reservation@image = althud/buttons_althud1g
 		}
 		
 		container right
