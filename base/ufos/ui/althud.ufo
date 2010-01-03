@@ -824,12 +824,6 @@ window althud extends ahud
 			onMouseLeave			{ cmd "remaining_tus crouch 0;" }
 		}
 	
-		// CROUCH/STAND UP BUTTON
-		confunc deselstanda  { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1 }
-		confunc deselcroucha { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1 }
-		confunc disstanda    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
-		confunc discroucha   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
-	
 		checkbox bt_crouch_reservation
 		{
 			tooltip		*cvar:mn_crouch_reservation_tt
@@ -1193,8 +1187,14 @@ window althud extends ahud
 	}
 
 	confunc hudselect {
-		*floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 4 )
+		*floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 7 )
 	}
+
+	// CROUCH/STAND UP BUTTON
+	confunc deselstand  { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1 }
+	confunc deselcrouch { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1 }
+	confunc disstand    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
+	confunc discrouch   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
 
 	// ==================
 	// init function

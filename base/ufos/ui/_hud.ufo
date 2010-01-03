@@ -26,10 +26,10 @@ window ahud {
 	confunc disrl { cmd "disrls;disrla;" }
 	confunc disrr { cmd "disrrs;disrra;" }
 
-	confunc deselstand { cmd "deselstands;deselstanda;" }
-	confunc deselcrouch { cmd "deselcrouchs;deselcroucha;" }
-	confunc disstand { cmd "disstands;disstanda;" }
-	confunc discrouch { cmd "discrouchs;discroucha;" }
+	confunc deselstand { }
+	confunc deselcrouch { }
+	confunc disstand { }
+	confunc discrouch { }
 
 	/* Prevent time for crouch */
 	confunc crouch_checkbox_disable { }

@@ -343,17 +343,6 @@ window hud extends ahud
 		}
 	}
 
-	confunc hudselect {
-		*team_selection.bt_actor<1>@disabled = false
-		*cvar:selected_soldier = <1>
-	}
-	confunc huddeselect {
-		*team_selection.bt_actor<1>@disabled = false
-	}
-	confunc huddisable {
-		*team_selection.bt_actor<1>@disabled = true
-	}
-
 	// ==================
 	// round events
 	// ==================
@@ -678,25 +667,6 @@ window hud extends ahud
 		}
 	}
 
-	// CROUCH/STAND UP BUTTON
-	confunc deselstands { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
-	confunc deselcrouchs { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
-	confunc disstands { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
-	confunc discrouchs { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
-
-	confunc crouch_checkbox_disable {
-		*left.bt_crouch_reservation@disabled = true
-	}
-	confunc crouch_checkbox_clear	{
-		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 0
-	}
-	confunc crouch_checkbox_check	{
-		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 1
-	}
-
-
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear_s
 	{
@@ -920,6 +890,39 @@ window hud extends ahud
 	{
 		*chatscreen@invis = true
 	}
+	
+	// ==================
+	// override ahud confunc
+	// ==================
+
+	confunc crouch_checkbox_disable {
+		*left.bt_crouch_reservation@disabled = true
+	}
+	confunc crouch_checkbox_clear	{
+		*left.bt_crouch_reservation@disabled = false
+		*(checkbox)left.bt_crouch_reservation@current = 0
+	}
+	confunc crouch_checkbox_check	{
+		*left.bt_crouch_reservation@disabled = false
+		*(checkbox)left.bt_crouch_reservation@current = 1
+	}
+
+	confunc hudselect {
+		*team_selection.bt_actor<1>@disabled = false
+		*cvar:selected_soldier = <1>
+	}
+	confunc huddeselect {
+		*team_selection.bt_actor<1>@disabled = false
+	}
+	confunc huddisable {
+		*team_selection.bt_actor<1>@disabled = true
+	}
+
+	// CROUCH/STAND UP BUTTON
+	confunc deselstand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
+	confunc deselcrouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
+	confunc disstand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
+	confunc discrouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
 
 	// ==================
 	// init function
