@@ -197,8 +197,11 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
 		return qfalse;
-	if (strcmp(*token, "=") != 0)
+	if (strcmp(*token, "=") != 0) {
+		Com_Printf("MN_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, MN_GetPath(menuNode));
 		Com_UnParseLastToken();
+		/*return qfalse;*/
+	}
 
 	/* get the value */
 	if (type == EA_VALUE_CVARNAME || type == EA_VALUE_CVARNAME_WITHINJECTION) {
