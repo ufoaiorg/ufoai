@@ -304,7 +304,7 @@ static qboolean CL_CheckFiremodeReservation (void)
 	if (!selActor)
 		return qfalse;
 
-	do {	/* Loop for the 2 hands (l/r) to avoid unneccesary code-duplication and abstraction. */
+	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
 		const fireDef_t *fireDef;
 
 		/* Get weapon (and its ammo) from the hand. */
@@ -356,7 +356,8 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	if (reset) {
 		CL_ReserveTUs(selActor, RES_SHOT, 0);
 		CL_CharacterSetShotSettings(selChr, -1, -1, NULL);
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
+		/* Update server-side settings */
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot);
 		return;
 	}
 
@@ -417,7 +418,8 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 		/* We have more entries than the "0 TUs" one
 		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot <lineselected>");
-		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
+		/* Set color for selected entry. */
+		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);
 		popupListNode->selectedColor[3] = 1.0;
 		MN_TextNodeSelectLine(popupListNode, selectedEntry);
 		popupReload = qfalse;
@@ -470,9 +472,11 @@ static void HUD_ReserveShot_f (void)
 
 	/* Check if we have enough TUs (again) */
 	if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
+		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
 		CL_ReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
-		CL_CharacterSetShotSettings(selChr, reserveShotData->hand, reserveShotData->fireModeIndex, INVSH_GetItemByIDX(reserveShotData->weaponIndex));
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, max(0, selChr->reservedTus.shot)); /* Update server-side settings */
+		CL_CharacterSetShotSettings(selChr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
+		/* Update server-side settings */
+		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, max(0, selChr->reservedTus.shot));
 		if (popupListNode)
 			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 	}
@@ -523,11 +527,11 @@ qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 	/* Display 'impossible" (red) reaction buttons */
 	switch (HUD_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
-		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
+		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;
 		MN_ExecuteConfunc("startreactiononce_impos");
 		break;
 	case R_FIRE_MANY:
-		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
+		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;
 		MN_ExecuteConfunc("startreactionmany_impos");
 		break;
 	default:
