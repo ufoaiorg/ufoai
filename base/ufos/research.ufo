@@ -4678,7 +4678,7 @@ tech rs_craft_ammo_shiva_1
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	// image	"techs/craft_ammo_shiva_1"
+	mdl				"aircraft/craft_weapon_shiva/ammo"
 }
 
 tech rs_craft_ammo_shiva_2
@@ -4699,7 +4699,7 @@ tech rs_craft_ammo_shiva_2
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	// image	"techs/craft_ammo_shiva_2"
+	mdl				"aircraft/craft_weapon_shiva/ammo"
 }
 
 tech rs_craft_weapon_sparrowhawk
