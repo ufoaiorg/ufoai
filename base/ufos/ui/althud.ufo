@@ -249,20 +249,17 @@ window althud extends ahud
 		pic bar_selbox
 		{
 			image		althud/bar_selbox
-			pos			"849 26"
-			size		"78 90"
-			texl		"0 38"
-			texh		"78 90"
+			pos			"0 26"
 		}
 	
-		confunc hudselecta0 { *floor.bar_selbox@left = "32" }
-		confunc hudselecta1 { *floor.bar_selbox@left = "128" }
-		confunc hudselecta2 { *floor.bar_selbox@left = "224" }
-		confunc hudselecta3 { *floor.bar_selbox@left = "320" }
-		confunc hudselecta4 { *floor.bar_selbox@left = "416" }
-		confunc hudselecta5 { *floor.bar_selbox@left = "512" }
-		confunc hudselecta6 { *floor.bar_selbox@left = "608" }
-		confunc hudselecta7 { *floor.bar_selbox@left = "704" }
+		confunc hudselecta0 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox0@left> - 4 ) }
+		confunc hudselecta1 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox1@left> - 4 ) }
+		confunc hudselecta2 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox2@left> - 4 ) }
+		confunc hudselecta3 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox3@left> - 4 ) }
+		confunc hudselecta4 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox4@left> - 4 ) }
+		confunc hudselecta5 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox5@left> - 4 ) }
+		confunc hudselecta6 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox6@left> - 4 ) }
+		confunc hudselecta7 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox7@left> - 4 ) }
 
 		// ==================
 		// models
