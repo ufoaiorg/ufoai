@@ -168,11 +168,22 @@ typedef struct menuAction_s {
 /* prototype */
 struct menuNode_s;
 
+/**
+ * @brief Contain the context of the calling of a function
+ */
+typedef struct menuCallContext_s {
+	/** node owning the action */
+	const struct menuNode_s* source;
+	/** is the function can use param from command line */
+	qboolean useCmdParam;
+} menuCallContext_t;
+
+
 void MN_ExecuteEventActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 qboolean MN_IsInjectedString(const char *string);
 void MN_FreeStringProperty(void* pointer);
-const char* MN_GenInjectedString(const struct menuNode_s* source, qboolean useCmdParam, const char* input, qboolean addNewLine);
+const char* MN_GenInjectedString(const char* input, qboolean addNewLine, const menuCallContext_t *context);
 int MN_GetActionTokenType(const char* token, int group);
 
 void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
