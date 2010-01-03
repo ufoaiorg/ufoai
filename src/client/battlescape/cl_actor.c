@@ -47,7 +47,6 @@ static cvar_t *cl_showactors;
 
 /* public */
 le_t *selActor;
-const fireDef_t *selFD;
 character_t *selChr;
 pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
@@ -1957,7 +1956,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	int distx, disty, i, n;
 	le_t *le;
 
-	if (!selActor || !selFD)
+	if (!selActor || !selActor->fd)
 		return 0.0;
 
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
@@ -1968,7 +1967,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 		/* no target there */
 		return 0.0;
 	/* or suicide attempted */
-	if (le->selected && selFD->damage[0] > 0)
+	if (le->selected && le->fd->damage[0] > 0)
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);
@@ -1986,13 +1985,13 @@ static float CL_TargetingToHit (pos3_t toPos)
 	height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
 
 	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
-			selFD->weaponSkill ? selChr->score.skills[selFD->weaponSkill] : 0);
+			selActor->fd->weaponSkill ? selChr->score.skills[selActor->fd->weaponSkill] : 0);
 
-	crouch = (LE_IsCrouched(selActor) && selFD->crouch) ? selFD->crouch : 1;
+	crouch = (LE_IsCrouched(selActor) && selActor->fd->crouch) ? selActor->fd->crouch : 1;
 
 	commonfactor = crouch * torad * distance * GET_INJURY_MULT(selChr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
-	stdevupdown = (selFD->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	stdevleftright = (selFD->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
+	stdevupdown = (selActor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
+	stdevleftright = (selActor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
 			  * (stdevleftright > LOOKUP_EPSILON ? CL_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
@@ -2084,7 +2083,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	le_t *target = NULL;
 	int toActorSize;
 
-	if (!selActor || !selFD)
+	if (!selActor || !selActor->fd)
 		return;
 
 	/* search for an actor at target */
@@ -2111,8 +2110,8 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	VectorNormalize(dir);
 
 	/* calculate 'out of range point' if there is one */
-	if (VectorDistSqr(start, end) > selFD->range * selFD->range) {
-		VectorMA(start, selFD->range, dir, mid);
+	if (VectorDistSqr(start, end) > selActor->fd->range * selActor->fd->range) {
+		VectorMA(start, selActor->fd->range, dir, mid);
 		crossNo = qtrue;
 	} else {
 		VectorCopy(end, mid);
@@ -2176,7 +2175,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	le_t *target = NULL;
 	int toActorSize;
 
-	if (!selActor || Vector2Compare(fromPos, toPos))
+	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
 		return;
 
 	/* search for an actor at target */
@@ -2196,7 +2195,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	/* get vectors, paint cross */
 	Grid_PosToVec(clMap, fromActorSize, fromPos, from);
 	Grid_PosToVec(clMap, toActorSize, toPos, at);
-	from[2] += selFD->shotOrg[1];
+	from[2] += selActor->fd->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
 	at[2] -= GROUND_DELTA;
@@ -2205,7 +2204,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	VectorCopy(at, cross);
 
 	/* calculate parabola */
-	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, selFD->rolled, v0);
+	dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 		return;
@@ -2240,21 +2239,21 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		/* draw particles */
 		/** @todo character strength should be used here, too
 		 * the stronger the character, the further the throw */
-		if (obstructed || VectorLength(at) > selFD->range)
+		if (obstructed || VectorLength(at) > selActor->fd->range)
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
 		else
 			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
 	/* draw targeting cross */
-	if (obstructed || VectorLength(at) > selFD->range)
+	if (obstructed || VectorLength(at) > selActor->fd->range)
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 	else
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
-	if (selFD->splrad) {
+	if (selActor->fd->splrad) {
 		Grid_PosToVec(clMap, toActorSize, toPos, at);
-		CL_TargetingRadius(at, selFD->splrad);
+		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
 
 	hitProbability = 100 * CL_TargetingToHit(toPos);
@@ -2385,7 +2384,7 @@ void CL_ActorTargetAlign_f (void)
 	static int currentPos = 0;
 
 	/* no firedef selected */
-	if (!selFD || !selActor)
+	if (!selActor || !selActor->fd)
 		return;
 	if (selActor->actorMode != M_FIRE_R && selActor->actorMode != M_FIRE_L
 	 && selActor->actorMode != M_PEND_FIRE_R && selActor->actorMode != M_PEND_FIRE_L)
@@ -2397,14 +2396,14 @@ void CL_ActorTargetAlign_f (void)
 	} else {
 		switch (currentPos) {
 		case 0:
-			if (selFD->gravity)
+			if (selActor->fd->gravity)
 				align = -align;
 			currentPos = 1; /* next level */
 			break;
 		case 1:
 			/* only allow to align to lower z level if the actor is
 			 * standing at a higher z-level */
-			if (selFD->gravity)
+			if (selActor->fd->gravity)
 				align = -(2 * align);
 			else
 				align = -align;
@@ -2412,7 +2411,7 @@ void CL_ActorTargetAlign_f (void)
 			break;
 		case 2:
 			/* the static var is not reseted on weaponswitch or actorswitch */
-			if (selFD->gravity) {
+			if (selActor->fd->gravity) {
 				align = 0;
 				currentPos = 0; /* next level */
 			} else {
@@ -2465,17 +2464,17 @@ void CL_AddTargeting (void)
 		break;
 	case M_FIRE_R:
 	case M_FIRE_L:
-		if (!selFD)
+		if (!selActor->fd)
 			return;
 
-		if (!selFD->gravity)
+		if (!selActor->fd->gravity)
 			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePos);
 		else
 			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePos);
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		if (!selFD)
+		if (!selActor->fd)
 			return;
 
 		/* Draw cursor at mousepointer */
@@ -2484,7 +2483,7 @@ void CL_AddTargeting (void)
 		/* Draw (pending) Cursor at target */
 		CL_AddTargetingBox(selActor->mousePendPos, qtrue);
 
-		if (!selFD->gravity)
+		if (!selActor->fd->gravity)
 			CL_TargetingStraight(selActor->pos, selActor->fieldSize, selActor->mousePendPos);
 		else
 			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, selActor->mousePendPos);

@@ -1145,8 +1145,6 @@ void HUD_ActorUpdateCvars (void)
 	Cvar_Set("mn_lweapon", "");
 
 	if (selActor) {
-		const invList_t *selWeapon;
-
 		selActorReactionState = HUD_GetReactionState(selActor);
 
 		/* set generic cvars */
@@ -1180,49 +1178,6 @@ void HUD_ActorUpdateCvars (void)
 			const invList_t *i = LEFT(selActor);
 			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
 			Cvar_Set("mn_lweapon", i->item.t->model);
-		}
-
-		/* get weapon */
-		if (IS_MODE_FIRE_HEADGEAR(selActor->actorMode)) {
-			selWeapon = HEADGEAR(selActor);
-		} else if (IS_MODE_FIRE_LEFT(selActor->actorMode)) {
-			selWeapon = LEFT(selActor);
-		} else {
-			selWeapon = RIGHT(selActor);
-		}
-
-		if (!selWeapon && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
-			selWeapon = RIGHT(selActor);
-
-		if (selWeapon) {
-			if (!selWeapon->item.t) {
-				/* No valid weapon in the hand. */
-				selFD = NULL;
-			} else {
-				/* Check whether this item uses/has ammo. */
-				if (!selWeapon->item.m) {
-					selFD = NULL;
-					/* This item does not use ammo, check for existing firedefs in this item. */
-					/* This is supposed to be a weapon or other usable item. */
-					if (selWeapon->item.t->numWeapons > 0) {
-						if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
-							const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-							/* Get firedef from the weapon (or other usable item) entry instead. */
-							if (fdArray != NULL)
-								selFD = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, selActor->currentSelectedFiremode);
-						}
-					}
-				} else {
-					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-					if (fdArray != NULL) {
-						const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, selActor->currentSelectedFiremode);
-						/* reset the align if we switched the firemode */
-						if (old != selFD)
-							mousePosTargettingAlign = 0;
-						selFD = old;
-					}
-				}
-			}
 		}
 
 		/* write info */
@@ -1286,19 +1241,65 @@ void HUD_ActorUpdateCvars (void)
 			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			time = selActor->actorMoveLength;
 		} else {
+			const invList_t *selWeapon;
+
+			/* get weapon */
+			if (IS_MODE_FIRE_HEADGEAR(selActor->actorMode)) {
+				selWeapon = HEADGEAR(selActor);
+			} else if (IS_MODE_FIRE_LEFT(selActor->actorMode)) {
+				selWeapon = LEFT(selActor);
+			} else {
+				selWeapon = RIGHT(selActor);
+			}
+
+			if (!selWeapon && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
+				selWeapon = RIGHT(selActor);
+
+			if (selWeapon) {
+				if (!selWeapon->item.t) {
+					/* No valid weapon in the hand. */
+					selActor->fd = NULL;
+				} else {
+					/* Check whether this item uses/has ammo. */
+					if (!selWeapon->item.m) {
+						selActor->fd = NULL;
+						/* This item does not use ammo, check for existing firedefs in this item. */
+						/* This is supposed to be a weapon or other usable item. */
+						if (selWeapon->item.t->numWeapons > 0) {
+							if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
+								const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+								/* Get firedef from the weapon (or other usable item) entry instead. */
+								if (fdArray != NULL)
+									selActor->fd = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, selActor->currentSelectedFiremode);
+							}
+						}
+					} else {
+						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+						if (fdArray != NULL) {
+							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, selActor->currentSelectedFiremode);
+							/* reset the align if we switched the firemode */
+							if (old != selActor->fd)
+								mousePosTargettingAlign = 0;
+							selActor->fd = old;
+						}
+					}
+				}
+			}
+
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			if (selWeapon && !GAME_ItemIsUseable(selWeapon->item.t)) {
 				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
 				selActor->actorMode = M_MOVE;
-			} else if (selWeapon && selFD) {
+			} else if (selWeapon && selActor->fd) {
 				Com_sprintf(infoText, lengthof(infoText),
-							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, hitProbability, selFD->time);
-				Com_sprintf(mouseText, lengthof(mouseText),
-							"%s: %s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, hitProbability, selFD->time);
+							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selActor->fd->name),
+							selActor->fd->ammo, hitProbability, selActor->fd->time);
 
-				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);	/* Save the text for later display next to the cursor. */
+				/* Save the text for later display next to the cursor. */
+				Q_strncpyz(mouseText, infoText, sizeof(mouseText));
+				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 
-				time = selFD->time;
+				time = selActor->fd->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
 				if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time)
 					selActor->actorMode = M_MOVE;

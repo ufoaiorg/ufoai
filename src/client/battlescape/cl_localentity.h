@@ -124,7 +124,7 @@ typedef struct le_s {
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
 	int gender;
-	const fireDef_t *fd;	/**< in case this is a projectile */
+	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
 
 	pathing_t *pathMap;	/**< This is where the data for TUS used to move and actor
 								 * locations go - only available for human controlled actors */

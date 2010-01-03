@@ -66,7 +66,6 @@ typedef enum {
 } walkType_t;
 
 extern character_t *selChr;
-extern const fireDef_t *selFD;
 extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
