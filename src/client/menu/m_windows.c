@@ -1,5 +1,5 @@
 /**
- * @file m_menus.c
+ * @file m_windows.c
  */
 
 /*
@@ -31,12 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cinematic/cl_cinematic.h"
 
 /**
- * @brief Menu name use as alternative for option
+ * @brief Window name use as alternative for option
  */
 static cvar_t *mn_sys_main;
 
 /**
- * @brief Main menu of a stack
+ * @brief Main window of a stack
  */
 static cvar_t *mn_sys_active;
 
@@ -95,8 +95,8 @@ void MN_MoveWindowOnTop (menuNode_t * window)
 }
 
 /**
- * @brief Remove the menu from the menu stack
- * @param[in] menu The menu to remove from the stack
+ * @brief Remove the window from the window stack
+ * @param[in] window The window to remove from the stack
  * @sa MN_PushWindowDelete
  * @todo Why dont we call onClose?
  */
@@ -236,8 +236,8 @@ int MN_CompleteWithWindow (const char *partial, const char **match)
 }
 
 /**
- * @brief Push a menu onto the menu stack
- * @param[in] name Name of the menu to push onto menu stack
+ * @brief Push a window onto the menu stack
+ * @param[in] name Name of the window to push onto window stack
  * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to menuNode_t
  */
@@ -383,8 +383,8 @@ static void MN_CloseAllWindow (void)
 
 /**
  * @brief Init the stack to start with a window, and have an alternative window with ESC
- * @param[in] activeMenu The first active menu of the stack, else NULL
- * @param[in] mainMenu The alternative menu, else NULL if nothing
+ * @param[in] activeMenu The first active window of the stack, else NULL
+ * @param[in] mainMenu The alternative window, else NULL if nothing
  * @param[in] popAll If true, clean up the stack first
  * @param[in] pushActive If true, push the active window into the stack
  * @todo remove Cvar_Set we have direct access to the cvar
@@ -426,13 +426,13 @@ static void MN_CloseWindowByRef (menuNode_t *window)
 {
 	int i;
 
-	/** @todo If the focus is not on the menu we close, we don't need to remove it */
+	/** @todo If the focus is not on the window we close, we don't need to remove it */
 	MN_ReleaseInput();
 
 	assert(mn.windowStackPos);
 	i = MN_GetWindowPositionFromStackByName(window->name);
 	if (i == -1) {
-		Com_Printf("Menu '%s' is not on the active stack\n", window->name);
+		Com_Printf("Window '%s' is not on the active stack\n", window->name);
 		return;
 	}
 
@@ -509,13 +509,13 @@ void MN_PopWindow (qboolean all)
 	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
 
-	/* when we leave a menu and a menu cinematic is running... we should stop it */
+	/* when we leave a window and a window cinematic is running... we should stop it */
 	if (cls.playingCinematic == CIN_STATUS_MENU)
 		CIN_StopCinematic();
 }
 
 /**
- * @brief Console function to close a named menu
+ * @brief Console function to close a named window
  * @sa MN_PushWindow
  */
 static void MN_CloseWindow_f (void)
@@ -544,7 +544,7 @@ void MN_PopWindowWithEscKey (void)
 }
 
 /**
- * @brief Console function to pop a menu from the menu stack
+ * @brief Console function to pop a window from the window stack
  * @sa MN_PopWindow
  */
 static void MN_PopWindow_f (void)
@@ -558,8 +558,8 @@ static void MN_PopWindow_f (void)
 }
 
 /**
- * @brief Returns the current active menu from the menu stack or NULL if there is none
- * @return menuNode_t pointer from menu stack
+ * @brief Returns the current active window from the window stack or NULL if there is none
+ * @return menuNode_t pointer from window stack
  * @sa MN_GetWindow
  */
 menuNode_t* MN_GetActiveWindow (void)
@@ -743,7 +743,7 @@ static void MN_FireInit_f (void)
 	const menuNode_t* window;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <menu>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <window>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -819,18 +819,18 @@ static void MN_DebugTree_f (void)
 
 void MN_InitWindows (void)
 {
-	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main menu id that is at the very first menu stack - also see mn_sys_active");
-	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_sys_main");
+	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main window id that is at the very first menu stack - also see mn_sys_active");
+	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active window we will return to when hitting esc once - also see mn_sys_main");
 
 	/* add command */
-	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
-	Cmd_AddCommand("mn_push", MN_PushWindow_f, "Push a menu to the menustack");
+	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a window");
+	Cmd_AddCommand("mn_push", MN_PushWindow_f, "Push a window to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithWindow);
-	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownWindow_f, "Push a dropdown menu at a position");
-	Cmd_AddCommand("mn_push_child", MN_PushChildWindow_f, "Push a menu to the menustack with a big dependancy to a parent menu");
-	Cmd_AddCommand("mn_pop", MN_PopWindow_f, "Pops the current menu from the stack");
-	Cmd_AddCommand("mn_close", MN_CloseWindow_f, "Close a menu");
-	Cmd_AddCommand("mn_move", MN_SetNewWindowPos_f, "Moves the menu to a new position.");
+	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownWindow_f, "Push a dropdown window at a position");
+	Cmd_AddCommand("mn_push_child", MN_PushChildWindow_f, "Push a window to the windowstack with a big dependancy to a parent window");
+	Cmd_AddCommand("mn_pop", MN_PopWindow_f, "Pops the current window from the stack");
+	Cmd_AddCommand("mn_close", MN_CloseWindow_f, "Close a window");
+	Cmd_AddCommand("mn_move", MN_SetNewWindowPos_f, "Moves the window to a new position.");
 	Cmd_AddCommand("mn_initstack", MN_InitStack_f, "Initialize the window stack with a main and an option window.");
 
 	Cmd_AddCommand("mn_tree", MN_DebugTree_f, "Display a tree of nodes fropm a window into the console.");

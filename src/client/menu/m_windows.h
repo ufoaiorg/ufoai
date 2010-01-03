@@ -1,5 +1,5 @@
 /**
- * @file m_menus.h
+ * @file m_windows.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_MENUS_H
-#define CLIENT_MENU_M_MENUS_H
+#ifndef CLIENT_MENU_M_WINDOWS_H
+#define CLIENT_MENU_M_WINDOWS_H
 
 #include "../../common/common.h"
 

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_MAIN_H
 
 #include "m_data.h"
-#include "m_menus.h"
+#include "m_windows.h"
 
 /** @todo client code should manage itself this vars */
 struct cvar_s;

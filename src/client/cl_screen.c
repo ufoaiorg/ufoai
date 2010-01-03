@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_draw.h"
 #include "menu/m_nodes.h"
-#include "menu/m_menus.h"
+#include "menu/m_windows.h"
 #include "menu/m_dragndrop.h"
 #include "menu/m_render.h"
 

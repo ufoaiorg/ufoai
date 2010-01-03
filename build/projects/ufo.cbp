@@ -802,10 +802,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/m_main.h" />
-		<Unit filename="../../src/client/menu/m_menus.c">
+		<Unit filename="../../src/client/menu/m_windows.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/menu/m_menus.h" />
+		<Unit filename="../../src/client/menu/m_windows.h" />
 		<Unit filename="../../src/client/menu/m_nodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
