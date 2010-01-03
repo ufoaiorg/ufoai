@@ -1241,8 +1241,9 @@ void HUD_ActorUpdateCvars (void)
 					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_UsableTUs(selActor));
 				else
 					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
+
+				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			}
-			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			time = selActor->actorMoveLength;
 		} else {
 			const invList_t *selWeapon;
