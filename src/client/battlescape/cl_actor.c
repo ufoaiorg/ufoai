@@ -441,7 +441,10 @@ int CL_UsableTUs (const le_t * le)
 		return -1;
 	}
 
-	return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE);
+	if (LE_IsCrouched(le) && cl_autostand->integer)
+		return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE) - TU_CROUCH;
+	else
+		return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE);
 }
 
 /**
