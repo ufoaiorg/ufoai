@@ -252,15 +252,6 @@ window althud extends ahud
 			pos			"0 26"
 		}
 	
-		confunc hudselecta0 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox0@left> - 4 ) }
-		confunc hudselecta1 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox1@left> - 4 ) }
-		confunc hudselecta2 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox2@left> - 4 ) }
-		confunc hudselecta3 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox3@left> - 4 ) }
-		confunc hudselecta4 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox4@left> - 4 ) }
-		confunc hudselecta5 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox5@left> - 4 ) }
-		confunc hudselecta6 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox6@left> - 4 ) }
-		confunc hudselecta7 { *floor.bar_selbox@left = ( <node:root.floor.bar_teambox7@left> - 4 ) }
-
 		// ==================
 		// models
 		// ==================
@@ -1202,6 +1193,10 @@ window althud extends ahud
 	confunc crouch_checkbox_check	{
 		*right.bt_crouch_reservation@disabled = false
 		*(checkbox)right.bt_crouch_reservation@current = 1
+	}
+
+	confunc hudselect {
+		*floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 4 )
 	}
 
 	// ==================

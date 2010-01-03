@@ -8,23 +8,10 @@
  */
 window ahud {
 
-	// ==================
-	// cmd forwarding
-	// @todo need to clean up that list, some cmd are not used
-	// ==================
 
 	confunc hudselect { }
 	confunc huddeselect { }
 	confunc huddisable { }
-
-	confunc	hudselect0 { cmd "hudselects0;hudselecta0;" }
-	confunc	hudselect1 { cmd "hudselects1;hudselecta1;" }
-	confunc	hudselect2 { cmd "hudselects2;hudselecta2;" }
-	confunc	hudselect3 { cmd "hudselects3;hudselecta3;" }
-	confunc	hudselect4 { cmd "hudselects4;hudselecta4;" }
-	confunc	hudselect5 { cmd "hudselects5;hudselecta5;" }
-	confunc	hudselect6 { cmd "hudselects6;hudselecta6;" }
-	confunc	hudselect7 { cmd "hudselects7;hudselecta7;" }
 
 	confunc selpl { cmd "selpls;selpla;" }
 	confunc selpr { cmd "selprs;selpra;" }
