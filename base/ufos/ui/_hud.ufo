@@ -13,28 +13,28 @@ window ahud {
 	confunc huddeselect { }
 	confunc huddisable { }
 
-	confunc selpl { }
-	confunc selpr { }
+	confunc deselect_primaryleft { }
+	confunc deselect_primaryright { }
+	confunc deselect_reloadleft { }
+	confunc deselect_reloadright { }
+	confunc deselect_stand { }
+	confunc deselect_crouch { }
+	confunc deselect_reaction { }
+	confunc deselect_headgear { }
 
-	confunc deselpl { }
-	confunc deselpr { }
-	confunc deselrl { }
-	confunc deselrr { }
-
-	confunc displ { }
-	confunc dispr { }
-	confunc disrl { }
-	confunc disrr { }
-
-	confunc deselstand { }
-	confunc deselcrouch { }
-	confunc disstand { }
-	confunc discrouch { }
+	confunc disable_primaryleft { }
+	confunc disable_primaryright { }
+	confunc disable_reloadleft { }
+	confunc disable_reloadright { }
+	confunc disable_stand { }
+	confunc disable_crouch { }
+	confunc disable_reaction { }
+	confunc disable_headgear { }
 
 	/* Prevent time for crouch */
 	confunc crouch_checkbox_disable { }
-	confunc crouch_checkbox_clear	{ }
-	confunc crouch_checkbox_check	{ }
+	confunc crouch_checkbox_clear { }
+	confunc crouch_checkbox_check { }
 
 	confunc reserve_shot_clear { }
 	
@@ -46,20 +46,13 @@ window ahud {
 	confunc startreactionmany_impos { }
 	confunc startreactiononce { }
 	confunc startreactiononce_impos { }
-	confunc deselreaction { }
-	confunc disreaction { }
-
-	confunc deselheadgear { }
-	confunc disheadgear { }
 
 	confunc startround { }
 	confunc endround { }
 	
 	confunc openradar { cmd "mn_push radarwindow;" }
 
-	confunc unhide_chatscreen {
-		*chatscreen@invis = false
-	}
+	confunc unhide_chatscreen { *chatscreen@invis = false }
 	
 	/**
 	 * @param <1> the id of the soldier (starting at 0)

@@ -75,7 +75,7 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	chr->state = (le->state & STATE_REACTION);
 
 	if (!(le->state & STATE_REACTION)) {
-		MN_ExecuteConfunc("disreaction");
+		MN_ExecuteConfunc("disable_reaction");
 	} else {
 		/* change reaction button state */
 		if (le->state & STATE_REACTION_MANY)

@@ -71,11 +71,11 @@ typedef enum {
 
 /** @brief a cbuf string for each button_types_t */
 static const char *shootTypeStrings[] = {
-	"pr",
+	"primaryright",
 	"reaction",
-	"pl",
-	"rr",
-	"rl",
+	"primaryleft",
+	"reloadright",
+	"reloadleft",
 	"stand",
 	"crouch",
 	"headgear"
@@ -169,11 +169,11 @@ static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 	assert(button < BT_NUM_TYPES);
 
 	if (state == BT_STATE_DESELECT)
-		prefix = "desel";
+		prefix = "deselect_";
 	else if (state == BT_STATE_DISABLE)
-		prefix = "dis";
+		prefix = "disable_";
 	else
-		prefix = "dis";
+		prefix = "disable_";
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
 	MN_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);

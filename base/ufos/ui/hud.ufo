@@ -836,26 +836,23 @@ window hud extends ahud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselstand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
-	confunc deselcrouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
-	confunc disstand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
-	confunc discrouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
+	confunc deselect_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
+	confunc deselect_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
+	confunc disable_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
+	confunc disable_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
 
-	confunc selpl { *left.bt_pfire@image = hud/buttons1a }
-	confunc selpr { *right.bt_pfire@image = hud/buttons1a }
+	confunc deselect_primaryleft { *left.bt_pfire@image = hud/buttons1 }
+	confunc deselect_primaryright { *right.bt_pfire@image = hud/buttons1 }
+	confunc deselect_reloadleft { *left.bt_reload@image = hud/buttons2 }
+	confunc deselect_reloadright { *right.bt_reload@image = hud/buttons2 }
 
-	confunc deselpl { *left.bt_pfire@image = hud/buttons1 }
-	confunc deselpr { *right.bt_pfire@image = hud/buttons1 }
-	confunc deselrl { *left.bt_reload@image = hud/buttons2 }
-	confunc deselrr { *right.bt_reload@image = hud/buttons2 }
+	confunc disable_primaryleft { *left.bt_pfire@image = hud/buttons1g }
+	confunc disable_primaryright { *right.bt_pfire@image = hud/buttons1g }
+	confunc disable_reloadleft { *left.bt_reload@image = hud/buttons2g }
+	confunc disable_reloadright { *right.bt_reload@image = hud/buttons2g }
 
-	confunc displ { *left.bt_pfire@image = hud/buttons1g }
-	confunc dispr { *right.bt_pfire@image = hud/buttons1g }
-	confunc disrl { *left.bt_reload@image = hud/buttons2g }
-	confunc disrr { *right.bt_reload@image = hud/buttons2g }
-
-	confunc deselheadgear { *right.hud_bt_use_headgear@image = hud/buttons2 }
-	confunc disheadgear { *right.hud_bt_use_headgear@image = hud/buttons2g }
+	confunc deselect_headgear { *right.hud_bt_use_headgear@image = hud/buttons2 }
+	confunc disable_headgear { *right.hud_bt_use_headgear@image = hud/buttons2g }
 
 	// ==================
 	// round events
@@ -914,13 +911,13 @@ window hud extends ahud
 		*info.bt_reaction_s@texh	= "63 95"
 		*info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
 	}
-	confunc deselreaction
+	confunc deselect_reaction
 	{
 		*info.bt_reaction_s@texl	= "0 32"
 		*info.bt_reaction_s@texh	= "31 63"
 		*info.bt_reaction_s@tooltip = "_No reaction fire"
 	}
-	confunc disreaction 
+	confunc disable_reaction 
 	{
 		*info.bt_reaction_s@texl	= "0 0"
 		*info.bt_reaction_s@texh	= "31 31"

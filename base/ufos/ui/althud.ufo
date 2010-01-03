@@ -610,7 +610,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
+			onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.right.bt_primaryright ll;" }
 		}
 		pic bt_primaryleft
 		{
@@ -620,7 +620,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
+			onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.right.bt_primaryright ll;" }
 		}
 
 		// ==================
@@ -1125,13 +1125,13 @@ window althud extends ahud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselstand  { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1 }
-	confunc deselcrouch { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1 }
-	confunc disstand    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
-	confunc discrouch   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
+	confunc deselect_stand  { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1 }
+	confunc deselect_crouch { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1 }
+	confunc disable_stand    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
+	confunc disable_crouch   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
 
-	confunc deselheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
-	confunc disheadgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+	confunc deselect_headgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+	confunc disable_headgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
 
 	// ==================
 	// round events
@@ -1146,18 +1146,15 @@ window althud extends ahud
 		*upperright.nextround@image = althud/buttons_althud1g
 	}
 
-	confunc selpl { *right.bt_primaryleft@image	= althud/buttons_althud1a }
-	confunc selpr { *right.bt_primaryright@image = althud/buttons_althud1a }
+	confunc deselect_primaryleft { *right.bt_primaryleft@image	= althud/buttons_althud1 }
+	confunc deselect_primaryright { *right.bt_primaryright@image	= althud/buttons_althud1 }
+	confunc deselect_reloadleft { *right.bt_reloadleft@image		= althud/buttons_althud1 }
+	confunc deselect_reloadright { *right.bt_reloadright@image	= althud/buttons_althud1 }
 
-	confunc deselpl { *right.bt_primaryleft@image	= althud/buttons_althud1 }
-	confunc deselpr { *right.bt_primaryright@image	= althud/buttons_althud1 }
-	confunc deselrl { *right.bt_reloadleft@image		= althud/buttons_althud1 }
-	confunc deselrr { *right.bt_reloadright@image	= althud/buttons_althud1 }
-
-	confunc displ { *right.bt_primaryleft@image	= althud/buttons_althud1g }
-	confunc dispr { *right.bt_primaryright@image	= althud/buttons_althud1g }
-	confunc disrl { *right.bt_reloadleft@image	= althud/buttons_althud1g }
-	confunc disrr { *right.bt_reloadright@image	= althud/buttons_althud1g }
+	confunc disable_primaryleft { *right.bt_primaryleft@image	= althud/buttons_althud1g }
+	confunc disable_primaryright { *right.bt_primaryright@image	= althud/buttons_althud1g }
+	confunc disable_reloadleft { *right.bt_reloadleft@image	= althud/buttons_althud1g }
+	confunc disable_reloadright { *right.bt_reloadright@image	= althud/buttons_althud1g }
 
 	confunc startreactionmany
 	{
@@ -1180,12 +1177,12 @@ window althud extends ahud
 		*right.bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
 	}
 
-	confunc deselreaction
+	confunc deselect_reaction
 	{
 		*right.bt_reaction_a@image = althud/buttons_althud1
 		*right.bt_reaction_a@tooltip = "_No reaction fire"
 	}
-	confunc disreaction {
+	confunc disable_reaction {
 		*right.bt_reaction_a@image = althud/buttons_althud1g
 	}
 
