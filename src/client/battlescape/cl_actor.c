@@ -2300,7 +2300,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				VectorSet(ent.color, 1, 1, 0); /* Yellow */
 				break;
 			default:
-				if (mouseActor->team == TEAM_ALIEN) {
+				if (LE_IsAlien(mouseActor)) {
 					if (GAME_TeamIsKnown(mouseActor->teamDef))
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else

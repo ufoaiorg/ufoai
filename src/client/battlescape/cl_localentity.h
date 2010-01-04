@@ -186,6 +186,7 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsCrouched(le)	((le)->state & STATE_CROUCHED)
 
 #define LE_IsCivilian(le)	((le)->team == TEAM_CIVILIAN)
+#define LE_IsAlien(le)		((le)->team == TEAM_ALIEN)
 
 /** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)

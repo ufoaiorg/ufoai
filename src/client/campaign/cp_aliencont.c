@@ -155,7 +155,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
-		if (LE_IsActor(le) && le->team == TEAM_ALIEN) {
+		if (LE_IsActor(le) && LE_IsAlien(le)) {
 			assert(le->teamDef);
 
 			if (LE_IsStunned(le))
