@@ -330,7 +330,6 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
 	int i, j;
 	le_t *le;
-	invList_t *item;
 	itemsTmp_t *cargo;
 	itemsTmp_t prevItemCargo[MAX_CARGO];
 	int prevItemTypes;
@@ -353,39 +352,27 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 		 * members carry. */
 		if (!le->inuse)
 			continue;
-		switch (le->type) {
-		case ET_ITEM:
+		if (LE_IsItem(le)) {
 			if (won) {
+				invList_t *item;
 				for (item = FLOOR(le); item; item = item->next) {
 					AII_CollectItem(aircraft, item->item.t, 1);
 					if (item->item.t->reload && item->item.a > 0)
 						AII_CollectingAmmo(aircraft, item);
 				}
 			}
-			break;
-		case ET_ACTOR:
-		case ET_ACTOR2x2:
+		} else if (LE_IsActor(le)) {
+			/* The items are already dropped to floor and are available
+			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
 			/* First of all collect armour of dead or stunned actors (if won). */
-			if (won) {
-				if (LE_IsDead(le) || LE_IsStunned(le)) {
-					if (le->i.c[csi.idArmour]) {
-						item = le->i.c[csi.idArmour];
-						AII_CollectItem(aircraft, item->item.t, 1);
-					}
-					break;
-				}
+			if (won && LE_IsDead(le)) {
+				invList_t *item = ARMOUR(le);
+				if (item)
+					AII_CollectItem(aircraft, item->item.t, 1);
+			} else if (le->team == cls.team && !LE_IsDead(le)) {
+				/* Finally, the living actor from our team. */
+				AII_CarriedItems(le);
 			}
-			/* Now, if this is dead or stunned actor, additional check. */
-			if (le->team != cls.team || LE_IsDead(le) || LE_IsStunned(le)) {
-				/* The items are already dropped to floor and are available
-				 * as ET_ITEM; or the actor is not ours. */
-				break;
-			}
-			/* Finally, the living actor from our team. */
-			AII_CarriedItems(le);
-			break;
-		default:
-			break;
 		}
 	}
 	/* Fill the missionResults array. */
