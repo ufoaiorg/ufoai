@@ -184,6 +184,7 @@ extern edict_t *g_edicts;
 #define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))
 /** @note check for actor first */
 #define G_IsCivilian(ent)		((ent)->team == TEAM_CIVILIAN)
+#define G_IsAlien(ent)			((ent)->team == TEAM_ALIEN)
 #define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
 
 extern cvar_t *sv_maxentities;

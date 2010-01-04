@@ -208,7 +208,7 @@ static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos
 	for (i = 0; i < 100; i++)
 		G_ClientShoot(player, shooter, at, type, firemode, &mock, qfalse, 0);
 
-	ff = mock.friendCount + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
+	ff = mock.friendCount + (G_IsAlien(shooter) ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemyCount >= minhit)
 		return G_ClientShoot(player, shooter, at, type, firemode, NULL, qfalse, 0);
 
