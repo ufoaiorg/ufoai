@@ -431,9 +431,10 @@ base/models/aircraft/craft_weapon_launcher/alien_launcher.jpg | GNU General Publ
 base/models/aircraft/craft_weapon_launcher/alien_launcher2.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/aircraft/craft_weapon_shiva/ammo.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/craft_weapon_shiva/ammo_api.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_blue.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/craft_weapon_shiva/ammo_hei.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_lblue.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_red.png | GNU General Public License 2.0 or later | Willem Sitters
