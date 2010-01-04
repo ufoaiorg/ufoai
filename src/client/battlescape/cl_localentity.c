@@ -1216,22 +1216,17 @@ void LE_Cleanup (void)
 {
 	int i;
 	le_t *le;
-	inventory_t inv;
 
 	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", cl.numLEs);
 	for (i = cl.numLEs - 1, le = &LEs[cl.numLEs - 1]; i >= 0; i--, le--) {
 		if (!le->inuse)
 			continue;
-		switch (le->type) {
-		case ET_ACTOR:
-		case ET_ACTOR2x2:
-			inv = le->i;
+		if (LE_IsActor(le))
 			CL_ActorCleanup(le);
-			break;
-		case ET_ITEM:
+		else if (LE_IsItem(le))
 			INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
-			break;
-		}
+
+		le->inuse = qfalse;
 	}
 }
 

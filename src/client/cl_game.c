@@ -145,6 +145,8 @@ void GAME_SetMode (int gametype)
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
 		list->shutdown();
 
+		LE_Cleanup();
+
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!MN_IsWindowOnStack("main"))
 			MN_InitStack("main", "", qtrue, qtrue);
