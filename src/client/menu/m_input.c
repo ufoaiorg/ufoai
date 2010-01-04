@@ -249,9 +249,12 @@ void MN_SetKeyBinding (const char* path, int key)
 	menuNode_t *node;
 	menuKeyBinding_t *binding;
 	const value_t *property = NULL;
+
 	MN_ReadNodePath(path, NULL, &node, &property);
-	if (node == NULL)
-		Com_Error(ERR_FATAL, "MN_SetKeyBinding: node \"%s\" not found.", path);
+	if (node == NULL) {
+		Com_Printf("MN_SetKeyBinding: node \"%s\" not found.\n", path);
+		return;
+	}
 
 	if (property != NULL && property->type != V_UI_NODEMETHOD)
 		Com_Error(ERR_FATAL, "MN_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
