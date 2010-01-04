@@ -245,7 +245,8 @@ character_t *CL_GetActorChr (const le_t * le)
 {
 	const int actorIdx = CL_GetActorNumber(le);
 	if (actorIdx < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: BAD ACTOR INDEX!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: Could not find actor in the team list - maybe already dead? (state is %i)!\n",
+				le->state);
 		return NULL;
 	}
 

@@ -493,7 +493,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
 	float bestActionPoints;
-	float reaction_trap = 0.0;
+	float reactionTrap = 0.0;
 	float delta = 0.0;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
@@ -582,9 +582,9 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!(G_IsAlien(check) || G_IsInsane(ent)))
 			continue;
 		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
-			reaction_trap += 25.0;
+			reactionTrap += 25.0;
 	}
-	delta -= reaction_trap;
+	delta -= reactionTrap;
 	bestActionPoints += delta;
 
 	/* add laziness */

@@ -72,6 +72,9 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* save those states that the actor should also carry over to other missions */
 	chr = CL_GetActorChr(le);
+	if (!chr)
+		return;
+
 	chr->state = (le->state & STATE_REACTION);
 
 	if (!(le->state & STATE_REACTION)) {
