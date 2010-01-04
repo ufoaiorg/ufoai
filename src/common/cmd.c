@@ -727,7 +727,7 @@ void* Cmd_GetUserdata (const char *cmd_name)
 	unsigned int hash;
 
 	if (!cmd_name || !cmd_name[0]) {
-		Com_Printf("Cmd_GetUserdata: Invalide param");
+		Com_Printf("Cmd_GetUserdata: Invalide parameter\n");
 		return NULL;
 	}
 
@@ -738,7 +738,7 @@ void* Cmd_GetUserdata (const char *cmd_name)
 		}
 	}
 
-	Com_Printf("Cmd_GetUserdata: '%s' not found", cmd_name);
+	Com_Printf("Cmd_GetUserdata: '%s' not found\n", cmd_name);
 	return NULL;
 }
 
