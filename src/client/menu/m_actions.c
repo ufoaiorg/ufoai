@@ -281,6 +281,7 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 
 	*cout++ = '\0';
 
+	/** @todo why va? cmd is static already */
 	return va("%s", cmd);
 }
 
@@ -496,6 +497,7 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
 
 /**
  * @brief Test if a string use an injection syntax
+ * @param[in] string The string to check for injection
  * @return True if we find the following syntax in the string "<" {thing without space} ">"
  */
 qboolean MN_IsInjectedString (const char *string)
@@ -522,6 +524,7 @@ qboolean MN_IsInjectedString (const char *string)
 
 /**
  * @brief Free a string property if it is allocated into mn_dynStringPool
+ * @param[in,out] pointer The pointer to the data that should be freed
  * @sa mn_dynStringPool
  */
 void MN_FreeStringProperty (void* pointer)
@@ -575,6 +578,12 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 	}
 }
 
+/**
+ * @brief Add a callback of a function into a node event. There can be more than on listener.
+ * @param[in,out] node The menu menu to add the listener to.
+ * @param[in] property The property of the node to add the listener to.
+ * @param[in] functionNode The node of the listener callback.
+ */
 void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *functionNode)
 {
 	menuAction_t *lastAction;
@@ -603,7 +612,7 @@ void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *func
 }
 
 /**
- * @brief add a call of a function into a nodfe event
+ * @brief add a call of a function into a node event
  */
 static void MN_AddListener_f (void)
 {
@@ -635,6 +644,12 @@ static void MN_AddListener_f (void)
 	MN_AddListener(node, property, function);
 }
 
+/**
+ * @brief Remove a function callback from a node event. There can be more than on listener.
+ * @param[in,out] node The menu menu to remove the listener from.
+ * @param[in] property The property of the node to remove the listener from.
+ * @param[in] functionNode The node of the listener callback.
+ */
 void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *functionNode)
 {
 	void *data;
@@ -674,7 +689,7 @@ void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *f
 }
 
 /**
- * @brief add a call of a function from a node event
+ * @brief Remove a function callback from a node event
  */
 static void MN_RemoveListener_f (void)
 {
