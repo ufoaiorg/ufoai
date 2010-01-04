@@ -883,6 +883,7 @@ void RS_ResearchRun (void)
 }
 
 #ifdef DEBUG
+/** @todo use Com_RegisterConstInt(); */
 static const char *RS_TechTypeToName (researchType_t type)
 {
 	switch(type) {
@@ -934,6 +935,7 @@ static const char *RS_TechReqToName (requirement_t *req)
 	}
 }
 
+/** @todo use Com_RegisterConstInt(); */
 static const char *RS_TechLinkTypeToName (requirementType_t type)
 {
 	switch(type) {
@@ -1243,6 +1245,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
 				return;
+			/** @todo use Com_RegisterConstInt(); */
 			/* redundant, but oh well. */
 			if (!strcmp(token, "tech"))
 				tech->type = RS_TECH;

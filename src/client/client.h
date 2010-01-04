@@ -68,6 +68,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
 
 /* Macros for faster access to the inventory-container. */
+#define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
