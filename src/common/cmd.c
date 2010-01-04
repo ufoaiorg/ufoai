@@ -712,10 +712,14 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 }
 
 /**
+ * @brief Fetches the userdata for a console command.
  * @param[in] cmd_name The name the command we want to add edit
  * @param[in] userdata for this function
+ * @return @c NULL if no userdata was set or the command wasn't found, the userdata
+ * pointer if it was found and set
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
+ * @sa Cmd_AddUserdata
  */
 void* Cmd_GetUserdata (const char *cmd_name)
 {
@@ -739,10 +743,12 @@ void* Cmd_GetUserdata (const char *cmd_name)
 }
 
 /**
+ * @brief Adds userdata to the console command.
  * @param[in] cmd_name The name the command we want to add edit
  * @param[in] userdata for this function
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
+ * @sa Cmd_GetUserdata
  */
 void Cmd_AddUserdata (const char *cmd_name, void* userdata)
 {
