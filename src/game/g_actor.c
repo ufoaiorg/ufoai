@@ -186,7 +186,7 @@ static int G_ActorTUReservations (edict_t *ent)
 
 	if (ent->chr.reservedTus.crouch)
 		reservedTU = ent->chr.reservedTus.crouch;
-	if (end->chr.reservedTus.shot)
+	if (ent->chr.reservedTus.shot)
 		reservedTU = reservedTU + ent->chr.reservedTus.shot;
 
 	return reservedTU;
