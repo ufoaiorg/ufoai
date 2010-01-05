@@ -1228,6 +1228,8 @@ void LE_Cleanup (void)
 
 		le->inuse = qfalse;
 	}
+
+	memset(LEs, 0, sizeof(LEs));
 }
 
 #ifdef DEBUG
