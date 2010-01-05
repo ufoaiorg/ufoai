@@ -152,6 +152,8 @@ void GAME_SetMode (int gametype)
 
 	cls.gametype = gametype;
 
+	CL_Disconnect();
+
 	list = GAME_GetCurrentType();
 	if (list) {
 		Com_Printf("Change gametype to '%s'\n", list->name);
@@ -159,8 +161,6 @@ void GAME_SetMode (int gametype)
 		INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initialized */
 		list->init();
 	}
-
-	CL_Disconnect();
 }
 
 /**
@@ -509,8 +509,6 @@ static void GAME_Abort_f (void)
 void GAME_Drop (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-
-	LE_Cleanup();
 
 	if (list) {
 		if (!list->drop) {

@@ -313,8 +313,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	} else
 		MN_PushWindow("lost", NULL);
 
-	SV_Shutdown("Mission end", qfalse);
 	CL_Disconnect();
+	SV_Shutdown("Mission end", qfalse);
 }
 
 qboolean GAME_CP_Spawn (void)
