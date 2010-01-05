@@ -818,42 +818,6 @@ static void CL_ShowConfigstrings_f (void)
 	}
 }
 
-/**
- * @brief Autocomplete function for some network functions
- * @sa Cmd_AddParamCompleteFunction
- * @todo Extend this for all the servers on the server browser list
- */
-static int CL_CompleteNetworkAddress (const char *partial, const char **match)
-{
-	int i, matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	const size_t len = strlen(partial);
-	if (!len) {
-		/* list them all if there was no parameter given */
-		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			const char *adrStr = Cvar_GetString(va("adr%i", i));
-			if (adrStr[0] != '\0')
-				Com_Printf("%s\n", adrStr);
-		}
-		return 0;
-	}
-
-	localMatch[matches] = NULL;
-
-	/* search all matches and fill the localMatch array */
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *adrStr = Cvar_GetString(va("adr%i", i));
-		if (adrStr[0] != '\0' && !strncmp(partial, adrStr, len)) {
-			Com_Printf("%s\n", adrStr);
-			localMatch[matches++] = adrStr;
-			if (matches >= MAX_COMPLETE)
-				break;
-		}
-	}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
-}
-
 static qboolean CL_CvarWorldLevel (cvar_t *cvar)
 {
 	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : PATHFINDING_HEIGHT - 1;
@@ -917,13 +881,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ration");
 
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
-	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
-	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
-	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
-	Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
-	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
-	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
-	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
 	Cmd_AddCommand("cl_userinfo", CL_UserInfo_f, "Prints your userinfo string");
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
