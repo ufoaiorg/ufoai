@@ -273,6 +273,8 @@ void CL_Disconnect (void)
 
 	S_Stop();
 
+	R_ShutdownModels(qfalse);
+
 	CL_SetClientState(ca_disconnected);
 	CL_ClearBattlescapeEvents();
 }
