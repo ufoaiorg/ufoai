@@ -996,7 +996,6 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	invList_t *weaponr;
 	invList_t *weaponl;
 	invList_t *headgear;
-	int reloadtime;
 	int rightCanBeReloaded = -1, leftCanBeReloaded = -1;
 	const int time = additionalTime + CL_UsableTUs(le);
 
