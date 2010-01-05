@@ -232,13 +232,12 @@ static void GAME_CP_Start_f (void)
 	CP_CampaignInit(campaign, qfalse);
 
 	/* Intro sentences */
-	Cbuf_AddText("seq_start intro;\n");
+	Cbuf_AddText("seq_start intro\n");
 }
 
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	int i, j;
-	/** @todo remove standalone ints if possible */
 	int our_survivors, our_killed, our_stunned;
 	int their_survivors, their_killed, their_stunned;
 	int civilian_survivors, civilian_killed, civilian_stunned;
@@ -283,10 +282,11 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	else
 		civilian_killed += civilian_stunned;
 
-	/* loot the battlefield */
-	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);				/**< Collect items from the battlefield. */
+	/* Collect items from the battlefield. */
+	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);
 	if (winner == cls.team)
-		AL_CollectingAliens(ccs.missionAircraft);	/**< Collect aliens from the battlefield. */
+		/* Collect aliens from the battlefield. */
+		AL_CollectingAliens(ccs.missionAircraft);
 
 	ccs.aliensKilled += their_killed;
 
