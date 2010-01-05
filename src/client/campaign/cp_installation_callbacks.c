@@ -120,8 +120,6 @@ static void INS_BuildInstallation_f (void)
 		else
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
 		MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-
-		Cbuf_AddText(va("mn_select_installation %i;", installation->idx));
 	} else {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
