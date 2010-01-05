@@ -1395,7 +1395,7 @@ window popup_newinstallation
 		image		ui/button_green_small
 		pos			"109 240"
 		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_build_installation *cvar:mn_installation_type;" }
+		onClick		{ cmd "mn_pop; mn_build_installation *cvar:mn_installation_type;" }
 	}
 
 	func onClose
@@ -1418,56 +1418,11 @@ window popup_newinstallation
 	}
 }
 
-window samsite
-{
-	func onInit
-	{
-		cmd "mn_pop; mn_push basedefence;"
-	}
-}
-
-window radartower
-{
-	{
-		pos			"284 282"
-		size		"496 247"
-		dragbutton	true
-		image		ui/popup_alpha_tile
-	}
-
-	textentry title
-	{
-		string		*cvar:mn_installation_title
-		pos			"26 17"
-		size		"420 30"
-		font		f_big
-	}
-
-	string info
-	{
-		string		"_No manangeable options for a radartower"
-		pos			"26 118"
-		size		"440 20"
-	}
-
-	button bt_close
-	{
-		string		"_Close"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
-		pos			"296 188"
-		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-}
-
 window popup_installationstatus
 {
 	{
 		pos			"264 262"
-		size		"496 247"
+		size		"496 220"
 		dragbutton	true
 		image		ui/popup_alpha_tile
 		string		"_Installation Status"
@@ -1476,42 +1431,32 @@ window popup_installationstatus
 	string name_label
 	{
 		string		"_Name:"
-		pos			"26 58"
-		size		"150 20"
+		pos			"25 60"
+		size		"120 25"
+		textalign	cl
 	}
 	textentry name
 	{
 		string		*cvar:mn_installation_title
-		pos			"46 73"
-		size		"420 32"
-		font		f_big
+		pos			"150 60"
+		size		"310 25"
+		border		3
+		bordercolor	"0 0.5 0 1"
+		font		f_normal
 		onChange	{ cmd "mn_installation_changename;" }
-	}
-
-	pic bt_nameedit
-	{
-		tooltip		"_Rename installation"
-		image		ui/buttons_small
-		pos			"26 78"
-		texl		"0 48"
-		texh		"16 64"
-		onClick		{ call *node:root.name@edit }
 	}
 
 	string buildtime_label
 	{
-		visiblewhen "*cvar:mn_installation_timetobuild ne \"-\""
 		string		"_Time to build:"
-		pos			"26 118"
-		size		"159 20"
+		pos			"25 110"
+		size		"120 20"
 	}
 	string buildtime
 	{
-		visiblewhen "*cvar:mn_installation_timetobuild ne \"-\""
 		string		*cvar:mn_installation_timetobuild
-		pos			"180 118"
-		size		"100 20"
-		textalign	uc
+		pos			"150 110"
+		size		"150 20"
 	}
 
 	button bt_back
@@ -1521,22 +1466,23 @@ window popup_installationstatus
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		pos			"295 189"
+		pos			"295 150"
 		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	button bt_enter
 	{
-		visiblewhen "*cvar:mn_installation_timetobuild eq \"-\""
 		string		"_Manage"
 		tooltip		"_Manage installation"
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		pos			"109 189"
+		pos			"295 110"
 		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_push *cvar:mn_installation_type;" }
+		invis		true
+		onClick		{ cmd "mn_pop; mn_push *cvar:mn_installation_type;" }
 	}
+
 	button bt_destroy
 	{
 		string		"_Destroy"
@@ -1544,16 +1490,30 @@ window popup_installationstatus
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		ui/button_green_small
-		pos			"295 110"
+		pos			"25 150"
 		size		"176 32"
-		onClick		{ cmd "mn_pop;mn_destroyinstallation;" }
+		onClick		{ cmd "mn_pop; mn_destroyinstallation;" }
 	}
 
 	func onInit
 	{
 		cmd "game_timestop;"
+
+		/* samsite has own menu */
 		if ( *cvar:mn_installation_type eq "samsite" ) {
 			cmd "mn_pop; mn_push basedefence;"
+		}
+		/* Show/Hide time-to-build notification and manage button  */
+		if ( *cvar:mn_installation_timetobuild eq "-" ) {
+			*node:root.buildtime_label@invis = true
+			*node:root.buildtime@invis = true
+			*node:root.bt_enter@invis = true
+		} else {
+			*node:root.buildtime_label@invis = false
+			*node:root.buildtime@invis = false
+			/** @todo Radar and UFO Yard has no manage menu yet */
+			/* *node:root.bt_enter@invis = false */
+			 
 		}
 	}
 }
