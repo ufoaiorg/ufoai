@@ -226,6 +226,8 @@ static void CL_Connect (void)
  */
 void CL_ClearState (void)
 {
+	LE_Cleanup();
+
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	cl.cam.zoom = 1.0;
