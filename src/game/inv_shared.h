@@ -271,7 +271,9 @@ typedef struct objDef_s {
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
-	int ammo;			/**< How much can we load into this weapon at once. @todo what is this? isn't it ammo-only specific which defines amount of bullets in clip? */
+	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
+					     would have, if that clip would be full. In other words, max bullets for this type of
+					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */

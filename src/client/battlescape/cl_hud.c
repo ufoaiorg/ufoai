@@ -877,6 +877,116 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 }
 
 /**
+ * @brief Checks every case for reload buttons on the HUD.
+ * @param[in] le Pointer of local entity being an actor.
+ * @param[in] weapon Pointer to weapon in hand.
+ * @param[in] tu Remaining TU units of selected actor.
+ * @param[in] hand qtrue for right hand, qfalse for left.
+ * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
+ */
+static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, qboolean hand)
+{
+	int container, containerOutTime;
+	qboolean notEnoughTU = qfalse;
+
+	if (!le)
+		return -1;
+
+	/* No weapon in hand. */
+	if (!weapon) {
+		if (hand)
+			Cvar_Set("mn_reloadright_tt", _("No weapon in right hand."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("No weapon in left hand."));
+		return -1;
+	}
+
+	assert (weapon->item.t);
+
+	/* This weapon cannot be reloaded. */
+	if (!weapon->item.t->reload) {
+		if (hand)
+			Cvar_Set("mn_reloadright_tt", _("Weapon in right hand cannot be reloaded."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("Weapon in left hand cannot be reloaded."));
+		return -1;
+	}
+
+	/* Weapon is fully loaded. */
+	Com_Printf ("weapon->item.t->ammo: %i, weapon->item.a -> %i\n", weapon->item.t->ammo, weapon->item.a);
+	if (weapon->item.m && weapon->item.a && (weapon->item.t->ammo == weapon->item.a)) {
+		if (hand)
+			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, already fully loaded."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, already fully loaded."));
+		return -1;
+	}
+
+	/* Weapon is empty, find ammo of any type loadable to this weapon. */
+	if (!weapon->item.m || (weapon->item.a == 0)) {
+		for (container = 0; container < csi.numIDs; container++) {
+			if ((csi.ids[container].out < tu) && !csi.ids[container].temp)  {
+				const invList_t *ic;
+				for (ic = le->i.c[container]; ic; ic = ic->next) {
+					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t)) {
+						break;
+					}
+				}
+				/* If we have enough TU to reload, return here. Otherwise
+				   search in another container, maybe another needs less TU. */
+				if (tu >= weapon->item.t->reload + csi.ids[container].out)
+					return (weapon->item.t->reload + csi.ids[container].out);
+				else
+					notEnoughTU = qtrue;
+			}
+		}
+		/* Found no ammo which could be used for this weapon. */
+		if (hand)
+			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, you don't have backup ammo."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
+		return -1;
+	}
+
+	/* Weapon is not fully loaded but there is similar clip in the inventory. */
+	if (weapon->item.m && weapon->item.a && (weapon->item.t->ammo > weapon->item.a)) {
+		for (container = 0; container < csi.numIDs; container++) {
+			if ((csi.ids[container].out < tu) && !csi.ids[container].temp)  {
+				const invList_t *ic;
+				containerOutTime = csi.ids[container].out;
+				for (ic = le->i.c[container]; ic; ic = ic->next) {
+					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t) && (weapon->item.m == ic->item.t)) {
+						break;
+					}
+				}
+				/* If we have enough TU to reload, return here. Otherwise
+				    search in another container, maybe another needs less TU. */
+				if (tu >= weapon->item.t->reload + csi.ids[container].out)
+					return (weapon->item.t->reload + csi.ids[container].out);
+				else
+					notEnoughTU = qtrue;
+			}
+		}
+		/* Found no backup ammo of the same type as loaded. */
+		if (hand)
+			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, you don't have backup ammo."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
+		return -1;
+	}
+
+	/* All cases covered, not enough TU for reload left. */
+	if (notEnoughTU) {
+		if (hand)
+			Cvar_Set("mn_reloadright_tt", _("Not enough TUs for reloading weapon in right hand."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("Not enough TUs for reloading weapon in left hand."));
+	}
+
+	return -1;
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
  * @sa HUD_ActorUpdateCvars
@@ -887,6 +997,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	invList_t *weaponl;
 	invList_t *headgear;
 	int reloadtime;
+	int rightCanBeReloaded = -1, leftCanBeReloaded = -1;
 	const int time = additionalTime + CL_UsableTUs(le);
 
 	if (!le)
@@ -962,36 +1073,20 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	}
 
 	/** Reload buttons @sa HUD_ActorUpdateCvars */
-	{
-		const qboolean fullyLoadedR = (weaponr && weaponr->item.t && (weaponr->item.t->ammo == weaponr->item.a));
-		if (weaponr)
-			reloadtime = CL_CalcReloadTime(le, weaponr->item.t);
-		if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime || fullyLoadedR) {
-			HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
-			if (fullyLoadedR)
-				Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, already fully loaded."));
-			else
-				Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
-		} else {
-			HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
-			Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), reloadtime));
-		}
+	rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, weaponr, time, qtrue);
+	if (rightCanBeReloaded > 0) {
+		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
+		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), rightCanBeReloaded));
+	} else {
+		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	}
 
-	{
-		const qboolean fullyLoadedL = (weaponl && weaponl->item.t && (weaponl->item.t->ammo == weaponl->item.a));
-		if (weaponl)
-			reloadtime = CL_CalcReloadTime(le, weaponl->item.t);
-		if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime || fullyLoadedL) {
-			HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
-			if (fullyLoadedL)
-				Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, already fully loaded."));
-			else
-				Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
-		} else {
-			HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
-			Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), reloadtime));
-		}
+	leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, weaponl, time, qfalse);
+	if (leftCanBeReloaded > 0) {
+		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
+		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), leftCanBeReloaded));
+	} else {
+		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 	}
 
 	/* Headgear button */
