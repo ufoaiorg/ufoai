@@ -125,25 +125,30 @@ static void RS_UpdateInfo (const base_t* base)
 		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overallTime)));
 	} else {
 		Cvar_SetValue("mn_research_seltimebar", 0);
-		Cvar_Set("mn_research_seltime", _("Progress: Not available."));
+		Cvar_Set("mn_research_seltime", _("Progress: not available."));
 	}
 
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
-		Cvar_Set("mn_research_selstatus", _("Status: Under research"));
+		Cvar_Set("mn_research_selstatus", _("Status: under research"));
+		Cvar_Set("mn_research_selstatus_long", _("Status: this research topic is currently being processed in labolatories"));
 		break;
 	case RS_PAUSED:
-		Cvar_Set("mn_research_selstatus", _("Status: Research paused"));
+		Cvar_Set("mn_research_selstatus", _("Status: research paused"));
+		Cvar_Set("mn_research_selstatus_long", _("Status: research topic currently paused."));
 		break;
 	case RS_FINISH:
-		Cvar_Set("mn_research_selstatus", _("Status: Research finished"));
+		Cvar_Set("mn_research_selstatus", _("Status: research finished"));
+		Cvar_Set("mn_research_selstatus_long", _("Status: research finished"));
 		break;
 	case RS_NONE:
 		if (tech->statusCollected && !tech->statusResearchable) {
 			/** @sa RS_UpdateData -> "--" */
-			Cvar_Set("mn_research_selstatus", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
+			Cvar_Set("mn_research_selstatus", _("Status: not possible to research"));
+			Cvar_Set("mn_research_selstatus_long", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
 		} else {
-			Cvar_Set("mn_research_selstatus", _("Status: Unknown technology"));
+			Cvar_Set("mn_research_selstatus", _("Status: unknown technology"));
+			Cvar_Set("mn_research_selstatus_long", _("Status: unknown technology"));
 		}
 		break;
 	default:

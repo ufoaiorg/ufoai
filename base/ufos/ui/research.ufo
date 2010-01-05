@@ -4,20 +4,50 @@
 
 component panel cmpResearchItem {
 	{
-	size "590 25"
+		size		"590 25"
 	}
-	pic img_status	{ pos	"0 0"	image ui/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
-	string txt_item	{ pos "20 0"		color "0 .78 0 1"	size "365 25"	longlines prettychop onClick { cmd "research_select <node:parent@num>;" } }
-	string txt_assigned	{ textalign ur size "40 20"  pos "405 0"	color "0 .78 0 1" }
-	string txt_rsstatus	{ pos "480 0" size "60 20"	color "0 .78 0 1"	textalign ur }
-	spinner bt_rs_change
-	{
-		tooltip	"_Add and remove scientist"
-		image	ui/spinner_blue
-		pos		"450 0"
-		min 0 current 10000 max 20000 delta 1
-		onChange {
-			cmd "research_select <node:parent@num>; mn_rs_change <node:parent@num> <lastdiff>;"
+
+	pic img_status {
+		image		ui/buttons_small
+		pos			"0 0"
+		texl		"32 16"
+		texh		"48 32"
+		mousefx		true
+	}
+
+	string txt_item	{
+		pos			"20 0"
+		size		"365 25"
+		color		"0 .78 0 1"
+		longlines	prettychop
+		onClick		{ cmd "research_select <node:parent@num>;" }
+	}
+
+	string txt_assigned	{
+		pos			"405 0"
+		size		"40 20"
+		color		"0 .78 0 1"
+		textalign	ur
+	}
+
+	string txt_rsstatus	{
+		pos			"480 0"
+		size		"60 20"
+		color		"0 .78 0 1"
+		textalign	ur
+	}
+
+	spinner bt_rs_change {
+		tooltip		"_Add and remove scientist"
+		image		ui/spinner_blue
+		pos			"450 0"
+		min			0
+		current		10000
+		max			20000
+		delta		1
+		onChange	{
+			cmd "research_select <node:parent@num>;"
+			cmd "mn_rs_change <node:parent@num> <lastdiff>;"
 		}
 	}
 }
@@ -46,15 +76,15 @@ window research
 	}
 
 	panel techlist {
-		pos		"29 93"
-		size	"587 597"
-		image	ui/panel_grey_green_large2
+		pos			"29 93"
+		size		"587 597"
+		image		ui/panel_grey_green_large2
 	}
 
 	panel infopanel {
-		pos		"645 93"
-		size	"353 660"
-		image	ui/panel_grey_green_large
+		pos			"645 93"
+		size		"353 660"
+		image		ui/panel_grey_green_large
 	}
 
 	// ==================
@@ -63,32 +93,35 @@ window research
 
 	custombutton bt_start
 	{
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Start research"
-		icon	research_start
-		pos		"725 674"
-		onClick	{ cmd "mn_start_research;" }
+		tooltip		"_Start research"
+		image		ui/button_background
+		icon		research_start
+		pos			"725 674"
+		size		"59 55"
+		texl		"1 1"
+		onClick		{ cmd "mn_start_research;" }
 	}
 
 	custombutton bt_stop
 	{
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Stop research"
-		icon	research_stop
-		pos		"795 674"
-		onClick	{ cmd "mn_stop_research;" }
+		tooltip		"_Stop research"
+		image		ui/button_background
+		icon		research_stop
+		pos			"795 674"
+		size		"59 55"
+		texl		"1 1"
+		onClick		{ cmd "mn_stop_research;" }
 	}
 
 	custombutton bt_pedia
 	{
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Show research proposal"
-		icon	mail
-		pos		"865 674"
-		onClick	{ cmd "mn_show_ufopedia;" }
+		tooltip		"_Show research proposal"
+		image		ui/button_background
+		icon		mail
+		pos			"865 674"
+		size		"59 55"
+		texl		"1 1"
+		onClick		{ cmd "mn_show_ufopedia;" }
 	}
 
 	// ==================
@@ -386,6 +419,7 @@ window research
 	string txt_selected_status
 	{
 		string		*cvar:mn_research_selstatus
+		tooltip		*cvar:mn_research_selstatus_long
 		pos			"685 210"
 		color		"0 .78 0 1"
 		longlines	prettychop
@@ -439,7 +473,7 @@ window research
 			*item<cvar:i>.txt_rsstatus@string = *cvar:mn_rsstatus<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
-	delete *cvar:i
+		delete *cvar:i
 
 		cmd "research_init;"
 	}
