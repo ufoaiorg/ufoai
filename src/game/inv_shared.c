@@ -850,7 +850,8 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
  * @param[in] to Destination container.
  * @param[in] tx X coordinate in destination container.
  * @param[in] ty Y coordinate in destination container.
- * @param[in,out] TU Amount of TU needed to move an item.
+ * @param[in,out] TU pointer to entity available TU at this moment
+ * or @c NULL if TU doesn't matter (outside battlescape)
  * @param[out] icp
  * @return IA_NOTIME when not enough TU.
  * @return IA_NONE if no action possible.
