@@ -548,6 +548,26 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 }
 
 /**
+ * @brief Calculates the range an aircraft can fly on the geoscape
+ * @param aircraft The aircraft to calculate the range for
+ * @return The range
+ */
+int AIR_GetOperationRange (const aircraft_t *aircraft)
+{
+	return aircraft->stats[AIR_STATS_SPEED] * aircraft->stats[AIR_STATS_FUELSIZE];
+}
+
+/**
+ * @brief Calculates the remaining range the aircraft can fly
+ * @param aircraft The aircraft to calculate the remaining range for
+ * @return The remaining range
+ */
+int AIR_GetRemainingRange (const aircraft_t *aircraft)
+{
+	return aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel;
+}
+
+/**
  * @brief check if aircraft has enough fuel to go to destination, and then come back home
  * @param[in] aircraft Pointer to the aircraft
  * @param[in] destination Pointer to the position the aircraft should go to
@@ -570,7 +590,7 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 	distance += GetDistanceOnGlobe(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	return (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR);
+	return (distance <= AIR_GetRemainingRange(aircraft) / (float)SECONDS_PER_HOUR);
 }
 
 /**
@@ -590,7 +610,7 @@ qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, cons
 	distance = GetDistanceOnGlobe(aircraft->pos, destination);
 
 	/* Check if the aircraft has enough fuel to go to destination */
-	return (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR);
+	return (distance <= AIR_GetRemainingRange(aircraft) / (float)SECONDS_PER_HOUR);
 }
 
 /**
