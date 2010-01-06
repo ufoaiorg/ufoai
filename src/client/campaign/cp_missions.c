@@ -143,7 +143,7 @@ void CP_StartMissionMap (mission_t* mission)
  * @param[in] missionCat Mission category to check.
  * @return True if alien Category may be used for this mission category.
  */
-static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t const *cat, interestCategory_t missionCat)
+static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t const *cat, const interestCategory_t missionCat)
 {
 	int i;
 
