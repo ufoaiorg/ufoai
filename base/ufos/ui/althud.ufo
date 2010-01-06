@@ -554,7 +554,7 @@ window althud extends ahud
 
 	panel right {
 		{
-			pos		"768 64"
+			pos		"768 100"
 			size	"256 512"
 			align	LAYOUTALIGN_RIGHT
 		}
@@ -899,16 +899,16 @@ window althud extends ahud
 	panel chat {
 		{
 			visiblewhen	"*cvar:sv_maxclients >= 2"
-			pos		"768 64"
-			size	"256 463"	/* popup height 335+64*2*/
+			pos		"0 6"
+			size	"256 64"
 			ghost	true
-			align	LAYOUTALIGN_RIGHT
+			align	LAYOUTALIGN_LEFT
 		}
 
 		pic bar_chat_bg
 		{
-			image		hud/bar_chat
-			pos			"192 0"
+			image		althud/bar_chat
+			pos			"0 0"
 			size		"64 64"
 		}
 		pic bar_chat_all
@@ -917,7 +917,7 @@ window althud extends ahud
 
 			tooltip		"_Chat"
 			image		hud/button_chat
-			pos			"176 12"
+			pos			"130 12"
 			size		"32 32"
 			texl		"0 0"
 			texh		"32 32"
@@ -928,7 +928,7 @@ window althud extends ahud
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Teamchat"
 			image		hud/button_chat
-			pos			"138 12"
+			pos			"90 12"
 			size		"32 32"
 			texl		"32 0"
 			texh		"64 32"
@@ -939,7 +939,7 @@ window althud extends ahud
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Show chat history"
 			image		hud/button_chat
-			pos			"100 12"
+			pos			"50 12"
 			size		"32 32"
 			texl		"64 0"
 			texh		"96 32"
@@ -960,7 +960,7 @@ window althud extends ahud
 		{
 			tooltip		"_Chat messages"
 			image		hud/event_log
-			pos			"217 6"
+			pos			"9 6"
 			texl		"0 0"
 			texh		"32 36"
 			onMouseEnter {
@@ -974,11 +974,11 @@ window althud extends ahud
 			onClick		{
 				if ( *cvar:mn_showchatbuttons != 0 ) {
 					*node:parent.bar_chat_bg@image = hud/bar_chat
-					*node:parent.bar_chat_bg@pos = "192 0"
+					*node:parent.bar_chat_bg@pos = "0 0"
 					*node:parent.bar_chat_bg@size = "64 64"
 					*cvar:mn_showchatbuttons = 0
 				} else {
-					*node:parent.bar_chat_bg@image = hud/bar_chat_choice
+					*node:parent.bar_chat_bg@image = althud/bar_chat_choice
 					*node:parent.bar_chat_bg@pos = "0 0"
 					*node:parent.bar_chat_bg@size = "256 64"
 					*cvar:mn_showchatbuttons = 1
