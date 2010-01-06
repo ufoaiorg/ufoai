@@ -886,8 +886,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  */
 static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, qboolean hand)
 {
-	int container, containerOutTime;
-	qboolean notEnoughTU = qfalse;
+	int container;
 
 	if (!le)
 		return -1;
@@ -901,7 +900,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 		return -1;
 	}
 
-	assert (weapon->item.t);
+	assert(weapon->item.t);
 
 	/* This weapon cannot be reloaded. */
 	if (!weapon->item.t->reload) {
@@ -935,8 +934,6 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 				 * search in another container, maybe another needs less TU. */
 				if (tu >= weapon->item.t->reload + csi.ids[container].out)
 					return (weapon->item.t->reload + csi.ids[container].out);
-				else
-					notEnoughTU = qtrue;
 			}
 		}
 		/* Found no ammo which could be used for this weapon. */
@@ -952,18 +949,15 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 		for (container = 0; container < csi.numIDs; container++) {
 			if (csi.ids[container].out < tu && !csi.ids[container].temp)  {
 				const invList_t *ic;
-				containerOutTime = csi.ids[container].out;
 				for (ic = le->i.c[container]; ic; ic = ic->next) {
 					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t) && weapon->item.m == ic->item.t) {
 						break;
 					}
 				}
 				/* If we have enough TU to reload, return here. Otherwise
-				    search in another container, maybe another needs less TU. */
+				 * search in another container, maybe another needs less TU. */
 				if (tu >= weapon->item.t->reload + csi.ids[container].out)
 					return (weapon->item.t->reload + csi.ids[container].out);
-				else
-					notEnoughTU = qtrue;
 			}
 		}
 		/* Found no backup ammo of the same type as loaded. */
@@ -972,14 +966,6 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 		else
 			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
 		return -1;
-	}
-
-	/* All cases covered, not enough TU for reload left. */
-	if (notEnoughTU) {
-		if (hand)
-			Cvar_Set("mn_reloadright_tt", _("Not enough TUs for reloading weapon in right hand."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("Not enough TUs for reloading weapon in left hand."));
 	}
 
 	return -1;
