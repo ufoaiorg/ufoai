@@ -913,8 +913,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 	}
 
 	/* Weapon is fully loaded. */
-	Com_Printf ("weapon->item.t->ammo: %i, weapon->item.a -> %i\n", weapon->item.t->ammo, weapon->item.a);
-	if (weapon->item.m && weapon->item.a && (weapon->item.t->ammo == weapon->item.a)) {
+	if (weapon->item.m && weapon->item.a && weapon->item.t->ammo == weapon->item.a) {
 		if (hand)
 			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, already fully loaded."));
 		else
@@ -925,7 +924,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 	/* Weapon is empty, find ammo of any type loadable to this weapon. */
 	if (!weapon->item.m || (weapon->item.a == 0)) {
 		for (container = 0; container < csi.numIDs; container++) {
-			if ((csi.ids[container].out < tu) && !csi.ids[container].temp)  {
+			if (csi.ids[container].out < tu && !csi.ids[container].temp)  {
 				const invList_t *ic;
 				for (ic = le->i.c[container]; ic; ic = ic->next) {
 					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t)) {
@@ -933,7 +932,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 					}
 				}
 				/* If we have enough TU to reload, return here. Otherwise
-				   search in another container, maybe another needs less TU. */
+				 * search in another container, maybe another needs less TU. */
 				if (tu >= weapon->item.t->reload + csi.ids[container].out)
 					return (weapon->item.t->reload + csi.ids[container].out);
 				else
@@ -949,13 +948,13 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, q
 	}
 
 	/* Weapon is not fully loaded but there is similar clip in the inventory. */
-	if (weapon->item.m && weapon->item.a && (weapon->item.t->ammo > weapon->item.a)) {
+	if (weapon->item.m && weapon->item.a && weapon->item.t->ammo > weapon->item.a) {
 		for (container = 0; container < csi.numIDs; container++) {
-			if ((csi.ids[container].out < tu) && !csi.ids[container].temp)  {
+			if (csi.ids[container].out < tu && !csi.ids[container].temp)  {
 				const invList_t *ic;
 				containerOutTime = csi.ids[container].out;
 				for (ic = le->i.c[container]; ic; ic = ic->next) {
-					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t) && (weapon->item.m == ic->item.t)) {
+					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t) && weapon->item.m == ic->item.t) {
 						break;
 					}
 				}
