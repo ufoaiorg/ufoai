@@ -539,9 +539,6 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 		return 10 * (int) (111.2 * value / 10.0f);
 	case AIR_STATS_FUELSIZE:
 		return value / 1000;
-	case AIR_STATS_OP_RANGE:
-		/* the 2.0f factor is for going to destination and then come back */
-		return 100 * (int) (KILOMETER_PER_DEGREE * value / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
 	default:
 		return value;
 	}
@@ -554,7 +551,9 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
  */
 int AIR_GetOperationRange (const aircraft_t *aircraft)
 {
-	return aircraft->stats[AIR_STATS_SPEED] * aircraft->stats[AIR_STATS_FUELSIZE];
+	const int range = aircraft->stats[AIR_STATS_SPEED] * aircraft->stats[AIR_STATS_FUELSIZE];
+	/* the 2.0f factor is for going to destination and then come back */
+	return 100 * (int) (KILOMETER_PER_DEGREE * range / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
 }
 
 /**

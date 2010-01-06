@@ -175,7 +175,6 @@ typedef enum {
 	AIR_STATS_ANTIMATTER,	/**< amount of antimatter needed for a full refill. */
 
 	AIR_STATS_MAX,
-	AIR_STATS_OP_RANGE	/**< Operational range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */
 } aircraftParams_t;
 
 /**
