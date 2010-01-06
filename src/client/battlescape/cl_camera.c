@@ -77,10 +77,14 @@ static inline void CL_ClampCamToMap (const float border)
 		cl.cam.origin[1] = mapMax[1] + border;
 }
 
+/**
+ * @brief Update the camera position. This can be done in two different reasons. The first is the user input, the second
+ * is an active camera route. The camera route overrides the user input and is lerping the movement until the final position
+ * is reached.
+ */
 void CL_CameraMove (void)
 {
 	float frac;
-	vec3_t g_forward, g_right, g_up;
 	vec3_t delta;
 	int i;
 
@@ -153,6 +157,7 @@ void CL_CameraMove (void)
 		const float angle = cl.cam.angles[YAW] * torad;
 		const float sy = sin(angle);
 		const float cy = cos(angle);
+		vec3_t g_forward, g_right, g_up;
 
 		VectorSet(g_forward, cy, sy, 0.0);
 		VectorSet(g_right, sy, -cy, 0.0);
@@ -250,6 +255,9 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 	cameraRoute = qtrue;
 }
 
+/**
+ * @brief Zooms the scene of the battlefield in
+ */
 void CL_CameraZoomIn (void)
 {
 	float quant;
@@ -270,6 +278,9 @@ void CL_CameraZoomIn (void)
 	V_CalcFovX();
 }
 
+/**
+ * @brief Zooms the scene of the battlefield out
+ */
 void CL_CameraZoomOut (void)
 {
 	float quant;
