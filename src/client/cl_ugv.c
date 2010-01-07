@@ -64,7 +64,7 @@ ugv_t *CL_GetUGVByID (const char *ugvID)
 
 	if (!ugvID)
 		Com_Printf("CL_GetUGVByID Called with NULL ugvID!\n");
-	if (!ugv)
+	else if (!ugv)
 		Com_Printf("CL_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, numUGV);
 	return ugv;
 }

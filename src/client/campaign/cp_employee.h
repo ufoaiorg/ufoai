@@ -67,7 +67,7 @@ typedef struct employee_s {
 
 	char speed;					/**< Speed of this Worker/Scientist at research/construction. */
 
-	building_t *building;				/**< Assigned to this building in ccs.buildings[baseIDXHired][buildingID] */
+	building_t *building;		/**< Assigned to this building in ccs.buildings[baseIDXHired][buildingID] */
 
 	qboolean transfer;			/**< Is this employee currently transferred?
 								 * @sa Set in TR_TransferStart_f
@@ -75,7 +75,7 @@ typedef struct employee_s {
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 	employeeType_t type;		/**< back link to employee type in ccs.employees */
 	struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
-	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
+	ugv_t *ugv;					/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
 } employee_t;
 
 void E_ResetEmployees(void);
@@ -92,6 +92,7 @@ int E_GenerateHiredEmployeesList(const base_t *base);
 qboolean E_IsAwayFromBase(const employee_t *employee);
 
 employeeType_t E_GetEmployeeType(const char* type);
+const char *E_GetEmployeeTypeID(employeeType_t type);
 extern const char* E_GetEmployeeString(employeeType_t type);
 
 employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
