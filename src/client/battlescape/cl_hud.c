@@ -887,6 +887,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, int hand)
 {
 	int container;
+	qboolean notEnoughTU = qfalse;
 
 	assert(hand == ACTOR_HAND_LEFT || hand == ACTOR_HAND_RIGHT);
 
@@ -929,6 +930,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, i
 				const invList_t *ic;
 				for (ic = le->i.c[container]; ic; ic = ic->next) {
 					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t)) {
+						notEnoughTU = qtrue;
 						break;
 					}
 				}
@@ -943,7 +945,6 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, i
 			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, you don't have backup ammo."));
 		else
 			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
-		return -1;
 	}
 
 	/* Weapon is not fully loaded but there is similar clip in the inventory. */
@@ -953,6 +954,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, i
 				const invList_t *ic;
 				for (ic = le->i.c[container]; ic; ic = ic->next) {
 					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t) && weapon->item.m == ic->item.t) {
+						notEnoughTU = qtrue;
 						break;
 					}
 				}
@@ -967,7 +969,15 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, i
 			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, you don't have backup ammo."));
 		else
 			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
-		return -1;
+	}
+
+	/* If notEnoughTU is qtrue, then we found backup ammo, but we don't have
+	   enough TU to reload. Otherwise, we don't have backup ammo. */
+	if (notEnoughTU) {
+		if (hand == ACTOR_HAND_RIGHT)
+			Cvar_Set("mn_reloadright_tt", _("Not enough TUs for reloading weapon in right hand."));
+		else
+			Cvar_Set("mn_reloadleft_tt", _("Not enough TUs for reloading weapon in left hand."));
 	}
 
 	return -1;
