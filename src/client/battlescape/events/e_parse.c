@@ -88,6 +88,25 @@ static void CL_LogEvent (const eventRegister_t *eventData)
 }
 
 /**
+ * @brief Adds the ability to block battlescape event execution until something other is
+ * finished. E.g. camera movement
+ * @param block @c true to block the execution of other events until you unblock the event
+ * execution again, @c false to unblock the event execution.
+ */
+void CL_BlockBattlescapeEvents (qboolean block)
+{
+	cl.eventsBlocked = block;
+}
+
+/**
+ * @return if the client interrupts the event execution, this is @c true
+ */
+static qboolean CL_AreBattlescapeEventsBlocked (void)
+{
+	return cl.eventsBlocked;
+}
+
+/**
  * @brief Checks if a given battlescape event is ok to run now.
  *  Uses the check_func pointer in the event struct.
  * @param now The current time.
@@ -96,13 +115,17 @@ static void CL_LogEvent (const eventRegister_t *eventData)
  */
 static qboolean CL_CheckBattlescapeEvent (int now, void *data)
 {
-	evTimes_t *event = (evTimes_t *)data;
-	const eventRegister_t *eventData = CL_GetEvent(event->eType);
+	if (CL_AreBattlescapeEventsBlocked()) {
+		return qfalse;
+	} else {
+		const evTimes_t *event = (evTimes_t *)data;
+		const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
-	if (eventData->eventCheck == NULL)
-		return qtrue;
+		if (eventData->eventCheck == NULL)
+			return qtrue;
 
-	return eventData->eventCheck(eventData, event->msg);
+		return eventData->eventCheck(eventData, event->msg);
+	}
 }
 
 /**

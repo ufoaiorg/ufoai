@@ -105,6 +105,8 @@ typedef struct client_state_s {
 	int numTeamList;
 	int numAliensSpotted;
 
+	qboolean eventsBlocked;		/**< if the client interrupts the event execution, this is true */
+
 	/** server state information */
 	int pnum;			/**< player num you have on the server */
 	int actTeam;		/**< the currently active team (in this round) */
