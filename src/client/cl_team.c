@@ -191,18 +191,6 @@ static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, i
 }
 
 /**
- * @sa CL_LoadItem
- */
-static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int y)
-{
-	assert(item.t);
-/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	MSG_WriteFormat(buf, "bbbbbl", item.a, container, x, y, item.rotated, item.amount);
-	MSG_WriteString(buf, item.t->id);
-	if (item.a > NONE_AMMO)
-		MSG_WriteString(buf, item.m->id);
-}
-/**
  * @sa CL_SaveItemXML
  * @sa CL_LoadInventoryXML
  */
@@ -217,26 +205,6 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 			CL_SaveItemXML(s, ic->item, j, ic->x, ic->y);
 		}
 	}
-}
-/**
- * @sa CL_SaveItem
- * @sa CL_LoadInventory
- */
-void CL_SaveInventory (sizebuf_t *buf, const inventory_t *i)
-{
-	int j, nr = 0;
-	invList_t *ic;
-
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			nr++;
-
-	assert(nr < MAX_INVLIST);
-	Com_DPrintf(DEBUG_CLIENT, "CL_SaveInventory: Save %i items\n", nr);
-	MSG_WriteShort(buf, nr);
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			CL_SaveItem(buf, ic->item, j, ic->x, ic->y);
 }
 
 /**
@@ -263,26 +231,6 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 }
 
 /**
- * @sa CL_SaveItem
- */
-static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
-{
-	const char *itemID;
-
-	/* reset */
-	memset(item, 0, sizeof(*item));
-	item->a = NONE_AMMO;
-
-	MSG_ReadFormat(buf, "bbbbbl", &item->a, container, x, y, &item->rotated, &item->amount);
-	itemID = MSG_ReadString(buf);
-	item->t = INVSH_GetItemByID(itemID);
-	if (item->a > NONE_AMMO) {
-		itemID = MSG_ReadString(buf);
-		item->m = INVSH_GetItemByID(itemID);
-	}
-}
-
-/**
  * @sa CL_SaveInventoryXML
  * @sa CL_LoadItemXML
  * @sa Com_AddToInventory
@@ -299,26 +247,6 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 		assert(count < MAX_INVLIST);
-	}
-}
-
-/**
- * @sa CL_SaveInventory
- * @sa CL_LoadItem
- * @sa Com_AddToInventory
- */
-void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
-{
-	item_t item;
-	int container, x, y;
-	int nr = MSG_ReadShort(buf);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_LoadInventory: Read %i items\n", nr);
-	assert(nr < MAX_INVLIST);
-	for (; nr-- > 0;) {
-		CL_LoadItem(buf, &item, &container, &x, &y);
-		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
-			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
 }
 

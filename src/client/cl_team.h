@@ -42,9 +42,7 @@ const char* CL_GetTeamSkinName(int id);
 qboolean CL_SaveCharacterXML(mxml_node_t *p, character_t chr);
 qboolean CL_LoadCharacterXML(mxml_node_t *p, character_t *chr);
 
-void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_SaveInventoryXML(mxml_node_t *p, const inventory_t * i);
-void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void CL_LoadInventoryXML(mxml_node_t *p, inventory_t * i);
 void TEAM_InitStartup(void);
 item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item);
