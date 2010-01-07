@@ -936,6 +936,9 @@ static void G_ClientSkipActorInfo (void)
 
 /**
  * @brief Checks whether the spawn of an actor is allowed for the current running match.
+ * @note Don't allow spawning of soldiers for multiplayer if:
+ * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
+ * + the team already hit the max allowed amount of soldiers
  * @param num The nth actor the player want to spawn in the game.
  * @param team The team the player is part of.
  * @return @c true if spawn is allowed, @c false otherwise.
@@ -949,146 +952,156 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
 }
 
 /**
+ * @brief Searches a free spawning point for a given actor size
+ * @param actorSize The actor size to get a spawning point for
+ * @return An actor edict or @c NULL if no free spawning point was found
+ */
+static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const int actorSize)
+{
+	if (actorSize == ACTOR_SIZE_NORMAL) {
+		/* Find valid actor spawn fields for this player. */
+		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
+		if (ent) {
+			ent->type = ET_ACTOR;
+			ent->chr.fieldSize = actorSize;
+			ent->fieldSize = ent->chr.fieldSize;
+		}
+		return ent;
+	} else if (actorSize == ACTOR_SIZE_2x2) {
+		/* Find valid actor spawn fields for this player. */
+		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
+		if (ent) {
+			ent->type = ET_ACTOR2x2;
+			ent->morale = 100;
+			ent->chr.fieldSize = actorSize;
+			ent->fieldSize = ent->chr.fieldSize;
+		}
+		return ent;
+	}
+
+	gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actorSize: %i)\n",
+			actorSize);
+}
+
+/**
+ * @brief Read the inventory from the clients team data
+ * @param ent The actor's entity that should receive the items.
+ */
+static void G_ClientReadInventory (edict_t *ent)
+{
+	/* inventory */
+	int nr = gi.ReadShort() / INV_INVENTORY_BYTES;
+
+	for (; nr-- > 0;) {
+		invDef_t *container;
+		item_t item;
+		int x, y;
+		G_ReadItem(&item, &container, &x, &y);
+		Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx
+				: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
+
+		if (container) {
+			Com_AddToInventory(&ent->i, item, container, x, y, 1);
+			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
+					container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
+		}
+	}
+
+	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
+	ent->chr.inv = ent->i;
+}
+
+/**
+ * @brief Reads the character data from the netchannel that is needed to spawn an actor.
+ * @param ent The actor entity to save the read data in.
+ */
+static void G_ClientReadCharacter (edict_t *ent)
+{
+	int k;
+
+	/* model */
+	ent->chr.ucn = gi.ReadShort();
+	Q_strncpyz(ent->chr.name, gi.ReadString(), sizeof(ent->chr.name));
+	Q_strncpyz(ent->chr.path, gi.ReadString(), sizeof(ent->chr.path));
+	Q_strncpyz(ent->chr.body, gi.ReadString(), sizeof(ent->chr.body));
+	Q_strncpyz(ent->chr.head, gi.ReadString(), sizeof(ent->chr.head));
+	ent->chr.skin = gi.ReadByte();
+
+	ent->chr.HP = gi.ReadShort();
+	ent->chr.minHP = ent->chr.HP;
+	ent->chr.maxHP = gi.ReadShort();
+	ent->chr.teamDef = &gi.csi->teamDef[gi.ReadByte()];
+
+	ent->chr.gender = gi.ReadByte();
+	ent->chr.STUN = gi.ReadByte();
+	ent->chr.morale = gi.ReadByte();
+
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
+		ent->chr.score.experience[k] = gi.ReadLong();
+	for (k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */
+		ent->chr.score.skills[k] = gi.ReadByte();
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
+		ent->chr.score.initialSkills[k] = gi.ReadByte();
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		ent->chr.score.kills[k] = gi.ReadShort();
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		ent->chr.score.stuns[k] = gi.ReadShort();
+	ent->chr.score.assignedMissions = gi.ReadShort();
+
+	ent->state = gi.ReadShort();
+
+	/* Mission Scores */
+	memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
+	ent->chr.scoreMission = &scoreMission[scoreMissionNum];
+	scoreMissionNum++;
+
+	/* set initial vital statistics */
+	ent->HP = ent->chr.HP;
+	ent->morale = ent->chr.morale;
+
+	/** @todo for now, heal fully upon entering mission */
+	ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
+
+	/* set models */
+	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
+	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+}
+
+/**
  * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
  * @param[in] player The player to spawn the actors for.
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa clc_teaminfo
  */
-void G_ClientTeamInfo (player_t * player)
+void G_ClientTeamInfo (const player_t * player)
 {
-	int i, k;
-	int x, y;
-	item_t item;
 	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
+	int i;
 
 	for (i = 0; i < length; i++) {
-		/* Search for a spawn point for each entry the client sent
-		 * Don't allow spawning of soldiers if:
-		 * + the player is not in a valid team
-		 * +++ Multiplayer
-		 * + the game is already running (activeTeam != -1)
-		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
-		 * + the team already hit the max allowed amount of soldiers */
-		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team)) {
-			/* Here the client tells the server the information for the spawned actor(s). */
-			edict_t *ent;
+		edict_t *ent;
+		/* Search for a spawn point for each entry the client sent */
+		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team))
+			ent = G_ClientGetFreeSpawnPointForActorSize(player, gi.ReadByte());
+		else
+			ent = NULL;
 
-			/* Receive fieldsize and get matching spawnpoint. */
-			const int dummyFieldSize = gi.ReadByte();
-			switch (dummyFieldSize) {
-			case ACTOR_SIZE_NORMAL:
-				/* Find valid actor spawn fields for this player. */
-				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
-				if (ent) {
-					ent->type = ET_ACTOR;
-				}
-				break;
-			case ACTOR_SIZE_2x2:
-				/* Find valid actor spawn fields for this player. */
-				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
-				if (ent) {
-					ent->type = ET_ACTOR2x2;
-					ent->morale = 100;
-				}
-				break;
-			default:
-				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actorSize: %i, actor num: %i)\n",
-						dummyFieldSize, i);
-			}
-
-			if (!ent) {
-				Com_DPrintf(DEBUG_GAME,
-						"G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
-						dummyFieldSize);
-				G_ClientSkipActorInfo();
-				continue;
-			}
+		if (ent) {
+			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
 
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
 			ent->pnum = player->num;
 
-			ent->chr.fieldSize = dummyFieldSize;
-			ent->fieldSize = ent->chr.fieldSize;
-
-			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
-
 			gi.LinkEdict(ent);
 
-			/* model */
-			ent->chr.ucn = gi.ReadShort();
-			Q_strncpyz(ent->chr.name, gi.ReadString(), sizeof(ent->chr.name));
-			Q_strncpyz(ent->chr.path, gi.ReadString(), sizeof(ent->chr.path));
-			Q_strncpyz(ent->chr.body, gi.ReadString(), sizeof(ent->chr.body));
-			Q_strncpyz(ent->chr.head, gi.ReadString(), sizeof(ent->chr.head));
-			ent->chr.skin = gi.ReadByte();
+			G_ClientReadCharacter(ent);
 
-			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: name: %s, path: %s, body: %s, head: %s, skin: %i\n",
-					ent->chr.name, ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.skin);
+			G_ClientReadInventory(ent);
 
-			ent->chr.HP = gi.ReadShort();
-			ent->chr.minHP = ent->chr.HP;
-			ent->chr.maxHP = gi.ReadShort();
-			ent->chr.teamDef = &gi.csi->teamDef[gi.ReadByte()];
-
-			ent->chr.gender = gi.ReadByte();
-			ent->chr.STUN = gi.ReadByte();
-			ent->chr.morale = gi.ReadByte();
-			ent->state = gi.ReadShort();
-
-			/** Scores @sa G_ClientSkipActorInfo */
-			for (k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
-				ent->chr.score.experience[k] = gi.ReadLong();
-			for (k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */
-				ent->chr.score.skills[k] = gi.ReadByte();
-			for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-				ent->chr.score.initialSkills[k] = gi.ReadByte();
-			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				ent->chr.score.kills[k] = gi.ReadShort();
-			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				ent->chr.score.stuns[k] = gi.ReadShort();
-			ent->chr.score.assignedMissions = gi.ReadShort();
-
-			/* Mission Scores */
-			memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
-			ent->chr.scoreMission = &scoreMission[scoreMissionNum];
-			scoreMissionNum++;
-
-			/* inventory */
-			{
-				int nr = gi.ReadShort() / INV_INVENTORY_BYTES;
-
-				for (; nr-- > 0;) {
-					invDef_t *container;
-					G_ReadItem(&item, &container, &x, &y);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx
-							: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
-
-					if (container) {
-						Com_AddToInventory(&ent->i, item, container, x, y, 1);
-						Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
-								container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
-					}
-				}
-			}
-
-			/* set models */
-			/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
-			ent->chr.inv = ent->i;
-			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
-			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
-
-			/* set initial vital statistics */
-			ent->HP = ent->chr.HP;
-			ent->morale = ent->chr.morale;
-
-			/** @todo for now, heal fully upon entering mission */
-			ent->morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-
-			ent->reaction_minhit = 30; /** @todo allow later changes from GUI */
+			/** @todo allow later changes from GUI */
+			ent->reaction_minhit = 30;
 		} else {
-			/* just do nothing with the info */
-			gi.ReadByte(); /* fieldSize */
 			G_ClientSkipActorInfo();
 		}
 	}

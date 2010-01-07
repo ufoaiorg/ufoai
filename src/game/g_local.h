@@ -376,7 +376,7 @@ void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
-void G_ClientTeamInfo(player_t * player);
+void G_ClientTeamInfo(const player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
 qboolean G_ClientIsReady(const player_t * player);

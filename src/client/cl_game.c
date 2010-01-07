@@ -350,6 +350,54 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 }
 
 /**
+ * @brief Send the character information to the server that is needed to spawn the soldiers of the player.
+ * @param buf The net channel buffer to write the character data into.
+ * @param chr The character to get the data from.
+ */
+static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
+{
+	int j;
+
+	if (!chr)
+		Com_Error(ERR_DROP, "No character given");
+	if (chr->fieldSize != ACTOR_SIZE_2x2 && chr->fieldSize != ACTOR_SIZE_NORMAL)
+		Com_Error(ERR_DROP, "Invalid character size given for character '%s'", chr->name);
+	if (chr->teamDef == NULL)
+		Com_Error(ERR_DROP, "Character with no teamdef set (%s)", chr->name);
+
+	NET_WriteByte(buf, chr->fieldSize);
+	NET_WriteShort(buf, chr->ucn);
+	NET_WriteString(buf, chr->name);
+
+	/* model */
+	NET_WriteString(buf, chr->path);
+	NET_WriteString(buf, chr->body);
+	NET_WriteString(buf, chr->head);
+	NET_WriteByte(buf, chr->skin);
+
+	NET_WriteShort(buf, chr->HP);
+	NET_WriteShort(buf, chr->maxHP);
+	NET_WriteByte(buf, chr->teamDef->idx);
+	NET_WriteByte(buf, chr->gender);
+	NET_WriteByte(buf, chr->STUN);
+	NET_WriteByte(buf, chr->morale);
+
+	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+		NET_WriteLong(buf, chr->score.experience[j]);
+	for (j = 0; j < SKILL_NUM_TYPES; j++)
+		NET_WriteByte(buf, chr->score.skills[j]);
+	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+		NET_WriteByte(buf, chr->score.initialSkills[j]);
+	for (j = 0; j < KILLED_NUM_TYPES; j++)
+		NET_WriteShort(buf, chr->score.kills[j]);
+	for (j = 0; j < KILLED_NUM_TYPES; j++)
+		NET_WriteShort(buf, chr->score.stuns[j]);
+	NET_WriteShort(buf, chr->score.assignedMissions);
+
+	NET_WriteShort(buf, chr->state);
+}
+
+/**
  * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
  * @sa G_ClientTeamInfo
  * @sa MP_SaveTeamMultiplayerInfo
@@ -357,7 +405,7 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
  */
 static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *team)
 {
-	int i, j;
+	int i;
 
 	/* header */
 	NET_WriteByte(buf, clc_teaminfo);
@@ -366,47 +414,9 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 	Com_DPrintf(DEBUG_CLIENT, "GAME_SendCurrentTeamSpawningInfo: Upload information about %i soldiers to server\n", team->num);
 	for (i = 0; i < team->num; i++) {
 		character_t *chr = team->chr[i];
-		assert(chr);
-		assert(chr->fieldSize > 0);
-		/* send the fieldSize ACTOR_SIZE_* */
-		NET_WriteByte(buf, chr->fieldSize);
 
-		/* unique character number */
-		NET_WriteShort(buf, chr->ucn);
+		GAME_NetSendCharacter(buf, chr);
 
-		/* name */
-		NET_WriteString(buf, chr->name);
-
-		/* model */
-		NET_WriteString(buf, chr->path);
-		NET_WriteString(buf, chr->body);
-		NET_WriteString(buf, chr->head);
-		NET_WriteByte(buf, chr->skin);
-
-		NET_WriteShort(buf, chr->HP);
-		NET_WriteShort(buf, chr->maxHP);
-		if (chr->teamDef == NULL)
-			Com_Error(ERR_DROP, "Character with no teamdef set");
-		NET_WriteByte(buf, chr->teamDef->idx);
-		NET_WriteByte(buf, chr->gender);
-		NET_WriteByte(buf, chr->STUN);
-		NET_WriteByte(buf, chr->morale);
-		NET_WriteShort(buf, chr->state);
-
-		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			NET_WriteLong(buf, chr->score.experience[j]);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			NET_WriteByte(buf, chr->score.skills[j]);
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			NET_WriteByte(buf, chr->score.initialSkills[j]);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->score.kills[j]);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->score.stuns[j]);
-		NET_WriteShort(buf, chr->score.assignedMissions);
-
-		/* inventory */
 		CL_NetSendInventory(buf, &chr->inv);
 	}
 }
