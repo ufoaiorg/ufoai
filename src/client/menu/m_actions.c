@@ -82,6 +82,8 @@ static const menuTypedActionToken_t actionTokens[] = {
 	{"||", EA_OPERATOR_OR, EA_BINARYOPERATOR},
 };
 
+static void MN_ExecuteInjectedActions(const menuAction_t* firstAction, menuCallContext_t *context);
+
 /**
  * @brief Check if the action token list is sorted by alphabet,
  * else dichotomic search can't work
@@ -162,7 +164,7 @@ int MN_GetParamNumber (const menuCallContext_t *context)
 {
 	if (context->useCmdParam)
 		return Cmd_Argc();
-	return 0;
+	return context->paramNumber;
 }
 
 /**
@@ -173,9 +175,24 @@ int MN_GetParamNumber (const menuCallContext_t *context)
  */
 const char* MN_GetParam (const menuCallContext_t *context, int paramID)
 {
+	linkedList_t *current;
+	assert(paramID >= 1);
+
 	if (context->useCmdParam)
 		return Cmd_Argv(paramID);
-	return "";
+
+	if (paramID > context->paramNumber) {
+		Com_Printf("MN_GetParam: %i out of range\n", paramID);
+		return "";
+	}
+
+	current = context->params;
+	while (paramID > 1) {
+		current = current->next;
+		paramID--;
+	}
+
+	return (char*) current->data;
 }
 
 /**
@@ -380,7 +397,56 @@ static inline void MN_ExecuteSetAction (const menuAction_t* action, const menuCa
 	}
 }
 
-static void MN_ExecuteInjectedActions(const menuAction_t* firstAction, menuCallContext_t *context);
+static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuCallContext_t *context)
+{
+	menuNode_t* callNode = NULL;
+	menuAction_t* param;
+	menuCallContext_t newContext;
+	const value_t* callProperty = NULL;
+	const char* path = action->d.nonTerminal.left->d.terminal.d1.constString;
+	MN_ReadNodePath(path, context->source, &callNode, &callProperty);
+
+	if (callNode == NULL) {
+		Com_Printf("MN_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, MN_GetPath(context->source));
+		return;
+	}
+
+	if (callProperty != NULL && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
+		Com_Printf("MN_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, MN_GetPath(callNode));
+		return;
+	}
+
+	newContext.source = callNode;
+	newContext.useCmdParam = qfalse;
+	newContext.params = NULL;
+	newContext.paramNumber = 0;
+
+	param = action->d.nonTerminal.right;
+	while (param) {
+		const char* value;
+		value = MN_GetStringFromExpression(param, context);
+		LIST_AddString(&newContext.params, value);
+		newContext.paramNumber++;
+		param = param->next;
+	}
+
+	if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
+		menuAction_t *actionsRef = NULL;
+		if (callProperty == NULL)
+			actionsRef = callNode->onClick;
+		else
+			actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
+		MN_ExecuteInjectedActions(actionsRef, &newContext);
+	} else if (callProperty->type == V_UI_NODEMETHOD) {
+		menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
+		func(callNode, &newContext);
+	} else {
+		/* unreachable, already checked few line before */
+		assert(qfalse);
+	}
+
+	LIST_Delete(&newContext.params);
+}
 
 /**
  * @brief Execute an action from a source
@@ -403,38 +469,7 @@ static void MN_ExecuteInjectedAction (const menuAction_t* action, menuCallContex
 
 	case EA_CALL:
 	case EA_LISTENER:
-		{
-			menuNode_t* callNode = NULL;
-			const value_t* callProperty = NULL;
-			const char* path = action->d.nonTerminal.left->d.terminal.d1.constString;
-			MN_ReadNodePath(path, context->source, &callNode, &callProperty);
-
-			if (callNode == NULL) {
-				Com_Printf("MN_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, MN_GetPath(context->source));
-				return;
-			}
-
-			if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
-				menuCallContext_t newContext;
-				menuAction_t *actionsRef = NULL;
-				if (callProperty == NULL)
-					actionsRef = callNode->onClick;
-				else
-					actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
-				newContext.source = callNode;
-				newContext.useCmdParam = context->useCmdParam;
-				MN_ExecuteInjectedActions(actionsRef, &newContext);
-			} else if (callProperty->type == V_UI_NODEMETHOD) {
-				menuCallContext_t newContext;
-				menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
-				newContext.source = callNode;
-				newContext.useCmdParam = context->useCmdParam;
-				func(callNode, &newContext);
-			} else {
-				Com_Printf("MN_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, MN_GetPath(callNode));
-				return;
-			}
-		}
+		MN_ExecuteCallAction(action, context);
 		break;
 
 	case EA_ASSIGN:
@@ -520,6 +555,8 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
 	menuCallContext_t context;
 	context.source = source;
 	context.useCmdParam = qfalse;
+	context.paramNumber = 0;
+	context.params = NULL;
 	MN_ExecuteInjectedActions(firstAction, &context);
 }
 
