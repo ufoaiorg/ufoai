@@ -646,7 +646,7 @@ static void MN_AddListener_f (void)
 
 /**
  * @brief Remove a function callback from a node event. There can be more than on listener.
- * @param[in,out] node The menu menu to remove the listener from.
+ * @param[in,out] node The node to remove the listener from.
  * @param[in] property The property of the node to remove the listener from.
  * @param[in] functionNode The node of the listener callback.
  */
@@ -677,7 +677,6 @@ void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *f
 			}
 		}
 		if (tmp) {
-			/** @todo merge that into a function */
 			menuAction_t* value = tmp->d.nonTerminal.left;
 			Mem_Free(value->d.terminal.d1.data);
 			Mem_Free(value);
