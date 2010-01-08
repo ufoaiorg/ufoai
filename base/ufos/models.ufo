@@ -5,22 +5,6 @@
 // need		(string)	"menu_model" name of e.g. head. (i.e. children menu-models)
 // anim		(string)	The animation from *.anm files.
 // skin	(int)			The index of hte skin (texture) to use in the file. Default 0.
-// origin	<x,y,z>
-// center	<x,y,z>
-// scale	<x,y,z>
-// angles	<x,y,z>
-// menutransform {
-//	<menuname> <x,y,z-scale> <x,y,z-angles> <x,y,z-origin>
-//	<menuname2> <x,y,z-scale> <x,y,z-angles> <x,y,z-origin>
-// }
-//			REPLACES the definition of "scale" and "angles" in the defined menu "<menuname>"
-//			Except for the "origin" values - they are ADDED to the original values of the menu.
-//			You can skip any of these values by replacing the '"x y z"' part with a '#'
-//			See "scale" "origin" and "angles" definitions for for info on the values.
-//			The downside the menutransform settings right now is that the models can't
-//			be rotated in-game (e.g. in the ufopedia) anymore and that the rotation
-//			values are kinda hard to get.
-//			use debug_mnangles, debug_mnorigin and debug_mnscale to find the best values
 // color	(color)
 // =================================================
 // NOTE: The entries have to be ordered (top-down) to start with children and end with parents (e.g. head, then body)
@@ -32,7 +16,6 @@ menu_model alien_ortnok_head
 	model	"aliens/ortnok/head01"
 	tag		"tag_head"
 	parent	"alien_ortnok"
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_ortnok
 {
@@ -46,7 +29,6 @@ menu_model alien_ortnok_medium_head
 	model	"aliens/ortnokmedium/head01"
 	tag		"tag_head"
 	parent	"alien_ortnok_medium"
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_ortnok_medium
 {
@@ -60,7 +42,6 @@ menu_model alien_ortnok_light_head
 	model	"aliens/ortnoklight/head01"
 	tag		"tag_head"
 	parent	alien_ortnok_light
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_ortnok_light
 {
@@ -74,7 +55,6 @@ menu_model alien_taman_head
 	model	"aliens/taman/head01"
 	tag		"tag_head"
 	parent	"alien_taman"
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_taman
 {
@@ -88,7 +68,6 @@ menu_model alien_taman_light_head
 	model	"aliens/tamanlight/head01"
 	tag		"tag_head"
 	parent	"alien_taman_light"
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_taman_light
 {
@@ -102,7 +81,6 @@ menu_model alien_taman_medium_head
 	model	"aliens/tamanmedium/head01"
 	tag		"tag_head"
 	parent	"alien_taman_medium"
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_taman_medium
 {
@@ -116,7 +94,6 @@ menu_model alien_shevaar_head
 	model	"aliens/shevaar/head01"
 	tag		"tag_head"
 	parent	"alien_shevaar"
-	scale	"1.0 1.0 1.0"
 }
 menu_model alien_shevaar
 {
@@ -125,44 +102,12 @@ menu_model alien_shevaar
 	anim	stand_still
 }
 
-/*
-menu_model alien_hovernet_head
-{
-	model	"aliens/hovernet/head01"
-	tag		"tag_head"
-	parent	"alien_hovernet"
-	scale	"1.0 1.0 1.0"
-}
-menu_model alien_hovernet
-{
-	model	"aliens/hovernet/body01"
-	need	"alien_hovernet_head"
-	anim	stand_still
-}
-*/
-
-//menu_model alien_cyborg_ortnok_head
-//{
-//	model	"aliens/cyborg_ortnok/head01"
-//	tag		"tag_head"
-//	parent	"alien_cyborg_ortnok"
-//	scale	"1.0 1.0 1.0"
-//}
-//menu_model alien_cyborg_ortnok
-//{
-//	model	"aliens/cyborg_ortnok/body01"
-//	need	"alien_cyborg_ortnok_head"
-//	anim	stand_still
-//}
-
-
 // ============== Civilian female ==================
 menu_model civ_female_head
 {
 	model	"civilians/female/head04c"
 	tag		"tag_head"
 	parent	"civ_female"
-	scale	"1.0 1.0 1.0"
 }
 menu_model civ_female
 {
@@ -176,18 +121,11 @@ menu_model ugv_ares_w_turret
 	model	"soldiers/ugv_ares/ares_w_turret"
 	tag		"tag_head"
 	parent	"ugv_ares_w"
-	scale	"1.0 1.0 1.0"
-	menutransform {
-		ufopedia "6 6 6" "0 0 120" "-70 0 0"
-	}
 }
 menu_model ugv_ares_w
 {
 	model	"soldiers/ugv_ares/ares_w"
 	need	"ugv_ares_w_turret"
-	menutransform {
-		ufopedia "6 6 6" "0 0 120" "-70 0 0"
-	}
 }
 
 // PHOENIX
@@ -196,158 +134,81 @@ menu_model ugv_phoenix_turret
 	model	"soldiers/ugv_phoenix/phoenix_turret"
 	tag		"tag_head"
 	parent	"ugv_phoenix"
-	scale	"1.0 1.0 1.0"
-	menutransform {
-		ufopedia "6 6 6" "0 0 120" "-70 0 0"
-	}
 }
 menu_model ugv_phoenix
 {
 	model	"soldiers/ugv_phoenix/phoenix"
 	need	"ugv_phoenix_turret"
-	menutransform {
-		ufopedia "6 6 6" "0 0 120" "-70 0 0"
-	}
 }
 
 // ============== Dropship Firebird =========================
 menu_model drop_firebird_top
 {
 	model	"aircraft/drop_firebird/firebird_top"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
-		aircraft		"0.8 0.8 0.8"	"0 0 0"	#
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"		#
-		item			"0.5 0.5 0.5"	"0 0 120"		#
-	}
 }
 menu_model drop_firebird
 {
 	model	"aircraft/drop_firebird/firebird"
 	need	"drop_firebird_top"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
-		aircraft		"0.8 0.8 0.8"	"0 0 0"	#
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"		#
-		item			"0.5 0.5 0.5"	"0 0 120"		#
-	}
 }
 
 // ============== Dropship Herakles =========================
 menu_model drop_herakles_pod
 {
 	model	"aircraft/drop_herakles/herakles_pod"
-	menutransform {
-		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
-		aircraft		"0.8 0.8 0.8"		"0 0 0"	"60 60 0"
-		aircraft_equip	"0.5 0.5 0.5"		"0 0 0"		#
-		item			"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
-	}
 }
 
 menu_model drop_herakles
 {
 	model	"aircraft/drop_herakles/herakles_carryall"
 	need	"drop_herakles_pod"
-	menutransform {
-		ufopedia		"0.3 0.3 0.3"		"180 0 -120"	"-20 0 0"
-		aircraft		"0.8 0.8 0.8"		"0 0 0"	"60 60 0"
-		aircraft_equip	"0.5 0.5 0.5"		"0 0 0"		#
-		item			"0.45 0.45 0.45"	"180 0 -120"	"0 60 0"
-	}
 }
 
 // ============== Dropship Raptor =========================
 menu_model drop_raptor
 {
 	model	"aircraft/drop_raptor/drop_raptor_low"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"0 0 120"		"-20 0 0"
-		aircraft		"0.8 0.8 0.8"	"0 0 0"	"80 -20 0"
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"		"-60 0 0"
-		item			"0.5 0.5 0.5"	"0 0 120"		#
-	}
 }
 
 // ============== Stingray Interceptor ======================
 menu_model inter_stingray
 {
 	model	"aircraft/inter_stingray/stingray_landed"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-45 135 45"	"-50 0 0"
-		aircraft		"1.1 1.1 1.1"	"0 0 0"	#
-		aircraft_equip	"0.9 0.9 0.9"	"0 0 0"		#
-		item			"0.5 0.5 0.5"	"-45 135 45"	#
-	}
 }
 
 // ============== Saracen Interceptor ======================
 menu_model inter_saracen
 {
 	model	"aircraft/inter_saracen/saracen"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"-50 0 0"
-		aircraft		"0.8 1.1 1.1"	"0 0 0"	"-10 70 0"
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"		"30 0 0"
-		item			"0.4 0.4 0.4"	"180 0 -120"	#
-	}
 }
 
 // ============== Dragon Interceptor ======================
 menu_model inter_dragon
 {
 	model	"aircraft/inter_dragon/inter_dragon"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"10 0 0"
-		aircraft		"0.8 1.1 1.1"	"0 0 0"			"60 0 0"
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"			"-20 0 0"
-		item			"0.4 0.4 0.4"	"180 0 -120"	#
-	}
 }
 
 // ============== Starchaser Interceptor ======================
 menu_model inter_starchaser
 {
 	model	"aircraft/inter_starchaser/starchaser"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"10 0 0"
-		aircraft		"0.8 1.1 1.1"	"0 0 0"			"60 0 0"
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"			"-20 0 0"
-		item			"0.4 0.4 0.4"	"180 0 -120"	#
-	}
 }
 
 // ============== Stiletto Interceptor =====================
 menu_model inter_stiletto_top
 {
 	model	"aircraft/inter_stiletto/stiletto_engines"
-	menutransform {
-		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft		"1.1 1.1 1.1"   "0 0 0"			#
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"			#
-		item			"0.8 0.8 0.8"	"180 0 -120"	#
-	}
 }
 menu_model inter_stiletto
 {
 	model	"aircraft/inter_stiletto/stiletto"
 	need	"inter_stiletto_top"
-	menutransform {
-		ufopedia		"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
-		aircraft		"1.1 1.1 1.1"   "0 0 0"			#
-		aircraft_equip	"0.7 0.7 0.7"	"0 0 0"			#
-		item			"0.8 0.8 0.8"	"180 0 -120"	#
-	}
 }
 
 // ============== UFO Carrier ======================
 menu_model ufo_carrier
 {
 	model	"aircraft/ufo_carrier/ufo_carrier"
-	menutransform {
-		ufopedia		"3 3 3"			"-45 135 45"	#
-		item			"3 3 3"			"-45 135 45"	#
-	}
 }
 
 // ============== UFO Ripper ======================
@@ -372,104 +233,60 @@ menu_model ufo_mothership
 menu_model ufo_harvester
 {
 	model	"aircraft/ufo_harvester/ufo_harvester"
-	menutransform {
-		ufopedia		"20 20 20"		"-45 135 45"	#
-		item			"20 20 20"		"-45 135 45"	#
-	}
 }
 
 // ============== UFO Bomber ======================
 menu_model ufo_bomber
 {
 	model	"aircraft/ufo_bomber/ufo_bomber"
-	menutransform {
-		ufopedia		"9 9 9"			"-45 135 45"	"-20 0 0"
-		item			"9 9 9"			"-45 135 45"	#
-	}
 }
 
 // ============== UFO Corruptor ======================
 menu_model ufo_corrupter
 {
 	model	"aircraft/ufo_corrupter/ufo_corrupter"
-	menutransform {
-		ufopedia		"9 9 9"			"-45 135 45"	"-20 0 0"
-		item			"9 9 9"			"-45 135 45"	#
-	}
 }
 
 // ============== UFO FIGHTER ============================
 menu_model ufo_fighter_upper
 {
 	model	"aircraft/ufo_fighter/ufo_fighter_upper"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 menu_model ufo_fighter_engines_2
 {
 	model	"aircraft/ufo_fighter/ufo_fighter_engines_2"
 	need	"ufo_fighter_upper"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 menu_model ufo_fighter_engines_1
 {
 	model	"aircraft/ufo_fighter/ufo_fighter_engines_1"
 	need	"ufo_fighter_engines_2"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 menu_model ufo_fighter_wings
 {
 	model	"aircraft/ufo_fighter/ufo_fighter_wings"
 	need	"ufo_fighter_engines_1"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 menu_model ufo_fighter
 {
 	model	"aircraft/ufo_fighter/ufo_fighter_hull"
 	need	"ufo_fighter_wings"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 
 // ============== UFO SCOUT ==============================
 menu_model ufo_scout_upper
 {
 	model	"aircraft/ufo_scout/ufo_scout_upper"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 menu_model ufo_scout_engines
 {
 	model	"aircraft/ufo_scout/ufo_scout_engines_1"
 	need	"ufo_scout_upper"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 menu_model ufo_scout
 {
 	model	"aircraft/ufo_scout/ufo_scout_hull"
 	need	"ufo_scout_engines"
-	menutransform {
-		ufopedia		"0.5 0.5 0.5"	"-135 -30 -150"	"-50 0 0"
-		item			"0.5 0.5 0.5"	"-135 -30 -150"	#
-	}
 }
 
 // ============== UFO SUPPLY ==========================
@@ -477,41 +294,26 @@ menu_model ufo_scout
 menu_model ufo_supply_engine_left
 {
 	model	"aircraft/ufo_supply/ufo_supply_engine_left"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-	}
 }
 menu_model ufo_supply_engine_right
 {
 	model	"aircraft/ufo_supply/ufo_supply_engine_right"
 	need	"ufo_supply_engine_left"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-	}
 }
 menu_model ufo_supply_wing_left
 {
 	model	"aircraft/ufo_supply/ufo_supply_wing_left"
 	need	"ufo_supply_engine_right"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-	}
 }
 menu_model ufo_supply_wing_right
 {
 	model	"aircraft/ufo_supply/ufo_supply_wing_right"
 	need	"ufo_supply_wing_left"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-	}
 }
 menu_model ufo_supply
 {
 	model	"aircraft/ufo_supply/ufo_supply_body_closed"
 	need	"ufo_supply_wing_right"
-	menutransform {
-		ufopedia		"0.4 0.4 0.4"	"180 150 -60"	#	// todo: fixme
-	}
 }
 
 // ============== UFO CRASH ========================
@@ -539,70 +341,3 @@ menu_model ufo_crash
 	model	"objects/alien/ufo_crashed/acrash_hull"
 	need	"ufo_crash_engine"
 }
-
-// ============== ALIEN CRAFT EQUIPMENT =========================
-menu_model craft_item_target
-{
-	model	"aircraft/craft_item_target/craft_item_target"
-	menutransform {
-		item			"2 2 2"			"-120 120 -30"	"10 0 0"
-		ufopedia		"5 5 5"			"-120 120 -30"	"10 0 0"
-	}
-}
-
-menu_model craft_item_astrogation
-{
-	model	"aircraft/craft_item_astro/craft_item_astrogation"
-	menutransform {
-		item			"2 2 2"	"-120 120 -30"	#
-		ufopedia		"6 6 6"	"-120 120 -30"	#
-	}
-}
-
-menu_model craft_item_propulsion
-{
-	model	"aircraft/craft_item_prop/propulsion"
-	menutransform {
-		item			"2 2 2"	"-120 120 -30"	"-40 0 0"
-		ufopedia		"5 5 5"	"-120 120 -30"	"-40 0 0"
-	}
-}
-
-menu_model craft_item_detector
-{
-	model	"aircraft/craft_item_det/detection"
-
-	menutransform {
-		item			"2 2 2"	"-120 120 -30"	"-20 0 0"
-		ufopedia		"6 6 6"	"-120 120 -30"	"-40 40 0"
-	}
-}
-
-menu_model craft_item_raven_ecm
-{
-	model	"aircraft/craft_item_raven_ecm/ecm"
-	menutransform {
-		item			"2 2 2"	"-120 120 -30"	"-20 0 0"
-		ufopedia		"6 6 6"	"-120 120 -30"	"0 40 0"
-	}
-}
-
-menu_model craft_shield_polymer
-{
-	model	"aircraft/craft_arm_poly/polymer"
-	menutransform {
-		item			"2 2 2"	"-120 120 -30"	"-20 0 0"
-		ufopedia		"2 2 2"	"-120 120 -30"	"-20 0 0"
-	}
-}
-
-menu_model craft_shield_plating
-{
-	model	"aircraft/craft_arm_plate/plating"
-	menutransform {
-		item			"2 2 2"	"-120 120 -30"	"-20 0 0"
-		ufopedia		"2 2 2"	"-120 120 -30"	"-20 0 0"
-	}
-}
-
-// ============== EOF =========================

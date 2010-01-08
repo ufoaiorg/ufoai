@@ -100,7 +100,7 @@ static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
  * @brief force edition of a textentry node
  * @note the textentry must be on the active menu
  */
-static void MN_TextEntryNodeFocus (menuNode_t *node)
+static void MN_TextEntryNodeFocus (menuNode_t *node, const menuCallContext_t *context)
 {
 	/* remove the focus to show changes */
 	if (!MN_HasFocus(node)) {

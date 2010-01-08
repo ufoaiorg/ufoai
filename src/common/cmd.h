@@ -107,6 +107,7 @@ extern void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(c
 void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
 
 void Cmd_AddUserdata(const char *cmd_name, void* userdata);
+void* Cmd_GetUserdata (const char *cmd_name);
 
 int Cmd_GenericCompleteFunction(size_t len, const char **match, int matches, const char **list);
 

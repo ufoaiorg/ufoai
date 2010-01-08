@@ -36,9 +36,9 @@ window tutorials
 		rows		"14"
 		onClick		{ cmd "tutoriallist_click <lineselected>" }
 		onViewChange	{
-			*(abstractscrollbar)tutoriallist_scroll@fullsize <fullsize>
-			*(abstractscrollbar)tutoriallist_scroll@current <viewpos>
-			*(abstractscrollbar)tutoriallist_scroll@viewsize <viewsize>
+			*(abstractscrollbar)tutoriallist_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)tutoriallist_scroll@current = <viewpos>
+			*(abstractscrollbar)tutoriallist_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -50,7 +50,7 @@ window tutorials
 		viewsize	14
 		fullsize	14
 		hidewhenunused true
-		onChange	{ *tutoriallist@viewpos <current> }
+		onChange	{ *tutoriallist@viewpos = <current> }
 	}
 
 	func onInit

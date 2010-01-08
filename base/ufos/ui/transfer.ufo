@@ -12,52 +12,7 @@ window transfer
 		image		ui/base_bg
 	}
 
-	string name
-	{
-		string		*cvar:mn_base_title
-		tooltip		"_Name of this base"
-		pos			"60 30"
-		size		"500 32"
-		textalign	cl
-		padding		8
-		font		f_big
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	custombutton back
-	{
-		tooltip		"_Back to baseview"
-		image		ui/button_background
-		texl		"1 1"
-		size		"59 55"
-		pos			"950 20"
-		icon		return
-		onClick		{ cmd "mn_pop;" }
-	}
-
-	// ==================
-	// credits
-	// ==================
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================
@@ -455,11 +410,11 @@ window transfer
 			*cvar:loop_max = 21
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
-			*itemlist.t_spinner<cvar:i>@invis false
+			*itemlist.t_spinner<cvar:i>@invis = false
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		while ( *cvar:i < 21 ) {
-			*itemlist.t_spinner<cvar:i>@invis true
+			*itemlist.t_spinner<cvar:i>@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	}
@@ -471,9 +426,9 @@ window transfer
 	 * @param[in] <4> max value allowed
 	 */
 	confunc trans_updatespinners {
-		*(abstractvalue)itemlist.t_spinner<1>@current <2>
-		*(abstractvalue)itemlist.t_spinner<1>@min <3>
-		*(abstractvalue)itemlist.t_spinner<1>@max <4>
+		*(abstractvalue)itemlist.t_spinner<1>@current = <2>
+		*(abstractvalue)itemlist.t_spinner<1>@min = <3>
+		*(abstractvalue)itemlist.t_spinner<1>@max = <4>
 	}
 
 	/**
@@ -614,6 +569,7 @@ window transfer
 		*itemlist.trans_list@viewpos = 0
 		*itemlist.trans_list_amount@viewpos = 0
 		*itemlist.trans_list_transfered@viewpos = 0
+		cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
 	}
 
 	// ==================

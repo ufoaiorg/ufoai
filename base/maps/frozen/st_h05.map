@@ -416,6 +416,33 @@
 ( 192 480 64 ) ( 160 480 64 ) ( 160 480 0 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 160 480 84 ) ( 160 448 84 ) ( 160 448 20 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 }
+// brush 46
+{
+( 95 193 264 ) ( 97 191 264 ) ( 95 191 264 ) tex_common/weaponclip -0 -0 180 0.25 0.25 33554432 0 0
+( 95 191 264 ) ( 101 187 0 ) ( 91 187 0 ) tex_common/weaponclip -0 0 0 -0.25 0.25 33554432 0 0
+( 95 193 264 ) ( 91 187 0 ) ( 91 197 0 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+( 101 197 0 ) ( 91 187 0 ) ( 101 187 0 ) tex_common/weaponclip -0 -0 180 0.25 0.25 33554432 0 0
+( 97 193 264 ) ( 91 197 0 ) ( 101 197 0 ) tex_common/weaponclip -0 0 0 -0.25 0.25 33554432 0 0
+( 101 197 0 ) ( 101 187 0 ) ( 97 193 264 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+}
+// brush 47
+{
+( 95 193 264 ) ( 97 191 264 ) ( 95 191 264 ) tex_common/nodraw -0 -0 180 0.25 0.25 0 128 0
+( 95 191 264 ) ( 101 187 0 ) ( 91 187 0 ) tex_common/nodraw -0 0 0 -0.25 0.25 0 128 0
+( 95 193 264 ) ( 91 187 0 ) ( 91 197 0 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+( 101 197 0 ) ( 91 187 0 ) ( 101 187 0 ) tex_common/nodraw -0 -0 180 0.25 0.25 0 128 0
+( 97 193 264 ) ( 91 197 0 ) ( 101 197 0 ) tex_common/nodraw -0 0 0 -0.25 0.25 0 128 0
+( 101 197 0 ) ( 101 187 0 ) ( 97 193 264 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+}
+// brush 48
+{
+( 95 193 264 ) ( 97 191 264 ) ( 95 191 264 ) tex_common/actorclip -0 -0 180 0.25 0.25 65536 0 0
+( 95 191 264 ) ( 101 187 0 ) ( 91 187 0 ) tex_common/actorclip -0 0 0 -0.25 0.25 65536 0 0
+( 95 193 264 ) ( 91 187 0 ) ( 91 197 0 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+( 101 197 0 ) ( 91 187 0 ) ( 101 187 0 ) tex_common/actorclip -0 -0 180 0.25 0.25 65536 0 0
+( 97 193 264 ) ( 91 197 0 ) ( 101 197 0 ) tex_common/actorclip -0 0 0 -0.25 0.25 65536 0 0
+( 101 197 0 ) ( 101 187 0 ) ( 97 193 264 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+}
 }
 // entity 1
 {
@@ -460,4 +487,49 @@
 "classname" "info_alien_start"
 "angle" "45"
 "origin" "48 272 24"
+}
+// entity 7
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "96 192 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
+"angles" "0 -180 0"
+}
+// entity 8
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "96 192 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+"angles" "0 -180 0"
+}
+// entity 9
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "96 192 0"
+"model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 10
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "96 192 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 11
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "96 192 0"
+"model" "models/objects/vegi/pino/pino2.md2"
+"skin" "0"
+"angles" "0 -180 0"
 }

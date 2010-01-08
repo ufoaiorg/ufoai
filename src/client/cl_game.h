@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CL_GAME_H
 
 #include "client.h"
+#include "menu/m_nodes.h"
 
 #define GAME_NONE			0
 #define GAME_SINGLEPLAYER	(1 << 0)
@@ -46,6 +47,7 @@ void GAME_SetMode(int gametype);
 void GAME_ReloadMode(void);
 void GAME_RestartMode(int gametype);
 void GAME_Init(qboolean load);
+void GAME_DisplayItemInfo(menuNode_t *node, const char *string);
 qboolean GAME_ItemIsUseable(const objDef_t *od);
 void GAME_HandleResults(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 void GAME_SpawnSoldiers(void);

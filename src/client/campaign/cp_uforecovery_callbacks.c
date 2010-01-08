@@ -38,15 +38,41 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #endif
 
+/**
+ * @brief Entries on Sell UFO dialog
+ */
+typedef struct ufoRecoveryNation_s {
+	nation_t *nation;
+	int price;										/**< price proposed by nation. */
+} ufoRecoveryNation_t;
+
+/**
+ * @brief Pointer to compare function
+ * @note This function is used by sorting algoritm.
+ */
+typedef int (*COMP_FUNCTION)(ufoRecoveryNation_t *a, ufoRecoveryNation_t *b);
+
+/**
+ * @brief Constants for Sell UFO menu order
+ */
+typedef enum {
+	ORDER_NATION,
+	ORDER_PRICE,
+	ORDER_HAPPINESS,
+	
+	MAX_ORDER
+} ufoRecoveryNationOrder_t;
+
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {
-	installation_t *installation;			/**< selected ufoyard for current selected ufo recovery */
-	const aircraft_t *ufoTemplate;		/**< the ufo type of the current ufo recovery */
-	nation_t *nation;		/**< selected nation to sell to for current ufo recovery */
-	qboolean recoveryDone;	/**< recoveryDone? Then the buttons are disabled */
-	float condition;		/**< How much the UFO is damaged - used for disassembies */
-
-	int UFOprices[MAX_NATIONS];		/**< Array of prices proposed by nation. */
+	installation_t *installation;					/**< selected ufoyard for current selected ufo recovery */
+	const aircraft_t *ufoTemplate;					/**< the ufo type of the current ufo recovery */
+	nation_t *nation;								/**< selected nation to sell to for current ufo recovery */
+	qboolean recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
+	float condition;								/**< How much the UFO is damaged - used for disassembies */
+	ufoRecoveryNation_t UFONations[MAX_NATIONS];	/**< Sorted array of nations. */
+	ufoRecoveryNationOrder_t sortedColumn;			/**< Column sell sorted by */
+	qboolean sortDescending;						/**< ascending (qfalse) / descending (qtrue) */
 } ufoRecovery_t;
 
 static ufoRecovery_t ufoRecovery;
@@ -93,12 +119,13 @@ static void UR_DialogInit_f (void)
 	ccs.missionResults.ufoCondition = cond;
 	ccs.missionResults.crashsite = (cond < 1);
 	ccs.missionResults.ufotype = ufoCraft->ufotype;
-
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
+	/* Fill ufoRecovery structure */
 	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
 	ufoRecovery.ufoTemplate = ufoCraft;
 	ufoRecovery.condition = cond;
+	ufoRecovery.sortedColumn = ORDER_NATION;
 
 	Cvar_Set("mn_uforecovery_actualufo", UFO_MissionResultToString());
 }
@@ -179,7 +206,7 @@ static void UR_DialogStartStore_f (void)
 		if (installation->ufoCapacity.max <= 0
 		 || installation->ufoCapacity.max <= installation->ufoCapacity.cur)
 		 	continue;
-		
+
 		if (count == idx) {
 			UFOYard = installation;
 			break;
@@ -201,45 +228,223 @@ static void UR_DialogStartStore_f (void)
 }
 
 /**
+ * @brief Build the Sell UFO dialog's nationlist
+ */
+static void UR_DialogFillNations (void)
+{
+	int i;
+	char row[MAX_SMALLMENUTEXTLEN];
+	linkedList_t *nationList = NULL;
+
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nation = ufoRecovery.UFONations[i].nation;
+		if (nation) {
+			Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
+				ufoRecovery.UFONations[i].price, NAT_GetHappinessString(nation));
+			LIST_AddString(&nationList, row);
+		}
+	}
+
+	MN_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
+}
+
+/**
+ * @brief Compare nations by nation name.
+ * @param[in] a First item to compare
+ * @param[in] b Second item to compare
+ * @sa UR_SortNations
+ */
+static int UR_CompareByName (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
+{
+	return strcmp(_(a->nation->name), _(b->nation->name));
+}
+
+/**
+ * @brief Compare nations by price.
+ * @param[in] a First item to compare
+ * @param[in] b Second item to compare
+ * @return 1 if a > b
+ * @return -1 if b > a
+ * @return 0 if a == b
+ * @sa UR_SortNations
+ */
+static int UR_CompareByPrice (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
+{
+	if (a->price > b->price)
+		return 1;
+	if (a->price < b->price)
+		return -1;
+	return 0;
+}
+
+/**
+ * @brief Compare nations by happiness.
+ * @param[in] a First item to compare
+ * @param[in] b Second item to compare
+ * @return 1 if a > b
+ * @return -1 if b > a
+ * @return 0 if a == b
+ * @sa UR_SortNations
+ */
+static int UR_CompareByHappiness (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
+{
+	if (a->nation->stats[0].happiness > b->nation->stats[0].happiness)
+		return 1;
+	if (a->nation->stats[0].happiness < b->nation->stats[0].happiness)
+		return -1;
+	return 0;
+}
+
+/**
+ * @brief Sort nations
+ * @note uses Bubble sort algorithm
+ * @param[in] comp Compare function
+ * @param[in] order Ascending/Descending order
+ * @sa UR_CompareByName
+ * @sa UR_CompareByPrice
+ * @sa UR_CompareByHappiness
+ */
+static void UR_SortNations (COMP_FUNCTION comp, qboolean order)
+{
+	int i;
+
+	for (i = 0; i < ccs.numNations; i++) {
+		qboolean swapped = qfalse;
+		int j;
+
+		for (j = 0; j < ccs.numNations - 1; j++) {
+			int value = (*comp)(&ufoRecovery.UFONations[j], &ufoRecovery.UFONations[j + 1]);
+			ufoRecoveryNation_t tmp;
+
+			if (order)
+				value *= -1;
+			if (value > 0) {
+				/* swap nations */
+				tmp = ufoRecovery.UFONations[j];
+				ufoRecovery.UFONations[j] = ufoRecovery.UFONations[j + 1];
+				ufoRecovery.UFONations[j + 1] = tmp;
+				swapped = qtrue;
+			}
+		}
+		if (!swapped)
+			break;
+	}
+}
+
+/**
+ * @brief Returns the sort function for a column
+ * @param[in] column Column ordertype.
+ */
+static COMP_FUNCTION UR_GetSortFunctionByColumn (ufoRecoveryNationOrder_t column)
+{
+	switch (column) {
+	case ORDER_NATION:
+		return UR_CompareByName;
+	case ORDER_PRICE:
+		return UR_CompareByPrice;
+	case ORDER_HAPPINESS:
+		return UR_CompareByHappiness;
+	default:
+		Com_Printf("UR_DialogSortByColumn_f: Invalid sort option!\n");
+		return NULL;
+	}
+}
+
+/**
  * @brief Function to initialize list to sell recovered UFO to desired nation.
  * @note Command to call this: cp_uforecovery_sell_init.
  */
 static void UR_DialogInitSell_f (void)
 {
 	int i;
-	int nations = 0;
-	static char recoveryNationSelectPopup[MAX_SMALLMENUTEXTLEN];
 
 	/* Do nothing if recovery process is finished. */
 	if (ufoRecovery.recoveryDone)
 		return;
-
+	/* Do nothing without a ufoTemplate set */
 	if (!ufoRecovery.ufoTemplate)
 		return;
 
-	memset(ufoRecovery.UFOprices, -1, sizeof(ufoRecovery.UFOprices));
-
-	recoveryNationSelectPopup[0] = '\0';
-
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = &ccs.nations[i];
-		nations++;
-		/* Calculate price offered by nation only if this is first popup opening. */
-		if (!ufoRecovery.nation) {
-			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.ufoTemplate->price * (.85f + frand() * .3f));
-			/* Nation will pay less if corrupted */
-			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
-		}
-		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup), lengthof(recoveryNationSelectPopup),
-				"%s\t\t\t%i\t\t%s\n", _(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
+		nation_t *nation = NAT_GetNationByIDX(i);
+		int price;
+
+		price = (int) (ufoRecovery.ufoTemplate->price * (.85f + frand() * .3f));
+		/* Nation will pay less if corrupted */
+		price = (int) (price * exp(-nation->stats[0].xviInfection / 20.0f));
+
+		ufoRecovery.UFONations[i].nation = nation;
+		ufoRecovery.UFONations[i].price = price;
+	}
+	UR_SortNations(UR_GetSortFunctionByColumn(ufoRecovery.sortedColumn), ufoRecovery.sortDescending);
+	UR_DialogFillNations();
+	MN_ExecuteConfunc("btnatsel disable");
+}
+
+/**
+ * @brief Returns the index of the selected nation in SellUFO list
+ */
+static int UR_DialogGetCurrentNationIndex (void)
+{
+	int i;
+
+	for (i = 0; i < ccs.numNations; i++)
+		if (ufoRecovery.UFONations[i].nation == ufoRecovery.nation)
+			return i;
+	return -1;
+}
+
+/**
+ * @brief Converts script id string to ordercolumn constant
+ * @param[in] id Script id for order column
+ * @sa ufoRecoveryNationOrder_t
+ */
+static ufoRecoveryNationOrder_t UR_GetOrderTypeByID (const char *id)
+{
+	if (!id)
+		return MAX_ORDER;
+	if (!strcmp(id, "nation"))
+		return ORDER_NATION;
+	if (!strcmp(id, "price"))
+		return ORDER_PRICE;
+	if (!strcmp(id, "happiness"))
+		return ORDER_HAPPINESS;
+	return MAX_ORDER;
+}
+
+/**
+ * @brief Sort Sell UFO dialog
+ */
+static void UR_DialogSortByColumn_f (void)
+{
+	COMP_FUNCTION comp = 0;
+	ufoRecoveryNationOrder_t column;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <nation|price|happiness>\n", Cmd_Argv(0));
+		return;
 	}
 
-	/* Do nothing without at least one nation. */
-	if (nations == 0)
-		return;
+	column = UR_GetOrderTypeByID(Cmd_Argv(1));
+	if (ufoRecovery.sortedColumn != column) {
+		ufoRecovery.sortDescending = qfalse;
+		ufoRecovery.sortedColumn = column;
+	} else {
+		ufoRecovery.sortDescending = !ufoRecovery.sortDescending;
+	}
 
-	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
-	MN_ExecuteConfunc("btnatsel disable");
+	comp = UR_GetSortFunctionByColumn(column);
+	if (comp) {
+		int index;
+
+		UR_SortNations(comp, ufoRecovery.sortDescending);
+		UR_DialogFillNations();
+
+		/* changed line selection corresponding to current nation */
+		index = UR_DialogGetCurrentNationIndex();
+		if (index != -1)
+			MN_ExecuteConfunc("cp_nationsel_select %d", index);
+	}
 }
 
 /**
@@ -263,7 +468,8 @@ static void UR_DialogSelectSellNation_f (void)
 	if (0 > num || num >= ccs.numNations)
 		return;
 
-	nation = &ccs.nations[num];
+	nation = ufoRecovery.UFONations[num].nation;
+
 	ufoRecovery.nation = nation;
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
@@ -277,6 +483,7 @@ static void UR_DialogSelectSellNation_f (void)
  */
 static void UR_DialogStartSell_f (void)
 {
+	int price = -1;
 	nation_t *nation;
 	int i;
 
@@ -285,31 +492,35 @@ static void UR_DialogStartSell_f (void)
 
 	nation = ufoRecovery.nation;
 	assert(nation->name);
-	if (ufoRecovery.UFOprices[nation->idx] == -1) {
-		Com_Printf("CP_UFOSellStart_f: Error: ufo price of -1 - nation: '%s'\n", nation->id);
-		return;
-	}
+
+	i = UR_DialogGetCurrentNationIndex();
+	price = ufoRecovery.UFONations[i].price;
+
+	assert(price >= 0);
 #if 0
 	if (ufoRecovery.selectedStorage) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Sold previously recovered %s from %s to nation %s, gained %i credits."), UFO_TypeToName(
-				ufoRecovery.selectedStorage->ufoTemplate->ufotype), ufoRecovery.selectedStorage->base->name, _(nation->name), ufoRecovery.UFOprices[nation->idx]);
+				ufoRecovery.selectedStorage->ufoTemplate->ufotype), ufoRecovery.selectedStorage->base->name, _(nation->name), price);
 	} else
 #endif
 	{
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."), UFO_TypeToName(
-				ufoRecovery.ufoTemplate->ufotype), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
+				ufoRecovery.ufoTemplate->ufotype), _(nation->name), price);
 	}
 	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
+	CL_UpdateCredits(ccs.credits + price);
 
 	/* update nation happiness */
 	for (i = 0; i < ccs.numNations; i++) {
-		if (ccs.nations + i == nation)
+		nation_t *nat = NAT_GetNationByIDX(i);
+
+		assert(nat);
+		if (nat == nation)
 			/* nation is happy because it got the UFO */
 			NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_UFO_SALE_GAIN);
 		else
 			/* nation is unhappy because it wanted the UFO */
-			NAT_SetHappiness(&ccs.nations[i], ccs.nations[i].stats[0].happiness + HAPPINESS_UFO_SALE_LOSS);
+			NAT_SetHappiness(nat, nat->stats[0].happiness + HAPPINESS_UFO_SALE_LOSS);
 	}
 
 	/* UFO recovery process is done, disable buttons. */
@@ -371,7 +582,7 @@ static void US_StoreUFO_f (void)
 	if (installationIDX < 0 || installationIDX >= MAX_INSTALLATIONS) {
 		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
 		return;
-	}		
+	}
 	installation = INS_GetFoundedInstallationByIDX(installationIDX);
 	if (!installation) {
 		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
@@ -422,7 +633,7 @@ void UR_InitCallbacks (void)
 	Cmd_AddCommand("cp_uforecovery_nationlist_click", UR_DialogSelectSellNation_f, "Callback for recovery sell to nation list.");
 	Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
 	Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
-
+	Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars.");
 	Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
@@ -438,6 +649,7 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("cp_uforecovery_nationlist_click");
 	Cmd_RemoveCommand("cp_uforecovery_store_start");
 	Cmd_RemoveCommand("cp_uforecovery_sell_start");
+	Cmd_RemoveCommand("cp_uforecovery_sort");
 #ifdef DEBUG
 	Cmd_RemoveCommand("debug_liststoredufos");
 	Cmd_RemoveCommand("debug_storeufo");

@@ -850,7 +850,8 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
  * @param[in] to Destination container.
  * @param[in] tx X coordinate in destination container.
  * @param[in] ty Y coordinate in destination container.
- * @param[in,out] TU Amount of TU needed to move an item.
+ * @param[in,out] TU pointer to entity available TU at this moment
+ * or @c NULL if TU doesn't matter (outside battlescape)
  * @param[out] icp
  * @return IA_NOTIME when not enough TU.
  * @return IA_NONE if no action possible.
@@ -1098,13 +1099,14 @@ void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 	invList_t *ic;
 #ifdef DEBUG
 	int cnt = 0;
-
-	assert(container);
-
-	if (container->temp)
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", container->name);
+#endif
 
 	assert(i);
+	assert(container);
+
+#ifdef DEBUG
+	if (container->temp)
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", container->name);
 #endif
 
 	ic = i->c[container->id];

@@ -26,13 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_internal.h"
 #include "m_parse.h"
+#include "m_actions.h"
 #include "node/m_node_abstractnode.h"
 #include "../../shared/parse.h"
 
 /**
  * @return A float value, else 0
  */
-float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *source)
+float MN_GetFloatFromExpression (menuAction_t *expression, const menuCallContext_t *context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -42,7 +43,7 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *sou
 			{
 				const char* string = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
-					string = MN_GenInjectedString(source, qtrue, string, qfalse);
+					string = MN_GenInjectedString(string, qfalse, context);
 				return atof(string);
 			}
 		case EA_VALUE_FLOAT:
@@ -53,7 +54,7 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *sou
 				cvar_t *cvar = NULL;
 				const char *cvarName = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
-					cvarName = MN_GenInjectedString(source, qtrue, cvarName, qfalse);
+					cvarName = MN_GenInjectedString(cvarName, qfalse, context);
 				cvar = Cvar_Get(cvarName, "", 0, "Cvar from menu expression");
 				return cvar->value;
 			}
@@ -64,9 +65,9 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *sou
 				const value_t *property;
 				const char *path = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = MN_GenInjectedString(source, qtrue, path, qfalse);
+					path = MN_GenInjectedString(path, qfalse, context);
 
-				MN_ReadNodePath(path, source, &node, &property);
+				MN_ReadNodePath(path, context->source, &node, &property);
 				if (!node) {
 					Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
 					return 0;
@@ -81,8 +82,8 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *sou
 		break;
 	case EA_OPERATOR_FLOAT2FLOAT:
 		{
-			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
-			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
+			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, context);
+			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_ADD:
@@ -119,7 +120,7 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuNode_t *sou
  * @todo this should not work very well, because too much va are used
  * then we should locally cache values, or manage a temporary string structure
  */
-const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode_t *source)
+const char* MN_GetStringFromExpression (menuAction_t *expression, const menuCallContext_t *context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -129,7 +130,7 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
 			{
 				const char* string = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
-					string = MN_GenInjectedString(source, qtrue, string, qfalse);
+					string = MN_GenInjectedString(string, qfalse, context);
 				return string;
 			}
 		case EA_VALUE_FLOAT:
@@ -148,7 +149,7 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
 			cvar_t *cvar = NULL;
 			const char *cvarName = expression->d.terminal.d1.string;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
-				cvarName = MN_GenInjectedString(source, qtrue, cvarName, qfalse);
+				cvarName = MN_GenInjectedString(cvarName, qfalse, context);
 			cvar = Cvar_Get(cvarName, "", 0, "Cvar from menu expression");
 			return cvar->string;
 		}
@@ -160,9 +161,9 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
 				const char* string;
 				const char *path = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = MN_GenInjectedString(source, qtrue, path, qfalse);
+					path = MN_GenInjectedString(path, qfalse, context);
 
-				MN_ReadNodePath(expression->d.terminal.d1.string, source, &node, &property);
+				MN_ReadNodePath(expression->d.terminal.d1.string, context->source, &node, &property);
 				if (!node) {
 					Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", path);
 					return "";
@@ -185,13 +186,13 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
 	case EA_OPERATOR_FLOAT2BOOLEAN:
 	case EA_OPERATOR_STRING2BOOLEAN:
 		{
-			const qboolean v = MN_GetBooleanFromExpression(expression, source);
+			const qboolean v = MN_GetBooleanFromExpression(expression, context);
 			return (v)?"1":"0";
 		}
 
 	case EA_OPERATOR_FLOAT2FLOAT:
 		{
-			const float number = MN_GetFloatFromExpression(expression, source);
+			const float number = MN_GetFloatFromExpression(expression, context);
 			const int integer = number;
 			/** @todo should we add a delta? */
 			if (number == integer)
@@ -210,19 +211,19 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuNode
  * @brief Check if an expression is true
  * @return True if the expression is true
  */
-qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t *source)
+qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallContext_t *context)
 {
 	if (expression == NULL)
 		return qfalse;
 
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
-		return MN_GetFloatFromExpression (expression, source) != 0;
+		return MN_GetFloatFromExpression(expression, context) != 0;
 
 	case EA_OPERATOR_BOOLEAN2BOOLEAN:
 		{
-			const qboolean value1 = MN_GetBooleanFromExpression(expression->d.nonTerminal.left, source);
-			const qboolean value2 = MN_GetBooleanFromExpression(expression->d.nonTerminal.right, source);
+			const qboolean value1 = MN_GetBooleanFromExpression(expression->d.nonTerminal.left, context);
+			const qboolean value2 = MN_GetBooleanFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_AND:
@@ -241,8 +242,8 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 
 	case EA_OPERATOR_FLOAT2BOOLEAN:
 		{
-			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, source);
-			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, source);
+			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, context);
+			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_EQ:
@@ -271,15 +272,15 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuNode_t
 			assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
 			cvarName = e->d.terminal.d1.string;
 			if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
-				cvarName = MN_GenInjectedString(source, qtrue, cvarName, qfalse);
+				cvarName = MN_GenInjectedString(cvarName, qfalse, context);
 			return Cvar_FindVar(cvarName) != NULL;
 		}
 		break;
 
 	case EA_OPERATOR_STRING2BOOLEAN:
 		{
-			const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, source);
-			const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, source);
+			const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, context);
+			const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_STR_EQ:
@@ -411,7 +412,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 			/* do we ALREADY know this node? and his type */
 			MN_ReadNodePath(path, source, &node, &property);
 			if (!node)
-				Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", path);
+				Com_Printf("MN_ParseSetAction: node \"%s\" not yet known (in event), you can try to cast it\n", path);
 		}
 
 		if (property && property->type) {
@@ -422,9 +423,9 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	}
 
 	/* unsigned and signed number */
-	if ( (token[0] >= '0' && token[0] <= '9')
-		|| (token[0] == '-' && token[1] >= '0' && token[1] <= '9') ) {
-		/* @todo use a better check */
+	if ((token[0] >= '0' && token[0] <= '9')
+		|| (token[0] == '-' && token[1] >= '0' && token[1] <= '9')) {
+		/** @todo use a better check - e.g. Com_ParseValue with V_INT or V_FLOAT */
 		float f = atof(token);
 		expression->d.terminal.d1.number = f;
 		expression->type = EA_VALUE_FLOAT;

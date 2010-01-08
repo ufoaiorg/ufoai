@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_particle.h"
+#include "../../../../renderer/r_mesh.h"
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorshoot.h"
 
@@ -102,6 +103,64 @@ static void CL_ActorHit (const le_t * le, vec3_t impact, int normal)
 }
 
 /**
+ * @brief Calculates the muzzle for the current weapon the actor is shooting with
+ * @param[in] actor The actor that is shooting. Might not be @c NULL
+ * @param[out] muzzle The muzzle vector to spawn the particle at. Might not be @c NULL. This is not
+ * modified if there is no tag for the muzzle found for the weapon or item the actor has
+ * in the hand (also see the given shoot type)
+ * @param[in] shootType The shoot type to determine which tag of the actor should be used
+ * to resolve the world coordinates. Also used to determine which item (or better which hand)
+ * should be used to resolve the actor's item.
+ */
+static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t shootType)
+{
+#if 0
+	const struct model_s *model;
+	const char *tag;
+	const float *shooterTag, *muzzleTag;
+	float matrix[16], mc[16];
+	const objDef_t* od;
+	const invList_t *invlistWeapon;
+
+	if (IS_SHOT_RIGHT(shootType)) {
+		tag = "tag_rweapon";
+		invlistWeapon = RIGHT(actor);
+	} else {
+		tag = "tag_lweapon";
+		invlistWeapon = LEFT(actor);
+	}
+
+	if (!invlistWeapon || !invlistWeapon->item.t)
+		return;
+
+	od = invlistWeapon->item.t;
+
+	model = cls.modelPool[od->idx];
+	if (!model)
+		Com_Error(ERR_DROP, "Model for item %s is not precached", od->id);
+
+	/* not every weapon has a muzzle tag assigned */
+	muzzleTag = R_GetTagMatrix(model, "tag_muzzle");
+	if (!muzzleTag)
+		return;
+
+	shooterTag = R_GetTagMatrix(actor->model1, tag);
+	if (!shooterTag)
+		Com_Error(ERR_DROP, "Could not find tag %s for actor model %s", tag, actor->model1->name);
+
+	GLMatrixAssemble(actor->origin, actor->angles, mc);
+	GLMatrixMultiply(mc, shooterTag, matrix);
+	GLMatrixMultiply(matrix, muzzleTag, mc);
+
+	muzzle[0] = mc[12];
+	muzzle[1] = -mc[13];
+	muzzle[2] = mc[14];
+
+	CL_ParticleSpawn("debug_marker", 0, muzzle, NULL, NULL);
+#endif
+}
+
+/**
  * @brief Shoot with weapon.
  * @sa CL_ActorShoot
  * @sa CL_ActorShootHidden
@@ -136,6 +195,8 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
+	CL_ActorGetMuzzle(leShooter, muzzle, shootType);
+
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 
@@ -151,24 +212,23 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	if (!leShooter)
 		return; /* maybe hidden or inuse is false? */
 
-	if (!LE_IsActor(leShooter)) {
-		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", leShooter->type);
-		return;
-	}
+	if (!LE_IsActor(leShooter))
+		Com_Error(ERR_DROP, "Can't shoot, LE not an actor (type: %i)", leShooter->type);
 
 	/* no animations for hidden actors */
 	if (leShooter->type == ET_ACTORHIDDEN)
 		return;
 
-	/** Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead :)
-	 * Don't do it if it's a stun-attack though.
-	 * @todo Special particles for stun attack (mind you that there is electrical and gas/chemical stunning)? */
-	if ((flags & SF_BODY) && fd->obj->dmgtype != csi.damStunGas) {	/**< @todo && !(flags & SF_BOUNCED) ? */
-		CL_ActorHit(leShooter, impact, normal);
+	/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
+	if (flags & SF_BODY) {
+		/** @todo Special particles for stun attack (mind you that there is
+		 * electrical and gas/chemical stunning)? */
+		if (fd->obj->dmgtype != csi.damStunGas)
+			CL_ActorHit(leShooter, impact, normal);
 	}
 
 	if (LE_IsDead(leShooter)) {
-		Com_Printf("Can't shoot, actor dead or stunned.\n");
+		Com_DPrintf(DEBUG_CLIENT, "Can't shoot, actor dead or stunned.\n");
 		return;
 	}
 

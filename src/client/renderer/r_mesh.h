@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_MESH_H
 
 void R_DrawModelDirect(modelInfo_t *mi, modelInfo_t *pmi, const char *tagname);
+void R_ModelAutoScale(const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center);
 const float* R_GetTagMatrix(const model_t* mod, const char* tagName);
 
 #endif

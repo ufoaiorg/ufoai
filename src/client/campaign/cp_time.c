@@ -97,7 +97,7 @@ void CL_GameTimeStop (void)
  */
 static qboolean CL_AllowTimeScale (void)
 {
-	const char *menuName = MN_GetActiveMenuName();
+	const char *menuName = MN_GetActiveWindowName();
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the ccs.numBases values is pointless here */

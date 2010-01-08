@@ -76,7 +76,7 @@ static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	if (y + node->root->size[1] > viddef.virtualHeight)
 		y = viddef.virtualHeight - node->root->size[1];
 
-	MN_SetNewMenuPos(node->root, x, y);
+	MN_SetNewWindowPos(node->root, x, y);
 }
 
 void MN_RegisterControlsNode (nodeBehaviour_t *behaviour)

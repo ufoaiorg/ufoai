@@ -57,13 +57,8 @@ static const value_t optionProperties[] = {
 static const value_t menuModelProperties[] = {
 	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
-	{"menutransform", V_NULL, 0, 0},
 	{"anim", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, anim), 0},
 	{"skin", V_INT, offsetof(menuModel_t, skin), sizeof(int)},
-	{"origin", V_VECTOR, offsetof(menuModel_t, origin), sizeof(vec3_t)},
-	{"center", V_VECTOR, offsetof(menuModel_t, center), sizeof(vec3_t)},
-	{"scale", V_VECTOR, offsetof(menuModel_t, scale), sizeof(vec3_t)},
-	{"angles", V_VECTOR, offsetof(menuModel_t, angles), sizeof(vec3_t)},
 	{"color", V_COLOR, offsetof(menuModel_t, color), sizeof(vec4_t)},
 	{"tag", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, tag), 0},
 	{"parent", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, parent), 0},
@@ -202,8 +197,10 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
 		return qfalse;
-	if (strcmp(*token, "=") != 0)
-		Com_UnParseLastToken();
+	if (strcmp(*token, "=") != 0) {
+		Com_Printf("MN_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, MN_GetPath(menuNode));
+		return qfalse;
+	}
 
 	/* get the value */
 	if (type == EA_VALUE_CVARNAME || type == EA_VALUE_CVARNAME_WITHINJECTION) {
@@ -805,7 +802,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const char **token)
 {
 	menuAction_t **action;
-	assert (node->behaviour->isFunction);
+	assert(node->behaviour->isFunction);
 
 	action = &node->onClick;
 	*action = MN_ParseActionList(node, text, token);
@@ -860,7 +857,6 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 		}
 
 		/* find the property */
-
 		val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 		if (!val) {
 			/* unknown token, print message and continue */
@@ -1009,7 +1005,7 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 	}
 
 	/* test if node already exists */
-	/** Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
+	/* Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
 	if (parent)
 		node = MN_GetNode(parent, *token);
 
@@ -1055,74 +1051,6 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 		node->behaviour->loaded(node);
 
 	return node;
-}
-
-/**
- * @brief Parse menu transform
- */
-static qboolean MN_ParseMenuTransform (menuModel_t *menuModel, const char **text, const char **token, const char *errhead)
-{
-	*token = Com_EParse(text, errhead, menuModel->id);
-	if (!*text)
-		return qfalse;
-	if (*token[0] != '{') {
-		Com_Printf("Error in menumodel '%s' menutransform definition\n", menuModel->id);
-		return qfalse;
-	}
-	do {
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}')
-			break;
-		menuModel->menuTransform[menuModel->menuTransformCnt].menuID = Mem_PoolStrDup(*token, mn_sysPool, 0);
-
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}') {
-			Com_Printf("Error in menumodel '%s' menutransform definition - missing scale float value\n", menuModel->id);
-			break;
-		}
-		if (*token[0] == '#') {
-			menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qfalse;
-		} else {
-			Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].scale, *token, V_VECTOR, 0, sizeof(vec3_t));
-			menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qtrue;
-		}
-
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}') {
-			Com_Printf("Error in menumodel '%s' menutransform definition - missing angles float value\n", menuModel->id);
-			break;
-		}
-		if (*token[0] == '#') {
-			menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qfalse;
-		} else {
-			Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].angles, *token, V_VECTOR, 0, sizeof(vec3_t));
-			menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qtrue;
-		}
-
-		*token = Com_EParse(text, errhead, menuModel->id);
-		if (!*text)
-			return qfalse;
-		if (*token[0] == '}') {
-			Com_Printf("Error in menumodel '%s' menutransform definition - missing origin float value\n", menuModel->id);
-			break;
-		}
-		if (*token[0] == '#') {
-			menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qfalse;
-		} else {
-			Com_EParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].origin, *token, V_VECTOR, 0, sizeof(vec3_t));
-			menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qtrue;
-		}
-
-		menuModel->menuTransformCnt++;
-	} while (*token[0] != '}'); /* dummy condition - break is earlier here */
-
-	return qtrue;
 }
 
 /**
@@ -1189,11 +1117,6 @@ void MN_ParseMenuModel (const char *name, const char **text)
 				if (!menuModel->next)
 					Com_Printf("Could not find menumodel %s", token);
 				menuModel->need = Mem_PoolStrDup(token, mn_sysPool, 0);
-			} else if (!strcmp(v->string, "menutransform")) {
-				qboolean result;
-				result = MN_ParseMenuTransform (menuModel, text, &token, errhead);
-				if (!result)
-					return;
 			}
 		} else {
 			token = Com_EParse(text, errhead, name);
@@ -1315,8 +1238,8 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		Com_Printf("MN_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
-	if (mn.numWindows >= MAX_MENUS) {
-		Com_Error(ERR_FATAL, "MN_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_MENUS, name);
+	if (mn.numWindows >= MAX_WINDOWS) {
+		Com_Error(ERR_FATAL, "MN_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_WINDOWS, name);
 		return;	/* never reached */
 	}
 
@@ -1327,7 +1250,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 	if (!strcmp(token, "extends")) {
 		menuNode_t *superMenu;
 		token = Com_Parse(text);
-		superMenu = MN_GetMenu(token);
+		superMenu = MN_GetWindow(token);
 		if (superMenu == NULL)
 			Sys_Error("Could not get the super menu %s", token);
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
@@ -1338,7 +1261,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		menu->behaviour->loading(menu);
 	}
 
-	MN_InsertMenu(menu);
+	MN_InsertWindow(menu);
 
 	/* parse it's body */
 	result = MN_ParseNodeBody(menu, text, &token, errhead);

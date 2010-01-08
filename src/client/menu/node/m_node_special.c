@@ -81,6 +81,20 @@ static void MN_ConfuncCommand_f (void)
 }
 
 /**
+ * @brief Checks whether the given node is a virtual confunc that can be overridden from inheriting nodes.
+ * @param node The node to check (must be a confunc node).
+ * @return @c true if the given node is a dummy node, @c false otherwise.
+ */
+static qboolean MN_ConFuncIsVirtual (const menuNode_t *const node)
+{
+	/* magic way to know if it is a dummy node (used for inherited confunc) */
+	const menuNode_t *dummy = (const menuNode_t*) Cmd_GetUserdata(node->name);
+	assert(node);
+	assert(MN_NodeInstanceOf(node, "confunc"));
+	return (dummy != NULL && dummy->parent == NULL);
+}
+
+/**
  * @brief Call after the script initialized the node
  */
 static void MN_ConFuncNodeLoaded (menuNode_t *node)
@@ -94,18 +108,47 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 		} else {
 			Com_Printf("MN_ParseNodeBody: Command name for confunc '%s' already registered\n", MN_GetPath(node));
 		}
+	} else {
+		menuNode_t *dummy;
+
+		/* convert a confunc to an "inherited" confunc if it is possible */
+		if (Cmd_Exists(node->name)) {
+			if (MN_ConFuncIsVirtual(node))
+				return;
+		}
+
+		dummy = MN_AllocStaticNode(node->name, "confunc");
+		Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Inherited confunc callback");
+		Cmd_AddUserdata(dummy->name, dummy);
+	}
+}
+
+static void MN_ConFuncNodeClone (const menuNode_t *source, menuNode_t *clone)
+{
+	MN_ConFuncNodeLoaded(clone);
+}
+
+/**
+ * @brief Callback every time the parent window is opened (pushed into the active window stack)
+ */
+static void MN_ConFuncNodeInit (menuNode_t *node)
+{
+	if (MN_ConFuncIsVirtual(node)) {
+		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
+		menuNode_t *userData = (menuNode_t*) Cmd_GetUserdata(node->name);
+		MN_AddListener(userData, property, node);
 	}
 }
 
 /**
- * @brief Callback every time the parent menu is open (pushed into the active menu stack)
+ * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-static void MN_ConFuncNodeInit (menuNode_t *node)
+static void MN_ConFuncNodeClose (menuNode_t *node)
 {
-	/* override confunc only for inherited confunc node */
-	if (node->super) {
-		assert(Cmd_Exists(node->name));
-		Cmd_AddUserdata(node->name, node);
+	if (MN_ConFuncIsVirtual(node)) {
+		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
+		menuNode_t *userData = (menuNode_t*) Cmd_GetUserdata(node->name);
+		MN_RemoveListener(userData, property, node);
 	}
 }
 
@@ -117,6 +160,8 @@ void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
 	behaviour->isFunction = qtrue;
 	behaviour->loaded = MN_ConFuncNodeLoaded;
 	behaviour->init = MN_ConFuncNodeInit;
+	behaviour->close = MN_ConFuncNodeClose;
+	behaviour->clone = MN_ConFuncNodeClone;
 }
 
 void MN_RegisterCvarFuncNode (nodeBehaviour_t *behaviour)

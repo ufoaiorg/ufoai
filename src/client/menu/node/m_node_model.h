@@ -30,21 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_MENUMODELS		128
 
-/* max menuscale values */
-#define MAX_MENUMODELS_SCALEMENUS 8
-typedef struct menuTransform_s {
-	char *menuID;		/**< The menu id wher ethe model should use these values. */
-	void *menuPtr;		/**< Linked after parsing for faster access */
-
-	qboolean useScale;	/**< Is the scale value used? */
-	qboolean useAngles;	/**< Is the angles value used? */
-	qboolean useOrigin;	/**< Is the origin value used? */
-
-	vec3_t scale;		/**< Scale values to be used instead of the ones defined in the menu */
-	vec3_t angles;		/**< Angle values to be used instead of the ones defined in the menu */
-	vec3_t origin;		/**< The _relative_ offset on the screen. It is added to the "origin" value defined in the menu (-file). */
-} menuTransform_t;
-
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {
 	char *id;
@@ -54,10 +39,8 @@ typedef struct menuModel_s {
 	char *tag;	/**< the tag the model should placed onto */
 	int skin;		/**< skin number to use - default 0 (first skin) */
 	char *model;
-	menuTransform_t menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< The various transform values for the specific menu */
-	int menuTransformCnt;			/**< Nubmer of parsed menutransform menus. */
 	animState_t animState;
-	vec3_t origin, scale, angles, center;
+	vec3_t origin, scale, angles, center;	/**< to cache the calculated values */
 	vec4_t color;				/**< rgba */
 	struct menuModel_s *next;
 } menuModel_t;

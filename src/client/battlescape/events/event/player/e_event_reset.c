@@ -49,6 +49,8 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 		MN_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
 	}
 
+	CL_CompleteRecalcRouting();
+
 	if (cls.team == cl.actTeam)
 		MN_ExecuteConfunc("startround");
 	else

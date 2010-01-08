@@ -329,6 +329,7 @@ static char retAnim[MAX_VAR];
 
 /**
  * @brief Get the correct animation for the given actor state and weapons
+ * @param[in] anim Type of animation (for example "stand", "walk")
  * @param[in] right ods index to determine the weapon in the actors right hand
  * @param[in] left ods index to determine the weapon in the actors left hand
  * @param[in] state the actors state - e.g. STATE_CROUCHED (crounched animations)
@@ -1215,23 +1216,20 @@ void LE_Cleanup (void)
 {
 	int i;
 	le_t *le;
-	inventory_t inv;
 
 	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", cl.numLEs);
 	for (i = cl.numLEs - 1, le = &LEs[cl.numLEs - 1]; i >= 0; i--, le--) {
 		if (!le->inuse)
 			continue;
-		switch (le->type) {
-		case ET_ACTOR:
-		case ET_ACTOR2x2:
-			inv = le->i;
+		if (LE_IsActor(le))
 			CL_ActorCleanup(le);
-			break;
-		case ET_ITEM:
+		else if (LE_IsItem(le))
 			INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
-			break;
-		}
+
+		le->inuse = qfalse;
 	}
+
+	memset(LEs, 0, sizeof(LEs));
 }
 
 #ifdef DEBUG

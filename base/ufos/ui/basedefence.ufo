@@ -14,7 +14,7 @@ window basedefence extends objectinfo
 	 * @brief sets available defencetypes
 	 */
 	confunc set_defencetypes {
-		*cvar:mn_cvartmp "<1>"
+		*cvar:mn_cvartmp = "<1>"
 		if ( *cvar:mn_cvartmp eq "enable" ) {
 			cmd "mn_updateoption <path:root>.defencetype missile enable;"
 			cmd "mn_updateoption <path:root>.defencetype missile display;"
@@ -24,7 +24,7 @@ window basedefence extends objectinfo
 		} elif ( *cvar:mn_cvartmp eq "na" ) {
 			cmd "mn_updateoption <path:root>.defencetype missile hide;"
 		}
-		*cvar:mn_cvartmp "<2>"
+		*cvar:mn_cvartmp = "<2>"
 		if ( *cvar:mn_cvartmp eq "enable" ) {
 			cmd "mn_updateoption <path:root>.defencetype laser enable;"
 			cmd "mn_updateoption <path:root>.defencetype laser display;"
@@ -76,20 +76,20 @@ window basedefence extends objectinfo
 		/* @todo: We should check if the slot is empty but can't do from here */
 		confunc update_buttons {
 			if ( *node:(text)parent.slots.slotlist@lineselected < 0 ) {
-				*node:parent.bt_add@disabled true
-				*node:parent.bt_remove@disabled true
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = true
 			} elif ( *node:(text)parent.slots.slotlist@lineselected >= *node:(text)parent.slots.slotlist@lines ) {
-				*node:parent.bt_add@disabled true
-				*node:parent.bt_remove@disabled true
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = true
 			} elif ( *node:(text)parent.store.storelist@lineselected < 0 ) {
-				*node:parent.bt_add@disabled true
-				*node:parent.bt_remove@disabled false
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = false
 			} elif ( *node:(text)parent.store.storelist@lineselected >= *node:(text)parent.store.storelist@lines ) {
-				*node:parent.bt_add@disabled true
-				*node:parent.bt_remove@disabled false
+				*node:parent.bt_add@disabled = true
+				*node:parent.bt_remove@disabled = false
 			} else {
-				*node:parent.bt_add@disabled false
-				*node:parent.bt_remove@disabled false
+				*node:parent.bt_add@disabled = false
+				*node:parent.bt_remove@disabled = false
 			}
 		}
 
@@ -252,33 +252,33 @@ window basedefence extends objectinfo
 			model item_model
 			{
 				model		*cvar:mn_upmodel_top
+				angles		"-10 160 70"
 				pos			"10 50"
-				size		"314 100"
+				size		"314 140"
 			}
 
 			text description
 			{
 				dataid		TEXT_ITEMDESCRIPTION
-				pos			"10 155"
-				size		"284 120"
+				pos			"10 195"
+				size		"284 80"
 				lineheight	20
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
-				rows		"6"
 				onViewChange {
-					*node:(abstractscrollbar)parent.description_scroll@fullsize <fullsize>
-					*node:(abstractscrollbar)parent.description_scroll@current <viewpos>
-					*node:(abstractscrollbar)parent.description_scroll@viewsize <viewsize>
+					*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
+					*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar description_scroll
 			{
 				image		ui/scrollbar_v_green
-				pos			"304 155"
-				height		"120"
+				pos			"304 195"
+				height		"80"
 				current		0
-				viewsize	6
-				fullsize	6
+				viewsize	4
+				fullsize	4
 				hidewhenunused	true
 				onChange	{ *node:parent.description@viewpos = <current> }
 			}
@@ -390,11 +390,11 @@ window basedefence extends objectinfo
 	confunc setautofire	{
 		*cvar:tmp = <1>
 		if ( *cvar:tmp eq "disable" ) {
-			*node:root.infopanel.autofire@current 0
-			*node:root.infopanel.autofire@disabled true
+			*node:root.infopanel.autofire@current = 0
+			*node:root.infopanel.autofire@disabled = true
 		} else {
-			*node:root.infopanel.autofire@current <cvar:tmp>
-			*node:root.infopanel.autofire@disabled false
+			*node:root.infopanel.autofire@current = <cvar:tmp>
+			*node:root.infopanel.autofire@disabled = false
 		}
 		delete *cvar:tmp	
 	}

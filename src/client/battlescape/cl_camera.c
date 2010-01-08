@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_view.h"
 #include "../input/cl_input.h"
+#include "events/e_parse.h"
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
@@ -77,10 +78,14 @@ static inline void CL_ClampCamToMap (const float border)
 		cl.cam.origin[1] = mapMax[1] + border;
 }
 
+/**
+ * @brief Update the camera position. This can be done in two different reasons. The first is the user input, the second
+ * is an active camera route. The camera route overrides the user input and is lerping the movement until the final position
+ * is reached.
+ */
 void CL_CameraMove (void)
 {
 	float frac;
-	vec3_t g_forward, g_right, g_up;
 	vec3_t delta;
 	int i;
 
@@ -143,8 +148,11 @@ void CL_CameraMove (void)
 		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - 200) {
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
-			if (DotProduct(delta, routeDelta) < 0.05)
+			if (DotProduct(delta, routeDelta) < 0.05) {
 				cameraRoute = qfalse;
+
+				CL_BlockBattlescapeEvents(qfalse);
+			}
 		} else
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
 	} else {
@@ -153,6 +161,7 @@ void CL_CameraMove (void)
 		const float angle = cl.cam.angles[YAW] * torad;
 		const float sy = sin(angle);
 		const float cy = cos(angle);
+		vec3_t g_forward, g_right, g_up;
 
 		VectorSet(g_forward, cy, sy, 0.0);
 		VectorSet(g_right, sy, -cy, 0.0);
@@ -248,8 +257,13 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 
 	VectorClear(cl.cam.speed);
 	cameraRoute = qtrue;
+
+	CL_BlockBattlescapeEvents(qtrue);
 }
 
+/**
+ * @brief Zooms the scene of the battlefield in
+ */
 void CL_CameraZoomIn (void)
 {
 	float quant;
@@ -270,6 +284,9 @@ void CL_CameraZoomIn (void)
 	V_CalcFovX();
 }
 
+/**
+ * @brief Zooms the scene of the battlefield out
+ */
 void CL_CameraZoomOut (void)
 {
 	float quant;

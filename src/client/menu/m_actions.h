@@ -168,15 +168,31 @@ typedef struct menuAction_s {
 /* prototype */
 struct menuNode_s;
 
+/**
+ * @brief Contain the context of the calling of a function
+ */
+typedef struct menuCallContext_s {
+	/** node owning the action */
+	const struct menuNode_s* source;
+	/** is the function can use param from command line */
+	qboolean useCmdParam;
+} menuCallContext_t;
+
+
 void MN_ExecuteEventActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 qboolean MN_IsInjectedString(const char *string);
 void MN_FreeStringProperty(void* pointer);
-const char* MN_GenInjectedString(const struct menuNode_s* source, qboolean useCmdParam, const char* input, qboolean addNewLine);
+const char* MN_GenInjectedString(const char* input, qboolean addNewLine, const menuCallContext_t *context);
 int MN_GetActionTokenType(const char* token, int group);
 
 void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
 menuAction_t* MN_AllocStaticCommandAction(char *command);
 void MN_InitActions(void);
+void MN_AddListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
+void MN_RemoveListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
+
+const char* MN_GetParam(const menuCallContext_t *context, int paramID);
+int MN_GetParamNumber(const menuCallContext_t *context);
 
 #endif

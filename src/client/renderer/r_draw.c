@@ -146,27 +146,42 @@ void R_DrawChars (void)
  * @param[in] height The height of the texture
  * @return the texture number of the uploaded images
  */
-int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
+int R_UploadData (const char *name, byte *frame, int width, int height)
 {
 	image_t *img;
+	unsigned *scaled;
+	int scaledWidth, scaledHeight;
+
+	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
 	img = R_FindImage(name, it_pic);
 	if (img == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not find the searched image: %s", name);
 
-	R_BindTexture(img->texnum);
+	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
+		scaled = (unsigned *)Mem_PoolAllocExt(scaledWidth * scaledHeight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+		R_ScaleTexture((unsigned *)frame, width, height, scaled, scaledWidth, scaledHeight);
+	} else {
+		scaled = (unsigned *)frame;
+	}
 
-	if (img->width == width && img->height == height) {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+	R_BindTexture(img->texnum);
+	if (img->upload_width == scaledWidth && img->upload_height == scaledHeight) {
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, scaledWidth, scaledHeight, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	} else {
 		/* Reallocate the texture */
 		img->width = width;
 		img->height = height;
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+		img->upload_width = scaledWidth;
+		img->upload_height = scaledHeight;
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	}
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
+
+	if (scaled != (unsigned *)frame)
+		Mem_Free(scaled);
 
 	return img->texnum;
 }
@@ -677,7 +692,8 @@ void R_DrawPolygon (int points, int *verts)
 void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model, int skin)
 {
 	modelInfo_t mi;
-	vec3_t model_center;
+	vec2_t size;
+	vec3_t scale, center;
 
 	memset(&mi, 0, sizeof(mi));
 
@@ -686,17 +702,14 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 		Com_Printf("Could not find model '%s'\n", model);
 		return;
 	}
-	mi.name = model;
 
+	mi.name = model;
 	mi.origin = position;
 	mi.angles = angles;
-	mi.scale = NULL;
 	mi.skin = skin;
 
-	model_center[0] = MARKER_SIZE * zoom;
-	model_center[1] = MARKER_SIZE * zoom;
-	model_center[2] = MARKER_SIZE * zoom; /** @todo */
-	mi.center = model_center;
+	size[0] = size[1] = MARKER_SIZE * zoom;
+	R_ModelAutoScale(size, &mi, scale, center);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 }

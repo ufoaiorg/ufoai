@@ -1333,6 +1333,7 @@ void CP_StartSelectedMission (void)
 	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
+	Cvar_SetValue("mn_autogo", 0);
 
 	/* manage inventory */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
@@ -1514,7 +1515,7 @@ void CL_GameAutoGo (mission_t *mis)
 		winProbability = CP_GetWinProbabilty(mis, (base_t *)mis->data, NULL);
 	}
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 
 	won = frand() < winProbability;
 
@@ -1540,7 +1541,8 @@ void CL_GameAutoGo (mission_t *mis)
 		counts[MRC_ALIENS_KILLED] = ccs.battleParameters.aliens;
 		counts[MRC_CIVILIAN_SURVIVOR] = ccs.battleParameters.civilians;
 		CP_InitMissionResults(counts, won);
-		MN_PushMenu("won", NULL);
+		Cvar_SetValue("mn_autogo", 1);
+		MN_PushWindow("won", NULL);
 	}
 
 	/* handle base attack mission */
@@ -1807,7 +1809,6 @@ static const cmdList_t game_commands[] = {
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
 	{"game_settimeid", CL_SetGameTime_f, NULL},
-	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, NULL},
 	{"map_scroll", MAP_Scroll_f, NULL},

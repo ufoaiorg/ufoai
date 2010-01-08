@@ -40,37 +40,37 @@ window objectinfo
 		*cvar:mn_numfiremodes = <2>
 
 		if ( *cvar:mn_numweapons > 0 ) {
-			*node:this.parent.itemdescription.header_item@invis false
-			*node:this.parent.itemdescription.item_name@invis false
+			*node:this.parent.itemdescription.header_item@invis = false
+			*node:this.parent.itemdescription.item_name@invis = false
 			if ( *cvar:mn_numweapons > 1 ) {
-				*node:this.parent.itemdescription.action_dec@invis false
-				*node:this.parent.itemdescription.action_inc@invis false
+				*node:this.parent.itemdescription.action_dec@invis = false
+				*node:this.parent.itemdescription.action_inc@invis = false
 			} else {
-				*node:this.parent.itemdescription.action_dec@invis true
-				*node:this.parent.itemdescription.action_inc@invis true
+				*node:this.parent.itemdescription.action_dec@invis = true
+				*node:this.parent.itemdescription.action_inc@invis = true
 			}
 		} else {
-			*node:this.parent.itemdescription.header_item@invis true
-			*node:this.parent.itemdescription.item_name@invis true
-			*node:this.parent.itemdescription.action_dec@invis true
-			*node:this.parent.itemdescription.action_inc@invis true
+			*node:this.parent.itemdescription.header_item@invis = true
+			*node:this.parent.itemdescription.item_name@invis = true
+			*node:this.parent.itemdescription.action_dec@invis = true
+			*node:this.parent.itemdescription.action_inc@invis = true
 		}
 
 		if ( *cvar:mn_numfiremodes > 0 ) {
-			*node:this.parent.itemdescription.header_firemode@invis false
-			*node:this.parent.itemdescription.firemode_name@invis false
+			*node:this.parent.itemdescription.header_firemode@invis = false
+			*node:this.parent.itemdescription.firemode_name@invis = false
 			if ( *cvar:mn_numfiremodes > 1 ) {
-				*node:this.parent.itemdescription.firemode_dec@invis false
-				*node:this.parent.itemdescription.firemode_inc@invis false
+				*node:this.parent.itemdescription.firemode_dec@invis = false
+				*node:this.parent.itemdescription.firemode_inc@invis = false
 			} else {
-				*node:this.parent.itemdescription.firemode_dec@invis true
-				*node:this.parent.itemdescription.firemode_inc@invis true
+				*node:this.parent.itemdescription.firemode_dec@invis = true
+				*node:this.parent.itemdescription.firemode_inc@invis = true
 			}
 		} else {
-			*node:this.parent.itemdescription.header_firemode@invis true
-			*node:this.parent.itemdescription.firemode_name@invis true
-			*node:this.parent.itemdescription.firemode_dec@invis true
-			*node:this.parent.itemdescription.firemode_inc@invis true
+			*node:this.parent.itemdescription.header_firemode@invis = true
+			*node:this.parent.itemdescription.firemode_name@invis = true
+			*node:this.parent.itemdescription.firemode_dec@invis = true
+			*node:this.parent.itemdescription.firemode_inc@invis = true
 		}
 
 		delete *cvar:mn_numweapons

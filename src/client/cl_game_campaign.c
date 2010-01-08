@@ -232,13 +232,12 @@ static void GAME_CP_Start_f (void)
 	CP_CampaignInit(campaign, qfalse);
 
 	/* Intro sentences */
-	Cbuf_AddText("seq_start intro;\n");
+	Cbuf_AddText("seq_start intro\n");
 }
 
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	int i, j;
-	/** @todo remove standalone ints if possible */
 	int our_survivors, our_killed, our_stunned;
 	int their_survivors, their_killed, their_stunned;
 	int civilian_survivors, civilian_killed, civilian_stunned;
@@ -283,10 +282,11 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	else
 		civilian_killed += civilian_stunned;
 
-	/* loot the battlefield */
-	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);				/**< Collect items from the battlefield. */
+	/* Collect items from the battlefield. */
+	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);
 	if (winner == cls.team)
-		AL_CollectingAliens(ccs.missionAircraft);	/**< Collect aliens from the battlefield. */
+		/* Collect aliens from the battlefield. */
+		AL_CollectingAliens(ccs.missionAircraft);
 
 	ccs.aliensKilled += their_killed;
 
@@ -309,12 +309,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
-		MN_PushMenu("won", NULL);
+		MN_PushWindow("won", NULL);
 	} else
-		MN_PushMenu("lost", NULL);
+		MN_PushWindow("lost", NULL);
 
-	SV_Shutdown("Mission end", qfalse);
 	CL_Disconnect();
+	SV_Shutdown("Mission end", qfalse);
 }
 
 qboolean GAME_CP_Spawn (void)
@@ -395,6 +395,21 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
 		Cvar_Set("mn_chrrank", buf);
 		Cvar_Set("mn_chrrank_img", rank->image);
+	}
+}
+
+void GAME_CP_DisplayItemInfo (menuNode_t *node, const char *string)
+{
+	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
+	if (aircraft) {
+		assert(aircraft->tech);
+		MN_DrawModelNode(node, aircraft->tech->mdl);
+	} else {
+		const technology_t *tech = RS_GetTechByProvided(string);
+		if (tech)
+			MN_DrawModelNode(node, tech->mdl);
+		else
+			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", string);
 	}
 }
 

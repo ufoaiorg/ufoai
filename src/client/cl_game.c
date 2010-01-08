@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game.h"
 #include "battlescape/cl_localentity.h"
 #include "menu/m_main.h"
+#include "menu/m_nodes.h"
 #include "cl_team.h"
 #include "battlescape/events/e_main.h"
 #include "cl_inventory.h"
@@ -48,6 +49,8 @@ typedef struct gameTypeList_s {
 	void (*results)(struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 	/** check whether the given item is usable in the current game mode */
 	qboolean (*itemIsUseable)(const objDef_t *od);
+	/** shows item info if not resolvable via objDef_t */
+	void (*displayiteminfo)(menuNode_t *node, const char *string);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t * (*getequipdef)(void);
 	/** update character display values for game type dependent stuff */
@@ -59,9 +62,9 @@ typedef struct gameTypeList_s {
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -113,6 +116,18 @@ void GAME_RestartMode (int gametype)
 	GAME_SetMode(gametype);
 }
 
+/**
+ * @brief Shows game type specific item information (if it's not resolvable via @c objDef_t).
+ * @param[in] node The menu node to show the information in.
+ * @param[in] string The id of the 'thing' to show information for.
+ */
+void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
+{
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list != NULL && list->displayiteminfo)
+		list->displayiteminfo(node, string);
+}
+
 void GAME_SetMode (int gametype)
 {
 	const gameTypeList_t *list = gameTypeList;
@@ -131,11 +146,13 @@ void GAME_SetMode (int gametype)
 		list->shutdown();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
-		if (!MN_IsMenuOnStack("main"))
+		if (!MN_IsWindowOnStack("main"))
 			MN_InitStack("main", "", qtrue, qtrue);
 	}
 
 	cls.gametype = gametype;
+
+	CL_Disconnect();
 
 	list = GAME_GetCurrentType();
 	if (list) {
@@ -144,8 +161,6 @@ void GAME_SetMode (int gametype)
 		INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initialized */
 		list->init();
 	}
-
-	CL_Disconnect();
 }
 
 /**
@@ -265,7 +280,7 @@ static void GAME_SetMode_f (void)
 	if (Cmd_Argc() == 2)
 		modeName = Cmd_Argv(1);
 	else
-		modeName = MN_GetActiveMenuName();
+		modeName = MN_GetActiveWindowName();
 
 	if (modeName[0] == '\0')
 		return;
@@ -335,6 +350,54 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 }
 
 /**
+ * @brief Send the character information to the server that is needed to spawn the soldiers of the player.
+ * @param buf The net channel buffer to write the character data into.
+ * @param chr The character to get the data from.
+ */
+static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
+{
+	int j;
+
+	if (!chr)
+		Com_Error(ERR_DROP, "No character given");
+	if (chr->fieldSize != ACTOR_SIZE_2x2 && chr->fieldSize != ACTOR_SIZE_NORMAL)
+		Com_Error(ERR_DROP, "Invalid character size given for character '%s'", chr->name);
+	if (chr->teamDef == NULL)
+		Com_Error(ERR_DROP, "Character with no teamdef set (%s)", chr->name);
+
+	NET_WriteByte(buf, chr->fieldSize);
+	NET_WriteShort(buf, chr->ucn);
+	NET_WriteString(buf, chr->name);
+
+	/* model */
+	NET_WriteString(buf, chr->path);
+	NET_WriteString(buf, chr->body);
+	NET_WriteString(buf, chr->head);
+	NET_WriteByte(buf, chr->skin);
+
+	NET_WriteShort(buf, chr->HP);
+	NET_WriteShort(buf, chr->maxHP);
+	NET_WriteByte(buf, chr->teamDef->idx);
+	NET_WriteByte(buf, chr->gender);
+	NET_WriteByte(buf, chr->STUN);
+	NET_WriteByte(buf, chr->morale);
+
+	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+		NET_WriteLong(buf, chr->score.experience[j]);
+	for (j = 0; j < SKILL_NUM_TYPES; j++)
+		NET_WriteByte(buf, chr->score.skills[j]);
+	for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+		NET_WriteByte(buf, chr->score.initialSkills[j]);
+	for (j = 0; j < KILLED_NUM_TYPES; j++)
+		NET_WriteShort(buf, chr->score.kills[j]);
+	for (j = 0; j < KILLED_NUM_TYPES; j++)
+		NET_WriteShort(buf, chr->score.stuns[j]);
+	NET_WriteShort(buf, chr->score.assignedMissions);
+
+	NET_WriteShort(buf, chr->state);
+}
+
+/**
  * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
  * @sa G_ClientTeamInfo
  * @sa MP_SaveTeamMultiplayerInfo
@@ -342,7 +405,7 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
  */
 static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *team)
 {
-	int i, j;
+	int i;
 
 	/* header */
 	NET_WriteByte(buf, clc_teaminfo);
@@ -351,49 +414,9 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 	Com_DPrintf(DEBUG_CLIENT, "GAME_SendCurrentTeamSpawningInfo: Upload information about %i soldiers to server\n", team->num);
 	for (i = 0; i < team->num; i++) {
 		character_t *chr = team->chr[i];
-		assert(chr);
-		assert(chr->fieldSize > 0);
-		/* send the fieldSize ACTOR_SIZE_* */
-		NET_WriteByte(buf, chr->fieldSize);
 
-		/* unique character number */
-		NET_WriteShort(buf, chr->ucn);
+		GAME_NetSendCharacter(buf, chr);
 
-		/* name */
-		NET_WriteString(buf, chr->name);
-
-		/* model */
-		NET_WriteString(buf, chr->path);
-		NET_WriteString(buf, chr->body);
-		NET_WriteString(buf, chr->head);
-		NET_WriteByte(buf, chr->skin);
-
-		NET_WriteShort(buf, chr->HP);
-		NET_WriteShort(buf, chr->maxHP);
-		if (chr->teamDef == NULL)
-			Com_Error(ERR_DROP, "Character with no teamdef set");
-		NET_WriteByte(buf, chr->teamDef->idx);
-		NET_WriteByte(buf, chr->gender);
-		NET_WriteByte(buf, chr->STUN);
-		NET_WriteByte(buf, chr->morale);
-
-		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			NET_WriteLong(buf, chr->score.experience[j]);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			NET_WriteByte(buf, chr->score.skills[j]);
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			NET_WriteByte(buf, chr->score.initialSkills[j]);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->score.kills[j]);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->score.stuns[j]);
-		NET_WriteShort(buf, chr->score.assignedMissions);
-
-		/* Send user-defined (default) reaction-state. */
-		NET_WriteShort(buf, chr->reservedTus.reserveReaction);
-
-		/* inventory */
 		CL_NetSendInventory(buf, &chr->inv);
 	}
 }
@@ -496,8 +519,6 @@ static void GAME_Abort_f (void)
 void GAME_Drop (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-
-	LE_Cleanup();
 
 	if (list) {
 		if (!list->drop) {

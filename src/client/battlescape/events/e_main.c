@@ -116,7 +116,7 @@ const eventRegister_t events[] = {
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL, NULL},
 	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, NULL, NULL},
 	{E(EV_INV_HANDS_CHANGED), "ss", CL_InvCheckHands, NULL, NULL},
-	{E(EV_INV_TRANSFER), "sbsbbbb", NULL, NULL, NULL},
+	{E(EV_INV_TRANSFER), "sbsbbbbs", NULL, NULL, NULL},
 
 	{E(EV_MODEL_EXPLODE), "s", CL_Explode, NULL, NULL},
 	{E(EV_MODEL_EXPLODE_TRIGGERED), "s", CL_Explode, NULL, NULL},

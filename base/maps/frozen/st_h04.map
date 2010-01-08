@@ -490,6 +490,60 @@
 ( 68 220 44 ) ( 68 224 44 ) ( 68 224 64 ) tex_common/nodraw 79 17 0 0.25 0.234375 65280 128 0
 ( 84 220 52 ) ( 32 220 64 ) ( 32 224 64 ) tex_common/nodraw 79 17 0 0.25 0.234375 65280 128 0
 }
+// brush 54
+{
+( 193 95 264 ) ( 191 97 264 ) ( 193 97 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 193 97 264 ) ( 187 101 0 ) ( 197 101 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 193 95 264 ) ( 197 101 0 ) ( 197 91 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 187 91 0 ) ( 197 101 0 ) ( 187 101 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 191 95 264 ) ( 197 91 0 ) ( 187 91 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 187 91 0 ) ( 187 101 0 ) ( 191 95 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+}
+// brush 55
+{
+( 193 95 264 ) ( 191 97 264 ) ( 193 97 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 193 97 264 ) ( 187 101 0 ) ( 197 101 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 193 95 264 ) ( 197 101 0 ) ( 197 91 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 187 91 0 ) ( 197 101 0 ) ( 187 101 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 191 95 264 ) ( 197 91 0 ) ( 187 91 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 187 91 0 ) ( 187 101 0 ) ( 191 95 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+}
+// brush 56
+{
+( 193 95 264 ) ( 191 97 264 ) ( 193 97 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 193 97 264 ) ( 187 101 0 ) ( 197 101 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 193 95 264 ) ( 197 101 0 ) ( 197 91 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 187 91 0 ) ( 197 101 0 ) ( 187 101 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 191 95 264 ) ( 197 91 0 ) ( 187 91 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 187 91 0 ) ( 187 101 0 ) ( 191 95 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+}
+// brush 57
+{
+( 97 63 264 ) ( 95 65 264 ) ( 97 65 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 97 65 264 ) ( 91 69 0 ) ( 101 69 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 97 63 264 ) ( 101 69 0 ) ( 101 59 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 91 59 0 ) ( 101 69 0 ) ( 91 69 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 95 63 264 ) ( 101 59 0 ) ( 91 59 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 91 59 0 ) ( 91 69 0 ) ( 95 63 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+}
+// brush 58
+{
+( 97 63 264 ) ( 95 65 264 ) ( 97 65 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 97 65 264 ) ( 91 69 0 ) ( 101 69 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 97 63 264 ) ( 101 69 0 ) ( 101 59 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 91 59 0 ) ( 101 69 0 ) ( 91 69 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 95 63 264 ) ( 101 59 0 ) ( 91 59 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 91 59 0 ) ( 91 69 0 ) ( 95 63 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+}
+// brush 59
+{
+( 97 63 264 ) ( 95 65 264 ) ( 97 65 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 97 65 264 ) ( 91 69 0 ) ( 101 69 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 97 63 264 ) ( 101 69 0 ) ( 101 59 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 91 59 0 ) ( 101 69 0 ) ( 91 69 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 95 63 264 ) ( 101 59 0 ) ( 91 59 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 91 59 0 ) ( 91 69 0 ) ( 95 63 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+}
 }
 // entity 1
 {
@@ -769,4 +823,84 @@
 "classname" "info_alien_start"
 "angle" "45"
 "origin" "176 336 28"
+}
+// entity 12
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "192 96 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
+}
+// entity 13
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "192 96 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+}
+// entity 14
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "192 96 0"
+"model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
+}
+// entity 15
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "192 96 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
+}
+// entity 16
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "192 96 0"
+"model" "models/objects/vegi/pino/pino2.md2"
+"skin" "0"
+}
+// entity 17
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "96 64 0"
+"model" "models/objects/vegi/pino/pino2.md2"
+"skin" "0"
+}
+// entity 18
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "96 64 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+}
+// entity 19
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "96 64 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
+}
+// entity 20
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "96 64 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
+}
+// entity 21
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "96 64 0"
+"model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
 }

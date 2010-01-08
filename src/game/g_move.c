@@ -228,8 +228,11 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);
-			if (stopOnVisStop && (status & VIS_STOP))
+			if (stopOnVisStop && (status & VIS_STOP)) {
+				/* don't autocrouch if new enemy becomes visible */
+				autoCrouchRequired = qfalse;
 				break;
+			}
 
 			/* decrease TUs */
 			div = gi.TUsUsed(dir);
@@ -367,9 +370,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 			}
 
 			if (stopOnVisStop && (status & VIS_STOP)) {
-				/* if something got visible in mid move that prevents us from walking
-				 * further, we should also not go into crouch mode, but let the decision
-				 * be made by the player to not waste TUs */
+				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;
 			}

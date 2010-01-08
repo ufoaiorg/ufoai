@@ -104,7 +104,8 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 }
 
 /**
- * @brief set correct bounding box for actor (state dependent)
+ * @brief Sets correct bounding box for actor (state dependent).
+ * @param[in] ent Pointer to entity for which bounding box is being set.
  * @note Also re-links the actor edict - because the server must know about the
  * changed bounding box for tracing to work.
  */
@@ -120,7 +121,13 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 
 /**
- * @brief Report and handle death of an actor
+ * @brief Reports and handles death or stun of an actor.
+ * @param[in] ent Pointer to an entity being killed or stunned actor.
+ * @param[in] state Dead or stunned?
+ * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
+ * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
+ * it should drop only what he has in hands? Stunned actor can wake later during mission.
+ * @todo Renameme - stunned actor is not dead actor.
  */
 void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 {
@@ -167,6 +174,25 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 }
 
 /**
+ * @brief Calculates TU reservations for an actor.
+ * @param[in] ent The pointer to the selected edict being soldier.
+ * @return Sum of reserved TUs.
+ * @todo See also CL_ReservedTUs and unify both functions to one
+ * shared function in character_t code.
+ */
+static int G_ActorTUReservations (edict_t *ent)
+{
+	int reservedTU = 0;
+
+	if (ent->chr.reservedTus.crouch)
+		reservedTU = ent->chr.reservedTus.crouch;
+	if (ent->chr.reservedTus.shot)
+		reservedTU = reservedTU + ent->chr.reservedTus.shot;
+
+	return reservedTU;
+}
+
+/**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
@@ -192,6 +218,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	int msglevel;
 	invList_t fItemBackup;
 	int fx, fy;
+	int originalTU, reservedTU = 0;
 
 	player = G_PLAYER_FROM_ENT(ent);
 	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
@@ -236,8 +263,17 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			return;
 	}
 
-	/* Try to actually move the item and check the return value */
+	/* Because Com_MoveInInventory don't know anything about character_t and it updates ent->TU,
+	   we need to save original ent->TU for the sake of checking TU reservations. */
+	originalTU = ent->TU;
+	reservedTU = G_ActorTUReservations(ent);
+	/* Temporary decrease ent->TU to make Com_MoveInInventory() do what expected. */
+	ent->TU -= reservedTU;
+	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
 	ia = Com_MoveInInventory(&ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
+	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
+
 	switch (ia) {
 	case IA_NONE:
 		/* No action possible - abort */
@@ -343,6 +379,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 /**
  * @brief Reload weapon with actor.
+ * @param[in] ent Pointer to an actor reloading weapon.
+ * @param[in] st Reloading weapon in right or left hand.
+ * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa AI_ActorThink
  */
 void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)

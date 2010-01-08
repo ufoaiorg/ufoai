@@ -64,8 +64,8 @@ typedef struct fireDef_s {
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
-	int fireAttenuation;
-	int impactAttenuation;
+	int fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
+	int impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
@@ -77,28 +77,31 @@ typedef struct fireDef_s {
 						 */
 	int fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
 
-	qboolean soundOnce;
-	qboolean gravity;			/**< Does gravity has any influence on this item? */
-	qboolean launched;
-	qboolean rolled;			/**< Can it be rolled - e.g. grenades */
-	qboolean reaction;			/**< This firemode can be used/selected for reaction fire.*/
+	qboolean soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
+	qboolean gravity;		/**< Does gravity has any influence on this item? */
+	qboolean launched;		/**< used for calculating parabolas in Com_GrenadeTarget() */
+	qboolean rolled;		/**< Can it be rolled - e.g. grenades - used in "Roll" firemodes, see Com_GrenadeTarget() */
+	qboolean reaction;		/**< This firemode can be used/selected for reaction fire.*/
 	int throughWall;		/**< allow the shooting through a wall */
-	byte dmgweight;
-	float speed;
-	vec2_t shotOrg;
-	vec2_t spread;
-	int delay;
-	int bounce;				/**< Is this item bouncing? e.g. grenades */
-	float bounceFac;
-	float crouch;
-	float range;			/**< range of the weapon ammunition */
-	int shots;
-	int ammo;
-	/** the delay that the weapon needs to play sounds and particles
-	 * The higher the value, the less the delay (1000/delay) */
-	float delayBetweenShots;
-	int time;
-	vec2_t damage, spldmg;
+	byte dmgweight;			/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
+	float speed;			/**< projectile-related; zero value means unlimited speed (most of the cases).
+					     for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
+	vec2_t shotOrg;			/**< not set for any firedefinition, but called in CL_TargetingGrenade() and G_GetShotOrigin() */
+	vec2_t spread;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
+	int delay;			/**< applied on grenades and grenade launcher. If no delay is set, a touch with an actor will lead to
+						 * an explosion or a hit of the projectile. If a delay is set, the (e.g. grenade) may bounce away again. */
+	int bounce;			/**< amount of max possible bounces, for example grenades */
+	float bounceFac;		/**< used in G_ShootGrenade() to apply VectorScale() effect */
+	float crouch;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
+	float range;			/**< range of the weapon ammunition, defined per firemode */
+	int shots;			/**< how many shots this firemode will produce */
+	int ammo;			/**< how many ammo this firemode will use */
+	float delayBetweenShots;	/**< delay between shots (sounds and particles) for this firemode;
+					     the higher the value, the less the delay (1000/delay) */
+	int time;			/**< amount of TU used for this firemode */
+	vec2_t damage;			/**< G_Damage(), damage[0] is min value of damage, damage[1] is used for randomized calculations
+					     of additional damage; damage[0] < 0 means healing, not applying damage */
+	vec2_t spldmg;			/**< G_SplashDamage(), currently we use only first value (spldmg[0]) for apply splashdamage effect */
 	float splrad;			/**< splash damage radius */
 	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
 	int irgoggles;			/**< Is this an irgoogle? */
@@ -172,7 +175,6 @@ typedef enum {
 	AIR_STATS_ANTIMATTER,	/**< amount of antimatter needed for a full refill. */
 
 	AIR_STATS_MAX,
-	AIR_STATS_OP_RANGE	/**< Operational range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */
 } aircraftParams_t;
 
 /**
@@ -268,7 +270,9 @@ typedef struct objDef_s {
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
-	int ammo;			/**< How much can we load into this weapon at once. @todo what is this? isn't it ammo-only specific which defines amount of bullets in clip? */
+	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
+					     would have, if that clip would be full. In other words, max bullets for this type of
+					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
 						 * "int ammo" of objDef_s defines the amount of ammo used in oneshoot weapons. */
@@ -607,29 +611,19 @@ typedef struct chrFiremodeSettings_s {
  * @sa CL_UsableTUs
  * @sa CL_ReservedTUs
  * @sa CL_ReserveTUs
- * @todo Would a list be better here? See the enum reservation_types_t
  */
 typedef struct chrReservations_s {
 	/* Reaction fire reservation (for current round and next enemy round) */
-	int reserveReaction; /**< Stores if the player has activated or disabled reservation for RF. states can be 0, STATE_REACTION_ONCE or STATE_REACTION_MANY See also le_t->state. This is only for remembering over missions. @sa: g_client:G_ClientSpawn*/
-	int reaction;	/**< Did the player activate RF with a usable firemode? (And at the same time storing the TU-costs of this firemode) */
+	int reaction;	/**< Did the player activate RF with a usable firemode?
+					 * (And at the same time storing the TU-costs of this firemode) */
 
 	/* Crouch reservation (for current round)	*/
-	qboolean reserveCrouch; /**< Stores if the player has activated or disabled reservation for crouching/standing up. @sa cl_parse:CL_StartingGameDone */
-	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH.
-			 * @sa cl_actor:CL_ActorStandCrouch_f
-			 * @sa cl_parse:CL_ActorStateChange
-			 */
+	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
 
-	/** Shot reservation (for current round)
-	 * @sa cl_actor.c:CL_PopupFiremodeReservation_f (sel_shotreservation) */
+	/* Shot reservation (for current round) */
 	int shot;	/**< If non-zero we reserved a shot in this turn. */
-	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon (and hand) was used for "shot" reservation. */
-
-/*
-	int reserveCustom;	**< Did the player activate reservation for the custom value?
-	int custom;	**< How many TUs the player has reserved by manual input. @todo My suggestion is to provide a numerical input-field.
-*/
+	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
+										 * (and hand) was used for "shot" reservation. */
 } chrReservations_t;
 
 typedef enum {
@@ -664,6 +658,8 @@ typedef struct character_s {
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
 	int STUN;
 	int morale;
+
+	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
 
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
 	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */

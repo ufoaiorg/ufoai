@@ -195,6 +195,26 @@ static void MN_WindowNodeInit (menuNode_t *node)
 }
 
 /**
+ * @brief Called when we close the node on the screen
+ * @todo we can move generic code into abstract node
+ */
+static void MN_WindowNodeClose (menuNode_t *node)
+{
+	menuNode_t *child;
+
+	/* close child */
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->behaviour->close) {
+			child->behaviour->close(child);
+		}
+	}
+
+	/* script callback */
+	if (EXTRADATA(node).onClose)
+		MN_ExecuteEventActions(node, EXTRADATA(node).onClose);
+}
+
+/**
  * @brief Called at the begin of the load from script
  */
 static void MN_WindowNodeLoading (menuNode_t *node)
@@ -331,6 +351,7 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_WindowNodeLoading;
 	behaviour->loaded = MN_WindowNodeLoaded;
 	behaviour->init = MN_WindowNodeInit;
+	behaviour->close = MN_WindowNodeClose;
 	behaviour->draw = MN_WindowNodeDraw;
 	behaviour->doLayout = MN_WindowNodeDoLayout;
 	behaviour->clone = MN_WindowNodeClone;

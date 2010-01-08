@@ -52,6 +52,7 @@ window aircraft_equip extends iaircraft
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = ""
 			*itemlist@image = "ui/panel_grey_white"
+			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>" 
 		}
 	}
@@ -67,6 +68,7 @@ window aircraft_equip extends iaircraft
 		size	"522 259"
 		angles	"0 0 180"
 		view	"aircraft_equip"
+		autoscale	true
 	}
 
 	// ==================
@@ -103,6 +105,7 @@ window aircraft_equip extends iaircraft
 			pos		"14 76"
 			size	"225 96"
 			view	aircraft_equip
+			angles	"-120 120 -30"
 		}
 
 		text description
@@ -149,8 +152,15 @@ window aircraft_equip extends iaircraft
 			image		ui/button_green_small
 			pos			"26 271"
 			size		"200 25"
-			onClick		{ cmd "airequip_add_item 1;" }
 			color		"0 0.5 0 1"
+			onClick		{
+				cmd "airequip_add_item 1;"
+				if ( *cvar:mn_equip_itemtype eq "ammo" ) {
+					cmd "airequip_select zone2;"
+				} else {
+					cmd "airequip_select zone1;"
+				}
+			}
 		}
 		
 		button button_remove
@@ -159,7 +169,10 @@ window aircraft_equip extends iaircraft
 			image		ui/button_green_small
 			pos			"26 271"
 			size		"200 25"
-			onClick		{ cmd "airequip_remove_item 1;" }
+			onClick		{
+				cmd "airequip_remove_item 1;"
+				cmd "airequip_select item -1"
+			}
 			color		"0 0.5 0 1"
 		}
 	}
@@ -208,6 +221,7 @@ window aircraft_equip extends iaircraft
 			}
 			onChange {
 				cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
+				cmd "airequip_select item -1" 
 			}
 		}
 

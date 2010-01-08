@@ -335,7 +335,6 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
 	int i, j;
 	le_t *le;
-	invList_t *item;
 	itemsTmp_t *cargo;
 	itemsTmp_t prevItemCargo[MAX_CARGO];
 	int prevItemTypes;
@@ -358,39 +357,27 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 		 * members carry. */
 		if (!le->inuse)
 			continue;
-		switch (le->type) {
-		case ET_ITEM:
+		if (LE_IsItem(le)) {
 			if (won) {
+				invList_t *item;
 				for (item = FLOOR(le); item; item = item->next) {
 					AII_CollectItem(aircraft, item->item.t, 1);
 					if (item->item.t->reload && item->item.a > 0)
 						AII_CollectingAmmo(aircraft, item);
 				}
 			}
-			break;
-		case ET_ACTOR:
-		case ET_ACTOR2x2:
+		} else if (LE_IsActor(le)) {
+			/* The items are already dropped to floor and are available
+			 * as ET_ITEM if the actor is dead; or the actor is not ours. */
 			/* First of all collect armour of dead or stunned actors (if won). */
-			if (won) {
-				if (LE_IsDead(le) || LE_IsStunned(le)) {
-					if (le->i.c[csi.idArmour]) {
-						item = le->i.c[csi.idArmour];
-						AII_CollectItem(aircraft, item->item.t, 1);
-					}
-					break;
-				}
+			if (won && LE_IsDead(le)) {
+				invList_t *item = ARMOUR(le);
+				if (item)
+					AII_CollectItem(aircraft, item->item.t, 1);
+			} else if (le->team == cls.team && !LE_IsDead(le)) {
+				/* Finally, the living actor from our team. */
+				AII_CarriedItems(le);
 			}
-			/* Now, if this is dead or stunned actor, additional check. */
-			if (le->team != cls.team || LE_IsDead(le) || LE_IsStunned(le)) {
-				/* The items are already dropped to floor and are available
-				 * as ET_ITEM; or the actor is not ours. */
-				break;
-			}
-			/* Finally, the living actor from our team. */
-			AII_CarriedItems(le);
-			break;
-		default:
-			break;
 		}
 	}
 	/* Fill the missionResults array. */
@@ -557,12 +544,31 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
 		return 10 * (int) (111.2 * value / 10.0f);
 	case AIR_STATS_FUELSIZE:
 		return value / 1000;
-	case AIR_STATS_OP_RANGE:
-		/* the 2.0f factor is for going to destination and then come back */
-		return 100 * (int) (KILOMETER_PER_DEGREE * value / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
 	default:
 		return value;
 	}
+}
+
+/**
+ * @brief Calculates the range an aircraft can fly on the geoscape
+ * @param aircraft The aircraft to calculate the range for
+ * @return The range
+ */
+int AIR_GetOperationRange (const aircraft_t *aircraft)
+{
+	const int range = aircraft->stats[AIR_STATS_SPEED] * aircraft->stats[AIR_STATS_FUELSIZE];
+	/* the 2.0f factor is for going to destination and then come back */
+	return 100 * (int) (KILOMETER_PER_DEGREE * range / (2.0f * (float)SECONDS_PER_HOUR * 100.0f));
+}
+
+/**
+ * @brief Calculates the remaining range the aircraft can fly
+ * @param aircraft The aircraft to calculate the remaining range for
+ * @return The remaining range
+ */
+int AIR_GetRemainingRange (const aircraft_t *aircraft)
+{
+	return aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel;
 }
 
 /**
@@ -588,7 +594,7 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
 	distance += GetDistanceOnGlobe(destination, base->pos);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	return (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR);
+	return (distance <= AIR_GetRemainingRange(aircraft) / (float)SECONDS_PER_HOUR);
 }
 
 /**
@@ -608,7 +614,7 @@ qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, cons
 	distance = GetDistanceOnGlobe(aircraft->pos, destination);
 
 	/* Check if the aircraft has enough fuel to go to destination */
-	return (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / (float)SECONDS_PER_HOUR);
+	return (distance <= AIR_GetRemainingRange(aircraft) / (float)SECONDS_PER_HOUR);
 }
 
 /**
@@ -1188,7 +1194,7 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			ccs.interceptAircraft = ccs.missionAircraft;
 			Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
 			CL_GameTimeStop();
-			MN_PushMenu("popup_intercept_ready", NULL);
+			MN_PushWindow("popup_intercept_ready", NULL);
 			break;
 		case AIR_RETURNING:
 			/* aircraft entered in homebase */
@@ -1327,30 +1333,6 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 }
 
 /**
- * @brief Returns the aircraft item in the list of aircraft Items.
- * @note id may not be null or empty
- * @param[in] id the item id in our csi.ods array
- */
-objDef_t *AII_GetAircraftItemByID (const char *id)
-{
-	int i;
-
-#ifdef DEBUG
-	if (!id || !*id) {
-		Com_Printf("AII_GetAircraftItemByID: Called with empty id\n");
-		return NULL;
-	}
-#endif
-
-	for (i = 0; i < csi.numODs; i++)	/* i = item index */
-		if (!strcmp(id, csi.ods[i].id))
-			return &csi.ods[i];
-
-	Com_Printf("AII_GetAircraftItemByID: Aircraft Item \"%s\" not found.\n", id);
-	return NULL;
-}
-
-/**
  * @brief Returns aircraft for a given global index.
  * @param[in] idx Global aircraft index.
  * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
@@ -1418,7 +1400,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 		AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->active = qtrue;
-		MN_PushMenu("popup_baseattack", NULL);
+		MN_PushWindow("popup_baseattack", NULL);
 		return qtrue;
 	}
 
@@ -1601,7 +1583,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, aircraftTemplate->id);
 				tech = RS_GetTechByID(token);
 				if (tech)
-					aircraftTemplate->shield.item = AII_GetAircraftItemByID(tech->provides);
+					aircraftTemplate->shield.item = INVSH_GetItemByID(tech->provides);
 			} else if (!strcmp(token, "slot")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
@@ -1666,11 +1648,11 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						if (tech) {
 							switch (itemType) {
 							case AC_ITEM_WEAPON:
-								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].item = AII_GetAircraftItemByID(tech->provides);
+								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].item = INVSH_GetItemByID(tech->provides);
 								Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, aircraftTemplate->id);
 								break;
 							case AC_ITEM_ELECTRONICS:
-								aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].item = AII_GetAircraftItemByID(tech->provides);
+								aircraftTemplate->electronics[aircraftTemplate->maxElectronics - 1].item = INVSH_GetItemByID(tech->provides);
 								Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, aircraftTemplate->id);
 								break;
 							default:
@@ -1684,7 +1666,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 						tech = RS_GetTechByID(token);
 						if (tech) {
 							if (itemType == AC_ITEM_WEAPON) {
-								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].ammo = AII_GetAircraftItemByID(tech->provides);
+								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].ammo = INVSH_GetItemByID(tech->provides);
 								Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, aircraftTemplate->id);
 							} else
 								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
@@ -2911,7 +2893,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		technology_t *tech = RS_GetTechByProvided(mxml_GetString(snode, SAVE_AIRCRAFT_AIRCRAFTITEMID));
 		if (tech) {
 			int j;
-			ccs.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
+			ccs.projectiles[i].aircraftItem = INVSH_GetItemByID(tech->provides);
 			for (j = 0, ssnode=mxml_GetPos2(snode, SAVE_AIRCRAFT_POS, ccs.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
 			     ssnode = mxml_GetNextPos2(ssnode, snode, SAVE_AIRCRAFT_POS, ccs.projectiles[i].pos[j]), j++)
 				;

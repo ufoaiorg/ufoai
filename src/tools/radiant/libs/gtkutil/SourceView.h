@@ -28,6 +28,7 @@ namespace gtkutil
 			 * Constructs a new sourceview with the given language ID as specified
 			 * in the .lang files (e.g. "python").
 			 *
+			 * @param language the language definition to create a source view for.
 			 * @param[in] readOnly: Set this to TRUE to disallow editing of the text buffer.
 			 *
 			 * @throw runtime_error if the given language file wasn't found in the sourceviewer/ subdirectory

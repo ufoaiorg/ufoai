@@ -154,13 +154,13 @@ CLIENT_SRCS = \
 	client/menu/m_icon.c \
 	client/menu/m_input.c \
 	client/menu/m_main.c \
-	client/menu/m_menus.c \
 	client/menu/m_nodes.c \
 	client/menu/m_parse.c \
 	client/menu/m_popup.c \
 	client/menu/m_render.c \
 	client/menu/m_timer.c \
 	client/menu/m_tooltip.c \
+	client/menu/m_windows.c \
 	client/menu/node/m_node_abstractnode.c \
 	client/menu/node/m_node_abstractvalue.c \
 	client/menu/node/m_node_abstractoption.c \

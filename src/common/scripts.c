@@ -42,7 +42,10 @@ static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
 
 
 /**
+ * @brief Searches whether a given value was registered as a string to int mapping
  * @return True if the value is found.
+ * @sa Com_RegisterConstInt
+ * @sa Com_ParseValue
  */
 qboolean Com_GetConstInt (const char *name, int *value)
 {
@@ -61,6 +64,12 @@ qboolean Com_GetConstInt (const char *name, int *value)
 	return qfalse;
 }
 
+/**
+ * @brief Register mappings between script strings and enum values for values of the type @c V_INT
+ * @param name The name of the script entry to map to an integer
+ * @param value The value to map the given name to
+ * @sa Com_GetConstInt
+ */
 void Com_RegisterConstInt (const char *name, int value)
 {
 	com_constNameInt_t *a;

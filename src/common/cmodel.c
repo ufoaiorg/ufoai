@@ -113,6 +113,11 @@ static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 static void CM_MakeTracingNodes(void);
 static void CM_InitBoxHull(void);
 
+static void CM_SetInlineList (const char **list)
+{
+	inlineList = list;
+}
+
 /*
 ===============================================================================
 MAP LOADING
@@ -673,11 +678,11 @@ qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end
 	qboolean hit;
 
 	/* set the list of entities to check */
-	inlineList = entlist;
+	CM_SetInlineList(entlist);
 	/* do the line test */
 	hit = CM_EntTestLineDM(start, stop, end, levelmask);
 	/* zero the list */
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	return hit;
 }
@@ -821,7 +826,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	double start, end;
 	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(tempMap);
 
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	start = time(NULL);
 
@@ -2331,7 +2336,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 		model->mins[0], model->mins[1], model->mins[2],
 		model->maxs[0], model->maxs[1], model->maxs[2]);
 
-	inlineList = list;
+	CM_SetInlineList(list);
 
 	/* get the target model's dimensions */
 	if (VectorNotEmpty(model->angles)) {
@@ -2378,7 +2383,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 	Grid_RecalcBoxRouting(map, min, max);
 
 	/* Reset the inlineList variable */
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n", name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
@@ -2494,7 +2499,19 @@ TARGETING FUNCTIONS
  *        \/  \/ h  + d   - h
  *
  * as the minimum launch velocity for that angle.
- * @param[out] v0 The velocity vector
+ *
+ * @brief Calculates parabola-type shot.
+ * @param[in] from Starting position for calculations.
+ * @param[in] at Ending position for calculations.
+ * @param[in] speed Launch velocity.
+ * @param[in] launched Set to true for grenade launchers.
+ * @param[in] rolled Set to true for "roll" type shoot.
+ * @param[in,out] v0 The velocity vector
+ * @todo refactor and move me
+ * @todo Com_GrenadeTarget() is called from CL_TargetingGrenade() with speed
+ * param as (fireDef_s) fd->range, while it is being used here for speed
+ * calculations - a bug or just misleading documentation?
+ * @sa CL_TargetingGrenade
  */
 float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {

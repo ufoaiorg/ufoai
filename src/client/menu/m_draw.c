@@ -376,11 +376,11 @@ void MN_DisplayNotice (const char *text, int time, const char* windowName)
 	Q_strncpyz(noticeText, text, sizeof(noticeText));
 
 	if (windowName == NULL) {
-		noticeMenu = MN_GetActiveMenu();
+		noticeMenu = MN_GetActiveWindow();
 		if (noticeMenu == NULL)
 			Com_Printf("MN_DisplayNotice: No active menu\n");
 	} else {
-		noticeMenu = MN_GetMenu(windowName);
+		noticeMenu = MN_GetWindow(windowName);
 		if (noticeMenu == NULL)
 			Com_Printf("MN_DisplayNotice: '%s' not found\n", windowName);
 	}

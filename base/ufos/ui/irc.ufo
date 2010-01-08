@@ -65,9 +65,9 @@ window irc
 		onClick		{ cmd "irc_userlist_click <lineselected>" }
 		onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
 		onViewChange {
-			*(abstractscrollbar)irc_userlist_scroll@fullsize <fullsize>
-			*(abstractscrollbar)irc_userlist_scroll@current <viewpos>
-			*(abstractscrollbar)irc_userlist_scroll@viewsize <viewsize>
+			*(abstractscrollbar)irc_userlist_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)irc_userlist_scroll@current = <viewpos>
+			*(abstractscrollbar)irc_userlist_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -90,9 +90,9 @@ window irc
 		lineheight  "22"
 		dataid		TEXT_IRCCONTENT
 		onViewChange {
-			*(abstractscrollbar)irc_data_scroll@fullsize <fullsize>
-			*(abstractscrollbar)irc_data_scroll@current <viewpos>
-			*(abstractscrollbar)irc_data_scroll@viewsize <viewsize>
+			*(abstractscrollbar)irc_data_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)irc_data_scroll@current = <viewpos>
+			*(abstractscrollbar)irc_data_scroll@viewsize = <viewsize>
 		}
 	}
 

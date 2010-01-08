@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-07-21 16:16+0600\n"
+"PO-Revision-Date: 2009-10-27 18:47+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -909,19 +909,19 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1582
 #: src/tools/radiant/radiant/mainframe.cpp:1585
 msgid "_Edges"
-msgstr ""
+msgstr "Рёбра"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1579
 #: src/tools/radiant/radiant/mainframe.cpp:1583
 #: src/tools/radiant/radiant/mainframe.cpp:1586
 msgid "_Vertices"
-msgstr ""
+msgstr "Вершины"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1580
 #: src/tools/radiant/radiant/mainframe.cpp:1584
 #: src/tools/radiant/radiant/mainframe.cpp:1587
 msgid "_Faces"
-msgstr ""
+msgstr "Грани"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1585
 #: src/tools/radiant/radiant/mainframe.cpp:1589
@@ -961,25 +961,25 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1598
 #: src/tools/radiant/radiant/mainframe.cpp:1601
 msgid "Rotate"
-msgstr ""
+msgstr "Вращение"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1597
 #: src/tools/radiant/radiant/mainframe.cpp:1601
 #: src/tools/radiant/radiant/mainframe.cpp:1604
 msgid "Rotate X"
-msgstr ""
+msgstr "X вращение"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1598
 #: src/tools/radiant/radiant/mainframe.cpp:1602
 #: src/tools/radiant/radiant/mainframe.cpp:1605
 msgid "Rotate Y"
-msgstr ""
+msgstr "Y вращение"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1599
 #: src/tools/radiant/radiant/mainframe.cpp:1603
 #: src/tools/radiant/radiant/mainframe.cpp:1606
 msgid "Rotate Z"
-msgstr ""
+msgstr "Z вращение"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1602
 #: src/tools/radiant/radiant/mainframe.cpp:1606
@@ -1009,13 +1009,13 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1615
 #: src/tools/radiant/radiant/mainframe.cpp:1618
 msgid "Arbitrary rotation..."
-msgstr ""
+msgstr "Произвольное вращение..."
 
 #: src/tools/radiant/radiant/mainframe.cpp:1612
 #: src/tools/radiant/radiant/mainframe.cpp:1616
 #: src/tools/radiant/radiant/mainframe.cpp:1619
 msgid "Arbitrary scale..."
-msgstr ""
+msgstr "Произвольное масштабирование..."
 
 #: src/tools/radiant/radiant/mainframe.cpp:1620
 #: src/tools/radiant/radiant/mainframe.cpp:1624
@@ -1033,7 +1033,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1644
 #: src/tools/radiant/radiant/mainframe.cpp:1647
 msgid "Find brush..."
-msgstr ""
+msgstr "Найти браш..."
 
 #: src/tools/radiant/radiant/mainframe.cpp:1641
 #: src/tools/radiant/radiant/mainframe.cpp:1645
@@ -1120,21 +1120,21 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:430
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1275
 msgid "Surface Inspector"
-msgstr ""
+msgstr "Инспектор поверхностей"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:438
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:440
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:442
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:444
 msgid "Texture"
-msgstr ""
+msgstr "Текстура"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:459
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:461
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:463
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:465
 msgid "Horizontal shift"
-msgstr ""
+msgstr "Горизонтальный сдвиг"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:477
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:513
@@ -1158,28 +1158,28 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:628
 msgctxt "Step width"
 msgid "Step"
-msgstr ""
+msgstr "Шаг"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:497
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:499
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:501
 msgid "Vertical shift"
-msgstr ""
+msgstr "Вертикальный сдвиг"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:531
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:533
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:535
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:537
 msgid "Horizontal stretch"
-msgstr ""
+msgstr "Горизонтальное растягивание"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:567
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:569
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:571
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:573
 msgid "Vertical stretch"
-msgstr ""
+msgstr "Вертикальное растягивание"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:641
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:643
@@ -1200,28 +1200,28 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:673
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:675
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:676
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:678
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:680
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:682
 msgid "Height"
-msgstr ""
+msgstr "Высота"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:723
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:725
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:727
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:731
 msgid "Surface Flags"
-msgstr ""
+msgstr "Флаги поверхностей"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:759
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:761
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:763
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:773
 msgid "Content Flags"
-msgstr ""
+msgstr "Флаги содержимого"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1400
@@ -1231,7 +1231,7 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:817
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1729
 msgid "Value"
-msgstr ""
+msgstr "Значение"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1195
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1211
@@ -1256,12 +1256,12 @@ msgstr "Об UFORadiant"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:73
 msgid "<b>UFORadiant "
-msgstr ""
+msgstr "<b>UFO Радиант"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:87
 #: src/tools/radiant/radiant/dialogs/about.cpp:88
 msgid "<b>GTK+ Properties</b>"
-msgstr ""
+msgstr "<b>Свойства GTK+</b>"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:95
 #, c-format
@@ -1272,7 +1272,7 @@ msgstr "Версия: %i.%i.%i"
 #: src/tools/radiant/radiant/dialogs/about.cpp:151
 #: src/tools/radiant/radiant/dialogs/about.cpp:209
 msgid "<b>OpenGL Properties</b>"
-msgstr ""
+msgstr "<b>Свойства OpenGL</b>"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:109
 #: src/tools/radiant/radiant/dialogs/about.cpp:157
@@ -1294,11 +1294,11 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/findbrush.cpp:111
 msgid "Entity number"
-msgstr ""
+msgstr "Число объектов"
 
 #: src/tools/radiant/radiant/dialogs/findbrush.cpp:118
 msgid "Brush number"
-msgstr ""
+msgstr "Число брашей"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:118
 msgid "Find / Replace Texture(s)"
@@ -1897,9 +1897,9 @@ msgid "3 button"
 msgstr ""
 
 #: src/tools/radiant/radiant/qe3.cpp:106
-#, fuzzy, c-format
+#, c-format
 msgid "Brushes: %d Entities: %d"
-msgstr "Кистей: %d : %d"
+msgstr "Кистей: %d Объектов: %d"
 
 #: src/tools/radiant/radiant/qe3.cpp:131
 msgid ""
@@ -1916,23 +1916,20 @@ msgid "Texture Gamma"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:652
-#, fuzzy
 msgid "Texture Render Mode"
-msgstr "Браузер текстур"
+msgstr "Режим отрисовки текстур"
 
 #: src/tools/radiant/radiant/textures.cpp:673
 msgid "Hardware Texture Compression"
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:682
-#, fuzzy
 msgid "Textures"
-msgstr "Браузер текстур"
+msgstr "Текстуры"
 
 #: src/tools/radiant/radiant/textures.cpp:682
-#, fuzzy
 msgid "Texture Settings"
-msgstr "Настройки путей"
+msgstr "Настройки текстур"
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:46
 msgid "BrushExport-Plugin 3.0 by namespace"
@@ -2012,9 +2009,8 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:1074
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1209
 #: src/tools/radiant/radiant/xywindow.cpp:1077
-#, fuzzy
 msgid "Info"
-msgstr "Информация о карте"
+msgstr "Информация"
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1261
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1418
@@ -2141,9 +2137,8 @@ msgid "Find Brush"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/findbrush.cpp:147
-#, fuzzy
 msgid "Find"
-msgstr "Найти:"
+msgstr "Найти"
 
 #: src/tools/radiant/radiant/eclass_def.cpp:220
 #: src/tools/radiant/radiant/eclass_def.cpp:351
@@ -2180,9 +2175,8 @@ msgstr "Раскладка окна"
 #: src/tools/radiant/radiant/mainframe.cpp:2267
 #: src/tools/radiant/radiant/mainframe.cpp:2307
 #: src/tools/radiant/radiant/mainframe.cpp:2310
-#, fuzzy
 msgid "Layout Preferences"
-msgstr "Настройки мыши"
+msgstr "Настройки раскладки"
 
 #: src/tools/radiant/radiant/pathfinding.cpp:70
 msgid "Pathfinding log file"
@@ -2305,9 +2299,8 @@ msgstr "Поворот (R)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:97
 #: src/tools/radiant/radiant/toolbars.cpp:98
-#, fuzzy
 msgid "Scale"
-msgstr "Сохранить"
+msgstr "Масштаб"
 
 #: src/tools/radiant/radiant/toolbars.cpp:98
 #: src/tools/radiant/radiant/toolbars.cpp:99
@@ -2317,7 +2310,7 @@ msgstr ""
 #: src/tools/radiant/radiant/toolbars.cpp:141
 #: src/tools/radiant/radiant/toolbars.cpp:142
 msgid "Refresh Models"
-msgstr ""
+msgstr "Обновить модели"
 
 #: src/tools/radiant/radiant/toolbars.cpp:142
 #: src/tools/radiant/radiant/toolbars.cpp:143
@@ -2327,12 +2320,12 @@ msgstr ""
 #: src/tools/radiant/radiant/toolbars.cpp:145
 #: src/tools/radiant/radiant/toolbars.cpp:146
 msgid "Create material entries for selected faces (M)"
-msgstr ""
+msgstr "Создать запись материала для для выбранных граней"
 
 #: src/tools/radiant/radiant/toolbars.cpp:172
 #: src/tools/radiant/radiant/toolbars.cpp:173
 msgid "Texture Lock (SHIFT + T)"
-msgstr ""
+msgstr "Залочить текстуру (Shift T)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:175
 #: src/tools/radiant/radiant/toolbars.cpp:176
@@ -2347,17 +2340,17 @@ msgstr "Сохранить рисунок"
 #: src/tools/radiant/radiant/brushmanip.cpp:1230
 #: src/tools/radiant/radiant/brushmanip.cpp:1310
 msgid "Cone..."
-msgstr ""
+msgstr "Конус..."
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1231
 #: src/tools/radiant/radiant/brushmanip.cpp:1311
 msgid "Prism..."
-msgstr ""
+msgstr "Призма..."
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1232
 #: src/tools/radiant/radiant/brushmanip.cpp:1312
 msgid "Sphere..."
-msgstr ""
+msgstr "Сфера..."
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1238
 msgid "Make _Hollow"
@@ -2376,17 +2369,17 @@ msgstr ""
 #: src/tools/radiant/radiant/brushmanip.cpp:1248
 #: src/tools/radiant/radiant/brushmanip.cpp:1329
 msgid "Clip selection"
-msgstr ""
+msgstr "Обрезать выделенное"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1249
 #: src/tools/radiant/radiant/brushmanip.cpp:1330
 msgid "Split selection"
-msgstr ""
+msgstr "Разделить выделенное"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1250
 #: src/tools/radiant/radiant/brushmanip.cpp:1331
 msgid "Flip Clip orientation"
-msgstr ""
+msgstr "Сменить направление обрезки"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1253
 #: src/tools/radiant/radiant/brushmanip.cpp:1334
@@ -2400,9 +2393,8 @@ msgstr ""
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1256
 #: src/tools/radiant/radiant/brushmanip.cpp:1337
-#, fuzzy
 msgid "Texture Lock"
-msgstr "Браузер текстур"
+msgstr "Залочить текстуру"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1258
 #: src/tools/radiant/radiant/brushmanip.cpp:1339
@@ -2419,7 +2411,7 @@ msgstr ""
 #: src/tools/radiant/radiant/brushmanip.cpp:1319
 #: src/tools/radiant/radiant/toolbars.cpp:67
 msgid "Make Hollow"
-msgstr ""
+msgstr "Сделать пустотелым"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1239
 #: src/tools/radiant/radiant/brushmanip.cpp:1320
@@ -2704,9 +2696,8 @@ msgid "Error during load of map."
 msgstr "Ошибка загрузки карты."
 
 #: src/tools/radiant/radiant/map.cpp:1540
-#, fuzzy
 msgid "Import Map"
-msgstr "_Импорт"
+msgstr "Импорт карты"
 
 #: src/tools/radiant/radiant/map.cpp:1550
 msgid "Save Map"

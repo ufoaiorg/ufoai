@@ -381,7 +381,7 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 	assert(ufo->ufoTemplate);
 	assert(ufo->ufoTemplate->tech);
 
-	prodPerHour = PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo->comp);
+	prodPerHour = PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo);
 	/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 	assert(prodPerHour > 0);
 	time = ceil((1.0f - percentDone) / prodPerHour);

@@ -87,7 +87,7 @@ typedef struct le_s {
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 
-	char inlineModelName[8];
+	char inlineModelName[8];	/**< for bmodels */
 	int modelnum1;	/**< the number of the body model in the cl.model_draw array */
 	int modelnum2;	/**< the number of the head model in the cl.model_draw array */
 	int skinnum;	/**< the skin number of the body and head model */
@@ -124,7 +124,7 @@ typedef struct le_s {
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
 	int gender;
-	const fireDef_t *fd;	/**< in case this is a projectile */
+	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
 
 	pathing_t *pathMap;	/**< This is where the data for TUS used to move and actor
 								 * locations go - only available for human controlled actors */
@@ -185,7 +185,9 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 #define LE_IsPaniced(le)	((le)->state & STATE_PANIC)
 #define LE_IsCrouched(le)	((le)->state & STATE_CROUCHED)
 
+#define LE_IsItem(le)		((le)->type == ET_ITEM)
 #define LE_IsCivilian(le)	((le)->team == TEAM_CIVILIAN)
+#define LE_IsAlien(le)		((le)->team == TEAM_ALIEN)
 
 /** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)

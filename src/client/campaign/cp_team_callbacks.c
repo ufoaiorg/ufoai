@@ -161,7 +161,7 @@ static void CL_UpdateSoldierList_f (void)
 
 	result = CL_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
 	if (!result)
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 }
 
 /**
@@ -184,7 +184,7 @@ static void CL_UpdatePilotList_f (void)
 
 	result = CL_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
 	if (!result)
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 }
 
 /**
@@ -209,7 +209,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 
 	/* no soldiers are assigned to the current aircraft. */
 	if (!aircraft->teamSize) {
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 

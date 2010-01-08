@@ -267,7 +267,6 @@ void CL_CampaignRunAircraft(int dt, qboolean updateRadarOverlay);
 aircraft_t *AIR_GetAircraftSilent(const char *name);
 aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
-objDef_t *AII_GetAircraftItemByID(const char *id);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
@@ -302,5 +301,8 @@ qboolean AIR_CanIntercept(const aircraft_t *aircraft);
 void AIR_LoadOneSlotXML(aircraftSlot_t* slot, mxml_node_t *node, qboolean weapon);
 qboolean AIR_LoadAircraftXML(aircraft_t *craft, qboolean isUfo, mxml_node_t *p);
 void AIR_SaveAircraftXML(mxml_node_t *node, const aircraft_t* const aircraft, qboolean const isUfo);
+
+int AIR_GetOperationRange(const aircraft_t *aircraft);
+int AIR_GetRemainingRange(const aircraft_t *aircraft);
 
 #endif

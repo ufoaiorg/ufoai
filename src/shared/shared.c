@@ -171,11 +171,11 @@ char *va (const char *format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */
-	static char string[2][VA_BUFSIZE];
-	static int index = 0;
+	static char string[16][VA_BUFSIZE];
+	static unsigned int index = 0;
 	char *buf;
 
-	buf = string[index & 1];
+	buf = string[index & 0x0F];
 	index++;
 
 	va_start(argptr, format);

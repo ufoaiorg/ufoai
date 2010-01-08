@@ -184,6 +184,7 @@ extern edict_t *g_edicts;
 #define G_IsVisibleForTeam(ent, team) ((ent)->visflags & G_TeamToVisMask(team))
 /** @note check for actor first */
 #define G_IsCivilian(ent)		((ent)->team == TEAM_CIVILIAN)
+#define G_IsAlien(ent)			((ent)->team == TEAM_ALIEN)
 #define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
 
 extern cvar_t *sv_maxentities;
@@ -375,7 +376,7 @@ void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
-void G_ClientTeamInfo(player_t * player);
+void G_ClientTeamInfo(const player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
 qboolean G_ClientIsReady(const player_t * player);
@@ -635,8 +636,8 @@ struct edict_s {
 					 * then -1=up; -2=down is used additionally */
 
 	int speed;	/**< speed of entities - e.g. rotating or actors */
-	const char *target;	/**< name of the entity to trigger or move towards */
-	const char *targetname;	/**< name pointed to by target */
+	const char *target;	/**< name of the entity to trigger or move towards - this name is stored in the target edicts targetname value */
+	const char *targetname;	/**< name pointed to by target - see the target of the parent edict */
 	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
 	const char *message; /**< misc_message */

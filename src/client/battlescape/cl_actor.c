@@ -47,7 +47,6 @@ static cvar_t *cl_showactors;
 
 /* public */
 le_t *selActor;
-const fireDef_t *selFD;
 character_t *selChr;
 pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
@@ -246,7 +245,8 @@ character_t *CL_GetActorChr (const le_t * le)
 {
 	const int actorIdx = CL_GetActorNumber(le);
 	if (actorIdx < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: BAD ACTOR INDEX!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: Could not find actor in the team list - maybe already dead? (state is %i)!\n",
+				le->state);
 		return NULL;
 	}
 
@@ -408,13 +408,11 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 		return reservedReaction + reservedCrouch + reservedShot;
 	case RES_ALL_ACTIVE: {
 		/* A summary of ALL TUs that are reserved depending on their "status". */
-		const int crouch = (chr->reservedTus.reserveCrouch) ? reservedCrouch : 0;
-		/** @todo reserveReaction is not yet correct on the client side - at least not tested. */
 		/* Only use reaction-value if we are have RF activated. */
 		if ((le->state & STATE_REACTION))
-			return reservedReaction + reservedShot + crouch;
+			return reservedReaction + reservedShot + reservedCrouch;
 		else
-			return reservedShot + crouch;
+			return reservedShot + reservedCrouch;
 	}
 	case RES_REACTION:
 		return reservedReaction;
@@ -474,33 +472,21 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 {
 	character_t *chr;
 
-	if (!le || tus < 0) {
+	if (!le || tus < 0)
 		return;
-	}
 
 	chr = CL_GetActorChr(le);
-	if (!chr)
-		return;
+	if (chr) {
+		chrReservations_t *res = &chr->reservedTus;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Debug: Reservation type=%i, TUs=%i\n", type, tus);
+		if (type == RES_REACTION)
+			chr->reservedTus.reaction = tus;
+		else if (type == RES_CROUCH)
+			chr->reservedTus.crouch = tus;
+		else if (type == RES_SHOT)
+			chr->reservedTus.shot = tus;
 
-	switch (type) {
-	case RES_ALL:
-	case RES_ALL_ACTIVE:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: RES_ALL and RES_ALL_ACTIVE are not valid options.\n");
-		return;
-	case RES_REACTION:
-		chr->reservedTus.reaction = tus;
-		return;
-	case RES_CROUCH:
-		chr->reservedTus.crouch = tus;
-		return;
-	case RES_SHOT:
-		chr->reservedTus.shot = tus;
-		return;
-	default:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReserveTUs: Bad reservation type given: %i\n", type);
-		return;
+		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res->reaction, res->shot, res->crouch);
 	}
 }
 
@@ -531,19 +517,18 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
 		const fireDef_t *fd = CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_CHAR(handidx));
 		if (fd) {
+			int time = fd[fdIdx].time;
 			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
-			if (chr->reservedTus.reserveReaction == STATE_REACTION_MANY)
-				CL_ReserveTUs(actor, RES_REACTION, fd[fdIdx].time * (usableTusForRF / fd[fdIdx].time));
-			else
-				CL_ReserveTUs(actor, RES_REACTION, fd[fdIdx].time);
+			if (actor->state & STATE_REACTION_MANY)
+				time *= (usableTusForRF / fd[fdIdx].time);
+
+			CL_ReserveTUs(actor, RES_REACTION, time);
 		}
 	}
 
 	CL_CharacterSetRFMode(chr, handidx, fdIdx, od);
 	/* Send RFmode[] to server-side storage as well. See g_local.h for more. */
 	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fdIdx, od ? od->idx : NONE);
-	/* Update server-side settings */
-	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction);
 }
 
 /**
@@ -1356,6 +1341,16 @@ void CL_ActorDoorAction_f (void)
 }
 
 /**
+ * @brief Checks whether we are in fire mode or node
+ * @param mode The actor mode
+ * @return @c true if we are in fire mode, @c false otherwise
+ */
+static qboolean CL_ActorFireModeActivated (const actorModes_t mode)
+{
+	return IS_MODE_FIRE_RIGHT(mode) || IS_MODE_FIRE_LEFT(mode) || IS_MODE_FIRE_HEADGEAR(mode);
+}
+
+/**
  * @brief Turns the actor around without moving
  */
 void CL_ActorTurnMouse (void)
@@ -1375,15 +1370,9 @@ void CL_ActorTurnMouse (void)
 	}
 
 	/* check for fire-modes, and cancel them */
-	switch (selActor->actorMode) {
-	case M_FIRE_R:
-	case M_FIRE_L:
-	case M_PEND_FIRE_R:
-	case M_PEND_FIRE_L:
-		selActor->actorMode = M_MOVE;
+	if (CL_ActorFireModeActivated(selActor->actorMode)) {
+		CL_ActorActionMouse();
 		return; /* and return without turning */
-	default:
-		break;
 	}
 
 	/* calculate dv */
@@ -1750,7 +1739,6 @@ void CL_ActorMouseTrace (void)
 				break;
 			default:
 				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
-				break;
 		}
 
 	/* calculate move length */
@@ -1954,7 +1942,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	int distx, disty, i, n;
 	le_t *le;
 
-	if (!selActor || !selFD)
+	if (!selActor || !selActor->fd)
 		return 0.0;
 
 	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
@@ -1965,7 +1953,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 		/* no target there */
 		return 0.0;
 	/* or suicide attempted */
-	if (le->selected && selFD->damage[0] > 0)
+	if (le->selected && le->fd->damage[0] > 0)
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);
@@ -1983,13 +1971,13 @@ static float CL_TargetingToHit (pos3_t toPos)
 	height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
 
 	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
-			selFD->weaponSkill ? selChr->score.skills[selFD->weaponSkill] : 0);
+			selActor->fd->weaponSkill ? selChr->score.skills[selActor->fd->weaponSkill] : 0);
 
-	crouch = (LE_IsCrouched(selActor) && selFD->crouch) ? selFD->crouch : 1;
+	crouch = (LE_IsCrouched(selActor) && selActor->fd->crouch) ? selActor->fd->crouch : 1;
 
 	commonfactor = crouch * torad * distance * GET_INJURY_MULT(selChr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
-	stdevupdown = (selFD->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	stdevleftright = (selFD->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
+	stdevupdown = (selActor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
+	stdevleftright = (selActor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
 			  * (stdevleftright > LOOKUP_EPSILON ? CL_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
@@ -2050,22 +2038,12 @@ static float CL_TargetingToHit (pos3_t toPos)
 /**
  * @brief Show weapon radius
  * @param[in] center The center of the circle
+ * @param[in] radius The radius of the damage circle
  */
-static void CL_TargetingRadius (vec3_t center)
+static void CL_TargetingRadius (const vec3_t center, const float radius)
 {
-	const vec4_t color = {0, 1, 0, 0.3};
-	ptl_t *particle;
-
-	assert(selFD);
-
-	particle = CL_ParticleSpawn("*circle", 0, center, NULL, NULL);
-	particle->size[0] = selFD->splrad; /* misuse size vector as radius */
-	particle->size[1] = 1; /* thickness */
-	particle->style = STYLE_CIRCLE;
-	particle->blend = BLEND_BLEND;
-	/* free the particle every frame */
-	particle->life = 0.0001;
-	Vector4Copy(color, particle->color);
+	ptl_t *particle = CL_ParticleSpawn("circle", 0, center, NULL, NULL);
+	particle->size[0] = radius;
 }
 
 
@@ -2091,7 +2069,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	le_t *target = NULL;
 	int toActorSize;
 
-	if (!selActor || !selFD)
+	if (!selActor || !selActor->fd)
 		return;
 
 	/* search for an actor at target */
@@ -2118,8 +2096,8 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	VectorNormalize(dir);
 
 	/* calculate 'out of range point' if there is one */
-	if (VectorDistSqr(start, end) > selFD->range * selFD->range) {
-		VectorMA(start, selFD->range, dir, mid);
+	if (VectorDistSqr(start, end) > selActor->fd->range * selActor->fd->range) {
+		VectorMA(start, selActor->fd->range, dir, mid);
 		crossNo = qtrue;
 	} else {
 		VectorCopy(end, mid);
@@ -2183,7 +2161,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	le_t *target = NULL;
 	int toActorSize;
 
-	if (!selActor || Vector2Compare(fromPos, toPos))
+	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
 		return;
 
 	/* search for an actor at target */
@@ -2203,7 +2181,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	/* get vectors, paint cross */
 	Grid_PosToVec(clMap, fromActorSize, fromPos, from);
 	Grid_PosToVec(clMap, toActorSize, toPos, at);
-	from[2] += selFD->shotOrg[1];
+	from[2] += selActor->fd->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
 	at[2] -= GROUND_DELTA;
@@ -2212,7 +2190,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	VectorCopy(at, cross);
 
 	/* calculate parabola */
-	dt = Com_GrenadeTarget(from, at, selFD->range, selFD->launched, selFD->rolled, v0);
+	dt = Com_GrenadeTarget(from, at, selActor->fd->range, selActor->fd->launched, selActor->fd->rolled, v0);
 	if (!dt) {
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 		return;
@@ -2247,21 +2225,21 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		/* draw particles */
 		/** @todo character strength should be used here, too
 		 * the stronger the character, the further the throw */
-		if (obstructed || VectorLength(at) > selFD->range)
+		if (obstructed || VectorLength(at) > selActor->fd->range)
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
 		else
 			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
 	/* draw targeting cross */
-	if (obstructed || VectorLength(at) > selFD->range)
+	if (obstructed || VectorLength(at) > selActor->fd->range)
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 	else
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
-	if (selFD->splrad) {
+	if (selActor->fd->splrad) {
 		Grid_PosToVec(clMap, toActorSize, toPos, at);
-		CL_TargetingRadius(at);
+		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
 
 	hitProbability = 100 * CL_TargetingToHit(toPos);
@@ -2323,7 +2301,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				VectorSet(ent.color, 1, 1, 0); /* Yellow */
 				break;
 			default:
-				if (mouseActor->team == TEAM_ALIEN) {
+				if (LE_IsAlien(mouseActor)) {
 					if (GAME_TeamIsKnown(mouseActor->teamDef))
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else
@@ -2331,7 +2309,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
-					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
+					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.color, 1, 0, 0); /* Red */
@@ -2340,7 +2318,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		} else {
 			/* coop multiplayer games */
 			if (mouseActor->pnum != cl.pnum) {
-				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
+				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 			} else {
 				/* we know the names of our own actors */
 				character_t* chr = CL_GetActorChr(mouseActor);
@@ -2392,7 +2370,7 @@ void CL_ActorTargetAlign_f (void)
 	static int currentPos = 0;
 
 	/* no firedef selected */
-	if (!selFD || !selActor)
+	if (!selActor || !selActor->fd)
 		return;
 	if (selActor->actorMode != M_FIRE_R && selActor->actorMode != M_FIRE_L
 	 && selActor->actorMode != M_PEND_FIRE_R && selActor->actorMode != M_PEND_FIRE_L)
@@ -2404,14 +2382,14 @@ void CL_ActorTargetAlign_f (void)
 	} else {
 		switch (currentPos) {
 		case 0:
-			if (selFD->gravity)
+			if (selActor->fd->gravity)
 				align = -align;
 			currentPos = 1; /* next level */
 			break;
 		case 1:
 			/* only allow to align to lower z level if the actor is
 			 * standing at a higher z-level */
-			if (selFD->gravity)
+			if (selActor->fd->gravity)
 				align = -(2 * align);
 			else
 				align = -align;
@@ -2419,7 +2397,7 @@ void CL_ActorTargetAlign_f (void)
 			break;
 		case 2:
 			/* the static var is not reseted on weaponswitch or actorswitch */
-			if (selFD->gravity) {
+			if (selActor->fd->gravity) {
 				align = 0;
 				currentPos = 0; /* next level */
 			} else {
@@ -2472,17 +2450,17 @@ void CL_AddTargeting (void)
 		break;
 	case M_FIRE_R:
 	case M_FIRE_L:
-		if (!selFD)
+		if (!selActor->fd)
 			return;
 
-		if (!selFD->gravity)
+		if (!selActor->fd->gravity)
 			CL_TargetingStraight(selActor->pos, selActor->fieldSize, mousePos);
 		else
 			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, mousePos);
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		if (!selFD)
+		if (!selActor->fd)
 			return;
 
 		/* Draw cursor at mousepointer */
@@ -2491,7 +2469,7 @@ void CL_AddTargeting (void)
 		/* Draw (pending) Cursor at target */
 		CL_AddTargetingBox(selActor->mousePendPos, qtrue);
 
-		if (!selFD->gravity)
+		if (!selActor->fd->gravity)
 			CL_TargetingStraight(selActor->pos, selActor->fieldSize, selActor->mousePendPos);
 		else
 			CL_TargetingGrenade(selActor->pos, selActor->fieldSize, selActor->mousePendPos);
@@ -2509,49 +2487,48 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
  */
 static void CL_AddPathingBox (pos3_t pos)
 {
-	entity_t ent;
-	int height; /* The total opening size */
-	int base; /* The floor relative to this cell */
+	if (selActor) {
+		entity_t ent;
+		int height; /* The total opening size */
+		int base; /* The floor relative to this cell */
 
- 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
+		/* Get size of selected actor */
+		const int fieldSize = selActor->fieldSize;
+		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
+		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
+		const int TUhave = CL_UsableTUs(selActor);
 
-	const byte crouchingState = selActor && LE_IsCrouched(selActor) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
-	const int TUhave = CL_UsableTUs(selActor);
+		memset(&ent, 0, sizeof(ent));
+		ent.flags = RF_PATH;
 
-	memset(&ent, 0, sizeof(ent));
-	ent.flags = RF_PATH;
+		Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
+		VectorSubtract(ent.origin, boxShift, ent.origin);
 
-	Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
-	VectorSubtract(ent.origin, boxShift, ent.origin);
+		base = Grid_Floor(clMap, fieldSize, pos);
 
-	base = Grid_Floor(clMap, fieldSize, pos);
+		/* Paint the box green if it is reachable,
+		 * yellow if it can be entered but is too far,
+		 * or red if it cannot be entered ever. */
+		if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
+			VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
+		} else {
+			/* Can reach - green
+			 * Passable but unreachable - yellow
+			 * Not passable - red */
+			VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
+		}
 
-	/* Paint the box green if it is reachable,
-	 * yellow if it can be entered but is too far,
-	 * or red if it cannot be entered ever. */
-	if (base < -QuantToModel(PATHFINDING_MAX_FALL)) {
-		VectorSet(ent.color, 0.0, 0.0, 0.0); /* Can't enter - black */
-	} else {
-		/* Can reach - green
-		 * Passable but unreachable - yellow
-		 * Not passable - red */
-		VectorSet(ent.color, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
+		/* Set the box height to the ceiling value of the cell. */
+		height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
+		ent.oldorigin[2] = height;
+		ent.oldorigin[0] = TUneed;
+		ent.oldorigin[1] = TUhave;
+
+		ent.alpha = 0.25;
+
+		/* add it */
+		R_AddEntity(&ent);
 	}
-
-	/* Set the box height to the ceiling value of the cell. */
-	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
-	ent.oldorigin[2] = height;
-	ent.oldorigin[0] = TUneed;
-	ent.oldorigin[1] = TUhave;
-
-	ent.alpha = 0.25;
-
-	/* add it */
-	R_AddEntity(&ent);
 }
 
 /**

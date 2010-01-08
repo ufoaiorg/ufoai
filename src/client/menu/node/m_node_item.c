@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cp_campaign.h"
+#include "../../cl_game.h"
 #include "../../renderer/r_draw.h"
 
 #define EXTRADATA(node) (node->u.model)
@@ -72,14 +72,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 			MN_DrawModelNode(node, item.t->model);
 		}
 	} else {
-		/** @todo remove this - this is campaign mode only */
-		const aircraft_t *aircraft = AIR_GetAircraft(ref);
-		if (aircraft) {
-			assert(aircraft->tech);
-			MN_DrawModelNode(node, aircraft->tech->mdl);
-		} else {
-			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", ref);
-		}
+		GAME_DisplayItemInfo(node, ref);
 	}
 }
 

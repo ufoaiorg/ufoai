@@ -28,9 +28,9 @@ window popup
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*(abstractscrollbar)popup_text_scroll@fullsize <fullsize>
-			*(abstractscrollbar)popup_text_scroll@current <viewpos>
-			*(abstractscrollbar)popup_text_scroll@viewsize <viewsize>
+			*(abstractscrollbar)popup_text_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)popup_text_scroll@current = <viewpos>
+			*(abstractscrollbar)popup_text_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -42,7 +42,7 @@ window popup
 		viewsize	8
 		fullsize	8
 		hidewhenunused true
-		onChange	{ *popup_text@viewpos <current> }
+		onChange	{ *popup_text@viewpos = <current> }
 	}
 	button button_ok
 	{
@@ -90,9 +90,9 @@ window popup_list
 		tabwidth	100
 		rows		6
 		onViewChange	{
-			*(abstractscrollbar)popup_list_scroll@fullsize <fullsize>
-			*(abstractscrollbar)popup_list_scroll@current <viewpos>
-			*(abstractscrollbar)popup_list_scroll@viewsize <viewsize>
+			*(abstractscrollbar)popup_list_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)popup_list_scroll@current = <viewpos>
+			*(abstractscrollbar)popup_list_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar popup_list_scroll {
@@ -103,7 +103,7 @@ window popup_list
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *popup_list@viewpos <current> }
+		onChange	{ *popup_list@viewpos = <current> }
 	}
 
 	button bt_ok
@@ -144,9 +144,9 @@ window popup_button
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*(abstractscrollbar)popup_text_scroll@fullsize <fullsize>
-			*(abstractscrollbar)popup_text_scroll@current <viewpos>
-			*(abstractscrollbar)popup_text_scroll@viewsize <viewsize>
+			*(abstractscrollbar)popup_text_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)popup_text_scroll@current = <viewpos>
+			*(abstractscrollbar)popup_text_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -158,7 +158,7 @@ window popup_button
 		viewsize	8
 		fullsize	8
 		hidewhenunused true
-		onChange	{ *popup_text@viewpos <current> }
+		onChange	{ *popup_text@viewpos = <current> }
 	}
 
 	button popup_button_1

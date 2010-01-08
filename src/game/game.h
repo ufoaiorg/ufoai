@@ -264,7 +264,7 @@ typedef struct {
 
 	int (EXPORT *ClientAction) (player_t * client);
 	void (EXPORT *ClientEndRound) (player_t * client, qboolean quiet);
-	void (EXPORT *ClientTeamInfo) (player_t * client);
+	void (EXPORT *ClientTeamInfo) (const player_t * client);
 	int (EXPORT *ClientGetTeamNum) (const player_t * client);
 	int (EXPORT *ClientGetTeamNumPref) (const player_t * client);
 	qboolean (EXPORT *ClientIsReady) (const player_t * client);

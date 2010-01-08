@@ -76,9 +76,6 @@ namespace model
 			/**
 			 * @brief Return the skins associated with the given model.
 			 *
-			 * @param
-			 * The full pathname of the model, as given by the "model" key in the skin definition.
-			 *
 			 * @return
 			 * A vector of strings, each identifying the name of a skin which is associated with the
 			 * given model. The vector may be empty as a model does not require any associated skins.

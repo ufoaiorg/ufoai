@@ -37,47 +37,7 @@ window iaircraft
 	// base info
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "500 32"
-		textalign	cl
-		padding	8
-		font	f_big
-	}
-
-	string base_txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string base_txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
-	}
-
-	// ==================
-	// navigation
-	// ==================
-
-	custombutton bt_continue
-	{
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Back"
-		pos		"950 20"
-		icon	"return"
-		onClick	{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	panel tab_background {
@@ -140,9 +100,9 @@ window iaircraft
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onViewChange {
-			*(abstractscrollbar)aircraft_list_scroll@fullsize <fullsize>
-			*(abstractscrollbar)aircraft_list_scroll@viewsize <viewsize>
-			*(abstractscrollbar)aircraft_list_scroll@current <viewpos>
+			*(abstractscrollbar)aircraft_list_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)aircraft_list_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)aircraft_list_scroll@current = <viewpos>
 		}
 		onClick {
 			cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line

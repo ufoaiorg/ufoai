@@ -1978,8 +1978,6 @@ void B_SelectBase (const base_t *base)
 		 * that means that player wants to quit this mode */
 		if (ccs.mapAction == MA_NEWBASE) {
 			MAP_ResetAction();
-			if (!radarOverlayWasSet)
-				MAP_DeactivateOverlay("radar");
 			return;
 		}
 
@@ -1994,7 +1992,7 @@ void B_SelectBase (const base_t *base)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
-		MN_PushMenu("bases", NULL);
+		MN_PushWindow("bases", NULL);
 		B_SetCurrentSelectedBase(base);
 	}
 
@@ -2290,46 +2288,46 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 		switch (building->buildingType) {
 		case B_LAB:
 			if (RS_ResearchAllowed(base))
-				MN_PushMenu("research", NULL);
+				MN_PushWindow("research", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_HOSPITAL:
 			if (HOS_HospitalAllowed(base))
-				MN_PushMenu("hospital", NULL);
+				MN_PushWindow("hospital", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ALIEN_CONTAINMENT:
 			if (AC_ContainmentAllowed(base))
-				MN_PushMenu("aliencont", NULL);
+				MN_PushWindow("aliencont", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_QUARTERS:
 			if (E_HireAllowed(base))
-				MN_PushMenu("employees", NULL);
+				MN_PushWindow("employees", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_WORKSHOP:
 			if (PR_ProductionAllowed(base))
-				MN_PushMenu("production", NULL);
+				MN_PushWindow("production", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_DEFENCE_LASER:
 		case B_DEFENCE_MISSILE:
-			MN_PushMenu("basedefence", NULL);
+			MN_PushWindow("basedefence", NULL);
 			break;
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (!AIR_AircraftAllowed(base)) {
 				UP_OpenWith(building->pedia);
 			} else if (base->numAircraftInBase) {
-				MN_PushMenu("aircraft", NULL);
+				MN_PushWindow("aircraft", NULL);
 			} else {
-				MN_PushMenu("buyaircraft", NULL);
+				MN_PushWindow("buyaircraft", NULL);
 				/* transfer is only possible when there are at least two bases */
 				if (ccs.numBases > 1)
 					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
@@ -2340,7 +2338,7 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 		case B_STORAGE:
 		case B_ANTIMATTER:
 			if (BS_BuySellAllowed(base))
-				MN_PushMenu("market", NULL);
+				MN_PushWindow("market", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;

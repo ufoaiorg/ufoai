@@ -185,8 +185,8 @@ tech rs_baselaser
 		tech rs_laser
 	}
 	time	3000
-	image	techs/base_defence_laser_turret
 	provides baselaser
+	mdl		"objects/laserturret/laserturret"	
 	producetime	150
 }
 
@@ -335,7 +335,8 @@ tech rs_alien_breathing
 	}
 
 	time		2500
-	image	techs/alien_breathing
+	image		techs/alien_breathing
+	provides	"brapparatus"
 }
 
 // TODO check if we _really_ need the rs_item_brapparatus tech ... rs_alien_breathing seems to fulfill all the same function (except for the "provide" entry).
@@ -4299,8 +4300,7 @@ tech rs_base_AA51_launcher
 	time		0
 	producetime	200
 
-	// TODO: Add a model for this
-	// image	"techs/base_AA51_launcher"
+	mdl			"objects/samlauncher/samlauncher"
 }
 
 tech rs_base_ammo_AA51
@@ -4331,7 +4331,7 @@ tech rs_craft_el_raven
 	time		0
 	producetime	100
 
-	mdl	"craft_item_raven_ecm"
+	mdl	"aircraft/craft_item_raven_ecm/ecm"
 }
 
 tech rs_craft_shield_polymer
@@ -4348,7 +4348,7 @@ tech rs_craft_shield_polymer
 	time		0
 	producetime	140
 
-	mdl	"craft_shield_polymer"
+	mdl	"aircraft/craft_arm_poly/polymer"
 }
 
 tech rs_craft_shield_plating
@@ -4384,7 +4384,7 @@ tech rs_craft_shield_plating
 	time		3000
 	producetime	240
 
-	mdl	"craft_shield_plating"
+	mdl	"aircraft/craft_arm_plate/plating"
 }
 
 tech rs_craft_alien_astrogation
@@ -4422,7 +4422,7 @@ tech rs_craft_alien_astrogation
 	time		3500
 	producetime	-1
 
-	mdl		craft_item_astrogation
+	mdl		"aircraft/craft_item_astro/astrogation"
 }
 
 tech rs_craft_alien_propulsion
@@ -4459,7 +4459,7 @@ tech rs_craft_alien_propulsion
 	time		3500
 	producetime	-1
 
-	mdl		craft_item_propulsion
+	mdl		"aircraft/craft_item_prop/propulsion"
 }
 
 tech rs_craft_alien_detection
@@ -4496,7 +4496,7 @@ tech rs_craft_alien_detection
 	time		3500
 	producetime	-1
 
-	mdl		"craft_item_detector"
+	mdl		"aircraft/craft_item_det/detection"
 }
 
 tech rs_craft_weapon_alc
@@ -4584,7 +4584,7 @@ tech rs_craft_ammo_shiva_1
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	// image	"techs/craft_ammo_shiva_1"
+	mdl				"aircraft/craft_weapon_shiva/ammo_api"
 }
 
 tech rs_craft_ammo_shiva_2
@@ -4605,7 +4605,7 @@ tech rs_craft_ammo_shiva_2
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	// image	"techs/craft_ammo_shiva_2"
+	mdl				"aircraft/craft_weapon_shiva/ammo_hei"
 }
 
 tech rs_craft_weapon_sparrowhawk
@@ -4727,7 +4727,6 @@ tech rs_craft_weapon_particle
 	producetime	150
 
 	mdl		"aircraft/craft_weapon_particle/pbw"
-	//image	"techs/craft_weapon_particle"
 }
 
 tech rs_craft_ammo_particle
@@ -4754,7 +4753,7 @@ tech rs_craft_el_targeting
 	time		0
 	producetime	571
 
-	mdl		craft_item_target
+	mdl		"aircraft/craft_item_target/craft_item_target"
 }
 
 tech rs_craft_el_fuelpod

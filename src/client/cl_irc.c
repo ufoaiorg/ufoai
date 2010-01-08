@@ -461,7 +461,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 	MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	MN_TextScrollEnd("irc.irc_data");
 
-	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveMenuName(), "irc")) {
+	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveWindowName(), "irc")) {
 		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 		MP_AddChatMessage(appendString);
 		return qtrue;
@@ -772,7 +772,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/** get the ip and port into the menu */
 			MN_ExecuteConfunc("multiplayer_invite_server_info %s %s", serverIPAndPort, port);
 
-			MN_PushMenu("multiplayer_invite", NULL);
+			MN_PushWindow("multiplayer_invite", NULL);
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && strcmp(params, irc_defaultChannel->string)) {
@@ -781,14 +781,14 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (strcmp(MN_GetActiveMenuName(), "irc") && strcmp(MN_GetActiveMenuName(), mn_hud->string)) {
+				if (strcmp(MN_GetActiveWindowName(), "irc") && strcmp(MN_GetActiveWindowName(), mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
-					MN_PushMenu("chat_popup", NULL);
+					MN_PushWindow("chat_popup", NULL);
 				}
 			}
 		}
 
-		if (MN_GetActiveMenu() && strcmp(MN_GetActiveMenuName(), "irc")) {
+		if (MN_GetActiveWindow() && strcmp(MN_GetActiveWindowName(), "irc")) {
 			Com_Printf("%c<%s@lobby> %s\n", COLORED_GREEN, nick, trailing);
 		}
 	}
@@ -1644,7 +1644,7 @@ static void Irc_Client_Invite_f (void)
 	}
 
 	if (!chan) {
-		MN_PushMenu("irc_popup", NULL);
+		MN_PushWindow("irc_popup", NULL);
 		return;
 	}
 
@@ -1751,13 +1751,13 @@ static void Irc_UserRightClick_f (void)
  */
 static void Irc_Input_Activate_f (void)
 {
-	/* in case of a failure we need this in MN_PopMenu */
+	/* in case of a failure we need this in MN_PopWindow */
 	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
 		MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
-		MN_PopMenu(qfalse);
-		MN_PushMenu("irc_popup", NULL);
+		MN_PopWindow(qfalse);
+		MN_PushWindow("irc_popup", NULL);
 		/* cancel any active editing */
 		return;
 	}

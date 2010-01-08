@@ -884,7 +884,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), transfer->destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 }
 
 /**
@@ -954,7 +954,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 		LIST_AddString(&transfer, string);
 	}
 	MN_RegisterLinkedListText(TEXT_LIST, transfer);
-	MN_PushMenu("popup_transferbaselist", NULL);
+	MN_PushWindow("popup_transferbaselist", NULL);
 }
 
 /**
@@ -1096,7 +1096,7 @@ static void TR_TransferStart_f (void)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 }
 
 /**

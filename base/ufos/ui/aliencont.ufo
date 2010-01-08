@@ -60,43 +60,7 @@ window aliencont
 	// Base header
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "500 32"
-		textalign	cl
-		padding	8
-		font	f_big
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
-	}
-
-	custombutton bt_continue
-	{
-		tooltip	"_Back to baseview"
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		pos		"950 20"
-		icon	"return"
-		onClick	{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================
@@ -104,11 +68,11 @@ window aliencont
 	// ==================
 
 	confunc aliencont_killb {
-		*bt_alc_killaliens@disabled false
+		*bt_alc_killaliens@disabled = false
 	}
 
 	confunc aliencont_killg {
-		*bt_alc_killaliens@disabled true
+		*bt_alc_killaliens@disabled = true
 	}
 
 	// ==================
@@ -119,10 +83,10 @@ window aliencont
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 12 ) {
-			*ac.ac<cvar:i>@image ui/hosp_button_green
-			*ac.ac<cvar:i>.icon@image	icons/health_unused
-			*ac.ac<cvar:i>.kill_zone@invis true
-			*ac.ac<cvar:i>.autopsy_zone@invis true
+			*ac.ac<cvar:i>@image = ui/hosp_button_green
+			*ac.ac<cvar:i>.icon@image = icons/health_unused
+			*ac.ac<cvar:i>.kill_zone@invis = true
+			*ac.ac<cvar:i>.autopsy_zone@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
@@ -132,13 +96,13 @@ window aliencont
 	 * @param[in] <1> index of the field
 	 */
 	confunc aliencontneedautopsy {
-		*ac.ac<1>@image ui/hosp_button_light
-		*ac.ac<1>.icon@image icons/surgery
-		*ac.ac<1>.icon@tooltip "_Start autopsy"
+		*ac.ac<1>@image = ui/hosp_button_light
+		*ac.ac<1>.icon@image = icons/surgery
+		*ac.ac<1>.icon@tooltip = "_Start autopsy"
 
 		/* hide kill */
-		*ac.ac<1>.kill_zone@invis true
-		*ac.ac<1>.autopsy_zone@invis false
+		*ac.ac<1>.kill_zone@invis = true
+		*ac.ac<1>.autopsy_zone@invis = false
 	}
 
 	/**
@@ -146,13 +110,13 @@ window aliencont
 	 */
 	confunc aliencontkill
 	{
-		*ac.ac<1>.icon@image icons/kill
-		*ac.ac<1>.icon@tooltip "_Kill this alien"
-		*ac.ac<1>@image ui/hosp_button_light
+		*ac.ac<1>.icon@image = icons/kill
+		*ac.ac<1>.icon@tooltip = "_Kill this alien"
+		*ac.ac<1>@image = ui/hosp_button_light
 
 		/* hide_autopsy */
-		*ac.ac<1>.kill_zone@invis false
-		*ac.ac<1>.autopsy_zone@invis true
+		*ac.ac<1>.kill_zone@invis = false
+		*ac.ac<1>.autopsy_zone@invis = true
 	}
 
 	panel ac {

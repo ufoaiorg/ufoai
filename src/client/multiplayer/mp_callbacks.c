@@ -51,7 +51,7 @@ void CL_Connect_f (void)
 	}
 
 	if (Cvar_GetInteger("mn_server_need_password")) {
-		MN_PushMenu("serverpassword", NULL);
+		MN_PushWindow("serverpassword", NULL);
 		return;
 	}
 
@@ -216,6 +216,42 @@ static void CL_TeamNum_f (void)
 	CL_SelectTeam_Init_f();
 }
 
+/**
+ * @brief Autocomplete function for some network functions
+ * @sa Cmd_AddParamCompleteFunction
+ * @todo Extend this for all the servers on the server browser list
+ */
+static int CL_CompleteNetworkAddress (const char *partial, const char **match)
+{
+	int i, matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	const size_t len = strlen(partial);
+	if (!len) {
+		/* list them all if there was no parameter given */
+		for (i = 0; i < MAX_BOOKMARKS; i++) {
+			const char *adrStr = Cvar_GetString(va("adr%i", i));
+			if (adrStr[0] != '\0')
+				Com_Printf("%s\n", adrStr);
+		}
+		return 0;
+	}
+
+	localMatch[matches] = NULL;
+
+	/* search all matches and fill the localMatch array */
+	for (i = 0; i < MAX_BOOKMARKS; i++) {
+		const char *adrStr = Cvar_GetString(va("adr%i", i));
+		if (adrStr[0] != '\0' && !strncmp(partial, adrStr, len)) {
+			Com_Printf("%s\n", adrStr);
+			localMatch[matches++] = adrStr;
+			if (matches >= MAX_COMPLETE)
+				break;
+		}
+	}
+
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+}
+
 void MP_CallbacksInit (void)
 {
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
@@ -228,6 +264,13 @@ void MP_CallbacksInit (void)
 	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
 	Cmd_AddCommand("mp_team_update", MP_UpdateMenuParameters_f, "");
 	Cmd_AddCommand("mp_team_select", MP_TeamSelect_f, "");
+	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
+	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
+	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
+	Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
+	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
+	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
+	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
 }
 
 void MP_CallbacksShutdown (void)
@@ -240,4 +283,9 @@ void MP_CallbacksShutdown (void)
 	Cmd_RemoveCommand("team_comments");
 	Cmd_RemoveCommand("mp_team_update");
 	Cmd_RemoveCommand("mp_team_select");
+	Cmd_RemoveCommand("rcon");
+	Cmd_RemoveCommand("pingservers");
+	Cmd_RemoveCommand("disconnect");
+	Cmd_RemoveCommand("connect");
+	Cmd_RemoveCommand("reconnect");
 }

@@ -154,6 +154,31 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
 }
 
 /**
+ * Get the number of param from an execution context
+ * @param[in] context The execution context
+ * @return The requested param
+ */
+int MN_GetParamNumber (const menuCallContext_t *context)
+{
+	if (context->useCmdParam)
+		return Cmd_Argc();
+	return 0;
+}
+
+/**
+ * Get a param from an execution context
+ * @param[in] context The execution context
+ * @param[in] paramID The ID of the requested param (first param is integer 1)
+ * @return The requested param
+ */
+const char* MN_GetParam (const menuCallContext_t *context, int paramID)
+{
+	if (context->useCmdParam)
+		return Cmd_Argv(paramID);
+	return "";
+}
+
+/**
  * @brief Replace injection identifiers (e.g. &lt;eventParam&gt;) by a value
  * @note The injection identifier can be every node value - e.g. &lt;image&gt; or &lt;width&gt;.
  * It's also possible to do something like
@@ -161,7 +186,7 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
  * cmd "set someCvar &lt;min&gt;/&lt;max&gt;"
  * @endcode
  */
-const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam, const char* input, qboolean addNewLine)
+const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const menuCallContext_t *context)
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
@@ -189,7 +214,7 @@ const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam
 					const value_t *property;
 					const char* string;
 					int l;
-					MN_ReadNodePath(path, source, &node, &property);
+					MN_ReadNodePath(path, context->source, &node, &property);
 					if (!node) {
 						Com_Printf("MN_GenInjectedString: Node '%s' wasn't found; '' returned\n", path);
 						string = "";
@@ -212,15 +237,15 @@ const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam
 
 				/* source path injection */
 				} else if (!strncmp(propertyName, "path:", 5)) {
-					if (source) {
+					if (context->source) {
 						const char *command = propertyName + 5;
 						const menuNode_t *node = NULL;
 						if (!strcmp(command, "root"))
-							node = source->root;
+							node = context->source->root;
 						else if (!strcmp(command, "this"))
-							node = source;
+							node = context->source;
 						else if (!strcmp(command, "parent"))
-							node = source->parent;
+							node = context->source->parent;
 						else
 							Com_Printf("MN_GenCommand: Command '%s' for path injection unknown\n", command);
 
@@ -236,14 +261,14 @@ const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam
 				/* no prefix */
 				} else {
 					/* source property injection */
-					if (source) {
+					if (context->source) {
 						/* find property definition */
-						const value_t *property = MN_GetPropertyFromBehaviour(source->behaviour, propertyName);
+						const value_t *property = MN_GetPropertyFromBehaviour(context->source->behaviour, propertyName);
 						if (property) {
 							const char* value;
 							int l;
 							/* inject the property value */
-							value = MN_GetStringFromNodeProperty(source, property);
+							value = MN_GetStringFromNodeProperty(context->source, property);
 							if (value == NULL)
 								value = "";
 							l = snprintf(cout, length, "%s", value);
@@ -255,11 +280,11 @@ const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam
 					}
 
 					/* param injection */
-					if (useCmdParam) {
+					if (MN_GetParamNumber(context) != 0) {
 						int arg;
 						const int checked = sscanf(propertyName, "%d", &arg);
-						if (checked == 1 && Cmd_Argc() >= arg) {
-							const int l = snprintf(cout, length, "%s", Cmd_Argv(arg));
+						if (checked == 1 && arg >= 1 && arg <= MN_GetParamNumber(context)) {
+							const int l = snprintf(cout, length, "%s", MN_GetParam(context, arg));
 							cout += l;
 							cin = next;
 							length -= l;
@@ -281,10 +306,11 @@ const char* MN_GenInjectedString (const menuNode_t* source, qboolean useCmdParam
 
 	*cout++ = '\0';
 
-	return cmd;
+	/* copy the result into a free va slot */
+	return va("%s", cmd);
 }
 
-static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
+static inline void MN_ExecuteSetAction (const menuAction_t* action, const menuCallContext_t *context)
 {
 	const char* path;
 	menuNode_t *node;
@@ -311,9 +337,9 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		if (left->type == EA_VALUE_CVARNAME)
 			cvarName = left->d.terminal.d1.string;
 		else
-			cvarName = MN_GenInjectedString(source, useCmdParam, left->d.terminal.d1.string, qfalse);
+			cvarName = MN_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
 
-		textValue = MN_GetStringFromExpression(right, source);
+		textValue = MN_GetStringFromExpression(right, context);
 
 		if (textValue[0] == '_')
 			textValue = _(textValue + 1);
@@ -326,17 +352,17 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	if (left->type == EA_VALUE_PATHPROPERTY)
 		path = left->d.terminal.d1.string;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-		path = MN_GenInjectedString(source, useCmdParam, left->d.terminal.d1.string, qfalse);
+		path = MN_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
 	else
 		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
 
-	MN_ReadNodePath(path, source, &node, &property);
+	MN_ReadNodePath(path, context->source, &node, &property);
 	if (!node) {
-		Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
+		Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(context->source));
 		return;
 	}
 	if (!property) {
-		Com_Printf("MN_ExecuteSetAction: property \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
+		Com_Printf("MN_ExecuteSetAction: property \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(context->source));
 		return;
 	}
 
@@ -349,12 +375,12 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	/* else it is an expression */
 	else {
 		/** @todo we should improve if when the prop is a boolean/int/float */
-		const char* value = MN_GetStringFromExpression(right, source);
+		const char* value = MN_GetStringFromExpression(right, context);
 		MN_NodeSetProperty(node, property, value);
 	}
 }
 
-static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
+static void MN_ExecuteInjectedActions(const menuAction_t* firstAction, menuCallContext_t *context);
 
 /**
  * @brief Execute an action from a source
@@ -362,7 +388,7 @@ static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdP
  * @param[in] useCmdParam If true, inject every where its possible command line param
  * @param[in] action Action to execute
  */
-static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
+static void MN_ExecuteInjectedAction (const menuAction_t* action, menuCallContext_t *context)
 {
 	switch (action->type) {
 	case EA_NULL:
@@ -372,7 +398,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	case EA_CMD:
 		/* execute a command */
 		if (action->d.terminal.d1.string)
-			Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->d.terminal.d1.string, qtrue));
+			Cbuf_AddText(MN_GenInjectedString(action->d.terminal.d1.string, qtrue, context));
 		break;
 
 	case EA_CALL:
@@ -381,18 +407,29 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 			menuNode_t* callNode = NULL;
 			const value_t* callProperty = NULL;
 			const char* path = action->d.nonTerminal.left->d.terminal.d1.constString;
-			MN_ReadNodePath(path, source, &callNode, &callProperty);
+			MN_ReadNodePath(path, context->source, &callNode, &callProperty);
+
+			if (callNode == NULL) {
+				Com_Printf("MN_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, MN_GetPath(context->source));
+				return;
+			}
 
 			if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
+				menuCallContext_t newContext;
 				menuAction_t *actionsRef = NULL;
 				if (callProperty == NULL)
 					actionsRef = callNode->onClick;
 				else
 					actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
-				MN_ExecuteInjectedActions(callNode, useCmdParam, actionsRef);
+				newContext.source = callNode;
+				newContext.useCmdParam = context->useCmdParam;
+				MN_ExecuteInjectedActions(actionsRef, &newContext);
 			} else if (callProperty->type == V_UI_NODEMETHOD) {
+				menuCallContext_t newContext;
 				menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
-				func(callNode);
+				newContext.source = callNode;
+				newContext.useCmdParam = context->useCmdParam;
+				func(callNode, &newContext);
 			} else {
 				Com_Printf("MN_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, MN_GetPath(callNode));
 				return;
@@ -401,7 +438,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_ASSIGN:
-		MN_ExecuteSetAction(source, useCmdParam, action);
+		MN_ExecuteSetAction(action, context);
 		break;
 
 	case EA_DELETE:
@@ -414,8 +451,8 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	case EA_WHILE:
 		{
 			int loop = 0;
-			while (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
-				MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
+			while (MN_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
+				MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 				if (loop > 1000) {
 					Com_Printf("MN_ExecuteInjectedAction: Infinite loop. Force breaking 'while'\n");
 					break;
@@ -426,20 +463,20 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		}
 
 	case EA_IF:
-		if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
-			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
+		if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
+			MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 			return;
 		}
 		action = action->next;
 		while (action && action->type == EA_ELIF) {
-			if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, source)) {
-				MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
+			if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
+				MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 				return;
 			}
 			action = action->next;
 		}
 		if (action && action->type == EA_ELSE) {
-			MN_ExecuteInjectedActions(source, useCmdParam, action->d.nonTerminal.right);
+			MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 		}
 		break;
 
@@ -453,7 +490,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	}
 }
 
-static void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
+static void MN_ExecuteInjectedActions (const menuAction_t* firstAction, menuCallContext_t *context)
 {
 	static int callnumber = 0;
 	const menuAction_t *action;
@@ -462,7 +499,7 @@ static void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmd
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
-		MN_ExecuteInjectedAction(source, useCmdParam, action);
+		MN_ExecuteInjectedAction(action, context);
 	}
 	callnumber--;
 }
@@ -472,16 +509,23 @@ static void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmd
  */
 void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction_t* firstAction)
 {
-	MN_ExecuteInjectedActions(source, qtrue, firstAction);
+	menuCallContext_t context;
+	context.source = source;
+	context.useCmdParam = qtrue;
+	MN_ExecuteInjectedActions(firstAction, &context);
 }
 
 void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* firstAction)
 {
-	MN_ExecuteInjectedActions(source, qfalse, firstAction);
+	menuCallContext_t context;
+	context.source = source;
+	context.useCmdParam = qfalse;
+	MN_ExecuteInjectedActions(firstAction, &context);
 }
 
 /**
  * @brief Test if a string use an injection syntax
+ * @param[in] string The string to check for injection
  * @return True if we find the following syntax in the string "<" {thing without space} ">"
  */
 qboolean MN_IsInjectedString (const char *string)
@@ -508,6 +552,7 @@ qboolean MN_IsInjectedString (const char *string)
 
 /**
  * @brief Free a string property if it is allocated into mn_dynStringPool
+ * @param[in,out] pointer The pointer to the data that should be freed
  * @sa mn_dynStringPool
  */
 void MN_FreeStringProperty (void* pointer)
@@ -562,16 +607,46 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 }
 
 /**
- * @brief add a call of a function into a nodfe event
+ * @brief Add a callback of a function into a node event. There can be more than on listener.
+ * @param[in,out] node The menu menu to add the listener to.
+ * @param[in] property The property of the node to add the listener to.
+ * @param[in] functionNode The node of the listener callback.
+ */
+void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *functionNode)
+{
+	menuAction_t *lastAction;
+	menuAction_t *action;
+	menuAction_t *value;
+
+	/* create the call action */
+	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
+	value = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
+	value->d.terminal.d1.constString = Mem_PoolStrDup(MN_GetPath(functionNode), mn_sysPool, 0);
+	value->next = NULL;
+	action->type = EA_LISTENER;
+	action->d.nonTerminal.left = value;
+	/** @todo It is a hack, we should remove that */
+	action->d.terminal.d2.data = &functionNode->onClick;
+	action->next = NULL;
+
+	/* insert the action */
+	lastAction = *(menuAction_t**)((char*)node + property->ofs);
+	if (lastAction) {
+		while (lastAction->next)
+			lastAction = lastAction->next;
+		lastAction->next = action;
+	} else
+		*(menuAction_t**)((char*)node + property->ofs) = action;
+}
+
+/**
+ * @brief add a call of a function into a node event
  */
 static void MN_AddListener_f (void)
 {
 	menuNode_t *node;
 	menuNode_t *function;
 	const value_t *property;
-	menuAction_t *action;
-	menuAction_t *value;
-	menuAction_t *lastAction;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <pathnode@event> <pathnode>\n", Cmd_Argv(0));
@@ -594,38 +669,60 @@ static void MN_AddListener_f (void)
 		return;
 	}
 
-	/* create the call action */
-	/** @todo merge that into a function */
-	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	value = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	value->d.terminal.d1.constString = Mem_PoolStrDup(Cmd_Argv(2), mn_sysPool, 0);
-	value->next = NULL;
-	action->type = EA_LISTENER;
-	action->d.nonTerminal.left = value;
-	/** @todo It is a hack, we should remove that */
-	action->d.terminal.d2.data = &function->onClick;
-	action->next = NULL;
-
-	/* insert the action */
-	lastAction = *(menuAction_t**)((char*)node + property->ofs);
-	if (lastAction) {
-		while (lastAction->next)
-			lastAction = lastAction->next;
-		lastAction->next = action;
-	} else
-		*(menuAction_t**)((char*)node + property->ofs) = action;
+	MN_AddListener(node, property, function);
 }
 
 /**
- * @brief add a call of a function from a node event
+ * @brief Remove a function callback from a node event. There can be more than on listener.
+ * @param[in,out] node The node to remove the listener from.
+ * @param[in] property The property of the node to remove the listener from.
+ * @param[in] functionNode The node of the listener callback.
+ */
+void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *functionNode)
+{
+	void *data;
+	menuAction_t *lastAction;
+
+	/* data we must remove */
+	data = (void*) &functionNode->onClick;
+
+	/* remove the action */
+	lastAction = *(menuAction_t**)((char*)node + property->ofs);
+	if (lastAction) {
+		menuAction_t *tmp = NULL;
+		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.data == data) {
+			tmp = lastAction;
+			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
+		} else {
+			while (lastAction->next) {
+				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.data == data)
+					break;
+				lastAction = lastAction->next;
+			}
+			if (lastAction->next) {
+				tmp = lastAction->next;
+				lastAction->next = lastAction->next->next;
+			}
+		}
+		if (tmp) {
+			menuAction_t* value = tmp->d.nonTerminal.left;
+			Mem_Free(value->d.terminal.d1.data);
+			Mem_Free(value);
+			Mem_Free(tmp);
+		}
+		else
+			Com_Printf("MN_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
+	}
+}
+
+/**
+ * @brief Remove a function callback from a node event
  */
 static void MN_RemoveListener_f (void)
 {
 	menuNode_t *node;
 	menuNode_t *function;
 	const value_t *property;
-	void *data;
-	menuAction_t *lastAction;
 
 	if (Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <pathnode@event> <pathnode>\n", Cmd_Argv(0));
@@ -648,37 +745,7 @@ static void MN_RemoveListener_f (void)
 		return;
 	}
 
-	/* data we must remove */
-	data = (void*) &function->onClick;
-
-	/* remove the action */
-	lastAction = *(menuAction_t**)((char*)node + property->ofs);
-	if (lastAction) {
-		menuAction_t *tmp = NULL;
-		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.data == data) {
-			tmp = lastAction;
-			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
-		} else {
-			while (lastAction->next) {
-				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.data == data)
-					break;
-				lastAction = lastAction->next;
-			}
-			if (lastAction->next) {
-				tmp = lastAction->next;
-				lastAction->next = lastAction->next->next;
-			}
-		}
-		if (tmp) {
-			/** @todo merge that into a function */
-			menuAction_t* value = tmp->d.nonTerminal.left;
-			Mem_Free(value->d.terminal.d1.data);
-			Mem_Free(value);
-			Mem_Free(tmp);
-		}
-		else
-			Com_Printf("MN_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
-	}
+	MN_RemoveListener(node, property, function);
 }
 
 void MN_InitActions (void)

@@ -1,0 +1,51 @@
+
+component panel myCrazyComponent {
+	{
+		bgcolor		"0 1 0 0.5"
+		size		"80 50"
+	}
+	
+	string text {
+		size		"80 50"
+		string		""
+	}
+	
+	// this confunc is only called when his window is into the stack
+	// if no instance of this component is into the stack, nothing is called
+	confunc myCrazyComponentSetter {
+		*node:parent.text@string = <1>
+		cmd "echo \"<path:this> <1>\""
+	}
+}
+
+window unittest_inheritedConfunc {
+	{
+		size		"120 330"
+		bgcolor		"0 0 0 1"
+	}
+
+	// all this tree component listen the same confunc
+
+	myCrazyComponent foo1 { pos "10 10"}
+	myCrazyComponent foo2 { pos "10 110"}
+	myCrazyComponent foo3 {
+		{ pos "10 220"}
+		// we can override it
+		confunc myCrazyComponentSetter {
+			*node:parent.text@string = ( <1> * 2 )
+			cmd "echo \"<path:this> <1>\""
+		}
+	}
+
+	vscrollbar moveMyValue {
+		image		ui/scrollbar_v_green
+		pos			"100 0"
+		height		"330"
+		current		0
+		viewsize	0
+		fullsize	50
+		onChange	{
+			cmd "myCrazyComponentSetter <current>"
+		}
+	}
+}

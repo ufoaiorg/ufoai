@@ -55,6 +55,7 @@
 #include "convert.h"
 #include "imaterial.h"
 
+#include "gtkutil/image.h"
 #include "gtkutil/menu.h"
 #include "gtkutil/nonmodal.h"
 #include "gtkutil/cursor.h"
@@ -103,11 +104,6 @@ void TextureGroups_addDirectory (TextureGroups& groups, const char* directory)
 	groups.insert(directory);
 }
 typedef ReferenceCaller1<TextureGroups, const char*, TextureGroups_addDirectory> TextureGroupsAddDirectoryCaller;
-
-namespace
-{
-	bool g_TextureBrowser_fixedSize = false;
-}
 
 class DeferredAdjustment
 {
@@ -163,9 +159,6 @@ typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport> 
 void TextureBrowser_showShadersExport (const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport> TextureBrowserShowShadersExport;
 
-void TextureBrowser_fixedSize (const BoolImportCallback& importer);
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_fixedSize> TextureBrowserFixedSizeExport;
-
 class TextureBrowser
 {
 	public:
@@ -184,7 +177,6 @@ class TextureBrowser
 
 		ToggleItem m_hideunused_item;
 		ToggleItem m_showshaders_item;
-		ToggleItem m_fixedsize_item;
 
 		guint m_sizeHandler;
 		guint m_exposeHandler;
@@ -206,13 +198,16 @@ class TextureBrowser
 		// if false, all the shaders in memory are displayed
 		bool m_hideUnused;
 		bool m_rmbSelected;
+		// If true, textures are resized to an uniform size when displayed in the texture browser.
+		// If false, textures are displayed in proportion to their pixel size.
+		bool m_resizeTextures;
 		// The uniform size (in pixels) that textures are resized to when m_resizeTextures is true.
 		int m_uniformTextureSize;
 		// Return the display width of a texture in the texture browser
 		int getTextureWidth (const qtexture_t* tex)
 		{
 			int width;
-			if (!g_TextureBrowser_fixedSize) {
+			if (!m_resizeTextures) {
 				// Don't use uniform size
 				width = (int) (tex->width * ((float) m_textureScale / 100));
 			} else if (tex->width >= tex->height) {
@@ -228,7 +223,7 @@ class TextureBrowser
 		int getTextureHeight (const qtexture_t* tex)
 		{
 			int height;
-			if (!g_TextureBrowser_fixedSize) {
+			if (!m_resizeTextures) {
 				// Don't use uniform size
 				height = (int) (tex->height * ((float) m_textureScale / 100));
 			} else if (tex->height >= tex->width) {
@@ -243,11 +238,11 @@ class TextureBrowser
 
 		TextureBrowser () :
 			m_texture_scroll(0), m_hideunused_item(TextureBrowserHideUnusedExport()), m_showshaders_item(
-					TextureBrowserShowShadersExport()), m_fixedsize_item(TextureBrowserFixedSizeExport()),
-					m_heightChanged(true), m_originInvalid(true),
+					TextureBrowserShowShadersExport()), m_heightChanged(true), m_originInvalid(true),
 					m_scrollAdjustment(TextureBrowser_scrollChanged, this), color_textureback(0.25f, 0.25f, 0.25f),
 					m_mouseWheelScrollIncrement(64), m_textureScale(50), m_showShaders(true), m_showTextureScrollbar(
-							true), m_hideUnused(false), m_rmbSelected(false), m_uniformTextureSize(128)
+							true), m_hideUnused(false), m_rmbSelected(false), m_resizeTextures(true),
+					m_uniformTextureSize(128)
 		{
 		}
 };
@@ -602,12 +597,6 @@ void TextureBrowser_showShadersExport (const BoolImportCallback& importer)
 }
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport> TextureBrowserShowShadersExport;
 
-void TextureBrowser_fixedSize (const BoolImportCallback& importer)
-{
-	importer(g_TextureBrowser_fixedSize);
-}
-typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_fixedSize> TextureBrowser_FixedSizeExport;
-
 void TextureBrowser_SetHideUnused (TextureBrowser& textureBrowser, bool hideUnused)
 {
 	if (hideUnused) {
@@ -652,8 +641,7 @@ static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const std::str
 		// we have found when texdef->name and the shader name match
 		// NOTE: as everywhere else for our comparisons, we are not case sensitive
 		if (shader_equal(name, shader->getName())) {
-			const int textureHeight = (int) (q->height * ((float) textureBrowser.m_textureScale / 100)) + 2
-					* TextureBrowser_fontHeight(textureBrowser);
+			const int textureHeight = textureBrowser.getTextureHeight(q);
 
 			int originy = TextureBrowser_getOriginY(textureBrowser);
 			if (y > originy) {
@@ -879,6 +867,13 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 	//qglFinish();
 }
 
+void TextureBrowser_setUniformSize(TextureBrowser& textureBrowser, int value)
+{
+	textureBrowser.m_uniformTextureSize = value;
+	TextureBrowser_heightChanged(textureBrowser);
+}
+
+
 void TextureBrowser_queueDraw (TextureBrowser& textureBrowser)
 {
 	if (textureBrowser.m_gl_widget != 0) {
@@ -905,6 +900,20 @@ static void TextureBrowser_MouseWheel (TextureBrowser& textureBrowser, bool bUp)
 
 	TextureBrowser_setOriginY(textureBrowser, originy);
 }
+
+// GTK callback for toggling uniform texture sizing
+void TextureBrowser_toggleResizeTextures (GtkToggleToolButton* button, TextureBrowser* textureBrowser)
+{
+	if (gtk_toggle_tool_button_get_active(button) == TRUE) {
+		textureBrowser->m_resizeTextures = true;
+	} else {
+		textureBrowser->m_resizeTextures = false;
+	}
+
+	// Update texture browser
+	TextureBrowser_heightChanged(*textureBrowser);
+}
+
 
 static gboolean TextureBrowser_button_press (GtkWidget* widget, GdkEventButton* event, TextureBrowser* textureBrowser)
 {
@@ -1104,7 +1113,6 @@ static GtkMenuItem* TextureBrowser_constructViewMenu (GtkMenu* menu)
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, _("Show All"), "ShowAllTextures");
 	create_check_menu_item_with_mnemonic(menu, _("Show shaders"), "ToggleShowShaders");
-	create_check_menu_item_with_mnemonic(menu, _("Fixed Size"), "FixedSize");
 
 	return textures_menu_item;
 }
@@ -1128,7 +1136,7 @@ GtkWidget* TextureBrowser_constructNotebookTab ()
 
 	GtkWidget* table = gtk_table_new(3, 3, FALSE);
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
-	gtk_table_attach(GTK_TABLE(table), vbox, 0, 1, 1, 3, GTK_FILL, GTK_FILL, 0, 0);
+	gtk_table_attach(GTK_TABLE(table), vbox, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
 	gtk_widget_show(vbox);
 
 	GtkWidget* menu_bar;
@@ -1148,6 +1156,33 @@ GtkWidget* TextureBrowser_constructNotebookTab ()
 		gtk_table_attach(GTK_TABLE (table), menu_bar, 0, 3, 0, 1, GTK_FILL, GTK_SHRINK, 0, 0);
 		gtk_widget_show(menu_bar);
 	}
+	{ //tool bar
+		GtkWidget* toolbar = gtk_toolbar_new();
+		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
+		gtk_table_attach(GTK_TABLE (table), toolbar, 0, 3, 1, 2, GTK_FILL, GTK_SHRINK, 0, 0);
+		GtkTooltips* barTips = gtk_tooltips_new();
+
+		// Button for toggling the resizing of textures
+
+		GtkToolItem* sizeToggle = gtk_toggle_tool_button_new();
+		GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf("texwindow_uniformsize.png");
+		GtkWidget* toggle_image = GTK_WIDGET(gtk_image_new_from_pixbuf(pixBuf));
+		gtk_tool_item_set_tooltip(sizeToggle, barTips, "Clamp texture thumbnails to constant size", "");
+
+		gtk_tool_button_set_label(GTK_TOOL_BUTTON(sizeToggle), "Constant size");
+		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(sizeToggle), toggle_image);
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(sizeToggle), TRUE);
+
+		// Insert button and connect callback
+		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), sizeToggle, 0);
+		g_signal_connect(G_OBJECT(sizeToggle),
+						 "toggled",
+						 G_CALLBACK(TextureBrowser_toggleResizeTextures),
+						 &g_TextureBrowser);
+
+		gdk_pixbuf_unref(pixBuf);
+		gtk_widget_show_all(toolbar);
+	}
 	{ // Texture TreeView
 		g_TextureBrowser.m_scr_win_tree = gtk_scrolled_window_new(NULL, NULL);
 		gtk_container_set_border_width(GTK_CONTAINER(g_TextureBrowser.m_scr_win_tree), 0);
@@ -1166,7 +1201,7 @@ GtkWidget* TextureBrowser_constructNotebookTab ()
 	}
 	{ // gl_widget scrollbar
 		GtkWidget* w = gtk_vscrollbar_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 0, 1, 1, 1)));
-		gtk_table_attach(GTK_TABLE(table), w, 2, 3, 1, 2, GTK_SHRINK, GTK_FILL, 0, 0);
+		gtk_table_attach(GTK_TABLE(table), w, 2, 3, 2, 3, GTK_SHRINK, GTK_FILL, 0, 0);
 		gtk_widget_show(w);
 		g_TextureBrowser.m_texture_scroll = w;
 
@@ -1184,7 +1219,7 @@ GtkWidget* TextureBrowser_constructNotebookTab ()
 				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
 		GTK_WIDGET_SET_FLAGS(g_TextureBrowser.m_gl_widget, GTK_CAN_FOCUS);
 
-		gtk_table_attach_defaults(GTK_TABLE(table), g_TextureBrowser.m_gl_widget, 1, 2, 1, 2);
+		gtk_table_attach_defaults(GTK_TABLE(table), g_TextureBrowser.m_gl_widget, 1, 2, 2, 3);
 		gtk_widget_show(g_TextureBrowser.m_gl_widget);
 
 		g_TextureBrowser.m_sizeHandler = g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "size_allocate",
@@ -1238,13 +1273,6 @@ void TextureBrowser_showAll (void)
 	TextureBrowser_heightChanged(g_TextureBrowser);
 }
 
-void TextureBrowser_FixedSize (void)
-{
-	g_TextureBrowser_fixedSize ^= 1;
-	GlobalTextureBrowser().m_fixedsize_item.update();
-	TextureBrowser_activeShadersChanged(GlobalTextureBrowser());
-}
-
 void TextureScaleImport (TextureBrowser& textureBrowser, int value)
 {
 	switch (value) {
@@ -1289,17 +1317,35 @@ void TextureScaleExport (TextureBrowser& textureBrowser, const IntImportCallback
 }
 typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureScaleExport> TextureScaleExportCaller;
 
+// Get the texture size preference from the prefs dialog
+void TextureUniformSizeImport (TextureBrowser& textureBrowser, int value)
+{
+	TextureBrowser_setUniformSize(textureBrowser, value);
+}
+typedef ReferenceCaller1<TextureBrowser, int, TextureUniformSizeImport> TextureUniformSizeImportCaller;
+
+// Set the value of the texture size preference widget in the prefs dialog
+void TextureUniformSizeExport (TextureBrowser& textureBrowser, const IntImportCallback& importer)
+{
+	importer(textureBrowser.m_uniformTextureSize);
+}
+typedef ReferenceCaller1<TextureBrowser, const IntImportCallback&, TextureUniformSizeExport>
+		TextureUniformSizeExportCaller;
+
+
 static void TextureBrowser_constructPreferences (PreferencesPage& page)
 {
 	page.appendCheckBox("", _("Texture scrollbar"), TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser()),
 			BoolExportCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	{
 		const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
-		page.appendCombo(_("Texture Thumbnail Scale"), STRING_ARRAY_RANGE(texture_scale), IntImportCallback(
+		page.appendCombo(_("Texture thumbnail scale"), STRING_ARRAY_RANGE(texture_scale), IntImportCallback(
 				TextureScaleImportCaller(GlobalTextureBrowser())), IntExportCallback(TextureScaleExportCaller(
 				GlobalTextureBrowser())));
 	}
 	page.appendEntry(_("Mousewheel Increment"), GlobalTextureBrowser().m_mouseWheelScrollIncrement);
+	page.appendEntry("Uniform texture thumbnail size (pixels)", IntImportCallback(TextureUniformSizeImportCaller(
+			GlobalTextureBrowser())), IntExportCallback(TextureUniformSizeExportCaller(GlobalTextureBrowser())));
 }
 
 void TextureBrowser_constructPage (PreferenceGroup& group)
@@ -1317,6 +1363,7 @@ static void TextureBrowser_registerPreferencesPage (void)
 #include "stringio.h"
 
 typedef ReferenceCaller1<TextureBrowser, std::size_t, TextureBrowser_setScale> TextureBrowserSetScaleCaller;
+typedef ReferenceCaller1<TextureBrowser, int, TextureBrowser_setUniformSize> TextureBrowserSetUniformSizeCaller;
 
 void TextureClipboard_textureSelected (const char* shader);
 
@@ -1330,19 +1377,17 @@ void TextureBrowser_Construct (void)
 	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect> ());
 	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders> (),
 			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_showshaders_item));
-	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize> (), ToggleItem::AddCallbackCaller(
-			GlobalTextureBrowser().m_fixedsize_item));
 
 	GlobalPreferenceSystem().registerPreference("TextureScale", makeSizeStringImportCallback(
 			TextureBrowserSetScaleCaller(GlobalTextureBrowser())), SizeExportStringCaller(
 			GlobalTextureBrowser().m_textureScale));
+	GlobalPreferenceSystem().registerPreference("TextureUniformSize", IntImportStringCaller(
+			g_TextureBrowser.m_uniformTextureSize), IntExportStringCaller(g_TextureBrowser.m_uniformTextureSize));
 	GlobalPreferenceSystem().registerPreference("TextureScrollbar", makeBoolStringImportCallback(
 			TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser())), BoolExportStringCaller(
 			GlobalTextureBrowser().m_showTextureScrollbar));
 	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(
 			GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(GlobalTextureBrowser().m_showShaders));
-	GlobalPreferenceSystem().registerPreference("FixedSize", BoolImportStringCaller(g_TextureBrowser_fixedSize),
-			BoolExportStringCaller(g_TextureBrowser_fixedSize));
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(
 			GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(
 			GlobalTextureBrowser().m_mouseWheelScrollIncrement));

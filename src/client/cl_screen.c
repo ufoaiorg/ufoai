@@ -40,12 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_view.h"
+#include "battlescape/cl_hud.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
 #include "menu/m_main.h"
 #include "menu/m_draw.h"
 #include "menu/m_nodes.h"
-#include "menu/m_menus.h"
+#include "menu/m_windows.h"
 #include "menu/m_dragndrop.h"
 #include "menu/m_render.h"
 
@@ -61,10 +62,8 @@ static cvar_t *scr_consize;
 static cvar_t *scr_rspeed;
 static cvar_t *scr_cursor;
 static cvar_t *scr_showcursor;
-static cvar_t *cl_show_cursor_tooltips;
 
 static char cursorImage[MAX_QPATH];
-
 /**
  * @sa Font_DrawString
  */
@@ -249,10 +248,6 @@ static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
  */
 static void SCR_DrawCursor (void)
 {
-	int iconOffsetX = 16;	/* Offset of the first icon on the x-axis. */
-	int iconOffsetY = 16;	/* Offset of the first icon on the y-axis. */
-	const int iconSpacing = 2;	/* the space between different icons. */
-
 	if (scr_showcursor->integer == 0)
 		return;
 
@@ -281,52 +276,7 @@ static void SCR_DrawCursor (void)
 			R_DrawImage(mousePosX - image->width / 2, mousePosY - image->height / 2, image);
 
 		if (mouseSpace == MS_WORLD && CL_BattlescapeRunning()) {
-			le_t *le = selActor;
-			if (le) {
-				/* Display 'crouch' icon if actor is crouched. */
-				if (LE_IsCrouched(le)) {
-					image = R_FindImage("pics/cursors/ducked", it_pic);
-					if (image)
-						R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
-				}
-				iconOffsetY += 16;	/* Height of 'crouched' icon. */
-				iconOffsetY += iconSpacing;
-
-				/* Display 'Reaction shot' icon if actor has it activated. */
-				if (le->state & STATE_REACTION_ONCE)
-					image = R_FindImage("pics/cursors/reactionfire", it_pic);
-				else if (le->state & STATE_REACTION_MANY)
-					image = R_FindImage("pics/cursors/reactionfiremany", it_pic);
-				else
-					image = NULL;
-
-				if (image)
-					R_DrawImage(mousePosX - image->width / 2 + iconOffsetX, mousePosY - image->height / 2 + iconOffsetY, image);
-				iconOffsetY += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
-				iconOffsetY += iconSpacing;
-
-				/* Display weaponmode (text) heR_ */
-				if (MN_GetText(TEXT_MOUSECURSOR_RIGHT) && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX + iconOffsetX, mousePosY - 16, MN_GetText(TEXT_MOUSECURSOR_RIGHT), qfalse);
-			}
-
-			/* playernames */
-			if (MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES) && cl_show_cursor_tooltips->integer) {
-				SCR_DrawString(mousePosX + iconOffsetX, mousePosY - 32, MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), qfalse);
-				MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
-			}
-
-			if (cl_map_debug->integer & MAPDEBUG_TEXT) {
-				/* Display ceiling text */
-				if (MN_GetText(TEXT_MOUSECURSOR_TOP) && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX, mousePosY - 64, MN_GetText(TEXT_MOUSECURSOR_TOP), qfalse);
-				/* Display floor text */
-				if (MN_GetText(TEXT_MOUSECURSOR_BOTTOM) && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX, mousePosY + 64, MN_GetText(TEXT_MOUSECURSOR_BOTTOM), qfalse);
-				/* Display left text */
-				if (MN_GetText(TEXT_MOUSECURSOR_LEFT) && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX - 64, mousePosY, MN_GetText(TEXT_MOUSECURSOR_LEFT), qfalse);
-			}
+			HUD_UpdateCursor();
 		}
 	} else {
 		MN_DrawCursor();
@@ -523,7 +473,6 @@ void SCR_Init (void)
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, "Console open/close speed");
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, "Console size");
 	scr_rspeed = Cvar_Get("r_speeds", "0", CVAR_ARCHIVE, "Show some rendering stats");
-	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 	scr_cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
 	scr_showcursor = Cvar_Get("scr_showcursor", "1", 0, "Show/hide mouse cursor- 0-1");
 

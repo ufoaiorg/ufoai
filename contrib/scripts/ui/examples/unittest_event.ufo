@@ -1,0 +1,100 @@
+/**
+ * @brief Unittest for event function from window node
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_event"
+ */
+
+window unittest_event
+{
+	{
+		pos "100 100"
+		size "340 340"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest event"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	button button2000 {
+		pos		"20 60"
+		size	"150 15"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string "Set 2000ms"
+		onClick {
+			*node:root@timeout = 2000
+		}
+	}
+
+	button button1000 {
+		pos		"20 80"
+		size	"150 15"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string "Set 1000ms"
+		onClick {
+			*node:root@timeout = 1000
+		}
+	}
+
+	button button500 {
+		pos		"20 100"
+		size	"150 15"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string "Set 500ms"
+		onClick {
+			*node:root@timeout = 500
+		}
+	}
+
+	button button100 {
+		pos		"20 120"
+		size	"150 15"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string "Set 100ms"
+		onClick {
+			*node:root@timeout = 100
+		}
+	}
+
+	button buttonStop {
+		pos		"20 160"
+		size	"150 15"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string "Stop"
+		onClick {
+			*node:root@timeout = 0
+		}
+	}
+
+	panel test {
+		pos		"200 60"
+		size	"50 50"
+		bgcolor	"1 1 1 1"
+	}
+
+	func onEvent {
+		if ( *cvar:counter == 0 ) {
+			*cvar:counter = 1
+			*node:root.test@bgcolor = "1 0 0 1"
+		} elif ( *cvar:counter == 1 ) {
+			*cvar:counter = 2
+			*node:root.test@bgcolor = "0 1 0 1"
+		} else {
+			*cvar:counter = 0
+			*node:root.test@bgcolor = "0 0 1 1"
+		}
+	}
+
+	func onLoad {
+		*cvar:counter = 0
+	}
+
+	func onClose {
+		cmd "del counter"
+	}
+
+}

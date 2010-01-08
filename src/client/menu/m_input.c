@@ -249,9 +249,12 @@ void MN_SetKeyBinding (const char* path, int key)
 	menuNode_t *node;
 	menuKeyBinding_t *binding;
 	const value_t *property = NULL;
+
 	MN_ReadNodePath(path, NULL, &node, &property);
-	if (node == NULL)
-		Com_Error(ERR_FATAL, "MN_SetKeyBinding: node \"%s\" not found.", path);
+	if (node == NULL) {
+		Com_Printf("MN_SetKeyBinding: node \"%s\" not found.\n", path);
+		return;
+	}
 
 	if (property != NULL && property->type != V_UI_NODEMETHOD)
 		Com_Error(ERR_FATAL, "MN_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
@@ -298,8 +301,11 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *windo
 	if (binding->property == NULL)
 		node->behaviour->activate(node);
 	else if (binding->property->type == V_UI_NODEMETHOD) {
+		menuCallContext_t newContext;
 		menuNodeMethod_t func = (menuNodeMethod_t) binding->property->ofs;
-		func(node);
+		newContext.source = node;
+		newContext.useCmdParam = qfalse;
+		func(node, &newContext);
 	} else
 		Com_Printf("MN_KeyPressedInWindow: @%s not supported.", binding->property->string);
 
@@ -339,7 +345,7 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 			MN_MouseRelease();
 			return qtrue;
 		}
-		MN_PopMenuWithEscKey();
+		MN_PopWindowWithEscKey();
 		return qtrue;
 	}
 
@@ -508,7 +514,7 @@ static void MN_LeftClick (int x, int y)
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && mn.windowStackPos != 0) {
 		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown) {
-			MN_PopMenu(qfalse);
+			MN_PopWindow(qfalse);
 		}
 	}
 

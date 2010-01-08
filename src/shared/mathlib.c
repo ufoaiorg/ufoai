@@ -932,7 +932,7 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
 
 /**
  * @brief If the point is outside the box defined by mins and maxs, expand
- * the box to accomodate it. Sets mins and maxs to their new values
+ * the box to accommodate it. Sets mins and maxs to their new values
  */
 void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {

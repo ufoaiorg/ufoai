@@ -42,7 +42,7 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 
 	switch (self->owner->team) {
 	case TEAM_ALIEN:
-		if (activator->team == TEAM_ALIEN) {
+		if (G_IsAlien(activator)) {
 			if (!self->count) {
 				self->count = level.actualRound;
 				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone\n"));

@@ -7,7 +7,7 @@ window multiplayer
 	confunc mn_push_multiplayer
 	{
 		cmd "game_setmode multiplayer; mn_push mp_serverbrowser;"
-		*cvar:mn_multiplayer_tab 1
+		*cvar:mn_multiplayer_tab = 1
 	}
 
 	/** @brief prevent pushing this menu */
@@ -645,38 +645,20 @@ window mp_create_server extends abstract_multiplayer
 			size		"256 20"
 		}
 
-		pic mappic
+		cmpMapPic mappic
 		{
 			image		*cvar:mn_mappic
 			pos			"85 30"
-			texl		"0 0"
-			texh		"128 96"
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-			onRClick		{ cmd "mn_prevmap;" }
 		}
-		pic mappic2
+		cmpMapPic mappic2
 		{
 			image		*cvar:mn_mappic2
 			pos			"225 30"
-			texl		"0 0"
-			texh		"128 96"
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-			onRClick		{ cmd "mn_prevmap;" }
 		}
-		pic mappic3
+		cmpMapPic mappic3
 		{
 			image		*cvar:mn_mappic3
 			pos			"365 30"
-			texl		"0 0"
-			texh		"128 96"
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-			onRClick		{ cmd "mn_prevmap;" }
 		}
 
 		// ===================
@@ -688,39 +670,10 @@ window mp_create_server extends abstract_multiplayer
 			pos			"85 155"
 			size		"256 20"
 		}
-		textentry slot_map
-		{
-			string		*cvar:mn_svmapname
-			image		ui/button_green_verysmall
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		8
-			font		"f_verysmall"
-			pos			"245 150"
-			size		"256 34"
-			disabled	true
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-		}
-
-		custombutton prev_map
-		{
-			pos			"223 155"
-			size		"16 16"
-			icon		prev
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_prevmap;" }
-		}
-		custombutton next_map
-		{
-			pos			"505 155"
-			size		"16 16"
-			icon		next
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
+		cmpMapSlot mapSlot {
+			{
+				pos "213 150"
+			}
 		}
 
 		// ===================
@@ -1027,17 +980,17 @@ window mp_create_server extends abstract_multiplayer
 	// ===================
 
 	confunc mp_update_config_navigation {
-		*panel_map@invis true
-		*panel_option@invis true
-		*panel_security@invis true
+		*panel_map@invis = true
+		*panel_option@invis = true
+		*panel_security@invis = true
 		if ( *cvar:mn_server_config_tab == 1 ) {
-			*panel_map@invis false
+			*panel_map@invis = false
 		}
 		elif ( *cvar:mn_server_config_tab == 2 ) {
-			*panel_option@invis false
+			*panel_option@invis = false
 		}
 		elif ( *cvar:mn_server_config_tab == 3 ) {
-			*panel_security@invis false
+			*panel_security@invis = false
 		}
 	}
 
@@ -1045,7 +998,7 @@ window mp_create_server extends abstract_multiplayer
 	{
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
-		*cvar:mn_server_config_tab 1
+		*cvar:mn_server_config_tab = 1
 		cmd "mp_update_config_navigation;"
 		cmd "mn_datareset TEXT_STANDARD;"
 	}
@@ -1544,9 +1497,9 @@ window multiplayer_wait
 					onClick		{ cmd "irc_userlist_click <lineselected>" }
 					onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
 					onViewChange {
-						*node:(abstractscrollbar)parent.scroll@fullsize <fullsize>
-						*node:(abstractscrollbar)parent.scroll@current <viewpos>
-						*node:(abstractscrollbar)parent.scroll@viewsize <viewsize>
+						*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
+						*node:(abstractscrollbar)parent.scroll@current = <viewpos>
+						*node:(abstractscrollbar)parent.scroll@viewsize = <viewsize>
 					}
 				}
 

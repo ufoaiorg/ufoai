@@ -32,6 +32,7 @@ struct menuIcon_s;
 struct menuCondition_s;
 struct value_s;
 struct nodeKeyBinding_s;
+struct menuCallContext_s;
 
 /* extradata struct */
 #include "node/m_node_abstractoption.h"
@@ -57,7 +58,7 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
-typedef void (*menuNodeMethod_t)(struct menuNode_s*node);
+typedef void (*menuNodeMethod_t)(struct menuNode_s*node, const struct menuCallContext_s *context);
 
 /**
  * @brief menu node
@@ -211,7 +212,8 @@ typedef struct nodeBehaviour_s {
 	/* system callback */
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, initialized default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
-	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
+	void (*init)(menuNode_t *node);			/**< call every time we push the parent window */
+	void (*close)(menuNode_t *node);		/**< call every time we pop the parent window */
 	void (*clone)(const menuNode_t *source, menuNode_t *clone);			/**< call to initialize a cloned node */
 	void (*doLayout)(menuNode_t *node);		/**< call to update node layout */
 	void (*activate)(menuNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */

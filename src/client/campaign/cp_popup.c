@@ -204,7 +204,7 @@ static void CL_PopupChangeHomebase_f (void)
 
 	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 	CL_DisplayHomebasePopup(selectedAircraft, qtrue);
 }
 
@@ -253,7 +253,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	}
 
 	/* Display popup_aircraft menu */
-	MN_PushMenu("popup_aircraft", NULL);
+	MN_PushWindow("popup_aircraft", NULL);
 }
 
 /**
@@ -275,7 +275,7 @@ static void CL_PopupAircraftClick_f (void)
 	if (num < 0 || num >= popupAircraft.numItems)
 		return;
 
-	MN_PopMenu(qfalse); /* Close popup */
+	MN_PopWindow(qfalse); /* Close popup */
 
 	/* Get aircraft associated with the popup_aircraft */
 	aircraft = popupAircraft.aircraft;
@@ -366,7 +366,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 	CL_GameTimeStop();
 
 	/* Display the popup */
-	MN_PushMenu("popup_mission", NULL);
+	MN_PushWindow("popup_mission", NULL);
 }
 
 
@@ -461,7 +461,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	CL_GameTimeStop();
 
 	/* Display the popup */
-	MN_PushMenu("popup_intercept", NULL);
+	MN_PushWindow("popup_intercept", NULL);
 }
 
 /**
@@ -480,7 +480,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft_f (void)
 	if (num < 0 || num >= popupIntercept.numAircraft)
 		return NULL;
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 	if (!popupIntercept.aircraft[num])
 		return NULL;
 	return popupIntercept.aircraft[num];
@@ -532,7 +532,7 @@ static void CL_PopupInterceptRClick_f (void)
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	B_SelectBase(aircraft->homebase);
-	MN_PushMenu("aircraft", NULL);
+	MN_PushWindow("aircraft", NULL);
 }
 
 /**
@@ -608,7 +608,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 			base->lasers[i].target = selectedUFO;
 	}
 
-	MN_PopMenu(qfalse);
+	MN_PopWindow(qfalse);
 }
 
 /**

@@ -115,6 +115,11 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	return qtrue;
 }
 
+/**
+ * @brief Loads a character from a given xml node.
+ * @param[in] p The node from which we should load the character.
+ * @param[in] chr Pointer to the charcter we should load.
+ */
 qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 {
 	mxml_node_t *s;
@@ -163,7 +168,6 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	}
 	chr->score.assignedMissions = mxml_GetInt(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
 	chr->score.rank = mxml_GetInt(p, SAVE_CHARACTER_SCORE_RANK, -1);
-	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
 	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
 	INVSH_DestroyInventory(&chr->inv);
@@ -268,10 +272,6 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
 
-	/* Set default reaction-mode for all character-types to "once".
-	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa G_SpawnAIPlayer */
-	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
-
 	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
 
 	Com_GetCharacterValues(teamDefName, chr);
@@ -360,6 +360,10 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 }
 
 /**
+ * @brief Updates status of weapon (sets pointers, reloads, etc).
+ * @param[in] ed Pointer to equipment definition.
+ * @param[in] item An item to update.
+ * @return Updated item in any case, even if there was no update.
  * @sa CL_CleanupAircraftCrew
  * @todo Move it to a better place - has nothing to do with team code imo
  */

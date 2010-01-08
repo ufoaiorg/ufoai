@@ -44,6 +44,8 @@ enum {
 
 typedef struct s_sample_s {
 	char *name;
+	int lastPlayed;		/**< used to determine whether this sample should be send to the mixer or skipped if played
+						 * too fast after each other */
 	Mix_Chunk* chunk;
 	struct s_sample_s* hashNext;	/**< next hash entry */
 } s_sample_t;

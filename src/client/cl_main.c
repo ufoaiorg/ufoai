@@ -201,11 +201,12 @@ static void CL_Connect (void)
 		assert(cls.serverport[0] != '\0');
 		Com_Printf("Connecting to %s %s...\n", cls.servername, cls.serverport);
 		cls.netStream = NET_Connect(cls.servername, cls.serverport);
-	} else
+	} else {
+		Com_Printf("Connecting to localhost...\n");
 		cls.netStream = NET_ConnectToLoopBack();
+	}
 
 	if (cls.netStream) {
-		Com_Printf("Connecting to localhost...\n");
 		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = cls.realtime;
 	} else {
@@ -226,6 +227,8 @@ static void CL_Connect (void)
  */
 void CL_ClearState (void)
 {
+	LE_Cleanup();
+
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	cl.cam.zoom = 1.0;
@@ -269,6 +272,8 @@ void CL_Disconnect (void)
 	CL_ClearState();
 
 	S_Stop();
+
+	R_ShutdownModels(qfalse);
 
 	CL_SetClientState(ca_disconnected);
 	CL_ClearBattlescapeEvents();
@@ -398,7 +403,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		s = NET_ReadString(msg);
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
-			MN_PushMenu("serverpassword", NULL);
+			MN_PushWindow("serverpassword", NULL);
 		MN_Popup(_("Notice"), _(s));
 		return;
 	}
@@ -794,7 +799,7 @@ static void CL_CheckCvars_f (void)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
 		if (checkcvar[i].var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", checkcvar[i].var->name);
-			MN_PushMenu("checkcvars", NULL);
+			MN_PushWindow("checkcvars", NULL);
 			break;
 		}
 		i++;
@@ -814,42 +819,6 @@ static void CL_ShowConfigstrings_f (void)
 			continue;
 		Com_Printf("cl.configstrings[%3i]: %s\n", i, cl.configstrings[i]);
 	}
-}
-
-/**
- * @brief Autocomplete function for some network functions
- * @sa Cmd_AddParamCompleteFunction
- * @todo Extend this for all the servers on the server browser list
- */
-static int CL_CompleteNetworkAddress (const char *partial, const char **match)
-{
-	int i, matches = 0;
-	const char *localMatch[MAX_COMPLETE];
-	const size_t len = strlen(partial);
-	if (!len) {
-		/* list them all if there was no parameter given */
-		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			const char *adrStr = Cvar_GetString(va("adr%i", i));
-			if (adrStr[0] != '\0')
-				Com_Printf("%s\n", adrStr);
-		}
-		return 0;
-	}
-
-	localMatch[matches] = NULL;
-
-	/* search all matches and fill the localMatch array */
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *adrStr = Cvar_GetString(va("adr%i", i));
-		if (adrStr[0] != '\0' && !strncmp(partial, adrStr, len)) {
-			Com_Printf("%s\n", adrStr);
-			localMatch[matches++] = adrStr;
-			if (matches >= MAX_COMPLETE)
-				break;
-		}
-	}
-
-	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
 static qboolean CL_CvarWorldLevel (cvar_t *cvar)
@@ -915,13 +884,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("cl_setratiofilter", CL_SetRatioFilter_f, "Filter the resolution screen list with a ration");
 
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
-	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
-	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
-	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
-	Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
-	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
-	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
-	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
 	Cmd_AddCommand("cl_userinfo", CL_UserInfo_f, "Prints your userinfo string");
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */

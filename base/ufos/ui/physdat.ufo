@@ -2,6 +2,19 @@
 // PHYSDATA BASE MENU
 // ==================
 
+component cmpDefNamedTbar cmpPhysNamedTbar {
+	pic			bdr { 
+		pos "3 18"
+	}
+	tbar		bar {
+		pos "3 18"
+	}
+	string	val {
+		pos "140 0"
+	}
+}
+
+
 window physdata
 {
 	{
@@ -59,50 +72,86 @@ window physdata
 	// abilities
 	// ==================
 
-	string pwr_lbl { pos "220 32" size "150 20" string "_Strength:" }
-	string pwr_val { pos "365 32" size "120 20"  string *cvar:mn_tpwr textalign ur }
-	pic pwr_bdr    { pos "222 48"  image ui/bar_border }
-	tbar pwr_bar   { pos "226 48"  current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpPhysNamedTbar pwr {
+			{
+				pos "220 32"
+			}
+			tbar bar   { current *cvar:mn_vpwr }
+			string lbl { string "_Strength:" }
+			string val { string *cvar:mn_tpwr }
+		}
 
-	string spd_lbl { pos "220 64" size "150 20" string "_Speed:" }
-	string spd_val { pos "365 64" size "120 20" string *cvar:mn_tspd textalign ur }
-	pic spd_bdr    { pos "222 80" image ui/bar_border }
-	tbar spd_bar   { pos "226 80" current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpPhysNamedTbar spd {
+			{
+				pos "220 64"
+			}
+			tbar bar   { current *cvar:mn_vspd }
+			string lbl { string "_Speed:" }
+			string val { string *cvar:mn_tspd }
+		}
 
-	string acc_lbl { pos "220 96" size "150 20" string "_Accuracy:" }
-	string acc_val { pos "365 96" size "120 20" string *cvar:mn_tacc textalign ur }
-	pic acc_bdr    { pos "222 112" image ui/bar_border }
-	tbar acc_bar   { pos "226 112" current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpPhysNamedTbar acc {
+			{
+				pos "220 96"
+			}
+			tbar bar   { current *cvar:mn_vacc }
+			string lbl { string "_Accuracy:" }
+			string val { string *cvar:mn_tacc }
+		}
 
-	string mnd_lbl { pos "220 128" size "150 20" string "_Mind:" }
-	string mnd_val { pos "365 128" size "120 20" string *cvar:mn_tmnd textalign ur }
-	pic mnd_bdr    { pos "222 144" image ui/bar_border }
-	tbar mnd_bar   { pos "226 144" current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+		cmpPhysNamedTbar mnd {
+			{
+				pos "220 128"
+			}
+			tbar bar   { current *cvar:mn_vmnd }
+			string lbl { string "_Mind:" }
+			string val { string *cvar:mn_tmnd }
+		}
 
-	string cls_lbl { pos "220 166" size "150 20" string "_Close Combat:" }
-	string cls_val { pos "365 166" size "120 20" string *cvar:mn_tcls textalign ur }
-	pic cls_bdr    { pos "222 182" image ui/bar_border }
-	tbar cls_bar   { pos "226 182" current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpPhysNamedTbar cls {
+			{
+				pos "220 166"
+			}
+			tbar bar   { current *cvar:mn_vcls }
+			string lbl { string "_Close Combat:" }
+			string val { string *cvar:mn_tcls }
+		}
 
-	string hvy_lbl { pos "220 198" size "150 20" string "_Heavy Weapons:" }
-	string hvy_val { pos "365 198" size "120 20" string *cvar:mn_thvy textalign ur }
-	pic hvy_bdr    { pos "222 214" image ui/bar_border }
-	tbar hvy_bar   { pos "226 214" current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpPhysNamedTbar hvy {
+			{
+				pos "220 198"
+			}
+			tbar bar   { current *cvar:mn_vhvy }
+			string lbl { string "_Heavy Weapons:" }
+			string val { string *cvar:mn_thvy }
+		}
 
-	string ass_lbl { pos "220 230" size "150 20" string "_Assault Weapons:" }
-	string ass_val { pos "365 230" size "120 20" string *cvar:mn_tass textalign ur }
-	pic ass_bdr    { pos "222 246" image ui/bar_border }
-	tbar ass_bar   { pos "226 246" current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpPhysNamedTbar ass {
+			{
+				pos "220 230"
+			}
+			tbar bar   { current *cvar:mn_vass }
+			string lbl { string "_Assault Weapons:" }
+			string val { string *cvar:mn_tass }
+		}
 
-	string snp_lbl { pos "220 262" size "150 20" string "_Sniper Rifles:" }
-	string snp_val { pos "365 262" size "120 20" string *cvar:mn_tsnp textalign ur }
-	pic snp_bdr    { pos "222 278" image ui/bar_border }
-	tbar snp_bar   { pos "226 278" current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpPhysNamedTbar snp {
+			{
+				pos "220 262"
+			}
+			tbar bar   { current *cvar:mn_vsnp }
+			string lbl { string "_Sniper Rifles:" }
+			string val { string *cvar:mn_tsnp }
+		}
 
-	string exp_lbl { pos "220 296" size "150 20" string "_High-Explosives:" }
-	string exp_val { pos "365 296" size "120 20" string *cvar:mn_texp textalign ur }
-	pic exp_bdr    { pos "222 312" image ui/bar_border }
-	tbar exp_bar   { pos "226 312" current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+		cmpPhysNamedTbar exp {
+			{
+				pos "220 296"
+			}
+			tbar bar   { current *cvar:mn_vexp }
+			string lbl { string "_High-Explosives:" }
+			string val { string *cvar:mn_texp }
+		}
 
 	// ==================
 	// health and morale
@@ -111,7 +160,7 @@ window physdata
 	string hp_val
 	{
 		string		*cvar:mn_hp
-		pos			"415 376"
+		pos			"415 373"
 		size		"50 20"
 		textalign	uc
 	}
@@ -125,7 +174,7 @@ window physdata
 	string morale_val
 	{
 		string		*cvar:mn_morale
-		pos			"415 416"
+		pos			"415 413"
 		size		"50 20"
 		textalign	uc
 	}

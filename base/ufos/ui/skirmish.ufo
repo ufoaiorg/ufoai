@@ -162,8 +162,8 @@ window skirmish
 	 * @param<1> boolean to hide or show
 	 */
 	confunc skirmish_hide_ufos {
-		*ufos_str@invis <1>
-		*ufos_box@invis <1>
+		*ufos_str@invis = <1>
+		*ufos_box@invis = <1>
 	}
 
 	string ufos_str
@@ -192,8 +192,8 @@ window skirmish
 	 * @param<1> boolean to hide or show
 	 */
 	confunc skirmish_hide_dropships {
-		*dropships_str@invis <1>
-		*dropships_box@invis <1>
+		*dropships_str@invis = <1>
+		*dropships_box@invis = <1>
 	}
 
 	string dropships_str
@@ -223,72 +223,28 @@ window skirmish
 		pos			"500 510"
 		size		"450 20"
 	}
-	textentry slot_map
+
+	cmpMapSlot mapSlot 
 	{
-		string		*cvar:mn_svmapname
-		image		ui/button_green_verysmall
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"500 530"
-		size		"256 34"
-		onWheelUp	{ cmd "mn_prevmap;" }
-		onWheelDown	{ cmd "mn_nextmap;" }
-		disabled	true
+		{
+		pos			"468 530"
+		}
 	}
 
-	custombutton prev_map
-	{
-		pos			"468 530"
-		size		"35 35"
-		icon		prev
-		onWheelUp	{ cmd "mn_prevmap;" }
-		onWheelDown	{ cmd "mn_nextmap;" }
-		onClick		{ cmd "mn_prevmap;" }
-	}
-	custombutton next_map
-	{
-		pos			"753 530"
-		size		"35 35"
-		icon		next
-		onWheelUp	{ cmd "mn_prevmap;" }
-		onWheelDown	{ cmd "mn_nextmap;" }
-		onClick		{ cmd "mn_nextmap;" }
-	}
-	pic mappic
+	cmpMapPic mappic
 	{
 		image		*cvar:mn_mappic
 		pos			"500 400"
-		texl		"0 0"
-		texh		"128 96"
-		onWheelUp	{ cmd "mn_prevmap;" }
-		onWheelDown	{ cmd "mn_nextmap;" }
-		onClick		{ cmd "mn_nextmap;" }
-		onRClick		{ cmd "mn_prevmap;" }
 	}
-	pic mappic2
+	cmpMapPic mappic2
 	{
 		image		*cvar:mn_mappic2
 		pos			"650 400"
-		texl		"0 0"
-		texh		"128 96"
-		onWheelUp	{ cmd "mn_prevmap;" }
-		onWheelDown	{ cmd "mn_nextmap;" }
-		onClick		{ cmd "mn_nextmap;" }
-		onRClick		{ cmd "mn_prevmap;" }
 	}
-	pic mappic3
+	cmpMapPic mappic3
 	{
 		image		*cvar:mn_mappic3
 		pos			"800 400"
-		texl		"0 0"
-		texh		"128 96"
-		onWheelUp	{ cmd "mn_prevmap;" }
-		onWheelDown	{ cmd "mn_nextmap;" }
-		onClick		{ cmd "mn_nextmap;" }
-		onRClick		{ cmd "mn_prevmap;" }
 	}
 
 	// ===================

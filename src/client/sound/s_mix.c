@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_mix.h"
 #include "s_main.h"
 
+/**
+ * @brief Searches a channel with no sample applied yet.
+ * @return @c -1 if no free channel was found, otherwise the index of the channel
+ */
 static int S_AllocChannel (void)
 {
 	int i;
@@ -39,6 +43,10 @@ static int S_AllocChannel (void)
 	return -1;
 }
 
+/**
+ * @brief Callback that is called when a channel finished playing
+ * @param c The channel id
+ */
 void S_FreeChannel (int c)
 {
 	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
@@ -48,6 +56,7 @@ void S_FreeChannel (int c)
 
 /**
  * @brief Set distance and stereo panning for the specified channel.
+ * @param[in] ch The channel to perform the spatialization for.
  */
 void S_SpatializeChannel (const s_channel_t *ch)
 {
@@ -81,8 +90,10 @@ void S_SpatializeChannel (const s_channel_t *ch)
 
 /**
  * @brief Validates the parms and queues the sound up
- * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
+ * @param[in] origin if this is @c NULL, the sound will be dynamically sourced from the entity
  * @param[in] sample The soundfile to play
+ * @param[in] atten Attenuation of sound to be played (for example, @c fireAttenuation
+ * or @c impactAttenuation from @c fireDef_s).
  * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
  * @sa S_StartLocalSample
  * @sa S_SetVolume
@@ -98,9 +109,14 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 	if (!sample)
 		return;
 
+	/* if the last mix of this particular sample is less than half a second ago, skip it */
+	if (sample->lastPlayed > cls.realtime - 500)
+		return;
+
 	if ((i = S_AllocChannel()) == -1)
 		return;
 
+	sample->lastPlayed = cls.realtime;
 	ch = &s_env.channels[i];
 
 	ch->atten = atten;
@@ -149,6 +165,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 
 		ch = &s_env.channels[i];
 
+		sample->lastPlayed = cls.realtime;
 		VectorCopy(org, ch->org);
 		ch->count = 1;
 		ch->atten = SOUND_ATTN_IDLE;
@@ -161,9 +178,13 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 }
 
 /**
+ * @brief Plays a sample without spatialization
+ * @param[in] name The sample name
+ * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
  * @sa S_PlaySample
+ * @sa S_LoadSample
  */
-void S_StartLocalSample (const char *name, float volume)
+void S_StartLocalSample (const char *name, float relVolume)
 {
 	s_sample_t *sample;
 
@@ -175,5 +196,5 @@ void S_StartLocalSample (const char *name, float volume)
 		Com_Printf("S_StartLocalSample: Failed to load %s\n", name);
 		return;
 	}
-	S_PlaySample(NULL, sample, SOUND_ATTN_NORM, volume);
+	S_PlaySample(NULL, sample, SOUND_ATTN_NORM, relVolume);
 }

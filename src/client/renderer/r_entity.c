@@ -33,10 +33,10 @@ int r_numEntities;
 static entity_t r_entities[MAX_ENTITIES];
 
 /**
- * @brief Compute the bouding box for an entity out of the mins, maxs
+ * @brief Compute the bounding box for an entity out of the mins, maxs
  * @sa R_EntityDrawBBox
  */
-void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
+static void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
 {
 	int i;
 
@@ -64,8 +64,12 @@ void R_TransformForEntity (const entity_t *e)
  * @brief Draws the model bounding box
  * @sa R_EntityComputeBoundingBox
  */
-void R_EntityDrawBBox (vec3_t bbox[8])
+void R_EntityDrawBBox (const vec3_t mins, const vec3_t maxs)
 {
+	vec3_t bbox[8];
+
+	R_EntityComputeBoundingBox(mins, maxs, bbox);
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* Draw top and sides */
@@ -111,9 +115,7 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(color);
 
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
-		vec3_t bbox[8];
-		R_EntityComputeBoundingBox(e->mins, e->maxs, bbox);
-		R_EntityDrawBBox(bbox);
+		R_EntityDrawBBox(e->mins, e->maxs);
 	} else {
 		vec3_t upper, lower;
 		const float dx = e->oldorigin[0] - e->origin[0];

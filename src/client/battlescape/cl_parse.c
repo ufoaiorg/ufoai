@@ -112,9 +112,22 @@ static void CL_LoadClientinfo (clientinfo_t *ci, const char *s)
 static void CL_ParseClientinfo (int player)
 {
 	clientinfo_t *ci = &cl.clientinfo[player];
-	const char *s = cl.configstrings[player + CS_PLAYERNAMES];
+	const char *s = CL_PlayerGetName(player);
 
 	CL_LoadClientinfo(ci, s);
+}
+
+/**
+ * @brief Get the player name
+ * @param player The index of the player
+ * @return The name of the player
+ */
+const char *CL_PlayerGetName (int player)
+{
+	assert(player >= 0);
+	assert(player < MAX_CLIENTS);
+
+	return cl.configstrings[CS_PLAYERNAMES + player];
 }
 
 /**

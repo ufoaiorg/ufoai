@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../m_main.h"
 #include "../m_data.h"
-#include "../m_menus.h"
+#include "../m_windows.h"
 #include "../m_nodes.h"
 #include "../m_actions.h"
 #include "../m_render.h"
@@ -371,7 +371,7 @@ static void MN_MaterialEditorStart_f (void)
 #ifndef ANYIMAGES
 	if (cls.state != ca_active) {
 		Com_Printf("Material editor is only usable in battlescape mode\n");
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		return;
 	}
 #endif

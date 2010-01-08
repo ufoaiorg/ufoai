@@ -11,31 +11,7 @@ window production
 	{
 		image		ui/base_bg
 	}
-
-	string name
-	{
-		string		*cvar:mn_base_title
-		tooltip		"_Name of this base"
-		pos			"60 30"
-		size		"500 32"
-		textalign	cl
-		padding		8
-		font		f_big
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	custombutton back
-	{
-		tooltip		"_Back to baseview"
-		image		ui/button_background
-		texl		"1 1"
-		size		"59 55"
-		pos			"950 20"
-		icon		return
-		onClick		{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================
@@ -54,11 +30,11 @@ window production
 	 */
 	func prod_stores {
 		if ( *cvar:mn_itemtype ne "aircraft" ) {
-			*node:parent.infopanel.txt_prod_storage_caption@invis	false
-			*node:parent.infopanel.txt_prod_storage@invis	false
+			*node:parent.infopanel.txt_prod_storage_caption@invis	= false
+			*node:parent.infopanel.txt_prod_storage@invis	= false
 		} else {
-			*node:parent.infopanel.txt_prod_storage_caption@invis	true
-			*node:parent.infopanel.txt_prod_storage@invis	true
+			*node:parent.infopanel.txt_prod_storage_caption@invis	= true
+			*node:parent.infopanel.txt_prod_storage@invis	= true
 		}
 	}
 
@@ -111,28 +87,6 @@ window production
 			label	"_Disassembly"
 			value	"disassembly"
 		}
-	}
-
-	// ==================
-	// credits
-	// ==================
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
 	}
 
 	// ==================
@@ -275,8 +229,8 @@ window production
 		size		"265 550"
 		longlines	prettychop
 		onClick		{
-			*node:(text)root.prodlist_amount@lineselected <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected <node:this@lineselected>
+			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
@@ -285,9 +239,9 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
+			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
+			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
 			*(textlist)prodlist_amount@viewpos = <viewpos>
 			*(textlist)prodlist_queued@viewpos = <viewpos>
 		}
@@ -313,9 +267,9 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
+			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
+			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
 			*prodlist@viewpos = <viewpos>
 			*(textlist)prodlist_queued@viewpos = <viewpos>
 		}
@@ -340,9 +294,9 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize <viewsize>
+			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
+			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
 			*prodlist_amount@viewpos = <viewpos>
 			*prodlist@viewpos = <viewpos>
 		}
@@ -493,15 +447,15 @@ window production
 	 */
 	confunc prod_nothingselected
 	{
-		*prod_stop@invis true
-		*prod_down@invis true
-		*prod_up@invis true
-		*prod_change@invis true
-		*prod_change_10@invis true
-		*prod_new@invis true
-		*prod_amount@invis true
-		*label_1@invis true
-		*label_10@invis true
+		*prod_stop@invis = true
+		*prod_down@invis = true
+		*prod_up@invis = true
+		*prod_change@invis = true
+		*prod_change_10@invis = true
+		*prod_new@invis = true
+		*prod_amount@invis = true
+		*label_1@invis = true
+		*label_10@invis = true
 	}
 
 	/**
@@ -509,15 +463,15 @@ window production
 	 */
 	confunc prod_availableselected
 	{
-		*prod_stop@invis true
-		*prod_down@invis true
-		*prod_up@invis true
-		*prod_change@invis true
-		*prod_change_10@invis true
-		*prod_amount@invis true
-		*prod_new@invis false
-		*label_1@invis true
-		*label_10@invis true
+		*prod_stop@invis = true
+		*prod_down@invis = true
+		*prod_up@invis = true
+		*prod_change@invis = true
+		*prod_change_10@invis = true
+		*prod_amount@invis = true
+		*prod_new@invis = false
+		*label_1@invis = true
+		*label_10@invis = true
 	}
 
 	/**
@@ -525,15 +479,15 @@ window production
 	 */
 	confunc prod_taskselected
 	{
-		*prod_stop@invis false
-		*prod_down@invis false
-		*prod_up@invis false
-		*prod_change@invis false
-		*prod_change_10@invis false
-		*prod_amount@invis false
-		*prod_new@invis true
-		*label_1@invis false
-		*label_10@invis false
+		*prod_stop@invis = false
+		*prod_down@invis = false
+		*prod_up@invis = false
+		*prod_change@invis = false
+		*prod_change_10@invis = false
+		*prod_amount@invis = false
+		*prod_new@invis = true
+		*label_1@invis = false
+		*label_10@invis = false
 	}
 
 	// ==================
@@ -549,9 +503,9 @@ window production
 		tabwidth	260
 		rows		"10"
 		onViewChange	{
-			*(abstractscrollbar)description_scroll@fullsize <fullsize>
-			*(abstractscrollbar)description_scroll@current <viewpos>
-			*(abstractscrollbar)description_scroll@viewsize <viewsize>
+			*(abstractscrollbar)description_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)description_scroll@current = <viewpos>
+			*(abstractscrollbar)description_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -563,7 +517,7 @@ window production
 		viewsize	10
 		fullsize	10
 		hidewhenunused true
-		onChange	{ *description@viewpos <current> }
+		onChange	{ *description@viewpos = <current> }
 	}
 
 	// ==================

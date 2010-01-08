@@ -116,9 +116,8 @@ static void MN_RadioButtonNodeActivate (menuNode_t * node)
 	{
 		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, NULL, node->extraData1);
-		if (node->onChange) {
+		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
-		}
 	}
 }
 
@@ -127,6 +126,9 @@ static void MN_RadioButtonNodeActivate (menuNode_t * node)
  */
 static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 {
+	if (node->onClick)
+		MN_ExecuteEventActions(node, node->onClick);
+
 	MN_RadioButtonNodeActivate(node);
 }
 

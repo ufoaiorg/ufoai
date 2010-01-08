@@ -695,6 +695,26 @@ static void MN_AbstractNodeDoLayout (menuNode_t *node)
 	node->invalidated = qfalse;
 }
 
+static void MN_AbstractNodeInit (menuNode_t *node)
+{
+	menuNode_t* child;
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->behaviour->init) {
+			child->behaviour->init(child);
+		}
+	}
+}
+
+static void MN_AbstractNodeClose (menuNode_t *node)
+{
+	menuNode_t* child;
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->behaviour->close) {
+			child->behaviour->close(child);
+		}
+	}
+}
+
 /**
  * @brief Callback stub
  */
@@ -746,6 +766,8 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->activate = MN_AbstractNodeActivate;
 	behaviour->propertyChanged = MN_AbstractNodePropertyChanged;
 	behaviour->sizeChanged = MN_AbstractNodeSizeChanged;
+	behaviour->init = MN_AbstractNodeInit;
+	behaviour->close = MN_AbstractNodeClose;
 
 	/* some commands */
 #ifdef DEBUG

@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_misc.h"
 #include "r_error.h"
 #include "../../common/tracing.h"
-#include "../menu/m_menus.h"
+#include "../menu/m_windows.h"
 
 rendererData_t refdef;
 
@@ -153,6 +153,9 @@ void R_SetupFrustum (void)
 	}
 }
 
+/**
+ * @brief Clears the screens color and depth buffer
+ */
 static inline void R_Clear (void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -185,7 +188,7 @@ void R_BeginFrame (void)
 		VID_Restart_f();
 #endif
 	}
-	/* we definitly need a restart here */
+	/* we definitely need a restart here */
 	if (r_ext_texture_compression->modified)
 		VID_Restart_f();
 

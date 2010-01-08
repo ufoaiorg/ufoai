@@ -185,7 +185,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
-		MN_PopMenu(qfalse);
+		MN_PopWindow(qfalse);
 		selected = atoi(Cmd_Argv(1));
 		multiSelection = qtrue;
 	}
@@ -298,7 +298,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			if (ccs.numBases < MAX_BASES) {
 				Cmd_ExecuteString("mn_set_base_title");
-				MN_PushMenu("popup_newbase", NULL);
+				MN_PushWindow("popup_newbase", NULL);
 			}
 			return;
 		}
@@ -311,13 +311,13 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				Cmd_ExecuteString("mn_set_installation_title");
-				MN_PushMenu("popup_newinstallation", NULL);
+				MN_PushWindow("popup_newinstallation", NULL);
 			}
 			return;
 		}
 		break;
 	case MA_UFORADAR:
-		MN_PushMenu("popup_intercept_ufo", NULL);
+		MN_PushWindow("popup_intercept_ufo", NULL);
 		/* if shoot down - we have a new crashsite mission if color != water */
 		break;
 	default:
@@ -381,7 +381,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		/* Display popup for multi selection */
 		MN_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CL_GameTimeStop();
-		MN_PushMenu("popup_multi_selection", NULL);
+		MN_PushWindow("popup_multi_selection", NULL);
 	} else {
 		/* Nothing selected */
 		if (!selectedAircraft)
@@ -1104,7 +1104,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (strcmp(MN_GetActiveMenuName(), "geoscape"))
+	if (strcmp(MN_GetActiveWindowName(), "geoscape"))
 		return;
 
 	centerOnEventIdx++;
@@ -1775,6 +1775,9 @@ void MAP_ResetAction (void)
 	ccs.selectedMission = NULL;
 	selectedAircraft = NULL;
 	selectedUFO = NULL;
+
+	if (!radarOverlayWasSet)
+		MAP_DeactivateOverlay("radar");
 }
 
 /**
@@ -2466,6 +2469,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");

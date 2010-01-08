@@ -142,9 +142,9 @@ window lostgame
 		font		"f_normal"
 		dataid	TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize <fullsize>
-			*(abstractscrollbar)reason_scroll@current <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize <viewsize>
+			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)reason_scroll@current = <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -156,7 +156,7 @@ window lostgame
 		viewsize	5
 		fullsize	5
 		hidewhenunused true
-		onChange	{ *reason@viewpos <current> }
+		onChange	{ *reason@viewpos = <current> }
 	}
 
 	string lostgame_click
@@ -221,9 +221,9 @@ window endgame
 		font		"f_normal"
 		dataid	TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize <fullsize>
-			*(abstractscrollbar)reason_scroll@current <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize <viewsize>
+			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)reason_scroll@current = <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -235,7 +235,7 @@ window endgame
 		viewsize	5
 		fullsize	5
 		hidewhenunused true
-		onChange	{ *reason@viewpos <current> }
+		onChange	{ *reason@viewpos = <current> }
 	}
 
 	string endgame_click

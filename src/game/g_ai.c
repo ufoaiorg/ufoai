@@ -479,9 +479,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 }
 
 /**
+ * @brief Calculates possible actions for a civilian.
+ * @param[in] ent Pointer to an edict being civilian.
+ * @param[in] to The grid position to walk to.
+ * @param[in] aia Pointer to aiAction containing informations about possible action.
  * @sa AI_ActorThink
- * @param ent The civilian edict
- * @param to The grid position to walk to
  * @note Even civilians can use weapons if the teamdef allows this
  */
 static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
@@ -491,7 +493,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
 	float bestActionPoints;
-	float reaction_trap = 0.0;
+	float reactionTrap = 0.0;
 	float delta = 0.0;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
@@ -577,12 +579,12 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
 		if (!check->inuse || ent == check)
 			continue;
-		if (!(check->team == TEAM_ALIEN || G_IsInsane(ent)))
+		if (!(G_IsAlien(check) || G_IsInsane(ent)))
 			continue;
 		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
-			reaction_trap += 25.0;
+			reactionTrap += 25.0;
 	}
-	delta -= reaction_trap;
+	delta -= reactionTrap;
 	bestActionPoints += delta;
 
 	/* add laziness */
@@ -1007,11 +1009,8 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 
 	/* More tweaks */
 	if (team != TEAM_CIVILIAN) {
-		/* Set default reaction mode. */
-		ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
-
 		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
-		G_ClientStateChange(player, ent, ent->chr.reservedTus.reserveReaction, qfalse);
+		G_ClientStateChange(player, ent, STATE_REACTION_ONCE, qfalse);
 	}
 
 	/* initialize the LUA AI now */

@@ -20,12 +20,12 @@ window material_editor {
 		selectcolor "1 1 1 1"
 
 		onViewChange {
-			*(abstractscrollbar)editor_scroll@current <viewpos>
-			*(abstractscrollbar)editor_scroll@viewsize <viewsize>
-			*(abstractscrollbar)editor_scroll@fullsize <fullsize>
+			*(abstractscrollbar)editor_scroll@current = <viewpos>
+			*(abstractscrollbar)editor_scroll@viewsize = <viewsize>
+			*(abstractscrollbar)editor_scroll@fullsize = <fullsize>
 		}
 		onChange {
-			*cvar:me_image_id <num>
+			*cvar:me_image_id = <num>
 		}
 	}
 
@@ -35,7 +35,7 @@ window material_editor {
 		height		210
 		hidewhenunused true
 		onChange	{
-			*editor@viewpos <current>
+			*editor@viewpos = <current>
 		}
 	}
 
@@ -54,11 +54,11 @@ window material_editor {
 	 * @param<5> value for specular
 	 */
 	confunc hideshaders {
-		*shader_attributes@invis <1>
-		*cvar:me_bump <2>
-		*cvar:me_hardness <3>
-		*cvar:me_parallax <4>
-		*cvar:me_specular <5>
+		*shader_attributes@invis = <1>
+		*cvar:me_bump = <2>
+		*cvar:me_hardness = <3>
+		*cvar:me_parallax = <4>
+		*cvar:me_specular = <5>
 	}
 
 	panel shader_attributes {
@@ -160,11 +160,11 @@ window material_editor {
 	}
 
 	func hidestageattributestabs {
-		*stage_attributes.stage_attributes_scale@invis true
-		*stage_attributes.stage_attributes_scroll@invis true
-		*stage_attributes.stage_attributes_pulse@invis true
-		*stage_attributes.stage_attributes_stretch@invis true
-		*stage_attributes.stage_attributes_rotate@invis true
+		*stage_attributes.stage_attributes_scale@invis = true
+		*stage_attributes.stage_attributes_scroll@invis = true
+		*stage_attributes.stage_attributes_pulse@invis = true
+		*stage_attributes.stage_attributes_stretch@invis = true
+		*stage_attributes.stage_attributes_rotate@invis = true
 	}
 
 	/**
@@ -172,32 +172,32 @@ window material_editor {
 	 * @param<2> string the stage type tab to show - must only be given if <1> is false
 	 */
 	confunc hidestages {
-		*cvar:me_tmp <1>
-		*stage_attributes@invis <1>
+		*cvar:me_tmp = <1>
+		*stage_attributes@invis = <1>
 		call *node:root.hidestageattributestabs
 		if ( *cvar:me_tmp == false ) {
-			*cvar:me_stagetype <2>
-			*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis false
+			*cvar:me_stagetype = <2>
+			*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
 		}
 
 		cmd "del me_tmp;"
 	}
 
 	confunc updatestagevalues {
-		*cvar:rotate_hz <1>
-		*cvar:rotate_deg <2>
-		*cvar:me_stretch_hz <3>
-		*cvar:me_stretch_dhz <4>
-		*cvar:me_stretch_amp <5>
-		*cvar:me_stretch_damp <6>
-		*cvar:me_pulse_hz <7>
-		*cvar:me_pulse_dhz <8>
-		*cvar:me_scroll_ds <9>
-		*cvar:me_scroll_dt <10>
-		*cvar:me_scroll_s <11>
-		*cvar:me_scroll_t <12>
-		*cvar:me_scale_s <13>
-		*cvar:me_scale_t <14>
+		*cvar:rotate_hz = <1>
+		*cvar:rotate_deg = <2>
+		*cvar:me_stretch_hz = <3>
+		*cvar:me_stretch_dhz = <4>
+		*cvar:me_stretch_amp = <5>
+		*cvar:me_stretch_damp = <6>
+		*cvar:me_pulse_hz = <7>
+		*cvar:me_pulse_dhz = <8>
+		*cvar:me_scroll_ds = <9>
+		*cvar:me_scroll_dt = <10>
+		*cvar:me_scroll_s = <11>
+		*cvar:me_scroll_t = <12>
+		*cvar:me_scale_s = <13>
+		*cvar:me_scale_t = <14>
 	}
 
 	panel stages {
@@ -216,14 +216,14 @@ window material_editor {
 			lineheight	15
 			rows		6
 			onClick		{
-				*cvar:me_stage_id <lineselected>
+				*cvar:me_stage_id = <lineselected>
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;"
 			}
 			onViewChange {
-				*(abstractscrollbar)stages.stage_scroll@current <viewpos>
-				*(abstractscrollbar)stages.stage_scroll@viewsize <viewsize>
-				*(abstractscrollbar)stages.stage_scroll@fullsize <fullsize>
-				*(abstractscrollbar)stages.stage_scroll@height <height>
+				*(abstractscrollbar)stages.stage_scroll@current = <viewpos>
+				*(abstractscrollbar)stages.stage_scroll@viewsize = <viewsize>
+				*(abstractscrollbar)stages.stage_scroll@fullsize = <fullsize>
+				*(abstractscrollbar)stages.stage_scroll@height = <height>
 			}
 		}
 
@@ -233,7 +233,7 @@ window material_editor {
 			height		90
 			hidewhenunused true
 			onChange	{
-				*stages.stages@viewpos <current>
+				*stages.stages@viewpos = <current>
 			}
 		}
 
@@ -646,7 +646,7 @@ window material_editor {
 
 			onChange {
 				call *node:root.hidestageattributestabs
-				*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis false
+				*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
 			}
 
 			option stretch {
@@ -674,30 +674,30 @@ window material_editor {
 
 	func onInit {
 		// general cvars
-		*cvar:me_image_id -1
-		*cvar:me_stage_id -1
-		*cvar:me_imagename ""
-		*cvar:me_stagetype 0
+		*cvar:me_image_id = -1
+		*cvar:me_stage_id = -1
+		*cvar:me_imagename = ""
+		*cvar:me_stagetype = 0
 		// shader cvars
-		*cvar:me_bump 0
-		*cvar:me_hardness 0
-		*cvar:me_parallax 0
-		*cvar:me_specular 0
+		*cvar:me_bump = 0
+		*cvar:me_hardness = 0
+		*cvar:me_parallax = 0
+		*cvar:me_specular = 0
 		// stage cvars
-		*cvar:me_rotate_hz 0
-		*cvar:me_rotate_deg 0
-		*cvar:me_stretch_hz 0
-		*cvar:me_stretch_dhz 0
-		*cvar:me_stretch_amp 0
-		*cvar:me_stretch_damp 0
-		*cvar:me_pulse_hz 0
-		*cvar:me_pulse_dhz 0
-		*cvar:me_scroll_ds 0
-		*cvar:me_scroll_dt 0
-		*cvar:me_scroll_s 0
-		*cvar:me_scroll_t 0
-		*cvar:me_scale_s 0
-		*cvar:me_scale_t 0
+		*cvar:me_rotate_hz = 0
+		*cvar:me_rotate_deg = 0
+		*cvar:me_stretch_hz = 0
+		*cvar:me_stretch_dhz = 0
+		*cvar:me_stretch_amp = 0
+		*cvar:me_stretch_damp = 0
+		*cvar:me_pulse_hz = 0
+		*cvar:me_pulse_dhz = 0
+		*cvar:me_scroll_ds = 0
+		*cvar:me_scroll_dt = 0
+		*cvar:me_scroll_s = 0
+		*cvar:me_scroll_t = 0
+		*cvar:me_scale_s = 0
+		*cvar:me_scale_t = 0
 
 		cmd "hideshaders true 0 0 0 0;"
 		cmd "hidestages true stretch;"

@@ -41,31 +41,11 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 	glRotatef(mi->angles[1], 0, 1, 0);
 	glRotatef(mi->angles[2], 1, 0, 0);
 
-	if (mi->scale) {
-		/* scale by parameters */
+	/* scale by parameters */
+	if (mi->scale)
 		glScalef(mi->scale[0], mi->scale[1], mi->scale[2]);
-		if (mi->center)
-			glTranslatef(-mi->center[0], -mi->center[1], -mi->center[2]);
-	} else if (mi->center) {
-		/* autoscale */
-		float max, size;
-		vec3_t mins, maxs, center;
-		int i;
-		mAliasFrame_t *frame = mi->model->alias.frames;
-
-		/* get center and scale */
-		for (max = 1.0, i = 0; i < 3; i++) {
-			mins[i] = frame->translate[i];
-			maxs[i] = mins[i] + frame->scale[i] * 255;
-			center[i] = -(mins[i] + maxs[i]) / 2;
-			size = maxs[i] - mins[i];
-			if (size > max)
-				max = size;
-		}
-		size = (mi->center[0] < mi->center[1] ? mi->center[0] : mi->center[1]) / max;
-		glScalef(size, size, size);
-		glTranslatef(center[0], center[1], center[2]);
-	}
+	if (mi->center)
+		glTranslatef(mi->center[0], mi->center[1], mi->center[2]);
 }
 
 static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
@@ -224,6 +204,31 @@ const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
 }
 
 /**
+ * @brief Compute scale and center for a model info data structure
+ * @param[in] boxSize The size the model should fit into
+ * @param[in,out] mi The model info that contains the model that should be scaled
+ * @param[out] scale The scale vector
+ * @param[out] center The center of the model (center of the model's bounding box)
+ * @note The scale and center vectors are parameters here because the @c modelInfo_t
+ * struct only holds pointers to the vectors.
+ * @todo Take the rotation info from @c modelInfo_t into account
+ */
+void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center)
+{
+	const float width = mi->model->maxs[0] - mi->model->mins[0];
+	const float height = mi->model->maxs[1] - mi->model->mins[1];
+	const float size = min(boxSize[0], boxSize[1]) / max(width, height);
+
+	/* get center */
+	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);
+	VectorNegate(center, center);
+	VectorSet(scale, size, size, size);
+
+	mi->center = center;
+	mi->scale = scale;
+}
+
+/**
  * @sa R_DrawAliasModel
  */
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
@@ -262,7 +267,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		 * parent model location now */
 		R_TransformModelDirect(pmi);
 
-		/* tag trafo */
+		/* tag transformation */
 		if (tagname) {
 			const float *tag = R_GetTagMatrix(pmi->model, tagname);
 			if (tag) {
@@ -300,6 +305,10 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
 
+	/* show model bounding box */
+	if (r_showbox->integer)
+		R_EntityDrawBBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
+
 	glDisable(GL_DEPTH_TEST);
 
 	glPopMatrix();
@@ -331,9 +340,9 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	glPushMatrix();
 
 	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
-	glRotatef(mi->angles[1], 0, 0, 1);
-	glRotatef(mi->angles[0], 0, 1, 0);
-	glRotatef(-mi->angles[2], 1, 0, 0);
+	glRotatef(mi->angles[YAW], 0, 0, 1);
+	glRotatef(mi->angles[PITCH], 0, 1, 0);
+	glRotatef(-mi->angles[ROLL], 1, 0, 0);
 
 	/* draw it */
 	R_BindTexture(skin->texnum);
@@ -345,6 +354,10 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		R_DrawAliasStatic(mesh);
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
+
+	/* show model bounding box */
+	if (r_showbox->integer)
+		R_EntityDrawBBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
 
 	glPopMatrix();
 
@@ -403,9 +416,10 @@ qboolean R_CullMeshModel (entity_t *e)
 	for (i = 0; i < 8; i++) {
 		int mask = 0;
 		int j;
+		const int size = lengthof(r_locals.frustum);
 
-		for (j = 0; j < 4; j++) {
-			/* get the distance between the frustom normal vector and the
+		for (j = 0; j < size; j++) {
+			/* get the distance between the frustum normal vector and the
 			 * current vector of the bounding box */
 			const float f = DotProduct(r_locals.frustum[j].normal, bbox[i]);
 			if ((f - r_locals.frustum[j].dist) < 0)
@@ -447,9 +461,9 @@ static void R_ModelViewTransform (const vec3_t in, vec3_t out)
  */
 static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAliasModel_t* mod)
 {
-    if (mod->num_meshes == 1 || (refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-    	return &mod->meshes[0];
-    } else {
+	if (mod->num_meshes == 1 || (refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		return &mod->meshes[0];
+	} else {
 		vec3_t dist;
 		vec_t length;
 
@@ -465,7 +479,7 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 		}
 
 		return &mod->meshes[0];
-    }
+	}
 }
 
 /**
@@ -551,11 +565,8 @@ void R_DrawAliasModel (entity_t *e)
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	/* show model bounding box */
-	if (r_showbox->integer) {
-		vec3_t bbox[8];
-		R_EntityComputeBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs, bbox);
-		R_EntityDrawBBox(bbox);
-	}
+	if (r_showbox->integer)
+		R_EntityDrawBBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
 
 	glPopMatrix();
 

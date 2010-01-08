@@ -1,6 +1,44 @@
 // ==================
 // HOSPITAL MENU
 // ==================
+
+component cmpDefNamedTbar cmpHospitalNamedTbar {
+	pic			bdr { 
+		pos "17 18"
+	}
+	tbar		bar {
+		pos "19 18"
+	}
+	string	val {
+		pos "160 0"
+	}
+}
+
+component panel cmpHospitalPanel {
+	{
+	size "300 85"
+	}
+	pic button {
+		image ui/hosp_button_green
+		pos "0 0"
+	}
+
+	pic icon	{ visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"		image icons/health_unused 	pos "248  11" }
+
+	string item	{ pos "15 10"	color "1 1 1 1"	size "220 16" }
+
+	string rank	{ pos "15 35"	color "1 1 1 1"	size "220 16" }
+
+	bar health     { pos "22 65" 	size "263 6" color "0 .8 0 1" }
+
+	zone click_button {
+		pos "0 0"
+		size "300 85"
+		tooltip "_Unused"
+		onClick { cmd "hosp_list_click <node:parent@num>;" }
+	}
+}
+
 window hospital
 {
 	// ==================
@@ -61,69 +99,34 @@ window hospital
 
 	confunc hospital_clear
 	{
-		*hos_button0@image ui/hosp_button_green
-		*hos_button1@image ui/hosp_button_green
-		*hos_button2@image ui/hosp_button_green
-		*hos_button3@image ui/hosp_button_green
-		*hos_button4@image ui/hosp_button_green
-		*hos_button5@image ui/hosp_button_green
-		*hos_button6@image ui/hosp_button_green
-		*hos_button7@image ui/hosp_button_green
-		*hos_button8@image ui/hosp_button_green
-		*hos_button9@image ui/hosp_button_green
-		*hos_button10@image ui/hosp_button_green
-		*hos_button11@image ui/hosp_button_green
-		*hos_button12@image ui/hosp_button_green
-		*hos_button13@image ui/hosp_button_green
-		*hos_button14@image ui/hosp_button_green
-		*hos_button15@image ui/hosp_button_green
-		*hos_button16@image ui/hosp_button_green
-		*hos_button17@image ui/hosp_button_green
-		*hos_button18@image ui/hosp_button_green
-		*hos_button19@image ui/hosp_button_green
-		*hos_button20@image ui/hosp_button_green
-		*click_hos_button0@tooltip "_Unused"
-		*click_hos_button1@tooltip "_Unused"
-		*click_hos_button2@tooltip "_Unused"
-		*click_hos_button3@tooltip "_Unused"
-		*click_hos_button4@tooltip "_Unused"
-		*click_hos_button5@tooltip "_Unused"
-		*click_hos_button6@tooltip "_Unused"
-		*click_hos_button7@tooltip "_Unused"
-		*click_hos_button8@tooltip "_Unused"
-		*click_hos_button9@tooltip "_Unused"
-		*click_hos_button10@tooltip "_Unused"
-		*click_hos_button11@tooltip "_Unused"
-		*click_hos_button12@tooltip "_Unused"
-		*click_hos_button13@tooltip "_Unused"
-		*click_hos_button14@tooltip "_Unused"
-		*click_hos_button15@tooltip "_Unused"
-		*click_hos_button16@tooltip "_Unused"
-		*click_hos_button17@tooltip "_Unused"
-		*click_hos_button18@tooltip "_Unused"
-		*click_hos_button19@tooltip "_Unused"
-		*click_hos_button20@tooltip "_Unused"
+		*cvar:i = 0
+		while ( *cvar:i < 20 ) {
+			*hos<cvar:i>.button@image = ui/hosp_button_green
+			*hos<cvar:i>.click_button@tooltip = "_Unused"
+			*cvar:i = ( *cvar:i + 1 )
+		}
+	delete *cvar:i
 	}
 
 	confunc hospitalserious	{
-		*hos_icon<1>@image				icons/health_critical
-		*hos_button<1>@image			ui/hosp_button_light
-		*click_hos_button<1>@tooltip	"_Heavily wounded"
+		*hos<1>.icon@image				= icons/health_critical
+		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*hos_icon<1>@image				icons/health_medium
-		*hos_button<1>@image			ui/hosp_button_light
-		*click_hos_button<1>@tooltip	"_Medium wounds"
+		*hos<1>.icon@image				= icons/health_medium
+		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*hos_icon<1>@image				icons/health_normal
-		*hos_button<1>@image			ui/hosp_button_light
-		*click_hos_button<1>@tooltip	"_Slightly wounded"
+		*hos<1>.icon@image				= icons/health_normal
+		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*hos_icon<1>@image				icons/health_unused
-		*hos_button<1>@image			ui/hosp_button_green
-		*click_hos_button<1>@tooltip	"_Unused"
+		*hos<1>.icon@image				= icons/health_unused
+		*hos<1>.button@image			= ui/hosp_button_green
+		*hos<1>.click_button@tooltip	= "_Unused"
 	}
 
 	zone hos_scroll_zone
@@ -134,304 +137,214 @@ window hospital
 		onWheelDown { cmd "hosp_list_down;" }
 	}
 
-	pic hos_button0 {
-		image ui/hosp_button_green
-		pos "25 95"
+	cmpHospitalPanel hos0 {
+		{
+			pos "25 95"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp0
+			max *cvar:mn_hos_hpmax0 
+		}
 	}
-	pic hos_button1 {
-		image ui/hosp_button_green
-		pos "345 95"
+	
+	cmpHospitalPanel hos1 {
+		{
+			pos "345 95"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp1
+			max *cvar:mn_hos_hpmax1
+		}
 	}
-	pic hos_button2 {
-		image ui/hosp_button_green
-		pos "665 95"
+	
+	cmpHospitalPanel hos2 {
+		{
+			pos "665 95"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp2
+			max *cvar:mn_hos_hpmax2
+		}
 	}
-	pic hos_button3 {
-		image ui/hosp_button_green
-		pos "25 190"
+	
+	cmpHospitalPanel hos3 {
+		{
+			pos "25 190"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp3
+			max *cvar:mn_hos_hpmax3
+		}
 	}
-	pic hos_button4 {
-		image ui/hosp_button_green
-		pos "345 190"
+	
+	cmpHospitalPanel hos4 {
+		{
+			pos "345 190"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp4
+			max *cvar:mn_hos_hpmax4
+		}
 	}
-	pic hos_button5 {
-		image ui/hosp_button_green
-		pos "665 190"
+	
+	cmpHospitalPanel hos5 {
+		{
+			pos "665 190"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp5
+			max *cvar:mn_hos_hpmax5
+		}
 	}
-	pic hos_button6 {
-		image ui/hosp_button_green
-		pos "25 285"
+	
+	cmpHospitalPanel hos6 {
+		{
+			pos "25 285"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp6
+			max *cvar:mn_hos_hpmax6
+		}
 	}
-	pic hos_button7 {
-		image ui/hosp_button_green
-		pos "345 285"
-	}
-	pic hos_button8 {
-		image ui/hosp_button_green
-		pos "665 285"
-	}
-	pic hos_button9 {
-		image ui/hosp_button_green
-		pos "25 380"
-	}
-	pic hos_button10 {
-		image ui/hosp_button_green
-		pos "345 380"
-	}
-	pic hos_button11 {
-		image ui/hosp_button_green
-		pos "665 380"
-	}
-	pic hos_button12 {
-		image ui/hosp_button_green
-		pos "25 475"
-	}
-	pic hos_button13 {
-		image ui/hosp_button_green
-		pos "345 475"
-	}
-	pic hos_button14 {
-		image ui/hosp_button_green
-		pos "665 475"
-	}
-	pic hos_button15 {
-		image ui/hosp_button_green
-		pos "25 570"
-	}
-	pic hos_button16 {
-		image ui/hosp_button_green
-		pos "345 570"
-	}
-	pic hos_button17 {
-		image ui/hosp_button_green
-		pos "665 570"
-	}
-	pic hos_button18 {
-		image ui/hosp_button_green
-		pos "25 665"
-	}
-	pic hos_button19 {
-		image ui/hosp_button_green
-		pos "345 665"
-	}
-	pic hos_button20 {
-		image ui/hosp_button_green
-		pos "665 665"
+	
+	cmpHospitalPanel hos7 {
+		{
+			pos "345 285"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp7
+			max *cvar:mn_hos_hpmax7
+		}
 	}
 
-	pic hos_icon0	{ visiblewhen "exists *cvar:mn_hos_item0"		image icons/health_unused 	pos "272  106" }
-	pic hos_icon1	{ visiblewhen "exists *cvar:mn_hos_item1"		image icons/health_unused 	pos "592  106" }
-	pic hos_icon2	{ visiblewhen "exists *cvar:mn_hos_item2"		image icons/health_unused 	pos "912  106" }
-	pic hos_icon3	{ visiblewhen "exists *cvar:mn_hos_item3"		image icons/health_unused 	pos "272 201" }
-	pic hos_icon4	{ visiblewhen "exists *cvar:mn_hos_item4"		image icons/health_unused 	pos "592 201" }
-	pic hos_icon5	{ visiblewhen "exists *cvar:mn_hos_item5"		image icons/health_unused 	pos "912 201" }
-	pic hos_icon6	{ visiblewhen "exists *cvar:mn_hos_item6"		image icons/health_unused 	pos "272 296" }
-	pic hos_icon7	{ visiblewhen "exists *cvar:mn_hos_item7"		image icons/health_unused 	pos "592 296" }
-	pic hos_icon8	{ visiblewhen "exists *cvar:mn_hos_item8"		image icons/health_unused 	pos "912 296" }
-	pic hos_icon9	{ visiblewhen "exists *cvar:mn_hos_item9"		image icons/health_unused 	pos "272 391" }
-	pic hos_icon10	{ visiblewhen "exists *cvar:mn_hos_item10"	image icons/health_unused 	pos "592 391" }
-	pic hos_icon11	{ visiblewhen "exists *cvar:mn_hos_item11"	image icons/health_unused 	pos "912 391" }
-	pic hos_icon12	{ visiblewhen "exists *cvar:mn_hos_item12"	image icons/health_unused 	pos "272 486" }
-	pic hos_icon13	{ visiblewhen "exists *cvar:mn_hos_item13"	image icons/health_unused 	pos "592 486" }
-	pic hos_icon14	{ visiblewhen "exists *cvar:mn_hos_item14"	image icons/health_unused 	pos "912 486" }
-	pic hos_icon15	{ visiblewhen "exists *cvar:mn_hos_item15"	image icons/health_unused 	pos "272 581" }
-	pic hos_icon16	{ visiblewhen "exists *cvar:mn_hos_item16"	image icons/health_unused 	pos "592 581" }
-	pic hos_icon17	{ visiblewhen "exists *cvar:mn_hos_item17"	image icons/health_unused 	pos "912 581" }
-	pic hos_icon18	{ visiblewhen "exists *cvar:mn_hos_item18"	image icons/health_unused 	pos "272 676" }
-	pic hos_icon19	{ visiblewhen "exists *cvar:mn_hos_item19"	image icons/health_unused 	pos "592 676" }
-	pic hos_icon20	{ visiblewhen "exists *cvar:mn_hos_item20"	image icons/health_unused 	pos "912 676" }
+	cmpHospitalPanel hos8 {
+		{
+			pos "665 285"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp8
+			max *cvar:mn_hos_hpmax8
+		}
+	}
 
-	string hos_item0	{ string *cvar:mn_hos_item0		pos "40 105"	color "1 1 1 1"	size "220 16" }
-	string hos_item1	{ string *cvar:mn_hos_item1		pos "360 105"	color "1 1 1 1"	size "220 16" }
-	string hos_item2	{ string *cvar:mn_hos_item2		pos "680 105"	color "1 1 1 1"	size "220 16" }
-	string hos_item3	{ string *cvar:mn_hos_item3		pos "40 200"	color "1 1 1 1"	size "220 16" }
-	string hos_item4	{ string *cvar:mn_hos_item4		pos "360 200"	color "1 1 1 1"	size "220 16" }
-	string hos_item5	{ string *cvar:mn_hos_item5		pos "680 200"	color "1 1 1 1"	size "220 16" }
-	string hos_item6	{ string *cvar:mn_hos_item6		pos "40 295"	color "1 1 1 1"	size "220 16" }
-	string hos_item7 	{ string *cvar:mn_hos_item7   	pos "360 295"	color "1 1 1 1"	size "220 16" }
-	string hos_item8	{ string *cvar:mn_hos_item8		pos "680 295"	color "1 1 1 1"	size "220 16" }
-	string hos_item9 	{ string *cvar:mn_hos_item9		pos "40 390"	color "1 1 1 1"	size "220 16" }
-	string hos_item10 	{ string *cvar:mn_hos_item10		pos "360 390"	color "1 1 1 1"	size "220 16" }
-	string hos_item11	{ string *cvar:mn_hos_item11		pos "680 390"	color "1 1 1 1"	size "220 16" }
-	string hos_item12 	{ string *cvar:mn_hos_item12		pos "40 485"	color "1 1 1 1"	size "220 16" }
-	string hos_item13 	{ string *cvar:mn_hos_item13		pos "360 485"	color "1 1 1 1"	size "220 16" }
-	string hos_item14	{ string *cvar:mn_hos_item14		pos "680 485"	color "1 1 1 1"	size "220 16" }
-	string hos_item15	{ string *cvar:mn_hos_item15		pos "40 580"	color "1 1 1 1"	size "220 16" }
-	string hos_item16	{ string *cvar:mn_hos_item16		pos "360 580"	color "1 1 1 1"	size "220 16" }
-	string hos_item17	{ string *cvar:mn_hos_item17		pos "680 580"	color "1 1 1 1"	size "220 16" }
-	string hos_item18	{ string *cvar:mn_hos_item18		pos "40 675"	color "1 1 1 1"	size "220 16" }
-	string hos_item19	{ string *cvar:mn_hos_item19		pos "360 675"	color "1 1 1 1"	size "220 16" }
-	string hos_item20	{ string *cvar:mn_hos_item20		pos "680 675"	color "1 1 1 1"	size "220 16" }
+	cmpHospitalPanel hos9 {
+		{
+			pos "25 380"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp9
+			max *cvar:mn_hos_hpmax9
+		}
+	}
 
-	string hos_rank0	{ string *cvar:mn_hos_rank0		pos "40 130"	color "1 1 1 1"	size "220 16" }
-	string hos_rank1	{ string *cvar:mn_hos_rank1		pos "360 130"	color "1 1 1 1"	size "220 16" }
-	string hos_rank2	{ string *cvar:mn_hos_rank2		pos "680 130"	color "1 1 1 1"	size "220 16" }
-	string hos_rank3	{ string *cvar:mn_hos_rank3		pos "40 225"	color "1 1 1 1"	size "220 16" }
-	string hos_rank4	{ string *cvar:mn_hos_rank4		pos "360 225"	color "1 1 1 1"	size "220 16" }
-	string hos_rank5	{ string *cvar:mn_hos_rank5		pos "680 225"	color "1 1 1 1"	size "220 16" }
-	string hos_rank6	{ string *cvar:mn_hos_rank6		pos "40 320"	color "1 1 1 1"	size "220 16" }
-	string hos_rank7 	{ string *cvar:mn_hos_rank7   	pos "360 320"	color "1 1 1 1"	size "220 16" }
-	string hos_rank8	{ string *cvar:mn_hos_rank8		pos "680 320"	color "1 1 1 1"	size "220 16" }
-	string hos_rank9 	{ string *cvar:mn_hos_rank9		pos "40 415"	color "1 1 1 1"	size "220 16" }
-	string hos_rank10 	{ string *cvar:mn_hos_rank10		pos "360 415"	color "1 1 1 1"	size "220 16" }
-	string hos_rank11	{ string *cvar:mn_hos_rank11		pos "680 415"	color "1 1 1 1"	size "220 16" }
-	string hos_rank12 	{ string *cvar:mn_hos_rank12		pos "40 510"	color "1 1 1 1"	size "220 16" }
-	string hos_rank13 	{ string *cvar:mn_hos_rank13		pos "360 510"	color "1 1 1 1"	size "220 16" }
-	string hos_rank14	{ string *cvar:mn_hos_rank14		pos "680 510"	color "1 1 1 1"	size "220 16" }
-	string hos_rank15	{ string *cvar:mn_hos_rank15		pos "40 605"	color "1 1 1 1"	size "220 16" }
-	string hos_rank16	{ string *cvar:mn_hos_rank16		pos "360 605"	color "1 1 1 1"	size "220 16" }
-	string hos_rank17	{ string *cvar:mn_hos_rank17		pos "680 605"	color "1 1 1 1"	size "220 16" }
-	string hos_rank18	{ string *cvar:mn_hos_rank18		pos "40 700"	color "1 1 1 1"	size "220 16" }
-	string hos_rank19	{ string *cvar:mn_hos_rank19		pos "360 700"	color "1 1 1 1"	size "220 16" }
-	string hos_rank20	{ string *cvar:mn_hos_rank20		pos "680 700"	color "1 1 1 1"	size "220 16" }
+	cmpHospitalPanel hos10 {
+		{
+			pos "345 380"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp10
+			max *cvar:mn_hos_hpmax10
+		}
+	}
 
-	bar hos_health0     { pos "47 160" 	current *cvar:mn_hos_hp0 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax0 }
-	bar hos_health1     { pos "367 160" current *cvar:mn_hos_hp1 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax1 }
-	bar hos_health2     { pos "687 160" current *cvar:mn_hos_hp2 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax2 }
-	bar hos_health3     { pos "47 255" 	current *cvar:mn_hos_hp3 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax3 }
-	bar hos_health4     { pos "367 255" current *cvar:mn_hos_hp4 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax4 }
-	bar hos_health5     { pos "687 255" current *cvar:mn_hos_hp5 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax5 }
-	bar hos_health6     { pos "47 350" 	current *cvar:mn_hos_hp6 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax6 }
-	bar hos_health7     { pos "367 350" current *cvar:mn_hos_hp7 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax7 }
-	bar hos_health8     { pos "687 350" current *cvar:mn_hos_hp8 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax8 }
-	bar hos_health9     { pos "47 445" 	current *cvar:mn_hos_hp9 	size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax9 }
-	bar hos_health10    { pos "367 445" current *cvar:mn_hos_hp10 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax10 }
-	bar hos_health11    { pos "687 445" current *cvar:mn_hos_hp11 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax11 }
-	bar hos_health12    { pos "47 540" 	current *cvar:mn_hos_hp12 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax12 }
-	bar hos_health13    { pos "367 540" current *cvar:mn_hos_hp13 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax13 }
-	bar hos_health14    { pos "687 540" current *cvar:mn_hos_hp14 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax14 }
-	bar hos_health15    { pos "47 635" 	current *cvar:mn_hos_hp15 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax15 }
-	bar hos_health16    { pos "367 635" current *cvar:mn_hos_hp16 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax16 }
-	bar hos_health17	{ pos "687 635" current *cvar:mn_hos_hp17 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax17 }
-	bar hos_health18    { pos "47 730" 	current *cvar:mn_hos_hp18 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax18 }
-	bar hos_health19    { pos "367 730" current *cvar:mn_hos_hp19 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax19 }
-	bar hos_health20	{ pos "687 730" current *cvar:mn_hos_hp20 size "263 6" color "0 .8 0 1" max *cvar:mn_hos_hpmax20 }
+	cmpHospitalPanel hos11 {
+		{
+			pos "665 380"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp11
+			max *cvar:mn_hos_hpmax11
+		}
+	}
 
-	zone click_hos_button0 {
-		pos "25 95"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 0;" }
+	cmpHospitalPanel hos12 {
+		{
+			pos "25 475"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp12
+			max *cvar:mn_hos_hpmax12
+		}
 	}
-	zone click_hos_button1 {
-		pos "345 95"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 1;" }
+
+	cmpHospitalPanel hos13 {
+		{
+			pos "345 475"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp13
+			max *cvar:mn_hos_hpmax13
+		}
 	}
-	zone click_hos_button2 {
-		pos "665 95"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 2;" }
+
+	cmpHospitalPanel hos14 {
+		{
+			pos "665 475"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp14
+			max *cvar:mn_hos_hpmax14
+		}
 	}
-	zone click_hos_button3 {
-		pos "25 190"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 3;" }
+
+	cmpHospitalPanel hos15 {
+		{
+			pos "25 570"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp15
+			max *cvar:mn_hos_hpmax15
+		}
 	}
-	zone click_hos_button4 {
-		pos "345 190"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 4;" }
+
+	cmpHospitalPanel hos16 {
+		{
+			pos "345 570"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp16
+			max *cvar:mn_hos_hpmax16
+		}
 	}
-	zone click_hos_button5 {
-		pos "665 190"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 5;" }
+
+	cmpHospitalPanel hos17 {
+		{
+			pos "665 570"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp17
+			max *cvar:mn_hos_hpmax17
+		}
 	}
-	zone click_hos_button6 {
-		pos "25 285"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 6;" }
+
+	cmpHospitalPanel hos18 {
+		{
+			pos "25 665"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp18
+			max *cvar:mn_hos_hpmax18
+		}
 	}
-	zone click_hos_button7 {
-		pos "345 285"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 7;" }
+
+	cmpHospitalPanel hos19 {
+		{
+			pos "345 665"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp19
+			max *cvar:mn_hos_hpmax19
+		}
 	}
-	zone click_hos_button8 {
-		pos "665 285"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 8;" }
-	}
-	zone click_hos_button9 {
-		pos "25 380"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 9;" }
-	}
-	zone click_hos_button10 {
-		pos "345 380"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 10;" }
-	}
-	zone click_hos_button11 {
-		pos "665 380"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 11;" }
-	}
-	zone click_hos_button12 {
-		pos "25 475"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 12;" }
-	}
-	zone click_hos_button13 {
-		pos "345 475"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 13;" }
-	}
-	zone click_hos_button14 {
-		pos "665 475"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 14;" }
-	}
-	zone click_hos_button15 {
-		pos "25 570"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 15;" }
-	}
-	zone click_hos_button16 {
-		pos "345 570"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 16;" }
-	}
-	zone click_hos_button17 {
-		pos "665 570"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 17;" }
-	}
-	zone click_hos_button18 {
-		pos "25 665"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 18;" }
-	}
-	zone click_hos_button19 {
-		pos "345 665"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 19;" }
-	}
-	zone click_hos_button20 {
-		pos "665 665"
-		size "300 85"
-		tooltip "_Unused"
-		onClick { cmd "hosp_list_click 20;" }
+
+	cmpHospitalPanel hos20 {
+		{
+			pos "665 665"
+		}
+		bar health  {
+			current *cvar:mn_hos_hp20
+			max *cvar:mn_hos_hpmax20
+		}
 	}
 
 	pic hos_button_scrollup
@@ -443,8 +356,8 @@ window hospital
 		texh	"48 48"
 		texl	"32 32"
 		onClick	{ cmd "hosp_list_up;" }
-		onMouseLeave		{ *node:this@texl "32 32" *node:this@texh "48 48" }
-		onMouseEnter		{ *node:this@texl "48 32" *node:this@texh "64 48" }
+		onMouseLeave		{ *node:this@texl = "32 32" *node:this@texh = "48 48" }
+		onMouseEnter		{ *node:this@texl = "48 32" *node:this@texh = "64 48" }
 	}
 
 	pic hos_button_scrolldown
@@ -456,8 +369,8 @@ window hospital
 		texl	"32 48"
 		texh	"48 64"
 		onClick	{ cmd "hosp_list_down;" }
-		onMouseLeave		{ *node:this@texl "32 48" *node:this@texh "48 64" }
-		onMouseEnter		{ *node:this@texl "48 48" *node:this@texh "64 64" }
+		onMouseLeave		{ *node:this@texl = "32 48" *node:this@texh = "48 64" }
+		onMouseEnter		{ *node:this@texl = "48 48" *node:this@texh = "64 64" }
 	}
 
 	// ==================
@@ -467,6 +380,17 @@ window hospital
 	func onInit
 	{
 		cmd "hosp_init;"
+		*cvar:i = 0
+		while ( *cvar:i < 20 ) {
+			*hos<cvar:i>@num = <cvar:i>
+			*hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
+			*hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
+//			*hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
+//			*hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+	delete *cvar:i
+
 	}
 }
 
@@ -488,43 +412,7 @@ window hospital_employee
 	// Base header
 	// ==================
 
-	string base_name
-	{
-		tooltip	"_Name of this base"
-		string	*cvar:mn_base_title
-		pos	"60 30"
-		size "240 32"
-		textalign	cl
-		padding	8
-		font	f_big
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"675 30"
-		size		"100 30"
-		font		f_big
-	}
-
-	string txt_credits
-	{
-		tooltip		"_Organisation capital"
-		string		*cvar:mn_credits
-		pos			"780 30"
-		size		"130 30"
-		font		f_big
-		textalign	ur
-	}
-
-	custombutton bt_continue
-	{
-		tooltip	"_Back"
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
-		pos		"950 20"
-		icon	"return"
-		onClick	{ cmd "mn_pop;" }
+	cmpBaseHeader baseHeader {
 	}
 
 	// ==================
@@ -569,55 +457,95 @@ window hospital_employee
 	pic	rank_img { pos "475 470" image *cvar:mn_chrrank_img }
 	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines prettychop }
 
-	string pwr_lbl { pos "690 182" size "180 20" string "_Strength:" longlines prettychop }
-	string pwr_val { pos "860 182" size "130 20" string *cvar:mn_tpwr textalign ur longlines prettychop }
-	pic pwr_bdr    { pos "707 198"  image ui/bar_border }
-	tbar pwr_bar   { pos "710 198"  max 100 current *cvar:mn_vpwr texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	cmpHospitalNamedTbar pwr {
+		{
+			pos "690 182"
+		}
+		tbar bar   { current *cvar:mn_vpwr }
+		string lbl { string "_Strength:" }
+		string val { string *cvar:mn_tpwr }
+	}
 
-	string spd_lbl { pos "690 212" size "180 20" string "_Speed:" longlines prettychop }
-	string spd_val { pos "860 212" size "130 20" string *cvar:mn_tspd textalign ur longlines prettychop }
-	pic spd_bdr    { pos "707 228" image ui/bar_border }
-	tbar spd_bar   { pos "710 228" current *cvar:mn_vspd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	cmpHospitalNamedTbar spd {
+		{
+			pos "690 212"
+		}
+		tbar bar   { current *cvar:mn_vspd }
+		string lbl { string "_Speed:" }
+		string val { string *cvar:mn_tspd }
+	}
 
-	string acc_lbl { pos "690 242" size "180 20" string "_Accuracy:" longlines prettychop }
-	string acc_val { pos "860 242" size "130 20" string *cvar:mn_tacc textalign ur longlines prettychop }
-	pic acc_brd    { pos "707 258" image ui/bar_border }
-	tbar acc_bar   { pos "710 258" current *cvar:mn_vacc texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	cmpHospitalNamedTbar acc {
+		{
+			pos "690 242"
+		}
+		tbar bar   { current *cvar:mn_vacc }
+		string lbl { string "_Accuracy:" }
+		string val { string *cvar:mn_tacc }
+	}
 
-	string mnd_lbl { pos "690 272" size "180 20" string "_Mind:" longlines prettychop }
-	string mnd_val { pos "860 272" size "130 20" string *cvar:mn_tmnd textalign ur longlines prettychop }
-	pic mnd_brd    { pos "707 288" image ui/bar_border }
-	tbar mnd_bar   { pos "710 288" current *cvar:mn_vmnd texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
+	cmpHospitalNamedTbar mnd {
+		{
+			pos "690 272"
+		}
+		tbar bar   { current *cvar:mn_vmnd }
+		string lbl { string "_Mind:" }
+		string val { string *cvar:mn_tmnd }
+	}
 
-	string cls_lbl { pos "690 312" size "180 20" string "_Close Combat:" longlines prettychop }
-	string cls_val { pos "860 312" size "130 20" string *cvar:mn_tcls textalign ur longlines prettychop }
-	pic cls_brd    { pos "707 328" image ui/bar_border }
-	tbar cls_bar   { pos "710 328" current *cvar:mn_vcls texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	cmpHospitalNamedTbar cls {
+		{
+			pos "690 312"
+		}
+		tbar bar   { current *cvar:mn_vcls }
+		string lbl { string "_Close Combat:" }
+		string val { string *cvar:mn_tcls }
+	}
 
-	string hvy_lbl { pos "690 342" size "180 20" string "_Heavy Weapons:" longlines prettychop }
-	string hvy_val { pos "860 342" size "130 20" string *cvar:mn_thvy textalign ur longlines prettychop }
-	pic hvy_brd    { pos "707 358" image ui/bar_border }
-	tbar hvy_bar   { pos "710 358" current *cvar:mn_vhvy texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	cmpHospitalNamedTbar  {
+		{
+			pos "690 342"
+		}
+		tbar bar   { current *cvar:mn_vhvy }
+		string lbl { string "_Heavy Weapons:" }
+		string val { string *cvar:mn_thvy }
+	}
 
-	string ass_lbl { pos "690 372" size "180 20" string "_Assault Weapons:" longlines prettychop }
-	string ass_val { pos "860 372" size "130 20" string *cvar:mn_tass textalign ur longlines prettychop }
-	pic ass_brd    { pos "707 388" image ui/bar_border }
-	tbar ass_bar   { pos "710 388" current *cvar:mn_vass texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	cmpHospitalNamedTbar ass {
+		{
+			pos "690 372"
+		}
+		tbar bar   { current *cvar:mn_vass }
+		string lbl { string "_Assault Weapons:" }
+		string val { string *cvar:mn_tass }
+	}
 
-	string snp_lbl { pos "690 402" size "180 20" string "_Sniper Rifles:" longlines prettychop }
-	string snp_val { pos "860 402" size "130 20" string *cvar:mn_tsnp textalign ur longlines prettychop }
-	pic snp_brd    { pos "707 418" image ui/bar_border }
-	tbar snp_bar   { pos "710 418" current *cvar:mn_vsnp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	cmpHospitalNamedTbar snp {
+		{
+			pos "690 402"
+		}
+		tbar bar   { current *cvar:mn_vsnp }
+		string lbl { string "_Sniper Rifles:" }
+		string val { string *cvar:mn_tsnp }
+	}
 
-	string exp_lbl { pos "690 432" size "180 20" string "_High-Explosives:" longlines prettychop }
-	string exp_val { pos "860 432" size "130 20" string *cvar:mn_texp textalign ur longlines prettychop }
-	pic exp_brd    { pos "707 448" image ui/bar_border }
-	tbar exp_bar   { pos "710 448" current *cvar:mn_vexp texl "3 0" image ui/bar_skill size "250 16"	max 100 }
+	cmpHospitalNamedTbar exp {
+		{
+			pos "690 432"
+		}
+		tbar bar   { current *cvar:mn_vexp }
+		string lbl { string "_High-Explosives:" }
+		string val { string *cvar:mn_texp }
+	}
 
-	string health     { pos "690 476" size "180 30" string "_Health:" font f_normal longlines prettychop }
-	string health_val { pos "860 476" size "130 30" string *cvar:mn_hp textalign ur font f_normal longlines prettychop }
-	pic health_brd    { pos "707 498" image ui/bar_border }
-	tbar health_bar   { pos "710 498" current *cvar:mn_hp max *cvar:mn_hpmax texl "3 0" image ui/bar_health size "250 16" }
+	cmpHospitalNamedTbar health  {
+		{
+			pos "690 476"
+		}
+		tbar bar   { current *cvar:mn_hp max *cvar:mn_hpmax image ui/bar_health }
+		string lbl { string "_Health:" font f_normal longlines prettychop }
+		string val { string *cvar:mn_hp  font f_normal longlines prettychop }
+	}
 
 	// ==================
 	// action buttons

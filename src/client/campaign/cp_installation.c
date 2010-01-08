@@ -413,6 +413,7 @@ void INS_UpdateInstallationData (void)
 
 static const value_t installation_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(installationTemplate_t, name), 0},
+	{"description", V_TRANSLATION_STRING, offsetof(installationTemplate_t, description), 0},
 	{"radar_range", V_INT, offsetof(installationTemplate_t, radarRange), MEMBER_SIZEOF(installationTemplate_t, radarRange)},
 	{"radar_tracking_range", V_INT, offsetof(installationTemplate_t, trackingRange), MEMBER_SIZEOF(installationTemplate_t, trackingRange)},
 	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
@@ -490,7 +491,8 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 				switch (vp->type) {
 				case V_TRANSLATION_STRING:
-					token++;
+					if (token[0] == '_')
+						token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cp_campaignPool, 0);
 					break;

@@ -285,6 +285,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			if (!equal(item->craftitem.weaponDamage, 0))
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));
+		} else if (item->craftitem.type < AC_ITEM_WEAPON) {
+			Q_strcat(itemText, _("Weapon for base defence system\n"), sizeof(itemText));
 		}
 		/* We write the range of the weapon */
 		if (!equal(item->craftitem.stats[AIR_STATS_WRANGE], 0))
@@ -344,7 +346,7 @@ void UP_AircraftDescription (const technology_t* tech)
 					break;
 				case AIR_STATS_FUELSIZE:
 					Q_strcat(upBuffer, va(_("Operational range:\t%i km\n"),
-						CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE] * aircraft->stats[AIR_STATS_SPEED], AIR_STATS_OP_RANGE)), sizeof(upBuffer));
+						AIR_GetOperationRange(aircraft)), sizeof(upBuffer));
 				case AIR_STATS_ACCURACY:
 					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i),
 						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
@@ -391,6 +393,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
+	Cvar_Set("mn_item", tech->provides);
 
 	Cvar_Set("mn_upmetadata", "1");
 	if (RS_IsResearched_ptr(tech)) {
@@ -646,10 +649,13 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				UP_AircraftDescription(tech);
 				break;
 			case RS_CRAFTITEM:
-				UP_AircraftItemDescription(AII_GetAircraftItemByID(tech->provides));
+				UP_AircraftItemDescription(INVSH_GetItemByID(tech->provides));
 				break;
 			case RS_BUILDING:
 				UP_BuildingDescription(tech);
+				break;
+			case RS_UGV:
+				UP_UGVDescription(CL_GetUGVByIDSilent(tech->provides));
 				break;
 			default:
 				break;
@@ -684,7 +690,7 @@ void UP_OpenEventMail (const char *eventMailID)
 	if (!mail)
 		return;
 
-	MN_PushMenu("mail", NULL);
+	MN_PushWindow("mail", NULL);
 	UP_Article(NULL, mail);
 }
 
@@ -698,7 +704,7 @@ static void UP_OpenMailWith (const char *techID)
 	if (!techID)
 		return;
 
-	MN_PushMenu("mail", NULL);
+	MN_PushWindow("mail", NULL);
 	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
@@ -712,8 +718,8 @@ void UP_OpenWith (const char *techID)
 	if (!techID)
 		return;
 
-	MN_PushMenu("ufopedia", NULL);
-	Cbuf_AddText(va("ufopedia %s\n", techID));
+	MN_PushWindow("ufopedia", NULL);
+	Cbuf_AddText(va("ufopedia %s; update_ufopedia_layout;\n", techID));
 }
 
 /**
@@ -841,7 +847,7 @@ static void UP_Content_f (void)
 /**
  * @brief Callback when we click on the ufopedia summary
  * @note when we click on a chapter, param=chapterId,
- * when we click on an article, param='@'+techId
+ * when we click on an article, param='@'+techIdx
  */
 static void UP_Click_f (void)
 {

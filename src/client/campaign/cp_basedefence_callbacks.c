@@ -119,7 +119,7 @@ static void BDEF_SelectItem_f (void)
 		const objDef_t *item;
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, slotIDX) : BDEF_GetBaseSlotByIDX(base, bdefType, slotIDX);
 		item = (slot) ? ( (slot->nextItem) ? slot->nextItem : slot->item ) : NULL;
-		INV_ItemDescription(item);
+		UP_AircraftItemDescription(item);
 	} else if (itemIDX >= 0) {
 		technology_t **list;
 		technology_t *itemTech = NULL;
@@ -135,7 +135,7 @@ static void BDEF_SelectItem_f (void)
 			}
 			list++;
 		}
-		INV_ItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : NULL);
+		UP_AircraftItemDescription((itemTech) ? INVSH_GetItemByIDSilent(itemTech->provides) : NULL);
 	} else {
 		Com_Printf("BDEF_AddItem_f: Invalid item-space.\n");
 	}
@@ -389,7 +389,7 @@ static void BDEF_AddItem_f (void)
 			AII_RemoveItemFromSlot(base, slot, qfalse);
 			AII_AddItemToSlot(base, itemTech, slot, qfalse); /* Aircraft stats are updated below */
 			AII_AutoAddAmmo(slot);
-		} else if (slot->item == AII_GetAircraftItemByID(itemTech->provides)) {
+		} else if (slot->item == INVSH_GetItemByID(itemTech->provides)) {
 			/* the added item is the same than the one in current slot */
 			if (slot->installationTime == -slot->item->craftitem.installationTime) {
 				/* player changed his mind: he just want to re-add the item he just removed */

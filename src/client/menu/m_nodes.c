@@ -157,9 +157,12 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
  */
 qboolean MN_CheckVisibility (menuNode_t *node)
 {
+	menuCallContext_t context;
 	if (!node->visibilityCondition)
 		return qtrue;
-	return MN_GetBooleanFromExpression(node->visibilityCondition, node);
+	context.source = node;
+	context.useCmdParam = qfalse;
+	return MN_GetBooleanFromExpression(node->visibilityCondition, &context);
 }
 
 /**
@@ -248,7 +251,7 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 					return;
 				node = relativeNode->root;
 			} else
-				node = MN_GetMenu(name);
+				node = MN_GetWindow(name);
 			break;
 		case '.':	/* child node */
 			if (!strcmp(name, "parent"))
@@ -300,7 +303,7 @@ menuNode_t* MN_GetNodeByPath (const char* path)
 		}
 
 		if (node == NULL)
-			node = MN_GetMenu(name);
+			node = MN_GetWindow(name);
 		else
 			node = MN_GetNode(node, name);
 
@@ -528,6 +531,8 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, capturedMouseMove),
 	offsetof(nodeBehaviour_t, loading),
 	offsetof(nodeBehaviour_t, loaded),
+	offsetof(nodeBehaviour_t, init),
+	offsetof(nodeBehaviour_t, close),
 	offsetof(nodeBehaviour_t, clone),
 	offsetof(nodeBehaviour_t, activate),
 	offsetof(nodeBehaviour_t, doLayout),

@@ -5,72 +5,78 @@
 /**
  * @brief Define interface shared by all huds.
  * @note called "ahud" to be loaded before another huds
+ * @todo rename the interface confuncs
  */
 window ahud {
 
+	confunc hudselect { }
+	confunc huddeselect { }
+	confunc huddisable { }
+
+	confunc deselect_primaryleft { }
+	confunc deselect_primaryright { }
+	confunc deselect_reloadleft { }
+	confunc deselect_reloadright { }
+	confunc deselect_stand { }
+	confunc deselect_crouch { }
+	confunc deselect_reaction { }
+	confunc deselect_headgear { }
+
+	confunc disable_primaryleft { }
+	confunc disable_primaryright { }
+	confunc disable_reloadleft { }
+	confunc disable_reloadright { }
+	confunc disable_stand { }
+	confunc disable_crouch { }
+	confunc disable_reaction { }
+	confunc disable_headgear { }
+
 	/* Prevent time for crouch */
-	confunc crouch_checkbox_disable_s { }
-	confunc crouch_checkbox_clear_s	{ }
-	confunc crouch_checkbox_check_s	{ }
+	confunc crouch_checkbox_disable { }
+	confunc crouch_checkbox_clear { }
+	confunc crouch_checkbox_check { }
 
-	confunc unhide_chatscreen { }
-
-	// ==================
-	// cmd forwarding
-	// @todo need to clean up that list, some cmd are not used
-	// ==================
-
-	confunc	hudselect0 { cmd "hudselects0;hudselecta0;" }
-	confunc	hudselect1 { cmd "hudselects1;hudselecta1;" }
-	confunc	hudselect2 { cmd "hudselects2;hudselecta2;" }
-	confunc	hudselect3 { cmd "hudselects3;hudselecta3;" }
-	confunc	hudselect4 { cmd "hudselects4;hudselecta4;" }
-	confunc	hudselect5 { cmd "hudselects5;hudselecta5;" }
-	confunc	hudselect6 { cmd "hudselects6;hudselecta6;" }
-	confunc	hudselect7 { cmd "hudselects7;hudselecta7;" }
-
-	confunc selpl { cmd "selpls;selpla;" }
-	confunc selpr { cmd "selprs;selpra;" }
-
-	confunc deselpl { cmd "deselpls;deselpla;" }
-	confunc deselpr { cmd "deselprs;deselpra;" }
-	confunc deselrl { cmd "deselrls;deselrla;" }
-	confunc deselrr { cmd "deselrrs;deselrra;" }
-
-	confunc displ { cmd "displs;displa;" }
-	confunc dispr { cmd "disprs;dispra;" }
-	confunc disrl { cmd "disrls;disrla;" }
-	confunc disrr { cmd "disrrs;disrra;" }
-
-	confunc deselstand { cmd "deselstands;deselstanda;" }
-	confunc deselcrouch { cmd "deselcrouchs;deselcroucha;" }
-	confunc disstand { cmd "disstands;disstanda;" }
-	confunc discrouch { cmd "discrouchs;discroucha;" }
-
-	confunc crouch_checkbox_disable { cmd "crouch_checkbox_disable_s;" }
-	confunc crouch_checkbox_clear	{ cmd "crouch_checkbox_clear_s;" }
-	confunc crouch_checkbox_check	{ cmd "crouch_checkbox_check_s;" }
-
-	confunc reserve_shot_clear	{ cmd "reserve_shot_clear_s;reserve_shot_clear_a;" }
-	confunc reserve_shot_check	{ cmd "reserve_shot_check_s;reserve_shot_check_a;" }
-	confunc reserve_shot_disable	{ cmd "reserve_shot_disable_s;reserve_shot_disable_a;" }
-
-	confunc startreactionmany { cmd "startreactionmanys;startreactionmanya;" }
-	confunc startreactionmany_impos { cmd "startreactionmanys_impos;startreactionmanya_impos;" }
-	confunc startreactiononce { cmd "startreactiononces;startreactiononcea;" }
-	confunc startreactiononce_impos { cmd "startreactiononces_impos;startreactiononcea_impos;" }
-	confunc deselreaction { cmd "deselreactions;deselreactiona;" }
-	confunc disreaction { cmd "disreactions;disreactiona;" }
-
-	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
-	confunc disheadgear { cmd "hud_disheadgear;althud_disheadgear;" }
-
-	confunc startround { cmd "startrounds;startrounda;" }
-	confunc endround { cmd "endrounds;endrounda;" }
+	confunc reserve_shot_clear { }
 	
-	confunc openradar { cmd "mn_push radarwindow" }
+	confunc reserve_shot_check { }
 	
+	confunc reserve_shot_disable { }
 
+	confunc startreactionmany { }
+	confunc startreactionmany_impos { }
+	confunc startreactiononce { }
+	confunc startreactiononce_impos { }
+
+	confunc startround { }
+	confunc endround { }
+	
+	confunc openradar { cmd "mn_push radarwindow;" }
+
+	confunc unhide_chatscreen { *chatscreen@invis = false }
+	
+	/**
+	 * @param <1> the id of the soldier (starting at 0)
+	 * @param <2> the model path of the head model
+	 * @param <3> the hp of the actor 
+	 * @param <4> the max hp of the actor
+	 * @param <5> the tus of the actor
+	 * @param <6> the max tus of the actor
+	 * @param <7> the morale of the actor
+	 * @param <8> the max morale of the actor
+	 * @param <9> the stun value of the actor
+	 * @param <10> the tooltip 
+	 */
+	confunc updateactorvalues {
+		*cvar:mn_head<1> = "<2>"
+		*cvar:mn_hp<1> = "<3>"
+		*cvar:mn_hpmax<1> = "<4>"
+		*cvar:mn_tu<1> = "<5>"
+		*cvar:mn_tumax<1> = "<6>"
+		*cvar:mn_morale<1> = "<7>"
+		*cvar:mn_moralemax<1> = "<8>"
+		*cvar:mn_stun<1> = "<9>"
+		*cvar:mn_soldier<1>_tt = "<10>"
+	}
 }
 
 window radarwindow {
@@ -135,8 +141,8 @@ window firemode_left {
 			size			"214  63"
 			invis			true
 			onClick			{ cmd "fireweap l 0;mn_pop;" }
-			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image "hud/firemode" }
+			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
+			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name0 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -164,8 +170,8 @@ window firemode_left {
 			size			"214  63"
 			invis			true
 			onClick			{ cmd "fireweap l 1;mn_pop;" }
-			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image "hud/firemode" }
+			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
+			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name1 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -193,8 +199,8 @@ window firemode_left {
 			size			"214  63"
 			invis			true
 			onClick			{ cmd "fireweap l 2;mn_pop;" }
-			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image "hud/firemode" }
+			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
+			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name2 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -222,8 +228,8 @@ window firemode_left {
 			size			"214  63"
 			invis			true
 			onClick			{ cmd "fireweap l 3;mn_pop;" }
-			onMouseEnter	{ *node:this@image "hud/firemode_hover" }
-			onMouseLeave	{ *node:this@image "hud/firemode" }
+			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
+			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name3 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -251,8 +257,8 @@ window firemode_left {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap l 4;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name4 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -280,8 +286,8 @@ window firemode_left {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap l 5;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name5 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -309,8 +315,8 @@ window firemode_left {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap l 6;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name6 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -338,8 +344,8 @@ window firemode_left {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap l 7;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name7 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -360,39 +366,39 @@ window firemode_left {
 	/* Firemode console functions ===================================*/
 
 	confunc set_left_ina {
-		*(pic)bt_left_fm<1>@texl "0 64"
-		*(pic)bt_left_fm<1>@texh "214 128"
+		*(pic)bt_left_fm<1>@texl = "0 64"
+		*(pic)bt_left_fm<1>@texh = "214 128"
 	}
 
 	confunc set_left_a {
-		*(pic)bt_left_fm<1>@texl "0 0"
-		*(pic)bt_left_fm<1>@texh "214 63"
+		*(pic)bt_left_fm<1>@texl = "0 0"
+		*(pic)bt_left_fm<1>@texh = "214 63"
 	}
 
 	confunc set_left_inv {
-		*(pic)bt_left_fm<1>@invis true
+		*(pic)bt_left_fm<1>@invis = true
 	}
 
 	confunc set_left_vis {
-		*(pic)bt_left_fm<1>@invis false
+		*(pic)bt_left_fm<1>@invis = false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_left_cb_ina {
-		*(pic)bt_left_fm<1>.cb@texl "0 0"
-		*(pic)bt_left_fm<1>.cb@texh "31 31"
-		*(pic)bt_left_fm<1>.cb@invis false
+		*(pic)bt_left_fm<1>.cb@texl = "0 0"
+		*(pic)bt_left_fm<1>.cb@texh = "31 31"
+		*(pic)bt_left_fm<1>.cb@invis = false
 	}
 
 	confunc set_left_cb_a {
-		*(pic)bt_left_fm<1>.cb@texl "0 32"
-		*(pic)bt_left_fm<1>.cb@texh "31 63"
-		*(pic)bt_left_fm<1>.cb@invis false
+		*(pic)bt_left_fm<1>.cb@texl = "0 32"
+		*(pic)bt_left_fm<1>.cb@texh = "31 63"
+		*(pic)bt_left_fm<1>.cb@invis = false
 	}
 
 	confunc set_left_cb_invis {
-		*(pic)bt_left_fm<1>.cb@invis true
+		*(pic)bt_left_fm<1>.cb@invis = true
 	}
 }
 
@@ -420,8 +426,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 0;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name0 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -449,8 +455,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 1;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name1 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -478,8 +484,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 2;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name2 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -507,8 +513,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 3;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name3 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -536,8 +542,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 4;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name4 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -565,8 +571,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 5;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name5 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -594,8 +600,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 6;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name6 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -623,8 +629,8 @@ window firemode_right {
 			size	"214  63"
 			invis true
 			onClick	{ cmd "fireweap r 7;mn_pop;" }
-			onMouseEnter { *node:this@image "hud/firemode_hover" }
-			onMouseLeave { *node:this@image "hud/firemode" }
+			onMouseEnter { *node:this@image = "hud/firemode_hover" }
+			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name7 // @todo create a better tooltip with name, tu, shots...
 		}
 
@@ -654,38 +660,38 @@ window firemode_right {
 	*/
 
 	confunc set_right_ina {
-		*(pic)bt_right_fm<1>@texl "0 64"
-		*(pic)bt_right_fm<1>@texh "214 128"
+		*(pic)bt_right_fm<1>@texl = "0 64"
+		*(pic)bt_right_fm<1>@texh = "214 128"
 	}
 
 	confunc set_right_a {
-		*(pic)bt_right_fm<1>@texl "0 0"
-		*(pic)bt_right_fm<1>@texh "214 63"
+		*(pic)bt_right_fm<1>@texl = "0 0"
+		*(pic)bt_right_fm<1>@texh = "214 63"
 	}
 
 	confunc set_right_inv {
-		*(pic)bt_right_fm<1>@invis true
+		*(pic)bt_right_fm<1>@invis = true
 	}
 
 	confunc set_right_vis {
-		*(pic)bt_right_fm<1>@invis false
+		*(pic)bt_right_fm<1>@invis = false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_right_cb_ina {
-		*(pic)bt_right_fm<1>.cb@texl "0 0"
-		*(pic)bt_right_fm<1>.cb@texh "31 31"
-		*(pic)bt_right_fm<1>.cb@invis false
+		*(pic)bt_right_fm<1>.cb@texl = "0 0"
+		*(pic)bt_right_fm<1>.cb@texh = "31 31"
+		*(pic)bt_right_fm<1>.cb@invis = false
 	}
 
 	confunc set_right_cb_a {
-		*(pic)bt_right_fm<1>.cb@texl "0 32"
-		*(pic)bt_right_fm<1>.cb@texh "31 63"
-		*(pic)bt_right_fm<1>.cb@invis false
+		*(pic)bt_right_fm<1>.cb@texl = "0 32"
+		*(pic)bt_right_fm<1>.cb@texh = "31 63"
+		*(pic)bt_right_fm<1>.cb@invis = false
 	}
 
 	confunc set_right_cb_invis {
-		*(pic)bt_right_fm<1>.cb@invis true
+		*(pic)bt_right_fm<1>.cb@invis = true
 	}
 }

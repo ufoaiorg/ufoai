@@ -75,102 +75,6 @@ void MN_ListMenuModels_f (void)
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", mn.menuModels[i].id, mn.menuModels[i].model, mn.menuModels[i].need);
 }
 
-
-#ifdef DEBUG
-/**
- * @brief This function allows you inline transforming of models.
- * @note Changes you made are lost on quit
- */
-static void MN_SetModelTransform_f (void)
-{
-	menuNode_t *node;
-	menuModel_t *model;
-	const char *command, *nodeOrMenuID, *menuModel;
-	float x, y ,z;
-	vec3_t value;
-	const nodeBehaviour_t *modelBehaviour = MN_GetNodeBehaviour("model");
-
-	/* not initialized yet - commandline? */
-	if (mn.windowStackPos <= 0)
-		return;
-
-	if (Cmd_Argc() < 5) {
-		Com_Printf("Usage: %s [<model> <menu>] | [<node>] <x> <y> <z>\n", Cmd_Argv(0));
-		Com_Printf("<model> <menu> is needed for menumodel definitions\n");
-		Com_Printf("<node> is needed for 'normal' models\n");
-		return;
-	}
-
-	if (Cmd_Argc() == 5) {
-		command = Cmd_Argv(0);
-		menuModel = NULL;
-		nodeOrMenuID = Cmd_Argv(1);
-		x = atof(Cmd_Argv(2));
-		y = atof(Cmd_Argv(3));
-		z = atof(Cmd_Argv(4));
-	} else {
-		command = Cmd_Argv(0);
-		menuModel = Cmd_Argv(1);
-		nodeOrMenuID = Cmd_Argv(2);
-		x = atof(Cmd_Argv(3));
-		y = atof(Cmd_Argv(4));
-		z = atof(Cmd_Argv(5));
-	}
-
-	VectorSet(value, x, y, z);
-
-	if (menuModel) {
-		model = MN_GetMenuModel(menuModel);
-		if (!model) {
-			Com_Printf("MN_SetModelTransform_f: model \"%s\" wasn't found\n", menuModel);
-			return;
-		}
-
-		if (model->menuTransformCnt) {
-#if 0	/** @todo model is no more linked to menu; this code need an update */
-			const menuNode_t *menu = MN_GetActiveMenu();
-			int i;
-
-			for (i = 0; i < model->menuTransformCnt; i++) {
-				if (menu == model->menuTransform[i].menuPtr) {
-					if (!strcmp(command, "debug_mnscale")) {
-						VectorCopy(value, model->menuTransform[i].scale);
-					} else if (!strcmp(command, "debug_mnangles")) {
-						VectorCopy(value, model->menuTransform[i].angles);
-					} else if (!strcmp(command, "debug_mnorigin")) {
-						VectorCopy(value, model->menuTransform[i].origin);
-					}
-					break;
-				}
-			}
-#endif
-		} else {
-			Com_Printf("MN_SetModelTransform_f: no entry in menumodel '%s' for menu '%s'\n", menuModel, nodeOrMenuID);
-			return;
-		}
-	} else {
-		/* search the node */
-		node = MN_GetNode(MN_GetActiveMenu(), nodeOrMenuID);
-		if (!node) {
-			/* didn't find node -> "kill" action and print error */
-			Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeOrMenuID);
-			return;
-		} else if (node->behaviour != modelBehaviour) {
-			Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeOrMenuID);
-			return;
-		}
-
-		if (!strcmp(command, "debug_mnscale")) {
-			VectorCopy(value, EXTRADATA(node).scale);
-		} else if (!strcmp(command, "debug_mnangles")) {
-			VectorCopy(value, EXTRADATA(node).angles);
-		} else if (!strcmp(command, "debug_mnorigin")) {
-			VectorCopy(value, EXTRADATA(node).origin);
-		}
-	}
-}
-#endif
-
 static void MN_ModelNodeDraw (menuNode_t *node)
 {
 	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
@@ -189,93 +93,17 @@ static vec3_t nullVector = {0, 0, 0};
  */
 static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
 {
-	qboolean isInitialised = qfalse;
 	vec3_t nodeorigin;
 	MN_GetNodeAbsPos(node, nodeorigin);
 	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
 
-	if (menuModel->menuTransformCnt) {
-		int i;
-		/* search a menuTransforme */
-		for (i = 0; i < menuModel->menuTransformCnt; i++) {
-			if (EXTRADATA(node).viewName != NULL) {
-				/** @todo improve the test when its possible */
-				if (!strcmp(EXTRADATA(node).viewName, menuModel->menuTransform[i].menuID))
-					break;
-			}
-		}
-
-		/* menuTransforme found */
-		if (i != menuModel->menuTransformCnt) {
-			/* Use menu scale if defined. */
-			if (menuModel->menuTransform[i].useScale) {
-				VectorCopy(menuModel->menuTransform[i].scale, mi->scale);
-			} else {
-				VectorCopy(EXTRADATA(node).scale, mi->scale);
-			}
-
-			/* Use menu angles if defined. */
-			if (menuModel->menuTransform[i].useAngles) {
-				VectorCopy(menuModel->menuTransform[i].angles, mi->angles);
-			} else {
-				VectorCopy(EXTRADATA(node).angles, mi->angles);
-			}
-
-			/* Use menu origin if defined. */
-			if (menuModel->menuTransform[i].useOrigin) {
-				VectorAdd(nodeorigin, menuModel->menuTransform[i].origin, mi->origin);
-			} else {
-				VectorCopy(nodeorigin, mi->origin);
-			}
-			isInitialised = qtrue;
-		}
-		mi->angles[0] += EXTRADATA(node).angles[0];
-		mi->angles[1] += EXTRADATA(node).angles[1];
-		mi->angles[2] += EXTRADATA(node).angles[2];
-	}
-
-	if (!isInitialised) {
-		VectorCopy(EXTRADATA(node).scale, mi->scale);
-		VectorCopy(EXTRADATA(node).angles, mi->angles);
-		VectorCopy(nodeorigin, mi->origin);
-	}
+	VectorCopy(EXTRADATA(node).scale, mi->scale);
+	VectorCopy(EXTRADATA(node).angles, mi->angles);
+	VectorCopy(nodeorigin, mi->origin);
 
 	VectorCopy(nullVector, mi->center);
-
-	if (EXTRADATA(node).autoscale) {
-		mi->scale = NULL;
-		mi->center = node->size;
-	}
-}
-
-/**
- * @brief Compute scape and center for a node and a modelInfo
- * @todo Code and interface need improvment for composite models
- */
-static void MN_AutoScale(menuNode_t *node, modelInfo_t *mi, vec3_t scale, vec3_t center)
-{
-	/* autoscale */
-	float max, size;
-	vec3_t mins, maxs;
-	int i;
-	mAliasFrame_t *frame = mi->model->alias.frames;
-
-	/* get center and scale */
-	for (max = 1.0, i = 0; i < 3; i++) {
-		mins[i] = frame->translate[i];
-		maxs[i] = mins[i] + frame->scale[i] * 255;
-		center[i] = (mins[i] + maxs[i]) / 2;
-		size = maxs[i] - mins[i];
-		if (size > max)
-			max = size;
-	}
-	size = (node->size[0] < node->size[1] ? node->size[0] : node->size[1]) / max;
-
-	scale[0] = size;
-	scale[1] = size;
-	scale[2] = size;
 }
 
 /**
@@ -310,56 +138,13 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 		mi->color = menuModel->color;
 		mi->scale = menuModel->scale;
 
-		/* no tag and no parent means - base model or single model */
-		if (!menuModel->tag && !menuModel->parent) {
-			const char *ref;
-			MN_InitModelInfoView(node, mi, menuModel);
-			Vector4Copy(node->color, mi->color);
-
-			/* compute the scale and center for the first model.
-			 * it think its the bigger of composite models.
-			 * All next elements use the same result
-			 */
-			if (EXTRADATA(node).autoscale) {
-				if (!autoScaleComputed) {
-					MN_AutoScale(node, mi, autoScale, autoCenter);
-					autoScaleComputed = qtrue;
-				}
-				mi->center = autoCenter;
-				mi->scale = autoScale;
-			}
-
-			/* get the animation given by menu node properties */
-			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
-				ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
-			/* otherwise use the standard animation from modelmenu definition */
-			} else
-				ref = menuModel->anim;
-
-			/* only base models have animations */
-			if (ref && *ref) {
-				animState_t *as = &menuModel->animState;
-				const char *anim = R_AnimGetName(as, mi->model);
-				/* initial animation or animation change */
-				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
-					R_AnimChange(as, mi->model, ref);
-				else
-					R_AnimRun(as, mi->model, cls.frametime * 1000);
-
-				mi->frame = as->frame;
-				mi->oldframe = as->oldframe;
-				mi->backlerp = as->backlerp;
-			}
-			R_DrawModelDirect(mi, NULL, NULL);
-		/* tag and parent defined */
-		} else {
+		if (menuModel->tag && menuModel->parent) {
+			/* tag and parent defined */
 			menuModel_t *menuModelParent;
 			modelInfo_t pmi;
 			vec3_t pmiorigin;
 			animState_t *as;
 			/* place this menumodel part on an already existing menumodel tag */
-			assert(menuModel->parent);
-			assert(menuModel->tag);
 			menuModelParent = MN_GetMenuModel(menuModel->parent);
 			if (!menuModelParent) {
 				Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
@@ -388,8 +173,10 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 			/* autoscale? */
 			if (EXTRADATA(node).autoscale) {
-				pmi.scale = NULL;
-				pmi.center = node->size;
+				if (!autoScaleComputed)
+					Sys_Error("Wrong order of model nodes - the tag and parent model node must be after the base model node");
+				pmi.scale = autoScale;
+				pmi.center = autoCenter;
 			}
 
 			as = &menuModelParent->animState;
@@ -400,12 +187,53 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			pmi.backlerp = as->backlerp;
 
 			R_DrawModelDirect(mi, &pmi, menuModel->tag);
+		} else {
+			/* no tag and no parent means - base model or single model */
+			const char *ref;
+			MN_InitModelInfoView(node, mi, menuModel);
+			Vector4Copy(node->color, mi->color);
+
+			/* compute the scale and center for the first model.
+			 * it think its the bigger of composite models.
+			 * All next elements use the same result
+			 */
+			if (EXTRADATA(node).autoscale) {
+				if (!autoScaleComputed) {
+					R_ModelAutoScale(node->size, mi, autoScale, autoCenter);
+					autoScaleComputed = qtrue;
+				} else {
+					mi->scale = autoScale;
+					mi->center = autoCenter;
+				}
+			}
+
+			/* get the animation given by menu node properties */
+			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
+				ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
+			/* otherwise use the standard animation from modelmenu definition */
+			} else
+				ref = menuModel->anim;
+
+			/* only base models have animations */
+			if (ref && *ref) {
+				animState_t *as = &menuModel->animState;
+				const char *anim = R_AnimGetName(as, mi->model);
+				/* initial animation or animation change */
+				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
+					R_AnimChange(as, mi->model, ref);
+				else
+					R_AnimRun(as, mi->model, cls.frametime * 1000);
+
+				mi->frame = as->frame;
+				mi->oldframe = as->oldframe;
+				mi->backlerp = as->backlerp;
+			}
+			R_DrawModelDirect(mi, NULL, NULL);
 		}
 
 		/* next */
 		menuModel = menuModel->next;
 	}
-
 }
 
 /**
@@ -417,6 +245,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	modelInfo_t mi;
 	menuModel_t *menuModel;
 	vec3_t nodeorigin;
+	vec3_t autoScale;
+	vec3_t autoCenter;
 
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
@@ -451,12 +281,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.color = node->color;
 	mi.mesh = 0;
 
-	/* autoscale? */
-	if (EXTRADATA(node).autoscale) {
-		mi.scale = NULL;
-		mi.center = node->size;
-	}
-
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
 		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
@@ -464,6 +288,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			R_EndClipRect();
 		return;
 	}
+
+	/* autoscale? */
+	if (EXTRADATA(node).autoscale)
+		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
 
 	/* if the node is linked to a parent, the parent will display it */
 	if (EXTRADATA(node).tag) {
@@ -703,10 +531,5 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(modelExtraData_t);
 
-#ifdef DEBUG
-	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
-	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
-#endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }

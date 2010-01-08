@@ -30,13 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct menuNode_s;
 struct menuAction_s;
+struct menuCallContext_s;
 
 struct menuAction_s *MN_AllocStaticStringCondition(const char *description) __attribute__ ((warn_unused_result));
 struct menuAction_s *MN_ParseExpression(const char **text, const char *errhead, const struct menuNode_s *source) __attribute__ ((warn_unused_result));
 
-qboolean MN_GetBooleanFromExpression(struct menuAction_s *expression, const struct menuNode_s *source) __attribute__ ((warn_unused_result));
-float MN_GetFloatFromExpression(struct menuAction_s *expression, const struct menuNode_s *source) __attribute__ ((warn_unused_result));
-const char *MN_GetStringFromExpression(struct menuAction_s *expression, const struct menuNode_s *source) __attribute__ ((warn_unused_result));
+qboolean MN_GetBooleanFromExpression(struct menuAction_s *expression, const struct menuCallContext_s *context) __attribute__ ((warn_unused_result));
+float MN_GetFloatFromExpression(struct menuAction_s *expression, const struct menuCallContext_s *context) __attribute__ ((warn_unused_result));
+const char *MN_GetStringFromExpression(struct menuAction_s *expression, const struct menuCallContext_s *context) __attribute__ ((warn_unused_result));
 
 
 #endif
