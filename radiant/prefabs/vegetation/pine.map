@@ -35,7 +35,7 @@
 "classname" "misc_model"
 "spawnflags" "252"
 "origin" "0 0 0"
-"model" "models/objects/vegi/pino/pino3.md2"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
 "skin" "0"
 }
 // entity 2
@@ -43,7 +43,7 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "origin" "0 0 0"
-"model" "models/objects/vegi/pino/pino2.md2"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
 "skin" "0"
 }
 // entity 3
@@ -52,5 +52,21 @@
 "spawnflags" "255"
 "origin" "0 0 0"
 "model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
+}
+// entity 4
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "0 0 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
+}
+// entity 5
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "0 0 0"
+"model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
 }

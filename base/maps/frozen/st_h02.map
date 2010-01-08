@@ -925,111 +925,111 @@
 }
 // brush 93
 {
-( 673 255 264 ) ( 671 257 264 ) ( 673 257 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 673 257 264 ) ( 667 261 0 ) ( 677 261 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 673 255 264 ) ( 677 261 0 ) ( 677 251 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 667 251 0 ) ( 677 261 0 ) ( 667 261 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 671 255 264 ) ( 677 251 0 ) ( 667 251 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 667 251 0 ) ( 667 261 0 ) ( 671 255 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 545 159 264 ) ( 543 161 264 ) ( 545 161 264 ) tex_common/weaponclip -0 -0 0 0.25 0.25 33554432 0 0
+( 545 161 264 ) ( 539 165 0 ) ( 549 165 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 545 159 264 ) ( 549 165 0 ) ( 549 155 0 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
+( 539 155 0 ) ( 549 165 0 ) ( 539 165 0 ) tex_common/weaponclip -0 -0 0 0.25 0.25 33554432 0 0
+( 543 159 264 ) ( 549 155 0 ) ( 539 155 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 539 155 0 ) ( 539 165 0 ) ( 543 159 264 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
 }
 // brush 94
 {
-( 673 255 264 ) ( 671 257 264 ) ( 673 257 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 673 257 264 ) ( 667 261 0 ) ( 677 261 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 673 255 264 ) ( 677 261 0 ) ( 677 251 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 667 251 0 ) ( 677 261 0 ) ( 667 261 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 671 255 264 ) ( 677 251 0 ) ( 667 251 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 667 251 0 ) ( 667 261 0 ) ( 671 255 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 545 159 264 ) ( 543 161 264 ) ( 545 161 264 ) tex_common/nodraw -0 -0 0 0.25 0.25 0 128 0
+( 545 161 264 ) ( 539 165 0 ) ( 549 165 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 545 159 264 ) ( 549 165 0 ) ( 549 155 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 539 155 0 ) ( 549 165 0 ) ( 539 165 0 ) tex_common/nodraw -0 -0 0 0.25 0.25 0 128 0
+( 543 159 264 ) ( 549 155 0 ) ( 539 155 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 539 155 0 ) ( 539 165 0 ) ( 543 159 264 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
 }
 // brush 95
 {
-( 673 255 264 ) ( 671 257 264 ) ( 673 257 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 673 257 264 ) ( 667 261 0 ) ( 677 261 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 673 255 264 ) ( 677 261 0 ) ( 677 251 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 667 251 0 ) ( 677 261 0 ) ( 667 261 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 671 255 264 ) ( 677 251 0 ) ( 667 251 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 667 251 0 ) ( 667 261 0 ) ( 671 255 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 545 159 264 ) ( 543 161 264 ) ( 545 161 264 ) tex_common/actorclip -0 -0 0 0.25 0.25 65536 0 0
+( 545 161 264 ) ( 539 165 0 ) ( 549 165 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 545 159 264 ) ( 549 165 0 ) ( 549 155 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
+( 539 155 0 ) ( 549 165 0 ) ( 539 165 0 ) tex_common/actorclip -0 -0 0 0.25 0.25 65536 0 0
+( 543 159 264 ) ( 549 155 0 ) ( 539 155 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 539 155 0 ) ( 539 165 0 ) ( 543 159 264 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
 }
 // brush 96
 {
-( 289 191 264 ) ( 287 193 264 ) ( 289 193 264 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
-( 289 193 264 ) ( 283 197 0 ) ( 293 197 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
-( 289 191 264 ) ( 293 197 0 ) ( 293 187 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 283 187 0 ) ( 293 197 0 ) ( 283 197 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
-( 287 191 264 ) ( 293 187 0 ) ( 283 187 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
-( 283 187 0 ) ( 283 197 0 ) ( 287 191 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 257 191 264 ) ( 255 193 264 ) ( 257 193 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 257 193 264 ) ( 251 197 0 ) ( 261 197 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 257 191 264 ) ( 261 197 0 ) ( 261 187 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 251 187 0 ) ( 261 197 0 ) ( 251 197 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 255 191 264 ) ( 261 187 0 ) ( 251 187 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 251 187 0 ) ( 251 197 0 ) ( 255 191 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
 }
 // brush 97
 {
-( 289 191 264 ) ( 287 193 264 ) ( 289 193 264 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 289 193 264 ) ( 283 197 0 ) ( 293 197 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 289 191 264 ) ( 293 197 0 ) ( 293 187 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 283 187 0 ) ( 293 197 0 ) ( 283 197 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 287 191 264 ) ( 293 187 0 ) ( 283 187 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 283 187 0 ) ( 283 197 0 ) ( 287 191 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 257 191 264 ) ( 255 193 264 ) ( 257 193 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 257 193 264 ) ( 251 197 0 ) ( 261 197 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 257 191 264 ) ( 261 197 0 ) ( 261 187 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 251 187 0 ) ( 261 197 0 ) ( 251 197 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 255 191 264 ) ( 261 187 0 ) ( 251 187 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 251 187 0 ) ( 251 197 0 ) ( 255 191 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
 }
 // brush 98
 {
-( 289 191 264 ) ( 287 193 264 ) ( 289 193 264 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
-( 289 193 264 ) ( 283 197 0 ) ( 293 197 0 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
-( 289 191 264 ) ( 293 197 0 ) ( 293 187 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 283 187 0 ) ( 293 197 0 ) ( 283 197 0 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
-( 287 191 264 ) ( 293 187 0 ) ( 283 187 0 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
-( 283 187 0 ) ( 283 197 0 ) ( 287 191 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 257 191 264 ) ( 255 193 264 ) ( 257 193 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 257 193 264 ) ( 251 197 0 ) ( 261 197 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 257 191 264 ) ( 261 197 0 ) ( 261 187 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 251 187 0 ) ( 261 197 0 ) ( 251 197 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 255 191 264 ) ( 261 187 0 ) ( 251 187 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 251 187 0 ) ( 251 197 0 ) ( 255 191 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
 }
 // brush 99
 {
-( 353 159 264 ) ( 351 161 264 ) ( 353 161 264 ) tex_common/nodraw -0 -0 0 0.25 0.25 0 128 0
-( 353 161 264 ) ( 347 165 0 ) ( 357 165 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 353 159 264 ) ( 357 165 0 ) ( 357 155 0 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
-( 347 155 0 ) ( 357 165 0 ) ( 347 165 0 ) tex_common/nodraw -0 -0 0 0.25 0.25 0 128 0
-( 351 159 264 ) ( 357 155 0 ) ( 347 155 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 347 155 0 ) ( 347 165 0 ) ( 351 159 264 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+( 319 161 264 ) ( 321 159 264 ) ( 319 159 264 ) tex_common/weaponclip 0 -0 180 0.25 0.25 33554432 0 0
+( 319 159 264 ) ( 325 155 0 ) ( 315 155 0 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+( 319 161 264 ) ( 315 155 0 ) ( 315 165 0 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+( 325 165 0 ) ( 315 155 0 ) ( 325 155 0 ) tex_common/weaponclip 0 -0 180 0.25 0.25 33554432 0 0
+( 321 161 264 ) ( 315 165 0 ) ( 325 165 0 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+( 325 165 0 ) ( 325 155 0 ) ( 321 161 264 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
 }
 // brush 100
 {
-( 353 159 264 ) ( 351 161 264 ) ( 353 161 264 ) tex_common/actorclip -0 -0 0 0.25 0.25 65536 0 0
-( 353 161 264 ) ( 347 165 0 ) ( 357 165 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 353 159 264 ) ( 357 165 0 ) ( 357 155 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
-( 347 155 0 ) ( 357 165 0 ) ( 347 165 0 ) tex_common/actorclip -0 -0 0 0.25 0.25 65536 0 0
-( 351 159 264 ) ( 357 155 0 ) ( 347 155 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 347 155 0 ) ( 347 165 0 ) ( 351 159 264 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
+( 319 161 264 ) ( 321 159 264 ) ( 319 159 264 ) tex_common/nodraw 0 -0 180 0.25 0.25 0 128 0
+( 319 159 264 ) ( 325 155 0 ) ( 315 155 0 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+( 319 161 264 ) ( 315 155 0 ) ( 315 165 0 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+( 325 165 0 ) ( 315 155 0 ) ( 325 155 0 ) tex_common/nodraw 0 -0 180 0.25 0.25 0 128 0
+( 321 161 264 ) ( 315 165 0 ) ( 325 165 0 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+( 325 165 0 ) ( 325 155 0 ) ( 321 161 264 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
 }
 // brush 101
 {
-( 353 159 264 ) ( 351 161 264 ) ( 353 161 264 ) tex_common/weaponclip -0 -0 0 0.25 0.25 33554432 0 0
-( 353 161 264 ) ( 347 165 0 ) ( 357 165 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 353 159 264 ) ( 357 165 0 ) ( 357 155 0 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
-( 347 155 0 ) ( 357 165 0 ) ( 347 165 0 ) tex_common/weaponclip -0 -0 0 0.25 0.25 33554432 0 0
-( 351 159 264 ) ( 357 155 0 ) ( 347 155 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 347 155 0 ) ( 347 165 0 ) ( 351 159 264 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
+( 319 161 264 ) ( 321 159 264 ) ( 319 159 264 ) tex_common/actorclip 0 -0 180 0.25 0.25 65536 0 0
+( 319 159 264 ) ( 325 155 0 ) ( 315 155 0 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+( 319 161 264 ) ( 315 155 0 ) ( 315 165 0 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+( 325 165 0 ) ( 315 155 0 ) ( 325 155 0 ) tex_common/actorclip 0 -0 180 0.25 0.25 65536 0 0
+( 321 161 264 ) ( 315 165 0 ) ( 325 165 0 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+( 325 165 0 ) ( 325 155 0 ) ( 321 161 264 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
 }
 // brush 102
 {
-( 449 191 264 ) ( 447 193 264 ) ( 449 193 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 449 193 264 ) ( 443 197 0 ) ( 453 197 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 449 191 264 ) ( 453 197 0 ) ( 453 187 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 443 187 0 ) ( 453 197 0 ) ( 443 197 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 447 191 264 ) ( 453 187 0 ) ( 443 187 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
-( 443 187 0 ) ( 443 197 0 ) ( 447 191 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 447 191 264 ) ( 449 193 264 ) ( 449 191 264 ) tex_common/weaponclip 0 0 -90 0.25 0.25 33554432 0 0
+( 449 191 264 ) ( 453 197 0 ) ( 453 187 0 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+( 447 191 264 ) ( 453 187 0 ) ( 443 187 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 443 197 0 ) ( 453 187 0 ) ( 453 197 0 ) tex_common/weaponclip 0 0 -90 0.25 0.25 33554432 0 0
+( 447 193 264 ) ( 443 187 0 ) ( 443 197 0 ) tex_common/weaponclip 0 0 0 -0.25 0.25 33554432 0 0
+( 443 197 0 ) ( 453 197 0 ) ( 447 193 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
 }
 // brush 103
 {
-( 449 191 264 ) ( 447 193 264 ) ( 449 193 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 449 193 264 ) ( 443 197 0 ) ( 453 197 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 449 191 264 ) ( 453 197 0 ) ( 453 187 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 443 187 0 ) ( 453 197 0 ) ( 443 197 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 447 191 264 ) ( 453 187 0 ) ( 443 187 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
-( 443 187 0 ) ( 443 197 0 ) ( 447 191 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 447 191 264 ) ( 449 193 264 ) ( 449 191 264 ) tex_common/nodraw 0 0 -90 0.25 0.25 0 128 0
+( 449 191 264 ) ( 453 197 0 ) ( 453 187 0 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+( 447 191 264 ) ( 453 187 0 ) ( 443 187 0 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
+( 443 197 0 ) ( 453 187 0 ) ( 453 197 0 ) tex_common/nodraw 0 0 -90 0.25 0.25 0 128 0
+( 447 193 264 ) ( 443 187 0 ) ( 443 197 0 ) tex_common/nodraw 0 0 0 -0.25 0.25 0 128 0
+( 443 197 0 ) ( 453 197 0 ) ( 447 193 264 ) tex_common/nodraw -0 0 0 0.25 0.25 0 128 0
 }
 // brush 104
 {
-( 449 191 264 ) ( 447 193 264 ) ( 449 193 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 449 193 264 ) ( 443 197 0 ) ( 453 197 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 449 191 264 ) ( 453 197 0 ) ( 453 187 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 443 187 0 ) ( 453 197 0 ) ( 443 197 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 447 191 264 ) ( 453 187 0 ) ( 443 187 0 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
-( 443 187 0 ) ( 443 197 0 ) ( 447 191 264 ) tex_common/weaponclip -0 0 0 0.25 0.25 33554432 0 0
+( 447 191 264 ) ( 449 193 264 ) ( 449 191 264 ) tex_common/actorclip 0 0 -90 0.25 0.25 65536 0 0
+( 449 191 264 ) ( 453 197 0 ) ( 453 187 0 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+( 447 191 264 ) ( 453 187 0 ) ( 443 187 0 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
+( 443 197 0 ) ( 453 187 0 ) ( 453 197 0 ) tex_common/actorclip 0 0 -90 0.25 0.25 65536 0 0
+( 447 193 264 ) ( 443 187 0 ) ( 443 197 0 ) tex_common/actorclip 0 0 0 -0.25 0.25 65536 0 0
+( 443 197 0 ) ( 453 197 0 ) ( 447 193 264 ) tex_common/actorclip -0 0 0 0.25 0.25 65536 0 0
 }
 }
 // entity 1
@@ -1264,23 +1264,23 @@
 {
 "classname" "misc_model"
 "spawnflags" "252"
-"origin" "672 256 0"
-"model" "models/objects/vegi/pino/pino3.md2"
-"skin" "0"
+"origin" "544 160 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
 }
 // entity 18
 {
 "classname" "misc_model"
 "spawnflags" "254"
-"origin" "672 256 0"
-"model" "models/objects/vegi/pino/pino2.md2"
-"skin" "0"
+"origin" "544 160 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
 }
 // entity 19
 {
 "classname" "misc_model"
 "spawnflags" "255"
-"origin" "672 256 0"
+"origin" "544 160 0"
 "model" "models/objects/vegi/pino/pino1.md2"
 "skin" "0"
 }
@@ -1288,7 +1288,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "252"
-"origin" "288 192 0"
+"origin" "544 160 0"
 "model" "models/objects/vegi/pino/pino3.md2"
 "skin" "0"
 }
@@ -1296,63 +1296,137 @@
 {
 "classname" "misc_model"
 "spawnflags" "254"
-"origin" "288 192 0"
+"origin" "544 160 0"
 "model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
 }
 // entity 22
 {
 "classname" "misc_model"
-"spawnflags" "255"
-"origin" "288 192 0"
-"model" "models/objects/vegi/pino/pino1.md2"
+"spawnflags" "254"
+"origin" "256 192 0"
+"model" "models/objects/vegi/pino/pino2.md2"
 "skin" "0"
 }
 // entity 23
 {
 "classname" "misc_model"
-"spawnflags" "252"
-"origin" "352 160 0"
-"model" "models/objects/vegi/pino/pino3.md2"
+"spawnflags" "255"
+"origin" "256 192 0"
+"model" "models/objects/vegi/pino/pino1.md2"
 "skin" "0"
 }
 // entity 24
 {
 "classname" "misc_model"
-"spawnflags" "254"
-"origin" "352 160 0"
-"model" "models/objects/vegi/pino/pino2.md2"
+"spawnflags" "252"
+"origin" "256 192 0"
+"model" "models/objects/vegi/pino/pino3.md2"
 "skin" "0"
 }
 // entity 25
 {
 "classname" "misc_model"
-"spawnflags" "255"
-"origin" "352 160 0"
-"model" "models/objects/vegi/pino/pino1.md2"
-"skin" "0"
+"spawnflags" "252"
+"origin" "256 192 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
 }
 // entity 26
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "256 192 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+}
+// entity 27
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "320 160 0"
+"model" "models/objects/vegi/pino/pino2.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 28
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "320 160 0"
+"model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 29
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "320 160 0"
+"model" "models/objects/vegi/pino/pino3.md2"
+"skin" "0"
+"angles" "0 -180 0"
+}
+// entity 30
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "320 160 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
+"angles" "0 -180 0"
+}
+// entity 31
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "320 160 0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+"angles" "0 -180 0"
+}
+// entity 32
+{
+"classname" "misc_model"
+"spawnflags" "254"
+"origin" "448 192 0"
+"model" "models/objects/vegi/pino/pino2.md2"
+"skin" "0"
+"angles" "0 -90 0"
+}
+// entity 33
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "448 192 0"
+"model" "models/objects/vegi/pino/pino1.md2"
+"skin" "0"
+"angles" "0 -90 0"
+}
+// entity 34
 {
 "classname" "misc_model"
 "spawnflags" "252"
 "origin" "448 192 0"
 "model" "models/objects/vegi/pino/pino3.md2"
 "skin" "0"
+"angles" "0 -90 0"
 }
-// entity 27
+// entity 35
+{
+"classname" "misc_model"
+"spawnflags" "252"
+"origin" "448 192 0"
+"model" "models/objects/vegi/pino/pino3_leaves.md2"
+"skin" "1"
+"angles" "0 -90 0"
+}
+// entity 36
 {
 "classname" "misc_model"
 "spawnflags" "254"
 "origin" "448 192 0"
-"model" "models/objects/vegi/pino/pino2.md2"
-"skin" "0"
-}
-// entity 28
-{
-"classname" "misc_model"
-"spawnflags" "255"
-"origin" "448 192 0"
-"model" "models/objects/vegi/pino/pino1.md2"
-"skin" "0"
+"model" "models/objects/vegi/pino/pino2_leaves.md2"
+"skin" "1"
+"angles" "0 -90 0"
 }
