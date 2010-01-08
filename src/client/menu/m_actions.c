@@ -306,7 +306,7 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 
 	*cout++ = '\0';
 
-	/** @todo why va? cmd is static already */
+	/* copy the result into a free va slot */
 	return va("%s", cmd);
 }
 
