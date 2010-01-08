@@ -415,18 +415,21 @@ static void MN_ExecuteInjectedAction (const menuAction_t* action, menuCallContex
 			}
 
 			if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
-				menuCallContext_t nextContext;
+				menuCallContext_t newContext;
 				menuAction_t *actionsRef = NULL;
 				if (callProperty == NULL)
 					actionsRef = callNode->onClick;
 				else
 					actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
-				nextContext.source = callNode;
-				nextContext.useCmdParam = context->useCmdParam;
-				MN_ExecuteInjectedActions(actionsRef, &nextContext);
+				newContext.source = callNode;
+				newContext.useCmdParam = context->useCmdParam;
+				MN_ExecuteInjectedActions(actionsRef, &newContext);
 			} else if (callProperty->type == V_UI_NODEMETHOD) {
+				menuCallContext_t newContext;
 				menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
-				func(callNode);
+				newContext.source = callNode;
+				newContext.useCmdParam = context->useCmdParam;
+				func(callNode, &newContext);
 			} else {
 				Com_Printf("MN_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, MN_GetPath(callNode));
 				return;

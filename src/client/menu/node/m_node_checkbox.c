@@ -105,6 +105,11 @@ static void MN_CheckBoxNodeActivate (menuNode_t *node)
 	}
 }
 
+static void MN_CheckBoxNodeCallActivate (menuNode_t *node, const menuCallContext_t *context)
+{
+	MN_CheckBoxNodeActivate(node);
+}
+
 /**
  * @brief Handles checkboxes clicks
  */
@@ -130,7 +135,7 @@ static const value_t properties[] = {
 	 */
 
 	/* Call it to toggle the node status. */
-	{"toggle", V_UI_NODEMETHOD, ((size_t) MN_CheckBoxNodeActivate), 0},
+	{"toggle", V_UI_NODEMETHOD, ((size_t) MN_CheckBoxNodeCallActivate), 0},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -32,6 +32,7 @@ struct menuIcon_s;
 struct menuCondition_s;
 struct value_s;
 struct nodeKeyBinding_s;
+struct menuCallContext_s;
 
 /* extradata struct */
 #include "node/m_node_abstractoption.h"
@@ -57,7 +58,7 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
-typedef void (*menuNodeMethod_t)(struct menuNode_s*node);
+typedef void (*menuNodeMethod_t)(struct menuNode_s*node, const struct menuCallContext_s *context);
 
 /**
  * @brief menu node

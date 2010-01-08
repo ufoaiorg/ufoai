@@ -127,31 +127,31 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 /**
  * @note pos == -1 is a reserved value, that why we clamp the value
  */
-static void MN_AbstractScrollableNodePageUp (menuNode_t *node) {
+static void MN_AbstractScrollableNodePageUp (menuNode_t *node, const menuCallContext_t *context) {
 	const int pos = EXTRADATA(node).scrollY.viewPos - 10;
 	MN_AbstractScrollableNodeSetY(node, (pos >= 0)?pos:0, -1, -1);
 }
 
-static void MN_AbstractScrollableNodePageDown (menuNode_t *node) {
+static void MN_AbstractScrollableNodePageDown (menuNode_t *node, const menuCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + 10, -1, -1);
 }
 
-static void MN_AbstractScrollableNodeMoveUp (menuNode_t *node) {
+static void MN_AbstractScrollableNodeMoveUp (menuNode_t *node, const menuCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos - 1, -1, -1);
 }
 
-static void MN_AbstractScrollableNodeMoveDown (menuNode_t *node) {
+static void MN_AbstractScrollableNodeMoveDown (menuNode_t *node, const menuCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + 1, -1, -1);
 }
 
-static void MN_AbstractScrollableNodeMoveHome (menuNode_t *node) {
+static void MN_AbstractScrollableNodeMoveHome (menuNode_t *node, const menuCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, 0, -1, -1);
 }
 
 /**
  * @note fullSize is bigger than the "end" position. But the function will clamp it right
  */
-static void MN_AbstractScrollableNodeMoveEnd (menuNode_t *node) {
+static void MN_AbstractScrollableNodeMoveEnd (menuNode_t *node, const menuCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.fullSize, -1, -1);
 }
 

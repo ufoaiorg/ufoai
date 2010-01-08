@@ -301,8 +301,11 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *windo
 	if (binding->property == NULL)
 		node->behaviour->activate(node);
 	else if (binding->property->type == V_UI_NODEMETHOD) {
+		menuCallContext_t newContext;
 		menuNodeMethod_t func = (menuNodeMethod_t) binding->property->ofs;
-		func(node);
+		newContext.source = node;
+		newContext.useCmdParam = qfalse;
+		func(node, &newContext);
 	} else
 		Com_Printf("MN_KeyPressedInWindow: @%s not supported.", binding->property->string);
 

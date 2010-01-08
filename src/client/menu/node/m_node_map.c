@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_input.h"
 #include "../m_parse.h"
+#include "../m_actions.h"
 #include "m_node_abstractnode.h"
 #include "m_node_map.h"
 
@@ -201,12 +202,12 @@ static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 	MN_MapNodeZoom(node, down);
 }
 
-static void MN_MapNodeZoomIn (menuNode_t *node)
+static void MN_MapNodeZoomIn (menuNode_t *node, const menuCallContext_t *context)
 {
 	MN_MapNodeZoom(node, qfalse);
 }
 
-static void MN_MapNodeZoomOut (menuNode_t *node)
+static void MN_MapNodeZoomOut (menuNode_t *node, const menuCallContext_t *context)
 {
 	MN_MapNodeZoom(node, qtrue);
 }

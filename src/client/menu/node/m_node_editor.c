@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_windows.h"
 #include "../m_render.h"
+#include "../m_actions.h"
 #include "m_node_editor.h"
 #include "m_node_abstractnode.h"
 
@@ -243,17 +244,17 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	MN_EditorNodeSelectNode(node, hovered);
 }
 
-static void MN_EditorNodeStart (menuNode_t *node)
+static void MN_EditorNodeStart (menuNode_t *node, const menuCallContext_t *context)
 {
 	MN_SetMouseCapture(node);
 }
 
-static void MN_EditorNodeStop (menuNode_t *node)
+static void MN_EditorNodeStop (menuNode_t *node, const menuCallContext_t *context)
 {
 	MN_MouseRelease();
 }
 
-static void MN_EditorNodeSelectNext (menuNode_t *node)
+static void MN_EditorNodeSelectNext (menuNode_t *node, const menuCallContext_t *context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -262,7 +263,7 @@ static void MN_EditorNodeSelectNext (menuNode_t *node)
 	MN_EditorNodeSelectNode(node, anchoredNode->next);
 }
 
-static void MN_EditorNodeSelectParent (menuNode_t *node)
+static void MN_EditorNodeSelectParent (menuNode_t *node, const menuCallContext_t *context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -271,7 +272,7 @@ static void MN_EditorNodeSelectParent (menuNode_t *node)
 	MN_EditorNodeSelectNode(node, anchoredNode->parent);
 }
 
-static void MN_EditorNodeSelectFirstChild (menuNode_t *node)
+static void MN_EditorNodeSelectFirstChild (menuNode_t *node, const menuCallContext_t *context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
