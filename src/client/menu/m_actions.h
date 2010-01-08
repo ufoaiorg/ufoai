@@ -192,4 +192,7 @@ void MN_InitActions(void);
 void MN_AddListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
 void MN_RemoveListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
 
+const char* MN_GetParam(const menuCallContext_t *context, int paramID);
+int MN_GetParamNumber(const menuCallContext_t *context);
+
 #endif

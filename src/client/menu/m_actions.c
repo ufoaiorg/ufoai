@@ -154,6 +154,31 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
 }
 
 /**
+ * Get the number of param from an execution context
+ * @param[in] context The execution context
+ * @return The requested param
+ */
+int MN_GetParamNumber (const menuCallContext_t *context)
+{
+	if (context->useCmdParam)
+		return Cmd_Argc();
+	return 0;
+}
+
+/**
+ * Get a param from an execution context
+ * @param[in] context The execution context
+ * @param[in] paramID The ID of the requested param (first param is integer 1)
+ * @return The requested param
+ */
+const char* MN_GetParam (const menuCallContext_t *context, int paramID)
+{
+	if (context->useCmdParam)
+		return Cmd_Argv(paramID);
+	return "";
+}
+
+/**
  * @brief Replace injection identifiers (e.g. &lt;eventParam&gt;) by a value
  * @note The injection identifier can be every node value - e.g. &lt;image&gt; or &lt;width&gt;.
  * It's also possible to do something like
@@ -255,11 +280,11 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 					}
 
 					/* param injection */
-					if (context->useCmdParam) {
+					if (MN_GetParamNumber(context) != 0) {
 						int arg;
 						const int checked = sscanf(propertyName, "%d", &arg);
-						if (checked == 1 && Cmd_Argc() >= arg) {
-							const int l = snprintf(cout, length, "%s", Cmd_Argv(arg));
+						if (checked == 1 && arg >= 1 && arg <= MN_GetParamNumber(context)) {
+							const int l = snprintf(cout, length, "%s", MN_GetParam(context, arg));
 							cout += l;
 							cin = next;
 							length -= l;
