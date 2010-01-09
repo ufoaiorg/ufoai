@@ -65,7 +65,6 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 
 	le->removeNextFrame = qfalse;
 
-
 	for (; nr-- > 0;) {
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
 

@@ -253,6 +253,7 @@ mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 qboolean Com_GetConstInt(const char *name, int *value);
+const char* Com_GetConstVariable(const char *namespace, int value);
 void Com_RegisterConstInt(const char *name, int value);
 
 #endif /* SCRIPTS_H */
