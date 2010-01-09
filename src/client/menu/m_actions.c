@@ -416,18 +416,36 @@ static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuC
 		return;
 	}
 
-	newContext.source = callNode;
-	newContext.useCmdParam = qfalse;
-	newContext.params = NULL;
-	newContext.paramNumber = 0;
+	if (action->type == EA_LISTENER) {
+		/* new context is not really need while we do not extend it with local var... */
+		newContext.source = callNode;
+		newContext.useCmdParam = context->useCmdParam;
+		newContext.params = NULL;
+		newContext.paramNumber = 0;
 
-	param = action->d.nonTerminal.right;
-	while (param) {
-		const char* value;
-		value = MN_GetStringFromExpression(param, context);
-		LIST_AddString(&newContext.params, value);
-		newContext.paramNumber++;
-		param = param->next;
+		if (!newContext.useCmdParam) {
+			linkedList_t *p = context->params;
+			while (p) {
+				const char* value = (char*) p->data;
+				LIST_AddString(&newContext.params, value);
+				newContext.paramNumber++;
+				p = p->next;
+			}
+		}
+	} else {
+		newContext.source = callNode;
+		newContext.useCmdParam = qfalse;
+		newContext.params = NULL;
+		newContext.paramNumber = 0;
+
+		param = action->d.nonTerminal.right;
+		while (param) {
+			const char* value;
+			value = MN_GetStringFromExpression(param, context);
+			LIST_AddString(&newContext.params, value);
+			newContext.paramNumber++;
+			param = param->next;
+		}
 	}
 
 	if (callProperty == NULL || callProperty->type == V_UI_ACTION) {

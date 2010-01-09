@@ -4,7 +4,14 @@
  * Every thing must be green and it must not print any text or warning into the console.
  */
 
-window unittest_function
+window unittest_function_interface
+{
+	confunc test7 {
+	
+	}
+}
+
+window unittest_function extends unittest_function_interface
 {
 	{
 		pos "100 100"
@@ -54,6 +61,12 @@ window unittest_function
 		pos		"20 160"
 		size	"20 20"
 		string	"t6"
+	}
+
+	string testCommon7 {
+		pos		"20 180"
+		size	"20 20"
+		string	"t7"
 	}
 
 	//
@@ -153,12 +166,39 @@ window unittest_function
 		}
 	}
 
+	// not a function, but it test listener which use function calls
+	confunc test7 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+
+		if ( <1> != "foo" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+		if ( <2> != 1 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+		if ( <3> != 2 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+
+		if ( *cvar:error == 0 ) {
+			*testCommon7@color = "0 1 0 1"
+			*testCommon7@tooltip = ""
+		} else {
+			*testCommon7@color = "1 0 0 1"
+			*testCommon7@tooltip = *cvar:errorMessage
+		}
+	}
+
 	//
 	// Common tests
 	//
 
 	func testCommon {
-/*
+
 		call *node:root.test1
 		if ( *cvar:error == 0 ) {
 			*testCommon1@color = "0 1 0 1"
@@ -185,7 +225,7 @@ window unittest_function
 			*testCommon3@color = "1 0 0 1"
 			*testCommon3@tooltip = *cvar:errorMessage
 		}
-*/
+
 		call *node:root.test4 ( 10 , ( 1 + 1 ) , "foo" )
 		if ( *cvar:error == 0 ) {
 			*testCommon4@color = "0 1 0 1"
@@ -212,6 +252,8 @@ window unittest_function
 			*testCommon6@color = "1 0 0 1"
 			*testCommon6@tooltip = *cvar:errorMessage
 		}
+		
+		cmd "test7 foo 1 2"
 	}
 
 	func onInit {
