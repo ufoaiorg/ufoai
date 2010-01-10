@@ -376,6 +376,30 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 }
 
 /**
+ * @brief After an actor changed his state, he might get visible for other
+ * players. Check the vis here and send the state change to the clients that
+ * are seeing him already.
+ * @param ent The actor edict
+ */
+static void G_ClientStateChangeUpdate (edict_t *ent)
+{
+	/* Send the state change. */
+	G_SendState(G_VisToPM(ent->visflags), ent);
+
+	/* Check if the player appears/perishes, seen from other teams. */
+	G_CheckVis(ent, qtrue);
+
+	/* Calc new vis for this player. */
+	G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+
+	/* Send the new TUs. */
+	G_SendStats(ent);
+
+	/* End the event. */
+ 	gi.EndEvents();
+}
+
+/**
  * @brief Changes the state of a player/soldier.
  * @param[in,out] player The player who controlls the actor
  * @param[in] ent the edict to perform the state change for
@@ -429,20 +453,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	if (!checkaction)
 		return;
 
-	/* Send the state change. */
-	G_SendState(G_VisToPM(ent->visflags), ent);
-
-	/* Check if the player appears/perishes, seen from other teams. */
-	G_CheckVis(ent, qtrue);
-
-	/* Calc new vis for this player. */
-	G_CheckVisTeam(ent->team, NULL, qfalse, ent);
-
-	/* Send the new TUs. */
-	G_SendStats(ent);
-
-	/* End the event. */
-	gi.EndEvents();
+	G_ClientStateChangeUpdate(ent);
 }
 
 /**
@@ -1071,9 +1082,8 @@ void G_ClientInitActorStates (const player_t * player)
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
 		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
-		G_SendState(G_TeamToPM(ent->team), ent);
 		ent->TU = saveTU;
-		G_EventActorStats(ent);
+		G_ClientStateChangeUpdate(ent);
 	}
 }
 
