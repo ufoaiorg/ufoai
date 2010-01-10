@@ -35,6 +35,24 @@ qboolean G_IsLivingActor (const edict_t *ent)
 }
 
 /**
+ * @brief Searches an actor by a unique character number
+ * @param[in] ucn The unique character number
+ * @param[in] team The team to get the actor with the ucn from
+ * @return The actor edict if found, otherwise @c NULL
+ */
+edict_t *G_GetActorByUCN (const int ucn, const int team)
+{
+	int i;
+	edict_t *ent;
+
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && G_IsActor(ent) && team == ent->team && ent->chr.ucn == ucn)
+			return ent;
+
+	return NULL;
+}
+
+/**
  * @brief Turns an actor around
  * @param[in] ent the actor (edict) we are talking about
  * @param[in] dir the direction to turn the edict into, might be an action

@@ -292,7 +292,7 @@ int G_GetActiveTeam (void)
  * @param[in] quiet Don't print the console message if quiet is true.
  * the action with
  */
-qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
+qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU, qboolean quiet)
 {
 	int msglevel;
 
@@ -384,7 +384,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
  * don't even use the G_ActionCheck function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (player_t* player, edict_t* ent, int reqState, qboolean checkaction)
+void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qboolean checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheck(player, ent, 0, NOISY))
@@ -1005,8 +1005,6 @@ static void G_ClientReadCharacter (edict_t *ent)
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		ent->chr.score.stuns[k] = gi.ReadShort();
 	ent->chr.score.assignedMissions = gi.ReadShort();
-
-	ent->state = gi.ReadShort();
 }
 
 /**
@@ -1052,6 +1050,31 @@ static void G_ClientAssignDefaultActorValues (edict_t *ent)
 
 	/** @todo allow later changes from GUI */
 	ent->reaction_minhit = 30;
+}
+
+/**
+ * @brief This is called after the actors are spawned and will set actor states without consuming TUs
+ * @param player The player to perform the action for
+ */
+void G_ClientInitActorStates (const player_t * player)
+{
+	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
+	int i;
+
+	for (i = 0; i < length; i++) {
+		const int ucn = gi.ReadShort();
+		int saveTU;
+		edict_t *ent = G_GetActorByUCN(ucn, player->pers.team);
+		if (!ent)
+			gi.error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
+
+		/* these state changes are not consuming any TUs */
+		saveTU = ent->TU;
+		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
+		G_SendState(G_TeamToPM(ent->team), ent);
+		ent->TU = saveTU;
+		G_EventActorStats(ent);
+	}
 }
 
 /**

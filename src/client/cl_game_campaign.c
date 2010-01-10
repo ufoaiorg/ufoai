@@ -381,6 +381,27 @@ void GAME_CP_Drop (void)
 	CL_Disconnect();
 }
 
+/**
+ * @brief Changes some actor states for a campaign game
+ * @param team The team to change the states for
+ */
+void GAME_CP_InitializeBattlescape (const chrList_t *team)
+{
+	int i;
+	struct dbuffer *msg = new_dbuffer();
+
+	NET_WriteByte(msg, clc_initactorstates);
+	NET_WriteByte(msg, team->num);
+
+	for (i = 0; i < team->num; i++) {
+		character_t *chr = team->chr[i];
+		NET_WriteShort(msg, chr->ucn);
+		NET_WriteShort(msg, chr->state);
+	}
+
+	NET_WriteMsg(cls.netStream, msg);
+}
+
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)
 {
 	return &ccs.eMission;
