@@ -477,16 +477,16 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 
 	chr = CL_GetActorChr(le);
 	if (chr) {
-		chrReservations_t *res = &chr->reservedTus;
+		chrReservations_t res = chr->reservedTus;
 
 		if (type == RES_REACTION)
-			chr->reservedTus.reaction = tus;
+			res.reaction = tus;
 		else if (type == RES_CROUCH)
-			chr->reservedTus.crouch = tus;
+			res.crouch = tus;
 		else if (type == RES_SHOT)
-			chr->reservedTus.shot = tus;
+			res.shot = tus;
 
-		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res->reaction, res->shot, res->crouch);
+		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res.reaction, res.shot, res.crouch);
 	}
 }
 
