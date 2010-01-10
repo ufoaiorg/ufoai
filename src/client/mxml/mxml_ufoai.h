@@ -35,6 +35,16 @@ void mxml_AddInt(mxml_node_t *parent, const char *name, int value);
 void mxml_AddLong(mxml_node_t *parent, const char *name, long value);
 void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos);
 void mxml_AddPos2(mxml_node_t *parent, const char *name, const vec2_t pos);
+
+void mxml_AddStringValue(mxml_node_t *parent, const char *name, const char *value);
+void mxml_AddBoolValue(mxml_node_t *parent, const char *name, qboolean value);
+void mxml_AddFloatValue(mxml_node_t *parent, const char *name, float value);
+void mxml_AddDoubleValue(mxml_node_t *parent, const char *name, double value);
+void mxml_AddByteValue(mxml_node_t *parent, const char *name, byte value);
+void mxml_AddShortValue(mxml_node_t *parent, const char *name, short value);
+void mxml_AddIntValue(mxml_node_t *parent, const char *name, int value);
+void mxml_AddLongValue(mxml_node_t *parent, const char *name, long value);
+
 mxml_node_t * mxml_AddNode(mxml_node_t *parent, const char *name);
 
 qboolean mxml_GetBool(mxml_node_t *parent, const char *name, const qboolean defaultval);
