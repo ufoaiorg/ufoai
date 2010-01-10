@@ -722,8 +722,6 @@ base/models/geoscape/alienbase.md2 | GNU General Public License 2.0 or later | W
 base/models/geoscape/alienbase.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/base.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/base.tga | GNU General Public License 2.0 or later | TimberDragon
-base/models/geoscape/defence.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/defence.tga | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/drop_firebird.jpg | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/drop_firebird.md2 | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/drop_herakles.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
