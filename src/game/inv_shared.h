@@ -749,6 +749,6 @@ int Com_ShapeUsage(const uint32_t shape);
 uint32_t Com_ShapeRotate(const uint32_t shape);
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
-#define INV_INVENTORY_BYTES 9
+#define INV_INVENTORY_BYTES 11
 
 #endif /* GAME_INV_SHARED_H */

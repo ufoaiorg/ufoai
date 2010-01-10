@@ -893,48 +893,6 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 }
 
 /**
- * @brief Call this if you want to skip some actor netchannel data
- * @note The fieldsize is not skipped
- * @sa G_ClientTeamInfo
- */
-static void G_ClientSkipActorInfo (void)
-{
-	int k, j;
-
-	gi.ReadShort(); /* ucn */
-	for (k = 0; k < 4; k++)
-		gi.ReadString(); /* name, path, body, head */
-	gi.ReadByte(); /* skin */
-
-	gi.ReadShort(); /* HP */
-	gi.ReadShort(); /* maxHP */
-	gi.ReadByte(); /* teamDef->idx */
-	gi.ReadByte(); /* gender */
-	gi.ReadByte(); /* STUN */
-	gi.ReadByte(); /* morale */
-
-	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		gi.ReadLong(); /* score.experience */
-	for (k = 0; k < SKILL_NUM_TYPES; k++)
-		gi.ReadByte(); /* score.skills */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		gi.ReadByte(); /* score.initialSkills */
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.ReadShort(); /* score.kills */
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.ReadShort(); /* score.stuns */
-	gi.ReadShort(); /* score.assigned missions */
-
-	gi.ReadShort(); /* reservedTus.reserveReaction */
-
-	/* skip inventory */
-	j = gi.ReadShort();
-	for (k = 0; k < j; k++)
-		gi.ReadByte(); /* inventory */
-}
-
-/**
  * @brief Checks whether the spawn of an actor is allowed for the current running match.
  * @note Don't allow spawning of soldiers for multiplayer if:
  * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
@@ -1049,7 +1007,33 @@ static void G_ClientReadCharacter (edict_t *ent)
 	ent->chr.score.assignedMissions = gi.ReadShort();
 
 	ent->state = gi.ReadShort();
+}
 
+/**
+ * @brief Call this if you want to skip some actor netchannel data
+ * @note The fieldsize is not skipped
+ * @sa G_ClientTeamInfo
+ */
+static void G_ClientSkipActorInfo (void)
+{
+	int k, j;
+	edict_t ent;
+
+	G_ClientReadCharacter(&ent);
+
+	/* skip inventory */
+	j = gi.ReadShort();
+	for (k = 0; k < j; k++)
+		gi.ReadByte(); /* inventory */
+}
+
+/**
+ * @brief Used after spawning an actor to set some default values that are not read from the
+ * network event.
+ * @param ent The actor edict to set the values for.
+ */
+static void G_ClientAssignDefaultActorValues (edict_t *ent)
+{
 	/* Mission Scores */
 	memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
 	ent->chr.scoreMission = &scoreMission[scoreMissionNum];
@@ -1065,6 +1049,9 @@ static void G_ClientReadCharacter (edict_t *ent)
 	/* set models */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+
+	/** @todo allow later changes from GUI */
+	ent->reaction_minhit = 30;
 }
 
 /**
@@ -1080,9 +1067,10 @@ void G_ClientTeamInfo (const player_t * player)
 
 	for (i = 0; i < length; i++) {
 		edict_t *ent;
+		const int actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
 		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team))
-			ent = G_ClientGetFreeSpawnPointForActorSize(player, gi.ReadByte());
+			ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 		else
 			ent = NULL;
 
@@ -1099,8 +1087,7 @@ void G_ClientTeamInfo (const player_t * player)
 
 			G_ClientReadInventory(ent);
 
-			/** @todo allow later changes from GUI */
-			ent->reaction_minhit = 30;
+			G_ClientAssignDefaultActorValues(ent);
 		} else {
 			G_ClientSkipActorInfo();
 		}
