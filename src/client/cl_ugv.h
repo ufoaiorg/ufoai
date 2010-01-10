@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_UGV_H
 #define CL_UGV_H
 
-#define MAX_UGV	8
-
 /** @brief Defines a type of UGV/Robot */
 typedef struct ugv_s {
 	char *id;

@@ -173,15 +173,6 @@ typedef enum {
 	UFO_MAX
 } ufoType_t;
 
-typedef enum {
-	DROPSHIP_FIREBIRD,
-	DROPSHIP_HERAKLES,
-	DROPSHIP_RAPTOR,
-
-	INTERCEPTOR_STILETTO,
-
-	AIRCRAFTTYPE_MAX
-} humanAircraftType_t;
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
 extern const char *const align_names[];

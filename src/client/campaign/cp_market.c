@@ -32,54 +32,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_market.h"
 #include "cp_market_callbacks.h"
 
-/** @brief Max amount of aircraft type calculated for the market. */
-static const int MAX_AIRCRAFT_SUPPLY = 8;
-
-/**
- * Returns the storage amount of a
- * @param[in] base The base to count the aircraft type in
- * @param[in] aircraftID Aircraft script id
- * @return The storage amount for the given aircraft type in the given base
- */
-static inline int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID)
+void BS_AddItemToMarket (const objDef_t *od, int amount)
 {
-	const aircraft_t *aircraft;
-	int storage = 0;
-	int j;
-
-	assert(base);
-
-	/* Get storage amount in the base. */
-	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-		if (!strcmp(aircraft->id, aircraftID))
-			storage++;
-	}
-	return storage;
+	assert(amount >= 0);
+	ccs.eMarket.numItems[od->idx] += amount;
 }
 
-/**
- * @brief Calculates amount of aircraft in base and on the market.
- * @param[in] base The base to get the storage amount from. If @c NULL when supply (market) is returned.
- * @param[in] aircraftID Aircraft id (type).
- * @return Amount of aircraft in base or amount of aircraft on the market.
- */
-int BS_GetStorageSupply (const base_t *base, const char *aircraftID)
+void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
 {
-	if (base) {
-		/* get storage amount */
-		return BS_GetStorageAmountInBase(base, aircraftID);
-	} else {
-		int amount = 0;
-		int j;
-		/* get supply amount (global) */
-		for (j = 0; j < MAX_BASES; j++) {
-			base = B_GetFoundedBaseByIDX(j);
-			if (!base)
-				continue;
-			amount += BS_GetStorageAmountInBase(base, aircraftID);
-		}
-		return max(0, MAX_AIRCRAFT_SUPPLY - amount);
-	}
+	assert(amount >= 0);
+	ccs.eMarket.numItems[od->idx] -= amount;
+	if (ccs.eMarket.numItems[od->idx] < 0)
+		ccs.eMarket.numItems[od->idx] = 0;
+}
+
+void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->tpl->id);
+	assert(amount >= 0);
+	assert(aircraft->type != AIRCRAFT_UFO);
+	ccs.eMarket.numAircraft[type] += amount;
+}
+
+void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->tpl->id);
+	assert(amount >= 0);
+	assert(aircraft->type != AIRCRAFT_UFO);
+	ccs.eMarket.numAircraft[type] -= amount;
+	if (ccs.eMarket.numAircraft[type] < 0)
+		ccs.eMarket.numAircraft[type] = 0;
+}
+
+int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->tpl->id);
+	assert(aircraft->type != AIRCRAFT_UFO);
+	return ccs.eMarket.numAircraft[type];
 }
 
 /**
@@ -96,12 +85,12 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 	assert(item);
 
 	/* you can't buy more items than there are on market */
-	numItems = min(number, ccs.eMarket.num[item->idx]);
+	numItems = min(number, ccs.eMarket.numItems[item->idx]);
 
 	/* you can't buy more items than you have credits for */
 	/** @todo Handle items with price 0 better */
-	if (ccs.eMarket.ask[item->idx])
-		numItems = min(numItems, ccs.credits / ccs.eMarket.ask[item->idx]);
+	if (ccs.eMarket.askItems[item->idx])
+		numItems = min(numItems, ccs.credits / ccs.eMarket.askItems[item->idx]);
 	if (numItems <= 0)
 		return qfalse;
 
@@ -117,8 +106,8 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 	}
 
 	B_UpdateStorageAndCapacity(base, item, numItems, qfalse, qfalse);
-	ccs.eMarket.num[item->idx] -= numItems;
-	CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item->idx] * numItems);
+	BS_RemoveItemFromMarket(item, numItems);
+	CL_UpdateCredits(ccs.credits - ccs.eMarket.askItems[item->idx] * numItems);
 	return qtrue;
 }
 
@@ -130,8 +119,8 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, const int numItems)
 {
 	if (craftitem) {
-		ccs.eMarket.num[craftitem->idx] += numItems;
-		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bid[craftitem->idx] * numItems));
+		BS_AddItemToMarket(craftitem, numItems);
+		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bidItems[craftitem->idx] * numItems));
 	}
 }
 
@@ -150,14 +139,22 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 		if (csi.ods[i].id[0] != '\0') {
 			mxml_node_t * snode = mxml_AddNode(node, "element");
 			mxml_AddString(snode, "id", csi.ods[i].id);
-			mxml_AddInt(snode, "num", ccs.eMarket.num[i]);
-			mxml_AddInt(snode, "bid", ccs.eMarket.bid[i]);
-			mxml_AddInt(snode, "ask", ccs.eMarket.ask[i]);
-			mxml_AddDouble(snode, "evo", ccs.eMarket.currentEvolution[i]);
-			mxml_AddBool(snode, "autosell", ccs.autosell[i]);
+			mxml_AddInt(snode, "num", ccs.eMarket.numItems[i]);
+			mxml_AddInt(snode, "bid", ccs.eMarket.bidItems[i]);
+			mxml_AddInt(snode, "ask", ccs.eMarket.askItems[i]);
+			mxml_AddDouble(snode, "evo", ccs.eMarket.currentEvolutionItems[i]);
 		}
 	}
-
+	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
+		if (ccs.eMarket.numAircraft[i]) {
+			mxml_node_t * snode = mxml_AddNode(node, "elementaircraft");
+			mxml_AddString(snode, "aircrafttype", Com_DropShipTypeToShortName(i));
+			mxml_AddInt(snode, "numaircraft", ccs.eMarket.numAircraft[i]);
+			mxml_AddInt(snode, "bidaircraft", ccs.eMarket.bidAircraft[i]);
+			mxml_AddInt(snode, "askaircraft", ccs.eMarket.askAircraft[i]);
+			mxml_AddDouble(snode, "evoaircraft", ccs.eMarket.currentEvolutionAircraft[i]);
+		}
+	}
 	return qtrue;
 }
 
@@ -173,19 +170,29 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 	node = mxml_GetNode(parent, "market");
 	if (!node)
 		return qfalse;
-	for(i = 0, snode = mxml_GetNode(node, "element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "element")) {
+	for (i = 0, snode = mxml_GetNode(node, "element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "element")) {
 		if (snode) {
 			const char *s = mxml_GetString(snode, "id");
 			const objDef_t *od = INVSH_GetItemByID(s);
 			if (!od) {
 				Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			} else {
-				ccs.eMarket.num[od->idx] = mxml_GetInt(snode, "num", 0);
-				ccs.eMarket.bid[od->idx] = mxml_GetInt(snode, "bid", 0);
-				ccs.eMarket.ask[od->idx] = mxml_GetInt(snode, "ask", 0);
-				ccs.eMarket.currentEvolution[od->idx] = mxml_GetDouble(snode, "evo", 0.0);
+				ccs.eMarket.numItems[od->idx] = mxml_GetInt(snode, "num", 0);
+				ccs.eMarket.bidItems[od->idx] = mxml_GetInt(snode, "bid", 0);
+				ccs.eMarket.askItems[od->idx] = mxml_GetInt(snode, "ask", 0);
+				ccs.eMarket.currentEvolutionItems[od->idx] = mxml_GetDouble(snode, "evo", 0.0);
 				ccs.autosell[od->idx] = mxml_GetBool(snode, "autosell", qfalse);
 			}
+		}
+	}
+	for (i = 0, snode = mxml_GetNode(node, "elementaircraft"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "elementaircraft")) {
+		if (snode) {
+			const char *s = mxml_GetString(snode, "aircrafttype");
+			humanAircraftType_t type = Com_DropShipShortNameToID(s);
+			ccs.eMarket.numAircraft[type] = mxml_GetInt(snode, "numaircraft", 0);
+			ccs.eMarket.bidAircraft[type] = mxml_GetInt(snode, "bidaircraft", 0);
+			ccs.eMarket.askAircraft[type] = mxml_GetInt(snode, "askaircraft", 0);
+			ccs.eMarket.currentEvolutionAircraft[type] = mxml_GetDouble(snode, "evoaircraft", 0.0);
 		}
 	}
 
@@ -219,9 +226,9 @@ void BS_InitMarket (qboolean load)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (ccs.eMarket.ask[i] == 0) {
-			ccs.eMarket.ask[i] = csi.ods[i].price;
-			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
+		if (ccs.eMarket.askItems[i] == 0) {
+			ccs.eMarket.askItems[i] = csi.ods[i].price;
+			ccs.eMarket.bidItems[i] = floor(ccs.eMarket.askItems[i] * BID_FACTOR);
 		}
 
 		if (!ccs.curCampaign->marketDef->numItems[i])
@@ -231,7 +238,7 @@ void BS_InitMarket (qboolean load)
 			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
 		else
 			/* the other relevant values were already set above */
-			ccs.eMarket.num[i] = campaign->marketDef->numItems[i];
+			ccs.eMarket.numItems[i] = campaign->marketDef->numItems[i];
 	}
 }
 
@@ -271,16 +278,14 @@ void CL_CampaignRunMarket (void)
 		}
 
 		/* Store the evolution of the market in currentEvolution */
-		ccs.eMarket.currentEvolution[i] += (asymptoticNumber - ccs.eMarket.num[i]) / TYPICAL_TIME;
+		ccs.eMarket.currentEvolutionItems[i] += (asymptoticNumber - ccs.eMarket.numItems[i]) / TYPICAL_TIME;
 
 		/* Check if new items appeared or disappeared on market */
-		if (fabs(ccs.eMarket.currentEvolution[i]) >= 1.0f) {
-			const int num = (int)(ccs.eMarket.currentEvolution[i]);
-			ccs.eMarket.num[i] += num;
-			ccs.eMarket.currentEvolution[i] -= num;
+		if (fabs(ccs.eMarket.currentEvolutionItems[i]) >= 1.0f) {
+			const int num = (int)(ccs.eMarket.currentEvolutionItems[i]);
+			BS_AddItemToMarket(&csi.ods[i], num);
+			ccs.eMarket.currentEvolutionItems[i] -= num;
 		}
-		if (ccs.eMarket.num[i] < 0)
-			ccs.eMarket.num[i] = 0;
 	}
 }
 

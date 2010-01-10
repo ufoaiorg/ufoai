@@ -2568,7 +2568,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		} else {
 			/* If the related technology is researched, check the autosell option. */
 			if (ccs.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
-				ccs.eMarket.num[cargo[i].item->idx] += cargo[i].amount;
+				BS_AddItemToMarket(cargo[i].item, cargo[i].amount);
 				gained += (cargo[i].item->price * cargo[i].amount);
 				numitems += cargo[i].amount;
 			} else {
@@ -2578,7 +2578,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				for (j = 0; j < cargo[i].amount; j++) {
 					if (!B_UpdateStorageAndCapacity(base, cargo[i].item, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
-						ccs.eMarket.num[cargo[i].item->idx]++;
+						BS_AddItemToMarket(cargo[i].item, 1);
 						forcedgained += cargo[i].item->price;
 						forcedsold++;
 					}

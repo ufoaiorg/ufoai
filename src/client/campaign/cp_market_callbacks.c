@@ -61,6 +61,15 @@ static int buyCat = FILTER_S_PRIMARY;	/**< Category of items in the menu.
 /** @brief Max values for Buy/Sell factors. */
 static const int MAX_BS_FACTORS = 500;
 
+/**
+ * @brief Checks whether a given aircraft should appear on the market
+ * @param aircraft The aircraft to check
+ * @return @c true if the aircraft should appear on the market
+ */
+static qboolean BS_AircraftIsOnMarket (const aircraft_t *aircraft)
+{
+	return aircraft->type != AIRCRAFT_UFO && aircraft->price != -1;
+}
 
 /**
  * @brief Set the number of item to buy or sell.
@@ -105,14 +114,29 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
+
 /**
- * @brief
- * @param[in] base
- * @param[in] itemNum
- * @param[out] min
- * @param[out] max
- * @param[out] value
+ * Returns the storage amount of a
+ * @param[in] base The base to count the aircraft type in
+ * @param[in] aircraftID Aircraft script id
+ * @return The storage amount for the given aircraft type in the given base
  */
+static int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID)
+{
+	const aircraft_t *aircraft;
+	int storage = 0;
+	int j;
+
+	assert(base);
+
+	/* Get storage amount in the base. */
+	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
+		if (!strcmp(aircraft->id, aircraftID))
+			storage++;
+	}
+	return storage;
+}
+
 static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNum, int *min, int *max, int *value)
 {
 	assert(base);
@@ -129,15 +153,15 @@ static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNu
 		const aircraft_t *aircraft = buyList.l[itemNum + buyList.scroll].aircraft;
 		if (!aircraft)
 			return qfalse;
-		*value = BS_GetStorageSupply(base, aircraft->id);
-		*max = BS_GetStorageSupply(base, aircraft->id) + BS_GetStorageSupply(NULL, aircraft->id);
+		*value = BS_GetStorageAmountInBase(base, aircraft->id);
+		*max = BS_GetStorageAmountInBase(base, aircraft->id) + BS_GetAircraftOnMarket(aircraft);
 		*min = 0;
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
 		if (!item)
 			return qfalse;
 		*value = base->storage.numItems[item->idx];
-		*max = base->storage.numItems[item->idx] + ccs.eMarket.num[item->idx];
+		*max = base->storage.numItems[item->idx] + ccs.eMarket.numItems[item->idx];
 		*min = 0;
 	}
 
@@ -190,7 +214,7 @@ static void BS_MarketScroll_f (void)
 		else {
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od && (base->storage.numItems[od->idx] || ccs.eMarket.num[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
+			if (od && (base->storage.numItems[od->idx] || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
 				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(base, i - buyList.scroll);
 				if (ccs.autosell[od->idx])
@@ -311,7 +335,7 @@ static void BS_BuyType (const base_t *base)
 		const technology_t* tech;
 		const aircraft_t *aircraftTemplate;
 		for (i = 0, j = 0, aircraftTemplate = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, aircraftTemplate++) {
-			if (aircraftTemplate->type == AIRCRAFT_UFO || aircraftTemplate->price == -1)
+			if (!BS_AircraftIsOnMarket(aircraftTemplate))
 				continue;
 			tech = aircraftTemplate->tech;
 			assert(tech);
@@ -320,8 +344,8 @@ static void BS_BuyType (const base_t *base)
 					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
-				BS_AddToList(aircraftTemplate->name, BS_GetStorageSupply(base, aircraftTemplate->id),
-						BS_GetStorageSupply(NULL, aircraftTemplate->id), aircraftTemplate->price);
+				BS_AddToList(aircraftTemplate->name, BS_GetStorageAmountInBase(base, aircraftTemplate->id),
+						BS_GetAircraftOnMarket(aircraftTemplate), aircraftTemplate->price);
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
@@ -340,7 +364,7 @@ static void BS_BuyType (const base_t *base)
 			if (!BS_IsOnMarket(od))
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od->tech && (base->storage.numItems[i] || ccs.eMarket.num[i])
+			if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i])
 			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -350,7 +374,7 @@ static void BS_BuyType (const base_t *base)
 					else
 						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
-				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
+				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], ccs.eMarket.askItems[i]);
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_FILTERLIST value to handle that much items\n");
 				buyList.l[j].item = od;
@@ -403,8 +427,8 @@ static void BS_BuyType (const base_t *base)
 				continue;
 
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od->tech && INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.numItems[i] || ccs.eMarket.num[i])) {
-				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
+			if (od->tech && INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.numItems[i] || ccs.eMarket.numItems[i])) {
+				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], ccs.eMarket.askItems[i]);
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -433,8 +457,8 @@ static void BS_BuyType (const base_t *base)
 				if (!BS_IsOnMarket(od))
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
-				if (od->tech && (base->storage.numItems[i] || ccs.eMarket.num[i]) && INV_ItemMatchesFilter(od, buyCat)) {
-					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
+				if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
+					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], ccs.eMarket.askItems[i]);
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 						MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -670,6 +694,7 @@ static void BS_SellAircraft_f (void)
 
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			/* the capacities are also updated here */
+			BS_AddAircraftToMarket(aircraft, 1);
 			AIR_DeleteAircraft(aircraft);
 
 			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
@@ -731,7 +756,7 @@ static void BS_BuyItem_f (void)
 				Com_Error(ERR_DROP, "BS_BuyItem_f: Could not get weapon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
 			ugvWeaponBuyable = qtrue;
-			if (!ccs.eMarket.num[ugvWeapon->idx])
+			if (!ccs.eMarket.numItems[ugvWeapon->idx])
 				ugvWeaponBuyable = qfalse;
 
 			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur <
@@ -743,7 +768,7 @@ static void BS_BuyItem_f (void)
 			if (ugvWeaponBuyable && E_HireRobot(base, ugv)) {
 				/* Move the item into the storage. */
 				B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse, qfalse);
-				ccs.eMarket.num[ugvWeapon->idx]--;
+				BS_RemoveItemFromMarket(ugvWeapon, 1);
 
 				/* Update Display/List and credits. */
 				BS_BuyType(base);
@@ -817,7 +842,7 @@ static void BS_SellItem_f (void)
 			if (base->storage.numItems[ugvWeapon->idx]) {
 				/* If we have a weapon we sell it as well. */
 				B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse, qfalse);
-				ccs.eMarket.num[ugvWeapon->idx]++;
+				BS_AddItemToMarket(ugvWeapon, 1);
 			}
 			BS_BuyType(base);
 			CL_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
@@ -835,10 +860,9 @@ static void BS_SellItem_f (void)
 		if (numItems) {
 			/* reinit the menu */
 			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse, qfalse);
-			ccs.eMarket.num[item->idx] += numItems;
-
+			BS_AddItemToMarket(item, numItems);
 			BS_BuyType(base);
-			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx] * numItems);
+			CL_UpdateCredits(ccs.credits + ccs.eMarket.bidItems[item->idx] * numItems);
 			BS_UpdateItem(base, num);
 		}
 	}

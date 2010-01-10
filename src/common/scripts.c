@@ -455,6 +455,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(token, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
+		else if (!strcmp(token, "craft_inter_saracen"))
+			*(int *) b = INTERCEPTOR_SARACEN;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
 		*writtenBytes = sizeof(int);
@@ -1877,40 +1879,52 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 		if (!vp->string) {
 			if (!strcmp(token, "item")) {
+				objDef_t *od;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid item token in equipment defintion: %s", ed->name);
+					Sys_Error("Invalid item token in equipment definition: %s", ed->name);
 
-				for (i = 0; i < csi.numODs; i++)
-					if (!strcmp(token, csi.ods[i].id)) {
-						token = Com_EParse(text, errhead, name);
-						if (!*text || *token == '}') {
-							Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
-							return;
-						}
-						n = atoi(token);
-						if (ed->numItems[i])
-							Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
-								csi.ods[i].id, name);
-						if (n)
-							ed->numItems[i] = n;
-						break;
+				od = INVSH_GetItemByID(token);
+				if (od) {
+					token = Com_EParse(text, errhead, name);
+					if (!*text || *token == '}') {
+						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
+						return;
 					}
-
-				if (i == csi.numODs)
+					n = atoi(token);
+					if (ed->numItems[od->idx])
+						Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
+							od->id, name);
+					if (n)
+						ed->numItems[od->idx] = n;
+				} else {
 					Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+				}
 			} else if (!strcmp(token, "aircraft")) {
+				humanAircraftType_t type;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid aircraft token in equipment defintion: %s", ed->name);
-				/** @todo parse aircraft */
+					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->name);
+
+				type = Com_DropShipShortNameToID(token);
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}') {
+					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
+					return;
+				}
+				n = atoi(token);
+				if (ed->numAircraft[type])
+					Com_Printf("Com_ParseEquipment: aircraft type '%i' is used several times in def '%s'. Only last entry will be taken into account.\n",
+						type, name);
+				if (n)
+					ed->numAircraft[type] = n;
 			} else if (!strcmp(token, "ugv")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
-					Sys_Error("Invalid ugv token in equipment defintion: %s", ed->name);
+					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
 				/** @todo parse ugv */
 			} else {
-				Sys_Error("unknown token in equipment in defintion %s: '%s'", ed->name, token);
+				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
 			}
 		}
 	} while (*text);
@@ -2734,6 +2748,8 @@ const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
 
 /**
  * @brief Translate DropShip type to short name.
+ * @return Will always return a valid human aircraft type or errors out if the given token can't
+ * be mapped to an human aircraft type
  * @sa Com_DropShipTypeToShortName
  */
 humanAircraftType_t Com_DropShipShortNameToID (const char *token)
