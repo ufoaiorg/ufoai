@@ -71,7 +71,7 @@ rank lancecorp
 	name			"_Lance-Corporal"
 	shortname		"_LCpl"
 	image			"ranks/rank_02"
-	mind			32
+	mind			27
 	killed_enemies	4
 	killed_others	7
 	type			EMPL_SOLDIER
@@ -83,7 +83,7 @@ rank corporal
 	name			"_Corporal"
 	shortname		"_Cpl"
 	image			"ranks/rank_03"
-	mind			37
+	mind			31
 	killed_enemies	8
 	killed_others	5
 	type			EMPL_SOLDIER
@@ -95,7 +95,7 @@ rank sergeant
 	name			"_Sergeant"
 	shortname		"_Sgt"
 	image			"ranks/rank_04"
-	mind			45
+	mind			36
 	killed_enemies	12
 	killed_others	3
 	type			EMPL_SOLDIER
@@ -107,7 +107,7 @@ rank warrant
 	name			"_Warrant Officer"
 	shortname		"_WO"
 	image			"ranks/rank_05"
-	mind			51
+	mind			40
 	killed_enemies	18
 	killed_others	2
 	type			EMPL_SOLDIER
@@ -119,7 +119,7 @@ rank senwarrant
 	name			"_Senior Warrant Officer"
 	shortname		"_SWO"
 	image			"ranks/rank_06"
-	mind			57
+	mind			45
 	killed_enemies	24
 	type			EMPL_SOLDIER
 	factor			0.6
@@ -130,7 +130,7 @@ rank seclieut
 	name			"_Second Lieutenant"
 	shortname		"_2Lt"
 	image			"ranks/rank_07"
-	mind			63
+	mind			50
 	killed_enemies	30
 	type			EMPL_SOLDIER
 	factor			0.6
@@ -141,7 +141,7 @@ rank lieut
 	name			"_Lieutenant"
 	shortname		"_Lt"
 	image			"ranks/rank_08"
-	mind			69
+	mind			55
 	killed_enemies	36
 	type			EMPL_SOLDIER
 	factor			0.6
@@ -152,7 +152,7 @@ rank captain
 	name			"_Captain"
 	shortname		"_Capt"
 	image			"ranks/rank_09"
-	mind		        75
+	mind		        60
 	killed_enemies	42
 	type			EMPL_SOLDIER
 	factor			0.7
@@ -163,7 +163,7 @@ rank major
 	name			"_Major"
 	shortname		"_Maj"
 	image			"ranks/rank_10"
-	mind			81
+	mind			64
 	killed_enemies	48
 	type			EMPL_SOLDIER
 	factor			0.7
@@ -174,7 +174,7 @@ rank ltcol
 	name			"_Lieutenant-Colonel"
 	shortname		"_Lt Col"
 	image			"ranks/rank_11"
-	mind			87
+	mind			68
 	killed_enemies	54
 	type			EMPL_SOLDIER
 	factor			0.8
@@ -185,7 +185,7 @@ rank col
 	name			"_Colonel"
 	shortname		"_Col"
 	image			"ranks/rank_12"
-	mind			93
+	mind			72
 	killed_enemies	60
 	type			EMPL_SOLDIER
 	factor			0.9

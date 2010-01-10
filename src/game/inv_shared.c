@@ -1645,7 +1645,7 @@ int CHRSH_CharGetMaxExperiencePerMission (abilityskills_t skill)
 	case ABILITY_ACCURACY:
 		return 290;
 	case ABILITY_MIND:
-		return 290;
+		return 450;
 	case SKILL_CLOSE:
 		return 680;
 	case SKILL_HEAVY:

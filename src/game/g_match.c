@@ -54,7 +54,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 		}
 		break;
 	case ABILITY_MIND:
-		exp = 100 * chr->scoreMission->kills[KILLED_ENEMIES];
+		exp = 50 + 200 * chr->scoreMission->kills[KILLED_ENEMIES];
 		break;
 	case SKILL_CLOSE:
 		exp = 150 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
