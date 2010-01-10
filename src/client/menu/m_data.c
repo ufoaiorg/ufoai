@@ -193,7 +193,7 @@ menuOption_t* MN_AddOption (menuOption_t**tree, const char* name, const char* la
 	menuOption_t *option;
 	assert(tree != NULL);
 
-	option = (menuOption_t*)Mem_PoolAlloc(sizeof(*option), com_genericPool, 0);
+	option = (menuOption_t*)Mem_PoolAlloc(sizeof(*option), mn_dynPool, 0);
 	MN_InitOption(option, name, label, value);
 
 	/* append the option */

@@ -1,0 +1,62 @@
+window unittest_nodeallocation
+{
+	{
+		pos "100 100"
+		size "340 500"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest node allocation"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	panel dyn {
+		pos "10 140"
+		size "320 350"
+		bgcolor "0.3 0.3 0.3 1"
+	}
+
+	button create {
+		pos "10 60"
+		size "200 20"		
+		string "create"
+		onClick {
+			call *node:root.dyn@createchild ( "foo<cvar:nb>" , "string" )
+			*node:(string)root.dyn.foo<cvar:nb>@top = ( *cvar:nb * 20 )
+			*node:(string)root.dyn.foo<cvar:nb>@width = 100
+			*node:(string)root.dyn.foo<cvar:nb>@height = 20
+			*node:(string)root.dyn.foo<cvar:nb>@string = "foo<cvar:nb>"
+			*cvar:nb = ( *cvar:nb + 1 )
+		}
+	}
+
+	button removeOne {
+		pos "10 80"
+		size "200 20"		
+		string "remove one"
+		onClick {
+			if ( *cvar:nb > 0 ) {
+				*cvar:nb = ( *cvar:nb - 1 )
+				call *node:root.dyn.foo<cvar:nb>@delete
+			}
+		}
+	}
+
+	button removeAll {
+		pos "10 100"
+		size "200 20"		
+		string "remove all"
+		onClick {
+			call *node:root.dyn@removeAllChild
+			*cvar:nb = 0
+		}
+	}
+
+	func onInit {
+		*cvar:nb = 0
+	}
+
+	func onClose {
+		delete *cvar:nb
+	}
+}

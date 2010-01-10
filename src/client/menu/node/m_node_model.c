@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_input.h"
+#include "../m_internal.h"
 #include "m_node_model.h"
 #include "m_node_abstractnode.h"
 
@@ -454,8 +455,6 @@ static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
-	if (EXTRADATA(node).oldRefValue == NULL)
-		EXTRADATA(node).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
 	EXTRADATA(node).clipOverflow = qtrue;
 }
@@ -469,6 +468,18 @@ static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
 	EXTRADATA(clone).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
+static void MN_ModelNodeNew (menuNode_t *node)
+{
+	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, mn_dynPool, 0);
+	EXTRADATA(node).oldRefValue[0] = '\0';
+}
+
+static void MN_ModelNodeDelete (menuNode_t *node)
+{
+	Mem_Free(EXTRADATA(node).oldRefValue);
+	EXTRADATA(node).oldRefValue = NULL;
+}
+
 static void MN_ModelNodeLoaded (menuNode_t *node)
 {
 	/* a tag without but not a submodel */
@@ -476,6 +487,9 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 		Com_Printf("MN_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", MN_GetPath(node));
 		EXTRADATA(node).tag = NULL;
 	}
+
+	if (EXTRADATA(node).oldRefValue == NULL)
+		EXTRADATA(node).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 
 	/* no tag but no size */
 	if (EXTRADATA(node).tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
@@ -527,6 +541,8 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_ModelNodeLoading;
 	behaviour->loaded = MN_ModelNodeLoaded;
 	behaviour->clone = MN_ModelNodeClone;
+	behaviour->new = MN_ModelNodeNew;
+	behaviour->delete = MN_ModelNodeDelete;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(modelExtraData_t);

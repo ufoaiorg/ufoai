@@ -163,18 +163,18 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuCall
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
 					path = MN_GenInjectedString(path, qfalse, context);
 
-				MN_ReadNodePath(expression->d.terminal.d1.string, context->source, &node, &property);
+				MN_ReadNodePath(path, context->source, &node, &property);
 				if (!node) {
-					Com_Printf("MN_GetStringFromParam: Node '%s' wasn't found; '' returned\n", path);
+					Com_Printf("MN_GetStringFromExpression: Node '%s' wasn't found; '' returned\n", path);
 					return "";
 				}
 				if (!property) {
-					Com_Printf("MN_GetStringFromParam: Property '%s' wasn't found; '' returned\n", path);
+					Com_Printf("MN_GetStringFromExpression: Property '%s' wasn't found; '' returned\n", path);
 					return "";
 				}
 				string = MN_GetStringFromNodeProperty(node, property);
 				if (string == NULL) {
-					Com_Printf("MN_GetStringFromParam: String getter for '%s' property do not exists; '' returned\n", path);
+					Com_Printf("MN_GetStringFromExpression: String getter for '%s' property do not exists; '' returned\n", path);
 					return "";
 				}
 				return string;

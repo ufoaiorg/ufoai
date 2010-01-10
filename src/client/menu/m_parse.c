@@ -287,7 +287,7 @@ static qboolean MN_ParseCallAction (menuNode_t *menuNode, menuAction_t *action, 
 	if (expression == NULL)
 		return qfalse;
 
-	if (expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY) {
+	if (expression->type != EA_VALUE_PATHNODE_WITHINJECTION && expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY && expression->type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
 		Com_Printf("MN_ParseCallAction: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", MN_GetPath(menuNode));
 		return qfalse;
 	}
@@ -1081,17 +1081,13 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 
 	/* else initialize a new node */
 	} else {
-		node = MN_AllocStaticNode(*token, behaviour->name);
+		node = MN_AllocNode(*token, behaviour->name, qfalse);
 		node->parent = parent;
 		if (parent)
 			node->root = parent->root;
 		/** @todo move it into caller */
 		if (parent)
 			MN_AppendNode(parent, node);
-
-		/* initialize default properties */
-		if (node->behaviour->loading)
-			node->behaviour->loading(node);
 	}
 
 	/* get body */
@@ -1309,9 +1305,8 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
 		token = Com_Parse(text);
 	} else {
-		menu = MN_AllocStaticNode(name, type);
+		menu = MN_AllocNode(name, type, qfalse);
 		menu->root = menu;
-		menu->behaviour->loading(menu);
 	}
 
 	MN_InsertWindow(menu);

@@ -95,5 +95,6 @@ typedef struct menuGlobal_s {
 extern menuGlobal_t mn;
 extern struct memPool_s *mn_sysPool;
 extern struct memPool_s *mn_dynStringPool;
+extern struct memPool_s *mn_dynPool;
 
 #endif

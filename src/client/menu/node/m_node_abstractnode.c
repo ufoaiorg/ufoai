@@ -44,109 +44,6 @@ qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
 	return qfalse;
 }
 
-/** @brief valid properties for a node */
-static const value_t properties[] = {
-	/* Top-left position of the node */
-	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
-	/* Size of the node */
-	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
-	/* Width of the node (see also <code>size</code>) */
-	{"width", V_FLOAT, offsetof(menuNode_t, size[0]), MEMBER_SIZEOF(menuNode_t, size[0])},
-	/* Height of the node (see also <code>size</code>) */
-	{"height", V_FLOAT, offsetof(menuNode_t, size[1]), MEMBER_SIZEOF(menuNode_t, size[1])},
-	/* Left position of the node (see also <code>pos</code>) */
-	{"left", V_FLOAT, offsetof(menuNode_t, pos[0]), MEMBER_SIZEOF(menuNode_t, pos[0])},
-	/* Top position of the node (see also <code>pos</code>) */
-	{"top", V_FLOAT, offsetof(menuNode_t, pos[1]), MEMBER_SIZEOF(menuNode_t, pos[1])},
-
-	/* If true, the node is not displayed nor or activatable. */
-	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
-	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
-	{"disabled", V_BOOL, offsetof(menuNode_t, disabled), MEMBER_SIZEOF(menuNode_t, disabled)},
-	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
-	{"ghost", V_BOOL, offsetof(menuNode_t, ghost), MEMBER_SIZEOF(menuNode_t, ghost)},
-	/* Border size we want to display. */
-	{"border", V_INT, offsetof(menuNode_t, border), MEMBER_SIZEOF(menuNode_t, border)},
-	/* Padding size we want to use. Few node support it. */
-	{"padding", V_INT, offsetof(menuNode_t, padding), MEMBER_SIZEOF(menuNode_t, padding)},
-	/* Background color we want to display. */
-	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
-	/* Border color we want to display. */
-	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
-
-	/*
-	 * Used to set the position of the node when the parent use a layout manager.
-	 * Else it do nothing.
-	 * Available values are: LAYOUTALIGN_TOPLEFT, LAYOUTALIGN_TOP, LAYOUTALIGN_TOPRIGHT,
-	 * LAYOUTALIGN_LEFT, LAYOUTALIGN_MIDDLE, LAYOUTALIGN_RIGHT, LAYOUTALIGN_BOTTOMLEFT,
-	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
-	 * Allowed value depend the layout manager used. The update to date list is into
-	 * m_node_panel.c
-	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
-	 */
-	{"align", V_INT, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
-
-	/*
-	 * Used share an int, only used by 1 behavour
-	 * @todo move it to the right behaviour, delete it
-	 */
-	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
-
-	/* Tooltip we want to use. */
-	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
-	/* Image to use. Each behaviour use it like they want.
-	 * @todo Move it into behaviour need it.
-	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
-	 */
-	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
-	/* Text the node will display. */
-	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
-	/* Text font the node will use.
-	 * @todo use V_REF_OF_STRING when its possible ('font' is never a cvar).
-	 */
-	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
-
-	/* Text color the node will use. */
-	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
-	/* Text color the node will use when something is selected. */
-	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
-	/* Alignement of the text into the node, or elements into blocks. */
-	{"textalign", V_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
-	/* When <code>invis</code> property is false (default value), this condition say if the node is visible or not. It use a script expression. */
-	{"visiblewhen", V_UI_IF, offsetof(menuNode_t, visibilityCondition), 0},
-
-	/* Called when the user click with left button into the node. */
-	{"onclick", V_UI_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
-	/* Called when the user click with right button into the node. */
-	{"onrclick", V_UI_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
-	/* Called when the user click with middle button into the node. */
-	{"onmclick", V_UI_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
-	/* Called when the user use the mouse wheel over the node. */
-	{"onwheel", V_UI_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
-	/* Called when the user use the mouse wheel up over the node. */
-	{"onwheelup", V_UI_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
-	/* Called when the user use the mouse wheel down over the node. */
-	{"onwheeldown", V_UI_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
-	/* Called when the mouse enter over the node. */
-	{"onmouseenter", V_UI_ACTION, offsetof(menuNode_t, onMouseEnter), MEMBER_SIZEOF(menuNode_t, onMouseEnter)},
-	/* Called when the mouse go out of the node. */
-	{"onmouseleave", V_UI_ACTION, offsetof(menuNode_t, onMouseLeave), MEMBER_SIZEOF(menuNode_t, onMouseLeave)},
-	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
-	 * @todo Move it where it is need.
-	 */
-	{"onchange", V_UI_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
-
-	/* Identify an icon the node will use.
-	 * @todo Move it where it is need.
-	 */
-	{"icon", V_UI_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
-
-	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */
-	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 /**
  * @brief return a relative position of a point into a node.
  * @param [in] node Requested node
@@ -743,6 +640,150 @@ static void MN_AbstractNodePropertyChanged (menuNode_t *node, const value_t *pro
 		MN_AbstractNodeVisibilityChange(node);
 	}
 }
+
+static void MN_AbstractNodeCallRemovaAllChild (menuNode_t *node, const menuCallContext_t *context)
+{
+	if (MN_GetParamNumber(context) != 0) {
+		Com_Printf("MN_AbstractNodeCallRemovaAllChild: Invalide number of param\n");
+		return;
+	}
+	MN_DeleteAllChild(node);
+}
+
+static void MN_AbstractNodeCallCreateChild (menuNode_t *node, const menuCallContext_t *context)
+{
+	menuNode_t *child;
+	if (MN_GetParamNumber(context) != 2) {
+		Com_Printf("MN_AbstractNodeCallDelete: Invalide number of param\n");
+		return;
+	}
+
+	child = MN_AllocNode(MN_GetParam(context, 1), MN_GetParam(context, 2), qtrue);
+	if (child == NULL)
+		return;
+	MN_AppendNode(node, child);
+}
+
+static void MN_AbstractNodeCallDelete (menuNode_t *node, const menuCallContext_t *context)
+{
+	if (MN_GetParamNumber(context) != 0) {
+		Com_Printf("MN_AbstractNodeCallDelete: Invalide number of param\n");
+		return;
+	}
+	MN_DeleteNode(node);
+}
+
+/** @brief valid properties for a node */
+static const value_t properties[] = {
+	/* Top-left position of the node */
+	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
+	/* Size of the node */
+	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
+	/* Width of the node (see also <code>size</code>) */
+	{"width", V_FLOAT, offsetof(menuNode_t, size[0]), MEMBER_SIZEOF(menuNode_t, size[0])},
+	/* Height of the node (see also <code>size</code>) */
+	{"height", V_FLOAT, offsetof(menuNode_t, size[1]), MEMBER_SIZEOF(menuNode_t, size[1])},
+	/* Left position of the node (see also <code>pos</code>) */
+	{"left", V_FLOAT, offsetof(menuNode_t, pos[0]), MEMBER_SIZEOF(menuNode_t, pos[0])},
+	/* Top position of the node (see also <code>pos</code>) */
+	{"top", V_FLOAT, offsetof(menuNode_t, pos[1]), MEMBER_SIZEOF(menuNode_t, pos[1])},
+
+	/* If true, the node is not displayed nor or activatable. */
+	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
+	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
+	{"disabled", V_BOOL, offsetof(menuNode_t, disabled), MEMBER_SIZEOF(menuNode_t, disabled)},
+	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
+	{"ghost", V_BOOL, offsetof(menuNode_t, ghost), MEMBER_SIZEOF(menuNode_t, ghost)},
+	/* Border size we want to display. */
+	{"border", V_INT, offsetof(menuNode_t, border), MEMBER_SIZEOF(menuNode_t, border)},
+	/* Padding size we want to use. Few node support it. */
+	{"padding", V_INT, offsetof(menuNode_t, padding), MEMBER_SIZEOF(menuNode_t, padding)},
+	/* Background color we want to display. */
+	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
+	/* Border color we want to display. */
+	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
+
+	/*
+	 * Used to set the position of the node when the parent use a layout manager.
+	 * Else it do nothing.
+	 * Available values are: LAYOUTALIGN_TOPLEFT, LAYOUTALIGN_TOP, LAYOUTALIGN_TOPRIGHT,
+	 * LAYOUTALIGN_LEFT, LAYOUTALIGN_MIDDLE, LAYOUTALIGN_RIGHT, LAYOUTALIGN_BOTTOMLEFT,
+	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
+	 * Allowed value depend the layout manager used. The update to date list is into
+	 * m_node_panel.c
+	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
+	 */
+	{"align", V_INT, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
+
+	/*
+	 * Used share an int, only used by 1 behavour
+	 * @todo move it to the right behaviour, delete it
+	 */
+	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
+
+	/* Tooltip we want to use. */
+	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
+	/* Image to use. Each behaviour use it like they want.
+	 * @todo Move it into behaviour need it.
+	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
+	 */
+	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
+	/* Text the node will display. */
+	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
+	/* Text font the node will use.
+	 * @todo use V_REF_OF_STRING when its possible ('font' is never a cvar).
+	 */
+	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
+
+	/* Text color the node will use. */
+	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
+	/* Text color the node will use when something is selected. */
+	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
+	/* Alignement of the text into the node, or elements into blocks. */
+	{"textalign", V_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
+	/* When <code>invis</code> property is false (default value), this condition say if the node is visible or not. It use a script expression. */
+	{"visiblewhen", V_UI_IF, offsetof(menuNode_t, visibilityCondition), 0},
+
+	/* Called when the user click with left button into the node. */
+	{"onclick", V_UI_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
+	/* Called when the user click with right button into the node. */
+	{"onrclick", V_UI_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
+	/* Called when the user click with middle button into the node. */
+	{"onmclick", V_UI_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
+	/* Called when the user use the mouse wheel over the node. */
+	{"onwheel", V_UI_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
+	/* Called when the user use the mouse wheel up over the node. */
+	{"onwheelup", V_UI_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
+	/* Called when the user use the mouse wheel down over the node. */
+	{"onwheeldown", V_UI_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
+	/* Called when the mouse enter over the node. */
+	{"onmouseenter", V_UI_ACTION, offsetof(menuNode_t, onMouseEnter), MEMBER_SIZEOF(menuNode_t, onMouseEnter)},
+	/* Called when the mouse go out of the node. */
+	{"onmouseleave", V_UI_ACTION, offsetof(menuNode_t, onMouseLeave), MEMBER_SIZEOF(menuNode_t, onMouseLeave)},
+	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
+	 * @todo Move it where it is need.
+	 */
+	{"onchange", V_UI_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
+
+	/* Identify an icon the node will use.
+	 * @todo Move it where it is need.
+	 */
+	{"icon", V_UI_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
+
+	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */
+	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
+
+	/* Remove all child from the node (only dynamic allocated nodes). */
+	{"removeallchild", V_UI_NODEMETHOD, ((size_t) MN_AbstractNodeCallRemovaAllChild), 0},
+
+	/* Create a new child with name and type. */
+	{"createchild", V_UI_NODEMETHOD, ((size_t) MN_AbstractNodeCallCreateChild), 0},
+
+	/* Delete the node and remove it from his parent. */
+	{"delete", V_UI_NODEMETHOD, ((size_t) MN_AbstractNodeCallDelete), 0},
+
+	{NULL, V_NULL, 0, 0}
+};
 
 void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 {
