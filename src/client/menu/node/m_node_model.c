@@ -270,7 +270,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	MN_GetNodeAbsPos(node, nodeorigin);
 	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	if (EXTRADATA(node).clipOverflow)
-		R_BeginClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
+		R_PushClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
@@ -286,7 +286,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	if (menuModel) {
 		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
 		if (EXTRADATA(node).clipOverflow)
-			R_EndClipRect();
+			R_PopClipRect();
 		return;
 	}
 
@@ -297,7 +297,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	/* if the node is linked to a parent, the parent will display it */
 	if (EXTRADATA(node).tag) {
 		if (EXTRADATA(node).clipOverflow)
-			R_EndClipRect();
+			R_PopClipRect();
 		return;
 	}
 
@@ -400,7 +400,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	}
 
 	if (EXTRADATA(node).clipOverflow)
-		R_EndClipRect();
+		R_PopClipRect();
 }
 
 static int oldMousePosX = 0;

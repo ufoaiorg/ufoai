@@ -588,7 +588,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
 	MN_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
-	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 #endif
 
 	/* the cl struct is wiped with every new map */
@@ -670,7 +670,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	}
 
 #ifndef RADARSIZE_DEBUG
-	R_EndClipRect();
+	R_PopClipRect();
 #endif
 }
 

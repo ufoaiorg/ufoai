@@ -971,23 +971,81 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glMatrixMode(GL_MODELVIEW);
 }
 
+typedef struct {
+	int x;
+	int y;
+	int width;
+	int height;
+} rect_t;
+
+#define MAX_CLIPRECT 16
+
+static rect_t clipRect[MAX_CLIPRECT];
+
+static int currentClipRect = 0;
+
 /**
- * @brief Force to draw only on a rect
- * @note Don't forget to call @c R_EndClipRect
- * @sa R_EndClipRect
+ * @brief Compute the intersection of 2 rect
+ * @param[in] a A rect
+ * @param[in] b A rect
+ * @param[out] out The intersection rect
  */
-void R_BeginClipRect (int x, int y, int width, int height)
+static void R_RectIntersection(rect_t *a, rect_t *b, rect_t *out)
 {
-	glScissor(x * viddef.rx, (viddef.virtualHeight - (y + height)) * viddef.ry, width * viddef.rx, height * viddef.ry);
-	glEnable(GL_SCISSOR_TEST);
+	out->x = (a->x > b->x) ? a->x : b->x;
+	out->y = (a->y > b->y) ? a->y : b->y;
+	out->width = ((a->x + a->width < b->x + b->width) ? a->x + a->width : b->x + b->width) - out->x;
+	out->height = ((a->y + a->height < b->y + b->height) ? a->y + a->height : b->y + b->height) - out->y;
+	if (out->width < 0)
+		out->width = 0;
+	if (out->height < 0)
+		out->height = 0;
 }
 
 /**
- * @sa R_BeginClipRect
+ * @brief Force to draw only on a rect
+ * @note Don't forget to call @c R_EndClipRect
+ * @sa R_PopClipRect
  */
-void R_EndClipRect (void)
+void R_PushClipRect (int x, int y, int width, int height)
 {
-	glDisable(GL_SCISSOR_TEST);
+	const int depth = currentClipRect;
+	assert(depth < MAX_CLIPRECT);
+
+	if (depth == 0) {
+		clipRect[depth].x = x * viddef.rx;
+		clipRect[depth].y = (viddef.virtualHeight - (y + height)) * viddef.ry;
+		clipRect[depth].width = width * viddef.rx;
+		clipRect[depth].height = height * viddef.ry;
+	} else {
+		rect_t rect;
+		rect.x = x * viddef.rx;
+		rect.y = (viddef.virtualHeight - (y + height)) * viddef.ry;
+		rect.width = width * viddef.rx;
+		rect.height = height * viddef.ry;
+		R_RectIntersection(&clipRect[depth - 1], &rect, &clipRect[depth]);
+	}
+
+	glScissor(clipRect[depth].x, clipRect[depth].y, clipRect[depth].width, clipRect[depth].height);
+
+	if (currentClipRect == 0)
+		glEnable(GL_SCISSOR_TEST);
+	currentClipRect++;
+}
+
+/**
+ * @sa R_PushClipRect
+ */
+void R_PopClipRect (void)
+{
+	assert(currentClipRect > 0);
+	currentClipRect--;
+	if (currentClipRect == 0)
+		glDisable(GL_SCISSOR_TEST);
+	else {
+		const int depth = currentClipRect;
+		glScissor(clipRect[depth].x, clipRect[depth].y, clipRect[depth].width, clipRect[depth].height);
+	}
 }
 
 /**

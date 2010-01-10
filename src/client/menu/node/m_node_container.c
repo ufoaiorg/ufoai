@@ -814,11 +814,11 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	vec2_t pos;
 
 	MN_GetNodeAbsPos(node, pos);
-	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 
 	needHeight = MN_ContainerNodeDrawBaseInventoryItems(node, highlightType);
 
-	R_EndClipRect();
+	R_PopClipRect();
 	visibleHeight = node->size[1];
 
 #if 0
