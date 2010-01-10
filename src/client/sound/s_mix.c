@@ -110,7 +110,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 		return;
 
 	/* if the last mix of this particular sample is less than half a second ago, skip it */
-	if (sample->lastPlayed > cls.realtime - 500)
+	if (sample->lastPlayed > cls.realtime - 50)
 		return;
 
 	if ((i = S_AllocChannel()) == -1)
