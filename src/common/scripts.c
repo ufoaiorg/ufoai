@@ -457,6 +457,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = INTERCEPTOR_STILETTO;
 		else if (!strcmp(token, "craft_inter_saracen"))
 			*(int *) b = INTERCEPTOR_SARACEN;
+		else if (!strcmp(token, "craft_inter_dragon"))
+			*(int *) b = INTERCEPTOR_DRAGON;
+		else if (!strcmp(token, "craft_inter_starchaser"))
+			*(int *) b = INTERCEPTOR_STARCHASER;
+		else if (!strcmp(token, "craft_inter_stingray"))
+			*(int *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
 		*writtenBytes = sizeof(int);
@@ -876,6 +882,14 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(int *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(set, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
+		else if (!strcmp(set, "craft_inter_saracen"))
+			*(int *) b = INTERCEPTOR_SARACEN;
+		else if (!strcmp(set, "craft_inter_dragon"))
+			*(int *) b = INTERCEPTOR_DRAGON;
+		else if (!strcmp(set, "craft_inter_starchaser"))
+			*(int *) b = INTERCEPTOR_STARCHASER;
+		else if (!strcmp(set, "craft_inter_stingray"))
+			*(int *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", (const char *)set);
 		return sizeof(int);
@@ -1086,6 +1100,14 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "craft_drop_raptor";
 		case INTERCEPTOR_STILETTO:
 			return "craft_inter_stiletto";
+		case INTERCEPTOR_SARACEN:
+			return "craft_inter_saracen";
+		case INTERCEPTOR_DRAGON:
+			return "craft_inter_dragon";
+		case INTERCEPTOR_STARCHASER:
+			return "craft_inter_starchaser";
+		case INTERCEPTOR_STINGRAY:
+			return "craft_inter_stingray";
 		default:
 			Sys_Error("Unknown aircrafttype type: '%i'", *(const int *) b);
 		}

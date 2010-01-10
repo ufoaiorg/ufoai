@@ -240,6 +240,24 @@ void BS_InitMarket (qboolean load)
 			/* the other relevant values were already set above */
 			ccs.eMarket.numItems[i] = campaign->marketDef->numItems[i];
 	}
+
+	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
+		const char* name = Com_DropShipTypeToShortName(i);
+		const aircraft_t *aircraft = AIR_GetAircraft(name);
+		if (ccs.eMarket.askAircraft[i] == 0) {
+			ccs.eMarket.askAircraft[i] = aircraft->price;
+			ccs.eMarket.bidAircraft[i] = floor(ccs.eMarket.askAircraft[i] * BID_FACTOR);
+		}
+
+		if (!ccs.curCampaign->marketDef->numAircraft[i])
+			continue;
+
+		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0)
+			Com_Error(ERR_DROP, "BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s", aircraft->id, campaign->id);
+		else
+			/* the other relevant values were already set above */
+			ccs.eMarket.numAircraft[i] = campaign->marketDef->numAircraft[i];
+	}
 }
 
 /**
