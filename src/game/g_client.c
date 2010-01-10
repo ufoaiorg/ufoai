@@ -376,6 +376,20 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 }
 
 /**
+ * @brief Will inform the player about the real TU reservation
+ * @param ent
+ */
+static void G_SendReservations (const edict_t *ent)
+{
+	gi.AddEvent(G_TeamToPM(ent->visflags), EV_ACTOR_RESERVATIONCHANGE);
+
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->chr.reservedTus.reaction);
+	gi.WriteShort(ent->chr.reservedTus.shot);
+	gi.WriteShort(ent->chr.reservedTus.crouch);
+}
+
+/**
  * @brief After an actor changed his state, he might get visible for other
  * players. Check the vis here and send the state change to the clients that
  * are seeing him already.
@@ -679,6 +693,8 @@ int G_ClientAction (player_t * player)
 		ent->chr.reservedTus.reaction = resReaction;
 		ent->chr.reservedTus.shot = resShot;
 		ent->chr.reservedTus.crouch = resCrouch;
+
+		G_SendReservations(ent);
 		break;
 
 	default:
