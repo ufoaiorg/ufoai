@@ -336,6 +336,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorstatechange.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreservationchange.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreservationchange.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorstats.c">
 			<Option compilerVar="CC" />
 		</Unit>
