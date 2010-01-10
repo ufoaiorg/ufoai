@@ -48,9 +48,9 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 	case ABILITY_ACCURACY:
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			if (i == SKILL_SNIPER)
-				exp = 30 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
+				exp += 30 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 			else
-				exp = 20 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
+				exp += 20 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 		}
 		break;
 	case ABILITY_MIND:
