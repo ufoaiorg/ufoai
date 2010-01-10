@@ -1403,7 +1403,7 @@ void XYWnd::disableBackground (void)
 
 void WXY_BackgroundSelect (void)
 {
-	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
+	bool brushesSelected = map::countSelectedBrushes() != 0;
 	if (!brushesSelected) {
 		gtk_MessageBox(0, _("You have to select some brushes to get the bounding box for.\n"), _("No selection"),
 				eMB_OK, eMB_ICONERROR);

@@ -173,6 +173,13 @@ namespace map
 	 */
 	void selectedBrushesSubtractOrigin (const Vector3& origin);
 
+	/** Count the number of selected brushes in the current map.
+	 *
+	 * @return The number of selected brushes.
+	 */
+
+	int countSelectedBrushes();
+
 	/**
 	 * @return @c true if the map is not yet saved, @c false otherwise
 	 */
