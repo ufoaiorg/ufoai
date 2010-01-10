@@ -144,8 +144,8 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	for (i = 0; i < csi.numODs; i++) {
 		mxml_node_t *ssnode = mxml_AddNode(snode, "emission");
 		mxml_AddString(ssnode, "id", csi.ods[i].id);
-		mxml_AddInt(ssnode, "num", ed->num[i]);
-		mxml_AddInt(ssnode, "numloose", ed->numLoose[i]);
+		mxml_AddInt(ssnode, "num", ed->numItems[i]);
+		mxml_AddInt(ssnode, "numloose", ed->numItemsLoose[i]);
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
@@ -279,8 +279,8 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 		const char *objID = mxml_GetString(ssnode, "id");
 		const objDef_t *od = INVSH_GetItemByID(objID);
 		if (od) {
-			ed->num[od->idx] = mxml_GetInt(snode, "num", 0);
-			ed->numLoose[od->idx] = mxml_GetInt(snode, "numloose", 0);
+			ed->numItems[od->idx] = mxml_GetInt(snode, "num", 0);
+			ed->numItemsLoose[od->idx] = mxml_GetInt(snode, "numloose", 0);
 		}
 	}
 

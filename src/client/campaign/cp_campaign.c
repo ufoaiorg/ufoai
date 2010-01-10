@@ -1716,7 +1716,7 @@ static void CL_DebugAllItems_f (void)
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
-		if (base->storage.num[i] > 0) {
+		if (base->storage.numItems[i] > 0) {
 			technology_t *tech = obj->tech;
 			if (!tech)
 				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", obj->id, obj->name);
@@ -1750,7 +1750,7 @@ static void CL_DebugShowItems_f (void)
 		const objDef_t *obj = &csi.ods[i];
 		if (!obj->tech)
 			Sys_Error("CL_DebugAllItems_f: No tech for %s\n", obj->id);
-		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.num[i]);
+		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.numItems[i]);
 	}
 }
 

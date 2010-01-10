@@ -271,11 +271,11 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 		if (!GAME_ItemIsUseable(&csi.ods[i]))
 			continue;
 
-		while (ed->num[i]) {
+		while (ed->numItems[i]) {
 			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
 			if (!Com_AddToInventory(inv, item, &csi.ids[csi.idEquip], NONE, NONE, 1))
 				break; /* no space left in menu */
-			ed->num[item.t->idx]--;
+			ed->numItems[item.t->idx]--;
 		}
 	}
 

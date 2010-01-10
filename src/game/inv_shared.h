@@ -373,8 +373,8 @@ typedef struct inventory_s {
 
 typedef struct equipDef_s {
 	char name[MAX_VAR];		/**< Name of the equipment definition */
-	int num[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
-	byte numLoose[MAX_OBJDEFS];
+	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
+	byte numItemsLoose[MAX_OBJDEFS];
 	int minInterest;		/**< Minimum overall interest to use this equipment definition (only for alien) */
 	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
 } equipDef_t;

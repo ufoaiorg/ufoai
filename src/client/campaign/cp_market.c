@@ -224,14 +224,14 @@ void BS_InitMarket (qboolean load)
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
 		}
 
-		if (!ccs.curCampaign->marketDef->num[i])
+		if (!ccs.curCampaign->marketDef->numItems[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->num[i] > 0)
+		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->numItems[i] > 0)
 			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
 		else
 			/* the other relevant values were already set above */
-			ccs.eMarket.num[i] = campaign->marketDef->num[i];
+			ccs.eMarket.num[i] = campaign->marketDef->numItems[i];
 	}
 }
 
@@ -260,11 +260,11 @@ void CL_CampaignRunMarket (void)
 		if (!tech)
 			Com_Error(ERR_DROP, "No tech that provides '%s'\n", csi.ods[i].id);
 
-		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->num[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
 			 * there number tend to the value defined in equipment.ufo.
 			 * This value is the asymptotic value if it is not 0, or initial value else */
-			asymptoticNumber = campaign->asymptoticMarketDef->num[i] ? campaign->asymptoticMarketDef->num[i] : campaign->marketDef->num[i];
+			asymptoticNumber = campaign->asymptoticMarketDef->numItems[i] ? campaign->asymptoticMarketDef->numItems[i] : campaign->marketDef->numItems[i];
 		} else {
 			/* items that have just been researched don't appear on market, but they can disappear */
 			asymptoticNumber = 0;

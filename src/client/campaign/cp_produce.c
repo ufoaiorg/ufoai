@@ -133,10 +133,10 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 			assert(item);
 			if (amount > 0) {
 				/* Add items to the base-storage. */
-				ed->num[item->idx] += (req->amount * amount);
+				ed->numItems[item->idx] += (req->amount * amount);
 			} else { /* amount < 0 */
 				/* Remove items from the base-storage. */
-				ed->num[item->idx] -= (req->amount * -amount);
+				ed->numItems[item->idx] -= (req->amount * -amount);
 			}
 		}
 	}

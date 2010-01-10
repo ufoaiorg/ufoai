@@ -1861,8 +1861,6 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	}
 
 	do {
-		qboolean foundDefinition = qfalse;
-
 		token = Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
@@ -1874,29 +1872,46 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (!*text)
 					return;
 				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-				foundDefinition = qtrue;
 				break;
 			}
 
-		if (!foundDefinition) {
-			for (i = 0; i < csi.numODs; i++)
-				if (!strncmp(token, csi.ods[i].id, MAX_VAR)) {
-					token = Com_EParse(text, errhead, name);
-					if (!*text || *token == '}') {
-						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
-						return;
-					}
-					n = atoi(token);
-					if (ed->num[i])
-						Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
-							csi.ods[i].id, name);
-					if (n)
-						ed->num[i] = n;
-					break;
-				}
+		if (!vp->string) {
+			if (!strcmp(token, "item")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					Sys_Error("Invalid item token in equipment defintion: %s", ed->name);
 
-			if (i == csi.numODs)
-				Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+				for (i = 0; i < csi.numODs; i++)
+					if (!strcmp(token, csi.ods[i].id)) {
+						token = Com_EParse(text, errhead, name);
+						if (!*text || *token == '}') {
+							Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
+							return;
+						}
+						n = atoi(token);
+						if (ed->numItems[i])
+							Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
+								csi.ods[i].id, name);
+						if (n)
+							ed->numItems[i] = n;
+						break;
+					}
+
+				if (i == csi.numODs)
+					Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+			} else if (!strcmp(token, "aircraft")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					Sys_Error("Invalid aircraft token in equipment defintion: %s", ed->name);
+				/** @todo parse aircraft */
+			} else if (!strcmp(token, "ugv")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					Sys_Error("Invalid ugv token in equipment defintion: %s", ed->name);
+				/** @todo parse ugv */
+			} else {
+				Sys_Error("unknown token in equipment in defintion %s: '%s'", ed->name, token);
+			}
 		}
 	} while (*text);
 }

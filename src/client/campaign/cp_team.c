@@ -76,7 +76,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 				assert(chr);
 				for (ic = chr->inv.c[container]; ic; ic = next) {
 					next = ic->next;
-					if (ed->num[ic->item.t->idx] > 0) {
+					if (ed->numItems[ic->item.t->idx] > 0) {
 						ic->item = CL_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */

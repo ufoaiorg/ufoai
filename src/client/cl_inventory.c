@@ -164,7 +164,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 			const objDef_t const *obj = &csi.ods[j];
 			if (obj->weapon && obj->fireTwoHanded
 			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
-				sum += ed->num[j];
+				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
 			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for primary weapons greater than 100\n", ed->name);
@@ -176,7 +176,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		for (j = 0; j < csi.numODs; j++) {
 			const objDef_t const *obj = &csi.ods[j];
 			if (obj->weapon && obj->reload && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
-				sum += ed->num[j];
+				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
 			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for secondary weapons greater than 100\n", ed->name);
@@ -188,7 +188,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		for (j = 0; j < csi.numODs; j++) {
 			const objDef_t const *obj = &csi.ods[j];
 			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
-				sum += ed->num[j];
+				sum += ed->numItems[j];
 		}
 		if (sum > 100) {
 			Com_Printf("INV_EquipmentDefSanityCheck: Equipment Def '%s' has a total probability for armours greater than 100\n", ed->name);

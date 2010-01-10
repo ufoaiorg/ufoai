@@ -379,8 +379,8 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	int i;
 	objDef_t *type = item.t;
 
-	assert(ed->num[type->idx] > 0);
-	ed->num[type->idx]--;
+	assert(ed->numItems[type->idx] > 0);
+	ed->numItems[type->idx]--;
 
 	if (type->weapons[0]) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
@@ -404,8 +404,8 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			if (ed->num[item.m->idx] > 0) {
-				ed->num[item.m->idx]--;
+			if (ed->numItems[item.m->idx] > 0) {
+				ed->numItems[item.m->idx]--;
 				return item;
 			} else {
 				/* Your clip has been sold; give it back. */
@@ -416,8 +416,8 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	}
 
 	/* Check for complete clips of the same kind */
-	if (item.m && ed->num[item.m->idx] > 0) {
-		ed->num[item.m->idx]--;
+	if (item.m && ed->numItems[item.m->idx] > 0) {
+		ed->numItems[item.m->idx]--;
 		item.a = type->ammo;
 		return item;
 	}
@@ -426,8 +426,8 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)) {
-			if (ed->num[i] > 0) {
-				ed->num[i]--;
+			if (ed->numItems[i] > 0) {
+				ed->numItems[i]--;
 				item.a = type->ammo;
 				item.m = &csi.ods[i];
 				return item;
@@ -443,9 +443,9 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 	/* Failed to find a complete clip - see if there's any loose ammo
 	 * of the same kind; if so, gather it all in this weapon. */
-	if (item.m && ed->numLoose[item.m->idx] > 0) {
-		item.a = ed->numLoose[item.m->idx];
-		ed->numLoose[item.m->idx] = 0;
+	if (item.m && ed->numItemsLoose[item.m->idx] > 0) {
+		item.a = ed->numItemsLoose[item.m->idx];
+		ed->numItemsLoose[item.m->idx] = 0;
 		return item;
 	}
 
@@ -453,20 +453,20 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type) && (ed->numLoose[i] > item.a)) {
+		if (INVSH_LoadableInWeapon(&csi.ods[i], type) && ed->numItemsLoose[i] > item.a) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
 				 * more bullets.  Put the previously found ammo back, so
 				 * we'll take the new type. */
 				assert(item.m);
-				ed->numLoose[item.m->idx] = item.a;
+				ed->numItemsLoose[item.m->idx] = item.a;
 				/* We don't have to accumulate loose ammo into clips
 				 * because we did it previously and we create no new ammo */
 			}
 			/* Found some loose ammo to load the weapon with */
-			item.a = ed->numLoose[i];
-			ed->numLoose[i] = 0;
+			item.a = ed->numItemsLoose[i];
+			ed->numItemsLoose[i] = 0;
 			item.m = &csi.ods[i];
 		}
 	}
