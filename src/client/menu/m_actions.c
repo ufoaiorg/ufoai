@@ -678,6 +678,15 @@ void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *func
 	menuAction_t *action;
 	menuAction_t *value;
 
+	if (node->dynamic) {
+		Com_Printf("MN_AddListener: '%s' is a dynamic node. We can't listen it.\n", MN_GetPath(node));
+		return;
+	}
+	if (functionNode->dynamic) {
+		Com_Printf("MN_AddListener: '%s' is a dynamic node. It can't be a listener callback.\n", MN_GetPath(functionNode));
+		return;
+	}
+
 	/* create the call action */
 	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
 	value = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
