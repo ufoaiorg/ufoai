@@ -161,7 +161,7 @@ void CL_UGVCvars (const character_t *chr)
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
 	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
-	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ALIENS]));
+	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ENEMIES]));
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 	Cvar_Set("mn_chrrank_img", "");

@@ -296,8 +296,6 @@ typedef struct objDef_s {
 						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
 	struct technology_s *tech;	/**< Technology link to item. */
-	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension).
-											 * @todo Is this used anywhere? */
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
@@ -499,19 +497,16 @@ qboolean INV_IsLeftDef(const invDef_t* invDef);
 qboolean INV_IsEquipDef(const invDef_t* invDef);
 qboolean INV_IsArmourDef(const invDef_t* invDef);
 
-/**
- * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
- * For this see also g_combat.c:G_UpdateCharacterScore
-*/
 typedef enum {
-	KILLED_ALIENS,		/**< Killed aliens */
+	KILLED_ENEMIES,		/**< Killed enemies */
 	KILLED_CIVILIANS,	/**< Civilians, animals */
 	KILLED_TEAM,		/**< Friendly fire, own team, partner-teams. */
 
 	KILLED_NUM_TYPES
 } killtypes_t;
 
-typedef enum { /** @note Changing order/entries also changes network-transmission and savegames! */
+/** @note Changing order/entries also changes network-transmission and savegames! */
+typedef enum {
 	ABILITY_POWER,
 	ABILITY_SPEED,
 	ABILITY_ACCURACY,
@@ -545,17 +540,13 @@ typedef struct chrScoreMission_s {
 	/* Movement counts. */
 	int movedNormal;
 	int movedCrouched;
-#if 0
-	int movedPowered;
 
-	int weight; /**< Weight of equipment (or only armour?) */
-#endif
-	/** Kills & stuns @todo use existing code */
+	/* Kills & stuns */
+	/** @todo use existing code */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
 	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
 
-	/**
-	 * Hits/Misses @sa g_combat.c:G_UpdateHitScore. */
+	/* Hits/Misses */
 	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
 	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
 	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
@@ -569,13 +560,9 @@ typedef struct chrScoreMission_s {
 	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
 														 		 * This is counted in overall damage (healthpoint).*/
 	/** @todo Check HEALING of others. */
-
 	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
 
 	int heal;	/**< How many hitpoints has this soldier received trough healing in battlescape. */
-#if 0
-	int reactionFire;	/**< Count number of usage of RF (or TUs?) */
-#endif
 } chrScoreMission_t;
 
 /**

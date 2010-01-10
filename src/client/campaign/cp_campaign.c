@@ -1622,7 +1622,7 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 		return qfalse;
 
 	/* not enough killed enemies yet */
-	if (chr->score.kills[KILLED_ALIENS] < rank->killedEnemies)
+	if (chr->score.kills[KILLED_ENEMIES] < rank->killedEnemies)
 		return qfalse;
 
 	/* too many civilians and team kills */

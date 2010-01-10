@@ -175,7 +175,6 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
  * @param[in] fd Pointer to fireDef_t used in shoot.
  * @param[in] target Pointer to target.
  * @sa G_UpdateCharacterSkills
- * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
  */
 static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, const edict_t *target)
 {
@@ -190,12 +189,12 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 	case TEAM_ALIEN:
 		if (target->HP <= 0) {
 			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_ALIENS]++;
-			attacker->chr.score.kills[KILLED_ALIENS]++;
+				attacker->chr.scoreMission->kills[KILLED_ENEMIES]++;
+			attacker->chr.score.kills[KILLED_ENEMIES]++;
 		} else {
 			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->stuns[KILLED_ALIENS]++;
-			attacker->chr.score.stuns[KILLED_ALIENS]++;
+				attacker->chr.scoreMission->stuns[KILLED_ENEMIES]++;
+			attacker->chr.score.stuns[KILLED_ENEMIES]++;
 		}
 
 		/** @todo Add check for valid values of fd->weaponSkill */
@@ -257,9 +256,9 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 				}
 				break;
 			case TEAM_ALIEN:
-				if (!attacker->chr.scoreMission->firedHit[KILLED_ALIENS]) {
-					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_ALIENS]++;
-					attacker->chr.scoreMission->firedHit[KILLED_ALIENS] = qtrue;
+				if (!attacker->chr.scoreMission->firedHit[KILLED_ENEMIES]) {
+					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_ENEMIES]++;
+					attacker->chr.scoreMission->firedHit[KILLED_ENEMIES] = qtrue;
 				}
 				break;
 			default:
@@ -284,10 +283,10 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 				}
 				break;
 			case TEAM_ALIEN:
-				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_ALIENS] += splashDamage;
-				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_ALIENS]) {
-					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_ALIENS]++;
-					attacker->chr.scoreMission->firedSplashHit[KILLED_ALIENS] = qtrue;
+				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_ENEMIES] += splashDamage;
+				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_ENEMIES]) {
+					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_ENEMIES]++;
+					attacker->chr.scoreMission->firedSplashHit[KILLED_ENEMIES] = qtrue;
 				}
 				break;
 			default:
