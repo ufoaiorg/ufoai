@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 #include "lua/lua.h"
-#include "../common/filesys.h" /**< MAX_QPATH @todo remove once all those 'doesn't belong here' are fixed */
+#include "../common/filesys.h"
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
@@ -227,7 +227,6 @@ typedef enum {
 
 /**
  * @brief Defines all attributes of objects used in the inventory.
- * @todo Document the various (and mostly not obvious) variables here. The documentation in the .ufo file(s) might be a good starting point.
  * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
  */
 typedef struct objDef_s {
@@ -243,8 +242,8 @@ typedef struct objDef_s {
 	uint32_t shape;			/**< The shape in inventory. */
 
 	byte sx, sy;			/**< Size in x and y direction. */
-	float scale;			/**< scale value for images? and models @todo fixme - array of scales. */
-	vec3_t center;			/**< origin for models @todo fixme - array of scales. */
+	float scale;			/**< scale value for images? and models */
+	vec3_t center;			/**< origin for models */
 	char animationIndex;	/**< The animation index for the character with the weapon. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
@@ -473,9 +472,6 @@ typedef struct csi_s {
 	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 } csi_t;
-
-
-/** @todo Medals. Still subject to (major) changes. */
 
 #define MAX_SKILL	100
 
