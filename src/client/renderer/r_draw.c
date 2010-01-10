@@ -1043,7 +1043,7 @@ void R_PopClipRect (void)
 	if (currentClipRect == 0)
 		glDisable(GL_SCISSOR_TEST);
 	else {
-		const int depth = currentClipRect;
+		const int depth = currentClipRect - 1;
 		glScissor(clipRect[depth].x, clipRect[depth].y, clipRect[depth].width, clipRect[depth].height);
 	}
 }
