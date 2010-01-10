@@ -334,7 +334,7 @@ menuNode_t* MN_AllocStaticNode (const char* name, const char* type)
 	node->behaviour->count++;
 #endif
 	if (node->behaviour->isAbstract)
-		Com_Error(ERR_FATAL, "MN_AllocStaticNode: We can't allocate the abstract node behaviour '%s'", type);
+		Com_Error(ERR_FATAL, "MN_AllocStaticNode: Node behavior '%s' is abstract. We can't instantiate it.", type);
 
 	if (name != NULL) {
 		Q_strncpyz(node->name, name, sizeof(node->name));
