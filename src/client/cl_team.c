@@ -71,11 +71,11 @@ const char* CL_GetTeamSkinName (int id)
  */
 qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 {
-	/* Store the character data */
 	mxml_node_t *s;
 	int k;
 	const int count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
 
+	/* Store the character data */
 	mxml_AddString(p, SAVE_CHARACTER_NAME, chr.name);
 	mxml_AddString(p, SAVE_CHARACTER_BODY, chr.body);
 	mxml_AddString(p, SAVE_CHARACTER_PATH, chr.path);
@@ -96,16 +96,20 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 		if (k < SKILL_NUM_TYPES)
 			mxml_AddInt(s, SAVE_CHARACTER_SKILL, chr.score.skills[k]);
 		if (k < SKILL_NUM_TYPES + 1) {
-			mxml_AddInt(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
-			mxml_AddInt(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
+			if (chr.score.experience[k])
+				mxml_AddInt(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
+			if (chr.score.initialSkills[k])
+				mxml_AddInt(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
 		}
 		if (k < KILLED_NUM_TYPES) {
-			mxml_AddInt(s, SAVE_CHARACTER_KILLS, chr.score.kills[k]);
-			mxml_AddInt(s, SAVE_CHARACTER_STUNS, chr.score.stuns[k]);
+			if (chr.score.kills[k])
+				mxml_AddInt(s, SAVE_CHARACTER_KILLS, chr.score.kills[k]);
+			if (chr.score.stuns[k])
+				mxml_AddInt(s, SAVE_CHARACTER_STUNS, chr.score.stuns[k]);
 		}
 	}
-
-	mxml_AddInt(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr.score.assignedMissions);
+	if (chr.score.assignedMissions)
+		mxml_AddInt(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr.score.assignedMissions);
 	mxml_AddInt(p, SAVE_CHARACTER_SCORE_RANK, chr.score.rank);
 
 	/* Store inventories */
