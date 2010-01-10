@@ -2572,7 +2572,7 @@ void UndoSaveStateTracker::UpdateSensitiveStates (void)
 	if (g_pParentWnd == 0)
 		return;
 
-	const bool saveEnabled = m_savedStep < 0 || (m_undoSteps != abs(m_savedStep));
+	const bool saveEnabled = m_savedStep < 0 || (m_undoSteps != (unsigned int)m_savedStep);
 	const bool undoEnabled = m_undoSteps > 0;
 	const bool redoEnabled = m_redoSteps > 0;
 
