@@ -301,7 +301,10 @@ void CL_CampaignRunMarket (void)
 		/* Check if new items appeared or disappeared on market */
 		if (fabs(ccs.eMarket.currentEvolutionItems[i]) >= 1.0f) {
 			const int num = (int)(ccs.eMarket.currentEvolutionItems[i]);
-			BS_AddItemToMarket(&csi.ods[i], num);
+			if (num >= 0)
+				BS_AddItemToMarket(&csi.ods[i], num);
+			else
+				BS_RemoveItemFromMarket(&csi.ods[i], -num);
 			ccs.eMarket.currentEvolutionItems[i] -= num;
 		}
 	}
