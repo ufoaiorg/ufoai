@@ -56,6 +56,7 @@ class UndoSaveStateTracker: public UndoTracker
 		void UpdateSensitiveStates (void);
 		void increaseUndo();
 		void increaseRedo();
+		void checkUndoLevel();
 	public:
 		UndoSaveStateTracker () :
 			m_undoSteps(0), m_redoSteps(0), m_savedStep(0)
