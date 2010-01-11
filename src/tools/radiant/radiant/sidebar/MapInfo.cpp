@@ -155,6 +155,13 @@ namespace sidebar
 		/** @todo select all of these entities and delete them */
 	}
 
+	MapInfo& MapInfo::getInstance ()
+	{
+		static MapInfo _instance;
+		return _instance;
+	}
+
+
 	void MapInfo::update ()
 	{
 		// Initialize fields

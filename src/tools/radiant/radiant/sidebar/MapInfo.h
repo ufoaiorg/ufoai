@@ -61,11 +61,7 @@ namespace sidebar
 
 			/** Return the singleton instance.
 			 */
-			static MapInfo& getInstance ()
-			{
-				static MapInfo _instance;
-				return _instance;
-			}
+			static MapInfo& getInstance ();
 
 			/** Return the main widget for packing into
 			 * the groupdialog or other parent container.
