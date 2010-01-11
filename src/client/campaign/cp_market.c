@@ -64,6 +64,11 @@ void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
 		ccs.eMarket.numAircraft[type] = 0;
 }
 
+/**
+ * @brief Get the number of aircraft of the given type on the market
+ * @param aircraft The aircraft to search the market for
+ * @return The amount of aircraft for the given type
+ */
 int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
 {
 	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
@@ -71,6 +76,11 @@ int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
 	return ccs.eMarket.numAircraft[type];
 }
 
+/**
+ * @brief Get the price for an aircraft that you want to sell on the market
+ * @param od The aircraft to sell
+ * @return The price of the aircraft
+ */
 int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
 {
 	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
@@ -78,11 +88,36 @@ int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
 	return ccs.eMarket.bidAircraft[type];
 }
 
+/**
+ * @brief Get the price for an aircraft that you want to buy on the market
+ * @param od The aircraft to buy
+ * @return The price of the aircraft
+ */
 int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
 {
 	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
 	assert(aircraft->type != AIRCRAFT_UFO);
 	return ccs.eMarket.askAircraft[type];
+}
+
+/**
+ * @brief Get the price for an item that you want to sell on the market
+ * @param od The item to sell
+ * @return The price of the item
+ */
+int BS_GetItemSellingPrice (const objDef_t *od)
+{
+	return ccs.eMarket.bidItems[od->idx];
+}
+
+/**
+ * @brief Get the price for an item that you want to buy on the market
+ * @param od The item to buy
+ * @return The price of the item
+ */
+int BS_GetItemBuyingPrice (const objDef_t *od)
+{
+	return ccs.eMarket.askItems[od->idx];
 }
 
 /**
@@ -134,7 +169,7 @@ void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, con
 {
 	if (craftitem) {
 		BS_AddItemToMarket(craftitem, numItems);
-		CL_UpdateCredits(ccs.credits + (ccs.eMarket.bidItems[craftitem->idx] * numItems));
+		CL_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(craftitem) * numItems);
 	}
 }
 

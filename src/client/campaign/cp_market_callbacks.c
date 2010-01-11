@@ -374,7 +374,7 @@ static void BS_BuyType (const base_t *base)
 					else
 						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
-				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], ccs.eMarket.askItems[i]);
+				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_FILTERLIST value to handle that much items\n");
 				buyList.l[j].item = od;
@@ -429,7 +429,7 @@ static void BS_BuyType (const base_t *base)
 
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od->tech && INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.numItems[i] || ccs.eMarket.numItems[i])) {
-				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], ccs.eMarket.askItems[i]);
+				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -459,7 +459,7 @@ static void BS_BuyType (const base_t *base)
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
 				if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
-					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], ccs.eMarket.askItems[i]);
+					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 						MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -865,7 +865,7 @@ static void BS_SellItem_f (void)
 			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse, qfalse);
 			BS_AddItemToMarket(item, numItems);
 			BS_BuyType(base);
-			CL_UpdateCredits(ccs.credits + ccs.eMarket.bidItems[item->idx] * numItems);
+			CL_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(item) * numItems);
 			BS_UpdateItem(base, num);
 		}
 	}
