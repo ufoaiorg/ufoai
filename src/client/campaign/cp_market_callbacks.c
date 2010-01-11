@@ -345,7 +345,7 @@ static void BS_BuyType (const base_t *base)
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 				BS_AddToList(aircraftTemplate->name, BS_GetStorageAmountInBase(base, aircraftTemplate->id),
-						BS_GetAircraftOnMarket(aircraftTemplate), aircraftTemplate->price);
+						BS_GetAircraftOnMarket(aircraftTemplate), BS_GetAircraftBuyingPrice(aircraftTemplate));
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList.l[j].item = NULL;
@@ -406,6 +406,7 @@ static void BS_BuyType (const base_t *base)
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 
+				/** @todo use the market to get the price */
 				BS_AddToList(tech->name,
 					hiredRobot,			/* numInStorage */
 					unhiredRobot,			/* numOnMarket */
@@ -614,13 +615,14 @@ static void BS_BuyAircraft_f (void)
 			MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 			return;
 		} else {
-			assert(aircraftTemplate);
-			if (ccs.credits < aircraftTemplate->price) {
+			const int price = BS_GetAircraftBuyingPrice(aircraftTemplate);
+			if (ccs.credits < price) {
 				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
 				return;
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
-				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
+				BS_RemoveAircraftFromMarket(aircraftTemplate, 1);
+				CL_UpdateCredits(ccs.credits - price);
 				AIR_NewAircraft(base, aircraftTemplate->id);
 				Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(FILTER_AIRCRAFT)));
 			}
@@ -659,7 +661,7 @@ static void BS_SellAircraft_f (void)
 			return;
 
 		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-			if (!strncmp(aircraft->id, aircraftTemplate->id, MAX_VAR)) {
+			if (!strcmp(aircraft->id, aircraftTemplate->id)) {
 				if (aircraft->teamSize) {
 					teamNote = qtrue;
 					continue;
@@ -695,9 +697,10 @@ static void BS_SellAircraft_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			/* the capacities are also updated here */
 			BS_AddAircraftToMarket(aircraft, 1);
+			CL_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
+
 			AIR_DeleteAircraft(aircraft);
 
-			CL_UpdateCredits(ccs.credits + aircraftTemplate->price);
 			/* reinit the menu */
 			BS_BuyType(base);
 		} else {

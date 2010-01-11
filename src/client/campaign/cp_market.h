@@ -43,6 +43,8 @@ void BS_RemoveItemFromMarket(const objDef_t *od, int amount);
 void BS_AddAircraftToMarket(const aircraft_t *aircraft, int amount);
 void BS_RemoveAircraftFromMarket(const aircraft_t *aircraft, int amount);
 int BS_GetAircraftOnMarket(const aircraft_t *aircraft);
+int BS_GetAircraftSellingPrice(const aircraft_t *aircraft);
+int BS_GetAircraftBuyingPrice(const aircraft_t *aircraft);
 
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
 void BS_ProcessCraftItemSale(const base_t *base, const objDef_t *craftitem, const int numItems);

@@ -48,7 +48,7 @@ void BS_RemoveItemFromMarket (const objDef_t *od, int amount)
 
 void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->tpl->id);
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
 	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
 	ccs.eMarket.numAircraft[type] += amount;
@@ -56,7 +56,7 @@ void BS_AddAircraftToMarket (const aircraft_t *aircraft, int amount)
 
 void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->tpl->id);
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
 	assert(amount >= 0);
 	assert(aircraft->type != AIRCRAFT_UFO);
 	ccs.eMarket.numAircraft[type] -= amount;
@@ -66,9 +66,23 @@ void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
 
 int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
 {
-	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->tpl->id);
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
 	assert(aircraft->type != AIRCRAFT_UFO);
 	return ccs.eMarket.numAircraft[type];
+}
+
+int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	assert(aircraft->type != AIRCRAFT_UFO);
+	return ccs.eMarket.bidAircraft[type];
+}
+
+int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
+{
+	const humanAircraftType_t type = Com_DropShipShortNameToID(aircraft->id);
+	assert(aircraft->type != AIRCRAFT_UFO);
+	return ccs.eMarket.askAircraft[type];
 }
 
 /**
