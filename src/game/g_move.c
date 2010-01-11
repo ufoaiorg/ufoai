@@ -132,16 +132,26 @@ void G_ActorFall (edict_t *ent)
  * @param visState The visibily check state @c VIS_PERISH, @c VIS_APPEAR
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState)
+static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState, byte* dvtab, int max)
 {
 	 if (stopOnVisStop && (visState & VIS_STOP))
 		 return qtrue;
 
+	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
+	  * this might be the case if the edict got visible in mid mode */
 	 if (visState & VIS_APPEAR) {
-		 /** @todo check dvtab and see whether the any of the steps would
-		  * be on the same spot as the of another actor */
-		 return qfalse;
+		 pos3_t pos;
+		 VectorCopy(ent->pos, pos);
+		 while (max > 0) {
+			 int tmp = 0;
+			 edict_t *blockEdict;
+			 PosAddDV(pos, tmp, dvtab[max--]);
+			 blockEdict = G_GetEdictFromPos(pos, 0);
+			 if (G_IsBlockingMovementActor(blockEdict))
+				 return qtrue;
+		 }
 	 }
+	 return qfalse;
 }
 
 /**
@@ -388,7 +398,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status)) {
+			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status, dvtab, numdv)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;
