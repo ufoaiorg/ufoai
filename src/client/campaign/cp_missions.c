@@ -197,7 +197,7 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 
 /**
  * @brief Check if an alien equipment may be used with a mission.
- * @param[in] mission Pointter to the mission.
+ * @param[in] mission Pointer to the mission.
  * @param[in] equip Pointer to the alien equipment to check.
  * @return True if equipment definition is selectable.
  */
@@ -269,7 +269,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 
 	assert(mission->posAssigned);
 
-	/** @todo Should it be scripted too? */
+	/** @todo Should it be scripted too? at least it should depend on the difficulty level. */
 	numAliens = 4 + (int) ccs.overallInterest / 50;
 	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
 		numAliens = mission->ufo->maxTeamSize;
