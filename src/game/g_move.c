@@ -98,7 +98,7 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
 
 /**
  * @brief Let an actor fall down if e.g. the func_breakable the actor was standing on was destroyed.
- * @param ent The actor that should fall down
+ * @param[in,out] ent The actor that should fall down
  * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.
  */
 void G_ActorFall (edict_t *ent)
@@ -123,6 +123,24 @@ void G_ActorFall (edict_t *ent)
 	G_EventActorFall(ent);
 
 	gi.EndEvents();
+}
+
+/**
+ * @brief Checks whether the actor should stop movement
+ * @param ent The actors edict
+ * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
+ * @param visState The visibily check state @c VIS_PERISH, @c VIS_APPEAR
+ * @return @c true if the actor should stop movement, @c false otherwise
+ */
+static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState)
+{
+	 if (visState & VIS_STOP)
+		 return qtrue;
+
+	 if (visState & VIS_APPEAR) {
+		 /** @todo check dvtab and see whether the any of the steps would
+		  * be on the same spot as the of another actor */
+	 }
 }
 
 /**
@@ -330,7 +348,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 
 				clientAction = ent->clientAction;
 				oldState = ent->state;
-				/* check triggers at new position but only if no actor appeared */
+				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
 					triggers = qtrue;
 					if (!clientAction)
@@ -369,7 +387,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (stopOnVisStop && (status & VIS_STOP)) {
+			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;

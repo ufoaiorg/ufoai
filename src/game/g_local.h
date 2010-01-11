@@ -341,7 +341,10 @@ void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 
-/* g_client.c */
+/* g_vis.c */
+#define VIS_APPEAR	1
+#define VIS_PERISH	2
+
 /** the visibile changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
 /** actor visible? */
@@ -349,6 +352,7 @@ void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const 
 /** stop the current action if actor appears */
 #define VIS_STOP	4
 
+/* g_client.c */
 /** check whether edict is still visible - it maybe is currently visible but this
  * might have changed due to some action */
 #define VT_PERISH		1
