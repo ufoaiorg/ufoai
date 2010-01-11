@@ -1209,7 +1209,8 @@ void HUD_UpdateCursor (void)
 			bgW += width;
 		}
 
-		R_DrawFill(bgX, bgY, bgW, bgH, cursorTextBg);
+		if (cl_show_cursor_tooltips->integer)
+			R_DrawFill(bgX, bgY, bgW, bgH, cursorTextBg);
 
 		/* Display 'crouch' icon if actor is crouched. */
 		if (LE_IsCrouched(le)) {
