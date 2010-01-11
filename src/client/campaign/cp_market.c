@@ -320,15 +320,15 @@ void CL_CampaignRunMarket (void)
 {
 	int i;
 	campaign_t *campaign = ccs.curCampaign;
+	const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
+	const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
+												 * items added on market */
 
 	assert(campaign->marketDef);
 	assert(campaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
 		const technology_t *tech = csi.ods[i].tech;
-		const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
-		const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
-													 * items added on market */
 		int asymptoticNumber;
 
 		if (!tech)
@@ -355,6 +355,39 @@ void CL_CampaignRunMarket (void)
 			else
 				BS_RemoveItemFromMarket(&csi.ods[i], -num);
 			ccs.eMarket.currentEvolutionItems[i] -= num;
+		}
+	}
+
+	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
+		const humanAircraftType_t type = i;
+		const char *aircraftID = Com_DropShipTypeToShortName(type);
+		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
+		const technology_t *tech = aircraft->tech;
+		int asymptoticNumber;
+
+		if (!tech)
+			Com_Error(ERR_DROP, "No tech that provides '%s'\n", aircraftID);
+
+		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numAircraft[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+			/* if aircraft is researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
+			 * there number tend to the value defined in equipment.ufo.
+			 * This value is the asymptotic value if it is not 0, or initial value else */
+			asymptoticNumber = campaign->asymptoticMarketDef->numAircraft[i] ? campaign->asymptoticMarketDef->numAircraft[i] : campaign->marketDef->numAircraft[i];
+		} else {
+			/* items that have just been researched don't appear on market, but they can disappear */
+			asymptoticNumber = 0;
+		}
+		/* Store the evolution of the market in currentEvolution */
+		ccs.eMarket.currentEvolutionAircraft[i] += (asymptoticNumber - ccs.eMarket.numAircraft[i]) / TYPICAL_TIME;
+
+		/* Check if new items appeared or disappeared on market */
+		if (fabs(ccs.eMarket.currentEvolutionAircraft[i]) >= 1.0f) {
+			const int num = (int)(ccs.eMarket.currentEvolutionAircraft[i]);
+			if (num >= 0)
+				BS_AddAircraftToMarket(aircraft, num);
+			else
+				BS_RemoveAircraftFromMarket(aircraft, -num);
+			ccs.eMarket.currentEvolutionAircraft[i] -= num;
 		}
 	}
 }
