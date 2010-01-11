@@ -138,8 +138,8 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 
 	/* you can't buy more items than you have credits for */
 	/** @todo Handle items with price 0 better */
-	if (ccs.eMarket.askItems[item->idx])
-		numItems = min(numItems, ccs.credits / ccs.eMarket.askItems[item->idx]);
+	if (BS_GetItemBuyingPrice(item))
+		numItems = min(numItems, ccs.credits / BS_GetItemBuyingPrice(item));
 	if (numItems <= 0)
 		return qfalse;
 
@@ -156,7 +156,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 
 	B_UpdateStorageAndCapacity(base, item, numItems, qfalse, qfalse);
 	BS_RemoveItemFromMarket(item, numItems);
-	CL_UpdateCredits(ccs.credits - ccs.eMarket.askItems[item->idx] * numItems);
+	CL_UpdateCredits(ccs.credits - BS_GetItemBuyingPrice(item) * numItems);
 	return qtrue;
 }
 
