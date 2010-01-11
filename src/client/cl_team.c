@@ -96,20 +96,15 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 		if (k < SKILL_NUM_TYPES)
 			mxml_AddInt(s, SAVE_CHARACTER_SKILL, chr.score.skills[k]);
 		if (k < SKILL_NUM_TYPES + 1) {
-			if (chr.score.experience[k])
-				mxml_AddInt(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
-			if (chr.score.initialSkills[k])
-				mxml_AddInt(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
+			mxml_AddIntValue(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
+			mxml_AddIntValue(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
 		}
 		if (k < KILLED_NUM_TYPES) {
-			if (chr.score.kills[k])
-				mxml_AddInt(s, SAVE_CHARACTER_KILLS, chr.score.kills[k]);
-			if (chr.score.stuns[k])
-				mxml_AddInt(s, SAVE_CHARACTER_STUNS, chr.score.stuns[k]);
+			mxml_AddIntValue(s, SAVE_CHARACTER_KILLS, chr.score.kills[k]);
+			mxml_AddIntValue(s, SAVE_CHARACTER_STUNS, chr.score.stuns[k]);
 		}
 	}
-	if (chr.score.assignedMissions)
-		mxml_AddInt(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr.score.assignedMissions);
+	mxml_AddIntValue(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr.score.assignedMissions);
 	mxml_AddInt(p, SAVE_CHARACTER_SCORE_RANK, chr.score.rank);
 
 	/* Store inventories */
@@ -187,15 +182,17 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, int y)
 {
 	assert(item.t);
-	mxml_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
+
 	mxml_AddInt(p, SAVE_INVENTORY_CONTAINER, container);
 	mxml_AddInt(p, SAVE_INVENTORY_X, x);
 	mxml_AddInt(p, SAVE_INVENTORY_Y, y);
 	mxml_AddInt(p, SAVE_INVENTORY_ROTATED, item.rotated);
 	mxml_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
 	mxml_AddString(p, SAVE_INVENTORY_WEAPONID, item.t->id);
-	if (item.a > NONE_AMMO)
+	if (item.a > NONE_AMMO) {
 		mxml_AddString(p, SAVE_INVENTORY_MUNITIONID, item.m->id);
+		mxml_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
+	}
 }
 
 /**
@@ -232,9 +229,14 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 	*container = mxml_GetInt(n, SAVE_INVENTORY_CONTAINER, 0);
 	itemID = mxml_GetString(n, SAVE_INVENTORY_WEAPONID);
 	item->t = INVSH_GetItemByID(itemID);
+
 	if (item->a > NONE_AMMO) {
 		itemID = mxml_GetString(n, SAVE_INVENTORY_MUNITIONID);
 		item->m = INVSH_GetItemByID(itemID);
+
+		/* reset ammo count if ammunition (item) not found */
+		if (!item->m)
+			item->a = NONE_AMMO;
 	}
 }
 
