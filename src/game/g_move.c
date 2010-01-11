@@ -134,12 +134,13 @@ void G_ActorFall (edict_t *ent)
  */
 static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState)
 {
-	 if (visState & VIS_STOP)
+	 if (stopOnVisStop && (visState & VIS_STOP))
 		 return qtrue;
 
 	 if (visState & VIS_APPEAR) {
 		 /** @todo check dvtab and see whether the any of the steps would
 		  * be on the same spot as the of another actor */
+		 return qfalse;
 	 }
 }
 
