@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_PANEL_H
 #define CLIENT_MENU_M_NODE_PANEL_H
 
+#include "m_node_abstractscrollable.h"
+
 struct menuNode_s;
 struct nodeBehaviour_s;
 
@@ -34,6 +36,7 @@ typedef enum {
 	LAYOUT_BORDER,
 	LAYOUT_PACK,
 	LAYOUT_STAR,
+	LAYOUT_CLIENT,
 
 	LAYOUT_MAX,
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
@@ -43,6 +46,7 @@ typedef enum {
  * @brief extradata for the panel node
  */
 typedef struct {
+	abstractScrollableExtraData_t super;
 	panelLayout_t layout;	/**< The layout manager the panel is using to render all its children */
 	int layoutMargin;		/**< The margin between all children nodes of the panel */
 } panelExtraData_t;

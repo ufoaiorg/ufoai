@@ -223,6 +223,7 @@ typedef struct nodeBehaviour_s {
 	void (*activate)(menuNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 	void (*propertyChanged)(menuNode_t *node, const value_t *property);		/**< Called when a property change */
 	void (*sizeChanged)(menuNode_t *node);		/**< Called when the node size change */
+	void (*getClientPosition)(menuNode_t *node, vec2_t position);	/**< Return the position of the client zone into the node */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */

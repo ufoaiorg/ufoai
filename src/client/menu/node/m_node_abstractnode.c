@@ -208,6 +208,9 @@ menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
  */
 void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *newNode)
 {
+	if (newNode->root == NULL)
+		newNode->root = node->root;
+
 	assert(node);
 	assert(newNode);
 	/* insert only a single element */
@@ -221,14 +224,16 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
 			node->lastChild = newNode;
 		}
 		newNode->parent = node;
-		return;
+	} else {
+		newNode->next = prevNode->next;
+		prevNode->next = newNode;
+		if (prevNode == node->lastChild) {
+			node->lastChild = newNode;
+		}
+		newNode->parent = node;
 	}
-	newNode->next = prevNode->next;
-	prevNode->next = newNode;
-	if (prevNode == node->lastChild) {
-		node->lastChild = newNode;
-	}
-	newNode->parent = node;
+
+	MN_Invalidate(node);
 }
 
 /**
@@ -259,6 +264,7 @@ menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 		if (previous == NULL)
 			return NULL;
 	}
+	MN_Invalidate(node);
 
 	/** update cache */
 	if (node->lastChild == child)

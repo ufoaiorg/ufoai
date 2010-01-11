@@ -373,7 +373,6 @@ menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic
 static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 {
 	menuNode_t *find;
-	menuNode_t *child;
 	int i;
 
 	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
@@ -389,11 +388,25 @@ static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 
 	/** @todo we should improve the loop (last-to-first) */
 	find = NULL;
-	for (child = node->firstChild; child; child = child->next) {
-		menuNode_t *tmp;
-		tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
-		if (tmp)
-			find = tmp;
+	if (node->firstChild) {
+		menuNode_t *child;
+		vec2_t clientPosition = {0, 0};
+
+		if (node->behaviour->getClientPosition)
+			node->behaviour->getClientPosition(node, clientPosition);
+
+		rx -= clientPosition[0];
+		ry -= clientPosition[1];
+
+		for (child = node->firstChild; child; child = child->next) {
+			menuNode_t *tmp;
+			tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
+			if (tmp)
+				find = tmp;
+		}
+
+		rx += clientPosition[0];
+		ry += clientPosition[1];
 	}
 	if (find)
 		return find;
@@ -624,6 +637,7 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, extraDataSize),
 	offsetof(nodeBehaviour_t, sizeChanged),
 	offsetof(nodeBehaviour_t, propertyChanged),
+	offsetof(nodeBehaviour_t, getClientPosition),
 	-1
 };
 

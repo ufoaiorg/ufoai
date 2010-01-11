@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_main.h"
 #include "../m_parse.h"
+#include "../m_draw.h"
 #include "../m_input.h"
 #include "../m_nodes.h"
 #include "../m_windows.h"
@@ -97,6 +98,11 @@ static zoneNode_t MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, in
 }
 
 static void MN_EditorNodeDraw (menuNode_t *node)
+{
+	MN_CaptureDrawOver(node);
+}
+
+static void MN_EditorNodeDrawOverMenu (menuNode_t *node)
 {
 	menuNode_t* hovered = NULL;
 
@@ -361,6 +367,7 @@ void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "editor";
 	behaviour->extends = "special";
 	behaviour->draw = MN_EditorNodeDraw;
+	behaviour->drawOverMenu = MN_EditorNodeDrawOverMenu;
 	behaviour->mouseDown = MN_EditorNodeMouseDown;
 	behaviour->mouseUp = MN_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = MN_EditorNodeCapturedMouseMove;

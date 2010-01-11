@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_render.h"
+#include "../m_actions.h"
 #include "m_node_abstractnode.h"
 #include "m_node_panel.h"
 #include "../../../common/scripts.h"
@@ -318,6 +319,34 @@ void MN_StarLayout (menuNode_t *node)
 	}
 }
 
+/**
+ * Update the client zone
+ */
+static void MN_ClientLayout (menuNode_t *node)
+{
+	int width = 0;
+	int height = 0;
+	menuNode_t *child;
+	qboolean updated;
+	for (child = node->firstChild; child; child = child->next) {
+		int value;
+		value = child->pos[0] + child->size[0];
+		if (value > width)
+			width = value;
+		value = child->pos[1] + child->size[1];
+		if (value > height)
+			height = value;
+	}
+
+	width += node->padding;
+	height += node->padding;
+
+	updated = MN_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], width);
+	updated = MN_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], height) || updated;
+	if (updated && EXTRADATA(node).super.onViewChange)
+		MN_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+}
+
 static void MN_PanelNodeDoLayout (menuNode_t *node)
 {
 	switch (EXTRADATA(node).layout) {
@@ -334,6 +363,9 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 		break;
 	case LAYOUT_STAR:
 		MN_StarLayout(node);
+		break;
+	case LAYOUT_CLIENT:
+		MN_ClientLayout(node);
 		break;
 	default:
 		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
@@ -353,6 +385,12 @@ static void MN_PanelNodeLoaded (menuNode_t *node)
 #endif
 	if (EXTRADATA(node).layout != LAYOUT_NONE)
 		MN_Invalidate(node);
+}
+
+static void MN_PanelNodeGetClientPosition (menuNode_t *node, vec2_t position)
+{
+	position[0] = -EXTRADATA(node).super.scrollX.viewPos;
+	position[1] = -EXTRADATA(node).super.scrollY.viewPos;
 }
 
 /**
@@ -384,12 +422,14 @@ static const value_t properties[] = {
 void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
+	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(panelExtraData_t);
 	behaviour->draw = MN_PanelNodeDraw;
 	behaviour->loaded = MN_PanelNodeLoaded;
 	behaviour->doLayout = MN_PanelNodeDoLayout;
+	behaviour->getClientPosition = MN_PanelNodeGetClientPosition;
 
 	Com_RegisterConstInt("LAYOUTALIGN_TOPLEFT", LAYOUTALIGN_TOPLEFT);
 	Com_RegisterConstInt("LAYOUTALIGN_TOP", LAYOUTALIGN_TOP);
@@ -406,4 +446,5 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	Com_RegisterConstInt("LAYOUT_BORDER", LAYOUT_BORDER);
 	Com_RegisterConstInt("LAYOUT_PACK", LAYOUT_PACK);
 	Com_RegisterConstInt("LAYOUT_STAR", LAYOUT_STAR);
+	Com_RegisterConstInt("LAYOUT_CLIENT", LAYOUT_CLIENT);
 }
