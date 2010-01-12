@@ -676,6 +676,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
  * @param[in] y The x location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa Com_RemoveFromInventory
+ * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
 invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_t * container, int x, int y, int amount)
 {
