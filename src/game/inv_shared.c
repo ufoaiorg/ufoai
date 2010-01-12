@@ -1174,6 +1174,8 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 		return;
 	}
 
+	/** @todo optimize for single containers */
+
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 			const int checkedTo = Com_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
@@ -1222,8 +1224,7 @@ qboolean Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDe
 		else
 			item.rotated = qfalse;
 
-		Com_AddToInventory(inv, item, container, x, y, 1);
-		return qtrue;
+		return Com_AddToInventory(inv, item, container, x, y, 1) != NULL;
 	}
 }
 
