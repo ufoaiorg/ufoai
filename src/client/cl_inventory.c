@@ -121,7 +121,7 @@ void INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *cont
 	assert(weapon);
 	if (container && inv) {
 		const item_t item = {NONE_AMMO, NULL, weapon->item.m, 0, 0};
-		Com_AddToInventory(inv, item, container, -1, -1, 1);
+		Com_AddToInventory(inv, item, container, NONE, NONE, 1);
 	}
 	weapon->item.m = NULL;
 	weapon->item.a = 0;
