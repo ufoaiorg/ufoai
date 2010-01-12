@@ -697,7 +697,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 /**
  * @brief Add an item to a specified container in a given inventory.
- * @note Set x and y to NONE if the item should get added but not displayed.
+ * @note Set x and y to NONE if the item should get added to an automatically chosen free spot in the container.
  * @param[in] i Pointer to inventory definition, to which we will add item.
  * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
@@ -715,6 +715,9 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 		return NULL;
 
 	if (amount <= 0)
+		return NULL;
+
+	if (container->single && i->c[container->id]->next)
 		return NULL;
 
 	if (!invUnused)
@@ -773,9 +776,6 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	ic->item.amount = amount;
 	ic->x = x;
 	ic->y = y;
-
-	if (container->single && i->c[container->id]->next)
-		Com_Printf("Com_AddToInventory: Error: single container %s has many items.\n", container->name);
 
 	return ic;
 }
