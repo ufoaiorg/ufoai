@@ -102,7 +102,9 @@ equipment campaign_initial_market
 	item base_AA51_launcher			3
 	item ugv_chaingun				20 // This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
 	item ugv_chaingun_belt			40
-//	aircraft craft_drop_firebird	10
+	aircraft craft_drop_firebird	5
+	aircraft craft_inter_stiletto	8
+	aircraft craft_inter_saracen	6
 }
 
 equipment campaign_asymptotic_market

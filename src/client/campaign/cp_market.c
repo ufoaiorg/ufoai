@@ -234,7 +234,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 			}
 		}
 	}
-	for (i = 0, snode = mxml_GetNode(node, "elementaircraft"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "elementaircraft")) {
+	for (i = 0, snode = mxml_GetNode(node, "elementaircraft"); i < AIRCRAFTTYPE_MAX; i++, snode = mxml_GetNextNode(snode, node, "elementaircraft")) {
 		if (snode) {
 			const char *s = mxml_GetString(snode, "aircrafttype");
 			humanAircraftType_t type = Com_DropShipShortNameToID(s);
@@ -269,10 +269,6 @@ void BS_InitMarket (qboolean load)
 	if (!ccs.curCampaign->asymptoticMarketDef)
 		Com_Error(ERR_DROP, "BS_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 				campaign->asymptoticMarket, campaign->id);
-
-	/* the savegame loading process will get the following values from savefile */
-	if (load)
-		return;
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (ccs.eMarket.askItems[i] == 0) {
