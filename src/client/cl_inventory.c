@@ -87,10 +87,10 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 
 /**
  * @brief Load a weapon with ammo.
- * @param[in] weapon Pointer (invList_t) to weapon to load.
- * @param[in] inv Pointer (inventory_t) to inventory where the change happen.
- * @param[in] srcContainer Pointer (invDef_t) to inventorydef where to search ammo.
- * @param[in] destContainer Pointer (invDef_t) to inventorydef where the weapon is.
+ * @param[in] weapon Pointer to weapon to load.
+ * @param[in] inv Pointer to inventory where the change happen.
+ * @param[in] srcContainer Pointer to inventorydef where to search ammo.
+ * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
 void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
