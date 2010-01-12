@@ -249,15 +249,13 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 {
 	mxml_node_t *s;
-	int count = 0;
 
-	for (s = mxml_GetNode(p, "item"); s; s = mxml_GetNextNode(s, p, "item"), count++) {
+	for (s = mxml_GetNode(p, "item"); s; s = mxml_GetNextNode(s, p, "item")) {
 		item_t item;
 		int container, x, y;
 		CL_LoadItemXML(s, &item, &container, &x, &y);
 		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
-		assert(count < MAX_INVLIST);
 	}
 }
 
