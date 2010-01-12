@@ -717,14 +717,14 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	if (amount <= 0)
 		return NULL;
 
-	if (container->single && i->c[container->id]->next)
-		return NULL;
-
 	if (!invUnused)
 		Sys_Error("Com_AddToInventory: No free inventory space!");
 
 	assert(i);
 	assert(container);
+
+	if (container->single && i->c[container->id] && i->c[container->id]->next)
+		return NULL;
 
 	/**
 	 * What we are doing here.
