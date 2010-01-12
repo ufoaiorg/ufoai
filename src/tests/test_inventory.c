@@ -127,7 +127,7 @@ static void testItemDel (void)
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
 
-	Com_RemoveFromInventory(&inv, container, addedItem);
+	CU_ASSERT(Com_RemoveFromInventory(&inv, container, addedItem));
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
 }
