@@ -45,7 +45,7 @@ namespace
 	FILE* g_hLogFile;
 }
 
-bool g_Console_enableLogging = false;
+bool g_Console_enableLogfile = false;
 
 static bool g_Console_createLogFailed = false;
 

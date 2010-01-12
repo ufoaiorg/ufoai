@@ -492,7 +492,7 @@ int main (int argc, char* argv[])
 	// so we use a latching system
 	if (g_GamesDialog.m_bForceLogConsole) {
 		Sys_LogFile(true);
-		g_Console_enableLogging = true;
+		g_Console_enableLogfile = true;
 		g_GamesDialog.m_bForceLogConsole = false;
 	}
 

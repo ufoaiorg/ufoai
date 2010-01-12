@@ -42,7 +42,7 @@ GtkWidget* Console_constructWindow(GtkWindow* toplevel);
 
 // will open/close the log file based on the parameter
 void Sys_LogFile(bool enable);
-extern bool g_Console_enableLogging;
+extern bool g_Console_enableLogfile;
 
 
 #endif
