@@ -937,6 +937,10 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 	else {
 		if (tx == NONE || ty == NONE)
 			Com_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
+		/* still no valid location found */
+		if (tx == NONE || ty == NONE)
+			return IA_NONE;
+
 		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, tx, ty, fItem);
 	}
 
