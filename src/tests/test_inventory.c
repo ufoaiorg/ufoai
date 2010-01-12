@@ -94,7 +94,7 @@ static void testItemAdd (void)
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
 
-	Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
+	CU_ASSERT_PTR_NOT_NULL(Com_AddToInventory(&inv, item, container, NONE, NONE, 1));
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
 }
