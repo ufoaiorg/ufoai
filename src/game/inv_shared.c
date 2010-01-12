@@ -37,7 +37,6 @@ INVLIST FUNCTIONS
 ================================*/
 
 static invList_t *invUnused;
-static invList_t *invUnusedRevert;
 
 static void INVSH_RemoveInvList (invList_t *ic)
 {
@@ -72,15 +71,13 @@ static invList_t* INVSH_AddInvList (invList_t **invList)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INVSH_InitInventory (invList_t * invList, size_t length, qboolean store)
+void INVSH_InitInventory (invList_t * invList, size_t length)
 {
 	int i;
 
-	assert(invList);
+	fprintf(stderr, "%p: %p\n", INVSH_InitInventory, invList);
 
-	/* store last Unused stack? */
-	if (store)
-		invUnusedRevert = invUnused;
+	assert(invList);
 
 	invUnused = invList;
 	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
@@ -96,18 +93,6 @@ void INVSH_InitInventory (invList_t * invList, size_t length, qboolean store)
 		invList_t *last = invUnused++;
 		invUnused->next = last;
 	}
-}
-
-/**
- * @brief reverts invUnused back to previous structure list
- */
-void INVSH_InvUnusedRevert (void)
-{
-	if (!invUnusedRevert)
-		return;
-
-	invUnused = invUnusedRevert;
-	invUnusedRevert = NULL;
 }
 
 /*================================

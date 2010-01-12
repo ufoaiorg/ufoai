@@ -700,8 +700,7 @@ qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull)
 /* ================================ */
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
-void INVSH_InitInventory(invList_t * invChain, size_t length, qboolean store);
-void INVSH_InvUnusedRevert(void);
+void INVSH_InitInventory(invList_t * invChain, size_t length);
 int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
 void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);

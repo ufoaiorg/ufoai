@@ -235,7 +235,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INVSH_InitInventory(invChain, lengthof(invChain), qtrue);
+	INVSH_InitInventory(invChain, lengthof(invChain));
 
 	logstatsfile = NULL;
 	if (logstats->integer)
@@ -256,7 +256,6 @@ static void G_Shutdown (void)
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
-	INVSH_InvUnusedRevert();
 }
 
 

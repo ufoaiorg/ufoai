@@ -160,7 +160,8 @@ void GAME_SetMode (int gametype)
 	if (list) {
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		memset(&invList, 0, sizeof(invList));
-		INVSH_InitInventory(invList, lengthof(invList), qfalse); /* inventory structure switched/initialized */
+		/* inventory structure switched/initialized */
+		INVSH_InitInventory(invList, lengthof(invList));
 		list->init();
 	}
 }

@@ -33,7 +33,7 @@ static invList_t invList[MAX_INVLIST];
 static inline void ResetInventoryList (void)
 {
 	memset(&invList, 0, sizeof(invList));
-	INVSH_InitInventory(invList, lengthof(invList), qfalse);
+	INVSH_InitInventory(invList, lengthof(invList));
 }
 
 /**
