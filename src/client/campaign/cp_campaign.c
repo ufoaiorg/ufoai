@@ -1494,7 +1494,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	CP_CreateBattleParameters(mis);
 
-	if (!ccs.interceptAircraft) {
+	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 		return;
 	}
