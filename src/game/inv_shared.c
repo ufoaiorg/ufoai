@@ -1012,7 +1012,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 						return IA_NONE;
 
 					/* Add the currently used ammo in a free place of the "from" container. */
-					Com_AddToInventory(i, item, from, -1, -1, 1);
+					Com_AddToInventory(i, item, from, NONE, NONE, 1);
 
 					ic->item.m = cacheItem.t;
 					if (icp)
