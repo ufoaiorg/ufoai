@@ -696,6 +696,8 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
 		/* No (sane) position in container given as parameter - find free space on our own. */
 		Com_FindSpace(i, &item, container, &x, &y, NULL);
+		if (x == NONE)
+			return NULL;
 	}
 
 	/**
