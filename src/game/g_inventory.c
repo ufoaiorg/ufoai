@@ -220,7 +220,7 @@ void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
 /**
  * @brief Sends whole inventory through the network buffer.
  * @param[in] playerMask The player mask to determine which clients should receive the event (@c G_VisToPM(ent->visflags)).
- * @param[in] ent Pointer to an actor with inventory to send.
+ * @param[in] ent Pointer to an actor or floor container with inventory to send.
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
@@ -239,7 +239,7 @@ void G_SendInventory (unsigned int playerMask, edict_t *ent)
 			nr++;
 
 	/* return if no inventory items to send */
-	if (nr == 0 && ent->type != ET_ITEM)
+	if (nr == 0)
 		return;
 
 	G_EventInventoryAdd(ent, playerMask, nr);
