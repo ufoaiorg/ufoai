@@ -147,7 +147,7 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnV
 			 edict_t *blockEdict;
 			 PosAddDV(pos, tmp, dvtab[max--]);
 			 blockEdict = G_GetEdictFromPos(pos, 0);
-			 if (G_IsBlockingMovementActor(blockEdict))
+			 if (blockEdict && G_IsBlockingMovementActor(blockEdict))
 				 return qtrue;
 		 }
 	 }
