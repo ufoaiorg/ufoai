@@ -712,8 +712,8 @@ qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filt
 itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
-invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1)));
+invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1), warn_unused_result));
+qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1), warn_unused_result));
 int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
 void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
