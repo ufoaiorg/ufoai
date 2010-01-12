@@ -986,7 +986,8 @@ static void G_ClientReadInventory (edict_t *ent)
 				: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
 		if (container) {
-			Com_AddToInventory(&ent->i, item, container, x, y, 1);
+			if (Com_AddToInventory(&ent->i, item, container, x, y, 1) == NULL)
+				gi.error("G_ClientTeamInfo failed, could not add item to container %i", container);
 			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
 					container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
 		}
