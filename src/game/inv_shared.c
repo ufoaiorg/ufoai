@@ -726,13 +726,6 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	assert(i);
 	assert(container);
 
-	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
-		/* No (sane) position in container given as parameter - find free space on our own. */
-		Com_FindSpace(i, &item, container, &x, &y, NULL);
-		if (x == NONE)
-			return NULL;
-	}
-
 	/**
 	 * What we are doing here.
 	 * invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
@@ -766,6 +759,13 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 					ic->item.t->name, ic->item.amount);
 				return ic;
 			}
+	}
+
+	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
+		/* No (sane) position in container given as parameter - find free space on our own. */
+		Com_FindSpace(i, &item, container, &x, &y, NULL);
+		if (x == NONE)
+			return NULL;
 	}
 
 	/* not found - add a new one */
