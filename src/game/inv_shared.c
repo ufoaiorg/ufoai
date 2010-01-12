@@ -29,14 +29,90 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "inv_shared.h"
 #include "../shared/shared.h"
 
+static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
+static csi_t *CSI;
+
+/*================================
+INVLIST FUNCTIONS
+================================*/
+
+static invList_t *invUnused;
+static invList_t *invUnusedRevert;
+
+static void INVSH_RemoveInvList (invList_t *ic)
+{
+	ic->next = invUnused;
+	invUnused = ic;
+}
+
+static invList_t* INVSH_AddInvList (invList_t **invList)
+{
+	invList_t* ic = invUnused;
+
+	if (!ic)
+		Sys_Error("INVSH_AddInvList: No free inventory space!");
+
+	/* Ensure, that for later usage invUnused will be the next empty/free slot. */
+	invUnused = ic->next;
+
+	/* Set the "next" link of the new "first item" to the original "first item". */
+	ic->next = *invList;
+
+	/* Remember the new "first item" (i.e. the yet empty entry). */
+	*invList = ic;
+
+	return ic;
+}
+
+/**
+ * @brief Initializes the inventory definition by linking the ->next pointers properly.
+ * @param[in] invList Pointer to invList_t definition being initialized.
+ * @param[in] length The size of the invList array
+ * @sa G_Init
+ * @sa CL_ResetSinglePlayerData
+ * @sa CL_InitLocal
+ */
+void INVSH_InitInventory (invList_t * invList, size_t length, qboolean store)
+{
+	int i;
+
+	assert(invList);
+
+	/* store last Unused stack? */
+	if (store)
+		invUnusedRevert = invUnused;
+
+	invUnused = invList;
+	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
+	invUnused->next = NULL;
+
+	/* now link the invList_t next pointers
+	 * invList[1]->next = invList[0]
+	 * invList[2]->next = invList[1]
+	 * invList[3]->next = invList[2]
+	 * ... and so on
+	 */
+	for (i = 0; i < length - 1; i++) {
+		invList_t *last = invUnused++;
+		invUnused->next = last;
+	}
+}
+
+/**
+ * @brief reverts invUnused back to previous structure list
+ */
+void INVSH_InvUnusedRevert (void)
+{
+	if (!invUnusedRevert)
+		return;
+
+	invUnused = invUnusedRevert;
+	invUnusedRevert = NULL;
+}
+
 /*================================
 INVENTORY MANAGEMENT FUNCTIONS
 ================================*/
-
-static csi_t *CSI;
-static invList_t *invUnused;
-static invList_t *invUnusedRevert;
-static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
 
 /**
  * @brief Initializes csi_t *CSI pointer.
@@ -114,53 +190,6 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
 	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
 		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i] for item '%s'", fdIdx, obj->id);
 	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
-}
-
-/**
- * @brief Initializes the inventory definition by linking the ->next pointers properly.
- * @param[in] invList Pointer to invList_t definition being initialized. This array must have at
- * least the size @c MAX_INVLIST.
- * @param[in] store When true, the last invUnused is backuped - @sa INVSH_InvUnusedRevert
- * @sa G_Init
- * @sa CL_ResetSinglePlayerData
- * @sa CL_InitLocal
- */
-void INVSH_InitInventory (invList_t * invList, qboolean store)
-{
-	int i;
-
-	assert(invList);
-
-	/* store last Unused stack? */
-	if (store)
-		invUnusedRevert = invUnused;
-
-	invUnused = invList;
-	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
-	invUnused->next = NULL;
-
-	/* now link the invList_t next pointers
-	 * invList[1]->next = invList[0]
-	 * invList[2]->next = invList[1]
-	 * invList[3]->next = invList[2]
-	 * ... and so on
-	 */
-	for (i = 0; i < MAX_INVLIST - 1; i++) {
-		invList_t *last = invUnused++;
-		invUnused->next = last;
-	}
-}
-
-/**
- * @brief reverts invUnused back to previous structure list
- */
-void INVSH_InvUnusedRevert (void)
-{
-	if (!invUnusedRevert)
-		return;
-
-	invUnused = invUnusedRevert;
-	invUnusedRevert = NULL;
 }
 
 static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
@@ -737,19 +766,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	}
 
 	/* not found - add a new one */
-	/* Get empty container */
-	ic = invUnused;
-
-	/* Ensure, that for later usage invUnused will be the next empty/free slot.
-	 * It is not used _here_ anymore. */
-	invUnused = ic->next;
-
-	/* Set the "next" link of the new "first item" to the original "first item". */
-	ic->next = i->c[container->id];
-
-	/* Remember the new "first item" (i.e. the yet empty entry). */
-	i->c[container->id] = ic;
-/*	Com_Printf("Add to container %i: %s\n", container, item.t->id);*/
+	ic = INVSH_AddInvList(&i->c[container->id]);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
@@ -813,8 +830,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 		i->c[container->id] = ic->next;
 
 		/* updated invUnused to be able to reuse this space later again */
-		ic->next = invUnused;
-		invUnused = ic;
+		INVSH_RemoveInvList(ic);
 
 		return qtrue;
 	}
@@ -835,8 +851,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 			else
 				previous->next = ic->next;
 
-			ic->next = invUnused;
-			invUnused = ic;
+			INVSH_RemoveInvList(ic);
 
 			return qtrue;
 		}
@@ -1104,34 +1119,15 @@ qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
 void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 {
 	invList_t *ic;
-#ifdef DEBUG
-	int cnt = 0;
-#endif
-
-	assert(i);
-	assert(container);
-
-#ifdef DEBUG
-	if (container->temp)
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", container->name);
-#endif
 
 	ic = i->c[container->id];
 
 	while (ic) {
 		invList_t *old = ic;
 		ic = ic->next;
-		old->next = invUnused;
-		invUnused = old;
-#ifdef DEBUG
-		if (cnt >= MAX_INVLIST) {
-			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (INVSH_EmptyContainer)\n",
-				container->name, cnt, MAX_INVLIST);
-			break;
-		}
-		cnt++;
-#endif
+		INVSH_RemoveInvList(old);
 	}
+
 	i->c[container->id] = NULL;
 }
 
