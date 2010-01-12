@@ -134,7 +134,7 @@ void G_ActorFall (edict_t *ent)
  */
 static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState, byte* dvtab, int max)
 {
-	 if (stopOnVisStop && (visState & VIS_STOP))
+	if (stopOnVisStop && (visState & VIS_STOP))
 		 return qtrue;
 
 	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
@@ -142,10 +142,11 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnV
 	 if (visState & VIS_APPEAR) {
 		 pos3_t pos;
 		 VectorCopy(ent->pos, pos);
-		 while (max > 0) {
+		 while (max >= 0) {
 			 int tmp = 0;
 			 edict_t *blockEdict;
-			 PosAddDV(pos, tmp, dvtab[max--]);
+			 PosAddDV(pos, tmp, dvtab[max]);
+			 max--;
 			 blockEdict = G_GetEdictFromPos(pos, 0);
 			 if (blockEdict && G_IsBlockingMovementActor(blockEdict))
 				 return qtrue;
@@ -398,7 +399,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status, dvtab, numdv)) {
+			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;
