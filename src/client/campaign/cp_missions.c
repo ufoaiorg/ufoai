@@ -1146,10 +1146,10 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	/* Check for alien containment in aircraft homebase. */
 	if (AL_GetAircraftAlienCargoTypes(aircraft) && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
-		 * Popup aircraft transer dialog to choose a better base. */
+		 * Popup aircraft transfer dialog to choose a better base. */
 		TR_TransferAircraftMenu(aircraft);
 	} else {
-		/* The aircraft can be savely sent to its homebase without losing aliens */
+		/* The aircraft can be safely sent to its homebase without losing aliens */
 	}
 
 	/* handle base attack mission */
@@ -1175,7 +1175,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
  * @brief Check if a stage mission is over when UFO reached destination.
  * @param[in] ufocraft Pointer to the ufo that reached destination.
  * @sa UFO_CampaignRunUFOs
- * @return True if UFO is removed from global array (and therfore pointer ufocraft can't be used anymore).
+ * @return True if UFO is removed from global array (and therefore pointer ufocraft can't be used anymore).
  */
 qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
 {
