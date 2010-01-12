@@ -1520,13 +1520,12 @@ void CL_GameAutoGo (mission_t *mis)
 	won = frand() < winProbability;
 
 	/* update nation opinions */
-	if (won) {
-		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
-		CP_CheckLostCondition();
-	} else {
-		CL_HandleNationData(!won, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
-		CP_CheckLostCondition();
-	}
+	if (won)
+		CL_HandleNationData(qfalse, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
+	else
+		CL_HandleNationData(qtrue, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
+
+	CP_CheckLostCondition();
 
 	CL_AutoMissionAlienCollect(aircraft);
 
