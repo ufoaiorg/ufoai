@@ -71,7 +71,7 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 		if (LE_IsItem(le) && container != csi.idFloor)
 			Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
 
-		if (Com_AddToInventory(&le->i, item, &csi.ids[container], x, y, item.amount) == NULL)
+		if (cls.i.AddToInventory(&cls.i, &le->i, item, &csi.ids[container], x, y, item.amount) == NULL)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add item to container %i", container);
 
 		if (container == csi.idRight)

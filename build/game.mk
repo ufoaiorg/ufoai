@@ -31,6 +31,7 @@ GAME_SRCS=\
 	game/g_utils.c \
 	game/g_vis.c \
 	game/inv_shared.c \
+	game/inventory.c \
 	shared/mathlib.c \
 	shared/shared.c \
 	shared/parse.c \

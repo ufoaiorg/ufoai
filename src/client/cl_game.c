@@ -85,7 +85,7 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&characters[i], teamDefID, NULL);
 		/* pack equipment */
-		INVSH_EquipActor(&characters[i].inv, ed, &characters[i]);
+		cls.i.EquipActor(&cls.i, &characters[i].inv, ed, &characters[i]);
 
 		chrDisplayList.chr[i] = &characters[i];
 	}
@@ -161,7 +161,7 @@ void GAME_SetMode (int gametype)
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		memset(&invList, 0, sizeof(invList));
 		/* inventory structure switched/initialized */
-		INVSH_InitInventory(invList, lengthof(invList));
+		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
 		list->init();
 	}
 }

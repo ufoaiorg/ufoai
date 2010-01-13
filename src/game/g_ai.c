@@ -974,10 +974,10 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 	/* Pack equipment. */
 	if (team != TEAM_CIVILIAN) { /** @todo Give civilians gear. */
 		if (ent->chr.teamDef->weapons)
-			INVSH_EquipActor(&ent->i, ed, &ent->chr);
+			game.i.EquipActor(&game.i, &ent->i, ed, &ent->chr);
 		else if (ent->chr.teamDef)
 			/* actor cannot handle equipment but no weapons */
-			INVSH_EquipActorMelee(&ent->i, &ent->chr);
+			game.i.EquipActorMelee(&game.i, &ent->i, &ent->chr);
 		else
 			gi.dprintf("AI_InitPlayer: actor with no equipment\n");
 	}

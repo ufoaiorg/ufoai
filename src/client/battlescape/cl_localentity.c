@@ -1224,7 +1224,7 @@ void LE_Cleanup (void)
 		if (LE_IsActor(le))
 			CL_ActorCleanup(le);
 		else if (LE_IsItem(le))
-			INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
+			cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
 
 		le->inuse = qfalse;
 	}

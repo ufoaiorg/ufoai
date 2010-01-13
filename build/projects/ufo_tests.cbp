@@ -204,6 +204,9 @@
 		<Unit filename="..\..\src\game\inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\game\inventory.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\game\q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -700,7 +700,6 @@ qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull)
 /* ================================ */
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
-void INVSH_InitInventory(invList_t * invChain, size_t length);
 int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
 void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
@@ -711,21 +710,11 @@ qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filt
 itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
-invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1), warn_unused_result));
-qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1), warn_unused_result));
-int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
-void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
-void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
-void Com_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
-qboolean Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
-void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
-void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
-void INVSH_EquipActor(inventory_t* const inv, const equipDef_t *ed, character_t* chr) __attribute__((nonnull(1)));
+void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
 qboolean INV_IsCraftItem(const objDef_t *obj);
 qboolean INV_IsBaseDefenceItem(const objDef_t *item);
 
-void INVSH_PrintItemDescription(const objDef_t *od);
 objDef_t *INVSH_GetItemByID(const char *id);
 objDef_t *INVSH_GetItemByIDX(int index);
 objDef_t *INVSH_GetItemByIDSilent(const char *id);

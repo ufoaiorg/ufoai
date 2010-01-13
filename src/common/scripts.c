@@ -24,7 +24,7 @@
 #include "common.h"
 #include "scripts.h"
 #include "../shared/parse.h"
-#include "../game/inv_shared.h"
+#include "../game/inventory.h"
 
 #define CONSTNAMEINT_HASH_SIZE	32
 

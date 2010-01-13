@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_G_LOCAL_H
 
 #include "q_shared.h"
-#include "inv_shared.h"
+#include "inventory.h"
 #include "../shared/infostring.h"
 
 /** no gettext support for game lib - but we must be able to mark the strings */
@@ -95,6 +95,8 @@ typedef struct {
 	/* store latched cvars here that we want to get at often */
 	int sv_maxplayersperteam;
 	int sv_maxentities;
+
+	inventoryInterface_t i;
 } game_locals_t;
 
 /** @brief this structure is cleared as each map is entered */

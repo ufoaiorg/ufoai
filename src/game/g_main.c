@@ -235,7 +235,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INVSH_InitInventory(invChain, lengthof(invChain));
+	INV_InitInventory(&game.i, gi.csi, invChain, lengthof(invChain));
 
 	logstatsfile = NULL;
 	if (logstats->integer)

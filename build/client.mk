@@ -247,6 +247,7 @@ CLIENT_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \
+	game/inventory.c \
 	\
 	client/renderer/r_array.c \
 	client/renderer/r_bsp.c \

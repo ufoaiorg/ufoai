@@ -158,10 +158,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/unzip.h" />
-		<Unit filename="../../src/game/inv_shared.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/game/inv_shared.h" />
 		<Unit filename="../../src/game/q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>

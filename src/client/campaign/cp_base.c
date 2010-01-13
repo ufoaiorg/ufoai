@@ -2170,7 +2170,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 			character_t *chr = &aircraft->acTeam[i]->chr;
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-			INVSH_EquipActor(&chr->inv, ed, chr);
+			cls.i.EquipActor(&cls.i, &chr->inv, ed, chr);
 			chrListTemp.chr[chrListTemp.num] = chr;
 			chrListTemp.num++;
 		}
@@ -3061,7 +3061,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				}
 			}
 		}
-		/** @todo can't we use something like INVSH_DestroyInventory here? */
+		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 		/* reset capacities */

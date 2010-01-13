@@ -74,7 +74,7 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 		return qfalse;
 
 	/* move the item */
-	moved = Com_MoveInInventory(inv, fromContainer, fItem, toContainer, px, py, NULL, NULL);
+	moved = cls.i.MoveInInventory(&cls.i, inv, fromContainer, fItem, toContainer, px, py, NULL, NULL);
 
 	switch (moved) {
 	case IA_MOVE:
@@ -121,7 +121,7 @@ void INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *cont
 	assert(weapon);
 	if (container && inv) {
 		const item_t item = {NONE_AMMO, NULL, weapon->item.m, 0, 0};
-		Com_AddToInventory(inv, item, container, NONE, NONE, 1);
+		cls.i.AddToInventory(&cls.i, inv, item, container, NONE, NONE, 1);
 	}
 	weapon->item.m = NULL;
 	weapon->item.a = 0;
@@ -136,8 +136,23 @@ static void INV_InventoryList_f (void)
 {
 	int i;
 
-	for (i = 0; i < csi.numODs; i++)
-		INVSH_PrintItemDescription(&csi.ods[i]);
+	for (i = 0; i < csi.numODs; i++) {
+		objDef_t *od = INVSH_GetItemByIDX(i);
+		Com_Printf("Item: %s\n", od->id);
+		Com_Printf("... name          -> %s\n", od->name);
+		Com_Printf("... type          -> %s\n", od->type);
+		Com_Printf("... category      -> %i\n", od->animationIndex);
+		Com_Printf("... weapon        -> %i\n", od->weapon);
+		Com_Printf("... holdtwohanded -> %i\n", od->holdTwoHanded);
+		Com_Printf("... firetwohanded -> %i\n", od->fireTwoHanded);
+		Com_Printf("... thrown        -> %i\n", od->thrown);
+		Com_Printf("... usable for weapon (if type is ammo):\n");
+		for (i = 0; i < od->numWeapons; i++) {
+			if (od->weapons[i])
+				Com_Printf("    ... %s\n", od->weapons[i]->name);
+		}
+		Com_Printf("\n");
+	}
 }
 #endif
 

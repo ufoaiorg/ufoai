@@ -2018,7 +2018,7 @@ campaign_t* CL_GetCampaign (const char* name)
 
 /**
  * @brief Will clear most of the parsed singleplayer data
- * @sa INVSH_InitInventory
+ * @sa INV_InitInventory
  * @sa CL_ReadSinglePlayerData
  */
 void CL_ResetSinglePlayerData (void)

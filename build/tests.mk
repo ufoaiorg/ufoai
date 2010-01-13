@@ -37,6 +37,7 @@ TESTS_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \
+	game/inventory.c \
 	shared/byte.c \
 	shared/infostring.c \
 	shared/mathlib.c \

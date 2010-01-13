@@ -3074,7 +3074,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
-	INVSH_DestroyInventory(&employee->chr.inv);
+	cls.i.DestroyInventory(&cls.i, &employee->chr.inv);
 	return AIR_RemoveFromAircraftTeam(aircraft, employee);
 }
 

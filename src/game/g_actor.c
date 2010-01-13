@@ -244,7 +244,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	assert(fItem);
 	assert(fItem->item.t);
 
-	/* Store the location/item of 'from' BEFORE actually moving items with Com_MoveInInventory. */
+	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
 	fItemBackup = *fItem;
 
 	/* Get first used bit in item. */
@@ -276,19 +276,19 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	if (tx == NONE) {
 		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
-			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
 			return;
 	}
 
-	/* Because Com_MoveInInventory don't know anything about character_t and it updates ent->TU,
+	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
 	   we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
 	reservedTU = G_ActorTUReservations(ent);
-	/* Temporary decrease ent->TU to make Com_MoveInInventory() do what expected. */
+	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = Com_MoveInInventory(&ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.MoveInInventory(&game.i, &ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
 

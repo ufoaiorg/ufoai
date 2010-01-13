@@ -120,8 +120,8 @@ void G_InventoryToFloor (edict_t *ent)
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
-			Com_RemoveFromInventory(&ent->i, INVDEF(k), ic);
-			Com_AddToInventory(&floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1);
+			game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(k), ic);
+			game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1);
 
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
@@ -139,7 +139,7 @@ void G_InventoryToFloor (edict_t *ent)
 						floorAdjacent->visflags = 0;
 					}
 
-					Com_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
+					INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
 					if (x != NONE) {
 						ic->x = x;
 						ic->y = y;

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_CONTAINER_H
 #define CLIENT_MENU_M_NODE_CONTAINER_H
 
-#include "../../../game/inv_shared.h"
+#include "../../../game/inventory.h"
 
 /** @brief One unit in the containers is 25x25. */
 #define C_UNIT				25
