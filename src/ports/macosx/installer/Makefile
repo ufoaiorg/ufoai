@@ -88,8 +88,6 @@ copynotes-ufoai: package-dir-ufoai
 	@cp $(ROOTDIR)/COPYING $(UFOAI_PACKAGE_NAME)
 
 copynotes-uforadiant: package-dir-uforadiant
-	@cp $(ROOTDIR)/src/tools/radiant/GPL $(UFORADIANT_PACKAGE_NAME)
-	@cp $(ROOTDIR)/src/tools/radiant/LGPL $(UFORADIANT_PACKAGE_NAME)
 	@cp $(ROOTDIR)/src/tools/radiant/LICENSE $(UFORADIANT_PACKAGE_NAME)
 
 # =======================
