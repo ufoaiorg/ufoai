@@ -1277,7 +1277,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 	/* create the list */
 	if (!*listDest) {
 		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(**listDest), com_genericPool, 0);
-		(*listDest)->data = (byte*)Mem_PoolStrDup(data, com_genericPool, 0);
+		(*listDest)->data = (byte*)Mem_StrDup(data);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
 	} else
