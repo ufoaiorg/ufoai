@@ -161,6 +161,9 @@
 		<Unit filename="../../src/game/q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/game/inv_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/ports/linux/linux_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
