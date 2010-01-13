@@ -248,7 +248,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	fItemBackup = *fItem;
 
 	/* Get first used bit in item. */
-	Com_GetFirstShapePosition(fItem, &fx, &fy);
+	INVSH_GetFirstShapePosition(fItem, &fx, &fy);
 	fx += fItem->x;
 	fy += fItem->y;
 
@@ -274,7 +274,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
+		ic = INVSH_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
 			INVSH_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)

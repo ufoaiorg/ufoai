@@ -1272,7 +1272,7 @@ void CL_ActorReload (le_t *le, int hand)
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
 				 && GAME_ItemIsUseable(ic->item.t)) {
-					Com_GetFirstShapePosition(ic, &x, &y);
+					INVSH_GetFirstShapePosition(ic, &x, &y);
 					x += ic->x;
 					y += ic->y;
 					tu = csi.ids[container].out;

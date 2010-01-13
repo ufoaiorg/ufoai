@@ -650,7 +650,7 @@ int G_ClientAction (player_t * player)
 		} else {
 			invDef_t *fromPtr = INVDEF(from);
 			invDef_t *toPtr = INVDEF(to);
-			invList_t *fromItem = Com_SearchInInventory(&ent->i, fromPtr, fx, fy);
+			invList_t *fromItem = INVSH_SearchInInventory(&ent->i, fromPtr, fx, fy);
 			if (!fromItem)
 				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);

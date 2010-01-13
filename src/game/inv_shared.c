@@ -113,29 +113,31 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
 	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
 }
 
-static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
+static int cacheCheckToInventory = INV_DOES_NOT_FIT;
 
 /**
  * @brief Will check if the item-shape is colliding with something else in the container-shape at position x/y.
- * @note The function expects an already rotated shape for itemShape. Use Com_ShapeRotate if needed.
+ * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
  * @param[in] itemShape
  * @param[in] x
  * @param[in] y
  */
-static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
+static qboolean INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
 	int i;
 
 	/* Negative positions not allowed (all items are supposed to have at least one bit set in the first row and column) */
 	if (x < 0 || y < 0) {
-		Com_DPrintf(DEBUG_SHARED, "Com_CheckShapeCollision: x or y value negative: x=%i y=%i!\n", x, y);
+		Com_DPrintf(DEBUG_SHARED, "INVSH_CheckShapeCollision: x or y value negative: x=%i y=%i!\n", x, y);
 		return qtrue;
 	}
 
 	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT; i++) {
-		const int itemRow = (itemShape >> (i * SHAPE_SMALL_MAX_WIDTH)) & 0xFF; /**< 0xFF is the length of one row in a "small shape" i.e. SHAPE_SMALL_MAX_WIDTH */
-		const uint32_t itemRowShifted = itemRow << x;	/**< Result has to be limited to 32bit (SHAPE_BIG_MAX_WIDTH) */
+		/* 0xFF is the length of one row in a "small shape" i.e. SHAPE_SMALL_MAX_WIDTH */
+		const int itemRow = (itemShape >> (i * SHAPE_SMALL_MAX_WIDTH)) & 0xFF;
+		/* Result has to be limited to 32bit (SHAPE_BIG_MAX_WIDTH) */
+		const uint32_t itemRowShifted = itemRow << x;
 
 		/* Check x maximum. */
 		if (itemRowShifted >> x != itemRow)
@@ -163,10 +165,10 @@ static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t i
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @sa Com_CheckToInventory
+ * @sa INVSH_CheckToInventory
  * @return qfalse if the item does not fit, qtrue if it fits.
  */
-static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
+static qboolean INVSH_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
 {
 	int j;
 	invList_t *ic;
@@ -175,13 +177,13 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
 	assert(container);
 
 	if (container->scroll)
-		Sys_Error("Com_CheckToInventory_shape: No scrollable container will ever use this. This type does not support grid-packing!");
+		Sys_Error("INVSH_CheckToInventory_shape: No scrollable container will ever use this. This type does not support grid-packing!");
 
 	/* check bounds */
 	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
 
-	if (!cache_Com_CheckToInventory) {
+	if (!cacheCheckToInventory) {
 		/* extract shape info */
 		for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 			mask[j] = ~container->shape[j];
@@ -192,14 +194,14 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
 				continue;
 
 			if (ic->item.rotated)
-				Com_MergeShapes(mask, Com_ShapeRotate(ic->item.t->shape), ic->x, ic->y);
+				INVSH_MergeShapes(mask, INVSH_ShapeRotate(ic->item.t->shape), ic->x, ic->y);
 			else
-				Com_MergeShapes(mask, ic->item.t->shape, ic->x, ic->y);
+				INVSH_MergeShapes(mask, ic->item.t->shape, ic->x, ic->y);
 		}
 	}
 
 	/* Test for collisions with newly generated mask. */
-	if (Com_CheckShapeCollision(mask, itemShape, x, y))
+	if (INVSH_CheckShapeCollision(mask, itemShape, x, y))
 		return qfalse;
 
 	/* Everything ok. */
@@ -213,13 +215,12 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @sa Com_CheckToInventory_mask
  * @return INV_DOES_NOT_FIT if the item does not fit
  * @return INV_FITS if it fits and
  * @return INV_FITS_ONLY_ROTATED if it fits only when rotated 90 degree (to the left).
  * @return INV_FITS_BOTH if it fits either normally or when rotated 90 degree (to the left).
  */
-int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem)
+int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem)
 {
 	int fits;
 	assert(i);
@@ -263,15 +264,15 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 		} else {
 			fits = INV_DOES_NOT_FIT; /* equals 0 */
 
-			if (Com_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 				fits |= INV_FITS;
-			if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y, ignoredItem))
+			if (INVSH_CheckToInventory_shape(i, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
 				fits |= INV_FITS_ONLY_ROTATED;
 
 			if (fits != INV_DOES_NOT_FIT)
 				return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
 
-			Com_DPrintf(DEBUG_SHARED, "Com_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
+			Com_DPrintf(DEBUG_SHARED, "INVSH_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
 			return INV_FITS; /**< We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
@@ -282,9 +283,9 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 
 	/* Check 'grid' containers. */
 	fits = INV_DOES_NOT_FIT; /* equals 0 */
-	if (Com_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
+	if (INVSH_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
-	if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y, ignoredItem)
+	if (INVSH_CheckToInventory_shape(i, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem)
 	 && !INV_IsEquipDef(container) && !INV_IsFloorDef(container))
 		fits |= INV_FITS_ONLY_ROTATED;
 
@@ -297,7 +298,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
  * @param[in] item2 Second item to compare.
  * @return qtrue if they are identical or qfalse otherwise.
  */
-qboolean Com_CompareItem (item_t *item1, item_t *item2)
+qboolean INVSH_CompareItem (item_t *item1, item_t *item2)
 {
 	if (item1->t == item2->t && item1->m == item2->m && item1->a == item2->a)
 		return qtrue;
@@ -311,13 +312,13 @@ qboolean Com_CompareItem (item_t *item1, item_t *item2)
  * @param[in] x The x location in the container.
  * @param[in] y The y location in the container.
  */
-static qboolean Com_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
+static qboolean INVSH_ShapeCheckPosition (const invList_t *ic, const int x, const int y)
 {
 	assert(ic);
 
  	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (ic->item.rotated) {
- 		if (((Com_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+ 		if (((INVSH_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
  			return qtrue;
 	} else {
  		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
@@ -334,9 +335,9 @@ static qboolean Com_ShapeCheckPosition (const invList_t *ic, const int x, const 
  * @param[in] ic A pointer to an invList_t struct.
  * @param[out] x The x location inside the item.
  * @param[out] y The x location inside the item.
- * @sa Com_CheckToInventory
+ * @sa INVSH_CheckToInventory
  */
-void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
+void INVSH_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 {
 	int tempX, tempY;
 
@@ -344,7 +345,7 @@ void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
 
 	for (tempX = 0; tempX < SHAPE_SMALL_MAX_HEIGHT; tempX++)
 		for (tempY = 0; tempY < SHAPE_SMALL_MAX_HEIGHT; tempY++)
-			if (Com_ShapeCheckPosition(ic, ic->x + tempX, ic->y + tempY)) {
+			if (INVSH_ShapeCheckPosition(ic, ic->x + tempX, ic->y + tempY)) {
 				*x = tempX;
 				*y = tempY;
 				return;
@@ -360,12 +361,12 @@ void Com_GetFirstShapePosition (const invList_t *ic, int* const x, int* const y)
  * @param[in] item The item to search for.
  * @return qtrue if there already is at least one item of this type, otherwise qfalse.
  */
-qboolean Com_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, item_t item)
+qboolean INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t * container, item_t item)
 {
 	invList_t *ic;
 
 	for (ic = inv->c[container->id]; ic; ic = ic->next)
-		if (Com_CompareItem(&ic->item, &item)) {
+		if (INVSH_CompareItem(&ic->item, &item)) {
 			return qtrue;
 		}
 
@@ -562,9 +563,9 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @param[in] filterType Enum definition of type (types of items for filtering purposes).
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
- * @sa Com_SearchInInventory
+ * @sa INVSH_SearchInInventory
  */
-invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
 	/** @todo is this function doing any reasonable stuff if the item is a null pointer?
@@ -592,7 +593,7 @@ invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const in
  * @return invList_t Pointer to the invList_t/item that is located at x/y.
  * @sa INV_SearchInScrollableContainer
  */
-invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * container, const int x, const int y)
+invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t * container, const int x, const int y)
 {
 	invList_t *ic;
 
@@ -603,12 +604,12 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 		return i->c[container->id];
 
 	if (container->scroll)
-		Sys_Error("Com_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.\nUse INV_SearchInScrollableContainer instead!",
+		Sys_Error("INVSH_SearchInInventory: Scrollable containers (%i:%s) are not supported by this function.\nUse INV_SearchInScrollableContainer instead!",
 				container->id, container->name);
 
 	/* More than one item - search for the item that is located at location x/y in this container. */
 	for (ic = i->c[container->id]; ic; ic = ic->next)
-		if (Com_ShapeCheckPosition(ic, x, y))
+		if (INVSH_ShapeCheckPosition(ic, x, y))
 			return ic;
 
 	/* Found nothing. */
@@ -632,7 +633,7 @@ qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
  * @param[out] px The x position in the container
  * @param[out] py The y position in the container
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
- * @sa Com_CheckToInventory
+ * @sa INVSH_CheckToInventory
  */
 void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t * container, int* const px, int* const py, const invList_t *ignoredItem)
 {
@@ -640,7 +641,7 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 	assert(inv);
 	assert(container);
-	assert(!cache_Com_CheckToInventory);
+	assert(!cacheCheckToInventory);
 
 	/* Scrollable container always have room. We return a dummy location. */
 	if (container->scroll) {
@@ -652,18 +653,18 @@ void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const in
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-			const int checkedTo = Com_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
+			const int checkedTo = INVSH_CheckToInventory(inv, item->t, container, x, y, ignoredItem);
 			if (checkedTo) {
-				cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
+				cacheCheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
 				*py = y;
 				return;
 			} else {
-				cache_Com_CheckToInventory = INV_FITS;
+				cacheCheckToInventory = INV_FITS;
 			}
 		}
 	}
-	cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
+	cacheCheckToInventory = INV_DOES_NOT_FIT;
 
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_SHARED, "INVSH_FindSpace: no space for %s: %s in %s\n",
@@ -1244,13 +1245,13 @@ int FIRESH_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
 
 /**
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
- * @note The function expects an already rotated shape for itemShape. Use Com_ShapeRotate if needed.
+ * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
  * @param[in] itemShape
  * @param[in] x
  * @param[in] y
  */
-void Com_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
+void INVSH_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, const int y)
 {
 	int i;
 
@@ -1264,13 +1265,13 @@ void Com_MergeShapes (uint32_t *shape, const uint32_t itemShape, const int x, co
  * @param[in] x
  * @param[in] y
  */
-qboolean Com_CheckShape (const uint32_t *shape, const int x, const int y)
+qboolean INVSH_CheckShape (const uint32_t *shape, const int x, const int y)
 {
 	const uint32_t row = shape[y];
 	int position = pow(2, x);
 
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
-		Com_Printf("Com_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);
+		Com_Printf("INVSH_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x, y);
 		return qfalse;
 	}
 
@@ -1286,10 +1287,10 @@ qboolean Com_CheckShape (const uint32_t *shape, const int x, const int y)
  * @param[in] x
  * @param[in] y
  */
-static qboolean Com_CheckShapeSmall (const uint32_t shape, const int x, const int y)
+static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const int y)
 {
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0) {
-		Com_Printf("Com_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x, y);
+		Com_Printf("INVSH_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x, y);
 		return qfalse;
 	}
 
@@ -1302,7 +1303,7 @@ static qboolean Com_CheckShapeSmall (const uint32_t shape, const int x, const in
  * @return Number of bits.
  * @note Used to calculate the real field usage in the inventory
  */
-int Com_ShapeUsage (const uint32_t shape)
+int INVSH_ShapeSize (const uint32_t shape)
 {
  	int bitCounter = 0;
 	int i;
@@ -1323,10 +1324,10 @@ int Com_ShapeUsage (const uint32_t shape)
  * @param[in] y The y (height) position of the bit to set.
  * @return The new shape.
  */
-static uint32_t Com_ShapeSetBit (uint32_t shape, const int x, const int y)
+static uint32_t INVSH_ShapeSetBit (uint32_t shape, const int x, const int y)
 {
 	if (x >= SHAPE_SMALL_MAX_WIDTH || y >= SHAPE_SMALL_MAX_HEIGHT || x < 0 || y < 0) {
-		Com_Printf("Com_ShapeSetBit: Bad x or y value: (x=%i, y=%i)\n", x,y);
+		Com_Printf("INVSH_ShapeSetBit: Bad x or y value: (x=%i, y=%i)\n", x,y);
 		return shape;
 	}
 
@@ -1341,7 +1342,7 @@ static uint32_t Com_ShapeSetBit (uint32_t shape, const int x, const int y)
  * @param[in] shape The shape to rotate.
  * @return The new shape.
  */
-uint32_t Com_ShapeRotate (const uint32_t shape)
+uint32_t INVSH_ShapeRotate (const uint32_t shape)
 {
 	int h, w;
 	uint32_t shapeNew = 0;
@@ -1349,7 +1350,7 @@ uint32_t Com_ShapeRotate (const uint32_t shape)
 
 	for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
 		for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
-			if (Com_CheckShapeSmall(shape, w, h)) {
+			if (INVSH_CheckShapeSmall(shape, w, h)) {
 				if (w >= SHAPE_SMALL_MAX_HEIGHT) {
 					/* Object can't be rotated (code-wise), it is longer than SHAPE_SMALL_MAX_HEIGHT allows. */
 					return shape;
@@ -1358,7 +1359,7 @@ uint32_t Com_ShapeRotate (const uint32_t shape)
 				if (maxWidth < 0)
 					maxWidth = w;
 
-				shapeNew = Com_ShapeSetBit(shapeNew, h, maxWidth - w);
+				shapeNew = INVSH_ShapeSetBit(shapeNew, h, maxWidth - w);
 			}
 		}
 	}

@@ -103,7 +103,7 @@ void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcCon
 	equipType = INV_GetFilterFromItem(weapon->item.t);
 	/* search an ammo */
 	while (i < weapon->item.t->numAmmos && !ic) {
-		ic = Com_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, weapon->item.t->ammos[i], equipType);
+		ic = INVSH_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, weapon->item.t->ammos[i], equipType);
 		i++;
 	}
 	if (ic)

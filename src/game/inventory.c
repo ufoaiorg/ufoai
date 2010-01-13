@@ -80,7 +80,7 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 	/* idEquip and idFloor */
 	if (container->temp) {
 		for (ic = i->c[container->id]; ic; ic = ic->next)
-			if (Com_CompareItem(&ic->item, &item)) {
+			if (INVSH_CompareItem(&ic->item, &item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i\n",
 					ic->item.t->name, ic->item.amount);
@@ -242,7 +242,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		for (; ic; ic = ic->next) {
 			if (ic == fItem) {
 				if (ic->item.amount > 1) {
-					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty, fItem);
+					checkedTo = INVSH_CheckToInventory(i, ic->item.t, to, tx, ty, fItem);
 					if (checkedTo & INV_FITS) {
 						ic->x = tx;
 						ic->y = ty;
@@ -272,7 +272,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 	/* Check if the target is a blocked inv-armour and source!=dest. */
 	if (to->single)
-		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, 0, 0, fItem);
+		checkedTo = INVSH_CheckToInventory(i, fItem->item.t, to, 0, 0, fItem);
 	else {
 		if (tx == NONE || ty == NONE)
 			INVSH_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
@@ -280,7 +280,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		if (tx == NONE || ty == NONE)
 			return IA_NONE;
 
-		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, tx, ty, fItem);
+		checkedTo = INVSH_CheckToInventory(i, fItem->item.t, to, tx, ty, fItem);
 	}
 
 	if (to->armour && from != to && !checkedTo) {
@@ -293,7 +293,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
-		icTo = Com_SearchInInventory(i, to, tx, ty);
+		icTo = INVSH_SearchInInventory(i, to, tx, ty);
 		if (fItem->item.t == icTo->item.t)
 			return IA_NONE;
 
@@ -313,7 +313,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 	} else if (!checkedTo) {
 		/* Get the target-invlist (e.g. a weapon). We don't need to check for
 		 * scroll because checkedTo is always true here. */
-		ic = Com_SearchInInventory(i, to, tx, ty);
+		ic = INVSH_SearchInInventory(i, to, tx, ty);
 
 		if (ic && !INV_IsEquipDef(to) && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t)) {
 			/* A target-item was found and the dragged item (implicitly ammo)
@@ -429,7 +429,7 @@ static qboolean I_TryAddToInventory (inventoryInterface_t* self, inventory_t* co
 		assert(y == NONE);
 		return qfalse;
 	} else {
-		const int checkedTo = Com_CheckToInventory(inv, item.t, container, x, y, NULL);
+		const int checkedTo = INVSH_CheckToInventory(inv, item.t, container, x, y, NULL);
 		if (!checkedTo)
 			return qfalse;
 		else if (checkedTo == INV_FITS_ONLY_ROTATED)
