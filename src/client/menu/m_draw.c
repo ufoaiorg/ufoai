@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../renderer/r_draw.h"
+#include "../renderer/r_misc.h"
 
 static cvar_t *mn_show_tooltips;
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
@@ -202,6 +203,7 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 static void MN_DrawNode (menuNode_t *node)
 {
 	menuNode_t *child;
+	vec2_t pos;
 
 	/* skip invisible, virtual, and undrawable nodes */
 	if (node->invis || node->behaviour->isVirtual)
@@ -210,13 +212,13 @@ static void MN_DrawNode (menuNode_t *node)
 	if (!MN_CheckVisibility(node))
 		return;
 
+	MN_GetNodeAbsPos(node, pos);
+
 	/** @todo remove it when its possible:
 	 * we can create a 'box' node with this properties,
 	 * but we often don't need it */
 	/* check node size x and y value to check whether they are zero */
 	if (node->size[0] && node->size[1]) {
-		vec2_t pos;
-		MN_GetNodeAbsPos(node, pos);
 		if (node->bgcolor[3] != 0)
 			MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], node->bgcolor);
 
@@ -231,13 +233,39 @@ static void MN_DrawNode (menuNode_t *node)
 		node->behaviour->draw(node);
 	}
 
-	/* skip child */
-	if (node->behaviour->drawItselfChild)
-		return;
-
 	/* draw all child */
-	for (child = node->firstChild; child; child = child->next) {
-		MN_DrawNode(child);
+	if (!node->behaviour->drawItselfChild && node->firstChild) {
+		qboolean hasClient = qfalse;
+		vec2_t clientPosition;
+		if (node->behaviour->getClientPosition) {
+			node->behaviour->getClientPosition(node, clientPosition);
+			hasClient = qtrue;
+		}
+
+		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+
+		/** @todo move it at the right position */
+		if (hasClient) {
+			vec3_t trans;
+			trans[0] = clientPosition[0];
+			trans[1] = clientPosition[1];
+			trans[2] = 0;
+			R_Transform(trans, NULL, NULL);
+		}
+
+		for (child = node->firstChild; child; child = child->next)
+			MN_DrawNode(child);
+
+		/** @todo move it at the right position */
+		if (hasClient) {
+			vec3_t trans;
+			trans[0] = -clientPosition[0];
+			trans[1] = -clientPosition[1];
+			trans[2] = 0;
+			R_Transform(trans, NULL, NULL);
+		}
+
+		R_PopClipRect();
 	}
 }
 

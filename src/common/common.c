@@ -807,7 +807,7 @@ void Qcommon_Init (int argc, const char **argv)
 	/* random seed */
 	srand(time(NULL));
 
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
+	com_aliasSysPool = Mem_CreatePool("Common: Alias system for commands and enums");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
 	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
 	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");

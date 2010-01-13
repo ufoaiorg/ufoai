@@ -28,11 +28,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 #include "lua/lua.h"
-#include "../common/filesys.h" /**< MAX_QPATH @todo remove once all those 'doesn't belong here' are fixed */
+#include "../common/filesys.h"
+
+typedef enum {
+	DROPSHIP_FIREBIRD,
+	DROPSHIP_HERAKLES,
+	DROPSHIP_RAPTOR,
+
+	INTERCEPTOR_STILETTO,
+	INTERCEPTOR_SARACEN,
+	INTERCEPTOR_DRAGON,
+	INTERCEPTOR_STARCHASER,
+	INTERCEPTOR_STINGRAY,
+
+	AIRCRAFTTYPE_MAX
+} humanAircraftType_t;
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
 #define MAX_MAPDEFS		128
+#define MAX_UGV			8
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_AMMOS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8
@@ -227,7 +242,6 @@ typedef enum {
 
 /**
  * @brief Defines all attributes of objects used in the inventory.
- * @todo Document the various (and mostly not obvious) variables here. The documentation in the .ufo file(s) might be a good starting point.
  * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
  */
 typedef struct objDef_s {
@@ -243,8 +257,8 @@ typedef struct objDef_s {
 	uint32_t shape;			/**< The shape in inventory. */
 
 	byte sx, sy;			/**< Size in x and y direction. */
-	float scale;			/**< scale value for images? and models @todo fixme - array of scales. */
-	vec3_t center;			/**< origin for models @todo fixme - array of scales. */
+	float scale;			/**< scale value for images? and models */
+	vec3_t center;			/**< origin for models */
 	char animationIndex;	/**< The animation index for the character with the weapon. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
@@ -296,8 +310,6 @@ typedef struct objDef_s {
 						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
 	struct technology_s *tech;	/**< Technology link to item. */
-	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension).
-											 * @todo Is this used anywhere? */
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
@@ -376,8 +388,10 @@ typedef struct inventory_s {
 
 typedef struct equipDef_s {
 	char name[MAX_VAR];		/**< Name of the equipment definition */
-	int num[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
-	byte numLoose[MAX_OBJDEFS];
+	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
+	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
+	int numAircraft[AIRCRAFTTYPE_MAX];
+	int numUGVs[MAX_UGV];
 	int minInterest;		/**< Minimum overall interest to use this equipment definition (only for alien) */
 	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
 } equipDef_t;
@@ -476,9 +490,6 @@ typedef struct csi_s {
 	int numAlienTeams;
 } csi_t;
 
-
-/** @todo Medals. Still subject to (major) changes. */
-
 #define MAX_SKILL	100
 
 #define GET_HP_HEALING( ab ) (1 + (ab) * 15/MAX_SKILL)
@@ -499,19 +510,16 @@ qboolean INV_IsLeftDef(const invDef_t* invDef);
 qboolean INV_IsEquipDef(const invDef_t* invDef);
 qboolean INV_IsArmourDef(const invDef_t* invDef);
 
-/**
- * @todo Generally rename "KILLED_ALIENS" to "KILLED_ENEMIES" and adapt all checks to check for (attacker->team == target->team)?
- * For this see also g_combat.c:G_UpdateCharacterScore
-*/
 typedef enum {
-	KILLED_ALIENS,		/**< Killed aliens */
+	KILLED_ENEMIES,		/**< Killed enemies */
 	KILLED_CIVILIANS,	/**< Civilians, animals */
 	KILLED_TEAM,		/**< Friendly fire, own team, partner-teams. */
 
 	KILLED_NUM_TYPES
 } killtypes_t;
 
-typedef enum { /** @note Changing order/entries also changes network-transmission and savegames! */
+/** @note Changing order/entries also changes network-transmission and savegames! */
+typedef enum {
 	ABILITY_POWER,
 	ABILITY_SPEED,
 	ABILITY_ACCURACY,
@@ -545,17 +553,13 @@ typedef struct chrScoreMission_s {
 	/* Movement counts. */
 	int movedNormal;
 	int movedCrouched;
-#if 0
-	int movedPowered;
 
-	int weight; /**< Weight of equipment (or only armour?) */
-#endif
-	/** Kills & stuns @todo use existing code */
+	/* Kills & stuns */
+	/** @todo use existing code */
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
 	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
 
-	/**
-	 * Hits/Misses @sa g_combat.c:G_UpdateHitScore. */
+	/* Hits/Misses */
 	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
 	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
 	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
@@ -569,13 +573,9 @@ typedef struct chrScoreMission_s {
 	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
 														 		 * This is counted in overall damage (healthpoint).*/
 	/** @todo Check HEALING of others. */
-
 	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
 
 	int heal;	/**< How many hitpoints has this soldier received trough healing in battlescape. */
-#if 0
-	int reactionFire;	/**< Count number of usage of RF (or TUs?) */
-#endif
 } chrScoreMission_t;
 
 /**
@@ -700,8 +700,7 @@ qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull)
 /* ================================ */
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
-void INVSH_InitInventory(invList_t * invChain, qboolean store);
-void INVSH_InvUnusedRevert(void);
+void INVSH_InitInventory(invList_t * invChain, size_t length);
 int Com_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean Com_CompareItem(item_t *item1, item_t *item2);
 void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
@@ -712,8 +711,8 @@ qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filt
 itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
-invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1)));
+invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1), warn_unused_result));
+qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1), warn_unused_result));
 int Com_MoveInInventory(inventory_t* const i, const invDef_t * from, invList_t *item, const invDef_t * to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
 void INVSH_EmptyContainer(inventory_t* const i, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
@@ -749,6 +748,6 @@ int Com_ShapeUsage(const uint32_t shape);
 uint32_t Com_ShapeRotate(const uint32_t shape);
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
-#define INV_INVENTORY_BYTES 9
+#define INV_INVENTORY_BYTES 11
 
 #endif /* GAME_INV_SHARED_H */

@@ -719,8 +719,6 @@ base/models/geoscape/alienbase.md2 | GNU General Public License 2.0 or later | W
 base/models/geoscape/alienbase.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/base.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/base.tga | GNU General Public License 2.0 or later | TimberDragon
-base/models/geoscape/defence.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/defence.tga | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/drop_firebird.jpg | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/drop_firebird.md2 | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/drop_herakles.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
@@ -3256,6 +3254,7 @@ base/textures/tex_lights/mtl_l1_fx1.tga | GNU General Public License 2.0 | Nexui
 base/textures/tex_lights/mtl_l2.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l2_fx0.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/proto_lightblue.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_lights/stoplights01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/wsupprt1_12.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_material/c_black.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_blue.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -3782,6 +3781,8 @@ base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner "hoeh
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/vendor_cart.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/vendor_cart_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/yellowcamelcrossing.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/yellowroadcrossingsign.jpg | Public Domain |  | Public Domain Golgotha
 base/textures/tex_misc/yellowtwowaysign.jpg | Public Domain |  | Public Domain Golgotha

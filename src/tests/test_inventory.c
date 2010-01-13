@@ -33,7 +33,7 @@ static invList_t invList[MAX_INVLIST];
 static inline void ResetInventoryList (void)
 {
 	memset(&invList, 0, sizeof(invList));
-	INVSH_InitInventory(invList, qfalse);
+	INVSH_InitInventory(invList, lengthof(invList));
 }
 
 /**
@@ -94,7 +94,7 @@ static void testItemAdd (void)
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
 
-	Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
+	CU_ASSERT_PTR_NOT_NULL(Com_AddToInventory(&inv, item, container, NONE, NONE, 1));
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
 }
@@ -127,7 +127,7 @@ static void testItemDel (void)
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
 
-	Com_RemoveFromInventory(&inv, container, addedItem);
+	CU_ASSERT(Com_RemoveFromInventory(&inv, container, addedItem));
 
 	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
 }

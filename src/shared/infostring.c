@@ -126,7 +126,9 @@ void Info_RemoveKey (char *s, const char *key)
 		*o = 0;
 
 		if (!strncmp(key, pkey, sizeof(pkey))) {
-			strcpy(start, s);	/* remove this part */
+			const size_t size = strlen(s);
+			memmove(start, s, size);
+			start[size] = 0;
 			return;
 		}
 

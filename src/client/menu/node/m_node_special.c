@@ -117,7 +117,7 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 				return;
 		}
 
-		dummy = MN_AllocStaticNode(node->name, "confunc");
+		dummy = MN_AllocNode(node->name, "confunc", qfalse);
 		Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Inherited confunc callback");
 		Cmd_AddUserdata(dummy->name, dummy);
 	}

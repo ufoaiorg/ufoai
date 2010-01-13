@@ -193,7 +193,7 @@ menuOption_t* MN_AddOption (menuOption_t**tree, const char* name, const char* la
 	menuOption_t *option;
 	assert(tree != NULL);
 
-	option = (menuOption_t*)Mem_PoolAlloc(sizeof(*option), com_genericPool, 0);
+	option = (menuOption_t*)Mem_PoolAlloc(sizeof(*option), mn_dynPool, 0);
 	MN_InitOption(option, name, label, value);
 
 	/* append the option */
@@ -405,7 +405,6 @@ int MN_OptionUpdateCache (menuOption_t* option)
 	return count;
 }
 
-
 /**
  * @brief find an option why index (0 is the first option)
  * @param[in] index Requested index (0 is the first option)
@@ -465,15 +464,19 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
  *     MN_OptionIteratorNextOption(&iterator);	// also return the option
  * }
  * @endcode
+ * @todo Rework that code, we should split "Init" and "AtIndex"
  */
 menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
 {
 	memset(iterator, 0, sizeof(*iterator));
+	iterator->skipCollapsed = qtrue;
+	iterator->skipInvisible = qtrue;
 	return MN_FindOptionAtIndex(index, option, iterator);
 }
 
 /**
  * @brief Find the next element from the iterator
+ * Iterator skipCollapsed and skipInvisible attribute can controle the option flow
  */
 menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 {
@@ -484,14 +487,14 @@ menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 	iterator->depthCache[iterator->depthPos] = option;
 	iterator->depthPos++;
 
-	if (option->collapsed)
+	if (option->collapsed && iterator->skipCollapsed)
 		option = NULL;
 	else
 		option = option->firstChild;
 
 	while (qtrue) {
 		while (option) {
-			if (!option->invis) {
+			if (!option->invis || !iterator->skipInvisible) {
 				iterator->option = option;
 				return option;
 			}
@@ -505,6 +508,41 @@ menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 
 	iterator->option = NULL;
 	return NULL;
+}
+
+/**
+ * @brief Find an option (and all his parents) by is value.
+ * @param[in] value The value we search
+ * @param[in] option The first option from the list/tree of option
+ * @param[inout] iterator If it found an option, the iterator contain all option parent
+ * @return The right option, else NULL
+ */
+menuOption_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* value)
+{
+	while (iterator->option) {
+		if (!strcmp(iterator->option->value, value))
+			return iterator->option;
+		MN_OptionIteratorNextOption(iterator);
+	}
+	return NULL;
+}
+
+/**
+ * @brief Find an option position from an option iterator
+ * @param[inout] iterator Context of the iteration. If it found an option, the iterator contain all option parent
+ * @param[in] value The value we search
+ * @return The option index, else -1
+ */
+int MN_FindOptionPosition (menuOptionIterator_t* iterator, const menuOption_t* option)
+{
+	int i = 0;
+	while (iterator->option) {
+		if (iterator->option == option)
+			return i;
+		i++;
+		MN_OptionIteratorNextOption(iterator);
+	}
+	return -1;
 }
 
 /**

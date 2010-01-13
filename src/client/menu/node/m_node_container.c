@@ -271,11 +271,11 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 		if (!GAME_ItemIsUseable(&csi.ods[i]))
 			continue;
 
-		while (ed->num[i]) {
+		while (ed->numItems[i]) {
 			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
 			if (!Com_AddToInventory(inv, item, &csi.ids[csi.idEquip], NONE, NONE, 1))
 				break; /* no space left in menu */
-			ed->num[item.t->idx]--;
+			ed->numItems[item.t->idx]--;
 		}
 	}
 
@@ -814,11 +814,11 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	vec2_t pos;
 
 	MN_GetNodeAbsPos(node, pos);
-	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 
 	needHeight = MN_ContainerNodeDrawBaseInventoryItems(node, highlightType);
 
-	R_EndClipRect();
+	R_PopClipRect();
 	visibleHeight = node->size[1];
 
 #if 0

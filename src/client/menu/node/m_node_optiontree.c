@@ -301,6 +301,66 @@ static void MN_OptionTreeNodeLoaded (menuNode_t *node)
 {
 }
 
+static void MN_OptionTreeSetSelectedValue (menuNode_t *node, const menuCallContext_t *context)
+{
+	menuOptionIterator_t iterator;
+	menuOption_t *option;
+	menuOption_t *firstOption;
+	const char* value;
+	int pos, i;
+
+	if (MN_GetParamNumber(context) != 1) {
+		Com_Printf("MN_OptionTreeSetSelectedValue: Invalide number of param\n");
+		return;
+	}
+
+	value = MN_GetParam(context, 1);
+
+	/* is the option exists */
+	firstOption = MN_OptionTreeNodeGetFirstOption(node);
+	MN_InitOptionIteratorAtIndex(0, firstOption, &iterator);
+	/** @todo merge that into the Init iterator function */
+	iterator.skipCollapsed = qfalse;
+	option = MN_FindOptionByValue(&iterator, value);
+
+	/* update the selection */
+	if (option) {
+		const char *cvarName = &((const char *)node->cvar)[6];
+		MN_SetCvar(cvarName, value, 0);
+		if (node->onChange)
+			MN_ExecuteEventActions(node, node->onChange);
+	} else {
+		Com_Printf("MN_OptionTreeSetSelectedValue: Option value \"%s\" not found\n", value);
+		return;
+	}
+
+	/* expend parents */
+	for (i = 0; i < iterator.depthPos; i++)
+		iterator.depthCache[i]->collapsed = qfalse;
+	MN_OptionTreeNodeUpdateCache(node);
+	MN_OptionTreeNodeUpdateScroll(node);
+
+	/* fix scroll bar */
+	firstOption = MN_OptionTreeNodeGetFirstOption(node);
+	MN_InitOptionIteratorAtIndex(0, firstOption, &iterator);
+	pos = MN_FindOptionPosition(&iterator, option);
+	if (pos == -1)
+		return;
+	if (pos < EXTRADATA(node).scrollY.viewPos || pos >= EXTRADATA(node).scrollY.viewPos + EXTRADATA(node).scrollY.viewSize) {
+		qboolean updated;
+		updated = MN_SetScroll(&EXTRADATA(node).scrollY, pos, -1, -1);
+		if (updated && EXTRADATA(node).onViewChange)
+			MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	}
+}
+
+static const value_t properties[] = {
+	/* Call it to toggle the node status. */
+	{"setselectedvalue", V_UI_NODEMETHOD, ((size_t) MN_OptionTreeSetSelectedValue), 0},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
@@ -310,4 +370,5 @@ void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseWheel = MN_OptionTreeNodeMouseWheel;
 	behaviour->loading = MN_OptionTreeNodeLoading;
 	behaviour->loaded = MN_OptionTreeNodeLoaded;
+	behaviour->properties = properties;
 }

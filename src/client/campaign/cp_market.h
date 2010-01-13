@@ -28,13 +28,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** market structure */
 typedef struct market_s {
-	int num[MAX_OBJDEFS];					/**< number of items on the market */
-	int bid[MAX_OBJDEFS];					/**< price of item for selling */
-	int ask[MAX_OBJDEFS];					/**< price of item for buying */
-	double currentEvolution[MAX_OBJDEFS];	/**< evolution of the market */
+	int numItems[MAX_OBJDEFS];					/**< number of items on the market */
+	int bidItems[MAX_OBJDEFS];					/**< price of item for selling */
+	int askItems[MAX_OBJDEFS];					/**< price of item for buying */
+	double currentEvolutionItems[MAX_OBJDEFS];	/**< evolution of the market */
+	int numAircraft[AIRCRAFTTYPE_MAX];			/**< number of Aircraft on the market */
+	int bidAircraft[AIRCRAFTTYPE_MAX];			/**< price of Aircraft for selling */
+	int askAircraft[AIRCRAFTTYPE_MAX];			/**< price of Aircraft for buying */
+	double currentEvolutionAircraft[AIRCRAFTTYPE_MAX];	/**< evolution of the market */
 } market_t;
 
-int BS_GetStorageSupply(const base_t *base, const char *aircraftID);
+void BS_AddItemToMarket(const objDef_t *od, int amount);
+void BS_RemoveItemFromMarket(const objDef_t *od, int amount);
+void BS_AddAircraftToMarket(const aircraft_t *aircraft, int amount);
+void BS_RemoveAircraftFromMarket(const aircraft_t *aircraft, int amount);
+int BS_GetAircraftOnMarket(const aircraft_t *aircraft);
+int BS_GetAircraftSellingPrice(const aircraft_t *aircraft);
+int BS_GetAircraftBuyingPrice(const aircraft_t *aircraft);
+int BS_GetItemSellingPrice(const objDef_t *od);
+int BS_GetItemBuyingPrice(const objDef_t *od);
+
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
 void BS_ProcessCraftItemSale(const base_t *base, const objDef_t *craftitem, const int numItems);
 

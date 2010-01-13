@@ -1197,40 +1197,6 @@ void Scene_parentSelectedBrushesToEntity (scene::Graph& graph, scene::Node& pare
 	graph.traverse(ParentSelectedBrushesToEntityWalker(parent));
 }
 
-class CountSelectedBrushes: public scene::Graph::Walker
-{
-		std::size_t& m_count;
-		mutable std::size_t m_depth;
-	public:
-		CountSelectedBrushes (std::size_t& count) :
-			m_count(count), m_depth(0)
-		{
-			m_count = 0;
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (++m_depth != 1 && path.top().get().isRoot()) {
-				return false;
-			}
-			Selectable* selectable = Instance_getSelectable(instance);
-			if (selectable != 0 && selectable->isSelected() && Node_isPrimitive(path.top())) {
-				++m_count;
-			}
-			return true;
-		}
-		void post (const scene::Path& path, scene::Instance& instance) const
-		{
-			--m_depth;
-		}
-};
-
-std::size_t Scene_countSelectedBrushes (scene::Graph& graph)
-{
-	std::size_t count;
-	graph.traverse(CountSelectedBrushes(count));
-	return count;
-}
-
 namespace map
 {
 

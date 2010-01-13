@@ -249,7 +249,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if it need, construct the drag button */
 	if (EXTRADATA(node).dragButton) {
-		menuNode_t *control = MN_AllocStaticNode("move_window_button", "controls");
+		menuNode_t *control = MN_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
 		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
@@ -263,7 +263,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if the menu should have a close button, add it here */
 	if (EXTRADATA(node).closeButton) {
-		menuNode_t *button = MN_AllocStaticNode("close_window_button", "pic");
+		menuNode_t *button = MN_AllocNode("close_window_button", "pic", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		button->root = node;
 		button->image = "ui/close";

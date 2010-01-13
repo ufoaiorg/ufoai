@@ -533,7 +533,7 @@ static void B_UpdateAntimatterCap (base_t *base)
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID)) {
-			base->capacities[CAP_ANTIMATTER].cur = base->storage.num[i];
+			base->capacities[CAP_ANTIMATTER].cur = base->storage.numItems[i];
 			return;
 		}
 	}
@@ -1068,14 +1068,14 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 			B_PackInitialEquipment(assignInitialAircraft, ed);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
-				edTarget->num[i] += ed->num[i] / 5;
+				edTarget->numItems[i] += ed->numItems[i] / 5;
 		}
 	}
 
 	/* Pay for the initial equipment as well as update storage capacity. */
 	for (i = 0; i < csi.numODs; i++) {
-		price += edTarget->num[i] * csi.ods[i].price;
-		base->capacities[CAP_ITEMS].cur += edTarget->num[i] * csi.ods[i].size;
+		price += edTarget->numItems[i] * csi.ods[i].price;
+		base->capacities[CAP_ITEMS].cur += edTarget->numItems[i] * csi.ods[i].size;
 	}
 
 	/* Finally update credits. */
@@ -2560,7 +2560,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		} else {
 			/* If the related technology is researched, check the autosell option. */
 			if (ccs.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
-				ccs.eMarket.num[cargo[i].item->idx] += cargo[i].amount;
+				BS_AddItemToMarket(cargo[i].item, cargo[i].amount);
 				gained += (cargo[i].item->price * cargo[i].amount);
 				numitems += cargo[i].amount;
 			} else {
@@ -2570,7 +2570,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 				for (j = 0; j < cargo[i].amount; j++) {
 					if (!B_UpdateStorageAndCapacity(base, cargo[i].item, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
-						ccs.eMarket.num[cargo[i].item->idx]++;
+						BS_AddItemToMarket(cargo[i].item, 1);
 						forcedgained += cargo[i].item->price;
 						forcedsold++;
 					}
@@ -2637,7 +2637,7 @@ qboolean B_BaseHasItem (const base_t *base, const objDef_t *item)
 {
 	assert(base);
 	assert(item);
-	return (item->virtual || base->storage.num[item->idx] > 0);
+	return (item->virtual || base->storage.numItems[item->idx] > 0);
 }
 
 /**
@@ -2662,7 +2662,7 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
 	if (!ed)
 		return -1;
 
-	return ed->num[item->idx];
+	return ed->numItems[item->idx];
 }
 
 /**
@@ -2769,14 +2769,12 @@ qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 	for (k = 0; k < MAX_OBJDEFS; k++) {
 		if (csi.ods[k].id[0] == '\0')
 			continue;
-		if (equip.num[k] || equip.numLoose[k]) {
+		if (equip.numItems[k] || equip.numItemsLoose[k]) {
 			mxml_node_t *node = mxml_AddNode(parent, SAVE_BASES_ITEM);
 
 			mxml_AddString(node, SAVE_BASES_ODS_ID, csi.ods[k].id);
-			if (equip.num[k])
-				mxml_AddInt(node, SAVE_BASES_NUM, equip.num[k]);
-			if (equip.numLoose[k])
-				mxml_AddByte(node, SAVE_BASES_NUMLOOSE, equip.numLoose[k]);
+			mxml_AddIntValue(node, SAVE_BASES_NUM, equip.numItems[k]);
+			mxml_AddByteValue(node, SAVE_BASES_NUMLOOSE, equip.numItemsLoose[k]);
 		}
 	}
 	return qtrue;
@@ -2931,10 +2929,9 @@ qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 
 		if (!od) {
 			Com_Printf("B_Load: Could not find item '%s'\n", s);
-			return qfalse;
 		} else {
-			equip->num[od->idx] = mxml_GetInt(node, SAVE_BASES_NUM, 0);
-			equip->numLoose[od->idx] = mxml_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
+			equip->numItems[od->idx] = mxml_GetInt(node, SAVE_BASES_NUM, 0);
+			equip->numItemsLoose[od->idx] = mxml_GetInt(node, SAVE_BASES_NUMLOOSE, 0);
 		}
 	}
 	return qtrue;
@@ -3104,8 +3101,8 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 		return qtrue;
 
 	if (reset) {
-		base->storage.num[obj->idx] = 0;
-		base->storage.numLoose[obj->idx] = 0; /** @todo needed? */
+		base->storage.numItems[obj->idx] = 0;
+		base->storage.numItemsLoose[obj->idx] = 0; /** @todo needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
 		if (!B_ItemIsStoredInBaseStorage(obj)) {
@@ -3121,7 +3118,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 			}
 		}
 
-		base->storage.num[obj->idx] += amount;
+		base->storage.numItems[obj->idx] += amount;
 		if (obj->size > 0)
 			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
 
@@ -3130,9 +3127,9 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 			base->capacities[CAP_ITEMS].cur = 0;
 		}
 
-		if (base->storage.num[obj->idx] < 0) {
+		if (base->storage.numItems[obj->idx] < 0) {
 			Com_Printf("B_UpdateStorageAndCapacity: current number of item '%s' is negative: reset to 0\n", obj->id);
-			base->storage.num[obj->idx] = 0;
+			base->storage.numItems[obj->idx] = 0;
 		}
 	}
 
@@ -3196,7 +3193,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			continue;
 
 		/* Don't count item that we don't have in base */
-		if (!base->storage.num[i])
+		if (!base->storage.numItems[i])
 			continue;
 
 		objIdx[num++] = i;
@@ -3223,7 +3220,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			const int idx = objIdx[randNumber];
 			assert(idx >= 0);
 			assert(idx < MAX_OBJDEFS);
-			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.numItems[idx], qfalse, qfalse);
 		}
 		REMOVE_ELEM(objIdx, randNumber, num);
 
@@ -3252,7 +3249,7 @@ void B_UpdateStorageCap (base_t *base)
 		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
 
-		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * obj->size;
+		base->capacities[CAP_ITEMS].cur += base->storage.numItems[i] * obj->size;
 	}
 
 	/* UGV takes room in storage capacity */
@@ -3293,12 +3290,12 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	if (add) {	/* Adding. */
 		/** @todo: recheck callers and optimize */
 		if (base->capacities[CAP_ANTIMATTER].cur + amount <= base->capacities[CAP_ANTIMATTER].max) {
-			base->storage.num[i] += amount;
+			base->storage.numItems[i] += amount;
 			base->capacities[CAP_ANTIMATTER].cur += amount;
 		} else {
 			for (j = 0; j < amount; j++) {
 				if (base->capacities[CAP_ANTIMATTER].cur < base->capacities[CAP_ANTIMATTER].max) {
-					base->storage.num[i]++;
+					base->storage.numItems[i]++;
 					base->capacities[CAP_ANTIMATTER].cur++;
 				} else
 					break;
@@ -3307,10 +3304,10 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	} else {	/* Removing. */
 		if (amount == 0) {
 			base->capacities[CAP_ANTIMATTER].cur = 0;
-			base->storage.num[i] = 0;
+			base->storage.numItems[i] = 0;
 		} else {
 			base->capacities[CAP_ANTIMATTER].cur -= amount;
-			base->storage.num[i] -= amount;
+			base->storage.numItems[i] -= amount;
 		}
 	}
 }

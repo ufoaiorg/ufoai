@@ -341,7 +341,10 @@ void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 
-/* g_client.c */
+/* g_vis.c */
+#define VIS_APPEAR	1
+#define VIS_PERISH	2
+
 /** the visibile changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
 /** actor visible? */
@@ -349,6 +352,7 @@ void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const 
 /** stop the current action if actor appears */
 #define VIS_STOP	4
 
+/* g_client.c */
 /** check whether edict is still visible - it maybe is currently visible but this
  * might have changed due to some action */
 #define VT_PERISH		1
@@ -361,7 +365,7 @@ void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const 
 
 void G_FlushSteps(void);
 qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
-qboolean G_ActionCheck(player_t *player, edict_t *ent, int TU, qboolean quiet);
+qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU, qboolean quiet);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
@@ -371,12 +375,14 @@ void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
 
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
+edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(const player_t * player);
+void G_ClientInitActorStates(const player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
 qboolean G_ClientIsReady(const player_t * player);
@@ -397,7 +403,7 @@ void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to, qbool
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
 void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
-void G_ClientStateChange(player_t* player, edict_t* ent, int reqState, qboolean checkaction);
+void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
 
 void G_SendInvisible(player_t *player);

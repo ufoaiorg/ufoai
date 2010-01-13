@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 #include "../m_parse.h"
+#include "../m_internal.h"
 #include "m_node_abstractvalue.h"
 
 #define EXTRADATA(node) (node->u.abstractvalue)
@@ -46,6 +47,26 @@ static void MN_AbstractValueLoaded (menuNode_t * node)
 	MN_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);
 	MN_InitCvarOrFloat((float**)&EXTRADATA(node).max, 0);
 	MN_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
+}
+
+static void MN_AbstractValueNew (menuNode_t * node)
+{
+	EXTRADATA(node).value = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
+	EXTRADATA(node).delta = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
+	EXTRADATA(node).max = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
+	EXTRADATA(node).min = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
+}
+
+static void MN_AbstractValueDelete (menuNode_t * node)
+{
+	Mem_Free(EXTRADATA(node).value);
+	Mem_Free(EXTRADATA(node).delta);
+	Mem_Free(EXTRADATA(node).max);
+	Mem_Free(EXTRADATA(node).min);
+	EXTRADATA(node).value = NULL;
+	EXTRADATA(node).delta = NULL;
+	EXTRADATA(node).max = NULL;
+	EXTRADATA(node).min = NULL;
 }
 
 static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
@@ -94,6 +115,8 @@ void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "abstractvalue";
 	behaviour->loaded = MN_AbstractValueLoaded;
 	behaviour->clone = MN_AbstractValueClone;
+	behaviour->new = MN_AbstractValueNew;
+	behaviour->delete = MN_AbstractValueDelete;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(abstractValueExtraData_t);

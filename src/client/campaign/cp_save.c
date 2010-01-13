@@ -638,10 +638,10 @@ static void SAV_GameQuickLoad_f (void)
 void SAV_Init (void)
 {
 	static saveSubsystems_t b_subsystemXML = {"base", B_SaveXML, B_LoadXML};
+	static saveSubsystems_t rs_subsystemXML = {"research", RS_SaveXML, RS_LoadXML};
 	static saveSubsystems_t cp_subsystemXML = {"campaign", CP_SaveXML, CP_LoadXML};
 	static saveSubsystems_t hos_subsystemXML = {"hospital", HOS_SaveXML, HOS_LoadXML};
 	static saveSubsystems_t bs_subsystemXML = {"market", BS_SaveXML, BS_LoadXML};
-	static saveSubsystems_t rs_subsystemXML = {"research", RS_SaveXML, RS_LoadXML};
 	static saveSubsystems_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
 	static saveSubsystems_t ac_subsystemXML = {"aliencont", AC_SaveXML, AC_LoadXML};
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
@@ -663,10 +663,10 @@ void SAV_Init (void)
 
 	/* don't mess with the order */
 	SAV_AddSubsystem(&b_subsystemXML);
+	SAV_AddSubsystem(&rs_subsystemXML);
 	SAV_AddSubsystem(&cp_subsystemXML);
 	SAV_AddSubsystem(&hos_subsystemXML);
 	SAV_AddSubsystem(&bs_subsystemXML);
-	SAV_AddSubsystem(&rs_subsystemXML);
 	SAV_AddSubsystem(&e_subsystemXML);
 	SAV_AddSubsystem(&ac_subsystemXML);
 	SAV_AddSubsystem(&air_subsystemXML);

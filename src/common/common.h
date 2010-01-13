@@ -177,6 +177,7 @@ enum clc_ops_e {
 	clc_nop,
 	clc_endround,
 	clc_teaminfo,
+	clc_initactorstates,
 	clc_action,
 	clc_userinfo,				/**< [[userinfo string] */
 	clc_stringcmd,				/**< [string] message */

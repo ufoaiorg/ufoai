@@ -46,9 +46,9 @@ static void MN_MapNodeDraw (menuNode_t *node)
 		MN_GetNodeAbsPos(node, pos);
 
 		/* Draw geoscape */
-		R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 		MAP_DrawMap(node);
-		R_EndClipRect();
+		R_PopClipRect();
 	}
 }
 

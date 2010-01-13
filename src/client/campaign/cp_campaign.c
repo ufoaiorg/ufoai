@@ -1494,7 +1494,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	CP_CreateBattleParameters(mis);
 
-	if (!ccs.interceptAircraft) {
+	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 		return;
 	}
@@ -1520,13 +1520,12 @@ void CL_GameAutoGo (mission_t *mis)
 	won = frand() < winProbability;
 
 	/* update nation opinions */
-	if (won) {
-		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
-		CP_CheckLostCondition();
-	} else {
-		CL_HandleNationData(!won, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
-		CP_CheckLostCondition();
-	}
+	if (won)
+		CL_HandleNationData(qfalse, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
+	else
+		CL_HandleNationData(qtrue, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
+
+	CP_CheckLostCondition();
 
 	CL_AutoMissionAlienCollect(aircraft);
 
@@ -1622,7 +1621,7 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 		return qfalse;
 
 	/* not enough killed enemies yet */
-	if (chr->score.kills[KILLED_ALIENS] < rank->killedEnemies)
+	if (chr->score.kills[KILLED_ENEMIES] < rank->killedEnemies)
 		return qfalse;
 
 	/* too many civilians and team kills */
@@ -1716,7 +1715,7 @@ static void CL_DebugAllItems_f (void)
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
-		if (base->storage.num[i] > 0) {
+		if (base->storage.numItems[i] > 0) {
 			technology_t *tech = obj->tech;
 			if (!tech)
 				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", obj->id, obj->name);
@@ -1750,7 +1749,7 @@ static void CL_DebugShowItems_f (void)
 		const objDef_t *obj = &csi.ods[i];
 		if (!obj->tech)
 			Sys_Error("CL_DebugAllItems_f: No tech for %s\n", obj->id);
-		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.num[i]);
+		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.numItems[i]);
 	}
 }
 

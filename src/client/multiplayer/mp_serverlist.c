@@ -267,6 +267,7 @@ static char userInfoText[256];
  * @note This function fills the network browser server information with text
  * @sa NET_OOB_Printf
  * @sa CL_ServerInfoCallback
+ * @sa SVC_Info
  */
 void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 {

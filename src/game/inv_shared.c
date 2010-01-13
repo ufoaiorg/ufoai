@@ -29,14 +29,75 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "inv_shared.h"
 #include "../shared/shared.h"
 
+static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
+static csi_t *CSI;
+
+/*================================
+INVLIST FUNCTIONS
+================================*/
+
+static invList_t *invUnused;
+
+static void INVSH_RemoveInvList (invList_t *ic)
+{
+	ic->next = invUnused;
+	invUnused = ic;
+}
+
+static invList_t* INVSH_AddInvList (invList_t **invList)
+{
+	invList_t* ic = invUnused;
+
+	if (!ic)
+		Sys_Error("INVSH_AddInvList: No free inventory space!");
+
+	/* Ensure, that for later usage invUnused will be the next empty/free slot. */
+	invUnused = ic->next;
+
+	/* Set the "next" link of the new "first item" to the original "first item". */
+	ic->next = *invList;
+
+	/* Remember the new "first item" (i.e. the yet empty entry). */
+	*invList = ic;
+
+	return ic;
+}
+
+/**
+ * @brief Initializes the inventory definition by linking the ->next pointers properly.
+ * @param[in] invList Pointer to invList_t definition being initialized.
+ * @param[in] length The size of the invList array
+ * @sa G_Init
+ * @sa CL_ResetSinglePlayerData
+ * @sa CL_InitLocal
+ */
+void INVSH_InitInventory (invList_t * invList, size_t length)
+{
+	int i;
+
+	fprintf(stderr, "%p: %p\n", INVSH_InitInventory, invList);
+
+	assert(invList);
+
+	invUnused = invList;
+	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
+	invUnused->next = NULL;
+
+	/* now link the invList_t next pointers
+	 * invList[1]->next = invList[0]
+	 * invList[2]->next = invList[1]
+	 * invList[3]->next = invList[2]
+	 * ... and so on
+	 */
+	for (i = 0; i < length - 1; i++) {
+		invList_t *last = invUnused++;
+		invUnused->next = last;
+	}
+}
+
 /*================================
 INVENTORY MANAGEMENT FUNCTIONS
 ================================*/
-
-static csi_t *CSI;
-static invList_t *invUnused;
-static invList_t *invUnusedRevert;
-static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
 
 /**
  * @brief Initializes csi_t *CSI pointer.
@@ -114,53 +175,6 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
 	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
 		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i] for item '%s'", fdIdx, obj->id);
 	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
-}
-
-/**
- * @brief Initializes the inventory definition by linking the ->next pointers properly.
- * @param[in] invList Pointer to invList_t definition being initialized. This array must have at
- * least the size @c MAX_INVLIST.
- * @param[in] store When true, the last invUnused is backuped - @sa INVSH_InvUnusedRevert
- * @sa G_Init
- * @sa CL_ResetSinglePlayerData
- * @sa CL_InitLocal
- */
-void INVSH_InitInventory (invList_t * invList, qboolean store)
-{
-	int i;
-
-	assert(invList);
-
-	/* store last Unused stack? */
-	if (store)
-		invUnusedRevert = invUnused;
-
-	invUnused = invList;
-	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
-	invUnused->next = NULL;
-
-	/* now link the invList_t next pointers
-	 * invList[1]->next = invList[0]
-	 * invList[2]->next = invList[1]
-	 * invList[3]->next = invList[2]
-	 * ... and so on
-	 */
-	for (i = 0; i < MAX_INVLIST - 1; i++) {
-		invList_t *last = invUnused++;
-		invUnused->next = last;
-	}
-}
-
-/**
- * @brief reverts invUnused back to previous structure list
- */
-void INVSH_InvUnusedRevert (void)
-{
-	if (!invUnusedRevert)
-		return;
-
-	invUnused = invUnusedRevert;
-	invUnusedRevert = NULL;
 }
 
 static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
@@ -668,7 +682,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
 
 /**
  * @brief Add an item to a specified container in a given inventory.
- * @note Set x and y to NONE if the item should get added but not displayed.
+ * @note Set x and y to NONE if the item should get added to an automatically chosen free spot in the container.
  * @param[in] i Pointer to inventory definition, to which we will add item.
  * @param[in] item Item to add to given container (needs to have "rotated" tag already set/checked, this is NOT checked here!)
  * @param[in] container Container in given inventory definition, where the new item will be stored.
@@ -676,6 +690,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, const invDef_t * c
  * @param[in] y The x location in the container.
  * @param[in] amount How many items of this type should be added. (this will overwrite the amount as defined in "item.amount")
  * @sa Com_RemoveFromInventory
+ * @return the @c invList_t pointer the item was added to, or @c NULL in case of an error (item wasn't added)
  */
 invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_t * container, int x, int y, int amount)
 {
@@ -693,10 +708,8 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	assert(i);
 	assert(container);
 
-	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
-		/* No (sane) position in container given as parameter - find free space on our own. */
-		Com_FindSpace(i, &item, container, &x, &y, NULL);
-	}
+	if (container->single && i->c[container->id] && i->c[container->id]->next)
+		return NULL;
 
 	/**
 	 * What we are doing here.
@@ -733,29 +746,21 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 			}
 	}
 
+	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT) {
+		/* No (sane) position in container given as parameter - find free space on our own. */
+		Com_FindSpace(i, &item, container, &x, &y, NULL);
+		if (x == NONE)
+			return NULL;
+	}
+
 	/* not found - add a new one */
-	/* Get empty container */
-	ic = invUnused;
-
-	/* Ensure, that for later usage invUnused will be the next empty/free slot.
-	 * It is not used _here_ anymore. */
-	invUnused = ic->next;
-
-	/* Set the "next" link of the new "first item" to the original "first item". */
-	ic->next = i->c[container->id];
-
-	/* Remember the new "first item" (i.e. the yet empty entry). */
-	i->c[container->id] = ic;
-/*	Com_Printf("Add to container %i: %s\n", container, item.t->id);*/
+	ic = INVSH_AddInvList(&i->c[container->id]);
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
 	ic->item.amount = amount;
 	ic->x = x;
 	ic->y = y;
-
-	if (container->single && i->c[container->id]->next)
-		Com_Printf("Com_AddToInventory: Error: single container %s has many items.\n", container->name);
 
 	return ic;
 }
@@ -810,8 +815,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 		i->c[container->id] = ic->next;
 
 		/* updated invUnused to be able to reuse this space later again */
-		ic->next = invUnused;
-		invUnused = ic;
+		INVSH_RemoveInvList(ic);
 
 		return qtrue;
 	}
@@ -832,8 +836,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 			else
 				previous->next = ic->next;
 
-			ic->next = invUnused;
-			invUnused = ic;
+			INVSH_RemoveInvList(ic);
 
 			return qtrue;
 		}
@@ -935,6 +938,10 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 	else {
 		if (tx == NONE || ty == NONE)
 			Com_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
+		/* still no valid location found */
+		if (tx == NONE || ty == NONE)
+			return IA_NONE;
+
 		checkedTo = Com_CheckToInventory(i, fItem->item.t, to, tx, ty, fItem);
 	}
 
@@ -990,7 +997,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 						return IA_NONE;
 
 					/* Add the currently used ammo in a free place of the "from" container. */
-					Com_AddToInventory(i, item, from, -1, -1, 1);
+					Com_AddToInventory(i, item, from, NONE, NONE, 1);
 
 					ic->item.m = cacheItem.t;
 					if (icp)
@@ -1097,34 +1104,15 @@ qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
 void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 {
 	invList_t *ic;
-#ifdef DEBUG
-	int cnt = 0;
-#endif
-
-	assert(i);
-	assert(container);
-
-#ifdef DEBUG
-	if (container->temp)
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", container->name);
-#endif
 
 	ic = i->c[container->id];
 
 	while (ic) {
 		invList_t *old = ic;
 		ic = ic->next;
-		old->next = invUnused;
-		invUnused = old;
-#ifdef DEBUG
-		if (cnt >= MAX_INVLIST) {
-			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (INVSH_EmptyContainer)\n",
-				container->name, cnt, MAX_INVLIST);
-			break;
-		}
-		cnt++;
-#endif
+		INVSH_RemoveInvList(old);
 	}
+
 	i->c[container->id] = NULL;
 }
 
@@ -1171,6 +1159,8 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 		*px = *py = 0;
 		return;
 	}
+
+	/** @todo optimize for single containers */
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
@@ -1220,8 +1210,7 @@ qboolean Com_TryAddToInventory (inventory_t* const inv, item_t item, const invDe
 		else
 			item.rotated = qfalse;
 
-		Com_AddToInventory(inv, item, container, x, y, 1);
-		return qtrue;
+		return Com_AddToInventory(inv, item, container, x, y, 1) != NULL;
 	}
 }
 
@@ -1296,7 +1285,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 			int totalAvailableAmmo = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				objDef_t *obj = &CSI->ods[i];
-				if (ed->num[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+				if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 					totalAvailableAmmo++;
 				}
 			}
@@ -1304,7 +1293,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 				int randNumber = rand() % totalAvailableAmmo;
 				for (i = 0; i < CSI->numODs; i++) {
 					objDef_t *obj = &CSI->ods[i];
-					if (ed->num[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+					if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 						randNumber--;
 						if (randNumber < 0) {
 							ammo = obj;
@@ -1349,7 +1338,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 		int numpacked = 0;
 
 		/* how many clips? */
-		num = (1 + ed->num[ammo->idx])
+		num = (1 + ed->numItems[ammo->idx])
 			* (float) (1.0f + missedPrimary / 100.0);
 
 		/* pack some ammo */
@@ -1449,7 +1438,7 @@ typedef enum {
 void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t* chr)
 {
 	int i, sum;
-	const int numEquip = lengthof(ed->num);
+	const int numEquip = lengthof(ed->numItems);
 	int hasWeapon = 0, repeat = 0;
 	int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
 							* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
@@ -1464,9 +1453,9 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 		int randNumber = rand() % 100;
 		for (i = 0; i < maxWeaponIdx; i++) {
 			objDef_t *obj = &CSI->ods[i];
-			if (ed->num[i] && obj->weapon && obj->fireTwoHanded && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))) {
-				randNumber -= ed->num[i];
-				missedPrimary += ed->num[i];
+			if (ed->numItems[i] && obj->weapon && obj->fireTwoHanded && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))) {
+				randNumber -= ed->numItems[i];
+				missedPrimary += ed->numItems[i];
 				if (!primaryWeapon && randNumber < 0)
 					primaryWeapon = obj;
 			}
@@ -1479,7 +1468,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 
 				/* Find the first possible ammo to check damage type. */
 				for (ammo = 0; ammo < CSI->numODs; ammo++)
-					if (ed->num[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], primaryWeapon))
+					if (ed->numItems[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], primaryWeapon))
 						break;
 				if (ammo < CSI->numODs) {
 					primary =
@@ -1502,9 +1491,9 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 			objDef_t *secondaryWeapon = NULL;
 			for (i = 0; i < CSI->numODs; i++) {
 				objDef_t *obj = &CSI->ods[i];
-				if (ed->num[i] && obj->weapon && obj->reload && !obj->deplete
+				if (ed->numItems[i] && obj->weapon && obj->reload && !obj->deplete
 				 && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)) {
-					randNumber -= ed->num[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
+					randNumber -= ed->numItems[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						secondaryWeapon = obj;
 						break;
@@ -1533,12 +1522,12 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 		sum = 0;
 		for (i = 0; i < CSI->numODs; i++) {
 			objDef_t *obj = &CSI->ods[i];
-			if (ed->num[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
+			if (ed->numItems[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
 			 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
 				 * don't take it into account for probability
 				 * Make sure that the probability is at least one if an item can be selected */
-				sum += ed->num[i] ? max(ed->num[i] % 100, 1) : 0;
+				sum += ed->numItems[i] ? max(ed->numItems[i] % 100, 1) : 0;
 			}
 		}
 		if (sum) {
@@ -1547,9 +1536,9 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 				objDef_t *secondaryWeapon = NULL;
 				for (i = 0; i < CSI->numODs; i++) {
 					objDef_t *obj = &CSI->ods[i];
-					if (ed->num[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
+					if (ed->numItems[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
 					 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
-						randNumber -= ed->num[i] ? max(ed->num[i] % 100,1) : 0;
+						randNumber -= ed->numItems[i] ? max(ed->numItems[i] % 100,1) : 0;
 						if (randNumber < 0) {
 							secondaryWeapon = obj;
 							break;
@@ -1558,7 +1547,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 				}
 
 				if (secondaryWeapon) {
-					int num = ed->num[secondaryWeapon->idx] / 100 + (ed->num[secondaryWeapon->idx] % 100 >= 100 * frand());
+					int num = ed->numItems[secondaryWeapon->idx] / 100 + (ed->numItems[secondaryWeapon->idx] % 100 >= 100 * frand());
 					while (num--) {
 						hasWeapon += INVSH_PackAmmoAndWeapon(inv, secondaryWeapon, 0, ed);
 					}
@@ -1573,7 +1562,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", ed->name);
 			for (i = 0; i < CSI->numODs; i++) {
 				objDef_t *obj = &CSI->ods[i];
-				if (ed->num[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
+				if (ed->numItems[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
 					if (obj->price > maxPrice) {
 						maxPrice = obj->price;
 						blade = obj;
@@ -1602,8 +1591,8 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 		int randNumber = rand() % 100;
 		for (i = 0; i < CSI->numODs; i++) {
 			objDef_t *armour = &CSI->ods[i];
-			if (ed->num[i] && INV_ItemMatchesFilter(armour, FILTER_S_ARMOUR)) {
-				randNumber -= ed->num[i];
+			if (ed->numItems[i] && INV_ItemMatchesFilter(armour, FILTER_S_ARMOUR)) {
+				randNumber -= ed->numItems[i];
 				if (randNumber < 0) {
 					const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
 					if (Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idArmour]))
@@ -1645,7 +1634,7 @@ int CHRSH_CharGetMaxExperiencePerMission (abilityskills_t skill)
 	case ABILITY_ACCURACY:
 		return 290;
 	case ABILITY_MIND:
-		return 290;
+		return 450;
 	case SKILL_CLOSE:
 		return 680;
 	case SKILL_HEAVY:

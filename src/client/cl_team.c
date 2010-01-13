@@ -248,15 +248,13 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 {
 	mxml_node_t *s;
-	int count = 0;
 
-	for (s = mxml_GetNode(p, SAVE_INVENTORY_ITEM); s; s = mxml_GetNextNode(s, p, SAVE_INVENTORY_ITEM), count++) {
+	for (s = mxml_GetNode(p, SAVE_INVENTORY_ITEM); s; s = mxml_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		item_t item;
 		int container, x, y;
 		CL_LoadItemXML(s, &item, &container, &x, &y);
 		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
-		assert(count < MAX_INVLIST);
 	}
 }
 
@@ -363,113 +361,6 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 		assert(chrDisplayList.chr[i]);
 		chrDisplayList.chr[i]->skin = newSkin;
 	}
-}
-
-/**
- * @brief Updates status of weapon (sets pointers, reloads, etc).
- * @param[in] ed Pointer to equipment definition.
- * @param[in] item An item to update.
- * @return Updated item in any case, even if there was no update.
- * @sa CL_CleanupAircraftCrew
- * @todo Move it to a better place - has nothing to do with team code imo
- */
-item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
-{
-	int i;
-	objDef_t *type = item.t;
-
-	assert(ed->num[type->idx] > 0);
-	ed->num[type->idx]--;
-
-	if (type->weapons[0]) {
-		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
-		if (type->oneshot) {
-			/* "Recharge" the oneshot weapon. */
-			item.a = type->ammo;
-			item.m = item.t; /* Just in case this hasn't been done yet. */
-			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", type->id);
-			return item;
-		} else {
-			/* No change, nothing needs to be done to this item. */
-			return item;
-		}
-	} else if (!type->reload) {
-		/* The given item is a weapon but no ammo is needed,
-		 * so fire definitions are in t (the weapon). Setting equal. */
-		item.m = item.t;
-		return item;
-	} else if (item.a) {
-		assert(item.m);
-		/* The item is a weapon and it was reloaded one time. */
-		if (item.a == type->ammo) {
-			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			if (ed->num[item.m->idx] > 0) {
-				ed->num[item.m->idx]--;
-				return item;
-			} else {
-				/* Your clip has been sold; give it back. */
-				item.a = NONE_AMMO;
-				return item;
-			}
-		}
-	}
-
-	/* Check for complete clips of the same kind */
-	if (item.m && ed->num[item.m->idx] > 0) {
-		ed->num[item.m->idx]--;
-		item.a = type->ammo;
-		return item;
-	}
-
-	/* Search for any complete clips. */
-	/** @todo We may want to change this to use the type->ammo[] info. */
-	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type)) {
-			if (ed->num[i] > 0) {
-				ed->num[i]--;
-				item.a = type->ammo;
-				item.m = &csi.ods[i];
-				return item;
-			}
-		}
-	}
-
-	/** @todo on return from a mission with no clips left
-	 * and one weapon half-loaded wielded by soldier
-	 * and one empty in equip, on the first opening of equip,
-	 * the empty weapon will be in soldier hands, the half-full in equip;
-	 * this should be the other way around. */
-
-	/* Failed to find a complete clip - see if there's any loose ammo
-	 * of the same kind; if so, gather it all in this weapon. */
-	if (item.m && ed->numLoose[item.m->idx] > 0) {
-		item.a = ed->numLoose[item.m->idx];
-		ed->numLoose[item.m->idx] = 0;
-		return item;
-	}
-
-	/* See if there's any loose ammo */
-	/** @todo We may want to change this to use the type->ammo[] info. */
-	item.a = NONE_AMMO;
-	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type) && (ed->numLoose[i] > item.a)) {
-			if (item.a > 0) {
-				/* We previously found some ammo, but we've now found other
-				 * loose ammo of a different (but appropriate) type with
-				 * more bullets.  Put the previously found ammo back, so
-				 * we'll take the new type. */
-				assert(item.m);
-				ed->numLoose[item.m->idx] = item.a;
-				/* We don't have to accumulate loose ammo into clips
-				 * because we did it previously and we create no new ammo */
-			}
-			/* Found some loose ammo to load the weapon with */
-			item.a = ed->numLoose[i];
-			ed->numLoose[i] = 0;
-			item.m = &csi.ods[i];
-		}
-	}
-	return item;
 }
 
 /**

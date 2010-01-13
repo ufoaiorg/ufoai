@@ -245,10 +245,10 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 static void AII_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
 {
 	/* Let's add remaining ammo to market. */
-	eTempEq.numLoose[magazine->item.m->idx] += magazine->item.a;
-	if (eTempEq.numLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
+	eTempEq.numItemsLoose[magazine->item.m->idx] += magazine->item.a;
+	if (eTempEq.numItemsLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
+		eTempEq.numItemsLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
 		AII_CollectItem(aircraft, magazine->item.m, 1);
 	}
 }
@@ -300,7 +300,7 @@ static void AII_CarriedItems (const le_t *soldier)
 			/** @todo */
 			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
 
-			ccs.eMission.num[item->item.t->idx]++;
+			ccs.eMission.numItems[item->item.t->idx]++;
 			tech = item->item.t->tech;
 			if (!tech)
 				Com_Error(ERR_DROP, "AII_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
@@ -308,10 +308,10 @@ static void AII_CarriedItems (const le_t *soldier)
 
 			if (!item->item.t->reload || item->item.a == 0)
 				continue;
-			ccs.eMission.numLoose[item->item.m->idx] += item->item.a;
-			if (ccs.eMission.numLoose[item->item.m->idx] >= item->item.t->ammo) {
-				ccs.eMission.numLoose[item->item.m->idx] -= item->item.t->ammo;
-				ccs.eMission.num[item->item.m->idx]++;
+			ccs.eMission.numItemsLoose[item->item.m->idx] += item->item.a;
+			if (ccs.eMission.numItemsLoose[item->item.m->idx] >= item->item.t->ammo) {
+				ccs.eMission.numItemsLoose[item->item.m->idx] -= item->item.t->ammo;
+				ccs.eMission.numItems[item->item.m->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload
 			 * will happen at equip screen or at the start of next mission,
@@ -3180,15 +3180,15 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 					const objDef_t *type = item.t;
 					invList_t *next = ic->next;
 
-					ed->num[type->idx]++;
+					ed->numItems[type->idx]++;
 					if (item.a) {
 						assert(type->reload);
 						assert(item.m);
-						ed->numLoose[item.m->idx] += item.a;
+						ed->numItemsLoose[item.m->idx] += item.a;
 						/* Accumulate loose ammo into clips */
-						if (ed->numLoose[item.m->idx] >= type->ammo) {
-							ed->numLoose[item.m->idx] -= type->ammo;
-							ed->num[item.m->idx]++;
+						if (ed->numItemsLoose[item.m->idx] >= type->ammo) {
+							ed->numItemsLoose[item.m->idx] -= type->ammo;
+							ed->numItems[item.m->idx]++;
 						}
 					}
 					ic = next;

@@ -98,7 +98,7 @@ void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int 
 
 /**
  * @brief Let an actor fall down if e.g. the func_breakable the actor was standing on was destroyed.
- * @param ent The actor that should fall down
+ * @param[in,out] ent The actor that should fall down
  * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.
  */
 void G_ActorFall (edict_t *ent)
@@ -123,6 +123,36 @@ void G_ActorFall (edict_t *ent)
 	G_EventActorFall(ent);
 
 	gi.EndEvents();
+}
+
+/**
+ * @brief Checks whether the actor should stop movement
+ * @param ent The actors edict
+ * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
+ * @param visState The visibily check state @c VIS_PERISH, @c VIS_APPEAR
+ * @return @c true if the actor should stop movement, @c false otherwise
+ */
+static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState, byte* dvtab, int max)
+{
+	if (stopOnVisStop && (visState & VIS_STOP))
+		 return qtrue;
+
+	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
+	  * this might be the case if the edict got visible in mid mode */
+	 if (visState & VIS_APPEAR) {
+		 pos3_t pos;
+		 VectorCopy(ent->pos, pos);
+		 while (max >= 0) {
+			 int tmp = 0;
+			 edict_t *blockEdict;
+			 PosAddDV(pos, tmp, dvtab[max]);
+			 max--;
+			 blockEdict = G_GetEdictFromPos(pos, 0);
+			 if (blockEdict && G_IsBlockingMovementActor(blockEdict))
+				 return qtrue;
+		 }
+	 }
+	 return qfalse;
 }
 
 /**
@@ -330,7 +360,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 
 				clientAction = ent->clientAction;
 				oldState = ent->state;
-				/* check triggers at new position but only if no actor appeared */
+				/* check triggers at new position */
 				if (G_TouchTriggers(ent)) {
 					triggers = qtrue;
 					if (!clientAction)
@@ -369,7 +399,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (stopOnVisStop && (status & VIS_STOP)) {
+			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;

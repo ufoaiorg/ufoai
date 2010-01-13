@@ -476,14 +476,14 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++)
-				if ((srcbase->storage.num[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
+				if ((srcbase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
 					if (td.trItemsTmp[i] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
 					else
 						LIST_AddString(&transferListTransfered, "");
 					Com_sprintf(str, sizeof(str), "%s", _(csi.ods[i].name));
 					LIST_AddString(&transferList, str);
-					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.num[i]));
+					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.numItems[i]));
 					cnt++;
 				}
 			if (!cnt) {
@@ -1140,7 +1140,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if ((base->storage.num[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {	
+			if ((base->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {	
 				if (cnt == num) {
 					int amount;
 					const objDef_t *od = &csi.ods[i];
@@ -1152,7 +1152,7 @@ static void TR_TransferListSelect_f (void)
 
 					/* you can't transfer more item than you have */
 					if (amount > 0) {
-						amount = min(amount, base->storage.num[i]);
+						amount = min(amount, base->storage.numItems[i]);
 						if (amount == 0)
 							return;
 						/* you can only transfer items that destination base can accept */
@@ -1997,11 +1997,11 @@ static void TR_TransferList_Scroll_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if ((srcBase->storage.num[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
+		if ((srcBase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
 			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
 				break;
 			if (cnt >= viewPos)
-				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos, td.trItemsTmp[i], 0, srcBase->storage.num[i] + td.trItemsTmp[i]);
+				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos, td.trItemsTmp[i], 0, srcBase->storage.numItems[i] + td.trItemsTmp[i]);
 			cnt++;
 		}
 	}

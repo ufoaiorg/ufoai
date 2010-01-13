@@ -276,5 +276,13 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		ge->ClientTeamInfo(sv_player);
 		sv_msg = NULL;
 		break;
+
+	case clc_initactorstates:
+		/* player sends team info */
+		/* actors spawn accordingly */
+		sv_msg = msg;
+		ge->ClientInitActorStates(sv_player);
+		sv_msg = NULL;
+		break;
 	}
 }

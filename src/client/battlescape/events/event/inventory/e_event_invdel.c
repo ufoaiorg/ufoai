@@ -49,7 +49,9 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 		return;
 	}
 
-	Com_RemoveFromInventory(&le->i, &csi.ids[container], ic);
+	if (!Com_RemoveFromInventory(&le->i, &csi.ids[container], ic))
+		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
+
 	if (container == csi.idRight)
 		le->right = NONE;
 	else if (container == csi.idLeft)

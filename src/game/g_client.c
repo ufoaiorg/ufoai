@@ -292,7 +292,7 @@ int G_GetActiveTeam (void)
  * @param[in] quiet Don't print the console message if quiet is true.
  * the action with
  */
-qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
+qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU, qboolean quiet)
 {
 	int msglevel;
 
@@ -376,6 +376,44 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 }
 
 /**
+ * @brief Will inform the player about the real TU reservation
+ * @param ent
+ */
+static void G_SendReservations (const edict_t *ent)
+{
+	gi.AddEvent(G_TeamToPM(ent->visflags), EV_ACTOR_RESERVATIONCHANGE);
+
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->chr.reservedTus.reaction);
+	gi.WriteShort(ent->chr.reservedTus.shot);
+	gi.WriteShort(ent->chr.reservedTus.crouch);
+}
+
+/**
+ * @brief After an actor changed his state, he might get visible for other
+ * players. Check the vis here and send the state change to the clients that
+ * are seeing him already.
+ * @param ent The actor edict
+ */
+static void G_ClientStateChangeUpdate (edict_t *ent)
+{
+	/* Send the state change. */
+	G_SendState(G_VisToPM(ent->visflags), ent);
+
+	/* Check if the player appears/perishes, seen from other teams. */
+	G_CheckVis(ent, qtrue);
+
+	/* Calc new vis for this player. */
+	G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+
+	/* Send the new TUs. */
+	G_SendStats(ent);
+
+	/* End the event. */
+ 	gi.EndEvents();
+}
+
+/**
  * @brief Changes the state of a player/soldier.
  * @param[in,out] player The player who controlls the actor
  * @param[in] ent the edict to perform the state change for
@@ -384,7 +422,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
  * don't even use the G_ActionCheck function
  * @note Use checkaction true only for e.g. spawning values
  */
-void G_ClientStateChange (player_t* player, edict_t* ent, int reqState, qboolean checkaction)
+void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qboolean checkaction)
 {
 	/* Check if any action is possible. */
 	if (checkaction && !G_ActionCheck(player, ent, 0, NOISY))
@@ -429,20 +467,7 @@ void G_ClientStateChange (player_t* player, edict_t* ent, int reqState, qboolean
 	if (!checkaction)
 		return;
 
-	/* Send the state change. */
-	G_SendState(G_VisToPM(ent->visflags), ent);
-
-	/* Check if the player appears/perishes, seen from other teams. */
-	G_CheckVis(ent, qtrue);
-
-	/* Calc new vis for this player. */
-	G_CheckVisTeam(ent->team, NULL, qfalse, ent);
-
-	/* Send the new TUs. */
-	G_SendStats(ent);
-
-	/* End the event. */
-	gi.EndEvents();
+	G_ClientStateChangeUpdate(ent);
 }
 
 /**
@@ -668,6 +693,8 @@ int G_ClientAction (player_t * player)
 		ent->chr.reservedTus.reaction = resReaction;
 		ent->chr.reservedTus.shot = resShot;
 		ent->chr.reservedTus.crouch = resCrouch;
+
+		G_SendReservations(ent);
 		break;
 
 	default:
@@ -893,48 +920,6 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 }
 
 /**
- * @brief Call this if you want to skip some actor netchannel data
- * @note The fieldsize is not skipped
- * @sa G_ClientTeamInfo
- */
-static void G_ClientSkipActorInfo (void)
-{
-	int k, j;
-
-	gi.ReadShort(); /* ucn */
-	for (k = 0; k < 4; k++)
-		gi.ReadString(); /* name, path, body, head */
-	gi.ReadByte(); /* skin */
-
-	gi.ReadShort(); /* HP */
-	gi.ReadShort(); /* maxHP */
-	gi.ReadByte(); /* teamDef->idx */
-	gi.ReadByte(); /* gender */
-	gi.ReadByte(); /* STUN */
-	gi.ReadByte(); /* morale */
-
-	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		gi.ReadLong(); /* score.experience */
-	for (k = 0; k < SKILL_NUM_TYPES; k++)
-		gi.ReadByte(); /* score.skills */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
-		gi.ReadByte(); /* score.initialSkills */
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.ReadShort(); /* score.kills */
-	for (k = 0; k < KILLED_NUM_TYPES; k++)
-		gi.ReadShort(); /* score.stuns */
-	gi.ReadShort(); /* score.assigned missions */
-
-	gi.ReadShort(); /* reservedTus.reserveReaction */
-
-	/* skip inventory */
-	j = gi.ReadShort();
-	for (k = 0; k < j; k++)
-		gi.ReadByte(); /* inventory */
-}
-
-/**
  * @brief Checks whether the spawn of an actor is allowed for the current running match.
  * @note Don't allow spawning of soldiers for multiplayer if:
  * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
@@ -1001,7 +986,8 @@ static void G_ClientReadInventory (edict_t *ent)
 				: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
 		if (container) {
-			Com_AddToInventory(&ent->i, item, container, x, y, 1);
+			if (Com_AddToInventory(&ent->i, item, container, x, y, 1) == NULL)
+				gi.error("G_ClientTeamInfo failed, could not add item to container %i", container->id);
 			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
 					container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
 		}
@@ -1047,9 +1033,33 @@ static void G_ClientReadCharacter (edict_t *ent)
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		ent->chr.score.stuns[k] = gi.ReadShort();
 	ent->chr.score.assignedMissions = gi.ReadShort();
+}
 
-	ent->state = gi.ReadShort();
+/**
+ * @brief Call this if you want to skip some actor netchannel data
+ * @note The fieldsize is not skipped
+ * @sa G_ClientTeamInfo
+ */
+static void G_ClientSkipActorInfo (void)
+{
+	int k, j;
+	edict_t ent;
 
+	G_ClientReadCharacter(&ent);
+
+	/* skip inventory */
+	j = gi.ReadShort();
+	for (k = 0; k < j; k++)
+		gi.ReadByte(); /* inventory */
+}
+
+/**
+ * @brief Used after spawning an actor to set some default values that are not read from the
+ * network event.
+ * @param ent The actor edict to set the values for.
+ */
+static void G_ClientAssignDefaultActorValues (edict_t *ent)
+{
 	/* Mission Scores */
 	memset(&scoreMission[scoreMissionNum], 0, sizeof(scoreMission[scoreMissionNum]));
 	ent->chr.scoreMission = &scoreMission[scoreMissionNum];
@@ -1065,6 +1075,33 @@ static void G_ClientReadCharacter (edict_t *ent)
 	/* set models */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
+
+	/** @todo allow later changes from GUI */
+	ent->reaction_minhit = 30;
+}
+
+/**
+ * @brief This is called after the actors are spawned and will set actor states without consuming TUs
+ * @param player The player to perform the action for
+ */
+void G_ClientInitActorStates (const player_t * player)
+{
+	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
+	int i;
+
+	for (i = 0; i < length; i++) {
+		const int ucn = gi.ReadShort();
+		int saveTU;
+		edict_t *ent = G_GetActorByUCN(ucn, player->pers.team);
+		if (!ent)
+			gi.error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
+
+		/* these state changes are not consuming any TUs */
+		saveTU = ent->TU;
+		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
+		ent->TU = saveTU;
+		G_ClientStateChangeUpdate(ent);
+	}
 }
 
 /**
@@ -1080,9 +1117,10 @@ void G_ClientTeamInfo (const player_t * player)
 
 	for (i = 0; i < length; i++) {
 		edict_t *ent;
+		const int actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
 		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team))
-			ent = G_ClientGetFreeSpawnPointForActorSize(player, gi.ReadByte());
+			ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
 		else
 			ent = NULL;
 
@@ -1099,8 +1137,7 @@ void G_ClientTeamInfo (const player_t * player)
 
 			G_ClientReadInventory(ent);
 
-			/** @todo allow later changes from GUI */
-			ent->reaction_minhit = 30;
+			G_ClientAssignDefaultActorValues(ent);
 		} else {
 			G_ClientSkipActorInfo();
 		}

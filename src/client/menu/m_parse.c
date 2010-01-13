@@ -276,6 +276,69 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 }
 
 /**
+ * @brief Parser for c command
+ */
+static qboolean MN_ParseCallAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
+{
+	menuAction_t *expression;
+	menuAction_t *lastParam = NULL;
+	int paramID = 0;
+	expression = MN_ParseExpression(text, errhead, menuNode);
+	if (expression == NULL)
+		return qfalse;
+
+	if (expression->type != EA_VALUE_PATHNODE_WITHINJECTION && expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY && expression->type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
+		Com_Printf("MN_ParseCallAction: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", MN_GetPath(menuNode));
+		return qfalse;
+	}
+
+	action->d.nonTerminal.left = expression;
+
+	/* check parameters */
+	*token = Com_EParse(text, errhead, NULL);
+	if (!*token)
+		return qfalse;
+
+	/* there is no parameters */
+	if (strcmp(*token, "(") != 0) {
+		Com_UnParseLastToken();
+		return qtrue;
+	}
+
+	/* read parameters */
+	do {
+		menuAction_t *param;
+		paramID++;
+
+		/* parameter */
+		param = MN_ParseExpression(text, errhead, menuNode);
+		if (param == NULL) {
+			Com_Printf("MN_ParseCallAction: problem with the %i parameter\n", paramID);
+			return qfalse;
+		}
+		if (lastParam == NULL)
+			action->d.nonTerminal.right = param;
+		else
+			lastParam->next = param;
+		lastParam = param;
+
+		/* separator */
+		*token = Com_EParse(text, errhead, NULL);
+		if (!*token)
+			return qfalse;
+		if (strcmp(*token, ",") != 0) {
+			if (strcmp(*token, ")") == 0)
+				break;
+			Com_UnParseLastToken();
+			Com_Printf("MN_ParseCallAction: Invalidate end of 'call' after param %i\n", paramID);
+			return qfalse;
+		}
+	} while(qtrue);
+
+	return qtrue;
+}
+
+/**
  * @brief Parse actions and return action list
  * @return The first element from a list of action
  * @sa ea_t
@@ -349,20 +412,10 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 			break;
 
 		case EA_CALL:
-			{
-				menuAction_t *expression;
-				expression = MN_ParseExpression(text, errhead, menuNode);
-				if (expression == NULL)
-					return NULL;
-
-				if (expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY) {
-					Com_Printf("MN_ParseActionList: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", MN_GetPath(menuNode));
-					return NULL;
-				}
-
-				action->d.nonTerminal.left = expression;
-				break;
-			}
+			result = MN_ParseCallAction(menuNode, action, text, token, errhead);
+			if (!result)
+				return NULL;
+			break;
 
 		case EA_DELETE:
 			{
@@ -1028,17 +1081,13 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 
 	/* else initialize a new node */
 	} else {
-		node = MN_AllocStaticNode(*token, behaviour->name);
+		node = MN_AllocNode(*token, behaviour->name, qfalse);
 		node->parent = parent;
 		if (parent)
 			node->root = parent->root;
 		/** @todo move it into caller */
 		if (parent)
 			MN_AppendNode(parent, node);
-
-		/* initialize default properties */
-		if (node->behaviour->loading)
-			node->behaviour->loading(node);
 	}
 
 	/* get body */
@@ -1256,9 +1305,8 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
 		token = Com_Parse(text);
 	} else {
-		menu = MN_AllocStaticNode(name, type);
+		menu = MN_AllocNode(name, type, qfalse);
 		menu->root = menu;
-		menu->behaviour->loading(menu);
 	}
 
 	MN_InsertWindow(menu);

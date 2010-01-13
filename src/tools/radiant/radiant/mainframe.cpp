@@ -2572,7 +2572,7 @@ void UndoSaveStateTracker::UpdateSensitiveStates (void)
 	if (g_pParentWnd == 0)
 		return;
 
-	const bool saveEnabled = m_undoSteps != m_savedStep;
+	const bool saveEnabled = m_savedStep < 0 || (m_undoSteps != static_cast<unsigned int> (m_savedStep));
 	const bool undoEnabled = m_undoSteps > 0;
 	const bool redoEnabled = m_redoSteps > 0;
 
@@ -2604,11 +2604,45 @@ void UndoSaveStateTracker::storeState (void)
 }
 
 /**
+ * increase redo steps if undo level supports it
+ */
+void UndoSaveStateTracker::increaseRedo (void)
+{
+	if (m_redoSteps < GlobalUndoSystem().getLevels()) {
+		m_redoSteps++;
+	}
+}
+
+/**
+ * adjusts undo level if needed (e.g. if undo queue size was lowered)
+ */
+void UndoSaveStateTracker::checkUndoLevel (void)
+{
+	const unsigned int currentLevel = GlobalUndoSystem().getLevels();
+	if (m_undoSteps > currentLevel)
+		m_undoSteps = currentLevel;
+}
+
+/**
+ * Increase undo steps if undo level supports it. If undo exceeds current undo level,
+ * lower saved steps to ensure that save state is handled correctly.
+ */
+void UndoSaveStateTracker::increaseUndo (void)
+{
+	if (m_undoSteps < GlobalUndoSystem().getLevels()) {
+		m_undoSteps++;
+	} else {
+		checkUndoLevel();
+		m_savedStep--;
+	}
+}
+
+/**
  * Begin a new step, invalidates all other redo states
  */
 void UndoSaveStateTracker::begin (void)
 {
-	m_undoSteps++;
+	increaseUndo();
 	m_redoSteps = 0;
 	UpdateSensitiveStates();
 }
@@ -2630,7 +2664,7 @@ void UndoSaveStateTracker::clear (void)
 void UndoSaveStateTracker::redo (void)
 {
 	m_redoSteps--;
-	m_undoSteps++;
+	increaseUndo();
 	UpdateSensitiveStates();
 }
 
@@ -2639,7 +2673,8 @@ void UndoSaveStateTracker::redo (void)
  */
 void UndoSaveStateTracker::undo (void)
 {
-	m_redoSteps++;
+	increaseRedo();
+	checkUndoLevel();
 	m_undoSteps--;
 	UpdateSensitiveStates();
 }

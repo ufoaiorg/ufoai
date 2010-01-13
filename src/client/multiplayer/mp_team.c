@@ -145,8 +145,8 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	for (i = 0; i < csi.numODs; i++) {
 		mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_MULTIPLAYER_EMISSION);
 		mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, csi.ods[i].id);
-		mxml_AddInt(ssnode, SAVE_MULTIPLAYER_NUM, ed->num[i]);
-		mxml_AddInt(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numLoose[i]);
+		mxml_AddInt(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[i]);
+		mxml_AddInt(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[i]);
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
@@ -280,8 +280,8 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 		const char *objID = mxml_GetString(ssnode, SAVE_MULTIPLAYER_ID);
 		const objDef_t *od = INVSH_GetItemByID(objID);
 		if (od) {
-			ed->num[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUM, 0);
-			ed->numLoose[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUMLOOSE, 0);
+			ed->numItems[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUM, 0);
+			ed->numItemsLoose[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUMLOOSE, 0);
 		}
 	}
 

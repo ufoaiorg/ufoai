@@ -235,7 +235,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INVSH_InitInventory(invChain, qtrue);
+	INVSH_InitInventory(invChain, lengthof(invChain));
 
 	logstatsfile = NULL;
 	if (logstats->integer)
@@ -256,7 +256,6 @@ static void G_Shutdown (void)
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
-	INVSH_InvUnusedRevert();
 }
 
 
@@ -282,6 +281,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 	globals.ClientAction = G_ClientAction;
 	globals.ClientEndRound = G_ClientEndRound;
 	globals.ClientTeamInfo = G_ClientTeamInfo;
+	globals.ClientInitActorStates = G_ClientInitActorStates;
 	globals.ClientGetTeamNum = G_ClientGetTeamNum;
 	globals.ClientGetTeamNumPref = G_ClientGetTeamNumPref;
 	globals.ClientIsReady = G_ClientIsReady;

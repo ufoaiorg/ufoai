@@ -179,7 +179,7 @@ typedef struct aircraft_s {
 	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
 	aircraftStatus_t status;			/**< Status of this aircraft, see aircraftStatus_t. */
 
-	int price;			/**< Price of this aircraft type. */
+	int price;			/**< Price of this aircraft type at game start, it's evolving on the market. */
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
 	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? @note Limited to MAX_ACTIVETEAM */

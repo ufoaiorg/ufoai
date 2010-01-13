@@ -43,8 +43,8 @@ void R_DrawLine(int *verts, float thickness);
 void R_DrawCircle(vec3_t mid, float radius, const vec4_t color, int thickness);
 void R_DrawCircle2D(int x, int y, float radius, qboolean fill, const vec4_t color, float thickness);
 void R_DrawPolygon(int points, int *verts);
-void R_BeginClipRect(int x, int y, int width, int height);
-void R_EndClipRect(void);
+void R_PushClipRect(int x, int y, int width, int height);
+void R_PopClipRect(void);
 void R_CleanupDepthBuffer(int x, int y, int width, int height);
 
 extern cvar_t *r_geoscape_overlay;

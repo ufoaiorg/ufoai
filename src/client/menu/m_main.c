@@ -35,6 +35,7 @@ cvar_t *mn_hud;
 
 menuGlobal_t mn;
 struct memPool_s *mn_dynStringPool;
+struct memPool_s *mn_dynPool;
 struct memPool_s *mn_sysPool;
 
 #ifdef DEBUG
@@ -307,8 +308,9 @@ void MN_Init (void)
 #endif
 
 
-	mn_sysPool = Mem_CreatePool("Client: Menu");
-	mn_dynStringPool = Mem_CreatePool("Client: Dynamic string for menu");
+	mn_sysPool = Mem_CreatePool("Client: UI");
+	mn_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
+	mn_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
 	/* 256kb */
 	mn.adataize = MENU_HUNK_SIZE;

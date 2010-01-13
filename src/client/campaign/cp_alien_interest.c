@@ -69,10 +69,11 @@ void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 	if (percentage > 0.0f) {
 		const int gain = (int) (percentage * ccs.overallInterest);
 		const int diff = ccs.overallInterest - ccs.interest[category];
-		const float slowerIncreaseFraction = 0.5f; /**< Fraction of individual interest that will be won if
-									individal interest becomes higher than overall interest. 0 means no increase */
+		/* Fraction of individual interest that will be won if
+		 * individal interest becomes higher than overall interest. 0 means no increase */
+		const float slowerIncreaseFraction = 0.5f;
 		/* Value increases: percentage is taken from the overall interest value
-			But it increase slower if the individual interest becomes higher than the overall interest value */
+		 * But it increase slower if the individual interest becomes higher than the overall interest value */
 		if (diff > gain)
 			/* Final value of individual interest is below overall interest */
 			ccs.interest[category] += gain;
@@ -108,7 +109,8 @@ void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
  */
 void CP_IncreaseAlienInterest (void)
 {
-	const int delayBetweenIncrease = 28 - ccs.curCampaign->difficulty;	/**< Number of hours between 2 overall interest increase */
+	/* Number of hours between 2 overall interest increase */
+	const int delayBetweenIncrease = 28 - ccs.curCampaign->difficulty;
 
 	ccs.lastInterestIncreaseDelay++;
 

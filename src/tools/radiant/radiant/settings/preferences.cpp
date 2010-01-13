@@ -46,7 +46,7 @@
 
 void Interface_constructPreferences (PreferencesPage& page)
 {
-	page.appendCheckBox(_("Console"), _("Enable Logging"), g_Console_enableLogging);
+	page.appendCheckBox(_("Console"), _("Enable logfile"), g_Console_enableLogfile);
 	page.appendCheckBox("", _("Load last map on open"), g_bLoadLastMap);
 }
 
@@ -157,8 +157,8 @@ static bool Preferences_Save_Safe (PreferenceDictionary& preferences, const std:
 
 void LogConsole_importString (const char* string)
 {
-	g_Console_enableLogging = string_equal(string, "true");
-	Sys_LogFile(g_Console_enableLogging);
+	g_Console_enableLogfile = string_equal(string, "true");
+	Sys_LogFile(g_Console_enableLogfile);
 }
 typedef FreeCaller1<const char*, LogConsole_importString> LogConsoleImportStringCaller;
 
@@ -622,8 +622,8 @@ typedef FreeCaller1<const StringImportCallback&, GameName_exportString> GameName
 
 static void RegisterPreferences (PreferenceSystem& preferences)
 {
-	preferences.registerPreference("log console", LogConsoleImportStringCaller(), BoolExportStringCaller(
-			g_Console_enableLogging));
+	preferences.registerPreference("LogConsoleToFile", LogConsoleImportStringCaller(), BoolExportStringCaller(
+			g_Console_enableLogfile));
 	preferences.registerPreference("GameName", GameNameImportStringCaller(), GameNameExportStringCaller());
 }
 

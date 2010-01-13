@@ -70,11 +70,11 @@ void CL_InvReload (const eventRegister_t *self, struct dbuffer *msg)
 	ed = GAME_GetEquipmentDefinition();
 	if (ed && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
 		assert(ammo == ic->item.t->ammo);
-		ed->numLoose[ic->item.m->idx] += ic->item.a;
+		ed->numItemsLoose[ic->item.m->idx] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ed->numLoose[ic->item.m->idx] >= ic->item.t->ammo) {
-			ed->numLoose[ic->item.m->idx] -= ic->item.t->ammo;
-			ed->num[ic->item.m->idx]++;
+		if (ed->numItemsLoose[ic->item.m->idx] >= ic->item.t->ammo) {
+			ed->numItemsLoose[ic->item.m->idx] -= ic->item.t->ammo;
+			ed->numItems[ic->item.m->idx]++;
 		}
 	}
 

@@ -246,7 +246,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 			menuOption_t *option;
 			objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
 			assert(item);
-			amount = base->storage.num[item->idx];
+			amount = base->storage.numItems[item->idx];
 
 			LIST_AddString(&amountList, va("%d", amount));
 			option = MN_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));

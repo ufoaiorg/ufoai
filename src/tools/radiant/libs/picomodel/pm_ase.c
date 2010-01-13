@@ -401,7 +401,10 @@ static picoModel_t *_ase_load (PM_PARAMS_LOAD)
 			_pico_free(vertices);
 			_pico_free(texcoords);
 			_pico_free(colors);
-			colors = faces = vertices = texcoords = NULL; /* OrbWeaver: reset all pointers to avoid double-free */
+			colors = NULL; /* OrbWeaver: reset all pointers to avoid double-free */
+			faces = NULL;
+			vertices = NULL;
+			texcoords = NULL;
 		} else if (!_pico_stricmp(p->token, "*mesh_numvertex")) {
 			if (!_pico_parse_int(p, &numVertices))
 				_ase_error_return("Missing MESH_NUMVERTEX value");

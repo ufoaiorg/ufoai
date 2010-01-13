@@ -49,11 +49,14 @@ const int c_count_status = 4;
 
 class UndoSaveStateTracker: public UndoTracker
 {
-		int m_undoSteps;
-		int m_redoSteps;
+		unsigned int m_undoSteps;
+		unsigned int m_redoSteps;
 		int m_savedStep;
 
 		void UpdateSensitiveStates (void);
+		void increaseUndo();
+		void increaseRedo();
+		void checkUndoLevel();
 	public:
 		UndoSaveStateTracker () :
 			m_undoSteps(0), m_redoSteps(0), m_savedStep(0)

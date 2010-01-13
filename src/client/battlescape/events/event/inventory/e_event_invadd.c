@@ -65,14 +65,14 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 
 	le->removeNextFrame = qfalse;
 
-
 	for (; nr-- > 0;) {
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
 
 		if (LE_IsItem(le) && container != csi.idFloor)
 			Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
 
-		Com_AddToInventory(&le->i, item, &csi.ids[container], x, y, item.amount);
+		if (Com_AddToInventory(&le->i, item, &csi.ids[container], x, y, item.amount) == NULL)
+			Com_Error(ERR_DROP, "InvAdd failed - could not add item to container %i", container);
 
 		if (container == csi.idRight)
 			le->right = item.t->idx;

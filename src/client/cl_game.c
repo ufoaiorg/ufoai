@@ -59,12 +59,14 @@ typedef struct gameTypeList_s {
 	qboolean (*teamisknown)(const teamDef_t *teamDef);
 	/** called on errors */
 	void (*drop)(void);
+	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
+	void (*initializebattlescape)(const chrList_t *team);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -158,7 +160,8 @@ void GAME_SetMode (int gametype)
 	if (list) {
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		memset(&invList, 0, sizeof(invList));
-		INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initialized */
+		/* inventory structure switched/initialized */
+		INVSH_InitInventory(invList, lengthof(invList));
 		list->init();
 	}
 }
@@ -393,8 +396,6 @@ static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
 	for (j = 0; j < KILLED_NUM_TYPES; j++)
 		NET_WriteShort(buf, chr->score.stuns[j]);
 	NET_WriteShort(buf, chr->score.assignedMissions);
-
-	NET_WriteShort(buf, chr->state);
 }
 
 /**
@@ -441,6 +442,18 @@ static qboolean GAME_Spawn (void)
 }
 
 /**
+ * @brief This is called if actors are spawned (or at least the spawning commands were send to
+ * the server). This callback can e.g. be used to set initial actor states. E.g. request crouch and so on.
+ * These events are executed without consuming time
+ */
+static void GAME_InitializeBattlescape (chrList_t *team)
+{
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list->initializebattlescape)
+		list->initializebattlescape(team);
+}
+
+/**
  * @brief Called during startup of mission to send team info
  */
 void GAME_SpawnSoldiers (void)
@@ -466,6 +479,8 @@ void GAME_SpawnSoldiers (void)
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "spawn\n");
 		NET_WriteMsg(cls.netStream, msg);
+
+		GAME_InitializeBattlescape(&cl.chrList);
 	}
 }
 

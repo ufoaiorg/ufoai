@@ -63,6 +63,7 @@ typedef struct s_env_s {
 
 	s_channel_t channels[MAX_CHANNELS];
 
+	int sampleRepeatRate;	/**< milliseconds that must have passed to replay the same sample again */
 	int rate;
 	int numChannels;
 	uint16_t format;

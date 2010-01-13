@@ -320,27 +320,45 @@ menuNode_t* MN_GetNodeByPath (const char* path)
  * @todo Assert out when we are not in parsing/loading stage
  * @param[in] name Name of the new node, else NULL if we dont want to edit it.
  * @param[in] type Name of the node behavior
+ * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
-menuNode_t* MN_AllocStaticNode (const char* name, const char* type)
+menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic)
 {
-	menuNode_t* node = &mn.nodes[mn.numNodes++];
-	if (mn.numNodes >= MAX_MENUNODES)
-		Com_Error(ERR_FATAL, "MN_AllocStaticNode: MAX_MENUNODES hit");
-	memset(node, 0, sizeof(*node));
+	menuNode_t* node;
+
+	if (!isDynamic) {
+		if (mn.numNodes >= MAX_MENUNODES)
+			Com_Error(ERR_FATAL, "MN_AllocStaticNode: MAX_MENUNODES hit");
+		node = &mn.nodes[mn.numNodes++];
+		memset(node, 0, sizeof(*node));
+	} else {
+		node = (menuNode_t*)Mem_PoolAlloc(sizeof(*node), mn_dynPool, 0);
+		memset(node, 0, sizeof(*node));
+		node->dynamic = qtrue;
+	}
+
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
-		Com_Error(ERR_FATAL, "MN_AllocStaticNode: Node behaviour '%s' doesn't exist", type);
+		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
 #ifdef DEBUG
 	node->behaviour->count++;
 #endif
 	if (node->behaviour->isAbstract)
-		Com_Error(ERR_FATAL, "MN_AllocStaticNode: We can't allocate the abstract node behaviour '%s'", type);
+		Com_Error(ERR_FATAL, "MN_AllocNode: Node behavior '%s' is abstract. We can't instantiate it.", type);
 
 	if (name != NULL) {
 		Q_strncpyz(node->name, name, sizeof(node->name));
 		if (strlen(node->name) != strlen(name))
-			Com_Printf("MN_AllocStaticNode: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
+			Com_Printf("MN_AllocNode: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
+
+	/* initialize default properties */
+	if (node->behaviour->loading)
+		node->behaviour->loading(node);
+
+	/* allocate memories */
+	if (node->dynamic && node->behaviour->new)
+		node->behaviour->new(node);
 
 	return node;
 }
@@ -355,7 +373,6 @@ menuNode_t* MN_AllocStaticNode (const char* name, const char* type)
 static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 {
 	menuNode_t *find;
-	menuNode_t *child;
 	int i;
 
 	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
@@ -371,11 +388,25 @@ static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 
 	/** @todo we should improve the loop (last-to-first) */
 	find = NULL;
-	for (child = node->firstChild; child; child = child->next) {
-		menuNode_t *tmp;
-		tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
-		if (tmp)
-			find = tmp;
+	if (node->firstChild) {
+		menuNode_t *child;
+		vec2_t clientPosition = {0, 0};
+
+		if (node->behaviour->getClientPosition)
+			node->behaviour->getClientPosition(node, clientPosition);
+
+		rx -= clientPosition[0];
+		ry -= clientPosition[1];
+
+		for (child = node->firstChild; child; child = child->next) {
+			menuNode_t *tmp;
+			tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
+			if (tmp)
+				find = tmp;
+		}
+
+		rx += clientPosition[0];
+		ry += clientPosition[1];
 	}
 	if (find)
 		return find;
@@ -471,6 +502,64 @@ int MN_GetNodeBehaviourCount(void)
 }
 
 /**
+ * @brief Remove all child from a node (only remove dynamic memory allocation nodes)
+ * @param node The node we want to clean
+ */
+void MN_DeleteAllChild (menuNode_t* node)
+{
+	menuNode_t *child;
+	child = node->firstChild;
+	while (child) {
+		menuNode_t *next = child->next;
+		MN_DeleteNode(child);
+		child = next;
+	}
+}
+
+/**
+ * Delete the node and remove it from his parent
+ * @param node The node we want to delete
+ */
+void MN_DeleteNode (menuNode_t* node)
+{
+	nodeBehaviour_t *behaviour;
+
+	if (!node->dynamic)
+		return;
+
+	MN_DeleteAllChild(node);
+	if (node->firstChild != NULL) {
+		Com_Printf("MN_DeleteNode: Node '%s' contain static nodes. We can't delete it.", MN_GetPath(node));
+		return;
+	}
+
+	if (node->parent)
+		MN_RemoveNode(node->parent, node);
+
+	/* delete all allocated properties */
+	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
+		const value_t *property = behaviour->properties;
+		while (property->string != NULL) {
+			if ((property->type & V_UI_MASK) == V_UI_CVAR) {
+				void *mem = ((byte *) node + property->ofs);
+				mem = *(void**)mem;
+				if (mem != NULL) {
+					MN_FreeStringProperty(*(void**)mem);
+					*(void**)mem = NULL;
+				}
+			}
+
+			/** @todo We must delete all EA_LISTENER too */
+
+			property++;
+		}
+	}
+
+	if (node->behaviour->delete)
+		node->behaviour->delete(node);
+}
+
+/**
  * @brief Clone a node
  * @param[in] node Node to clone
  * @param[in] recursive True if we also must clone subnodes
@@ -481,7 +570,7 @@ int MN_GetNodeBehaviourCount(void)
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName)
 {
-	menuNode_t* newNode = MN_AllocStaticNode(NULL, node->behaviour->name);
+	menuNode_t* newNode = MN_AllocNode(NULL, node->behaviour->name, qfalse);
 
 	/* clone all data */
 	*newNode = *node;
@@ -534,6 +623,8 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, init),
 	offsetof(nodeBehaviour_t, close),
 	offsetof(nodeBehaviour_t, clone),
+	offsetof(nodeBehaviour_t, new),
+	offsetof(nodeBehaviour_t, delete),
 	offsetof(nodeBehaviour_t, activate),
 	offsetof(nodeBehaviour_t, doLayout),
 	offsetof(nodeBehaviour_t, dndEnter),
@@ -546,6 +637,7 @@ static const int virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, extraDataSize),
 	offsetof(nodeBehaviour_t, sizeChanged),
 	offsetof(nodeBehaviour_t, propertyChanged),
+	offsetof(nodeBehaviour_t, getClientPosition),
 	-1
 };
 

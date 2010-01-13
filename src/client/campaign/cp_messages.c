@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../client.h"
+#include "../sound/s_sample.h"
 #include "../menu/m_main.h"
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
@@ -215,6 +216,11 @@ qboolean MS_LoadXML (mxml_node_t *p)
 	if (!n)
 		return qfalse;
 
+	/* we have to set this a little bit higher here, otherwise the samples that are played when adding
+	 * a message to the stack would all played a few milliseconds after each other - that doesn't sound
+	 * nice */
+	S_SetSampleRepeatRate(500);
+
 	for (sn = mxml_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = mxml_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
 		int mtype;
@@ -254,6 +260,10 @@ qboolean MS_LoadXML (mxml_node_t *p)
 			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 		}
 	}
+
+	/* reset the sample repeat rate */
+	S_SetSampleRepeatRate(0);
+
 	return qtrue;
 }
 

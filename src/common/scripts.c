@@ -30,19 +30,40 @@
 
 #define	MAX_CONSTNAMEINT_NAME	32
 
+/**
+ * @brief Structure to map (script) strings and integer (enum) values
+ */
 typedef struct com_constNameInt_s {
-	char name[MAX_CONSTNAMEINT_NAME];
-	int value;
-	struct com_constNameInt_s *hash_next;
-	struct com_constNameInt_s *next;
+	char name[MAX_CONSTNAMEINT_NAME];	/**< script id */
+	char *fullname;			/**< only set in case there was a namespace given */
+	int value;				/**< integer value */
+	struct com_constNameInt_s *hash_next;	/**< hash next pointer */
+	struct com_constNameInt_s *next;	/**< linked list next pointer */
 } com_constNameInt_t;
 
+/** @brief Linked list of all the registeres mappings */
 static com_constNameInt_t *com_constNameInt;
+/** @brief Hash of all the registeres mappings */
 static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
 
+/**
+ * @brief Will extract the variable from a string<=>int mapping string which contain a namespace
+ * @param name The name of the script entry to map to an integer
+ * @return The namespace in case one was found, @c NULL otherwise
+ */
+static const char *Com_ConstIntGetVariable (const char *name)
+{
+	const char *namespace = strstr(name, "::");
+	if (namespace)
+		return namespace;
+	return name;
+}
 
 /**
  * @brief Searches whether a given value was registered as a string to int mapping
+ * @param[in] name The name of the string mapping (maybe including a namespace)
+ * @param[out] value The mapped integer if found, not touched if the given string
+ * was found in the registered values.
  * @return True if the value is found.
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
@@ -51,9 +72,12 @@ qboolean Com_GetConstInt (const char *name, int *value)
 {
 	com_constNameInt_t *a;
 	unsigned int hash;
+	const char *variable;
+
+	variable = Com_ConstIntGetVariable(name);
 
 	/* if the alias already exists */
-	hash = Com_HashKey(name, CONSTNAMEINT_HASH_SIZE);
+	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
 		if (!strncmp(name, a->name, MAX_CONSTNAMEINT_NAME)) {
 			*value = a->value;
@@ -65,20 +89,52 @@ qboolean Com_GetConstInt (const char *name, int *value)
 }
 
 /**
+ * @brief Searches the mapping variable for a given integer value and a namespace
+ * @param[in] value The mapped integer
+ * @param[in] namespace The namespace to search in - might not be @c NULL or empty.
+ * @note only variables with a namespace given are found here
+ * @sa Com_RegisterConstInt
+ * @sa Com_ParseValue
+ */
+const char* Com_GetConstVariable (const char *namespace, int value)
+{
+	com_constNameInt_t *a;
+	const size_t namespaceLength = strlen(namespace);
+
+	a = com_constNameInt;
+	while (a) {
+		if (a->value == value && a->fullname) {
+			if (!strncmp(a->fullname, namespace, namespaceLength))
+				return a->name;
+		}
+		a = a->next;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Register mappings between script strings and enum values for values of the type @c V_INT
- * @param name The name of the script entry to map to an integer
+ * @param name The name of the script entry to map to an integer. This can also include a namespace prefix
+ * for the case we want to map back an integer to a string from a specific namespace. In case this string
+ * is equipped with a namespace, the string is in the form "namespace::variable"
  * @param value The value to map the given name to
+ * @note You still can't register the same name twice even if you put it into different namespaces (yet). The
+ * namespaces are only for converting an integer back into a string.
  * @sa Com_GetConstInt
  */
 void Com_RegisterConstInt (const char *name, int value)
 {
 	com_constNameInt_t *a;
 	unsigned int hash;
+	const char *variable;
+
+	variable = Com_ConstIntGetVariable(name);
 
 	/* if the alias already exists, reuse it */
-	hash = Com_HashKey(name, CONSTNAMEINT_HASH_SIZE);
+	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
-		if (!strncmp(name, a->name, MAX_CONSTNAMEINT_NAME)) {
+		if (!strncmp(variable, a->name, sizeof(a->name))) {
 			break;
 		}
 	}
@@ -89,7 +145,9 @@ void Com_RegisterConstInt (const char *name, int value)
 	}
 
 	a = Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
-	Q_strncpyz(a->name, name, sizeof(a->name));
+	Q_strncpyz(a->name, variable, sizeof(a->name));
+	if (strcmp(variable, name))
+		a->fullname = Mem_StrDup(name);
 	a->next = com_constNameInt;
 	/* com_constNameInt_hash should be null on the first run */
 	a->hash_next = com_constNameInt_hash[hash];
@@ -397,6 +455,14 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(token, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
+		else if (!strcmp(token, "craft_inter_saracen"))
+			*(int *) b = INTERCEPTOR_SARACEN;
+		else if (!strcmp(token, "craft_inter_dragon"))
+			*(int *) b = INTERCEPTOR_DRAGON;
+		else if (!strcmp(token, "craft_inter_starchaser"))
+			*(int *) b = INTERCEPTOR_STARCHASER;
+		else if (!strcmp(token, "craft_inter_stingray"))
+			*(int *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
 		*writtenBytes = sizeof(int);
@@ -816,6 +882,14 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(int *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(set, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
+		else if (!strcmp(set, "craft_inter_saracen"))
+			*(int *) b = INTERCEPTOR_SARACEN;
+		else if (!strcmp(set, "craft_inter_dragon"))
+			*(int *) b = INTERCEPTOR_DRAGON;
+		else if (!strcmp(set, "craft_inter_starchaser"))
+			*(int *) b = INTERCEPTOR_STARCHASER;
+		else if (!strcmp(set, "craft_inter_stingray"))
+			*(int *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", (const char *)set);
 		return sizeof(int);
@@ -1026,6 +1100,14 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "craft_drop_raptor";
 		case INTERCEPTOR_STILETTO:
 			return "craft_inter_stiletto";
+		case INTERCEPTOR_SARACEN:
+			return "craft_inter_saracen";
+		case INTERCEPTOR_DRAGON:
+			return "craft_inter_dragon";
+		case INTERCEPTOR_STARCHASER:
+			return "craft_inter_starchaser";
+		case INTERCEPTOR_STINGRAY:
+			return "craft_inter_stingray";
 		default:
 			Sys_Error("Unknown aircrafttype type: '%i'", *(const int *) b);
 		}
@@ -1803,8 +1885,6 @@ static void Com_ParseEquipment (const char *name, const char **text)
 	}
 
 	do {
-		qboolean foundDefinition = qfalse;
-
 		token = Com_EParse(text, errhead, name);
 		if (!*text || *token == '}')
 			return;
@@ -1816,29 +1896,58 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (!*text)
 					return;
 				Com_EParseValue(ed, token, vp->type, vp->ofs, vp->size);
-				foundDefinition = qtrue;
 				break;
 			}
 
-		if (!foundDefinition) {
-			for (i = 0; i < csi.numODs; i++)
-				if (!strncmp(token, csi.ods[i].id, MAX_VAR)) {
+		if (!vp->string) {
+			if (!strcmp(token, "item")) {
+				objDef_t *od;
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					Sys_Error("Invalid item token in equipment definition: %s", ed->name);
+
+				od = INVSH_GetItemByID(token);
+				if (od) {
 					token = Com_EParse(text, errhead, name);
 					if (!*text || *token == '}') {
 						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
 						return;
 					}
 					n = atoi(token);
-					if (ed->num[i])
+					if (ed->numItems[od->idx])
 						Com_Printf("Com_ParseEquipment: item '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
-							csi.ods[i].id, name);
+							od->id, name);
 					if (n)
-						ed->num[i] = n;
-					break;
+						ed->numItems[od->idx] = n;
+				} else {
+					Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
 				}
+			} else if (!strcmp(token, "aircraft")) {
+				humanAircraftType_t type;
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					Sys_Error("Invalid aircraft token in equipment definition: %s", ed->name);
 
-			if (i == csi.numODs)
-				Com_Printf("Com_ParseEquipment: unknown token \"%s\" ignored (equipment %s)\n", token, name);
+				type = Com_DropShipShortNameToID(token);
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}') {
+					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
+					return;
+				}
+				n = atoi(token);
+				if (ed->numAircraft[type])
+					Com_Printf("Com_ParseEquipment: aircraft type '%i' is used several times in def '%s'. Only last entry will be taken into account.\n",
+						type, name);
+				if (n)
+					ed->numAircraft[type] = n;
+			} else if (!strcmp(token, "ugv")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
+				/** @todo parse ugv */
+			} else {
+				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
+			}
 		}
 	} while (*text);
 }
@@ -2661,6 +2770,8 @@ const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
 
 /**
  * @brief Translate DropShip type to short name.
+ * @return Will always return a valid human aircraft type or errors out if the given token can't
+ * be mapped to an human aircraft type
  * @sa Com_DropShipTypeToShortName
  */
 humanAircraftType_t Com_DropShipShortNameToID (const char *token)

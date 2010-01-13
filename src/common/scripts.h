@@ -173,15 +173,6 @@ typedef enum {
 	UFO_MAX
 } ufoType_t;
 
-typedef enum {
-	DROPSHIP_FIREBIRD,
-	DROPSHIP_HERAKLES,
-	DROPSHIP_RAPTOR,
-
-	INTERCEPTOR_STILETTO,
-
-	AIRCRAFTTYPE_MAX
-} humanAircraftType_t;
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
 extern const char *const align_names[];
@@ -253,6 +244,7 @@ mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 qboolean Com_GetConstInt(const char *name, int *value);
+const char* Com_GetConstVariable(const char *namespace, int value);
 void Com_RegisterConstInt(const char *name, int value);
 
 #endif /* SCRIPTS_H */

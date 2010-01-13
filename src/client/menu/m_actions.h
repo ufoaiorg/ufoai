@@ -176,6 +176,8 @@ typedef struct menuCallContext_s {
 	const struct menuNode_s* source;
 	/** is the function can use param from command line */
 	qboolean useCmdParam;
+	linkedList_t *params;
+	int paramNumber;
 } menuCallContext_t;
 
 

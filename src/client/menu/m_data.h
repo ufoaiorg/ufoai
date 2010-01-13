@@ -166,9 +166,11 @@ typedef struct menuSharedData_s {
 #define MAX_DEPTH_OPTIONITERATORCACHE 8
 
 typedef struct {
-	menuOption_t* option;	/**< current option */
+	menuOption_t* option;		/**< current option */
 	menuOption_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
-	int depthPos;	/**< current cache position */
+	int depthPos;				/**< current cache position */
+	qboolean skipInvisible;		/**< skip invisible options when we iterate */
+	qboolean skipCollapsed;		/**< skip collapsed options when we iterate */
 } menuOptionIterator_t;
 
 /* common */
@@ -193,6 +195,8 @@ int MN_OptionUpdateCache (menuOption_t* option);
 menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
 menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
 void MN_UpdateInvisOptions(menuOption_t *option, const struct linkedList_s *stringList);
+menuOption_t* MN_FindOptionByValue(menuOptionIterator_t* iterator, const char* value);
+int MN_FindOptionPosition(menuOptionIterator_t* iterator, const menuOption_t* option);
 
 /* option tree */
 struct menuOption_s* MN_AddOption(struct menuOption_s**tree, const char* name, const char* label, const char* value);

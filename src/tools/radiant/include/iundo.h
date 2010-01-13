@@ -136,6 +136,8 @@ class UndoSystem
 
 		virtual void trackerAttach (UndoTracker& tracker) = 0;
 		virtual void trackerDetach (UndoTracker& tracker) = 0;
+
+		virtual std::size_t getLevels () const = 0;
 };
 
 #include "modulesystem.h"

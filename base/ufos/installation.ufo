@@ -36,7 +36,7 @@ installation ufoyard
 installation samsite
 {
 	name		"_SAM Site"
-	model		"geoscape/defence"
+	model		"geoscape/samlauncher"
 	image		"pics/geoscape/defence"
 	cost		20000
 	radar_range	0

@@ -309,7 +309,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	const bool isStartingPositionUGV = (name == "info_2x2_start");
 	const bool isStartingPosition = isStartingPositionActor || isStartingPositionUGV;
 
-	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
+	const bool brushesSelected = map::countSelectedBrushes() != 0;
 
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
 		throw EntityCreationException(std::string("Unable to create entity \"") + name + "\", no brushes selected");

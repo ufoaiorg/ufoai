@@ -67,8 +67,8 @@ typedef struct menuNode_s {
 	/* common identification */
 	char name[MAX_VAR];			/**< name from the script files */
 	struct nodeBehaviour_s *behaviour;
-
 	struct menuNode_s *super;	/**< Node inherited, else NULL */
+	qboolean dynamic;			/** True if it use dynamic memory */
 
 	/* common navigation */
 	struct menuNode_s *firstChild;	/**< first element of linked list of child */
@@ -209,16 +209,21 @@ typedef struct nodeBehaviour_s {
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
 	void (*capturedMouseLost)(menuNode_t *node);
 
-	/* system callback */
+	/* system allocation */
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, initialized default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
+	void (*clone)(const menuNode_t *source, menuNode_t *clone);			/**< call to initialize a cloned node */
+	void (*new)(menuNode_t *node);			/**< call to initialize a dynamic node */
+	void (*delete)(menuNode_t *node);		/**< call to delete a dynamic node */
+
+	/* system callback */
 	void (*init)(menuNode_t *node);			/**< call every time we push the parent window */
 	void (*close)(menuNode_t *node);		/**< call every time we pop the parent window */
-	void (*clone)(const menuNode_t *source, menuNode_t *clone);			/**< call to initialize a cloned node */
 	void (*doLayout)(menuNode_t *node);		/**< call to update node layout */
 	void (*activate)(menuNode_t *node);		/**< Activate the node. Can be used without the mouse (ie. a button will execute onClick) */
 	void (*propertyChanged)(menuNode_t *node, const value_t *property);		/**< Called when a property change */
 	void (*sizeChanged)(menuNode_t *node);		/**< Called when the node size change */
+	void (*getClientPosition)(menuNode_t *node, vec2_t position);	/**< Return the position of the client zone into the node */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
@@ -244,13 +249,15 @@ typedef struct nodeBehaviour_s {
 void MN_InitNodes(void);
 
 /* nodes */
-menuNode_t* MN_AllocStaticNode(const char* name, const char* type) __attribute__ ((warn_unused_result));
+menuNode_t* MN_AllocNode(const char* name, const char* type, qboolean isDynamic);
 menuNode_t* MN_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
 void MN_ReadNodePath(const char* path, const menuNode_t *relativeNode, menuNode_t** resultNode, const value_t **resultProperty);
 struct menuNode_s *MN_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* MN_GetPath(const menuNode_t* node) __attribute__ ((warn_unused_result));
 struct menuNode_s *MN_CloneNode(const struct menuNode_s * node, struct menuNode_s *newMenu, qboolean recursive, const char *newName) __attribute__ ((warn_unused_result));
 qboolean MN_CheckVisibility(menuNode_t *node);
+void MN_DeleteAllChild(menuNode_t* node);
+void MN_DeleteNode(menuNode_t* node);
 
 /* behaviours */
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));

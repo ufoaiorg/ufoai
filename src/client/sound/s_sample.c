@@ -30,6 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static s_sample_t *sampleHash[SAMPLE_HASH_SIZE];
 
 /**
+ * @brief Controls the repeat rate for the same sample.
+ * @param[in] sampleRepeatRate milliseconds that must have passed to play the same sample again
+ */
+void S_SetSampleRepeatRate (int sampleRepeatRate)
+{
+	s_env.sampleRepeatRate = sampleRepeatRate;
+}
+
+/**
  * @brief Searches the hash for a given sound file
  * @param name The soundfile (relative to the sound dir and without extension)
  * @return @c NULL if not yet loaded
