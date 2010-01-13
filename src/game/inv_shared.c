@@ -36,8 +36,8 @@ INVENTORY MANAGEMENT FUNCTIONS
 ================================*/
 
 /**
- * @brief Initializes csi_t *CSI pointer.
- * @param[in] import
+ * @brief Initializes client server shared data pointer
+ * @param[in] import The client server interface pointer
  * @sa G_Init
  * @sa Com_ParseScripts
  */
