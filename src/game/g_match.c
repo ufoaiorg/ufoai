@@ -93,7 +93,7 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
  * x = 46
  * The division by 100 happens in G_UpdateCharacterSkills
  */
-static int G_CharGetMaxExperiencePerMission (abilityskills_t skill)
+static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 {
 	switch (skill) {
 	case ABILITY_POWER:
@@ -117,8 +117,7 @@ static int G_CharGetMaxExperiencePerMission (abilityskills_t skill)
 	case SKILL_NUM_TYPES: /* This is health. */
 		return 2154;
 	default:
-		Com_DPrintf(DEBUG_GAME, "G_GetMaxExperiencePerMission: invalid skill type\n");
-		return 0;
+		gi.error("G_GetMaxExperiencePerMission: invalid skill type\n");
 	}
 }
 
@@ -141,7 +140,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 
 	totalGainedXP = 0;
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
-		maxXP = G_CharGetMaxExperiencePerMission(i);
+		maxXP = G_CharacterGetMaxExperiencePerMission(i);
 		gainedXP = G_GetEarnedExperience(i, chr);
 
 		gainedXP = min(gainedXP, maxXP);
@@ -154,7 +153,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
 	assert(i == SKILL_NUM_TYPES);	/**< We need to get sure that index for health-experience is correct. */
-	maxXP = G_CharGetMaxExperiencePerMission(i);
+	maxXP = G_CharacterGetMaxExperiencePerMission(i);
 	gainedXP = min(maxXP, totalGainedXP / 2);
 
 	chr->score.experience[i] += gainedXP;
