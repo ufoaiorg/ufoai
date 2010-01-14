@@ -231,11 +231,13 @@ void R_SwitchModelMemPoolTag (void)
 	/* mark the static model textures as it_static, thus R_FreeWorldImages
 	 * won't free them */
 	for (i = 0, mod = r_models; i < r_numModelsStatic; i++, mod++) {
+		if (!mod->alias.num_meshes)
+			Com_Printf("Model '%s' has no meshes\n", mod->name);
 		for (j = 0; j < mod->alias.num_meshes; j++) {
 			if (!mod->alias.meshes[j].num_skins)
 				Com_Printf("Model '%s' has no skins\n", mod->name);
 			for (k = 0; k < mod->alias.meshes[j].num_skins; k++) {
-				if (mod->alias.meshes[j].skins[k].skin)
+				if (mod->alias.meshes[j].skins[k].skin != r_noTexture)
 					mod->alias.meshes[j].skins[k].skin->type = it_static;
 				else
 					Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
