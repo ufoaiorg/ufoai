@@ -316,6 +316,10 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 
 	if (!mod->alias.meshes[*mesh].num_skins)
 		Com_Error(ERR_DROP, "Model with no skins");
+
+	if (mod->alias.meshes[*mesh].skins[*skin].skin->texnum <= 0)
+		Com_Error(ERR_DROP, "Texture is already freed and no longer uploaded, texnum is invalid for model %s", mod->name);
+
 	return mod->alias.meshes[*mesh].skins[*skin].skin;
 }
 
