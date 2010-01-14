@@ -115,16 +115,20 @@ void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcCon
  * @param[in] weapon Pointer (invList_t) to weapon to unload ammo.
  * @param[in] inv Pointer (inventory_t) to inventory where the change happen.
  * @param[in] container Pointer (invDef_t) to inventorydef where to put the removed ammo.
+ * @return @c true if the unload was successful, @c false otherwise
  */
-void INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
+qboolean INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
 {
 	assert(weapon);
 	if (container && inv) {
 		const item_t item = {NONE_AMMO, NULL, weapon->item.m, 0, 0};
-		cls.i.AddToInventory(&cls.i, inv, item, container, NONE, NONE, 1);
+		if (cls.i.AddToInventory(&cls.i, inv, item, container, NONE, NONE, 1) != NULL) {
+			weapon->item.m = NULL;
+			weapon->item.a = 0;
+			return qtrue;
+		}
 	}
-	weapon->item.m = NULL;
-	weapon->item.a = 0;
+	return qfalse;
 }
 
 #ifdef DEBUG
