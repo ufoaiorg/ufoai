@@ -400,7 +400,7 @@ static void CL_UpdateObject_f (void)
 	if (changeTab) {
 		const cvar_t *var = Cvar_FindVar("mn_equiptype");
 		const int filter = INV_GetFilterFromItem(obj);
-		if (var->integer != filter) {
+		if (var && var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
 			MN_ExecuteConfunc("update_item_list");
 		}
