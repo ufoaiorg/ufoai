@@ -689,7 +689,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		int randNumber = rand() % 100;
 		for (i = 0; i < maxWeaponIdx; i++) {
 			objDef_t *obj = INVSH_GetItemByIDX(i);
-			if (ed->numItems[i] && obj->weapon && obj->fireTwoHanded && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))) {
+			if (ed->numItems[i] && obj->weapon && obj->fireTwoHanded && obj->isPrimary) {
 				randNumber -= ed->numItems[i];
 				missedPrimary += ed->numItems[i];
 				if (!primaryWeapon && randNumber < 0)
@@ -727,8 +727,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 			objDef_t *secondaryWeapon = NULL;
 			for (i = 0; i < self->csi->numODs; i++) {
 				objDef_t *obj = INVSH_GetItemByIDX(i);
-				if (ed->numItems[i] && obj->weapon && obj->reload && !obj->deplete
-				 && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)) {
+				if (ed->numItems[i] && obj->weapon && obj->reload && !obj->deplete && obj->isSecondary) {
 					randNumber -= ed->numItems[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						secondaryWeapon = obj;
@@ -758,8 +757,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		sum = 0;
 		for (i = 0; i < self->csi->numODs; i++) {
 			objDef_t *obj = INVSH_GetItemByIDX(i);
-			if (ed->numItems[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
-			 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+			if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
+			 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
 				 * don't take it into account for probability
 				 * Make sure that the probability is at least one if an item can be selected */
@@ -772,8 +771,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				objDef_t *secondaryWeapon = NULL;
 				for (i = 0; i < self->csi->numODs; i++) {
 					objDef_t *obj = INVSH_GetItemByIDX(i);
-					if (ed->numItems[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
-					 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
+					 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
 						randNumber -= ed->numItems[i] ? max(ed->numItems[i] % 100,1) : 0;
 						if (randNumber < 0) {
 							secondaryWeapon = obj;
@@ -798,7 +797,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", ed->name);
 			for (i = 0; i < self->csi->numODs; i++) {
 				objDef_t *obj = INVSH_GetItemByIDX(i);
-				if (ed->numItems[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
+				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
 					if (obj->price > maxPrice) {
 						maxPrice = obj->price;
 						blade = obj;
@@ -827,7 +826,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		int randNumber = rand() % 100;
 		for (i = 0; i < self->csi->numODs; i++) {
 			objDef_t *armour = INVSH_GetItemByIDX(i);
-			if (ed->numItems[i] && INV_ItemMatchesFilter(armour, FILTER_S_ARMOUR)) {
+			if (ed->numItems[i] && INV_IsArmour(armour)) {
 				randNumber -= ed->numItems[i];
 				if (randNumber < 0) {
 					const item_t item = {NONE_AMMO, NULL, armour, 0, 0};

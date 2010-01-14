@@ -298,8 +298,23 @@ void G_InvList_f (const player_t *player)
 	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && G_IsLivingActor(ent) && ent->team == player->pers.team) {
+			int container;
 			gi.dprintf("actor: '%s'\n", ent->chr.name);
-			INVSH_PrintContainerToConsole(&ent->i);
+
+			for (container = 0; container < gi.csi->numIDs; container++) {
+				const invList_t *ic = ent->i.c[container];
+				Com_Printf("Container: %i\n", container);
+				while (ic) {
+					Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
+							(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
+							ic->item.a, ic->x, ic->y);
+					if (ic->item.t)
+						Com_Printf(".... weapon: %s\n", ic->item.t->id);
+					if (ic->item.m)
+						Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
+					ic = ic->next;
+				}
+			}
 		}
 }
 

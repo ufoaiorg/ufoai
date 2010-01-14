@@ -210,37 +210,6 @@ typedef struct craftitem_s {
 } craftitem_t;
 
 /**
- * @brief A list of filter types in the market and production view.
- * @note Run-time only, please do not use this in savegame/structures and the like.
- * Please also do not use hardcoded numbers to access this (e.g. in a .ufo script).
- * @sa inv_shared.c:INV_ItemMatchesFilter
- * @sa inv_shared.c:INV_GetFilterTypeID
- */
-typedef enum {
-	/* All types starting with "FILTER_S_" contain items that can used on/with soldiers (i.e. personal equipment). */
-	FILTER_S_PRIMARY,		/**< All 'Primary' weapons and their ammo for soldiers (Except for heavy weapons). */
-	FILTER_S_SECONDARY,		/**< All 'Secondary' weapons and their ammo for soldiers. */
-	FILTER_S_HEAVY,			/**< Heavy weapons for soldiers. */
-	FILTER_S_MISC,			/**< Misc. soldier equipment (i.e. everything else that is not in the other soldier-item filters) */
-	FILTER_S_ARMOUR,		/**< Armour for soldiers. */
-	MAX_SOLDIER_FILTERTYPES,
-
-	/* Non-soldier items */
-	FILTER_CRAFTITEM,	/**< Aircraft equipment. */
-	FILTER_UGVITEM,	/**< Heavy equipment like tanks (i.e. these are actually employees) and their parts.
-					 * Some of the content are special normal items (like for soldiers).
-					 * The UGVs themself are specially handled.*/
-	FILTER_AIRCRAFT,	/**< Aircrafts. */
-	FILTER_DUMMY,		/**< Everything that is not in _any_ of the other filter types.
-					 * Mostly plot-relevant stuff, unproducible stuff and stuff. */
-	FILTER_DISASSEMBLY,
-
-	MAX_FILTERTYPES,
-
-	FILTER_ENSURE_32BIT = 0x7FFFFFFF
-} itemFilterTypes_t;
-
-/**
  * @brief Defines all attributes of objects used in the inventory.
  * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
  */
@@ -689,7 +658,6 @@ typedef struct character_s {
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
 
-int CHRSH_CharGetMaxExperiencePerMission(abilityskills_t skill);
 void CHRSH_CharGenAbilitySkills(character_t * chr, qboolean multiplayer) __attribute__((nonnull));
 const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
 const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
@@ -704,14 +672,8 @@ int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const
 qboolean INVSH_CompareItem(item_t *item1, item_t *item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
-itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
-const char *INV_GetFilterType(const int id);
-qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
-itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj);
 invList_t *INVSH_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
-invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
-void INVSH_PrintContainerToConsole(inventory_t* const i);
 qboolean INV_IsCraftItem(const objDef_t *obj);
 qboolean INV_IsBaseDefenceItem(const objDef_t *item);
 

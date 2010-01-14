@@ -216,6 +216,189 @@ qboolean INV_EquipmentDefSanityCheck (void)
 	return result;
 }
 
+itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
+{
+	assert(obj);
+
+	/* heavy weapons may be primary too. check heavy first */
+	if (obj->isHeavy)
+		return FILTER_S_HEAVY;
+	else if (obj->isPrimary)
+		return FILTER_S_PRIMARY;
+	else if (obj->isSecondary)
+		return FILTER_S_SECONDARY;
+	else if (obj->isMisc)
+		return FILTER_S_MISC;
+	else if (INV_IsArmour(obj))
+		return FILTER_S_ARMOUR;
+
+	/** @todo need to implement everything */
+	Sys_Error("INV_GetFilterFromItem: unknown filter category for item '%s'", obj->id);
+}
+
+/**
+ * @brief Checks if the given object/item matched the given filter type.
+ * @param[in] obj A pointer to an objDef_t item.
+ * @param[in] filterType Filter type to check against.
+ * @return qtrue if obj is in filterType
+ */
+qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t filterType)
+{
+	int i;
+
+	if (!obj)
+		return qfalse;
+
+	switch (filterType) {
+	case FILTER_S_PRIMARY:
+		if (obj->isPrimary && !obj->isHeavy)
+			return qtrue;
+
+		/* Check if one of the items that uses this ammo matches this filter type. */
+		for (i = 0; i < obj->numWeapons; i++) {
+			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+				return qtrue;
+		}
+		break;
+
+	case FILTER_S_SECONDARY:
+		if (obj->isSecondary && !obj->isHeavy)
+			return qtrue;
+
+		/* Check if one of the items that uses this ammo matches this filter type. */
+		for (i = 0; i < obj->numWeapons; i++) {
+			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+				return qtrue;
+		}
+		break;
+
+	case FILTER_S_HEAVY:
+		if (obj->isHeavy)
+			return qtrue;
+
+		/* Check if one of the items that uses this ammo matches this filter type. */
+		for (i = 0; i < obj->numWeapons; i++) {
+			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+				return qtrue;
+		}
+		break;
+
+	case FILTER_S_ARMOUR:
+		return INV_IsArmour(obj);
+
+	case FILTER_S_MISC:
+		return obj->isMisc;
+
+	case FILTER_CRAFTITEM:
+		/** @todo Should we handle FILTER_AIRCRAFT here as well? */
+		return INV_IsCraftItem(obj);
+
+	case FILTER_UGVITEM:
+		return obj->isUGVitem;
+
+	case FILTER_DUMMY:
+		return obj->isDummy;
+
+	case FILTER_AIRCRAFT:
+		return !strcmp(obj->type, "aircraft");
+
+	case FILTER_DISASSEMBLY:
+		/** @todo I guess we should search for components matching this item here. */
+		break;
+
+	case MAX_SOLDIER_FILTERTYPES:
+	case MAX_FILTERTYPES:
+	case FILTER_ENSURE_32BIT:
+		Com_Printf("INV_ItemMatchesFilter: Unknown filter type for items: %i\n", filterType);
+		break;
+	}
+
+	/* The given filter type is unknown. */
+	return qfalse;
+}
+
+/**
+ * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
+ * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
+ * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @param[in] filterType Enum definition of type (types of items for filtering purposes).
+ * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @sa INVSH_SearchInInventory
+ */
+invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+{
+	invList_t *ic;
+	/** @todo is this function doing any reasonable stuff if the item is a null pointer?
+	 * if not, we can return null without walking through the whole container */
+	for (ic = i->c[container->id]; ic; ic = ic->next) {
+		/* Search only in the items that could get displayed. */
+		if (ic && ic->item.t && (INV_ItemMatchesFilter(ic->item.t, filterType) || filterType == MAX_FILTERTYPES)) {
+			if (item) {
+				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
+				if (item == ic->item.t)
+					return ic;
+			}
+		}
+	}
+
+	/* No item with these coordinates (or matching item) found. */
+	return NULL;
+}
+
+/** Names of the filter types as used in console function. e.g. in .ufo files.
+ * @sa inv_shared.h:itemFilterTypes_t */
+static const char *filterTypeNames[MAX_FILTERTYPES] = {
+	"primary",		/**< FILTER_S_PRIMARY */
+	"secondary",	/**< FILTER_S_SECONDARY */
+	"heavy",		/**< FILTER_S_HEAVY */
+	"misc",			/**< FILTER_S_MISC */
+	"armour",		/**< FILTER_S_ARMOUR */
+	"",				/**< MAX_SOLDIER_FILTERTYPES */
+	"craftitem",	/**< FILTER_CRAFTITEM */
+	"ugvitem",		/**< FILTER_UGVITEM */
+	"aircraft",		/**< FILTER_AIRCRAFT */
+	"dummy",		/**< FILTER_DUMMY */
+	"disassembly"	/**< FILTER_DISASSEMBLY */
+};
+CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
+
+/**
+ * @brief Searches for a filter type name (as used in console functions) and returns the matching itemFilterTypes_t enum.
+ * @param[in] filterTypeID Filter type name so search for. @sa filterTypeNames.
+ */
+itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
+{
+	itemFilterTypes_t i;
+
+	if (!filterTypeID)
+		return MAX_FILTERTYPES;
+
+	/* default filter type is primary */
+	if (filterTypeID[0] == '\0')
+		return FILTER_S_PRIMARY;
+
+	for (i = 0; i < MAX_FILTERTYPES; i++) {
+		if (filterTypeNames[i] && !strcmp(filterTypeNames[i], filterTypeID))
+			return i;
+	}
+
+	/* No matching filter type found, returning max value. */
+	return MAX_FILTERTYPES;
+}
+
+/**
+ * @param[in] id The filter type index
+ */
+const char *INV_GetFilterType (const int id)
+{
+	assert(id >= 0);
+	assert(id < MAX_FILTERTYPES);
+	return filterTypeNames[id];
+}
+
 void INV_InitStartup (void)
 {
 #ifdef DEBUG
