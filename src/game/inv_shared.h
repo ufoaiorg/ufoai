@@ -691,7 +691,6 @@ invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
-int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapFdsIdx);
 
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 qboolean INVSH_CheckShape(const uint32_t *shape, const int x, const int y);

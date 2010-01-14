@@ -750,16 +750,16 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 	}
 }
 
-/** @brief Used in CHRSH_CharGetHead and CHRSH_CharGetBody to generate the model path. */
-static char CHRSH_returnModel[MAX_VAR];
-
 /**
  * @brief Returns the body model for the soldiers for armoured and non armoured soldiers
  * @param chr Pointer to character struct
  * @sa CHRSH_CharGetBody
+ * @return the character body model (from a static buffer)
  */
 const char *CHRSH_CharGetBody (const character_t * const chr)
 {
+	static char returnModel[MAX_VAR];
+
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
@@ -767,10 +767,10 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
-		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
+		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->body);
 	} else
-		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->body);
-	return CHRSH_returnModel;
+		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->body);
+	return returnModel;
 }
 
 /**
@@ -780,6 +780,8 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
  */
 const char *CHRSH_CharGetHead (const character_t * const chr)
 {
+	static char returnModel[MAX_VAR];
+
 	/* models of UGVs don't change - because they are already armoured */
 	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
@@ -787,11 +789,10 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
-		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->head);
+		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->head);
 	} else
-		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->head);
-	Com_DPrintf(DEBUG_SHARED, "CHRSH_CharGetBody: use '%s' as head model path for character\n", CHRSH_returnModel);
-	return CHRSH_returnModel;
+		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->head);
+	return returnModel;
 }
 
 /**
@@ -953,37 +954,6 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 	}
 
 	return NULL;
-}
-
-/**
- * @brief Returns the default reaction firemode for a given ammo in a given weapon.
- * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
- * @param[in] weaponFdsIdx The index in objDef[x]
- * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
- */
-int FIRESH_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
-{
-	int fdIdx;
-	if (weaponFdsIdx >= MAX_WEAPONS_PER_OBJDEF) {
-		Com_Printf("FIRESH_GetDefaultReactionFire: bad weaponFdsIdx (%i) Maximum is %i.\n", weaponFdsIdx, MAX_WEAPONS_PER_OBJDEF - 1);
-		return -1;
-	}
-	if (weaponFdsIdx < 0) {
-		Com_Printf("FIRESH_GetDefaultReactionFire: Negative weaponFdsIdx given.\n");
-		return -1;
-	}
-
-	if (ammo->numFiredefs[weaponFdsIdx] == 0) {
-		Com_Printf("FIRESH_GetDefaultReactionFire: Probably not an ammo-object: %s\n", ammo->id);
-		return -1;
-	}
-
-	for (fdIdx = 0; fdIdx < ammo->numFiredefs[weaponFdsIdx]; fdIdx++) {
-		if (ammo->fd[weaponFdsIdx][fdIdx].reaction)
-			return fdIdx;
-	}
-
-	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
 }
 
 /**

@@ -556,6 +556,37 @@ qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 }
 
 /**
+ * @brief Returns the default reaction firemode for a given ammo in a given weapon.
+ * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
+ * @param[in] weaponFdsIdx The index in objDef[x]
+ * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
+ */
+static int CL_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
+{
+	int fdIdx;
+	if (weaponFdsIdx >= MAX_WEAPONS_PER_OBJDEF) {
+		Com_Printf("CL_GetDefaultReactionFire: bad weaponFdsIdx (%i) Maximum is %i.\n", weaponFdsIdx, MAX_WEAPONS_PER_OBJDEF - 1);
+		return -1;
+	}
+	if (weaponFdsIdx < 0) {
+		Com_Printf("CL_GetDefaultReactionFire: Negative weaponFdsIdx given.\n");
+		return -1;
+	}
+
+	if (ammo->numFiredefs[weaponFdsIdx] == 0) {
+		Com_Printf("CL_GetDefaultReactionFire: Probably not an ammo-object: %s\n", ammo->id);
+		return -1;
+	}
+
+	for (fdIdx = 0; fdIdx < ammo->numFiredefs[weaponFdsIdx]; fdIdx++) {
+		if (ammo->fd[weaponFdsIdx][fdIdx].reaction)
+			return fdIdx;
+	}
+
+	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
+}
+
+/**
  * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
  * @param[in] actor The actor we want to update the reaction-fire firemode for.
  * @param[in] hand Which weapon(-hand) to use (l|r).
@@ -595,7 +626,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 
 	if (firemodeActive < 0) {
 		/* Set default reaction firemode for this hand (firemodeActive=-1) */
-		const int reactionFiremodeIndex = FIRESH_GetDefaultReactionFire(ammo, fd->weapFdsIdx);
+		const int reactionFiremodeIndex = CL_GetDefaultReactionFire(ammo, fd->weapFdsIdx);
 
 		if (reactionFiremodeIndex >= 0) {
 			/* Found usable firemode for the weapon in _this_ hand. */
