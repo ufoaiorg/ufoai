@@ -148,7 +148,7 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnV
 			 PosAddDV(pos, tmp, dvtab[max]);
 			 max--;
 			 blockEdict = G_GetEdictFromPos(pos, 0);
-			 if (blockEdict && G_IsBlockingMovementActor(blockEdict))
+			 if (blockEdict && G_IsBlockingMovementActor(blockEdict) && G_IsVisibleForTeam(blockEdict, ent->team))
 				 return qtrue;
 		 }
 	 }

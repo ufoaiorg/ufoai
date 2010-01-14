@@ -2248,7 +2248,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	cl_worldlevel->integer = oldLevel;
 }
 
-
 /**
  * @brief field marker box
  * @sa ModelOffset
