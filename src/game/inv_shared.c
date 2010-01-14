@@ -31,12 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static csi_t *CSI;
 
-/*================================
-INVENTORY MANAGEMENT FUNCTIONS
-================================*/
-
 /**
- * @brief Initializes client server shared data pointer
+ * @brief Initializes client server shared data pointer. This works because the client and the server are both
+ * using exactly the same pointer.
  * @param[in] import The client server interface pointer
  * @sa G_Init
  * @sa Com_ParseScripts
@@ -94,23 +91,6 @@ qboolean INV_IsEquipDef (const invDef_t* invDef)
 qboolean INV_IsArmourDef (const invDef_t* invDef)
 {
 	return invDef->id == CSI->idArmour;
-}
-
-/**
- * @brief Get the fire definitions for a given object
- * @param[in] obj The object to get the firedef for
- * @param[in] weapFdsIdx the weapon index in the fire definition array
- * @param[in] fdIdx the fire definition index for the weapon (given by @c weapFdsIdx)
- * @return Will never return NULL
- * @sa FIRESH_FiredefForWeapon
- */
-const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
-{
-	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
-		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'", weapFdsIdx, obj->id);
-	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
-		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i] for item '%s'", fdIdx, obj->id);
-	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
 }
 
 static int cacheCheckToInventory = INV_DOES_NOT_FIT;
@@ -1183,6 +1163,23 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 FIREMODE MANAGEMENT FUNCTIONS
 ===============================
 */
+
+/**
+ * @brief Get the fire definitions for a given object
+ * @param[in] obj The object to get the firedef for
+ * @param[in] weapFdsIdx the weapon index in the fire definition array
+ * @param[in] fdIdx the fire definition index for the weapon (given by @c weapFdsIdx)
+ * @return Will never return NULL
+ * @sa FIRESH_FiredefForWeapon
+ */
+const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
+{
+	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
+		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'", weapFdsIdx, obj->id);
+	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
+		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i] for item '%s'", fdIdx, obj->id);
+	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
+}
 
 /**
  * @brief Returns the firedefinitions for a given weapon/ammo

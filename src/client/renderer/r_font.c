@@ -53,7 +53,7 @@ typedef struct {
 	/* no need for individual line height, just use font->height */
 	qboolean truncated;	/**< needs ellipsis after text */
 	vec2_t texsize;	/**< texture width and height */
-	GLuint texId;	/**< bound texture ID (0 if not textured yet) */
+	GLuint texnum;	/**< bound texture ID (0 if not textured yet) */
 } chunkCache_t;
 
 /**
@@ -126,9 +126,9 @@ static void R_FontCleanCache (void)
 
 	/* free the surfaces */
 	for (i = 0; i < numChunks; i++) {
-		if (!chunkCache[i].texId)
+		if (!chunkCache[i].texnum)
 			continue;
-		glDeleteTextures(1, &(chunkCache[i].texId));
+		glDeleteTextures(1, &(chunkCache[i].texnum));
 		R_CheckError();
 	}
 
@@ -572,7 +572,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	Uint32 amask = 0xff000000;
 #endif
 
-	if (chunk->texId != 0)
+	if (chunk->texnum != 0)
 		return;  /* already generated */
 
 	assert(strlen(text) >= chunk->pos + chunk->len);
@@ -611,8 +611,8 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_FreeSurface(textSurface);
 
 	/* use a fixed texture number allocation scheme */
-	chunk->texId = TEXNUM_FONTS + (chunk - chunkCache);
-	R_BindTexture(chunk->texId);
+	chunk->texnum = TEXNUM_FONTS + (chunk - chunkCache);
+	R_BindTexture(chunk->texnum);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -703,7 +703,7 @@ int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int
 			continue;
 
 		R_FontGenerateTexture(font, c, chunk);
-		R_FontDrawTexture(chunk->texId, x + xalign, y + (linenum - scrollPos) * lineHeight, chunk->texsize[0], chunk->texsize[1]);
+		R_FontDrawTexture(chunk->texnum, x + xalign, y + (linenum - scrollPos) * lineHeight, chunk->texsize[0], chunk->texsize[1]);
 	}
 
 	return wrap->numLines;
