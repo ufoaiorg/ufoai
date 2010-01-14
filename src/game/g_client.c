@@ -377,16 +377,18 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 
 /**
  * @brief Will inform the player about the real TU reservation
- * @param ent
+ * @param ent The actors edict.
  */
 static void G_SendReservations (const edict_t *ent)
 {
-	gi.AddEvent(G_TeamToPM(ent->visflags), EV_ACTOR_RESERVATIONCHANGE);
+	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
 
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->chr.reservedTus.reaction);
 	gi.WriteShort(ent->chr.reservedTus.shot);
 	gi.WriteShort(ent->chr.reservedTus.crouch);
+
+	gi.EndEvents();
 }
 
 /**
