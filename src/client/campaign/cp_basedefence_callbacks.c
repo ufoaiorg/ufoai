@@ -248,7 +248,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 			BDEF_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
 			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 				if (!installation->batteries[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: empty", i + 1);
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
 					LIST_AddString(&slotList, defBuffer);
 				} else {
 					const aircraftSlot_t *slot = &installation->batteries[i].slot ;
@@ -276,19 +276,19 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 			BDEF_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
 			for (i = 0; i < base->numBatteries; i++) {
 				if (!base->batteries[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: empty", i + 1);
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
 					LIST_AddString(&slotList, defBuffer);
 				} else {
 					const aircraftSlot_t *slot = &base->batteries[i].slot ;
-					char status[MAX_VAR];
+					const char *status;
 					if (!slot->installationTime)
-						Q_strncpyz(status, _("Working"), sizeof(status));
+						status = _("Working");
 					else if (slot->installationTime > 0)
-						Q_strncpyz(status, _("Installing"), sizeof(status));
+						status = _("Installing");
 					else if (slot->nextItem)
-						Q_strncpyz(status, _("Replacing"), sizeof(status));
+						status = _("Replacing");
 					else
-						Q_strncpyz(status, _("Removing"), sizeof(status));
+						status = _("Removing");
 
 					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", i + 1, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
 					LIST_AddString(&slotList, defBuffer);
@@ -308,7 +308,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 					LIST_AddString(&slotList, defBuffer);
 				} else {
 					const aircraftSlot_t *slot = &base->lasers[i].slot ;
-					char *status;
+					const char *status;
 					if (!slot->installationTime)
 						status = _("Working");
 					else if (slot->installationTime > 0)
