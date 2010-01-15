@@ -128,13 +128,14 @@ void G_ActorFall (edict_t *ent)
 /**
  * @brief Checks whether the actor should stop movement
  * @param ent The actors edict
- * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
  * @param visState The visibily check state @c VIS_PERISH, @c VIS_APPEAR
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState, byte* dvtab, int max)
+qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvtab, int max)
 {
-	if (stopOnVisStop && (visState & VIS_STOP))
+	/** @todo this might lead to aliens inside of civilians - VIS_STOP should always stop the movement and
+	 * the ai edict loop should handle this (run as long as x TUs are left) */
+	if (!G_IsAI(ent) && (visState & VIS_STOP))
 		 return qtrue;
 
 	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
@@ -165,12 +166,10 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnV
  * not if they e.g. hide.
  * @param[in] ent Edict to move
  * @param[in] to The grid position to walk to
- * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
- * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
+void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 {
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
@@ -185,6 +184,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
+	const qboolean quiet = G_IsAIPlayer(player);
 
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	oldState = 0;
@@ -258,7 +258,20 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);
-			if (stopOnVisStop && (status & VIS_STOP)) {
+
+			/* This is now a flag to indicate a change in crouching - we need this for
+			 * the stop in mid move call(s), because we need the updated entity position */
+			crouchFlag = 0;
+			PosAddDV(ent->pos, crouchFlag, dv);
+
+			/* link it at new position - this must be done for every edict
+			 * movement - to let the server know about it. */
+			gi.LinkEdict(ent);
+
+			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
+				if (!(status & VIS_STOP))
+					G_EventActorTurn(ent);
+
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;
@@ -280,9 +293,6 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				ent->speed = ACTOR_SPEED_NORMAL;
 			ent->speed *= g_actorspeed->value;
 
-			/* This is now a flag to indicate a change in crouching */
-			crouchFlag = 0;
-			PosAddDV(ent->pos, crouchFlag, dv);
 			if (crouchFlag == 0) { /* No change in crouch */
 				edict_t* clientAction;
 
@@ -291,10 +301,6 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				pointTrace[2] += PLAYER_MIN;
 
 				contentFlags = gi.PointContents(pointTrace);
-
-				/* link it at new position - this must be done for every edict
-				 * movement - to let the server know about it. */
-				gi.LinkEdict(ent);
 
 				/* Only the PHALANX team has these stats right now. */
 				if (ent->chr.scoreMission) {
@@ -399,7 +405,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status, dvtab, numdv - 1)) {
+			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;

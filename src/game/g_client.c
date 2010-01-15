@@ -626,7 +626,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_MOVE:
 		gi.ReadFormat(pa_format[PA_MOVE], &pos);
-		G_ClientMove(player, player->pers.team, ent, pos, qtrue, NOISY);
+		G_ClientMove(player, player->pers.team, ent, pos);
 		break;
 
 	case PA_STATE:

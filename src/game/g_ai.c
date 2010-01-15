@@ -364,8 +364,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						}
 					}
 #if 0
-				/*
-				 * This feature causes the 'aliens shoot at walls'-bug.
+				/**
+				 * @todo This feature causes the 'aliens shoot at walls'-bug.
 				 * I considered adding a visibility check, but that wouldn't prevent aliens
 				 * from shooting at the breakable parts of their own ship.
 				 * So I disabled it for now. Duke, 23.10.09
@@ -375,6 +375,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 						if (check->inuse && G_IsBreakable(check)) {
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+								continue;
+
+							/* check whether target is visible enough */
+							vis = G_ActorVis(ent->origin, check, qtrue);
+							if (vis < ACTOR_VIS_0)
 								continue;
 
 							/* don't take vis into account, don't multiply with amout of shots
@@ -748,7 +753,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 		G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	G_ClientMove(player, 0, ent, bestAia.to, qfalse, QUIET);
+	G_ClientMove(player, 0, ent, bestAia.to);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
@@ -858,7 +863,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(player, ent->team, ent, bestAia.stop, qfalse, QUIET);
+		G_ClientMove(player, ent->team, ent, bestAia.stop);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
