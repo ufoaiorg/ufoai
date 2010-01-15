@@ -1,3 +1,32 @@
+
+
+component panel myAllocatedPanel {
+
+	{
+		size "200 20"
+	}
+
+	string value  {
+		pos "0 0"
+		size "40 20"
+	}
+
+	spinner changeValue
+	{
+		tooltip		"_Buy and sell item"
+		image		ui/spinner_blue
+		pos			"40 0"
+		min			0
+		max			10
+	}
+
+	func initCvar {
+		*node:parent.value@string = "*cvar:<1>"
+		*node:parent.changeValue@current = "*cvar:<1>"
+	}
+
+}
+
 window unittest_nodeallocation
 {
 	{
@@ -51,6 +80,13 @@ window unittest_nodeallocation
 					*node:this@color = "1 0 0 1"
 				}
 			}
+
+			call *node:root.dyn@createchild ( "panel<cvar:nb>" , "myAllocatedPanel" )
+			*node:(panel)root.dyn.panel<cvar:nb>@top = ( *cvar:nb * 20 )
+			*node:(panel)root.dyn.panel<cvar:nb>@left = 100
+			*cvar:foo<cvar:nb> = 1
+			call *node:(panel)root.dyn.panel<cvar:nb>.initCvar ( "foo<cvar:nb>" )
+
 			*cvar:nb = ( *cvar:nb + 1 )
 		}
 	}
@@ -63,6 +99,7 @@ window unittest_nodeallocation
 			if ( *cvar:nb > 0 ) {
 				*cvar:nb = ( *cvar:nb - 1 )
 				call *node:root.dyn.foo<cvar:nb>@delete
+				call *node:root.dyn.panel<cvar:nb>@delete
 			}
 		}
 	}

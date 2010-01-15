@@ -202,6 +202,8 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 
 static void MN_DrawNode (menuNode_t *node)
 {
+	static int globalTransX = 0;
+	static int globalTransY = 0;
 	menuNode_t *child;
 	vec2_t pos;
 
@@ -242,11 +244,13 @@ static void MN_DrawNode (menuNode_t *node)
 			hasClient = qtrue;
 		}
 
-		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+		R_PushClipRect(pos[0] + globalTransX, pos[1] + globalTransY, node->size[0], node->size[1]);
 
 		/** @todo move it at the right position */
 		if (hasClient) {
 			vec3_t trans;
+			globalTransX += clientPosition[0];
+			globalTransY += clientPosition[1];
 			trans[0] = clientPosition[0];
 			trans[1] = clientPosition[1];
 			trans[2] = 0;
@@ -259,6 +263,8 @@ static void MN_DrawNode (menuNode_t *node)
 		/** @todo move it at the right position */
 		if (hasClient) {
 			vec3_t trans;
+			globalTransX -= clientPosition[0];
+			globalTransY -= clientPosition[1];
 			trans[0] = -clientPosition[0];
 			trans[1] = -clientPosition[1];
 			trans[2] = 0;

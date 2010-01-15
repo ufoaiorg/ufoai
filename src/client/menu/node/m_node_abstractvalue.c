@@ -69,15 +69,21 @@ static void MN_AbstractValueDelete (menuNode_t * node)
 	EXTRADATA(node).min = NULL;
 }
 
-static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
+static void MN_CloneCvarOrFloat (const menuNode_t *source, menuNode_t *clone, const float*const* sourceData, float** cloneData)
 {
 	/* dont update cvar */
-	if (!strncmp(*(const char*const*)source, "*cvar", 5))
-		return;
+	if (!strncmp(*(const char*const*)sourceData, "*cvar", 5)) {
+		/* thats anyway a const string */
+		assert(!source->dynamic);
+		if (clone->dynamic)
+			Mem_Free(*(char**)cloneData);
+		*(const char**)cloneData = *(const char*const*)sourceData;
+	}
 
 	/* clone float */
-	*clone = MN_AllocStaticFloat(1);
-	**clone = **source;
+	if (!clone->dynamic)
+		*cloneData = MN_AllocStaticFloat(1);
+	**cloneData = **sourceData;
 }
 
 /**
@@ -86,10 +92,10 @@ static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
 static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).value, (float**)&EXTRADATA(clone).value);
-	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).delta, (float**)&EXTRADATA(clone).delta);
-	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).max, (float**)&EXTRADATA(clone).max);
-	MN_CloneCvarOrFloat((const float*const*)&EXTRADATA(source).min, (float**)&EXTRADATA(clone).min);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).value, (float**)&EXTRADATA(clone).value);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).delta, (float**)&EXTRADATA(clone).delta);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).max, (float**)&EXTRADATA(clone).max);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).min, (float**)&EXTRADATA(clone).min);
 }
 
 static const value_t properties[] = {
