@@ -674,7 +674,7 @@ void CL_CampaignRun (void)
 		/* must be called even if dt = timeAlreadyFlied in order to update radar overlay */
 		CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
 		UFO_CampaignCheckEvents();
-		AIRFIGHT_CampaignRunBaseDefense(dt);
+		AIRFIGHT_CampaignRunBaseDefence(dt);
 		CP_CheckMissionEnd();
 		CP_CheckLostCondition();
 		AIRFIGHT_CampaignRunProjectiles(dt);
