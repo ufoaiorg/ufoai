@@ -9,5 +9,5 @@ base/i18n/* /usr/share/games/ufoai/base/i18n
 src/docs/tex/ufo-manual_EN.pdf /usr/share/doc/ufoai-data/
 # This is not in Debian yet
 base/media/UnDinaruBold.ttf /usr/share/games/ufoai/media
-# This is not in Debian yet, see ITP #461757 for ttf-ume
+# This is not in Debian yet, see ITP #461757 for ttf-ume - ttf-umefont is in testing and unstable now
 base/media/ume-pgo4.ttf /usr/share/games/ufoai/media
