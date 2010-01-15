@@ -38,13 +38,16 @@ static int forbiddenListLength;
 /**
  * @brief Build the forbidden list for the pathfinding (server side).
  * @param[in] team The team number if the list should be calculated from the eyes of that team. Use 0 to ignore team.
+ * @param[in] movingActor The moving actor to build the forbidden list for. If this is an AI actor, everything other actor will be
+ * included in the forbidden list - even the invisible ones. This is needed to ensure that they are not walking into each other
+ * (civilians <=> aliens, aliens <=> civilians)
  * @sa G_MoveCalc
  * @sa Grid_CheckForbidden
  * @sa CL_BuildForbiddenList <- shares quite some code
  * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
-static void G_BuildForbiddenList (int team)
+static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 {
 	edict_t *ent;
 	int visMask;
@@ -62,7 +65,7 @@ static void G_BuildForbiddenList (int team)
 		if (!ent->inuse)
 			continue;
 		/* Dead 2x2 unit will stop walking, too. */
-		if (G_IsBlockingMovementActor(ent) && (ent->visflags & visMask)) {
+		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & visMask))) {
 			forbiddenList[forbiddenListLength++] = ent->pos;
 			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
@@ -83,16 +86,15 @@ static void G_BuildForbiddenList (int team)
  * This will calculate a routing table for all reachable fields with the given distance
  * from the given spot with the given actorsize
  * @param[in] team The current team (see G_BuildForbiddenList)
- * @param[in] actorSize
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int distance)
+void G_MoveCalc (int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance)
 {
-	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.routingMap, actorSize, gi.pathingMap, from, crouchingState, distance,
+	G_BuildForbiddenList(team, movingActor);
+	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, gi.pathingMap, from, crouchingState, distance,
 			forbiddenList, forbiddenListLength);
 }
 
@@ -112,7 +114,6 @@ void G_ActorFall (edict_t *ent)
 	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
-		/** @todo search a grid field besides the found edict */
 	}
 
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
@@ -133,9 +134,7 @@ void G_ActorFall (edict_t *ent)
  */
 qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvtab, int max)
 {
-	/** @todo this might lead to aliens inside of civilians - VIS_STOP should always stop the movement and
-	 * the ai edict loop should handle this (run as long as x TUs are left) */
-	if (!G_IsAI(ent) && (visState & VIS_STOP))
+	if (visState & VIS_STOP)
 		 return qtrue;
 
 	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
@@ -194,7 +193,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 		return;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
 	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
@@ -212,7 +211,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
-				G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
 				length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 				autoCrouchRequired = qtrue;
 			}

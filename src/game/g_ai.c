@@ -317,6 +317,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 							continue;
 
+						/** @todo use the team visibility check here - they are using psi ;) */
 						/* check whether target is visible */
 						vis = G_ActorVis(ent->origin, check, qtrue);
 						if (vis == ACTOR_VIS_0)
@@ -428,10 +429,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, to, ent->fieldSize, crouchingState, HIDE_DIST);
+			G_MoveCalc(0, ent, to, crouchingState, HIDE_DIST);
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
+			/** @todo remove this magic number */
 			maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
 			maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
 
@@ -691,7 +693,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, MAX_ROUTE);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(gi.pathingMap);
 
@@ -792,7 +794,7 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 	int dv;
 	const byte crouchingState = G_IsCrouched(aiActor) ? 1 : 0;
 
-	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouchingState, MAX_ROUTE);
+	G_MoveCalc(aiActor->team, aiActor, pos, crouchingState, MAX_ROUTE);
 
 	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {

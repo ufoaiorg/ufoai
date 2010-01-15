@@ -404,7 +404,7 @@ void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
 void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to);
 void G_ActorFall(edict_t *ent);
-void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
+void G_MoveCalc(int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance);
 void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
 void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);

@@ -472,7 +472,7 @@ static int pos3L_goto (lua_State *L)
 	assert(lua_ispos3(L, 1));
 
 	/* Calculate move table. */
-	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize, crouchingState, AIL_ent->TU);
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, crouchingState, AIL_ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* Move. */
@@ -768,7 +768,7 @@ static int AIL_positionshoot (lua_State *L)
 	dist = ent->TU;
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, ent->TU);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
@@ -836,7 +836,7 @@ static int AIL_positionhide (lua_State *L)
 	dist = ent->TU;
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, ent->TU);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
