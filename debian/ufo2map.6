@@ -1,0 +1,35 @@
+.TH UFO2MAP 6 "January 13, 2008"
+.SH NAME
+ufo2map \- UFO: Alien Invasion map compiler
+
+.SH SYNOPSIS
+.PP
+\fBufo2map\fR \fBmaps/mapname.map [\fI-option\fR \fIvalue\fP] ...
+
+.SH DESCRIPTION
+This manual page documents briefly the
+.B ufo2map
+command.
+.PP
+\fBufo2map\fP is the map compiler for the strategy game UFO: Alien Invasion. It is used to pre-calculate the lightmaps and the pathfinding data.
+
+.SH OPTIONS
+.PP
+Options passed by "-option [value]"
+.TP 
+\fB-h\fR
+Show the help screen with a brief description of all options\&.
+
+.SH "FILES"
+The map compiler must have access to the game data files. Either in the user home directory or in the system wide path. It can
+read the content from the pk3 files like the game is doing, too.
+
+.SH "SEE ALSO"
+.PP
+\fBuforadiant\fR(6)
+
+.SH AUTHOR
+\fBufo2map\fP was written by the UFO: Alien Invasion team.
+.PP
+This manual page was written by Florian Ludwig <dino@phidev.org>,
+for the Debian project (but may be used by others).
