@@ -104,7 +104,7 @@ static const int TUsUsed[] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & SW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
-	};
+};
 CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
 /** @brief Used to track where rerouting needs to occur. */
@@ -615,7 +615,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		assert(**name == '*');
+		assert(*name[0] == '*');
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
@@ -652,11 +652,11 @@ qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int le
 	qboolean hit;
 
 	/* set the list of entities to check */
-	inlineList = entlist;
+	CM_SetInlineList(entlist);
 	/* do the line test */
 	hit = CM_EntTestLine(start, stop, levelmask);
 	/* zero the list */
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	return hit;
 }
