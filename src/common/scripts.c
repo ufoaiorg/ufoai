@@ -148,6 +148,8 @@ void Com_RemoveConstVariable (const char *name)
 						break;
 					}
 				}
+				if (a->fullname)
+					Mem_Free(a->fullname);
 				Mem_Free(a);
 				break;
 			}

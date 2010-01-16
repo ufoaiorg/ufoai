@@ -243,7 +243,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 			if (pos)
-				Com_Printf("%s",MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
+				Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
 			if (pos)
 				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 			else
