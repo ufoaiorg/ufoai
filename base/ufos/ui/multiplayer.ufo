@@ -1021,8 +1021,6 @@ window multiplayer_wait extends levelbuttons
 		align		LAYOUTALIGN_FILL
 	}
 
-	todo adminteam { pos "80 310" string "Feature: admin can change a player's team" }
-	todo inviteothers { pos "80 340" string "Invite button only in inet mode, not in lan mode"}
 	todo widescreen { pos "80 370" string "Center panels"}
 
 	panel floor {
