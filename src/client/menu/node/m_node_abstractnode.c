@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "../m_parse.h"
 #include "../m_main.h"
+#include "../m_components.h"
 #include "../m_internal.h"
 
 /**
@@ -352,6 +353,13 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 			{
 				float f;
 
+				if (!strncmp(value, "*cvar", 5)) {
+					MN_FreeStringProperty(*(void**)b);
+					*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
+					node->behaviour->propertyChanged(node, property);
+					return qtrue;
+				}
+
 				result = Com_ParseValue(&f, value, V_FLOAT, 0, sizeof(f), &bytes);
 				if (result != RESULT_OK) {
 					Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
@@ -659,14 +667,30 @@ static void MN_AbstractNodeCallRemovaAllChild (menuNode_t *node, const menuCallC
 static void MN_AbstractNodeCallCreateChild (menuNode_t *node, const menuCallContext_t *context)
 {
 	menuNode_t *child;
+	menuNode_t *component;
+	const char *name;
+	const char *type;
+
 	if (MN_GetParamNumber(context) != 2) {
-		Com_Printf("MN_AbstractNodeCallDelete: Invalide number of param\n");
+		Com_Printf("MN_AbstractNodeCallCreateChild: Invalide number of param\n");
 		return;
 	}
 
-	child = MN_AllocNode(MN_GetParam(context, 1), MN_GetParam(context, 2), qtrue);
-	if (child == NULL)
+	name = MN_GetParam(context, 1);
+	type = MN_GetParam(context, 2);
+
+	component = MN_GetComponent(type);
+	if (component) {
+		child = MN_CloneNode(component, node->root, qtrue, name, qtrue);
+	} else {
+		child = MN_AllocNode(name, type, qtrue);
+	}
+
+	if (child == NULL) {
+		Com_Printf("MN_AbstractNodeCallCreateChild: Impossible de create the node\n");
 		return;
+	}
+
 	MN_AppendNode(node, child);
 }
 

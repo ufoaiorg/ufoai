@@ -60,8 +60,8 @@
 ./client/input/cl_input.c
 ./client/input/cl_joystick.c
 ./client/menu/m_main.c
-./client/menu/m_menus.c
 ./client/menu/m_tooltip.c
+./client/menu/m_windows.c
 ./client/menu/node/m_node_base.c
 ./client/menu/node/m_node_container.c
 ./client/menu/node/m_node_keybinding.c

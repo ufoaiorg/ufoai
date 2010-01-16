@@ -531,7 +531,7 @@ void E_ResetEmployee (employee_t *employee)
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuildingOrAircraft(employee);
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-	INVSH_DestroyInventory(&employee->chr.inv);
+	cls.i.DestroyInventory(&cls.i, &employee->chr.inv);
 }
 
 /**

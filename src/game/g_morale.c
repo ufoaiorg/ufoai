@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
+static void G_MoralePanic (edict_t * ent, qboolean sanity)
 {
 	G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s panics!\n"), ent->chr.name);
 
@@ -39,10 +39,10 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	if (!sanity && ent->chr.teamDef->weapons) {
 		if (RIGHT(ent))
 			G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent),
-					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, quiet);
+					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 		if (LEFT(ent))
 			G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent),
-					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, quiet);
+					INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 	}
 
 	/* get up */
@@ -71,12 +71,12 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
  * @sa G_MoraleStopRage
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopPanic (edict_t * ent, qboolean quiet)
+static void G_MoraleStopPanic (edict_t * ent)
 {
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand())
 		ent->state &= ~STATE_PANIC;
 	else
-		G_MoralePanic(ent, qtrue, quiet);
+		G_MoralePanic(ent, qtrue);
 }
 
 /**
@@ -108,13 +108,13 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
  * @sa G_MoraleStopPanic
  * @sa G_MoraleBehaviour
  */
-static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
+static void G_MoraleStopRage (edict_t * ent)
 {
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		ent->state &= ~STATE_INSANE;
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
-		G_MoralePanic(ent, qtrue, quiet); /* regains sanity */
+		G_MoralePanic(ent, qtrue); /* regains sanity */
 }
 
 /**
@@ -141,29 +141,29 @@ static qboolean G_IsMoraleEnabled (void)
  * @sa G_MoraleStopRage
  * @sa G_MoraleStopPanic
  */
-void G_MoraleBehaviour (int team, qboolean quiet)
+void G_MoraleBehaviour (int team)
 {
 	edict_t *ent;
 	int i, newMorale;
-	qboolean sanity;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
 		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !G_IsDead(ent)) {
 			/* civilians have a 1:1 chance to randomly run away in multiplayer */
 			if (sv_maxclients->integer >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
-				G_MoralePanic(ent, qfalse, quiet);
+				G_MoralePanic(ent, qfalse);
 			/* multiplayer needs enabled sv_enablemorale */
 			/* singleplayer has this in every case */
 			if (G_IsMoraleEnabled()) {
 				/* if panic, determine what kind of panic happens: */
 				if (ent->morale <= mor_panic->value && !G_IsPaniced(ent) && !G_IsRaged(ent)) {
+					qboolean sanity;
 					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
 						sanity = qtrue;
 					else
 						sanity = qfalse;
 					if ((float) ent->morale / mor_panic->value > (m_rage->value * frand()))
-						G_MoralePanic(ent, sanity, quiet);
+						G_MoralePanic(ent, sanity);
 					else
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
@@ -176,9 +176,9 @@ void G_MoraleBehaviour (int team, qboolean quiet)
 							ent->chr.name);
 				} else {
 					if (G_IsPaniced(ent))
-						G_MoraleStopPanic(ent, quiet);
+						G_MoraleStopPanic(ent);
 					else if (G_IsRaged(ent))
-						G_MoraleStopRage(ent, quiet);
+						G_MoraleStopRage(ent);
 				}
 			}
 

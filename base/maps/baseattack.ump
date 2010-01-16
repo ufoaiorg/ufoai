@@ -1,0 +1,193 @@
+/// tets assembly for phalanx base.
+
+base b/
+
+tile +aliencont 
+{
+6 4
+0  a  a  a  a  0
+a +a +a +a +a  a
+a +a +a +a +a  a
+0  a  a  a  a  0
+}
+
+tile +antimatter 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +base_empty 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +commando 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +drop 
+{
+6 4
+0  a  a  a  a  0
+a +a +a +a +a  a
+a +a +a +a +a  a
+0  a  a  a  a  0
+}
+
+tile +empty 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +entrance 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +hospital 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +intercept 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +lab 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +laser 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +missile 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +powerplant 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +quarters 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +radar 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +radar_adv 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +storage 
+{
+4 4
+0  a  a  0
+a +a +a  a
+a +a +a  a
+0  a  a  0
+}
+
+tile +workshop 
+{
+6 4
+0  a  a  a  a  0
+a +a +a +a +a  a
+a +a +a +a +a  a
+0  a  a  a  a  0
+}
+
+assembly default
+{
+	size "10 10"
+	title "_Home"
+	grid			"2 2"
+	fix +entrance			"8 4"
+	fix +quarters			"6 0"
+	fix +quarters			"6 2"
+	fix +aliencont		"2 8"
+	fix +storage			"8 2"
+	fix +powerplant		"8 0"
+	fix +commando			"4 0"
+	fix +drop					"6 8"
+	fix +intercept		"6 6"
+	fix +workshop			"0 0"
+	fix +radar				"8 6"
+	fix +lab					"2 2"
+	fix +hospital			"4 2"
+
+	+antimatter				"0 1"
+	+base_empty				"0 20"
+	+empty						"0 1"
+	+laser						"0 1"
+	+missile					"0 1"
+	+radar_adv				"0 1"
+}
+

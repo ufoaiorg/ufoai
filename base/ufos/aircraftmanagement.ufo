@@ -1016,7 +1016,7 @@ craftitem base_ammo_AA51
 
 craftitem baselaser
 {
-	name				"_Base-Defense Laser Turret"
+	name				"_Base-Defence Laser Turret"
 	crafttype			base_laser
 	size				90 // medium
 	installationTime	12

@@ -247,6 +247,7 @@ CLIENT_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \
+	game/inventory.c \
 	\
 	client/renderer/r_array.c \
 	client/renderer/r_bsp.c \
@@ -259,6 +260,7 @@ CLIENT_SRCS = \
 	client/renderer/r_lightmap.c \
 	client/renderer/r_main.c \
 	client/renderer/r_material.c \
+	client/renderer/r_matrix.c \
 	client/renderer/r_misc.c \
 	client/renderer/r_mesh.c \
 	client/renderer/r_mesh_anim.c \

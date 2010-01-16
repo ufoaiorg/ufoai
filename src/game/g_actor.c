@@ -42,11 +42,10 @@ qboolean G_IsLivingActor (const edict_t *ent)
  */
 edict_t *G_GetActorByUCN (const int ucn, const int team)
 {
-	int i;
-	edict_t *ent;
+	edict_t *ent = NULL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsActor(ent) && team == ent->team && ent->chr.ucn == ucn)
+	while ((ent = G_EdictsGetNextActor(ent)))
+		if (team == ent->team && ent->chr.ucn == ucn)
 			return ent;
 
 	return NULL;
@@ -219,12 +218,11 @@ static int G_ActorTUReservations (edict_t *ent)
  * @param[in] tx x position where you want the item to go in the destination container
  * @param[in] ty y position where you want the item to go in the destination container
  * @param[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
- * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
 void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
-		int ty, qboolean checkaction, qboolean quiet)
+		int ty, qboolean checkaction)
 {
 	player_t *player;
 	edict_t *floor;
@@ -233,28 +231,26 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	item_t item;
 	int mask;
 	inventory_action_t ia;
-	int msglevel;
 	invList_t fItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
 
 	player = G_PLAYER_FROM_ENT(ent);
-	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	assert(fItem);
 	assert(fItem->item.t);
 
-	/* Store the location/item of 'from' BEFORE actually moving items with Com_MoveInInventory. */
+	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
 	fItemBackup = *fItem;
 
 	/* Get first used bit in item. */
-	Com_GetFirstShapePosition(fItem, &fx, &fy);
+	INVSH_GetFirstShapePosition(fItem, &fx, &fy);
 	fx += fItem->x;
 	fy += fItem->y;
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
+	if (checkaction && !G_ActionCheck(player, ent, 1))
 		return;
 
 	/* "get floor ready" - searching for existing floor-edict */
@@ -274,21 +270,21 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
+		ic = INVSH_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
-			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
 			return;
 	}
 
-	/* Because Com_MoveInInventory don't know anything about character_t and it updates ent->TU,
+	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
 	   we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
 	reservedTU = G_ActorTUReservations(ent);
-	/* Temporary decrease ent->TU to make Com_MoveInInventory() do what expected. */
+	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = Com_MoveInInventory(&ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.MoveInInventory(&game.i, &ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
 
@@ -297,10 +293,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		/* No action possible - abort */
 		return;
 	case IA_NOTIME:
-		G_ClientPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		G_ClientPrintf(player, msglevel,
+		G_ClientPrintf(player, PRINT_HUD,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
@@ -399,10 +395,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
  * @brief Reload weapon with actor.
  * @param[in] ent Pointer to an actor reloading weapon.
  * @param[in] st Reloading weapon in right or left hand.
- * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa AI_ActorThink
  */
-void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)
+void G_ActorReload (edict_t* ent, shoot_types_t st)
 {
 	invList_t *ic;
 	invList_t *icFinal;
@@ -452,5 +447,5 @@ void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
 }

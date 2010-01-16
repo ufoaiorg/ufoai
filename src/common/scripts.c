@@ -24,7 +24,7 @@
 #include "common.h"
 #include "scripts.h"
 #include "../shared/parse.h"
-#include "../game/inv_shared.h"
+#include "../game/inventory.h"
 
 #define CONSTNAMEINT_HASH_SIZE	32
 
@@ -55,7 +55,7 @@ static const char *Com_ConstIntGetVariable (const char *name)
 {
 	const char *namespace = strstr(name, "::");
 	if (namespace)
-		return namespace;
+		return namespace + 2;
 	return name;
 }
 
@@ -114,6 +114,52 @@ const char* Com_GetConstVariable (const char *namespace, int value)
 }
 
 /**
+ * @brief Removes a registered constant from the script mapping hash table.
+ * @param name The name of the script entry to remove out of the const int hash. In case this string
+ * is equipped with a namespace, the string is in the form "namespace::variable". If you try to
+ * unregister a variable that was registered with a namespace, this namespace must be included in the
+ * given name, too.
+ * @sa Com_RegisterConstInt
+ * @sa Com_GetConstVariable
+ */
+void Com_RemoveConstVariable (const char *name)
+{
+	com_constNameInt_t *a;
+	com_constNameInt_t *prev = NULL;
+
+	a = com_constNameInt;
+	while (a) {
+		if (a->fullname) {
+			if (!strcmp(a->fullname, name)) {
+				const unsigned int hash = Com_HashKey(name, CONSTNAMEINT_HASH_SIZE);
+				com_constNameInt_t *b;
+
+				if (prev)
+					prev->next = a->next;
+
+				prev = NULL;
+
+				for (b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
+					if (!strcmp(name, b->fullname)) {
+						if (!prev)
+							com_constNameInt_hash[hash] = NULL;
+						else
+							prev->hash_next = b->hash_next;
+						break;
+					}
+				}
+				if (a->fullname)
+					Mem_Free(a->fullname);
+				Mem_Free(a);
+				break;
+			}
+		}
+		prev = a;
+		a = a->next;
+	}
+}
+
+/**
  * @brief Register mappings between script strings and enum values for values of the type @c V_INT
  * @param name The name of the script entry to map to an integer. This can also include a namespace prefix
  * for the case we want to map back an integer to a string from a specific namespace. In case this string
@@ -122,6 +168,7 @@ const char* Com_GetConstVariable (const char *namespace, int value)
  * @note You still can't register the same name twice even if you put it into different namespaces (yet). The
  * namespaces are only for converting an integer back into a string.
  * @sa Com_GetConstInt
+ * @sa Com_RemoveConstVariable
  */
 void Com_RegisterConstInt (const char *name, int value)
 {

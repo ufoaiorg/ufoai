@@ -436,24 +436,6 @@ qboolean R_CullMeshModel (entity_t *e)
 }
 
 /**
- * @brief Transforms the specified input by the world model view matrix.
- *
- * [ a b c d ]   [ x ]   [ ax + by + cz + d ]
- * [ e f g h ] * [ y ] = [ ex + fy + gz + h ]
- * [ i j k l ]   [ z ]   [ ix + jy + kz + l ]
- * [ m n o p ]   [ 1 ]   [ m  + n  + o  + p ]
- */
-static void R_ModelViewTransform (const vec3_t in, vec3_t out)
-{
-	const float *v = in;
-	const float *m = r_locals.world_matrix;
-
-	out[0] = m[0] * v[0] + m[4] * v[1] + m[8]  * v[2] + m[12];
-	out[1] = m[1] * v[0] + m[5] * v[1] + m[9]  * v[2] + m[13];
-	out[2] = m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14];
-}
-
-/**
  * @brief Searches an appropriate level-of-detail mesh for the given model
  * @param origin The origin the model should be placed to in the world
  * @param mod The model where we are searching an appropriate level-of-detail mesh for
@@ -520,7 +502,7 @@ void R_DrawAliasModel (entity_t *e)
 			}
 
 			/* enable hardware light sources, transform the static light source vector */
-			R_ModelViewTransform(e->lighting->position, lightpos);
+			R_TransformForEntity(e, e->lighting->position, lightpos);
 			R_ProgramParameter3fv("LIGHTPOS", lightpos);
 		}
 

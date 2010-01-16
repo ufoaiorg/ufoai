@@ -55,7 +55,9 @@ typedef struct le_s {
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
 	pos3_t pos, oldPos, newPos;		/**< position on the grid */
-	int dir;				/**< the current dir the le is facing into */
+	int dir;				/**< the current dir the le is facing into. Beware, this can either
+							 * be an index in the bytedirs array or an index for the angles
+							 * array of the le */
 
 	int TU, maxTU;				/**< time units */
 	int morale, maxMorale;		/**< morale value - used for soldier panic and the like */
@@ -119,6 +121,7 @@ typedef struct le_s {
 	int levelflags;	/**< the levels this particle should be visible at */
 	ptl_t *ptl;				/**< particle pointer to display */
 	const char *ref1, *ref2;
+	const struct le_s *ref3;
 	inventory_t i;
 	int left, right, extension, headgear;
 	int fieldSize;				/**< ACTOR_SIZE_* */
@@ -173,8 +176,8 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
-void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal);
-void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
+void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
+void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
 void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume);
 le_t *LE_GetClosestActor(const vec3_t origin);
 int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
@@ -227,7 +230,7 @@ void LE_Cleanup(void);
 void LE_AddToScene(void);
 void LE_CenterView(const le_t *le);
 
-trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
+trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel);
 
 void LM_Register(void);
 

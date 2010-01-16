@@ -66,7 +66,7 @@ typedef struct aircraftProjectile_s {
 void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
 void AIRFIGHT_CampaignRunProjectiles(int dt);
-void AIRFIGHT_CampaignRunBaseDefense(int dt);
+void AIRFIGHT_CampaignRunBaseDefence(int dt);
 int AIRFIGHT_CheckWeapon(const aircraftSlot_t *slot, float distance);
 int AIRFIGHT_ChooseWeapon(const aircraftSlot_t const *slot, int maxSlot, const vec3_t pos, const vec3_t targetPos);
 qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);

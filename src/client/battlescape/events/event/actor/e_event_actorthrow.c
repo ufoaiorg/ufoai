@@ -57,7 +57,8 @@ void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le (local entity) */
-	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
+	/** @todo add victim support for blood and hurt sounds */
+	LE_AddGrenade(fd, flags, muzzle, v0, dtime, NULL);
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {

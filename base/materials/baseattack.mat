@@ -9,3 +9,75 @@
 		lightmap
 	}
 }
+
+{
+	material tex_terrain/dummy
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/arctic
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/cold
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/desert
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/grass
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/mountain
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/tropical
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}
+
+{
+	material tex_terrain/wasted
+	{
+		texture tex_nature/grass
+		dirtmap 1.0
+		lightmap
+	}
+}

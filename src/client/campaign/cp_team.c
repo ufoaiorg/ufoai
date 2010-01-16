@@ -170,7 +170,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 			if (aircraft->acTeam[p]->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
 				if (!chr->inv.c[csi.idRight] || !chr->inv.c[csi.idRight]->item.t)
-					INVSH_EquipActorRobot(&chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
+					cls.i.EquipActorRobot(&cls.i, &chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
 			}
 		}
 	}
@@ -186,7 +186,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 						ic->item = CP_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						Com_RemoveFromInventory(&chr->inv, &csi.ids[container], ic);
+						cls.i.RemoveFromInventory(&cls.i, &chr->inv, &csi.ids[container], ic);
 					}
 				}
 			}
@@ -215,7 +215,7 @@ void CL_CleanTempInventory (base_t* base)
 	if (!base)
 		return;
 
-	INVSH_DestroyInventory(&base->bEquipment);
+	cls.i.DestroyInventory(&cls.i, &base->bEquipment);
 }
 
 /**

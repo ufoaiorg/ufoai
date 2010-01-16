@@ -30,6 +30,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 /**
+ * @brief A set of functions to encapsulate the access to the list of entities
+ * @note only happens when a new game/map is started
+ */
+static edict_t* G_EdictsGetNext (edict_t* lastEnt)
+{
+	edict_t* endOfEnts = &g_edicts[globals.num_edicts];
+	edict_t* ent;
+
+	if (!lastEnt)
+		lastEnt = g_edicts;
+	assert(lastEnt >= g_edicts);
+	assert(lastEnt < endOfEnts);
+
+	ent = lastEnt;
+
+	ent++;
+	if (ent >= endOfEnts)
+		return NULL;
+	else
+		return ent;
+}
+
+edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (ent->inuse && G_IsLivingActor(ent))
+			break;
+	}
+	return ent;
+}
+
+edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (ent->inuse && G_IsActor(ent))
+			break;
+	}
+	return ent;
+}
+
+/**
  * @brief Marks the edict as free
  * @sa G_Spawn
  */

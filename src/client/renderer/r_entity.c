@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_matrix.h"
 #include "r_entity.h"
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
@@ -49,15 +50,21 @@ static void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, ve
 }
 
 /**
- * @brief Applies translation and rotation for the specified entity.
+ * @brief Transforms a point by the inverse of the world-model matrix for the
+ * specified entity.
  */
-void R_TransformForEntity (const entity_t *e)
+void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
 {
-	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
+	matrix4x4_t tmp, mat;
 
-	glRotatef(e->angles[YAW], 0, 0, 1);
-	glRotatef(e->angles[PITCH], 0, 1, 0);
-	glRotatef(e->angles[ROLL], 1, 0, 0);
+	Matrix4x4_CreateFromQuakeEntity(&tmp,
+			e->origin[0], e->origin[1], e->origin[2],
+			e->angles[0], e->angles[1], e->angles[2],
+			e->scale[0]);
+
+	Matrix4x4_Invert_Simple(&mat, &tmp);
+
+	Matrix4x4_Transform(&mat, in, out);
 }
 
 /**

@@ -34,10 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {
-	edict_t *check;
+	edict_t *check = NULL;
 	vec3_t dtarget, dcheck, back;
 	float cosSpread;
-	int i;
 
 	/* spread data */
 	if (spread < 1.0)
@@ -48,8 +47,8 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	VectorNormalize(dtarget);
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && G_IsLivingActor(check) && ent != check && check->team == ent->team) {
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (ent != check && check->team == ent->team) {
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
 			if (DotProduct(dtarget, dcheck) > 0.0) {
@@ -60,6 +59,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 					return qtrue;
 			}
 		}
+	}
 
 	/* no ally in danger */
 	return qfalse;
@@ -317,6 +317,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 							continue;
 
+						/** @todo use the team visibility check here - they are using psi ;) */
 						/* check whether target is visible */
 						vis = G_ActorVis(ent->origin, check, qtrue);
 						if (vis == ACTOR_VIS_0)
@@ -364,8 +365,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						}
 					}
 #if 0
-				/*
-				 * This feature causes the 'aliens shoot at walls'-bug.
+				/**
+				 * @todo This feature causes the 'aliens shoot at walls'-bug.
 				 * I considered adding a visibility check, but that wouldn't prevent aliens
 				 * from shooting at the breakable parts of their own ship.
 				 * So I disabled it for now. Duke, 23.10.09
@@ -375,6 +376,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 						if (check->inuse && G_IsBreakable(check)) {
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+								continue;
+
+							/* check whether target is visible enough */
+							vis = G_ActorVis(ent->origin, check, qtrue);
+							if (vis < ACTOR_VIS_0)
 								continue;
 
 							/* don't take vis into account, don't multiply with amout of shots
@@ -423,10 +429,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, to, ent->fieldSize, crouchingState, HIDE_DIST);
+			G_MoveCalc(0, ent, to, crouchingState, HIDE_DIST);
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
+			/** @todo remove this magic number */
 			maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
 			maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
 
@@ -686,7 +693,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, MAX_ROUTE);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(gi.pathingMap);
 
@@ -748,7 +755,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 		G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
 
 	/* do the move */
-	G_ClientMove(player, 0, ent, bestAia.to, qfalse, QUIET);
+	G_ClientMove(player, 0, ent, bestAia.to);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
@@ -787,7 +794,7 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 	int dv;
 	const byte crouchingState = G_IsCrouched(aiActor) ? 1 : 0;
 
-	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouchingState, MAX_ROUTE);
+	G_MoveCalc(aiActor->team, aiActor, pos, crouchingState, MAX_ROUTE);
 
 	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {
@@ -815,23 +822,23 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	if (!G_IsPaniced(ent)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
-				G_ActorReload(ent, ST_RIGHT_RELOAD, QUIET);
+				G_ActorReload(ent, ST_RIGHT_RELOAD);
 			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ActorReload(ent, ST_LEFT_RELOAD, QUIET);
+				G_ActorReload(ent, ST_LEFT_RELOAD);
 			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 			}
 		}
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
 	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent))
-		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
+		G_ClientGetWeaponFromInventory(player, ent->number);
 
 	bestAia = AI_PrepBestAction(player, ent);
 
@@ -858,7 +865,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/* now hide - for this we use the team of the alien actor because a phalanx soldier
 		 * might become visible during the hide movement */
-		G_ClientMove(player, ent->team, ent, bestAia.stop, qfalse, QUIET);
+		G_ClientMove(player, ent->team, ent, bestAia.stop);
 		/* no shots left, but possible targets left - maybe they shoot back
 		 * or maybe they are still close after hiding */
 
@@ -914,7 +921,7 @@ void AI_Run (void)
 
 			/* nothing left to do, request endround */
 			if (j >= globals.num_edicts) {
-				G_ClientEndRound(player, QUIET);
+				G_ClientEndRound(player);
 				player->pers.last = g_edicts + globals.num_edicts;
 			}
 			return;
@@ -974,10 +981,10 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 	/* Pack equipment. */
 	if (team != TEAM_CIVILIAN) { /** @todo Give civilians gear. */
 		if (ent->chr.teamDef->weapons)
-			INVSH_EquipActor(&ent->i, ed, &ent->chr);
+			game.i.EquipActor(&game.i, &ent->i, ed, &ent->chr);
 		else if (ent->chr.teamDef)
 			/* actor cannot handle equipment but no weapons */
-			INVSH_EquipActorMelee(&ent->i, &ent->chr);
+			game.i.EquipActorMelee(&game.i, &ent->i, &ent->chr);
 		else
 			gi.dprintf("AI_InitPlayer: actor with no equipment\n");
 	}

@@ -145,7 +145,7 @@ static void BDEF_SelectItem_f (void)
  * @brief Fills the battery list, descriptions, and weapons in slots
  * of the basedefence equip menu
  */
-static void BDEF_BaseDefenseMenuUpdate_f (void)
+static void BDEF_BaseDefenceMenuUpdate_f (void)
 {
 	int i;
 	char type[MAX_VAR];
@@ -173,7 +173,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* base and installation should not both be set. This function requires one or the other set. */
 	if (base && installation) {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: both the base and installation are set.  This shouldn't happen: you shouldn't be in this function.\n");
+		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: both the base and installation are set.  This shouldn't happen: you shouldn't be in this function.\n");
 		return;
 	}
 
@@ -226,15 +226,15 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* Check that the base or installation has at least 1 battery */
 	if (base) {
 		if (base->numBatteries + base->numLasers < 1) {
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
+			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this base: you shouldn't be in this function.\n");
 			return;
 		}
 	} else if (installation) {
 		if (installation->installationStatus != INSTALLATION_WORKING) {
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
+			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: installation isn't working: you shouldn't be in this function.\n");
 			return;
 		} else if (installation->installationTemplate->maxBatteries < 1) {
-			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
+			Com_Printf("BDEF_BaseDefenceMenuUpdate_f: there is no defence battery in this installation: you shouldn't be in this function.\n");
 			return;
 		}
 	}
@@ -248,7 +248,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			BDEF_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
 			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
 				if (!installation->batteries[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: empty", i + 1);
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
 					LIST_AddString(&slotList, defBuffer);
 				} else {
 					const aircraftSlot_t *slot = &installation->batteries[i].slot ;
@@ -276,19 +276,19 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			BDEF_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
 			for (i = 0; i < base->numBatteries; i++) {
 				if (!base->batteries[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: empty", i + 1);
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
 					LIST_AddString(&slotList, defBuffer);
 				} else {
 					const aircraftSlot_t *slot = &base->batteries[i].slot ;
-					char status[MAX_VAR];
+					const char *status;
 					if (!slot->installationTime)
-						Q_strncpyz(status, _("Working"), sizeof(status));
+						status = _("Working");
 					else if (slot->installationTime > 0)
-						Q_strncpyz(status, _("Installing"), sizeof(status));
+						status = _("Installing");
 					else if (slot->nextItem)
-						Q_strncpyz(status, _("Replacing"), sizeof(status));
+						status = _("Replacing");
 					else
-						Q_strncpyz(status, _("Removing"), sizeof(status));
+						status = _("Removing");
 
 					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", i + 1, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
 					LIST_AddString(&slotList, defBuffer);
@@ -304,19 +304,19 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			BDEF_UpdateAircraftItemList(&base->lasers[0].slot, NULL);
 			for (i = 0; i < base->numLasers; i++) {
 				if (!base->lasers[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: empty", i + 1);
+					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
 					LIST_AddString(&slotList, defBuffer);
 				} else {
 					const aircraftSlot_t *slot = &base->lasers[i].slot ;
-					char status[MAX_VAR];
+					const char *status;
 					if (!slot->installationTime)
-						Q_strncpyz(status, _("Working"), sizeof(status));
+						status = _("Working");
 					else if (slot->installationTime > 0)
-						Q_strncpyz(status, _("Installing"), sizeof(status));
+						status = _("Installing");
 					else if (slot->nextItem)
-						Q_strncpyz(status, _("Replacing"), sizeof(status));
+						status = _("Replacing");
 					else
-						Q_strncpyz(status, _("Removing"), sizeof(status));
+						status = _("Removing");
 
 					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", i + 1, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
 					LIST_AddString(&slotList, defBuffer);
@@ -324,7 +324,7 @@ static void BDEF_BaseDefenseMenuUpdate_f (void)
 			}
 		}
 	} else {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown bdefType.\n");
+		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: unknown bdefType.\n");
 		return;
 	}
 	MN_RegisterLinkedListText(TEXT_BASEDEFENCE_LIST, slotList);
@@ -643,7 +643,7 @@ void BDEF_InitCallbacks (void)
 {
 	Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
 	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
-	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu");
+	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenceMenuUpdate_f, "Inits base defence menu");
 	Cmd_AddCommand("basedef_selectitem", BDEF_SelectItem_f, NULL);
 	Cmd_AddCommand("basedef_additem", BDEF_AddItem_f, "Add item to slot");
 	Cmd_AddCommand("basedef_removeitem", BDEF_RemoveItem_f, "Remove item from slot");

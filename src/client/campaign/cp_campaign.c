@@ -244,7 +244,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 			Com_Printf("CP_ChooseMap: Could not find map with required conditions:\n");
 			Com_Printf("  ufo: %s -- pos: ", mission->ufo ? Com_UFOTypeToShortName(mission->ufo->ufotype) : "none");
 			if (pos)
-				Com_Printf("%s",MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
+				Com_Printf("%s", MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)) ? " (in water) " : "");
 			if (pos)
 				Com_Printf("(%.02f, %.02f)\n", pos[0], pos[1]);
 			else
@@ -675,7 +675,7 @@ void CL_CampaignRun (void)
 		/* must be called even if dt = timeAlreadyFlied in order to update radar overlay */
 		CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
 		UFO_CampaignCheckEvents();
-		AIRFIGHT_CampaignRunBaseDefense(dt);
+		AIRFIGHT_CampaignRunBaseDefence(dt);
 		CP_CheckMissionEnd();
 		CP_CheckLostCondition();
 		AIRFIGHT_CampaignRunProjectiles(dt);
@@ -1997,7 +1997,7 @@ campaign_t* CL_GetCampaign (const char* name)
 
 /**
  * @brief Will clear most of the parsed singleplayer data
- * @sa INVSH_InitInventory
+ * @sa INV_InitInventory
  * @sa CL_ReadSinglePlayerData
  */
 void CL_ResetSinglePlayerData (void)

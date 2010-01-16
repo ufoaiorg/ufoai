@@ -250,6 +250,8 @@ window althud extends ahud
 		{
 			image		althud/bar_selbox
 			pos			"0 26"
+			size		"79 90"
+			texh		"79 90"
 		}
 	
 		// ==================
@@ -557,12 +559,15 @@ window althud extends ahud
 			pos		"768 100"
 			size	"256 512"
 			align	LAYOUTALIGN_RIGHT
+			ghost	true
 		}
 		
 		pic bar_right
 		{
 			image		althud/bar_right
 			pos			"0 0"
+			excluderect	{ pos	"0 0"	size	"96 512" }
+			excluderect	{ pos	"0 473"	size	"192 39" }
 		}
 
 		model right_actor
@@ -994,15 +999,18 @@ window althud extends ahud
 	
 	panel lowerright {
 		{
-			pos		"960 640"
-			size	"64 128"
+			pos		"984 651"
+			size	"40 117"
 			align	LAYOUTALIGN_BOTTOMRIGHT
+			ghost	true
 		}
 		
 		pic bar_floor
 		{
 			image		althud/bar_floor
 			pos			"0 0"
+			texl		"24 11"
+			size		"40 117"
 		}
 
 		pic bt_floorup
@@ -1010,7 +1018,7 @@ window althud extends ahud
 			tooltip		"_Level up"
 			image		althud/buttons_althud1
 			mousefx		true
-			pos			"31 18"
+			pos			"7 7"
 			texl		"54 74"
 			texh		"79 107"
 			onClick		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
@@ -1020,7 +1028,7 @@ window althud extends ahud
 			tooltip		"_Level down"
 			image		althud/buttons_althud1
 			mousefx		true
-			pos			"31 93"
+			pos			"7 82"
 			texl		"81 74"
 			texh		"106 107"
 			onClick		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
@@ -1029,7 +1037,7 @@ window althud extends ahud
 		string str_floor
 		{
 			string		*cvar:cl_worldlevel
-			pos			"25 60"
+			pos			"1 49"
 			size		"40 20"
 			textalign	cc
 		}
@@ -1040,6 +1048,7 @@ window althud extends ahud
 			pos		"0 700"
 			size	"265 68"
 			align	LAYOUTALIGN_BOTTOMLEFT
+			ghost	true
 		}
 		text infoscreen
 		{
@@ -1050,6 +1059,7 @@ window althud extends ahud
 			tabwidth	100
 			color		"0 1 0 1"
 			rows		"2"
+			ghost		true
 		}
 	}
 	

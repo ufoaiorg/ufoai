@@ -169,7 +169,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->score.rank = mxml_GetInt(p, SAVE_CHARACTER_SCORE_RANK, -1);
 
 	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
-	INVSH_DestroyInventory(&chr->inv);
+	cls.i.DestroyInventory(&cls.i, &chr->inv);
 	s = mxml_GetNode(p, SAVE_INVENTORY_INVENTORY);
 	CL_LoadInventoryXML(s, &chr->inv);
 
@@ -243,7 +243,7 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 /**
  * @sa CL_SaveInventoryXML
  * @sa CL_LoadItemXML
- * @sa Com_AddToInventory
+ * @sa I_AddToInventory
   */
 void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 {
@@ -253,7 +253,7 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 		item_t item;
 		int container, x, y;
 		CL_LoadItemXML(s, &item, &container, &x, &y);
-		if (!Com_AddToInventory(i, item, &csi.ids[container], x, y, 1))
+		if (!cls.i.AddToInventory(&cls.i, i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
 }
@@ -271,7 +271,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 	memset(chr, 0, sizeof(*chr));
 
 	/* link inventory */
-	INVSH_DestroyInventory(&chr->inv);
+	cls.i.DestroyInventory(&cls.i, &chr->inv);
 
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
@@ -399,7 +399,7 @@ static void CL_UpdateObject_f (void)
 	if (changeTab) {
 		const cvar_t *var = Cvar_FindVar("mn_equiptype");
 		const int filter = INV_GetFilterFromItem(obj);
-		if (var->integer != filter) {
+		if (var && var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
 			MN_ExecuteConfunc("update_item_list");
 		}

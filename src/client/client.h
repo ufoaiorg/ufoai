@@ -204,6 +204,8 @@ typedef struct client_static_s {
 
 	/* unique character id */
 	int nextUniqueCharacterNumber;
+
+	inventoryInterface_t i;
 } client_static_t;
 
 extern client_static_t cls;

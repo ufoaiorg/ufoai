@@ -11,8 +11,8 @@ vec3 eye;
 
 
 /*
-BumpTexcoord
-*/
+ * BumpTexcoord
+ */
 vec2 BumpTexcoord(in float height){
 
 	eye = normalize(eyedir);
@@ -22,8 +22,8 @@ vec2 BumpTexcoord(in float height){
 
 
 /*
-BumpFragment
-*/
+ *BumpFragment
+ */
 vec3 BumpFragment(in vec3 deluxemap, in vec3 normalmap){
 
 	float diffuse = dot(deluxemap,

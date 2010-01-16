@@ -9,8 +9,8 @@ uniform sampler2D SAMPLER1;
 
 
 /*
-main
-*/
+ * main
+ */
 void main(void){
 
 	// sample the warp texture at a time-varied offset

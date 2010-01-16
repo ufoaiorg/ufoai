@@ -77,32 +77,6 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, const
 }
 
 /**
- * @brief Spawns particle effects for a hit actor.
- * @param[in] le The actor to spawn the particles for.
- * @param[in] impact The impact location (where the particles are spawned).
- * @param[in] normal The index of the normal vector of the particles (think: impact angle).
- * @todo Get real impact location and direction?
- */
-static void CL_ActorHit (const le_t * le, vec3_t impact, int normal)
-{
-	if (!le) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
-		return;
-	}
-
-	if (!LE_IsActor(le)) {
-		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor (type: %i)\n", le->type);
-		return;
-	}
-
-	if (le->teamDef) {
-		/* Spawn "hit_particle" if defined in teamDef. */
-		if (le->teamDef->hitParticle[0] != '\0')
-			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal], NULL);
-	}
-}
-
-/**
  * @brief Calculates the muzzle for the current weapon the actor is shooting with
  * @param[in] actor The actor that is shooting. Might not be @c NULL
  * @param[out] muzzle The muzzle vector to spawn the particle at. Might not be @c NULL. This is not
@@ -170,7 +144,7 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 {
 	const fireDef_t *fd;
-	le_t *leShooter;
+	le_t *leShooter, *leVictim;
 	vec3_t muzzle, impact;
 	int flags, normal, shooterEntnum, victimEntnum;
 	int objIdx;
@@ -181,11 +155,11 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	NET_ReadFormat(msg, self->formatString, &shooterEntnum, &victimEntnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
 	if (victimEntnum != SKIP_LOCAL_ENTITY) {
-		const le_t *leVictim = LE_Get(victimEntnum);
+		leVictim = LE_Get(victimEntnum);
 		if (!leVictim)
 			LE_NotFoundError(victimEntnum);
-
-		CL_PlayActorSound(leVictim, SND_HURT);
+	} else {
+		leVictim = NULL;
 	}
 
 	/* get shooter le */
@@ -198,7 +172,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	CL_ActorGetMuzzle(leShooter, muzzle, shootType);
 
 	/* add effect le */
-	LE_AddProjectile(fd, flags, muzzle, impact, normal);
+	LE_AddProjectile(fd, flags, muzzle, impact, normal, leVictim);
 
 	/* start the sound */
 	/** @todo handle fd->soundOnce */
@@ -218,14 +192,6 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	/* no animations for hidden actors */
 	if (leShooter->type == ET_ACTORHIDDEN)
 		return;
-
-	/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
-	if (flags & SF_BODY) {
-		/** @todo Special particles for stun attack (mind you that there is
-		 * electrical and gas/chemical stunning)? */
-		if (fd->obj->dmgtype != csi.damStunGas)
-			CL_ActorHit(leShooter, impact, normal);
-	}
 
 	if (LE_IsDead(leShooter)) {
 		Com_DPrintf(DEBUG_CLIENT, "Can't shoot, actor dead or stunned.\n");

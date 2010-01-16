@@ -254,7 +254,7 @@ menuNode_t* MN_GetNodeByPath(const char* path) __attribute__ ((warn_unused_resul
 void MN_ReadNodePath(const char* path, const menuNode_t *relativeNode, menuNode_t** resultNode, const value_t **resultProperty);
 struct menuNode_s *MN_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* MN_GetPath(const menuNode_t* node) __attribute__ ((warn_unused_result));
-struct menuNode_s *MN_CloneNode(const struct menuNode_s * node, struct menuNode_s *newMenu, qboolean recursive, const char *newName) __attribute__ ((warn_unused_result));
+struct menuNode_s *MN_CloneNode(const struct menuNode_s * node, struct menuNode_s *newMenu, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
 qboolean MN_CheckVisibility(menuNode_t *node);
 void MN_DeleteAllChild(menuNode_t* node);
 void MN_DeleteNode(menuNode_t* node);

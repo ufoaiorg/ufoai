@@ -1007,7 +1007,7 @@ window mp_create_server extends abstract_multiplayer
 // ===========================================
 // MULTIPLAYER TEAM SELECTION AND WAIT DIALOG
 // ===========================================
-window multiplayer_wait
+window multiplayer_wait extends levelbuttons
 {
 	{
 		timeout 	2000
@@ -1021,11 +1021,7 @@ window multiplayer_wait
 		align		LAYOUTALIGN_FILL
 	}
 
-	todo adminteam { pos "80 310" string "Feature: admin can change a player's team" }
-	todo disablefloor { pos "80 340" string "Disable unless levels" }
-	todo fixchat { pos "80 370" string "Fix irc/chat usability (last line on bottom and visible)" }
-	todo inviteothers { pos "80 400" string "Invite button only in inet mode, not in lan mode"}
-	todo widescreen { pos "80 400" string "Center panels"}
+	todo widescreen { pos "80 370" string "Center panels"}
 
 	panel floor {
 		{
@@ -1685,6 +1681,16 @@ window multiplayer_wait
 	 */
 	confunc multiplayer_setTeamplay {
 		// @todo - deactivate team change if the given boolean is false	(0)
+	}
+
+	/**
+	 * @inherited from levelbuttons window
+	 * @param <1> level ID (0..7)
+	 * @param <2> status: 0 not available, 1 available, 2 selected
+	 */
+	confunc updateLevelStatus {
+		if ( <2> == 0 ) { *floor.bt<1>@disabled = true }
+		elif ( <2> >= 1 ) { *floor.bt<1>@disabled = false }
 	}
 
 	// ===================

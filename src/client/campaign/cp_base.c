@@ -2162,7 +2162,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 			character_t *chr = &aircraft->acTeam[i]->chr;
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-			INVSH_EquipActor(&chr->inv, ed, chr);
+			cls.i.EquipActor(&cls.i, &chr->inv, ed, chr);
 			chrListTemp.chr[chrListTemp.num] = chr;
 			chrListTemp.num++;
 		}
@@ -2398,7 +2398,15 @@ static void B_BuildingConstructionFinished_f (void)
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		building_t *building = &ccs.buildings[base->idx][i];
-		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+
+		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
+			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+
+			if (building->onConstruct[0] != '\0') {
+				base->buildingCurrent = building;
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
+			}
+		}
 	}
 	/* update menu */
 	B_SelectBase(base);
@@ -3057,7 +3065,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				}
 			}
 		}
-		/** @todo can't we use something like INVSH_DestroyInventory here? */
+		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 		/* reset capacities */

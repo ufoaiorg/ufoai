@@ -171,7 +171,7 @@ typedef struct {
 	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, qboolean stored);
 	int (IMPORT *MoveNext) (const routing_t * map, int actorSize, pathing_t *path, pos3_t from, byte crouchingState);
 	int (IMPORT *GridFloor) (const routing_t * map, int actorSize, const pos3_t pos);
-	int (IMPORT *TUsUsed) (int dir);
+	int (IMPORT *GetTUsForDirection) (int dir);
 	pos_t (IMPORT *GridFall) (const routing_t * map, int actorSize, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (const routing_t * map, int actorSize, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (routing_t * map, const char *name, const char **list);
@@ -263,7 +263,7 @@ typedef struct {
 	void (EXPORT *ClientCommand) (player_t * client);
 
 	int (EXPORT *ClientAction) (player_t * client);
-	void (EXPORT *ClientEndRound) (player_t * client, qboolean quiet);
+	void (EXPORT *ClientEndRound) (player_t * client);
 	void (EXPORT *ClientTeamInfo) (const player_t * client);
 	void (EXPORT *ClientInitActorStates) (const player_t * client);
 	int (EXPORT *ClientGetTeamNum) (const player_t * client);

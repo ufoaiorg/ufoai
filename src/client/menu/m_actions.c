@@ -405,9 +405,10 @@ static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuC
 	menuCallContext_t newContext;
 	const value_t* callProperty = NULL;
 	const char* path = left->d.terminal.d1.constString;
-	if (left->type == EA_VALUE_PATHPROPERTY)
+
+	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
 		path = left->d.terminal.d1.string;
-	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
+	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
 		path = MN_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
 	MN_ReadNodePath(path, context->source, &callNode, &callProperty);
 

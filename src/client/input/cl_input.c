@@ -516,7 +516,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 				at[2] += EYE_HT_CROUCH;
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID);
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
 				continue;

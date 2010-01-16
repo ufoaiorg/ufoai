@@ -104,7 +104,7 @@ static const int TUsUsed[] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & SW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
-	};
+};
 CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
 /** @brief Used to track where rerouting needs to occur. */
@@ -615,7 +615,8 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		assert(**name == '*');
+		if (*name[0] != '*')
+			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
@@ -652,11 +653,11 @@ qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int le
 	qboolean hit;
 
 	/* set the list of entities to check */
-	inlineList = entlist;
+	CM_SetInlineList(entlist);
 	/* do the line test */
 	hit = CM_EntTestLine(start, stop, levelmask);
 	/* zero the list */
-	inlineList = NULL;
+	CM_SetInlineList(NULL);
 
 	return hit;
 }
@@ -712,7 +713,8 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		assert(*name[0] == '*');
+		if (*name[0] != '*')
+			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
@@ -776,7 +778,8 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		assert(*name[0] == '*');
+		if (*name[0] != '*')
+			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
@@ -1673,7 +1676,7 @@ void Grid_MoveMark (const routing_t *map, const int actorSize, pathing_t *path, 
 #endif
 
 	/* Find the number of TUs used to move in this direction. */
-	l = Grid_TUsUsed(dir);
+	l = Grid_GetTUsForDirection(dir);
 
 	/* If crouching then multiply by the crouching factor. */
 	if (crouchingState == 1)
@@ -2137,11 +2140,11 @@ pos_t Grid_StepUp (const routing_t *map, const int actorSize, const pos3_t pos, 
 
 
 /**
- * @brief Returns the maximum height of an obstruction that an actor can travel over.
+ * @brief Returns the amounts of TUs that are needed to perform one step into the given direction.
  * @param[in] dir the direction in which we are moving
  * @return The TUs needed to move there.
  */
-int Grid_TUsUsed (int dir)
+int Grid_GetTUsForDirection (int dir)
 {
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 	return TUsUsed[dir];

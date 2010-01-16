@@ -85,7 +85,7 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&characters[i], teamDefID, NULL);
 		/* pack equipment */
-		INVSH_EquipActor(&characters[i].inv, ed, &characters[i]);
+		cls.i.EquipActor(&cls.i, &characters[i].inv, ed, &characters[i]);
 
 		chrDisplayList.chr[i] = &characters[i];
 	}
@@ -161,7 +161,7 @@ void GAME_SetMode (int gametype)
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		memset(&invList, 0, sizeof(invList));
 		/* inventory structure switched/initialized */
-		INVSH_InitInventory(invList, lengthof(invList));
+		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
 		list->init();
 	}
 }
@@ -431,6 +431,9 @@ static qboolean GAME_Spawn (void)
 	if (GAME_GetCurrentType() == NULL || chrDisplayList.num == 0) {
 		const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+		memset(&invList, 0, sizeof(invList));
+		/* inventory structure switched/initialized */
+		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
 		GAME_GenerateTeam(teamDefID, ed);
 	}
 
@@ -449,7 +452,7 @@ static qboolean GAME_Spawn (void)
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list->initializebattlescape)
+	if (list && list->initializebattlescape)
 		list->initializebattlescape(team);
 }
 

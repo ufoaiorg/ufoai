@@ -145,6 +145,11 @@ void MN_RegisterText (int textId, const char *text)
  */
 void MN_RegisterLinkedListText (int textId, linkedList_t *text)
 {
+	/** Hack to disable release memory, if we only want to update the same list */
+	if (mn.sharedData[textId].type == MN_SHARED_LINKEDLISTTEXT && mn.sharedData[textId].data.linkedListText == text) {
+		mn.sharedData[textId].versionId++;
+		return;
+	}
 	MN_ResetData(textId);
 	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
 	mn.sharedData[textId].data.linkedListText = text;

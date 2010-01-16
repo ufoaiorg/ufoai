@@ -42,14 +42,14 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		Com_Error(ERR_DROP, "InvDel message ignored... LE not found\n");
 
-	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
+	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
 
 	if (!ic) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvDel: No item found at location x/y=%i/%i.\n", x, y);
 		return;
 	}
 
-	if (!Com_RemoveFromInventory(&le->i, &csi.ids[container], ic))
+	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, &csi.ids[container], ic))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 
 	if (container == csi.idRight)

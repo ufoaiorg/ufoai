@@ -1056,6 +1056,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_array.h" />
+		<Unit filename="../../src/client/renderer/r_matrix.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_matrix.h" />
 		<Unit filename="../../src/client/renderer/r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1262,6 +1266,9 @@
 		<Unit filename="../../src/game/g_local.h" />
 		<Unit filename="../../src/game/game.h" />
 		<Unit filename="../../src/game/inv_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/game/inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/game/inv_shared.h" />

@@ -148,7 +148,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 	/* check all possible shooters */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		/* not if ent has reaction target already */
-		if (ent->reactionTarget)
+		if (!ent->inuse || ent->reactionTarget)
 			continue;
 
 		/* check whether reaction fire is possible */
@@ -297,7 +297,7 @@ static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
 
 	/* check all possible shooters */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-		if (!ent->reactionTarget)
+		if (!ent->inuse || !ent->reactionTarget)
 			continue;
 
 		shoot = qfalse;
@@ -348,7 +348,7 @@ void G_ReactToPreFire (edict_t *target)
 
 	/* check all ents to see who wins and who loses a draw */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-		if (!ent->reactionTarget)
+		if (!ent->inuse || !ent->reactionTarget)
 			continue;
 		if (ent->reactionTarget != target) {
 			/* if the entity has changed then resolve the reaction fire */
@@ -402,7 +402,7 @@ void G_ReactToEndTurn (void)
 
 	/* resolve all outstanding reaction firing if possible */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-		if (!ent->reactionTarget)
+		if (!ent->inuse || !ent->reactionTarget)
 			continue;
 
 		G_ResolveRF(ent, qfalse);
@@ -419,11 +419,10 @@ void G_ReactToEndTurn (void)
  */
 void G_ResetReactionFire (int team)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
+	while ((ent = G_EdictsGetNextLivingActor(ent)))
+		if (ent->team == team) {
 			/** @todo why do we send the state here and why do we change the "shaken" state? */
 			ent->state &= ~STATE_SHAKEN;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);

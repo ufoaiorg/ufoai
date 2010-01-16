@@ -4,8 +4,8 @@ varying float fog;
 
 
 /*
-FogVertex
-*/
+ * FogVertex
+ */
 void FogVertex(void){
 
 	// calculate interpolated fog depth

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_G_LOCAL_H
 
 #include "q_shared.h"
-#include "inv_shared.h"
+#include "inventory.h"
 #include "../shared/infostring.h"
 
 /** no gettext support for game lib - but we must be able to mark the strings */
@@ -95,6 +95,8 @@ typedef struct {
 	/* store latched cvars here that we want to get at often */
 	int sv_maxplayersperteam;
 	int sv_maxentities;
+
+	inventoryInterface_t i;
 } game_locals_t;
 
 /** @brief this structure is cleared as each map is entered */
@@ -281,7 +283,7 @@ void G_InventoryToFloor(edict_t *ent);
 edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
 
 /* g_morale */
-void G_MoraleBehaviour(int team, qboolean quiet);
+void G_MoraleBehaviour(int team);
 
 /* g_phys.c */
 void G_PhysicsRun(void);
@@ -365,7 +367,7 @@ void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const 
 
 void G_FlushSteps(void);
 qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
-qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU, qboolean quiet);
+qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
 int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
@@ -380,7 +382,7 @@ void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 int G_ClientAction(player_t * player);
-void G_ClientEndRound(player_t * player, qboolean quiet);
+void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);
 void G_ClientInitActorStates(const player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
@@ -396,13 +398,14 @@ void G_ClientSpawn(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
-void G_ActorReload(edict_t* ent, shoot_types_t st, qboolean quiet);
+void G_ActorReload(edict_t* ent, shoot_types_t st);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
-void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
-void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to, qboolean stop, qboolean quiet);
+void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
+qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
+void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to);
 void G_ActorFall(edict_t *ent);
-void G_MoveCalc(int team, pos3_t from, int actorSize, byte crouchingState, int distance);
-void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet);
+void G_MoveCalc(int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance);
+void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction);
 void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
 
@@ -463,6 +466,9 @@ void SP_trigger_touch(edict_t *ent);
 void SP_func_rotating(edict_t *ent);
 void SP_func_door(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
+
+edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
+edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 
 /*============================================================================ */
 

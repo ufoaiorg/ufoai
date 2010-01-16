@@ -26,14 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_inventory.h"
 #include "../common/common.h"
-#include "../game/inv_shared.h"
+#include "../game/inventory.h"
 
 static invList_t invList[MAX_INVLIST];
+static inventoryInterface_t i;
 
 static inline void ResetInventoryList (void)
 {
 	memset(&invList, 0, sizeof(invList));
-	INVSH_InitInventory(invList, lengthof(invList));
+	INV_InitInventory(&i, &csi, invList, lengthof(invList));
 }
 
 /**
@@ -85,18 +86,18 @@ static void testItemAdd (void)
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
 
-	container = INVSH_GetInventoryDefinitionByID("left");
+	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
 	item.t = od;
 	item.m = NULL;
 	item.a = 0;
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qfalse);
 
-	CU_ASSERT_PTR_NOT_NULL(Com_AddToInventory(&inv, item, container, NONE, NONE, 1));
+	CU_ASSERT_PTR_NOT_NULL(i.AddToInventory(&i, &inv, item, container, NONE, NONE, 1));
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qtrue);
 }
 
 static void testItemDel (void)
@@ -114,22 +115,22 @@ static void testItemDel (void)
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
 
-	container = INVSH_GetInventoryDefinitionByID("left");
+	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
 	item.t = od;
 	item.m = NULL;
 	item.a = 0;
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qfalse);
 
-	addedItem = Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&i, &inv, item, container, NONE, NONE, 1);
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qtrue);
 
-	CU_ASSERT(Com_RemoveFromInventory(&inv, container, addedItem));
+	CU_ASSERT(i.RemoveFromInventory(&i, &inv, container, addedItem));
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qfalse);
 }
 
 static void testItemMove (void)
@@ -147,25 +148,27 @@ static void testItemMove (void)
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
 
-	container = INVSH_GetInventoryDefinitionByID("left");
+	container = INVSH_GetInventoryDefinitionByID("right");
 	CU_ASSERT_PTR_NOT_NULL(container);
 
 	item.t = od;
 	item.m = NULL;
 	item.a = 0;
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qfalse);
 
-	addedItem = Com_AddToInventory(&inv, item, container, NONE, NONE, 1);
+	addedItem = i.AddToInventory(&i, &inv, item, container, NONE, NONE, 1);
+	CU_ASSERT_PTR_NOT_NULL(addedItem);
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qtrue);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qtrue);
 
-	containerTo = INVSH_GetInventoryDefinitionByID("right");
+	containerTo = INVSH_GetInventoryDefinitionByID("backpack");
+	CU_ASSERT_PTR_NOT_NULL(containerTo);
 
-	Com_MoveInInventory(&inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL);
+	CU_ASSERT_EQUAL(IA_MOVE, i.MoveInInventory(&i, &inv, container, addedItem, containerTo, NONE, NONE, NULL, NULL));
 
-	CU_ASSERT(Com_ExistsInInventory(&inv, container, item) == qfalse);
-	CU_ASSERT(Com_ExistsInInventory(&inv, containerTo, item) == qtrue);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, container, item) == qfalse);
+	CU_ASSERT(INVSH_ExistsInInventory(&inv, containerTo, item) == qtrue);
 }
 
 static qboolean testAddSingle (inventory_t *inv, objDef_t *od, invDef_t *container)
@@ -176,7 +179,7 @@ static qboolean testAddSingle (inventory_t *inv, objDef_t *od, invDef_t *contain
 	item.m = NULL;
 	item.a = 0;
 
-	return Com_TryAddToInventory(inv, item, container);
+	return i.TryAddToInventory(&i, inv, item, container);
 }
 
 static void testItemMassActions (void)

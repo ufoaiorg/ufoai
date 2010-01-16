@@ -19,7 +19,7 @@ dataarchive: pk3
 linuxinstaller: lang maps pk3
 	cd src/ports/linux/installer; $(MAKE) packdata; $(MAKE)
 
-macinstaller: lang pk3
+macinstaller: lang maps pk3
 	# Replacing existing compiled maps with downloaded precompiled maps,
 	# otherwise multiplayer won't work due to mismatching checksums
 	# FIXME: Use the maps from the current release at sourceforge.net

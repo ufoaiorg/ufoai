@@ -49,7 +49,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ITEM:
-		INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
+		cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
 
 		/* search owners (there can be many, some of them dead) */
 		for (i = 0, actor = LEs; i < cl.numLEs; i++, actor++)
@@ -61,7 +61,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 		break;
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		INVSH_DestroyInventory(&le->i);
+		cls.i.DestroyInventory(&cls.i, &le->i);
 		break;
 #ifdef DEBUG
 	case ET_ACTORHIDDEN:

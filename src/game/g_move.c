@@ -38,13 +38,16 @@ static int forbiddenListLength;
 /**
  * @brief Build the forbidden list for the pathfinding (server side).
  * @param[in] team The team number if the list should be calculated from the eyes of that team. Use 0 to ignore team.
+ * @param[in] movingActor The moving actor to build the forbidden list for. If this is an AI actor, everything other actor will be
+ * included in the forbidden list - even the invisible ones. This is needed to ensure that they are not walking into each other
+ * (civilians <=> aliens, aliens <=> civilians)
  * @sa G_MoveCalc
  * @sa Grid_CheckForbidden
  * @sa CL_BuildForbiddenList <- shares quite some code
  * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
-static void G_BuildForbiddenList (int team)
+static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 {
 	edict_t *ent;
 	int visMask;
@@ -62,7 +65,7 @@ static void G_BuildForbiddenList (int team)
 		if (!ent->inuse)
 			continue;
 		/* Dead 2x2 unit will stop walking, too. */
-		if (G_IsBlockingMovementActor(ent) && (ent->visflags & visMask)) {
+		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & visMask))) {
 			forbiddenList[forbiddenListLength++] = ent->pos;
 			forbiddenList[forbiddenListLength++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
@@ -83,16 +86,15 @@ static void G_BuildForbiddenList (int team)
  * This will calculate a routing table for all reachable fields with the given distance
  * from the given spot with the given actorsize
  * @param[in] team The current team (see G_BuildForbiddenList)
- * @param[in] actorSize
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
  * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalc (int team, pos3_t from, int actorSize, byte crouchingState, int distance)
+void G_MoveCalc (int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance)
 {
-	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.routingMap, actorSize, gi.pathingMap, from, crouchingState, distance,
+	G_BuildForbiddenList(team, movingActor);
+	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, gi.pathingMap, from, crouchingState, distance,
 			forbiddenList, forbiddenListLength);
 }
 
@@ -112,7 +114,6 @@ void G_ActorFall (edict_t *ent)
 	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
-		/** @todo search a grid field besides the found edict */
 	}
 
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
@@ -128,13 +129,12 @@ void G_ActorFall (edict_t *ent)
 /**
  * @brief Checks whether the actor should stop movement
  * @param ent The actors edict
- * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
  * @param visState The visibily check state @c VIS_PERISH, @c VIS_APPEAR
  * @return @c true if the actor should stop movement, @c false otherwise
  */
-static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnVisStop, int visState, byte* dvtab, int max)
+qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvtab, int max)
 {
-	if (stopOnVisStop && (visState & VIS_STOP))
+	if (visState & VIS_STOP)
 		 return qtrue;
 
 	 /* check that the appearing unit is not on a grid position the actor wanted to walk to.
@@ -148,7 +148,7 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnV
 			 PosAddDV(pos, tmp, dvtab[max]);
 			 max--;
 			 blockEdict = G_GetEdictFromPos(pos, 0);
-			 if (blockEdict && G_IsBlockingMovementActor(blockEdict))
+			 if (blockEdict && G_IsBlockingMovementActor(blockEdict) && G_IsVisibleForTeam(blockEdict, ent->team))
 				 return qtrue;
 		 }
 	 }
@@ -165,12 +165,10 @@ static qboolean G_ActorShouldStopInMidMove (const edict_t *ent, qboolean stopOnV
  * not if they e.g. hide.
  * @param[in] ent Edict to move
  * @param[in] to The grid position to walk to
- * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
- * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
+void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 {
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
@@ -186,15 +184,15 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
 
+	/* check if action is possible */
+	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT))
+		return;
+
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	oldState = 0;
 
-	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT, quiet))
-		return;
-
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
 	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
@@ -212,7 +210,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 			G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
-				G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
 				length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 				autoCrouchRequired = qtrue;
 			}
@@ -249,6 +247,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 		while (numdv > 0) {
 			/* A flag to see if we needed to change crouch state */
 			int crouchFlag;
+			const byte oldDir = ent->dir;
 
 			/* get next dv */
 			numdv--;
@@ -258,14 +257,32 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);
-			if (stopOnVisStop && (status & VIS_STOP)) {
+			if (status & VIS_STOP) {
+				autoCrouchRequired = qfalse;
+				if (ent->moveinfo.steps == 0)
+					tu += TU_TURN;
+				break;
+			}
+
+			/* This is now a flag to indicate a change in crouching - we need this for
+			 * the stop in mid move call(s), because we need the updated entity position */
+			crouchFlag = 0;
+			PosAddDV(ent->pos, crouchFlag, dv);
+
+			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
+				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
+				 * send the turn event if this is our first step */
+				if (oldDir != ent->dir && ent->moveinfo.steps == 0) {
+					G_EventActorTurn(ent);
+					tu += TU_TURN;
+				}
 				break;
 			}
 
 			/* decrease TUs */
-			div = gi.TUsUsed(dir);
+			div = gi.GetTUsForDirection(dir);
 			truediv = div;
 			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
 				div *= TU_CROUCH_MOVING_FACTOR;
@@ -280,9 +297,6 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				ent->speed = ACTOR_SPEED_NORMAL;
 			ent->speed *= g_actorspeed->value;
 
-			/* This is now a flag to indicate a change in crouching */
-			crouchFlag = 0;
-			PosAddDV(ent->pos, crouchFlag, dv);
 			if (crouchFlag == 0) { /* No change in crouch */
 				edict_t* clientAction;
 
@@ -399,7 +413,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to, qboo
 				return;
 			}
 
-			if (G_ActorShouldStopInMidMove(ent, stopOnVisStop, status, dvtab, numdv - 1)) {
+			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;

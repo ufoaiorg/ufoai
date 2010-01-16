@@ -2,7 +2,7 @@
  * @file q_shared.h
  * @brief Common header file.
  *
- * Apparently included by every file - unnecessary?
+ * @todo Apparently included by every file - unnecessary?
  */
 
 /*

@@ -556,6 +556,37 @@ qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 }
 
 /**
+ * @brief Returns the default reaction firemode for a given ammo in a given weapon.
+ * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
+ * @param[in] weaponFdsIdx The index in objDef[x]
+ * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
+ */
+static int CL_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
+{
+	int fdIdx;
+	if (weaponFdsIdx >= MAX_WEAPONS_PER_OBJDEF) {
+		Com_Printf("CL_GetDefaultReactionFire: bad weaponFdsIdx (%i) Maximum is %i.\n", weaponFdsIdx, MAX_WEAPONS_PER_OBJDEF - 1);
+		return -1;
+	}
+	if (weaponFdsIdx < 0) {
+		Com_Printf("CL_GetDefaultReactionFire: Negative weaponFdsIdx given.\n");
+		return -1;
+	}
+
+	if (ammo->numFiredefs[weaponFdsIdx] == 0) {
+		Com_Printf("CL_GetDefaultReactionFire: Probably not an ammo-object: %s\n", ammo->id);
+		return -1;
+	}
+
+	for (fdIdx = 0; fdIdx < ammo->numFiredefs[weaponFdsIdx]; fdIdx++) {
+		if (ammo->fd[weaponFdsIdx][fdIdx].reaction)
+			return fdIdx;
+	}
+
+	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
+}
+
+/**
  * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
  * @param[in] actor The actor we want to update the reaction-fire firemode for.
  * @param[in] hand Which weapon(-hand) to use (l|r).
@@ -595,7 +626,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 
 	if (firemodeActive < 0) {
 		/* Set default reaction firemode for this hand (firemodeActive=-1) */
-		const int reactionFiremodeIndex = FIRESH_GetDefaultReactionFire(ammo, fd->weapFdsIdx);
+		const int reactionFiremodeIndex = CL_GetDefaultReactionFire(ammo, fd->weapFdsIdx);
 
 		if (reactionFiremodeIndex >= 0) {
 			/* Found usable firemode for the weapon in _this_ hand. */
@@ -1272,7 +1303,7 @@ void CL_ActorReload (le_t *le, int hand)
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
 				 && GAME_ItemIsUseable(ic->item.t)) {
-					Com_GetFirstShapePosition(ic, &x, &y);
+					INVSH_GetFirstShapePosition(ic, &x, &y);
 					x += ic->x;
 					y += ic->y;
 					tu = csi.ids[container].out;
@@ -2062,7 +2093,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	trace_t tr;
-	int oldLevel, i;
+	int i;
 	float d;
 	qboolean crossNo;
 	le_t *le;
@@ -2104,27 +2135,21 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 		crossNo = qfalse;
 	}
 
-	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
-	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = cl.mapMaxLevel - 1;
-
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
-	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT);
+	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
+	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT, cl.mapMaxLevel - 1);
 	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
 		VectorCopy(start, temp);
 
-	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
+	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 	if (tr.fraction < 1.0) {
 		d = VectorDist(temp, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
 		crossNo = qtrue;
 	}
-
-	/* switch level back to where it was again */
-	cl_worldlevel->integer = oldLevel;
 
 	/* spawn particles */
 	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
@@ -2154,7 +2179,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	float vz, dt;
 	vec3_t v0, ds, next;
 	trace_t tr;
-	int oldLevel;
 	qboolean obstructed = qfalse;
 	int i;
 	le_t *le;
@@ -2201,10 +2225,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	VectorScale(ds, 1.0 / GRENADE_PARTITIONS, ds);
 	ds[2] = 0;
 
-	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
-	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = cl.mapMaxLevel - 1;
-
 	/* paint */
 	vz = v0[2];
 
@@ -2214,8 +2234,9 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		vz -= GRAVITY * dt;
 		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
 
-		/* trace for obstacles */
-		tr = CL_Trace(from, next, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
+		/* trace for obstacles. Switch up to top level, to make sure our trace
+		 * doesn't go through ceilings ... */
+		tr = CL_Trace(from, next, vec3_origin, vec3_origin, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 		/* something was hit */
 		if (tr.fraction < 1.0) {
@@ -2243,11 +2264,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	}
 
 	hitProbability = 100 * CL_TargetingToHit(toPos);
-
-	/* switch level back to where it was again */
-	cl_worldlevel->integer = oldLevel;
 }
-
 
 /**
  * @brief field marker box

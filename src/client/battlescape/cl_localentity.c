@@ -535,7 +535,7 @@ static void LE_PlayFootStepSound (le_t *le)
 		/* we should really hit the ground with this */
 		to[2] -= UNIT_HEIGHT;
 
-		trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+		trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID, cl_worldlevel->integer);
 		if (trace.surface)
 			LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
 	} else
@@ -591,6 +591,21 @@ void LE_DoEndPathMove (le_t *le)
 	LE_SetThink(le, LET_StartIdle);
 	LE_ExecuteThink(le);
 	LE_Unlock(le);
+}
+
+/**
+ * @brief Spawns particle effects for a hit actor.
+ * @param[in] le The actor to spawn the particles for.
+ * @param[in] impact The impact location (where the particles are spawned).
+ * @param[in] normal The index of the normal vector of the particles (think: impact angle).
+ */
+static void LE_ActorBodyHit (const le_t * le, const vec3_t impact, int normal)
+{
+	if (le->teamDef) {
+		/* Spawn "hit_particle" if defined in teamDef. */
+		if (le->teamDef->hitParticle[0] != '\0')
+			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal], NULL);
+	}
 }
 
 /**
@@ -664,15 +679,22 @@ static void LET_Projectile (le_t * le)
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
 		le->inuse = qfalse;
-		if (le->ref1 && le->ref1[0]) {
+		if (le->ref1 && le->ref1[0] != '\0') {
 			VectorCopy(le->ptl->s, impact);
-			/** @todo Why are we using le->state here, not le->dir? */
-			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->state], NULL);
+			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->dir], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
-		if (le->ref2 && le->ref2[0]) {
+		if (le->ref2 && le->ref2[0] != '\0') {
 			s_sample_t *sample = S_LoadSample(le->ref2);
 			S_PlaySample(impact, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
+		}
+		if (le->ref3) {
+			/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
+			/** @todo Special particles for stun attack (mind you that there is
+			 * electrical and gas/chemical stunning)? */
+			if (le->fd->obj->dmgtype != csi.damStunGas)
+				LE_ActorBodyHit(le->ref3, impact, le->dir);
+			CL_PlayActorSound(le->ref3, SND_HURT);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
@@ -686,7 +708,7 @@ static void LET_Projectile (le_t * le)
  LE Special Effects
 =========================================================================== */
 
-void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal)
+void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim)
 {
 	le_t *le;
 	vec3_t delta;
@@ -709,10 +731,8 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	dist = VectorLength(delta);
 
 	VecToAngles(delta, le->ptl->angles);
-	/* direction */
-	/** @todo Why are we not using le->dir here?
-	 * @sa LE_AddGrenade */
-	le->state = normal;
+	/* direction - bytedirs index */
+	le->dir = normal;
 	le->fd = fd;
 
 	/* infinite speed projectile? */
@@ -728,17 +748,24 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->hitBody[0])
-					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
+					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[le->dir], NULL);
+
+				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
+				/** @todo Special particles for stun attack (mind you that there is
+				 * electrical and gas/chemical stunning)? */
+				if (leVictim && fd->obj->dmgtype != csi.damStunGas)
+					LE_ActorBodyHit(leVictim, impact, le->dir);
+				CL_PlayActorSound(leVictim, SND_HURT);
 			} else {
 				if (fd->impactSound[0]) {
 					s_sample_t *sample = S_LoadSample(fd->impactSound);
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->impact[0])
-					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
+					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[le->dir], NULL);
 			}
 			if (ptl)
-				VecToAngles(bytedirs[normal], ptl->angles);
+				VecToAngles(bytedirs[le->dir], ptl->angles);
 		}
 		return;
 	}
@@ -750,6 +777,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	if (flags & SF_BODY) {
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
+		le->ref3 = leVictim;
 	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
@@ -776,7 +804,7 @@ static objDef_t *LE_BiggestItem (const invList_t *ic)
 	int maxSize = 0;
 
 	for (max = ic->item.t; ic; ic = ic->next) {
-		const int size = Com_ShapeUsage(ic->item.t->shape);
+		const int size = INVSH_ShapeSize(ic->item.t->shape);
 		if (size > maxSize) {
 			max = ic->item.t;
 			maxSize = size;
@@ -835,7 +863,7 @@ void LE_PlaceItem (le_t *le)
  * @param[in] v0 velocity vector
  * @param[in] dt delta seconds
  */
-void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt)
+void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim)
 {
 	le_t *le;
 	vec3_t accel;
@@ -861,6 +889,7 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	if (flags & SF_BODY) {
 		le->ref1 = fd->hitBody;
 		le->ref2 = fd->hitBodySound;
+		le->ref3 = leVictim;
 	} else if (flags & SF_IMPACT || (fd->splrad && !fd->bounce)) {
 		le->ref1 = fd->impact;
 		le->ref2 = fd->impactSound;
@@ -871,9 +900,8 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	}
 
 	le->endTime = cl.time + dt;
-	/** @todo Why are we not using le->dir here?
-	 @sa LE_AddProjectile */
-	le->state = 5;				/* direction (0,0,1) */
+	/* direction - bytedirs index (0,0,1) */
+	le->dir = 5;
 	le->fd = fd;
 	assert(fd);
 	LE_SetThink(le, LET_Projectile);
@@ -1224,7 +1252,7 @@ void LE_Cleanup (void)
 		if (LE_IsActor(le))
 			CL_ActorCleanup(le);
 		else if (LE_IsItem(le))
-			INVSH_EmptyContainer(&le->i, &csi.ids[csi.idFloor]);
+			cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
 
 		le->inuse = qfalse;
 	}
@@ -1400,14 +1428,14 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] passle Ignore this local entity in the trace (might be NULL)
  * @param[in] passle2 Ignore this local entity in the trace (might be NULL)
  * @param[in] contentmask Searched content the trace should watch for
- * @todo cl_worldlevel->integer should be a function parameter to eliminate sideeffects like e.g. in the particles code
+ * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
+trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 
 	/* clip to world */
-	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, (1 << (cl_worldlevel->integer + 1)) - 1, contentmask, 0);
+	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, (1 << (worldLevel + 1)) - 1, contentmask, 0);
 	clip.trace.le = NULL;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

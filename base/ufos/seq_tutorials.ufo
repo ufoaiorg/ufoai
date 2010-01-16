@@ -305,15 +305,15 @@ sequence tut_gameplay
 
 	rem gameplay_pic8a
 	rem gameplay_pic8b
-	rem gameplay_gameplay_txt9
-	rem gameplay_gameplay_txt8
-	rem gameplay_gameplay_txt7
-	rem gameplay_gameplay_txt6
-	rem gameplay_gameplay_txt5
-	rem gameplay_gameplay_txt4
-	rem gameplay_gameplay_txt3
-	rem gameplay_gameplay_txt2
-	rem gameplay_gameplay_txt1
+	rem gameplay_txt9
+	rem gameplay_txt8
+	rem gameplay_txt7
+	rem gameplay_txt6
+	rem gameplay_txt5
+	rem gameplay_txt4
+	rem gameplay_txt3
+	rem gameplay_txt2
+	rem gameplay_txt1
 	rem gameplay_continue_txt
 	rem gameplay_welcome
 }
@@ -996,7 +996,7 @@ sequence tut_skirmish
 		font	f_big
 	}
 	wait 3
-	rem start_hover
+	rem _hover
 	wait 2
 	2dobj or_text
 	{

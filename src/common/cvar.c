@@ -60,7 +60,7 @@ static qboolean Cvar_InfoValidate (const char *s)
 /**
  * @brief Searches for a cvar given by parameter
  * @param varName The cvar name as string
- * @return Pointer to cvar_t struct
+ * @return Pointer to cvar_t struct or @c NULL if no cvar with the specified name was found
  * @sa Cvar_GetString
  * @sa Cvar_SetValue
  */

@@ -764,7 +764,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
  * @brief Run base defences.
  * @param[in] dt Time elapsed since last call of this function.
  */
-void AIRFIGHT_CampaignRunBaseDefense (int dt)
+void AIRFIGHT_CampaignRunBaseDefence (int dt)
 {
 	int baseIdx;
 	int installationIdx;

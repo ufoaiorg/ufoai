@@ -315,14 +315,14 @@ menuNode_t* MN_GetNodeByPath (const char* path)
 }
 
 /**
- * @brief Allocate a node into the UI memory
+ * @brief Allocate a node into the UI memory (do notr call behaviour->new)
  * @note It's not a dynamic memory allocation. Please only use it at the loading time
  * @todo Assert out when we are not in parsing/loading stage
  * @param[in] name Name of the new node, else NULL if we dont want to edit it.
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
-menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic)
+static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, qboolean isDynamic)
 {
 	menuNode_t* node;
 
@@ -355,6 +355,21 @@ menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic
 	/* initialize default properties */
 	if (node->behaviour->loading)
 		node->behaviour->loading(node);
+
+	return node;
+}
+
+/**
+ * @brief Allocate a node into the UI memory
+ * @note It's not a dynamic memory allocation. Please only use it at the loading time
+ * @todo Assert out when we are not in parsing/loading stage
+ * @param[in] name Name of the new node, else NULL if we dont want to edit it.
+ * @param[in] type Name of the node behavior
+ * @param[in] isDynamic Allocate a node in static or dynamic memory
+ */
+menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic)
+{
+	menuNode_t* node = MN_AllocNodeWithoutNew (name, type, isDynamic);
 
 	/* allocate memories */
 	if (node->dynamic && node->behaviour->new)
@@ -539,11 +554,12 @@ void MN_DeleteNode (menuNode_t* node)
 	/* delete all allocated properties */
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		const value_t *property = behaviour->properties;
+		if (property == NULL)
+			continue;
 		while (property->string != NULL) {
 			if ((property->type & V_UI_MASK) == V_UI_CVAR) {
 				void *mem = ((byte *) node + property->ofs);
-				mem = *(void**)mem;
-				if (mem != NULL) {
+				if (*(void**)mem != NULL) {
 					MN_FreeStringProperty(*(void**)mem);
 					*(void**)mem = NULL;
 				}
@@ -565,15 +581,17 @@ void MN_DeleteNode (menuNode_t* node)
  * @param[in] recursive True if we also must clone subnodes
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
  * @param[in] newName New node name, else NULL to use the source name
+ * @param[in] isDynamic Allocate a node in static or dynamic memory
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName)
+menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName, qboolean isDynamic)
 {
-	menuNode_t* newNode = MN_AllocNode(NULL, node->behaviour->name, qfalse);
+	menuNode_t* newNode = MN_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
 
 	/* clone all data */
 	*newNode = *node;
+	newNode->dynamic = isDynamic;
 
 	/* custom name */
 	if (newName != NULL) {
@@ -596,10 +614,14 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	if (recursive) {
 		menuNode_t* childNode;
 		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
-			menuNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive, NULL);
+			menuNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive, NULL, isDynamic);
 			MN_AppendNode(newNode, newChildNode);
 		}
 	}
+
+	/* allocate memories */
+	if (newNode->dynamic && newNode->behaviour->new)
+		newNode->behaviour->new(newNode);
 
 	newNode->behaviour->clone(node, newNode);
 

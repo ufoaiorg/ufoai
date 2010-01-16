@@ -231,11 +231,13 @@ void R_SwitchModelMemPoolTag (void)
 	/* mark the static model textures as it_static, thus R_FreeWorldImages
 	 * won't free them */
 	for (i = 0, mod = r_models; i < r_numModelsStatic; i++, mod++) {
+		if (!mod->alias.num_meshes)
+			Com_Printf("Model '%s' has no meshes\n", mod->name);
 		for (j = 0; j < mod->alias.num_meshes; j++) {
 			if (!mod->alias.meshes[j].num_skins)
 				Com_Printf("Model '%s' has no skins\n", mod->name);
 			for (k = 0; k < mod->alias.meshes[j].num_skins; k++) {
-				if (mod->alias.meshes[j].skins[k].skin)
+				if (mod->alias.meshes[j].skins[k].skin != r_noTexture)
 					mod->alias.meshes[j].skins[k].skin->type = it_static;
 				else
 					Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
@@ -316,6 +318,10 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 
 	if (!mod->alias.meshes[*mesh].num_skins)
 		Com_Error(ERR_DROP, "Model with no skins");
+
+	if (mod->alias.meshes[*mesh].skins[*skin].skin->texnum <= 0)
+		Com_Error(ERR_DROP, "Texture is already freed and no longer uploaded, texnum is invalid for model %s", mod->name);
+
 	return mod->alias.meshes[*mesh].skins[*skin].skin;
 }
 

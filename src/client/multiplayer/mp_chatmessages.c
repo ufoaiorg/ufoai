@@ -26,51 +26,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_main.h"
 #include "../menu/m_data.h"
 #include "../menu/node/m_node_text.h"
-#include "mp_callbacks.h"
 #include "mp_chatmessages.h"
 
-/**< @brief buffer that hold all printed chat messages for menu display */
-static char *chatBuffer = NULL;
-
-/** @brief Stores all chat messages from a multiplayer game */
-typedef struct chatMessage_s {
-	char *text;
-	struct chatMessage_s *next;
-} chatMessage_t;
-
-static chatMessage_t *mp_chatMessageStack;
-
-#define MAX_CHAT_TEXT 4096
+static linkedList_t *mp_chatMessageStack = NULL;
 
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
  */
 void MP_AddChatMessage (const char *text)
 {
-	/* allocate memory for new chat message */
-	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(*chat), cl_genericPool, 0);
-
-	/* push the new chat message at the beginning of the stack */
-	chat->next = mp_chatMessageStack;
-	mp_chatMessageStack = chat;
-	chat->text = Mem_PoolStrDup(text, cl_genericPool, 0);
-
-	if (!chatBuffer) {
-		chatBuffer = (char*)Mem_PoolAlloc(MAX_CHAT_TEXT, cl_genericPool, 0);
-		if (!chatBuffer) {
-			Com_Printf("Could not allocate chat buffer\n");
-			return;
-		}
-	}
-
-	*chatBuffer = '\0'; /* clear buffer */
-	do {
-		if (strlen(chatBuffer) + strlen(chat->text) >= MAX_CHAT_TEXT)
-			break;
-		Q_strcat(chatBuffer, chat->text, MAX_CHAT_TEXT);
-		chat = chat->next;
-	} while (chat);
-
-	MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
+	char message[2048];
+	Q_strncpyz(message, text, sizeof(message));
+	LIST_AddString(&mp_chatMessageStack, Com_Trim(message));
+	MN_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
 	MN_ExecuteConfunc("unhide_chatscreen");
 }

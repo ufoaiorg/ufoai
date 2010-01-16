@@ -472,12 +472,12 @@ static int pos3L_goto (lua_State *L)
 	assert(lua_ispos3(L, 1));
 
 	/* Calculate move table. */
-	G_MoveCalc(0, AIL_ent->pos, AIL_ent->fieldSize, crouchingState, AIL_ent->TU);
+	G_MoveCalc(0, AIL_ent, AIL_ent->pos, crouchingState, AIL_ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* Move. */
 	pos = lua_topos3(L, 1);
-	G_ClientMove(AIL_player, 0, AIL_ent, *pos, qfalse, QUIET);
+	G_ClientMove(AIL_player, 0, AIL_ent, *pos);
 
 	lua_pushboolean(L, 1);
 	return 1;
@@ -741,7 +741,7 @@ static int AIL_reload (lua_State *L)
 	} else
 		weap = gi.csi->idRight; /* Default to right hand. */
 
-	G_ActorReload(AIL_ent, weap, QUIET);
+	G_ActorReload(AIL_ent, weap);
 	return 0;
 }
 
@@ -768,7 +768,7 @@ static int AIL_positionshoot (lua_State *L)
 	dist = ent->TU;
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, ent->TU);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
@@ -836,7 +836,7 @@ static int AIL_positionhide (lua_State *L)
 	dist = ent->TU;
 
 	/* Calculate move table. */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, ent->TU);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */

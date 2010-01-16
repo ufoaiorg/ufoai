@@ -139,11 +139,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* game/g_client.c, game/g_cmds.c, game/g_combat.c, game/g_svccmds.c, server/sv_ccmds.c */
 #define	PRINT_CONSOLE	2   /* critical messages goes to the game console */
 
-/* {game} */
-#define	QUIET	(qtrue)
-/* {game}, server/sv_user.c */
-#define	NOISY	(qfalse)
-
 #define ERR_FATAL           0   /* exit the entire game with a popup window */
 #define ERR_DROP            1   /* print to console and disconnect from game */
 #define ERR_DISCONNECT      2   /* don't kill server */

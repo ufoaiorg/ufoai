@@ -1072,7 +1072,7 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 
 	/* else initialize a component */
 	} else if (component) {
-		node = MN_CloneNode(component, NULL, qtrue, *token);
+		node = MN_CloneNode(component, NULL, qtrue, *token, qfalse);
 		if (parent) {
 			if (parent->root)
 				MN_UpdateRoot(node, parent->root);
@@ -1302,7 +1302,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		superMenu = MN_GetWindow(token);
 		if (superMenu == NULL)
 			Sys_Error("Could not get the super menu %s", token);
-		menu = MN_CloneNode(superMenu, NULL, qtrue, name);
+		menu = MN_CloneNode(superMenu, NULL, qtrue, name, qfalse);
 		token = Com_Parse(text);
 	} else {
 		menu = MN_AllocNode(name, type, qfalse);
@@ -1399,7 +1399,9 @@ float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 			/* get the cvar value */
 			return Cvar_GetValue(token + 5);
 		} else {
-			Sys_Error("MN_GetReferenceFloat: unknown reference");	/**< maybe this code is never used */
+			/** @todo maybe this code is never used */
+			Sys_Error("MN_GetReferenceFloat: unknown reference '%s' from node '%s'",
+					token, node->name);
 #if 0	/** @todo need a full rework */
 			menuNode_t *refNode;
 			const value_t *val;
