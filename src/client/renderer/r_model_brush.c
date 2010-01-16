@@ -1153,7 +1153,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	R_FreeWorldImages();
 
-	if (mapName[0] == '+')
+	if (mapName[0] == '+' || mapName[0] == '.')
 		R_LoadMaterials(mapName + 1);
 	/* already assembled maps via console command? Skip them */
 	else if (mapName[0] != '-')

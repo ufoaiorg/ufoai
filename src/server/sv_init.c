@@ -147,7 +147,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	if (!strncmp(sv.configstrings[CS_MAPTITLE], "b/", 2)) {
 		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
 		Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "Base attack");
-		Com_sprintf(sv.configstrings[CS_NAME], sizeof(sv.configstrings[CS_NAME]), "+baseattack");
+		Com_sprintf(sv.configstrings[CS_NAME], sizeof(sv.configstrings[CS_NAME]), ".baseattack");
 	}
 
 	/* clear random-map assembly data */
