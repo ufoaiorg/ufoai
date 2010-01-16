@@ -425,10 +425,8 @@ qboolean AB_SaveXML (mxml_node_t *p)
 
 		assert(base);
 		mxml_AddPos2(s, SAVE_ALIENBASE_POS, base->pos);
-		if (base->supply)
-			mxml_AddInt(s, SAVE_ALIENBASE_SUPPLY, base->supply);
-		if (base->stealth)
-			mxml_AddFloat(s, SAVE_ALIENBASE_STEALTH, base->stealth);
+		mxml_AddIntValue(s, SAVE_ALIENBASE_SUPPLY, base->supply);
+		mxml_AddFloatValue(s, SAVE_ALIENBASE_STEALTH, base->stealth);
 	}
 
 	return qtrue;
