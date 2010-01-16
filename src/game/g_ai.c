@@ -47,7 +47,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	VectorNormalize(dtarget);
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
-	while ((check = entities_getNextLivingActor(check))) {
+	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (ent != check && check->team == ent->team) {
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);

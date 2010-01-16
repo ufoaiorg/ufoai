@@ -467,7 +467,7 @@ void SP_func_rotating(edict_t *ent);
 void SP_func_door(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
 
-edict_t* entities_getNextLivingActor(edict_t* lastEnt);
+edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
 
 /*============================================================================ */
 
