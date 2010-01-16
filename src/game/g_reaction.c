@@ -148,7 +148,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 	/* check all possible shooters */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		/* not if ent has reaction target already */
-		if (ent->reactionTarget)
+		if (!ent->inuse || ent->reactionTarget)
 			continue;
 
 		/* check whether reaction fire is possible */
