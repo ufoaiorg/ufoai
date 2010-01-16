@@ -1101,7 +1101,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, int shootTyp
 	reactionLeftover = IS_SHOT_REACTION(shootType) ? sv_reaction_leftover->integer : 0;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, fd->time + reactionLeftover, quiet))
+	if (!G_ActionCheck(player, ent, fd->time + reactionLeftover))
 		return qfalse;
 
 	/* Don't allow to shoot yourself */

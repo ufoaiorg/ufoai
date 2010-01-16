@@ -265,7 +265,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	case clc_endround:
 		/* player wants to end round */
 		sv_msg = msg;
-		ge->ClientEndRound(sv_player, NOISY);
+		ge->ClientEndRound(sv_player);
 		sv_msg = NULL;
 		break;
 

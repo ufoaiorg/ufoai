@@ -70,7 +70,7 @@ void G_CheckForceEndRound (void)
 	/* set all team members to ready (only human players) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam) {
-			G_ClientEndRound(p, NOISY);
+			G_ClientEndRound(p);
 			level.nextEndRound = level.framenum;
 		}
 
@@ -143,7 +143,7 @@ static void G_GetNextActiveTeam (void)
 /**
  * @sa G_PlayerSoldiersCount
  */
-void G_ClientEndRound (player_t * player, qboolean quiet)
+void G_ClientEndRound (player_t * player)
 {
 	player_t *p;
 	int i;
@@ -208,7 +208,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);
 	if (mor_panic->integer)
-		G_MoraleBehaviour(level.activeTeam, quiet);
+		G_MoraleBehaviour(level.activeTeam);
 
 	/* start ai - there is only one player for ai teams, and the last pointer must only
 	 * be updated for ai players */

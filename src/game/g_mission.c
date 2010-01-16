@@ -71,7 +71,7 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 								/* drop the weapon - even if out of TUs */
 								G_ActorInvMove(activator,
 									INVDEF(j), ic, INVDEF(gi.csi->idFloor),
-									NONE, NONE, qfalse, QUIET);
+									NONE, NONE, qfalse);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));
 								self->owner->count = level.actualRound;
 								return qtrue;

@@ -289,13 +289,10 @@ int G_GetActiveTeam (void)
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  * @param[in] TU The time units to check against the ones ent has.
- * @param[in] quiet Don't print the console message if quiet is true.
  * the action with
  */
-qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU, qboolean quiet)
+qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 {
-	int msglevel;
-
 	/* don't check for a player - but maybe a server action */
 	if (!player)
 		return qtrue;
@@ -306,35 +303,33 @@ qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU, qboolean q
 		return qfalse;
 	}
 
-	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
-
 	if (!ent || !ent->inuse) {
-		G_ClientPrintf(player, msglevel, _("Can't perform action - object not present!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!\n"));
 		return qfalse;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		G_ClientPrintf(player, msglevel, _("Can't perform action - not an actor!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
 
 	if (G_IsStunned(ent)) {
-		G_ClientPrintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is stunned!\n"));
 		return qfalse;
 	}
 
 	if (G_IsDead(ent)) {
-		G_ClientPrintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - actor is dead!\n"));
 		return qfalse;
 	}
 
 	if (ent->team != player->pers.team) {
-		G_ClientPrintf(player, msglevel, _("Can't perform action - not on same team!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not on same team!\n"));
 		return qfalse;
 	}
 
 	if (ent->pnum != player->num) {
-		G_ClientPrintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - no control over allied actors!\n"));
 		return qfalse;
 	}
 
@@ -354,7 +349,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 	const int dir = getDVdir(dv);
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_TURN, NOISY))
+	if (!G_ActionCheck(player, ent, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
@@ -427,7 +422,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qboolean checkaction)
 {
 	/* Check if any action is possible. */
-	if (checkaction && !G_ActionCheck(player, ent, 0, NOISY))
+	if (checkaction && !G_ActionCheck(player, ent, 0))
 		return;
 
 	if (!reqState)
@@ -436,7 +431,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	switch (reqState) {
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
+		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH)) {
 			ent->state ^= STATE_CROUCHED;
 			ent->TU -= TU_CROUCH;
 			G_ActorSetMaxs(ent);
@@ -513,7 +508,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quiet)
+void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -554,7 +549,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
 }
 
 /**
@@ -570,7 +565,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
-	if (!G_ActionCheck(player, actor, edict->TU, qfalse))
+	if (!G_ActionCheck(player, actor, edict->TU))
 		return qfalse;
 
 	if (!G_UseEdict(edict, actor))
@@ -656,7 +651,7 @@ int G_ClientAction (player_t * player)
 			if (!fromItem)
 				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);
-			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
+			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
 		}
 		break;
 
@@ -1375,7 +1370,7 @@ void G_ClientDisconnect (player_t * player)
 		gi.ConfigString(CS_PLAYERCOUNT, "%i", level.numplayers);
 
 		if (level.activeTeam == player->pers.team)
-			G_ClientEndRound(player, NOISY);
+			G_ClientEndRound(player);
 
 		/* if no more players are connected - stop the server */
 		G_MatchEndCheck();

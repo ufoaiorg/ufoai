@@ -822,23 +822,23 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	if (!G_IsPaniced(ent)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
-				G_ActorReload(ent, ST_RIGHT_RELOAD, QUIET);
+				G_ActorReload(ent, ST_RIGHT_RELOAD);
 			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ActorReload(ent, ST_LEFT_RELOAD, QUIET);
+				G_ActorReload(ent, ST_LEFT_RELOAD);
 			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue, QUIET);
+				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 			}
 		}
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
 	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent))
-		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
+		G_ClientGetWeaponFromInventory(player, ent->number);
 
 	bestAia = AI_PrepBestAction(player, ent);
 
@@ -921,7 +921,7 @@ void AI_Run (void)
 
 			/* nothing left to do, request endround */
 			if (j >= globals.num_edicts) {
-				G_ClientEndRound(player, QUIET);
+				G_ClientEndRound(player);
 				player->pers.last = g_edicts + globals.num_edicts;
 			}
 			return;

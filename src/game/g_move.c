@@ -183,13 +183,12 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
-	const qboolean quiet = G_IsAIPlayer(player);
 
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	oldState = 0;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT, quiet))
+	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT))
 		return;
 
 	/* calculate move table */

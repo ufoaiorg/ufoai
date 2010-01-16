@@ -219,12 +219,11 @@ static int G_ActorTUReservations (edict_t *ent)
  * @param[in] tx x position where you want the item to go in the destination container
  * @param[in] ty y position where you want the item to go in the destination container
  * @param[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
- * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
 void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
-		int ty, qboolean checkaction, qboolean quiet)
+		int ty, qboolean checkaction)
 {
 	player_t *player;
 	edict_t *floor;
@@ -233,13 +232,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	item_t item;
 	int mask;
 	inventory_action_t ia;
-	int msglevel;
 	invList_t fItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
 
 	player = G_PLAYER_FROM_ENT(ent);
-	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	assert(fItem);
 	assert(fItem->item.t);
@@ -254,7 +251,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
+	if (checkaction && !G_ActionCheck(player, ent, 1))
 		return;
 
 	/* "get floor ready" - searching for existing floor-edict */
@@ -297,10 +294,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		/* No action possible - abort */
 		return;
 	case IA_NOTIME:
-		G_ClientPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		G_ClientPrintf(player, msglevel,
+		G_ClientPrintf(player, PRINT_HUD,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
@@ -399,10 +396,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
  * @brief Reload weapon with actor.
  * @param[in] ent Pointer to an actor reloading weapon.
  * @param[in] st Reloading weapon in right or left hand.
- * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa AI_ActorThink
  */
-void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)
+void G_ActorReload (edict_t* ent, shoot_types_t st)
 {
 	invList_t *ic;
 	invList_t *icFinal;
@@ -452,5 +448,5 @@ void G_ActorReload (edict_t* ent, shoot_types_t st, qboolean quiet)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue, quiet);
+		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
 }

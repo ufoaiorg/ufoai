@@ -741,7 +741,7 @@ static int AIL_reload (lua_State *L)
 	} else
 		weap = gi.csi->idRight; /* Default to right hand. */
 
-	G_ActorReload(AIL_ent, weap, QUIET);
+	G_ActorReload(AIL_ent, weap);
 	return 0;
 }
 
