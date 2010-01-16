@@ -2406,7 +2406,15 @@ static void B_BuildingConstructionFinished_f (void)
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		building_t *building = &ccs.buildings[base->idx][i];
-		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+
+		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
+			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+
+			if (building->onConstruct[0] != '\0') {
+				base->buildingCurrent = building;
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
+			}
+		}
 	}
 	/* update menu */
 	B_SelectBase(base);
