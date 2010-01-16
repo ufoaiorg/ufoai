@@ -184,12 +184,12 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 	qboolean autoCrouchRequired = qfalse;
 	byte crouchingState;
 
-	crouchingState = G_IsCrouched(ent) ? 1 : 0;
-	oldState = 0;
-
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT))
 		return;
+
+	crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	oldState = 0;
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
@@ -262,10 +262,6 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			crouchFlag = 0;
 			PosAddDV(ent->pos, crouchFlag, dv);
 
-			/* link it at new position - this must be done for every edict
-			 * movement - to let the server know about it. */
-			gi.LinkEdict(ent);
-
 			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
 				if (!(status & VIS_STOP))
 					G_EventActorTurn(ent);
@@ -299,6 +295,10 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				pointTrace[2] += PLAYER_MIN;
 
 				contentFlags = gi.PointContents(pointTrace);
+
+				/* link it at new position - this must be done for every edict
+				 * movement - to let the server know about it. */
+				gi.LinkEdict(ent);
 
 				/* Only the PHALANX team has these stats right now. */
 				if (ent->chr.scoreMission) {
