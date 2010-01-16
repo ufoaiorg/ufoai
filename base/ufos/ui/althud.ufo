@@ -559,12 +559,15 @@ window althud extends ahud
 			pos		"768 100"
 			size	"256 512"
 			align	LAYOUTALIGN_RIGHT
+			ghost	true
 		}
 		
 		pic bar_right
 		{
 			image		althud/bar_right
 			pos			"0 0"
+			excluderect	{ pos	"0 0"	size	"96 512" }
+			excluderect	{ pos	"0 473"	size	"192 39" }
 		}
 
 		model right_actor
