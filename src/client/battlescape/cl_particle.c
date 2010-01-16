@@ -842,12 +842,8 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (p->physics) {
 		/** @todo don't do this every frame */
 		trace_t tr;
-		const int oldLevel = cl_worldlevel->integer;
 
-		/* we have to update the worldlevel to let the trace work */
-		cl_worldlevel->integer = cl.mapMaxLevel - 1;
-		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
-		cl_worldlevel->integer = oldLevel;
+		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {

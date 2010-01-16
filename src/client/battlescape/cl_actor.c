@@ -2093,7 +2093,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	trace_t tr;
-	int oldLevel, i;
+	int i;
 	float d;
 	qboolean crossNo;
 	le_t *le;
@@ -2135,27 +2135,21 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 		crossNo = qfalse;
 	}
 
-	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
-	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = cl.mapMaxLevel - 1;
-
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
-	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT);
+	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
+	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT, cl.mapMaxLevel - 1);
 	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
 		VectorCopy(start, temp);
 
-	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
+	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 	if (tr.fraction < 1.0) {
 		d = VectorDist(temp, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
 		crossNo = qtrue;
 	}
-
-	/* switch level back to where it was again */
-	cl_worldlevel->integer = oldLevel;
 
 	/* spawn particles */
 	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
@@ -2185,7 +2179,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	float vz, dt;
 	vec3_t v0, ds, next;
 	trace_t tr;
-	int oldLevel;
 	qboolean obstructed = qfalse;
 	int i;
 	le_t *le;
@@ -2232,10 +2225,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	VectorScale(ds, 1.0 / GRENADE_PARTITIONS, ds);
 	ds[2] = 0;
 
-	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
-	oldLevel = cl_worldlevel->integer;
-	cl_worldlevel->integer = cl.mapMaxLevel - 1;
-
 	/* paint */
 	vz = v0[2];
 
@@ -2245,8 +2234,9 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		vz -= GRAVITY * dt;
 		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
 
-		/* trace for obstacles */
-		tr = CL_Trace(from, next, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
+		/* trace for obstacles. Switch up to top level, to make sure our trace
+		 * doesn't go through ceilings ... */
+		tr = CL_Trace(from, next, vec3_origin, vec3_origin, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 		/* something was hit */
 		if (tr.fraction < 1.0) {
@@ -2274,9 +2264,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 	}
 
 	hitProbability = 100 * CL_TargetingToHit(toPos);
-
-	/* switch level back to where it was again */
-	cl_worldlevel->integer = oldLevel;
 }
 
 /**
