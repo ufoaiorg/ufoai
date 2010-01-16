@@ -431,6 +431,9 @@ static qboolean GAME_Spawn (void)
 	if (GAME_GetCurrentType() == NULL || chrDisplayList.num == 0) {
 		const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+		memset(&invList, 0, sizeof(invList));
+		/* inventory structure switched/initialized */
+		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
 		GAME_GenerateTeam(teamDefID, ed);
 	}
 
@@ -449,7 +452,7 @@ static qboolean GAME_Spawn (void)
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list->initializebattlescape)
+	if (list && list->initializebattlescape)
 		list->initializebattlescape(team);
 }
 
