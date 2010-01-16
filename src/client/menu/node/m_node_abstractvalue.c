@@ -78,12 +78,12 @@ static void MN_CloneCvarOrFloat (const menuNode_t *source, menuNode_t *clone, co
 		if (clone->dynamic)
 			Mem_Free(*(char**)cloneData);
 		*(const char**)cloneData = *(const char*const*)sourceData;
+	} else {
+		/* clone float */
+		if (!clone->dynamic)
+			*cloneData = MN_AllocStaticFloat(1);
+		**cloneData = **sourceData;
 	}
-
-	/* clone float */
-	if (!clone->dynamic)
-		*cloneData = MN_AllocStaticFloat(1);
-	**cloneData = **sourceData;
 }
 
 /**
