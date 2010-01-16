@@ -1399,7 +1399,9 @@ float MN_GetReferenceFloat (const menuNode_t* const node, const void *ref)
 			/* get the cvar value */
 			return Cvar_GetValue(token + 5);
 		} else {
-			Sys_Error("MN_GetReferenceFloat: unknown reference");	/**< maybe this code is never used */
+			/** @todo maybe this code is never used */
+			Sys_Error("MN_GetReferenceFloat: unknown reference '%s' from node '%s'",
+					token, node->name);
 #if 0	/** @todo need a full rework */
 			menuNode_t *refNode;
 			const value_t *val;
