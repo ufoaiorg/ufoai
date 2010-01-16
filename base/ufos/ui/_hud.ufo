@@ -2,12 +2,16 @@
 // HUD INTERFACE
 // ==================
 
+window levelbuttons {
+	confunc updateLevelStatus { }
+}
+
 /**
  * @brief Define interface shared by all huds.
  * @note called "ahud" to be loaded before another huds
  * @todo rename the interface confuncs
  */
-window ahud {
+window ahud extends levelbuttons {
 
 	confunc hudselect { }
 	confunc huddeselect { }
