@@ -592,9 +592,6 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	/* clone all data */
 	*newNode = *node;
 	newNode->dynamic = isDynamic;
-	if (newNode->dynamic) {
-		newNode->dynamic = qtrue;
-	}
 
 	/* custom name */
 	if (newName != NULL) {
