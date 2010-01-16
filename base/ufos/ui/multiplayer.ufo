@@ -1023,8 +1023,7 @@ window multiplayer_wait
 
 	todo adminteam { pos "80 310" string "Feature: admin can change a player's team" }
 	todo disablefloor { pos "80 340" string "Disable unless levels" }
-	todo fixchat { pos "80 370" string "Fix irc/chat usability (last line on bottom and visible)" }
-	todo inviteothers { pos "80 400" string "Invite button only in inet mode, not in lan mode"}
+	todo inviteothers { pos "80 370" string "Invite button only in inet mode, not in lan mode"}
 	todo widescreen { pos "80 400" string "Center panels"}
 
 	panel floor {
