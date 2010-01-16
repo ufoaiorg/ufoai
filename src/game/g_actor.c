@@ -42,11 +42,10 @@ qboolean G_IsLivingActor (const edict_t *ent)
  */
 edict_t *G_GetActorByUCN (const int ucn, const int team)
 {
-	int i;
-	edict_t *ent;
+	edict_t *ent = NULL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsActor(ent) && team == ent->team && ent->chr.ucn == ucn)
+	while ((ent = G_EdictsGetNextLivingActor(ent)))
+		if (team == ent->team && ent->chr.ucn == ucn)
 			return ent;
 
 	return NULL;
