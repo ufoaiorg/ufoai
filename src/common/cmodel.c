@@ -1673,7 +1673,7 @@ void Grid_MoveMark (const routing_t *map, const int actorSize, pathing_t *path, 
 #endif
 
 	/* Find the number of TUs used to move in this direction. */
-	l = Grid_TUsUsed(dir);
+	l = Grid_GetTUsForDirection(dir);
 
 	/* If crouching then multiply by the crouching factor. */
 	if (crouchingState == 1)
@@ -2137,11 +2137,11 @@ pos_t Grid_StepUp (const routing_t *map, const int actorSize, const pos3_t pos, 
 
 
 /**
- * @brief Returns the maximum height of an obstruction that an actor can travel over.
+ * @brief Returns the amounts of TUs that are needed to perform one step into the given direction.
  * @param[in] dir the direction in which we are moving
  * @return The TUs needed to move there.
  */
-int Grid_TUsUsed (int dir)
+int Grid_GetTUsForDirection (int dir)
 {
 	assert(dir >= 0 && dir < PATHFINDING_DIRECTIONS);
 	return TUsUsed[dir];

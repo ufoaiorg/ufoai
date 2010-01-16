@@ -77,7 +77,7 @@ int Grid_Height(const routing_t *map, const int actorSize, const pos3_t pos);
 unsigned int Grid_Ceiling(const routing_t *map, const int actorSize, const pos3_t pos);
 int Grid_Floor(const routing_t *map, const int actorSize, const pos3_t pos);
 pos_t Grid_StepUp(const routing_t *map, const int actorSize, const pos3_t pos, const int dir);
-int Grid_TUsUsed(int dir);
+int Grid_GetTUsForDirection(int dir);
 int Grid_Filled(const routing_t *map, const int actorSize, pos3_t pos);
 pos_t Grid_Fall(const routing_t *map, const int actorSize, const pos3_t pos);
 void Grid_PosToVec(const routing_t *map, const int actorSize, const pos3_t pos, vec3_t vec);

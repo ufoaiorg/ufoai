@@ -282,7 +282,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			}
 
 			/* decrease TUs */
-			div = gi.TUsUsed(dir);
+			div = gi.GetTUsForDirection(dir);
 			truediv = div;
 			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
 				div *= TU_CROUCH_MOVING_FACTOR;

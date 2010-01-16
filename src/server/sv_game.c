@@ -451,7 +451,7 @@ void SV_InitGameProgs (void)
 	import.MoveLength = Grid_MoveLength;
 	import.MoveNext = Grid_MoveNext;
 	import.GridFloor = Grid_Floor;
-	import.TUsUsed = Grid_TUsUsed;
+	import.GetTUsForDirection = Grid_GetTUsForDirection;
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = Grid_RecalcRouting;
