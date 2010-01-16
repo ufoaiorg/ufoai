@@ -753,9 +753,11 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
 				/** @todo Special particles for stun attack (mind you that there is
 				 * electrical and gas/chemical stunning)? */
-				if (leVictim && fd->obj->dmgtype != csi.damStunGas)
-					LE_ActorBodyHit(leVictim, impact, le->dir);
-				CL_PlayActorSound(leVictim, SND_HURT);
+				if (leVictim) {
+					if (fd->obj->dmgtype != csi.damStunGas)
+						LE_ActorBodyHit(leVictim, impact, le->dir);
+					CL_PlayActorSound(leVictim, SND_HURT);
+				}
 			} else {
 				if (fd->impactSound[0]) {
 					s_sample_t *sample = S_LoadSample(fd->impactSound);
