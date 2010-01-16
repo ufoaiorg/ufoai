@@ -247,6 +247,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 		while (numdv > 0) {
 			/* A flag to see if we needed to change crouch state */
 			int crouchFlag;
+			const byte oldDir = ent->dir;
 
 			/* get next dv */
 			numdv--;
@@ -258,6 +259,8 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			status = G_ActorDoTurn(ent, dir);
 			if (status & VIS_STOP) {
 				autoCrouchRequired = qfalse;
+				if (ent->moveinfo.steps == 0)
+					tu += TU_TURN;
 				break;
 			}
 
@@ -269,6 +272,12 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
+				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
+				 * send the turn event if this is our first step */
+				if (oldDir != ent->dir && ent->moveinfo.steps == 0) {
+					G_EventActorTurn(ent);
+					tu += TU_TURN;
+				}
 				break;
 			}
 

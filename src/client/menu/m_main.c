@@ -307,7 +307,6 @@ void MN_Init (void)
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
 #endif
 
-
 	mn_sysPool = Mem_CreatePool("Client: UI");
 	mn_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
 	mn_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
