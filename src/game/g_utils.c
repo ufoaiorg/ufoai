@@ -63,6 +63,17 @@ edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 	return ent;
 }
 
+edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (ent->inuse && G_IsActor(ent))
+			break;
+	}
+	return ent;
+}
+
 /**
  * @brief Marks the edict as free
  * @sa G_Spawn

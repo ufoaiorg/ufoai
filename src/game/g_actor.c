@@ -44,7 +44,7 @@ edict_t *G_GetActorByUCN (const int ucn, const int team)
 {
 	edict_t *ent = NULL;
 
-	while ((ent = G_EdictsGetNextLivingActor(ent)))
+	while ((ent = G_EdictsGetNextActor(ent)))
 		if (team == ent->team && ent->chr.ucn == ucn)
 			return ent;
 
