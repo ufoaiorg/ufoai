@@ -217,19 +217,20 @@ static void G_MatchSendResults (int team)
 	int i, j = 0;
 
 	attacker = NULL;
+	ent = NULL;
 	/* Calculate new scores/skills for the soldiers. */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent)) {
-			if (!G_IsAI(ent))
-				G_UpdateCharacterSkills(&ent->chr);
-			else if (ent->team == team)
-				attacker = ent;
-		}
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (!G_IsAI(ent))
+			G_UpdateCharacterSkills(&ent->chr);
+		else if (ent->team == team)
+			attacker = ent;
+	}
 
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && G_IsLivingActor(ent) && ent->team != team)
+		ent = NULL;
+		while ((ent = G_EdictsGetNextLivingActor(ent)))
+			if (ent->team != team)
 				G_ActorDie(ent, STATE_DEAD, attacker);
 	}
 
