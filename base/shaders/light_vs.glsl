@@ -5,8 +5,8 @@ varying vec3 normal;
 
 
 /*
-LightVertex
-*/
+ * LightVertex
+ */
 void LightVertex(void){
 
 	// pass the interpolated normal and position along for dynamic lights

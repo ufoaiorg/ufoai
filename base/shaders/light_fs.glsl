@@ -8,8 +8,8 @@ varying vec3 normal;
 
 
 /*
-LightFragment
-*/
+ * LightFragment
+ */
 void LightFragment(in vec4 diffuse, in vec3 lightmap){
 
 	vec3 delta, dir, light = vec3(0.0);
