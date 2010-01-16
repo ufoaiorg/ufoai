@@ -256,6 +256,10 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 
 			/* turn around first */
 			status = G_ActorDoTurn(ent, dir);
+			if (status & VIS_STOP) {
+				autoCrouchRequired = qfalse;
+				break;
+			}
 
 			/* This is now a flag to indicate a change in crouching - we need this for
 			 * the stop in mid move call(s), because we need the updated entity position */
@@ -263,9 +267,6 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			PosAddDV(ent->pos, crouchFlag, dv);
 
 			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
-				if (!(status & VIS_STOP))
-					G_EventActorTurn(ent);
-
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				break;
