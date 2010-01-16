@@ -7,6 +7,7 @@ uniform vec3 LIGHTPOS;
 
 uniform sampler2D SAMPLER0;
 
+varying vec3 lightpos;
 
 /*
 main
@@ -17,7 +18,7 @@ void main(void){
 	vec4 diffuse = texture2D(SAMPLER0, gl_TexCoord[0].st);
 
 	// use the primary color and static light direction to resolve shade
-	vec3 lightdir = normalize(LIGHTPOS - point);
+	vec3 lightdir = normalize(lightpos - point);
 	float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
 
 	// add any dynamic lighting and yield a base fragment color

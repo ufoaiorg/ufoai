@@ -5,14 +5,20 @@
 
 uniform float OFFSET;
 
+uniform vec3 LIGHTPOS;
+
+varying vec3 lightpos;
 
 /*
-main
-*/
+ * main
+ */
 void main(void){
 
 	// mvp transform into clip space
 	gl_Position = ftransform();
+
+	// transform the static lighting direction into model space
+	lightpos = vec3(gl_ModelViewMatrix * vec4(LIGHTPOS, 1.0));
 
 	LightVertex();
 
