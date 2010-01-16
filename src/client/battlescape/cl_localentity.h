@@ -55,7 +55,9 @@ typedef struct le_s {
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
 	pos3_t pos, oldPos, newPos;		/**< position on the grid */
-	int dir;				/**< the current dir the le is facing into */
+	int dir;				/**< the current dir the le is facing into. Beware, this can either
+							 * be an index in the bytedirs array or an index for the angles
+							 * array of the le */
 
 	int TU, maxTU;				/**< time units */
 	int morale, maxMorale;		/**< morale value - used for soldier panic and the like */

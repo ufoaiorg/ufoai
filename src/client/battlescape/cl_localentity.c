@@ -731,7 +731,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	dist = VectorLength(delta);
 
 	VecToAngles(delta, le->ptl->angles);
-	/* direction */
+	/* direction - bytedirs index */
 	le->dir = normal;
 	le->fd = fd;
 
@@ -900,7 +900,8 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	}
 
 	le->endTime = cl.time + dt;
-	le->dir = 5;				/* direction (0,0,1) */
+	/* direction - bytedirs index (0,0,1) */
+	le->dir = 5;
 	le->fd = fd;
 	assert(fd);
 	LE_SetThink(le, LET_Projectile);
