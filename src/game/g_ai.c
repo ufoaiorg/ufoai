@@ -34,10 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spread)
 {
-	edict_t *check;
+	edict_t *check = NULL;
 	vec3_t dtarget, dcheck, back;
 	float cosSpread;
-	int i;
 
 	/* spread data */
 	if (spread < 1.0)
@@ -48,8 +47,8 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	VectorNormalize(dtarget);
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && G_IsLivingActor(check) && ent != check && check->team == ent->team) {
+	while ((check = entities_getNextLivingActor(check))) {
+		if (ent != check && check->team == ent->team) {
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
 			if (DotProduct(dtarget, dcheck) > 0.0) {
@@ -60,6 +59,7 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 					return qtrue;
 			}
 		}
+	}
 
 	/* no ally in danger */
 	return qfalse;

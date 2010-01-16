@@ -98,15 +98,15 @@ void G_ClientPrintf (const player_t *player, int printLevel, const char *fmt, ..
  */
 void G_GiveTimeUnits (int team)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
+	while ((ent = entities_getNextLivingActor(ent))) {
+		if (ent->team == team) {
 			ent->state &= ~STATE_DAZED;
 			ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
 			G_SendStats(ent);
 		}
+	}
 }
 
 void G_SendState (unsigned int playerMask, const edict_t *ent)

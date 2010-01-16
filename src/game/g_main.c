@@ -119,6 +119,37 @@ cvar_t *difficulty;
 static invList_t invChain[MAX_INVLIST];
 
 /**
+ * @brief A set of functions to encapsulate the access to the list of entities
+ * @note only happens when a new game/map is started
+ */
+edict_t* entities_getNext(edict_t* lastEnt)
+{
+	edict_t* endOfEnts = &g_edicts[globals.num_edicts];
+
+	if (!lastEnt)
+		lastEnt = g_edicts;
+	assert(lastEnt >= g_edicts);
+	assert(lastEnt < endOfEnts);
+
+	edict_t* ent = lastEnt;
+	ent++;
+	if (ent >= endOfEnts)
+		return NULL;
+	else
+		return ent;
+}
+
+edict_t* entities_getNextLivingActor(edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = entities_getNext(ent))) {
+		if (ent->inuse && G_IsLivingActor(ent))
+			break;
+	}
+	return ent;
+}
+/**
  * @brief This will be called when the game library is first loaded
  * @note only happens when a new game/map is started
  */
