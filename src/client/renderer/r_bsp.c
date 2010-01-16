@@ -190,7 +190,11 @@ void R_DrawBrushModel (const entity_t * e)
 	R_ShiftLights(e->origin);
 
 	glPushMatrix();
-	R_TransformForEntity(e);
+
+	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
+	glRotatef(e->angles[YAW], 0, 0, 1);
+	glRotatef(e->angles[PITCH], 0, 1, 0);
+	glRotatef(e->angles[ROLL], 1, 0, 0);
 
 	R_DrawBspModelSurfaces(e, modelorg);
 
