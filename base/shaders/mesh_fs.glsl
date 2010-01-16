@@ -9,15 +9,16 @@ uniform sampler2D SAMPLER0;
 
 varying vec3 lightpos;
 
+
 /*
-main
-*/
+ * main
+ */
 void main(void){
 
 	// sample the diffuse texture, honoring the parallax offset
 	vec4 diffuse = texture2D(SAMPLER0, gl_TexCoord[0].st);
 
-	// use the primary color and static light direction to resolve shade
+	// use the static lighting direction to resolve a shade
 	vec3 lightdir = normalize(lightpos - point);
 	float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
 
