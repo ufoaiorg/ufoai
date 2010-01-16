@@ -615,7 +615,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		if (*name[0] == '*')
+		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
 		model = CM_InlineModel(*name);
 		assert(model);
@@ -713,7 +713,7 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		if (*name[0] == '*')
+		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
 		model = CM_InlineModel(*name);
 		assert(model);
@@ -778,7 +778,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
-		if (*name[0] == '*')
+		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
 		model = CM_InlineModel(*name);
 		assert(model);
