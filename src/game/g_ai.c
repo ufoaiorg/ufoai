@@ -119,14 +119,13 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 
 		/* see if there are enemies */
 		while ((check = G_EdictsGetNextLivingActor(check))) {
+			float actorVis;
 			/* don't check for aliens */
 			if (check->team == ent->team)
 				continue;
 			/* check whether the origin of the enemy is inside the
 			 * AI actors view frustum */
-			float actorVis;
-			qboolean frustum = G_FrustumVis(check, ent->origin);
-			if (!frustum)
+			if (!G_FrustumVis(check, ent->origin))
 				continue;
 			/* check whether the enemy is close enough to change the state */
 			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
@@ -161,14 +160,13 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 
 	/* see if we are very well visible by an enemy */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
+		float actorVis;
 		/* don't check for civilians or aliens */
 		if (check->team == ent->team || G_IsCivilian(check))
 			continue;
 		/* check whether the origin of the enemy is inside the
 		 * AI actors view frustum */
-		float actorVis;
-		qboolean frustum = G_FrustumVis(check, ent->origin);
-		if (!frustum)
+		if (!G_FrustumVis(check, ent->origin))
 			continue;
 		/* check whether the enemy is close enough to change the state */
 		if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
