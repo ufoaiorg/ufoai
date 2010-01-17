@@ -1243,8 +1243,8 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
 
 /**
  * @brief Searches for the first occurrence of a given string
- * @return true if the string is found, otherwise false
- * @note if string is @c NULL, the function returns false
+ * @return the linkedList_t pointer if the string is found, otherwise @c NULL
+ * @note if string is @c NULL, the function returns @c NULL
  * @sa LIST_AddString
  */
 const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)

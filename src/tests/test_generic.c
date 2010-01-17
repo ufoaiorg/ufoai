@@ -89,6 +89,29 @@ static void testConstInt (void)
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable6"));
 }
 
+
+static void testLinkedList (void)
+{
+	linkedList_t *list = NULL;
+	const char* data = "SomeDataForTheLinkedList";
+	const size_t length = strlen(data);
+	linkedList_t *entry;
+	const linkedList_t *entry2;
+	const char *returnedData;
+
+	entry = LIST_Add(&list, (const byte*)data, length);
+	CU_ASSERT_EQUAL(LIST_Count(list), 1);
+	CU_ASSERT_TRUE(entry != NULL);
+	returnedData = LIST_GetByIdx(list, 0);
+	CU_ASSERT_TRUE(returnedData != NULL);
+	entry2 = LIST_ContainsString(list, returnedData);
+	CU_ASSERT_TRUE(entry2 != NULL);
+	CU_ASSERT_EQUAL((const void*)entry2->data, (const void*)returnedData);
+	CU_ASSERT_STRING_EQUAL(entry2->data, returnedData);
+	LIST_Remove(&list, entry);
+	CU_ASSERT_EQUAL(LIST_Count(list), 0);
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -99,6 +122,9 @@ int UFO_AddGenericTests (void)
 
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(GenericSuite, testConstInt) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testLinkedList) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
