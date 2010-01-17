@@ -937,6 +937,19 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 }
 
 /**
+ * @brief Will set the vector for the geoscape position
+ * @param vector[out] The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
+ * @param objectPos[in] The position vector of the object to transform.
+ */
+static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const vec2_t objectPos)
+{
+	if (cl_3dmap->integer)
+		VectorSet(vector, objectPos[0], -objectPos[1], 0);
+	else
+		Vector2Set(vector, objectPos[0], objectPos[1]);
+}
+
+/**
  * @brief center to a mission
  */
 static void MAP_GetMissionAngle (float *vector, int id)
@@ -949,12 +962,8 @@ static void MAP_GetMissionAngle (float *vector, int id)
 		mission = (mission_t *)list->data;
 		if (missionID == id) {
 			assert(mission);
-			if (cl_3dmap->integer)
-				VectorSet(vector, mission->pos[0], -mission->pos[1], 0);
-			else
-				Vector2Set(vector, mission->pos[0], mission->pos[1]);
-			MAP_ResetAction();
-			ccs.selectedMission = mission;
+			MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
+			MAP_SelectMission(mission);
 			return;
 		}
 	}
@@ -971,12 +980,8 @@ static void MAP_GetUFOAngle (float *vector, int idx)
 		if (aircraft->idx != idx)
 			continue;
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
-			if (cl_3dmap->integer)
-				VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
-			else
-				Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
-			MAP_ResetAction();
-			ccs.selectedUFO = aircraft;
+			MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
+			MAP_SelectUFO(aircraft);
 			return;
 		}
 	}
@@ -1057,21 +1062,6 @@ static void MAP_SelectObject_f (void)
 }
 
 /**
-=======
- * @brief Will set the vector for the geoscape position
- * @param vector[out] The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
- * @param objectPos[in] The position vector of the object to transform.
- */
-static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const vec2_t objectPos)
-{
-	if (cl_3dmap->integer)
-		VectorSet(vector, objectPos[0], -objectPos[1], 0);
-	else
-		Vector2Set(vector, objectPos[0], objectPos[1]);
-}
-
-/**
->>>>>>> .r28138
  * @brief Returns position of the model corresponding to centerOnEventIdx.
  * @param[out] vector Latitude and longitude of the model (finalAngle[2] is always 0).
  * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
@@ -1104,10 +1094,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* if there's nothing to center the view on, just go to 0,0 pos */
 	if (maxEventIdx < 0) {
-		if (cl_3dmap->integer)
-			VectorSet(vector, 0, 0, 0);
-		else
-			Vector2Set(vector, 0, 0);
+		MAP_ConvertObjectPositionToGeoscapePosition(vector, vec2_origin);
 		return;
 	}
 
