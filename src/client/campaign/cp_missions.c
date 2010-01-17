@@ -638,6 +638,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_BUILDING:
 		return "geoscape/mission";
 	case INTERESTCATEGORY_ALIENBASE:
+		/** @todo we have two different alienbase models */
 		return "geoscape/alienbase";
 	/* Should not be reached, these mission categories are not drawn on geoscape */
 	case INTERESTCATEGORY_BASE_ATTACK:
