@@ -563,10 +563,12 @@ static void GAME_Exit_f (void)
  */
 void GAME_Frame (void)
 {
+	const gameTypeList_t *list;
+
 	if (cls.gametype == GAME_NONE)
 		return;
 
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	list = GAME_GetCurrentType();
 	if (list && list->frame)
 		list->frame();
 }
