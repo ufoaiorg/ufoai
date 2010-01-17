@@ -138,8 +138,8 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 static void G_KillTeam_f (void)
 {
 	/* default is to kill all teams */
-	int teamToKill = -1, i;
-	edict_t *ent;
+	int teamToKill = -1;
+	edict_t *ent = NULL;
 
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() == 2)
@@ -147,14 +147,13 @@ static void G_KillTeam_f (void)
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent)) {
-			if (teamToKill >= 0 && ent->team != teamToKill)
-				continue;
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (teamToKill >= 0 && ent->team != teamToKill)
+			continue;
 
-			/* die */
-			G_ActorDie(ent, STATE_DEAD, NULL);
-		}
+		/* die */
+		G_ActorDie(ent, STATE_DEAD, NULL);
+	}
 
 	/* check for win conditions */
 	G_MatchEndCheck();
@@ -166,26 +165,25 @@ static void G_KillTeam_f (void)
 static void G_StunTeam_f (void)
 {
 	/* default is to kill all teams */
-	int teamToKill = -1, i;
-	edict_t *ent;
+	int teamToKill = -1;
+	edict_t *ent = NULL;
 
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() == 2)
 		teamToKill = atoi(gi.Cmd_Argv(1));
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent)) {
-			if (teamToKill >= 0 && ent->team != teamToKill)
-				continue;
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (teamToKill >= 0 && ent->team != teamToKill)
+			continue;
 
-			/* die */
-			G_ActorDie(ent, STATE_STUN, NULL);
+		/* die */
+		G_ActorDie(ent, STATE_STUN, NULL);
 
-			if (teamToKill == TEAM_ALIEN)
-				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
-			else
-				level.num_stuns[TEAM_ALIEN][teamToKill]++;
-		}
+		if (teamToKill == TEAM_ALIEN)
+			level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
+		else
+			level.num_stuns[TEAM_ALIEN][teamToKill]++;
+	}
 
 	/* check for win conditions */
 	G_MatchEndCheck();
@@ -198,8 +196,8 @@ static void G_StunTeam_f (void)
 static void G_ListMissionScore_f (void)
 {
 	int team = -1;
-	edict_t *ent;
-	int entIdx, i, j;
+	edict_t *ent = NULL;
+	int i, j;
 
 	/* With a parameter we will be able to get the info for a specific team */
 	if (gi.Cmd_Argc() == 2) {
@@ -209,81 +207,79 @@ static void G_ListMissionScore_f (void)
 		return;
 	}
 
-	for (entIdx = 0, ent = g_edicts; entIdx < globals.num_edicts; entIdx++, ent++) {
-		if (ent->inuse && G_IsLivingActor(ent)) {
-			if (team >= 0 && ent->team != team)
-				continue;
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (team >= 0 && ent->team != team)
+			continue;
 
-			assert(ent->chr.scoreMission);
+		assert(ent->chr.scoreMission);
 
-			gi.dprintf("Soldier: %s\n", ent->chr.name);
+		gi.dprintf("Soldier: %s\n", ent->chr.name);
 
-			/* ===================== */
-			gi.dprintf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
+		/* ===================== */
+		gi.dprintf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
 
-			gi.dprintf("  Kills:");
-			for (i = 0; i < KILLED_NUM_TYPES; i++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->kills[i]);
-			}
-			gi.dprintf("\n");
-
-			gi.dprintf("  Stuns:");
-			for (i = 0; i < KILLED_NUM_TYPES; i++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->stuns[i]);
-			}
-			gi.dprintf("\n");
-
-			/* ===================== */
-			gi.dprintf("  Fired:");
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->fired[i]);
-			}
-			gi.dprintf("\n");
-
-			gi.dprintf("  Hits:\n");
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				gi.dprintf("    Skill%i: ",i);
-				for (j = 0; j < KILLED_NUM_TYPES; j++) {
-					gi.dprintf(" %i", ent->chr.scoreMission->hits[i][j]);
-				}
-				gi.dprintf("\n");
-			}
-
-			/* ===================== */
-			gi.dprintf("  Fired Splash:");
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->firedSplash[i]);
-			}
-			gi.dprintf("\n");
-
-			gi.dprintf("  Hits Splash:\n");
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				gi.dprintf("    Skill%i: ",i);
-				for (j = 0; j < KILLED_NUM_TYPES; j++) {
-					gi.dprintf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
-				}
-				gi.dprintf("\n");
-			}
-
-			gi.dprintf("  Splash Damage:\n");
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				gi.dprintf("    Skill%i: ",i);
-				for (j = 0; j < KILLED_NUM_TYPES; j++) {
-					gi.dprintf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
-				}
-				gi.dprintf("\n");
-			}
-
-			/* ===================== */
-			gi.dprintf("  Kills per skill:");
-			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->skillKills[i]);
-			}
-			gi.dprintf("\n");
-
-			/* ===================== */
-			gi.dprintf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
+		gi.dprintf("  Kills:");
+		for (i = 0; i < KILLED_NUM_TYPES; i++) {
+			gi.dprintf(" %i", ent->chr.scoreMission->kills[i]);
 		}
+		gi.dprintf("\n");
+
+		gi.dprintf("  Stuns:");
+		for (i = 0; i < KILLED_NUM_TYPES; i++) {
+			gi.dprintf(" %i", ent->chr.scoreMission->stuns[i]);
+		}
+		gi.dprintf("\n");
+
+		/* ===================== */
+		gi.dprintf("  Fired:");
+		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			gi.dprintf(" %i", ent->chr.scoreMission->fired[i]);
+		}
+		gi.dprintf("\n");
+
+		gi.dprintf("  Hits:\n");
+		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			gi.dprintf("    Skill%i: ",i);
+			for (j = 0; j < KILLED_NUM_TYPES; j++) {
+				gi.dprintf(" %i", ent->chr.scoreMission->hits[i][j]);
+			}
+			gi.dprintf("\n");
+		}
+
+		/* ===================== */
+		gi.dprintf("  Fired Splash:");
+		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			gi.dprintf(" %i", ent->chr.scoreMission->firedSplash[i]);
+		}
+		gi.dprintf("\n");
+
+		gi.dprintf("  Hits Splash:\n");
+		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			gi.dprintf("    Skill%i: ",i);
+			for (j = 0; j < KILLED_NUM_TYPES; j++) {
+				gi.dprintf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
+			}
+			gi.dprintf("\n");
+		}
+
+		gi.dprintf("  Splash Damage:\n");
+		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			gi.dprintf("    Skill%i: ",i);
+			for (j = 0; j < KILLED_NUM_TYPES; j++) {
+				gi.dprintf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
+			}
+			gi.dprintf("\n");
+		}
+
+		/* ===================== */
+		gi.dprintf("  Kills per skill:");
+		for (i = 0; i < SKILL_NUM_TYPES; i++) {
+			gi.dprintf(" %i", ent->chr.scoreMission->skillKills[i]);
+		}
+		gi.dprintf("\n");
+
+		/* ===================== */
+		gi.dprintf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
 	}
 }
 
@@ -292,12 +288,11 @@ static void G_ListMissionScore_f (void)
  */
 void G_InvList_f (const player_t *player)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 
 	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && ent->team == player->pers.team) {
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (ent->team == player->pers.team) {
 			int container;
 			gi.dprintf("actor: '%s'\n", ent->chr.name);
 
@@ -316,6 +311,7 @@ void G_InvList_f (const player_t *player)
 				}
 			}
 		}
+	}
 }
 
 static void G_TouchEdict_f (void)
