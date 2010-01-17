@@ -1541,21 +1541,80 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 
 /**
  * @brief Assembles a string for a mission that is on the geoscape
- * @param mission The mission to get the description for
- * @return A pointer to a mission description. This might be a static pointer. So make sure, that you
- * save the value somewhere before calling this a second time.
+ * @param[in] mission The mission to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetAircraftText
+ * @sa MAP_GetUFOText
  */
-static const char *MAP_GetMissionText (const mission_t *mission)
+static const char *MAP_GetMissionText (char *buffer, size_t size, const mission_t *mission)
 {
-	return va("%s: %s", CP_MissionToTypeString(mission), mission->location);
+	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
+		CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
+	return buffer;
 }
 
+/**
+ * @brief Assembles a string for an aircraft that is on the geoscape
+ * @param[in] aircraft The aircraft to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetUFOText
+ * @sa MAP_GetMissionText
+ */
+static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraft_t *aircraft)
+{
+	if (aircraft->status == AIR_UFO) {
+		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
+		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
+		Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
+	} else {
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
+		if (aircraft->status != AIR_IDLE) {
+			const float distance = GetDistanceOnGlobe(aircraft->pos,
+					aircraft->route.point[aircraft->route.numPoints - 1]);
+			Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
+		}
+	}
+	return buffer;
+}
+
+/**
+ * @brief Assembles a string for an UFO that is on the geoscape
+ * @param[in] ufo The UFO to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetAircraftText
+ * @sa MAP_GetMissionText
+ */
+static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
+{
+	Com_sprintf(buffer, size, "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
+	Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+	return buffer;
+}
+
+/**
+ * @brief Will add missions and UFOs to the geoscape dock panel
+ */
 void MAP_UpdateGeoscapeDock (void)
 {
 	const linkedList_t *list = ccs.missions;
-	int aircraftIdx;
+	int ufoIDX;
 	int missionID = 0;
-	qboolean oneUFOVisible = qfalse;
+	char buf[MAX_SMALLMENUTEXTLEN];
 
 	MN_ExecuteConfunc("clean_geoscape_object");
 
@@ -1564,25 +1623,18 @@ void MAP_UpdateGeoscapeDock (void)
 		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
-		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"", missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetMissionText(ms));
-	}
-
-	/* check if at least 1 UFO is visible */
-	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
-		const aircraft_t const *aircraft = &ccs.ufos[aircraftIdx];
-		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
-			oneUFOVisible = qtrue;
-			break;
-		}
+		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
+				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetMissionText(buf, sizeof(buf), ms));
 	}
 
 	/* draws ufos */
-	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
-		aircraft_t *aircraft = &ccs.ufos[aircraftIdx];
-		if (!oneUFOVisible || !UFO_IsUFOSeenOnGeoscape(aircraft))
+	for (ufoIDX = 0; ufoIDX < ccs.numUFOs; ufoIDX++) {
+		aircraft_t *ufo = &ccs.ufos[ufoIDX];
+		if (!UFO_IsUFOSeenOnGeoscape(ufo))
 			continue;
 
-		MN_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"", aircraftIdx, aircraftIdx, aircraft->model, aircraft->name);
+		MN_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
+				ufoIDX, ufoIDX, ufo->model, MAP_GetUFOText(buf, sizeof(buf), ufo));
 	}
 }
 
@@ -1767,9 +1819,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  */
 void MAP_DrawMap (const menuNode_t* node)
 {
-	float distance;
 	vec2_t pos;
-	qboolean disableSolarRender = qfalse;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	MN_GetNodeAbsPos(node, pos);
@@ -1782,6 +1832,7 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
+		qboolean disableSolarRender = qfalse;
 		if (ccs.zoom > cl_mapzoommax->value)
 			disableSolarRender = qtrue;
 		if (smoothRotation)
@@ -1828,48 +1879,17 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (ccs.selectedMission) {
-		static char t[MAX_SMALLMENUTEXTLEN];
-		Com_sprintf(t, lengthof(t), _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
-			CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
-		MN_RegisterText(TEXT_STANDARD, t);
+		MN_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
 	} else if (ccs.selectedAircraft) {
 		const aircraft_t *aircraft = ccs.selectedAircraft;
-		switch (aircraft->status) {
-		case AIR_HOME:
-		case AIR_REFUEL:
+		if (AIR_IsAircraftInBase(aircraft)) {
+			MN_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
-			break;
-		case AIR_UFO:
-			assert(aircraft->aircraftTarget);
-			distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
-			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
-			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
-			MN_RegisterText(TEXT_STANDARD, textStandard);
-			break;
-		default:
-			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
-			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
-			if (aircraft->status != AIR_IDLE) {
-				distance = GetDistanceOnGlobe(aircraft->pos,
-						aircraft->route.point[aircraft->route.numPoints - 1]);
-				Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
-			}
-			MN_RegisterText(TEXT_STANDARD, textStandard);
-			break;
+			return;
 		}
+		MN_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
 	} else if (ccs.selectedUFO) {
-		const aircraft_t *ufo = ccs.selectedUFO;
-		Com_sprintf(textStandard, sizeof(textStandard), "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
-		Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-		MN_RegisterText(TEXT_STANDARD, textStandard);
+		MN_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
