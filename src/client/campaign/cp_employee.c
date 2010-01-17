@@ -1189,7 +1189,7 @@ qboolean E_SaveXML (mxml_node_t *p)
 		int i;
 		mxml_node_t *snode = mxml_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
-		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable("saveEmployeeType", j));
+		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, j));
 		for (i = 0; i < ccs.numEmployees[j]; i++) {
 			const employee_t *e = &ccs.employees[j][i];
 			mxml_node_t * chrNode;
