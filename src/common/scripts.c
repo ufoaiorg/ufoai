@@ -79,9 +79,11 @@ qboolean Com_GetConstInt (const char *name, int *value)
 	/* if the alias already exists */
 	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
-		if (!strncmp(name, a->name, MAX_CONSTNAMEINT_NAME)) {
-			*value = a->value;
-			return qtrue;
+		if (!strcmp(variable, a->name)) {
+			if (!a->fullname || variable == name || !strcmp(a->fullname, name)) {
+				*value = a->value;
+				return qtrue;
+			}
 		}
 	}
 

@@ -64,17 +64,29 @@ static int UFO_CleanSuiteGeneric (void)
 
 static void testConstInt (void)
 {
-	Com_RegisterConstInt("namespace::variable", 1);
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
+	int out;
 
 	Com_RegisterConstInt("namespace::variable", 1);
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
 
-	Com_RegisterConstInt("namespace::variable2", 1);
-	Com_RegisterConstInt("namespace::variable3", 1);
-	Com_RegisterConstInt("namespace::variable4", 1);
-	Com_RegisterConstInt("namespace::variable5", 1);
-	Com_RegisterConstInt("namespace::variable6", 1);
+	Com_RegisterConstInt("namespace::variable", 1);
+	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
+
+	Com_RegisterConstInt("namespace::variable2", 2);
+	Com_RegisterConstInt("namespace::variable3", 3);
+	Com_RegisterConstInt("namespace::variable4", 4);
+	Com_RegisterConstInt("namespace::variable5", 5);
+	Com_RegisterConstInt("namespace::variable6", 6);
+
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("namespace::variable2", &out));
+	CU_ASSERT_EQUAL(out, 2);
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("variable2", &out));
+	CU_ASSERT_EQUAL(out, 2);
+
+	CU_ASSERT_STRING_EQUAL(Com_GetConstVariable("namespace", 2), "variable2");
+
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable2"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable3"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable4"));
