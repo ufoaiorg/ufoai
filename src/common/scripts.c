@@ -127,6 +127,8 @@ qboolean Com_UnregisterConstVariable (const char *name)
 	com_constNameInt_t *a;
 	com_constNameInt_t *prev = NULL;
 
+	assert(strstr(name, "::") != NULL);
+
 	a = com_constNameInt;
 	while (a) {
 		if (a->fullname) {

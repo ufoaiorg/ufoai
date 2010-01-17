@@ -247,6 +247,7 @@ void INS_InitCallbacks (void)
 	INS_UpdateInsatallationLimit_f();
 	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	Cvar_Set("mn_installation_title", "");
+	Cvar_Set("mn_installation_type", "");
 }
 
 void INS_ShutdownCallbacks (void)
@@ -259,4 +260,5 @@ void INS_ShutdownCallbacks (void)
 	Cvar_Delete("mn_installation_count");
 	Cvar_Delete("mn_installation_title");
 	Cvar_Delete("mn_installation_max");
+	Cvar_Delete("mn_installation_type");
 }
