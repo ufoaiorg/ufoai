@@ -1958,6 +1958,8 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
 	/* Unselect the current selected mission if it's the same */
 	if (ccs.selectedMission == mission)
 		MAP_ResetAction();
+
+	MAP_UpdateGeoscapeDock();
 }
 
 /**

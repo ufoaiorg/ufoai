@@ -277,7 +277,6 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 	radar->ufos[radar->numUFOs] = UFO_NOT_SENSORED;
 
 	RADAR_DeactivateRadarOverlay();
-	MAP_UpdateGeoscapeDock();
 }
 
 /**
@@ -329,6 +328,8 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 			RADAR_NotifyUFORemovedFromOneRadar(&installation->radar, ufo, destroyed);
 		}
 	}
+
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
