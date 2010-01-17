@@ -1550,6 +1550,22 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
  */
 static const char *MAP_GetMissionText (char *buffer, size_t size, const mission_t *mission)
 {
+	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), mission->location,
+			CP_MissionToTypeString(mission), _(mission->mapDef->description));
+	return buffer;
+}
+
+/**
+ * @brief Assembles a short string for a mission that is on the geoscape
+ * @param[in] mission The mission to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetAircraftText
+ * @sa MAP_GetUFOText
+ */
+static const char *MAP_GetShortMissionText (char *buffer, size_t size, const mission_t *mission)
+{
 	Com_sprintf(buffer, size, _("%s (%s)\n%s"),
 			CP_MissionToTypeString(mission),
 			mission->location,
@@ -1626,7 +1642,7 @@ void MAP_UpdateGeoscapeDock (void)
 		if (!ms->onGeoscape)
 			continue;
 		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
-				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetMissionText(buf, sizeof(buf), ms));
+				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
 	}
 
 	/* draws ufos */
