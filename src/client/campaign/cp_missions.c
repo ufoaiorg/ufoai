@@ -622,13 +622,12 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	assert(mission->mapDef);
 
 	if (mission->crashed)
-		/** @todo Should be a special crashed UFO mission model */
-		return "geoscape/mission";
+		return "geoscape/ufocrash";
 
-	if (mission->mapDef->storyRelated && mission->category != INTERESTCATEGORY_ALIENBASE) {
+	if (mission->mapDef->storyRelated && mission->category != INTERESTCATEGORY_ALIENBASE)
 		/** @todo Should be a special story related mission model */
 		return "geoscape/mission";
-	}
+
 	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
 	/** @todo each category should have a its own model */
@@ -640,11 +639,12 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "geoscape/mission";
 	case INTERESTCATEGORY_ALIENBASE:
 		return "geoscape/alienbase";
-	case INTERESTCATEGORY_BASE_ATTACK:	/* Should not be reached, this mission category is not drawn on geoscape */
-	case INTERESTCATEGORY_SUPPLY:		/* Should not be reached, this mission category is not drawn on geoscape */
-	case INTERESTCATEGORY_INTERCEPT:	/* Should not be reached, this mission category is not drawn on geoscape */
-	case INTERESTCATEGORY_NONE:			/* Should not be reached, this mission category is not drawn on geoscape */
-	case INTERESTCATEGORY_MAX:			/* Should not be reached, this mission category is not drawn on geoscape */
+	/* Should not be reached, these mission categories are not drawn on geoscape */
+	case INTERESTCATEGORY_BASE_ATTACK:
+	case INTERESTCATEGORY_SUPPLY:
+	case INTERESTCATEGORY_INTERCEPT:
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
 		break;
 	}
 	Com_Error(ERR_DROP, "Unknown mission interest category");
