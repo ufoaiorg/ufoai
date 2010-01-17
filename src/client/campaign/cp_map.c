@@ -297,10 +297,9 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			Vector2Copy(pos, newBasePos);
 
-			CL_GameTimeStop();
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
-				Cmd_ExecuteString("mn_set_installation_title");
+				CL_GameTimeStop();
 				MN_PushWindow("popup_newinstallation", NULL);
 			}
 			return;
@@ -308,7 +307,6 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		break;
 	case MA_UFORADAR:
 		MN_PushWindow("popup_intercept_ufo", NULL);
-		/* if shoot down - we have a new crashsite mission if color != water */
 		break;
 	default:
 		break;

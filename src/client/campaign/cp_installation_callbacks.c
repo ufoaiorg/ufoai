@@ -33,6 +33,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../renderer/r_draw.h"
 
+ /**
+ * @brief Sets the title of the installation to a cvar to prepare the rename menu.
+ * @note it also assigns description text
+ */
+static void INS_SetInstallationTitle (void)
+{
+	const installationTemplate_t *insTemp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
+	char insName[MAX_VAR];
+	int i = 1;
+	int j;
+
+	do {
+		j = 0;
+		Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), i);
+		while (j <= ccs.numInstallations && strcmp(insName, ccs.installations[j++].name));
+	} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
+
+	Cvar_Set("mn_installation_title", insName);
+	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
+		MN_ResetData(TEXT_BUILDING_INFO);
+	else
+		MN_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
+}
+
 /**
  * @brief Select an installation when clicking on it on geoscape, or build a new installation.
  * @param[in] installation If this is @c NULL we want to build a new installation
@@ -54,6 +78,8 @@ void INS_SelectInstallation (installation_t *installation)
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
+
+			INS_SetInstallationTitle();
 		}
 	} else {
 		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
@@ -149,39 +175,9 @@ static void INS_SelectInstallation_f (void)
 	if (installationID >= 0 && installationID < ccs.numInstallations)
 		installation = INS_GetFoundedInstallationByIDX(installationID);
 	else
-		/* create a new base */
+		/* create a new installation */
 		installation = NULL;
 	INS_SelectInstallation(installation);
-}
-
-/**
- * @brief Sets the title of the installation to a cvar to prepare the rename menu.
- * @note it also assigns description text
- */
-static void INS_SetInstallationTitle_f (void)
-{
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", ccs.numInstallations);
-	if (ccs.numInstallations < B_GetInstallationLimit()) {
-		const installationTemplate_t *insTemp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
-		char insName[MAX_VAR];
-		int i = 1;
-		int j;
-
-		do {
-			j = 0;
-			Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), i);
-			while (j <= ccs.numInstallations && strcmp(insName, ccs.installations[j++].name));
-		} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
-
-		Cvar_Set("mn_installation_title", insName);
-		if (!insTemp || !insTemp->description || !strlen(insTemp->description))
-			MN_ResetData(TEXT_BUILDING_INFO);
-		else
-			MN_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
-	} else {
-		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopWindow(qfalse);		/* remove the new installation popup */
-	}
 }
 
 /**
@@ -222,7 +218,7 @@ static void INS_DestroyInstallation_f (void)
 	if (Cmd_Argc() < 3) {
 		char command[MAX_VAR];
 
-		Com_sprintf(command, sizeof(command), "mn_destroyinstallation %d 1; mn_pop;", installation->idx);
+		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; mn_pop;", installation->idx);
 		MN_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
 			command, _("Destroy"), _("Destroy installation"),
 			"mn_pop;", _("Cancel"), _("Forget it"),
@@ -242,27 +238,24 @@ static void INS_UpdateInsatallationLimit_f (void)
 
 void INS_InitCallbacks (void)
 {
-	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
-	Cmd_AddCommand("mn_build_installation", INS_BuildInstallation_f, NULL);
-	Cmd_AddCommand("mn_set_installation_title", INS_SetInstallationTitle_f, NULL);
+	Cmd_AddCommand("mn_installation_select", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
+	Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, NULL);
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
-	Cmd_AddCommand("mn_destroyinstallation", INS_DestroyInstallation_f, "Destroys an installation");
-	Cmd_AddCommand("mn_update_max_installations", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
+	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
+	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
 
 	INS_UpdateInsatallationLimit_f();
 	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	Cvar_Set("mn_installation_title", "");
 }
 
-/** @todo unify the names into mn_base_* */
 void INS_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("mn_select_installation");
-	Cmd_RemoveCommand("mn_build_installation");
-	Cmd_RemoveCommand("mn_set_installation_title");
+	Cmd_RemoveCommand("mn_installation_select");
+	Cmd_RemoveCommand("mn_installation_build");
 	Cmd_RemoveCommand("mn_installation_changename");
-	Cmd_RemoveCommand("mn_destroyinstallation");
-	Cmd_RemoveCommand("mn_update_max_installations");
+	Cmd_RemoveCommand("mn_installation_destroy");
+	Cmd_RemoveCommand("mn_installation_update_max_count");
 	Cvar_Delete("mn_installation_count");
 	Cvar_Delete("mn_installation_title");
 }

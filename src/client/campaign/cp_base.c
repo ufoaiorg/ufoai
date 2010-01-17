@@ -433,7 +433,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
 		break;
 	case B_COMMAND:
-		Cmd_ExecuteString("mn_update_max_installations");
+		Cmd_ExecuteString("mn_installation_update_max_count");
 		break;
 	default:
 		break;
@@ -460,7 +460,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
 		break;
 	case B_COMMAND:
-		Cmd_ExecuteString("mn_update_max_installations");
+		Cmd_ExecuteString("mn_installation_update_max_count");
 		break;
 	default:
 		break;
