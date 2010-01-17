@@ -258,4 +258,5 @@ void INS_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_installation_update_max_count");
 	Cvar_Delete("mn_installation_count");
 	Cvar_Delete("mn_installation_title");
+	Cvar_Delete("mn_installation_max");
 }
