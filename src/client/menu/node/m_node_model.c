@@ -465,7 +465,8 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	EXTRADATA(clone).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
+	if (!clone->dynamic)
+		EXTRADATA(clone).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
 static void MN_ModelNodeNew (menuNode_t *node)
