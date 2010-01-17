@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "save/save.h"
 
+#define SAVEGAME_EXTENSION "savx"
+
 typedef struct saveFileHeaderXML_s {
 	uint32_t version; /**< which savegame version */
 	uint32_t compressed; /**< is this file compressed via zlib */
@@ -137,7 +139,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	Q_strncpyz(filename, file, sizeof(filename));
 
 	/* open file */
-	FS_OpenFile(va("save/%s.xml", filename), &f, FILE_READ);
+	FS_OpenFile(va("save/%s.%s", filename, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (!f.f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		return qfalse;
@@ -158,7 +160,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	/* doing some header verification */
 	if (!SAV_VerifyXMLHeader(&header)) {
 		/* our header is not valid, we MUST abort loading the game! */
-		Com_Printf("The Header of the savegame '%s.xml' is corrupted. Loading aborted\n", filename);
+		Com_Printf("The Header of the savegame '%s.%s' is corrupted. Loading aborted\n", filename, SAVEGAME_EXTENSION);
 		Mem_Free(cbuf);
 		return qfalse;
 	}
@@ -264,7 +266,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	}
 
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
-	Com_sprintf(savegame, sizeof(savegame), "save/%s.xml", filename);
+	Com_sprintf(savegame, sizeof(savegame), "save/%s.%s", filename, SAVEGAME_EXTENSION);
 #ifdef DEBUG
 	Com_sprintf(savegame_debug, sizeof(savegame_debug), "save/%s.lint", filename);
 #endif
@@ -388,7 +390,7 @@ static void SAV_GameReadGameComment (const int idx)
 	saveFileHeader_t headerXML;
 	qFILE f;
 
-	FS_OpenFile(va("save/slot%i.xml", idx), &f, FILE_READ);
+	FS_OpenFile(va("save/slot%i.%s", idx, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (f.f || f.z) {
 		if (FS_Read(&headerXML, sizeof(headerXML), &f) != sizeof(headerXML))
 			Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
@@ -538,7 +540,7 @@ static void SAV_GameSaveNameCleanup_f (void)
 
 	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 
-	FS_OpenFile(va("save/slot%i.xml", slotID), &f, FILE_READ);
+	FS_OpenFile(va("save/slot%i.%s", slotID, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (!f.f && !f.z)
 		return;
 
@@ -582,7 +584,7 @@ static void SAV_GameQuickLoadInit_f (void)
 		return;
 	}
 
-	FS_OpenFile("save/slotquick.xml", &f, FILE_READ);
+	FS_OpenFile(va("save/slotquick.%s", SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (!f.f && !f.z)
 		MN_PopWindow(qfalse);
 	else
