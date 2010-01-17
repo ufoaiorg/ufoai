@@ -284,6 +284,9 @@
 		<Unit filename="..\..\src\tests\test_all.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tests\test_generic.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>

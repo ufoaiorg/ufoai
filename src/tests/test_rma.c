@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "CUnit/Basic.h"
-#include "test_rma.h"
+#include "test_generic.h"
 
 #include "../server/sv_rma.c"
 #include "../server/sv_init.c"
