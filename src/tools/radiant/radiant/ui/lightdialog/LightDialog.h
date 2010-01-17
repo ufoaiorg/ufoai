@@ -29,6 +29,8 @@ namespace ui
 
 			std::string _intensity;
 
+			bool _aborted;
+
 		private:
 
 			// Widget construction
@@ -71,6 +73,11 @@ namespace ui
 			 * a click to the ok button, and not if you close it or hit the cancel button
 			 */
 			std::string getIntensity ();
+
+			/**
+			 * @return true if the dialog was aborted by hitting the cancel button
+			 */
+			bool isAborted ();
 	};
 }
 

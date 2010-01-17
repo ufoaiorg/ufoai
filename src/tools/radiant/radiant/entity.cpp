@@ -365,8 +365,8 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	if (name == "light" || name == "light_spot") {
 		ui::LightDialog dialog;
 		dialog.show();
-		std::string intensity = dialog.getIntensity();
-		if (!intensity.empty()) {
+		if (!dialog.isAborted()) {
+			std::string intensity = dialog.getIntensity();
 			Vector3 color = dialog.getColor();
 			entity->setKeyValue("light", intensity);
 			entity->setKeyValue("_color", color.toString());
