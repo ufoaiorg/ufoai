@@ -64,6 +64,20 @@ static int UFO_CleanSuiteGeneric (void)
 
 static void testConstInt (void)
 {
+	const constListEntry_t list[] = {
+		{"namespace::power", 1},
+		{"namespace::speed", 2},
+		{"namespace::accuracy", 3},
+		{"namespace::mind", 4},
+		{"namespace::close", 5},
+		{"namespace::heavy", 6},
+		{"namespace::assault", 7},
+		{"namespace::sniper", 8},
+		{"namespace::explosive", 9},
+		{"namespace::hp", 10},
+
+		{NULL, -1}
+	};
 	int out;
 
 	Com_RegisterConstInt("namespace::variable", 1);
@@ -99,6 +113,15 @@ static void testConstInt (void)
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable4"));
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable5"));
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable6"));
+
+	Com_RegisterConstList(list);
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("sniper", &out));
+	CU_ASSERT_EQUAL(out, 8);
+
+	Com_UnregisterConstList(list);
+	out = 0;
+	CU_ASSERT_FALSE(Com_GetConstInt("sniper", &out));
 }
 
 
