@@ -1604,7 +1604,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
 {
 	Com_sprintf(buffer, size, "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
-	Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+	Q_strcat(buffer, va(_("Speed: %i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 	return buffer;
 }
 
