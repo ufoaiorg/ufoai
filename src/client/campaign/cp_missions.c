@@ -706,6 +706,7 @@ void CP_MissionRemoveFromGeoscape (mission_t *mission)
 
 	/* Notifications */
 	MAP_NotifyMissionRemoved(mission);
+	MAP_UpdateGeoscapeDock();
 	AIR_AircraftsNotifyMissionRemoved(mission);
 }
 
@@ -736,6 +737,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
+	MAP_UpdateGeoscapeDock();
 }
 
 /**

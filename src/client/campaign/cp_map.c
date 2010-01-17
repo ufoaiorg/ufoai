@@ -49,6 +49,8 @@ cvar_t *cl_mapzoommin;
 static cvar_t *debug_showInterest;
 #endif
 
+#define ZOOM_LIMIT	2.5f
+
 enum {
 	GEOSCAPE_IMAGE_MISSION,
 	GEOSCAPE_IMAGE_MISSION_SELECTED,
@@ -935,6 +937,128 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 }
 
 /**
+<<<<<<< .mine
+ * @brief center to a mission
+ */
+static void MAP_GetMissionAngle (float *vector, int id)
+{
+	int missionID = 0;
+	/* Cycle through missions */
+	const linkedList_t *list;
+	mission_t *mission = NULL;
+	for (list = ccs.missions ;list; list = list->next, missionID++) {
+		mission = (mission_t *)list->data;
+		if (missionID == id) {
+			assert(mission);
+			if (cl_3dmap->integer)
+				VectorSet(vector, mission->pos[0], -mission->pos[1], 0);
+			else
+				Vector2Set(vector, mission->pos[0], mission->pos[1]);
+			MAP_ResetAction();
+			ccs.selectedMission = mission;
+			return;
+		}
+	}
+}
+
+/**
+ * @brief center to an ufo
+ */
+static void MAP_GetUFOAngle (float *vector, int idx)
+{
+	aircraft_t *aircraft;
+	/* Cycle through UFO (only those visible on geoscape) */
+	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
+		if (aircraft->idx != idx)
+			continue;
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
+			if (cl_3dmap->integer)
+				VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
+			else
+				Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
+			MAP_ResetAction();
+			ccs.selectedUFO = aircraft;
+			return;
+		}
+	}
+}
+
+
+/**
+ * @brief Start center to the selected point
+ * @sa MAP_GetGeoscapeAngle
+ * @sa MAP_DrawMap
+ * @sa MAP3D_SmoothRotate
+ * @sa MAP_SmoothTranslate
+ */
+static void MAP_StartCenter (void)
+{
+	if (cl_3dmap->integer) {
+		/* case 3D geoscape */
+		vec3_t diff;
+
+		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+		smoothDeltaLength = VectorLength(diff);
+	} else {
+		/* case 2D geoscape */
+		vec2_t diff;
+
+		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
+		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
+		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
+		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
+		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
+		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+	}
+
+	smoothFinalZoom = ZOOM_LIMIT;
+	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
+	smoothRotation = qtrue;
+}
+
+/**
+ * @brief Center the view and select an object from the geoscape
+ */
+static void MAP_SelectObject_f (void)
+{
+	const char *type;
+	int idx;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <mission|ufo> <id>\n", Cmd_Argv(0));
+		return;
+	}
+
+	type = Cmd_Argv(1);
+	idx = atoi(Cmd_Argv(2));
+
+	if (cl_3dmap->integer) {
+		if (!strcmp(type, "mission"))
+			MAP_GetMissionAngle(smoothFinalGlobeAngle, idx);
+		else if (!strcmp(type, "ufo"))
+			MAP_GetUFOAngle(smoothFinalGlobeAngle, idx);
+		else {
+			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
+			return;
+		}
+	} else {
+		if (!strcmp(type, "mission"))
+			MAP_GetMissionAngle(smoothFinal2DGeoscapeCenter, idx);
+		else if (!strcmp(type, "ufo"))
+			MAP_GetUFOAngle(smoothFinal2DGeoscapeCenter, idx);
+		else {
+			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
+			return;
+		}
+	}
+	MAP_StartCenter();
+}
+
+/**
+=======
  * @brief Will set the vector for the geoscape position
  * @param vector[out] The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
  * @param objectPos[in] The position vector of the object to transform.
@@ -948,6 +1072,7 @@ static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const ve
 }
 
 /**
+>>>>>>> .r28138
  * @brief Returns position of the model corresponding to centerOnEventIdx.
  * @param[out] vector Latitude and longitude of the model (finalAngle[2] is always 0).
  * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
@@ -1074,7 +1199,6 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	}
 }
 
-#define ZOOM_LIMIT	2.5f
 /**
  * @brief Switch to next model on 2D and 3D geoscape.
  * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
@@ -1092,33 +1216,11 @@ void MAP_CenterOnPoint_f (void)
 
 	centerOnEventIdx++;
 
-	if (cl_3dmap->integer) {
-		/* case 3D geoscape */
-		vec3_t diff;
-
+	if (cl_3dmap->integer)
 		MAP_GetGeoscapeAngle(smoothFinalGlobeAngle);
-		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
-		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
-		smoothDeltaLength = VectorLength(diff);
-	} else {
-		/* case 2D geoscape */
-		vec2_t diff;
-
+	else
 		MAP_GetGeoscapeAngle(smoothFinal2DGeoscapeCenter);
-		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
-		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
-			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
-		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
-			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
-		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
-		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
-		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
-	}
-	smoothFinalZoom = ZOOM_LIMIT;
-
-	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
-
-	smoothRotation = qtrue;
+	MAP_StartCenter();
 }
 
 /**
@@ -1449,6 +1551,53 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+}
+
+/**
+ * @brief Assembles a string for a mission that is on the geoscape
+ * @param mission The mission to get the description for
+ * @return A pointer to a mission description. This might be a static pointer. So make sure, that you
+ * save the value somewhere before calling this a second time.
+ */
+static const char *MAP_GetMissionText (const mission_t *mission)
+{
+	return va("%s: %s", CP_MissionToTypeString(mission), mission->location);
+}
+
+void MAP_UpdateGeoscapeDock (void)
+{
+	const linkedList_t *list = ccs.missions;
+	int aircraftIdx;
+	int missionID = 0;
+	qboolean oneUFOVisible = qfalse;
+
+	MN_ExecuteConfunc("clean_geoscape_object");
+
+	/* draw mission pics */
+	for (; list; list = list->next, missionID++) {
+		const mission_t *ms = (mission_t *)list->data;
+		if (!ms->onGeoscape)
+			continue;
+		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"", missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetMissionText(ms));
+	}
+
+	/* check if at least 1 UFO is visible */
+	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
+		const aircraft_t const *aircraft = &ccs.ufos[aircraftIdx];
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
+			oneUFOVisible = qtrue;
+			break;
+		}
+	}
+
+	/* draws ufos */
+	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
+		aircraft_t *aircraft = &ccs.ufos[aircraftIdx];
+		if (!oneUFOVisible || !UFO_IsUFOSeenOnGeoscape(aircraft))
+			continue;
+
+		MN_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"", aircraftIdx, aircraftIdx, aircraft->model, aircraft->name);
+	}
 }
 
 /**
@@ -2463,6 +2612,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object an center on it");
 	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");

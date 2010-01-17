@@ -653,6 +653,7 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->id);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.ufos, num, ccs.numUFOs);
+	MAP_UpdateGeoscapeDock();
 }
 
 #ifdef DEBUG

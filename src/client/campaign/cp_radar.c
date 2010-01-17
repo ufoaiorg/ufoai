@@ -254,6 +254,8 @@ static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
 	radar->ufos[radar->numUFOs] = numUFO;
 	radar->numUFOs++;
 
+	MAP_UpdateGeoscapeDock();
+
 	return qtrue;
 }
 
@@ -275,6 +277,7 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 	radar->ufos[radar->numUFOs] = UFO_NOT_SENSORED;
 
 	RADAR_DeactivateRadarOverlay();
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
