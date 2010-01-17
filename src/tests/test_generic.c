@@ -126,17 +126,18 @@ static void testConstInt (void)
 	CU_ASSERT_TRUE(Com_GetConstInt("sniper", &out));
 	CU_ASSERT_EQUAL(out, 8);
 
-	Com_UnregisterConstList(list);
+	CU_ASSERT_TRUE(Com_UnregisterConstList(list));
 	out = 0;
 	CU_ASSERT_FALSE(Com_GetConstInt("sniper", &out));
-
 
 	Com_RegisterConstList(list2);
 
 	Com_RegisterConstList(list);
-	Com_UnregisterConstList(list);
+	CU_ASSERT_TRUE(Com_UnregisterConstList(list));
 
+	out = 0;
 	CU_ASSERT(Com_GetConstInt("pilot", &out));
+	CU_ASSERT_EQUAL(out, 3);
 	Com_UnregisterConstList(list2);
 }
 

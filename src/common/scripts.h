@@ -258,6 +258,6 @@ const char* Com_GetConstVariable(const char *namespace, int value);
 qboolean Com_UnregisterConstVariable(const char *name);
 void Com_RegisterConstInt(const char *name, int value);
 void Com_RegisterConstList(const constListEntry_t constList[]);
-void Com_UnregisterConstList(const constListEntry_t constList[]);
+qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
 
 #endif /* SCRIPTS_H */

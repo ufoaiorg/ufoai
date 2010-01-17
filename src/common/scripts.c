@@ -219,12 +219,15 @@ void Com_RegisterConstInt (const char *name, int value)
  * with a NULL string ({NULL, -1}) line
  * @sa constListEntry_t
  */
-void Com_UnregisterConstList (const constListEntry_t constList[])
+qboolean Com_UnregisterConstList (const constListEntry_t constList[])
 {
 	int i;
+	qboolean state = qtrue;
 
 	for (i = 0; constList[i].name != NULL; i++)
-		Com_UnregisterConstVariable(constList[i].name);
+		state &= Com_UnregisterConstVariable(constList[i].name);
+
+	return state;
 }
 
 /**
