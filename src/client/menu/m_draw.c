@@ -207,6 +207,9 @@ static void MN_DrawNode (menuNode_t *node)
 	menuNode_t *child;
 	vec2_t pos;
 
+	/* update the layout */
+	node->behaviour->doLayout(node);
+
 	/* skip invisible, virtual, and undrawable nodes */
 	if (node->invis || node->behaviour->isVirtual)
 		return;
@@ -353,9 +356,6 @@ void MN_Draw (void)
 	/* draw all visible menus */
 	for (; pos < mn.windowStackPos; pos++) {
 		menu = mn.windowStack[pos];
-
-		/* update the layout */
-		menu->behaviour->doLayout(menu);
 
 		drawOverNode = NULL;
 

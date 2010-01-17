@@ -685,6 +685,8 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 	/* If this is the first UFO on geoscape, activate radar */
 	if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 		MAP_SetOverlay("radar");
+
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
@@ -772,8 +774,9 @@ qboolean UFO_CampaignCheckEvents (void)
 					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), ufo->aircraftTarget->name), qfalse, MSG_STANDARD, NULL);
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
 					 * @sa UFO_SearchAircraftTarget */
-				} else
+				} else {
 					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), qfalse, MSG_UFOSPOTTED, NULL);
+				}
 				newDetection = qtrue;
 				UFO_DetectNewUFO(ufo);
 			} else if (!detected) {

@@ -1232,8 +1232,10 @@ qboolean E_LoadXML (mxml_node_t *p)
 		int i;
 		mxml_node_t * ssnode;
 		employeeType_t emplType;
+		const char *type = mxml_GetString(snode, SAVE_EMPLOYEE_TYPE);
 		
-		if (!Com_GetConstInt(mxml_GetString(snode, SAVE_EMPLOYEE_TYPE), (int*) &emplType)) {
+		if (!Com_GetConstInt(type, (int*) &emplType)) {
+			Com_Printf("Invaild employee type '%s'\n", type);
 			success = qfalse;
 			break;
 		}
@@ -1249,6 +1251,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = mxml_GetInt(ssnode, SAVE_EMPLOYEE_IDX, MAX_EMPLOYEES);
 			if (e->idx >= MAX_EMPLOYEES) {
+				Com_Printf("Invalid employeeIDX\n");
 				success = qfalse;
 				break;
 			}
@@ -1266,6 +1269,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			/* nation */
 			e->nation = NAT_GetNationByID(mxml_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!e->nation) {
+				Com_Printf("No nation defined for employee\n");
 				success = qfalse;
 				break;
 			}
@@ -1274,10 +1278,15 @@ qboolean E_LoadXML (mxml_node_t *p)
 			/* Character Data */
 			chrNode = mxml_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {
+				Com_Printf("No character definition found for employee\n");
 				success = qfalse;
 				break;
 			}
-			CL_LoadCharacterXML(chrNode, &e->chr);
+			if (!CL_LoadCharacterXML(chrNode, &e->chr)) {
+				Com_Printf("Error loading character definition for employee\n");
+				success = qfalse;
+				break;
+			}
 		}
 		if (!success)
 			break;

@@ -71,10 +71,11 @@ const char* CL_GetTeamSkinName (int id)
  */
 qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 {
-	mxml_node_t *s;
+	mxml_node_t *sScore;
+	mxml_node_t *sInventory;
 	int k;
-	const int count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
 
+	Com_RegisterConstList(saveCharacterConstants);
 	/* Store the character data */
 	mxml_AddString(p, SAVE_CHARACTER_NAME, chr.name);
 	mxml_AddString(p, SAVE_CHARACTER_BODY, chr.body);
@@ -90,27 +91,40 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	mxml_AddInt(p, SAVE_CHARACTER_MORALE, chr.morale);
 	mxml_AddInt(p, SAVE_CHARACTER_FIELDSIZE, chr.fieldSize);
 
-	/* Store character stats/score */
-	for (k = 0; k < count; k++) {
-		s = mxml_AddNode(p, SAVE_CHARACTER_SCORE);
-		if (k < SKILL_NUM_TYPES)
-			mxml_AddInt(s, SAVE_CHARACTER_SKILL, chr.score.skills[k]);
-		if (k < SKILL_NUM_TYPES + 1) {
-			mxml_AddIntValue(s, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
-			mxml_AddIntValue(s, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
-		}
-		if (k < KILLED_NUM_TYPES) {
-			mxml_AddIntValue(s, SAVE_CHARACTER_KILLS, chr.score.kills[k]);
-			mxml_AddIntValue(s, SAVE_CHARACTER_STUNS, chr.score.stuns[k]);
+	sScore = mxml_AddNode(p, SAVE_CHARACTER_SCORES);
+	/* Store skills */
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) {
+		mxml_node_t *sSkill;
+		
+		if ((k < SKILL_NUM_TYPES && chr.score.skills[k])
+		 || chr.score.experience[k] || chr.score.initialSkills[k]) {
+			sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);;
+
+			mxml_AddString(sSkill, SAVE_CHARACTER_SKILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, k));
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, chr.score.initialSkills[k]);
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, chr.score.experience[k]);
+			if (k < SKILL_NUM_TYPES)
+				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, chr.score.skills[k] - chr.score.initialSkills[k]);
 		}
 	}
-	mxml_AddIntValue(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr.score.assignedMissions);
-	mxml_AddInt(p, SAVE_CHARACTER_SCORE_RANK, chr.score.rank);
+	/* Store kills */
+	for (k = 0; k < KILLED_NUM_TYPES; k++) {
+		mxml_node_t *sKill;
+		if (chr.score.kills[k] || chr.score.stuns[k]) {
+			sKill = mxml_AddNode(sScore, SAVE_CHARACTER_KILLS);
+			mxml_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_KILLED, chr.score.kills[k]);
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, chr.score.stuns[k]);
+		}
+	}
+	mxml_AddIntValue(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr.score.assignedMissions);
+	mxml_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, chr.score.rank);
 
 	/* Store inventories */
-	s = mxml_AddNode(p, SAVE_INVENTORY_INVENTORY);
-	CL_SaveInventoryXML(s, &chr.inv);
+	sInventory = mxml_AddNode(p, SAVE_INVENTORY_INVENTORY);
+	CL_SaveInventoryXML(sInventory, &chr.inv);
 
+	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
 }
 
@@ -121,28 +135,20 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
  */
 qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 {
-	mxml_node_t *s;
-	int td, k, count;
+	int td;
+	mxml_node_t *sScore;
+	mxml_node_t *sSkill;
+	mxml_node_t *sKill;
+	mxml_node_t *sInventory;
+	qboolean success = qtrue;
 
+	/* Load the character data */
 	Q_strncpyz(chr->name, mxml_GetString(p, SAVE_CHARACTER_NAME), sizeof(chr->name));
 	Q_strncpyz(chr->body, mxml_GetString(p, SAVE_CHARACTER_BODY), sizeof(chr->body));
 	Q_strncpyz(chr->path, mxml_GetString(p, SAVE_CHARACTER_PATH), sizeof(chr->path));
 	Q_strncpyz(chr->head, mxml_GetString(p, SAVE_CHARACTER_HEAD), sizeof(chr->head));
 
 	chr->skin = mxml_GetInt(p, SAVE_CHARACTER_SKIN, 0);
-
-	chr->teamDef = NULL;
-	/* Team-definition index */
-	td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, BYTES_NONE);
-
-	if (td != BYTES_NONE) {
-		assert(csi.numTeamDefs);
-		if (td >= csi.numTeamDefs)
-			return qfalse;
-		chr->teamDef = &csi.teamDef[td];
-	}
-
-	/* Load the character data */
 	chr->gender = mxml_GetInt(p, SAVE_CHARACTER_GENDER, 0);
 	chr->ucn = mxml_GetInt(p, SAVE_CHARACTER_UCN, 0);
 	chr->maxHP = mxml_GetInt(p, SAVE_CHARACTER_MAXHP, 0);
@@ -151,28 +157,73 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->morale = mxml_GetInt(p, SAVE_CHARACTER_MORALE, 0);
 	chr->fieldSize = mxml_GetInt(p, SAVE_CHARACTER_FIELDSIZE, 1);
 
-	/* Load character stats/score */
-	count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
-	for (k = 0, s = mxml_GetNode(p, SAVE_CHARACTER_SCORE); s && k < count; k++, s = mxml_GetNextNode(s, p, SAVE_CHARACTER_SCORE)) {
-		if (k < SKILL_NUM_TYPES)
-			chr->score.skills[k] = mxml_GetInt(s, SAVE_CHARACTER_SKILL, 0);
-		if (k < SKILL_NUM_TYPES + 1) {
-			chr->score.experience[k] = mxml_GetInt(s, SAVE_CHARACTER_EXPERIENCE, 0);
-			chr->score.initialSkills[k] = mxml_GetInt(s, SAVE_CHARACTER_INITSKILL, 0);
+	chr->teamDef = NULL;
+	/* Team-definition index */
+	td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, BYTES_NONE);
+
+	if (td != BYTES_NONE) {
+		assert(csi.numTeamDefs);
+		if (td >= csi.numTeamDefs) {
+			Com_Printf("Invalid TeamDefIDX %i for %s (ucn: %i)\n", td, chr->name, chr->ucn);
+			return qfalse;
 		}
-		if (k < KILLED_NUM_TYPES) {
-			chr->score.kills[k] = mxml_GetInt(s, SAVE_CHARACTER_KILLS, 0);
-			chr->score.stuns[k] = mxml_GetInt(s, SAVE_CHARACTER_STUNS, 0);
+		chr->teamDef = &csi.teamDef[td];
+	}
+
+	Com_RegisterConstList(saveCharacterConstants);
+
+	sScore = mxml_GetNode(p, SAVE_CHARACTER_SCORES);
+	/* Load Skills */
+	for (sSkill = mxml_GetNode(sScore, SAVE_CHARACTER_SKILLS); sSkill; sSkill = mxml_GetNextNode(sSkill, sScore, SAVE_CHARACTER_SKILLS)) {
+		int idx;
+		const char *type = mxml_GetString(sSkill, SAVE_CHARACTER_SKILLTYPE);
+
+		if (!Com_GetConstInt(type, &idx)) {
+			Com_Printf("Invalid skill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
+			success = qfalse;
+			break;
+		}
+
+		chr->score.initialSkills[idx] = mxml_GetInt(sSkill, SAVE_CHARACTER_INITSKILL, 0);
+		chr->score.experience[idx] = mxml_GetInt(sSkill, SAVE_CHARACTER_EXPERIENCE, 0);
+		if (idx < SKILL_NUM_TYPES) {
+			chr->score.skills[idx] = chr->score.initialSkills[idx];
+			chr->score.skills[idx] += mxml_GetInt(sSkill, SAVE_CHARACTER_SKILLIMPROVE, 0);
 		}
 	}
-	chr->score.assignedMissions = mxml_GetInt(p, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
-	chr->score.rank = mxml_GetInt(p, SAVE_CHARACTER_SCORE_RANK, -1);
 
-	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
+	if (!success) {
+		Com_UnregisterConstList(saveCharacterConstants);
+		return qfalse;
+	}
+
+	/* Load kills */
+	for (sKill = mxml_GetNode(sScore, SAVE_CHARACTER_KILLS); sKill; sKill = mxml_GetNextNode(sKill, sScore, SAVE_CHARACTER_KILLS)) {
+		int idx;
+		const char *type = mxml_GetString(sKill, SAVE_CHARACTER_KILLTYPE);
+
+		if (!Com_GetConstInt(type, &idx)) {
+			Com_Printf("Invalid kill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
+			success = qfalse;
+			break;
+		}
+		chr->score.kills[idx] = mxml_GetInt(sKill, SAVE_CHARACTER_KILLED, 0);
+		chr->score.stuns[idx] = mxml_GetInt(sKill, SAVE_CHARACTER_STUNNED, 0);
+	}
+
+	if (!success) {
+		Com_UnregisterConstList(saveCharacterConstants);
+		return qfalse;
+	}
+
+	chr->score.assignedMissions = mxml_GetInt(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
+	chr->score.rank = mxml_GetInt(sScore, SAVE_CHARACTER_SCORE_RANK, -1);
+
 	cls.i.DestroyInventory(&cls.i, &chr->inv);
-	s = mxml_GetNode(p, SAVE_INVENTORY_INVENTORY);
-	CL_LoadInventoryXML(s, &chr->inv);
+	sInventory = mxml_GetNode(p, SAVE_INVENTORY_INVENTORY);
+	CL_LoadInventoryXML(sInventory, &chr->inv);
 
+	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
 }
 

@@ -64,17 +64,50 @@ static int UFO_CleanSuiteGeneric (void)
 
 static void testConstInt (void)
 {
-	Com_RegisterConstInt("namespace::variable", 1);
-	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
+	const constListEntry_t list[] = {
+		{"namespace::power", 1},
+		{"namespace::speed", 2},
+		{"namespace::accuracy", 3},
+		{"namespace::mind", 4},
+		{"namespace::close", 5},
+		{"namespace::heavy", 6},
+		{"namespace::assault", 7},
+		{"namespace::sniper", 8},
+		{"namespace::explosive", 9},
+		{"namespace::hp", 10},
+
+		{NULL, -1}
+	};
+	const constListEntry_t list2[] = {
+		{"namespace2::soldier", 0},
+		{"namespace2::scientist", 1},
+		{"namespace2::worker", 2},
+		{"namespace2::pilot", 3},
+		{NULL, -1}
+	};
+	int out;
 
 	Com_RegisterConstInt("namespace::variable", 1);
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
 
-	Com_RegisterConstInt("namespace::variable2", 1);
-	Com_RegisterConstInt("namespace::variable3", 1);
-	Com_RegisterConstInt("namespace::variable4", 1);
-	Com_RegisterConstInt("namespace::variable5", 1);
-	Com_RegisterConstInt("namespace::variable6", 1);
+	Com_RegisterConstInt("namespace::variable", 1);
+	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable"));
+
+	Com_RegisterConstInt("namespace::variable2", 2);
+	Com_RegisterConstInt("namespace::variable3", 3);
+	Com_RegisterConstInt("namespace::variable4", 4);
+	Com_RegisterConstInt("namespace::variable5", 5);
+	Com_RegisterConstInt("namespace::variable6", 6);
+
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("namespace::variable2", &out));
+	CU_ASSERT_EQUAL(out, 2);
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("variable2", &out));
+	CU_ASSERT_EQUAL(out, 2);
+
+	CU_ASSERT_STRING_EQUAL(Com_GetConstVariable("namespace", 2), "variable2");
+
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable2"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable3"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable4"));
@@ -87,6 +120,25 @@ static void testConstInt (void)
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable4"));
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable5"));
 	CU_ASSERT(!Com_UnregisterConstVariable("namespace::variable6"));
+
+	Com_RegisterConstList(list);
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("sniper", &out));
+	CU_ASSERT_EQUAL(out, 8);
+
+	CU_ASSERT_TRUE(Com_UnregisterConstList(list));
+	out = 0;
+	CU_ASSERT_FALSE(Com_GetConstInt("sniper", &out));
+
+	Com_RegisterConstList(list2);
+
+	Com_RegisterConstList(list);
+	CU_ASSERT_TRUE(Com_UnregisterConstList(list));
+
+	out = 0;
+	CU_ASSERT(Com_GetConstInt("pilot", &out));
+	CU_ASSERT_EQUAL(out, 3);
+	Com_UnregisterConstList(list2);
 }
 
 

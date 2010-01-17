@@ -600,4 +600,6 @@ void RADAR_SetRadarAfterLoading (void)
 
 		RADAR_AddDetectedUFOToEveryRadar(ufo);
 	}
+
+	MAP_UpdateGeoscapeDock();
 }

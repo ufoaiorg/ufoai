@@ -43,6 +43,7 @@ typedef byte pos_t;
 typedef pos_t pos3_t[3];
 typedef pos_t pos4_t[4];
 
+extern const vec2_t vec2_origin;
 extern const vec3_t vec3_origin;
 extern const vec4_t vec4_origin;
 extern const vec4_t color_white;

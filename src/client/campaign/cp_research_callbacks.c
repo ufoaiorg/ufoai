@@ -131,7 +131,7 @@ static void RS_UpdateInfo (const base_t* base)
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
 		Cvar_Set("mn_research_selstatus", _("Status: under research"));
-		Cvar_Set("mn_research_selstatus_long", _("Status: this research topic is currently being processed in labolatories"));
+		Cvar_Set("mn_research_selstatus_long", _("Status: this research topic is currently being processed in laboratories"));
 		break;
 	case RS_PAUSED:
 		Cvar_Set("mn_research_selstatus", _("Status: research paused"));

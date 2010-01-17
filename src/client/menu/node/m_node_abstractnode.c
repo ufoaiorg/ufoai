@@ -268,8 +268,11 @@ menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 	MN_Invalidate(node);
 
 	/** update cache */
-	if (node->lastChild == child)
-		node->lastChild = child->next;
+	if (node->lastChild == child) {
+		node->lastChild = node->firstChild;
+		while (node->lastChild && node->lastChild->next)
+			node->lastChild = node->lastChild->next;
+	}
 	child->next = NULL;
 	return child;
 }

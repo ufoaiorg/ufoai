@@ -736,6 +736,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
@@ -824,11 +825,6 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	AIR_AircraftsNotifyUFORemoved(mission->ufo, destroyed);
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
 
-	/* maybe we use a high speed time: UFO was detected, but flied out of radar
-	 * range since last calculation, and mission is spawned outside radar range */
-	if (!RADAR_CheckRadarSensored(mission->ufo->pos) && mission->ufo->detected)
-		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
-
 	if (destroyed) {
 		/* remove UFO from radar and update idx of ufo in radar array */
 		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
@@ -843,6 +839,10 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 
 		UFO_RemoveFromGeoscape(mission->ufo);
 		mission->ufo = NULL;
+	} else if (mission->ufo->detected && !RADAR_CheckRadarSensored(mission->ufo->pos)) {
+		/* maybe we use a high speed time: UFO was detected, but flied out of radar
+		 * range since last calculation, and mission is spawned outside radar range */
+		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 	}
 }
 
@@ -851,7 +851,7 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 *
 * Handling missions
 *
-====================================*/
+*====================================*/
 
 /**
  * @brief Removes a mission from mission global array.

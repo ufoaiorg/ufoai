@@ -79,9 +79,11 @@ qboolean Com_GetConstInt (const char *name, int *value)
 	/* if the alias already exists */
 	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
-		if (!strncmp(name, a->name, MAX_CONSTNAMEINT_NAME)) {
-			*value = a->value;
-			return qtrue;
+		if (!strcmp(variable, a->name)) {
+			if (!a->fullname || variable == name || !strcmp(a->fullname, name)) {
+				*value = a->value;
+				return qtrue;
+			}
 		}
 	}
 
@@ -127,6 +129,8 @@ qboolean Com_UnregisterConstVariable (const char *name)
 	com_constNameInt_t *a;
 	com_constNameInt_t *prev = NULL;
 
+	assert(strstr(name, "::") != NULL);
+
 	a = com_constNameInt;
 	while (a) {
 		if (a->fullname) {
@@ -148,7 +152,7 @@ qboolean Com_UnregisterConstVariable (const char *name)
 							if (prev)
 								prev->hash_next = b->hash_next;
 							else
-								com_constNameInt_hash[hash] = NULL;
+								com_constNameInt_hash[hash] = com_constNameInt_hash[hash]->hash_next;
 							break;
 						}
 					}
@@ -215,12 +219,15 @@ void Com_RegisterConstInt (const char *name, int value)
  * with a NULL string ({NULL, -1}) line
  * @sa constListEntry_t
  */
-void Com_UnregisterConstList (const constListEntry_t constList[])
+qboolean Com_UnregisterConstList (const constListEntry_t constList[])
 {
 	int i;
+	qboolean state = qtrue;
 
 	for (i = 0; constList[i].name != NULL; i++)
-		Com_UnregisterConstVariable(constList[i].name);
+		state &= Com_UnregisterConstVariable(constList[i].name);
+
+	return state;
 }
 
 /**

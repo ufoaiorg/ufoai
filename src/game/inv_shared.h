@@ -566,7 +566,7 @@ typedef struct chrScoreGlobal_s {
 
 	int assignedMissions;		/**< Number of missions this soldier was assigned to. */
 
-	int rank;					/**< Index of rank (in gd.ranks). */
+	int rank;					/**< Index of rank (in ccs.ranks). */
 } chrScoreGlobal_t;
 
 typedef struct chrFiremodeSettings_s {

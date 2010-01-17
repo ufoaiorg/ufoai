@@ -35,19 +35,48 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CHARACTER_STUN "stun"
 #define SAVE_CHARACTER_MORALE "morale"
 #define SAVE_CHARACTER_FIELDSIZE "fieldSize"
-#define SAVE_CHARACTER_SCORE "score"
-#define SAVE_CHARACTER_SKILL "skill"
+
+#define SAVE_CHARACTER_SCORES "scores"
+
+#define SAVE_CHARACTER_SKILLS "skill"
+#define SAVE_CHARACTER_SKILLTYPE "type"
+#define SAVE_CHARACTER_INITSKILL "initial"
 #define SAVE_CHARACTER_EXPERIENCE "experience"
-#define SAVE_CHARACTER_INITSKILL "initSkill"
-#define SAVE_CHARACTER_KILLS "kills"
-#define SAVE_CHARACTER_STUNS "stuns"
-#define SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS "assignedMissions"
+#define SAVE_CHARACTER_SKILLIMPROVE "improve"
+
+#define SAVE_CHARACTER_KILLS "kill"
+#define SAVE_CHARACTER_KILLTYPE "type"
+#define SAVE_CHARACTER_KILLED "killed"
+#define SAVE_CHARACTER_STUNNED "stunned"
+
+#define SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS "missions"
 #define SAVE_CHARACTER_SCORE_RANK "rank"
+
+#define SAVE_CHARACTER_SKILLTYPE_NAMESPACE "saveCharacterSkillType"
+#define SAVE_CHARACTER_KILLTYPE_NAMESPACE "saveCharacterKillType"
+const constListEntry_t saveCharacterConstants[] = {
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::power", ABILITY_POWER},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::speed", ABILITY_SPEED},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::accuracy", ABILITY_ACCURACY},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::mind", ABILITY_MIND},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::close", SKILL_CLOSE},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::heavy", SKILL_HEAVY},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::assault", SKILL_ASSAULT},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::sniper", SKILL_SNIPER},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::explosive", SKILL_EXPLOSIVE},
+	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::hp", SKILL_NUM_TYPES},
+
+	{SAVE_CHARACTER_KILLTYPE_NAMESPACE"::enemy", KILLED_ENEMIES},
+	{SAVE_CHARACTER_KILLTYPE_NAMESPACE"::civilian", KILLED_CIVILIANS},
+	{SAVE_CHARACTER_KILLTYPE_NAMESPACE"::team", KILLED_TEAM},
+
+	{NULL, -1}
+};
 
 /*
 DTD: (incomplete)
 
-<!ELEMENT character (score*, inventory?)>
+<!ELEMENT character (scores, inventory)>
 <!ATTLIST character
 	name			#CDATA		#IMPLIED
 	body			#CDATA		#IMPLIED
@@ -55,13 +84,34 @@ DTD: (incomplete)
 	head			#CDATA		#IMPLIED
 	skin			#NMTOKEN	0
 	teamdefIDX		#NMTOKEN	#REQUIRED
-	gender		
-	ucn
-	maxHp
-	hp
-	stun
-	morale
-	fieldSize
+	gender			#NMTOKEN	0
+	ucn				#NMTOKEN	0
+	maxHp			#NMTOKEN	0
+	hp				#NMTOKEN	0
+	stun			#NMTOKEN	0
+	morale			#NMTOKEN	0
+	fieldSize		#NMTOKEN	1
+>
+
+<!ELEMENT scores (skill*, kill*)>
+<!ATTLIST scores
+	missions		#NMTOKEN	0
+	rank			#NMTOKEN	-1
+>
+
+<!ELEMENT skill EMPTY>
+<!ATTLIST skill
+	type			#CDATA		#REQUIRED
+	initial			#NMTOKEN	0
+	experience		#NMTOKEN	0
+	improve			#NMTOKEN	0
+>
+
+<!ELEMENT kill EMPTY>
+<!ATTLIST kill
+	type			#CDATA		#REQUIRED
+	killed			#NMTOKEN	0
+	stunned			#NMTOKEN	0
 >
 
 */

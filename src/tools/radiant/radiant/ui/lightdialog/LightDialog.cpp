@@ -41,7 +41,7 @@ namespace ui
 	}
 
 	LightDialog::LightDialog () :
-		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL))
+		_widget(gtk_window_new(GTK_WINDOW_TOPLEVEL)), _aborted(false)
 	{
 		// Set up the window
 		gtk_window_set_transient_for(GTK_WINDOW(_widget), GlobalRadiant().getMainWindow());
@@ -163,6 +163,7 @@ namespace ui
 	// Delete dialog
 	gboolean LightDialog::_onDelete (GtkWidget* w, GdkEvent* e, LightDialog* self)
 	{
+		self->_aborted = true;
 		gtk_main_quit();
 		return false; // propagate event
 	}
@@ -179,6 +180,7 @@ namespace ui
 	// Cancel button
 	void LightDialog::_onCancel (GtkWidget* w, LightDialog* self)
 	{
+		self->_aborted = true;
 		gtk_widget_destroy(self->_widget);
 		gtk_main_quit();
 	}
@@ -188,5 +190,10 @@ namespace ui
 	{
 		gtk_widget_show_all(_widget);
 		gtk_main();
+	}
+
+	bool LightDialog::isAborted ()
+	{
+		return _aborted;
 	}
 }

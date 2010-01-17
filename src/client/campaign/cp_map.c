@@ -49,6 +49,8 @@ cvar_t *cl_mapzoommin;
 static cvar_t *debug_showInterest;
 #endif
 
+#define ZOOM_LIMIT	2.5f
+
 enum {
 	GEOSCAPE_IMAGE_MISSION,
 	GEOSCAPE_IMAGE_MISSION_SELECTED,
@@ -116,8 +118,6 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
-aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
-aircraft_t *selectedUFO;			/**< Currently selected UFO */
 static char textStandard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx;		/**< Current Event centered on 3D geoscape */
 static const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
@@ -213,13 +213,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			CL_DisplayPopupInterceptMission(ccs.selectedMission);
 			return;
 		}
-
-		MAP_ResetAction();
-		ccs.selectedMission = MAP_GetMissionByIDX(id);
-
-		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", ccs.selectedMission->id,
-				ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
-		ccs.mapAction = MA_INTERCEPT;
+		MAP_SelectMission(MAP_GetMissionByIDX(id));
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
 			CL_DisplayPopupInterceptMission(ccs.selectedMission);
@@ -233,13 +227,12 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		}
 
-		if (aircraft == selectedAircraft) {
+		if (aircraft == ccs.selectedAircraft) {
 			/* Selection of an already selected aircraft */
 			CL_DisplayPopupAircraft(aircraft);	/* Display popup_aircraft */
 		} else {
 			/* Selection of an unselected aircraft */
-			MAP_ResetAction();
-			selectedAircraft = aircraft;
+			MAP_SelectAircraft(aircraft);
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
 				CL_DisplayPopupAircraft(aircraft);
@@ -251,16 +244,15 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		aircraft = ccs.ufos + id;
 
-		if (aircraft == selectedUFO) {
+		if (aircraft == ccs.selectedUFO) {
 			/* Selection of an already selected ufo */
-			CL_DisplayPopupInterceptUFO(selectedUFO);
+			CL_DisplayPopupInterceptUFO(ccs.selectedUFO);
 		} else {
 			/* Selection of an unselected ufo */
-			MAP_ResetAction();
-			selectedUFO = aircraft;
+			MAP_SelectUFO(aircraft);
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
-				CL_DisplayPopupInterceptUFO(selectedUFO);
+				CL_DisplayPopupInterceptUFO(ccs.selectedUFO);
 		}
 		break;
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
@@ -307,10 +299,9 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			Vector2Copy(pos, newBasePos);
 
-			CL_GameTimeStop();
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
-				Cmd_ExecuteString("mn_set_installation_title");
+				CL_GameTimeStop();
 				MN_PushWindow("popup_newinstallation", NULL);
 			}
 			return;
@@ -318,7 +309,6 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		break;
 	case MA_UFORADAR:
 		MN_PushWindow("popup_intercept_ufo", NULL);
-		/* if shoot down - we have a new crashsite mission if color != water */
 		break;
 	default:
 		break;
@@ -384,13 +374,13 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		MN_PushWindow("popup_multi_selection", NULL);
 	} else {
 		/* Nothing selected */
-		if (!selectedAircraft)
+		if (!ccs.selectedAircraft)
 			MAP_ResetAction();
-		else if (AIR_IsAircraftOnGeoscape(selectedAircraft) && AIR_AircraftHasEnoughFuel(selectedAircraft, pos)) {
+		else if (AIR_IsAircraftOnGeoscape(ccs.selectedAircraft) && AIR_AircraftHasEnoughFuel(ccs.selectedAircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
-			MAP_MapCalcLine(selectedAircraft->pos, pos, &selectedAircraft->route);
-			selectedAircraft->status = AIR_TRANSIT;
-			selectedAircraft->time = aircraft->point = 0;
+			MAP_MapCalcLine(ccs.selectedAircraft->pos, pos, &ccs.selectedAircraft->route);
+			ccs.selectedAircraft->status = AIR_TRANSIT;
+			ccs.selectedAircraft->time = aircraft->point = 0;
 		}
 	}
 }
@@ -947,6 +937,131 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 }
 
 /**
+ * @brief Will set the vector for the geoscape position
+ * @param vector[out] The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
+ * @param objectPos[in] The position vector of the object to transform.
+ */
+static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const vec2_t objectPos)
+{
+	if (cl_3dmap->integer)
+		VectorSet(vector, objectPos[0], -objectPos[1], 0);
+	else
+		Vector2Set(vector, objectPos[0], objectPos[1]);
+}
+
+/**
+ * @brief center to a mission
+ */
+static void MAP_GetMissionAngle (float *vector, int id)
+{
+	int missionID = 0;
+	/* Cycle through missions */
+	const linkedList_t *list;
+	mission_t *mission = NULL;
+	for (list = ccs.missions ;list; list = list->next, missionID++) {
+		mission = (mission_t *)list->data;
+		if (missionID == id) {
+			assert(mission);
+			MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
+			MAP_SelectMission(mission);
+			return;
+		}
+	}
+}
+
+/**
+ * @brief center to an ufo
+ */
+static void MAP_GetUFOAngle (float *vector, int idx)
+{
+	aircraft_t *aircraft;
+	/* Cycle through UFO (only those visible on geoscape) */
+	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
+		if (aircraft->idx != idx)
+			continue;
+		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
+			MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
+			MAP_SelectUFO(aircraft);
+			return;
+		}
+	}
+}
+
+
+/**
+ * @brief Start center to the selected point
+ * @sa MAP_GetGeoscapeAngle
+ * @sa MAP_DrawMap
+ * @sa MAP3D_SmoothRotate
+ * @sa MAP_SmoothTranslate
+ */
+static void MAP_StartCenter (void)
+{
+	if (cl_3dmap->integer) {
+		/* case 3D geoscape */
+		vec3_t diff;
+
+		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
+		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
+		smoothDeltaLength = VectorLength(diff);
+	} else {
+		/* case 2D geoscape */
+		vec2_t diff;
+
+		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
+		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
+		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
+			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
+		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
+		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
+		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+	}
+
+	smoothFinalZoom = ZOOM_LIMIT;
+	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
+	smoothRotation = qtrue;
+}
+
+/**
+ * @brief Center the view and select an object from the geoscape
+ */
+static void MAP_SelectObject_f (void)
+{
+	const char *type;
+	int idx;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <mission|ufo> <id>\n", Cmd_Argv(0));
+		return;
+	}
+
+	type = Cmd_Argv(1);
+	idx = atoi(Cmd_Argv(2));
+
+	if (cl_3dmap->integer) {
+		if (!strcmp(type, "mission"))
+			MAP_GetMissionAngle(smoothFinalGlobeAngle, idx);
+		else if (!strcmp(type, "ufo"))
+			MAP_GetUFOAngle(smoothFinalGlobeAngle, idx);
+		else {
+			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
+			return;
+		}
+	} else {
+		if (!strcmp(type, "mission"))
+			MAP_GetMissionAngle(smoothFinal2DGeoscapeCenter, idx);
+		else if (!strcmp(type, "ufo"))
+			MAP_GetUFOAngle(smoothFinal2DGeoscapeCenter, idx);
+		else {
+			Com_Printf("MAP_SelectObject_f: type %s unsupported.", type);
+			return;
+		}
+	}
+	MAP_StartCenter();
+}
+
+/**
  * @brief Returns position of the model corresponding to centerOnEventIdx.
  * @param[out] vector Latitude and longitude of the model (finalAngle[2] is always 0).
  * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
@@ -979,10 +1094,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* if there's nothing to center the view on, just go to 0,0 pos */
 	if (maxEventIdx < 0) {
-		if (cl_3dmap->integer)
-			VectorSet(vector, 0, 0, 0);
-		else
-			Vector2Set(vector, 0, 0);
+		MAP_ConvertObjectPositionToGeoscapePosition(vector, vec2_origin);
 		return;
 	}
 
@@ -1003,12 +1115,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		}
 		assert(mission);
 
-		if (cl_3dmap->integer)
-			VectorSet(vector, mission->pos[0], -mission->pos[1], 0);
-		else
-			Vector2Set(vector, mission->pos[0], mission->pos[1]);
-		MAP_ResetAction();
-		ccs.selectedMission = mission;
+		MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
+		MAP_SelectMission(mission);
 		return;
 	}
 	counter += numMissions;
@@ -1021,10 +1129,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				continue;
 
 			if (counter == centerOnEventIdx) {
-				if (cl_3dmap->integer)
-					VectorSet(vector, ccs.bases[baseIdx].pos[0], -ccs.bases[baseIdx].pos[1], 0);
-				else
-					Vector2Set(vector, ccs.bases[baseIdx].pos[0], ccs.bases[baseIdx].pos[1]);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, ccs.bases[baseIdx].pos);
 				return;
 			}
 			counter++;
@@ -1041,10 +1146,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				continue;
 
 			if (counter == centerOnEventIdx) {
-				if (cl_3dmap->integer)
-					VectorSet(vector, ccs.installations[instIdx].pos[0], -ccs.installations[instIdx].pos[1], 0);
-				else
-					Vector2Set(vector, ccs.installations[instIdx].pos[0], ccs.installations[instIdx].pos[1]);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, ccs.installations[instIdx].pos);
 				return;
 			}
 			counter++;
@@ -1061,12 +1163,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
-					if (cl_3dmap->integer)
-						VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
-					else
-						Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
-					MAP_ResetAction();
-					selectedAircraft = aircraft;
+					MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
+					MAP_SelectAircraft(aircraft);
 					return;
 				}
 				counter++;
@@ -1078,12 +1176,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			if (centerOnEventIdx == counter) {
-				if (cl_3dmap->integer)
-					VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
-				else
-					Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
-				MAP_ResetAction();
-				selectedUFO = aircraft;
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
+				MAP_SelectUFO(aircraft);
 				return;
 			}
 			counter++;
@@ -1091,12 +1185,11 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	}
 }
 
-#define ZOOM_LIMIT	2.5f
 /**
  * @brief Switch to next model on 2D and 3D geoscape.
  * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
  * @note This function sets the value of smoothFinalGlobeAngle (for 3D) or smoothFinal2DGeoscapeCenter (for 2D),
- *  which contains the finale value that ccs.angles or ccs.centre must respectively take.
+ *  which contains the final value that ccs.angles or ccs.centre must respectively take.
  * @sa MAP_GetGeoscapeAngle
  * @sa MAP_DrawMap
  * @sa MAP3D_SmoothRotate
@@ -1109,33 +1202,11 @@ void MAP_CenterOnPoint_f (void)
 
 	centerOnEventIdx++;
 
-	if (cl_3dmap->integer) {
-		/* case 3D geoscape */
-		vec3_t diff;
-
+	if (cl_3dmap->integer)
 		MAP_GetGeoscapeAngle(smoothFinalGlobeAngle);
-		smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
-		VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
-		smoothDeltaLength = VectorLength(diff);
-	} else {
-		/* case 2D geoscape */
-		vec2_t diff;
-
+	else
 		MAP_GetGeoscapeAngle(smoothFinal2DGeoscapeCenter);
-		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
-		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
-			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
-		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
-			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
-		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
-		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
-		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
-	}
-	smoothFinalZoom = ZOOM_LIMIT;
-
-	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
-
-	smoothRotation = qtrue;
+	MAP_StartCenter();
 }
 
 /**
@@ -1447,7 +1518,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	}
 
 	/* Draw a circle around selected aircraft */
-	if (aircraft == selectedAircraft) {
+	if (aircraft == ccs.selectedAircraft) {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
@@ -1466,6 +1537,105 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+}
+
+/**
+ * @brief Assembles a string for a mission that is on the geoscape
+ * @param[in] mission The mission to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetAircraftText
+ * @sa MAP_GetUFOText
+ */
+static const char *MAP_GetMissionText (char *buffer, size_t size, const mission_t *mission)
+{
+	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
+		CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
+	return buffer;
+}
+
+/**
+ * @brief Assembles a string for an aircraft that is on the geoscape
+ * @param[in] aircraft The aircraft to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetUFOText
+ * @sa MAP_GetMissionText
+ */
+static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraft_t *aircraft)
+{
+	if (aircraft->status == AIR_UFO) {
+		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
+		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
+		Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
+	} else {
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
+		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
+		if (aircraft->status != AIR_IDLE) {
+			const float distance = GetDistanceOnGlobe(aircraft->pos,
+					aircraft->route.point[aircraft->route.numPoints - 1]);
+			Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
+		}
+	}
+	return buffer;
+}
+
+/**
+ * @brief Assembles a string for an UFO that is on the geoscape
+ * @param[in] ufo The UFO to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetAircraftText
+ * @sa MAP_GetMissionText
+ */
+static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
+{
+	Com_sprintf(buffer, size, "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
+	Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+	return buffer;
+}
+
+/**
+ * @brief Will add missions and UFOs to the geoscape dock panel
+ */
+void MAP_UpdateGeoscapeDock (void)
+{
+	const linkedList_t *list = ccs.missions;
+	int ufoIDX;
+	int missionID = 0;
+	char buf[MAX_SMALLMENUTEXTLEN];
+
+	MN_ExecuteConfunc("clean_geoscape_object");
+
+	/* draw mission pics */
+	for (; list; list = list->next, missionID++) {
+		const mission_t *ms = (mission_t *)list->data;
+		if (!ms->onGeoscape)
+			continue;
+		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
+				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetMissionText(buf, sizeof(buf), ms));
+	}
+
+	/* draws ufos */
+	for (ufoIDX = 0; ufoIDX < ccs.numUFOs; ufoIDX++) {
+		aircraft_t *ufo = &ccs.ufos[ufoIDX];
+		if (!UFO_IsUFOSeenOnGeoscape(ufo))
+			continue;
+
+		MN_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
+				ufoIDX, ufoIDX, ufo->model, MAP_GetUFOText(buf, sizeof(buf), ufo));
+	}
 }
 
 /**
@@ -1562,7 +1732,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
-			if (aircraft == selectedUFO) {
+			if (aircraft == ccs.selectedUFO) {
 				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
@@ -1649,9 +1819,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  */
 void MAP_DrawMap (const menuNode_t* node)
 {
-	float distance;
 	vec2_t pos;
-	qboolean disableSolarRender = qfalse;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	MN_GetNodeAbsPos(node, pos);
@@ -1664,6 +1832,7 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
+		qboolean disableSolarRender = qfalse;
 		if (ccs.zoom > cl_mapzoommax->value)
 			disableSolarRender = qtrue;
 		if (smoothRotation)
@@ -1710,46 +1879,17 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (ccs.selectedMission) {
-		static char t[MAX_SMALLMENUTEXTLEN];
-		Com_sprintf(t, lengthof(t), _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
-			CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
-		MN_RegisterText(TEXT_STANDARD, t);
-	} else if (selectedAircraft) {
-		switch (selectedAircraft->status) {
-		case AIR_HOME:
-		case AIR_REFUEL:
+		MN_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
+	} else if (ccs.selectedAircraft) {
+		const aircraft_t *aircraft = ccs.selectedAircraft;
+		if (AIR_IsAircraftInBase(aircraft)) {
+			MN_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
-			break;
-		case AIR_UFO:
-			assert(selectedAircraft->aircraftTarget);
-			distance = GetDistanceOnGlobe(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
-			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
-			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
-			MN_RegisterText(TEXT_STANDARD, textStandard);
-			break;
-		default:
-			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
-			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
-			if (selectedAircraft->status != AIR_IDLE) {
-				distance = GetDistanceOnGlobe(selectedAircraft->pos,
-					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
-				Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
-			}
-			MN_RegisterText(TEXT_STANDARD, textStandard);
-			break;
+			return;
 		}
-	} else if (selectedUFO) {
-		Com_sprintf(textStandard, sizeof(textStandard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
-		Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-		MN_RegisterText(TEXT_STANDARD, textStandard);
+		MN_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
+	} else if (ccs.selectedUFO) {
+		MN_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
@@ -1773,11 +1913,20 @@ void MAP_ResetAction (void)
 
 	ccs.interceptAircraft = NULL;
 	ccs.selectedMission = NULL;
-	selectedAircraft = NULL;
-	selectedUFO = NULL;
+	ccs.selectedAircraft = NULL;
+	ccs.selectedUFO = NULL;
 
 	if (!radarOverlayWasSet)
 		MAP_DeactivateOverlay("radar");
+}
+
+/**
+ * @brief Select the specified ufo in geoscape
+ */
+void MAP_SelectUFO (aircraft_t* ufo)
+{
+	MAP_ResetAction();
+	ccs.selectedUFO = ufo;
 }
 
 /**
@@ -1786,7 +1935,7 @@ void MAP_ResetAction (void)
 void MAP_SelectAircraft (aircraft_t* aircraft)
 {
 	MAP_ResetAction();
-	selectedAircraft = aircraft;
+	ccs.selectedAircraft = aircraft;
 }
 
 /**
@@ -1809,6 +1958,8 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
 	/* Unselect the current selected mission if it's the same */
 	if (ccs.selectedMission == mission)
 		MAP_ResetAction();
+
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
@@ -1818,14 +1969,14 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
  */
 void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
-	if (!selectedUFO)
+	if (!ccs.selectedUFO)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUFO == ufo)
+	if (ccs.selectedUFO == ufo)
 		MAP_ResetAction();
-	else if (destroyed && selectedUFO > ufo)
-		selectedUFO--;
+	else if (destroyed && ccs.selectedUFO > ufo)
+		ccs.selectedUFO--;
 }
 
 /**
@@ -1835,14 +1986,14 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  */
 void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
 {
-	if (!selectedAircraft)
+	if (!ccs.selectedAircraft)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
+	if (ccs.selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
 		MAP_ResetAction();
-	else if (destroyed && (selectedAircraft->homebase == aircraft->homebase) && selectedAircraft > aircraft)
-		selectedAircraft--;
+	else if (destroyed && (ccs.selectedAircraft->homebase == aircraft->homebase) && ccs.selectedAircraft > aircraft)
+		ccs.selectedAircraft--;
 }
 
 /**
@@ -2235,8 +2386,10 @@ void MAP_Init (void)
 void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUFO == ufo)
+	if (ccs.selectedUFO == ufo)
 		MAP_ResetAction();
+
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
@@ -2469,6 +2622,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object an center on it");
 	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");

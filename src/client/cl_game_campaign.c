@@ -381,6 +381,20 @@ void GAME_CP_Drop (void)
 	CL_Disconnect();
 }
 
+void GAME_CP_Frame (void)
+{
+	/* don't run the campaign in console mode */
+	if (cls.keyDest == key_console)
+		return;
+
+	if (GAME_CP_IsRunning()) {
+		if (!strcmp("geoscape", MN_GetActiveWindowName())) {
+			/* advance time */
+			CL_CampaignRun();
+		}
+	}
+}
+
 /**
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for

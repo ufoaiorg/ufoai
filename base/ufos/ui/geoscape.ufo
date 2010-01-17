@@ -2,6 +2,47 @@
 // MAP MENU
 // ==================
 
+component panel cmpGeoscapeDocklet {
+	{
+		pos		"0 0"
+		size	"280 60"
+		align	LAYOUTALIGN_TOP
+	}
+
+	pic bg {
+		image			"geoscape/docklet_bg"
+		size			"280 60"
+		onMouseEnter	{ *node:this@image = "geoscape/docklet_bg_hovered" }
+		onMouseLeave	{ *node:this@image = "geoscape/docklet_bg" }
+		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>" }
+	}
+
+	model siteModel {
+		pos		"5 5"
+		size	"50 50"
+		autoscale	true
+		ghost	true
+	}
+
+	string	message {
+		pos		"65 5"
+		size	"210 50"
+		ghost	true
+	}
+
+	/** store the id to find the object */
+	string type {
+		size	"0 0"
+		invis	true
+	}
+
+	/** store the id to find the object */
+	string id {
+		size	"0 0"
+		invis	true
+	}
+}
+
 window geoscape
 {
 	// ==================
@@ -19,6 +60,23 @@ window geoscape
 		onRClick		{ cmd "mn_mapaction_reset;" }
 		align			LAYOUTALIGN_FILL
 		padding-right	256
+	}
+
+
+	panel messageDock {
+		{
+			pos				"0 0"
+			size			"300 768"
+			layout			LAYOUT_PACK
+			ghost			true
+			padding			10
+			layoutmargin	10
+		}
+
+		panel topMargin {
+			align		LAYOUTALIGN_TOP
+			size		"280 30"
+		}
 	}
 
 	panel messagesystem {
@@ -65,8 +123,26 @@ window geoscape
 				*node:parent.message@viewpos = <current>
 			}
 		}
-	
-	
+	}
+
+	confunc clean_geoscape_object {
+		call *node:root.messageDock@removeAllChild
+	}
+
+	/**
+	 * @param<1> type [mission|ufo]
+	 * @param<2> id (internal, to identify the docklet object)
+	 * @param<3> id (external, to identify the linked object)
+	 * @param<4> model
+	 * @param<5> text
+	 */
+	confunc add_geoscape_object
+	{
+		call *node:root.messageDock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
+		*node:root.messageDock.<1><2>.type@string = <1>
+		*node:root.messageDock.<1><2>.id@string = <2>
+		*node:(model)root.messageDock.<1><2>.siteModel@model = <4>
+		*node:root.messageDock.<1><2>.message@string = <5>
 	}
 
 	confunc messagesystem_changemode

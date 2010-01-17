@@ -29,8 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GLOBE_ROTATE -90
 #define ROTATE_SPEED	0.5
 #define KILOMETER_PER_DEGREE	111.2		/* this is the conversion between distance in game (in degree) and km */
-extern aircraft_t *selectedAircraft;
-extern aircraft_t *selectedUFO;
 
 extern cvar_t *cl_mapzoommax;
 extern cvar_t *cl_mapzoommin;
@@ -56,6 +54,7 @@ void MAP_Zoom_f(void);
 void MAP_MapClick(struct menuNode_s * node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
+void MAP_SelectUFO(aircraft_t* ufo);
 void MAP_SelectMission(mission_t* mission);
 void MAP_NotifyMissionRemoved(const mission_t* mission);
 void MAP_NotifyUFORemoved(const aircraft_t* ufo, qboolean destroyed);
@@ -72,5 +71,6 @@ void MAP_Init(void);
 qboolean MAP_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);
+void MAP_UpdateGeoscapeDock(void);
 
 #endif /* CLIENT_CL_MAP_H */
