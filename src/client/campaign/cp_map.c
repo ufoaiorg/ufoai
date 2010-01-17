@@ -2388,6 +2388,8 @@ void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 	/* Unselect the current selected ufo if its the same */
 	if (ccs.selectedUFO == ufo)
 		MAP_ResetAction();
+
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
