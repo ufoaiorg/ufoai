@@ -78,6 +78,13 @@ static void testConstInt (void)
 
 		{NULL, -1}
 	};
+	const constListEntry_t list2[] = {
+		{"namespace2::soldier", 0},
+		{"namespace2::scientist", 1},
+		{"namespace2::worker", 2},
+		{"namespace2::pilot", 3},
+		{NULL, -1}
+	};
 	int out;
 
 	Com_RegisterConstInt("namespace::variable", 1);
@@ -122,6 +129,15 @@ static void testConstInt (void)
 	Com_UnregisterConstList(list);
 	out = 0;
 	CU_ASSERT_FALSE(Com_GetConstInt("sniper", &out));
+
+
+	Com_RegisterConstList(list2);
+
+	Com_RegisterConstList(list);
+	Com_UnregisterConstList(list);
+
+	CU_ASSERT(Com_GetConstInt("pilot", &out));
+	Com_UnregisterConstList(list2);
 }
 
 
