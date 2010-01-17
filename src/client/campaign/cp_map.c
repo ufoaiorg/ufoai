@@ -937,7 +937,6 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 }
 
 /**
-<<<<<<< .mine
  * @brief center to a mission
  */
 static void MAP_GetMissionAngle (float *vector, int id)
