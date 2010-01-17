@@ -2033,6 +2033,36 @@ static void CL_SwapSkill (character_t *cp1, character_t *cp2, abilityskills_t sk
 	cp2->score.experience[skill] = tmp1;
 }
 
+static void CL_DoSwapSkills (character_t *cp1, character_t *cp2, const int skill)
+{
+	if (cp1->score.skills[skill] < cp2->score.skills[skill])
+		CL_SwapSkill(cp1, cp2, skill);
+
+	switch (skill) {
+	case SKILL_CLOSE:
+		if (cp1->score.skills[ABILITY_SPEED] < cp2->score.skills[ABILITY_SPEED])
+			CL_SwapSkill(cp1, cp2, ABILITY_SPEED);
+		break;
+	case SKILL_HEAVY:
+		if (cp1->score.skills[ABILITY_POWER] < cp2->score.skills[ABILITY_POWER])
+			CL_SwapSkill(cp1, cp2, ABILITY_POWER);
+		break;
+	case SKILL_ASSAULT:
+		/* no related basic attribute */
+		break;
+	case SKILL_SNIPER:
+		if (cp1->score.skills[ABILITY_ACCURACY] < cp2->score.skills[ABILITY_ACCURACY])
+			CL_SwapSkill(cp1, cp2, ABILITY_ACCURACY);
+		break;
+	case SKILL_EXPLOSIVE:
+		if (cp1->score.skills[ABILITY_MIND] < cp2->score.skills[ABILITY_MIND])
+			CL_SwapSkill(cp1, cp2, ABILITY_MIND);
+		break;
+	default:
+		Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
+	}
+}
+
 /**
  * @brief Swaps skills of the initial team of soldiers so that they match inventories
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
@@ -2090,58 +2120,9 @@ static void CL_SwapSkills (chrList_t *team)
 							if (no1 > no2 /* more use of this skill */
 								 || (no1 && no1 == no2)) { /* or earlier on list */
 
-								if (cp1->score.skills[skill] < cp2->score.skills[skill])
-									CL_SwapSkill(cp1, cp2, skill);
-
-								switch (skill) {
-								case SKILL_CLOSE:
-									if (cp1->score.skills[ABILITY_SPEED] < cp2->score.skills[ABILITY_SPEED])
-										CL_SwapSkill(cp1, cp2, ABILITY_SPEED);
-									break;
-								case SKILL_HEAVY:
-									if (cp1->score.skills[ABILITY_POWER] < cp2->score.skills[ABILITY_POWER])
-										CL_SwapSkill(cp1, cp2, ABILITY_POWER);
-									break;
-								case SKILL_ASSAULT:
-									/* no related basic attribute */
-									break;
-								case SKILL_SNIPER:
-									if (cp1->score.skills[ABILITY_ACCURACY] < cp2->score.skills[ABILITY_ACCURACY])
-										CL_SwapSkill(cp1, cp2, ABILITY_ACCURACY);
-									break;
-								case SKILL_EXPLOSIVE:
-									if (cp1->score.skills[ABILITY_MIND] < cp2->score.skills[ABILITY_MIND])
-										CL_SwapSkill(cp1, cp2, ABILITY_MIND);
-									break;
-								default:
-									Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
-								}
+								CL_DoSwapSkills(cp1, cp2, skill);
 							} else if (no1 < no2) {
-								if (cp2->score.skills[skill] < cp1->score.skills[skill])
-										CL_SwapSkill(cp1, cp2, skill);
-
-								switch (skill) {
-								case SKILL_CLOSE:
-									if (cp2->score.skills[ABILITY_SPEED] < cp1->score.skills[ABILITY_SPEED])
-										CL_SwapSkill(cp1, cp2, ABILITY_SPEED);
-									break;
-								case SKILL_HEAVY:
-									if (cp2->score.skills[ABILITY_POWER] < cp1->score.skills[ABILITY_POWER])
-										CL_SwapSkill(cp1, cp2, ABILITY_POWER);
-									break;
-								case SKILL_ASSAULT:
-									break;
-								case SKILL_SNIPER:
-									if (cp2->score.skills[ABILITY_ACCURACY] < cp1->score.skills[ABILITY_ACCURACY])
-										CL_SwapSkill(cp1, cp2, ABILITY_ACCURACY);
-									break;
-								case SKILL_EXPLOSIVE:
-									if (cp2->score.skills[ABILITY_MIND] < cp1->score.skills[ABILITY_MIND])
-										CL_SwapSkill(cp1, cp2, ABILITY_MIND);
-									break;
-								default:
-									Com_Error(ERR_DROP, "CL_SwapSkills: illegal skill %i.\n", skill);
-								}
+								CL_DoSwapSkills(cp2, cp1, skill);
 							}
 						}
 					}
