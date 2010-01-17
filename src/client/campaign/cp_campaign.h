@@ -390,8 +390,11 @@ typedef struct ccs_s {
 	/** governs zero build time for first base if empty base option chosen */
 	int instant_build;
 
-	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
+	/** @todo make this a union? */
+	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
+	aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
+	aircraft_t *selectedUFO;			/**< Currently selected UFO */
 
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */

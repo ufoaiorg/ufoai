@@ -970,7 +970,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 
 	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
 	/* Redirect selectedAircraft */
-	selectedAircraft = aircraft;
+	MAP_SelectAircraft(aircraft);
 
 	return qtrue;
 }

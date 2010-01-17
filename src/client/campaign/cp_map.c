@@ -116,8 +116,6 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
-aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
-aircraft_t *selectedUFO;			/**< Currently selected UFO */
 static char textStandard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx;		/**< Current Event centered on 3D geoscape */
 static const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
@@ -233,13 +231,12 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		}
 
-		if (aircraft == selectedAircraft) {
+		if (aircraft == ccs.selectedAircraft) {
 			/* Selection of an already selected aircraft */
 			CL_DisplayPopupAircraft(aircraft);	/* Display popup_aircraft */
 		} else {
 			/* Selection of an unselected aircraft */
-			MAP_ResetAction();
-			selectedAircraft = aircraft;
+			MAP_SelectAircraft(aircraft);
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
 				CL_DisplayPopupAircraft(aircraft);
@@ -251,16 +248,15 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			return;
 		aircraft = ccs.ufos + id;
 
-		if (aircraft == selectedUFO) {
+		if (aircraft == ccs.selectedUFO) {
 			/* Selection of an already selected ufo */
-			CL_DisplayPopupInterceptUFO(selectedUFO);
+			CL_DisplayPopupInterceptUFO(ccs.selectedUFO);
 		} else {
 			/* Selection of an unselected ufo */
-			MAP_ResetAction();
-			selectedUFO = aircraft;
+			MAP_SelectUFO(aircraft);
 			if (multiSelection)
 				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
-				CL_DisplayPopupInterceptUFO(selectedUFO);
+				CL_DisplayPopupInterceptUFO(ccs.selectedUFO);
 		}
 		break;
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
@@ -384,13 +380,13 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		MN_PushWindow("popup_multi_selection", NULL);
 	} else {
 		/* Nothing selected */
-		if (!selectedAircraft)
+		if (!ccs.selectedAircraft)
 			MAP_ResetAction();
-		else if (AIR_IsAircraftOnGeoscape(selectedAircraft) && AIR_AircraftHasEnoughFuel(selectedAircraft, pos)) {
+		else if (AIR_IsAircraftOnGeoscape(ccs.selectedAircraft) && AIR_AircraftHasEnoughFuel(ccs.selectedAircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
-			MAP_MapCalcLine(selectedAircraft->pos, pos, &selectedAircraft->route);
-			selectedAircraft->status = AIR_TRANSIT;
-			selectedAircraft->time = aircraft->point = 0;
+			MAP_MapCalcLine(ccs.selectedAircraft->pos, pos, &ccs.selectedAircraft->route);
+			ccs.selectedAircraft->status = AIR_TRANSIT;
+			ccs.selectedAircraft->time = aircraft->point = 0;
 		}
 	}
 }
@@ -1065,8 +1061,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 						VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
 					else
 						Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
-					MAP_ResetAction();
-					selectedAircraft = aircraft;
+					MAP_SelectAircraft(aircraft);
 					return;
 				}
 				counter++;
@@ -1082,8 +1077,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 					VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
 				else
 					Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
-				MAP_ResetAction();
-				selectedUFO = aircraft;
+				MAP_SelectUFO(aircraft);
 				return;
 			}
 			counter++;
@@ -1447,7 +1441,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	}
 
 	/* Draw a circle around selected aircraft */
-	if (aircraft == selectedAircraft) {
+	if (aircraft == ccs.selectedAircraft) {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
@@ -1562,7 +1556,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
-			if (aircraft == selectedUFO) {
+			if (aircraft == ccs.selectedUFO) {
 				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
@@ -1714,41 +1708,43 @@ void MAP_DrawMap (const menuNode_t* node)
 		Com_sprintf(t, lengthof(t), _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
 			CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
 		MN_RegisterText(TEXT_STANDARD, t);
-	} else if (selectedAircraft) {
-		switch (selectedAircraft->status) {
+	} else if (ccs.selectedAircraft) {
+		const aircraft_t *aircraft = ccs.selectedAircraft;
+		switch (aircraft->status) {
 		case AIR_HOME:
 		case AIR_REFUEL:
 			MAP_ResetAction();
 			break;
 		case AIR_UFO:
-			assert(selectedAircraft->aircraftTarget);
-			distance = GetDistanceOnGlobe(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
-			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
-			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
+			assert(aircraft->aircraftTarget);
+			distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
+			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), sizeof(textStandard));
 			Q_strcat(textStandard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
 			MN_RegisterText(TEXT_STANDARD, textStandard);
 			break;
 		default:
-			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
-			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
-			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
-				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
-			if (selectedAircraft->status != AIR_IDLE) {
-				distance = GetDistanceOnGlobe(selectedAircraft->pos,
-					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
-				Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
+			Com_sprintf(textStandard, sizeof(textStandard), _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+			Q_strcat(textStandard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
+			Q_strcat(textStandard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(textStandard));
+			if (aircraft->status != AIR_IDLE) {
+				distance = GetDistanceOnGlobe(aircraft->pos,
+						aircraft->route.point[aircraft->route.numPoints - 1]);
+				Q_strcat(textStandard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), sizeof(textStandard));
 			}
 			MN_RegisterText(TEXT_STANDARD, textStandard);
 			break;
 		}
-	} else if (selectedUFO) {
-		Com_sprintf(textStandard, sizeof(textStandard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
-		Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
+	} else if (ccs.selectedUFO) {
+		const aircraft_t *ufo = ccs.selectedUFO;
+		Com_sprintf(textStandard, sizeof(textStandard), "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
+		Q_strcat(textStandard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(textStandard));
 		MN_RegisterText(TEXT_STANDARD, textStandard);
 	} else {
 #ifdef DEBUG
@@ -1773,11 +1769,20 @@ void MAP_ResetAction (void)
 
 	ccs.interceptAircraft = NULL;
 	ccs.selectedMission = NULL;
-	selectedAircraft = NULL;
-	selectedUFO = NULL;
+	ccs.selectedAircraft = NULL;
+	ccs.selectedUFO = NULL;
 
 	if (!radarOverlayWasSet)
 		MAP_DeactivateOverlay("radar");
+}
+
+/**
+ * @brief Select the specified ufo in geoscape
+ */
+void MAP_SelectUFO (aircraft_t* ufo)
+{
+	MAP_ResetAction();
+	ccs.selectedUFO = ufo;
 }
 
 /**
@@ -1786,7 +1791,7 @@ void MAP_ResetAction (void)
 void MAP_SelectAircraft (aircraft_t* aircraft)
 {
 	MAP_ResetAction();
-	selectedAircraft = aircraft;
+	ccs.selectedAircraft = aircraft;
 }
 
 /**
@@ -1818,14 +1823,14 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
  */
 void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
-	if (!selectedUFO)
+	if (!ccs.selectedUFO)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUFO == ufo)
+	if (ccs.selectedUFO == ufo)
 		MAP_ResetAction();
-	else if (destroyed && selectedUFO > ufo)
-		selectedUFO--;
+	else if (destroyed && ccs.selectedUFO > ufo)
+		ccs.selectedUFO--;
 }
 
 /**
@@ -1835,14 +1840,14 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  */
 void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
 {
-	if (!selectedAircraft)
+	if (!ccs.selectedAircraft)
 		return;
 
 	/* Unselect the current selected ufo if its the same */
-	if (selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
+	if (ccs.selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
 		MAP_ResetAction();
-	else if (destroyed && (selectedAircraft->homebase == aircraft->homebase) && selectedAircraft > aircraft)
-		selectedAircraft--;
+	else if (destroyed && (ccs.selectedAircraft->homebase == aircraft->homebase) && ccs.selectedAircraft > aircraft)
+		ccs.selectedAircraft--;
 }
 
 /**
@@ -2235,7 +2240,7 @@ void MAP_Init (void)
 void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
-	if (selectedUFO == ufo)
+	if (ccs.selectedUFO == ufo)
 		MAP_ResetAction();
 }
 

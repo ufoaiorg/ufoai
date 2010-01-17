@@ -151,7 +151,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
 		MN_TextNodeSelectLine(popupListNode, homebase);
-		selectedAircraft = aircraft;
+		MAP_SelectAircraft(aircraft);
 		return qtrue;
 	}
 
@@ -171,7 +171,7 @@ static void CL_PopupChangeHomebase_f (void)
 	int baseIdx;
 
 	/* If popup is opened, that means an aircraft is selected */
-	if (!selectedAircraft) {
+	if (!ccs.selectedAircraft) {
 		Com_Printf("CL_PopupChangeHomebase_f: An aircraft must be selected\n");
 		return;
 	}
@@ -202,10 +202,10 @@ static void CL_PopupChangeHomebase_f (void)
 
 	base = B_GetFoundedBaseByIDX(baseIdx);
 
-	AIR_MoveAircraftIntoNewHomebase(selectedAircraft, base);
+	AIR_MoveAircraftIntoNewHomebase(ccs.selectedAircraft, base);
 
 	MN_PopWindow(qfalse);
-	CL_DisplayHomebasePopup(selectedAircraft, qtrue);
+	CL_DisplayHomebasePopup(ccs.selectedAircraft, qtrue);
 }
 
 /*========================================
@@ -546,13 +546,14 @@ static void CL_PopupInterceptBaseClick_f (void)
 	installation_t *installation = NULL;
 	qboolean atLeastOneBase = qfalse;
 
-	/* If popup is opened, that means that ufo is selected on geoscape */
-	assert(selectedUFO);
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\tnum=num in base list\n", Cmd_Argv(0));
 		return;
 	}
+
+	/* If popup is opened, that means that ufo is selected on geoscape */
+	if (!ccs.selectedUFO)
+		return;
 
 	num = atoi(Cmd_Argv(1));
 
@@ -600,12 +601,12 @@ static void CL_PopupInterceptBaseClick_f (void)
 	assert(base || installation);
 	if (installation) {
 		for (i = 0; i < installation->installationTemplate->maxBatteries; i++)
-			installation->batteries[i].target = selectedUFO;
+			installation->batteries[i].target = ccs.selectedUFO;
 	} else {
 		for (i = 0; i < base->numBatteries; i++)
-			base->batteries[i].target = selectedUFO;
+			base->batteries[i].target = ccs.selectedUFO;
 		for (i = 0; i < base->numLasers; i++)
-			base->lasers[i].target = selectedUFO;
+			base->lasers[i].target = ccs.selectedUFO;
 	}
 
 	MN_PopWindow(qfalse);
