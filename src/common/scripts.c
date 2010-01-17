@@ -152,7 +152,7 @@ qboolean Com_UnregisterConstVariable (const char *name)
 							if (prev)
 								prev->hash_next = b->hash_next;
 							else
-								com_constNameInt_hash[hash] = com_constNameInt_hash[hash]->next;
+								com_constNameInt_hash[hash] = com_constNameInt_hash[hash]->hash_next;
 							break;
 						}
 					}
