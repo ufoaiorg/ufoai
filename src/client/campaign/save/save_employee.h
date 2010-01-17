@@ -32,12 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_EMPLOYEE_UGV "UGV"
 #define SAVE_EMPLOYEE_CHR "character"
 
+#define SAVE_EMPLOYEETYPE_NAMESPACE "saveEmployeeType"
 const constListEntry_t saveEmployeeConstants[] = {
-	{"saveEmployeeType::soldier", EMPL_SOLDIER},
-	{"saveEmployeeType::scientist", EMPL_SCIENTIST},
-	{"saveEmployeeType::worker", EMPL_WORKER},
-	{"saveEmployeeType::pilot", EMPL_PILOT},
-	{"saveEmployeeType::robot", EMPL_ROBOT},
+	{SAVE_EMPLOYEETYPE_NAMESPACE"::soldier", EMPL_SOLDIER},
+	{SAVE_EMPLOYEETYPE_NAMESPACE"::scientist", EMPL_SCIENTIST},
+	{SAVE_EMPLOYEETYPE_NAMESPACE"::worker", EMPL_WORKER},
+	{SAVE_EMPLOYEETYPE_NAMESPACE"::pilot", EMPL_PILOT},
+	{SAVE_EMPLOYEETYPE_NAMESPACE"::robot", EMPL_ROBOT},
 	{NULL, -1}
 };
 
