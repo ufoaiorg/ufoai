@@ -251,11 +251,10 @@ void G_SendInvisible (player_t* player)
 
 	assert(team != TEAM_NO_ACTIVE);
 	if (level.num_alive[team]) {
-		int i;
-		edict_t* ent;
+		edict_t* ent = NULL;
 		/* check visibility */
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-			if (ent->inuse && ent->team != team && G_IsActor(ent)) {
+		while ((ent = G_EdictsGetNextActor(ent))) {
+			if (ent->team != team) {
 				/* not visible for this team - so add the le only */
 				if (!G_IsVisibleForTeam(ent, team)) {
 					/* parsed in CL_ActorAdd */
@@ -892,8 +891,7 @@ static void G_GetStartingTeam (const player_t* player)
  */
 static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
 {
-	int i;
-	edict_t *ent;
+	edict_t *ent = NULL;
 
 	/* Abort for non-spawnpoints */
 	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
@@ -901,14 +899,14 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 	if (level.randomSpawn) {
 		edict_t *list[MAX_EDICTS];
 		int count = 0;
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		while ((ent = G_EdictsGetNext(ent)))
 			if (ent->type == spawnType && player->pers.team == ent->team)
 				list[count++] = ent;
 
 		if (count)
 			return list[rand() % count];
 	} else {
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		while ((ent = G_EdictsGetNext(ent)))
 			if (ent->type == spawnType && player->pers.team == ent->team)
 				return ent;
 	}
