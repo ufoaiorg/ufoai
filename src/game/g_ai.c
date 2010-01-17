@@ -115,32 +115,26 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 	switch (ent->team) {
 	case TEAM_ALIEN: {
 		/* only use the door when there is no civilian or phalanx to kill */
-		int i;
-		const edict_t *check;
+		edict_t *check = NULL;
 
 		/* see if there are enemies */
-		for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-			if (!check->inuse)
-				continue;
+		while ((check = G_EdictsGetNextLivingActor(check))) {
 			/* don't check for aliens */
 			if (check->team == ent->team)
 				continue;
-			/* if it's an actor and he's still living */
-			if (G_IsLivingActor(check)) {
-				/* check whether the origin of the enemy is inside the
-				 * AI actors view frustum */
-				float actorVis;
-				qboolean frustum = G_FrustumVis(check, ent->origin);
-				if (!frustum)
-					continue;
-				/* check whether the enemy is close enough to change the state */
-				if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
-					continue;
-				actorVis = G_ActorVis(check->origin, ent, qtrue);
-				/* there is a visible enemy, don't use that door */
-				if (actorVis > ACTOR_VIS_0)
-					return qfalse;
-				}
+			/* check whether the origin of the enemy is inside the
+			 * AI actors view frustum */
+			float actorVis;
+			qboolean frustum = G_FrustumVis(check, ent->origin);
+			if (!frustum)
+				continue;
+			/* check whether the enemy is close enough to change the state */
+			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+				continue;
+			actorVis = G_ActorVis(check->origin, ent, qtrue);
+			/* there is a visible enemy, don't use that door */
+			if (actorVis > ACTOR_VIS_0)
+				return qfalse;
 			}
 		}
 		break;
@@ -163,31 +157,25 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
  */
 static qboolean AI_CheckCrouch (const edict_t *ent)
 {
-	int i;
-	const edict_t *check;
+	edict_t *check = NULL;
 
 	/* see if we are very well visible by an enemy */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		if (!check->inuse)
-			continue;
+	while ((check = G_EdictsGetNextLivingActor(check))) {
 		/* don't check for civilians or aliens */
 		if (check->team == ent->team || G_IsCivilian(check))
 			continue;
-		/* if it's an actor and he's still living */
-		if (G_IsLivingActor(check)) {
-			/* check whether the origin of the enemy is inside the
-			 * AI actors view frustum */
-			float actorVis;
-			qboolean frustum = G_FrustumVis(check, ent->origin);
-			if (!frustum)
-				continue;
-			/* check whether the enemy is close enough to change the state */
-			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
-				continue;
-			actorVis = G_ActorVis(check->origin, ent, qtrue);
-			if (actorVis >= ACTOR_VIS_50)
-				return qtrue;
-		}
+		/* check whether the origin of the enemy is inside the
+		 * AI actors view frustum */
+		float actorVis;
+		qboolean frustum = G_FrustumVis(check, ent->origin);
+		if (!frustum)
+			continue;
+		/* check whether the enemy is close enough to change the state */
+		if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
+			continue;
+		actorVis = G_ActorVis(check->origin, ent, qtrue);
+		if (actorVis >= ACTOR_VIS_50)
+			return qtrue;
 	}
 	return qfalse;
 }
@@ -258,10 +246,10 @@ static const item_t *AI_GetItemForShootType (int shootType, const edict_t *ent)
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
-	edict_t *check;
+	edict_t *check = NULL;
 	int tu;
 	pos_t move;
-	int i, fm, shots;
+	int fm, shots;
 	float dist, minDist;
 	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
 	const objDef_t *ad;
@@ -306,9 +294,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			shots = tu / fd->time;
 			if (shots) {
 				/* search best target */
-				for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-					if (check->inuse && G_IsLivingActor(check) && ent != check
-						&& (check->team != ent->team || G_IsInsane(ent))) {
+				while ((check = G_EdictsGetNextLivingActor(check))) {
+					if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
 
 						/* don't shoot civilians in mp */
 						if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
@@ -397,6 +384,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						}
 				}
 #endif
+				}
 			}
 		} /* firedefs */
 	}
@@ -474,12 +462,14 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	/* reward closing in */
 	minDist = CLOSE_IN_DIST;
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && check->team != ent->team && G_IsLivingActor(ent)) {
+	check = NULL;
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (check->team != ent->team) {
 			dist = VectorDist(ent->origin, check->origin);
 			if (dist < minDist)
 				minDist = dist;
 		}
+	}
 	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
 
 	return bestActionPoints;
@@ -495,8 +485,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
  */
 static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
-	edict_t *check;
-	int i, tu;
+	edict_t *check = NULL;
+	int tu;
 	pos_t move;
 	float minDist, minDistCivilian, minDistFighter;
 	float bestActionPoints;
@@ -530,11 +520,9 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+	while ((check = G_EdictsGetNextLivingActor(check))) {
 		float dist;
-		if (!check->inuse || ent == check)
-			continue;
-		if (!G_IsLivingActor(check))
+		if (ent == check)
 			continue;
 		dist = VectorDist(ent->origin, check->origin);
 		/* if we are trying to walk to a position that is occupied by another actor already we just return */
@@ -583,12 +571,13 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		delta /= 10.0;
 
 	/* try to hide */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		if (!check->inuse || ent == check)
+	check = NULL;
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (ent == check)
 			continue;
 		if (!(G_IsAlien(check) || G_IsInsane(ent)))
 			continue;
-		if (G_IsLivingActor(check) && G_ActorVis(check->origin, ent, qtrue) > 0.25)
+		if (G_ActorVis(check->origin, ent, qtrue) > 0.25)
 			reactionTrap += 25.0;
 	}
 	delta -= reactionTrap;
