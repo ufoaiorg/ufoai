@@ -211,13 +211,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			CL_DisplayPopupInterceptMission(ccs.selectedMission);
 			return;
 		}
-
-		MAP_ResetAction();
-		ccs.selectedMission = MAP_GetMissionByIDX(id);
-
-		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", ccs.selectedMission->id,
-				ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
-		ccs.mapAction = MA_INTERCEPT;
+		MAP_SelectMission(MAP_GetMissionByIDX(id));
 		if (multiSelection) {
 			/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
 			CL_DisplayPopupInterceptMission(ccs.selectedMission);
@@ -943,6 +937,19 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 }
 
 /**
+ * @brief Will set the vector for the geoscape position
+ * @param vector[out] The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
+ * @param objectPos[in] The position vector of the object to transform.
+ */
+static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const vec2_t objectPos)
+{
+	if (cl_3dmap->integer)
+		VectorSet(vector, objectPos[0], -objectPos[1], 0);
+	else
+		Vector2Set(vector, objectPos[0], objectPos[1]);
+}
+
+/**
  * @brief Returns position of the model corresponding to centerOnEventIdx.
  * @param[out] vector Latitude and longitude of the model (finalAngle[2] is always 0).
  * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
@@ -999,12 +1006,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		}
 		assert(mission);
 
-		if (cl_3dmap->integer)
-			VectorSet(vector, mission->pos[0], -mission->pos[1], 0);
-		else
-			Vector2Set(vector, mission->pos[0], mission->pos[1]);
-		MAP_ResetAction();
-		ccs.selectedMission = mission;
+		MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
+		MAP_SelectMission(mission);
 		return;
 	}
 	counter += numMissions;
@@ -1017,10 +1020,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				continue;
 
 			if (counter == centerOnEventIdx) {
-				if (cl_3dmap->integer)
-					VectorSet(vector, ccs.bases[baseIdx].pos[0], -ccs.bases[baseIdx].pos[1], 0);
-				else
-					Vector2Set(vector, ccs.bases[baseIdx].pos[0], ccs.bases[baseIdx].pos[1]);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, ccs.bases[baseIdx].pos);
 				return;
 			}
 			counter++;
@@ -1037,10 +1037,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				continue;
 
 			if (counter == centerOnEventIdx) {
-				if (cl_3dmap->integer)
-					VectorSet(vector, ccs.installations[instIdx].pos[0], -ccs.installations[instIdx].pos[1], 0);
-				else
-					Vector2Set(vector, ccs.installations[instIdx].pos[0], ccs.installations[instIdx].pos[1]);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, ccs.installations[instIdx].pos);
 				return;
 			}
 			counter++;
@@ -1057,10 +1054,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
-					if (cl_3dmap->integer)
-						VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
-					else
-						Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
+					MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
 					MAP_SelectAircraft(aircraft);
 					return;
 				}
@@ -1073,10 +1067,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			if (centerOnEventIdx == counter) {
-				if (cl_3dmap->integer)
-					VectorSet(vector, aircraft->pos[0], -aircraft->pos[1], 0);
-				else
-					Vector2Set(vector, aircraft->pos[0], aircraft->pos[1]);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
 				MAP_SelectUFO(aircraft);
 				return;
 			}
@@ -1090,7 +1081,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  * @brief Switch to next model on 2D and 3D geoscape.
  * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
  * @note This function sets the value of smoothFinalGlobeAngle (for 3D) or smoothFinal2DGeoscapeCenter (for 2D),
- *  which contains the finale value that ccs.angles or ccs.centre must respectively take.
+ *  which contains the final value that ccs.angles or ccs.centre must respectively take.
  * @sa MAP_GetGeoscapeAngle
  * @sa MAP_DrawMap
  * @sa MAP3D_SmoothRotate
