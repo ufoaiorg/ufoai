@@ -1126,6 +1126,8 @@ void CL_Frame (int now, void *data)
 
 	IN_Frame();
 
+	GAME_Frame();
+
 	/* update camera position */
 	CL_CameraMove();
 

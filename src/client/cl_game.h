@@ -57,6 +57,7 @@ void GAME_CharacterCvars(const character_t *chr);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_Drop(void);
+void GAME_Frame(void);
 
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"
