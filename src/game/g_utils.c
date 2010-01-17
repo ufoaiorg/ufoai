@@ -31,9 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief A set of functions to encapsulate the access to the list of entities
- * @note only happens when a new game/map is started
  */
-static edict_t* G_EdictsGetNext (edict_t* lastEnt)
+edict_t* G_EdictsGetNext (edict_t* lastEnt)
 {
 	edict_t* endOfEnts = &g_edicts[globals.num_edicts];
 	edict_t* ent;

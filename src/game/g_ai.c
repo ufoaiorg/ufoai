@@ -188,10 +188,9 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 {
 	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
 	if (ent->morale > mor_brave->integer) {
-		edict_t *from;
-		int i;
+		edict_t *from = NULL;
 		/* test if check is visible */
-		for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
+		while ((from = G_EdictsGetNext(from))) {
 			/** @todo using the visflags of the ai should be faster here */
 			if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM)) {
 				const invList_t *invlist = LEFT(from);
@@ -210,6 +209,7 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 						return qtrue;
 				}
 			}
+		}
 	}
 	return qfalse;
 }
@@ -360,7 +360,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				 */
 				if (!aia->target) {
 					/* search best none human target */
-					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+					check = NULL;
+					while ((check = G_EdictsGetNext(check))) {
 						if (check->inuse && G_IsBreakable(check)) {
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;
@@ -382,6 +383,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							/* take the first best breakable or door and try to shoot it */
 							break;
 						}
+					}
 				}
 #endif
 				}
@@ -643,10 +645,9 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 	}
 	case TEAM_ALIEN:
 	{
-		edict_t *mission;
-		int i;
 		/* search for a mission edict */
-		for (i = 0, mission = g_edicts; i < globals.num_edicts; i++, mission++)
+		edict_t *mission = NULL;
+		while ((mission = G_EdictsGetNext(mission))) {
 			if (mission->inuse && mission->type == ET_MISSION) {
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
@@ -657,7 +658,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 					/* try to prevent the phalanx from reaching their mission target */
 					bestActionPoints = GUETE_MISSION_OPPONENT_TARGET;
 			}
-
+		}
 		break;
 	}
 	}
