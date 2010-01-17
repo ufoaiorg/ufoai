@@ -842,7 +842,7 @@ void RS_ResearchRun (void)
 			continue;
 
 		if (!RS_RequirementsMet(&tech->requireAND, &tech->requireOR, tech->base)) {
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s does not met at %s. Research halted!"), _(tech->name), tech->base->name);
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Research prerequisites of %s do not met at %s. Research halted!"), _(tech->name), tech->base->name);
 			MSO_CheckAddNewMessage(NT_RESEARCH_HALTED, _("Research halted"), cp_messageBuffer, qfalse, MSG_RESEARCH_HALTED, NULL);
 
 			while (tech->scientists > 0)
