@@ -40,13 +40,12 @@ typedef enum {
  */
 static qboolean G_TeamPointVis (int team, const vec3_t point)
 {
-	const edict_t *from;
+	edict_t *from = NULL;
 	vec3_t eye;
-	int i;
 
 	/* test if point is visible from team */
-	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
-		if (from->inuse && from->team == team && G_IsLivingActor(from) && G_FrustumVis(from, point)) {
+	while ((from = G_EdictsGetNextLivingActor(from))) {
+		if (from->team == team && G_FrustumVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
 			if (G_IsCrouched(from))
@@ -58,6 +57,7 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 			if (!gi.TestLine(eye, point, TL_FLAG_NONE))
 				return qtrue;
 		}
+	}
 
 	/* not visible */
 	return qfalse;

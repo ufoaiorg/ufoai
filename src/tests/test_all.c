@@ -30,11 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef int (*testSuite_t) (void);
 
 /* include the tests here */
+#include "test_generic.h"
 #include "test_routing.h"
 #include "test_inventory.h"
 #include "test_rma.h"
 
 static const testSuite_t testSuites[] = {
+	UFO_AddGenericTests,
 	UFO_AddRoutingTests,
 	UFO_AddInventoryTests,
 	UFO_AddRandomMapAssemblyTests,

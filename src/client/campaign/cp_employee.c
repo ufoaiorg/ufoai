@@ -201,29 +201,6 @@ employeeType_t E_GetEmployeeType (const char* type)
 }
 
 /**
- * @brief Convert employeeType_t to string ID
- * @param type Employee Type
- * @return Pointer to employee type string
- */
-const char *E_GetEmployeeTypeID (employeeType_t type)
-{
-	switch (type) {
-	case EMPL_SCIENTIST:
-		return "EMPL_SCIENTIST";
-	case EMPL_SOLDIER:
-		return "EMPL_SOLDIER";
-	case EMPL_WORKER:
-		return "EMPL_WORKER";
-	case EMPL_PILOT:
-		return "EMPL_PILOT";
-	case EMPL_ROBOT:
-		return "EMPL_ROBOT";
-	default:
-		Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
-	}
-}
-
-/**
  * @brief Clears the employees list for loaded and new games
  * @sa CL_ResetSinglePlayerData
  * @sa E_DeleteEmployee
@@ -1207,11 +1184,12 @@ qboolean E_SaveXML (mxml_node_t *p)
 {
 	employeeType_t j;
 
+	Com_RegisterConstList(saveEmployeeConstants);
 	for (j = 0; j < MAX_EMPL; j++) {
 		int i;
 		mxml_node_t *snode = mxml_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
-		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, E_GetEmployeeTypeID(j));
+		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable("saveEmployeeType", j));
 		for (i = 0; i < ccs.numEmployees[j]; i++) {
 			const employee_t *e = &ccs.employees[j][i];
 			mxml_node_t * chrNode;
@@ -1234,6 +1212,7 @@ qboolean E_SaveXML (mxml_node_t *p)
 			CL_SaveCharacterXML(chrNode, e->chr);
 		}
 	}
+	Com_UnregisterConstList(saveEmployeeConstants);
 
 	return qtrue;
 }
@@ -1245,15 +1224,19 @@ qboolean E_SaveXML (mxml_node_t *p)
 qboolean E_LoadXML (mxml_node_t *p)
 {
 	mxml_node_t * snode;
+	qboolean success = qtrue;
 
+	Com_RegisterConstList(saveEmployeeConstants);
 	for (snode = mxml_GetNode(p, SAVE_EMPLOYEE_EMPLOYEES); snode;
 			snode = mxml_GetNextNode(snode, p , SAVE_EMPLOYEE_EMPLOYEES)) {
 		int i;
 		mxml_node_t * ssnode;
-		employeeType_t emplType = E_GetEmployeeType(mxml_GetString(snode, SAVE_EMPLOYEE_TYPE));
-
-		if (emplType == MAX_EMPL)
-			return qfalse;
+		employeeType_t emplType;
+		
+		if (!Com_GetConstInt(mxml_GetString(snode, SAVE_EMPLOYEE_TYPE), (int*) &emplType)) {
+			success = qfalse;
+			break;
+		}
 
 		for (ssnode = mxml_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE), i = 0; i < MAX_EMPLOYEES && ssnode;
 				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE), i++) {
@@ -1265,8 +1248,10 @@ qboolean E_LoadXML (mxml_node_t *p)
 
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = mxml_GetInt(ssnode, SAVE_EMPLOYEE_IDX, MAX_EMPLOYEES);
-			if (e->idx >= MAX_EMPLOYEES)
-				return qfalse;
+			if (e->idx >= MAX_EMPLOYEES) {
+				success = qfalse;
+				break;
+			}
 			e->type = emplType;
 			/* base */
 			assert(ccs.numBases);	/* Just in case the order is ever changed. */
@@ -1280,19 +1265,27 @@ qboolean E_LoadXML (mxml_node_t *p)
 			e->building = (e->baseHired && buildingIDX >= 0) ? &ccs.buildings[e->baseHired->idx][buildingIDX] : NULL;
 			/* nation */
 			e->nation = NAT_GetNationByID(mxml_GetString(ssnode, SAVE_EMPLOYEE_NATION));
-			if (!e->nation)
-				return qfalse;
+			if (!e->nation) {
+				success = qfalse;
+				break;
+			}
 			/* UGV-Type */
 			e->ugv = CL_GetUGVByIDSilent(mxml_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			/* Character Data */
 			chrNode = mxml_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
-			if (!chrNode)
-				return qfalse;
+			if (!chrNode) {
+				success = qfalse;
+				break;
+			}
 			CL_LoadCharacterXML(chrNode, &e->chr);
 		}
+		if (!success)
+			break;
 		ccs.numEmployees[emplType] = i;
 	}
-	return qtrue;
+	Com_UnregisterConstList(saveEmployeeConstants);
+
+	return success;
 }
 
 /**

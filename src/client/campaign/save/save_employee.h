@@ -32,12 +32,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_EMPLOYEE_UGV "UGV"
 #define SAVE_EMPLOYEE_CHR "character"
 
+const constListEntry_t saveEmployeeConstants[] = {
+	{"saveEmployeeType::soldier", EMPL_SOLDIER},
+	{"saveEmployeeType::scientist", EMPL_SCIENTIST},
+	{"saveEmployeeType::worker", EMPL_WORKER},
+	{"saveEmployeeType::pilot", EMPL_PILOT},
+	{"saveEmployeeType::robot", EMPL_ROBOT},
+	{NULL, -1}
+};
+
 /*
 DTD:
 
 <!ELEMENT employees employee*>
 <!ATTLIST employees
-	type		#CDATA		#REQUIRED
+	type		soldier|
+				scientist|
+				worker|
+				pilot|robot	#REQUIRED
 >
 
 <!ELEMENT employee character>

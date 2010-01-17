@@ -82,12 +82,13 @@ void G_CheckForceEndRound (void)
  */
 static int G_PlayerSoldiersCount (const player_t* player)
 {
-	int i, cnt = 0;
-	edict_t *ent;
+	int cnt = 0;
+	edict_t *ent = NULL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && ent->pnum == player->num)
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (ent->pnum == player->num)
 			cnt++;
+	}
 
 	return cnt;
 }
@@ -104,12 +105,11 @@ static int G_PlayerSoldiersCount (const player_t* player)
  */
 static void G_UpdateStunState (int team)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 	const int regen = 1;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && ent->team == team) {
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (ent->team == team) {
 			if (ent->STUN > 0 && (ent->state & ~STATE_STUN)) {
 				if (regen > ent->STUN)
 					ent->STUN = 0;
@@ -117,6 +117,7 @@ static void G_UpdateStunState (int team)
 					ent->STUN -= regen;
 			}
 		}
+	}
 }
 
 /**

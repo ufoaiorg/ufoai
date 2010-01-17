@@ -30,10 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 /**
- * @brief A set of functions to encapsulate the access to the list of entities
- * @note only happens when a new game/map is started
+ * @brief A functions to encapsulate the access to the list of entities
  */
-static edict_t* G_EdictsGetNext (edict_t* lastEnt)
+edict_t* G_EdictsGetNext (edict_t* lastEnt)
 {
 	edict_t* endOfEnts = &g_edicts[globals.num_edicts];
 	edict_t* ent;
@@ -52,6 +51,10 @@ static edict_t* G_EdictsGetNext (edict_t* lastEnt)
 		return ent;
 }
 
+/**
+ * @brief A functions to encapsulate the access to the list of living
+ * actor entities
+ */
 edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;
@@ -63,6 +66,10 @@ edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 	return ent;
 }
 
+/**
+ * @brief A functions to encapsulate the access to the list of living
+ * or dead actor entities
+ */
 edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;

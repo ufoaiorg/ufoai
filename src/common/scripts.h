@@ -229,6 +229,16 @@ typedef struct terrainType_s {
 
 const terrainType_t* Com_GetTerrainType(const char *textureName);
 
+/**
+ * @brief list of script aliases to register
+ * @note must be terminated with a NULL ({NULL, -1}) entry!
+ * @sa saveEmployeeConstants[]
+ */
+typedef struct constListEntry_s {
+	char *name;
+	int value;
+} constListEntry_t;
+
 const char *Com_GiveName(int gender, teamDef_t *td);
 const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
@@ -245,7 +255,13 @@ void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 qboolean Com_GetConstInt(const char *name, int *value);
 const char* Com_GetConstVariable(const char *namespace, int value);
-void Com_RemoveConstVariable(const char *name);
+qboolean Com_UnregisterConstVariable(const char *name);
 void Com_RegisterConstInt(const char *name, int value);
+void Com_RegisterConstList(const constListEntry_t constList[]);
+void Com_UnregisterConstList(const constListEntry_t constList[]);
+
+void Com_RegisterConstList(const constListEntry_t constList[]);
+void Com_UnregisterConstList(const constListEntry_t constList[]);
 
 #endif /* SCRIPTS_H */
+

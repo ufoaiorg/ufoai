@@ -553,7 +553,7 @@ static int AIL_see (lua_State *L)
 {
 	int vision, team;
 	int i, j, k, n, cur;
-	edict_t *check;
+	edict_t *check = NULL;
 	aiActor_t target;
 	edict_t *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
 	float distLookup[MAX_EDICTS];
@@ -603,14 +603,15 @@ static int AIL_see (lua_State *L)
 
 	n = 0;
 	/* Get visible things. */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && G_IsLivingActor(check) && AIL_ent != check
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (AIL_ent != check
 		 && vision == 0 /* Vision checks. */
 		 && G_IsVisibleForTeam(check, team)
 		 && (team == TEAM_ALL || check->team == team)) {/* Check for team match if needed. */
 			distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}
+	}
 
 	/* Sort by distance - nearest first. */
 	for (i = 0; i < n; i++) { /* Until we fill sorted */

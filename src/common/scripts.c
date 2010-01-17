@@ -122,7 +122,7 @@ const char* Com_GetConstVariable (const char *namespace, int value)
  * @sa Com_RegisterConstInt
  * @sa Com_GetConstVariable
  */
-void Com_RemoveConstVariable (const char *name)
+qboolean Com_UnregisterConstVariable (const char *name)
 {
 	com_constNameInt_t *a;
 	com_constNameInt_t *prev = NULL;
@@ -131,32 +131,38 @@ void Com_RemoveConstVariable (const char *name)
 	while (a) {
 		if (a->fullname) {
 			if (!strcmp(a->fullname, name)) {
-				const unsigned int hash = Com_HashKey(name, CONSTNAMEINT_HASH_SIZE);
+				const char *variable = Com_ConstIntGetVariable(name);
+				const unsigned int hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 				com_constNameInt_t *b;
 
 				if (prev)
 					prev->next = a->next;
+				else
+					com_constNameInt = a->next;
 
 				prev = NULL;
 
 				for (b = com_constNameInt_hash[hash]; b; prev = b, b = b->hash_next) {
-					if (!strcmp(name, b->fullname)) {
-						if (!prev)
-							com_constNameInt_hash[hash] = NULL;
-						else
-							prev->hash_next = b->hash_next;
-						break;
+					if (b->fullname) {
+						if (!strcmp(name, b->fullname)) {
+							if (prev)
+								prev->hash_next = b->hash_next;
+							else
+								com_constNameInt_hash[hash] = NULL;
+							break;
+						}
 					}
 				}
 				if (a->fullname)
 					Mem_Free(a->fullname);
 				Mem_Free(a);
-				break;
+				return qtrue;
 			}
 		}
 		prev = a;
 		a = a->next;
 	}
+	return qfalse;
 }
 
 /**
@@ -168,7 +174,7 @@ void Com_RemoveConstVariable (const char *name)
  * @note You still can't register the same name twice even if you put it into different namespaces (yet). The
  * namespaces are only for converting an integer back into a string.
  * @sa Com_GetConstInt
- * @sa Com_RemoveConstVariable
+ * @sa Com_UnregisterConstVariable
  */
 void Com_RegisterConstInt (const char *name, int value)
 {
@@ -201,6 +207,34 @@ void Com_RegisterConstInt (const char *name, int value)
 	com_constNameInt_hash[hash] = a;
 	com_constNameInt = a;
 	a->value = value;
+}
+
+/**
+ * @brief Unregisters a list of string aliases
+ * @param[in] constList Array of string => int mappings. Must be terminated
+ * with a NULL string ({NULL, -1}) line
+ * @sa constListEntry_t
+ */
+void Com_UnregisterConstList (const constListEntry_t constList[])
+{
+	int i;
+
+	for (i = 0; constList[i].name != NULL; i++)
+		Com_UnregisterConstVariable(constList[i].name);
+}
+
+/**
+ * @brief Registers a list of string aliases
+ * @param[in] constList Array of string => int mappings. Must be terminated
+ * with a NULL string ({NULL, -1}) line
+ * @sa constListEntry_t
+ */
+void Com_RegisterConstList (const constListEntry_t constList[])
+{
+	int i;
+
+	for (i = 0; constList[i].name != NULL; i++)
+		Com_RegisterConstInt(constList[i].name, constList[i].value);
 }
 
 /**
