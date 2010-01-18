@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-15 17:30+0100\n"
-"PO-Revision-Date: 2010-01-15 17:39+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2010-01-18 07:09+0100\n"
+"Last-Translator: Borsti67 <i-c-q@hiereinwerfen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,9 +50,8 @@ msgid "Construction"
 msgstr "Konstruktion"
 
 #: ../base/maps/desert.ump:53
-#, fuzzy
 msgid "Crashed Harvester"
-msgstr "UFO - Sammler"
+msgstr "Abgestürzter Sammler"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
@@ -112,14 +111,12 @@ msgid "Japan"
 msgstr "Japan"
 
 #: ../base/maps/japan.ump:293
-#, fuzzy
 msgid "Small eastern park."
-msgstr "Kleiner Hangar"
+msgstr "Kleiner östlicher Park."
 
 #: ../base/maps/japan.ump:321
-#, fuzzy
 msgid "Harvester"
-msgstr "UFO-Saml."
+msgstr "Sammler"
 
 #: ../base/maps/laboratory.ump:63
 #: ../base/ufos/basemanagement.ufo:283
@@ -289,7 +286,7 @@ msgstr "UFO - Sammler"
 
 #: ../base/ufos/aircraftmanagement.ufo:495
 msgid "Harvester U"
-msgstr "UFO-Saml."
+msgstr "UFO-Samml"
 
 #: ../base/ufos/aircraftmanagement.ufo:535
 #: ../base/ufos/otheritems.ufo:99
@@ -308,6 +305,7 @@ msgid "UFO - Corrupter"
 msgstr "UFO - Corrupter"
 
 #: ../base/ufos/aircraftmanagement.ufo:576
+#, fuzzy
 msgid "Corrupter U"
 msgstr "Corrupter U"
 
@@ -1420,7 +1418,7 @@ msgstr "Radarturm"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr ""
+msgstr "Der Radarturm ist eine unbemannte Installation, die überall in der Welt errichtet werden kann, um die Aufklärungs-Reichweite zu erhöhen. Er ist billig und sehr nützlich, hat aber keine sonderlich effektive Tarnung. Wenn ein UFO die aktive Ortung bemerkt, wird es möglicherweise versuchen, den Turm zu zerstören. Es wird empfohlen, Radartürme mit Flugabwehr-Geschützen zu sichern."
 
 #: ../base/ufos/installation.ufo:23
 #: ../base/ufos/ui/geoscape.ufo:1136
@@ -1430,7 +1428,7 @@ msgstr "UFO Lagerhalle"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr ""
+msgstr "Die UFO-Lagerhalle ist ein getarnter Lagerbereich für erbeutete UFOs. Sie kann überall in der Welt errichtet werden, um UFOs zu demontieren und zu erforschen. UFOs können auch zu anderen Lagerhallen transferiert werden. Die Erforschung bzw. Demontage kann von jeder Basis mit passender Einrichtung vorgenommen werden, allerdings dauert es um so länger, je weiter sie von der Lagerhalle entfernt ist."
 
 #: ../base/ufos/installation.ufo:38
 #: ../base/ufos/ui/geoscape.ufo:1094
@@ -1439,7 +1437,7 @@ msgstr "Luftabwehr Stellung"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr ""
+msgstr "Die Luftabwehr-Stellung ist eine unbemannte Einrichtung, die überall in der Welt errichtet werden kann, um entdeckte UFOs automatisch mit Boden-Luft-Raketen anzugreifen. Sie ist billig und höchst nützlich, aber ihre Tarnung ist nicht sehr effektiv. Wenn UFOs den Beschuss zurückverfolgen, werden sie versuchen, die Stellung zu zerstören. Diese ist zwar robust, kann einem mehrfachen Bombardement aber nicht standhalten. Der Nachschub an Raketen erfolgt durch UN-Truppen."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -1565,9 +1563,8 @@ msgid "An industrial compound."
 msgstr "Ein Industriekomplex."
 
 #: ../base/ufos/maps.ufo:600
-#, fuzzy
 msgid "Cemetery terror mission."
-msgstr "Terrormission in der Wildnis."
+msgstr "Terrormission auf einem Friedhof."
 
 #: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
@@ -1684,8 +1681,9 @@ msgid "An urban district in an oriental region."
 msgstr "Ein Stadtbezirk einer orientalischen Region."
 
 #: ../base/ufos/maps.ufo:2289
+#, fuzzy
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "Unterirdische Rohr-Konstruktions-Stätte."
 
 #: ../base/ufos/maps.ufo:2336
 msgid "A subway station in a suburban part of town."
@@ -1725,14 +1723,12 @@ msgid "A luxurious vacation resort."
 msgstr "Eine luxuriöse Urlaubsanlage."
 
 #: ../base/ufos/maps.ufo:2811
-#, fuzzy
 msgid "A suburb that has been visited by UFO."
-msgstr "Eine afrikanische Vorstadt hat Besuch von einem Sammler UFO bekommen."
+msgstr "Eine Vorstadt hat Besuch von einem UFO bekommen."
 
 #: ../base/ufos/maps.ufo:2863
-#, fuzzy
 msgid "A suburb that has received a visit from a Harvester."
-msgstr "Eine afrikanische Vorstadt hat Besuch von einem Sammler UFO bekommen."
+msgstr "Eine Vorstadt hat Besuch von einem Sammler bekommen."
 
 #: ../base/ufos/maps.ufo:2914
 msgid "An alien Harvester has crashed in the wastelands."
@@ -8303,71 +8299,68 @@ msgid "End round"
 msgstr "Runde beenden"
 
 #: ../base/ufos/seq_tutorials.ufo:771
-#, fuzzy
 msgid "How to play skirmish"
-msgstr "Mehrspielermodus Anleitung"
+msgstr "Anleitung für Einzelgefecht"
 
 #: ../base/ufos/seq_tutorials.ufo:785
-#, fuzzy
 msgid "Skirmish tutorial"
-msgstr "Einzelgefecht"
+msgstr "Einzelgefecht Tutorial"
 
 #: ../base/ufos/seq_tutorials.ufo:796
 msgid "Skirmish is type of fast game."
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:835
-#, fuzzy
 msgid "Equipment selection"
-msgstr "Teamauswahl"
+msgstr "Auswahl der Ausrüstung"
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid "Day or night version of map to play"
-msgstr ""
+msgstr "Tag- oder Nachtversion der zu spielenden Karte"
 
 #: ../base/ufos/seq_tutorials.ufo:877
 msgid "How many aliens will fight versus you"
-msgstr ""
+msgstr "Wie viele Aliens werden gegen Sie antreten"
 
 #: ../base/ufos/seq_tutorials.ufo:898
-#, fuzzy
 msgid "Select your team"
-msgstr "Team speichern"
+msgstr "Team wählen"
 
 #: ../base/ufos/seq_tutorials.ufo:919
 msgid ""
 "Select UFO to secure \\n"
 "(if possible for current map)"
 msgstr ""
+"Zu sicherndes UFO wählen \\n"
+"(sofern für diese Karte möglich)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
 msgid ""
 "Select dropship \\n"
 "(if possible for current map)"
 msgstr ""
+"Landungsschiff wählen \\n"
+"(sofern für diese Karte möglich)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
-msgstr ""
+msgstr "Zu spielende Karte wählen"
 
 #: ../base/ufos/seq_tutorials.ufo:974
-#, fuzzy
 msgid "And..."
-msgstr "..."
+msgstr "Und..."
 
 #: ../base/ufos/seq_tutorials.ufo:991
-#, fuzzy
 msgid "Start the game!"
-msgstr "Starte Spiel"
+msgstr "Spiel starten!"
 
 #: ../base/ufos/seq_tutorials.ufo:1003
-#, fuzzy
 msgid "Or..."
-msgstr "..."
+msgstr "Oder..."
 
 #: ../base/ufos/seq_tutorials.ufo:1022
 msgid "Exit to main menu"
-msgstr ""
+msgstr "Zurück zum Hauptmenü"
 
 #: ../base/ufos/seq_tutorials.ufo:1042
 msgid "How to play multiplayer"
@@ -8480,7 +8473,7 @@ msgstr "Passen Sie auf, was hinter Ihnen ist! Ihre Soldaten können nur Feinde i
 
 #: ../base/ufos/tips.ufo:23
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Bauen Sie eine Werkstatt und UFO-Hangars um UFOs zu demontieren."
+msgstr "Bauen Sie eine Werkstatt und UFO-Lagerhallen, um UFOs zu demontieren."
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -8596,7 +8589,7 @@ msgstr "Nutzen Sie Scharfschützen als Rückendeckung. Bringen Sie sie geduckt u
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr ""
+msgstr "Wenn Sie Abfangjäger gegen schnellere UFOs starten, sollten Sie dies tun, wenn es sich dicht bei der Basis befindet. So vermeiden Sie eine lange Verfolgungsjagd und sind vielleicht unmittelbar nach dem Start schon in Schussreichweite."
 
 #: ../base/ufos/tips.ufo:53
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
@@ -8997,22 +8990,20 @@ msgstr "Benutze Gegenstand"
 #: ../base/ufos/ui/althud.ufo:657
 #: ../base/ufos/ui/althud.ufo:717
 msgid "TUs"
-msgstr ""
+msgstr "ZEs"
 
 #: ../base/ufos/ui/althud.ufo:667
-#, fuzzy
 msgid "TUs remaining"
-msgstr "Übrige Munition"
+msgstr "Übrige ZEs"
 
 #: ../base/ufos/ui/althud.ufo:678
 msgid "TUs reserved"
-msgstr ""
+msgstr "reservierte ZEs"
 
 #: ../base/ufos/ui/althud.ufo:689
 #: ../base/ufos/ui/althud.ufo:725
-#, fuzzy
 msgid "Morale"
-msgstr "Moral  %i"
+msgstr "Moral"
 
 #: ../base/ufos/ui/althud.ufo:709
 msgid "Health"
@@ -9143,7 +9134,6 @@ msgid "Selected Item"
 msgstr "Gewählter Gegenstand"
 
 #: ../base/ufos/ui/basedefence.ufo:296
-#, fuzzy
 msgid "Surface to Air defences"
 msgstr "Boden-Luft-Abwehr"
 
@@ -9816,7 +9806,7 @@ msgstr "Neue Luftabwehr-Stellung"
 
 #: ../base/ufos/ui/geoscape.ufo:1415
 msgid "New UFO yard"
-msgstr "Neue UFO Lagerhalle"
+msgstr "Neue UFO-Lagerhalle"
 
 #: ../base/ufos/ui/geoscape.ufo:1428
 msgid "Installation Status"
@@ -10093,9 +10083,8 @@ msgid "Nation:"
 msgstr "Nation:"
 
 #: ../base/ufos/ui/lostwon.ufo:306
-#, fuzzy
 msgid "Sort nations by name"
-msgstr "Zielbasis"
+msgstr "Nationen nach Name sortieren"
 
 #: ../base/ufos/ui/lostwon.ufo:316
 msgid "Price:"
@@ -10103,7 +10092,7 @@ msgstr "Preis:"
 
 #: ../base/ufos/ui/lostwon.ufo:317
 msgid "Sort nations by price"
-msgstr ""
+msgstr "Nationen nach Preis sortieren"
 
 #: ../base/ufos/ui/lostwon.ufo:327
 msgid "Relations:"
@@ -10111,7 +10100,7 @@ msgstr "Beziehungen:"
 
 #: ../base/ufos/ui/lostwon.ufo:328
 msgid "Sort nations by relation"
-msgstr ""
+msgstr "Nationen nach Beziehung sortieren"
 
 #: ../base/ufos/ui/lostwon.ufo:377
 msgid "Selected nation:"
@@ -10597,7 +10586,7 @@ msgstr "Basisinformationen"
 
 #: ../base/ufos/ui/multiplayer.ufo:1158
 msgid "Display/hide the panel"
-msgstr ""
+msgstr "Panel anzeigen/verstecken"
 
 #: ../base/ufos/ui/multiplayer.ufo:1203
 msgid "Max. players per team"
@@ -10632,9 +10621,8 @@ msgid "Force start"
 msgstr "Erzwinge Start"
 
 #: ../base/ufos/ui/multiplayer.ufo:1354
-#, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
-msgstr "Starte das Spiel - auch wenn noch nicht alle Teams verbunden sind"
+msgstr "Starte das Spiel - auch wenn noch nicht alle Teams bereit/verbunden sind"
 
 #: ../base/ufos/ui/multiplayer.ufo:1365
 #: ../base/ufos/ui/multiplayer.ufo:1374
@@ -11003,7 +10991,7 @@ msgstr "Aktiviere:"
 
 #: ../base/ufos/ui/options.ufo:1097
 msgid "Enables/Disables Joysticks"
-msgstr ""
+msgstr "Joystick ein-/ausschalten"
 
 #: ../base/ufos/ui/options.ufo:1108
 msgid "Threshold:"
@@ -11306,9 +11294,8 @@ msgstr "Anzahl/Transfer"
 #: ../base/ufos/ui/transfer.ufo:368
 #: ../base/ufos/ui/transfer.ufo:379
 #: ../base/ufos/ui/transfer.ufo:390
-#, fuzzy
 msgid "Add/Remove item to transfer cargo"
-msgstr "Zielbasis auswählen"
+msgstr "Gegenstand zur Transfer-Fracht zufügen/entfernen"
 
 #: ../base/ufos/ui/transfer.ufo:516
 msgid "Destination base"
@@ -12011,26 +11998,20 @@ msgid ""
 msgstr "Nicht genug Zeiteinheiten.\n"
 
 #: client/battlescape/cl_hud.c:900
-#, fuzzy
 msgid "No weapon in right hand."
-msgstr "Waffe in rechter Hand"
+msgstr "Keine Waffe in rechter Hand."
 
 #: client/battlescape/cl_hud.c:902
-#, fuzzy
 msgid "No weapon in left hand."
-msgstr "Waffe in rechter Hand"
+msgstr "Keine Waffe in linker Hand."
 
 #: client/battlescape/cl_hud.c:911
-#, fuzzy
 msgid "Weapon in right hand cannot be reloaded."
-msgstr "Waffe in rechter Hand"
+msgstr "Waffe in der rechten Hand kann nicht nachgeladen werden."
 
 #: client/battlescape/cl_hud.c:913
-#, fuzzy
 msgid "Weapon in left hand cannot be reloaded."
-msgstr ""
-"Diese Waffe kann nicht\n"
-"einhändig benutzt werden\n"
+msgstr "Waffe in der linken Hand kann nicht nachgeladen werden."
 
 #: client/battlescape/cl_hud.c:920
 msgid "No reload possible for right hand, already fully loaded."
@@ -12042,25 +12023,21 @@ msgstr "Kann Waffe in der linken Hand nicht nachladen (ist voll)."
 
 #: client/battlescape/cl_hud.c:945
 #: client/battlescape/cl_hud.c:969
-#, fuzzy
 msgid "No reload possible for right hand, you don't have backup ammo."
-msgstr "Kann Waffe in der rechten Hand nicht nachladen (ist voll)."
+msgstr "Kann Waffe in der rechten Hand nicht nachladen (keine Munition)."
 
 #: client/battlescape/cl_hud.c:947
 #: client/battlescape/cl_hud.c:971
-#, fuzzy
 msgid "No reload possible for left hand, you don't have backup ammo."
-msgstr "Kann Waffe in der linken Hand nicht nachladen (ist voll)."
+msgstr "Kann Waffe in der linken Hand nicht nachladen (keine Munition)."
 
 #: client/battlescape/cl_hud.c:978
-#, fuzzy
 msgid "Not enough TUs for reloading weapon in right hand."
-msgstr "Nicht genügend ZE um aufzustehen."
+msgstr "Nicht genügend ZE, um die Waffe in der rechten Hand nachzuladen."
 
 #: client/battlescape/cl_hud.c:980
-#, fuzzy
 msgid "Not enough TUs for reloading weapon in left hand."
-msgstr "Nicht genügend ZE um aufzustehen."
+msgstr "Nicht genügend ZE, um die Waffe in der linken Hand nachzuladen."
 
 #: client/battlescape/cl_hud.c:1014
 msgid "Not enough TUs for standing up."
@@ -12841,9 +12818,8 @@ msgid "Buy or produce at least one aircraft first."
 msgstr "Kaufen oder produzieren Sie zuerst ein Flugzeug."
 
 #: client/campaign/cp_base_callbacks.c:297
-#, fuzzy
 msgid "No Hangar functional in base."
-msgstr "Kein Hangar in dieser Basis.\n"
+msgstr "Kein funktionierender Hangar in dieser Basis."
 
 #: client/campaign/cp_base_callbacks.c:303
 #: client/campaign/cp_base_callbacks.c:313
@@ -12851,9 +12827,9 @@ msgstr "Kein Hangar in dieser Basis.\n"
 #: client/campaign/cp_base_callbacks.c:323
 #: client/campaign/cp_base_callbacks.c:328
 #: client/campaign/cp_base_callbacks.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "No %s functional in base."
-msgstr "Kein Lager in dieser Basis."
+msgstr "%s in dieser Basis nicht funktionsfähig."
 
 #: client/campaign/cp_base_callbacks.c:308
 msgid "Build at least a second base to transfer equipment or personnel"
@@ -13043,6 +13019,8 @@ msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
+"\n"
+"Gelder diesen Monat:\t%d"
 
 #: client/campaign/cp_campaign.c:795
 #: client/cl_inventory_callbacks.c:137
@@ -13286,9 +13264,8 @@ msgstr "Dieser Waffe ist keine Munition zugewiesen."
 
 #: client/campaign/cp_fightequip_callbacks.c:433
 #: client/campaign/cp_fightequip_callbacks.c:438
-#, fuzzy
 msgid "No ammo needed"
-msgstr "Kein Gegenstand ausgewählt"
+msgstr "Keine Munition nötig"
 
 #: client/campaign/cp_fightequip_callbacks.c:566
 msgid "No slot selected."
@@ -13304,7 +13281,7 @@ msgstr "Sie können sich nicht mit Alien-Technologie ausrüsten."
 
 #: client/campaign/cp_fightequip_callbacks.c:575
 msgid "Technology requested is not yet completed."
-msgstr ""
+msgstr "Gewünschte Technologie noch nicht vollständig."
 
 #: client/campaign/cp_fightequip_callbacks.c:578
 msgid "This item is too heavy for the selected slot."
@@ -14171,7 +14148,7 @@ msgstr "Nicht genügend Laboratorien"
 #: client/campaign/cp_research.c:845
 #, c-format
 msgid "Research prerequisites of %s does not met at %s. Research halted!"
-msgstr ""
+msgstr "Voraussetzungen für Forschungsprojekt %s in %s nicht gegeben. Forschung angehalten!"
 
 #: client/campaign/cp_research.c:846
 msgid "Research halted"
@@ -14214,39 +14191,33 @@ msgid "Progress: %.1f%%"
 msgstr "Fortschritt: %.1f%%"
 
 #: client/campaign/cp_research_callbacks.c:128
-#, fuzzy
 msgid "Progress: not available."
 msgstr "Fortschritt: Nicht verfügbar."
 
 #: client/campaign/cp_research_callbacks.c:133
-#, fuzzy
 msgid "Status: under research"
 msgstr "Status: Wird erforscht"
 
 #: client/campaign/cp_research_callbacks.c:134
 msgid "Status: this research topic is currently being processed in labolatories"
-msgstr ""
+msgstr "Status: Dieses Projekt wird gerade in den Labors bearbeitet"
 
 #: client/campaign/cp_research_callbacks.c:137
-#, fuzzy
 msgid "Status: research paused"
 msgstr "Status: Forschung unterbrochen"
 
 #: client/campaign/cp_research_callbacks.c:138
-#, fuzzy
 msgid "Status: research topic currently paused."
 msgstr "Status: Forschung unterbrochen"
 
 #: client/campaign/cp_research_callbacks.c:141
 #: client/campaign/cp_research_callbacks.c:142
-#, fuzzy
 msgid "Status: research finished"
 msgstr "Status: Forschung abgeschlossen"
 
 #: client/campaign/cp_research_callbacks.c:147
-#, fuzzy
 msgid "Status: not possible to research"
-msgstr "Status: Wird erforscht"
+msgstr "Status: Kann nicht erforscht werden"
 
 #: client/campaign/cp_research_callbacks.c:148
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
@@ -14254,7 +14225,6 @@ msgstr "Status: Wir haben noch nicht genügend Materialien oder Hintergrundwisse
 
 #: client/campaign/cp_research_callbacks.c:150
 #: client/campaign/cp_research_callbacks.c:151
-#, fuzzy
 msgid "Status: unknown technology"
 msgstr "Status: Unbekannte Technologie"
 
@@ -15161,9 +15131,9 @@ msgid "^BDamage type:\tProtection:\n"
 msgstr "^BSchaden:\tSchutz:\n"
 
 #: client/cl_inventory_callbacks.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "%s weapon\n"
-msgstr "%s Waffe mit\n"
+msgstr "%s Waffe\n"
 
 #: client/cl_inventory_callbacks.c:144
 #: client/cl_inventory_callbacks.c:180
@@ -15205,14 +15175,14 @@ msgid "Spreads:\t%g\n"
 msgstr "Streuung:\t%g\n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%s ammo-less weapon\n"
-msgstr "%s munitionsfreie Waffe mit\n"
+msgstr "%s munitionsfreie Waffe\n"
 
 #: client/cl_inventory_callbacks.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "%s auxiliary equipment\n"
-msgstr "%s Gegenstand mit\n"
+msgstr "%s Gegenstand\n"
 
 #: client/cl_inventory_callbacks.c:185
 #, c-format
@@ -15657,12 +15627,12 @@ msgstr "Unter Schock, nimmt keine Befehle entgegen.\n"
 #: game/g_cmds.c:71
 #, c-format
 msgid "You can't talk for %d more seconds\n"
-msgstr ""
+msgstr "Sie können weitere %d Sekunden nicht sprechen"
 
 #: game/g_cmds.c:80
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
-msgstr ""
+msgstr "Flooding-Schutz: Sie können %d Sekunden nicht sprechen.\n"
 
 #: game/g_combat.c:394
 msgid ""
