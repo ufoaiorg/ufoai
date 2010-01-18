@@ -328,7 +328,7 @@ static void G_TouchEdict_f (void)
 	if (i < 0 || i >= globals.num_edicts)
 		return;
 
-	e = &g_edicts[i];
+	e = G_EdictsGetByNum(i);
 	if (!e->touch) {
 		gi.dprintf("No touch function for entity %s\n", e->classname);
 		return;
@@ -355,10 +355,12 @@ static void G_UseEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts)
+	if (i < 0 || i >= globals.num_edicts) {
+		gi.dprintf("No entity with number %i\n", i);
 		return;
+	}
 
-	e = &g_edicts[i];
+	e = G_EdictsGetByNum(i);
 	if (!e->use) {
 		gi.dprintf("No use function for entity %s\n", e->classname);
 		return;
@@ -382,7 +384,7 @@ static void G_DestroyEdict_f (void)
 	if (i < 0 || i >= globals.num_edicts)
 		return;
 
-	e = &g_edicts[i];
+	e = G_EdictsGetByNum(i);
 	if (!e->destroy) {
 		gi.dprintf("No destroy function for entity %s\n", e->classname);
 		return;
