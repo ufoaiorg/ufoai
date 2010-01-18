@@ -235,6 +235,17 @@ static void GAME_CP_Start_f (void)
 	Cbuf_AddText("seq_start intro\n");
 }
 
+/**
+ * @brief After a mission was finished this function is called
+ * @param msg The network message buffer
+ * @param winner The winning team
+ * @param numSpawned The amounts of all spawned actors per team
+ * @param numAlive The amount of survivors per team
+ * @param numKilled The amount of killed actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ * @param numStunned The amount of stunned actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ */
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	int i, j;

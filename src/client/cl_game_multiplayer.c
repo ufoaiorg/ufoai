@@ -167,6 +167,17 @@ static void GAME_MP_ChangeGametype_f (void)
 	}
 }
 
+/**
+ * @brief After a mission was finished this function is called
+ * @param msg The network message buffer
+ * @param winner The winning team
+ * @param numSpawned The amounts of all spawned actors per team
+ * @param numAlive The amount of survivors per team
+ * @param numKilled The amount of killed actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ * @param numStunned The amount of stunned actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ */
 void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	char resultText[MAX_SMALLMENUTEXTLEN];
