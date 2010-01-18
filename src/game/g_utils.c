@@ -48,6 +48,16 @@ void G_EdictsReset (void)
 }
 
 /**
+ * @brief Get an entity by it's number
+ * @param idx The entity's index in the array of entities
+ */
+edict_t* G_EdictsGetByNum (const int idx)
+{
+	assert(idx >= 0 && idx < globals.num_edicts);
+	return g_edicts + idx;
+}
+
+/**
  * @brief Iterate through the list of entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */

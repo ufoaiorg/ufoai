@@ -478,7 +478,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 	objDef_t *weapon;
 	int container;
 
-	ent = g_edicts + entnum;
+	ent = G_EdictsGetByNum(entnum);
 
 	/* search for clips and select the one that is available easily */
 	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
@@ -517,7 +517,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 	int container;
 	invDef_t *bestContainer;
 
-	ent = g_edicts + entnum;
+	ent = G_EdictsGetByNum(entnum);
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
 		return;
@@ -606,7 +606,7 @@ int G_ClientAction (player_t * player)
 		return action;
 	}
 
-	ent = g_edicts + num;
+	ent = G_EdictsGetByNum(num);
 
 	switch (action) {
 	case PA_NULL:
@@ -661,7 +661,7 @@ int G_ClientAction (player_t * player)
 		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
 
 		/* get the door edict */
-		door = g_edicts + i;
+		door = G_EdictsGetByNum(i);
 
 		if (ent->clientAction == door) {
 			/* check whether it's part of an edict group but not the master */
