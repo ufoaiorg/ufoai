@@ -45,10 +45,10 @@ void G_SendStats (edict_t * ent)
  */
 void G_SendPlayerStats (const player_t *player)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	int i;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsActor(ent) && ent->team == player->pers.team)
+	while ((ent == G_EdictsGetNextActor(ent)))
+		if (ent->team == player->pers.team)
 			G_SendStats(ent);
 }
