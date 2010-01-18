@@ -1053,7 +1053,7 @@ window popup_newbase
 		pos			"111 188"
 		size		"176 32"
 		onClick	{
-			cmd "mn_pop;mn_build_base;"
+			cmd "mn_pop;mn_base_build;"
 		}
 	}
 
@@ -1284,7 +1284,7 @@ window popup_newinstallation_type
 		size		"440 20"
 		onMouseEnter			{ *bt_highlight@invis = false *bt_highlight@pos = "26 136" }
 		onMouseLeave			{ *bt_highlight@invis = true }
-		onClick		{ cmd "mn_pop; mn_select_base -1;" }
+		onClick		{ cmd "mn_pop; mn_base_select -1;" }
 	}
 
 	/* disabled zones - for tooltip */

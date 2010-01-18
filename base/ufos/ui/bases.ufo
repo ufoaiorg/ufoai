@@ -31,8 +31,8 @@ component cmpDefBaseHeader cmpBaseviewHeader
 	{
 		pos	"25 25"
 		size	"606 46"
-		onWheelUp	{ cmd "mn_next_base;" }
-		onWheelDown	{ cmd "mn_prev_base;" }
+		onWheelUp	{ cmd "mn_base_next;" }
+		onWheelDown	{ cmd "mn_base_prev;" }
 	}
 
 	pic bt_edit
@@ -54,9 +54,9 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		icon	prev
 		pos		"30 30"
 		size	"30 30"
-		onClick	{ cmd "mn_prev_base;" }
-		onWheelUp	{ cmd "mn_next_base;" }
-		onWheelDown	{ cmd "mn_prev_base;" }
+		onClick	{ cmd "mn_base_prev;" }
+		onWheelUp	{ cmd "mn_base_next;" }
+		onWheelDown	{ cmd "mn_base_prev;" }
 	}
 
 	custombutton next_base
@@ -65,9 +65,9 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		icon	next
 		pos		"600 30"
 		size	"30 30"
-		onClick	{ cmd "mn_next_base;" }
-		onWheelUp	{ cmd "mn_next_base;" }
-		onWheelDown	{ cmd "mn_prev_base;" }
+		onClick	{ cmd "mn_base_next;" }
+		onWheelUp	{ cmd "mn_base_next;" }
+		onWheelDown	{ cmd "mn_base_prev;" }
 	}
 
 

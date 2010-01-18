@@ -274,7 +274,7 @@ window research
 	 * @param[in] <2> Selected item row
 	 */
 	confunc research_changebase {
-		cmd "mn_pop;mn_pop;mn_select_base <1>;mn_push research;"
+		cmd "mn_pop;mn_pop;mn_base_select <1>;mn_push research;"
 		cmd "research_select <2>;"
 	}
 	
