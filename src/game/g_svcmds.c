@@ -271,11 +271,10 @@ static void SVCmd_Win_f (void)
 #ifdef DEBUG
 static void SVCmd_ShowAll_f (void)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 
 	/* Make everything visible to anyone who can't already see it */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
+	while ((ent = G_EdictsGetNext(ent)))
 		if (ent->inuse) {
 			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
 			ent->visflags |= ~ent->visflags;

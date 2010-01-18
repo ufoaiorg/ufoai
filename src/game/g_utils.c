@@ -105,9 +105,9 @@ void G_FreeEdict (edict_t *ent)
  */
 edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
 {
-	edict_t *floor;
+	edict_t *floor = NULL;
 
-	for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
+	while ((floor = G_EdictsGetNext(floor))) {
 		if (!floor->inuse || (type > 0 && floor->type != type))
 			continue;
 		if (!VectorCompare(pos, floor->pos))
@@ -443,18 +443,11 @@ void G_RecalcRouting (const edict_t * ent)
  */
 void G_CompleteRecalcRouting (void)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 
-	/* generate entity list */
-	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (IS_BMODEL(ent)) {
-			Com_DPrintf(DEBUG_GAME, "Processing entity %i: inuse:%i model:%s solid:%i\n",
-				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
+	while ((ent = G_EdictsGetNext(ent)))
+		if (IS_BMODEL(ent))
 			G_RecalcRouting(ent);
-		} else {
-			Com_DPrintf(DEBUG_GAME, "Did not process entity %i: inuse:%i model:%s solid:%i\n",
-				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
-		}
 }
 
 /**

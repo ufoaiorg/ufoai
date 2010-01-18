@@ -74,11 +74,11 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
  */
 static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 {
-	edict_t *ent;
-	int i, newMorale;
+	edict_t *ent = NULL;
+	int newMorale;
 	float mod;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+	while ((ent = G_EdictsGetNext(ent))) {
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
 		if (ent->inuse && ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
 			switch (type) {
@@ -135,6 +135,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 			/* send phys data */
 			G_SendStats(ent);
 		}
+	}
 }
 
 /**
@@ -482,17 +483,16 @@ static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, cons
  */
 static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
 {
-	edict_t *check;
+	edict_t *check = NULL;
 	vec3_t center;
 	float dist;
 	int damage;
-	int i;
 
 	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 
 	assert(fd->splrad);
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+	while ((check = G_EdictsGetNext(check))) {
 		/* check basic info */
 		if (!check->inuse)
 			continue;
@@ -558,15 +558,15 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
  */
 static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 {
-	edict_t *floor, *actor;
+	edict_t *floor, *actor = NULL;
 
 	floor = G_GetFloorItemsFromPos(pos);
 	if (floor == NULL) {
 		floor = G_SpawnFloor(pos);
 
 		/* link the floor container to the actor standing on the given position */
-		for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-			if (actor->inuse && G_IsActor(actor) && VectorCompare(pos, actor->pos)) {
+		while ((actor = G_EdictsGetNextActor(actor)))
+			if (VectorCompare(pos, actor->pos)) {
 				FLOOR(actor) = FLOOR(floor);
 				break;
 			}
@@ -759,10 +759,10 @@ static void DumpTrace (vec3_t start, trace_t tr)
  */
 static void DumpAllEntities (void)
 {
-	int i;
-	edict_t *check;
+	int i = 0;
+	edict_t *check = NULL;
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+	while ((check = G_EdictsGetNext(check))) {
 		Com_DPrintf(DEBUG_GAME, "%i %s %s %s (%i, %i, %i) (%i, %i, %i) [%i, %i, %i] [%i, %i, %i]\n", i,
 			check->inuse ? "in use" : "unused",
 			check->classname,
@@ -771,6 +771,7 @@ static void DumpAllEntities (void)
 			(int) check->absmax[0], (int) check->absmax[1], (int) check->absmax[2],
 			(int) check->mins[0], (int) check->mins[1], (int) check->mins[2],
 			(int) check->maxs[0], (int) check->maxs[1], (int) check->maxs[2]);
+		i++;
 	}
 }
 

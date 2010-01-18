@@ -210,8 +210,7 @@ float G_Vis (int team, const edict_t *from, const edict_t *check, int flags)
  */
 int G_TestVis (int team, edict_t * check, int flags)
 {
-	int i;
-	edict_t *from;
+	edict_t *from = NULL;
 	/* store old flag */
 	const int old = G_IsVisibleForTeam(check, team) ? 1 : 0;
 
@@ -222,7 +221,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 		return VIS_YES;
 
 	/* test if check is visible */
-	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
+	while ((from = G_EdictsGetNext(from)))
 		if (G_Vis(team, from, check, flags))
 			/* visible */
 			return VIS_YES | !old;
@@ -244,12 +243,11 @@ static qboolean G_VisShouldStop (const edict_t *ent)
  */
 int G_CheckVisPlayer (player_t* player, qboolean perish)
 {
-	int i;
 	int status = 0;
-	edict_t* ent;
+	edict_t* ent = NULL;
 
 	/* check visibility */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+	while ((ent = G_EdictsGetNext(ent)))
 		if (ent->inuse) {
 			/* check if he's visible */
 			const int vis = G_TestVis(player->pers.team, ent, perish);
@@ -354,16 +352,16 @@ int G_CheckVis (edict_t * check, qboolean perish)
 }
 
 /**
- * @brief Reset the visflags for all edict in the global list (g_edicts) for the
+ * @brief Reset the visflags for all edicts in the global list for the
  * given team - and only for the given team
  */
 void G_ClearVisFlags (int team)
 {
-	edict_t *ent;
-	int i, mask;
+	edict_t *ent = NULL;
+	int mask;
 
 	mask = ~G_TeamToVisMask(team);
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+	while ((ent = G_EdictsGetNext(ent)))
 		if (ent->inuse)
 			ent->visflags &= mask;
 }

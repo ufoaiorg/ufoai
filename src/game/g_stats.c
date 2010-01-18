@@ -46,9 +46,8 @@ void G_SendStats (edict_t * ent)
 void G_SendPlayerStats (const player_t *player)
 {
 	edict_t *ent = NULL;
-	int i;
 
-	while ((ent == G_EdictsGetNextActor(ent)))
+	while ((ent = G_EdictsGetNextActor(ent)))
 		if (ent->team == player->pers.team)
 			G_SendStats(ent);
 }

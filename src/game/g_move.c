@@ -49,9 +49,8 @@ static int forbiddenListLength;
  */
 static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	int visMask;
-	int i;
 
 	forbiddenListLength = 0;
 
@@ -61,7 +60,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 	else
 		visMask = TEAM_ALL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+	while ((ent = G_EdictsGetNext(ent))) {
 		if (!ent->inuse)
 			continue;
 		/* Dead 2x2 unit will stop walking, too. */

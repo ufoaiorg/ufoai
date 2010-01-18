@@ -140,13 +140,13 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
  */
 static qboolean G_CheckRFTrigger (edict_t *target)
 {
-	edict_t *ent;
-	int i, tus;
+	edict_t *ent = NULL;
+	int tus;
 	qboolean queued = qfalse;
 	int firemode = -1;
 
 	/* check all possible shooters */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+	while ((ent = G_EdictsGetNext(ent))) {
 		/* not if ent has reaction target already */
 		if (!ent->inuse || ent->reactionTarget)
 			continue;
@@ -291,12 +291,11 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
  */
 static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 	qboolean fired = qfalse, shoot = qfalse;
 
 	/* check all possible shooters */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+	while ((ent = G_EdictsGetNext(ent))) {
 		if (!ent->inuse || !ent->reactionTarget)
 			continue;
 
@@ -342,12 +341,12 @@ qboolean G_ReactToMove (edict_t *target, qboolean mock)
  */
 void G_ReactToPreFire (edict_t *target)
 {
-	edict_t *ent;
-	int i, entTUs, targTUs;
+	edict_t *ent = NULL;
+	int entTUs, targTUs;
 	int firemode = -4;
 
 	/* check all ents to see who wins and who loses a draw */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+	while ((ent = G_EdictsGetNext(ent))) {
 		if (!ent->inuse || !ent->reactionTarget)
 			continue;
 		if (ent->reactionTarget != target) {
@@ -397,11 +396,10 @@ void G_ReactToPostFire (edict_t *target)
  */
 void G_ReactToEndTurn (void)
 {
-	edict_t *ent;
-	int i;
+	edict_t *ent = NULL;
 
 	/* resolve all outstanding reaction firing if possible */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+	while ((ent = G_EdictsGetNext(ent))) {
 		if (!ent->inuse || !ent->reactionTarget)
 			continue;
 
