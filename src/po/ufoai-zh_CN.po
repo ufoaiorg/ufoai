@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-01-15 17:30+0100\n"
+"POT-Creation-Date: 2010-01-18 20:52+0100\n"
 "PO-Revision-Date: 2009-03-27 18:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -22,6 +22,10 @@ msgstr "非洲"
 #: ../base/maps/alienbase.ump:170
 msgid "Alienbase"
 msgstr "外星人基地"
+
+#: ../base/maps/baseattack.ump:170 client/campaign/cp_base_callbacks.c:183
+msgid "Home"
+msgstr "PHALANX本部"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
@@ -169,7 +173,7 @@ msgstr "热带UFO"
 
 #: ../base/maps/ufocrash.ump:352 ../base/maps/ufocrash.ump:369
 #: ../base/maps/ufocrash.ump:386 ../base/maps/ufocrash.ump:404
-#: client/campaign/cp_missions.c:443
+#: client/campaign/cp_missions.c:442
 msgid "Crashed UFO"
 msgstr "坠毁的 UFO"
 
@@ -347,7 +351,7 @@ msgstr "UFO - 破坏者"
 msgid "Mothership U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4600
+#: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4599
 msgid "Aerial Laser Cannon"
 msgstr "机载激光炮"
 
@@ -355,11 +359,11 @@ msgstr "机载激光炮"
 msgid "Shiva Rotary Cannon"
 msgstr "旋转加农炮"
 
-#: ../base/ufos/aircraftmanagement.ufo:771 ../base/ufos/research.ufo:4667
+#: ../base/ufos/aircraftmanagement.ufo:771 ../base/ufos/research.ufo:4666
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API 穿甲弹"
 
-#: ../base/ufos/aircraftmanagement.ufo:787 ../base/ufos/research.ufo:4688
+#: ../base/ufos/aircraftmanagement.ufo:787 ../base/ufos/research.ufo:4687
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI 爆破弹"
 
@@ -375,47 +379,47 @@ msgstr "麻雀式飞弹发射器"
 msgid "Sparrowhawk Missile"
 msgstr "麻雀式飞弹"
 
-#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4747
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4746
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 火箭发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4764
+#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4763
 msgid "TR-20 Rocket"
 msgstr "TR-20 火箭"
 
-#: ../base/ufos/aircraftmanagement.ufo:874 ../base/ufos/research.ufo:4783
+#: ../base/ufos/aircraftmanagement.ufo:874 ../base/ufos/research.ufo:4782
 msgid "Particle Beam Weapon"
 msgstr "粒子束发射器"
 
-#: ../base/ufos/aircraftmanagement.ufo:904 ../base/ufos/research.ufo:4840
+#: ../base/ufos/aircraftmanagement.ufo:904 ../base/ufos/research.ufo:4839
 msgid "Targeting Computer"
 msgstr "计算机辅助系统"
 
-#: ../base/ufos/aircraftmanagement.ufo:916 ../base/ufos/research.ufo:4857
+#: ../base/ufos/aircraftmanagement.ufo:916 ../base/ufos/research.ufo:4856
 msgid "Fuel Pod"
 msgstr "燃料箱"
 
-#: ../base/ufos/aircraftmanagement.ufo:930 ../base/ufos/research.ufo:4435
+#: ../base/ufos/aircraftmanagement.ufo:930 ../base/ufos/research.ufo:4434
 msgid "Polymer Aircraft Armour"
 msgstr "航空机组合装甲"
 
-#: ../base/ufos/aircraftmanagement.ufo:944 ../base/ufos/research.ufo:4452
+#: ../base/ufos/aircraftmanagement.ufo:944 ../base/ufos/research.ufo:4451
 msgid "Alien Aircraft Plating"
 msgstr "外星飞船装甲"
 
-#: ../base/ufos/aircraftmanagement.ufo:958 ../base/ufos/research.ufo:4486
+#: ../base/ufos/aircraftmanagement.ufo:958 ../base/ufos/research.ufo:4485
 msgid "Alien Astrogation"
 msgstr "外星导航"
 
-#: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:4524
+#: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:4523
 msgid "Alien Propulsion"
 msgstr "外星动力"
 
-#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4561
+#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4560
 msgid "Alien Detection"
 msgstr "外星遥感"
 
-#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4387
+#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4386
 msgid "AA51 missile launcher"
 msgstr "AA51 飞弹发射器"
 
@@ -533,7 +537,7 @@ msgstr "休息室"
 msgid "Workshop"
 msgstr "工场"
 
-#: ../base/ufos/basemanagement.ufo:251 ../base/ufos/ui/_hud.ufo:89
+#: ../base/ufos/basemanagement.ufo:251 ../base/ufos/ui/_hud.ufo:93
 msgid "Radar"
 msgstr "雷达室"
 
@@ -805,20 +809,20 @@ msgstr "秘书长塞纳，联合国，纽约"
 #: ../base/ufos/research.ufo:3949 ../base/ufos/research.ufo:3957
 #: ../base/ufos/research.ufo:3992 ../base/ufos/research.ufo:4000
 #: ../base/ufos/research.ufo:4063 ../base/ufos/research.ufo:4071
-#: ../base/ufos/research.ufo:4123 ../base/ufos/research.ufo:4131
-#: ../base/ufos/research.ufo:4165 ../base/ufos/research.ufo:4173
-#: ../base/ufos/research.ufo:4207 ../base/ufos/research.ufo:4215
-#: ../base/ufos/research.ufo:4462 ../base/ufos/research.ufo:4469
-#: ../base/ufos/research.ufo:4499 ../base/ufos/research.ufo:4506
-#: ../base/ufos/research.ufo:4537 ../base/ufos/research.ufo:4544
-#: ../base/ufos/research.ufo:4574 ../base/ufos/research.ufo:4581
-#: ../base/ufos/research.ufo:4616 ../base/ufos/research.ufo:4624
-#: ../base/ufos/research.ufo:4799 ../base/ufos/research.ufo:4807
-#: ../base/ufos/research.ufo:4891 ../base/ufos/research.ufo:4899
-#: ../base/ufos/research.ufo:4988 ../base/ufos/research.ufo:5019
-#: ../base/ufos/research.ufo:5026 ../base/ufos/research.ufo:5056
-#: ../base/ufos/research.ufo:5065 ../base/ufos/research.ufo:5097
-#: ../base/ufos/research.ufo:5104
+#: ../base/ufos/research.ufo:4122 ../base/ufos/research.ufo:4130
+#: ../base/ufos/research.ufo:4164 ../base/ufos/research.ufo:4172
+#: ../base/ufos/research.ufo:4206 ../base/ufos/research.ufo:4214
+#: ../base/ufos/research.ufo:4461 ../base/ufos/research.ufo:4468
+#: ../base/ufos/research.ufo:4498 ../base/ufos/research.ufo:4505
+#: ../base/ufos/research.ufo:4536 ../base/ufos/research.ufo:4543
+#: ../base/ufos/research.ufo:4573 ../base/ufos/research.ufo:4580
+#: ../base/ufos/research.ufo:4615 ../base/ufos/research.ufo:4623
+#: ../base/ufos/research.ufo:4798 ../base/ufos/research.ufo:4806
+#: ../base/ufos/research.ufo:4890 ../base/ufos/research.ufo:4898
+#: ../base/ufos/research.ufo:4987 ../base/ufos/research.ufo:5018
+#: ../base/ufos/research.ufo:5025 ../base/ufos/research.ufo:5055
+#: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
+#: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
 msgstr "基地指挥官，PHALANX，大西洋作战司令部"
 
@@ -895,14 +899,14 @@ msgstr ""
 #: ../base/ufos/research.ufo:3870 ../base/ufos/research.ufo:3905
 #: ../base/ufos/research.ufo:3913 ../base/ufos/research.ufo:3948
 #: ../base/ufos/research.ufo:3956 ../base/ufos/research.ufo:3991
-#: ../base/ufos/research.ufo:3999 ../base/ufos/research.ufo:4461
-#: ../base/ufos/research.ufo:4468 ../base/ufos/research.ufo:4498
-#: ../base/ufos/research.ufo:4505 ../base/ufos/research.ufo:4536
-#: ../base/ufos/research.ufo:4543 ../base/ufos/research.ufo:4573
-#: ../base/ufos/research.ufo:4580 ../base/ufos/research.ufo:4615
-#: ../base/ufos/research.ufo:4623 ../base/ufos/research.ufo:4798
-#: ../base/ufos/research.ufo:4806 ../base/ufos/research.ufo:4890
-#: ../base/ufos/research.ufo:4898
+#: ../base/ufos/research.ufo:3999 ../base/ufos/research.ufo:4460
+#: ../base/ufos/research.ufo:4467 ../base/ufos/research.ufo:4497
+#: ../base/ufos/research.ufo:4504 ../base/ufos/research.ufo:4535
+#: ../base/ufos/research.ufo:4542 ../base/ufos/research.ufo:4572
+#: ../base/ufos/research.ufo:4579 ../base/ufos/research.ufo:4614
+#: ../base/ufos/research.ufo:4622 ../base/ufos/research.ufo:4797
+#: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
+#: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
 msgstr "司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部"
 
@@ -1195,8 +1199,8 @@ msgstr "<TODO: mail_new_radar_contact>"
 
 #: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
 #: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:592
-#: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5055
-#: ../base/ufos/research.ufo:5064
+#: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
+#: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
 msgstr "英格丽.福克兰上校，情报处，PHALANX，大西洋作战司令部"
 
@@ -1351,7 +1355,7 @@ msgstr "雷达站"
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1136
+#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1212
 #: ../base/ufos/ui/lostwon.ufo:212
 msgid "UFO Yard"
 msgstr "UFO停机场"
@@ -1360,7 +1364,7 @@ msgstr "UFO停机场"
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1094
+#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1170
 msgid "SAM Site"
 msgstr "地对空飞弹基地"
 
@@ -1886,8 +1890,8 @@ msgstr "反物质"
 msgid "Alien Breathing Apparatus"
 msgstr "外星人呼吸器"
 
-#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:4877
-#: ../base/ufos/research.ufo:4916
+#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:4876
+#: ../base/ufos/research.ufo:4915
 msgid "Alien Materials"
 msgstr "外星材料"
 
@@ -1901,9 +1905,9 @@ msgid "Background"
 msgstr "背景"
 
 #: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:129
-#: ../base/ufos/ui/geoscape.ufo:1848 ../base/ufos/ui/market.ufo:95
+#: ../base/ufos/ui/geoscape.ufo:1924 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
-#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:355
+#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
 msgid "Aircraft"
 msgstr "航空机"
 
@@ -2113,12 +2117,12 @@ msgstr ""
 #: ../base/ufos/research.ufo:555 ../base/ufos/research.ufo:563
 #: ../base/ufos/research.ufo:2329 ../base/ufos/research.ufo:2337
 #: ../base/ufos/research.ufo:4062 ../base/ufos/research.ufo:4070
-#: ../base/ufos/research.ufo:4122 ../base/ufos/research.ufo:4130
-#: ../base/ufos/research.ufo:4164 ../base/ufos/research.ufo:4172
-#: ../base/ufos/research.ufo:4206 ../base/ufos/research.ufo:4214
-#: ../base/ufos/research.ufo:4987 ../base/ufos/research.ufo:5018
-#: ../base/ufos/research.ufo:5025 ../base/ufos/research.ufo:5096
-#: ../base/ufos/research.ufo:5103
+#: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4129
+#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4171
+#: ../base/ufos/research.ufo:4205 ../base/ufos/research.ufo:4213
+#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
+#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
+#: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
 msgstr "康纳博士，生物工程部，PHALANX，大西洋作战司令部"
 
@@ -2287,7 +2291,7 @@ msgstr ""
 "博士康纳"
 
 #: ../base/ufos/research.ufo:518 client/campaign/cp_alienbase.c:169
-#: client/campaign/cp_missions.c:439
+#: client/campaign/cp_missions.c:438
 msgid "Alien base"
 msgstr "外星人基地"
 
@@ -5001,7 +5005,7 @@ msgstr ""
 "\n"
 "无"
 
-#: ../base/ufos/research.ufo:3058 ../base/ufos/research.ufo:4390
+#: ../base/ufos/research.ufo:3058 ../base/ufos/research.ufo:4389
 msgid "b_missile_txt"
 msgstr ""
 "蓝图 -- 飞弹发射仓\n"
@@ -6360,11 +6364,11 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4107
+#: ../base/ufos/research.ufo:4106
 msgid "Alien Autopsy - Ortnok"
 msgstr "解剖外星人 - Ortnok"
 
-#: ../base/ufos/research.ufo:4112
+#: ../base/ufos/research.ufo:4111
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "长官,\n"
@@ -6401,7 +6405,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4113
+#: ../base/ufos/research.ufo:4112
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "长官,\n"
@@ -6436,7 +6440,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4116
+#: ../base/ufos/research.ufo:4115
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "长官，\n"
@@ -6447,7 +6451,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4117
+#: ../base/ufos/research.ufo:4116
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "长官，\n"
@@ -6458,11 +6462,11 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4149
+#: ../base/ufos/research.ufo:4148
 msgid "Alien Autopsy - Taman"
 msgstr "解剖外星人 - Taman"
 
-#: ../base/ufos/research.ufo:4154
+#: ../base/ufos/research.ufo:4153
 msgid "taman_autopsy_txt"
 msgstr ""
 "长官,\n"
@@ -6501,7 +6505,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4155
+#: ../base/ufos/research.ufo:4154
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "长官,\n"
@@ -6538,7 +6542,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4158
+#: ../base/ufos/research.ufo:4157
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "长官，\n"
@@ -6549,7 +6553,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4159
+#: ../base/ufos/research.ufo:4158
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "长官，\n"
@@ -6560,11 +6564,11 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4191
+#: ../base/ufos/research.ufo:4190
 msgid "Alien Autopsy - Shevaar"
 msgstr "解剖外星人 - Shevaar"
 
-#: ../base/ufos/research.ufo:4196
+#: ../base/ufos/research.ufo:4195
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "长官,\n"
@@ -6601,7 +6605,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4197
+#: ../base/ufos/research.ufo:4196
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "长官,\n"
@@ -6636,7 +6640,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4199
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "长官，\n"
@@ -6647,7 +6651,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4201
+#: ../base/ufos/research.ufo:4200
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "长官，\n"
@@ -6658,47 +6662,47 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4290 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
 msgstr "凤凰 无人战车"
 
-#: ../base/ufos/research.ufo:4292
+#: ../base/ufos/research.ufo:4291
 msgid "ugv_phoenix_txt"
 msgstr "ugv_phoenix_txt"
 
-#: ../base/ufos/research.ufo:4295
+#: ../base/ufos/research.ufo:4294
 msgid "ugv_phoenix_pre_txt"
 msgstr "没有可用的资料。"
 
-#: ../base/ufos/research.ufo:4310 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4309 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
 msgstr "战神 W (无人战车)"
 
-#: ../base/ufos/research.ufo:4312
+#: ../base/ufos/research.ufo:4311
 msgid "ugv_ares_w_txt"
 msgstr "ugv_ares_w_txt"
 
-#: ../base/ufos/research.ufo:4315
+#: ../base/ufos/research.ufo:4314
 msgid "ugv_ares_w_pre_txt"
 msgstr "没有可用的资料。"
 
-#: ../base/ufos/research.ufo:4331
+#: ../base/ufos/research.ufo:4330
 msgid "ugv_chaingun_txt"
 msgstr "ugv_chaingun_txt"
 
-#: ../base/ufos/research.ufo:4334
+#: ../base/ufos/research.ufo:4333
 msgid "ugv_chaingun_pre_txt"
 msgstr "没有可用的资料。"
 
-#: ../base/ufos/research.ufo:4350
+#: ../base/ufos/research.ufo:4349
 msgid "ugv_chaingun_belt_txt"
 msgstr "没有之前的研究信息"
 
-#: ../base/ufos/research.ufo:4353
+#: ../base/ufos/research.ufo:4352
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "没有可用的资料。"
 
-#: ../base/ufos/research.ufo:4368
+#: ../base/ufos/research.ufo:4367
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
@@ -6717,15 +6721,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4371
+#: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "没有可用的资料。"
 
-#: ../base/ufos/research.ufo:4418
+#: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
 msgstr "乌鸦型ECM"
 
-#: ../base/ufos/research.ufo:4421
+#: ../base/ufos/research.ufo:4420
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "乌鸦型ECM\n"
@@ -6764,7 +6768,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4438
+#: ../base/ufos/research.ufo:4437
 msgid "craft_shield_light_txt"
 msgstr ""
 "航空机组合装甲\n"
@@ -6805,7 +6809,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4454
+#: ../base/ufos/research.ufo:4453
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Commander, now that we have the ability to produce and work the alien materials, a whole new range of options has opened up to us. These materials are so strong and flexible that they can be used for almost anything. Their most promising uses, however, have been in aircraft design -- specifically armour.\n"
@@ -6818,7 +6822,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4457
+#: ../base/ufos/research.ufo:4456
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
@@ -6835,7 +6839,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4491
+#: ../base/ufos/research.ufo:4490
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "长官， 收集到一个完整的飞船导航装置是一个重要的里程碑。 虽然这个装置似乎并没有包含星图， 它将帮助我们了解异形的宇宙知识， 能提高我们自己的宇宙导航系统好几个数量级， 最终我们将可以回溯到异形所在的星球\n"
@@ -6844,7 +6848,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4494
+#: ../base/ufos/research.ufo:4493
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "长官， 我们已经分析完那个收缴的外星导航装置， 这里是我的总结报告。\n"
@@ -6861,7 +6865,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4529
+#: ../base/ufos/research.ufo:4528
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "长官， 我们拿到外星飞船的反物质发动机了， 当那些勇士们带着这个回来的时候， 我们整个小组都欣喜若狂。 加上我们对外星材料的研究成果， 我认为我们有能力仔细分析这个引擎。 令人神往的是， 如果我们的研究能得到其如何作用的方程式的话， 那么这项技术就能真正实用化了。\n"
@@ -6870,7 +6874,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4532
+#: ../base/ufos/research.ufo:4531
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "长官， 我很高兴来报告我们对外星动力的研究成果。 我们破解了神秘的飞船引擎结构， 终于搞明白反物质是如何从燃料箱输送到反应室的。\n"
@@ -6893,7 +6897,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4566
+#: ../base/ufos/research.ufo:4565
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "长官， 外星遥感探测器似乎是一个非常强大的被动主动复合扫描系统， 包括雷达， 激光雷达， 磁场感应和紫外/红外探测， 以及一种我们未知的探测技术， 有趣的是这个技术比我们自己的更能成功侦测UFO。\n"
@@ -6904,7 +6908,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4569
+#: ../base/ufos/research.ufo:4568
 msgid "craft_alien_detection_txt"
 msgstr ""
 "外星遥感这个项目完成了， 长官。 对其的运作和控制我们有了充分的了解， 并且可以根据需要改进供人使用。\n"
@@ -6927,7 +6931,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4602
+#: ../base/ufos/research.ufo:4601
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
 "这里是开发新式激光武器的研究草案。\n"
@@ -6942,7 +6946,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4605
+#: ../base/ufos/research.ufo:4604
 msgid "craft_weapon_alc_txt"
 msgstr ""
 "长官，最新的激光发射系统已经研究完毕。我们成功地制造了空战激光炮，并准备把它投入生产。\n"
@@ -6957,11 +6961,11 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4650
+#: ../base/ufos/research.ufo:4649
 msgid "SHIVA Rotary Cannon"
 msgstr "旋转加农炮"
 
-#: ../base/ufos/research.ufo:4653
+#: ../base/ufos/research.ufo:4652
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "旋转加农炮\n"
@@ -7004,7 +7008,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4670
+#: ../base/ufos/research.ufo:4669
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "SHIVA 20mm 穿甲弹\n"
@@ -7043,7 +7047,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4691
+#: ../base/ufos/research.ufo:4690
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "SHIVA 20mm 爆破弹\n"
@@ -7082,11 +7086,11 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4709
+#: ../base/ufos/research.ufo:4708
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "麻雀式飞弹发射器"
 
-#: ../base/ufos/research.ufo:4712
+#: ../base/ufos/research.ufo:4711
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "麻雀式飞弹发射器\n"
@@ -7135,11 +7139,11 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4726
+#: ../base/ufos/research.ufo:4725
 msgid "'Sparrowhawk' Missile"
 msgstr "麻雀式飞弹"
 
-#: ../base/ufos/research.ufo:4729
+#: ../base/ufos/research.ufo:4728
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "麻雀式飞弹\n"
@@ -7182,7 +7186,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4750
+#: ../base/ufos/research.ufo:4749
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "TR-20火箭发射器\n"
@@ -7225,7 +7229,7 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4767
+#: ../base/ufos/research.ufo:4766
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "TR-20火箭\n"
@@ -7268,14 +7272,14 @@ msgstr ""
 "\n"
 "无。"
 
-#: ../base/ufos/research.ufo:4788
+#: ../base/ufos/research.ufo:4787
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "长官，俘获的UFO上有新的武器装备。它似乎可以发射某种高速粒子束，如果我们能够掌握这项技术，或者将这个武器用于我们自己的航空机，那对抗外星飞船的胜率就会有明显提高。\n"
 "\n"
 "--司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4791
+#: ../base/ufos/research.ufo:4790
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "长官，这里是粒子束武器的研究报告。\n"
@@ -7294,7 +7298,7 @@ msgstr ""
 "\n"
 "--司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4843
+#: ../base/ufos/research.ufo:4842
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "计算机辅助系统\n"
@@ -7333,7 +7337,7 @@ msgstr ""
 "\n"
 "变化的战场是没有金科玉律的，何时部署这套系统应该根据不同情况来决定。这全看指挥官的意愿。"
 
-#: ../base/ufos/research.ufo:4860
+#: ../base/ufos/research.ufo:4859
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "燃料箱\n"
@@ -7370,7 +7374,7 @@ msgstr ""
 "\n"
 "在读了纳瓦拉司令官的报告以后，长官，我必须强调一点，在我们的章程规定中，我们必须停止阻止所有在地球上的异形活动。不能因为异形活动的地方我们航空机飞不到就放弃。如果有平民死亡，是因为我们的登陆机没有及时到达，那我们的形象就会破灭，援助我们的资金就非常可能会减少或更糟。我们应该保留一些加装副燃料箱的远距离作战航空机随时待命来应付距离遥远的突发事件。"
 
-#: ../base/ufos/research.ufo:4882 ../base/ufos/research.ufo:4918
+#: ../base/ufos/research.ufo:4881 ../base/ufos/research.ufo:4917
 msgid "alien_materials_txt"
 msgstr ""
 "长官， 我们已经发现这种外星材料的秘密了。 通过修改我们的工场车床， 我们现在应该可以使用这种材料， 还能'设计'它的新形状。\n"
@@ -7387,7 +7391,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4885
+#: ../base/ufos/research.ufo:4884
 msgid "alien_materials_pre_txt"
 msgstr ""
 "长官， 正如我上次报告中提到的， UFO的表面是一种非常独特的材料制作的， 是一种塑料和金属混合的合金材料。 这些材料似乎是异形科技中用的非常普及的一种材料。 它是一种很高级的原材料， 功能用途极为广泛。\n"
@@ -7396,11 +7400,11 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:4938
+#: ../base/ufos/research.ufo:4937
 msgid "Political Situation Before The Invasion"
 msgstr "入侵前的政治局势"
 
-#: ../base/ufos/research.ufo:4940
+#: ../base/ufos/research.ufo:4939
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "到2084年，地球已经安稳了快半个世纪。也许是第一次，和平与合作的准则没有例外的存在了这么久。只所以会这样只能从21世纪初那个残酷的时代开始说起。\n"
@@ -7419,11 +7423,11 @@ msgstr ""
 "\n"
 "政府军的忠诚大大下降，之后数天大规模开小差，最终使政府走向末日。2036年8月15日战争结束。期间有六百万人死亡。至此第二次冷战正式结束。"
 
-#: ../base/ufos/research.ufo:4951
+#: ../base/ufos/research.ufo:4950
 msgid "After The War"
 msgstr "冷战之后"
 
-#: ../base/ufos/research.ufo:4953
+#: ../base/ufos/research.ufo:4952
 msgid "news_after_the_war_txt"
 msgstr ""
 "The Asian Republic:\n"
@@ -7536,11 +7540,11 @@ msgstr ""
 "\n"
 "Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:4964
+#: ../base/ufos/research.ufo:4963
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX和孟买之后"
 
-#: ../base/ufos/research.ufo:4966
+#: ../base/ufos/research.ufo:4965
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "“PHALANX”项目最早是由美国国防部于1955年开始的，那时在世界各地有越来越多的UFO目击者引起了多年的日益关注。外星入侵的可能性严重困扰了已经把注意力放在核武苏联的政治家。在宇宙中存在敌对的外星生命似乎非常遥远的事情，更何况在地球的广阔空间寻找这种可能不存在的东西--美国政府会给这个方案一个机会吗？\n"
@@ -7571,11 +7575,11 @@ msgstr ""
 "\n"
 "现在只差一名指挥官。"
 
-#: ../base/ufos/research.ufo:4976
+#: ../base/ufos/research.ufo:4975
 msgid "A New Twist"
 msgstr "新的转折"
 
-#: ../base/ufos/research.ufo:4981
+#: ../base/ufos/research.ufo:4980
 msgid "news_new_twist_txt"
 msgstr ""
 "Commander,\n"
@@ -7600,7 +7604,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4982
+#: ../base/ufos/research.ufo:4981
 msgid "news_new_twist_alt_txt"
 msgstr ""
 "Commander,\n"
@@ -7625,11 +7629,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5004
+#: ../base/ufos/research.ufo:5003
 msgid "The Enemy On Earth"
 msgstr "地球上的危险"
 
-#: ../base/ufos/research.ufo:5009
+#: ../base/ufos/research.ufo:5008
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "草案\n"
@@ -7662,7 +7666,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:5010
+#: ../base/ufos/research.ufo:5009
 msgid "enemy_on_earth_txt"
 msgstr ""
 "长官,\n"
@@ -7683,7 +7687,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:5013
+#: ../base/ufos/research.ufo:5012
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "长官，\n"
@@ -7706,11 +7710,11 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:5042
+#: ../base/ufos/research.ufo:5041
 msgid "XVI Census"
 msgstr "病毒普查"
 
-#: ../base/ufos/research.ufo:5047
+#: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
 msgstr ""
 "早上好，先生\n"
@@ -7731,7 +7735,7 @@ msgstr ""
 "\n"
 "祝您万事顺兴福克兰上校"
 
-#: ../base/ufos/research.ufo:5050
+#: ../base/ufos/research.ufo:5049
 msgid "xvi_census_pre_txt"
 msgstr ""
 "早上好，先生\n"
@@ -7746,11 +7750,11 @@ msgstr ""
 "\n"
 "祝您万事顺兴福克兰上校"
 
-#: ../base/ufos/research.ufo:5083
+#: ../base/ufos/research.ufo:5082
 msgid "The Enemy On Earth - Revisited"
 msgstr "地球上的危险-再发现"
 
-#: ../base/ufos/research.ufo:5088
+#: ../base/ufos/research.ufo:5087
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
 "Commander,\n"
@@ -7771,7 +7775,7 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:5091
+#: ../base/ufos/research.ufo:5090
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "没有可用的资料。"
 
@@ -8542,23 +8546,23 @@ msgstr ""
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
-#: ../base/ufos/ui/_hud.ufo:152 ../base/ufos/ui/_hud.ufo:181
-#: ../base/ufos/ui/_hud.ufo:210 ../base/ufos/ui/_hud.ufo:239
-#: ../base/ufos/ui/_hud.ufo:268 ../base/ufos/ui/_hud.ufo:297
-#: ../base/ufos/ui/_hud.ufo:326 ../base/ufos/ui/_hud.ufo:355
-#: ../base/ufos/ui/_hud.ufo:437 ../base/ufos/ui/_hud.ufo:466
-#: ../base/ufos/ui/_hud.ufo:495 ../base/ufos/ui/_hud.ufo:524
-#: ../base/ufos/ui/_hud.ufo:553 ../base/ufos/ui/_hud.ufo:582
-#: ../base/ufos/ui/_hud.ufo:611 ../base/ufos/ui/_hud.ufo:640
+#: ../base/ufos/ui/_hud.ufo:156 ../base/ufos/ui/_hud.ufo:185
+#: ../base/ufos/ui/_hud.ufo:214 ../base/ufos/ui/_hud.ufo:243
+#: ../base/ufos/ui/_hud.ufo:272 ../base/ufos/ui/_hud.ufo:301
+#: ../base/ufos/ui/_hud.ufo:330 ../base/ufos/ui/_hud.ufo:359
+#: ../base/ufos/ui/_hud.ufo:441 ../base/ufos/ui/_hud.ufo:470
+#: ../base/ufos/ui/_hud.ufo:499 ../base/ufos/ui/_hud.ufo:528
+#: ../base/ufos/ui/_hud.ufo:557 ../base/ufos/ui/_hud.ufo:586
+#: ../base/ufos/ui/_hud.ufo:615 ../base/ufos/ui/_hud.ufo:644
 msgid "Check to use this firemode for reaction fire"
 msgstr "使用此攻击方式为自动反应攻击方式"
 
-#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:195
+#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:271
 #: ../base/ufos/ui/hospital.ufo:70
 msgid "CREDITS"
 msgstr "资金"
 
-#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:204
+#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:280
 #: ../base/ufos/ui/hospital.ufo:78
 msgid "Organisation capital"
 msgstr "合计资金"
@@ -8707,7 +8711,7 @@ msgid "Add/remove this soldier"
 msgstr "搭载/移除此士兵"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:87
-#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:685
+#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:761
 msgid "Equip soldiers"
 msgstr "装备士兵"
 
@@ -8848,104 +8852,104 @@ msgstr "基地容量："
 msgid "Kill all aliens in this base"
 msgstr "屠杀所有在此基地的外星人"
 
-#: ../base/ufos/ui/althud.ufo:571 ../base/ufos/ui/inventory.ufo:192
+#: ../base/ufos/ui/althud.ufo:576 ../base/ufos/ui/inventory.ufo:192
 #: ../base/ufos/ui/physdat.ufo:233
 msgid "Inventory and physical stats"
 msgstr "详细资料"
 
-#: ../base/ufos/ui/althud.ufo:607 ../base/ufos/ui/althud.ufo:617
+#: ../base/ufos/ui/althud.ufo:612 ../base/ufos/ui/althud.ufo:622
 #: ../base/ufos/ui/hud.ufo:436
 msgid "Use Item"
 msgstr "使用"
 
-#: ../base/ufos/ui/althud.ufo:657 ../base/ufos/ui/althud.ufo:717
+#: ../base/ufos/ui/althud.ufo:662 ../base/ufos/ui/althud.ufo:722
 msgid "TUs"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:667
+#: ../base/ufos/ui/althud.ufo:672
 #, fuzzy
 msgid "TUs remaining"
 msgstr "弹药数量"
 
-#: ../base/ufos/ui/althud.ufo:678
+#: ../base/ufos/ui/althud.ufo:683
 msgid "TUs reserved"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:689 ../base/ufos/ui/althud.ufo:725
+#: ../base/ufos/ui/althud.ufo:694 ../base/ufos/ui/althud.ufo:730
 #, fuzzy
 msgid "Morale"
 msgstr "士气  %i"
 
-#: ../base/ufos/ui/althud.ufo:709
+#: ../base/ufos/ui/althud.ufo:714
 #, fuzzy
 msgid "Health"
 msgstr "生命力："
 
-#: ../base/ufos/ui/althud.ufo:766 ../base/ufos/ui/hud.ufo:406
+#: ../base/ufos/ui/althud.ufo:771 ../base/ufos/ui/hud.ufo:406
 msgid "Use headgear"
 msgstr "使用护目镜"
 
-#: ../base/ufos/ui/althud.ufo:856
+#: ../base/ufos/ui/althud.ufo:861
 msgid "Switch to right hand weapon"
 msgstr "切换至右手武器"
 
-#: ../base/ufos/ui/althud.ufo:868
+#: ../base/ufos/ui/althud.ufo:873
 msgid "Switch to left hand weapon"
 msgstr "切换至左手武器"
 
-#: ../base/ufos/ui/althud.ufo:918 ../base/ufos/ui/hud.ufo:734
+#: ../base/ufos/ui/althud.ufo:923 ../base/ufos/ui/hud.ufo:734
 msgid "Chat"
 msgstr "对话"
 
-#: ../base/ufos/ui/althud.ufo:929 ../base/ufos/ui/hud.ufo:745
+#: ../base/ufos/ui/althud.ufo:934 ../base/ufos/ui/hud.ufo:745
 msgid "Teamchat"
 msgstr "队伍聊天"
 
-#: ../base/ufos/ui/althud.ufo:940 ../base/ufos/ui/hud.ufo:756
+#: ../base/ufos/ui/althud.ufo:945 ../base/ufos/ui/hud.ufo:756
 msgid "Show chat history"
 msgstr "对话记录"
 
-#: ../base/ufos/ui/althud.ufo:961 ../base/ufos/ui/hud.ufo:777
+#: ../base/ufos/ui/althud.ufo:966 ../base/ufos/ui/hud.ufo:777
 msgid "Chat messages"
 msgstr "对话信息"
 
-#: ../base/ufos/ui/althud.ufo:1010
+#: ../base/ufos/ui/althud.ufo:1018
 msgid "Level up"
 msgstr "上一层"
 
-#: ../base/ufos/ui/althud.ufo:1020
+#: ../base/ufos/ui/althud.ufo:1028
 msgid "Level down"
 msgstr "下一层"
 
-#: ../base/ufos/ui/althud.ufo:1072 ../base/ufos/ui/hud.ufo:338
+#: ../base/ufos/ui/althud.ufo:1082 ../base/ufos/ui/hud.ufo:338
 msgid "Click to cycle through spotted enemies"
 msgstr "点击遍历发现的敌人"
 
-#: ../base/ufos/ui/althud.ufo:1080 ../base/ufos/ui/hud.ufo:326
+#: ../base/ufos/ui/althud.ufo:1090 ../base/ufos/ui/hud.ufo:326
 msgid "Finish round"
 msgstr "回合结束"
 
-#: ../base/ufos/ui/althud.ufo:1162 ../base/ufos/ui/hud.ufo:894
+#: ../base/ufos/ui/althud.ufo:1172 ../base/ufos/ui/hud.ufo:894
 msgid "Multiple-shot reaction fire"
 msgstr "预留多次自动反应攻击模式"
 
-#: ../base/ufos/ui/althud.ufo:1167
+#: ../base/ufos/ui/althud.ufo:1177
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "预留多次自动反应攻击模式（无法实现）"
 
-#: ../base/ufos/ui/althud.ufo:1172 ../base/ufos/ui/hud.ufo:906
+#: ../base/ufos/ui/althud.ufo:1182 ../base/ufos/ui/hud.ufo:906
 msgid "One-shot reaction fire"
 msgstr "预留一次自动反应攻击模式"
 
-#: ../base/ufos/ui/althud.ufo:1177
+#: ../base/ufos/ui/althud.ufo:1187
 msgid "One-shot reaction fire (not possible)"
 msgstr "预留一次自动反应攻击模式 （无法实现）"
 
-#: ../base/ufos/ui/althud.ufo:1183 ../base/ufos/ui/hud.ufo:918
+#: ../base/ufos/ui/althud.ufo:1193 ../base/ufos/ui/hud.ufo:918
 msgid "No reaction fire"
 msgstr "无自动反应"
 
-#: ../base/ufos/ui/althud.ufo:1192 ../base/ufos/ui/hud.ufo:874
+#: ../base/ufos/ui/althud.ufo:1202 ../base/ufos/ui/hud.ufo:874
 #: client/battlescape/cl_hud.c:1050
 msgid "Reserve TUs for shooting."
 msgstr "为射击保留活动时间。"
@@ -9011,8 +9015,8 @@ msgstr ""
 msgid "Targetted UFO:"
 msgstr ""
 
-#: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1343
-#: ../base/ufos/ui/geoscape.ufo:1451
+#: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1419
+#: ../base/ufos/ui/geoscape.ufo:1527
 msgid "Time to build:"
 msgstr "离完工还有："
 
@@ -9021,20 +9025,20 @@ msgstr "离完工还有："
 msgid "Autofire"
 msgstr "火焰"
 
-#: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1488
+#: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1564
 #: client/campaign/cp_base.c:890 client/campaign/cp_base.c:900
 #: client/campaign/cp_base.c:910 client/campaign/cp_base.c:923
-#: client/campaign/cp_installation_callbacks.c:227
+#: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy"
 msgstr "摧毁"
 
-#: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1489
-#: client/campaign/cp_installation_callbacks.c:227
+#: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1565
+#: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy installation"
 msgstr "拆除基站"
 
-#: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1237
-#: ../base/ufos/ui/geoscape.ufo:1464 ../base/ufos/ui/main.ufo:309
+#: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1313
+#: ../base/ufos/ui/geoscape.ufo:1540 ../base/ufos/ui/main.ufo:309
 msgid "Close"
 msgstr "近距离"
 
@@ -9042,7 +9046,7 @@ msgstr "近距离"
 msgid "Back to geoscape"
 msgstr "返回地球窗口"
 
-#: ../base/ufos/ui/bases.ufo:40 ../base/ufos/ui/geoscape.ufo:889
+#: ../base/ufos/ui/bases.ufo:40 ../base/ufos/ui/geoscape.ufo:965
 msgid "Rename your base"
 msgstr "基地名称更改"
 
@@ -9138,7 +9142,7 @@ msgstr "建筑预览"
 msgid "Select building"
 msgstr "选择建筑"
 
-#: ../base/ufos/ui/buildings.ufo:175 ../base/ufos/ui/geoscape.ufo:469
+#: ../base/ufos/ui/buildings.ufo:175 ../base/ufos/ui/geoscape.ufo:545
 #: ../base/ufos/ui/market.ufo:362 client/campaign/cp_ufopedia.c:121
 #: client/campaign/cp_ufopedia.c:614 client/campaign/cp_ufopedia.c:666
 #: client/campaign/cp_ufopedia.c:675 client/campaign/cp_ufopedia.c:835
@@ -9319,347 +9323,347 @@ msgstr ""
 msgid "Gen all levels"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:123
+#: ../base/ufos/ui/geoscape.ufo:199
 msgid "Open up messages"
 msgstr "活动信息一览"
 
-#: ../base/ufos/ui/geoscape.ufo:226
+#: ../base/ufos/ui/geoscape.ufo:302
 msgid "Pause"
 msgstr "暂停"
 
-#: ../base/ufos/ui/geoscape.ufo:238
+#: ../base/ufos/ui/geoscape.ufo:314
 msgid "Time lapse: 5 seconds"
 msgstr "时间流逝：5秒"
 
-#: ../base/ufos/ui/geoscape.ufo:250
+#: ../base/ufos/ui/geoscape.ufo:326
 msgid "Time lapse: 5 minutes"
 msgstr "时间流逝：5分钟"
 
-#: ../base/ufos/ui/geoscape.ufo:263
+#: ../base/ufos/ui/geoscape.ufo:339
 msgid "Time lapse: 20 minutes"
 msgstr "时间流逝：20分钟"
 
-#: ../base/ufos/ui/geoscape.ufo:275
+#: ../base/ufos/ui/geoscape.ufo:351
 msgid "Time lapse: 1 hour"
 msgstr "时间流逝：1小时"
 
-#: ../base/ufos/ui/geoscape.ufo:287
+#: ../base/ufos/ui/geoscape.ufo:363
 msgid "Time lapse: 12 hours"
 msgstr "时间流逝：12小时"
 
-#: ../base/ufos/ui/geoscape.ufo:300
+#: ../base/ufos/ui/geoscape.ufo:376
 msgid "Time lapse: 1 day"
 msgstr "时间流逝：1天"
 
-#: ../base/ufos/ui/geoscape.ufo:312
+#: ../base/ufos/ui/geoscape.ufo:388
 msgid "Time lapse: 5 days"
 msgstr "时间流逝：5天"
 
-#: ../base/ufos/ui/geoscape.ufo:409
+#: ../base/ufos/ui/geoscape.ufo:485
 #, fuzzy
 msgid "Message settings"
 msgstr "暂停设定"
 
-#: ../base/ufos/ui/geoscape.ufo:410
+#: ../base/ufos/ui/geoscape.ufo:486
 msgid "Change message and pause settings"
 msgstr "更改消息和暂停设置"
 
-#: ../base/ufos/ui/geoscape.ufo:425 ../base/ufos/ui/geoscape.ufo:441
+#: ../base/ufos/ui/geoscape.ufo:501 ../base/ufos/ui/geoscape.ufo:517
 #: ../base/ufos/ui/mailclient.ufo:122
 msgid "Mailclient"
 msgstr "信    箱"
 
-#: ../base/ufos/ui/geoscape.ufo:426
+#: ../base/ufos/ui/geoscape.ufo:502
 msgid "INBOX (with unread mails)"
 msgstr "信箱（新邮件）"
 
-#: ../base/ufos/ui/geoscape.ufo:442
+#: ../base/ufos/ui/geoscape.ufo:518
 msgid "INBOX"
 msgstr "信箱"
 
-#: ../base/ufos/ui/geoscape.ufo:455 ../base/ufos/ui/stats.ufo:28
+#: ../base/ufos/ui/geoscape.ufo:531 ../base/ufos/ui/stats.ufo:28
 #: ../base/ufos/ui/ufopedia.ufo:87
 msgid "Statistics"
 msgstr "统计资料"
 
-#: ../base/ufos/ui/geoscape.ufo:456
+#: ../base/ufos/ui/geoscape.ufo:532
 msgid "Organisation statistics"
 msgstr "统计资料"
 
-#: ../base/ufos/ui/geoscape.ufo:470
+#: ../base/ufos/ui/geoscape.ufo:546
 msgid "Open UFOpaedia"
 msgstr "资料库"
 
-#: ../base/ufos/ui/geoscape.ufo:483 ../base/ufos/ui/geoscape.ufo:484
+#: ../base/ufos/ui/geoscape.ufo:559 ../base/ufos/ui/geoscape.ufo:560
 msgid "Create installation"
 msgstr "建立新基站"
 
-#: ../base/ufos/ui/geoscape.ufo:501 ../base/ufos/ui/geoscape.ufo:1969
+#: ../base/ufos/ui/geoscape.ufo:577 ../base/ufos/ui/geoscape.ufo:2045
 msgid "Highlight nation borders"
 msgstr "显示国际组织边界"
 
-#: ../base/ufos/ui/geoscape.ufo:513 ../base/ufos/ui/geoscape.ufo:1994
+#: ../base/ufos/ui/geoscape.ufo:589 ../base/ufos/ui/geoscape.ufo:2070
 msgid "Show radar range"
 msgstr "显示雷达范围"
 
-#: ../base/ufos/ui/geoscape.ufo:526 ../base/ufos/ui/geoscape.ufo:2015
+#: ../base/ufos/ui/geoscape.ufo:602 ../base/ufos/ui/geoscape.ufo:2091
 msgid "Show XVI map"
 msgstr "显示XVI地图"
 
-#: ../base/ufos/ui/geoscape.ufo:538
+#: ../base/ufos/ui/geoscape.ufo:614
 msgid "Center objects on the map"
 msgstr "以建筑为地图中心"
 
-#: ../base/ufos/ui/geoscape.ufo:549
+#: ../base/ufos/ui/geoscape.ufo:625
 msgid "Go to Options"
 msgstr "系统配置"
 
-#: ../base/ufos/ui/geoscape.ufo:585
+#: ../base/ufos/ui/geoscape.ufo:661
 msgid "Ready"
 msgstr "准备"
 
-#: ../base/ufos/ui/geoscape.ufo:591
+#: ../base/ufos/ui/geoscape.ufo:667
 msgid "Aircraft reached desired location - what to do?"
 msgstr "航空机抵达预定地点，有何指示？"
 
-#: ../base/ufos/ui/geoscape.ufo:599 ../base/ufos/ui/geoscape.ufo:848
-#: ../base/ufos/ui/geoscape.ufo:959 ../base/ufos/ui/geoscape.ufo:1380
-#: ../base/ufos/ui/geoscape.ufo:1662 ../base/ufos/ui/geoscape.ufo:1752
-#: ../base/ufos/ui/geoscape.ufo:1825 ../base/ufos/ui/geoscape.ufo:1898
+#: ../base/ufos/ui/geoscape.ufo:675 ../base/ufos/ui/geoscape.ufo:924
+#: ../base/ufos/ui/geoscape.ufo:1035 ../base/ufos/ui/geoscape.ufo:1456
+#: ../base/ufos/ui/geoscape.ufo:1738 ../base/ufos/ui/geoscape.ufo:1828
+#: ../base/ufos/ui/geoscape.ufo:1901 ../base/ufos/ui/geoscape.ufo:1974
 #: ../base/ufos/ui/irc.ufo:211 ../base/ufos/ui/messageoptions.ufo:66
 #: ../base/ufos/ui/options.ufo:1290 ../base/ufos/ui/transfer.ufo:594
-#: client/campaign/cp_installation_callbacks.c:228
+#: client/campaign/cp_installation_callbacks.c:224
 msgid "Cancel"
 msgstr "取消"
 
-#: ../base/ufos/ui/geoscape.ufo:600 ../base/ufos/ui/geoscape.ufo:849
-#: ../base/ufos/ui/geoscape.ufo:960 ../base/ufos/ui/geoscape.ufo:1238
-#: ../base/ufos/ui/geoscape.ufo:1381 ../base/ufos/ui/geoscape.ufo:1465
-#: ../base/ufos/ui/geoscape.ufo:1663 ../base/ufos/ui/geoscape.ufo:1753
-#: ../base/ufos/ui/geoscape.ufo:1826 ../base/ufos/ui/geoscape.ufo:1899
+#: ../base/ufos/ui/geoscape.ufo:676 ../base/ufos/ui/geoscape.ufo:925
+#: ../base/ufos/ui/geoscape.ufo:1036 ../base/ufos/ui/geoscape.ufo:1314
+#: ../base/ufos/ui/geoscape.ufo:1457 ../base/ufos/ui/geoscape.ufo:1541
+#: ../base/ufos/ui/geoscape.ufo:1739 ../base/ufos/ui/geoscape.ufo:1829
+#: ../base/ufos/ui/geoscape.ufo:1902 ../base/ufos/ui/geoscape.ufo:1975
 #: ../base/ufos/ui/irc.ufo:212 ../base/ufos/ui/options.ufo:1291
 #: ../base/ufos/ui/sys_popup.ufo:50 ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "关闭窗口"
 
-#: ../base/ufos/ui/geoscape.ufo:614 ../base/ufos/ui/geoscape.ufo:782
+#: ../base/ufos/ui/geoscape.ufo:690 ../base/ufos/ui/geoscape.ufo:858
 msgid "Enter"
 msgstr "进入"
 
-#: ../base/ufos/ui/geoscape.ufo:615 ../base/ufos/ui/geoscape.ufo:783
+#: ../base/ufos/ui/geoscape.ufo:691 ../base/ufos/ui/geoscape.ufo:859
 msgid "Enter the battlefield"
 msgstr "进入战场"
 
-#: ../base/ufos/ui/geoscape.ufo:626 ../base/ufos/ui/geoscape.ufo:749
+#: ../base/ufos/ui/geoscape.ufo:702 ../base/ufos/ui/geoscape.ufo:825
 msgid "Auto mission"
 msgstr "自动"
 
-#: ../base/ufos/ui/geoscape.ufo:627 ../base/ufos/ui/geoscape.ufo:750
+#: ../base/ufos/ui/geoscape.ufo:703 ../base/ufos/ui/geoscape.ufo:826
 msgid "Automatically finish mission"
 msgstr "自动战斗"
 
-#: ../base/ufos/ui/geoscape.ufo:664
+#: ../base/ufos/ui/geoscape.ufo:740
 msgid "Base is under attack"
 msgstr "基地正在被攻击"
 
-#: ../base/ufos/ui/geoscape.ufo:686
+#: ../base/ufos/ui/geoscape.ufo:762
 msgid "Go to soldier equipment screen before the battle"
 msgstr "在战斗开始前先为士兵选择装备"
 
-#: ../base/ufos/ui/geoscape.ufo:700
+#: ../base/ufos/ui/geoscape.ufo:776
 msgid "Kill aliens in container"
 msgstr "屠杀所有在此收容器里的外星人"
 
-#: ../base/ufos/ui/geoscape.ufo:709 ../base/ufos/ui/geoscape.ufo:718
-#: ../base/ufos/ui/geoscape.ufo:727 ../base/ufos/ui/geoscape.ufo:736
+#: ../base/ufos/ui/geoscape.ufo:785 ../base/ufos/ui/geoscape.ufo:794
+#: ../base/ufos/ui/geoscape.ufo:803 ../base/ufos/ui/geoscape.ufo:812
 #: ../base/ufos/ui/hospital.ufo:568
 msgid "Not implemented"
 msgstr "还没有开发"
 
-#: ../base/ufos/ui/geoscape.ufo:716
+#: ../base/ufos/ui/geoscape.ufo:792
 msgid "Lift aircraft"
 msgstr "运输航空机"
 
-#: ../base/ufos/ui/geoscape.ufo:734
+#: ../base/ufos/ui/geoscape.ufo:810
 msgid "Disable Power Plant"
 msgstr "关闭动力室"
 
-#: ../base/ufos/ui/geoscape.ufo:824
+#: ../base/ufos/ui/geoscape.ufo:900
 msgid "Select base to transfer to"
 msgstr "选择一个基地运输"
 
-#: ../base/ufos/ui/geoscape.ufo:829
+#: ../base/ufos/ui/geoscape.ufo:905
 msgid "Choose a base to host alien bodies:"
 msgstr "选择一个基地存放外星人："
 
-#: ../base/ufos/ui/geoscape.ufo:870
+#: ../base/ufos/ui/geoscape.ufo:946
 msgid "New base"
 msgstr "新基地"
 
-#: ../base/ufos/ui/geoscape.ufo:875 ../base/ufos/ui/geoscape.ufo:1314
-#: ../base/ufos/ui/geoscape.ufo:1433 ../base/ufos/ui/geoscape.ufo:1710
-#: ../base/ufos/ui/geoscape.ufo:1788 ../base/ufos/ui/main.ufo:107
+#: ../base/ufos/ui/geoscape.ufo:951 ../base/ufos/ui/geoscape.ufo:1390
+#: ../base/ufos/ui/geoscape.ufo:1509 ../base/ufos/ui/geoscape.ufo:1786
+#: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/multiplayer.ufo:342 ../base/ufos/ui/options.ufo:736
 msgid "Name:"
 msgstr "名称："
 
-#: ../base/ufos/ui/geoscape.ufo:899 ../base/ufos/ui/geoscape.ufo:1331
+#: ../base/ufos/ui/geoscape.ufo:975 ../base/ufos/ui/geoscape.ufo:1407
 msgid "Cost:"
 msgstr "费用："
 
-#: ../base/ufos/ui/geoscape.ufo:923
+#: ../base/ufos/ui/geoscape.ufo:999
 msgid "Buildings already built in the initial base"
 msgstr "建立基地的同时也建筑部分设施"
 
-#: ../base/ufos/ui/geoscape.ufo:932
+#: ../base/ufos/ui/geoscape.ufo:1008
 msgid "Start with buildings"
 msgstr "开始有建筑"
 
-#: ../base/ufos/ui/geoscape.ufo:942
+#: ../base/ufos/ui/geoscape.ufo:1018
 msgid "Employees already hired at campaign start"
 msgstr "建立基地的同时也雇用人员"
 
-#: ../base/ufos/ui/geoscape.ufo:950
+#: ../base/ufos/ui/geoscape.ufo:1026
 msgid "Start with employees"
 msgstr "开始有员工"
 
-#: ../base/ufos/ui/geoscape.ufo:972 ../base/ufos/ui/geoscape.ufo:1391
+#: ../base/ufos/ui/geoscape.ufo:1048 ../base/ufos/ui/geoscape.ufo:1467
 msgid "Build"
 msgstr "建造"
 
-#: ../base/ufos/ui/geoscape.ufo:973
+#: ../base/ufos/ui/geoscape.ufo:1049
 msgid "Build the base"
 msgstr "建立此基地"
 
-#: ../base/ufos/ui/geoscape.ufo:1012
+#: ../base/ufos/ui/geoscape.ufo:1088
 msgid "New installation"
 msgstr "新基站"
 
-#: ../base/ufos/ui/geoscape.ufo:1017
+#: ../base/ufos/ui/geoscape.ufo:1093
 msgid "Type"
 msgstr "种类"
 
-#: ../base/ufos/ui/geoscape.ufo:1024
+#: ../base/ufos/ui/geoscape.ufo:1100
 msgid "Build Time"
 msgstr "建造耗时"
 
-#: ../base/ufos/ui/geoscape.ufo:1032
+#: ../base/ufos/ui/geoscape.ufo:1108
 msgid "Cost"
 msgstr "费用"
 
-#: ../base/ufos/ui/geoscape.ufo:1052
+#: ../base/ufos/ui/geoscape.ufo:1128
 msgid "Radar tower"
 msgstr "雷达站"
 
-#: ../base/ufos/ui/geoscape.ufo:1183 client/campaign/cp_map.c:349
+#: ../base/ufos/ui/geoscape.ufo:1259 client/campaign/cp_map.c:339
 msgid "Base"
 msgstr "基地"
 
-#: ../base/ufos/ui/geoscape.ufo:1191
+#: ../base/ufos/ui/geoscape.ufo:1267
 msgid "0 day"
 msgstr "当日"
 
-#: ../base/ufos/ui/geoscape.ufo:1220
+#: ../base/ufos/ui/geoscape.ufo:1296
 msgid "Installation limit reached. Build more bases."
 msgstr "永久军事基地上限达到。建立更多基地。"
 
-#: ../base/ufos/ui/geoscape.ufo:1227
+#: ../base/ufos/ui/geoscape.ufo:1303
 msgid "Base limit reached."
 msgstr "达到基地限制"
 
-#: ../base/ufos/ui/geoscape.ufo:1392
+#: ../base/ufos/ui/geoscape.ufo:1468
 msgid "Build the radar tower"
 msgstr "建立雷达站"
 
-#: ../base/ufos/ui/geoscape.ufo:1409
+#: ../base/ufos/ui/geoscape.ufo:1485
 msgid "New radar tower"
 msgstr "新的雷达站"
 
-#: ../base/ufos/ui/geoscape.ufo:1412
+#: ../base/ufos/ui/geoscape.ufo:1488
 msgid "New SAM site"
 msgstr "新的防空基地"
 
-#: ../base/ufos/ui/geoscape.ufo:1415
+#: ../base/ufos/ui/geoscape.ufo:1491
 msgid "New UFO yard"
 msgstr "新UFO场地"
 
-#: ../base/ufos/ui/geoscape.ufo:1428
+#: ../base/ufos/ui/geoscape.ufo:1504
 msgid "Installation Status"
 msgstr "基站状态"
 
-#: ../base/ufos/ui/geoscape.ufo:1475
+#: ../base/ufos/ui/geoscape.ufo:1551
 msgid "Manage"
 msgstr "管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1476
+#: ../base/ufos/ui/geoscape.ufo:1552
 msgid "Manage installation"
 msgstr "基站管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1533
+#: ../base/ufos/ui/geoscape.ufo:1609
 msgid "Anti-UFO defence"
 msgstr "对UFO防御设施"
 
-#: ../base/ufos/ui/geoscape.ufo:1541
+#: ../base/ufos/ui/geoscape.ufo:1617
 msgid "Aircraft interception"
 msgstr "飞行器拦截"
 
-#: ../base/ufos/ui/geoscape.ufo:1545
+#: ../base/ufos/ui/geoscape.ufo:1621
 msgid "SAM defence"
 msgstr "SAM选择防御"
 
-#: ../base/ufos/ui/geoscape.ufo:1562
+#: ../base/ufos/ui/geoscape.ufo:1638
 msgid "Aircraft:"
 msgstr "航空机："
 
-#: ../base/ufos/ui/geoscape.ufo:1569 ../base/ufos/ui/geoscape.ufo:1717
+#: ../base/ufos/ui/geoscape.ufo:1645 ../base/ufos/ui/geoscape.ufo:1793
 msgid "Status:"
 msgstr "状态："
 
-#: ../base/ufos/ui/geoscape.ufo:1576 ../base/ufos/ui/geoscape.ufo:1724
+#: ../base/ufos/ui/geoscape.ufo:1652 ../base/ufos/ui/geoscape.ufo:1800
 msgid "Base:"
 msgstr "基地："
 
-#: ../base/ufos/ui/geoscape.ufo:1624
+#: ../base/ufos/ui/geoscape.ufo:1700
 msgid "Surface-to-air missile site:"
 msgstr "地对空导弹发射场："
 
-#: ../base/ufos/ui/geoscape.ufo:1705
+#: ../base/ufos/ui/geoscape.ufo:1781
 msgid "Select aircraft"
 msgstr "选择航空机"
 
-#: ../base/ufos/ui/geoscape.ufo:1731
+#: ../base/ufos/ui/geoscape.ufo:1807
 msgid "ETA:"
 msgstr "估计到达时间："
 
-#: ../base/ufos/ui/geoscape.ufo:1775
+#: ../base/ufos/ui/geoscape.ufo:1851
 msgid "Select item"
 msgstr "选择"
 
-#: ../base/ufos/ui/geoscape.ufo:1780
+#: ../base/ufos/ui/geoscape.ufo:1856
 msgid "Type:"
 msgstr "种类："
 
-#: ../base/ufos/ui/geoscape.ufo:1853
+#: ../base/ufos/ui/geoscape.ufo:1929
 msgid "Action:"
 msgstr "行动："
 
-#: ../base/ufos/ui/geoscape.ufo:1861
+#: ../base/ufos/ui/geoscape.ufo:1937
 msgid "Description:"
 msgstr "目的地："
 
-#: ../base/ufos/ui/geoscape.ufo:1922
+#: ../base/ufos/ui/geoscape.ufo:1998
 msgid "Geoscape options"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1934
+#: ../base/ufos/ui/geoscape.ufo:2010
 msgid "Geoscape projection mode:"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1944
+#: ../base/ufos/ui/geoscape.ufo:2020
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:1948
+#: ../base/ufos/ui/geoscape.ufo:2024
 msgid "3D"
 msgstr "3D"
 
@@ -9712,35 +9716,35 @@ msgstr "后一页"
 msgid "Implants"
 msgstr "手术"
 
-#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1051
+#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1047
 msgid "Level 1"
 msgstr "一层"
 
-#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1062
+#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1058
 msgid "Level 2"
 msgstr "二层"
 
-#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1073
+#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1069
 msgid "Level 3"
 msgstr "三层"
 
-#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1084
+#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1080
 msgid "Level 4"
 msgstr "四层"
 
-#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1095
+#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1091
 msgid "Level 5"
 msgstr "五层"
 
-#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1106
+#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1102
 msgid "Level 6"
 msgstr "六层"
 
-#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1117
+#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1113
 msgid "Level 7"
 msgstr "七层"
 
-#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1128
+#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1124
 msgid "Level 8"
 msgstr "八层"
 
@@ -9765,8 +9769,8 @@ msgid "Floor"
 msgstr "地板"
 
 #: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:58
-#: ../base/ufos/ui/multiplayer.ufo:97 ../base/ufos/ui/multiplayer.ufo:1795
-#: ../base/ufos/ui/multiplayer.ufo:1848
+#: ../base/ufos/ui/multiplayer.ufo:97 ../base/ufos/ui/multiplayer.ufo:1801
+#: ../base/ufos/ui/multiplayer.ufo:1854
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 msgid "Lobby"
 msgstr "大厅"
@@ -9796,7 +9800,7 @@ msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "您还没有连接到大厅。你想连接？"
 
 #: ../base/ufos/ui/irc.ufo:199 ../base/ufos/ui/multiplayer.ufo:197
-#: ../base/ufos/ui/multiplayer.ufo:385 ../base/ufos/ui/multiplayer.ufo:1757
+#: ../base/ufos/ui/multiplayer.ufo:385 ../base/ufos/ui/multiplayer.ufo:1763
 msgid "Connect"
 msgstr "连接"
 
@@ -9941,7 +9945,7 @@ msgstr "语言："
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr "你必须设定玩家名称然后点击OK:"
 
-#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1756
+#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1762
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
 msgid "OK"
 msgstr "确定"
@@ -10314,134 +10318,134 @@ msgstr "RCON 密码："
 msgid "Start server"
 msgstr "启动服务器"
 
-#: ../base/ufos/ui/multiplayer.ufo:1148
+#: ../base/ufos/ui/multiplayer.ufo:1144
 #, fuzzy
 msgid "Party info"
 msgstr "基地信息"
 
-#: ../base/ufos/ui/multiplayer.ufo:1158
+#: ../base/ufos/ui/multiplayer.ufo:1154
 msgid "Display/hide the panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1203
+#: ../base/ufos/ui/multiplayer.ufo:1199
 msgid "Max. players per team"
 msgstr "一个队伍玩家最大数"
 
-#: ../base/ufos/ui/multiplayer.ufo:1217
+#: ../base/ufos/ui/multiplayer.ufo:1213
 msgid "Max. teams for this map"
 msgstr "这个地图最多几个队伍"
 
-#: ../base/ufos/ui/multiplayer.ufo:1240
+#: ../base/ufos/ui/multiplayer.ufo:1236
 #, fuzzy
 msgid "Players connected"
 msgstr "没有玩家接入\n"
 
-#: ../base/ufos/ui/multiplayer.ufo:1294
+#: ../base/ufos/ui/multiplayer.ufo:1290
 msgid "Team selection"
 msgstr "队伍选择"
 
-#: ../base/ufos/ui/multiplayer.ufo:1315
+#: ../base/ufos/ui/multiplayer.ufo:1311
 msgid "Team preference:"
 msgstr "队伍选择："
 
-#: ../base/ufos/ui/multiplayer.ufo:1329
+#: ../base/ufos/ui/multiplayer.ufo:1325
 msgid "Next free team"
 msgstr "后一个"
 
-#: ../base/ufos/ui/multiplayer.ufo:1340
+#: ../base/ufos/ui/multiplayer.ufo:1336
 msgid "Previous free team"
 msgstr "前一个"
 
-#: ../base/ufos/ui/multiplayer.ufo:1353
+#: ../base/ufos/ui/multiplayer.ufo:1349
 msgid "Force start"
 msgstr "强制开始"
 
-#: ../base/ufos/ui/multiplayer.ufo:1354
+#: ../base/ufos/ui/multiplayer.ufo:1350
 #, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr "不管团队人员是否满员都开始游戏"
 
-#: ../base/ufos/ui/multiplayer.ufo:1365 ../base/ufos/ui/multiplayer.ufo:1374
+#: ../base/ufos/ui/multiplayer.ufo:1361 ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Finish the teamselection and start the game"
 msgstr "结束队伍选择开始游戏"
 
-#: ../base/ufos/ui/multiplayer.ufo:1373
+#: ../base/ufos/ui/multiplayer.ufo:1369
 msgid "Are you ready?"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1382 ../base/ufos/ui/multiplayer.ufo:1392
+#: ../base/ufos/ui/multiplayer.ufo:1378 ../base/ufos/ui/multiplayer.ufo:1388
 #, fuzzy
 msgid "Activate IRC"
 msgstr "激活聊天"
 
-#: ../base/ufos/ui/multiplayer.ufo:1398
+#: ../base/ufos/ui/multiplayer.ufo:1394
 #, fuzzy
 msgid "Deactivate IRC"
 msgstr "Deactivates tooltips"
 
-#: ../base/ufos/ui/multiplayer.ufo:1406 ../base/ufos/ui/multiplayer.ufo:1416
+#: ../base/ufos/ui/multiplayer.ufo:1402 ../base/ufos/ui/multiplayer.ufo:1412
 msgid "Display IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1419
+#: ../base/ufos/ui/multiplayer.ufo:1415
 msgid "Hide IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1425
+#: ../base/ufos/ui/multiplayer.ufo:1421
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
 
-#: ../base/ufos/ui/multiplayer.ufo:1427
+#: ../base/ufos/ui/multiplayer.ufo:1423
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1463
+#: ../base/ufos/ui/multiplayer.ufo:1459
 #, fuzzy
 msgid "Party chat"
 msgstr "激活聊天"
 
-#: ../base/ufos/ui/multiplayer.ufo:1467
+#: ../base/ufos/ui/multiplayer.ufo:1463
 msgid "Global lobby (IRC)"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1550 ../base/ufos/ui/multiplayer.ufo:1623
+#: ../base/ufos/ui/multiplayer.ufo:1546 ../base/ufos/ui/multiplayer.ufo:1619
 #, fuzzy
 msgid "Say:"
 msgstr "Spray"
 
-#: ../base/ufos/ui/multiplayer.ufo:1723
+#: ../base/ufos/ui/multiplayer.ufo:1729
 msgid "Enter server password"
 msgstr "输入服务器密码"
 
-#: ../base/ufos/ui/multiplayer.ufo:1736
+#: ../base/ufos/ui/multiplayer.ufo:1742
 msgid "Password:"
 msgstr "密码："
 
-#: ../base/ufos/ui/multiplayer.ufo:1774
+#: ../base/ufos/ui/multiplayer.ufo:1780
 msgid "Personal message"
 msgstr "个人消息"
 
-#: ../base/ufos/ui/multiplayer.ufo:1796 ../base/ufos/ui/multiplayer.ufo:1849
+#: ../base/ufos/ui/multiplayer.ufo:1802 ../base/ufos/ui/multiplayer.ufo:1855
 msgid "Go into the lobby"
 msgstr "进入大厅"
 
-#: ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1819
 #, fuzzy
 msgid "Game invitation"
 msgstr "基站重新命名"
 
-#: ../base/ufos/ui/multiplayer.ufo:1832
+#: ../base/ufos/ui/multiplayer.ufo:1838
 #, fuzzy
 msgid "Server info"
 msgstr "基地信息"
 
-#: ../base/ufos/ui/multiplayer.ufo:1833
+#: ../base/ufos/ui/multiplayer.ufo:1839
 #, fuzzy
 msgid "Show server information"
 msgstr "玩家信息"
 
-#: ../base/ufos/ui/multiplayer.ufo:1861
+#: ../base/ufos/ui/multiplayer.ufo:1867
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
@@ -11613,23 +11617,23 @@ msgstr "这不是你的回合\n"
 msgid "You cannot reload this unknown item.\n"
 msgstr "不能装载未知物品。\n"
 
-#: client/battlescape/cl_actor.c:2338
+#: client/battlescape/cl_actor.c:2325
 msgid "Unknown alien race"
 msgstr "未知外星人种类"
 
-#: client/battlescape/cl_actor.c:2887
+#: client/battlescape/cl_actor.c:2874
 msgid "Reselect the current soldier"
 msgstr "重新选择士兵"
 
-#: client/battlescape/cl_actor.c:2888
+#: client/battlescape/cl_actor.c:2875
 msgid "Toggle to next soldier"
 msgstr "切换下一个士兵"
 
-#: client/battlescape/cl_actor.c:2889
+#: client/battlescape/cl_actor.c:2876
 msgid "Select a soldier from list"
 msgstr "从列表里选择一个士兵"
 
-#: client/battlescape/cl_actor.c:2890
+#: client/battlescape/cl_actor.c:2877
 msgid "Update a soldier"
 msgstr "更新一个士兵"
 
@@ -12069,8 +12073,8 @@ msgstr "一个新的%s在%s待命"
 #: client/campaign/cp_aliencont.c:194 client/campaign/cp_aliencont.c:226
 #: client/campaign/cp_aliencont.c:245 client/campaign/cp_aliencont.c:255
 #: client/campaign/cp_base.c:868 client/campaign/cp_base.c:1442
-#: client/campaign/cp_base.c:2594 client/campaign/cp_base.c:2599
-#: client/campaign/cp_base.c:3283 client/campaign/cp_base_callbacks.c:71
+#: client/campaign/cp_base.c:2583 client/campaign/cp_base.c:2588
+#: client/campaign/cp_base.c:3272 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
 #: client/campaign/cp_base_callbacks.c:588
@@ -12084,8 +12088,7 @@ msgstr "一个新的%s在%s待命"
 #: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1459
 #: client/campaign/cp_campaign.c:1504 client/campaign/cp_campaign.c:1557
 #: client/campaign/cp_campaign.c:1570 client/campaign/cp_campaign.c:1572
-#: client/campaign/cp_installation_callbacks.c:130
-#: client/campaign/cp_installation_callbacks.c:182
+#: client/campaign/cp_installation_callbacks.c:156
 #: client/campaign/cp_mapfightequip.c:332
 #: client/campaign/cp_mapfightequip.c:353
 #: client/campaign/cp_mapfightequip.c:359
@@ -12108,8 +12111,8 @@ msgstr "一个新的%s在%s待命"
 #: client/campaign/cp_research_callbacks.c:659
 #: client/campaign/cp_research_callbacks.c:826
 #: client/campaign/cp_research_callbacks.c:829 client/campaign/cp_ufo.c:396
-#: client/campaign/cp_ufo.c:772 client/campaign/cp_ufo.c:776
-#: client/campaign/cp_ufo.c:780
+#: client/campaign/cp_ufo.c:774 client/campaign/cp_ufo.c:778
+#: client/campaign/cp_ufo.c:783
 #: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:407
 #: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
@@ -12187,14 +12190,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "航空机起飞"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1729
-#: client/campaign/cp_map.c:1738 client/campaign/cp_map.c:1751
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1592
+#: client/campaign/cp_map.c:1599
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度：\t%i 公里/小时\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1730
-#: client/campaign/cp_map.c:1739
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1593
+#: client/campaign/cp_map.c:1600
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料：\t%i/%i\n"
@@ -12420,11 +12423,11 @@ msgstr "维护费：\t%i c\n"
 msgid "Needs:\t%s\n"
 msgstr "需要：\t%s\n"
 
-#: client/campaign/cp_base.c:2341
+#: client/campaign/cp_base.c:2322
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "基地里没有航空机--你需要购买或传送一架航空机\n"
 
-#: client/campaign/cp_base.c:2341 client/campaign/cp_base.c:2343
+#: client/campaign/cp_base.c:2322 client/campaign/cp_base.c:2324
 #: client/campaign/cp_market_callbacks.c:597
 #: client/campaign/cp_market_callbacks.c:602
 #: client/campaign/cp_market_callbacks.c:708
@@ -12433,44 +12436,44 @@ msgstr "基地里没有航空机--你需要购买或传送一架航空机\n"
 msgid "Note"
 msgstr "注意"
 
-#: client/campaign/cp_base.c:2343
+#: client/campaign/cp_base.c:2324
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "基地里没有航空机--你需要购买一架航空机\n"
 
-#: client/campaign/cp_base.c:2489
+#: client/campaign/cp_base.c:2478
 #, fuzzy, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "%s 建设完工在基地 %s。"
 
-#: client/campaign/cp_base.c:2490
+#: client/campaign/cp_base.c:2479
 msgid "Building finished"
 msgstr "建造完工"
 
-#: client/campaign/cp_base.c:2592
+#: client/campaign/cp_base.c:2581
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "出售%s使你获得%i资金"
 
-#: client/campaign/cp_base.c:2593
+#: client/campaign/cp_base.c:2582
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i 装备"
 msgstr[1] "%i 装备"
 
-#: client/campaign/cp_base.c:2597
+#: client/campaign/cp_base.c:2586
 #, fuzzy, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "仓库剩余空间不足在基地 %s. %s"
 
-#: client/campaign/cp_base.c:2598
+#: client/campaign/cp_base.c:2587
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i个卖了 %ic 。"
 msgstr[1] "%i个卖了 %ic 。"
 
-#: client/campaign/cp_base.c:3281
+#: client/campaign/cp_base.c:3270
 #, fuzzy, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "基地 %s 没有反物质仓库，%i 反物质丢弃。"
@@ -12484,10 +12487,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Base #%i"
 msgstr "2号基地"
-
-#: client/campaign/cp_base_callbacks.c:183
-msgid "Home"
-msgstr "PHALANX本部"
 
 #: client/campaign/cp_base_callbacks.c:187
 msgid "You've reached the base limit."
@@ -12641,6 +12640,13 @@ msgstr "%i c"
 #, fuzzy
 msgid "No defence of this type in this installation"
 msgstr "此军事基地无此类防御设施\n"
+
+#: client/campaign/cp_basedefence_callbacks.c:251
+#: client/campaign/cp_basedefence_callbacks.c:279
+#: client/campaign/cp_basedefence_callbacks.c:307
+#, fuzzy, c-format
+msgid "%i: empty"
+msgstr "防御井 %i:\t空\n"
 
 #: client/campaign/cp_basedefence_callbacks.c:257
 #: client/campaign/cp_basedefence_callbacks.c:285
@@ -12863,12 +12869,12 @@ msgstr ""
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "收集的物资 （种类/数量）\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1679
+#: client/campaign/cp_campaign.c:1678
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已经升级到 %s。\n"
 
-#: client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_campaign.c:1680
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -12877,7 +12883,7 @@ msgstr ""
 "%s 在战斗中光荣牺牲，被追封%s。\n"
 "以表彰其精神。\n"
 
-#: client/campaign/cp_campaign.c:1682
+#: client/campaign/cp_campaign.c:1681
 msgid "Soldier promoted"
 msgstr "士兵晋升"
 
@@ -13030,90 +13036,60 @@ msgid "%d c"
 msgstr "%d c"
 
 #: client/campaign/cp_installation.c:530
-#: client/campaign/cp_installation_callbacks.c:66
+#: client/campaign/cp_installation_callbacks.c:92
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d天"
 msgstr[1] "%d天"
 
-#: client/campaign/cp_installation_callbacks.c:119
+#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:354
+msgid "Installation"
+msgstr "基站"
+
+#: client/campaign/cp_installation_callbacks.c:145
 #, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "新基站已经建造： %s （国际组织： %s）"
 
-#: client/campaign/cp_installation_callbacks.c:121
+#: client/campaign/cp_installation_callbacks.c:147
 #, c-format
 msgid "A new installation has been built: %s"
 msgstr "新的基站建造： %s"
 
-#: client/campaign/cp_installation_callbacks.c:122
+#: client/campaign/cp_installation_callbacks.c:148
 msgid "Installation building"
 msgstr "基站建造"
 
-#: client/campaign/cp_installation_callbacks.c:129
+#: client/campaign/cp_installation_callbacks.c:155
 msgid "Not enough credits to set up a new installation."
 msgstr "资金不足以建新基站。"
 
-#: client/campaign/cp_installation_callbacks.c:172
-#: client/campaign/cp_map.c:364
-msgid "Installation"
-msgstr "基站"
-
-#: client/campaign/cp_installation_callbacks.c:182
-msgid "You've reached the installation limit."
-msgstr "基站建造不能再多了"
-
-#: client/campaign/cp_installation_callbacks.c:226
+#: client/campaign/cp_installation_callbacks.c:222
 msgid "Destroy Installation"
 msgstr "拆除基站"
 
-#: client/campaign/cp_installation_callbacks.c:226
+#: client/campaign/cp_installation_callbacks.c:222
 msgid "Do you really want to destroy this installation?"
 msgstr "确定要拆除这个基站吗？"
 
-#: client/campaign/cp_installation_callbacks.c:228
+#: client/campaign/cp_installation_callbacks.c:224
 msgid "Forget it"
 msgstr "别管它"
 
-#: client/campaign/cp_map.c:375
+#: client/campaign/cp_map.c:365
 msgid "UFO Sighting"
 msgstr "视野中有UFO"
 
-#: client/campaign/cp_map.c:1277
+#: client/campaign/cp_map.c:1348
 msgid "Day"
 msgstr "白天"
 
-#: client/campaign/cp_map.c:1277
+#: client/campaign/cp_map.c:1348
 msgid "Night"
 msgstr "夜晚"
 
-#: client/campaign/cp_map.c:1635
-#, c-format
-msgid "%s\t%i%%\n"
-msgstr "%s\t%i%%\n"
-
-#: client/campaign/cp_map.c:1687
-msgid "Select the desired location of the new base on the map.\n"
-msgstr "在地图上选择新基地位置。\n"
-
-#: client/campaign/cp_map.c:1690
-msgid "Select the desired location of the new installation on the map.\n"
-msgstr "在地图上选择新基站的建造位置。\n"
-
-#: client/campaign/cp_map.c:1695
-msgid "Aliens are attacking our base at this very moment.\n"
-msgstr "外星人马上要攻击我们的基地。\n"
-
-#: client/campaign/cp_map.c:1700
-msgid "Select ufo or mission on map\n"
-msgstr "在地图上选择UFO或任务\n"
-
-#: client/campaign/cp_map.c:1705
-msgid "UFO in radar range\n"
-msgstr "UFO在雷达范围\n"
-
-#: client/campaign/cp_map.c:1714
+#: client/campaign/cp_map.c:1553
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -13124,25 +13100,62 @@ msgstr ""
 "类型： %s\n"
 "环境： %s"
 
-#: client/campaign/cp_map.c:1726 client/campaign/cp_map.c:1736
+#: client/campaign/cp_map.c:1569
+#, fuzzy, c-format
+msgid ""
+"%s (%s)\n"
+"%s"
+msgstr "^B%s (%s)\n"
+
+#: client/campaign/cp_map.c:1589 client/campaign/cp_map.c:1597
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名称：\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1727 client/campaign/cp_map.c:1737
+#: client/campaign/cp_map.c:1590 client/campaign/cp_map.c:1598
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状态：\t%s\n"
 
-#: client/campaign/cp_map.c:1728
+#: client/campaign/cp_map.c:1591
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "与目标距离：\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1732 client/campaign/cp_map.c:1744
+#: client/campaign/cp_map.c:1595 client/campaign/cp_map.c:1605
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "估计用时：\t%s小时\n"
+
+#: client/campaign/cp_map.c:1623
+#, fuzzy, c-format
+msgid "Speed: %i km/h\n"
+msgstr "速度：\t%i 公里/小时\n"
+
+#: client/campaign/cp_map.c:1823
+#, c-format
+msgid "%s\t%i%%\n"
+msgstr "%s\t%i%%\n"
+
+#: client/campaign/cp_map.c:1874
+msgid "Select the desired location of the new base on the map.\n"
+msgstr "在地图上选择新基地位置。\n"
+
+#: client/campaign/cp_map.c:1877
+msgid "Select the desired location of the new installation on the map.\n"
+msgstr "在地图上选择新基站的建造位置。\n"
+
+#: client/campaign/cp_map.c:1882
+msgid "Aliens are attacking our base at this very moment.\n"
+msgstr "外星人马上要攻击我们的基地。\n"
+
+#: client/campaign/cp_map.c:1887
+msgid "Select ufo or mission on map\n"
+msgstr "在地图上选择UFO或任务\n"
+
+#: client/campaign/cp_map.c:1892
+msgid "UFO in radar range\n"
+msgstr "UFO在雷达范围\n"
 
 #: client/campaign/cp_mapfightequip.c:323
 #, fuzzy, c-format
@@ -13390,19 +13403,19 @@ msgstr ""
 "\n"
 " UFO:AI开发小组"
 
-#: client/campaign/cp_missions.c:433
+#: client/campaign/cp_missions.c:432
 msgid "Landed UFO"
 msgstr "UFO降落点"
 
-#: client/campaign/cp_missions.c:435
+#: client/campaign/cp_missions.c:434
 msgid "Terror mission"
 msgstr "都市区任务"
 
-#: client/campaign/cp_missions.c:437
+#: client/campaign/cp_missions.c:436
 msgid "Base attack"
 msgstr "基地攻击"
 
-#: client/campaign/cp_missions.c:441
+#: client/campaign/cp_missions.c:440
 msgid "Harvesting mission"
 msgstr "收割"
 
@@ -13411,7 +13424,7 @@ msgstr "收割"
 msgid "Alien activity has been detected in %s."
 msgstr "在%s发现有外星人活动。"
 
-#: client/campaign/cp_missions.c:1258
+#: client/campaign/cp_missions.c:1257
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
@@ -13846,7 +13859,7 @@ msgstr "没有足够的实验室"
 
 #: client/campaign/cp_research.c:845
 #, c-format
-msgid "Research prerequisites of %s does not met at %s. Research halted!"
+msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr ""
 
 #: client/campaign/cp_research.c:846
@@ -13901,8 +13914,9 @@ msgid "Status: under research"
 msgstr "状态：正在研究"
 
 #: client/campaign/cp_research_callbacks.c:134
-msgid "Status: this research topic is currently being processed in labolatories"
-msgstr ""
+#, fuzzy
+msgid "Status: this research topic is currently being processed in laboratories"
+msgstr "状态：研究停止"
 
 #: client/campaign/cp_research_callbacks.c:137
 #, fuzzy
@@ -14403,17 +14417,17 @@ msgstr ""
 "\n"
 "清理登陆 %s\n"
 
-#: client/campaign/cp_ufo.c:396 client/campaign/cp_ufo.c:772
+#: client/campaign/cp_ufo.c:396 client/campaign/cp_ufo.c:774
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr "一架UFO接近 %s"
 
-#: client/campaign/cp_ufo.c:776
+#: client/campaign/cp_ufo.c:778
 #, fuzzy, c-format
 msgid "Our radar detected a new UFO near %s"
 msgstr "我们的雷达侦测到一个新的UFO"
 
-#: client/campaign/cp_ufo.c:780
+#: client/campaign/cp_ufo.c:783
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "我们的雷达已经失去了追踪的UFO"
 
@@ -14721,7 +14735,7 @@ msgstr ""
 "最大允许借款额： %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:416
+#: client/cl_game_campaign.c:441
 #, c-format
 msgid "Rank: %s"
 msgstr "等级： %s"
@@ -14734,7 +14748,7 @@ msgstr "设置为每个玩家的士兵少于每个队伍的士兵"
 msgid "Settings doesn't make sense"
 msgstr "无意义的设定"
 
-#: client/cl_game_multiplayer.c:179 client/cl_game_skirmish.c:102
+#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:113
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -14744,11 +14758,11 @@ msgstr ""
 "\n"
 "都没有幸存者。"
 
-#: client/cl_game_multiplayer.c:180 client/cl_game_skirmish.c:103
+#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:114
 msgid "Game Drawn!"
 msgstr "平手！"
 
-#: client/cl_game_multiplayer.c:192 client/cl_game_skirmish.c:115
+#: client/cl_game_multiplayer.c:203
 #, c-format
 msgid ""
 "\n"
@@ -14761,25 +14775,36 @@ msgstr ""
 "死亡：  %i\n"
 "幸存：  %i"
 
-#: client/cl_game_multiplayer.c:194 client/cl_game_skirmish.c:117
+#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:136
 msgid "You won the game!"
 msgstr "游戏胜利！"
 
-#: client/cl_game_multiplayer.c:195 client/cl_game_skirmish.c:118
+#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:137
 msgid "Congratulations"
 msgstr "恭喜"
 
-#: client/cl_game_multiplayer.c:197 client/cl_game_skirmish.c:120
+#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:139
 msgid "You've lost the game!"
 msgstr "游戏失败！"
 
-#: client/cl_game_multiplayer.c:198 client/cl_game_skirmish.c:121
+#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:140
 msgid "Better luck next time"
 msgstr "下次好运"
 
-#: client/cl_game_multiplayer.c:229
+#: client/cl_game_multiplayer.c:240
 msgid "all"
 msgstr "全部"
+
+#: client/cl_game_skirmish.c:127
+#, c-format
+msgid ""
+"Enemies killed:\t\t%i\n"
+"Team survivors:\t\t%i\n"
+"Enemy survivors:\t\t%i\n"
+"Friendly fire:\t\t%i\n"
+"Civilians killed:\t\t%i\n"
+"Civilians killed by enemy:\t\t%i\n"
+msgstr ""
 
 #: client/cl_inventory_callbacks.c:43
 msgid "skill_close"
@@ -15248,43 +15273,43 @@ msgstr "新的队伍"
 msgid "Error saving team. Check free disk space!"
 msgstr "保存发生错误，请检查磁盘空间。"
 
-#: game/g_actor.c:300
+#: game/g_actor.c:296
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "无法执行：活动时间不足！\n"
 
-#: game/g_actor.c:304
+#: game/g_actor.c:300
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "无法执行：武器已装同类型弹药！\n"
 
-#: game/g_client.c:305
+#: game/g_client.c:301
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "无法行动：这不是你的回合！\n"
 
-#: game/g_client.c:312
+#: game/g_client.c:306
 msgid "Can't perform action - object not present!\n"
 msgstr "无法执行此动作 ── 目标改变！\n"
 
-#: game/g_client.c:317
+#: game/g_client.c:311
 msgid "Can't perform action - not an actor!\n"
 msgstr "无法执行：不可以指挥！\n"
 
-#: game/g_client.c:322
+#: game/g_client.c:316
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "无法执行：人物昏迷！\n"
 
-#: game/g_client.c:327
+#: game/g_client.c:321
 msgid "Can't perform action - actor is dead!\n"
 msgstr "无法执行：人物死了！\n"
 
-#: game/g_client.c:332
+#: game/g_client.c:326
 msgid "Can't perform action - not on same team!\n"
 msgstr "无法执行：不是同一队伍！\n"
 
-#: game/g_client.c:337
+#: game/g_client.c:331
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "无法执行：不能控制外星人！\n"
 
-#: game/g_client.c:448
+#: game/g_client.c:442
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "目前颤抖状态，不要让警戒能力下降。\n"
 
@@ -15298,7 +15323,7 @@ msgstr ""
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.c:394
+#: game/g_combat.c:395
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -15310,23 +15335,23 @@ msgstr ""
 msgid "Can't perform action - impossible throw!\n"
 msgstr "无法行动：不能扔出！\n"
 
-#: game/g_combat.c:1096
+#: game/g_combat.c:1097
 msgid "Can't perform action - object not activateable!\n"
 msgstr "无法行动：不能使用！\n"
 
-#: game/g_combat.c:1114
+#: game/g_combat.c:1115
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "无法行动：武器不能单手使用！\n"
 
-#: game/g_combat.c:1121
+#: game/g_combat.c:1122
 msgid "Can't perform action - no ammo!\n"
 msgstr "无法行动：没有弹药！\n"
 
-#: game/g_combat.c:1129
+#: game/g_combat.c:1130
 msgid "Can't perform action - target out of range!\n"
 msgstr "无法行动：目标太远！\n"
 
-#: game/g_combat.c:1175
+#: game/g_combat.c:1176
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "无法行动：弹药不足！\n"
 
@@ -15414,6 +15439,9 @@ msgstr "自由"
 msgid "Playing"
 msgstr "游戏进行中"
 
+#~ msgid "You've reached the installation limit."
+#~ msgstr "基站建造不能再多了"
+
 #, fuzzy
 #~ msgid "Base-Defense Laser Turret"
 #~ msgstr "激光步枪"
@@ -15476,10 +15504,6 @@ msgstr "游戏进行中"
 
 #~ msgid "With ammo:"
 #~ msgstr "使用弹药："
-
-#, fuzzy
-#~ msgid "Slot %i:\tempty"
-#~ msgstr "防御井 %i:\t空\n"
 
 #, fuzzy
 #~ msgid "Slot %i:\t%s (%s)"
@@ -17163,9 +17187,6 @@ msgstr "游戏进行中"
 
 #~ msgid "Re: %s (%s)\n"
 #~ msgstr "Re: %s (%s)\n"
-
-#~ msgid "^B%s (%s)\n"
-#~ msgstr "^B%s (%s)\n"
 
 #~ msgid "Alien Type:"
 #~ msgstr "Alien Type:"
