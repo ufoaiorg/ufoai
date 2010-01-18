@@ -30,7 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 /**
- * @brief A functions to encapsulate the access to the list of entities
+ * @brief Iterate through the list of entities
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
 edict_t* G_EdictsGetNext (edict_t* lastEnt)
 {
@@ -52,8 +53,18 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 }
 
 /**
- * @brief A functions to encapsulate the access to the list of living
- * actor entities
+ * @brief Allocate space for the entity pointers.
+ * @note No need to set it to zero, G_TagMalloc will do that for us
+ */
+edict_t* G_EdictsInit (void)
+{
+	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	return g_edicts;
+}
+
+/**
+ * @brief Iterate through the living actor entities
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
 edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 {
@@ -67,8 +78,8 @@ edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 }
 
 /**
- * @brief A functions to encapsulate the access to the list of living
- * or dead actor entities
+ * @brief Iterate through the actor entities (even the dead!)
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
 edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 {
