@@ -1156,7 +1156,7 @@ window popup_newinstallation_type
 			*cvar:mn_installation_type = "radartower"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_radartower_buildtime
 			cmd "mn_pop;"
-			cmd "mn_select_installation -1;"
+			cmd "mn_installation_select -1;"
 		}
 	}
 
@@ -1198,7 +1198,7 @@ window popup_newinstallation_type
 			*cvar:mn_installation_type = "samsite"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_samsite_buildtime
 			cmd "mn_pop;"
-			cmd "mn_select_installation -1;"
+			cmd "mn_installation_select -1;"
 		}
 	}
 
@@ -1240,7 +1240,7 @@ window popup_newinstallation_type
 			*cvar:mn_installation_type = "ufoyard"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_ufoyard_buildtime
 			cmd "mn_pop;"
-			cmd "mn_select_installation -1;"
+			cmd "mn_installation_select -1;"
 		}
 	}
 
@@ -1471,7 +1471,7 @@ window popup_newinstallation
 		image		ui/button_green_small
 		pos			"109 240"
 		size		"176 32"
-		onClick		{ cmd "mn_pop; mn_build_installation *cvar:mn_installation_type;" }
+		onClick		{ cmd "mn_pop; mn_installation_build *cvar:mn_installation_type;" }
 	}
 
 	func onClose
@@ -1568,7 +1568,7 @@ window popup_installationstatus
 		image		ui/button_green_small
 		pos			"25 150"
 		size		"176 32"
-		onClick		{ cmd "mn_pop; mn_destroyinstallation;" }
+		onClick		{ cmd "mn_pop; mn_installation_destroy;" }
 	}
 
 	func onInit

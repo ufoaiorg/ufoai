@@ -106,7 +106,7 @@ building building_command
 	map_name	"commando"
 	pedia		rs_building_command
 	max_count	1
-	ondestroy	"mn_update_max_installations"
+	ondestroy	"mn_installation_update_max_count"
 }
 
 building building_quarters
