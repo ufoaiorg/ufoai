@@ -1637,7 +1637,6 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
  * @param[in] won Determines whether we won the mission or not.
  * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
- * @sa GAME_CP_Results_f
  */
 void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
