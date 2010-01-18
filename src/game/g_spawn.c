@@ -325,7 +325,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	gi.FreeTags(TAG_LEVEL);
 
 	memset(&level, 0, sizeof(level));
-	memset(g_edicts, 0, game.sv_maxentities * sizeof(edict_t));
+	G_EdictsReset();
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 	level.day = day;

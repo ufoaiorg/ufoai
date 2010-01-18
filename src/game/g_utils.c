@@ -30,6 +30,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 /**
+ * @brief Allocate space for the entity pointers.
+ * @note No need to set it to zero, G_TagMalloc will do that for us
+ */
+edict_t* G_EdictsInit (void)
+{
+	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	return g_edicts;
+}
+
+/**
+ * @brief Reset the entity pointers for eg. a new game.
+ */
+void G_EdictsReset (void)
+{
+	memset(g_edicts, 0, game.sv_maxentities * sizeof(edict_t));
+}
+
+/**
  * @brief Iterate through the list of entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
@@ -50,16 +68,6 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 		return NULL;
 	else
 		return ent;
-}
-
-/**
- * @brief Allocate space for the entity pointers.
- * @note No need to set it to zero, G_TagMalloc will do that for us
- */
-edict_t* G_EdictsInit (void)
-{
-	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
-	return g_edicts;
 }
 
 /**
