@@ -334,10 +334,9 @@ static void G_TouchEdict_f (void)
 		return;
 	}
 
-	ent = NULL;
-	while ((ent = G_EdictsGetNextLivingActor(ent)))
-		if (!ent)
-			return;	/* didn't find any */
+	ent = G_EdictsGetNextLivingActor(NULL);
+	if (!ent)
+		return;	/* didn't find any */
 
 	gi.dprintf("Call touch function for %s\n", e->classname);
 	e->touch(e, ent);
