@@ -1065,7 +1065,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		assert(numPoints > 0);
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
-			ent = &g_edicts[spawnPoints[rand() % numPoints]];
+			ent = G_EdictsGetByNum(spawnPoints[rand() % numPoints]);
 
 		/* spawn */
 		level.num_spawned[team]++;

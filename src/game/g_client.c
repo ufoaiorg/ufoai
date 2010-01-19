@@ -1150,12 +1150,12 @@ void G_ClientTeamInfo (const player_t * player)
  */
 static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
-	int i;
-	edict_t *ent;
+	edict_t *ent = NULL;
 	const int mask = G_PlayerToPM(player);
 
 	/* make SOLID_BSP edicts visible to the client */
-	for (i = 1, ent = g_edicts + 1; i < globals.num_edicts; ent++, i++) {
+	ent++; /* skip the world */
+	while ((ent = G_EdictsGetNextActor(ent))) {
 		if (!ent->inuse)
 			continue;
 

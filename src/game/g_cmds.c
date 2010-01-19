@@ -316,8 +316,8 @@ void G_InvList_f (const player_t *player)
 
 static void G_TouchEdict_f (void)
 {
-	edict_t *e;
-	int i, j;
+	edict_t *e, *ent;
+	int i;
 
 	if (gi.Cmd_Argc() < 2) {
 		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
@@ -334,14 +334,13 @@ static void G_TouchEdict_f (void)
 		return;
 	}
 
-	for (j = 0; j < globals.num_edicts; j++)
-		if (G_IsLivingActor(&g_edicts[j]))
-			break;
-	if (j == globals.num_edicts)
-		return;
+	ent = NULL;
+	while ((ent = G_EdictsGetNextLivingActor(ent)))
+		if (!ent)
+			return;	/* didn't find any */
 
 	gi.dprintf("Call touch function for %s\n", e->classname);
-	e->touch(e, &g_edicts[j]);
+	e->touch(e, ent);
 }
 
 static void G_UseEdict_f (void)

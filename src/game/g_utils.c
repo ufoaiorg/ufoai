@@ -365,20 +365,16 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 {
 	const char *s;
+	edict_t *ent = from;
 
-	if (!from)
-		from = g_edicts;
-	else
-		from++;
-
-	for (; from < &g_edicts[globals.num_edicts]; from++) {
-		if (!from->inuse)
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (!ent->inuse)
 			continue;
-		s = *(const char **) ((byte *) from + fieldofs);
+		s = *(const char **) ((byte *) ent + fieldofs);
 		if (!s)
 			continue;
 		if (!Q_strcasecmp(s, match))
-			return from;
+			return ent;
 	}
 
 	return NULL;
