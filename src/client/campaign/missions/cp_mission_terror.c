@@ -85,7 +85,7 @@ static const city_t* CP_ChooseCity (void)
 {
 	const int randnumber = rand() % ccs.numCities;
 
-	return &ccs.cities[randnumber];
+	return (city_t*) LIST_GetByIdx(ccs.cities, randnumber);
 }
 
 static const mission_t* CP_TerrorInCity (const city_t *city)

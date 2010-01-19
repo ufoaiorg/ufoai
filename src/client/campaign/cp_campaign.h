@@ -446,7 +446,7 @@ typedef struct ccs_s {
 	int numNations;
 
 	/* == Cities == */
-	city_t cities[MAX_CITIES];
+	linkedList_t *cities;
 	int numCities;
 
 	/* Projectiles on geoscape (during fights) */
