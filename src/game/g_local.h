@@ -473,6 +473,7 @@ edict_t* G_EdictsGetByNum(const int idx);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
+edict_t* G_EdictsGetWorld(void);
 
 /*============================================================================ */
 

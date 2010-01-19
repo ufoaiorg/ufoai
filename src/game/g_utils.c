@@ -58,6 +58,15 @@ edict_t* G_EdictsGetByNum (const int idx)
 }
 
 /**
+ * @brief Returns the world entity
+ * @todo This might not always be the first edict - in case of rma they might be spread over the array.
+ */
+edict_t* G_EdictsGetWorld (void)
+{
+	return &g_edicts[0];
+}
+
+/**
  * @brief Iterate through the list of entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
