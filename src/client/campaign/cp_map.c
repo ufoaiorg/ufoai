@@ -1987,6 +1987,8 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
  */
 void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
+	MAP_UpdateGeoscapeDock();
+
 	if (!ccs.selectedUFO)
 		return;
 
