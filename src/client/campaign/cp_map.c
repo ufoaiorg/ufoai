@@ -2396,6 +2396,7 @@ void MAP_Init (void)
 		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", ccs.curCampaign->map);
 
 	MAP_ResetAction();
+	MAP_UpdateGeoscapeDock();
 }
 
 /**
