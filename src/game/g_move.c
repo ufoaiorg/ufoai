@@ -382,9 +382,11 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				/* state has changed - maybe we walked on a trigger_hurt */
 				if (oldState != ent->state)
 					status |= VIS_STOP;
-			} else if (crouchFlag == 1) { /* Actor is standing */
+			} else if (crouchFlag == 1) {
+				/* Actor is standing */
 				G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
-			} else if (crouchFlag == -1) { /* Actor is crouching and should stand up */
+			} else if (crouchFlag == -1) {
+				/* Actor is crouching and should stand up */
 				G_ClientStateChange(player, ent, STATE_CROUCHED, qfalse);
 			}
 
