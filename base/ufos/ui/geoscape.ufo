@@ -6,7 +6,7 @@ component panel cmpGeoscapeDocklet {
 	{
 		pos		"0 0"
 		size	"280 60"
-		align	LAYOUTALIGN_TOP
+		align	LAYOUTALIGN_BOTTOM
 	}
 
 	pic bg {
@@ -73,8 +73,8 @@ window geoscape
 			layoutmargin	10
 		}
 
-		panel topMargin {
-			align		LAYOUTALIGN_TOP
+		panel bottomMargin {
+			align		LAYOUTALIGN_BOTTOM
 			size		"280 30"
 		}
 	}
