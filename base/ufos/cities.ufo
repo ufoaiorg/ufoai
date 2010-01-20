@@ -10,40 +10,10 @@
 //		East and South have negative values.
 // ==============================================
 
-city stockholm
-{
-	name		"_Stockholm"
-	pos			"-18 59.3"
-}
-
 city amsterdam
 {
 	name		"_Amsterdam"
 	pos			"-5.5 52"
-}
-
-city athens
-{
-	name		"_Athens"
-	pos			"-23.7 38"
-}
-
-city bangkok
-{
-	name		"_Bangkok"
-	pos			"-100.5 13.8"
-}
-
-city beijing
-{
-	name		"_Beijing"
-	pos			"-116.9 39.9"
-}
-
-city berlin
-{
-	name		"_Berlin"
-	pos			"-13.4 52.5"
 }
 
 city mumbai
@@ -58,12 +28,6 @@ city capetown
 	pos			"-18.5 -33.7"
 }
 
-city cairo
-{
-	name		"_Cairo"
-	pos			"-31.4 30"
-}
-
 city cayenne
 {
 	name		"_Cayenne"
@@ -76,58 +40,10 @@ city dakar
 	pos			"16.8 14.7"
 }
 
-city mexico
-{
-	name		"_Mexico City"
-	pos			"99.1 19.4"
-}
-
-city novosibirsk
-{
-	name		"_Novosibirsk"
-	pos			"-82.93 55.01"
-}
-
-city paris
-{
-	name		"_Paris"
-	pos			"-2.3 48.8"
-}
-
-city sacramento
-{
-	name		"_Sacramento"
-	pos			"121.47 38.56"
-}
-
-city santiago
-{
-	name		"_Santiago"
-	pos			"70.67 -33.45"
-}
-
-city sydney
-{
-	name		"_Sydney"
-	pos			"-151 -34"
-}
-
 city teheran
 {
 	name		"_Teheran"
 	pos			"-51.4 35.4"
-}
-
-city tokyo
-{
-	name		"_Tokyo"
-	pos			"-139.3 35.7"
-}
-
-city washington
-{
-	name		"_Washington D.C."
-	pos			"77 38.9"
 }
 
 city wellington
@@ -140,5 +56,2723 @@ city whichita
 {
 	name		"_Wichita"
 	pos			"97.33 37.68"
+}
+
+city aarhus
+{
+	name "_Aarhus"
+	pos "-10.2 56.1500"
+}
+
+city aberdeen_scotland
+{
+	name "_Aberdeen"
+	pos "2.1000 57.1500"
+}
+
+city abidjan
+{
+	name "_Abidjan"
+	pos "4.0167 5.3333"
+}
+
+city abuja
+{
+	name "_Abuja"
+	pos "-7.4833 9.0667"
+}
+
+city accra
+{
+	name "_Accra"
+	pos "0.2000 5.5500"
+}
+
+city adana
+{
+	name "_Adana"
+	pos "-35.3167 37.0000"
+}
+
+city addis_ababa
+{
+	name "_Addis Ababa"
+	pos "-38.7333 9.0167"
+}
+
+city agartala_tripura
+{
+	name "_Agartala"
+	pos "-91.2 23.5000"
+}
+
+city ahmedabad_gujarat
+{
+	name "_Ahmedabad"
+	pos "-72.5667 23.0167"
+}
+
+city albuquerque_new_mexico
+{
+	name "_Albuquerque"
+	pos "106.6000 35.1000"
+}
+
+city almaty
+{
+	name "_Almaty"
+	pos "-76.8833 43.2667"
+}
+
+city amman
+{
+	name "_Amman"
+	pos "-35.9333 31.9500"
+}
+
+city amritsar_punjab
+{
+	name "_Amritsar"
+	pos "-74.85 31.6333"
+}
+
+city anadyr
+{
+	name "_Anadyr"
+	pos "-177.5 64.7333"
+}
+
+city anchorage_alaska
+{
+	name "_Anchorage"
+	pos "149.8833 61.2167"
+}
+
+city andorra_la_vella
+{
+	name "_Andorra la Vella"
+	pos "-1.5 42.5000"
+}
+
+city ankara
+{
+	name "_Ankara"
+	pos "-32.8333 39.8667"
+}
+
+city antananarivo
+{
+	name "_Antananarivo"
+	pos "-47.5167 -18.9333"
+}
+
+city antwerp
+{
+	name "_Antwerp"
+	pos "-4.4 51.2167"
+}
+
+city arbil_iraqi_kurdistan
+{
+	name "_Arbil"
+	pos "-44.0167 36.3333"
+}
+
+city arequipa
+{
+	name "_Arequipa"
+	pos "71.5333 -16.4"
+}
+
+city asmara
+{
+	name "_Asmara"
+	pos "-38.9333 15.3333"
+}
+
+city assis_s_o_paulo
+{
+	name "_Assis"
+	pos "50.4000 -22.65"
+}
+
+city astana
+{
+	name "_Astana"
+	pos "-71.45 51.1833"
+}
+
+city asunci_n
+{
+	name "_Asunción"
+	pos "57.6667 -25.2667"
+}
+
+city athens
+{
+	name "_Athens"
+	pos "-23.7167 37.9667"
+}
+
+city atlanta_georgia_u_s_state_
+{
+	name "_Atlanta"
+	pos "84.3833 33.7500"
+}
+
+city austin_texas
+{
+	name "_Austin"
+	pos "97.7667 30.2667"
+}
+
+city baghdad
+{
+	name "_Baghdad"
+	pos "-44.4167 33.3167"
+}
+
+city balikpapan
+{
+	name "_Balikpapan"
+	pos "-116.8167 -1.25"
+}
+
+city baltimore_maryland
+{
+	name "_Baltimore"
+	pos "76.6167 39.2833"
+}
+
+city bamako
+{
+	name "_Bamako"
+	pos "8.0000 12.6500"
+}
+
+city bandung
+{
+	name "_Bandung"
+	pos "-107.5667 -6.95"
+}
+
+city bangalore_karnataka
+{
+	name "_Bangalore"
+	pos "-77.5667 12.9667"
+}
+
+city bangkok
+{
+	name "_Bangkok"
+	pos "-100.4833 13.7500"
+}
+
+city bangui
+{
+	name "_Bangui"
+	pos "-18.5833 4.3500"
+}
+
+city barcelona
+{
+	name "_Barcelona"
+	pos "-2.1833 41.3833"
+}
+
+city basra
+{
+	name "_Basra"
+	pos "-47.8167 30.5000"
+}
+
+city batticaloa
+{
+	name "_Batticaloa"
+	pos "-81.7 7.7167"
+}
+
+city beijing
+{
+	name "_Beijing"
+	pos "-116.4 39.9000"
+}
+
+city belfast_northern_ireland
+{
+	name "_Belfast"
+	pos "5.9167 54.6000"
+}
+
+city belgrade
+{
+	name "_Belgrade"
+	pos "-20.45 44.8167"
+}
+
+city belmopan
+{
+	name "_Belmopan"
+	pos "88.7667 17.2500"
+}
+
+city berlin_berlin
+{
+	name "_Berlin"
+	pos "-13.4167 52.5167"
+}
+
+city berne
+{
+	name "_Berne"
+	pos "-7.45 46.9500"
+}
+
+city birmingham_england
+{
+	name "_Birmingham"
+	pos "1.8833 52.4833"
+}
+
+city bissau
+{
+	name "_Bissau"
+	pos "15.5833 11.8500"
+}
+
+city blantyre
+{
+	name "_Blantyre"
+	pos "-35 -15.7833"
+}
+
+city bloemfontein
+{
+	name "_Bloemfontein"
+	pos "-26.2167 -29.1"
+}
+
+city bogor
+{
+	name "_Bogor"
+	pos "-106.8 -6.6"
+}
+
+city bogot_
+{
+	name "_Bogotá"
+	pos "74.0667 4.6000"
+}
+
+city boston_massachusetts
+{
+	name "_Boston"
+	pos "71.0500 42.3500"
+}
+
+city bras_lia_distrito_federal
+{
+	name "_Brasília"
+	pos "47.9000 -15.8"
+}
+
+city bratislava
+{
+	name "_Bratislava"
+	pos "-17.1 48.1333"
+}
+
+city bratsk
+{
+	name "_Bratsk"
+	pos "-101.6167 56.1667"
+}
+
+city brazzaville
+{
+	name "_Brazzaville"
+	pos "-15.2833 -4.2667"
+}
+
+city brisbane_queensland
+{
+	name "_Brisbane"
+	pos "-153.0167 -27.4667"
+}
+
+city brussels
+{
+	name "_Brussels"
+	pos "-4.35 50.8333"
+}
+
+city bucharest
+{
+	name "_Bucharest"
+	pos "-26.1 44.4333"
+}
+
+city budapest
+{
+	name "_Budapest"
+	pos "-19.05 47.4667"
+}
+
+city buenos_aires
+{
+	name "_Buenos Aires"
+	pos "58.3667 -34.6"
+}
+
+city bujumbura
+{
+	name "_Bujumbura"
+	pos "-29.3667 -3.3833"
+}
+
+city busan
+{
+	name "_Busan"
+	pos "-129.0333 35.1000"
+}
+
+city cairns_queensland
+{
+	name "_Cairns"
+	pos "-145.7667 -16.9167"
+}
+
+city cairo
+{
+	name "_Cairo"
+	pos "-31.2167 30.0500"
+}
+
+city calama
+{
+	name "_Calama"
+	pos "68.9333 -22.4667"
+}
+
+city calgary_alberta
+{
+	name "_Calgary"
+	pos "114.0500 51.0333"
+}
+
+city campinas_s_o_paulo
+{
+	name "_Campinas"
+	pos "47.0500 -22.9"
+}
+
+city canberra_australian_capital_territory
+{
+	name "_Canberra"
+	pos "-149.1167 -35.3"
+}
+
+city cannes_provence_alpes_c_te_d_azur
+{
+	name "_Cannes"
+	pos "-7 43.5500"
+}
+
+city cardiff_wales
+{
+	name "_Cardiff"
+	pos "3.1833 51.4833"
+}
+
+city changchun_jilin
+{
+	name "_Changchun"
+	pos "-125.3167 43.8833"
+}
+
+city charlotte_amalie_united_states_virgin_islands
+{
+	name "_Charlotte Amalie"
+	pos "64.9500 -18.35"
+}
+
+city charlotte_north_carolina
+{
+	name "_Charlotte"
+	pos "80.8167 35.2000"
+}
+
+city chengdu_sichuan
+{
+	name "_Chengdu"
+	pos "-104.0667 30.6500"
+}
+
+city chennai_tamil_nadu
+{
+	name "_Chennai"
+	pos "-80.2667 13.0833"
+}
+
+city chiang_mai
+{
+	name "_Chiang Mai"
+	pos "-98.9833 18.7833"
+}
+
+city chicago_illinois
+{
+	name "_Chicago"
+	pos "87.6167 41.8667"
+}
+
+city chihuahua_chihuahua
+{
+	name "_Chihuahua"
+	pos "106.0000 28.1000"
+}
+
+city chi_in_u
+{
+	name "_Chişinău"
+	pos "-28.8667 47.0000"
+}
+
+city chittagong
+{
+	name "_Chittagong"
+	pos "-91.8 22.3667"
+}
+
+city chongjin
+{
+	name "_Chongjin"
+	pos "-129.7833 41.8000"
+}
+
+city chongqing
+{
+	name "_Chongqing"
+	pos "-106.5 29.5500"
+}
+
+city christchurch
+{
+	name "_Christchurch"
+	pos "-170.5 -45.8667"
+}
+
+city chu_rio_grande_do_sul
+{
+	name "_Chuí"
+	pos "53.4500 -33.6833"
+}
+
+city cincinnati_ohio
+{
+	name "_Cincinnati"
+	pos "84.5000 39.1333"
+}
+
+city ciudad_del_este
+{
+	name "_Ciudad del Este"
+	pos "54.6167 -25.4167"
+}
+
+city cologne_north_rhine_westphalia
+{
+	name "_Cologne"
+	pos "-6.9667 50.9500"
+}
+
+city columbus_ohio
+{
+	name "_Columbus"
+	pos "82.9833 39.9833"
+}
+
+city conakry
+{
+	name "_Conakry"
+	pos "13.7000 9.5167"
+}
+
+city copenhagen
+{
+	name "_Copenhagen"
+	pos "-12.5667 55.6667"
+}
+
+city c_rdoba
+{
+	name "_Córdoba"
+	pos "64.1833 -31.4"
+}
+
+city cork
+{
+	name "_Cork"
+	pos "8.4667 51.8833"
+}
+
+city cotonou
+{
+	name "_Cotonou"
+	pos "-2.4167 6.3500"
+}
+
+city cusco
+{
+	name "_Cusco"
+	pos "71.9667 -13.5"
+}
+
+city daegu
+{
+	name "_Daegu"
+	pos "-128.6 35.8667"
+}
+
+city dalian_liaoning
+{
+	name "_Dalian"
+	pos "-121.7667 39.0333"
+}
+
+city dallas_texas
+{
+	name "_Dallas"
+	pos "96.8000 32.7667"
+}
+
+city damascus
+{
+	name "_Damascus"
+	pos "-36.2833 33.5000"
+}
+
+city dammam
+{
+	name "_Dammam"
+	pos "-50.1167 26.4333"
+}
+
+city da_nang
+{
+	name "_Da Nang"
+	pos "-108.2333 16.0667"
+}
+
+city dar_es_salaam
+{
+	name "_Dar es Salaam"
+	pos "-39.2667 -6.8167"
+}
+
+city davao_city
+{
+	name "_Davao City"
+	pos "-126 7.5000"
+}
+
+city denpasar_bali
+{
+	name "_Denpasar"
+	pos "-115.2167 -8.65"
+}
+
+city denver_colorado
+{
+	name "_Denver"
+	pos "104.9833 39.7333"
+}
+
+city detroit_michigan
+{
+	name "_Detroit"
+	pos "83.0500 42.3333"
+}
+
+city dhaka
+{
+	name "_Dhaka"
+	pos "-90.3667 23.7000"
+}
+
+city dibrugarh_assam
+{
+	name "_Dibrugarh"
+	pos "-94.9 27.4667"
+}
+
+city dodoma
+{
+	name "_Dodoma"
+	pos "-35.7333 -6.1667"
+}
+
+city doha
+{
+	name "_Doha"
+	pos "-51.5333 25.2833"
+}
+
+city dongguan_guangdong
+{
+	name "_Dongguan"
+	pos "-113.7167 23.0333"
+}
+
+city douala
+{
+	name "_Douala"
+	pos "-9.7 4.0500"
+}
+
+city douglas_isle_of_man
+{
+	name "_Douglas"
+	pos "4.4833 54.1333"
+}
+
+city dublin
+{
+	name "_Dublin"
+	pos "6.2667 53.3333"
+}
+
+city durango_durango
+{
+	name "_Durango"
+	pos "104.6667 24.0167"
+}
+
+city durban
+{
+	name "_Durban"
+	pos "-31.05 -29.8833"
+}
+
+city dushanbe
+{
+	name "_Dushanbe"
+	pos "-68.7667 38.5333"
+}
+
+city d_sseldorf_north_rhine_westphalia
+{
+	name "_Düsseldorf"
+	pos "-6.7833 51.2333"
+}
+
+city edinburgh_scotland
+{
+	name "_Edinburgh"
+	pos "3.1500 55.9500"
+}
+
+city edmonton_alberta
+{
+	name "_Edmonton"
+	pos "113.5167 53.5667"
+}
+
+city el_paso_texas
+{
+	name "_El Paso"
+	pos "106.4167 31.7833"
+}
+
+city enugu
+{
+	name "_Enugu"
+	pos "-7.5 6.4500"
+}
+
+city espoo
+{
+	name "_Espoo"
+	pos "-24.65 60.2000"
+}
+
+city fairbanks_alaska
+{
+	name "_Fairbanks"
+	pos "147.7000 64.8333"
+}
+
+city faisalabad_punjab
+{
+	name "_Faisalabad"
+	pos "-72.9833 31.3667"
+}
+
+city frankfurt_am_main_hesse
+{
+	name "_Frankfurt am Main"
+	pos "-8.6833 50.1000"
+}
+
+city fredericton_new_brunswick
+{
+	name "_Fredericton"
+	pos "66.6667 45.9500"
+}
+
+city gangtok_sikkim
+{
+	name "_Gangtok"
+	pos "-88.6167 27.3167"
+}
+
+city gaziantep
+{
+	name "_Gaziantep"
+	pos "-37.3833 37.0667"
+}
+
+city geneva
+{
+	name "_Geneva"
+	pos "-6.15 46.2000"
+}
+
+city georgetown
+{
+	name "_Georgetown"
+	pos "58.1667 -6.8"
+}
+
+city gibraltar
+{
+	name "_Gibraltar"
+	pos "5.3500 36.1333"
+}
+
+city glasgow_scotland
+{
+	name "_Glasgow"
+	pos "4.2500 55.8500"
+}
+
+city gold_coast_queensland
+{
+	name "_Gold Coast"
+	pos "-153.55 -28.1667"
+}
+
+city gothenburg
+{
+	name "_Gothenburg"
+	pos "-11.9667 57.7000"
+}
+
+city graz
+{
+	name "_Graz"
+	pos "-15.4333 47.0667"
+}
+
+city greenwich_england
+{
+	name "_Greenwich"
+	pos "0.0000 51.4667"
+}
+
+city guadalajara_jalisco
+{
+	name "_Guadalajara"
+	pos "103.3500 20.6667"
+}
+
+city guangzhou_guangdong
+{
+	name "_Guangzhou"
+	pos "-113.2667 23.1000"
+}
+
+city guatemala_city
+{
+	name "_Guatemala City"
+	pos "90.5500 14.6333"
+}
+
+city guwahati_assam
+{
+	name "_Guwahati"
+	pos "-91.7667 26.1667"
+}
+
+city hai_phong
+{
+	name "_Hai Phong"
+	pos "-106.6833 20.8500"
+}
+
+city halifax_nova_scotia
+{
+	name "_Halifax"
+	pos "63.6000 44.6667"
+}
+
+city hamburg_hamburg
+{
+	name "_Hamburg"
+	pos "-9.9833 53.5833"
+}
+
+city handan_hubei
+{
+	name "_Handan"
+	pos "-114.4833 36.6000"
+}
+
+city hanga_roa_easter_island
+{
+	name "_Hanga Roa"
+	pos "109.4333 27.1500"
+}
+
+city hangzhou_zhejiang
+{
+	name "_Hangzhou"
+	pos "-120.1667 30.2500"
+}
+
+city hanoi
+{
+	name "_Hanoi"
+	pos "-105.85 21.0333"
+}
+
+city hanover_lower_saxony
+{
+	name "_Hanover"
+	pos "-9.7167 52.3667"
+}
+
+city harare
+{
+	name "_Harare"
+	pos "-31.05 -17.8167"
+}
+
+city harbin_heilongjiang
+{
+	name "_Harbin"
+	pos "-126.6333 45.7500"
+}
+
+city hat_yai
+{
+	name "_Hat Yai"
+	pos "-100.4667 7.0167"
+}
+
+city helsinki
+{
+	name "_Helsinki"
+	pos "-24.9333 60.1667"
+}
+
+city hiroshima
+{
+	name "_Hiroshima"
+	pos "-132.45 34.3833"
+}
+
+city hobart_tasmania
+{
+	name "_Hobart"
+	pos "-147.3167 -42.8833"
+}
+
+city ho_chi_minh_city
+{
+	name "_Ho Chi Minh City"
+	pos "-106.6833 10.7667"
+}
+
+city hong_kong
+{
+	name "_Hong Kong"
+	pos "-114.2 22.3000"
+}
+
+city houston_texas
+{
+	name "_Houston"
+	pos "95.3667 29.7500"
+}
+
+city hu_
+{
+	name "_Huế"
+	pos "-107.6 16.4667"
+}
+
+city hyderabad_andhra_pradesh
+{
+	name "_Hyderabad"
+	pos "-78.4667 17.3667"
+}
+
+city hyderabad_sindh
+{
+	name "_Hyderabad"
+	pos "-68.3667 25.3667"
+}
+
+city ibadan
+{
+	name "_Ibadan"
+	pos "-3.8833 7.3667"
+}
+
+city ilh_us_bahia
+{
+	name "_Ilhéus"
+	pos "39.0500 -14.7833"
+}
+
+city iloilo_city
+{
+	name "_Iloilo City"
+	pos "-122.55 10.6833"
+}
+
+city incheon
+{
+	name "_Incheon"
+	pos "-126.6333 37.4833"
+}
+
+city indianapolis_indiana
+{
+	name "_Indianapolis"
+	pos "86.1500 39.7833"
+}
+
+city innsbruck
+{
+	name "_Innsbruck"
+	pos "-11.3833 47.2667"
+}
+
+city invercargill
+{
+	name "_Invercargill"
+	pos "-168.3 -46.4167"
+}
+
+city ipoh_perak
+{
+	name "_Ipoh"
+	pos "-101.0667 4.6000"
+}
+
+city iqaluit_nunavut
+{
+	name "_Iqaluit"
+	pos "68.5167 63.7500"
+}
+
+city iquitos
+{
+	name "_Iquitos"
+	pos "73.2500 -3.7333"
+}
+
+city islamabad_islamabad_capital_territory
+{
+	name "_Islamabad"
+	pos "-73.0667 33.7167"
+}
+
+city istanbul
+{
+	name "_Istanbul"
+	pos "-28.9667 41.0000"
+}
+
+city _zmir
+{
+	name "_İzmir"
+	pos "-27.15 38.4333"
+}
+
+city jacksonville_florida
+{
+	name "_Jacksonville"
+	pos "81.6500 30.3167"
+}
+
+city jaipur_rajasthan
+{
+	name "_Jaipur"
+	pos "-75.8167 26.9167"
+}
+
+city jersey_city_new_jersey
+{
+	name "_Jersey City"
+	pos "74.1333 41.4333"
+}
+
+city jerusalem
+{
+	name "_Jerusalem"
+	pos "-35.2167 31.7833"
+}
+
+city jinan_shandong
+{
+	name "_Jinan"
+	pos "-116.9833 36.6667"
+}
+
+city johannesburg
+{
+	name "_Johannesburg"
+	pos "-28.0333 -26.2"
+}
+
+city johor_bahru_johor
+{
+	name "_Johor Bahru"
+	pos "-103.7333 1.4833"
+}
+
+city juneau_alaska
+{
+	name "_Juneau"
+	pos "134.5000 58.3500"
+}
+
+city kabul
+{
+	name "_Kabul"
+	pos "-69.1667 34.5333"
+}
+
+city kaesong
+{
+	name "_Kaesong"
+	pos "-126.55 37.9667"
+}
+
+city kaliningrad
+{
+	name "_Kaliningrad"
+	pos "-20.5167 54.7167"
+}
+
+city kandahar
+{
+	name "_Kandahar"
+	pos "-65.7167 31.6167"
+}
+
+city kandy
+{
+	name "_Kandy"
+	pos "-80.6333 7.2833"
+}
+
+city kano
+{
+	name "_Kano"
+	pos "-8.5167 12.0000"
+}
+
+city kanpur_uttar_pradesh
+{
+	name "_Kanpur"
+	pos "-80.3333 26.4500"
+}
+
+city kansas_city_missouri
+{
+	name "_Kansas City"
+	pos "94.5667 39.1000"
+}
+
+city kaohsiung
+{
+	name "_Kaohsiung"
+	pos "-120.2667 22.6333"
+}
+
+city karachi_sindh
+{
+	name "_Karachi"
+	pos "-67 24.8500"
+}
+
+city kathmandu
+{
+	name "_Kathmandu"
+	pos "-85.3333 27.7000"
+}
+
+city kawasaki
+{
+	name "_Kawasaki"
+	pos "-139.7 35.5167"
+}
+
+city kharkiv
+{
+	name "_Kharkiv"
+	pos "-36.3167 49.9167"
+}
+
+city khartoum
+{
+	name "_Khartoum"
+	pos "-32.5333 15.6333"
+}
+
+city kiev
+{
+	name "_Kiev"
+	pos "-30.5167 50.4500"
+}
+
+city kigali
+{
+	name "_Kigali"
+	pos "-30.05 -1.9333"
+}
+
+city kingston
+{
+	name "_Kingston"
+	pos "76.8000 17.9833"
+}
+
+city kinshasa
+{
+	name "_Kinshasa"
+	pos "-15.3167 -4.3167"
+}
+
+city kobe
+{
+	name "_Kobe"
+	pos "-135.2 34.6833"
+}
+
+city kolkata_west_bengal
+{
+	name "_Kolkata"
+	pos "-88.3667 22.5667"
+}
+
+city konya
+{
+	name "_Konya"
+	pos "-32.4833 37.8667"
+}
+
+city koulikoro
+{
+	name "_Koulikoro"
+	pos "7.5667 12.9833"
+}
+
+city krak_w
+{
+	name "_Kraków"
+	pos "-19.9333 50.0500"
+}
+
+city kuala_lumpur_federal_territory_malaysia_federal_territory
+{
+	name "_Kuala Lumpur"
+	pos "-101.6833 3.1333"
+}
+
+city kunming_yunnan
+{
+	name "_Kunming"
+	pos "-102.6833 25.0667"
+}
+
+city kuwait_city
+{
+	name "_Kuwait City"
+	pos "-47.9667 29.3667"
+}
+
+city kyoto
+{
+	name "_Kyoto"
+	pos "-135.7667 35.0167"
+}
+
+city lagos
+{
+	name "_Lagos"
+	pos "-3.3833 6.4500"
+}
+
+city lahore_punjab
+{
+	name "_Lahore"
+	pos "-74.3333 31.5500"
+}
+
+city lanzhou_gansu
+{
+	name "_Lanzhou"
+	pos "-103.8 36.0333"
+}
+
+city la_paz
+{
+	name "_La Paz"
+	pos "68.1500 -16.5"
+}
+
+city las_vegas_nevada
+{
+	name "_Las Vegas"
+	pos "115.1333 36.1667"
+}
+
+city leeds_england
+{
+	name "_Leeds"
+	pos "1.5500 53.8000"
+}
+
+city leipzig_saxony
+{
+	name "_Leipzig"
+	pos "-12.3833 51.3333"
+}
+
+city lhasa_tibet
+{
+	name "_Lhasa"
+	pos "-91.1167 29.6500"
+}
+
+city lilongwe
+{
+	name "_Lilongwe"
+	pos "-33.7833 -13.9833"
+}
+
+city linz
+{
+	name "_Linz"
+	pos "-14.2833 48.3000"
+}
+
+city livingstone
+{
+	name "_Livingstone"
+	pos "-25.8667 -17.85"
+}
+
+city ljubljana
+{
+	name "_Ljubljana"
+	pos "-14.5 46.0667"
+}
+
+city lobamba
+{
+	name "_Lobamba"
+	pos "-31.2 -26.4667"
+}
+
+city lom_
+{
+	name "_Lomé"
+	pos "-1.2 6.1333"
+}
+
+city london_england
+{
+	name "_London"
+	pos "0.1167 51.5000"
+}
+
+city longyearbyen_svalbard
+{
+	name "_Longyearbyen"
+	pos "-15.55 78.2167"
+}
+
+city los_angeles_california
+{
+	name "_Los Angeles"
+	pos "118.2500 34.0500"
+}
+
+city louisville_kentucky
+{
+	name "_Louisville"
+	pos "85.7500 38.2500"
+}
+
+city lubumbashi
+{
+	name "_Lubumbashi"
+	pos "-27.4667 -11.6667"
+}
+
+city lucknow_uttar_pradesh
+{
+	name "_Lucknow"
+	pos "-80.9167 26.8500"
+}
+
+city ludhiana_punjab
+{
+	name "_Ludhiana"
+	pos "-75.85 30.9000"
+}
+
+city lusaka
+{
+	name "_Lusaka"
+	pos "-28.2833 -15.4167"
+}
+
+city luxembourg
+{
+	name "_Luxembourg"
+	pos "-6.1167 49.6000"
+}
+
+city luxor
+{
+	name "_Luxor"
+	pos "-32.65 25.6833"
+}
+
+city lviv
+{
+	name "_Lviv"
+	pos "-24.0167 49.8500"
+}
+
+city lyon_rh_ne_alpes
+{
+	name "_Lyon"
+	pos "-4.8333 45.7667"
+}
+
+city macap_amap_
+{
+	name "_Macapá"
+	pos "51.3333 0.0333"
+}
+
+city macau
+{
+	name "_Macau"
+	pos "-113.55 22.1667"
+}
+
+city macei_alagoas
+{
+	name "_Maceió"
+	pos "35.7167 -9.65"
+}
+
+city madrid
+{
+	name "_Madrid"
+	pos "3.6833 40.4000"
+}
+
+city magadan
+{
+	name "_Magadan"
+	pos "-150.8 59.5667"
+}
+
+city makati_city
+{
+	name "_Makati City"
+	pos "-121.0333 14.5500"
+}
+
+city malacca_town_malacca
+{
+	name "_Malacca Town"
+	pos "-102.3833 2.1833"
+}
+
+city m_laga
+{
+	name "_Málaga"
+	pos "4.4167 36.7167"
+}
+
+city malang
+{
+	name "_Malang"
+	pos "-112.6167 -7.9667"
+}
+
+city malm_
+{
+	name "_Malmö"
+	pos "-13.0333 55.5833"
+}
+
+city managua
+{
+	name "_Managua"
+	pos "86.2500 12.1333"
+}
+
+city manaus_amazonas
+{
+	name "_Manaus"
+	pos "60.0167 3.1000"
+}
+
+city manchester_england
+{
+	name "_Manchester"
+	pos "2.2333 53.4667"
+}
+
+city manila
+{
+	name "_Manila"
+	pos "-120.9667 14.5833"
+}
+
+city manzini
+{
+	name "_Manzini"
+	pos "-31.3667 -26.4833"
+}
+
+city maputo
+{
+	name "_Maputo"
+	pos "-32.5833 -25.9667"
+}
+
+city maracaibo
+{
+	name "_Maracaibo"
+	pos "71.6333 -10.65"
+}
+
+city marrakech
+{
+	name "_Marrakech"
+	pos "8.0000 31.6333"
+}
+
+city marseille_provence_alpes_c_te_d_azur
+{
+	name "_Marseille"
+	pos "-5.3667 43.3000"
+}
+
+city maseru
+{
+	name "_Maseru"
+	pos "-27.4667 -29.3"
+}
+
+city mashhad
+{
+	name "_Mashhad"
+	pos "-59.6 36.3000"
+}
+
+city mbabane
+{
+	name "_Mbabane"
+	pos "-31.1333 -26.3167"
+}
+
+city mecca
+{
+	name "_Mecca"
+	pos "-39.8167 21.4167"
+}
+
+city medan
+{
+	name "_Medan"
+	pos "-98.6667 3.5833"
+}
+
+city medina
+{
+	name "_Medina"
+	pos "-39.6 24.4667"
+}
+
+city memphis_tennessee
+{
+	name "_Memphis"
+	pos "89.9667 35.1167"
+}
+
+city mendoza
+{
+	name "_Mendoza"
+	pos "68.8167 -32.8833"
+}
+
+city m_rida_yucat_n
+{
+	name "_Mérida"
+	pos "89.6167 20.9667"
+}
+
+city mexicali_baja_california
+{
+	name "_Mexicali"
+	pos "115.4667 32.6667"
+}
+
+city mexico_city
+{
+	name "_Mexico City"
+	pos "99.1167 19.4000"
+}
+
+city miami_florida
+{
+	name "_Miami"
+	pos "80.2167 25.7833"
+}
+
+city milan
+{
+	name "_Milan"
+	pos "-9.1833 45.4667"
+}
+
+city minneapolis_minnesota
+{
+	name "_Minneapolis"
+	pos "93.2500 44.9667"
+}
+
+city minsk
+{
+	name "_Minsk"
+	pos "-27.5667 53.9000"
+}
+
+city monaco
+{
+	name "_Monaco"
+	pos "-7.4 43.7333"
+}
+
+city monterrey_nuevo_le_n
+{
+	name "_Monterrey"
+	pos "100.3000 25.6667"
+}
+
+city montevideo
+{
+	name "_Montevideo"
+	pos "56.1667 -34.8833"
+}
+
+city montreal_quebec
+{
+	name "_Montreal"
+	pos "73.5500 45.5000"
+}
+
+city moscow
+{
+	name "_Moscow"
+	pos "-37.6 55.7500"
+}
+
+city multan_punjab
+{
+	name "_Multan"
+	pos "-71.45 30.2000"
+}
+
+city munich_bavaria
+{
+	name "_Munich"
+	pos "-11.5667 48.1333"
+}
+
+city murmansk
+{
+	name "_Murmansk"
+	pos "-33.0833 68.9667"
+}
+
+city nagoya
+{
+	name "_Nagoya"
+	pos "-136.9 35.1833"
+}
+
+city nagpur_maharashtra
+{
+	name "_Nagpur"
+	pos "-79.0167 21.0667"
+}
+
+city nairobi
+{
+	name "_Nairobi"
+	pos "-36.8167 -1.2833"
+}
+
+city nakhon_ratchasima
+{
+	name "_Nakhon Ratchasima"
+	pos "-102.1 14.9667"
+}
+
+city namangan
+{
+	name "_Namangan"
+	pos "-71.9667 41.6333"
+}
+
+city nanjing_jiangsu
+{
+	name "_Nanjing"
+	pos "-118.7667 32.0500"
+}
+
+city nanning_guangxi
+{
+	name "_Nanning"
+	pos "-108.3167 22.8167"
+}
+
+city nantes_pays_de_la_loire
+{
+	name "_Nantes"
+	pos "1.5500 47.2167"
+}
+
+city naples
+{
+	name "_Naples"
+	pos "-14.25 40.8333"
+}
+
+city nashville_tennessee
+{
+	name "_Nashville"
+	pos "86.7833 36.1667"
+}
+
+city naypyidaw
+{
+	name "_Naypyidaw"
+	pos "-96.1 19.7500"
+}
+
+city n_djamena
+{
+	name "_N'Djamena"
+	pos "-15.05 12.1000"
+}
+
+city ndola
+{
+	name "_Ndola"
+	pos "-28.6333 -12.9667"
+}
+
+city newcastle_new_south_wales
+{
+	name "_Newcastle"
+	pos "-151.75 -32.9167"
+}
+
+city new_delhi_delhi
+{
+	name "_New Delhi"
+	pos "-77.2 28.6167"
+}
+
+city new_york_city_new_york
+{
+	name "_New York City"
+	pos "74.0000 40.7167"
+}
+
+city niamey
+{
+	name "_Niamey"
+	pos "-2.1 13.5167"
+}
+
+city nice_provence_alpes_c_te_d_azur
+{
+	name "_Nice"
+	pos "-7.2667 43.7000"
+}
+
+city nizhny_novgorod
+{
+	name "_Nizhny Novgorod"
+	pos "-44 56.3333"
+}
+
+city norilsk
+{
+	name "_Norilsk"
+	pos "-88.2 69.3500"
+}
+
+city noum_a_new_caledonia
+{
+	name "_Nouméa"
+	pos "-166.45 -22.2667"
+}
+
+city novosibirsk
+{
+	name "_Novosibirsk"
+	pos "-82.9333 55.0167"
+}
+
+city odessa
+{
+	name "_Odessa"
+	pos "-30.7333 46.4667"
+}
+
+city oklahoma_city_oklahoma
+{
+	name "_Oklahoma City"
+	pos "97.5333 35.4667"
+}
+
+city omdurman
+{
+	name "_Omdurman"
+	pos "-32.4833 15.6500"
+}
+
+city omsk
+{
+	name "_Omsk"
+	pos "-73.3667 54.9833"
+}
+
+city osaka
+{
+	name "_Osaka"
+	pos "-135.5 34.6833"
+}
+
+city oslo
+{
+	name "_Oslo"
+	pos "-10.75 59.9500"
+}
+
+city ottawa_ontario
+{
+	name "_Ottawa"
+	pos "75.6833 45.4167"
+}
+
+city ouagadougou
+{
+	name "_Ouagadougou"
+	pos "1.5333 12.3500"
+}
+
+city palembang
+{
+	name "_Palembang"
+	pos "-104.75 -2.9833"
+}
+
+city panama_city
+{
+	name "_Panama City"
+	pos "79.5167 8.9833"
+}
+
+city paris_le_de_france
+{
+	name "_Paris"
+	pos "-2.3333 48.8667"
+}
+
+city patna_bihar
+{
+	name "_Patna"
+	pos "-85.1333 25.6000"
+}
+
+city pekanbaru
+{
+	name "_Pekanbaru"
+	pos "-101.45 0.5333"
+}
+
+city pelotas_rio_grande_do_sul
+{
+	name "_Pelotas"
+	pos "52.3333 -31.7667"
+}
+
+city perm
+{
+	name "_Perm"
+	pos "-56.3167 58.0000"
+}
+
+city peshawar_north_west_frontier
+{
+	name "_Peshawar"
+	pos "-71.5 34.0000"
+}
+
+city petropavlovsk_kamchatsky
+{
+	name "_Petropavlovsk-Kamchatsky"
+	pos "-158.65 53.0167"
+}
+
+city philadelphia_pennsylvania
+{
+	name "_Philadelphia"
+	pos "75.1667 39.9500"
+}
+
+city phnom_penh
+{
+	name "_Phnom Penh"
+	pos "-104.9167 11.5500"
+}
+
+city phoenix_arizona
+{
+	name "_Phoenix"
+	pos "112.0667 33.4333"
+}
+
+city pittsburgh_pennsylvania
+{
+	name "_Pittsburgh"
+	pos "79.9667 40.4333"
+}
+
+city podgorica
+{
+	name "_Podgorica"
+	pos "-19.2667 42.4667"
+}
+
+city portland_oregon
+{
+	name "_Portland"
+	pos "122.6667 45.5167"
+}
+
+city port_moresby
+{
+	name "_Port Moresby"
+	pos "-147.1667 -9.4667"
+}
+
+city prague
+{
+	name "_Prague"
+	pos "-14.4167 50.0833"
+}
+
+city pretoria
+{
+	name "_Pretoria"
+	pos "-28.1833 -25.7333"
+}
+
+city pristina
+{
+	name "_Pristina"
+	pos "-21.1667 42.6667"
+}
+
+city providence_rhode_island
+{
+	name "_Providence"
+	pos "71.4167 41.8167"
+}
+
+city puebla_puebla
+{
+	name "_Puebla"
+	pos "98.2000 19.0500"
+}
+
+city puerto_williams
+{
+	name "_Puerto Williams"
+	pos "67.6167 54.9333"
+}
+
+city pune_maharashtra
+{
+	name "_Pune"
+	pos "-73.85 18.5167"
+}
+
+city punta_arenas
+{
+	name "_Punta Arenas"
+	pos "70.9333 -53.1667"
+}
+
+city pyongyang
+{
+	name "_Pyongyang"
+	pos "-125.75 39.0333"
+}
+
+city qingdao_shandong
+{
+	name "_Qingdao"
+	pos "-120.3333 36.0833"
+}
+
+city quebec_city_quebec
+{
+	name "_Quebec City"
+	pos "71.2167 46.8000"
+}
+
+city quetzaltenango
+{
+	name "_Quetzaltenango"
+	pos "91.5167 14.8333"
+}
+
+city quezon_city
+{
+	name "_Quezon City"
+	pos "-121.0333 14.6333"
+}
+
+city quito
+{
+	name "_Quito"
+	pos "78.5833 0.2500"
+}
+
+city raleigh_north_carolina
+{
+	name "_Raleigh"
+	pos "78.6333 35.8167"
+}
+
+city rawalpindi_punjab
+{
+	name "_Rawalpindi"
+	pos "-73.0333 33.6000"
+}
+
+city recife_pernambuco
+{
+	name "_Recife"
+	pos "34.8667 -8.0667"
+}
+
+city regina_saskatchewan
+{
+	name "_Regina"
+	pos "104.6167 50.4333"
+}
+
+city rio_de_janeiro_rio_de_janeiro
+{
+	name "_Rio de Janeiro"
+	pos "43.2333 -22.9"
+}
+
+city riverside_california
+{
+	name "_Riverside"
+	pos "117.3833 33.9333"
+}
+
+city rockhampton_queensland
+{
+	name "_Rockhampton"
+	pos "-150.5 -23.3667"
+}
+
+city rome
+{
+	name "_Rome"
+	pos "-12.5 41.9000"
+}
+
+city rosario
+{
+	name "_Rosario"
+	pos "60.6667 -32.95"
+}
+
+city sabha
+{
+	name "_Sabha"
+	pos "-14.4333 27.0333"
+}
+
+city sacramento_california
+{
+	name "_Sacramento"
+	pos "121.4667 38.5500"
+}
+
+city saint_john_new_brunswick
+{
+	name "_Saint John"
+	pos "66.0500 45.2667"
+}
+
+city saint_petersburg
+{
+	name "_Saint Petersburg"
+	pos "-30.3333 59.9333"
+}
+
+city salzburg
+{
+	name "_Salzburg"
+	pos "-13.0333 47.8000"
+}
+
+city samara
+{
+	name "_Samara"
+	pos "-50.1667 53.2333"
+}
+
+city sana_a
+{
+	name "_Sana'a"
+	pos "-44.2 15.3500"
+}
+
+city san_antonio_texas
+{
+	name "_San Antonio"
+	pos "98.4667 29.5333"
+}
+
+city san_carlos_de_bariloche
+{
+	name "_San Carlos de Bariloche"
+	pos "71.3000 -41.15"
+}
+
+city san_francisco_california
+{
+	name "_San Francisco"
+	pos "122.4167 37.7667"
+}
+
+city san_jos_
+{
+	name "_San José"
+	pos "84.0833 9.9333"
+}
+
+city san_marino
+{
+	name "_San Marino"
+	pos "-12.4333 43.9333"
+}
+
+city san_salvador
+{
+	name "_San Salvador"
+	pos "89.1833 13.6833"
+}
+
+city santa_cruz_de_la_sierra
+{
+	name "_Santa Cruz de la Sierra"
+	pos "63.1667 -17.8"
+}
+
+city santiago
+{
+	name "_Santiago"
+	pos "70.6667 -33.45"
+}
+
+city santiago_de_cuba
+{
+	name "_Santiago de Cuba"
+	pos "75.8000 20.0167"
+}
+
+city santo_domingo
+{
+	name "_Santo Domingo"
+	pos "69.9167 18.4833"
+}
+
+city s_o_jos_dos_campos_s_o_paulo
+{
+	name "_São José dos Campos"
+	pos "45.8667 -23.1833"
+}
+
+city s_o_paulo_s_o_paulo
+{
+	name "_São Paulo"
+	pos "46.6333 -23.55"
+}
+
+city sarajevo
+{
+	name "_Sarajevo"
+	pos "-18.35 43.8500"
+}
+
+city saskatoon_saskatchewan
+{
+	name "_Saskatoon"
+	pos "106.6500 52.1167"
+}
+
+city seattle_washington
+{
+	name "_Seattle"
+	pos "122.3167 47.6000"
+}
+
+city seoul
+{
+	name "_Seoul"
+	pos "-126.9833 37.5500"
+}
+
+city seville
+{
+	name "_Seville"
+	pos "5.9833 37.3667"
+}
+
+city shanghai
+{
+	name "_Shanghai"
+	pos "-121.5 31.2000"
+}
+
+city shenzhen_guangdong
+{
+	name "_Shenzhen"
+	pos "-114.1 22.5500"
+}
+
+city shenyang_liaoning
+{
+	name "_Shenyang"
+	pos "-123.45 41.7833"
+}
+
+city shijiazhuang_hubei
+{
+	name "_Shijiazhuang"
+	pos "-114.5 38.0333"
+}
+
+city shillong_meghalaya
+{
+	name "_Shillong"
+	pos "-91.8833 25.5667"
+}
+
+city siem_reap
+{
+	name "_Siem Reap"
+	pos "-103.85 13.3500"
+}
+
+city simferopol_crimea
+{
+	name "_Simferopol"
+	pos "-34.1 44.9500"
+}
+
+city singapore
+{
+	name "_Singapore"
+	pos "-103.8 1.3667"
+}
+
+city sitka_alaska
+{
+	name "_Sitka"
+	pos "135.3167 57.0500"
+}
+
+city skopje
+{
+	name "_Skopje"
+	pos "-21.4333 42.0000"
+}
+
+city sofia
+{
+	name "_Sofia"
+	pos "-23.3333 42.7000"
+}
+
+city split
+{
+	name "_Split"
+	pos "-16.4333 43.5000"
+}
+
+city srinagar_jammu_and_kashmir
+{
+	name "_Srinagar"
+	pos "-74.7833 34.0833"
+}
+
+city stanley_falkland_islands
+{
+	name "_Stanley"
+	pos "57.8500 51.6833"
+}
+
+city stepanakert_nagorno_karabakh_republic
+{
+	name "_Stepanakert"
+	pos "-46.75 39.8167"
+}
+
+city st_louis_missouri
+{
+	name "_St. Louis"
+	pos "90.1833 38.6167"
+}
+
+city stockholm
+{
+	name "_Stockholm"
+	pos "-18.0667 59.3500"
+}
+
+city strasbourg_alsace
+{
+	name "_Strasbourg"
+	pos "-7.75 48.5833"
+}
+
+city stuttgart_baden_w_rttemberg
+{
+	name "_Stuttgart"
+	pos "-9.1667 48.7667"
+}
+
+city sucre
+{
+	name "_Sucre"
+	pos "65.2500 -19.0333"
+}
+
+city suez
+{
+	name "_Suez"
+	pos "-32.55 29.9667"
+}
+
+city sukhumi_abkhazia
+{
+	name "_Sukhumi"
+	pos "-41.0167 43.0000"
+}
+
+city surabaya
+{
+	name "_Surabaya"
+	pos "-112.7333 -7.2333"
+}
+
+city surat_gujarat
+{
+	name "_Surat"
+	pos "-72.8167 21.1667"
+}
+
+city surat_thani
+{
+	name "_Surat Thani"
+	pos "-99.3333 9.1333"
+}
+
+city suva
+{
+	name "_Suva"
+	pos "-178.4333 -18.1333"
+}
+
+city sydney_new_south_wales
+{
+	name "_Sydney"
+	pos "-151.2 -33.85"
+}
+
+city tabriz
+{
+	name "_Tabriz"
+	pos "-46.2833 38.0833"
+}
+
+city taiyuan_shanxi
+{
+	name "_Taiyuan"
+	pos "-112.55 37.8667"
+}
+
+city tamale
+{
+	name "_Tamale"
+	pos "0.8500 9.4000"
+}
+
+city tampa_florida
+{
+	name "_Tampa"
+	pos "82.4667 27.9667"
+}
+
+city tampere
+{
+	name "_Tampere"
+	pos "-23.75 61.5000"
+}
+
+city tartu
+{
+	name "_Tartu"
+	pos "-26.7167 58.3833"
+}
+
+city tashkent
+{
+	name "_Tashkent"
+	pos "-69.2167 41.2667"
+}
+
+city tbilisi
+{
+	name "_Tbilisi"
+	pos "-44.7833 41.7167"
+}
+
+city tegucigalpa
+{
+	name "_Tegucigalpa"
+	pos "87.2167 14.0833"
+}
+
+city tehran
+{
+	name "_Tehran"
+	pos "-51.4167 35.6833"
+}
+
+city thessaloniki
+{
+	name "_Thessaloniki"
+	pos "-22.95 40.6333"
+}
+
+city thimphu
+{
+	name "_Thimphu"
+	pos "-89.6333 27.4667"
+}
+
+city tianjin
+{
+	name "_Tianjin"
+	pos "-117.1833 39.1333"
+}
+
+city tijuana_baja_california
+{
+	name "_Tijuana"
+	pos "117.0333 32.5167"
+}
+
+city tirana
+{
+	name "_Tirana"
+	pos "-19.8167 41.3167"
+}
+
+city tiraspol_transnistria
+{
+	name "_Tiraspol"
+	pos "-29.6333 46.8500"
+}
+
+city tokyo
+{
+	name "_Tokyo"
+	pos "-139.7667 35.6833"
+}
+
+city toronto_ontario
+{
+	name "_Toronto"
+	pos "79.3833 43.6500"
+}
+
+city toulouse_midi_pyr_n_es
+{
+	name "_Toulouse"
+	pos "-1.4333 43.6000"
+}
+
+city tskhinvali_south_ossetia
+{
+	name "_Tskhinvali"
+	pos "-43.9667 42.2333"
+}
+
+city tucson_arizona
+{
+	name "_Tucson"
+	pos "110.9167 32.2000"
+}
+
+city tunis
+{
+	name "_Tunis"
+	pos "-10.1667 36.8000"
+}
+
+city turin
+{
+	name "_Turin"
+	pos "-7.7 45.0667"
+}
+
+city udon_thani
+{
+	name "_Udon Thani"
+	pos "-102.75 17.4167"
+}
+
+city ushuaia
+{
+	name "_Ushuaia"
+	pos "68.3000 -54.8"
+}
+
+city vaduz
+{
+	name "_Vaduz"
+	pos "-9.5167 47.1333"
+}
+
+city valencia
+{
+	name "_Valencia"
+	pos "0.3667 39.4833"
+}
+
+city vancouver_british_columbia
+{
+	name "_Vancouver"
+	pos "123.1000 49.2500"
+}
+
+city vienna
+{
+	name "_Vienna"
+	pos "-16.3667 48.2000"
+}
+
+city vientiane
+{
+	name "_Vientiane"
+	pos "-102.6167 17.9500"
+}
+
+city vilnius
+{
+	name "_Vilnius"
+	pos "-25.2833 54.6833"
+}
+
+city vit_ria_esp_rito_santo
+{
+	name "_Vitória"
+	pos "40.3333 -20.3167"
+}
+
+city warsaw
+{
+	name "_Warsaw"
+	pos "-21 52.2333"
+}
+
+city washington_d_c_us_capital
+{
+	name "_Washington"
+	pos "77.0333 38.8833"
+}
+
+city whitehorse_yukon
+{
+	name "_Whitehorse"
+	pos "135.0500 60.7167"
+}
+
+city wichita_kansas
+{
+	name "_Wichita"
+	pos "97.3333 37.6833"
+}
+
+city winnipeg_manitoba
+{
+	name "_Winnipeg"
+	pos "97.1333 49.9000"
+}
+
+city wollongong_new_south_wales
+{
+	name "_Wollongong"
+	pos "-150.8833 -34.4333"
+}
+
+city wonsan
+{
+	name "_Wonsan"
+	pos "-127.4333 39.1500"
+}
+
+city wuhan_hubei
+{
+	name "_Wuhan"
+	pos "-114.2667 30.5667"
+}
+
+city xi_an_shaanxi
+{
+	name "_Xi'an"
+	pos "-108.9 34.2667"
+}
+
+city xining_qinghai
+{
+	name "_Xining"
+	pos "-101.7667 36.6333"
+}
+
+city yakutsk
+{
+	name "_Yakutsk"
+	pos "-129.7333 62.0333"
+}
+
+city yamoussoukro
+{
+	name "_Yamoussoukro"
+	pos "5.2833 6.8167"
+}
+
+city yangon
+{
+	name "_Yangon"
+	pos "-96.1667 16.8000"
+}
+
+city yaound_
+{
+	name "_Yaoundé"
+	pos "-11.5167 3.8667"
+}
+
+city yekaterinburg
+{
+	name "_Yekaterinburg"
+	pos "-60.5833 56.8333"
+}
+
+city yellowknife_northwest_territories
+{
+	name "_Yellowknife"
+	pos "114.4000 62.4500"
+}
+
+city yerevan
+{
+	name "_Yerevan"
+	pos "-44.5167 40.1833"
+}
+
+city yogyakarta
+{
+	name "_Yogyakarta"
+	pos "-110.3667 -7.8"
+}
+
+city yokohama
+{
+	name "_Yokohama"
+	pos "-139.6333 35.4500"
+}
+
+city zagreb
+{
+	name "_Zagreb"
+	pos "-15.9833 45.8167"
+}
+
+city zamboanga_city
+{
+	name "_Zamboanga City"
+	pos "-122.0667 6.9000"
+}
+
+city zapopan_jalisco
+{
+	name "_Zapopan"
+	pos "103.4000 20.7667"
+}
+
+city zhengzhou_henan
+{
+	name "_Zhengzhou"
+	pos "-113.6333 34.7500"
+}
+
+city z_rich
+{
+	name "_Zürich"
+	pos "-8.55 47.3667"
 }
 
