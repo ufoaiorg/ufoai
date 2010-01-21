@@ -83,9 +83,13 @@ void CP_TerrorMissionStart (mission_t *mission)
  */
 static const city_t* CP_ChooseCity (void)
 {
-	const int randnumber = rand() % ccs.numCities;
+	if (ccs.numCities > 0) {
+		const int randnumber = rand() % ccs.numCities;
 
-	return (city_t*) LIST_GetByIdx(ccs.cities, randnumber);
+		return (city_t*) LIST_GetByIdx(ccs.cities, randnumber);
+	} else {
+		return NULL;
+	}
 }
 
 static const mission_t* CP_TerrorInCity (const city_t *city)
@@ -121,6 +125,9 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	/* Choose a map */
 	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 		const city_t const *city = CP_ChooseCity();
+
+		if (!city)
+			continue;
 
 		if (MAP_PositionCloseToBase(city->pos))
 			continue;
