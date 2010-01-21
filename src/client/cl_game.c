@@ -63,12 +63,14 @@ typedef struct gameTypeList_s {
 	void (*initializebattlescape)(const chrList_t *team);
 	/** callback that is executed every frame */
 	void (*frame)(void);
+	/** if you want to display a different model for the given object in your game mode, implement this function */
+	const char* (*getmodelforitem)(const objDef_t*od, menuModel_t** menuModel);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -97,6 +99,9 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 static const gameTypeList_t *GAME_GetCurrentType (void)
 {
 	const gameTypeList_t *list = gameTypeList;
+
+	if (cls.gametype == GAME_NONE)
+		return NULL;
 
 	while (list->name) {
 		if (list->gametype == cls.gametype)
@@ -501,7 +506,7 @@ int GAME_GetCurrentTeam (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	if (list)
+	if (list && list->getteam != NULL)
 		return list->getteam();
 
 	return TEAM_DEFAULT;
@@ -523,7 +528,7 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 	if (!teamDef)
 		return qfalse;
 
-	if (list && list->teamisknown)
+	if (list && list->teamisknown != NULL)
 		return list->teamisknown(teamDef);
 	return qtrue;
 }
@@ -531,7 +536,7 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CharacterCvars (const character_t *chr)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->charactercvars)
+	if (list && list->charactercvars != NULL)
 		list->charactercvars(chr);
 }
 
@@ -573,12 +578,28 @@ void GAME_Frame (void)
 {
 	const gameTypeList_t *list;
 
-	if (cls.gametype == GAME_NONE)
-		return;
-
 	list = GAME_GetCurrentType();
-	if (list && list->frame)
+	if (list && list->frame != NULL)
 		list->frame();
+}
+
+/**
+ * @brief Get a model for an item.
+ * @param[in] od The object definition to get the model from.
+ * @param[out] menuModel The menu model pointer.
+ * @return The model path for the item. Never @c NULL.
+ */
+const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
+{
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list && list->getmodelforitem != NULL) {
+		const char *model = list->getmodelforitem(od, menuModel);
+		if (model != NULL)
+			return model;
+	}
+
+	*menuModel = NULL;
+	return od->model;
 }
 
 static void GAME_InitMenuOptions (void)

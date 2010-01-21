@@ -407,6 +407,25 @@ void GAME_CP_Frame (void)
 }
 
 /**
+ * @brief Sets the item model for an object assigned technology. If no
+ * technology is set or the technology has no model assigned, this function
+ * is returning @c NULL to tell the caller to use the default object model.
+ * @param[in] od The object definition to get the model from.
+ * @param[out] menuModel The menu model pointer.
+ * @return The model path for the item. Never @c NULL.
+ */
+const char* GAME_CP_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
+{
+	if (od->tech && od->tech->mdl) {
+		*menuModel = MN_GetMenuModel(od->tech->mdl);
+		/* the model from the tech structure has higher priority, because the item model itself
+		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
+		return od->tech->mdl;
+	}
+	return NULL;
+}
+
+/**
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */

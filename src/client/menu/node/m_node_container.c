@@ -45,7 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cp_campaign.h" /**< @todo campaign mode only */
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
 #include "../../cl_game.h"
@@ -351,14 +350,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 		R_Color(NULL);
 	} else {
 		menuModel_t *menuModel = NULL;
-		const char *modelName = od->model;
-		/** @todo campaign mode only (techs) */
-		if (od->tech && od->tech->mdl) {
-			menuModel = MN_GetMenuModel(od->tech->mdl);
-			/* the model from the tech structure has higher priority, because the item model itself
-			 * is mainly for the battlescape or the geoscape - only use that as a fallback */
-			modelName = od->tech->mdl;
-		}
+		const char *modelName = GAME_GetModelForItem(od, &menuModel);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
 		if (modelName == NULL || modelName[0] == '\0') {
