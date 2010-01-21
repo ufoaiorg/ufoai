@@ -86,7 +86,6 @@ window singleplayermission
 		onClick		{ cmd "game_abort;" }
 	}
 
-	// @todo only works for campaign mode games - not for skirmish
 	cmpMenuButton button_retry
 	{
 		string		"_Retry"
