@@ -300,9 +300,6 @@ typedef struct campaign_s {
 	const campaignEvents_t *events;
 } campaign_t;
 
-extern campaign_t campaigns[MAX_CAMPAIGNS];
-extern int numCampaigns;
-
 /** salary values for a campaign */
 typedef struct salary_s {
 	int soldier_base;
@@ -566,7 +563,6 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
-extern campaign_t *curCampaign;
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;
