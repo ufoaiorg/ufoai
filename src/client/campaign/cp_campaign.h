@@ -36,6 +36,9 @@ struct storedUFO_s;
 
 #define MAX_ASSEMBLIES	16
 
+/** @todo rename this after merging with savegame breakage branch and also change the value to -1 */
+#define	BYTES_NONE	0xFF
+
 #include "cp_rank.h"
 #include "cp_save.h"
 #include "cp_parse.h"

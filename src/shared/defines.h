@@ -73,10 +73,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* {game}, [client] */
 #define	NONE_AMMO	0
 
-/* Used for saving/transfering (byte) indices */
-/* client/campaign/cp_aircraft.c, client/campaign/cp_base.c, client/campaign/cp_campaign.c, client/campaign/cp_transfer.c */
-#define	BYTES_NONE	0xFF
-
 /* Move/Routing values */
 /* game/g_ai.c, game/g_client.c, client/cl_actor.c, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c */
 #define	MAX_ROUTE		31

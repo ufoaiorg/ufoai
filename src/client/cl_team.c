@@ -134,9 +134,8 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 
 	chr->teamDef = NULL;
 	/* Team-definition index */
-	td = mxml_GetInt(p, "teamdefidx", BYTES_NONE);
-
-	if (td != BYTES_NONE) {
+	td = mxml_GetInt(p, "teamdefidx", -1);
+	if (td != -1) {
 		assert(csi.numTeamDefs);
 		if (td >= csi.numTeamDefs)
 			return qfalse;
