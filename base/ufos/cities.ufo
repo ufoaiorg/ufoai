@@ -204,7 +204,7 @@ city astana
 
 city asunci_n
 {
-	name "_Asunción"
+	name "_Asuncion"
 	pos "57.6667 -25.2667"
 }
 
@@ -360,7 +360,7 @@ city bogor
 
 city bogot_
 {
-	name "_Bogotá"
+	name "_Bogota"
 	pos "74.0667 4.6000"
 }
 
@@ -372,7 +372,7 @@ city boston_massachusetts
 
 city bras_lia_distrito_federal
 {
-	name "_Brasília"
+	name "_Brasilia"
 	pos "47.9000 -15.8"
 }
 
@@ -534,7 +534,7 @@ city chihuahua_chihuahua
 
 city chi_in_u
 {
-	name "_Chişinău"
+	name "_Chisinau"
 	pos "-28.8667 47.0000"
 }
 
@@ -564,7 +564,7 @@ city christchurch
 
 city chu_rio_grande_do_sul
 {
-	name "_Chuí"
+	name "_Chui"
 	pos "53.4500 -33.6833"
 }
 
@@ -606,7 +606,7 @@ city copenhagen
 
 city c_rdoba
 {
-	name "_Córdoba"
+	name "_Cordoba"
 	pos "64.1833 -31.4"
 }
 
@@ -762,7 +762,7 @@ city dushanbe
 
 city d_sseldorf_north_rhine_westphalia
 {
-	name "_Düsseldorf"
+	name "_Dusseldorf"
 	pos "-6.7833 51.2333"
 }
 
@@ -976,12 +976,6 @@ city helsinki
 	pos "-24.9333 60.1667"
 }
 
-city hiroshima
-{
-	name "_Hiroshima"
-	pos "-132.45 34.3833"
-}
-
 city hobart_tasmania
 {
 	name "_Hobart"
@@ -1006,12 +1000,6 @@ city houston_texas
 	pos "95.3667 29.7500"
 }
 
-city hu_
-{
-	name "_Huế"
-	pos "-107.6 16.4667"
-}
-
 city hyderabad_andhra_pradesh
 {
 	name "_Hyderabad"
@@ -1032,7 +1020,7 @@ city ibadan
 
 city ilh_us_bahia
 {
-	name "_Ilhéus"
+	name "_Ilheus"
 	pos "39.0500 -14.7833"
 }
 
@@ -1098,7 +1086,7 @@ city istanbul
 
 city _zmir
 {
-	name "_İzmir"
+	name "_Izmir"
 	pos "-27.15 38.4333"
 }
 
@@ -1284,7 +1272,7 @@ city koulikoro
 
 city krak_w
 {
-	name "_Kraków"
+	name "_Krakow"
 	pos "-19.9333 50.0500"
 }
 
@@ -1392,7 +1380,7 @@ city lobamba
 
 city lom_
 {
-	name "_Lomé"
+	name "_Lome"
 	pos "-1.2 6.1333"
 }
 
@@ -1470,7 +1458,7 @@ city lyon_rh_ne_alpes
 
 city macap_amap_
 {
-	name "_Macapá"
+	name "_Macapa"
 	pos "51.3333 0.0333"
 }
 
@@ -1482,7 +1470,7 @@ city macau
 
 city macei_alagoas
 {
-	name "_Maceió"
+	name "_Maceio"
 	pos "35.7167 -9.65"
 }
 
@@ -1512,7 +1500,7 @@ city malacca_town_malacca
 
 city m_laga
 {
-	name "_Málaga"
+	name "_Malaga"
 	pos "4.4167 36.7167"
 }
 
@@ -1524,7 +1512,7 @@ city malang
 
 city malm_
 {
-	name "_Malmö"
+	name "_Malmo"
 	pos "-13.0333 55.5833"
 }
 
@@ -1600,12 +1588,6 @@ city mbabane
 	pos "-31.1333 -26.3167"
 }
 
-city mecca
-{
-	name "_Mecca"
-	pos "-39.8167 21.4167"
-}
-
 city medan
 {
 	name "_Medan"
@@ -1632,7 +1614,7 @@ city mendoza
 
 city m_rida_yucat_n
 {
-	name "_Mérida"
+	name "_Merida"
 	pos "89.6167 20.9667"
 }
 
@@ -1810,12 +1792,6 @@ city new_delhi_delhi
 	pos "-77.2 28.6167"
 }
 
-city new_york_city_new_york
-{
-	name "_New York City"
-	pos "74.0000 40.7167"
-}
-
 city niamey
 {
 	name "_Niamey"
@@ -1842,7 +1818,7 @@ city norilsk
 
 city noum_a_new_caledonia
 {
-	name "_Nouméa"
+	name "_Noumea"
 	pos "-166.45 -22.2667"
 }
 
@@ -2196,7 +2172,7 @@ city san_francisco_california
 
 city san_jos_
 {
-	name "_San José"
+	name "_San Jose"
 	pos "84.0833 9.9333"
 }
 
@@ -2238,13 +2214,13 @@ city santo_domingo
 
 city s_o_jos_dos_campos_s_o_paulo
 {
-	name "_São José dos Campos"
+	name "_Sao Jose dos Campos"
 	pos "45.8667 -23.1833"
 }
 
 city s_o_paulo_s_o_paulo
 {
-	name "_São Paulo"
+	name "_Sao Paulo"
 	pos "46.6333 -23.55"
 }
 
@@ -2628,7 +2604,7 @@ city vilnius
 
 city vit_ria_esp_rito_santo
 {
-	name "_Vitória"
+	name "_Vitoria"
 	pos "40.3333 -20.3167"
 }
 
@@ -2712,7 +2688,7 @@ city yangon
 
 city yaound_
 {
-	name "_Yaoundé"
+	name "_Yaounde"
 	pos "-11.5167 3.8667"
 }
 
@@ -2772,7 +2748,7 @@ city zhengzhou_henan
 
 city z_rich
 {
-	name "_Zürich"
+	name "_Zurich"
 	pos "-8.55 47.3667"
 }
 
