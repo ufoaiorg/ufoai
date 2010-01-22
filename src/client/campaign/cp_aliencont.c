@@ -152,7 +152,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	int i;
 	le_t *le;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
 		if (LE_IsActor(le) && LE_IsAlien(le)) {

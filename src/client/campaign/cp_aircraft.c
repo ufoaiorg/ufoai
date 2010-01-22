@@ -346,7 +346,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	cargo = aircraft->itemcargo;
 	aircraft->itemtypes = 0;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		/* Winner collects everything on the floor, and everything carried
 		 * by surviving actors. Loser only gets what their living team
 		 * members carry. */

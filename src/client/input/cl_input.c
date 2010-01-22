@@ -335,7 +335,7 @@ static void CL_ConfirmAction_f (void)
 	if (time - cl.time < 1000) {
 		int i;
 		for (i = 0; i < cl.numLEs; i++) {
-			le_t *le = &LEs[i];
+			le_t *le = &cl.LEs[i];
 			if (LE_IsLivingActor(le) && le->team == cls.team)
 				CL_ConfirmAction(le);
 		}
@@ -501,7 +501,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		le_t *le;
 		if (++i >= cl.numLEs)
 			i = 0;
-		le = &LEs[i];
+		le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
 			VectorCopy(selActor->origin, from);
@@ -545,7 +545,7 @@ static void CL_NextAlien_f (void)
 	do {
 		if (++i >= cl.numLEs)
 			i = 0;
-		le = &LEs[i];
+		le = &cl.LEs[i];
 		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;

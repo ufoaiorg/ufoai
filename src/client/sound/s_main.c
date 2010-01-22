@@ -86,7 +86,7 @@ void S_Frame (void)
 
 	/* ambient sounds */
 	for (i = 0; i < cl.numLEs; i++) {
-		const le_t *le = &LEs[i];
+		const le_t *le = &cl.LEs[i];
 		int j;
 
 		if (le->inuse && le->type == ET_SOUND) {

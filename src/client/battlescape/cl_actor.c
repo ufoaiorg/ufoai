@@ -950,7 +950,7 @@ static void CL_BuildForbiddenList (void)
 
 	fb_length = 0;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
@@ -981,7 +981,7 @@ static void CL_DisplayBlockedPaths_f (void)
 	ptl_t *ptl;
 	vec3_t s;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
 
@@ -1700,7 +1700,7 @@ void CL_ActorMouseTrace (void)
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, leInlineModelList);
+		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	}
 
 	VecToPos(end, testPos);
@@ -1722,7 +1722,7 @@ void CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, leInlineModelList);
+	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
 
@@ -1730,7 +1730,7 @@ void CL_ActorMouseTrace (void)
 	if (restingLevel < cl_worldlevel->integer) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, leInlineModelList);
+		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 	}
@@ -1749,7 +1749,7 @@ void CL_ActorMouseTrace (void)
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
@@ -1976,7 +1976,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	if (!selActor || !selActor->fd)
 		return 0.0;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && VectorCompare(le->pos, toPos))
 			break;
 
@@ -2104,7 +2104,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
@@ -2189,7 +2189,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;

@@ -52,7 +52,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 		cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
 
 		/* search owners (there can be many, some of them dead) */
-		for (i = 0, actor = LEs; i < cl.numLEs; i++, actor++)
+		for (i = 0, actor = cl.LEs; i < cl.numLEs; i++, actor++)
 			if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 			 && VectorCompare(actor->pos, le->pos)) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: le of type ET_ITEM hidden\n");

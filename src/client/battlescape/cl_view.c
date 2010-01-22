@@ -250,7 +250,7 @@ void V_LoadMedia (void)
 	}
 
 	/* update le model references */
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse) {
 			if (le->modelnum1) {
 				le->model1 = cl.model_draw[le->modelnum1];

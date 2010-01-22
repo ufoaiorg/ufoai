@@ -165,11 +165,6 @@ typedef struct lm_s {
 	struct model_s *model;
 } localModel_t;							/* local models */
 
-extern localModel_t LMs[MAX_LOCALMODELS];
-
-extern le_t LEs[MAX_EDICTS];
-extern const char *leInlineModelList[MAX_EDICTS + 1];
-
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
