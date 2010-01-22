@@ -859,14 +859,14 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	flags = 0;
 
 	/* Are we healing? */
-	if (fd->damage[0] < 0)
+	if (FIRESH_IsMedikit(fd))
 		damage = fd->damage[0] + (fd->damage[1] * crand());
 	else
 		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
-	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && fd->damage[0] > 0)
+	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
 	VectorCopy(cur_loc, tracefrom);

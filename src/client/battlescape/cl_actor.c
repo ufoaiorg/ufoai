@@ -1984,7 +1984,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 		/* no target there */
 		return 0.0;
 	/* or suicide attempted */
-	if (le->selected && le->fd->damage[0] > 0)
+	if (le->selected && !FIRESH_IsMedikit(le->fd))
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);
