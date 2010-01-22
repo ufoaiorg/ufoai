@@ -57,7 +57,7 @@ static void V_ParseEntitystring (void)
 	char animname[MAX_QPATH], model[MAX_QPATH], particle[MAX_QPATH], sound[MAX_QPATH];
 	vec3_t origin, angles, scale;
 	vec2_t wait;
-	int maxLevel = 8, maxMultiplayerTeams = 2, entnum = 0;
+	int maxLevel = PATHFINDING_HEIGHT, maxMultiplayerTeams = 2, entnum = 0;
 	int skin, frame, spawnflags;
 	float volume;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
