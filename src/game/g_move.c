@@ -421,7 +421,8 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			}
 		}
 
-		/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
+		/* ensure that the grid position matches the real origin of the actor */
+		VecToPos(ent->origin, ent->pos);
 
 		/* submit the TUs / round down */
 		if (g_notu != NULL && g_notu->integer)
