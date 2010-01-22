@@ -1260,6 +1260,7 @@ void LE_Cleanup (void)
 	}
 
 	memset(LEs, 0, sizeof(LEs));
+	memset(leInlineModelList, 0, sizeof(leInlineModelList));
 }
 
 #ifdef DEBUG
