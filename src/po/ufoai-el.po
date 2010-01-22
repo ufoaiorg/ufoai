@@ -761,7 +761,8 @@ msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υόρκης"
+msgstr ""
+"ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υόρκης"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -847,7 +848,8 @@ msgstr "ΓΓ. Mahouf Serra, Ηνωμένα Έθνη, Πόλη της Νέας Υ
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Διοικητής Βάσης, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Διοικητής Βάσης, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -931,7 +933,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -1017,7 +1020,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Αξιωματικός Διοίκησης Abel S. Howard, Έλεγχος και Διοίκηση, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Αξιωματικός Διοίκησης Abel S. Howard, Έλεγχος και Διοίκηση, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1112,7 +1116,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Συνταγματάρxης Ingrid Falkland, Τμήμα Πληροφοριών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Συνταγματάρxης Ingrid Falkland, Τμήμα Πληροφοριών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1149,7 +1154,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Σμήναρχος Subakh al-Kuhar, Πτέρυγα Αεροπορίας, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Σμήναρχος Subakh al-Kuhar, Πτέρυγα Αεροπορίας, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2072,7 +2078,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Δρ. Connor, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Βιολογίας & Περιορισμού, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Δρ. Connor, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Βιολογίας & Περιορισμού, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -3718,34 +3725,36 @@ msgstr ""
 "--Paul Navarre, Διευθυντής"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"κ. Διοικητά,\n"
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
 "\n"
-"Είμαι στην ευχάριστη θέση να σας αναφέρω ότι οι προσπάθειές μας στέφθηκαν με επιτυχία! Έχω συμπεριλάβει φωτογραφίες του πρωτότυπου όπλου laser, το οποίο αποδίδει ακτίνα συνεχούς κύματος ενώ είναι εύκολα φορητό από ένα άτομο.\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
 "\n"
-"Το κρίσιμο στοιχείο για την ανάπτυξη της τεχνολογίας δεν ήταν η μάταιη προσπάθεια να φτιάξουμε μεγαλύτερες μπαταρίες, αλλά η χρήση ριζοσπαστικών τεχνικών σμίκρυνσης για τη μείωση του βάρους και της κλίμακας των χημικών laser που ήδη υπάρχουν. Η τεχνολογία των χημικών laser υπάρχει εδώ και\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"πολλά χρόνια και έχει χρησιμοποιηθεί σε πειραματικά οπλικά συστήματα από τα τέλη του 20ου αιώνα, πάντα όμως υπήρχαν προβλήματα. Ένα laser με αρκετή ισχύ ώστε να μπορεί να χρησιμοποιηθεί για στρατιωτικούς σκοπούς θα ήταν υπερβολικά βαρύ και ογκώδες για να το κουβαλάει ένας στρατιώτης στο πεδίο της μάχης. Μέχρι τώρα, οι μόνες στρατιωτικές τους εφαρμογές ήταν ως πυροβόλα σε τεθωρακισμένα και ως συστήματα αντιπυραυλικής άμυνας σε πλοία.\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
 "\n"
-"Αυτό που καταφέραμε στην PHALANX είναι να κατασκευάσουμε μια μικρογραφία ενός τυπικού κανονιού laser. Παρά το μικρό του μέγεθος, είναι απόλυτα ικανό να ελέγχει τη χημική αντίδραση δευτερίου-φθωρίου και να περιορίζει τα τοξικά παράγωγα χωρίς κανένα κίνδυνο μόλυνσης. Επιτρέψτε μου να δώσω μια σύντομη περιγραφή της εσωτερικής λειτουργίας.\n"
+"Now for the cons.\n"
 "\n"
-"Στο εσωτερικό του θαλάμου ανάφλεξης γίνεται η καύση αιθυλενίου μέσα σε τριφθωριούχο άζωτο. Η αντίδραση αυτή παράγει φθωριούχες ρίζες, οι οποίες στη συνέχεια έρχονται σε επαφή με ένα μίγμα αερίων δευτέριου και ήλιου. Το δευτέριο αντιδρά με τις φθωριούχες ρίζες και προκύπτουν υψηλής ενέργειας μόρια φθωριούχου δευτέριου. Τα μόρια αυτά υπόκεινται σε εκπομπή μέσω διέργερσης μέσα στον οπτικό ταλαντωτή του όπλου, δημιουργόντας έτσι την ακτίνα. Στη συνέχεια μια σειρά από έξυπνους φακούς συγκεντρώνει και κατευθύνει την ακτίνα στο σημείο που σημαδέυει ο χρήστης, ενώ ταυτόχρονα αντισταθμίζονται τυχόν μικροκινήσεις του χρήστη ή του στόχου. Τα καυσαέρια δευτερίου που προκύπτουν διοχετεύονται σε ένα φίλτρο υψηλής πίεσης που σχεδιάσαμε, το οποίο κατακρατεί όλα τα τοξικά ή ριαδενεργά μόρια και διοχετεύει τα εναπομείναντα ασφαλή αέρια πίσω στην ατμόσφαιρα.\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
 "\n"
-"Το φίλτρο πρέπει να αντικαθίσταται έπειτα από κάθε αποστολή, όμως σχεδιάσαμε το σύστημα ώστε η αντικατάσταση να είναι εύκολη και ανώδυνη. Σε περίπτωση που το φίλτρο πάθει οποιαδήποτε ζημιά κατά τη διάρκεια μιας επιχείρησης διακόπτεται άμεσα η λειτουργία του όπλου προκειμένου να αποφευχθεί πιθανή μόλυνση.\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
 "\n"
-"Επειδή το laser λειτουργεί στα μέσα υπέρυθρα μήκη κύματος, η ακτίνα που προκύπτει γίνεται ορατή μόνο με τη χρήση υπέρυθρων φακών.\n"
-"\n"
-"Δυστυχώς, το πρωτότυπο που κατασκευάσαμε δεν είναι ακόμα κατάλληλο για μαζική παραγωγή ως όπλο στρατιωτών καθώς χρειάζονται επιπλέον ρυθμίσεις και βελτιώσεις. Παρόλα αυτά, οι καινοτομίες που επιτύχαμε μπορούν επίσης να εφαρμοστούν σε οπλικά συστήματα οχημάτων -- ίσως ακόμα και σε πυροβόλα αεροσκαφών. Σας έχω υποβάλει στα εισερχόμενα ορισμένες νέες προτάσεις με στόχο τις ιδέες που αναφέραμε.\n"
-"\n"
-"Παρακαλώ ενημερώστε με κ. Διοικητά όταν θέλετε να ξεκινήσουμε την περαιτέρω έρευνα.\n"
-"\n"
-"--Paul Navarre, Διευθυντής"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -6095,7 +6104,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6806,7 +6816,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
+msgstr ""
+"Από: Paul Navarre, Διεύθυνση Έρευνας & Ανάπτυξης: Τμήμα Μηχανικών, PHALANX, Διοίκηση Επιχειρήσεων Ατλαντικού"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -8101,35 +8112,43 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Βρισκόμαστε στο έτος 2084. Η Γη, που ποτέ δεν αποτέλεσε ιδιαίτερα ειρηνικό μέρος, απολαμβάνει μια περίοδο σχετικής ηρεμίας. Το βίαιο ξεκίνημα του 21ου αιώνα αποτελεί μακρινή ανάμνηση, όχι όμως τόσο μακρινή ώστε να ξεχαστεί. Για τους περισσότερους κατοίκους της Γης ο Δεύτερος Ψυχρός Πόλεμος είναι μια σκοτεινή σκιά του παρελθόντος, όπως ήταν οι δύο Παγκόσμιοι Πόλεμοι για τα παιδιά στα τέλη του 20ου αιώνα."
+msgstr ""
+"Βρισκόμαστε στο έτος 2084. Η Γη, που ποτέ δεν αποτέλεσε ιδιαίτερα ειρηνικό μέρος, απολαμβάνει μια περίοδο σχετικής ηρεμίας. Το βίαιο ξεκίνημα του 21ου αιώνα αποτελεί μακρινή ανάμνηση, όχι όμως τόσο μακρινή ώστε να ξεχαστεί. Για τους περισσότερους κατοίκους της Γης ο Δεύτερος Ψυχρός Πόλεμος είναι μια σκοτεινή σκιά του παρελθόντος, όπως ήταν οι δύο Παγκόσμιοι Πόλεμοι για τα παιδιά στα τέλη του 20ου αιώνα."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Οι συρράξεις γίνονται όλο και πιο σπάνιες όσο πλησιάζουμε στο τέλος του 21ου αιώνα καθώς νέες τεχνολογίες και υγειονομική περίθαλψη έγιναν διαθέσιμες στις χώρες του τρίτου κόσμου. Ακόμα και οι φλόγες της τρομοκρατίας έχουν κοπάσει στον απόηχο του Δευτέρου Ψυχρού Πολέμου, αφού η φρίκη και η απανθρωπιά του είναι ακόμα ζωντανή στις μνήμες όλων των ανθρώπων, από τις παλιές Ηνωμένες Πολιτείες μέχρι την πολύπαθη περιοχή της Ινδίας. Στο πολιτικό προσκήνιο βγαίνουν πλέον οι ταξικές διαμάχες τώρα που κάθε έθνος έχει εγγυημένα δίκαιη αντιπροσώπηση στον ΟΗΕ, ενώ το παγκόσμιο επίπεδο ζωής σταδιακά αυξάνεται ακόμα και στις φτωχότερες γωνιές του πλανήτη. Οι χώρες έχουν συνοχή και εσωτερική σταθερότητα καθώς ο αναδομημένος ΟΗΕ επιτηρεί με επιτυχία τις διάφορες κυβερνήσεις. Στον αντίποδα των τεραστίων μπλοκ της Κίνας και της Ευρωπαϊκής Ένωσης και της ισχύος που αυτά συγκέντρωσαν, οι ομάδες των αρχικά φοβισμένων μικρών κρατών ενωθήκαν και φτιάξαν τις δικές τους ισχυρές πολιτικές συμμαχίες -- και ξαφνικά βρέθηκαν χωρίς γείτονες που θα μπορούσαν να πολεμήσουν με ασφάλεια. Για πρώτη φορά στα ανθρώπινα χρονικά επικρατεί νόμος και τάξη σε περισσότερα από τρία τέταρτα της Γης."
+msgstr ""
+"Οι συρράξεις γίνονται όλο και πιο σπάνιες όσο πλησιάζουμε στο τέλος του 21ου αιώνα καθώς νέες τεχνολογίες και υγειονομική περίθαλψη έγιναν διαθέσιμες στις χώρες του τρίτου κόσμου. Ακόμα και οι φλόγες της τρομοκρατίας έχουν κοπάσει στον απόηχο του Δευτέρου Ψυχρού Πολέμου, αφού η φρίκη και η απανθρωπιά του είναι ακόμα ζωντανή στις μνήμες όλων των ανθρώπων, από τις παλιές Ηνωμένες Πολιτείες μέχρι την πολύπαθη περιοχή της Ινδίας. Στο πολιτικό προσκήνιο βγαίνουν πλέον οι ταξικές διαμάχες τώρα που κάθε έθνος έχει εγγυημένα δίκαιη αντιπροσώπηση στον ΟΗΕ, ενώ το παγκόσμιο επίπεδο ζωής σταδιακά αυξάνεται ακόμα και στις φτωχότερες γωνιές του πλανήτη. Οι χώρες έχουν συνοχή και εσωτερική σταθερότητα καθώς ο αναδομημένος ΟΗΕ επιτηρεί με επιτυχία τις διάφορες κυβερνήσεις. Στον αντίποδα των τεραστίων μπλοκ της Κίνας και της Ευρωπαϊκής Ένωσης και της ισχύος που αυτά συγκέντρωσαν, οι ομάδες των αρχικά φοβισμένων μικρών κρατών ενωθήκαν και φτιάξαν τις δικές τους ισχυρές πολιτικές συμμαχίες -- και ξαφνικά βρέθηκαν χωρίς γείτονες που θα μπορούσαν να πολεμήσουν με ασφάλεια. Για πρώτη φορά στα ανθρώπινα χρονικά επικρατεί νόμος και τάξη σε περισσότερα από τρία τέταρτα της Γης."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Για τους περισσότερους ανθρώπους στη Γη, τα πράγματα δείχνουν να πηγαίνουν καλά."
+msgstr ""
+"Για τους περισσότερους ανθρώπους στη Γη, τα πράγματα δείχνουν να πηγαίνουν καλά."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Η πρώτη επίθεση γίνεται στο Μουμπάι, στις 3 Μαρτίου του 2084. Έξι μικρά UFO εμφανίζονται από το πουθενά, εισέρχονται με τρομακτική ταχύτητα στην ατμόσφαιρα χωρίς να γίνουν αντιληπτά από τις εγκαταστάσεις ρανταρ του Μουμπάι και προσγειωνονται στην πιο πυκνοκατοικημένη πόλη της Γης. Δεν δίνουν καμία προειδοποίηση, καμία εξήγηση. Είκοσι χιλιάδες αθώοι πολίτες και τρια τάγματα επίλεκτων στρατιωτών σφαγιάζονται μέσα σε δώδεκα ώρες, μέχρι να καταφέρει το σύνολο των δυνάμεων της Κοινοπολιτείας να σταματήσει την επέλαση των εξωγήινων. Τότε, όσο ξαφνικά εμφανίστηκαν, οι εξωγήινοι αποσύρονται στα σκάφη τους και φεύγουν στο διάστημα, αφήνοντας πίσω τους ερειπωμένους δρόμους του Μουμπάι ως ενθύμιο."
+msgstr ""
+"Η πρώτη επίθεση γίνεται στο Μουμπάι, στις 3 Μαρτίου του 2084. Έξι μικρά UFO εμφανίζονται από το πουθενά, εισέρχονται με τρομακτική ταχύτητα στην ατμόσφαιρα χωρίς να γίνουν αντιληπτά από τις εγκαταστάσεις ρανταρ του Μουμπάι και προσγειωνονται στην πιο πυκνοκατοικημένη πόλη της Γης. Δεν δίνουν καμία προειδοποίηση, καμία εξήγηση. Είκοσι χιλιάδες αθώοι πολίτες και τρια τάγματα επίλεκτων στρατιωτών σφαγιάζονται μέσα σε δώδεκα ώρες, μέχρι να καταφέρει το σύνολο των δυνάμεων της Κοινοπολιτείας να σταματήσει την επέλαση των εξωγήινων. Τότε, όσο ξαφνικά εμφανίστηκαν, οι εξωγήινοι αποσύρονται στα σκάφη τους και φεύγουν στο διάστημα, αφήνοντας πίσω τους ερειπωμένους δρόμους του Μουμπάι ως ενθύμιο."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Μια έκτακτη σύνοδος του ΟΗΕ δεν καταλήγει σε καθοριστικό τρόπο δράσης. Οι επιθέσεις συνεχίζονται με αυξανόμενη συχνότητα και βιαιότητα. Οι επόμενοι στόχοι είναι η Βόννη, το Γιοχάνεσμπουργκ και η Μπανγκοκ. Ορισμένα έθνη επιχειρούν τη διπλωματική οδό, στέλνοντας μηνύματα σε χίλιες διαφορετικές γλώσσες στους εξωγήινους που λυμαίνονται την περιοχή τους. Τα λόγια τους πέφτουν στο κενό. Λίγες ώρες μετά δεν μένει ίχνος ανθρώπινης ζωής στις τρεις πόλεις. Οι επιθέση έχει τελειώσει μέχρι να δοθεί η εντολή αντεπίθεσης στις διάφορες στρατιωτικές δυνάμεις. Οι εξωγήινοι αφήνουν στο δίαβα τους μόνο τσιμέντο και αίμα. Όλα τα UFO εξαφανίζονται χωρίς ίχνος -- κανείς δεν αμφιβάλει ότι θα επιστρέψουν."
+msgstr ""
+"Μια έκτακτη σύνοδος του ΟΗΕ δεν καταλήγει σε καθοριστικό τρόπο δράσης. Οι επιθέσεις συνεχίζονται με αυξανόμενη συχνότητα και βιαιότητα. Οι επόμενοι στόχοι είναι η Βόννη, το Γιοχάνεσμπουργκ και η Μπανγκοκ. Ορισμένα έθνη επιχειρούν τη διπλωματική οδό, στέλνοντας μηνύματα σε χίλιες διαφορετικές γλώσσες στους εξωγήινους που λυμαίνονται την περιοχή τους. Τα λόγια τους πέφτουν στο κενό. Λίγες ώρες μετά δεν μένει ίχνος ανθρώπινης ζωής στις τρεις πόλεις. Οι επιθέση έχει τελειώσει μέχρι να δοθεί η εντολή αντεπίθεσης στις διάφορες στρατιωτικές δυνάμεις. Οι εξωγήινοι αφήνουν στο δίαβα τους μόνο τσιμέντο και αίμα. Όλα τα UFO εξαφανίζονται χωρίς ίχνος -- κανείς δεν αμφιβάλει ότι θα επιστρέψουν."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Ογδονταεφτά ώρες μετά την αρχική επίθεση στο Μουμπάι, η Γη κυρήσει τον πόλεμο. Για δύο εβδομάδες, οι στρατοί της ανθρωπότητας προσπαθούν ανεξάρτητα να αποκρούσουν τους μυστηριώδεις εξωγήινους κατακτητές με όλες τους τις δυνάμεις. Σημειώνουν ελάχιστες επιτυχίες."
+msgstr ""
+"Ογδονταεφτά ώρες μετά την αρχική επίθεση στο Μουμπάι, η Γη κυρήσει τον πόλεμο. Για δύο εβδομάδες, οι στρατοί της ανθρωπότητας προσπαθούν ανεξάρτητα να αποκρούσουν τους μυστηριώδεις εξωγήινους κατακτητές με όλες τους τις δυνάμεις. Σημειώνουν ελάχιστες επιτυχίες."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Εφόσον δεν υπάρχει άλλη εναλλακτική, ο ΟΗΕ αναλαμβάνει δράση. Ξεσκονίζεται αρχαίος εξοπλισμός, τμήμα του οποίου είναι ηλικίας ενός αιώνα ή και μεγαλύτερο, και αναδημιουργείται η προ-πολλού διαλυμένη υπηρεσία αντιμετώπισης εξωγήινων των Ηνωμένων Πολιτειών -- η PHALANX -- υπό την αιγίδα του ΟΗΕ. Καθήκον της είναι η αντιμετώπιση της εξωγήινης απειλής και η διασφάλιση με κάθε κόστοας της επιβίωσης του ανθρώπινου είδους."
+msgstr ""
+"Εφόσον δεν υπάρχει άλλη εναλλακτική, ο ΟΗΕ αναλαμβάνει δράση. Ξεσκονίζεται αρχαίος εξοπλισμός, τμήμα του οποίου είναι ηλικίας ενός αιώνα ή και μεγαλύτερο, και αναδημιουργείται η προ-πολλού διαλυμένη υπηρεσία αντιμετώπισης εξωγήινων των Ηνωμένων Πολιτειών -- η PHALANX -- υπό την αιγίδα του ΟΗΕ. Καθήκον της είναι η αντιμετώπιση της εξωγήινης απειλής και η διασφάλιση με κάθε κόστοας της επιβίωσης του ανθρώπινου είδους."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Χρηματοδοτούμενη και από τις οχτώ πολιτικές δυνάμεις και αντλώντας προσωπικό από την αφρόκρεμα κάθε στρατού, η PHALANX είναι η καλύτερη των καλύτερων. Είναι η πρώτη και μοναδική άμυνα της Γης. Δεν υπάρχουν περιθώρια αποτυχίας. Χωρίς αυτήν, η ανθρωπότητα δεν έχει ελπίδα."
+msgstr ""
+"Χρηματοδοτούμενη και από τις οχτώ πολιτικές δυνάμεις και αντλώντας προσωπικό από την αφρόκρεμα κάθε στρατού, η PHALANX είναι η καλύτερη των καλύτερων. Είναι η πρώτη και μοναδική άμυνα της Γης. Δεν υπάρχουν περιθώρια αποτυχίας. Χωρίς αυτήν, η ανθρωπότητα δεν έχει ελπίδα."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

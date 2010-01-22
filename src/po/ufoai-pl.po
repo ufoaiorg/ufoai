@@ -707,7 +707,8 @@ msgstr "Wichita"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
+msgstr ""
+"Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -793,7 +794,8 @@ msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, No
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -866,7 +868,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -918,7 +921,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1013,7 +1017,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1043,7 +1048,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1913,7 +1919,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -3346,10 +3353,34 @@ msgstr ""
 #: ../base/ufos/research.ufo:1541
 msgid "electrolaser_txt"
 msgstr ""
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
+"\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
+"\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
+"\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
+"\n"
+"Now for the cons.\n"
+"\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
+"\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Brak informacji przed wynalezieniem."
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -5331,7 +5362,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -5904,7 +5936,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -6947,35 +6980,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, żeby o niej zapomnieć. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem przeszłości, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
+msgstr ""
+"Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, żeby o niej zapomnieć. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem przeszłości, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe -- jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych Świata."
+msgstr ""
+"Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe -- jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych Świata."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Dla wielu ludzi na Ziemi oznacza to, że w końcu nastały spokojne czasy."
+msgstr ""
+"Dla wielu ludzi na Ziemi oznacza to, że w końcu nastały spokojne czasy."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Celem pierwszego ataku staje się Bombaj w dniu 3 marca 2084 roku. Sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie znikąd, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
+msgstr ""
+"Celem pierwszego ataku staje się Bombaj w dniu 3 marca 2084 roku. Sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie znikąd, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio -- tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu -- choć nikt już nie wątpi, że pojawią się ponownie."
+msgstr ""
+"Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio -- tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu -- choć nikt już nie wątpi, że pojawią się ponownie."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
+msgstr ""
+"Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych, założona do walki z istotami pozaziemskimi -- PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
+msgstr ""
+"W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych, założona do walki z istotami pozaziemskimi -- PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek -- PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdzcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
+msgstr ""
+"Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek -- PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdzcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

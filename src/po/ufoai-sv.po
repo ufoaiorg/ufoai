@@ -844,7 +844,8 @@ msgstr "mejl_från_fn"
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -917,7 +918,8 @@ msgstr "mejl_prolog"
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -993,7 +995,8 @@ msgstr "mejl_produktion_klar"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1088,7 +1091,8 @@ msgstr "mejl_ny_radarkontakt"
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1118,7 +1122,8 @@ msgstr "mejl_utomjordisk_aktivitet_rapporterad"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2016,7 +2021,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -2614,7 +2620,7 @@ msgstr ""
 "\n"
 "The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
 "\n"
-"The French LeBlanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
+"The French Leblanc FAA-191 (Fusil d'Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
 "\n"
 "Though the design is far from new, first prototyped in 2057, no other rifle has fully surpassed the 191. It is accurate and quick to reload. Its rugged construction makes it dependable in combat and unlikely to break or jam. It is resistant to heat, cold, dust and humidity all at once. Ammunition and replacement parts are widely available due to the design's maturity and relative popularity among Earth's armed forces. This is a rifle you can entrust your life to.\n"
 "\n"
@@ -3677,30 +3683,36 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Det är med mycket stor stolthet jag rapporterar att vårt projekt har varit framgångsrikt. Jag har inkluderat bilder på vårat prototyplaservapen som åstadkommer kontinuerlig vågformsutgång och ändå är litet nog att bära med sig för en enskild person.\n"
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
 "\n"
-"Den praktiska lösningen låg inte i lönlösa försök att tillverka större batterier, utan i stället använde vi radikala miniatyriseringstekniker för att kunna göra existerande kemiskt drivna laserkomponenter mindre och lättare. Kemisk laser har använts länge, och har funnits i experimentella vapenprogram sedan slutet av 1900-talet, men tekniken har alltid lidit av många problem. De enda typer av kemisk laser där militära tillämpningar har varit aktuella har varit alldeles för stora och klumpiga för att infanterister ska kunna bära med sig dem i strid. Fram tills nu har lasertillämpningar i strid varit begränsade till laserkanoner monterade på stridsvagnar eller missilvärnsbatterier på fartyg.\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
 "\n"
-"Nu har vi inom PHALANX byggt en miniatyr av en konventionell laserkanon. Trots dess ringa storlek är den fullt kapabel att hantera deuteriumflouridreaktionen och det giftiga avfallet utan risk för förorening. Låt mig kort beskriva hur det fungerar.\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"Inuti förbränningskammeren förbränns eten i kvävetrifluorid. Reaktionen producerar exciterade fluorinradikaler, som sedan förs in i en blandning av helium- och deuteriumgas. Deuteriumet reagerar med fluorinet och producerar exciterad molekyler av deuteriumfluorid. Molekylerna utsätts sedan för stimulerad emission i vapnets optiska resonator, och där genereras strålen. En rad intelligenta linser fokuserar och riktar strålen dit användaren siktar och korrigerar dessutom för mindre rörelser hos användaren eller målet. Avgaserna av deuterium körs genom vårt specialbyggda högtrycksfilter, som fångar upp alla giftiga och radioaktiva molekyler innan den kvarvarande ofarliga ångan släpps tillbaka ut i atmosfären.\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
 "\n"
-"Filtret måste bytas ut efter varje uppdrag, men vi har designat systemet för att det ska vara lätt och smärtfritt. Om filtersystemet på något sätt skadas under ett uppdrag, kommer vapnet omedelbart att sluta fungera för att förhindra förorening.\n"
+"Now for the cons.\n"
 "\n"
-"Lasern använder infraröda våglängder, så den ger ingen synlig stråle förutom för dem som bär IR-glasögon.\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
 "\n"
-"Tyvärr är prototypen som vi har konstruerat inte redo för fullskalig produktion som infanterivapen än. Mer förfining och balansering behövs innan den kan användas av människor, men uppfinningarna som vi har gjort kan också användas för fordonsmonterade vapen -- kanske till och med på flygande fordon. Jag har skickat Er ett flertal nya förslag på huvudidéerna som vi har tagit fram.\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
 "\n"
-"Låt mig veta när Ni vill att vi ska börja arbeta med dem.\n"
-"\n"
-"--Kommendör Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Ingen information om tidigare forskning tillgänglig"
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -5492,8 +5504,7 @@ msgstr ""
 "\n"
 "Det är fullständigt klart att soldater i krig lever under en väldig stress. För att bibehålla moralen så behöver de en plats att trappa ner och umgås i en rangfri miljö. Vi har försökt att förse denna sort av vila och rekreation i form av en samlingssal.\n"
 "\n"
-"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n"
-"\n"
+"Den är utrustad med en mångfald av underhållning, allt från biljard bord till högteknologiska spel konsoller. Den innehåller också en blygsam väggmonterad bioduk för gemensam filmvisning. Det finns försäljningsmaskiner med både alkohol och alkoholfria drycker, och separata vardagsrum för att våra soldater ska kunna få någon sorts privatliv från instängdheten från livet i basen. Vardagsrummen kan låsas innefrån upp till 30 minuter per dag av varje lag medlem. Låset kan öppnas i nödfall från Kontrollcentralen, Kommandocentralen eller av sjukvårdsofficeren.\n\n"
 "\n"
 "All vår utrustning kräver underhåll, och jag skulle kunna hävda att våra soldater behöver mest underhåll. Samlingsalen är det bästa för att hålla dom mentalt hälsosamma och i stridbart skick.\n"
 "\n"
@@ -6080,7 +6091,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6848,7 +6860,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -7719,15 +7732,13 @@ msgstr ""
 "\n"
 "Den enklaste förklaringen är detta: Det är två typer av DNA i våra blodprover. Det främmande DNA: ts förekommst är total; denna sekvens kan hittas i alla medlemmar av Tamanrasen, och en närmare studie har bekräftat att en liknande sekvens finns i blodet på andra raser vi hittat. Källan verkar vara en sorts encellig organism som finns i stor mängd i det utomjordiska blodomloppet. Det finns flera olika versioner av den, en för varje utomjordisk ras, och alla delar otroliga DNA likheter. Intressant nog så även om alla dessa organismer har lika många kromosomer, så kan ingen av dom överleva i en kropp som inte är medlem av den ursprungliga rasen. Underligt nog så är det helt klart att det är absolut ingen som helst variation på DNA: t mellan organismer från samma version. Detta leder till att vi tror att olika versioner kan ha tillverkats -- helt eller delvis -- för att passa den individuella rasen.\n"
 "\n"
-"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n"
-"\n"
+"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n\n"
 "\n"
 "Vi har namngett denna organism XVI (EXtraterrestrial Virus Infektion). Detta kan vara en felbeteckning i microbiologiska termer; XVI är långt mer komplicerad än något virus på jorden, men den beter och kopierar sig precis som ett vanligt virus. Därför känner vi att termen är försvarbar. När varje utomjordisk ras bär en unik sträng av infektionen, så har vi gett dem ett alfabetiskt designering efter den ursprungliga ras som strängen hittas i. Tamanerna har XVI-T, Shevaar har XVI-S, osv.\n"
 "\n"
 "Infektionens syfte kvarstår suddig just nu, men det är det enda vi har hittat än så länge som binder ihop dessa olika raser fysiskt. Vi kan bara gissa att olika strängar av infektionen skapades för att passa varje ras.\n"
 "\n"
-"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n"
-"\n"
+"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n\n"
 "\n"
 "Vi tror för närvarande inta att XVI organismen utgör något hot för våra soldater på slagfältet. Men vi kommer forsätta att forska och hålla dig underrättad om något utvecklas. En grundlig blodtestning utförs nu på all vår personal, som en säkerhetsåtgärd, och vanliga karantän procedurer kommer upprätthållas alltigenom laboratoriumet.\n"
 "\n"
@@ -8166,35 +8177,43 @@ msgstr "För många människor på jorden verkar det äntligen som allt är bra.
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
+msgstr ""
+"Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
+msgstr ""
+"Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "För många människor på jorden verkar det äntligen som allt är bra."
+msgstr ""
+"För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
+msgstr ""
+"Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
+msgstr ""
+"Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
+msgstr ""
+"87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
+msgstr ""
+"När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
+msgstr ""
+"Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

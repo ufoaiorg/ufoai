@@ -857,7 +857,8 @@ msgstr "Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro 
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Comandante de la Base, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -931,7 +932,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Cmte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmte. Paul Navarre, I+D: División de Ingeniería, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -1011,7 +1013,8 @@ msgstr "Construcción finalizada"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"XO Abel S. Howard, Mando y Control, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1149,7 +1152,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Cor. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cor. Ingrid Falkland, División de Inteligencia, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1181,7 +1185,8 @@ msgstr "Informe de actividad alienígena: '%s'"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cmte. (Aire) Subakh al-Kuhar, Fuerza Aérea, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Cmte. (Aire) Subakh al-Kuhar, Fuerza Aérea, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2112,7 +2117,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
+msgstr ""
+"Dr. Connor, I+D: División Biológica y de Contención, PHALANX, Centro de Operaciones Atlánticas"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -3759,30 +3765,36 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Comandante, me alegra profundamente poder anunciarle que nuestro proyecto ha tenido éxito. He incluido imágenes de nuestro prototipo de arma láser, que logra una emisión de onda continua sin sacrificar su portabilidad.\n"
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
 "\n"
-"La solución práctica no se encontraba en el vano intento de crear lotes de baterías más grandes y potentes, sino en aplicar tecnologías de miniaturización extrema para aligerar y reducir el tamaño de los actuales componentes de los láseres químicos. Los láseres químicos se han utilizado durante muchísimos años y han formado parte de los programas armamentísticos experimentales desde finales del siglo XX, pero siempre han experimentado muchos problemas. Los únicos tipos de láseres químicos con potencial militar real han sido demasiado pesados y voluminosos para ser llevados por un soldado de infantería en el campo de batalla. Hasta ahora sus aplicaciones bélicas se habían limitado a cañones láser montados en tanques y a baterías anti-misiles láser instaladas en barcos.\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
 "\n"
-"Ahora, sin embargo, en PHALANX hemos desarrollado un cañón láser convencional en miniatura. A pesar de su tamaño reducido, es plenamente capaz de contener la reacción del fluoruro de deuterio y de almacenar los productos tóxicos producidos sin peligro de contaminación. Permítame explicarle brevemente su funcionamiento interno.\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"Dentro de la cámara de combustión, el etileno es quemado en presencia de trifloruro de nitrógeno. Esta reacción produce radicales excitados de flúor, que a continuación son puestos en contacto con una mezcla gaseosa de helio y de deuterio. El deuterio reacciona con el flúor, formando moléculas excitadas de fluoruro de deuterio, que experimentan procesos de emisión estimulada dentro del resonador óptico del arma, generando así el haz láser. Seguidamente, una serie de lentes inteligentes focaliza y dirige dicho haz hacia el objetivo del tirador, e incluso realiza correcciones para compensar pequeños movimientos del tirador o del objetivo. El gas residual de deuterio es forzado a través de nuestro sistema de filtrado de alta presión, diseñado especialmente para retener todas las moléculas tóxicas o radiactivas, mientras que las especies gaseosas inocuas son expulsadas a la atmósfera.\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
 "\n"
-"Aunque hace falta reemplazar el filtro después de cada misión, hemos diseñado el sistema de modo que sea fácil y seguro. Si el sistema de filtrado llegara a dañarse durante el transcurso de una operación, el arma dejaría de funcionar inmediatamente para evitar cualquier riesgo de contaminación.\n"
+"Now for the cons.\n"
 "\n"
-"El láser opera en el rango de longitudes de onda del infrarrojo medio, así que el haz emitido será invisible salvo para aquellos que lleven gafas de visión infrarroja.\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
 "\n"
-"Desafortunadamente, el prototipo que hemos fabricado no está listo aún para su producción en masa como arma de infantería, ya que hace falta ajustarlo y equilibrarlo para el uso humano. Por otra parte, las innovaciones realizadas también aplicarse en el desarrollo de armas laser para vehículos e incluso para cazas. He entregado un buen número de nuevas propuestas de investigación, que podrá encontrar en su buzón de entrada, en las que se detallan las ideas principales que hemos tenido para aplicar esta tecnología en el campo de batalla.\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
 "\n"
-"En cuanto quiera que empecemos a trabajar en ello, hágamelo saber, Comandante.\n"
-"\n"
-"--Cte. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "No existe información disponible previa a la investigación."
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -6142,7 +6154,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6940,7 +6953,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 #, fuzzy
@@ -8313,35 +8327,43 @@ msgstr "Para gran parte de los habitantes de la Tierra las cosas simplemente van
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Es el año 2084. La Tierra, conocida por su inestabilidad política, disfruta de unos momentos de relativa paz. Los violentos inicios del siglo XXI son ahora recuerdos lejanos, aunque no tan lejanos como para haber sido olvidados. Para la mayor parte de la población de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, tal y como lo fueron las guerras mundiales para los nacidos a finales del siglo XX."
+msgstr ""
+"Es el año 2084. La Tierra, conocida por su inestabilidad política, disfruta de unos momentos de relativa paz. Los violentos inicios del siglo XXI son ahora recuerdos lejanos, aunque no tan lejanos como para haber sido olvidados. Para la mayor parte de la población de la Tierra la Segunda Guerra Fría es una oscura sombra del pasado, tal y como lo fueron las guerras mundiales para los nacidos a finales del siglo XX."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Los conflictos armados se han hecho cada vez más raros gracias a las nuevas tecnologías y a que el sistema de salud pública universal por fin ha llegado al tercer mundo. Incluso los fuegos del terrorismo se apagaron en el comienzo de la Segunda Guerra Fría, con sus horrores todavía frescos en la memoria de la gente, desde los antiguos Estados Unidos hasta el lejano subcontinente Indio. Las luchas de clases están girando al campo de batalla político ahora que cada nación tiene garantizada una representación similar en la ONU, y el nivel de riqueza estandar ha alcanzado hasta los lugares más pobres del planeta. Los países se han establecido alrededor de una nueva y reestructurada Organización de las Naciones Unidas, que vigila eficazmente a todos los gobiernos del mundo. Grupos fragmentados de pequeñas naciones, asustados en principio por el poder de bloques políticos como China y la Unión Europea, se han unido en ligas comunes -- descubriendo por fín que ya no se puede combatir de manera segura contra ningún otro vecino. Por primera vez en la historia de la humanidad la ley y el orden recorren más de las tres cuartas partes del mundo."
+msgstr ""
+"Los conflictos armados se han hecho cada vez más raros gracias a las nuevas tecnologías y a que el sistema de salud pública universal por fin ha llegado al tercer mundo. Incluso los fuegos del terrorismo se apagaron en el comienzo de la Segunda Guerra Fría, con sus horrores todavía frescos en la memoria de la gente, desde los antiguos Estados Unidos hasta el lejano subcontinente Indio. Las luchas de clases están girando al campo de batalla político ahora que cada nación tiene garantizada una representación similar en la ONU, y el nivel de riqueza estandar ha alcanzado hasta los lugares más pobres del planeta. Los países se han establecido alrededor de una nueva y reestructurada Organización de las Naciones Unidas, que vigila eficazmente a todos los gobiernos del mundo. Grupos fragmentados de pequeñas naciones, asustados en principio por el poder de bloques políticos como China y la Unión Europea, se han unido en ligas comunes -- descubriendo por fín que ya no se puede combatir de manera segura contra ningún otro vecino. Por primera vez en la historia de la humanidad la ley y el orden recorren más de las tres cuartas partes del mundo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Para gran parte de los habitantes de la Tierra las cosas simplemente van bien."
+msgstr ""
+"Para gran parte de los habitantes de la Tierra las cosas simplemente van bien."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "El primer ataque tuvo como objetivo la ciudad de Mumbai el 3 de marzo de 2084. Seis pequeños OVNIs aparecieron de la nada y descendieron ruidosamente de sus orbitas, sin ser detectados por las inmensas instalaciones de radar que vigilaban el cielo de Mumbai, y aterrizaron en la ciudad más densamente poblada de la Tierra. No dieron ninguna advertencia, ninguna explicacion. Veinte mil civiles inocentes y tres batallones de élite fueron masacrados en el transcurso de doce horas brutales combates, antes de que el grueso de los soldados de la Commonwealth pudiera llevar el avance de los alienígenas a un punto muerto. Entonces, tan súbitamente como habían aparecido, los alienígenas se retiraron a sus naves y se desvanecieron otra vez en orbita, dejando sólo las destrozadas calles de Mumbai como prueba de su estancia."
+msgstr ""
+"El primer ataque tuvo como objetivo la ciudad de Mumbai el 3 de marzo de 2084. Seis pequeños OVNIs aparecieron de la nada y descendieron ruidosamente de sus orbitas, sin ser detectados por las inmensas instalaciones de radar que vigilaban el cielo de Mumbai, y aterrizaron en la ciudad más densamente poblada de la Tierra. No dieron ninguna advertencia, ninguna explicacion. Veinte mil civiles inocentes y tres batallones de élite fueron masacrados en el transcurso de doce horas brutales combates, antes de que el grueso de los soldados de la Commonwealth pudiera llevar el avance de los alienígenas a un punto muerto. Entonces, tan súbitamente como habían aparecido, los alienígenas se retiraron a sus naves y se desvanecieron otra vez en orbita, dejando sólo las destrozadas calles de Mumbai como prueba de su estancia."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "La reunion de emergencia de la ONU no llevó a ninguna conclusión. Las incursiones continuaron, mas rápidas, más grandes y más salvajes, esta vez en Bonn, Johanesburgo y Bangkok. Algunas naciones intentaron usar la diplomacia mandando mensajes en miles de idiomas diferentes a los alienígenas que destruían sus paises. Fueron ignorados. En cuestión de horas, las tres ciudades fueron desprovistas de vida humana. El ataque había terminado para el momento en el que a los militares se les dio permiso de contraatacar. Los alienígenas sólo dejaron atrás escombros y sangre. Todos los OVNIs desaparecieron, pero nadie duda de que volverán."
+msgstr ""
+"La reunion de emergencia de la ONU no llevó a ninguna conclusión. Las incursiones continuaron, mas rápidas, más grandes y más salvajes, esta vez en Bonn, Johanesburgo y Bangkok. Algunas naciones intentaron usar la diplomacia mandando mensajes en miles de idiomas diferentes a los alienígenas que destruían sus paises. Fueron ignorados. En cuestión de horas, las tres ciudades fueron desprovistas de vida humana. El ataque había terminado para el momento en el que a los militares se les dio permiso de contraatacar. Los alienígenas sólo dejaron atrás escombros y sangre. Todos los OVNIs desaparecieron, pero nadie duda de que volverán."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Ochenta y siete horas despues el primer ataque a Mumbai, la tierra declaró la guerra. Durante dos semanas los ejercitos de la Tierra intentaron repeler los misteriosos ataques con lo mejor de su artilleria, pero consiguieron sólo unas pocas victorias."
+msgstr ""
+"Ochenta y siete horas despues el primer ataque a Mumbai, la tierra declaró la guerra. Durante dos semanas los ejercitos de la Tierra intentaron repeler los misteriosos ataques con lo mejor de su artilleria, pero consiguieron sólo unas pocas victorias."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Con sólo una alternativa, la ONU entró en acción. Se desempolvó el antiguo equipamiento, alguno con más de un siglo de existencia, y la casi olvidada agencia anti-extraterrestre de los antiguos Estados Unidos -- PHALANX -- fue resucitada bajo bandera de la ONU."
+msgstr ""
+"Con sólo una alternativa, la ONU entró en acción. Se desempolvó el antiguo equipamiento, alguno con más de un siglo de existencia, y la casi olvidada agencia anti-extraterrestre de los antiguos Estados Unidos -- PHALANX -- fue resucitada bajo bandera de la ONU."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fundada por la unanimidad de los ocho bloques políticos más importantes, y eligiendo a sus soldados de entre la élite de sus tropas, PHALANX es lo mejor de lo mejor. La primera y única linea de defensa de la Tierra. No puede permitirse fallar; porque si lo hace la humanidad no tendrá ninguna oportunidad."
+msgstr ""
+"Fundada por la unanimidad de los ocho bloques políticos más importantes, y eligiendo a sus soldados de entre la élite de sus tropas, PHALANX es lo mejor de lo mejor. La primera y única linea de defensa de la Tierra. No puede permitirse fallar; porque si lo hace la humanidad no tendrá ninguna oportunidad."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

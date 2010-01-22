@@ -734,7 +734,8 @@ msgstr "Wichita"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "GenSek. Mahouf Serra, Forende Nationer, New York"
+msgstr ""
+"GenSek. Mahouf Serra, Forende Nationer, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -820,7 +821,8 @@ msgstr "GenSek. Mahouf Serra, Forende Nationer, New York"
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Øverstbefalende, FALANKS, Hovedkvarteret"
+msgstr ""
+"Øverstbefalende, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -908,7 +910,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Kommandør Paul Navarre, F&U; Ingeniørdivisionen, FALANKS, Hovedkvarteret"
+msgstr ""
+"Kommandør Paul Navarre, F&U; Ingeniørdivisionen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -971,7 +974,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "NK Abel S. Howard, Stabsafdelingen, FALANKS, Hovedkvarteret"
+msgstr ""
+"NK Abel S. Howard, Stabsafdelingen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1043,7 +1047,8 @@ msgstr "Rumvæsenbase opdaget -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -1066,7 +1071,8 @@ msgstr "e-post_ny_radarkontakt"
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Oberst Ingrid Falkland, Efterretningstjenesten, FALANKS, Hovedkvarteret"
+msgstr ""
+"Oberst Ingrid Falkland, Efterretningstjenesten, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1103,7 +1109,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kommandør Subakh al-Kuhar, Luftstyrkerne, FALANKS, Hovedkvarteret"
+msgstr ""
+"Kommandør Subakh al-Kuhar, Luftstyrkerne, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1993,7 +2000,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, Bio- & opbevaringsafdelingen, FALANKS, Hovedkvarteret"
+msgstr ""
+"Dr. Connor, Bio- & opbevaringsafdelingen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -3530,10 +3538,34 @@ msgstr ""
 #: ../base/ufos/research.ufo:1541
 msgid "electrolaser_txt"
 msgstr ""
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
+"\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
+"\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
+"\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
+"\n"
+"Now for the cons.\n"
+"\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
+"\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Ingen information om tidligere forskning tilgængelig"
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -5083,49 +5115,47 @@ msgstr ""
 #: ../base/ufos/research.ufo:3200
 msgid "b_radar_txt"
 msgstr ""
-"Tegninger -- Radar\n"
+"Tegninger - Radar\n"
 "\n"
 "KLASSIFIKATIONSNIVEAU SORT\n"
 "\n"
-"FALANKS Rumvæsenudrykningsenhed\n"
+"FALANKS-rumvæsenudrykningsenhed\n"
 "\n"
-"Bygningstegninger, Sigma tilladelse -- Kun for øverstbefalendes øjne\n"
+"Bygningstegninger: Sikkerhedsniveau Sigma - Kun for øverstbefalendes øjne\n"
 "\n"
 "Arkiveret: 18. marts 2084\n"
 "\n"
-"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvateret\n"
+"Af: Kommandør Paul Navarre, F&U: Ingeniørdivisionen, FALANKS, Hovedkvarteret\n"
 "\n"
 "\n"
 "\n"
 "Overblik\n"
 "\n"
-"Øverstbefalende, det har været nødvendigt at foretage omfattende ændringer på de gamle radar tegninger for at de er tidssvarende. De gamle rapporter er ikke længere gældende, så jeg har besluttet erstatte dem. Vores radar bygning er ikke et stort radar array i sig selv. Det er faktisk et kontrol center for en række kamuflerede paraboler placeret på høje steder omkring basen. Der er mellem 8 og 12 paraboler ved hver base, afhængig af tilgængelig plads og den enkelte parabols dæknings evne. Hver parabol er udstyret med flere detektions metoder, fremfor blot simpel radar, da radar har problemer med at fastholde kontakten med UFOer.\n"
+"Øverstbefalende, det har været nødvendigt at foretage omfattende ændringer på de gamle radartegninger, for at de er tidssvarende. De gamle rapporter er ikke længere gældende, så jeg har besluttet at erstatte dem. Vores radarbygning er ikke et stort radarbatteri i sig selv. Det er faktisk et kontrolcenter for en række kamuflerede paraboler placeret på høje steder omkring basen. Der er mellem 8 og 12 paraboler ved hver base, afhængig af den tilgængelige plads og den enkelte parabols dækningsevne. Hver parabol er udstyret med flere metoder til opdagelse af ufoer, fremfor blot at være en simpel radar, da en sådan radar har problemer med at fastholde kontakten med ufoer. De yderligere systemer omfatter blandt andet infrarødt lys og afstandsbedømmelse med laser.\n"
 "\n"
-"De yderligere systemer omfatter blandt andet infrarød og laser afstandsbedømmelse.\n"
+"Konstruktionen af yderligere radarinstallationer på en base vil øge rækkevidden af vores radardækning.\n"
 "\n"
-"Konstruktionen af yderligere radar installationer på en base vil øge rækkevidden af vores radar dækning.\n"
+"Radaren er bemandet døgnet rundt, i skiftehold af 6 timer, som behandler de færdige resultater, når computeren har samlet al den information den kan om en kontakt. Menneskelige operatører er absolut nødvendige og bør være til stede til enhver tid; hvad computeren måske bare betragter som et radarspøgelse kan vise sig at være en kamufleret opsamler, klar til at ramme civile. Instinkt og erfaring betyder lige så meget som programintelligens.\n"
 "\n"
-"Radaren er bemandet døgnet rundt, i skiftehold af 6 timer, som behandler de færdige resultater når computeren har samlet al den information den kan om en kontakt. Menneskelige operatører er absolut nødvendige og bør være tilstede til enhver tid; hvad computeren måske bare betragter som et radar spøgelse kan vise sig at være en kamufleret opsamler, klar til at ramme massevis af civile. Instinkt og erfaring betyder lige så meget som software intelligens.\n"
+"Vores radar er koblet direkte til FN's flyoversigt og kan krydstjekke data fra ethvert civilt fly med dets flyveplan og transportmanifest. Alle fly, med undtagelse af FALANKS militære fly, er forpligtiget til at angive deres ruter i vores database, men vi kan ikke være sikker på, at de forskellige hære vil være omhyggelige med at følge dette direktiv.\n"
 "\n"
-"Vores radar er koblet direkte til FN's flyoversigt og kan kryds checke transponder data fra ethvert civilt fly med dets flyveplan og transportmanifest. Ikke FALANKS militære fly er forpligtiget til at angive deres ruter i vores database, men vi kan ikke være sikker på at de forskellige hære vil være omhyggelige med at følge dette direktiv.\n"
-"\n"
-"Radaren kræver et virkende kraftværk eller en kommandocentral til at koordinere vores data til taktiske handlinger.\n"
+"Radaren kræver at et kraftværk eller en kommandocentral er til stede for at vi kan koordinere vores data til taktiske handlinger.\n"
 "\n"
 "\n"
 "Anbefalet doktrin\n"
 "\n"
-"Da vores rader-udsendende paraboler ikke findes i selve basen, er der ikke en direkte fare for opdagelse af vores base ved at bruge aktiv radar. I betragtning af antallet af øvrige militære radarkilder rundt omkring er det usandsynligt at en UFO vil noget nyttigt fra en dedikeret sporing. De kan allerhøjest finde det generelle område vores base er i.\n"
+"Da vores raderudsendende paraboler ikke findes i selve basen, er der ikke en direkte fare for vores base ved at bruge en aktiv radar. I betragtning af antallet af øvrige militære radarkilder rundt omkring er det usandsynligt at en ufo vil kunne udlede noget nyttigt fra en dedikeret sporing. De kan allerhøjest finde det generelle område vores base er i.\n"
 "\n"
-"På trods af dette kan enhver UFO som patruljerene i området være på udkig efter vores base og den bør ikke få lov til at fuldføre sin mission under nogen omstændigheder.\n"
+"På trods af dette kan enhver ufo som patruljerer i området være på udkig efter vores base og den bør ikke få lov til at fuldføre sin mission under nogen omstændigheder.\n"
 "\n"
-"Ved et base angreb vil radarrummet være et højrisiko område. Det er vores øjne og ører. Uden virkende radar, er vi ude afstand til at se UFOer som vi burde reagere overfor. Hvis rumvæsner kommer i nærheden af radaren vil de med stor sandsynlighed prøve at skade eller ødelægge den med sprængstoffer. Dette må ikke ske.\n"
+"Ved et angreb på basen vil radarrummet være et højrisikoområde. Det er vores øjne og ører. Uden virkende radar, er vi ude af stand til at se ufoer som vi burde reagere overfor. Hvis rumvæsener kommer i nærheden af radaren vil de med stor sandsynlighed prøve at skade eller ødelægge den med sprængstoffer. Dette må ikke ske.\n"
 "\n"
 "\n"
 "Tilføjelse\n"
 "\n"
-"Tilføjelse, NæstKommanderende Abel S. Howard, 18. marts 2084:\n"
+"Tilføjelse, Næstkommanderende Abel S. Howard, 18. marts 2084:\n"
 "\n"
-"Vi bør ikke opfatte radaren som den endelige løsning til opdagelse af ufoer. Selv med ekstra udstyr er vores dækning ikke fuld troværdig, og vi bør forske i andre måder at øge vores teknologiske muligheder for at opdage ufoer; hvis vi skal have en mulighed for at stoppe disse røvhuller."
+"Vi bør ikke opfatte radaren som den endelige løsning til opdagelse af ufoer. Selv med ekstra udstyr er vores dækning ikke fuldstændig troværdig, og vi bør forske i andre måder at øge vores teknologiske muligheder for at opdage ufoer. Dette er et krav hvis vi skal have en mulighed for at stoppe disse røvhuller."
 
 #: ../base/ufos/research.ufo:3218
 msgid "b_radar_adv_txt"
@@ -5559,7 +5589,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6971,35 +7002,43 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at 2000-tallet er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
+msgstr ""
+"Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at 2000-tallet er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter den 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber - og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af verdenen."
+msgstr ""
+"Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter den 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber - og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af verdenen."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "For mange mennesker ser verden lys ud."
+msgstr ""
+"For mange mennesker ser verden lys ud."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
+msgstr ""
+"Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle ufoer forsvinder uden spor - men ingen tvivler på, at de kommer tilbage."
+msgstr ""
+"Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle ufoer forsvinder uden spor - men ingen tvivler på, at de kommer tilbage."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
+msgstr ""
+"87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsenbureau fra det tidligere Amerika - FALANKS - genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
+msgstr ""
+"Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsenbureau fra det tidligere Amerika - FALANKS - genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
+msgstr ""
+"Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

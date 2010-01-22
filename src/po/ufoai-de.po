@@ -754,7 +754,8 @@ msgstr "Wichita"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/events.ufo:34
 #: ../base/ufos/events.ufo:44
@@ -922,7 +923,8 @@ msgstr "SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 #: ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Basiskommandeur, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Basiskommandeur, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -1063,7 +1065,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -1162,7 +1165,8 @@ msgstr "<TODO>"
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"XO Abel S. Howard, Kommando & Kontrolle, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1271,7 +1275,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1310,7 +1315,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Cdr. (Luft) Subakh al-Kuhar, Luftgeschwader, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2256,7 +2262,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
+msgstr ""
+"Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:345
 #: ../base/ufos/research.ufo:386
@@ -3835,30 +3842,36 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Herr Kommandant, ich bin in der glücklichen Lage, Ihnen mitteilen zu können, dass unser Projekt von Erfolg gekrönt war. Ich habe Bilder unseres Prototyps eingefügt, der einen kontinuierlichen Energiestrom in einem tragbaren Paket verwirklicht.\n"
+"Herr Kommandant, ich freue mich ihnen berichten zu können, dass wir erfolgreich einen Prototypen des neuen Elektrolaser-Designs fertiggestellt haben und die Pläne für die Produktion des Models ebenso. Wir können nun beginnen ihn im Kampf zu benutzen. Wie immer habe ich die Spezifikationen und die Einsatzempfehlung hier für sie notiert.\n"
 "\n"
-"Statt immer größere Batterien zu entwickeln lag die praktische Lösung eher darin, radikale Miniaturisierungstechnologien zu nutzen, um die bereits existierenden chemiebetriebenen Laserkomponenten leichter und kleiner zu machen. Chemische Laser werden schon seit langer Zeit benutzt und waren seit dem späten 20. Jahrhundert Teil von experimentellen Waffenprogrammen, wiesen aber viele Probleme auf. Die einzigen chemischen Laser mit militärischem Nutzen waren zu groß und sperrig, um von einem Soldaten getragen zu werden. Bis jetzt war ihr Einsatz auf panzergestützte Laserkanonen und auf Schiffen installierte Raketenabwehr beschränkt.\n"
+"Von einer technischen Sichtweise aus gesehen baut der Elektrolaser auf beinahe den selben Prinzipien wie natürliche Blitze auf. Er leitet Elektrizität durch einen Kanal aus ionisierter Luft -- wir nennen das einen \"Plasma Kanal\" -- welcher besser leitet als die Luft um ihn herum, was es der Elektrizität erlaubt sich einen Weg zum Ziel zu bahnen und sich dann selbst du erden, wo bei es zu einem nicht unerheblichen Schockschaden beim Ziel kommt. Dieser Plasma Kanal wird durch einen kurzen hoch energetischen Laserimpuls erzeugt durch welchen sich die Luft zu ionisieren beginnt.\n"
 "\n"
-"Nun aber haben wir bei PHALANX eine konventionelle Laserkanone in Miniaturform gebaut. Trotz der geringen Größe ist sie in der Lage, die Deuterium-Fluor-Reaktion zu bewältigen und die giftigen Abfallprodukte ohne die Gefahr einer Vergiftung zu speichern. Ich möchte Ihnen kurz die genaue Funktionsweise erläutern.\n"
+"Elektrolaser sind ein altbewährtes Konzept der Erde. Sie haben eine Geschichte, als nicht-tödliche Waffe, die mehrere Jahrzehnte zurück geht. Im Grunde ist der Elektrolaser nichts anderes als ein \"Taser-ohne-Drähte\", aber bis jetzt litten diese unter großen Einschränkungen aufgrund ihrer limitierten Batteriekapazität und der Stromstärke die benötigt wird, um einen Soldaten in einer isolierten Ganzkörperrüstung bewusstlos zu schlagen. Aus diesem Grund wurden sie seit jeher nur als zivile Einzelschuss-Waffen mit geringer Reichweite entwickelt. Dank der Leistung unserer deuteriumfluroid Laser und Energiesysteme sind wir nun in der Lage, um einiges mehr zu erreichen als damals.\n"
 "\n"
-"Innerhalb der Brennkammer wird Ethylen in Stickstofftrifluorid verbrannt. Dabei entstehen angeregte Fluorradikale, die dann mit einer Helium-Deuterium-Mixtur in Kontakt gebracht werden. Das Deuterium reagiert mit dem Fluor zu angeregten Deuteriumfluoridmolekülen. Durch stimulierte Emissionen im optischen Resonator der Waffe wird schlussendlich der Strahl generiert. Eine Serie intelligenter Linsen fokussiert und lenkt den Strahl zum Zielpunkt des Schützen und korrigiert sogar kleine Bewegungen des Schützen oder des Ziels. Die Reste des Deuteriumgases werden durch unseren speziell entwickelten Hochleistungsfilter gepresst, welcher alle giftigen und radioaktiven Moleküle abfängt und die restlichen harmlosen Abgase zurück in die Atmosphäre entlässt.\n"
+"Unser Elektrolaser kann einen stabilen Plasma Kanal über kurze bis mittlere Distanz, je nach Umweltbedingung, erschaffen und eine unvorstellbar große Spannung auf ein Ziel übertragen. Dies ist sowohl gegen organische als auch robotische Feinde effektiv. Er kann auf verschiedene stärke Stufen eingestellt werden, von einem einfachen betäubenden Schock, bis hin zu einer Stromstärke die einen elektrischem Stuhl übertrifft was schwächere Ziele auf der Stelle tötet. Als Munition dient eine standardmäßige PHALANX deuteriumfluroid Patrone, welche genügend Energie für mehrere Schüsse bietet, sogar auf dem höchsten Energielevel.\n"
 "\n"
-"Der Filter muss nach jeder Mission ersetzt werden, aber wir haben das System so entwickelt, dass dies kein Problem darstellt. Sollte der Filter während einer Mission beschädigt werden, so schaltet sich die Waffe automatisch ab, um eine Kontaminierung zu vermeiden.\n"
+"Nun die Nachteile.\n"
 "\n"
-"Der Laser arbeitet im mittleren Infrarotbereich, daher sieht man den Strahl nicht, außer man trägt eine Infrarotbrille.\n"
+"Diese um einiges stärkere Elektro/Laser-Ausrüstung hat, im Vergleich zum Betäubungstab, an Größe und Gewicht zugenommen, was dazu führt, dass der Elektrolaser zu den schweren Waffen gezählt werden muss. Wie alle, auf Laser basierenden Waffen, ist wird er von Regen, Nebel, Rauch und anderen Umständen welche die Luft verdichten oder Partikel in ihr erzeugen beeinflusst. Wie alle elektrischen Waffen hat das Feuern auf Luftziele eher begrenzten Wert; außer sie sind nahe genug an einem geerdeten Objekt das es der Elektrizität erlaubt zwischen ihnen zu fließen. Dazu kommt noch, dass jeder Elektrolaser die richtige Art Atmosphäre braucht, um in der Lage zu sein einen Plasma Kanal zu erzeugen; außerhalb der Erde kann er sich also als komplett nutzlos erweisen.\n"
 "\n"
-"Der von uns gebaute Prototyp ist leider noch nicht für die Massenproduktion geeignet, da noch Verfeinerungen für die menschliche Nutzung nötig sind. Jedoch können die Fortschritte, die wir hier gemacht haben, ebenfalls an Fahrzeugwaffen angewandt werden -- vielleicht sogar an Flugzeugkanonen. Ich habe Ihnen mehrere Anträge geschickt, die unsere Ideen darlegen.\n"
-"\n"
-"Lassen Sie es mich wissen, wenn wir mit der Arbeit beginnen sollen, Herr Kommandant.\n"
+"Jedenfalls ist der Elektrolaser, wie groß auch immer die Nachteile sein mögen, dem Betäubungsstab von Dr. Conner um Lichtjahre voraus. Ich würde dringend empfehlen alle Betäubungsstäbe, welche zur Zeit in Benutzung sind, so schnell wie nur irgend möglich durch Elektrolaser zu ersetzen. Zumindest zum Wohle unserer Truppen.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"Herr Kommandant, ich habe einen neuen Forschungsantrag für sie den sie vielleicht interessant finden. Bitte hören sie mir zu.\n"
+"\n"
+"Wie sie wissen waren die Nachteile von Connor's Betäubungsstab, seit dem ersten Antrag, ein ernsthaftes Anliegen meinerseits. Es ist das Risiko nicht wert, unsere Soldaten, nur wegen ein paar biologischen Spezies, dermaßen extremer Gefahr auszusetzen. Deswegen haben wir die möglichen Alternativen untersucht und sind nun zu einem Vorschlag gekommen welcher gleichzeitig technologisch machbar und effektiv im Kampf ist.\n"
+"\n"
+"Ich würde gerne unsere Forschung an dem Betäubungsstab mit unserer Arbeit an der neuen Lasergeneration kombinieren, um einen verstärkten Elektrolaser -- eine Blitzkanone -- von beispielloser Stärke zu kreieren. Stellen sie sich das vor: Die gesamte Energie des Betäubungsstabs einsetzbar auf Entfernung, ohne sich dem Ziel jemals nähern zu müssen!\n"
+"\n"
+"Mit genügend Mitteln und Zeit könnten wir das wirklich schaffen, Kommandant. Das würde die Chancen unsere Truppen, um einiges verbessern wenn es darum geht Gefangene zu machen und anstatt zu töten.\n"
+"\n"
+"-- Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -4148,11 +4161,11 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:1997
 msgid "coilgun_txt"
 msgstr ""
-"Kommandant, ich würde ihnen gerne die fertigen Pläne und den Prototypen des Gaußgewehrs präsentieren.\n"
+"Herr Kommandant, ich würde ihnen gerne die fertigen Pläne und den Prototypen des Gaußgewehrs präsentieren.\n"
 "\n"
 "Die Kombination einer von der außerirdischen Technologie inspirierten Energiequelle und Spulenanordnung mit unserer eigenen Bolter-Technologie hat einige der dem ursprünglichen Design des Gaußgewehrs innewohnenden Probleme gelöst. Vor mehr als hundert Jahren maß die Energieeffizienz eines Gaußgewehrs weniger als 2%; was bedeutete, dass die Energie die das Projektil letztendlich auf das Ziel übertrug weniger als 2 % der Energie darstellte die dum Abfeuern des Projektils verwendet wurde. Selbst die aktuelle Gaußgewehr-Technologie beschränkt sich in ihrer Effizienz auf einstellige Bereiche, wogegen der außerirdische Nadler in einen Effizienzbereich von über 70% vordringt. Es wird uns vermutlich noch Jahre kosten selber in solche Bereiche vor zu dringen, aber trotzdem haben wir mit dem vorliegenden Gaußgewehr etwas in der Hand, was sowohl praktisch als auch ausreichen effektiv ist um in diesem Krieg hilfreich zu sein.\n"
 "\n"
-"Um eine bessere Beschleunigung des Projektils durch die Spulen zu erreichen entwickelten wir eine neue Art von Munition die auf einer Legierung basiert, die die Außerirdischen für ihre Nadlermunition verwenden. Die Form entspricht einem standart, flügelstabilisierten Kern innerhalb eines Treibkäfigs, welcher jedoch aus Materielien besteht die niemals zuvor auf der Erde Verwendung fanden. Munition mit einem Treibkäfig findet sich normalerweise nur bei deutlich größerem Kaliber -- wir orientierten uns an Panzer-Abwehrmunition und verkleinerten sie -- und das panzerbrechende Potential ist phänomenal, höher als bei jeder anderen Waffe in unserem Besitz. Tatsächlich ist das Gaußgewehr damit nun die größt-kalibrigste tragbare Waffe auf diesem Planeten.\n"
+"Um eine bessere Beschleunigung des Projektils durch die Spulen zu erreichen entwickelten wir eine neue Art von Munition die auf einer Legierung basiert, die die Außerirdischen für ihre Nadlermunition verwenden. Die Form entspricht einem standart, flügelstabilisierten Kern innerhalb eines Treibkäfigs, welcher jedoch aus Materialien besteht, die niemals zuvor auf der Erde Verwendung fanden. Munition mit einem Treibkäfig findet sich normalerweise nur bei deutlich größerem Kaliber -- wir orientierten uns an Panzer-Abwehrmunition und verkleinerten sie -- und das panzerbrechende Potential ist phänomenal, höher als bei jeder anderen Waffe in unserem Besitz. Tatsächlich ist das Gaußgewehr damit nun die größt-kalibrigste tragbare Waffe auf diesem Planeten.\n"
 "\n"
 "Zudem verwendeten wir eine holografische Sicht nach Nadler-Art, was das Gaußgewehr extrem akkurat und einfach zu benutzen macht.\n"
 "\n"
@@ -6124,7 +6137,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6865,7 +6879,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -8146,35 +8161,43 @@ msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
+msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als drei Vierteln der Erde."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr ""
+"Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
+msgstr ""
+"Der erste Angriff trifft die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erscheinen aus dem Nirgendwo, stürzen unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landen in der wohl bevölkerungsreichsten Stadt der Welt. Es gibt keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten werden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl von Soldaten des Commonwealth es schafft, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen sind, ziehen sie sich zu ihren Schiffen zurück und verschwinden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein sind die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
+msgstr ""
+"Eine Notfallversammlung der UN ergibt keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchen es mit Diplomatie und schicken Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsten. Ihre Worte werden ignoriert. Innerhalb weniger Stunden sind diese drei Städte jedes Lebens beraubt. Der Angriff ist schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekommen. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt daran, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Zwei Wochen lang versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr ""
+"Mit dem letzten Ausweg in der Hand tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien-Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste vom Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

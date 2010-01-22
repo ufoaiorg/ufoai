@@ -737,7 +737,8 @@ msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
+msgstr ""
+"Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -823,7 +824,8 @@ msgstr "Generální tajemník Mahouf Serra, Spojené Národy, New York City"
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Velitel základny, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -907,8 +909,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací"
-
+msgstr ""
+"Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských operací"
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -972,7 +974,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Náčelník štábu Abel S. Howard, příkazy a řízení, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Náčelník štábu Abel S. Howard, příkazy a řízení, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1089,7 +1092,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořských operací"
+msgstr ""
+"plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1125,7 +1129,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Velitel letectva Subakh al-Kuhar, letecká peruť, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Velitel letectva Subakh al-Kuhar, letecká peruť, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2014,7 +2019,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
+msgstr ""
+"Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -2179,7 +2185,6 @@ msgstr ""
 "Upřímně zdraví,\n"
 "\n"
 "Dr. Connor"
-
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
 #: ../base/ufos/research.ufo:518 client/campaign/cp_alienbase.c:169
 #: client/campaign/cp_missions.c:438
@@ -3512,30 +3517,36 @@ msgstr ""
 "--Velitel Navarre"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Veliteli, jsem nesmírně potěšen, že mohu ohlásit, že projekt byl úspěšný. Připojil jsem obrázky našeho prototypu laserové zbraně, která dosahuje spojité vlny na výstupu a je v provední pro člověka.\n"
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
 "\n"
-"Praktické řešení nebylo v pokusech vytvořit vetší baterii ale v použití radikálních miniaturazačních technologií k zeštíhlení a zmenšení existujících chemických laserových komponent. Chemické lasery jsou užívány již velmi dlouhou dobu a jsou součátí experimentálních zbraní od 20. století, ale vždy měli mnoho problémů. Armádních chemické lasery jsou příliš velké a těžké, než aby si je voják vzal sebou do boje. Doteď byla jejich bojová aplikace limitována tak, že se montovali na tanky a protiraketové baterie.\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
 "\n"
-"Nyní jsme ve PHALANXu zkonstruovali miniaturní konvenční laserovou zbraň. Navzdory své malé velikosti je plně schopná udržet deuterium-fluoridovou reakci a pojmout toxické produkty bez nebezpečí kontaminace. Dovolte mi podat krátký popis činnosti.\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"Uvnitř spalovací komory je etylén spálen v fluorid-dusíku. Tato reakce produkuje excitované fluorové radikály, které jsou pak smýchány se směsí hélia a deuteria. Deuterium reaguje s fluorem za vzniku excitované molekuly fluorid-deuteria. Ty pak projdou stimulovanou emisí v optickém resonátoru zbraně a generují paprsek. Série inteligentních čoček potom zaostří a směřuje tento paprsek k cíleného bodu a dokonce korigují nepatrné pohyby střelce nebo cíle. Odpadní deuteriový plyn je poté protlačen námi vyrobeným vysokotlakým filtrovacím systémem, který zachytí veškeré toxické a radioaktivní molekuly předtím než se zbývají neškodný plyn vyloučí do atmosféry.\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
 "\n"
-"Filtry potřebují výměnu po každé emisi, ale vyvinuli jsme systém který to zvládne snadno a bezbolestně. Pokud se filtrovací systém během operace nějak poškodí, zbraň se okamžitě zablokuje aby se zabránilo možné kontaminaci.\n"
+"Now for the cons.\n"
 "\n"
-"Laser pracuje v oboru středně vzdálených infra vlnových délek, takže je neviditelný pro každého kdo nemá infravizor.\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
 "\n"
-"Prototyp který jsme vyvinuly bohužel ještě není přípraven pro sériovou výrobu jako pěchotní zbraň. Pro použití člověkem je potřeba ještě mnoho vylepšování a ladění, ale inovace kterých jsme dosáhli mohou být aplikovány také na těžké zbraně pro vozidla - možná dokonce i letecké zbraně. Poslal jsem vám i pár nových návrhů.\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
 "\n"
-"Veliteli, dejte vědět až na nich budete chtít začít pracovat.\n"
-"\n"
-"--vel. Navarre"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Před výzkumem nejsou dostupné žádné informace."
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -5666,7 +5677,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6251,7 +6263,6 @@ msgstr ""
 "S pozdravem,\n"
 "\n"
 "Dr. Connor"
-
 # Bezpilotní Pozemní Vozidlo
 #: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
@@ -6266,7 +6277,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:4294
 msgid "ugv_phoenix_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
-
 # Bezpilotní Pozemní Vozidlo
 #: ../base/ufos/research.ufo:4309 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
@@ -6310,8 +6320,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 # EPO=Elektronické ProtiOpatření
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -6679,7 +6689,6 @@ msgstr ""
 "Dodatky\n"
 "\n"
 "Žádné"
-
 # VV = Vzduch-Vzduch
 #: ../base/ufos/research.ufo:4708
 msgid "'Sparrowhawk' AA Missile Rack"
@@ -7586,35 +7595,43 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá období relativního míru. Násilnické začátky 21. století jsou již historií. Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně jako byly Světové války pro děti konce století dvacátého."
+msgstr ""
+"Píše se rok 2084. Země, která nikdy nepatřila k poklidným místům, si užívá období relativního míru. Násilnické začátky 21. století jsou již historií. Zapadlé vzpomínky. Nikoliv však tak zapadlé aby byly zcela zapomenuty. Pro většinu Pozemšťanů je Druhá studená válka temným stínem z minulosti, stejně jako byly Světové války pro děti konce století dvacátého."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Ke konci století se spory stávaly méně častými, ruku v ruce s tím, jak se do zemí třetího světa dostávaly nové technologie a všeobecná zdravotní péče. Dokonce i ohně terorismu pohasly při nástupu Druhé studené války, jejíž hrůzy a nelidskost jsou stále pevně vryty do myslí všech, od původních Spojených států až po zpustošený indický kontinent. Nyní má každý stát zaručeno rovnocenné zastoupení ve Spojených Národech a třídní boje se přesunuly na politická bojiště. Celosvětová životní úroveň se tak pomalu dostává i do nejchudších koutů planety. Státy se semkly kolem přeorganizovaných Spojených Národů, které úspěšně dozírají na světové vlády. Roztříštěné skupinky malých států, které byly nejprve vystrašeny ohromnou silou v rukou Číny a Evropské unie, se spojily a vytvořily společně vlastní vlivný politický svaz -- poté zjistili, že jsou bez sousedů se kterými by mohly bezpečně bojovat. Poprvé v celé historii lidstva je právo a řád ve více než třech čtvrtinách světa."
+msgstr ""
+"Ke konci století se spory stávaly méně častými, ruku v ruce s tím, jak se do zemí třetího světa dostávaly nové technologie a všeobecná zdravotní péče. Dokonce i ohně terorismu pohasly při nástupu Druhé studené války, jejíž hrůzy a nelidskost jsou stále pevně vryty do myslí všech, od původních Spojených států až po zpustošený indický kontinent. Nyní má každý stát zaručeno rovnocenné zastoupení ve Spojených Národech a třídní boje se přesunuly na politická bojiště. Celosvětová životní úroveň se tak pomalu dostává i do nejchudších koutů planety. Státy se semkly kolem přeorganizovaných Spojených Národů, které úspěšně dozírají na světové vlády. Roztříštěné skupinky malých států, které byly nejprve vystrašeny ohromnou silou v rukou Číny a Evropské unie, se spojily a vytvořily společně vlastní vlivný politický svaz -- poté zjistili, že jsou bez sousedů se kterými by mohly bezpečně bojovat. Poprvé v celé historii lidstva je právo a řád ve více než třech čtvrtinách světa."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Mnoha lidem na Zemi se zdá, že všechno jde naprosto skvěle."
+msgstr ""
+"Mnoha lidem na Zemi se zdá, že všechno jde naprosto skvěle."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjevilo šest malých cizáckých plavidel. S jekotem se přiřítila z oběžné dráhy nezjištěna rozsáhlým radarovým systémem, který pokrývá vzdušný prostor nad Bombají, a napadla nejlidnatější město na Zemi. Bez varování, bez vysvětlení. Dvacet tisíc nevinných civilistů a tři prapory elitních vojsk byly zmasakrovány v průběhu dvanácti strašlivých hodin, než se vojákům Společenství podařilo cizácký postup zastavit. Poté cizáci ustoupili do svých plavidel a stejně nečekaně jako se objevili zmizeli zpět na oběžnou dráhu, nechávajíc za sebou pouze zpustošené ulice Bombaje jako důkaz."
+msgstr ""
+"První útok zasáhl Bombaj třetího března 2084. Z prázdnoty se zjevilo šest malých cizáckých plavidel. S jekotem se přiřítila z oběžné dráhy nezjištěna rozsáhlým radarovým systémem, který pokrývá vzdušný prostor nad Bombají, a napadla nejlidnatější město na Zemi. Bez varování, bez vysvětlení. Dvacet tisíc nevinných civilistů a tři prapory elitních vojsk byly zmasakrovány v průběhu dvanácti strašlivých hodin, než se vojákům Společenství podařilo cizácký postup zastavit. Poté cizáci ustoupili do svých plavidel a stejně nečekaně jako se objevili zmizeli zpět na oběžnou dráhu, nechávajíc za sebou pouze zpustošené ulice Bombaje jako důkaz."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se vrátí."
+msgstr ""
+"Krizové shromáždění Spojených Národů nestanovilo jakýkoliv rozhodný pokyn. Invaze pokračovaly rychleji, ve větším rozsahu a byly krutější než poprvé, tentokráte v Bonnu, Johannesburgu a Bangkoku. Některé státy se pokoušely o diplomacii, posílajíc zprávy v tisíci různých jazycích cizákům drancujícím oblast. Jejich slova nebyla vyslyšena. Během několika hodin byli obyvatelé všech tří měst vyhlazeni. Útok skončil dříve než většina armád dostala povolení k protiakci. Cizáci za sebou nenechali nic kromě rozvalin a krve. Všechny cizácké lodě zmizely beze stop, ale nikdo nepochyboval o tom, že se vrátí."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Země vyhlásila válku osmdesát sedm hodin po prvotním útoku v Bombaji. Dva týdny každá z armád lidstva zkoušela zastavit nevyzpytatelné cizácké útočníky všemi svými dostupnými prostředky. Zaznamenaly žalostně málo úspěchů."
+msgstr ""
+"Země vyhlásila válku osmdesát sedm hodin po prvotním útoku v Bombaji. Dva týdny každá z armád lidstva zkoušela zastavit nevyzpytatelné cizácké útočníky všemi svými dostupnými prostředky. Zaznamenaly žalostně málo úspěchů."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Spojené Národy se uchýlily k poslední možnosti která jim zbývala. Bylo oprášeno letité vybavení, některé přes století staré, a dávno zrušená anti-mimozemská agentura dřívějších Spojených Států -- PHALANX -- byla vzkříšena nově pod vlajkou SN. Její místopřísežnou povinností je boj proti cizácké hrozbě a musí za každou cenu zaručit přežití lidské rasy."
+msgstr ""
+"Spojené Národy se uchýlily k poslední možnosti která jim zbývala. Bylo oprášeno letité vybavení, některé přes století staré, a dávno zrušená anti-mimozemská agentura dřívějších Spojených Států -- PHALANX -- byla vzkříšena nově pod vlajkou SN. Její místopřísežnou povinností je boj proti cizácké hrozbě a musí za každou cenu zaručit přežití lidské rasy."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Financována všemi osmi vládními silami a získávající elitní vojáky jejich armád je PHALANX tím nejlepším z nejlepších. Je to první a jediná pozemská obranná linie. Nemůže si dovolit selhat. Pokud by se tak stalo, lidstvo by ztratilo jakoukoliv naději."
+msgstr ""
+"Financována všemi osmi vládními silami a získávající elitní vojáky jejich armád je PHALANX tím nejlepším z nejlepších. Je to první a jediná pozemská obranná linie. Nemůže si dovolit selhat. Pokud by se tak stalo, lidstvo by ztratilo jakoukoliv naději."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

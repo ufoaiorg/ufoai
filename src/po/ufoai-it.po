@@ -727,7 +727,8 @@ msgstr "Wachau"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
+msgstr ""
+"Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -813,7 +814,8 @@ msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -886,7 +888,8 @@ msgstr "mail_prolog"
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -959,7 +962,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Ufficiale Esecutivo Abel S. Howard, Comando e Controllo, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Ufficiale Esecutivo Abel S. Howard, Comando e Controllo, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1092,7 +1096,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1122,7 +1127,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Com. (Aria) Subakh al-Kuhar, Aviazione, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Com. (Aria) Subakh al-Kuhar, Aviazione, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -2009,7 +2015,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -3608,41 +3615,62 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Commandant mon equipe et moi venons juste d'achever nos recherche le missile antimatière ramené par notre equipe de terrain. Comme d'habitude, il y a des bonnes et des mauvaise nouvelles. Pour en venir au fait.\n"
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
 "\n"
-"La structure principale du missile consiste en une enveloppe rigide en matériaux alien, le même que celui utilisé pour renforcer les coques d'OVNI mais conçu pour se fragmenter en centaines de shrapnel lors de l'explosion. Cette enveloppe contient des compartiment individuel pour le ciblage, l'avionique, l'équipement EW et d'autre système électronique, et -- occupant la majorité de moitié arrière du missile -- une fusée à annihilation proton-antiproton.\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
 "\n"
-"Cette fusée est de loin le plus puissant réacteur de missile jamais vus sur Terre, capable d'atteindre des vitesse catégoriquement impossible à obtenir via réaction chimique ordinaire. Elle propulse le missile à une vitesse telle que la présence d'une ogive n'est plus nécessaire. L'énergie cinétique généré par l'impact est suffisante réduire en lambeaux un avion de ligne aérienne non armé, et l'explosion du carburant Antimatière à proximité est généralement suffisant pour abattre un avion de chasse. Nos intercepteur n'ont pas été conçu pour supporter ce type de violence.\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"L'électronique de bord du missile est particulièrement intéressante. Elle très supérieur à la notre, mais j'ai quelques bonne nouvelles. Nous avons décrypter suffisamment de fréquence électromagnétique utilisé par le missile EW, en conséquence nous pouvons commencer à prendre des mesures contre. J'ai pris la liberté de mettre a jour les logiciel de nos appareil avec les nouvelles informations, ce qui de faciliter la détection radar et donner à nos appareil de meilleur d'esquiver ces missiles.\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
 "\n"
-"Nous pouvons dupliquer ces missile assez bien, mais ils requiert toujours de l'antimatière pour carburant, probablement la plus précieuse substance dans l'univers à l'heure actuel. j'ai quelques idées contourner ce problème, mais je suis pas prêt à faire de proposition encore. Je vous ferait savoir quand j'aurai quelque-chose de concret, Commandant.\n"
+"Now for the cons.\n"
 "\n"
-"--Cdt. Navarre"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
+"\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "Nessuna informazione disponibile prima della ricerca."
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
 msgstr ""
-"Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.\n"
+"Comandante, abbiamo terminato il progetto dei Caricatori al Fluoruro di Deuterio e adesso siamo pronti per la produzione di massa. Saranno costosi da fare ed usare, ma abbiamo fatto tutto il possibile per tenere bassi i costi.\n"
 "\n"
-"The cartridge is essentially a hard plastic shell containing five separate chambers. These are four pressurised storage reservoirs for ethylene, nitrogen trifluoride, helium and deuterium, plus a small battery to power the laser's electronics.\n"
+"Il caricatore essenzialmente è un un guscio di plastica dura diviso in cinque camere separate: quattro magazzini pressurizzati per l'etilene, il trifluoruro di azoto, l'elio e il deuterio, più una piccola batteria per alimentare l'elettronica del laser.\n"
 "\n"
-"The shell itself is made of the toughest polymer we can produce, reinforced in vulnerable spots with carbon nanotubes, to prevent mixing in case the cartridge receives any shocks or impacts. We can't provide perfect protection against direct hits on the cartridge, but we've done our best. The chance of combat spillage happening during any engagement has been reduced to only a fraction of a percent.\n"
+"Il guscio è costituito dai più resistenti polimeri che siamo in grado di produrre, rinforzati con nanotubi di carbonio nelle zone vulnerabili, per prevenire il mescolamento in caso la cartuccia ricevesse qulche impatto o scuotimento. Non possiamo fornire un'ottima protezione contro i colpi diretti al caricatore ma abbiamo fatto del nostro meglio. La possibilità di perdite durante uno scontro è stata ridotta ad una frazione di punto percentuale.\n"
 "\n"
-"Any materials remaining in a used cartridge will be pumped back into base storage upon the dropship's return. However, once they've been used, these cartridges have to be disposed of by a chemohazard team, and we'll have to manufacture replacements. They cannot be reused due to deuterium contamination.\n"
+"Qualunque materiale rimasto in una cartuccia usata verrà ri-pompato nel magazzino della base dopo il rientro del velivolo. Comunque, una volta usati, i caricatori vanno smaltiti da un gruppo di persone addestrate al rischio chimico e i ricambi andranno prodotti da zero: non si possono riutilizzare a causa della contaminazione da deuterio.\n"
 "\n"
-"--Cdr. Navarre"
+"-- Comandante Navarre"
 
 #: ../base/ufos/research.ufo:1588
 msgid "laser_ammo_pre_txt"
-msgstr "Nessuna informazione disponibile prima della ricerca."
+msgstr ""
+"Questa è una delle neumerose proposte che sto inviando per la ricerca e lo sviluppo di nuove armi laser, ognuna delle quali dovrà essere sviluppata separatamente a causa delle diverse taglie, livelli di potenza e complessità dei sistemi coinvolti.\n"
+"\n"
+"Per potenziare i nostri armamentari laser al floruro di deuterio, abbiamo bisogno di progettare un caricatore che possa immagazzinare in sicurezza una moltitudine di materiali pericolosi: etilene, tri-fluoruro di azoto, elio e deuterio -- tre fra i tossici -- vanno mantenuti in compartimenti pressurizzati separati, sotto controllo completo in ogni momento. Se questi materiali si potessero mescolare, accaderbbe quello che gli ingegneri chiamano 'male'.\n"
+"\n"
+"Abbiamo già un progetto di base che dovrebbe andare oltre questi problemi, ma c'è bisogno di laboratori e fondi per testare, prototipare e costruire il caricatore secondo le specifiche di sicurezza internazionali. E' un lavoro enorme, ma va fatto per rendere sicuri i nostri laser per l'utilizzo nel campo di battaglia. Non sono ancora preparato al rischio di avvelenare le nostre truppe con i gas di deuterio per fare le cose in fretta. Abbiamo bisogno di caricatori adatti se abbiamo intenzione di utilizzare le nostre armi laser.\n"
+"\n"
+"Prego, approvi questo programma prima possibile, Comandante.\n"
+"\n"
+"-- Comandante Navarre"
 
 #: ../base/ufos/research.ufo:1621
 msgid "medikit_txt"
@@ -6046,7 +6074,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6733,7 +6762,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -8033,35 +8063,43 @@ msgstr "A molta gente sulla Terra, sembrava che le cose stessero andando molto b
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
+msgstr ""
+"È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Gruppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storia del genere umano, c'è legge e ordine in più di tre quarti del mondo."
+msgstr ""
+"I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Gruppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storia del genere umano, c'è legge e ordine in più di tre quarti del mondo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
+msgstr ""
+"A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'élite vengono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
+msgstr ""
+"Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'élite vengono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna decisione conclusiva. Le incursioni continuano più veloci, grandi e selvagge di prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
+msgstr ""
+"Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna decisione conclusiva. Le incursioni continuano più veloci, grandi e selvagge di prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
+msgstr ""
+"Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-extraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
+msgstr ""
+"Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-extraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perché se fallisce, l'umanità non ha speranze."
+msgstr ""
+"Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perché se fallisce, l'umanità non ha speranze."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

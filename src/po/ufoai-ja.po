@@ -587,7 +587,8 @@ msgstr "Standard Campaign"
 
 #: ../base/ufos/campaign.ufo:59
 msgid "standard_campaign_txt"
-msgstr "1人用の、侵略に対抗するシナリオです。プレイヤーはPHALANX計画の司令官となり、エイリアンの脅威に対応していく事になります。ランダムな要素とストーリー的な要素の混ざったダイナミックキャンペーンをプレイする事ができます。また、このキャンペーンは複数の難易度でプレイ可能です。この難易度は、挑戦を望む初心者向けの標準的なモードです。"
+msgstr ""
+"1人用の、侵略に対抗するシナリオです。プレイヤーはPHALANX計画の司令官となり、エイリアンの脅威に対応していく事になります。ランダムな要素とストーリー的な要素の混ざったダイナミックキャンペーンをプレイする事ができます。また、このキャンペーンは複数の難易度でプレイ可能です。この難易度は、挑戦を望む初心者向けの標準的なモードです。"
 
 #: ../base/ufos/campaign.ufo:107
 msgid "Easy Campaign"
@@ -714,7 +715,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨーク"
+msgstr ""
+"Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨーク"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -800,7 +802,8 @@ msgstr "Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨー�
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr "基地指令, PHALANX 大西洋作戦司令部"
+msgstr ""
+"基地指令, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -873,7 +876,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre 中佐, R&D: 技術セクション, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Paul Navarre 中佐, R&D: 技術セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -925,7 +929,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Abel S 副司令. Howard, 指令部, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Abel S 副司令. Howard, 指令部, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1020,7 +1025,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr "Ingrid Falkland 大佐, 諜報セクション, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Ingrid Falkland 大佐, 諜報セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1050,7 +1056,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Subakh al-Kuhar 中佐, 航空機隊, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Subakh al-Kuhar 中佐, 航空機隊, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1924,7 +1931,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, R&D: 生物 & 収容セクション, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Dr. Connor, R&D: 生物 & 収容セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -2439,7 +2447,7 @@ msgstr ""
 "\n"
 "The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
 "\n"
-"The French LeBlanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
+"The French Leblanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
 "\n"
 "Though the design is far from new, first prototyped in 2057, no other rifle has fully surpassed the 191. It is accurate and quick to reload. Its rugged construction makes it dependable in combat and unlikely to break or jam. It is resistant to heat, cold, dust and humidity all at once. Ammunition and replacement parts are widely available due to the design's maturity and relative popularity among Earth's armed forces. This is a rifle you can entrust your life to.\n"
 "\n"
@@ -3409,30 +3417,36 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1541
-#, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
-"Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+"Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
 "\n"
-"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+"From a technical standpoint, the electrolaser works on almost the same principles as natural lightning. It pumps electricity through a channel of ionised air -- what we refer to as a 'plasma channel' -- that is more conductive than the air around it, allowing the electricity to arc all the way to the target and then earth itself, causing severe shock damage. This plasma channel is created by a short, high-powered laser pulse which causes the air to begin ionising\n"
 "\n"
-"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+"Electrolasers are a tried and true concept on Earth. They have a history of use going back several decades as less-than-lethal weapons. At their most basic, they are a 'taser without the wires', but until now they've suffered serious limitations due to battery capacity and the power levels required to knock out a soldier in insulated body armour. For this reason they've only ever been developed practically as single-shot disposables and close-range civilian weapons. Thanks to the output of our deuterium-fluoride lasers and energy systems, though, we've been able to go a lot further than that.\n"
 "\n"
-"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+"Our electrolaser can project a stable plasma channel at short to medium ranges, depending on atmospheric conditions, and deliver previously unheard-of voltages to the target. It is effective against both organic and robotic enemies. It can be toggled to different power levels depending on the needs of the moment, from a simple stunning shock to full-blown electrocution which can kill weaker targets outright. It loads standard PHALANX deuterium-fluoride cartridges, which provide enough juice for several shots even at the highest power settings.\n"
 "\n"
-"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+"Now for the cons.\n"
 "\n"
-"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
+"The more powerful electrical systems and laser equipment have increased size and weight considerably compared to the stun rod, putting the electrolaser firmly in the Heavy Weapons category. Like all laser-based weapons it's affected by rain, fog, smoke and other conditions that thicken the air or release particles into it. Like all electric weapons, firing at airborne targets will produce limited results, unless they're close enough to an earthed object to allow the electricity to arc between them. In addition, any electrolaser needs the right kind of atmosphere to be able to create a plasma channel; taking them off of Earth could render them useless.\n"
 "\n"
-"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
-"\n"
-"Let me know when you want us to start working on them, Commander.\n"
+"Of course, no matter what the drawbacks might be, performance is light-years ahead of Dr. Connor's stun rod. I highly recommend we replace all stun rods currently in use with electrolasers as soon as humanly possible. For the sake of our troops, if nothing else.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1544
 msgid "electrolaser_pre_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
+"\n"
+"You know the drawbacks of Connor's stun rod have been a serious concern of mine from the very first proposal onward. Putting our soldiers in extreme danger to capture some biological specimens can't possibly be worth the risk. That's why we at DivEngine have been investigating possible alternatives, and we've now arrived at a proposal that's going to be both technologically feasible and combat-effective.\n"
+"\n"
+"I'd like to combine the stun rod research with our work on the new generation of lasers to create a beefed-up electrolaser -- a lightning gun -- of unprecedented power. Imagine all the power of a stun rod deployed at range without ever having to approach the target!\n"
+"\n"
+"With funding and lab time we can really make this work, Commander. It'll give our troops a much better fighting chance when we need to capture instead of kill.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1585
 msgid "laser_ammo_txt"
@@ -5511,7 +5525,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6145,7 +6160,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
