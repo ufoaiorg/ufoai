@@ -282,7 +282,7 @@ const fireDef_t *CL_GetWeaponAndAmmo (const le_t * actor, const char hand)
  * @brief Prints all reaction- and reservation-info for the team.
  * @note Console command: debug_listreservations
  */
-void CL_ListReactionAndReservations_f (void)
+static void CL_ListReactionAndReservations_f (void)
 {
 	int actorIdx;
 
@@ -974,7 +974,7 @@ static void CL_BuildForbiddenList (void)
  * @todo currently the particles stay a _very_ long time ... so everybody has to stand still in order for the display to be correct.
  * @sa CL_BuildForbiddenList
  */
-void CL_DisplayBlockedPaths_f (void)
+static void CL_DisplayBlockedPaths_f (void)
 {
 	le_t *le;
 	int i, j;
@@ -2639,7 +2639,7 @@ void CL_DisplayObstructionArrows (void)
 /**
  * @brief Triggers @c Grid_MoveMark in every direction at the current truePos.
  */
-void CL_DumpMoveMark_f (void)
+static void CL_DumpMoveMark_f (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
 	const int fieldSize = selActor
@@ -2666,7 +2666,7 @@ void CL_DumpMoveMark_f (void)
  * @brief Shows a table of the TUs that would be used by the current actor to move
  * relative to its current location
  */
-void CL_DumpTUs_f (void)
+static void CL_DumpTUs_f (void)
 {
 	int x, y, crouchingState;
 	pos3_t pos, loc;
@@ -2716,7 +2716,7 @@ static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
 		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		/* 3 */
 }
 
-void CL_DebugPath_f (void)
+static void CL_DebugPath_f (void)
 {
 	const int actorSize = 1;
 	const pos_t x = mousePos[0];
@@ -2876,4 +2876,13 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
 	Cmd_AddCommand("soldier_updatecurrent", CL_UpdateSoldier_f, _("Update a soldier"));
 	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
+	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
+	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
+	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Triggers Grid_MoveMark in every direction at the current truePos.");
+	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");
+	Cmd_AddCommand("debug_actorinvlist", NULL, "Shows the inventory list of all actors");
+#endif /* DEBUG */
 }

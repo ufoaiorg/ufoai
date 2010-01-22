@@ -1065,12 +1065,6 @@ void IN_Init (void)
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
 	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
 
-#ifdef DEBUG
-	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
-	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
-	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
-#endif /* DEBUG */
-
 	mousePosX = mousePosY = 0.0;
 
 	IN_StartupJoystick();
