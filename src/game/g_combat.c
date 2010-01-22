@@ -403,9 +403,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				if (target->chr.scoreMission)
 					target->chr.scoreMission->heal += abs(damage);
 
-				/** @todo Do the same for "attacker" but as "applied" healing
-				 * e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
-
 				/** @todo Also increase the morale a little bit when
 				 * soldier gets healing and morale is lower than max possible? */
 			} else {
@@ -869,7 +866,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
-	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent))
+	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && fd->damage[0] > 0)
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
 	VectorCopy(cur_loc, tracefrom);
@@ -947,7 +944,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (G_IsActor(tr.ent) || G_IsBreakable(tr.ent))) {
+		if (tr.ent && (G_IsActor(tr.ent) || (G_IsBreakable(tr.ent) && damage > 0))) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
