@@ -275,7 +275,6 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @param[in] team Team to check the vis for
  * @param[in] check The edict that you want to check (and which maybe will appear
  * or perish for the given team). If this is NULL every edict will be checked.
- * If check is a NULL pointer - all edicts in g_edicts are checked
  * @param[in] perish Also check whether the edict (the actor) is going to become
  * invisible for the given team
  * @param[in] ent The edict that is (maybe) seeing other edicts

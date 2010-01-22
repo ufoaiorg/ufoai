@@ -397,12 +397,12 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
  */
 edict_t *G_FindTargetEntity (const char *target)
 {
-	int i;
+	edict_t *ent = NULL;
 
-	for (i = 0; i < globals.num_edicts; i++) {
-		const char *n = g_edicts[i].targetname;
+	while ((ent = G_EdictsGetNext(ent))) {
+		const char *n = ent->targetname;
 		if (n && !strcmp(n, target))
-			return &g_edicts[i];
+			return ent;
 	}
 
 	return NULL;
@@ -417,23 +417,20 @@ edict_t *G_FindTargetEntity (const char *target)
  */
 edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type)
 {
-	vec3_t eorg;
-	int j;
+	edict_t *ent = from;
 
-	if (!from)
-		from = g_edicts;
-	else
-		from++;
-	for (; from < &g_edicts[globals.num_edicts]; from++) {
-		if (!from->inuse)
+	while ((ent = G_EdictsGetNext(ent))) {
+		int j;
+		vec3_t eorg;
+		if (!ent->inuse)
 			continue;
 		for (j = 0; j < 3; j++)
-			eorg[j] = org[j] - (from->origin[j] + (from->mins[j] + from->maxs[j]) * 0.5);
+			eorg[j] = org[j] - (ent->origin[j] + (ent->mins[j] + ent->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
-		if (type != ET_NULL && from->type != type)
+		if (type != ET_NULL && ent->type != type)
 			continue;
-		return from;
+		return ent;
 	}
 
 	return NULL;
