@@ -6,7 +6,7 @@ component panel cmpGeoscapeDocklet {
 	{
 		pos		"0 0"
 		size	"280 60"
-		align	LAYOUTALIGN_BOTTOM
+		align	LAYOUTALIGN_TOP
 	}
 
 	pic bg {
@@ -62,71 +62,8 @@ window geoscape
 		padding-right	256
 	}
 
-
-	panel messageDock {
-		{
-			pos				"0 0"
-			size			"300 768"
-			layout			LAYOUT_PACK
-			ghost			true
-			padding			10
-			layoutmargin	10
-		}
-
-		panel bottomMargin {
-			align		LAYOUTALIGN_BOTTOM
-			size		"280 30"
-		}
-	}
-
-	panel messagesystem {
-		{
-			pos		"0 0"
-			size	"768 20"
-			layout	LAYOUT_BORDER
-		}
-
-		messagelist message
-		{
-			pos			"0 0"
-			size		"768 20"
-			bgcolor		"0 0 0 .5"
-			align		LAYOUTALIGN_MIDDLE
-			onMouseEnter {
-				if ( *cvar:mn_messagesystem < 2 ) {
-					*node:parent@height = 240
-				}
-			}
-			onMouseLeave {
-				if ( *cvar:mn_messagesystem < 2 ) {
-					cmd "messagesystem_changemode"
-				}
-			}
-			onViewChange {
-				*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.scroll@current = <viewpos>
-				*node:(abstractscrollbar)parent.scroll@viewsize = <viewsize>
-			}
-		}
-		vscrollbar scroll {
-			align		LAYOUTALIGN_RIGHT
-			invis		true
-			image		ui/scrollbar_v_green
-			bgcolor		"0 0 0 .5"
-			pos			"749 0"
-			height		"768"
-			current		0
-			viewsize	38
-			fullsize	50
-			hidewhenunused true
-			onChange	{
-				*node:parent.message@viewpos = <current>
-			}
-		}
-	}
-
 	confunc clean_geoscape_object {
-		call *node:root.messageDock@removeAllChild
+		call *node:root.messages.dock@removeAllChild
 	}
 
 	/**
@@ -138,39 +75,39 @@ window geoscape
 	 */
 	confunc add_geoscape_object
 	{
-		call *node:root.messageDock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
-		*node:root.messageDock.<1><2>.type@string = <1>
-		*node:root.messageDock.<1><2>.id@string = <2>
-		*node:(model)root.messageDock.<1><2>.siteModel@model = <4>
-		*node:root.messageDock.<1><2>.message@string = <5>
+		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
+		*node:root.messages.dock.<1><2>.type@string = <1>
+		*node:root.messages.dock.<1><2>.id@string = <2>
+		*node:(model)root.messages.dock.<1><2>.siteModel@model = <4>
+		*node:root.messages.dock.<1><2>.message@string = <5>
 	}
 
 	confunc messagesystem_changemode
 	{
 		/* one line */
 		if ( *cvar:mn_messagesystem == 0 ) {
-			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
-			*messagesystem@height	= 20
-			*messagesystem.scroll@invis = true
+			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height	= 20
+			*node:root.messages.messagesystem.scroll@invis = true
 		}
 		/* 6 lines */
 		if ( *cvar:mn_messagesystem == 1 ) {
-			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
-			*messagesystem@height	= 120
-			*messagesystem.scroll@invis = true
+			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height	= 120
+			*node:root.messages.messagesystem.scroll@invis = true
 		}
 		/* 12 lines */
 		if ( *cvar:mn_messagesystem == 2 ) {
-			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
-			*messagesystem@height	= 240
-			*messagesystem.scroll@invis = true
+			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@height	= 240
+			*node:root.messages.messagesystem.scroll@invis = true
 		}
 		/* full screen */
 		if ( *cvar:mn_messagesystem == 3 ) {
-			*messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
 			*cvar:foo = ( *cvar:mn_sys_screenwidth - 256 )
-			*messagesystem@height = 768
-			*messagesystem.scroll@invis = false
+			*node:root.messages.messagesystem@height = 768
+			*node:root.messages.messagesystem.scroll@invis = false
 			cmd "game_timestop;"
 		}
 
@@ -631,6 +568,90 @@ window geoscape
 			onClick		{ cmd mn_pop; }
 		}
 
+	}
+
+	// ==================
+	// Messages
+	// ==================
+
+	panel messages {
+		{
+			align	LAYOUTALIGN_FILL
+			layout	LAYOUT_PACK
+			ghost	true
+			size	"1024 768"
+		}
+			
+		panel rightMargin {
+			align	LAYOUTALIGN_RIGHT
+			size	"256 30"
+			ghost	true
+		}
+
+		panel messagesystem {
+			{
+				pos		"0 0"
+				size	"768 20"
+				layout	LAYOUT_BORDER
+				align	LAYOUTALIGN_TOP
+			}
+
+			vscrollbar scroll {
+				align		LAYOUTALIGN_RIGHT
+				invis		true
+				image		ui/scrollbar_v_green
+				bgcolor		"0 0 0 .5"
+				pos			"749 0"
+				height		"768"
+				current		0
+				viewsize	38
+				fullsize	50
+				hidewhenunused true
+				onChange	{
+					*node:(messagelist)parent.message@viewpos = <current>
+				}
+			}
+
+			messagelist message
+			{
+				pos			"0 0"
+				size		"768 20"
+				bgcolor		"0 0 0 .5"
+				align		LAYOUTALIGN_MIDDLE
+				onMouseEnter {
+					if ( *cvar:mn_messagesystem < 2 ) {
+						*node:parent@height = 240
+					}
+				}
+				onMouseLeave {
+					if ( *cvar:mn_messagesystem < 2 ) {
+						cmd "messagesystem_changemode"
+					}
+				}
+				onViewChange {
+					*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
+					*node:(abstractscrollbar)parent.scroll@current = <viewpos>
+					*node:(abstractscrollbar)parent.scroll@viewsize = <viewsize>
+				}
+			}
+		}
+
+		panel dock {
+			{
+				pos				"0 0"
+				size			"300 768"
+				align			LAYOUTALIGN_LEFT
+				layout			LAYOUT_PACK
+				ghost			true
+				padding			10
+				layoutmargin	10
+			}
+	
+			panel bottomMargin {
+				align		LAYOUTALIGN_BOTTOM
+				size		"280 30"
+			}
+		}
 	}
 
 	func onInit
