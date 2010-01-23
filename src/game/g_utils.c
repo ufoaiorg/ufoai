@@ -449,7 +449,7 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
 	return NULL;
 }
 
-#define IS_BMODEL(ent) ((ent)->inuse && (ent)->model && (ent)->model[0] == '*' && (ent)->solid == SOLID_BSP)
+#define IS_BMODEL(ent) ((ent)->model && (ent)->model[0] == '*' && (ent)->solid == SOLID_BSP)
 
 /**
  * @brief creates an entity list
@@ -459,11 +459,11 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
  */
 void G_GenerateEntList (const char *entList[MAX_EDICTS])
 {
-	int i;
-	edict_t *ent;
+	int i = 0;
+	edict_t *ent = NULL;
 
 	/* generate entity list */
-	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
+	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
 			entList[i++] = ent->model;
 	entList[i] = NULL;
@@ -489,7 +489,7 @@ void G_CompleteRecalcRouting (void)
 {
 	edict_t *ent = NULL;
 
-	while ((ent = G_EdictsGetNext(ent)))
+	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
 			G_RecalcRouting(ent);
 }
