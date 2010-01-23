@@ -1022,7 +1022,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 }
 
 #define MAX_SPAWNPOINTS		64
-static int spawnPoints[MAX_SPAWNPOINTS];
+static edict_t * spawnPoints[MAX_SPAWNPOINTS];
 
 
 /**
@@ -1033,7 +1033,7 @@ static int spawnPoints[MAX_SPAWNPOINTS];
  */
 static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	equipDef_t *ed = &gi.csi->eds[0];
 	int i, j, numPoints, team;
 	char name[MAX_VAR];
@@ -1041,9 +1041,9 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 	/* search spawn points */
 	team = player->pers.team;
 	numPoints = 0;
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTORSPAWN && ent->team == team)
-			spawnPoints[numPoints++] = i;
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		if (ent->type == ET_ACTORSPAWN && ent->team == team)
+			spawnPoints[numPoints++] = ent;
 
 	/* check spawn point number */
 	if (numPoints < numSpawn) {
@@ -1066,7 +1066,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		assert(numPoints > 0);
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
-			ent = G_EdictsGetByNum(spawnPoints[rand() % numPoints]);
+			ent = spawnPoints[rand() % numPoints];
 
 		/* spawn */
 		level.num_spawned[team]++;

@@ -1356,7 +1356,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 void G_ClientDisconnect (player_t * player)
 {
 #if 0
-	edict_t *ent;
+	edict_t *ent = NULL;
 #endif
 
 	/* only if the player already sent his began */
@@ -1373,10 +1373,10 @@ void G_ClientDisconnect (player_t * player)
 
 #if 0
 	/* now let's remove all the edicts that belongs to this player */
-	for (; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->pnum == player->num && ent->inuse)
-			if (G_IsLivingActor(ent))
-				G_ActorDie(ent, STATE_DEAD, NULL);
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (ent->pnum == player->num)
+			G_ActorDie(ent, STATE_DEAD, NULL);
+	}
 	G_MatchEndCheck();
 #endif
 
