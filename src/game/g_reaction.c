@@ -146,9 +146,9 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 	int firemode = -1;
 
 	/* check all possible shooters */
-	while ((ent = G_EdictsGetNext(ent))) {
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* not if ent has reaction target already */
-		if (!ent->inuse || ent->reactionTarget)
+		if (ent->reactionTarget)
 			continue;
 
 		/* check whether reaction fire is possible */
@@ -295,8 +295,8 @@ static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
 	qboolean fired = qfalse, shoot = qfalse;
 
 	/* check all possible shooters */
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse || !ent->reactionTarget)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (!ent->reactionTarget)
 			continue;
 
 		shoot = qfalse;
@@ -346,8 +346,8 @@ void G_ReactToPreFire (edict_t *target)
 	int firemode = -4;
 
 	/* check all ents to see who wins and who loses a draw */
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse || !ent->reactionTarget)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (!ent->reactionTarget)
 			continue;
 		if (ent->reactionTarget != target) {
 			/* if the entity has changed then resolve the reaction fire */
@@ -399,8 +399,8 @@ void G_ReactToEndTurn (void)
 	edict_t *ent = NULL;
 
 	/* resolve all outstanding reaction firing if possible */
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse || !ent->reactionTarget)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (!ent->reactionTarget)
 			continue;
 
 		G_ResolveRF(ent, qfalse);

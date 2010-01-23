@@ -274,11 +274,10 @@ static void SVCmd_ShowAll_f (void)
 	edict_t *ent = NULL;
 
 	/* Make everything visible to anyone who can't already see it */
-	while ((ent = G_EdictsGetNext(ent)))
-		if (ent->inuse) {
-			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
-			ent->visflags |= ~ent->visflags;
-		}
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
+		ent->visflags |= ~ent->visflags;
+	}
 	gi.dprintf("All items and creatures revealed to all sides\n");
 }
 

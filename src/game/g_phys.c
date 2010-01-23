@@ -119,9 +119,7 @@ void G_PhysicsRun (void)
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse)
-			continue;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (ent->think)
 			G_PhysicsThink(ent);
 	}

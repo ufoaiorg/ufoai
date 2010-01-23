@@ -203,8 +203,8 @@ void G_MissionThink (edict_t *self)
 
 	/* still active mission edicts left */
 	ent = NULL;
-	while ((ent = G_EdictsGetNext(ent)))
-		if (ent->inuse && (ent->type == ET_MISSION) && ent->team == self->team) {
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		if ((ent->type == ET_MISSION) && ent->team == self->team) {
 			return;
 		}
 

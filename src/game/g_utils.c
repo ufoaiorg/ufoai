@@ -90,6 +90,23 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 }
 
 /**
+ * @brief Iterate through the entities that are in use
+ * @note we can hopefully get rid of this funtion once we know when it makes sense
+ * to iterate through entities that are NOT in use
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+edict_t* G_EdictsGetNextInUse (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (ent->inuse)
+			break;
+	}
+	return ent;
+}
+
+/**
  * @brief Iterate through the living actor entities
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
@@ -97,8 +114,8 @@ edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;
 
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (ent->inuse && G_IsLivingActor(ent))
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsLivingActor(ent))
 			break;
 	}
 	return ent;
@@ -112,8 +129,8 @@ edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;
 
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (ent->inuse && G_IsActor(ent))
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsActor(ent))
 			break;
 	}
 	return ent;
@@ -145,8 +162,8 @@ edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
 {
 	edict_t *floor = NULL;
 
-	while ((floor = G_EdictsGetNext(floor))) {
-		if (!floor->inuse || (type > 0 && floor->type != type))
+	while ((floor = G_EdictsGetNextInUse(floor))) {
+		if ((type > 0 && floor->type != type))
 			continue;
 		if (!VectorCompare(pos, floor->pos))
 			continue;
@@ -376,9 +393,7 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 	const char *s;
 	edict_t *ent = from;
 
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse)
-			continue;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		s = *(const char **) ((byte *) ent + fieldofs);
 		if (!s)
 			continue;
@@ -419,11 +434,9 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
 {
 	edict_t *ent = from;
 
-	while ((ent = G_EdictsGetNext(ent))) {
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		int j;
 		vec3_t eorg;
-		if (!ent->inuse)
-			continue;
 		for (j = 0; j < 3; j++)
 			eorg[j] = org[j] - (ent->origin[j] + (ent->mins[j] + ent->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)

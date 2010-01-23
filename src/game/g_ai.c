@@ -359,8 +359,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (!aia->target) {
 					/* search best none human target */
 					check = NULL;
-					while ((check = G_EdictsGetNext(check))) {
-						if (check->inuse && G_IsBreakable(check)) {
+					while ((check = G_EdictsGetNextInUse(check))) {
+						if (G_IsBreakable(check)) {
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;
 
@@ -645,8 +645,8 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 	{
 		/* search for a mission edict */
 		edict_t *mission = NULL;
-		while ((mission = G_EdictsGetNext(mission))) {
-			if (mission->inuse && mission->type == ET_MISSION) {
+		while ((mission = G_EdictsGetNextInUse(mission))) {
+			if (mission->type == ET_MISSION) {
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
 				if (player->pers.team == mission->team) {

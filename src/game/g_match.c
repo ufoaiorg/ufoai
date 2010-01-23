@@ -236,12 +236,10 @@ static void G_MatchSendResults (int team)
 
 	/* Make everything visible to anyone who can't already see it */
 	ent = NULL;
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (ent->inuse) {
-			G_AppearPerishEvent(~G_VisToPM(ent->visflags), qtrue, ent, NULL);
-			if (G_IsActor(ent))
-				G_SendInventory(~G_TeamToPM(ent->team), ent);
-		}
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		G_AppearPerishEvent(~G_VisToPM(ent->visflags), qtrue, ent, NULL);
+		if (G_IsActor(ent))
+			G_SendInventory(~G_TeamToPM(ent->team), ent);
 	}
 
 	/* send results */

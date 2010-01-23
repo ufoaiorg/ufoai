@@ -60,9 +60,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 	else
 		visMask = TEAM_ALL;
 
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse)
-			continue;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
 		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & visMask))) {
 			forbiddenList[forbiddenListLength++] = ent->pos;

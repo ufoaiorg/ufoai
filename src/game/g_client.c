@@ -1155,10 +1155,7 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 
 	/* make SOLID_BSP edicts visible to the client */
 	ent++; /* skip the world */
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (!ent->inuse)
-			continue;
-
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* brush models that have a type - not the world - keep in
 		 * mind that there are several world edicts in the list in case of
 		 * a map assembly */

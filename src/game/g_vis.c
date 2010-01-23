@@ -247,23 +247,22 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
 	edict_t* ent = NULL;
 
 	/* check visibility */
-	while ((ent = G_EdictsGetNext(ent)))
-		if (ent->inuse) {
-			/* check if he's visible */
-			const int vis = G_TestVis(player->pers.team, ent, perish);
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		/* check if he's visible */
+		const int vis = G_TestVis(player->pers.team, ent, perish);
 
-			if (vis & VIS_CHANGE) {
-				ent->visflags ^= (1 << player->pers.team);
-				G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent, NULL);
+		if (vis & VIS_CHANGE) {
+			ent->visflags ^= (1 << player->pers.team);
+			G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent, NULL);
 
-				if (vis & VIS_YES) {
-					status |= VIS_APPEAR;
-					if (G_VisShouldStop(ent))
-						status |= VIS_STOP;
-				} else
-					status |= VIS_PERISH;
-			}
+			if (vis & VIS_YES) {
+				status |= VIS_APPEAR;
+				if (G_VisShouldStop(ent))
+					status |= VIS_STOP;
+			} else
+				status |= VIS_PERISH;
 		}
+	}
 
 	return status;
 }
@@ -360,7 +359,6 @@ void G_ClearVisFlags (int team)
 	int mask;
 
 	mask = ~G_TeamToVisMask(team);
-	while ((ent = G_EdictsGetNext(ent)))
-		if (ent->inuse)
-			ent->visflags &= mask;
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		ent->visflags &= mask;
 }

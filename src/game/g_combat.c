@@ -78,9 +78,9 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 	int newMorale;
 	float mod;
 
-	while ((ent = G_EdictsGetNext(ent))) {
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
-		if (ent->inuse && ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
+		if (ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
 			switch (type) {
 			case ML_WOUND:
 			case ML_DEATH:
@@ -489,11 +489,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 
 	assert(fd->splrad);
 
-	while ((check = G_EdictsGetNext(check))) {
-		/* check basic info */
-		if (!check->inuse)
-			continue;
-
+	while ((check = G_EdictsGetNextInUse(check))) {
 		/* If we use a blinding weapon we skip the target if it's looking
 		 * away from the impact location. */
 		if (shock && !G_FrustumVis(check, impact))
