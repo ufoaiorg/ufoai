@@ -882,7 +882,7 @@ void AI_Run (void)
 {
 	player_t *player;
 	edict_t *ent;
-	int i, j;
+	int i;
 
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
@@ -893,12 +893,12 @@ void AI_Run (void)
 		if (player->inuse && G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
 			/* find next actor to handle */
 			if (!player->pers.last)
-				ent = g_edicts;
+				ent = NULL;
 			else
 				ent = player->pers.last + 1;
 
-			for (j = ent - g_edicts; j < globals.num_edicts; j++, ent++)
-				if (ent->inuse && ent->TU && ent->team == player->pers.team && G_IsLivingActor(ent)) {
+			while ((ent = G_EdictsGetNextLivingActor(ent))) {
+				if (ent->TU && ent->team == player->pers.team) {
 					if (g_ailua->integer)
 						AIL_ActorThink(player, ent);
 					else
@@ -906,9 +906,10 @@ void AI_Run (void)
 					player->pers.last = ent;
 					return;
 				}
+			}
 
 			/* nothing left to do, request endround */
-			if (j >= globals.num_edicts) {
+			if (!ent) {
 				G_ClientEndRound(player);
 				player->pers.last = g_edicts + globals.num_edicts;
 			}
