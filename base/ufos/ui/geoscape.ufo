@@ -22,6 +22,7 @@ component panel cmpGeoscapeDocklet {
 		size	"50 50"
 		autoscale	true
 		ghost	true
+		angles	"0 0 150"
 	}
 
 	string	message {
