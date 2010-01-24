@@ -596,7 +596,7 @@ struct edict_s {
 	/** only used locally in game, not by server */
 
 	int type;
-	int visflags;
+	int visflags;				/**< bitmask of teams that can see this edict */
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 
