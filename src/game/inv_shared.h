@@ -455,7 +455,7 @@ typedef struct csi_s {
 	int numTeamDefs;
 
 	/** the current assigned teams for this mission */
-	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
+	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 } csi_t;
 

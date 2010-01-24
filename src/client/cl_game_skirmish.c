@@ -33,6 +33,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *cl_equip;
 
 /**
+ * @brief Register some data in the shared client/server structs to ensure that e.g. every known
+ * alien race is used in a skirmish game
+ */
+static void GAME_SK_SetMissionParameters (void)
+{
+	int i;
+
+	Cvar_SetValue("ai_numcivilians", 8);
+	Cvar_Set("ai_civilian", "europe");
+
+	/* now store the alien teams in the shared csi struct to let the game dll
+	 * have access to this data, too */
+	csi.numAlienTeams = 0;
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t* td = &csi.teamDef[i];
+		if (CHRSH_IsTeamDefAlien(td))
+			csi.alienTeams[csi.numAlienTeams++] = td;
+	}
+}
+
+/**
  * @brief Starts a new skirmish game
  * @todo Check the stuff in this function - maybe not every function call
  * is needed here or maybe some are missing
@@ -53,6 +74,8 @@ static void GAME_SK_Start_f (void)
 	if (!md)
 		return;
 
+	GAME_SK_SetMissionParameters();
+
 	GAME_GenerateTeam(teamDefID, ed);
 
 	assert(md->map);
@@ -71,22 +94,33 @@ static void GAME_SK_Restart_f (void)
 }
 
 /**
- * @brief Changed the cl_equip cvar to the next/prev equipment definition
+ * @brief Changed the given cvar to the next/prev equipment definition
  */
 static void GAME_SK_ChangeEquip_f (void)
 {
-	equipDef_t *ed = INV_GetEquipmentDefinitionByID(cl_equip->string);
-	int index = ed ? ed - csi.eds : 0;
+	equipDef_t *ed;
+	int index;
+	const char *cvarName;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <cvarname>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cvarName = Cmd_Argv(1);
+	ed = INV_GetEquipmentDefinitionByID(Cvar_GetString(cvarName));
+	index = ed ? ed - csi.eds : 0;
+
 	if (!strcmp(Cmd_Argv(0), "sk_prevequip")) {
 		index--;
 		if (index < 0)
 			index = csi.numEDs - 1;
-		Cvar_Set("cl_equip", csi.eds[index].name);
+		Cvar_Set(cvarName, csi.eds[index].name);
 	} else {
 		index++;
 		if (index >= csi.numEDs)
 			index = 0;
-		Cvar_Set("cl_equip", csi.eds[index].name);
+		Cvar_Set(cvarName, csi.eds[index].name);
 	}
 }
 
