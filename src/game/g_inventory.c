@@ -55,6 +55,20 @@ edict_t *G_GetFloorItems (edict_t * ent)
 	return NULL;
 }
 
+/**
+ * @brief Checks whether the given container contains items that should be
+ * dropped to the floor
+ * @param ic The container to check
+ * @return @c true if there are items that should be dropped to floor, @c false otherwise
+ */
+static qboolean G_InventoryDropToFloorCheck (const invList_t *ic)
+{
+	/** @todo check for virtual items? */
+	if (ic)
+		return qtrue;
+
+	return qfalse;
+}
 
 /** @brief Move items to adjacent locations if the containers on the current
  * floor edict are full */
@@ -78,7 +92,7 @@ void G_InventoryToFloor (edict_t *ent)
 
 	/* check for items */
 	for (k = 0; k < gi.csi->numIDs; k++)
-		if (k != gi.csi->idArmour && ent->i.c[k])
+		if (k != gi.csi->idArmour && G_InventoryDropToFloorCheck(ent->i.c[k]))
 			break;
 
 	/* edict is not carrying any items */
