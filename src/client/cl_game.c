@@ -379,7 +379,8 @@ static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given");
 	if (chr->fieldSize != ACTOR_SIZE_2x2 && chr->fieldSize != ACTOR_SIZE_NORMAL)
-		Com_Error(ERR_DROP, "Invalid character size given for character '%s'", chr->name);
+		Com_Error(ERR_DROP, "Invalid character size given for character '%s': %i",
+				chr->name, chr->fieldSize);
 	if (chr->teamDef == NULL)
 		Com_Error(ERR_DROP, "Character with no teamdef set (%s)", chr->name);
 
