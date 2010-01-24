@@ -522,7 +522,7 @@ static void R_ModLoadPlanes (const lump_t *l)
  * @brief Adds the specified static light source to the world model, after first
  * ensuring that it can not be merged with any known sources.
  */
-static void R_AddBspLight (model_t* mod, vec3_t org, float radius)
+static void R_AddBspLight (model_t* mod, const vec3_t org, const float radius)
 {
 	mBspLight_t *l;
 	vec3_t delta;
@@ -537,9 +537,10 @@ static void R_AddBspLight (model_t* mod, vec3_t org, float radius)
 	}
 
 	if (i == mod->bsp.numbsplights) {
-		if (!mod->bsp.bsplights)  /* first source */
+		if (!mod->bsp.bsplights) {
+			/* first source */
 			mod->bsp.bsplights = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
-		else {
+		} else {
 			const size_t size = sizeof(*l) * (mod->bsp.numbsplights + 1);
 			mod->bsp.bsplights = (mBspLight_t *)Mem_ReAlloc(mod->bsp.bsplights, size);
 		}
