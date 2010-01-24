@@ -957,9 +957,8 @@ static void MAP_GetMissionAngle (float *vector, int id)
 	int missionID = 0;
 	/* Cycle through missions */
 	const linkedList_t *list;
-	mission_t *mission = NULL;
 	for (list = ccs.missions ;list; list = list->next, missionID++) {
-		mission = (mission_t *)list->data;
+		mission_t *mission = (mission_t *)list->data;
 		if (missionID == id) {
 			assert(mission);
 			MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);

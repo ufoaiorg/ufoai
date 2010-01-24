@@ -2024,8 +2024,6 @@ void CL_ResetSinglePlayerData (void)
 {
 	int i;
 
-	memset(&ccs, 0, sizeof(ccs));
-
 	LIST_Delete(&ccs.missions);
 	cp_messageStack = NULL;
 
@@ -2038,6 +2036,8 @@ void CL_ResetSinglePlayerData (void)
 	 * was maybe already called */
 	RS_ResetTechs();
 	E_ResetEmployees();
+
+	memset(&ccs, 0, sizeof(ccs));
 
 	/* Count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
