@@ -454,7 +454,7 @@ static qboolean GAME_Spawn (void)
 	}
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++)
-		cl.chrList.chr[i] = &characters[i];
+		cl.chrList.chr[i] = chrDisplayList.chr[i];
 	cl.chrList.num = MAX_ACTIVETEAM;
 
 	return qtrue;
