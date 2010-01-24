@@ -163,7 +163,7 @@ edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
 	edict_t *floor = NULL;
 
 	while ((floor = G_EdictsGetNextInUse(floor))) {
-		if ((type > 0 && floor->type != type))
+		if ((type > ET_NULL && floor->type != type))
 			continue;
 		if (!VectorCompare(pos, floor->pos))
 			continue;
