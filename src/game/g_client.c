@@ -133,6 +133,13 @@ static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
 	gi.WriteString(ent->particle);
 }
 
+/**
+ * @brief Send an appear event to the client.
+ * @param playerMask The players to send the event to
+ * @param ent The edict that should appear to the players included in the given mask.
+ * @note Each following event that is relying on the fact that this edict must already
+ * be known in the client, must also adopt the client side parsing of the event times.
+ */
 static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_ENT_APPEAR);
