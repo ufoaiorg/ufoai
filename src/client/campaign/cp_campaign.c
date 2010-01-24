@@ -442,11 +442,14 @@ static void CP_CheckMissionEnd (void)
 	const linkedList_t *list = ccs.missions;
 
 	while (list) {
+		/* the mission might be removed inside this loop, so we have to ensure
+		 * that we have the correct next pointer */
+		linkedList_t *next = list->next;
 		mission_t *mission = (mission_t *)list->data;
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
 			CP_MissionStageEnd(mission);
 		}
-		list = list->next;
+		list = next;
 	}
 }
 
