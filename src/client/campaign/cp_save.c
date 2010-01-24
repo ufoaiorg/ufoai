@@ -192,7 +192,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
 		Mem_Free(cbuf);
 		if (!topNode) {
-			Mem_Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
 			return qfalse;
 		}
@@ -204,6 +203,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		Mem_Free(buf);
+		mxmlDelete(topNode);
 		return qfalse;
 	}
 
@@ -305,11 +305,13 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	header.xmlSize = LittleLong(requiredBufferLength);
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
 	if (!buf) {
+		mxmlDelete(topNode);
 		*error = _("Could not allocate enough memory to save this game");
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
 	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
+	mxmlDelete(topNode);
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
 	bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
@@ -338,8 +340,6 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
 	Mem_Free(fbuf);
-
-	mxmlDelete(topNode);
 
 	return qtrue;
 }

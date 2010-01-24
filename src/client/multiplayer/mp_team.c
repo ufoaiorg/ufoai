@@ -153,10 +153,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
 	if (!buf) {
+		mxmlDelete(topNode);
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
 	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
+	mxmlDelete(topNode);
 
 	fbuf = (byte *) Mem_PoolAlloc(requiredBufferLength + 1 + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
@@ -166,7 +168,6 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
-	mxmlDelete(topNode);
 
 	return qtrue;
 }
@@ -256,6 +257,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 
 	node = mxml_GetNode(topNode, "multiplayer");
 	if (!node) {
+		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node 'multiplayer' not found)\n");
 		return qfalse;
 	}
@@ -263,6 +265,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 
 	snode = mxml_GetNode(node, "team");
 	if (!snode) {
+		mxmlDelete(topNode);
 		Mem_Free(cbuf);
 		Com_Printf("Error: Failure in loading the xml data! (node 'team' not found)\n");
 		return qfalse;
@@ -271,6 +274,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 
 	snode = mxml_GetNode(node, "equipment");
 	if (!snode) {
+		mxmlDelete(topNode);
 		Mem_Free(cbuf);
 		Com_Printf("Error: Failure in loading the xml data! (node 'equipment' not found)\n");
 		return qfalse;
