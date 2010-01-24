@@ -52,16 +52,8 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	else if (container == csi.idHeadgear)
 		le->headgear = NONE;
 
-	switch (le->type) {
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
+	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
-		break;
-	case ET_ITEM:
-		/* update the rendered item */
-		LE_PlaceItem(le);
-		break;
-	}
 
 	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
 	/* ic can be null for other team actors - we don't the full inventory of them, only
@@ -71,5 +63,9 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 
 	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, &csi.ids[container], ic))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
+
+	/* update the rendered item after it was removed from the floor container */
+	if (le->type == ET_ITEM)
+		LE_PlaceItem(le);
 }
 
