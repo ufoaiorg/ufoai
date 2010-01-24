@@ -65,8 +65,15 @@ static qboolean G_InventoryDropToFloorCheck (const invList_t *ic)
 	/** @todo check for virtual items? if we check this and return false for virtual items,
 	 * we have to remove the virtual item from the given inventory list here, otherwise
 	 * we will produce 'No free inventory space' after some time. */
-	if (ic)
-		return qtrue;
+	if (ic) {
+		const invList_t *list = ic;
+		while (list) {
+			if (list->item.t && !list->item.t->virtual)
+				return qtrue;
+			list = list->next;
+		}
+		return qfalse;
+	}
 
 	return qfalse;
 }
