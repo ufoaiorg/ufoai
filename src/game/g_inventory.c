@@ -227,12 +227,16 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 
 	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
 
-	assert(t != NONE);
+	if (t < 0 || t >= gi.csi->numODs)
+		gi.error("Item index out of bounds: %i", t);
 	item->t = &gi.csi->ods[t];
 
 	item->m = NULL;
-	if (m != NONE)
+	if (m != NONE) {
+		if (m < 0 || m >= gi.csi->numODs)
+			gi.error("Ammo index out of bounds: %i", m);
 		item->m = &gi.csi->ods[m];
+	}
 
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
 		*container = INVDEF(containerID);
