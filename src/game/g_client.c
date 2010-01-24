@@ -122,10 +122,10 @@ void G_SendState (unsigned int playerMask, const edict_t *ent)
 
 /**
  * Send a particle spawn event to the client
- * @param playerMask The clients that should see the particle
- * @param ent The particle to spawn
+ * @param[in] playerMask The clients that should see the particle
+ * @param[in] ent The particle to spawn
  */
-static void G_SendParticle (unsigned int playerMask, edict_t *ent)
+static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_SPAWN_PARTICLE);
 	gi.WriteShort(ent->number);
