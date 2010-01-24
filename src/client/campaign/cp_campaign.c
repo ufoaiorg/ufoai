@@ -441,11 +441,12 @@ static void CP_CheckMissionEnd (void)
 {
 	const linkedList_t *list = ccs.missions;
 
-	for (; list; list = list->next) {
+	while (list) {
 		mission_t *mission = (mission_t *)list->data;
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
 			CP_MissionStageEnd(mission);
 		}
+		list = list->next;
 	}
 }
 
