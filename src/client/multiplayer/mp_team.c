@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"	/**< menuInventory */
 #include "mp_team.h"
 
-#define MPTEAM_SAVE_FILE_VERSION 3
+#define MPTEAM_SAVE_FILE_VERSION 4
 
 static inventory_t mp_inventory;
 character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
