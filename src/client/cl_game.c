@@ -599,7 +599,8 @@ const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 			return model;
 	}
 
-	*menuModel = NULL;
+	if (menuModel != NULL)
+		*menuModel = NULL;
 	return od->model;
 }
 

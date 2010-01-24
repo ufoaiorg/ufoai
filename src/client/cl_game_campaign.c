@@ -417,7 +417,8 @@ void GAME_CP_Frame (void)
 const char* GAME_CP_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 {
 	if (od->tech && od->tech->mdl) {
-		*menuModel = MN_GetMenuModel(od->tech->mdl);
+		if (menuModel != NULL)
+			*menuModel = MN_GetMenuModel(od->tech->mdl);
 		/* the model from the tech structure has higher priority, because the item model itself
 		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
 		return od->tech->mdl;
