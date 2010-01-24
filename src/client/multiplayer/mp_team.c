@@ -166,6 +166,8 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
+	mxmlDelete(topNode);
+
 	return qtrue;
 }
 
@@ -285,6 +287,9 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	}
 
 	Com_Printf("File '%s' loaded.\n", filename);
+
+	mxmlDelete(topNode);
+
 	return qtrue;
 }
 

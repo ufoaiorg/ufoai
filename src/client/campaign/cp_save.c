@@ -130,7 +130,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	qFILE f;
 	byte *cbuf, *buf;
 	int i, clen;
-	mxml_node_t *top_node, *node;
+	mxml_node_t *topNode, *node;
 	saveFileHeader_t header;
 
 	Q_strncpyz(filename, file, sizeof(filename));
@@ -181,17 +181,17 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return qfalse;
 		}
-		top_node = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
-		if (!top_node) {
+		topNode = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
+		if (!topNode) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
 			return qfalse;
 		}
 	} else {
 		/*memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));*/
-		top_node = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
+		topNode = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
 		Mem_Free(cbuf);
-		if (!top_node) {
+		if (!topNode) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
 			return qfalse;
@@ -200,7 +200,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	/* doing a subsystem run ;) */
 	GAME_RestartMode(GAME_CAMPAIGN);
-	node = mxml_GetNode(top_node, "savegame");
+	node = mxml_GetNode(topNode, "savegame");
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		Mem_Free(buf);
@@ -224,6 +224,8 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
 	Mem_Free(buf);
+
+	mxmlDelete(topNode);
 
 	MN_InitStack("geoscape", NULL, qtrue, qtrue);
 	return qtrue;
@@ -336,6 +338,8 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
 	Mem_Free(fbuf);
+
+	mxmlDelete(topNode);
 
 	return qtrue;
 }
