@@ -80,4 +80,9 @@
    obj:/usr/lib/libGLcore.so.185.18.36
    obj:*
 }
+{
+   nvidia_gl4
+   Memcheck:Cond
+   obj:/usr/lib/libGLcore.so.185.18.36
+}
 
