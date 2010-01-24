@@ -42,16 +42,7 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		Com_Error(ERR_DROP, "InvDel message ignored... LE not found\n");
 
-	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
-
-	if (!ic) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_InvDel: No item found at location x/y=%i/%i.\n", x, y);
-		return;
-	}
-
-	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, &csi.ids[container], ic))
-		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
-
+	/* update the local entity to ensure that the correct weapon/item is rendered in the battlescape */
 	if (container == csi.idRight)
 		le->right = NONE;
 	else if (container == csi.idLeft)
@@ -71,5 +62,14 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 		LE_PlaceItem(le);
 		break;
 	}
+
+	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
+	/* ic can be null for other team actors - we don't the full inventory of them, only
+	 * the object index */
+	if (!ic)
+		return;
+
+	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, &csi.ids[container], ic))
+		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 }
 
