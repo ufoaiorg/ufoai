@@ -62,7 +62,9 @@ edict_t *G_GetFloorItems (edict_t * ent)
  */
 static qboolean G_InventoryDropToFloorCheck (const invList_t *ic)
 {
-	/** @todo check for virtual items? */
+	/** @todo check for virtual items? if we check this and return false for virtual items,
+	 * we have to remove the virtual item from the given inventory list here, otherwise
+	 * we will produce 'No free inventory space' after some time. */
 	if (ic)
 		return qtrue;
 
