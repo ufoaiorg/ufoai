@@ -57,22 +57,35 @@ edict_t *G_GetFloorItems (edict_t * ent)
 /**
  * @brief Checks whether the given container contains items that should be
  * dropped to the floor
- * @param ic The container to check
+ * @param[in,out] ent The entity to check the inventory containers for
+ * @param[in] container The container of the entity inventory to check
  * @return @c true if there are items that should be dropped to floor, @c false otherwise
  */
-static qboolean G_InventoryDropToFloorCheck (const invList_t *ic)
+static qboolean G_InventoryDropToFloorCheck (edict_t* ent, int container)
 {
-	/** @todo check for virtual items? if we check this and return false for virtual items,
-	 * we have to remove the virtual item from the given inventory list here, otherwise
-	 * we will produce 'No free inventory space' after some time. */
-	if (ic) {
-		const invList_t *list = ic;
-		while (list) {
-			if (list->item.t && !list->item.t->virtual)
-				return qtrue;
-			list = list->next;
-		}
+	invList_t* ic = ent->i.c[container];
+
+	if (container == gi.csi->idArmour)
 		return qfalse;
+
+	if (ic) {
+		qboolean check = qfalse;
+		while (ic) {
+			assert(ic->item.t);
+			if (ic->item.t->virtual) {
+				invList_t *next = ic->next;
+				/* remove the virtual item to update the inventory lists */
+				if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(container), ic))
+					gi.error("Could not remove virtual item '%s' from inventory %i",
+							ic->item.t->id, container);
+				ic = next;
+			} else {
+				/* there are none virtual items left that should be send to the client */
+				check = qtrue;
+				ic = ic->next;
+			}
+		}
+		return check;
 	}
 
 	return qfalse;
@@ -100,7 +113,7 @@ void G_InventoryToFloor (edict_t *ent)
 
 	/* check for items */
 	for (k = 0; k < gi.csi->numIDs; k++)
-		if (k != gi.csi->idArmour && G_InventoryDropToFloorCheck(ent->i.c[k]))
+		if (G_InventoryDropToFloorCheck(ent, k))
 			break;
 
 	/* edict is not carrying any items */
@@ -142,9 +155,12 @@ void G_InventoryToFloor (edict_t *ent)
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
-			game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(k), ic);
-			game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1);
-
+			if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(k), ic))
+				gi.error("Could not remove item '%s' from inventory %i of entity %i",
+						ic->item.t->id, k, ent->number);
+			if (game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
+				gi.error("Could not add item '%s' from inventory %i of entity %i to floor container",
+						ic->item.t->id, k, ent->number);
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
