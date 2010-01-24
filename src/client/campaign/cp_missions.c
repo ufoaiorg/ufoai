@@ -641,6 +641,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "geoscape/alienbase";
 	/* Should not be reached, these mission categories are not drawn on geoscape */
 	case INTERESTCATEGORY_BASE_ATTACK:
+		return "geoscape/base2M"
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
 	case INTERESTCATEGORY_NONE:
