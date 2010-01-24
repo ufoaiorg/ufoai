@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_GenerateCharacter(character_t *chr, const char *teamDefName, const ugv_t *ugvType);
 const char* CL_GetTeamSkinName(int id);
 
-qboolean CL_SaveCharacterXML(mxml_node_t *p, character_t chr);
+qboolean CL_SaveCharacterXML(mxml_node_t *p, const character_t *chr);
 qboolean CL_LoadCharacterXML(mxml_node_t *p, character_t *chr);
 
 void CL_SaveInventoryXML(mxml_node_t *p, const inventory_t * i);

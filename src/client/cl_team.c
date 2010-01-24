@@ -67,50 +67,50 @@ const char* CL_GetTeamSkinName (int id)
  * @param[in] p The node to which we should save the character
  * @param[in] chr The charcter we should save
  */
-qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
+qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 {
 	/* Store the character data */
 	mxml_node_t *s;
 	int k;
 	const int count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
 
-	mxml_AddString(p, "name", chr.name);
-	mxml_AddString(p, "body", chr.body);
-	mxml_AddString(p, "path", chr.path);
-	mxml_AddString(p, "head", chr.head);
-	mxml_AddInt(p, "skin", chr.skin);
-	mxml_AddInt(p, "teamdefidx", chr.teamDef->idx);
-	mxml_AddInt(p, "gender", chr.gender);
-	mxml_AddInt(p, "state", chr.state);
-	mxml_AddInt(p, "ucn", chr.ucn);
-	mxml_AddInt(p, "maxhp", chr.maxHP);
-	mxml_AddInt(p, "hp", chr.HP);
-	mxml_AddInt(p, "stun", chr.STUN);
-	mxml_AddInt(p, "morale", chr.morale);
-	mxml_AddInt(p, "fieldsize", chr.fieldSize);
+	mxml_AddString(p, "name", chr->name);
+	mxml_AddString(p, "body", chr->body);
+	mxml_AddString(p, "path", chr->path);
+	mxml_AddString(p, "head", chr->head);
+	mxml_AddInt(p, "skin", chr->skin);
+	mxml_AddInt(p, "teamdefidx", chr->teamDef->idx);
+	mxml_AddInt(p, "gender", chr->gender);
+	mxml_AddInt(p, "state", chr->state);
+	mxml_AddInt(p, "ucn", chr->ucn);
+	mxml_AddInt(p, "maxhp", chr->maxHP);
+	mxml_AddInt(p, "hp", chr->HP);
+	mxml_AddInt(p, "stun", chr->STUN);
+	mxml_AddInt(p, "morale", chr->morale);
+	mxml_AddInt(p, "fieldsize", chr->fieldSize);
 
 	/* Store character stats/score */
 	for (k = 0; k < count; k++) {
 		s = mxml_AddNode(p, "score");
 		if (k < SKILL_NUM_TYPES)
-			mxml_AddInt(s, "skill", chr.score.skills[k]);
+			mxml_AddInt(s, "skill", chr->score.skills[k]);
 		if (k < SKILL_NUM_TYPES + 1) {
-			mxml_AddInt(s, "experience", chr.score.experience[k]);
+			mxml_AddInt(s, "experience", chr->score.experience[k]);
 			/** @todo There is a Bug in storing the initial skills. Fix it in loading */
-			mxml_AddInt(s, "initskill", chr.score.initialSkills[k]);
+			mxml_AddInt(s, "initskill", chr->score.initialSkills[k]);
 		}
 		if (k < KILLED_NUM_TYPES) {
-			mxml_AddInt(s, "kills", chr.score.kills[k]);
-			mxml_AddInt(s, "stuns", chr.score.stuns[k]);
+			mxml_AddInt(s, "kills", chr->score.kills[k]);
+			mxml_AddInt(s, "stuns", chr->score.stuns[k]);
 		}
 	}
 
-	mxml_AddInt(p, "score.assignedmissions", chr.score.assignedMissions);
-	mxml_AddInt(p, "score.rank", chr.score.rank);
+	mxml_AddInt(p, "score.assignedmissions", chr->score.assignedMissions);
+	mxml_AddInt(p, "score.rank", chr->score.rank);
 
 	/* Store inventories */
 	s = mxml_AddNode(p, "inventory");
-	CL_SaveInventoryXML(s, &chr.inv);
+	CL_SaveInventoryXML(s, &chr->inv);
 
 	return qtrue;
 }

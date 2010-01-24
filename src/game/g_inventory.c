@@ -231,17 +231,18 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 		gi.error("Item index out of bounds: %i", t);
 	item->t = &gi.csi->ods[t];
 
-	item->m = NULL;
 	if (m != NONE) {
 		if (m < 0 || m >= gi.csi->numODs)
 			gi.error("Ammo index out of bounds: %i", m);
 		item->m = &gi.csi->ods[m];
+	} else {
+		item->m = NULL;
 	}
 
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
 		*container = INVDEF(containerID);
 	else
-		*container = NULL;
+		gi.error("container id is out of bounds: %i", containerID);
 }
 
 /**

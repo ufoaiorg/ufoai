@@ -91,7 +91,7 @@ static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
 	for (i = 0; i < chrDisplayList.num; i++) {
 		const character_t *chr = chrDisplayList.chr[i];
 		mxml_node_t *n = mxml_AddNode(p, "character");
-		CL_SaveCharacterXML(n, *chr);
+		CL_SaveCharacterXML(n, chr);
 	}
 }
 

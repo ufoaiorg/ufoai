@@ -1201,7 +1201,7 @@ qboolean E_SaveXML (mxml_node_t *p)
 			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
 			if (e->ugv)
 				mxml_AddString(ssnode, "ugv", e->ugv->id);
-			CL_SaveCharacterXML(ssnode, e->chr);
+			CL_SaveCharacterXML(ssnode, &e->chr);
 		}
 	}
 
