@@ -346,7 +346,7 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
 	assert(item.t);
 	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
 		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
-	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated);
+	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated, item.amount);
 }
 
 /**

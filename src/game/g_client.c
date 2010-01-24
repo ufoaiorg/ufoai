@@ -977,12 +977,13 @@ static void G_ClientReadInventory (edict_t *ent)
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
-		Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx
+		Com_DPrintf(DEBUG_GAME, "G_ClientReadInventory: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx
 				: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
 		if (container) {
 			if (game.i.AddToInventory(&game.i, &ent->i, item, container, x, y, 1) == NULL)
-				gi.error("G_ClientTeamInfo failed, could not add item to container %i", container->id);
+				gi.error("G_ClientReadInventory failed, could not add item '%s' to container %i",
+						item.t->id, container->id);
 			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
 					container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
 		}
