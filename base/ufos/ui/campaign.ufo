@@ -572,3 +572,155 @@ window save
 	}
 }
 
+// ==================
+// LOST GAME MENU
+// ==================
+
+window lostgame
+{
+	pic background
+	{
+		image		ui/losegame_bg
+	}
+
+	string title
+	{
+		string		"_You've lost the game"
+		pos			"12 20"
+		size		"1000 35"
+		font		"f_menubig"
+		textalign	uc
+		color		"0 0.8 0 1"
+	}
+
+	string lostgame_click
+	{
+		string		"_Click to continue"
+		pos			"814 750"
+		size		"200 20"
+		font		"f_verysmall"
+		textalign	ur
+		color		"0 0.8 0 0.9"
+		ghost		true
+	}
+
+	zone leave
+	{
+		pos "0 0"
+		size "1024 768"
+		onClick {
+			cmd "initmainui;"
+		}
+	}
+
+	// reason why you've lost
+	text reason
+	{
+		dataid	TEXT_STANDARD
+		color		"0 0.8 0 0.9"
+		bgcolor		"0.2 0.2 0.2 0.4"
+		textalign	uc
+		pos			"30 600"
+		size		"960 140"
+		lineheight	"20"
+		font		"f_normal"
+		onClick		{ call *node:parent.leave@click }
+		onViewChange	{
+			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)reason_scroll@current = <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar reason_scroll {
+		image		ui/scrollbar_v_green
+		pos			"992 600"
+		height		"140"
+		current		0
+		viewsize	12
+		fullsize	12
+		hidewhenunused true
+		onClick		{ call *node:parent.leave@click }
+		onChange	{ *reason@viewpos = <current> }
+	}
+}
+
+// ==================
+// END GAME MENU
+// ==================
+
+window endgame
+{
+	pic background
+	{
+		image		ui/wingame_bg
+	}
+
+	string title
+	{
+		string		"_Thank you for playing UFO:Alien Invasion"
+		pos			"12 20"
+		size		"1000 35"
+		font		"f_menubig"
+		textalign	uc
+		color		"0 0.8 0 1"
+	}
+
+	string endgame_click
+	{
+		string		"_Click to continue"
+		pos			"814 750"
+		size		"200 20"
+		font		"f_verysmall"
+		textalign	ur
+		color		"0 0.8 0 0.9"
+		ghost		true
+		onClick {
+			cmd "initmainui; seq_start credits;"
+		}
+	}
+
+	zone leave
+	{
+		pos "0 0"
+		size "1024 768"
+		onClick {
+			cmd "initmainui; seq_start credits;"
+		}
+	}
+
+	text reason
+	{
+		dataid		TEXT_STANDARD
+		color		"0 0.8 0 0.9"
+		bgcolor		"0.2 0.2 0.2 0.4"
+		textalign	uc
+		pos			"30 500"
+		size		"960 240"
+		lineheight	"20"
+		font		"f_normal"
+		onClick		{ call *node:parent.leave@click }
+		onViewChange	{
+			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)reason_scroll@current = <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar reason_scroll {
+		image		ui/scrollbar_v_green
+		pos			"992 500"
+		height		"240"
+		current		0
+		viewsize	12
+		fullsize	12
+		hidewhenunused true
+		onClick		{ call *node:parent.leave@click }
+		onChange	{ *reason@viewpos = <current> }
+	}
+
+	func onInit {
+		cmd "cinematic end;"
+	}
+}
+
