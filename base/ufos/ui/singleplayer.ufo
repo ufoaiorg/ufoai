@@ -119,7 +119,7 @@ window lostgame
 		image		ui/losegame_bg
 	}
 
-	string lostgame
+	string title
 	{
 		string		"_You've lost the game"
 		pos			"12 20"
@@ -127,35 +127,6 @@ window lostgame
 		font		"f_menubig"
 		textalign	uc
 		color		"0 0.8 0 1"
-	}
-
-	// reason why you've lost
-	text reason
-	{
-		color		"0 0.8 0 0.9"
-		textalign	uc
-		pos			"256 640"
-		size		"492 100"
-		lineheight	"20"
-		rows		"5"
-		font		"f_normal"
-		dataid	TEXT_STANDARD
-		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)reason_scroll@current = <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
-		}
-	}
-
-	vscrollbar reason_scroll {
-		image		ui/scrollbar_v_green
-		pos			"752 640"
-		height		"100"
-		current		0
-		viewsize	5
-		fullsize	5
-		hidewhenunused true
-		onChange	{ *reason@viewpos = <current> }
 	}
 
 	string lostgame_click
@@ -169,10 +140,6 @@ window lostgame
 		ghost		true
 	}
 
-	// ==================
-	// click
-	// ==================
-
 	zone leave
 	{
 		pos "0 0"
@@ -181,44 +148,19 @@ window lostgame
 			cmd "initmainui;"
 		}
 	}
-}
 
-// ==================
-// END GAME MENU
-// ==================
-
-window endgame
-{
-	// ==================
-	// background
-	// ==================
-
-	pic background
-	{
-		image		ui/wingame_bg
-	}
-
-	string endgame
-	{
-		string		"_Thank you for playing UFO:Alien Invasion"
-		pos			"12 20"
-		size		"1000 35"
-		font		"f_menubig"
-		textalign	uc
-		color	"0 0.8 0 1"
-	}
-
-	// reason why you've won
+	// reason why you've lost
 	text reason
 	{
-		color		"0 0.8 0 0.9"
-		textalign	uc
-		pos			"256 640"
-		size		"492 100"
-		lineheight	"20"
-		rows		"5"
-		font		"f_normal"
 		dataid	TEXT_STANDARD
+		color		"0 0.8 0 0.9"
+		bgcolor		"0.2 0.2 0.2 0.4"
+		textalign	uc
+		pos			"30 600"
+		size		"960 140"
+		lineheight	"20"
+		font		"f_normal"
+		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
 			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)reason_scroll@current = <viewpos>
@@ -228,13 +170,36 @@ window endgame
 
 	vscrollbar reason_scroll {
 		image		ui/scrollbar_v_green
-		pos			"752 640"
-		height		"100"
+		pos			"992 600"
+		height		"140"
 		current		0
-		viewsize	5
-		fullsize	5
+		viewsize	12
+		fullsize	12
 		hidewhenunused true
+		onClick		{ call *node:parent.leave@click }
 		onChange	{ *reason@viewpos = <current> }
+	}
+}
+
+// ==================
+// END GAME MENU
+// ==================
+window endgame
+{
+
+	pic background
+	{
+		image		ui/wingame_bg
+	}
+
+	string title
+	{
+		string		"_Thank you for playing UFO:Alien Invasion"
+		pos			"12 20"
+		size		"1000 35"
+		font		"f_menubig"
+		textalign	uc
+		color		"0 0.8 0 1"
 	}
 
 	string endgame_click
@@ -246,15 +211,10 @@ window endgame
 		textalign	ur
 		color		"0 0.8 0 0.9"
 		ghost		true
+		onClick {
+			cmd "initmainui; seq_start credits;"
+		}
 	}
-
-	func onInit {
-		cmd "cinematic end;"
-	}
-
-	// ==================
-	// click
-	// ==================
 
 	zone leave
 	{
@@ -263,5 +223,39 @@ window endgame
 		onClick {
 			cmd "initmainui; seq_start credits;"
 		}
+	}
+
+	text reason
+	{
+		dataid		TEXT_STANDARD
+		color		"0 0.8 0 0.9"
+		bgcolor		"0.2 0.2 0.2 0.4"
+		textalign	uc
+		pos			"30 500"
+		size		"960 240"
+		lineheight	"20"
+		font		"f_normal"
+		onClick		{ call *node:parent.leave@click }
+		onViewChange	{
+			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
+			*(abstractscrollbar)reason_scroll@current = <viewpos>
+			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+		}
+	}
+
+	vscrollbar reason_scroll {
+		image		ui/scrollbar_v_green
+		pos			"992 500"
+		height		"240"
+		current		0
+		viewsize	12
+		fullsize	12
+		hidewhenunused true
+		onClick		{ call *node:parent.leave@click }
+		onChange	{ *reason@viewpos = <current> }
+	}
+
+	func onInit {
+		cmd "cinematic end;"
 	}
 }
