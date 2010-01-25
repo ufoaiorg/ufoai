@@ -90,6 +90,28 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 }
 
 /**
+ * @brief Find an entity that is not in use
+ */
+edict_t* G_EdictsGetNewEdict (void)
+{
+	edict_t* ent = NULL;
+
+	/* try to recycle an edict */
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (!ent->inuse)
+			return ent;
+	}
+
+	/* no unused edict found, create a new one */
+	ent = &g_edicts[globals.num_edicts];
+	globals.num_edicts++;
+	if (globals.num_edicts > game.sv_maxentities)
+		return NULL;
+	else
+		return ent;
+}
+
+/**
  * @brief Iterate through the entities that are in use
  * @note we can hopefully get rid of this funtion once we know when it makes sense
  * to iterate through entities that are NOT in use

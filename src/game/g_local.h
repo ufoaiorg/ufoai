@@ -469,6 +469,7 @@ void SP_func_breakable(edict_t *ent);
 
 edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
+edict_t* G_EdictsGetNewEdict(void);
 edict_t* G_EdictsGetByNum(const int idx);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
