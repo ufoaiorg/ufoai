@@ -526,29 +526,23 @@ static void R_AddBspLight (model_t* mod, const vec3_t org, const float radius)
 {
 	mBspLight_t *l;
 	vec3_t delta;
-	int i;
 
 	l = mod->bsp.bsplights;
-	for (i = 0; i < mod->bsp.numbsplights; i++, l++) {
+	while (l) {
 		VectorSubtract(org, l->org, delta);
 
 		if (VectorLength(delta) <= 48.0)  /* merge them */
 			break;
+
+		l = l->next;
 	}
 
-	if (i == mod->bsp.numbsplights) {
-		if (!mod->bsp.bsplights) {
-			/* first source */
-			mod->bsp.bsplights = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
-		} else {
-			const size_t size = sizeof(*l) * (mod->bsp.numbsplights + 1);
-			mod->bsp.bsplights = (mBspLight_t *)Mem_ReAlloc(mod->bsp.bsplights, size);
-		}
+	if (l == NULL) {
+		l = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
+		l->next = mod->bsp.bsplights;
+		mod->bsp.bsplights = l;
 
-		l = &mod->bsp.bsplights[i];
 		VectorCopy(org, l->org);
-
-		mod->bsp.numbsplights++;
 	}
 
 	l->radius += radius;
@@ -625,8 +619,6 @@ static void R_ModLoadBspLights (const lump_t *l)
 			R_AddBspLight(r_worldmodel, org, radius > 100.0 ? radius : 100.0);
 		}
 	}
-
-	Com_DPrintf(DEBUG_RENDERER, "%s: %i lights\n", r_worldmodel->name, r_worldmodel->bsp.numbsplights);
 }
 
 /**

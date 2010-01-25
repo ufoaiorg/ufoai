@@ -494,7 +494,6 @@ static void R_LightPointPosition (static_lighting_t *lighting)
 {
 	mBspLight_t *l;
 	float best;
-	int i;
 
 	if (!r_state.lighting_enabled)  /* don't bother */
 		return;
@@ -508,7 +507,7 @@ static void R_LightPointPosition (static_lighting_t *lighting)
 	assert(refdef.trace.mapTile < r_numMapTiles);
 
 	l = r_mapTiles[refdef.trace.mapTile]->bsp.bsplights;
-	for (i = 0; i < r_mapTiles[refdef.trace.mapTile]->bsp.numbsplights; i++, l++) {
+	while (l) {
 		float light;
 		vec3_t delta;
 		VectorSubtract(l->org, lighting->origin, delta);
@@ -516,12 +515,12 @@ static void R_LightPointPosition (static_lighting_t *lighting)
 
 		if (light > best) {  /* it's close, but is it in sight */
 			R_Trace(l->org, lighting->origin, 0.0, CONTENTS_SOLID);
-			if (refdef.trace.fraction < 1.0)
-				continue;
-
-			best = light;
-			VectorCopy(l->org, lighting->positions[0]);
+			if (refdef.trace.fraction >= 1.0) {
+				best = light;
+				VectorCopy(l->org, lighting->positions[0]);
+			}
 		}
+		l = l->next;
 	}
 }
 
