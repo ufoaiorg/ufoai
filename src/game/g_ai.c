@@ -906,7 +906,7 @@ void AI_Run (void)
 
 			/* nothing left to do, request endround */
 			G_ClientEndRound(player);
-			player->pers.last = &g_edicts[globals.num_edicts - 1];
+			player->pers.last = NULL;
 			return;
 		}
 }
