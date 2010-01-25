@@ -278,7 +278,6 @@ static void G_FindEdictGroups (void)
 {
 	edict_t *ent = G_EdictsGetWorld();
 
-	ent++;	/* skip the world */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		edict_t *ent2, *chain;
 
@@ -288,7 +287,7 @@ static void G_FindEdictGroups (void)
 			continue;
 		chain = ent;
 		ent->groupMaster = ent;
-		ent2 = ent + 1;			/* search only the remainder of the entities */
+		ent2 = ent;			/* search only the remainder of the entities */
 		while ((ent2 = G_EdictsGetNextInUse(ent2))) {
 			if (!ent2->group)
 				continue;
