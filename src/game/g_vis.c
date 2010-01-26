@@ -289,7 +289,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t * check, qboolean perish, edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *ent)
 {
 	int i, end;
 	int status = 0;
@@ -331,7 +331,13 @@ int G_CheckVisTeam (const int team, edict_t * check, qboolean perish, edict_t *e
  */
 int G_CheckVisTeamAll (const int team, qboolean perish, edict_t *ent)
 {
-	return G_CheckVisTeam (team, NULL, perish, ent);
+	edict_t *chk = NULL;
+	int status = 0;
+
+	while ((chk = G_EdictsGetNextInUse(chk))) {
+		status |= G_CheckVisTeam (team, chk, perish, ent);
+	}
+	return status;
 }
 
 /**
