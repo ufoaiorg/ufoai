@@ -188,7 +188,7 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 	if (ent->morale > mor_brave->integer) {
 		edict_t *from = NULL;
 		/* test if check is visible */
-		while ((from = G_EdictsGetNext(from))) {
+		while ((from = G_EdictsGetNextInUse(from))) {
 			/** @todo using the visflags of the ai should be faster here */
 			if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM)) {
 				const invList_t *invlist = LEFT(from);

@@ -151,6 +151,8 @@ edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;
 
+	assert(lastEnt < &g_edicts[globals.num_edicts]);
+
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (G_IsActor(ent))
 			break;

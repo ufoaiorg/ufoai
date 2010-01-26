@@ -221,7 +221,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 		return VIS_YES;
 
 	/* test if check is visible */
-	while ((from = G_EdictsGetNext(from)))
+	while ((from = G_EdictsGetNextInUse(from)))
 		if (G_Vis(team, from, check, flags))
 			/* visible */
 			return VIS_YES | !old;
