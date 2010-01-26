@@ -370,7 +370,8 @@ qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
-int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
+int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, edict_t *ent);
+int G_CheckVisTeamAll(const int team, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 void G_SendState(unsigned int playerMask, const edict_t *ent);
 void G_SetTeamForPlayer(player_t* player, const int team);
@@ -430,8 +431,8 @@ float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
 void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t *check, qboolean perish);
 int G_CheckVisPlayer(player_t* player, qboolean perish);
-int G_TestVis(int team, edict_t * check, int flags);
-float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
+int G_TestVis(const int team, edict_t * check, int flags);
+float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
 qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);

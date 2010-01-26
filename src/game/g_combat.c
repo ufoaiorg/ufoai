@@ -330,7 +330,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			target->destroy(target);
 
 			/* maybe the attacker is seeing something new? */
-			G_CheckVisTeam(attacker->team, NULL, qfalse, attacker);
+			G_CheckVisTeamAll(attacker->team, qfalse, attacker);
 
 			/* check if attacker appears/perishes for any other team */
 			G_CheckVis(attacker, qtrue);
@@ -1182,7 +1182,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, int shootTyp
 	assert(ent->dir < CORE_DIRECTIONS);
 
 	if (!mock) {
-		G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+		G_CheckVisTeamAll(ent->team, qfalse, ent);
 		G_EventActorTurn(ent);
 	}
 

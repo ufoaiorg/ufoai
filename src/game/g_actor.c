@@ -106,10 +106,11 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 	status = 0;
 
 	/* check every angle in the rotation whether something becomes visible */
+	/** @todo tell me how i is used here. (Duke) */
 	for (i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
-		status |= G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+		status |= G_CheckVisTeamAll(ent->team, qfalse, ent);
 	}
 
 	if (status & VIS_STOP) {
@@ -187,7 +188,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		G_CheckVis(attacker, qtrue);
 
 	/* calc new vis for this player */
-	G_CheckVisTeam(ent->team, NULL, qfalse, attacker);
+	G_CheckVisTeamAll(ent->team, qfalse, attacker);
 }
 
 /**

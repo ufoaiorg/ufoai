@@ -135,7 +135,7 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-float G_Vis (int team, const edict_t *from, const edict_t *check, int flags)
+float G_Vis (const int team, const edict_t *from, const edict_t *check, int flags)
 {
 	vec3_t eye;
 
@@ -208,7 +208,7 @@ float G_Vis (int team, const edict_t *from, const edict_t *check, int flags)
  * bits of @c VT_PERISH, no further checks are performed - only the
  * @c VIS_YES bits are returned
  */
-int G_TestVis (int team, edict_t * check, int flags)
+int G_TestVis (const int team, edict_t * check, int flags)
 {
 	edict_t *from = NULL;
 	/* store old flag */
@@ -289,7 +289,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t * check, qboolean perish, edict_t *ent)
 {
 	int i, end;
 	int status = 0;
@@ -324,6 +324,14 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 		}
 
 	return status;
+}
+
+/**
+ * @brief Do G_CheckVisTeam() for all entities
+ */
+int G_CheckVisTeamAll (const int team, qboolean perish, edict_t *ent)
+{
+	return G_CheckVisTeam (team, NULL, perish, ent);
 }
 
 /**
