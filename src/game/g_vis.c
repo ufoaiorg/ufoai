@@ -327,7 +327,7 @@ int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *en
 }
 
 /**
- * @brief Do G_CheckVisTeam() for all entities
+ * @brief Do @c G_CheckVisTeam for all entities
  */
 int G_CheckVisTeamAll (const int team, qboolean perish, edict_t *ent)
 {
@@ -335,7 +335,7 @@ int G_CheckVisTeamAll (const int team, qboolean perish, edict_t *ent)
 	int status = 0;
 
 	while ((chk = G_EdictsGetNextInUse(chk))) {
-		status |= G_CheckVisTeam (team, chk, perish, ent);
+		status |= G_CheckVisTeam(team, chk, perish, ent);
 	}
 	return status;
 }
