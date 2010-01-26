@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-01-25 02:56+0200\n"
+"PO-Revision-Date: 2010-01-25 22:07+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Afrikka"
 
 #: ../base/maps/alienbase.ump:170
 msgid "Alienbase"
-msgstr "Muukalaisten tukikohta"
+msgstr "Alieneiden tukikohta"
 
 #: ../base/maps/baseattack.ump:170
 #: client/campaign/cp_base_callbacks.c:183
@@ -34,7 +34,7 @@ msgstr "Kotitukikohta"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
-msgstr ""
+msgstr "Pommitettu kaupunki"
 
 #: ../base/maps/bridge.ump:67
 msgid "Bridge"
@@ -46,20 +46,19 @@ msgstr "Pieni hautausmaa"
 
 #: ../base/maps/city_disco.ump:65
 msgid "City_disco"
-msgstr ""
+msgstr "Kaupunki Disco"
 
 #: ../base/maps/community_centre.ump:61
-#, fuzzy
 msgid "Community_centre"
 msgstr "Komentokeskus"
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
-msgstr "Rakennus"
+msgstr "Rakennustyömaa"
 
 #: ../base/maps/desert.ump:53
 msgid "Crashed Harvester"
-msgstr "Tuhoutunut muukalaisalus"
+msgstr "Tuhoutunut UFO-alus"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
@@ -75,7 +74,7 @@ msgstr "Pieni metsä"
 
 #: ../base/maps/forest.ump:435
 msgid "Little bungalo in forest"
-msgstr "Pieni bungalo metsässä"
+msgstr "Pieni huvimaja metsässä"
 
 #: ../base/maps/frozen.ump:284
 msgid "Snow"
@@ -83,7 +82,7 @@ msgstr "Lumi"
 
 #: ../base/maps/frozen.ump:301
 msgid "Alien landing - Snow"
-msgstr "Muukalaiset laskeutuvat - Lumeen"
+msgstr "Alienit laskeutuvat - Lumeen"
 
 #: ../base/maps/frozen.ump:319
 msgid "Industrial"
@@ -91,17 +90,15 @@ msgstr "Tehdasalue"
 
 #: ../base/maps/frozen.ump:340
 msgid "Alien landing - Industrial"
-msgstr "Muukalaiset laskeutuvat - Tehdasalueelle"
+msgstr "Alienit laskeutuvat - Tehdasalueelle"
 
 #: ../base/maps/frozen.ump:362
-#, fuzzy
 msgid "Multiplayer Coop"
-msgstr "Moninpeli"
+msgstr "Moninpeli Coop"
 
 #: ../base/maps/frozen.ump:383
-#, fuzzy
 msgid "Multiplayer Deathmatch"
-msgstr "Moninpeli"
+msgstr "Moninpeli Deathmatch"
 
 #: ../base/maps/gasstation.ump:63
 msgid "Gasstation"
@@ -121,14 +118,12 @@ msgid "Japan"
 msgstr "Japani"
 
 #: ../base/maps/japan.ump:293
-#, fuzzy
 msgid "Small eastern park."
-msgstr "Pieni lentokonehalli"
+msgstr "Pieni Itä-puisto."
 
 #: ../base/maps/japan.ump:321
-#, fuzzy
 msgid "Harvester"
-msgstr "Pistoolikotelo"
+msgstr "Sadonkorjaaja"
 
 #: ../base/maps/laboratory.ump:63
 #: ../base/ufos/basemanagement.ufo:283
@@ -137,9 +132,8 @@ msgid "Laboratory"
 msgstr "Laboratorio"
 
 #: ../base/maps/mart.ump:64
-#, fuzzy
 msgid "Mart"
-msgstr "maaliskuu"
+msgstr "Kauppapaikka"
 
 #: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
@@ -168,9 +162,8 @@ msgid "Stadium"
 msgstr "Areena"
 
 #: ../base/maps/transport.ump:66
-#, fuzzy
 msgid "Transport"
-msgstr "Siirrä"
+msgstr "Kuljetusalus"
 
 #: ../base/maps/tropic.ump:359
 msgid "Tropical river"
@@ -194,90 +187,84 @@ msgstr "Tuhoutunut UFO"
 
 #: ../base/maps/village.ump:370
 #: ../base/maps/village.ump:403
-#, fuzzy
 msgid "Village residential"
 msgstr "Maaseutu"
 
 #: ../base/maps/village.ump:435
-#, fuzzy
 msgid "Village commercial"
 msgstr "Esikaupunki"
 
 #: ../base/maps/village.ump:468
-#, fuzzy
 msgid "Village recreational"
 msgstr "Vapaa Kaupunki"
 
 #: ../base/maps/village.ump:499
-#, fuzzy
 msgid "Village big"
 msgstr "Iso Kaupunki"
 
 #: ../base/ufos/aircraftmanagement.ufo:96
 msgid "Firebird-class Dropship"
-msgstr ""
+msgstr "Firebird-luokan Pudotusalus"
 
 #: ../base/ufos/aircraftmanagement.ufo:97
 msgid "Firebird D"
-msgstr ""
+msgstr "Firebird D"
 
 #: ../base/ufos/aircraftmanagement.ufo:131
 msgid "Herakles-class Heavy Lifter"
-msgstr ""
+msgstr "Herakles-luokan raskas Nostin"
 
 #: ../base/ufos/aircraftmanagement.ufo:132
 msgid "Herakles D"
-msgstr ""
+msgstr "Herakles D"
 
 #: ../base/ufos/aircraftmanagement.ufo:167
 msgid "Raptor-class Combat Transport"
-msgstr ""
+msgstr "Raptor-luokan Taktinen Kuljetusalus"
 
 #: ../base/ufos/aircraftmanagement.ufo:168
 msgid "Raptor"
-msgstr ""
+msgstr "Raptor"
 
 #: ../base/ufos/aircraftmanagement.ufo:216
 msgid "Stiletto-class Interceptor"
-msgstr ""
+msgstr "Stiletto-luokan Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:217
 msgid "Stiletto I"
-msgstr ""
+msgstr "Stiletto I"
 
 #: ../base/ufos/aircraftmanagement.ufo:261
 msgid "Saracen-class Interceptor"
-msgstr ""
+msgstr "Saracen-luokan Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:262
 msgid "Saracen I"
-msgstr ""
+msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:302
 msgid "Dragon Interceptor"
-msgstr ""
+msgstr "Dragon Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:303
-#, fuzzy
 msgid "Dragon"
-msgstr "Valmis"
+msgstr "Lohikäärme"
 
 #: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser-class Interceptor"
-msgstr ""
+msgstr "Starchaser-luokan Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:344
-#, fuzzy
 msgid "Starchaser"
-msgstr "Siirrä"
+msgstr "Tähdenmetsästäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray Interceptor"
-msgstr ""
+msgstr "Stingray Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:390
 msgid "Stingray"
-msgstr ""
+msgstr "Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:441
 #: ../base/ufos/otheritems.ufo:39
@@ -287,87 +274,87 @@ msgstr "UFO - Tiedustelija"
 
 #: ../base/ufos/aircraftmanagement.ufo:442
 msgid "Scout U"
-msgstr ""
+msgstr "Tiedustelija U"
 
 #: ../base/ufos/aircraftmanagement.ufo:464
 #: ../base/ufos/otheritems.ufo:49
 #: ../base/ufos/research.ufo:3634
 msgid "UFO - Fighter"
-msgstr ""
+msgstr "UFO - Hävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:465
 msgid "Fighter U"
-msgstr ""
+msgstr "Hävittäjä U"
 
 #: ../base/ufos/aircraftmanagement.ufo:494
 #: ../base/ufos/otheritems.ufo:59
 #: ../base/ufos/research.ufo:3935
 msgid "UFO - Harvester"
-msgstr ""
+msgstr "UFO - Sadonkorjaaja"
 
 #: ../base/ufos/aircraftmanagement.ufo:495
 msgid "Harvester U"
-msgstr ""
+msgstr "Sadonkorjaaja U"
 
 #: ../base/ufos/aircraftmanagement.ufo:535
 #: ../base/ufos/otheritems.ufo:99
 #: ../base/ufos/research.ufo:3849
 msgid "UFO - Gunboat"
-msgstr ""
+msgstr "UFO - Aselaiva"
 
 #: ../base/ufos/aircraftmanagement.ufo:536
 msgid "Gunboat U"
-msgstr ""
+msgstr "Aselaiva U"
 
 #: ../base/ufos/aircraftmanagement.ufo:575
 #: ../base/ufos/otheritems.ufo:109
 #: ../base/ufos/research.ufo:3806
 msgid "UFO - Corrupter"
-msgstr ""
+msgstr "UFO - Korruptoija"
 
 #: ../base/ufos/aircraftmanagement.ufo:576
 msgid "Corrupter U"
-msgstr ""
+msgstr "Korruptoija U"
 
 #: ../base/ufos/aircraftmanagement.ufo:604
 #: ../base/ufos/otheritems.ufo:128
 #: ../base/ufos/research.ufo:3677
 msgid "UFO - Supply Ship"
-msgstr ""
+msgstr "UFO - Huolto Alus"
 
 #: ../base/ufos/aircraftmanagement.ufo:605
 msgid "Supply U"
-msgstr ""
+msgstr "Huolto U"
 
 #: ../base/ufos/aircraftmanagement.ufo:626
 #: ../base/ufos/otheritems.ufo:79
 #: ../base/ufos/research.ufo:3892
 msgid "UFO - Ripper"
-msgstr ""
+msgstr "UFO - Viiltäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:627
 msgid "Ripper U"
-msgstr ""
+msgstr "Viiltäjä U"
 
 #: ../base/ufos/aircraftmanagement.ufo:654
 #: ../base/ufos/otheritems.ufo:69
 #: ../base/ufos/research.ufo:3763
 msgid "UFO - Bomber"
-msgstr ""
+msgstr "UFO - Pommittaja"
 
 #: ../base/ufos/aircraftmanagement.ufo:655
 msgid "Bomber U"
-msgstr ""
+msgstr "Pommittaja U"
 
 #: ../base/ufos/aircraftmanagement.ufo:689
 #: ../base/ufos/otheritems.ufo:119
 #: ../base/ufos/research.ufo:3720
 msgid "UFO - Carrier"
-msgstr ""
+msgstr "UFO - Lentotukialus"
 
 #: ../base/ufos/aircraftmanagement.ufo:690
 msgid "Carrier U"
-msgstr ""
+msgstr "Lentotukialus U"
 
 #: ../base/ufos/aircraftmanagement.ufo:712
 #: ../base/ufos/otheritems.ufo:89
@@ -382,25 +369,25 @@ msgstr "Emäalus U"
 #: ../base/ufos/aircraftmanagement.ufo:729
 #: ../base/ufos/research.ufo:4599
 msgid "Aerial Laser Cannon"
-msgstr ""
+msgstr "Aerial Laser tykki"
 
 #: ../base/ufos/aircraftmanagement.ufo:760
 msgid "Shiva Rotary Cannon"
-msgstr ""
+msgstr "Shiva Pyörivä Konetykki"
 
 #: ../base/ufos/aircraftmanagement.ufo:771
 #: ../base/ufos/research.ufo:4666
 msgid "SHIVA 20mm API Rounds"
-msgstr ""
+msgstr "SHIVA 20mm API Ammukset"
 
 #: ../base/ufos/aircraftmanagement.ufo:787
 #: ../base/ufos/research.ufo:4687
 msgid "SHIVA 20mm HEI Rounds"
-msgstr ""
+msgstr "SHIVA 20mm HEI Ammukset"
 
 #: ../base/ufos/aircraftmanagement.ufo:803
 msgid "Raven ECM Unit"
-msgstr ""
+msgstr "Raven ECM-yksikkö"
 
 #: ../base/ufos/aircraftmanagement.ufo:815
 msgid "Sparrowhawk AA Missile Rack"
@@ -413,17 +400,17 @@ msgstr "Sparrowhawk Ohjus"
 #: ../base/ufos/aircraftmanagement.ufo:842
 #: ../base/ufos/research.ufo:4746
 msgid "TR-20 Rocket Pod"
-msgstr ""
+msgstr "TR-20 Rakettikotelo"
 
 #: ../base/ufos/aircraftmanagement.ufo:855
 #: ../base/ufos/research.ufo:4763
 msgid "TR-20 Rocket"
-msgstr ""
+msgstr "TR-20 Raketti"
 
 #: ../base/ufos/aircraftmanagement.ufo:874
 #: ../base/ufos/research.ufo:4782
 msgid "Particle Beam Weapon"
-msgstr ""
+msgstr "Hiukkas-suihku Ase"
 
 #: ../base/ufos/aircraftmanagement.ufo:904
 #: ../base/ufos/research.ufo:4839
@@ -433,7 +420,7 @@ msgstr "Tähtäys Tietokone"
 #: ../base/ufos/aircraftmanagement.ufo:916
 #: ../base/ufos/research.ufo:4856
 msgid "Fuel Pod"
-msgstr ""
+msgstr "Polttoaine säiliö"
 
 #: ../base/ufos/aircraftmanagement.ufo:930
 #: ../base/ufos/research.ufo:4434
@@ -443,38 +430,36 @@ msgstr "Polymeerinen Lentokone Panssari"
 #: ../base/ufos/aircraftmanagement.ufo:944
 #: ../base/ufos/research.ufo:4451
 msgid "Alien Aircraft Plating"
-msgstr ""
+msgstr "Alien Lentokone Panssarointi"
 
 #: ../base/ufos/aircraftmanagement.ufo:958
 #: ../base/ufos/research.ufo:4485
-#, fuzzy
 msgid "Alien Astrogation"
-msgstr "Muukalaisten alkuperä"
+msgstr "Alieneiden alkuperä"
 
 #: ../base/ufos/aircraftmanagement.ufo:967
 #: ../base/ufos/research.ufo:4523
 msgid "Alien Propulsion"
-msgstr "Muukalaisien kuljetuskoneisto"
+msgstr "Alieneiden kuljetuskoneisto"
 
 #: ../base/ufos/aircraftmanagement.ufo:976
 #: ../base/ufos/research.ufo:4560
 msgid "Alien Detection"
-msgstr "Muukalainen havaittu!"
+msgstr "Alien havaittu!"
 
 #: ../base/ufos/aircraftmanagement.ufo:989
 #: ../base/ufos/research.ufo:4386
 msgid "AA51 missile launcher"
-msgstr ""
+msgstr "AA51 kantoraketti laukaisija"
 
 #: ../base/ufos/aircraftmanagement.ufo:1019
 #: ../base/ufos/research.ufo:156
-#, fuzzy
 msgid "Base-Defence Laser Turret"
-msgstr "Valitse tukikohta"
+msgstr "Tukikohdan puolustus laser-tykki"
 
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
-msgstr ""
+msgstr "normaali"
 
 #: ../base/ufos/armour.ufo:34
 msgid "blast"
@@ -498,46 +483,44 @@ msgstr "plastma"
 
 #: ../base/ufos/armour.ufo:51
 msgid "particlebeam"
-msgstr ""
+msgstr "Partikkeli Hiukkassuihku"
 
 #: ../base/ufos/armour.ufo:56
 msgid "stun_electro"
-msgstr ""
+msgstr "sähkötainnutin"
 
 #: ../base/ufos/armour.ufo:57
 msgid "stun_gas"
-msgstr ""
+msgstr "kaasu granaatti"
 
 #: ../base/ufos/armour.ufo:67
 msgid "Combat Armour"
 msgstr "Taktinen panssari"
 
 #: ../base/ufos/armour.ufo:128
-#, fuzzy
 msgid "Advanced Combat Armour"
-msgstr "<TODO>"
+msgstr "Kehittynyt Taktinen Panssari"
 
 #: ../base/ufos/armour.ufo:189
 msgid "Nanocomposite Armour"
 msgstr "Nanokomposiitti panssari"
 
 #: ../base/ufos/armour.ufo:251
-#, fuzzy
 msgid "Power Armour"
-msgstr "Näytä panssarit"
+msgstr "Energia Panssari"
 
 #: ../base/ufos/armour.ufo:490
 msgid "Alien Body Armour"
-msgstr "Muukalaisen Kehopanssari"
+msgstr "Alienin Kehopanssari"
 
 #: ../base/ufos/armour.ufo:551
 msgid "Medium Alien Armour"
-msgstr "Kehittynyt Muukalaispanssari"
+msgstr "Kehittynyt Alien panssari"
 
 #: ../base/ufos/basemanagement.ufo:29
 #: ../base/ufos/basemanagement.ufo:45
 msgid "Alien Containment Facility"
-msgstr "Muukalaissäilytystila"
+msgstr "Alien säilytystila"
 
 #: ../base/ufos/basemanagement.ufo:53
 msgid "Entrance"
@@ -622,7 +605,6 @@ msgid "Very Hard Campaign"
 msgstr "Erittäin vaikea kampanja"
 
 #: ../base/ufos/campaign.ufo:4
-#, fuzzy
 msgid "veryhard_campaign_txt"
 msgstr "Erittäin vaikea kampanja"
 
@@ -631,7 +613,6 @@ msgid "Hard Campaign"
 msgstr "Vaikea kampanja"
 
 #: ../base/ufos/campaign.ufo:30
-#, fuzzy
 msgid "hard_campaign_txt"
 msgstr "Vaikea kampanja"
 
@@ -640,7 +621,6 @@ msgid "Standard Campaign"
 msgstr "Normaali kampanja"
 
 #: ../base/ufos/campaign.ufo:59
-#, fuzzy
 msgid "standard_campaign_txt"
 msgstr "Normaali kampanja"
 
@@ -649,7 +629,6 @@ msgid "Easy Campaign"
 msgstr "Helppo kampanja"
 
 #: ../base/ufos/campaign.ufo:108
-#, fuzzy
 msgid "easy_campaign_txt"
 msgstr "Helppo kampanja"
 
@@ -658,13 +637,12 @@ msgid "Very Easy Campaign"
 msgstr "Erittäin helppo kampanja"
 
 #: ../base/ufos/campaign.ufo:137
-#, fuzzy
 msgid "veryeasy_campaign_txt"
 msgstr "Erittäin helppo kampanja"
 
 #: ../base/ufos/campaign.ufo:185
 msgid "Play the aliens"
-msgstr "Muukalaiskampanja"
+msgstr "Alien kampanja"
 
 #: ../base/ufos/campaign.ufo:186
 #, fuzzy
@@ -933,7 +911,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
-msgstr ""
+msgstr "21 maaliskuuta 2084 "
 
 #: ../base/ufos/events.ufo:36
 msgid "Good Luck"
@@ -1063,7 +1041,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
-msgstr "Muukalainen kuoli"
+msgstr "Alien kuoli"
 
 #: ../base/ufos/events.ufo:46
 #, fuzzy
@@ -1072,14 +1050,12 @@ msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:57
 #: ../base/ufos/events.ufo:68
-#, fuzzy
 msgid "Recovery Report -- %s"
-msgstr "Muukalaistoimintaa havaittu: %s"
+msgstr "Takaisinperintäraportti --  %s"
 
 #: ../base/ufos/events.ufo:58
-#, fuzzy
 msgid "mail_alien_ufo_crashed"
-msgstr "Muukalaistoimintaa havaittu: %s"
+msgstr "Sähköposti Alien Ufo alus pudonnut"
 
 #: ../base/ufos/events.ufo:69
 #, fuzzy
@@ -1107,9 +1083,8 @@ msgid "Production Finished -- %s"
 msgstr "Tuotanto Valmis -- %s"
 
 #: ../base/ufos/events.ufo:102
-#, fuzzy
 msgid "mail_production_finished"
-msgstr "Tuotteen %s valmistus tuli valmiiksi."
+msgstr "Sähköposti, tuotanto päättynyt"
 
 #: ../base/ufos/events.ufo:110
 #: ../base/ufos/events.ufo:132
@@ -1134,7 +1109,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:123
 msgid "UFO Stored In Hangar -- %s"
-msgstr ""
+msgstr "UFO varastoitu Halliin -%s"
 
 #: ../base/ufos/events.ufo:124
 msgid "mail_ufo_in_hangar"
@@ -1142,7 +1117,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:134
 msgid "Transfer Received -- %s"
-msgstr ""
+msgstr "Siirto vastaanotettu -- %s"
 
 #: ../base/ufos/events.ufo:135
 msgid "mail_transfer_received"
@@ -1150,7 +1125,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:145
 msgid "Equipment Order Received -- %s"
-msgstr ""
+msgstr "Laitteiden tilaus vastaanotettu -- %s"
 
 #: ../base/ufos/events.ufo:146
 msgid "mail_equipment_order_received"
@@ -1166,7 +1141,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:167
 msgid "New Base Ready -- %s"
-msgstr ""
+msgstr "Uusi Tukikohta Valmis -- %s"
 
 #: ../base/ufos/events.ufo:168
 msgid "mail_new_base_ready"
@@ -1182,7 +1157,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:189
 msgid "Mission Summary -- %s"
-msgstr ""
+msgstr "tehtävän yhteenveto -- %s"
 
 #: ../base/ufos/events.ufo:190
 msgid "mail_mission_summary"
@@ -1190,7 +1165,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:200
 msgid "Alien Base Discovered -- %s"
-msgstr ""
+msgstr "Alienien tukikohta löydetty -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
@@ -1198,7 +1173,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
-msgstr ""
+msgstr "Tutka seuranta hukattu -- %s"
 
 #: ../base/ufos/events.ufo:212
 msgid "mail_lost_radar_tracking"
@@ -1206,7 +1181,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:222
 msgid "New Radar Contact -- %s"
-msgstr ""
+msgstr "Uusi tutka kontakti -- %s"
 
 #: ../base/ufos/events.ufo:223
 msgid "mail_new_radar_contact"
@@ -1224,7 +1199,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
-msgstr ""
+msgstr "Reaktio liian myöhäinen -- %s"
 
 #: ../base/ufos/events.ufo:234
 msgid "mail_response_too_late"
@@ -1232,21 +1207,19 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:244
 msgid "UFO Shot Down -- %s"
-msgstr ""
+msgstr "UFO Ammuttu Alas -- %s"
 
 #: ../base/ufos/events.ufo:245
 msgid "mail_ufo_shot_down"
 msgstr ""
 
 #: ../base/ufos/events.ufo:255
-#, fuzzy
 msgid "Alien Activity Reported -- %s"
-msgstr "Muukalaistoimintaa havaittu: %s"
+msgstr "Alien toimintaa havaittu: %s"
 
 #: ../base/ufos/events.ufo:256
-#, fuzzy
 msgid "mail_alien_activity_reported"
-msgstr "Muukalaistoimintaa havaittu: %s"
+msgstr "Sähköposti alien toimintaa raportoitu"
 
 #: ../base/ufos/events.ufo:264
 #: ../base/ufos/events.ufo:275
@@ -1258,7 +1231,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
-msgstr ""
+msgstr "Uusi ilma-alus saapunut --%s"
 
 #: ../base/ufos/events.ufo:267
 msgid "mail_new_aircraft_arrived"
@@ -1266,7 +1239,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:277
 msgid "Aircraft Lost Target -- %s"
-msgstr ""
+msgstr "Lentokone hävitti kohteensa --%s"
 
 #: ../base/ufos/events.ufo:278
 msgid "mail_aircraft_lost_target"
@@ -1282,7 +1255,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
-msgstr ""
+msgstr "Lentokoneessa kenguru bensiiniä -- %s"
 
 #: ../base/ufos/events.ufo:300
 msgid "mail_aircraft_bingo_fuel"
@@ -1362,26 +1335,26 @@ msgstr "Tutka Torni"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr ""
+msgstr "Tutka torni on miehittämätön, rakennus voidaan sijoittaa minne tahansa maailmassa lisätäksemme tutkan herkkyysaluetta. Se on edullinen rakentaa ja erittäin hyödyllinen, mutta sen naamiointi ei ole kovin tehokas. UFO-alus voi havaita sen aktiivisella skannauksella ja yrittää tuhota torni kun he ovat löytäneet sen. On suositeltavaa, että tutka torneja suojata SAM-ilmatorjunta puolustuksella."
 
 #: ../base/ufos/installation.ufo:23
 #: ../base/ufos/ui/geoscape.ufo:1212
 #: ../base/ufos/ui/lostwon.ufo:212
 msgid "UFO Yard"
-msgstr ""
+msgstr "UFO-halli"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr ""
+msgstr "Ufo-halli on naamioitu varastointi halli kiinniotetuille ufoille. Se voidaan sijoittaa minne tahansa maailmassa ja sinne voidaan varastoida ufo-alukset purkamis ja tutkimus käyttöön. Niitä voidaan myös siirtää muihin UFO-halleihin. Varastoitu ufo voidaan selvittää ja/tai purkaa asianmukaisissa tiloissa.  Nämä toimet voidaan myös tehdä hitaammin kauempana."
 
 #: ../base/ufos/installation.ufo:38
 #: ../base/ufos/ui/geoscape.ufo:1170
 msgid "SAM Site"
-msgstr ""
+msgstr "SAM-ilmatorjunta puolustus"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr ""
+msgstr "SAM-ilmatorjunta puolustus on miehittämätön, se voidaan sijoittaa minne tahansa maailmassa automaattisesti. Se havaitsee UFOt automaattisesti, ja tuhoaa ne pinta-ilmatorjuntaohjuksin. Se on edullinen rakentaa ja erittäin hyödyllinen, mutta sen naamiointi ei ole kovin tehokasta. Alieneiden alus voi havaita ne ja yrittää tuhota kun he löytävät sen. SAM-puolustus on tukeva, mutta antaa periksi toistuvat pommitukset. Ohjuksen lataaminen on ilmaista ja se tapahtuu YK: n joukojen sivuilla."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -1484,27 +1457,27 @@ msgstr "Teollisuus teema"
 #: ../base/ufos/maps.ufo:171
 #: ../base/ufos/maps.ufo:211
 msgid "A suburban district of an oriental area."
-msgstr ""
+msgstr "Itämaisen tyylisessä esikaupunki alueella."
 
 #: ../base/ufos/maps.ufo:254
 #: ../base/ufos/maps.ufo:296
 #: ../base/ufos/maps.ufo:335
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr ""
+msgstr "Maatila maaseutualueella. Paljon maata kattava, mutta harvat esteet heikentävä näköyhteys."
 
 #: ../base/ufos/maps.ufo:384
 #: ../base/ufos/maps.ufo:465
 #: ../base/ufos/maps.ufo:506
 msgid "An industrial area in a cold region."
-msgstr ""
+msgstr "Teollisuusalue kylmällä alueella."
 
 #: ../base/ufos/maps.ufo:426
 msgid "An underpopulated area in a cold region."
-msgstr ""
+msgstr "Harva alue talvella."
 
 #: ../base/ufos/maps.ufo:545
 msgid "An industrial compound."
-msgstr ""
+msgstr "Teollisuusalue"
 
 #: ../base/ufos/maps.ufo:600
 msgid "Cemetery terror mission."
@@ -1512,87 +1485,87 @@ msgstr "Hautausmaan taktinen tehtävä."
 
 #: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
-msgstr ""
+msgstr "Joki joka virtaa läpi viidakon."
 
 #: ../base/ufos/maps.ufo:693
 #: ../base/ufos/maps.ufo:736
 msgid "A cleared stretch of land in the middle of the jungle."
-msgstr ""
+msgstr "Kulotettu alue keskellä viidakkoa."
 
 #: ../base/ufos/maps.ufo:782
 #: ../base/ufos/maps.ufo:821
 #: ../base/ufos/maps.ufo:862
 #: ../base/ufos/maps.ufo:902
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr ""
+msgstr "Rauhanomainen naapuruus väestökeskuksen laitamilla"
 
 #: ../base/ufos/maps.ufo:941
 #: ../base/ufos/maps.ufo:983
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Alieneilla ei mitään hyvää täällä harvaan asutussa metsässä."
 
 #: ../base/ufos/maps.ufo:1025
 #: ../base/ufos/maps.ufo:1067
 msgid "Some houses in desert"
-msgstr ""
+msgstr "Joitakin taloja autiomaassa"
 
 #: ../base/ufos/maps.ufo:1108
 msgid "An excavation site that has fallen under alien attack."
-msgstr ""
+msgstr "Kaivauspaikka Alieneiden hyökkäyksen kohteena."
 
 #: ../base/ufos/maps.ufo:1155
 msgid "An estate owned by rich and influential people."
-msgstr ""
+msgstr "Kiinteistöjen omistuksessa rikkaita ja vaikutusvaltaisia ihmisiä."
 
 #: ../base/ufos/maps.ufo:1199
 msgid "A small village in England."
-msgstr ""
+msgstr "Pieni kylä Englannissa."
 
 #: ../base/ufos/maps.ufo:1245
 msgid "A small office in a mountainous region."
-msgstr ""
+msgstr "Pieni toimisto vuoristoalueella."
 
 #: ../base/ufos/maps.ufo:1293
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr ""
+msgstr "Eräänlainen supermarket."
 
 #: ../base/ufos/maps.ufo:1343
 msgid "An old mine."
-msgstr ""
+msgstr "Vanha kaivos."
 
 #: ../base/ufos/maps.ufo:1391
 msgid "An industrial area, used for loading and unloading goods."
-msgstr ""
+msgstr "Teollisuusalue, joita käytetään tavaroiden lastaaminen ja purkaminen."
 
 #: ../base/ufos/maps.ufo:1437
 msgid "A bunker used in a previous conflict."
-msgstr ""
+msgstr "Punkkeri jota on käytetty edellisessä konfliktissa."
 
 #: ../base/ufos/maps.ufo:1483
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr ""
+msgstr "Vesivoima pato, joka uhkaavat alien valloittajat."
 
 #: ../base/ufos/maps.ufo:1527
 #: ../base/ufos/maps.ufo:1577
 #: ../base/ufos/maps.ufo:1627
 msgid "A classic eastern suburban area."
-msgstr ""
+msgstr "Klassinen esikaupunki alue."
 
 #: ../base/ufos/maps.ufo:1676
 msgid "A small industrial area."
-msgstr ""
+msgstr "Pieni teollisuusalue"
 
 #: ../base/ufos/maps.ufo:1722
 msgid "A stadium used for various recreational events."
-msgstr ""
+msgstr "Areena jota käytetään erilaisiin vapaa-ajan tapahtumiin."
 
 #: ../base/ufos/maps.ufo:1771
 msgid "A tropical area where several suspected criminals have made their homes."
-msgstr ""
+msgstr "Trooppinen alue, jossa useat epäillyt rikolliset asuvat."
 
 #: ../base/ufos/maps.ufo:1829
 msgid "A small estate in the mountains"
-msgstr ""
+msgstr "Pieni kartano vuorilla."
 
 #: ../base/ufos/maps.ufo:1878
 msgid "A crashed Scout UFO"
@@ -1600,15 +1573,15 @@ msgstr "Pudonnut tiedustelija UFO"
 
 #: ../base/ufos/maps.ufo:1913
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
-msgstr ""
+msgstr "Maataloa ja halleja ympäröivät pellot. UFO on laskeutunut yhdelle pellolle."
 
 #: ../base/ufos/maps.ufo:1960
 msgid "A ferry."
-msgstr ""
+msgstr "Lautta."
 
 #: ../base/ufos/maps.ufo:2008
 msgid "A rather old-fashioned suburban district."
-msgstr ""
+msgstr "Vanhanaikainen esikaupunki alue."
 
 #: ../base/ufos/maps.ufo:2057
 #: ../base/ufos/maps.ufo:2104
@@ -1647,15 +1620,15 @@ msgstr ""
 #: ../base/ufos/maps.ufo:2522
 #: ../base/ufos/maps.ufo:2568
 msgid "A small UFO has crashed in this mining region."
-msgstr ""
+msgstr "Pieni UFO tuhoutunut kaivos alueelle."
 
 #: ../base/ufos/maps.ufo:2617
 msgid "An office complex under construction."
-msgstr ""
+msgstr "Toimistorakennus rakenteilla"
 
 #: ../base/ufos/maps.ufo:2664
 msgid "A local harbour."
-msgstr ""
+msgstr "Paikallinen satama"
 
 #: ../base/ufos/maps.ufo:2709
 msgid "An office complex on the outskirts of town."
@@ -1675,12 +1648,12 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:2914
 msgid "An alien Harvester has crashed in the wastelands."
-msgstr ""
+msgstr "Alienien sadonkorjaaja alus tuhoutunut joutomaalle."
 
 #: ../base/ufos/maps.ufo:2960
 #: ../base/ufos/maps.ufo:2994
 msgid "A small settlement in winter."
-msgstr ""
+msgstr "Pieni ratkaisu talvella."
 
 #: ../base/ufos/maps.ufo:3033
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
@@ -1720,11 +1693,11 @@ msgstr "Tukikohtaan on hyökätty."
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
-msgstr ""
+msgstr "Risti"
 
 #: ../base/ufos/medals.ufo:9
 msgid "Coin"
-msgstr ""
+msgstr "Kolikko"
 
 #: ../base/ufos/medals.ufo:30
 #: ../base/ufos/team_humans.ufo:567
@@ -1800,9 +1773,8 @@ msgid "SWO"
 msgstr ""
 
 #: ../base/ufos/medals.ufo:130
-#, fuzzy
 msgid "Second Lieutenant"
-msgstr "Luutnantti"
+msgstr "Vänrikki"
 
 #: ../base/ufos/medals.ufo:131
 msgid "2Lt"
@@ -2113,7 +2085,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:302
 msgid "Live Alien"
-msgstr ""
+msgstr "Elävä Alien"
 
 #: ../base/ufos/research.ufo:307
 msgid "alien_live_txt"
@@ -2299,7 +2271,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:542
 msgid "The Universal Serum"
-msgstr ""
+msgstr "Universaalinen Seerumi"
 
 #: ../base/ufos/research.ufo:547
 msgid "universal_serum_txt"
@@ -5339,7 +5311,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3312
 msgid "b_workshop_txt"
 msgstr ""
-"Piirustukset -- Työpaja\n"
+"Sinikopiot -- Työpaja\n"
 "\n"
 "SALAINEN TASO MUSTA\n"
 "\n"
@@ -6051,7 +6023,7 @@ msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
 
 #: ../base/ufos/seq_credits.ufo:297
 msgid "Technology Consultants"
-msgstr "Tekniikkakonsulttit"
+msgstr "Tekniikkakonsultit"
 
 #: ../base/ufos/seq_credits.ufo:308
 msgid "Forest Hale (LordHavoc)"
@@ -6172,7 +6144,7 @@ msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:643
 msgid "Additional Thanks To"
-msgstr "Lisä kiitokset"
+msgstr "Kiitokset"
 
 #: ../base/ufos/seq_credits.ufo:650
 msgid "Sacrusha"
@@ -6272,7 +6244,6 @@ msgid "Gameplay"
 msgstr "Pelaaminen"
 
 #: ../base/ufos/seq_tutorials.ufo:35
-#, fuzzy
 msgid "Some notes about the gameplay"
 msgstr "Muutama ohje palataksesi peliä"
 
@@ -6406,9 +6377,8 @@ msgid "Skirmish is type of fast game."
 msgstr "Skirmishin tyyppi tai nopea peli."
 
 #: ../base/ufos/seq_tutorials.ufo:835
-#, fuzzy
 msgid "Equipment selection"
-msgstr "Muukalainen!\n"
+msgstr "Laitteiden valinta"
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid "Day or night version of map to play"
@@ -6451,7 +6421,6 @@ msgid "Or..."
 msgstr "Tai..."
 
 #: ../base/ufos/seq_tutorials.ufo:1022
-#, fuzzy
 msgid "Exit to main menu"
 msgstr "Lopeta palataksesi etusivulle"
 
@@ -6855,9 +6824,8 @@ msgstr ""
 #: ../base/ufos/ui/aircraft_equip.ufo:455
 #: ../base/ufos/ui/aircraft_equip.ufo:475
 #: ../base/ufos/ui/aircraft_equip.ufo:495
-#, fuzzy
 msgid "Select this slot"
-msgstr "Valitse tukikohta"
+msgstr "Valitse tämä paikka"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
 #: ../base/ufos/ui/aircraft_soldiers.ufo:65
@@ -6873,9 +6841,8 @@ msgid "Call back"
 msgstr "Pyydä takaisin"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:123
-#, fuzzy
 msgid "Pilot is assigned to another craft"
-msgstr "Lentäjä lentokoneessa"
+msgstr "Lentäjä on siirretty toiseen alukseen"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:141
 msgid "A pilot is already assigned to this craft"
@@ -6907,18 +6874,16 @@ msgid "Equip soldiers"
 msgstr "Varusta sotilas"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:115
-#, fuzzy
 msgid "Soldier is assigned to another craft"
-msgstr "Sotilas lentokoneessa"
+msgstr "Sotilas on siirretty toiseen alukseen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:134
 msgid "No more soldiers can be assigned to this craft"
 msgstr "Ei enemmpää sotilaita voidaan siirtää tähän alukseen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:136
-#, fuzzy
 msgid "Assign soldier to this craft"
-msgstr "Palkkaa sotilaita"
+msgstr "Määritä sotilas tähän alukseen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:147
 msgid "Remove soldier from this craft"
@@ -7350,7 +7315,6 @@ msgstr "Palkkaa työntekijöitä"
 
 #: ../base/ufos/ui/bases.ufo:207
 #: client/campaign/cp_base_callbacks.c:328
-#, fuzzy
 msgid "Containment"
 msgstr "Eristämistoimenpide"
 
@@ -7499,7 +7463,7 @@ msgstr "Lisäosa"
 #: ../base/ufos/ui/inventory.ufo:66
 #: ../base/ufos/ui/multiplayer_team.ufo:56
 msgid "Headgear"
-msgstr "Päähine"
+msgstr "Kypärä"
 
 #: ../base/ufos/ui/equipment.ufo:65
 #: ../base/ufos/ui/inventory.ufo:75
@@ -7564,21 +7528,21 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:416
 #: ../base/ufos/ui/ufopedia.ufo:280
 msgid "Firemode:"
-msgstr "Tulimoodi:"
+msgstr "Tulitila:"
 
 #: ../base/ufos/ui/equipment.ufo:440
 #: ../base/ufos/ui/market.ufo:463
 #: ../base/ufos/ui/multiplayer_team.ufo:424
 #: ../base/ufos/ui/ufopedia.ufo:288
 msgid "Previous firemode"
-msgstr "Edellinen tulimoodi"
+msgstr "Edellinen tulitila"
 
 #: ../base/ufos/ui/equipment.ufo:459
 #: ../base/ufos/ui/market.ufo:482
 #: ../base/ufos/ui/multiplayer_team.ufo:443
 #: ../base/ufos/ui/ufopedia.ufo:307
 msgid "Next firemode"
-msgstr "Seuraava tulimoodi"
+msgstr "Seuraava tulitila"
 
 #: ../base/ufos/ui/equipment.ufo:587
 #: ../base/ufos/ui/multiplayer_team.ufo:572
@@ -7916,18 +7880,16 @@ msgid "Manage"
 msgstr "Hallitse"
 
 #: ../base/ufos/ui/geoscape.ufo:1552
-#, fuzzy
 msgid "Manage installation"
-msgstr "Kansakunnat"
+msgstr "Hallitse asennuksia"
 
 #: ../base/ufos/ui/geoscape.ufo:1609
 msgid "Anti-UFO defence"
 msgstr "Anti-UFO puolustus"
 
 #: ../base/ufos/ui/geoscape.ufo:1617
-#, fuzzy
 msgid "Aircraft interception"
-msgstr "Lentokoneet"
+msgstr "Ilmakuuntelu"
 
 #: ../base/ufos/ui/geoscape.ufo:1621
 msgid "SAM defence"
@@ -7957,7 +7919,7 @@ msgstr "Valitse lentokone"
 
 #: ../base/ufos/ui/geoscape.ufo:1807
 msgid "ETA:"
-msgstr "JOA:"
+msgstr "ETA:"
 
 #: ../base/ufos/ui/geoscape.ufo:1851
 msgid "Select item"
@@ -7976,9 +7938,8 @@ msgid "Description:"
 msgstr "Kuvaus:"
 
 #: ../base/ufos/ui/geoscape.ufo:1998
-#, fuzzy
 msgid "Geoscape options"
-msgstr "Asetukset"
+msgstr "Maailmankartan asetukset"
 
 #: ../base/ufos/ui/geoscape.ufo:2010
 msgid "Geoscape projection mode:"
@@ -8003,7 +7964,7 @@ msgstr "Nimeä työntekijä"
 #: ../base/ufos/ui/hire.ufo:406
 #, fuzzy
 msgid "Occupation"
-msgstr "Asetukset"
+msgstr "Hallussapito"
 
 #: ../base/ufos/ui/hire.ufo:499
 msgid "Workers"
@@ -8028,9 +7989,8 @@ msgid "Medium wounds"
 msgstr "Keskisuuria vammoja"
 
 #: ../base/ufos/ui/hospital.ufo:124
-#, fuzzy
 msgid "Slightly wounded"
-msgstr "Vähän haavoittunut"
+msgstr "Hieman haavoittunut"
 
 #: ../base/ufos/ui/hospital.ufo:352
 msgid "Scroll up"
@@ -8086,7 +8046,7 @@ msgstr "Kerros 8"
 
 #: ../base/ufos/ui/hud.ufo:370
 msgid "Primary fire mode"
-msgstr "Pää tuli moodi"
+msgstr "Ensisijainen tuli tila"
 
 #: ../base/ufos/ui/hud.ufo:675
 msgid "Physical stats of this soldier"
@@ -8161,7 +8121,7 @@ msgstr ""
 #: ../base/ufos/ui/lostwon.ufo:165
 #, fuzzy
 msgid "UFO recovery"
-msgstr "Yö"
+msgstr "UFOn hyödyntäminen"
 
 #: ../base/ufos/ui/lostwon.ufo:176
 msgid "Store UFO"
@@ -8188,9 +8148,8 @@ msgid "Nation:"
 msgstr "Kansakunta:"
 
 #: ../base/ufos/ui/lostwon.ufo:306
-#, fuzzy
 msgid "Sort nations by name"
-msgstr "Kansakunnat"
+msgstr "Lajittele kansakuntien nimen mukaan"
 
 #: ../base/ufos/ui/lostwon.ufo:316
 msgid "Price:"
@@ -8201,18 +8160,16 @@ msgid "Sort nations by price"
 msgstr ""
 
 #: ../base/ufos/ui/lostwon.ufo:327
-#, fuzzy
 msgid "Relations:"
-msgstr "Resoluutio:"
+msgstr "Suhteet:"
 
 #: ../base/ufos/ui/lostwon.ufo:328
 msgid "Sort nations by relation"
 msgstr ""
 
 #: ../base/ufos/ui/lostwon.ufo:377
-#, fuzzy
 msgid "Selected nation:"
-msgstr "Valitse tukikohta"
+msgstr "Valitse kansakunta:"
 
 #: ../base/ufos/ui/lostwon.ufo:391
 msgid "Sell"
@@ -8256,9 +8213,8 @@ msgid "Credits"
 msgstr "Tekijät"
 
 #: ../base/ufos/ui/main.ufo:91
-#, fuzzy
 msgid "Initial settings"
-msgstr "Peliasetukset"
+msgstr "Alku asetukset"
 
 #: ../base/ufos/ui/main.ufo:96
 msgid "User Information"
@@ -8333,7 +8289,7 @@ msgstr "Osta ja myy tavaraa"
 #: ../base/ufos/ui/production.ufo:71
 #, fuzzy
 msgid "Craft items"
-msgstr "Luo"
+msgstr "Ammatti tuotteet"
 
 #: ../base/ufos/ui/market.ufo:99
 #: ../base/ufos/ui/production.ufo:83
@@ -8362,9 +8318,8 @@ msgid "Material editor"
 msgstr "Materiaali muokkain"
 
 #: ../base/ufos/ui/material_editor.ufo:71
-#, fuzzy
 msgid "Hardness:"
-msgstr "vaikea"
+msgstr "Kovuus:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
@@ -8393,18 +8348,16 @@ msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:301
 #: ../base/ufos/ui/material_editor.ufo:404
-#, fuzzy
 msgid "T:"
-msgstr "JOA:"
+msgstr "T:"
 
 #: ../base/ufos/ui/material_editor.ufo:332
 msgid "Ds:"
 msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:356
-#, fuzzy
 msgid "Dt:"
-msgstr "Päivä:"
+msgstr "Dt:"
 
 #: ../base/ufos/ui/material_editor.ufo:435
 #: ../base/ufos/ui/material_editor.ufo:490
@@ -8423,33 +8376,28 @@ msgid "Amp:"
 msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:617
-#, fuzzy
 msgid "Deg:"
-msgstr "Kuolleena:"
+msgstr "Deg:"
 
 #: ../base/ufos/ui/material_editor.ufo:653
-#, fuzzy
 msgid "Stretch"
-msgstr "Kestävyys:"
+msgstr "Kestävyys"
 
 #: ../base/ufos/ui/material_editor.ufo:657
-#, fuzzy
 msgid "Pulse"
-msgstr "Tauko"
+msgstr "Syke"
 
 #: ../base/ufos/ui/material_editor.ufo:661
-#, fuzzy
 msgid "Scroll"
-msgstr "Rullausnopeus:"
+msgstr "Rullaus"
 
 #: ../base/ufos/ui/material_editor.ufo:665
 msgid "Rotate"
 msgstr "Käännä"
 
 #: ../base/ufos/ui/material_editor.ufo:669
-#, fuzzy
 msgid "Scale"
-msgstr "Tallenna"
+msgstr "Skaala"
 
 #: ../base/ufos/ui/messageoptions.ufo:12
 msgid "enable or disable displaying a notification message"
@@ -8690,9 +8638,8 @@ msgid "Start server"
 msgstr "Aloita palvelin"
 
 #: ../base/ufos/ui/multiplayer.ufo:1144
-#, fuzzy
 msgid "Party info"
-msgstr "Partyn tiedot"
+msgstr "Miehistön tiedot"
 
 #: ../base/ufos/ui/multiplayer.ufo:1154
 msgid "Display/hide the panel"
@@ -8841,7 +8788,7 @@ msgstr "ihmiset"
 #: ../base/ufos/ui/multiplayer_team.ufo:920
 #: ../base/ufos/ui/skirmish.ufo:152
 msgid "Alien"
-msgstr "Muukalainen"
+msgstr "Alien"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:948
 msgid "Save your team"
@@ -8986,9 +8933,8 @@ msgid "Sound settings"
 msgstr "Ääniasetukset"
 
 #: ../base/ufos/ui/options.ufo:608
-#, fuzzy
 msgid "Sound rate:"
-msgstr "Toistojärjestelmä:"
+msgstr "Äänensuhde:"
 
 #: ../base/ufos/ui/options.ufo:614
 msgid "Restart sound to change the settings"
@@ -9339,24 +9285,20 @@ msgid "Node editor"
 msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:30
-#, fuzzy
 msgid "Capture a node"
-msgstr "Päivitä sotilas"
+msgstr "Kaappaa solmu"
 
 #: ../base/ufos/ui/sys_editor.ufo:42
-#, fuzzy
 msgid "Select parent node"
-msgstr "Valitse tukikohta"
+msgstr "Valitse emosolmu"
 
 #: ../base/ufos/ui/sys_editor.ufo:54
-#, fuzzy
 msgid "Select first child node"
-msgstr "Valitse tukikohta"
+msgstr "Valitse ensimmäinen lapsi solmu"
 
 #: ../base/ufos/ui/sys_editor.ufo:66
-#, fuzzy
 msgid "Select next node"
-msgstr "Valitse tukikohta"
+msgstr "Valitse seuraava solmu"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
 msgid "Extract window"
@@ -9367,9 +9309,8 @@ msgid "Extract the window of the last/current selected node"
 msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:93
-#, fuzzy
 msgid "Current window:"
-msgstr "Sulje ikkuna"
+msgstr "Nykyinen ikkuna:"
 
 #: ../base/ufos/ui/sys_editor.ufo:107
 msgid "Current node:"
@@ -9382,9 +9323,8 @@ msgid "Aliens"
 msgstr "muukalaiset"
 
 #: ../base/ufos/ui/transfer.ufo:90
-#, fuzzy
 msgid "Amount/Transfer"
-msgstr "Siirrä"
+msgstr "Määrä/Siirto"
 
 #: ../base/ufos/ui/transfer.ufo:168
 #: ../base/ufos/ui/transfer.ufo:179
@@ -9411,9 +9351,8 @@ msgid "Add/Remove item to transfer cargo"
 msgstr ""
 
 #: ../base/ufos/ui/transfer.ufo:516
-#, fuzzy
 msgid "Destination base"
-msgstr "Kansakunnat"
+msgstr "Kohde tukikohdasta"
 
 #: ../base/ufos/ui/transfer.ufo:582
 msgid "Start the transfer"
@@ -9493,7 +9432,7 @@ msgstr "Kaasugranaatti"
 
 #: ../base/ufos/weapons.ufo:416
 msgid "Alien Gas Grenade"
-msgstr "Muukalaisen Kaasu Granaatti"
+msgstr "Alienin Kaasu Granaatti"
 
 #: ../base/ufos/weapons.ufo:492
 msgid "Incendiary grenade"
@@ -9777,9 +9716,8 @@ msgid "Heavy Laser"
 msgstr "Raskas laser"
 
 #: ../base/ufos/weapons_laser.ufo:76
-#, fuzzy
 msgid "Electro Laser"
-msgstr "Valitse tukikohta"
+msgstr "Elektrofotografinen Laser"
 
 #: ../base/ufos/weapons_laser.ufo:96
 msgid "D-F Cartridge"
@@ -9944,9 +9882,8 @@ msgid "Chaingun"
 msgstr ""
 
 #: ../base/ufos/weapons_ugv.ufo:64
-#, fuzzy
 msgid "Chaingun Belt"
-msgstr "<TODO>"
+msgstr "Chain aseen Vyö"
 
 #: ../base/ufos/weapons_ugv.ufo:146
 msgid "Autocannon Module"
@@ -9998,7 +9935,7 @@ msgstr ""
 
 #: client/battlescape/cl_actor.c:2325
 msgid "Unknown alien race"
-msgstr "Tuntemattoman muukalaisen rotu"
+msgstr "Tuntemattoman alienin rotu"
 
 #: client/battlescape/cl_actor.c:2874
 msgid "Reselect the current soldier"
@@ -10139,14 +10076,12 @@ msgid "No reload possible for left hand, you don't have backup ammo."
 msgstr ""
 
 #: client/battlescape/cl_hud.c:978
-#, fuzzy
 msgid "Not enough TUs for reloading weapon in right hand."
-msgstr "Ei tarpeeksi TU:ja ylös nousemiselle"
+msgstr "Ei tarpeeksi TU:ta lataaksesi aseen oikeaan käteen."
 
 #: client/battlescape/cl_hud.c:980
-#, fuzzy
 msgid "Not enough TUs for reloading weapon in left hand."
-msgstr "Ei tarpeeksi TU:ja ylös nousemiselle"
+msgstr "Ei tarpeeksi TU:ta lataaksesi aseen vasempaan käteen."
 
 #: client/battlescape/cl_hud.c:1014
 msgid "Not enough TUs for standing up."
@@ -10381,9 +10316,8 @@ msgid "in transit"
 msgstr "siirretään"
 
 #: client/campaign/cp_aircraft.c:435
-#, fuzzy
 msgid "enroute to mission"
-msgstr "Taktiset tehtävät"
+msgstr "Taktinen tehtävä"
 
 #: client/campaign/cp_aircraft.c:437
 msgid "pursuing a UFO"
@@ -10410,7 +10344,6 @@ msgid "Interceptor"
 msgstr ""
 
 #: client/campaign/cp_aircraft.c:521
-#, fuzzy
 msgid "Transporter"
 msgstr "Siirrä"
 
@@ -10421,9 +10354,9 @@ msgid "UFO"
 msgstr ""
 
 #: client/campaign/cp_aircraft.c:785
-#, fuzzy, c-format
+#, c-format
 msgid "A new %s is ready in %s"
-msgstr "Uusi tukikohta rakennettiin: %s"
+msgstr ""
 
 #: client/campaign/cp_aircraft.c:786
 #: client/campaign/cp_aircraft.c:1238
@@ -10662,7 +10595,7 @@ msgstr ""
 #: client/campaign/cp_ufopedia.c:230
 #: client/input/cl_joystick.c:278
 msgid "None"
-msgstr "—"
+msgstr "Tyhjä"
 
 #: client/campaign/cp_base.c:867
 msgid "Base is under attack, you can't destroy buildings !"
@@ -10688,7 +10621,7 @@ msgstr ""
 
 #: client/campaign/cp_base.c:889
 msgid "Go to hangar"
-msgstr "Mene lentokonehaalliin"
+msgstr "Mene lentokonehalliin"
 
 #: client/campaign/cp_base.c:889
 msgid "Go to hangar without destroying building"
@@ -10727,7 +10660,7 @@ msgstr "Mene Palkkaa Työntekijöitä valikkoon  tuhoamatta rakennusta"
 
 #: client/campaign/cp_base.c:908
 msgid "Destroy Storage"
-msgstr "Tuhoa Säilytystila"
+msgstr "Tuhoa Varasto"
 
 #: client/campaign/cp_base.c:908
 msgid ""
@@ -10741,7 +10674,7 @@ msgstr "Mene osta/myy valikkoon tuhoamatta rakennusta"
 
 #: client/campaign/cp_base.c:909
 msgid "Go to storage"
-msgstr "Mene säilytystilaan"
+msgstr "Mene Varastoon"
 
 #: client/campaign/cp_base.c:921
 msgid "Are you sure you want to destroy this building?"
@@ -10896,12 +10829,11 @@ msgstr ""
 
 #: client/campaign/cp_base_callbacks.c:295
 msgid "Buy or produce at least one aircraft first."
-msgstr "Osta tai tuota vähintään yksi lentokone esnin."
+msgstr "Osta tai tuota vähintään yksi lentokone ensin."
 
 #: client/campaign/cp_base_callbacks.c:297
-#, fuzzy
 msgid "No Hangar functional in base."
-msgstr "Tukikohdassa ei ole lentokonehallia.\n"
+msgstr "Tukikohdassa ei ole lentokonehallia."
 
 #: client/campaign/cp_base_callbacks.c:303
 #: client/campaign/cp_base_callbacks.c:313
@@ -10911,7 +10843,7 @@ msgstr "Tukikohdassa ei ole lentokonehallia.\n"
 #: client/campaign/cp_base_callbacks.c:333
 #, fuzzy, c-format
 msgid "No %s functional in base."
-msgstr "Tukikohdan nimi"
+msgstr ""
 
 #: client/campaign/cp_base_callbacks.c:308
 msgid "Build at least a second base to transfer equipment or personnel"
@@ -10971,9 +10903,8 @@ msgid "^BEmployees\n"
 msgstr "^BTyöntekijää\n"
 
 #: client/campaign/cp_base_callbacks.c:706
-#, fuzzy
 msgid "^BAliens\n"
-msgstr "muukalaiset"
+msgstr "^BAlienit\n"
 
 #: client/campaign/cp_base_callbacks.c:718
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
@@ -11181,7 +11112,7 @@ msgstr ""
 #: client/campaign/cp_campaign.c:1589
 #, c-format
 msgid "Aliens killed\t%i\n"
-msgstr "Muukalaisia tapettu\t%i\n"
+msgstr "Alieneita tapettu\t%i\n"
 
 #: client/campaign/cp_campaign.c:1590
 #, c-format
@@ -11340,9 +11271,8 @@ msgid "No ammo needed"
 msgstr ""
 
 #: client/campaign/cp_fightequip_callbacks.c:566
-#, fuzzy
 msgid "No slot selected."
-msgstr "Yhtään lentokonetta ei ole valittu."
+msgstr "Ei paikkaa valitty"
 
 #: client/campaign/cp_fightequip_callbacks.c:569
 msgid "No item selected."
@@ -11392,7 +11322,7 @@ msgstr "Laitoksen %s asennus tuli valmiiksi."
 
 #: client/campaign/cp_installation.c:408
 msgid "Installation finished"
-msgstr "Laitos valmis"
+msgstr "Laitoksen asennus valmis"
 
 #: client/campaign/cp_installation.c:519
 #, c-format
@@ -11410,7 +11340,7 @@ msgstr[1] "%d päivää"
 #: client/campaign/cp_installation_callbacks.c:49
 #: client/campaign/cp_map.c:354
 msgid "Installation"
-msgstr "Laitos"
+msgstr "Rakennus"
 
 #: client/campaign/cp_installation_callbacks.c:145
 #, c-format
@@ -11424,7 +11354,7 @@ msgstr "Uusi asennus rakennettiin: %s"
 
 #: client/campaign/cp_installation_callbacks.c:148
 msgid "Installation building"
-msgstr "Asennus rakennus"
+msgstr "Asenna rakennus"
 
 #: client/campaign/cp_installation_callbacks.c:155
 msgid "Not enough credits to set up a new installation."
@@ -11495,7 +11425,7 @@ msgstr ""
 #: client/campaign/cp_map.c:1605
 #, c-format
 msgid "ETA:\t%sh\n"
-msgstr "JOA:\t%sh\n"
+msgstr "ETA:\t%sh\n"
 
 #: client/campaign/cp_map.c:1623
 #, c-format
@@ -11525,7 +11455,7 @@ msgstr "Valitse muukalaisalus tai tehtävä kartalta\n"
 
 #: client/campaign/cp_map.c:1892
 msgid "UFO in radar range\n"
-msgstr "UFO itutkan kantamassa\n"
+msgstr "UFO tutkan kantamassa\n"
 
 #: client/campaign/cp_mapfightequip.c:323
 #, c-format
@@ -11567,7 +11497,6 @@ msgid "Light weight"
 msgstr ""
 
 #: client/campaign/cp_mapfightequip.c:1328
-#, fuzzy
 msgid "Medium weight"
 msgstr "Keskikokoinen paino"
 
@@ -11600,7 +11529,7 @@ msgstr ""
 
 #: client/campaign/cp_market_callbacks.c:602
 msgid "Build a hangar first."
-msgstr "Rakenna lentotukikohta ensin."
+msgstr "Rakenna lentokonehalli ensin."
 
 #: client/campaign/cp_market_callbacks.c:615
 msgid ""
@@ -11624,19 +11553,19 @@ msgstr "Et voi myydä lentokonetta joka ei ole tukikohdassa"
 
 #: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
-msgstr "installation_installed"
+msgstr "asennus asennettu"
 
 #: client/campaign/cp_messageoptions.c:37
 msgid "installation_removed"
-msgstr "installation_removed"
+msgstr "asennus poistettu"
 
 #: client/campaign/cp_messageoptions.c:38
 msgid "installation_replaced"
-msgstr "installation_replaced"
+msgstr "asennus korvattu"
 
 #: client/campaign/cp_messageoptions.c:39
 msgid "aircraft_refueled"
-msgstr "lentokonetta_tankkaus"
+msgstr "lentokonetta tankataan"
 
 #: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_cannotrefuel"
@@ -11644,23 +11573,23 @@ msgstr ""
 
 #: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
-msgstr "installation_build_started"
+msgstr "laitoksen rakentaminen aloitettiin"
 
 #: client/campaign/cp_messageoptions.c:42
 msgid "installation_build_finished"
-msgstr "installation_build_finished"
+msgstr "laitoksen rakentaminen päättynyt"
 
 #: client/campaign/cp_messageoptions.c:43
 msgid "installation_destroyed"
-msgstr "installation_destroyed"
+msgstr "laitoksen asennus tuhoutui"
 
 #: client/campaign/cp_messageoptions.c:44
 msgid "research_new_proposed"
-msgstr "research_new_proposed"
+msgstr "uusi ehdotus tukimukseen"
 
 #: client/campaign/cp_messageoptions.c:45
 msgid "research_halted"
-msgstr "Tutkimus_lopetettava"
+msgstr "tutkimus lopetettava"
 
 #: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
@@ -11668,15 +11597,15 @@ msgstr ""
 
 #: client/campaign/cp_messageoptions.c:47
 msgid "production_started"
-msgstr "production_started"
+msgstr "tuotanto aloitettu"
 
 #: client/campaign/cp_messageoptions.c:48
 msgid "production_finished"
-msgstr "production_finished"
+msgstr "tuotanto valmistui"
 
 #: client/campaign/cp_messageoptions.c:49
 msgid "production_failed"
-msgstr "production_failed"
+msgstr "tuotanto epäonnistui"
 
 #: client/campaign/cp_messageoptions.c:50
 msgid "production_queue_empty"
@@ -11692,11 +11621,11 @@ msgstr ""
 
 #: client/campaign/cp_messageoptions.c:53
 msgid "nation_pleased"
-msgstr "nation_pleased"
+msgstr "kansakunta hyvillään"
 
 #: client/campaign/cp_messageoptions.c:54
 msgid "transfer_started"
-msgstr "transfer_started"
+msgstr "siirto aloitettu"
 
 #: client/campaign/cp_messageoptions.c:55
 msgid "transfer_completed_success"
@@ -11704,7 +11633,7 @@ msgstr ""
 
 #: client/campaign/cp_messageoptions.c:56
 msgid "transfer_lost"
-msgstr "transfer_lost"
+msgstr "siirto hävisi"
 
 #: client/campaign/cp_messageoptions.c:57
 msgid "transfer_aliens_defered"
@@ -11716,7 +11645,7 @@ msgstr ""
 
 #: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
-msgstr "ufo_spotted"
+msgstr "ufo havaittu"
 
 #: client/campaign/cp_messageoptions.c:60
 msgid "ufo_signal_lost"
@@ -11748,7 +11677,7 @@ msgstr ""
 
 #: client/campaign/cp_missions.c:432
 msgid "Landed UFO"
-msgstr "Laskeutunut UFo"
+msgstr "Laskeutunut UFO"
 
 #: client/campaign/cp_missions.c:434
 msgid "Terror mission"
@@ -11765,7 +11694,7 @@ msgstr "Keräystehtävä"
 #: client/campaign/cp_missions.c:733
 #, c-format
 msgid "Alien activity has been detected in %s."
-msgstr "Muukalaistoimintaa on havaittu kohteessa %s"
+msgstr "Alien toimintaa on havaittu kohteessa %s"
 
 #: client/campaign/cp_missions.c:1257
 #: client/campaign/missions/cp_mission_harvest.c:165
@@ -11899,9 +11828,9 @@ msgid "Paid %i credits for aircraft"
 msgstr ""
 
 #: client/campaign/cp_nations.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr "Maksoit %i kredittiä lentäjille"
+msgstr ""
 
 #: client/campaign/cp_nations.c:177
 #, c-format
@@ -11978,9 +11907,9 @@ msgid ""
 msgstr ""
 
 #: client/campaign/cp_produce.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "Production queue for %s is empty"
-msgstr "Tuotteen %s valmistus alkoi"
+msgstr "Tuotteen %s jono  on tyhjä"
 
 #: client/campaign/cp_produce.c:234
 msgid "Production queue empty"
@@ -12003,9 +11932,9 @@ msgid "Not enough free hangar space in %s. Production postponed.\n"
 msgstr ""
 
 #: client/campaign/cp_produce.c:405
-#, fuzzy, c-format
+#, c-format
 msgid "The production of %s at %s has finished."
-msgstr "Tuotteen %s valmistus tuli valmiiksi."
+msgstr "Tuotteen %s valmistus tuli valmiiksi %s."
 
 #: client/campaign/cp_produce.c:406
 #: client/campaign/cp_produce.c:446
@@ -12018,9 +11947,9 @@ msgid "Not enough free storage space in %s. Disassembling postponed.\n"
 msgstr ""
 
 #: client/campaign/cp_produce.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "The disassembling of %s at %s has finished."
-msgstr "%s:n purku on valmis."
+msgstr ""
 
 #: client/campaign/cp_produce_callbacks.c:130
 msgid "Not enough workers"
@@ -12106,9 +12035,9 @@ msgid "Stored at: %s\n"
 msgstr "Varastoitu %s\n"
 
 #: client/campaign/cp_produce_callbacks.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembly time: %ih\n"
-msgstr "Tuotteen %s valmistus alkoi"
+msgstr "Purkamisaika: %ih\n"
 
 #: client/campaign/cp_produce_callbacks.c:392
 msgid "Components:\n"
@@ -12253,18 +12182,16 @@ msgid "Status: under research"
 msgstr "Tila: tutkimuksen alla"
 
 #: client/campaign/cp_research_callbacks.c:134
-#, fuzzy
 msgid "Status: this research topic is currently being processed in laboratories"
-msgstr "Tila: tutkimus keskeytetty"
+msgstr "Tila: Tämän tutkimuksen aihetta parhaillaan käsitellään laboratorioissa"
 
 #: client/campaign/cp_research_callbacks.c:137
 msgid "Status: research paused"
 msgstr "Tila: tutkimus tauolla"
 
 #: client/campaign/cp_research_callbacks.c:138
-#, fuzzy
 msgid "Status: research topic currently paused."
-msgstr "Tila: tutkimus keskeytetty"
+msgstr "Tila: tutkimusaihe on tällä hetkellä keskeytetty."
 
 #: client/campaign/cp_research_callbacks.c:141
 #: client/campaign/cp_research_callbacks.c:142
@@ -12611,7 +12538,7 @@ msgstr "Elossa %s"
 
 #: client/campaign/cp_transfer.c:580
 msgid "Alien Containment is empty."
-msgstr "Muukalaissäilytystila on tyhjä."
+msgstr "Alienin säilytystila on tyhjä."
 
 #: client/campaign/cp_transfer.c:585
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
@@ -12708,7 +12635,7 @@ msgstr ""
 
 #: client/campaign/cp_transfer.c:1336
 msgid "No Alien Containment in this base.\n"
-msgstr "Tässä tukikohdassa ei ole Muukalaissäilytystilaa.\n"
+msgstr "Tässä tukikohdassa ei ole Alienin säilytystilaa.\n"
 
 #: client/campaign/cp_transfer.c:1340
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
@@ -12925,9 +12852,8 @@ msgstr ""
 "AIHE: %s%s\n"
 
 #: client/campaign/cp_ufopedia.c:614
-#, fuzzy
 msgid "(complete)"
-msgstr "harjaantunut"
+msgstr "(valmis)"
 
 #: client/campaign/cp_ufopedia.c:672
 msgid "No pre-research description available."
@@ -12976,14 +12902,12 @@ msgid "%s was transfered to %s."
 msgstr "%s siirretty %s."
 
 #: client/campaign/cp_uforecovery.c:76
-#, fuzzy
 msgid "UFO Recovered"
-msgstr "Yö"
+msgstr "UFO Heräsi"
 
 #: client/campaign/cp_uforecovery_callbacks.c:170
-#, fuzzy
 msgid "No free UFO yard available."
-msgstr "Tutkimusehdotuksia ei ole saatavilla"
+msgstr "Ei yhtään UFO alusta saatavilla"
 
 #: client/campaign/cp_uforecovery_callbacks.c:220
 #, c-format
@@ -13223,9 +13147,9 @@ msgid "%s ammo-less weapon\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "%s auxiliary equipment\n"
-msgstr "Näytä muut tarvikkeet"
+msgstr "%s ylimmääräiset tarvikkeet\n"
 
 #: client/cl_inventory_callbacks.c:185
 #, c-format
@@ -13680,90 +13604,93 @@ msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
 msgstr ""
+"Sotilas on päästään pyörällä!\n"
+"Vihollinen on käyttänyt sokaisu granaattia!\n"
 
 #: game/g_combat.c:633
 msgid "Can't perform action - impossible throw!\n"
-msgstr ""
+msgstr "Ei voi suorittaa toimintoa - mahdotonta heittää!\n"
 
 #: game/g_combat.c:1097
 msgid "Can't perform action - object not activateable!\n"
-msgstr ""
+msgstr "Ei voi suorittaa toimintoa - esine ei aktivoidu!\n"
 
 #: game/g_combat.c:1115
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
-msgstr ""
+msgstr "Ei voi suorittaa toimintoa - aseella ei voi ampua yhdellä kädellä!\n"
 
 #: game/g_combat.c:1122
 msgid "Can't perform action - no ammo!\n"
-msgstr ""
+msgstr "Ei voi suorittaa toimintoa - Ei ammuksia!\n"
 
 #: game/g_combat.c:1130
 msgid "Can't perform action - target out of range!\n"
-msgstr ""
+msgstr "Ei voi suorittaa toimintoa - kohde on liian kaukana!\n"
 
 #: game/g_combat.c:1176
 msgid "Can't perform action - not enough ammo!\n"
-msgstr ""
+msgstr "Ei voi suorittaa toimintoa - ei tarpeeksi ammuksia!\n"
 
 #: game/g_mission.c:48
 msgid "Aliens entered target zone\n"
-msgstr ""
+msgstr "Alienit tulivat tavoite alueelle\n"
 
 #: game/g_mission.c:75
 msgid "Item was placed\n"
-msgstr ""
+msgstr "Kohde on sijoitettu\n"
 
 #: game/g_mission.c:81
 msgid "Target zone is occupied\n"
-msgstr ""
+msgstr "Valittu alue on miehitetty\n"
 
 #: game/g_morale.c:36
 #, c-format
 msgid "%s panics!\n"
-msgstr ""
+msgstr "%s panikoi!\n"
 
 #: game/g_morale.c:97
 #, c-format
 msgid "%s is on a rampage.\n"
-msgstr ""
+msgstr "%s riehuu.\n"
 
 #: game/g_morale.c:99
-#, c-format
+#, fuzzy, c-format
 msgid "%s is consumed by mad rage!\n"
-msgstr ""
+msgstr "%s on kuluttaa hullun raivolla!\n"
 
 #: game/g_morale.c:175
 #, c-format
 msgid "%s is currently shaken.\n"
-msgstr ""
+msgstr "%s ravistellaan.\n"
 
 #: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
-msgstr ""
+msgstr "4 minuuttia aikaa, kunnes kierroksen loppuun\n"
 
 #: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
-msgstr ""
+msgstr "3 minuuttia aikaa, kierroksen loppuun\n"
 
 #: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
-msgstr ""
+msgstr "2 minuuttia aikaa, kierroksen loppuun\n"
 
 #: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
-msgstr ""
+msgstr "1 minuuttia aikaa, kierroksen loppuun\n"
 
 #: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
-msgstr ""
+msgstr "30 sekuntia aikaa, kierroksen loppuun\n"
 
 #: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
-msgstr ""
+msgstr "15 sekuntia aikaa, kierroksen loppuun\n"
 
 #: game/g_round.c:68
+#, fuzzy
 msgid "Current active team hit the max round time\n"
-msgstr ""
+msgstr "Nykyinen aktiivinen joukkue osui max kierroksen aika\n"
 
 #: po/OTHER_STRINGS:2
 msgid "human"
@@ -13771,7 +13698,7 @@ msgstr "ihminen"
 
 #: po/OTHER_STRINGS:3
 msgid "alien"
-msgstr "muukalainen"
+msgstr "alien"
 
 #: po/OTHER_STRINGS:6
 msgid "Take a screenshot"
