@@ -107,7 +107,7 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 
 	/* check every angle in the rotation whether something becomes visible */
 	for (i = 0; i < num; i++) {
-		ent->dir = rot[i];
+		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
 		status |= G_CheckVisTeamAll(ent->team, qfalse, ent);
 	}
