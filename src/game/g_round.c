@@ -216,7 +216,6 @@ void G_ClientEndRound (player_t * player)
 	p = G_GetPlayerForTeam(level.activeTeam);
 	if (p == NULL)
 		gi.error("Could not find player for team %i", level.activeTeam);
-	p->pers.last = NULL;
 
 	/* finish off events */
 	gi.EndEvents();
