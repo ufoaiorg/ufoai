@@ -276,7 +276,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
  */
 static void G_FindEdictGroups (void)
 {
-	edict_t *ent = G_EdictsGetWorld();
+	edict_t *ent = G_EdictsGetFirst(); /* the first edict is always a world edict that can be skipped */
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		edict_t *ent2, *chain;
@@ -340,7 +340,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 			gi.error("ED_LoadFromFile: found %s when expecting {", token);
 
 		if (!ent)
-			ent = g_edicts;
+			ent = G_EdictsGetFirst();
 		else
 			ent = G_Spawn();
 
@@ -380,7 +380,7 @@ static inline void G_InitEdict (edict_t * e)
 {
 	e->inuse = qtrue;
 	e->classname = "noclass";
-	e->number = e - g_edicts;
+	e->number = G_EdictsGetNumber(e);
 	e->fieldSize = ACTOR_SIZE_NORMAL;
 }
 

@@ -48,6 +48,19 @@ void G_EdictsReset (void)
 }
 
 /**
+ * @brief Get an entity's ID number
+ * @param ent The entity
+ * @return the entity's ID number, currently the index in the array
+ * @note DO NOT use this number as anything other than an identifier !
+ */
+int G_EdictsGetNumber (const edict_t* ent)
+{
+	int idx = ent - g_edicts;
+	assert(idx >= 0 && idx < globals.num_edicts);
+	return idx;
+}
+
+/**
  * @brief Get an entity by it's number
  * @param idx The entity's index in the array of entities
  */
@@ -58,10 +71,11 @@ edict_t* G_EdictsGetByNum (const int idx)
 }
 
 /**
- * @brief Returns the world entity
- * @todo This might not always be the first edict - in case of rma they might be spread over the array.
+ * @brief Returns the first entity
+ * @note This is always a world edict - but in case of rma there might be several parts
+ * of the world spread all over the array.
  */
-edict_t* G_EdictsGetWorld (void)
+edict_t* G_EdictsGetFirst (void)
 {
 	return &g_edicts[0];
 }

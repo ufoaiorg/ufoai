@@ -56,7 +56,7 @@ edict_t *G_GetActorByUCN (const int ucn, const int team)
  * @param[in] ent the actor (edict) we are talking about
  * @param[in] dir the direction to turn the edict into, might be an action
  * @return Bitmask of visible (VIS_*) values
- * @sa G_CheckVisTeam
+ * @sa G_CheckVisTeamAll
  */
 int G_ActorDoTurn (edict_t * ent, byte dir)
 {

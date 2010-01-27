@@ -286,42 +286,34 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @sa G_TestVis
  * @sa G_AppearPerishEvent
  * @sa G_CheckVisPlayer
+ * @sa G_CheckVisTeamAll
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
 int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *ent)
 {
-	int i, end;
 	int status = 0;
 
-	/* decide whether to check all entities or a specific one */
-	if (!check) {
-		check = g_edicts;
-		end = globals.num_edicts;
-	} else
-		end = 1;
-
 	/* check visibility */
-	for (i = 0; i < end; i++, check++)
-		if (check->inuse) {
-			/* check if he's visible */
-			const int vis = G_TestVis(team, check, perish);
+	if (check->inuse) {
+		/* check if he's visible */
+		const int vis = G_TestVis(team, check, perish);
 
-			/* visiblity has changed ... */
-			if (vis & VIS_CHANGE) {
-				/* swap the vis mask for the given team */
-				check->visflags ^= G_TeamToVisMask(team);
-				G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
+		/* visiblity has changed ... */
+		if (vis & VIS_CHANGE) {
+			/* swap the vis mask for the given team */
+			check->visflags ^= G_TeamToVisMask(team);
+			G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
 
-				/* ... to visible */
-				if (vis & VIS_YES) {
-					status |= VIS_APPEAR;
-					if (G_VisShouldStop(check))
-						status |= VIS_STOP;
-				} else
-					status |= VIS_PERISH;
-			}
+			/* ... to visible */
+			if (vis & VIS_YES) {
+				status |= VIS_APPEAR;
+				if (G_VisShouldStop(check))
+					status |= VIS_STOP;
+			} else
+				status |= VIS_PERISH;
 		}
+	}
 
 	return status;
 }
@@ -344,9 +336,8 @@ int G_CheckVisTeamAll (const int team, qboolean perish, edict_t *ent)
  * @brief Check if the edict appears/perishes for the other teams. If they appear
  * for other teams, the needed information for those clients are also send in
  * @c G_CheckVisTeam resp. @c G_AppearPerishEvent
- * @sa G_CheckVisTeam
  * @param[in] perish Also check for perishing events
- * @param[in] check The edict that is maybe seen by others
+ * @param[in] check The edict that is maybe seen by others. If NULL, all edicts are checked
  * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
@@ -357,8 +348,12 @@ int G_CheckVis (edict_t * check, qboolean perish)
 
 	status = 0;
 	for (team = 0; team < MAX_TEAMS; team++)
-		if (level.num_alive[team])
-			status |= G_CheckVisTeam(team, check, perish, NULL);
+		if (level.num_alive[team]) {
+			if (!check)	/* no special entity given, so check them ll */
+				status |= G_CheckVisTeamAll(team, perish, NULL);
+			else
+				status |= G_CheckVisTeam(team, check, perish, NULL);
+		}
 
 	return status;
 }
