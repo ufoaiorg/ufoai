@@ -234,6 +234,9 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 					MN_ReadNodePath(path, context->source, &node, &property);
 					if (!node) {
 						Com_Printf("MN_GenInjectedString: Node '%s' wasn't found; '' returned\n", path);
+#if DEBUG
+						Com_Printf("MN_GenInjectedString: Path relative to '%s'\n", MN_GetPath(context->source));
+#endif
 						string = "";
 					} else if (!property) {
 						Com_Printf("MN_GenInjectedString: Property '%s' wasn't found; '' returned\n", path);
