@@ -192,6 +192,7 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 			mxml_AddInt(snode, "bid", ccs.eMarket.bidItems[i]);
 			mxml_AddInt(snode, "ask", ccs.eMarket.askItems[i]);
 			mxml_AddDouble(snode, "evo", ccs.eMarket.currentEvolutionItems[i]);
+			mxml_AddBool(snode, "autosell", ccs.autosell[i]);
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
