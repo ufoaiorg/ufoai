@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-01-25 22:07+0200\n"
+"PO-Revision-Date: 2010-01-28 19:06+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -141,16 +141,15 @@ msgstr "Sotilas saattue"
 
 #: ../base/maps/oriental.ump:269
 msgid "Oriental small"
-msgstr "Pieni itämainen"
+msgstr "Pieni Lähi-idän kaupunki"
 
 #: ../base/maps/oriental.ump:291
-#, fuzzy
 msgid "Oriental medium"
-msgstr "Keskikokoinen itä"
+msgstr "Keskikokoinen Lähi-idän kaupunki"
 
 #: ../base/maps/oriental.ump:314
 msgid "Oriental big"
-msgstr "Idän Suuri"
+msgstr "Suuri Lähi-idän kaupunki"
 
 #: ../base/maps/spedition.ump:63
 #, fuzzy
@@ -188,19 +187,19 @@ msgstr "Tuhoutunut UFO"
 #: ../base/maps/village.ump:370
 #: ../base/maps/village.ump:403
 msgid "Village residential"
-msgstr "Maaseutu"
+msgstr "Asuntoalue"
 
 #: ../base/maps/village.ump:435
 msgid "Village commercial"
-msgstr "Esikaupunki"
+msgstr "Kaupallinen alue"
 
 #: ../base/maps/village.ump:468
 msgid "Village recreational"
-msgstr "Vapaa Kaupunki"
+msgstr "Virkistysalue"
 
 #: ../base/maps/village.ump:499
 msgid "Village big"
-msgstr "Iso Kaupunki"
+msgstr "Suuri kaupunki"
 
 #: ../base/ufos/aircraftmanagement.ufo:96
 msgid "Firebird-class Dropship"
@@ -1287,47 +1286,47 @@ msgstr ""
 
 #: ../base/ufos/gametypes.ufo:4
 msgid "1on1"
-msgstr ""
+msgstr "1/1"
 
 #: ../base/ufos/gametypes.ufo:17
 msgid "1on1on1"
-msgstr ""
+msgstr "1/1/1"
 
 #: ../base/ufos/gametypes.ufo:30
 msgid "2on2"
-msgstr ""
+msgstr "2/2"
 
 #: ../base/ufos/gametypes.ufo:43
 msgid "2on2on2"
-msgstr ""
+msgstr "2/2/2"
 
 #: ../base/ufos/gametypes.ufo:56
 msgid "3on3"
-msgstr ""
+msgstr "3/3"
 
 #: ../base/ufos/gametypes.ufo:69
 msgid "3on3on3"
-msgstr ""
+msgstr "3/3/3"
 
 #: ../base/ufos/gametypes.ufo:82
 msgid "4on4"
-msgstr ""
+msgstr "4/4"
 
 #: ../base/ufos/gametypes.ufo:95
 msgid "4on4on4"
-msgstr ""
+msgstr "4/4/4"
 
 #: ../base/ufos/gametypes.ufo:108
 msgid "Coop 2 players"
-msgstr ""
+msgstr "Kenttä 2 pelaajalle"
 
 #: ../base/ufos/gametypes.ufo:121
 msgid "Coop 3 players"
-msgstr ""
+msgstr "Kenttä 3 pelaajalle"
 
 #: ../base/ufos/gametypes.ufo:134
 msgid "Coop 4 players"
-msgstr ""
+msgstr "Kenttä 4 pelaajalle"
 
 #: ../base/ufos/installation.ufo:7
 msgid "Radar Tower"
@@ -1362,7 +1361,7 @@ msgstr "English"
 
 #: ../base/ufos/language.ufo:36
 msgid "German"
-msgstr "saksalainen"
+msgstr "German"
 
 #: ../base/ufos/language.ufo:54
 msgid "Polish"
@@ -1386,7 +1385,7 @@ msgstr "Estonian"
 
 #: ../base/ufos/language.ufo:138
 msgid "Finnish"
-msgstr "suomalainen"
+msgstr "Suomi"
 
 #: ../base/ufos/language.ufo:148
 msgid "French"
@@ -1402,7 +1401,7 @@ msgstr "Hungarian"
 
 #: ../base/ufos/language.ufo:186
 msgid "Italien"
-msgstr "italialainen"
+msgstr "Italy"
 
 #: ../base/ufos/language.ufo:198
 msgid "Korean"
@@ -1418,7 +1417,7 @@ msgstr "Portuguese"
 
 #: ../base/ufos/language.ufo:230
 msgid "Russian"
-msgstr "venäläinen"
+msgstr "Russian"
 
 #: ../base/ufos/language.ufo:242
 msgid "Slovenian"
@@ -1426,7 +1425,7 @@ msgstr "Slovenian"
 
 #: ../base/ufos/language.ufo:252
 msgid "Swedish"
-msgstr "ruotsalainen"
+msgstr "Swedish"
 
 #: ../base/ufos/language.ufo:264
 msgid "Thai"
@@ -1806,7 +1805,7 @@ msgstr ""
 
 #: ../base/ufos/medals.ufo:174
 msgid "Lieutenant-Colonel"
-msgstr ""
+msgstr "Eversti-Luutnantti"
 
 #: ../base/ufos/medals.ufo:175
 msgid "Lt Col"
@@ -1814,7 +1813,7 @@ msgstr ""
 
 #: ../base/ufos/medals.ufo:185
 msgid "Colonel"
-msgstr "eversti"
+msgstr "Eversti"
 
 #: ../base/ufos/medals.ufo:186
 msgid "Col"
@@ -1830,11 +1829,11 @@ msgstr "laitoksen_rakentaminen"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
-msgstr "Tutkimus"
+msgstr "tutkimus"
 
 #: ../base/ufos/msgcategories.ufo:30
 msgid "production"
-msgstr "Tuotanto"
+msgstr "tuotanto"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
@@ -1842,7 +1841,7 @@ msgstr ""
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
-msgstr "Siirrä"
+msgstr "siirrä"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
@@ -1866,7 +1865,7 @@ msgstr "Aasian tasavalta"
 
 #: ../base/ufos/nations.ufo:79
 msgid "The Middle-Eastern Alliance"
-msgstr "Keski-idän liito"
+msgstr "Keski-idän liitto"
 
 #: ../base/ufos/nations.ufo:91
 msgid "New Africa"
@@ -1903,7 +1902,7 @@ msgstr "Muukalaisien Materiaalit"
 #: ../base/ufos/weapons_melee.ufo:83
 #: ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
-msgstr ""
+msgstr "Iske"
 
 #: ../base/ufos/research.ufo:107
 msgid "Background"
@@ -1942,8 +1941,9 @@ msgid "Alien Artifacts"
 msgstr "Muukalaisien Artifactit"
 
 #: ../base/ufos/research.ufo:113
+#, fuzzy
 msgid "Autopsies & Observation"
-msgstr ""
+msgstr "Ruumiinavaus ja tarkkailu"
 
 #: ../base/ufos/research.ufo:114
 msgid "The Alien Threat"
@@ -1951,7 +1951,7 @@ msgstr "Vihollisuhka"
 
 #: ../base/ufos/research.ufo:123
 msgid "Continuous Wave Laser Operation"
-msgstr ""
+msgstr "Jatkuvan Aalto Laserin tutkiminen"
 
 #: ../base/ufos/research.ufo:128
 msgid "laser_txt"
@@ -2131,19 +2131,19 @@ msgid "alien_breathing_txt"
 msgstr ""
 "Komentaja,\n"
 "\n"
-"Olemme tehneet perusteellisen selvityksen muukalaisen ruumiinavauksesta löytyneestä laitteesta.Mielestäni olemme nyt valmiita tekemään siitä päätelmiä.Meidän tutkimus osoittaa, että muukalaisen kudokset ovat kasvaneet. Arpia on löytynyt muukalaisen kurkunpäästä. Voimme näin päätellä, että laitteita on kirurgisesti istutettu kurkkuun hyvin varhaisessa iässä.Jossain vaiheessa murrosiässä, lapsille tarkoitettu laite poistetaan ja aikuisten versio istutetaan.\n"
+"Olemme tehneet perusteellisen selvityksen muukalaisen ruumiinavauksesta löytyneestä laitteesta.Mielestäni olemme nyt valmiita tekemään siitä päätelmiä.Meidän tutkimus osoittaa, että alienin kudokset ovat kasvaneet. Arpia on löytynyt alienin kurkunpäästä. Voimme näin päätellä, että laitteita on kirurgisesti istutettu kurkkuun hyvin varhaisessa iässä.Jossain vaiheessa murrosiässä, lapsille tarkoitettu laite poistetaan ja aikuisten versio istutetaan.\n"
 "\n"
-"Olemme tutkineet useita eri vaihtoehtoja laitteen toiminnasta ravinnon jalostamiseen ja itsemurhalaitteeseen, mutta selvä vastaus osoittautui olevan oikea.Se on jonkinlainen hengityssuojain, jolloin muukalaiset voivat selviytyä meidän ilmakehässä ja mahdollisesti myös muissa ilmakehissä. Jokainen orgaanisessa mallissa on tällainen laite, jossa on kaikki samat toiminnot, mikä tarkoittaa ette ne toimivat funktionaalisesti ja he voivat selviytyä missä tahansa ilmakehässä.Tai sitten me näemme vain yksilöitä, jotka ovat tarkoitettu vain planeettojen toimintaa varten.Varmasti ulkoinen hengityssuojain olisi helpompi ja edullisempi käyttää, jos näillä yksilöillä olisi tarkoitus tehdä vain lyhyitä retkiä vihamielisiin atmosfääreihin.\n"
+"Olemme tutkineet useita eri vaihtoehtoja laitteen toiminnasta ravinnon jalostamiseen ja itsemurhalaitteeseen, mutta selvä vastaus osoittautui olevan oikea.Se on jonkinlainen hengityssuojain, jolloin alienit voivat selviytyä meidän ilmakehässä ja mahdollisesti myös muissa ilmakehissä. Jokainen orgaanisessa mallissa on tällainen laite, jossa on kaikki samat toiminnot, mikä tarkoittaa ette ne toimivat funktionaalisesti ja he voivat selviytyä missä tahansa ilmakehässä.Tai sitten me näemme vain yksilöitä, jotka ovat tarkoitettu vain planeettojen toimintaa varten.Varmasti ulkoinen hengityssuojain olisi helpompi ja edullisempi käyttää, jos näillä yksilöillä olisi tarkoitus tehdä vain lyhyitä retkiä vihamielisiin atmosfääreihin.\n"
 "\n"
 "Laite koostuu hienostuneesta suodattimesta, joka on laitettu kohteen henkitorveen, ja kahdesta pienestä pallomaisesta säilöstä, jotka ovat sijoitettu molemmin puolin aivokudosta, joka yhdistyy henkitorveen pienen metalliputken avulla. Nämä säiliöt ovat täytetty kaasuseoksella, joka puristetaan nestemäisessä olomuodossa, niiden toiminta näyttää perustuvan samanlaiseen ideaan kuin scuba diverin happipullot. Suodatin mekanismi on älykäs, se tunnollisesti poistaa kaikki haitalliset aineet, mutta antaa hyödyllistä osia vain läpi. Säiliöt voidaan täyttää tekemällä pieni mekaaninen napa muukalaisen kaulaan takana.\n"
 "\n"
-"Tarkastelu säiliöiden sisällöstä on antanut meille tarkkaa tietoa ulkomaalaisen ilmakehästä.Meillä on nyt useita seoksia varastoitu, uskomme että voimme tukea erilaisten muukalaisten säilyttämistä muukalaissäilytystilassa. Muutamia seoksia ovat typpi-happi-yhdisteet, hyvin samankaltainen kuin omamme, mutta toiset eivät sisällä happea lainkaan. Jos näitä kaikkia seoksia käyttävät yksi tai useampi muukalaislajeista, jotkut näistä vihollisista näyttävät hengittävän ilmakehässä melkein lähes puhdasta metaania.\n"
+"Tarkastelu säiliöiden sisällöstä on antanut meille tarkkaa tietoa alieneiden ilmakehästä.Meillä on nyt useita seoksia varastoitu, uskomme että voimme tukea erilaisten alieneiden säilyttämistä alienin säilytystilassa. Muutamia seoksia ovat typpi-happi-yhdisteet, hyvin samankaltainen kuin omamme, mutta toiset eivät sisällä happea lainkaan. Jos näitä kaikkia seoksia käyttävät yksi tai useampi alien lajeista, jotkut näistä vihollisista näyttävät hengittävän ilmakehässä melkein lähes puhdasta metaania.\n"
 "\n"
 "Hyvin erilaisia seoksia on paljon ja se antaa meille pienoisen palapelin. Eikö olisi edullisempaa käyttää erillistä miehistöä kuin pakottaa näiden lajien rinnakkaiselo samassa paikassa?\n"
 "\n"
 "Tulevaisuuden kysymyksiä, olemme hyvin tyytyväisiä tämän tuloksiin.\n"
 "\n"
-"Nyt voimme tallentaa muukalaiset meidän muukalaissäilytystilaa pidemmän ajan - ne eivät voi enää tukehtua, kun niiden tankit loppuvat.Tämä tapahtuu yleensä 24 tunnin kuluttua ilman täydennystä, joten viivästyksistä ei ole haittaa jos onnistumme kaappaamaan mallin.\n"
+"Nyt voimme varastoida alienit meidän aliensäilytystilaan pidemmäksi ajaksi - ne eivät voi enää tukehtua, kun niiden tankit loppuvat.Tämä tapahtuu yleensä 24 tunnin kuluttua ilman täydennystä, joten viivästyksistä ei ole haittaa jos onnistumme kaappaamaan mallin.\n"
 "\n"
 "Ryhmäni ja minä katsomme eteenpäin innostuneesti. Komentaja.\n"
 "\n"
@@ -2156,9 +2156,9 @@ msgid "alien_breathing_pre_txt"
 msgstr ""
 "Komentaja,\n"
 "\n"
-"Muukalaisen ruumiinavauksen aikana ryhmäni ja minä olemme löytäneet erikoisen koneen istuettuna muukalaisen kurkkuun.Se koostuu kahdesta metalli putkesta, jotka sijaitsevat kummallakin puolella aivokudosta.Henkitorvi on sellaisenaan suojattu jollakin tavalla, joko venttiilein tai suodattimin.Uskomme, että tämä laite voi olla jonkinlainen hengityssuojain tai hengityslaite, tai aivan jotain muuta mitä emme tiedä; emme myöskään tiedä miten se toimii.Haluaisimme luvan ja rahoituksen jatkaaksemme laitteiden tutkimusta mitä ruumiinavauksesta löytyi.Tässä vaiheessa sotaa kaikki mikä lisää ja parantaa meidän tietopohjaa muukalaisista on hyödyllistä.\n"
+"Alienin ruumiinavauksen aikana ryhmäni ja minä olemme löytäneet erikoisen koneen istuettuna alienin kurkkuun.Se koostuu kahdesta metalli putkesta, jotka sijaitsevat kummallakin puolella aivokudosta.Henkitorvi on sellaisenaan suojattu jollakin tavalla, joko venttiilein tai suodattimin.Uskomme, että tämä laite voi olla jonkinlainen hengityssuojain tai hengityslaite, tai aivan jotain muuta mitä emme tiedä; emme myöskään tiedä miten se toimii.Haluaisimme luvan ja rahoituksen jatkaaksemme laitteiden tutkimusta mitä ruumiinavauksesta löytyi.Tässä vaiheessa sotaa kaikki mikä lisää ja parantaa meidän tietopohjaa alieneista on hyödyllistä.\n"
 "\n"
-"Ja me löydämme tarpeellisia vihjeitä muukalaisten teknologiasta ja biologiasta.Meidän pitää selvittää miten muukalaiset hengittävät ennen kuin voimme majoittaa heidät muukalaissäilytystilaan.\n"
+"Ja me löydämme tarpeellisia vihjeitä alieneiden teknologiasta ja biologiasta.Meidän pitää selvittää miten alienit hengittävät ennen kuin voimme majoittaa heidät alieneiden säilytystilaan.\n"
 "\n"
 "Cdr. Navarra ja hänen ryhmänsä tulevat auttamaan teknisessä puolessa.Hän on antanut täyden tukensa ehdotukseen.\n"
 "\n"
@@ -2167,8 +2167,9 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:403
+#, fuzzy
 msgid "The Alien Mind"
-msgstr ""
+msgstr "Alieneiden Äly"
 
 #: ../base/ufos/research.ufo:408
 msgid "alien_mind_txt"
@@ -2180,7 +2181,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:441
 msgid "Odd Behaviour"
-msgstr ""
+msgstr "Vanha käyttäytyminen"
 
 #: ../base/ufos/research.ufo:446
 msgid "alien_odd_behaviour_txt"
@@ -2874,8 +2875,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1035
 #: ../base/ufos/weapons_human.ufo:1873
+#, fuzzy
 msgid "Electromagnetic Rifle"
-msgstr ""
+msgstr "Elektromagneettinen kivääri"
 
 #: ../base/ufos/research.ufo:1040
 msgid "bolterrifle_txt"
@@ -2911,8 +2913,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1074
 #: ../base/ufos/weapons_human.ufo:1893
+#, fuzzy
 msgid "Electromagnetic Rifle Magazine"
-msgstr ""
+msgstr "Elektromagneettisen kiväärin lipas"
 
 #: ../base/ufos/research.ufo:1095
 msgid "combatknife_txt"
@@ -7074,7 +7077,7 @@ msgstr "Terveys"
 #: ../base/ufos/ui/althud.ufo:771
 #: ../base/ufos/ui/hud.ufo:406
 msgid "Use headgear"
-msgstr "Käytä kypärää"
+msgstr "Käytä päähinettä"
 
 #: ../base/ufos/ui/althud.ufo:861
 msgid "Switch to right hand weapon"
@@ -7463,7 +7466,7 @@ msgstr "Lisäosa"
 #: ../base/ufos/ui/inventory.ufo:66
 #: ../base/ufos/ui/multiplayer_team.ufo:56
 msgid "Headgear"
-msgstr "Kypärä"
+msgstr "Päähine"
 
 #: ../base/ufos/ui/equipment.ufo:65
 #: ../base/ufos/ui/inventory.ufo:75
@@ -7547,7 +7550,7 @@ msgstr "Seuraava tulitila"
 #: ../base/ufos/ui/equipment.ufo:587
 #: ../base/ufos/ui/multiplayer_team.ufo:572
 msgid "Actor Abilities"
-msgstr ""
+msgstr "Hahmon kyvyt"
 
 #: ../base/ufos/ui/equipment.ufo:591
 #: ../base/ufos/ui/multiplayer_team.ufo:576
@@ -7869,7 +7872,7 @@ msgstr "Uusi SAM paikka"
 
 #: ../base/ufos/ui/geoscape.ufo:1491
 msgid "New UFO yard"
-msgstr ""
+msgstr "Uusi UFO-halli"
 
 #: ../base/ufos/ui/geoscape.ufo:1504
 msgid "Installation Status"
@@ -7923,15 +7926,15 @@ msgstr "ETA:"
 
 #: ../base/ufos/ui/geoscape.ufo:1851
 msgid "Select item"
-msgstr ""
+msgstr "Valitse kohde"
 
 #: ../base/ufos/ui/geoscape.ufo:1856
 msgid "Type:"
-msgstr ""
+msgstr "Tyyppi:"
 
 #: ../base/ufos/ui/geoscape.ufo:1929
 msgid "Action:"
-msgstr ""
+msgstr "Toiminta:"
 
 #: ../base/ufos/ui/geoscape.ufo:1937
 msgid "Description:"
@@ -7943,7 +7946,7 @@ msgstr "Maailmankartan asetukset"
 
 #: ../base/ufos/ui/geoscape.ufo:2010
 msgid "Geoscape projection mode:"
-msgstr ""
+msgstr "Maailmankartan projisointi tapa:"
 
 #: ../base/ufos/ui/geoscape.ufo:2020
 msgid "2D"
@@ -8050,15 +8053,15 @@ msgstr "Ensisijainen tuli tila"
 
 #: ../base/ufos/ui/hud.ufo:675
 msgid "Physical stats of this soldier"
-msgstr ""
+msgstr "Tämän sotilaan fyysiset tilastot"
 
 #: ../base/ufos/ui/hud.ufo:900
 msgid "Multiple-shot reaction fire (Not possible)"
-msgstr ""
+msgstr "Reaktio tilassa useita laukauksia  (Ei mahdollinen)"
 
 #: ../base/ufos/ui/hud.ufo:912
 msgid "One-shot reaction fire (Not possible)"
-msgstr ""
+msgstr "Reaktio tilassa yksi laukaus  (Ei mahdollinen)"
 
 #: ../base/ufos/ui/inventory.ufo:93
 msgid "Floor"
@@ -8079,11 +8082,11 @@ msgstr "Sulje yhteys"
 
 #: ../base/ufos/ui/irc.ufo:29
 msgid "Close menu and disconnect"
-msgstr ""
+msgstr "Sulje valikko ja katkaise yhteys"
 
 #: ../base/ufos/ui/irc.ufo:40
 msgid "Close menu but stay connected"
-msgstr ""
+msgstr "Sulje valikko ja pysy yhteydessä"
 
 #: ../base/ufos/ui/irc.ufo:51
 msgid "Users"
@@ -8116,7 +8119,7 @@ msgstr "Yritä uudelleen"
 #: ../base/ufos/ui/lostwon.ufo:37
 #: ../base/ufos/ui/lostwon.ufo:119
 msgid "Retry this mission"
-msgstr ""
+msgstr "Yritä uudelleen tätä tehtävää"
 
 #: ../base/ufos/ui/lostwon.ufo:165
 #, fuzzy
@@ -8133,15 +8136,17 @@ msgstr "Myy UFO"
 
 #: ../base/ufos/ui/lostwon.ufo:219
 msgid "Capacity (free/all)"
-msgstr ""
+msgstr "Kapasiteetti (vapaa/kaikki)"
 
 #: ../base/ufos/ui/lostwon.ufo:282
+#, fuzzy
 msgid "Recover"
-msgstr ""
+msgstr "Elpyä"
 
 #: ../base/ufos/ui/lostwon.ufo:283
+#, fuzzy
 msgid "Begin UFO recovery process"
-msgstr ""
+msgstr "Aloita UFO:n toipumis prosessi"
 
 #: ../base/ufos/ui/lostwon.ufo:305
 msgid "Nation:"
@@ -8177,7 +8182,7 @@ msgstr "Myy"
 
 #: ../base/ufos/ui/lostwon.ufo:392
 msgid "Begin UFO sell process"
-msgstr ""
+msgstr "Aloita UFO:n myynti prosessi"
 
 #: ../base/ufos/ui/mailclient.ufo:132
 msgid "Time:"
@@ -8189,11 +8194,11 @@ msgstr "Päivä:"
 
 #: ../base/ufos/ui/mailclient.ufo:169
 msgid "Mark all messages read"
-msgstr ""
+msgstr "Merkkaa kaikki viestit luetuksi"
 
 #: ../base/ufos/ui/mailclient.ufo:560
 msgid "Leave mailclient"
-msgstr ""
+msgstr "Poistu sähköpostiohjelmasta"
 
 #: ../base/ufos/ui/main.ufo:37
 msgid "Single-player"
@@ -8242,11 +8247,11 @@ msgstr "Kieli"
 #: ../base/ufos/ui/main.ufo:186
 #: ../base/ufos/ui/options.ufo:784
 msgid "Language:"
-msgstr ""
+msgstr "Kieli:"
 
 #: ../base/ufos/ui/main.ufo:224
 msgid "You have to set the playername and hit the 'OK' button:"
-msgstr ""
+msgstr "Sinun tulee asettaa palaajan nimesi ja painaa 'OK'-painiketta:"
 
 #: ../base/ufos/ui/main.ufo:232
 #: ../base/ufos/ui/multiplayer.ufo:1762
@@ -8307,11 +8312,11 @@ msgstr "Varasti (käytetty/kaikki)"
 
 #: ../base/ufos/ui/market.ufo:503
 msgid "Item autosell enabled"
-msgstr ""
+msgstr "Tuotteiden automaattinen myynti käytössä"
 
 #: ../base/ufos/ui/market.ufo:512
 msgid "Item autosell disabled"
-msgstr ""
+msgstr "Tuotteiden automaattinen myynti pois käytöstä"
 
 #: ../base/ufos/ui/material_editor.ufo:12
 msgid "Material editor"
@@ -8335,11 +8340,11 @@ msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:241
 msgid "+"
-msgstr ""
+msgstr "+"
 
 #: ../base/ufos/ui/material_editor.ufo:252
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../base/ufos/ui/material_editor.ufo:277
 #: ../base/ufos/ui/material_editor.ufo:380
@@ -8401,15 +8406,15 @@ msgstr "Skaala"
 
 #: ../base/ufos/ui/messageoptions.ufo:12
 msgid "enable or disable displaying a notification message"
-msgstr ""
+msgstr "päälle tai pois ilmoituksen viestin näyttäminen"
 
 #: ../base/ufos/ui/messageoptions.ufo:21
 msgid "enable or disable game stopping"
-msgstr ""
+msgstr "päälle tai pois pelin pysäyttäminen"
 
 #: ../base/ufos/ui/messageoptions.ufo:30
 msgid "enable or disable playing sound"
-msgstr ""
+msgstr "päälle tai pois pelin äänet"
 
 #: ../base/ufos/ui/messageoptions.ufo:48
 msgid "Pause/message settings"
@@ -8425,11 +8430,11 @@ msgstr "Hyväksy muutokset"
 
 #: ../base/ufos/ui/messageoptions.ufo:67
 msgid "Revert changes"
-msgstr ""
+msgstr "Peruuta muutokset"
 
 #: ../base/ufos/ui/messageoptions.ufo:79
 msgid "Notify types:"
-msgstr ""
+msgstr "Ilmoita tyypit:"
 
 #: ../base/ufos/ui/messageoptions.ufo:87
 msgid ""
@@ -8552,8 +8557,9 @@ msgid "Security/registration"
 msgstr "Turvallisuus/Rekisteröinti"
 
 #: ../base/ufos/ui/multiplayer.ufo:553
+#, fuzzy
 msgid "Hostname:"
-msgstr ""
+msgstr "Hostname:"
 
 #: ../base/ufos/ui/multiplayer.ufo:580
 msgid "Gametype:"
@@ -8561,7 +8567,7 @@ msgstr "Pelityyppi:"
 
 #: ../base/ufos/ui/multiplayer.ufo:617
 msgid "Teamplay:"
-msgstr ""
+msgstr "Tiimipeli:"
 
 #: ../base/ufos/ui/multiplayer.ufo:643
 msgid "Preview:"
@@ -8578,48 +8584,50 @@ msgstr "Sallittu pelityyppi:"
 #: ../base/ufos/ui/multiplayer.ufo:708
 #: ../base/ufos/ui/skirmish.ufo:89
 msgid "Day version:"
-msgstr ""
+msgstr "Päivä versio"
 
 #: ../base/ufos/ui/multiplayer.ufo:732
+#, fuzzy
 msgid "Enable morale states:"
-msgstr ""
+msgstr "Ota käyttöön moraali tilat:"
 
 #: ../base/ufos/ui/multiplayer.ufo:749
 msgid "Max. clients:"
 msgstr "Pelaajia enintään:"
 
 #: ../base/ufos/ui/multiplayer.ufo:750
+#, fuzzy
 msgid "Sets the max allowed clients to connect"
-msgstr ""
+msgstr "Aseta maksimimäärä hyväksytyille asiakkaiden yhteyksille"
 
 #: ../base/ufos/ui/multiplayer.ufo:776
 msgid "Max. soldiers per team:"
-msgstr ""
+msgstr "Enintään sotilaita joukkueella:"
 
 #: ../base/ufos/ui/multiplayer.ufo:777
 msgid "Sets the max allowed soldiers per team"
-msgstr ""
+msgstr "Aseta sallittu enimmäismäärä sotilaita joukkueelle"
 
 #: ../base/ufos/ui/multiplayer.ufo:803
 msgid "Max. soldiers per player:"
-msgstr ""
+msgstr "Enintään sotilaita pelaajalla:"
 
 #: ../base/ufos/ui/multiplayer.ufo:804
 msgid "Sets the max allowed soldiers per player when in teamplay"
-msgstr ""
+msgstr "Aseta sallittu maksimimäärä sotilaita pelaajalle joukkuepelissä"
 
 #: ../base/ufos/ui/multiplayer.ufo:831
 msgid "Max. human players per team:"
-msgstr ""
+msgstr "Enintään ihmispelaajia joukkueessa:"
 
 #: ../base/ufos/ui/multiplayer.ufo:857
 #: ../base/ufos/ui/skirmish.ufo:106
 msgid "Max. AI actors:"
-msgstr ""
+msgstr "Enintään tekoäly pelaajia:"
 
 #: ../base/ufos/ui/multiplayer.ufo:858
 msgid "Max AI actors for teamplay mode"
-msgstr ""
+msgstr "Enintään tekoäly pelaajia joukkuepeli moodissa"
 
 #: ../base/ufos/ui/multiplayer.ufo:891
 msgid "Make this server public:"
@@ -8659,32 +8667,32 @@ msgstr "Pelaajia yhdistetty"
 
 #: ../base/ufos/ui/multiplayer.ufo:1290
 msgid "Team selection"
-msgstr ""
+msgstr "Valitse joukkue"
 
 #: ../base/ufos/ui/multiplayer.ufo:1311
 msgid "Team preference:"
-msgstr ""
+msgstr "Joukkueen asetus:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1325
 msgid "Next free team"
-msgstr ""
+msgstr "Näytä seuraava joukkue"
 
 #: ../base/ufos/ui/multiplayer.ufo:1336
 msgid "Previous free team"
-msgstr ""
+msgstr "Näytä edellinen joukkue"
 
 #: ../base/ufos/ui/multiplayer.ufo:1349
 msgid "Force start"
-msgstr ""
+msgstr "Pakota aloitus"
 
 #: ../base/ufos/ui/multiplayer.ufo:1350
 msgid "Start the game even if not all teams is ready or have joined"
-msgstr ""
+msgstr "Aloita peli, vaikka kaikki joukkueet eivät ole valmiita tai eivät ole yhdistäneet"
 
 #: ../base/ufos/ui/multiplayer.ufo:1361
 #: ../base/ufos/ui/multiplayer.ufo:1370
 msgid "Finish the teamselection and start the game"
-msgstr ""
+msgstr "Lopeta joukkueen valitseminen ja aloita peli"
 
 #: ../base/ufos/ui/multiplayer.ufo:1369
 msgid "Are you ready?"
@@ -8697,16 +8705,16 @@ msgstr "Aktivoi IRC"
 
 #: ../base/ufos/ui/multiplayer.ufo:1394
 msgid "Deactivate IRC"
-msgstr ""
+msgstr "Deaktivoi IRC"
 
 #: ../base/ufos/ui/multiplayer.ufo:1402
 #: ../base/ufos/ui/multiplayer.ufo:1412
 msgid "Display IRC users"
-msgstr ""
+msgstr "Näytä IRC käyttäjät"
 
 #: ../base/ufos/ui/multiplayer.ufo:1415
 msgid "Hide IRC users"
-msgstr ""
+msgstr "Piilota IRC käyttäjät"
 
 #: ../base/ufos/ui/multiplayer.ufo:1421
 msgid "Invite others"
@@ -8718,7 +8726,7 @@ msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1459
 msgid "Party chat"
-msgstr ""
+msgstr "Bile rupattelu"
 
 #: ../base/ufos/ui/multiplayer.ufo:1463
 msgid "Global lobby (IRC)"
@@ -8760,11 +8768,11 @@ msgstr "Näytä palvelimen tiedot"
 
 #: ../base/ufos/ui/multiplayer.ufo:1867
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
-msgstr ""
+msgstr "Olet saanut kutsun moninpeliin. Paina yhdistä painiketta muodostaaksesi yhteyden palvelimelle"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:880
 msgid "Generate a new random team"
-msgstr ""
+msgstr "Luo uusi satunnainen joukkue"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:886
 msgid "New"
@@ -8772,7 +8780,7 @@ msgstr "Uusi"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:893
 msgid "Save the current team"
-msgstr ""
+msgstr "Tallenna valittu joukkue"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:904
 #: ../base/ufos/ui/skirmish.ufo:134
@@ -8812,7 +8820,7 @@ msgstr "Ääni"
 
 #: ../base/ufos/ui/options.ufo:65
 msgid "Input"
-msgstr ""
+msgstr "Syöte"
 
 #: ../base/ufos/ui/options.ufo:93
 msgid "Video settings"
@@ -8823,16 +8831,19 @@ msgid "Resolution:"
 msgstr "Resoluutio:"
 
 #: ../base/ufos/ui/options.ufo:109
+#, fuzzy
 msgid "Texture resolution cap:"
-msgstr ""
+msgstr "Pintarakenteen resoluutio cap:"
 
 #: ../base/ufos/ui/options.ufo:117
+#, fuzzy
 msgid "Lightmap block size:"
-msgstr ""
+msgstr "Valaistus lohkokoon koko:"
 
 #: ../base/ufos/ui/options.ufo:124
+#, fuzzy
 msgid "Texture anisotropy level:"
-msgstr ""
+msgstr "Tekstuurin anisotropy taso:"
 
 #: ../base/ufos/ui/options.ufo:150
 msgid "Fullscreen:"
@@ -8847,40 +8858,44 @@ msgid "Show FPS:"
 msgstr "Näytä FPS:"
 
 #: ../base/ufos/ui/options.ufo:192
+#, fuzzy
 msgid "Texture Lod:"
-msgstr ""
+msgstr "Tekstuurin Lod:"
 
 #: ../base/ufos/ui/options.ufo:206
+#, fuzzy
 msgid "Isometric Mode:"
-msgstr ""
+msgstr "Isometrinen Tila:"
 
 #: ../base/ufos/ui/options.ufo:220
 msgid "GLSL shaders:"
-msgstr ""
+msgstr "GLSL varjostinmallit:"
 
 #: ../base/ufos/ui/options.ufo:234
 msgid "Realtime lighting:"
-msgstr ""
+msgstr "Reaaliaikainen valaistus:"
 
 #: ../base/ufos/ui/options.ufo:248
 msgid "Weather effects:"
-msgstr ""
+msgstr "Sää efektit:"
 
 #: ../base/ufos/ui/options.ufo:262
 msgid "Vertex buffers:"
-msgstr ""
+msgstr "Vertex bufferi:"
 
 #: ../base/ufos/ui/options.ufo:276
+#, fuzzy
 msgid "Multisample buffers:"
-msgstr ""
+msgstr "Multisample bufferi:"
 
 #: ../base/ufos/ui/options.ufo:299
+#, fuzzy
 msgid "Swap interval:"
-msgstr ""
+msgstr "Swap aikaväli:"
 
 #: ../base/ufos/ui/options.ufo:323
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: ../base/ufos/ui/options.ufo:344
 msgid "Contrast:"
@@ -8888,7 +8903,7 @@ msgstr "Kontrasti:"
 
 #: ../base/ufos/ui/options.ufo:365
 msgid "Brightness:"
-msgstr ""
+msgstr "Kirkkaus:"
 
 #: ../base/ufos/ui/options.ufo:386
 msgid "Lightmap scale:"
@@ -8901,7 +8916,7 @@ msgstr ""
 #: ../base/ufos/ui/options.ufo:427
 #: ../base/ufos/ui/options.ufo:452
 msgid "Low"
-msgstr ""
+msgstr "Matala"
 
 #: ../base/ufos/ui/options.ufo:431
 #: ../base/ufos/ui/options.ufo:456
@@ -8926,7 +8941,7 @@ msgstr "loistava"
 
 #: ../base/ufos/ui/options.ufo:472
 msgid "Extreme"
-msgstr ""
+msgstr "Äärimmäinen"
 
 #: ../base/ufos/ui/options.ufo:551
 msgid "Sound settings"
@@ -8938,15 +8953,15 @@ msgstr "Äänensuhde:"
 
 #: ../base/ufos/ui/options.ufo:614
 msgid "Restart sound to change the settings"
-msgstr ""
+msgstr "Käynnistä uudelleen muuttaksesi ääni asetuksia"
 
 #: ../base/ufos/ui/options.ufo:650
 msgid "Enable sound:"
-msgstr ""
+msgstr "Salli ääni:"
 
 #: ../base/ufos/ui/options.ufo:676
 msgid "Show key bindings"
-msgstr ""
+msgstr "Näytä pikanäppäimet"
 
 #: ../base/ufos/ui/options.ufo:724
 msgid "Game settings"
@@ -8954,15 +8969,15 @@ msgstr "Peliasetukset"
 
 #: ../base/ufos/ui/options.ufo:758
 msgid "HUD Design:"
-msgstr ""
+msgstr "HUD muotoilu:"
 
 #: ../base/ufos/ui/options.ufo:770
 msgid "Original HUD"
-msgstr ""
+msgstr "Alkuperäinen HUD"
 
 #: ../base/ufos/ui/options.ufo:774
 msgid "Alternative HUD"
-msgstr ""
+msgstr "Vaihtoehtoinen HUD"
 
 #: ../base/ufos/ui/options.ufo:822
 msgid "Tooltips:"
@@ -8970,7 +8985,7 @@ msgstr "Kontekstivihjeet:"
 
 #: ../base/ufos/ui/options.ufo:829
 msgid "Activates tooltips"
-msgstr ""
+msgstr "Aktivoi vihjetekstit"
 
 #: ../base/ufos/ui/options.ufo:840
 msgid "Centre view:"
@@ -8990,19 +9005,20 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:876
 msgid "3D Geoscape:"
-msgstr ""
+msgstr "3D Maailmankartta:"
 
 #: ../base/ufos/ui/options.ufo:883
 msgid "Use 3D geoscape"
-msgstr ""
+msgstr "Käytä 3D maailmankarttaa"
 
 #: ../base/ufos/ui/options.ufo:894
+#, fuzzy
 msgid "3D Geoscape ambient lighting:"
-msgstr ""
+msgstr "3D Maailmankartta ulkoilman valoistuutta:"
 
 #: ../base/ufos/ui/options.ufo:919
 msgid "Show tip of the day:"
-msgstr ""
+msgstr "Näytä vinkki päivässä:"
 
 #: ../base/ufos/ui/options.ufo:937
 msgid "Precache models:"
@@ -9076,7 +9092,7 @@ msgstr "Ei"
 
 #: ../base/ufos/ui/options.ufo:1199
 msgid "Confirm Actions:"
-msgstr ""
+msgstr "Hyväksy Tehtävät:"
 
 #: ../base/ufos/ui/options.ufo:1219
 msgid "Only for moving"
@@ -9281,8 +9297,9 @@ msgid "max"
 msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:12
+#, fuzzy
 msgid "Node editor"
-msgstr ""
+msgstr "Solmu muokkain"
 
 #: ../base/ufos/ui/sys_editor.ufo:30
 msgid "Capture a node"
@@ -9360,7 +9377,7 @@ msgstr "Aloita siirto"
 
 #: ../base/ufos/ui/transfer.ufo:595
 msgid "Empty the aircraft storage"
-msgstr ""
+msgstr "Lentokenttä varasto on tyhjä"
 
 #: ../base/ufos/ui/ufopedia.ufo:83
 msgid "Pre research text"
@@ -9392,7 +9409,7 @@ msgstr "IR Lasit"
 
 #: ../base/ufos/weapons.ufo:82
 msgid "Scan"
-msgstr ""
+msgstr "Tutki"
 
 #: ../base/ufos/weapons.ufo:116
 msgid "Frag Grenade"
@@ -9406,7 +9423,7 @@ msgstr ""
 #: ../base/ufos/weapons.ufo:510
 #: ../base/ufos/weapons.ufo:585
 msgid "Lob"
-msgstr ""
+msgstr "Heitä"
 
 #: ../base/ufos/weapons.ufo:158
 #: ../base/ufos/weapons.ufo:233
@@ -9416,7 +9433,7 @@ msgstr ""
 #: ../base/ufos/weapons.ufo:535
 #: ../base/ufos/weapons.ufo:609
 msgid "Roll"
-msgstr ""
+msgstr "Vieritä"
 
 #: ../base/ufos/weapons.ufo:190
 msgid "Flashbang"
@@ -9468,17 +9485,18 @@ msgstr ""
 #: ../base/ufos/weapons_plasma.ufo:143
 #: ../base/ufos/weapons_plasma.ufo:268
 msgid "Snap Shot"
-msgstr ""
+msgstr "Napsauslaukaus"
 
 #: ../base/ufos/weapons_aliens.ufo:82
 #: ../base/ufos/weapons_aliens.ufo:145
+#, fuzzy
 msgid "Cannonade"
-msgstr ""
+msgstr "Tykkituli"
 
 #: ../base/ufos/weapons_aliens.ufo:102
 #: ../base/ufos/weapons_aliens.ufo:165
 msgid "Precision Shot"
-msgstr ""
+msgstr "Tarkkuuslaukaus"
 
 #: ../base/ufos/weapons_human.ufo:6
 msgid "Assault Rifle"
@@ -9498,7 +9516,7 @@ msgstr "Rynnäkkökiväärin lipas"
 #: ../base/ufos/weapons_human.ufo:1670
 #: ../base/ufos/weapons_human.ufo:1930
 msgid "3-Round Burst"
-msgstr ""
+msgstr "3-laukaisun sarja"
 
 #: ../base/ufos/weapons_human.ufo:81
 #: ../base/ufos/weapons_human.ufo:163
@@ -9510,8 +9528,9 @@ msgstr ""
 #: ../base/ufos/weapons_multiplayer.ufo:280
 #: ../base/ufos/weapons_plasma.ufo:203
 #: ../base/ufos/weapons_ugv.ufo:101
+#, fuzzy
 msgid "Full-Auto"
-msgstr ""
+msgstr "Täysi-Auto"
 
 #: ../base/ufos/weapons_human.ufo:101
 #: ../base/ufos/weapons_human.ufo:183
@@ -9528,13 +9547,14 @@ msgstr "Konekiväärin lipas"
 
 #: ../base/ufos/weapons_human.ufo:246
 msgid "5-Shot Burst"
-msgstr ""
+msgstr "5-ammunnan sarja"
 
 #: ../base/ufos/weapons_human.ufo:286
 #: ../base/ufos/weapons_multiplayer.ufo:88
 #: ../base/ufos/weapons_multiplayer.ufo:300
+#, fuzzy
 msgid "Full-Auto Sweep"
-msgstr ""
+msgstr "Täysi-Auto pyyhkäisy"
 
 #: ../base/ufos/weapons_human.ufo:312
 msgid "Sniper Rifle"
@@ -9555,7 +9575,7 @@ msgstr "Tarkkuuskiväärin lipas"
 #: ../base/ufos/weapons_plasma.ufo:61
 #: ../base/ufos/weapons_plasma.ufo:163
 msgid "Aimed Shot"
-msgstr ""
+msgstr "Tähtää ja ammu"
 
 #: ../base/ufos/weapons_human.ufo:412
 msgid "Coilgun Clip"
@@ -9741,7 +9761,7 @@ msgstr ""
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
-msgstr ""
+msgstr "Taktinen Puukko"
 
 #: ../base/ufos/weapons_melee.ufo:65
 msgid "Monomolecular Knife"
@@ -10003,8 +10023,9 @@ msgid "Reserve TUs for firing/using."
 msgstr ""
 
 #: client/battlescape/cl_hud.c:370
+#, fuzzy
 msgid "Shot Reservation"
-msgstr ""
+msgstr "Laukauksia Varastossa"
 
 #: client/battlescape/cl_hud.c:707
 msgid "No item in hand.\n"
@@ -10090,7 +10111,7 @@ msgstr "Ei tarpeeksi TU:ja ylös nousemiselle"
 #: client/battlescape/cl_hud.c:1017
 #, c-format
 msgid "Stand up (%i TU)"
-msgstr ""
+msgstr "Nouse ylös (%i TU)"
 
 #: client/battlescape/cl_hud.c:1022
 msgid "Not enough TUs for crouching."
@@ -10099,7 +10120,7 @@ msgstr "Ei tarpeeksi TU:ja kyykistymiselle."
 #: client/battlescape/cl_hud.c:1025
 #, c-format
 msgid "Crouch (%i TU)"
-msgstr ""
+msgstr "Polvistu (%i TU)"
 
 #: client/battlescape/cl_hud.c:1033
 #, c-format
@@ -10133,7 +10154,7 @@ msgstr ""
 #: client/battlescape/cl_hud.c:1083
 #, c-format
 msgid "Reload weapon (%i TU)."
-msgstr ""
+msgstr "Uudelleenlataa ase (%i TU)."
 
 #: client/battlescape/cl_hud.c:1303
 #, c-format
@@ -10177,6 +10198,8 @@ msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 msgstr ""
+"Et voi käyttää tätä tuntematonta tuotetta.\n"
+"Sinun täytyy tutkia ensin.\n"
 
 #: client/battlescape/cl_hud.c:1457
 #, c-format
@@ -10187,15 +10210,15 @@ msgstr ""
 
 #: client/battlescape/cl_hud.c:1466
 msgid "Currently panics!\n"
-msgstr ""
+msgstr "Tällä hetkellä panikoidaan!\n"
 
 #: client/battlescape/cl_hud.c:1670
 msgid "Reload the weapon in the soldiers left hand"
-msgstr ""
+msgstr "Lataa uudelleen ase sotilaan vasemassa kädessä"
 
 #: client/battlescape/cl_hud.c:1671
 msgid "Reload the weapon in the soldiers right hand"
-msgstr ""
+msgstr "Lataa uudelleen ase sotilaan oikeassa kädessä"
 
 #: client/battlescape/cl_hud.c:1673
 msgid "Toggle reservation for crouching."
@@ -13041,7 +13064,7 @@ msgstr "Voitit pelin!"
 #: client/cl_game_multiplayer.c:206
 #: client/cl_game_skirmish.c:137
 msgid "Congratulations"
-msgstr ""
+msgstr "Onneksi olkoon"
 
 #: client/cl_game_multiplayer.c:208
 #: client/cl_game_skirmish.c:139
@@ -13106,40 +13129,40 @@ msgstr "%s ase\n"
 #: client/cl_inventory_callbacks.c:180
 #: client/cl_inventory_callbacks.c:183
 msgid "One-handed"
-msgstr ""
+msgstr "Yhdenkäden"
 
 #: client/cl_inventory_callbacks.c:144
 #: client/cl_inventory_callbacks.c:180
 #: client/cl_inventory_callbacks.c:183
 msgid "Two-handed"
-msgstr ""
+msgstr "Kahdenkäden"
 
 #: client/cl_inventory_callbacks.c:146
 #, c-format
 msgid "Max ammo:\t%i\n"
-msgstr ""
+msgstr "Max. ammuksia:\t%i\n"
 
 #: client/cl_inventory_callbacks.c:173
 #, c-format
 msgid "Skill:\t%s\n"
-msgstr ""
+msgstr "Taito:\t%s\n"
 
 #: client/cl_inventory_callbacks.c:175
 #: client/cl_inventory_callbacks.c:186
 #, c-format
 msgid "Time units:\t%i\n"
-msgstr ""
+msgstr "Aikayksiköt:\t%i\n"
 
 #: client/cl_inventory_callbacks.c:176
 #: client/cl_inventory_callbacks.c:187
 #, c-format
 msgid "Range:\t%g\n"
-msgstr ""
+msgstr "Kantama:\t%g\n"
 
 #: client/cl_inventory_callbacks.c:177
 #, c-format
 msgid "Spreads:\t%g\n"
-msgstr ""
+msgstr "Leviämä:\t%g\n"
 
 #: client/cl_inventory_callbacks.c:180
 #, c-format
@@ -13318,7 +13341,7 @@ msgstr ""
 
 #: client/input/cl_input.c:1056
 msgid "Toggle the headgear"
-msgstr ""
+msgstr "Vaihda päähinettä"
 
 #: client/input/cl_input.c:1057
 msgid "Toggle to next alien"
@@ -13543,7 +13566,7 @@ msgstr ""
 
 #: client/multiplayer/mp_team.c:194
 msgid "NewTeam"
-msgstr ""
+msgstr "UusiJoukkue"
 
 #: client/multiplayer/mp_team.c:199
 msgid "Error saving team. Check free disk space!"
