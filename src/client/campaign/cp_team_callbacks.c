@@ -227,11 +227,6 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		MN_ExecuteConfunc("equipdisable %i", p);
 	}
 
-	/* reset description */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
-	MN_ResetData(TEXT_ITEMDESCRIPTION);
-
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
 

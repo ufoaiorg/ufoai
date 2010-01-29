@@ -1153,16 +1153,19 @@ void E_InitStartup (void)
 }
 
 /**
- * @brief Searches all soldiers employees for the ucn (character id)
+ * @brief Searches all employee for the ucn (character id)
+ * @param[in] uniqueCharacterNumber unique character number (UCN)
  */
 employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
 	int i;
+	int j;
 
 	/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
-	for (i = 0; i < MAX_EMPLOYEES; i++)
-		if (ccs.employees[EMPL_SOLDIER][i].chr.ucn == uniqueCharacterNumber)
-			return &(ccs.employees[EMPL_SOLDIER][i]);
+	for (j = 0; j < MAX_EMPL; j++)
+		for (i = 0; i < MAX_EMPLOYEES; i++)
+			if (ccs.employees[j][i].chr.ucn == uniqueCharacterNumber)
+				return &(ccs.employees[j][i]);
 
 	return NULL;
 }

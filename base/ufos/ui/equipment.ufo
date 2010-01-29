@@ -604,11 +604,26 @@ window equipment extends objectinfo
 	// inventory
 	// ==================
 
-	string txt_actorname
+	textentry name
 	{
-		string	*cvar:mn_name
-		pos		"544 24"
-		size	"300 20"
+		string		*cvar:mn_name
+		tooltip		"_Rename your unit"
+		pos			"544 24"
+		size		"230 20"
+		onChange	{
+			cmd "employee_changename; team_updateequip; equip_select <cvar:cl_selected>;"
+		}
+	}
+
+	pic bt_edit
+	{
+		tooltip		"_Rename your unit"
+		image		ui/buttons_small
+		pos			"780 24"
+		size		"16 16"
+		texl		"0 48"
+		texh		"16 64"
+		onClick		{ call *node:parent.name@edit }
 	}
 
 	model body
@@ -742,6 +757,7 @@ window equipment extends objectinfo
 		*cvar:mn_infotype = 0
 		*cvar:mn_equiptype = 0		
 		*cvar:mn_linkname = ""
+		*cvar:mn_itemname = ""
 		cmd "team_initskin;team_updateequip;update_item_list;equip_select 0;"
 	}
 }

@@ -2816,6 +2816,7 @@ static void CL_ActorEquipmentSelect_f (void)
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
+	Cvar_SetValue("mn_ucn", chrDisplayList.chr[num]->ucn);
 
 	/* set info cvars */
 	if (chr->teamDef->race == RACE_ROBOT)

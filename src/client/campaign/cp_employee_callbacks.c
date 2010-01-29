@@ -79,6 +79,7 @@ static void E_EmployeeSelect (employee_t *employee)
 	if (selectedEmployee) {
 		/* mn_employee_hired is needed to allow renaming */
 		Cvar_SetValue("mn_employee_hired", selectedEmployee->hired ? 1 : 0);
+		Cvar_SetValue("mn_ucn", selectedEmployee->chr.ucn);
 
 		/* set info cvars */
 		CL_CharacterCvars(&(selectedEmployee->chr));
@@ -218,16 +219,14 @@ static void E_EmployeeList_f (void)
 
 /**
  * @brief Change the name of the selected actor.
+ * @note called via "employee_changename"
  */
 static void E_ChangeName_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	employee_t *employee = E_GetEmployeeFromChrUCN(Cvar_GetInteger("mn_ucn"));
 
-	if (!base)
-		return;
-
-	if (selectedEmployee)
-		Q_strncpyz(selectedEmployee->chr.name, Cvar_GetString("mn_name"), sizeof(selectedEmployee->chr.name));
+	if (employee)
+		Q_strncpyz(employee->chr.name, Cvar_GetString("mn_name"), sizeof(employee->chr.name));
 }
 
 /**
