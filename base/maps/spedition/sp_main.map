@@ -2,7 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"maxlevel" "3"
+"maxlevel" "4"
 // brush 0
 {
 ( 1822 866 62 ) ( 1822 708 62 ) ( 1822 708 0 ) tex_misc/container006 64 8 0 0.5 0.5 768 0 0
