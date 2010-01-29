@@ -168,6 +168,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config_0.23-3_win32.zip pkg-config.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev_2.7.4-1_win32.zip libxml2.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ fontconfig-dev_2.8.0-1_win32.zip fontconfig.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 	download_archive http://mattn.ninex.info/download/ openal.zip libopenal-dev.zip
@@ -223,6 +224,7 @@ function extract_libs()
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
+	extract_archive_zip fontconfig.zip "${MINGW_DIR}"
 }
 
 function extract_cunit() 
