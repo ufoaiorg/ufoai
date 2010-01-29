@@ -183,14 +183,9 @@ static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
  */
 void HUD_HideFiremodes (void)
 {
-	int i;
-
 	visibleFiremodeListLeft = qfalse;
 	visibleFiremodeListRight = qfalse;
-	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		MN_ExecuteConfunc("set_left_inv %i", i);
-		MN_ExecuteConfunc("set_right_inv %i", i);
-	}
+	MN_ExecuteConfunc("hide_firemodes");
 }
 
 /**
@@ -202,18 +197,15 @@ void HUD_HideFiremodes (void)
 static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx, const char hand, int index)
 {
 	int usableTusForRF;
-	char cvarName[MAX_VAR];
+	char tuString[MAX_VAR];
 	qboolean status;
 	const fireDef_t *fd;
+	const char *tooltip;
 
-	if (index < ammo->numFiredefs[weapFdsIdx])
+	if (index < ammo->numFiredefs[weapFdsIdx]) {
 		/* We have a defined fd ... */
 		fd = &ammo->fd[weapFdsIdx][index];
-	else
-		/* No more fd left in the list or weapon not researched. */
-		fd = NULL;
-
-	if (!fd || !selActor) {
+	} else {
 		/* Hide this entry */
 		if (hand == ACTOR_HAND_CHAR_RIGHT)
 			MN_ExecuteConfunc("set_right_inv %i", index);
@@ -222,57 +214,28 @@ static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx
 		return;
 	}
 
+	assert(selActor);
 	assert(hand == ACTOR_HAND_CHAR_RIGHT || hand == ACTOR_HAND_CHAR_LEFT);
 
 	index = fd->fdIdx;
 	status = fd->time <= CL_UsableTUs(selActor);
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
-	if (hand == ACTOR_HAND_CHAR_RIGHT) {
-		/* Make this entry visible (in case it wasn't). */
-		MN_ExecuteConfunc("set_right_vis %i %i", fd->fdIdx, status);
-	} else if (hand == ACTOR_HAND_CHAR_LEFT) {
-		/* Make this entry visible (in case it wasn't). */
-		MN_ExecuteConfunc("set_left_vis %i %i", fd->fdIdx, status);
-	}
+	if (usableTusForRF > fd->time) {
+		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
+		tooltip = tuString;
+	} else
+		tooltip = _("No remaining TUs left after shot.");
 
-	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tt_tu%i", hand, fd->fdIdx);
-	if (usableTusForRF > fd->time)
-		Cvar_Set(cvarName, va(_("Remaining TUs: %i"), usableTusForRF - fd->time));
-	else
-		Cvar_Set(cvarName, _("No remaining TUs left after shot."));
+	MN_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", hand,
+			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
+			va(_("Shots: %i"), fd->ammo), tooltip);
 
-	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_name%i", hand, fd->fdIdx);
-	Cvar_Set(cvarName, _(fd->name));
-	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tu%i", hand, fd->fdIdx);
-	Cvar_Set(cvarName, va(_("TU: %i"), fd->time));
-	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_shot%i", hand, fd->fdIdx);
-	Cvar_Set(cvarName, va(_("Shots: %i"), fd->ammo));
-
-	/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
+	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
-		if (hand == ACTOR_HAND_CHAR_RIGHT) {
-			if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_RIGHT, index)) {
-				/* Set this checkbox visible+active. */
-				MN_ExecuteConfunc("set_right_cb_a %i", index);
-			} else {
-				/* Set this checkbox visible+inactive. */
-				MN_ExecuteConfunc("set_right_cb_ina %i", index);
-			}
-		} else { /* hand[0] == ACTOR_HAND_CHAR_LEFT */
-			if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_LEFT, index)) {
-				/* Set this checkbox visible+active. */
-				MN_ExecuteConfunc("set_left_cb_a %i", index);
-			} else {
-				/* Set this checkbox visible+active. */
-				MN_ExecuteConfunc("set_left_cb_ina %i", index);
-			}
-		}
-	} else {
-		if (hand == ACTOR_HAND_CHAR_RIGHT)
-			MN_ExecuteConfunc("set_right_cb_invis %i", index);
-		else
-			MN_ExecuteConfunc("set_left_cb_invis %i", index);
+		const qboolean active = THIS_FIREMODE(&selChr->RFmode, ACTOR_GET_HAND_INDEX(hand), index);
+		/* Change the state of the checkbox. */
+		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", hand, index, active);
 	}
 }
 

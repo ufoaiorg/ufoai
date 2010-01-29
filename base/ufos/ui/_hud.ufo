@@ -369,16 +369,6 @@ window firemode_left {
 
 	/* Firemode console functions ===================================*/
 
-	func set_left_ina {
-		*(pic)bt_left_fm<1>@texl = "0 64"
-		*(pic)bt_left_fm<1>@texh = "214 128"
-	}
-
-	func set_left_a {
-		*(pic)bt_left_fm<1>@texl = "0 0"
-		*(pic)bt_left_fm<1>@texh = "214 63"
-	}
-
 	confunc set_left_inv {
 		*(pic)bt_left_fm<1>@invis = true
 	}
@@ -392,10 +382,13 @@ window firemode_left {
 		*(pic)bt_left_fm<1>@invis = false
 
 		if ( *cvar:tmp eq "1" ) {
-			call *node:root.set_left_a ( <1> ) 
+			*(pic)bt_left_fm<1>@texl = "0 0"
+			*(pic)bt_left_fm<1>@texh = "214 63"
 		} else {
-			call *node:root.set_left_ina ( <1> )
+			*(pic)bt_left_fm<1>@texl = "0 64"
+			*(pic)bt_left_fm<1>@texh = "214 128"
 		}		
+		delete *cvar:tmp
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
@@ -674,16 +667,6 @@ window firemode_right {
 		hud/firemode (inactive)	->	texl "0 64"	texh "214 128"
 	*/
 
-	func set_right_ina {
-		*(pic)bt_right_fm<1>@texl = "0 64"
-		*(pic)bt_right_fm<1>@texh = "214 128"
-	}
-
-	func set_right_a {
-		*(pic)bt_right_fm<1>@texl = "0 0"
-		*(pic)bt_right_fm<1>@texh = "214 63"
-	}
-
 	confunc set_right_inv {
 		*(pic)bt_right_fm<1>@invis = true
 	}
@@ -697,10 +680,13 @@ window firemode_right {
 		*(pic)bt_right_fm<1>@invis = false
 
 		if ( *cvar:tmp eq "1" ) {
-			call *node:root.set_right_a ( <1> )
+			*(pic)bt_right_fm<1>@texl = "0 0"
+			*(pic)bt_right_fm<1>@texh = "214 63"
 		} else {
-			call *node:root.set_right_ina ( <1> )
-		}		
+			*(pic)bt_right_fm<1>@texl = "0 64"
+			*(pic)bt_right_fm<1>@texh = "214 128"
+		}
+		delete *cvar:tmp
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
@@ -719,5 +705,65 @@ window firemode_right {
 
 	confunc set_right_cb_invis {
 		*(pic)bt_right_fm<1>.cb@invis = true
+	}
+	
+	/**
+	 * @param<1> hand (char) (l or r for left or right)
+	 * @param<2> firedef index (int)
+	 * @param<3> firedef reaction fire (int) (1= true, 0= false)
+	 * @param<4> status
+	 * @param<5> name (string)
+	 * @param<6> TUs (string)
+	 * @param<7> shots (string)
+	 * @param<8> tooltip
+	 * @example cvar strings: mn_l_fm_nameX, mn_r_fm_nameX
+	 */
+	confunc set_firemode {
+		*cvar:mn_<1>_fm_name<2> = "<5>"
+		*cvar:mn_<1>_fm_tu<2> = "<6>"
+		*cvar:mn_<1>_fm_shot<2> = "<7>"
+		*cvar:mn_<1>_fm_tt_tu<2> = "<8>"
+		if ( <1> eq "l" ) {
+			cmd "set_left_vis <2> <4>;"
+			if ( <3> eq "0" ) {
+				cmd "set_left_cb_invis <2>;"
+			}
+		} else {
+			cmd "set_right_vis <2> <4>;"
+			if ( <3> eq "0" ) {
+				cmd "set_right_cb_invis <2>;"
+			}
+		}
+	}
+	
+	/**
+	 * @param<1> hand (char) (l or r for left or right)
+	 * @param<2> firedef index (int)
+	 * @param<3> activate (1=activate, 0=deactivate)
+	 */
+	confunc set_firemode_checkbox {
+		if ( <1> eq "l" ) {
+			if ( <3> eq "1" ) {
+				cmd "set_left_cb_a <2>;"
+			} else {
+				cmd "set_left_cb_ina <2>;"
+			}
+		} else {
+			if ( <3> eq "1" ) {
+				cmd "set_right_cb_a <2>;"
+			} else {
+				cmd "set_right_cb_ina <2>;"
+			}
+		}
+	}
+	
+	confunc hide_firemodes {
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			cmd "set_left_inv <cvar:i>;"
+			cmd "set_right_inv <cvar:i>;"
+			*cvar:i = ( *cvar:i + 1 )
+		} 
+		delete *cvar:i
 	}
 }
