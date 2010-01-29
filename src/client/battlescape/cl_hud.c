@@ -197,19 +197,35 @@ void HUD_HideFiremodes (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
  * @param[in] hand What list to display: 'l' for left hand list, 'r' for right hand list.
- * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  * @todo Put the most of this function into the scripts
  */
-static void HUD_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, const qboolean status)
+static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx, const char hand, int index)
 {
 	int usableTusForRF;
 	char cvarName[MAX_VAR];
+	qboolean status;
+	const fireDef_t *fd;
 
-	if (!fd || !selActor)
+	if (index < ammo->numFiredefs[weapFdsIdx])
+		/* We have a defined fd ... */
+		fd = &ammo->fd[weapFdsIdx][index];
+	else
+		/* No more fd left in the list or weapon not researched. */
+		fd = NULL;
+
+	if (!fd || !selActor) {
+		/* Hide this entry */
+		if (hand == ACTOR_HAND_CHAR_RIGHT)
+			MN_ExecuteConfunc("set_right_inv %i", index);
+		else
+			MN_ExecuteConfunc("set_left_inv %i", index);
 		return;
+	}
 
 	assert(hand == ACTOR_HAND_CHAR_RIGHT || hand == ACTOR_HAND_CHAR_LEFT);
 
+	index = fd->fdIdx;
+	status = fd->time <= CL_UsableTUs(selActor);
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
 	if (hand == ACTOR_HAND_CHAR_RIGHT) {
@@ -232,6 +248,32 @@ static void HUD_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, con
 	Cvar_Set(cvarName, va(_("TU: %i"), fd->time));
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_shot%i", hand, fd->fdIdx);
 	Cvar_Set(cvarName, va(_("Shots: %i"), fd->ammo));
+
+	/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
+	if (fd->reaction) {
+		if (hand == ACTOR_HAND_CHAR_RIGHT) {
+			if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_RIGHT, index)) {
+				/* Set this checkbox visible+active. */
+				MN_ExecuteConfunc("set_right_cb_a %i", index);
+			} else {
+				/* Set this checkbox visible+inactive. */
+				MN_ExecuteConfunc("set_right_cb_ina %i", index);
+			}
+		} else { /* hand[0] == ACTOR_HAND_CHAR_LEFT */
+			if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_LEFT, index)) {
+				/* Set this checkbox visible+active. */
+				MN_ExecuteConfunc("set_left_cb_a %i", index);
+			} else {
+				/* Set this checkbox visible+active. */
+				MN_ExecuteConfunc("set_left_cb_ina %i", index);
+			}
+		}
+	} else {
+		if (hand == ACTOR_HAND_CHAR_RIGHT)
+			MN_ExecuteConfunc("set_right_cb_invis %i", index);
+		else
+			MN_ExecuteConfunc("set_left_cb_invis %i", index);
+	}
 }
 
 /**
@@ -541,47 +583,8 @@ static void HUD_DisplayFiremodes_f (void)
 	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		if (i < ammo->numFiredefs[fd->weapFdsIdx]) { /* We have a defined fd ... */
-			/* Display the firemode information (image + text). */
-			if (ammo->fd[fd->weapFdsIdx][i].time <= CL_UsableTUs(selActor)) {	/* Enough timeunits for this firemode? */
-				HUD_DisplayFiremodeEntry(&ammo->fd[fd->weapFdsIdx][i], hand, qtrue);
-			} else{
-				HUD_DisplayFiremodeEntry(&ammo->fd[fd->weapFdsIdx][i], hand, qfalse);
-			}
-
-			/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
-			if (ammo->fd[fd->weapFdsIdx][i].reaction) {
-				Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
-				if (hand == ACTOR_HAND_CHAR_RIGHT) {
-					if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_RIGHT, i)) {
-						/* Set this checkbox visible+active. */
-						MN_ExecuteConfunc("set_right_cb_a %i", i);
-					} else {
-						/* Set this checkbox visible+inactive. */
-						MN_ExecuteConfunc("set_right_cb_ina %i", i);
-					}
-				} else { /* hand[0] == ACTOR_HAND_CHAR_LEFT */
-					if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_LEFT, i)) {
-						/* Set this checkbox visible+active. */
-						MN_ExecuteConfunc("set_left_cb_a %i", i);
-					} else {
-						/* Set this checkbox visible+active. */
-						MN_ExecuteConfunc("set_left_cb_ina %i", i);
-					}
-				}
-			} else {
-				if (hand == ACTOR_HAND_CHAR_RIGHT)
-					MN_ExecuteConfunc("set_right_cb_invis %i", i);
-				else
-					MN_ExecuteConfunc("set_left_cb_invis %i", i);
-			}
-
-		} else { /* No more fd left in the list or weapon not researched. */
-			if (hand == ACTOR_HAND_CHAR_RIGHT)
-				MN_ExecuteConfunc("set_right_inv %i", i); /* Hide this entry */
-			else
-				MN_ExecuteConfunc("set_left_inv %i", i); /* Hide this entry */
-		}
+		/* Display the firemode information (image + text). */
+		HUD_DisplayFiremodeEntry(ammo, fd->weapFdsIdx, hand, i);
 	}
 }
 
