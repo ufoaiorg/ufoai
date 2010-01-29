@@ -217,7 +217,6 @@ static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx
 	assert(selActor);
 	assert(hand == ACTOR_HAND_CHAR_RIGHT || hand == ACTOR_HAND_CHAR_LEFT);
 
-	index = fd->fdIdx;
 	status = fd->time <= CL_UsableTUs(selActor);
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
@@ -233,9 +232,9 @@ static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
-		const qboolean active = THIS_FIREMODE(&selChr->RFmode, ACTOR_GET_HAND_INDEX(hand), index);
+		const qboolean active = THIS_FIREMODE(&selChr->RFmode, ACTOR_GET_HAND_INDEX(hand), fd->fdIdx);
 		/* Change the state of the checkbox. */
-		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", hand, index, active);
+		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", hand, fd->fdIdx, active);
 	}
 }
 
