@@ -311,6 +311,8 @@ void LE_Think (void)
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		LE_ExecuteThink(le);
+		/* do animation */
+		R_AnimRun(&le->as, le->model1, cls.frametime * 1000);
 	}
 }
 
@@ -1185,9 +1187,7 @@ void LE_AddToScene (void)
 				/* set entity values */
 				VectorCopy(le->origin, ent.origin);
 				VectorCopy(le->origin, ent.oldorigin);
-
-				/* do animation */
-				R_AnimRun(&le->as, ent.model, cls.frametime * 1000);
+				/* store animation values */
 				ent.as = le->as;
 				break;
 			}
