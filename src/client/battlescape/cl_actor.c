@@ -1064,7 +1064,7 @@ int CL_CheckAction (const le_t *le)
  * @param[in] le Pointer to actor for which we calculate move lenght.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
-static byte CL_MoveLength (const le_t *le, pos3_t to)
+static byte CL_MoveLength (const le_t *le, const pos3_t to)
 {
 	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 	const byte length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
@@ -1102,7 +1102,7 @@ static qboolean CL_TraceMove (pos3_t to)
 		return qfalse;
 
 	length = CL_MoveLength(selActor, to);
-	if (!length || length >= 0x3F)
+	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return qfalse;
 
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
@@ -1143,27 +1143,22 @@ static qboolean CL_TraceMove (pos3_t to)
  * @param[in,out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
-static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
+static void CL_MaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 {
-	byte length;
 	int dv;
 	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
 	const int tus = CL_UsableTUs(le);
-	/* vec3_t vec; */
-
-	length = CL_MoveLength(le, to);
-	/** @todo fix magic number */
-	if (!length || length >= 0x3F)
+	const byte length = CL_MoveLength(le, to);
+	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return;
 
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(clMap, le->fieldSize, le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
-		length = CL_MoveLength(le, pos);
-		if (length <= tus)
+		const byte length2 = CL_MoveLength(le, pos);
+		if (length2 <= tus)
 			return;
 		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
-		/* Grid_PosToVec(clMap, le->fieldSize, pos, vec); */
 	}
 }
 
@@ -1175,7 +1170,7 @@ static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-void CL_ActorStartMove (le_t * le, pos3_t to)
+void CL_ActorStartMove (le_t * le, const pos3_t to)
 {
 	byte length;
 	pos3_t toReal;
@@ -1218,7 +1213,7 @@ void CL_ActorStartMove (le_t * le, pos3_t to)
  * @param[in] le Who is shooting
  * @param[in] at Position you are targeting to
  */
-void CL_ActorShoot (const le_t * le, pos3_t at)
+void CL_ActorShoot (const le_t * le, const pos3_t at)
 {
 	int type;
 
@@ -1416,7 +1411,6 @@ void CL_ActorTurnMouse (void)
 
 /**
  * @brief Stands or crouches actor.
- * @todo Maybe add a popup that asks if the player _really_ wants to crouch/stand up when only the reserved amount is left?
  */
 void CL_ActorStandCrouch_f (void)
 {
