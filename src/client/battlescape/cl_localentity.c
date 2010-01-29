@@ -295,7 +295,9 @@ void LE_ExecuteThink (le_t *le)
 }
 
 /**
- * @brief Calls the le think function
+ * @brief Calls the le think function and updates the animation. The animation updated even if the
+ * particular local entity is invisible for the client. This ensures, that an animation is always
+ * lerped correctly and won't magically start again once the local entity gets visible again.
  * @sa LET_StartIdle
  * @sa LET_PathMove
  * @sa LET_StartPathMove
