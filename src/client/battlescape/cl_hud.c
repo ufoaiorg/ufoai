@@ -380,10 +380,7 @@ static void HUD_PopupFiremodeReservation_f (void)
 {
 	/* A second parameter (the value itself will be ignored) was given.
 	 * This is used to reset the shot-reservation.*/
-	if (Cmd_Argc() == 2)
-		HUD_PopupFiremodeReservation(qtrue);
-	else
-		HUD_PopupFiremodeReservation(qfalse);
+	HUD_PopupFiremodeReservation(Cmd_Argc() == 2);
 }
 
 /**
@@ -1085,7 +1082,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 			popupReload = qtrue;
 
 			/* Update firemode reservation popup. */
-			/* @todo this is called every frames... is it really need? */
+			/** @todo this is called every frames... is it really need? */
 			HUD_PopupFiremodeReservation(qfalse);
 		}
 	}
@@ -1133,7 +1130,6 @@ void HUD_UpdateCursor (void)
 	le_t *le = selActor;
 	if (le) {
 		image_t *image;
-		const int bgY = mousePosY + iconOffsetY / 2 - 2;
 		/* icon width */
 		int iconW = 16;
 		/* icon height. */
@@ -1165,9 +1161,6 @@ void HUD_UpdateCursor (void)
 			R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
 			bgW += width;
 		}
-
-		if (cl_show_cursor_tooltips->integer)
-			R_DrawFill(bgX, bgY, bgW, bgH, cursorTextBg);
 
 		/* Display 'crouch' icon if actor is crouched. */
 		if (LE_IsCrouched(le)) {
