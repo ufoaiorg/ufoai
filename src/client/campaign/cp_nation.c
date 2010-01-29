@@ -380,33 +380,31 @@ static const value_t city_vals[] = {
 void CL_ParseCities (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseCities: unexpected end of file (nation ";
-	city_t *city;
+	city_t newCity;
+	linkedList_t *cities;
 	const value_t *vp;
 	const char *token;
-	int i;
-
-	if (ccs.numCities >= MAX_CITIES) {
-		Com_Printf("CL_ParseCities: city number exceeding maximum number of cities: %i\n", MAX_CITIES);
-		return;
-	}
 
 	/* search for cities with same name */
-	for (i = 0; i < ccs.numCities; i++)
-		if (!strncmp(name, ccs.cities[i].id, sizeof(ccs.cities[i].id)))
+	for (cities = ccs.cities; cities != NULL; cities = cities->next) {
+		const city_t *cty = (city_t*) cities->data;
+
+		assert(cty);
+		if (!strcmp(name, cty->id))
 			break;
-	if (i < ccs.numCities) {
+	}
+	if (cities != NULL) {
 		Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	/* initialize the nation */
-	city = &ccs.cities[ccs.numCities];
-	memset(city, 0, sizeof(*city));
-	city->idx = ccs.numCities;
+	memset(&newCity, 0, sizeof(newCity));
+	newCity.idx = ccs.numCities;
 	ccs.numCities++;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
-	city->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	newCity.id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -436,10 +434,10 @@ void CL_ParseCities (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)city + (int)vp->ofs), cp_campaignPool, 0);
+					Mem_PoolStrDupTo(token, (char**) ((char*)&newCity + (int)vp->ofs), cp_campaignPool, 0);
 					break;
 				default:
-					if (Com_EParseValue(city, token, vp->type, vp->ofs, vp->size) == -1)
+					if (Com_EParseValue(&newCity, token, vp->type, vp->ofs, vp->size) == -1)
 						Com_Printf("CL_ParseCities: Wrong size for value %s\n", vp->string);
 					break;
 				}
@@ -451,8 +449,10 @@ void CL_ParseCities (const char *name, const char **text)
 			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
-}
 
+	/* Add city to the list */
+	LIST_Add(&ccs.cities, (byte*) &newCity, sizeof(newCity));
+}
 
 /**
  * @brief Checks the parsed nations and cities for errors
@@ -460,13 +460,14 @@ void CL_ParseCities (const char *name, const char **text)
  */
 qboolean NAT_ScriptSanityCheck (void)
 {
-	int idx, i;
+	int i;
 	int error = 0;
+	linkedList_t *cities;
 
 	/* Check if there is at least one map fitting city parameter for terror mission */
-	for (idx = 0; idx < ccs.numCities; idx++) {
+	for (cities = ccs.cities; cities != NULL; cities = cities->next) {
 		int mapIdx;
-		city_t *city = &ccs.cities[idx];
+		city_t *city = (city_t*) cities->data;
 		const vec2_t pos = {city->pos[0], city->pos[1]};
 		qboolean cityCanBeUsed = qfalse;
 		qboolean parametersFit = qfalse;
@@ -521,7 +522,9 @@ qboolean NAT_ScriptSanityCheck (void)
 			MAP_PrintParameterStringByPos(pos);
 		}
 	}
-
+#ifdef DEBUG
+	Com_Printf("NAT_ScriptSanityCheck Errors: %i\n", error);
+#endif
 	return !error;
 }
 
@@ -781,11 +784,12 @@ static void CL_NationSelect_f (void)
  */
 static void NAT_ListCities_f (void)
 {
-	int idx;
+	linkedList_t *cities;
 
-	for (idx = 0; idx < ccs.numCities; idx++) {
-		const city_t const *city = &ccs.cities[idx];
+	for (cities = ccs.cities; cities != NULL; cities =cities->next) {
+		const city_t const *city = (city_t*) cities->data;
 
+		assert(city);
 		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
 		MAP_PrintParameterStringByPos(city->pos);
 	}

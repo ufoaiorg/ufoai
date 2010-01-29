@@ -69,7 +69,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 			/** @todo we should not use DrawItem but draw the image with render function (remove dependency with container) */
 			MN_DrawItem(node, pos, &item, -1, -1, EXTRADATA(node).scale, color);
 		} else {
-			MN_DrawModelNode(node, item.t->model);
+			MN_DrawModelNode(node, GAME_GetModelForItem(item.t, NULL));
 		}
 	} else {
 		GAME_DisplayItemInfo(node, ref);

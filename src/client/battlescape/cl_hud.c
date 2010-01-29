@@ -53,8 +53,7 @@ enum {
 
 	REMAINING_TU_MAX
 };
-
-static qboolean displayRemainingTus[REMAINING_TU_MAX];	/**< 0=reload_r, 1=reload_l, 2=crouch */
+static qboolean displayRemainingTus[REMAINING_TU_MAX];
 
 typedef enum {
 	BT_RIGHT_FIRE,
@@ -214,19 +213,11 @@ static void HUD_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, con
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
 	if (hand == ACTOR_HAND_CHAR_RIGHT) {
-		MN_ExecuteConfunc("set_right_vis %i", fd->fdIdx); /* Make this entry visible (in case it wasn't). */
-
-		if (status)
-			MN_ExecuteConfunc("set_right_a %i", fd->fdIdx);
-		else
-			MN_ExecuteConfunc("set_right_ina %i", fd->fdIdx);
+		/* Make this entry visible (in case it wasn't). */
+		MN_ExecuteConfunc("set_right_vis %i %i", fd->fdIdx, status);
 	} else if (hand == ACTOR_HAND_CHAR_LEFT) {
-		MN_ExecuteConfunc("set_left_vis %i", fd->fdIdx); /* Make this entry visible (in case it wasn't). */
-
-		if (status)
-			MN_ExecuteConfunc("set_left_a %i", fd->fdIdx);
-		else
-			MN_ExecuteConfunc("set_left_ina %i", fd->fdIdx);
+		/* Make this entry visible (in case it wasn't). */
+		MN_ExecuteConfunc("set_left_vis %i %i", fd->fdIdx, status);
 	}
 
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tt_tu%i", hand, fd->fdIdx);
@@ -833,7 +824,7 @@ static void HUD_RemainingTUs_f (void)
 	}
 
 	type = Cmd_Argv(1);
-	state = atoi(Cmd_Argv(2));
+	state = Com_ParseBoolean(Cmd_Argv(2));
 
 	if (!strcmp(type, "reload_r")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;

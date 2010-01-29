@@ -957,9 +957,8 @@ static void MAP_GetMissionAngle (float *vector, int id)
 	int missionID = 0;
 	/* Cycle through missions */
 	const linkedList_t *list;
-	mission_t *mission = NULL;
 	for (list = ccs.missions ;list; list = list->next, missionID++) {
-		mission = (mission_t *)list->data;
+		mission_t *mission = (mission_t *)list->data;
 		if (missionID == id) {
 			assert(mission);
 			MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
@@ -1550,8 +1549,26 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
  */
 static const char *MAP_GetMissionText (char *buffer, size_t size, const mission_t *mission)
 {
-	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
-		CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
+	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), mission->location,
+			CP_MissionToTypeString(mission), _(mission->mapDef->description));
+	return buffer;
+}
+
+/**
+ * @brief Assembles a short string for a mission that is on the geoscape
+ * @param[in] mission The mission to get the description for
+ * @param[out] buffer The target buffer to store the text in
+ * @param[in] size The size of the target buffer
+ * @return A pointer to the buffer that was given to this function
+ * @sa MAP_GetAircraftText
+ * @sa MAP_GetUFOText
+ */
+static const char *MAP_GetShortMissionText (char *buffer, size_t size, const mission_t *mission)
+{
+	Com_sprintf(buffer, size, _("%s (%s)\n%s"),
+			CP_MissionToTypeString(mission),
+			mission->location,
+			_(mission->mapDef->description));
 	return buffer;
 }
 
@@ -1602,7 +1619,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* ufo)
 {
 	Com_sprintf(buffer, size, "%s\n", UFO_AircraftToIDOnGeoscape(ufo));
-	Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
+	Q_strcat(buffer, va(_("Speed: %i km/h\n"), CL_AircraftMenuStatsValues(ufo->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 	return buffer;
 }
 
@@ -1624,7 +1641,7 @@ void MAP_UpdateGeoscapeDock (void)
 		if (!ms->onGeoscape)
 			continue;
 		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
-				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetMissionText(buf, sizeof(buf), ms));
+				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
 	}
 
 	/* draws ufos */
@@ -1969,6 +1986,8 @@ void MAP_NotifyMissionRemoved (const mission_t* mission)
  */
 void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
+	MAP_UpdateGeoscapeDock();
+
 	if (!ccs.selectedUFO)
 		return;
 
@@ -2378,6 +2397,7 @@ void MAP_Init (void)
 		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", ccs.curCampaign->map);
 
 	MAP_ResetAction();
+	MAP_UpdateGeoscapeDock();
 }
 
 /**

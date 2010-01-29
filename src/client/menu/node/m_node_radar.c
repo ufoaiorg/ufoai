@@ -643,7 +643,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	MN_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
 #endif
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		vec3_t itempos;
 		if (!le->inuse || le->invis)
 			continue;

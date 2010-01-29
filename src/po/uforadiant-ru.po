@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-27 18:47+0600\n"
+"PO-Revision-Date: 2010-01-19 20:35+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr ""
 #: src/tools/radiant/radiant/map.cpp:1290
 #: src/tools/radiant/radiant/map.cpp:1709
 msgid "Loading Map"
-msgstr ""
+msgstr "Загрузка карты"
 
 #: src/tools/radiant/radiant/map.cpp:926
 #: src/tools/radiant/radiant/map.cpp:1189
@@ -79,30 +79,30 @@ msgstr ""
 #: src/tools/radiant/radiant/map.cpp:1047
 #: src/tools/radiant/radiant/map.cpp:1315
 msgid "Saving Map"
-msgstr ""
+msgstr "Сохранение карты"
 
 #: src/tools/radiant/radiant/referencecache.cpp:187
 #: src/tools/radiant/radiant/referencecache.cpp:197
 msgid "Loading Model"
-msgstr ""
+msgstr "Загрузка моделей"
 
 #: src/tools/radiant/radiant/referencecache.cpp:621
 #: src/tools/radiant/radiant/referencecache.cpp:690
 msgid "Refreshing Models"
-msgstr ""
+msgstr "Обновление моделей"
 
 #: src/tools/radiant/radiant/texwindow.cpp:1110
 #: src/tools/radiant/radiant/texwindow.cpp:1178
 #: src/tools/radiant/radiant/texwindow.cpp:1184
 msgid "Loading Textures"
-msgstr ""
+msgstr "Загрузка текстур"
 
 #: src/tools/radiant/radiant/texwindow.cpp:1257
 #: src/tools/radiant/radiant/texwindow.cpp:1334
 #: src/tools/radiant/radiant/texwindow.cpp:1347
 #: src/tools/radiant/radiant/texwindow.cpp:1353
 msgid "Loading Shaders"
-msgstr ""
+msgstr "Загрузка шейдеров"
 
 #: src/tools/radiant/radiant/autosave.cpp:169
 #: src/tools/radiant/radiant/autosave.cpp:176
@@ -268,12 +268,12 @@ msgstr ""
 #: src/tools/radiant/radiant/colorscheme.cpp:174
 #: src/tools/radiant/radiant/colorscheme.cpp:173
 msgid "Black and Green"
-msgstr ""
+msgstr "Чёрно-зелёный"
 
 #: src/tools/radiant/radiant/colorscheme.cpp:175
 #: src/tools/radiant/radiant/colorscheme.cpp:174
 msgid "Maya/Max/Lightwave Emulation"
-msgstr ""
+msgstr "Эмуляция Майи/Макса/Лайтвейв"
 
 #: src/tools/radiant/radiant/colorscheme.cpp:179
 #: src/tools/radiant/radiant/colorscheme.cpp:178
@@ -1720,11 +1720,11 @@ msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/jobinfo.cpp:76
 msgid "Job"
-msgstr ""
+msgstr "Задание"
 
 #: src/tools/radiant/radiant/sidebar/jobinfo.cpp:84
 msgid "Progress"
-msgstr ""
+msgstr "Прогресс"
 
 #: src/tools/radiant/radiant/preferences.cpp:55
 #: src/tools/radiant/radiant/preferences.cpp:52
@@ -1739,7 +1739,7 @@ msgstr ""
 #: src/tools/radiant/radiant/preferences.cpp:56
 #: src/tools/radiant/radiant/preferences.cpp:53
 msgid "Load last map on open"
-msgstr ""
+msgstr "Загружать последнюю карту при открытии"
 
 #: src/tools/radiant/radiant/preferences.cpp:62
 #: src/tools/radiant/radiant/preferences.cpp:59
@@ -1978,7 +1978,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:75
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:76
 msgid "Nothing to fix in this map\n"
-msgstr ""
+msgstr "На этой карте исправлять нечего\n"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:75
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:76
@@ -1992,12 +1992,12 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:49
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:85
 msgid "Close the editor?"
-msgstr ""
+msgstr "Закрыть редактор?"
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:61
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:62
 msgid "Error saving file."
-msgstr ""
+msgstr "Ошибка сохранения файла."
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1209
@@ -2037,7 +2037,7 @@ msgstr "Консоль"
 #: src/tools/radiant/radiant/main.cpp:260
 #: src/tools/radiant/radiant/main.cpp:265
 msgid "Radiant - Runtime Error"
-msgstr ""
+msgstr "Радиант - Ошибка времени выполнения"
 
 #: src/tools/radiant/radiant/main.cpp:319
 #: src/tools/radiant/radiant/main.cpp:316
@@ -2097,7 +2097,7 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:1542
 #: src/tools/radiant/radiant/xywindow.cpp:1585
 msgid "Background Image"
-msgstr ""
+msgstr "Фоновый рисунок"
 
 #: src/tools/radiant/radiant/xywindow.cpp:1213
 #: src/tools/radiant/radiant/xywindow.cpp:1196
@@ -2115,7 +2115,7 @@ msgstr ""
 
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:166
 msgid "Open File"
-msgstr ""
+msgstr "Открыть файл"
 
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:166
 msgid "Save File"
@@ -2123,7 +2123,7 @@ msgstr "Сохранить файл"
 
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:220
 msgid "All Files (*.*)"
-msgstr ""
+msgstr "Все файлы (*.*)"
 
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:287
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:297
@@ -2134,7 +2134,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/findbrush.cpp:99
 msgid "Find Brush"
-msgstr ""
+msgstr "Найти браш"
 
 #: src/tools/radiant/radiant/dialogs/findbrush.cpp:147
 msgid "Find"
@@ -2151,17 +2151,17 @@ msgstr ""
 #: src/tools/radiant/radiant/entity.cpp:438
 #: src/tools/radiant/radiant/entity.cpp:444
 msgid "Choose Model"
-msgstr ""
+msgstr "Выбрать модель"
 
 #: src/tools/radiant/radiant/entity.cpp:450
 #: src/tools/radiant/radiant/entity.cpp:469
 msgid "Open Wav File"
-msgstr ""
+msgstr "Открыть звуковой файл"
 
 #: src/tools/radiant/radiant/gtkmisc.cpp:139
 #: src/tools/radiant/radiant/gtkmisc.cpp:145
 msgid "Choose File"
-msgstr ""
+msgstr "Выбрать файл"
 
 #: src/tools/radiant/radiant/mainframe.cpp:2252
 #: src/tools/radiant/radiant/mainframe.cpp:2267
@@ -2184,11 +2184,11 @@ msgstr ""
 
 #: src/tools/radiant/radiant/toolbars.cpp:34
 msgid "Open an existing map (CTRL + O)"
-msgstr ""
+msgstr "Открыть существующую карту (Ctrl-O)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:35
 msgid "Save the active map (CTRL + S)"
-msgstr ""
+msgstr "Сохранить активную карту (Ctrl-S)"
 
 #: src/tools/radiant/radiant/toolbars.cpp:40
 msgid "Undo (CTRL + Z)"

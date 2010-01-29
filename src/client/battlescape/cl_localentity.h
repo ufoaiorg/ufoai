@@ -165,14 +165,11 @@ typedef struct lm_s {
 	struct model_s *model;
 } localModel_t;							/* local models */
 
-extern localModel_t LMs[MAX_LOCALMODELS];
-
-extern le_t LEs[MAX_EDICTS];
-extern const char *leInlineModelList[MAX_EDICTS + 1];
-
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
+
+extern cvar_t* cl_le_debug;
 
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
@@ -194,6 +191,11 @@ int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, c
 
 /** @brief Valid indices from 1 - MAX_DEATH */
 #define LE_GetAnimationIndexForDeath(le)	((le)->state & MAX_DEATH)
+
+#ifdef DEBUG
+void LE_List_f(void);
+void LM_List_f(void);
+#endif
 
 void LE_SetThink(le_t *le, void (*think) (le_t *le));
 void LE_ExecuteThink(le_t *le);

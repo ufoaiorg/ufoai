@@ -535,6 +535,8 @@ void R_DrawAliasModel (entity_t *e)
 	R_Color(color);
 
 	/* the values are sane here already - see R_DrawEntities */
+	/* Let's assert if the above is true. Duke, 23.01.10 */
+	assert(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum > 0);
 	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
 
 	R_ResetArrayState();

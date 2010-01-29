@@ -235,6 +235,17 @@ static void GAME_CP_Start_f (void)
 	Cbuf_AddText("seq_start intro\n");
 }
 
+/**
+ * @brief After a mission was finished this function is called
+ * @param msg The network message buffer
+ * @param winner The winning team
+ * @param numSpawned The amounts of all spawned actors per team
+ * @param numAlive The amount of survivors per team
+ * @param numKilled The amount of killed actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ * @param numStunned The amount of stunned actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ */
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	int i, j;
@@ -393,6 +404,26 @@ void GAME_CP_Frame (void)
 			CL_CampaignRun();
 		}
 	}
+}
+
+/**
+ * @brief Sets the item model for an object assigned technology. If no
+ * technology is set or the technology has no model assigned, this function
+ * is returning @c NULL to tell the caller to use the default object model.
+ * @param[in] od The object definition to get the model from.
+ * @param[out] menuModel The menu model pointer.
+ * @return The model path for the item. Never @c NULL.
+ */
+const char* GAME_CP_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
+{
+	if (od->tech && od->tech->mdl) {
+		if (menuModel != NULL)
+			*menuModel = MN_GetMenuModel(od->tech->mdl);
+		/* the model from the tech structure has higher priority, because the item model itself
+		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
+		return od->tech->mdl;
+	}
+	return NULL;
 }
 
 /**

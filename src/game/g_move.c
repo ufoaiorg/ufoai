@@ -49,9 +49,8 @@ static int forbiddenListLength;
  */
 static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	int visMask;
-	int i;
 
 	forbiddenListLength = 0;
 
@@ -61,9 +60,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 	else
 		visMask = TEAM_ALL;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-		if (!ent->inuse)
-			continue;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* Dead 2x2 unit will stop walking, too. */
 		if (G_IsBlockingMovementActor(ent) && (G_IsAI(movingActor) || (ent->visflags & visMask))) {
 			forbiddenList[forbiddenListLength++] = ent->pos;
@@ -367,7 +364,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				G_CheckVis(ent, qtrue);
 
 				/* check for anything appearing, seen by "the moving one" */
-				status = G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+				status = G_CheckVisTeamAll(ent->team, qfalse, ent);
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 				ent->TU = max(0, initTU - (int) tu);
@@ -383,9 +380,11 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				/* state has changed - maybe we walked on a trigger_hurt */
 				if (oldState != ent->state)
 					status |= VIS_STOP;
-			} else if (crouchFlag == 1) { /* Actor is standing */
+			} else if (crouchFlag == 1) {
+				/* Actor is standing */
 				G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue);
-			} else if (crouchFlag == -1) { /* Actor is crouching and should stand up */
+			} else if (crouchFlag == -1) {
+				/* Actor is crouching and should stand up */
 				G_ClientStateChange(player, ent, STATE_CROUCHED, qfalse);
 			}
 
@@ -420,7 +419,8 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			}
 		}
 
-		/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
+		/* ensure that the grid position matches the real origin of the actor */
+		VecToPos(ent->origin, ent->pos);
 
 		/* submit the TUs / round down */
 		if (g_notu != NULL && g_notu->integer)

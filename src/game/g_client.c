@@ -122,10 +122,10 @@ void G_SendState (unsigned int playerMask, const edict_t *ent)
 
 /**
  * Send a particle spawn event to the client
- * @param playerMask The clients that should see the particle
- * @param ent The particle to spawn
+ * @param[in] playerMask The clients that should see the particle
+ * @param[in] ent The particle to spawn
  */
-static void G_SendParticle (unsigned int playerMask, edict_t *ent)
+static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_SPAWN_PARTICLE);
 	gi.WriteShort(ent->number);
@@ -133,6 +133,13 @@ static void G_SendParticle (unsigned int playerMask, edict_t *ent)
 	gi.WriteString(ent->particle);
 }
 
+/**
+ * @brief Send an appear event to the client.
+ * @param playerMask The players to send the event to
+ * @param ent The edict that should appear to the players included in the given mask.
+ * @note Each following event that is relying on the fact that this edict must already
+ * be known in the client, must also adopt the client side parsing of the event times.
+ */
 static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_ENT_APPEAR);
@@ -400,7 +407,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_CheckVis(ent, qtrue);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+	G_CheckVisTeamAll(ent->team, qfalse, ent);
 
 	/* Send the new TUs. */
 	G_SendStats(ent);
@@ -478,7 +485,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 	objDef_t *weapon;
 	int container;
 
-	ent = g_edicts + entnum;
+	ent = G_EdictsGetByNum(entnum);
 
 	/* search for clips and select the one that is available easily */
 	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
@@ -517,7 +524,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 	int container;
 	invDef_t *bestContainer;
 
-	ent = g_edicts + entnum;
+	ent = G_EdictsGetByNum(entnum);
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
 		return;
@@ -606,7 +613,7 @@ int G_ClientAction (player_t * player)
 		return action;
 	}
 
-	ent = g_edicts + num;
+	ent = G_EdictsGetByNum(num);
 
 	switch (action) {
 	case PA_NULL:
@@ -661,7 +668,7 @@ int G_ClientAction (player_t * player)
 		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
 
 		/* get the door edict */
-		door = g_edicts + i;
+		door = G_EdictsGetByNum(i);
 
 		if (ent->clientAction == door) {
 			/* check whether it's part of an edict group but not the master */
@@ -977,15 +984,9 @@ static void G_ClientReadInventory (edict_t *ent)
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
-		Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx
-				: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
-
-		if (container) {
-			if (game.i.AddToInventory(&game.i, &ent->i, item, container, x, y, 1) == NULL)
-				gi.error("G_ClientTeamInfo failed, could not add item to container %i", container->id);
-			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
-					container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
-		}
+		if (game.i.AddToInventory(&game.i, &ent->i, item, container, x, y, 1) == NULL)
+			gi.error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
+					item.t->id, container->id, x, y);
 	}
 
 	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
@@ -1150,15 +1151,11 @@ void G_ClientTeamInfo (const player_t * player)
  */
 static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
-	int i;
-	edict_t *ent;
 	const int mask = G_PlayerToPM(player);
+	edict_t *ent = G_EdictsGetFirst();
 
 	/* make SOLID_BSP edicts visible to the client */
-	for (i = 1, ent = g_edicts + 1; i < globals.num_edicts; ent++, i++) {
-		if (!ent->inuse)
-			continue;
-
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* brush models that have a type - not the world - keep in
 		 * mind that there are several world edicts in the list in case of
 		 * a map assembly */
@@ -1359,7 +1356,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 void G_ClientDisconnect (player_t * player)
 {
 #if 0
-	edict_t *ent;
+	edict_t *ent = NULL;
 #endif
 
 	/* only if the player already sent his began */
@@ -1376,10 +1373,10 @@ void G_ClientDisconnect (player_t * player)
 
 #if 0
 	/* now let's remove all the edicts that belongs to this player */
-	for (; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (ent->pnum == player->num && ent->inuse)
-			if (G_IsLivingActor(ent))
-				G_ActorDie(ent, STATE_DEAD, NULL);
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (ent->pnum == player->num)
+			G_ActorDie(ent, STATE_DEAD, NULL);
+	}
 	G_MatchEndCheck();
 #endif
 

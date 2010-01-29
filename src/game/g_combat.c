@@ -74,13 +74,13 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
  */
 static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 {
-	edict_t *ent;
-	int i, newMorale;
+	edict_t *ent = NULL;
+	int newMorale;
 	float mod;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
-		if (ent->inuse && ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
+		if (ent->type == ET_ACTOR && !G_IsDead(ent) && ent->team != TEAM_CIVILIAN) {
 			switch (type) {
 			case ML_WOUND:
 			case ML_DEATH:
@@ -135,6 +135,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 			/* send phys data */
 			G_SendStats(ent);
 		}
+	}
 }
 
 /**
@@ -329,7 +330,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			target->destroy(target);
 
 			/* maybe the attacker is seeing something new? */
-			G_CheckVisTeam(attacker->team, NULL, qfalse, attacker);
+			G_CheckVisTeamAll(attacker->team, qfalse, attacker);
 
 			/* check if attacker appears/perishes for any other team */
 			G_CheckVis(attacker, qtrue);
@@ -401,9 +402,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				/* Update stats here to get info on how many TUs the target received. */
 				if (target->chr.scoreMission)
 					target->chr.scoreMission->heal += abs(damage);
-
-				/** @todo Do the same for "attacker" but as "applied" healing
-				 * e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
 
 				/** @todo Also increase the morale a little bit when
 				 * soldier gets healing and morale is lower than max possible? */
@@ -480,23 +478,18 @@ static inline qboolean G_FireAffectedSurface (const cBspSurface_t *surface, cons
  * @param[in,out] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] tr The trace where the grenade hits something (or not)
  */
-static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
+static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, shot_mock_t *mock, const trace_t* tr)
 {
-	edict_t *check;
+	edict_t *check = NULL;
 	vec3_t center;
 	float dist;
 	int damage;
-	int i;
 
 	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 
 	assert(fd->splrad);
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
-		/* check basic info */
-		if (!check->inuse)
-			continue;
-
+	while ((check = G_EdictsGetNextInUse(check))) {
 		/* If we use a blinding weapon we skip the target if it's looking
 		 * away from the impact location. */
 		if (shock && !G_FrustumVis(check, impact))
@@ -558,15 +551,15 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
  */
 static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 {
-	edict_t *floor, *actor;
+	edict_t *floor, *actor = NULL;
 
 	floor = G_GetFloorItemsFromPos(pos);
 	if (floor == NULL) {
 		floor = G_SpawnFloor(pos);
 
 		/* link the floor container to the actor standing on the given position */
-		for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-			if (actor->inuse && G_IsActor(actor) && VectorCompare(pos, actor->pos)) {
+		while ((actor = G_EdictsGetNextActor(actor)))
+			if (VectorCompare(pos, actor->pos)) {
 				FLOOR(actor) = FLOOR(floor);
 				break;
 			}
@@ -759,10 +752,10 @@ static void DumpTrace (vec3_t start, trace_t tr)
  */
 static void DumpAllEntities (void)
 {
-	int i;
-	edict_t *check;
+	int i = 0;
+	edict_t *check = NULL;
 
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
+	while ((check = G_EdictsGetNext(check))) {
 		Com_DPrintf(DEBUG_GAME, "%i %s %s %s (%i, %i, %i) (%i, %i, %i) [%i, %i, %i] [%i, %i, %i]\n", i,
 			check->inuse ? "in use" : "unused",
 			check->classname,
@@ -771,6 +764,7 @@ static void DumpAllEntities (void)
 			(int) check->absmax[0], (int) check->absmax[1], (int) check->absmax[2],
 			(int) check->mins[0], (int) check->mins[1], (int) check->mins[2],
 			(int) check->maxs[0], (int) check->maxs[1], (int) check->maxs[2]);
+		i++;
 	}
 }
 
@@ -861,14 +855,14 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	flags = 0;
 
 	/* Are we healing? */
-	if (fd->damage[0] < 0)
+	if (FIRESH_IsMedikit(fd))
 		damage = fd->damage[0] + (fd->damage[1] * crand());
 	else
 		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
 	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
-	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent))
+	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
 	VectorCopy(cur_loc, tracefrom);
@@ -946,7 +940,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (G_IsActor(tr.ent) || G_IsBreakable(tr.ent))) {
+		if (tr.ent && (G_IsActor(tr.ent) || (G_IsBreakable(tr.ent) && damage > 0))) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
 
 			if (!mock) { /* check for firedHit is done in G_UpdateHitScore */
@@ -1188,7 +1182,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, int shootTyp
 	assert(ent->dir < CORE_DIRECTIONS);
 
 	if (!mock) {
-		G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+		G_CheckVisTeamAll(ent->team, qfalse, ent);
 		G_EventActorTurn(ent);
 	}
 

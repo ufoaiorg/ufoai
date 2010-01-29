@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "input/cl_input.h"
 #include "input/cl_keys.h"
 #include "battlescape/cl_camera.h"
+#include "battlescape/cl_localentity.h"
 
 /* Map debugging constants */
 /** @brief cvar debug_map options:
@@ -101,7 +102,7 @@ typedef struct client_state_s {
 								 * is rendering at.  always <= cls.realtime */
 	camera_t cam;
 
-	struct le_s *teamList[MAX_TEAMLIST];
+	le_t *teamList[MAX_TEAMLIST];
 	int numTeamList;
 	int numAliensSpotted;
 
@@ -125,8 +126,14 @@ typedef struct client_state_s {
 	int mapMaxLevelBase;
 
 	int numMapParticles;
-	int numLEs;
+
 	int numLMs;
+	localModel_t LMs[MAX_LOCALMODELS];
+
+	int numLEs;
+	le_t LEs[MAX_EDICTS];
+
+	const char *leInlineModelList[MAX_EDICTS + 1];
 
 	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */

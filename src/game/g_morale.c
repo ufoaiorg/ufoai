@@ -143,12 +143,12 @@ static qboolean G_IsMoraleEnabled (void)
  */
 void G_MoraleBehaviour (int team)
 {
-	edict_t *ent;
-	int i, newMorale;
+	edict_t *ent = NULL;
+	int newMorale;
 
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
-		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !G_IsDead(ent)) {
+		if (ent->type == ET_ACTOR && ent->team == team && !G_IsDead(ent)) {
 			/* civilians have a 1:1 chance to randomly run away in multiplayer */
 			if (sv_maxclients->integer >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
 				G_MoralePanic(ent, qfalse);
@@ -195,4 +195,5 @@ void G_MoraleBehaviour (int team)
 			G_SendStats(ent);
 			gi.EndEvents();
 		}
+	}
 }

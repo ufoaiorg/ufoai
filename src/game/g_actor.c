@@ -56,7 +56,7 @@ edict_t *G_GetActorByUCN (const int ucn, const int team)
  * @param[in] ent the actor (edict) we are talking about
  * @param[in] dir the direction to turn the edict into, might be an action
  * @return Bitmask of visible (VIS_*) values
- * @sa G_CheckVisTeam
+ * @sa G_CheckVisTeamAll
  */
 int G_ActorDoTurn (edict_t * ent, byte dir)
 {
@@ -93,7 +93,10 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 	if (angleDiv < -180.0)
 		angleDiv += 360.0;
 
-	/* prepare rotation */
+	/* prepare rotation - decide whether the actor turns around the left
+	 * shoulder or the right - this is needed the get the rotation vector
+	 * that is used below to check in each of the rotation steps
+	 * (1/8, 22.5 degree) whether something became visible while turning */
 	if (angleDiv > 0) {
 		rot = dvleft;
 		num = (angleDiv + 22.5) / 45.0;
@@ -105,11 +108,13 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 	/* do rotation and vis checks */
 	status = 0;
 
-	/* check every angle in the rotation whether something becomes visible */
+	/* check every angle (1/8 steps - on the way to the end direction) in the rotation
+	 * whether something becomes visible and stop before reaching the final direction
+	 * if this happened */
 	for (i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
-		status |= G_CheckVisTeam(ent->team, NULL, qfalse, ent);
+		status |= G_CheckVisTeamAll(ent->team, qfalse, ent);
 	}
 
 	if (status & VIS_STOP) {
@@ -187,7 +192,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		G_CheckVis(attacker, qtrue);
 
 	/* calc new vis for this player */
-	G_CheckVisTeam(ent->team, NULL, qfalse, attacker);
+	G_CheckVisTeamAll(ent->team, qfalse, attacker);
 }
 
 /**

@@ -123,16 +123,16 @@ typedef struct {
 	int activeTeam;
 	int nextEndRound;
 
-	int actualRound;
+	int actualRound;	/**< the current running round counter */
 
-	int randomSpawn;
+	int randomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
 
-	byte num_alive[MAX_TEAMS];
-	byte num_spawned[MAX_TEAMS];
-	byte num_spawnpoints[MAX_TEAMS];
-	byte num_2x2spawnpoints[MAX_TEAMS];
-	byte num_kills[MAX_TEAMS][MAX_TEAMS];
-	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
+	byte num_alive[MAX_TEAMS];		/**< the number of alive actors per team */
+	byte num_spawned[MAX_TEAMS];	/**< the number of spawned actors per team */
+	byte num_spawnpoints[MAX_TEAMS];	/**< the number of spawn points in the map per team */
+	byte num_2x2spawnpoints[MAX_TEAMS]; /**< the number of spawn points for 2x2 units in the map per team */
+	byte num_kills[MAX_TEAMS][MAX_TEAMS];	/**< the amount of kills per team, the first dimension contains the attacker team, the second the victim team */
+	byte num_stuns[MAX_TEAMS][MAX_TEAMS];	/**< the amount of stuns per team, the first dimension contains the attacker team, the second the victim team */
 } level_locals_t;
 
 
@@ -370,7 +370,8 @@ qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
-int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
+int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, edict_t *ent);
+int G_CheckVisTeamAll(const int team, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 void G_SendState(unsigned int playerMask, const edict_t *ent);
 void G_SetTeamForPlayer(player_t* player, const int team);
@@ -430,8 +431,8 @@ float G_ActorVis(const vec3_t from, const edict_t *check, qboolean full);
 void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t *check, qboolean perish);
 int G_CheckVisPlayer(player_t* player, qboolean perish);
-int G_TestVis(int team, edict_t * check, int flags);
-float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
+int G_TestVis(const int team, edict_t * check, int flags);
+float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
 qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
@@ -467,7 +468,14 @@ void SP_func_rotating(edict_t *ent);
 void SP_func_door(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
 
+edict_t* G_EdictsInit(void);
+void G_EdictsReset(void);
+edict_t* G_EdictsGetNewEdict(void);
+int G_EdictsGetNumber(const edict_t* ent);
+edict_t* G_EdictsGetByNum(const int idx);
+edict_t* G_EdictsGetFirst(void);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
+edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
 
@@ -591,7 +599,7 @@ struct edict_s {
 	/** only used locally in game, not by server */
 
 	int type;
-	int visflags;
+	int visflags;				/**< bitmask of teams that can see this edict */
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 

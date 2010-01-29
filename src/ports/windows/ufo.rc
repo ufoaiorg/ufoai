@@ -11,6 +11,7 @@
 #endif
 
 VS_VERSION_INFO VERSIONINFO
+FILEVERSION 2,3,0,0
 FILEFLAGSMASK 0x17L
 #ifdef DEBUG
 	FILEFLAGS 0x3L
@@ -29,7 +30,7 @@ BEGIN
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFO:Alien Invasion"
 			VALUE "InternalName", "ufoai"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2009"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2010"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
 			VALUE "ProductVersion", "Release"

@@ -92,7 +92,7 @@ static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
 	for (i = 0; i < chrDisplayList.num; i++) {
 		const character_t *chr = chrDisplayList.chr[i];
 		mxml_node_t *n = mxml_AddNode(p, SAVE_MULTIPLAYER_CHARACTER);
-		CL_SaveCharacterXML(n, *chr);
+		CL_SaveCharacterXML(n, chr);
 	}
 }
 
@@ -154,10 +154,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredBufferLength + 1, cl_genericPool, 0);
 	if (!buf) {
+		mxmlDelete(topNode);
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
 	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
+	mxmlDelete(topNode);
 
 	fbuf = (byte *) Mem_PoolAlloc(requiredBufferLength + 1 + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
@@ -167,6 +169,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
+
 	return qtrue;
 }
 
@@ -255,6 +258,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 
 	node = mxml_GetNode(topNode, SAVE_MULTIPLAYER_ROOTNODE);
 	if (!node) {
+		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node 'multiplayer' not found)\n");
 		return qfalse;
 	}
@@ -262,6 +266,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 
 	snode = mxml_GetNode(node, SAVE_MULTIPLAYER_TEAM);
 	if (!snode) {
+		mxmlDelete(topNode);
 		Mem_Free(cbuf);
 		Com_Printf("Error: Failure in loading the xml data! (node 'team' not found)\n");
 		return qfalse;
@@ -270,6 +275,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 
 	snode = mxml_GetNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	if (!snode) {
+		mxmlDelete(topNode);
 		Mem_Free(cbuf);
 		Com_Printf("Error: Failure in loading the xml data! (node 'equipment' not found)\n");
 		return qfalse;
@@ -286,6 +292,9 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	}
 
 	Com_Printf("File '%s' loaded.\n", filename);
+
+	mxmlDelete(topNode);
+
 	return qtrue;
 }
 

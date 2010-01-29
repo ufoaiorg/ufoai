@@ -235,12 +235,12 @@ static void G_MatchSendResults (int team)
 	}
 
 	/* Make everything visible to anyone who can't already see it */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if (ent->inuse) {
-			G_AppearPerishEvent(~G_VisToPM(ent->visflags), qtrue, ent, NULL);
-			if (G_IsActor(ent))
-				G_SendInventory(~G_TeamToPM(ent->team), ent);
-		}
+	ent = NULL;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		G_AppearPerishEvent(~G_VisToPM(ent->visflags), qtrue, ent, NULL);
+		if (G_IsActor(ent))
+			G_SendInventory(~G_TeamToPM(ent->team), ent);
+	}
 
 	/* send results */
 	gi.AddEvent(PM_ALL, EV_RESULTS);
@@ -261,18 +261,22 @@ static void G_MatchSendResults (int team)
 			gi.WriteByte(level.num_stuns[i][j]);
 
 	/* how many actors */
-	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if (ent->inuse && G_IsActor(ent) && !G_IsAI(ent))
+	j = 0;
+	ent = NULL;
+	while ((ent = G_EdictsGetNextActor(ent)))
+		if (!G_IsAI(ent))
 			j++;
 
 	/* number of soldiers */
 	gi.WriteByte(j);
 
 	if (j) {
-		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-			if (ent->inuse && G_IsActor(ent) && !G_IsAI(ent)) {
+		ent = NULL;
+		while ((ent = G_EdictsGetNextActor(ent))) {
+			if (!G_IsAI(ent)) {
 				G_SendCharacterData(ent);
 			}
+		}
 	}
 
 	gi.EndEvents();

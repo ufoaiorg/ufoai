@@ -63,12 +63,14 @@ typedef struct gameTypeList_s {
 	void (*initializebattlescape)(const chrList_t *team);
 	/** callback that is executed every frame */
 	void (*frame)(void);
+	/** if you want to display a different model for the given object in your game mode, implement this function */
+	const char* (*getmodelforitem)(const objDef_t*od, menuModel_t** menuModel);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -97,6 +99,9 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 static const gameTypeList_t *GAME_GetCurrentType (void)
 {
 	const gameTypeList_t *list = gameTypeList;
+
+	if (cls.gametype == GAME_NONE)
+		return NULL;
 
 	while (list->name) {
 		if (list->gametype == cls.gametype)
@@ -312,6 +317,14 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
 
 /**
  * @brief After a mission was finished this function is called
+ * @param msg The network message buffer
+ * @param winner The winning team
+ * @param numSpawned The amounts of all spawned actors per team
+ * @param numAlive The amount of survivors per team
+ * @param numKilled The amount of killed actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ * @param numStunned The amount of stunned actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
  */
 void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
@@ -333,7 +346,7 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
 	assert(item.t);
 	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
 		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
-	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated);
+	NET_WriteFormat(buf, eventData->formatString, item.t->idx, item.a, ammoIdx, container, x, y, item.rotated, item.amount);
 }
 
 /**
@@ -366,7 +379,8 @@ static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given");
 	if (chr->fieldSize != ACTOR_SIZE_2x2 && chr->fieldSize != ACTOR_SIZE_NORMAL)
-		Com_Error(ERR_DROP, "Invalid character size given for character '%s'", chr->name);
+		Com_Error(ERR_DROP, "Invalid character size given for character '%s': %i",
+				chr->name, chr->fieldSize);
 	if (chr->teamDef == NULL)
 		Com_Error(ERR_DROP, "Character with no teamdef set (%s)", chr->name);
 
@@ -440,7 +454,7 @@ static qboolean GAME_Spawn (void)
 	}
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++)
-		cl.chrList.chr[i] = &characters[i];
+		cl.chrList.chr[i] = chrDisplayList.chr[i];
 	cl.chrList.num = MAX_ACTIVETEAM;
 
 	return qtrue;
@@ -493,7 +507,7 @@ int GAME_GetCurrentTeam (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	if (list)
+	if (list && list->getteam != NULL)
 		return list->getteam();
 
 	return TEAM_DEFAULT;
@@ -515,7 +529,7 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 	if (!teamDef)
 		return qfalse;
 
-	if (list && list->teamisknown)
+	if (list && list->teamisknown != NULL)
 		return list->teamisknown(teamDef);
 	return qtrue;
 }
@@ -523,7 +537,7 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CharacterCvars (const character_t *chr)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->charactercvars)
+	if (list && list->charactercvars != NULL)
 		list->charactercvars(chr);
 }
 
@@ -565,12 +579,29 @@ void GAME_Frame (void)
 {
 	const gameTypeList_t *list;
 
-	if (cls.gametype == GAME_NONE)
-		return;
-
 	list = GAME_GetCurrentType();
-	if (list && list->frame)
+	if (list && list->frame != NULL)
 		list->frame();
+}
+
+/**
+ * @brief Get a model for an item.
+ * @param[in] od The object definition to get the model from.
+ * @param[out] menuModel The menu model pointer.
+ * @return The model path for the item. Never @c NULL.
+ */
+const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
+{
+	const gameTypeList_t *list = GAME_GetCurrentType();
+	if (list && list->getmodelforitem != NULL) {
+		const char *model = list->getmodelforitem(od, menuModel);
+		if (model != NULL)
+			return model;
+	}
+
+	if (menuModel != NULL)
+		*menuModel = NULL;
+	return od->model;
 }
 
 static void GAME_InitMenuOptions (void)

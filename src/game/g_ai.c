@@ -188,7 +188,7 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 	if (ent->morale > mor_brave->integer) {
 		edict_t *from = NULL;
 		/* test if check is visible */
-		while ((from = G_EdictsGetNext(from))) {
+		while ((from = G_EdictsGetNextInUse(from))) {
 			/** @todo using the visflags of the ai should be faster here */
 			if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM)) {
 				const invList_t *invlist = LEFT(from);
@@ -359,8 +359,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (!aia->target) {
 					/* search best none human target */
 					check = NULL;
-					while ((check = G_EdictsGetNext(check))) {
-						if (check->inuse && G_IsBreakable(check)) {
+					while ((check = G_EdictsGetNextInUse(check))) {
+						if (G_IsBreakable(check)) {
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;
 
@@ -645,8 +645,8 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 	{
 		/* search for a mission edict */
 		edict_t *mission = NULL;
-		while ((mission = G_EdictsGetNext(mission))) {
-			if (mission->inuse && mission->type == ET_MISSION) {
+		while ((mission = G_EdictsGetNextInUse(mission))) {
+			if (mission->type == ET_MISSION) {
 				VectorCopy(mission->pos, aia->to);
 				aia->target = mission;
 				if (player->pers.team == mission->team) {
@@ -881,8 +881,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 void AI_Run (void)
 {
 	player_t *player;
-	edict_t *ent;
-	int i, j;
+	int i;
 
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
@@ -892,13 +891,10 @@ void AI_Run (void)
 	for (i = 0, player = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, player++)
 		if (player->inuse && G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
 			/* find next actor to handle */
-			if (!player->pers.last)
-				ent = g_edicts;
-			else
-				ent = player->pers.last + 1;
+			edict_t *ent = player->pers.last;
 
-			for (j = ent - g_edicts; j < globals.num_edicts; j++, ent++)
-				if (ent->inuse && ent->TU && ent->team == player->pers.team && G_IsLivingActor(ent)) {
+			while ((ent = G_EdictsGetNextLivingActor(ent))) {
+				if (ent->TU && ent->team == player->pers.team) {
 					if (g_ailua->integer)
 						AIL_ActorThink(player, ent);
 					else
@@ -906,12 +902,11 @@ void AI_Run (void)
 					player->pers.last = ent;
 					return;
 				}
+			}
 
 			/* nothing left to do, request endround */
-			if (j >= globals.num_edicts) {
-				G_ClientEndRound(player);
-				player->pers.last = g_edicts + globals.num_edicts;
-			}
+			G_ClientEndRound(player);
+			player->pers.last = NULL;
 			return;
 		}
 }
@@ -1021,7 +1016,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 }
 
 #define MAX_SPAWNPOINTS		64
-static int spawnPoints[MAX_SPAWNPOINTS];
+static edict_t * spawnPoints[MAX_SPAWNPOINTS];
 
 
 /**
@@ -1032,7 +1027,7 @@ static int spawnPoints[MAX_SPAWNPOINTS];
  */
 static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	equipDef_t *ed = &gi.csi->eds[0];
 	int i, j, numPoints, team;
 	char name[MAX_VAR];
@@ -1040,9 +1035,9 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 	/* search spawn points */
 	team = player->pers.team;
 	numPoints = 0;
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && ent->type == ET_ACTORSPAWN && ent->team == team)
-			spawnPoints[numPoints++] = i;
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		if (ent->type == ET_ACTORSPAWN && ent->team == team)
+			spawnPoints[numPoints++] = ent;
 
 	/* check spawn point number */
 	if (numPoints < numSpawn) {
@@ -1063,9 +1058,10 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
 		assert(numPoints > 0);
+		ent = spawnPoints[rand() % numPoints];
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
-			ent = &g_edicts[spawnPoints[rand() % numPoints]];
+			ent = spawnPoints[rand() % numPoints];
 
 		/* spawn */
 		level.num_spawned[team]++;

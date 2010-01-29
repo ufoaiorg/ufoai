@@ -282,7 +282,7 @@ const fireDef_t *CL_GetWeaponAndAmmo (const le_t * actor, const char hand)
  * @brief Prints all reaction- and reservation-info for the team.
  * @note Console command: debug_listreservations
  */
-void CL_ListReactionAndReservations_f (void)
+static void CL_ListReactionAndReservations_f (void)
 {
 	int actorIdx;
 
@@ -950,7 +950,7 @@ static void CL_BuildForbiddenList (void)
 
 	fb_length = 0;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
@@ -974,14 +974,14 @@ static void CL_BuildForbiddenList (void)
  * @todo currently the particles stay a _very_ long time ... so everybody has to stand still in order for the display to be correct.
  * @sa CL_BuildForbiddenList
  */
-void CL_DisplayBlockedPaths_f (void)
+static void CL_DisplayBlockedPaths_f (void)
 {
 	le_t *le;
 	int i, j;
 	ptl_t *ptl;
 	vec3_t s;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++) {
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
 
@@ -1064,7 +1064,7 @@ int CL_CheckAction (const le_t *le)
  * @param[in] le Pointer to actor for which we calculate move lenght.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
-static byte CL_MoveLength (const le_t *le, pos3_t to)
+static byte CL_MoveLength (const le_t *le, const pos3_t to)
 {
 	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 	const byte length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
@@ -1102,7 +1102,7 @@ static qboolean CL_TraceMove (pos3_t to)
 		return qfalse;
 
 	length = CL_MoveLength(selActor, to);
-	if (!length || length >= 0x3F)
+	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return qfalse;
 
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
@@ -1143,27 +1143,22 @@ static qboolean CL_TraceMove (pos3_t to)
  * @param[in,out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
-static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
+static void CL_MaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 {
-	byte length;
 	int dv;
 	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
 	const int tus = CL_UsableTUs(le);
-	/* vec3_t vec; */
-
-	length = CL_MoveLength(le, to);
-	/** @todo fix magic number */
-	if (!length || length >= 0x3F)
+	const byte length = CL_MoveLength(le, to);
+	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return;
 
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(clMap, le->fieldSize, le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
-		length = CL_MoveLength(le, pos);
-		if (length <= tus)
+		const byte length2 = CL_MoveLength(le, pos);
+		if (length2 <= tus)
 			return;
 		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
-		/* Grid_PosToVec(clMap, le->fieldSize, pos, vec); */
 	}
 }
 
@@ -1175,7 +1170,7 @@ static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-void CL_ActorStartMove (le_t * le, pos3_t to)
+void CL_ActorStartMove (le_t * le, const pos3_t to)
 {
 	byte length;
 	pos3_t toReal;
@@ -1218,7 +1213,7 @@ void CL_ActorStartMove (le_t * le, pos3_t to)
  * @param[in] le Who is shooting
  * @param[in] at Position you are targeting to
  */
-void CL_ActorShoot (const le_t * le, pos3_t at)
+void CL_ActorShoot (const le_t * le, const pos3_t at)
 {
 	int type;
 
@@ -1416,7 +1411,6 @@ void CL_ActorTurnMouse (void)
 
 /**
  * @brief Stands or crouches actor.
- * @todo Maybe add a popup that asks if the player _really_ wants to crouch/stand up when only the reserved amount is left?
  */
 void CL_ActorStandCrouch_f (void)
 {
@@ -1700,7 +1694,7 @@ void CL_ActorMouseTrace (void)
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, leInlineModelList);
+		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	}
 
 	VecToPos(end, testPos);
@@ -1722,7 +1716,7 @@ void CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, leInlineModelList);
+	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
 
@@ -1730,7 +1724,7 @@ void CL_ActorMouseTrace (void)
 	if (restingLevel < cl_worldlevel->integer) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, leInlineModelList);
+		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 	}
@@ -1749,7 +1743,7 @@ void CL_ActorMouseTrace (void)
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
@@ -1976,7 +1970,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	if (!selActor || !selActor->fd)
 		return 0.0;
 
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && VectorCompare(le->pos, toPos))
 			break;
 
@@ -1984,7 +1978,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 		/* no target there */
 		return 0.0;
 	/* or suicide attempted */
-	if (le->selected && le->fd->damage[0] > 0)
+	if (le->selected && !FIRESH_IsMedikit(le->fd))
 		return 0.0;
 
 	VectorCopy(selActor->origin, shooter);
@@ -2104,7 +2098,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
@@ -2189,7 +2183,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = LEs; i < cl.numLEs; i++, le++)
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
@@ -2639,7 +2633,7 @@ void CL_DisplayObstructionArrows (void)
 /**
  * @brief Triggers @c Grid_MoveMark in every direction at the current truePos.
  */
-void CL_DumpMoveMark_f (void)
+static void CL_DumpMoveMark_f (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
 	const int fieldSize = selActor
@@ -2666,7 +2660,7 @@ void CL_DumpMoveMark_f (void)
  * @brief Shows a table of the TUs that would be used by the current actor to move
  * relative to its current location
  */
-void CL_DumpTUs_f (void)
+static void CL_DumpTUs_f (void)
 {
 	int x, y, crouchingState;
 	pos3_t pos, loc;
@@ -2716,7 +2710,7 @@ static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
 		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		/* 3 */
 }
 
-void CL_DebugPath_f (void)
+static void CL_DebugPath_f (void)
 {
 	const int actorSize = 1;
 	const pos_t x = mousePos[0];
@@ -2876,4 +2870,13 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
 	Cmd_AddCommand("soldier_updatecurrent", CL_UpdateSoldier_f, _("Update a soldier"));
 	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
+	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
+	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
+	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Triggers Grid_MoveMark in every direction at the current truePos.");
+	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");
+	Cmd_AddCommand("debug_actorinvlist", NULL, "Shows the inventory list of all actors");
+#endif /* DEBUG */
 }

@@ -131,7 +131,6 @@ void G_MissionThink (edict_t *self)
 {
 	edict_t *chain = self->groupMaster;
 	edict_t *ent;
-	int i;
 
 	if (!G_MatchIsRunning())
 		return;
@@ -203,8 +202,9 @@ void G_MissionThink (edict_t *self)
 	}
 
 	/* still active mission edicts left */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_MISSION) && ent->team == self->team) {
+	ent = NULL;
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		if ((ent->type == ET_MISSION) && ent->team == self->team) {
 			return;
 		}
 

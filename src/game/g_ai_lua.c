@@ -994,11 +994,8 @@ static void AIL_CleanupActor (edict_t * ent)
  */
 void AIL_Cleanup (void)
 {
-	int i;
+	edict_t *ent = NULL;
 
-	for (i = 0; i < globals.num_edicts; i++) {
-		edict_t *ent = g_edicts + i;
-		if (ent->inuse && G_IsActor(ent))
-			AIL_CleanupActor(ent);
-	}
+	while ((ent = G_EdictsGetNextActor(ent)))
+		AIL_CleanupActor(ent);
 }

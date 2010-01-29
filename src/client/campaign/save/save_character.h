@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CHARACTER_STUN "stun"
 #define SAVE_CHARACTER_MORALE "morale"
 #define SAVE_CHARACTER_FIELDSIZE "fieldSize"
+#define SAVE_CHARACTER_STATE "state"
 
 #define SAVE_CHARACTER_SCORES "scores"
 

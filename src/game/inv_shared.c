@@ -265,8 +265,9 @@ int INVSH_CheckToInventory (const inventory_t * const i, const objDef_t *od, con
 	fits = INV_DOES_NOT_FIT; /* equals 0 */
 	if (INVSH_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
-	if (INVSH_CheckToInventory_shape(i, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem)
-	 && !INV_IsEquipDef(container) && !INV_IsFloorDef(container))
+	/** @todo aren't both (equip and floor) temp container? */
+	if (!INV_IsEquipDef(container) && !INV_IsFloorDef(container)
+	&& INVSH_CheckToInventory_shape(i, container, INVSH_ShapeRotate(od->shape), x, y, ignoredItem))
 		fits |= INV_FITS_ONLY_ROTATED;
 
 	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */

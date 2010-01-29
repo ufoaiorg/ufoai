@@ -30,7 +30,59 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 /**
- * @brief A functions to encapsulate the access to the list of entities
+ * @brief Allocate space for the entity pointers.
+ * @note No need to set it to zero, G_TagMalloc will do that for us
+ */
+edict_t* G_EdictsInit (void)
+{
+	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	return g_edicts;
+}
+
+/**
+ * @brief Reset the entity pointers for eg. a new game.
+ */
+void G_EdictsReset (void)
+{
+	memset(g_edicts, 0, game.sv_maxentities * sizeof(g_edicts[0]));
+}
+
+/**
+ * @brief Get an entity's ID number
+ * @param ent The entity
+ * @return the entity's ID number, currently the index in the array
+ * @note DO NOT use this number as anything other than an identifier !
+ */
+int G_EdictsGetNumber (const edict_t* ent)
+{
+	int idx = ent - g_edicts;
+	assert(idx >= 0 && idx < globals.num_edicts);
+	return idx;
+}
+
+/**
+ * @brief Get an entity by it's number
+ * @param idx The entity's index in the array of entities
+ */
+edict_t* G_EdictsGetByNum (const int idx)
+{
+	assert(idx >= 0 && idx < globals.num_edicts);
+	return g_edicts + idx;
+}
+
+/**
+ * @brief Returns the first entity
+ * @note This is always a world edict - but in case of rma there might be several parts
+ * of the world spread all over the array.
+ */
+edict_t* G_EdictsGetFirst (void)
+{
+	return &g_edicts[0];
+}
+
+/**
+ * @brief Iterate through the list of entities
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
 edict_t* G_EdictsGetNext (edict_t* lastEnt)
 {
@@ -52,30 +104,71 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 }
 
 /**
- * @brief A functions to encapsulate the access to the list of living
- * actor entities
+ * @brief Find an entity that is not in use
  */
-edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
+edict_t* G_EdictsGetNewEdict (void)
+{
+	edict_t* ent = NULL;
+
+	/* try to recycle an edict */
+	while ((ent = G_EdictsGetNext(ent))) {
+		if (!ent->inuse)
+			return ent;
+	}
+
+	/* no unused edict found, create a new one */
+	ent = &g_edicts[globals.num_edicts];
+	globals.num_edicts++;
+	if (globals.num_edicts > game.sv_maxentities)
+		return NULL;
+	else
+		return ent;
+}
+
+/**
+ * @brief Iterate through the entities that are in use
+ * @note we can hopefully get rid of this funtion once we know when it makes sense
+ * to iterate through entities that are NOT in use
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+edict_t* G_EdictsGetNextInUse (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;
 
 	while ((ent = G_EdictsGetNext(ent))) {
-		if (ent->inuse && G_IsLivingActor(ent))
+		if (ent->inuse)
 			break;
 	}
 	return ent;
 }
 
 /**
- * @brief A functions to encapsulate the access to the list of living
- * or dead actor entities
+ * @brief Iterate through the living actor entities
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsLivingActor(ent))
+			break;
+	}
+	return ent;
+}
+
+/**
+ * @brief Iterate through the actor entities (even the dead!)
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
 edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 {
 	edict_t* ent = lastEnt;
 
-	while ((ent = G_EdictsGetNext(ent))) {
-		if (ent->inuse && G_IsActor(ent))
+	assert(lastEnt < &g_edicts[globals.num_edicts]);
+
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		if (G_IsActor(ent))
 			break;
 	}
 	return ent;
@@ -105,10 +198,10 @@ void G_FreeEdict (edict_t *ent)
  */
 edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
 {
-	edict_t *floor;
+	edict_t *floor = NULL;
 
-	for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-		if (!floor->inuse || (type > 0 && floor->type != type))
+	while ((floor = G_EdictsGetNextInUse(floor))) {
+		if ((type > ET_NULL && floor->type != type))
 			continue;
 		if (!VectorCompare(pos, floor->pos))
 			continue;
@@ -336,20 +429,14 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 {
 	const char *s;
+	edict_t *ent = from;
 
-	if (!from)
-		from = g_edicts;
-	else
-		from++;
-
-	for (; from < &g_edicts[globals.num_edicts]; from++) {
-		if (!from->inuse)
-			continue;
-		s = *(const char **) ((byte *) from + fieldofs);
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		s = *(const char **) ((byte *) ent + fieldofs);
 		if (!s)
 			continue;
 		if (!Q_strcasecmp(s, match))
-			return from;
+			return ent;
 	}
 
 	return NULL;
@@ -363,12 +450,12 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
  */
 edict_t *G_FindTargetEntity (const char *target)
 {
-	int i;
+	edict_t *ent = NULL;
 
-	for (i = 0; i < globals.num_edicts; i++) {
-		const char *n = g_edicts[i].targetname;
+	while ((ent = G_EdictsGetNext(ent))) {
+		const char *n = ent->targetname;
 		if (n && !strcmp(n, target))
-			return &g_edicts[i];
+			return ent;
 	}
 
 	return NULL;
@@ -383,29 +470,24 @@ edict_t *G_FindTargetEntity (const char *target)
  */
 edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type)
 {
-	vec3_t eorg;
-	int j;
+	edict_t *ent = from;
 
-	if (!from)
-		from = g_edicts;
-	else
-		from++;
-	for (; from < &g_edicts[globals.num_edicts]; from++) {
-		if (!from->inuse)
-			continue;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		int j;
+		vec3_t eorg;
 		for (j = 0; j < 3; j++)
-			eorg[j] = org[j] - (from->origin[j] + (from->mins[j] + from->maxs[j]) * 0.5);
+			eorg[j] = org[j] - (ent->origin[j] + (ent->mins[j] + ent->maxs[j]) * 0.5);
 		if (VectorLength(eorg) > rad)
 			continue;
-		if (type != ET_NULL && from->type != type)
+		if (type != ET_NULL && ent->type != type)
 			continue;
-		return from;
+		return ent;
 	}
 
 	return NULL;
 }
 
-#define IS_BMODEL(ent) ((ent)->inuse && (ent)->model && (ent)->model[0] == '*' && (ent)->solid == SOLID_BSP)
+#define IS_BMODEL(ent) ((ent)->model && (ent)->model[0] == '*' && (ent)->solid == SOLID_BSP)
 
 /**
  * @brief creates an entity list
@@ -415,11 +497,11 @@ edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type
  */
 void G_GenerateEntList (const char *entList[MAX_EDICTS])
 {
-	int i;
-	edict_t *ent;
+	int i = 0;
+	edict_t *ent = NULL;
 
 	/* generate entity list */
-	for (i = 0, ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
+	while ((ent = G_EdictsGetNextInUse(ent)))
 		if (IS_BMODEL(ent))
 			entList[i++] = ent->model;
 	entList[i] = NULL;
@@ -443,18 +525,11 @@ void G_RecalcRouting (const edict_t * ent)
  */
 void G_CompleteRecalcRouting (void)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 
-	/* generate entity list */
-	for (ent = g_edicts; ent < &g_edicts[globals.num_edicts]; ent++)
-		if (IS_BMODEL(ent)) {
-			Com_DPrintf(DEBUG_GAME, "Processing entity %i: inuse:%i model:%s solid:%i\n",
-				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
+	while ((ent = G_EdictsGetNextInUse(ent)))
+		if (IS_BMODEL(ent))
 			G_RecalcRouting(ent);
-		} else {
-			Com_DPrintf(DEBUG_GAME, "Did not process entity %i: inuse:%i model:%s solid:%i\n",
-				ent->number, ent->inuse, ent->model ? ent->model : "", ent->solid);
-		}
 }
 
 /**

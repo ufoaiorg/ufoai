@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cp_campaign.h" /**< message_t */
+#include "../../campaign/cp_messages.h" /**< message_t */
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) (node->u.abstractscrollable)
@@ -48,7 +48,7 @@ static const int DATETIME_COLUMN_SIZE = 180;
 /**
  * @return Number of lines need to display this message
  */
-static int MN_MessageGetLines(const menuNode_t *node, message_t *message, const char *fontID, int width)
+static int MN_MessageGetLines (const menuNode_t *node, message_t *message, const char *fontID, int width)
 {
 	const int column1 = DATETIME_COLUMN_SIZE;
 	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;
@@ -65,7 +65,8 @@ static char *lastDate;
  * @todo do not hard code icons
  * @todo cache icon result
  */
-static menuIcon_t *MN_MessageGetIcon(const message_t *message) {
+static menuIcon_t *MN_MessageGetIcon (const message_t *message)
+{
 	const char* iconName;
 
 	switch (message->type) {
@@ -128,7 +129,7 @@ static menuIcon_t *MN_MessageGetIcon(const message_t *message) {
 	return MN_GetIconByName(iconName);
 }
 
-static void MN_MessageDraw(const menuNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
+static void MN_MessageDraw (const menuNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
 {
 	const int column1 = DATETIME_COLUMN_SIZE;
 	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;

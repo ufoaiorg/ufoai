@@ -105,8 +105,7 @@ static qboolean G_PhysicsThink (edict_t *ent)
  */
 void G_PhysicsRun (void)
 {
-	int i;
-	edict_t *ent;
+	edict_t *ent = NULL;
 
 	/* not all teams are spawned or game has already ended */
 	if (!G_MatchIsRunning())
@@ -120,10 +119,7 @@ void G_PhysicsRun (void)
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
-	ent = &g_edicts[0];
-	for (i = 0; i < globals.num_edicts; i++, ent++) {
-		if (!ent->inuse)
-			continue;
+	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (ent->think)
 			G_PhysicsThink(ent);
 	}

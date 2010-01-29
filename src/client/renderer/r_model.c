@@ -74,9 +74,14 @@ void R_ModModellist_f (void)
 			Com_Printf("%3i ", mod->type);
 			break;
 		}
-		if (mod->alias.num_meshes)
-			Com_Printf(" | %5i | %7i | %s\n", i, mod->alias.meshes[0].num_tris, mod->name);
-		else
+		if (mod->alias.num_meshes) {
+			int j;
+			Com_Printf(" | %5i | %7i | %s (skins: %i)\n", i, mod->alias.meshes[0].num_tris, mod->name, mod->alias.meshes[0].num_skins);
+			for (j = 0; j < mod->alias.meshes[0].num_skins; j++) {
+				mAliasSkin_t *skin = &mod->alias.meshes[0].skins[j];
+				Com_Printf("     \\-- skin %i: '%s' (texnum %i and image type %i)\n", j + 1, skin->name, skin->skin->texnum, skin->skin->type);
+			}
+		} else
 			Com_Printf(" | %5i | unknown | %s\n", i, mod->name);
 	}
 	Com_Printf("%4i models loaded\n", r_numModels);

@@ -33,6 +33,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *cl_equip;
 
 /**
+ * @brief Register some data in the shared client/server structs to ensure that e.g. every known
+ * alien race is used in a skirmish game
+ */
+static void GAME_SK_SetMissionParameters (void)
+{
+	int i;
+
+	Cvar_SetValue("ai_numcivilians", 8);
+	Cvar_Set("ai_civilian", "europe");
+
+	/* now store the alien teams in the shared csi struct to let the game dll
+	 * have access to this data, too */
+	csi.numAlienTeams = 0;
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t* td = &csi.teamDef[i];
+		if (CHRSH_IsTeamDefAlien(td))
+			csi.alienTeams[csi.numAlienTeams++] = td;
+	}
+}
+
+/**
  * @brief Starts a new skirmish game
  * @todo Check the stuff in this function - maybe not every function call
  * is needed here or maybe some are missing
@@ -53,6 +74,8 @@ static void GAME_SK_Start_f (void)
 	if (!md)
 		return;
 
+	GAME_SK_SetMissionParameters();
+
 	GAME_GenerateTeam(teamDefID, ed);
 
 	assert(md->map);
@@ -71,29 +94,51 @@ static void GAME_SK_Restart_f (void)
 }
 
 /**
- * @brief Changed the cl_equip cvar to the next/prev equipment definition
+ * @brief Changed the given cvar to the next/prev equipment definition
  */
 static void GAME_SK_ChangeEquip_f (void)
 {
-	equipDef_t *ed = INV_GetEquipmentDefinitionByID(cl_equip->string);
-	int index = ed ? ed - csi.eds : 0;
+	equipDef_t *ed;
+	int index;
+	const char *cvarName;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <cvarname>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cvarName = Cmd_Argv(1);
+	ed = INV_GetEquipmentDefinitionByID(Cvar_GetString(cvarName));
+	index = ed ? ed - csi.eds : 0;
+
 	if (!strcmp(Cmd_Argv(0), "sk_prevequip")) {
 		index--;
 		if (index < 0)
 			index = csi.numEDs - 1;
-		Cvar_Set("cl_equip", csi.eds[index].name);
+		Cvar_Set(cvarName, csi.eds[index].name);
 	} else {
 		index++;
 		if (index >= csi.numEDs)
 			index = 0;
-		Cvar_Set("cl_equip", csi.eds[index].name);
+		Cvar_Set(cvarName, csi.eds[index].name);
 	}
 }
 
+/**
+ * @brief After a mission was finished this function is called
+ * @param msg The network message buffer
+ * @param winner The winning team
+ * @param numSpawned The amounts of all spawned actors per team
+ * @param numAlive The amount of survivors per team
+ * @param numKilled The amount of killed actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ * @param numStunned The amount of stunned actors for all teams. The first dimension contains
+ * the attacker team, the second the victim team
+ */
 void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	char resultText[MAX_SMALLMENUTEXTLEN];
-	int theirKilled, theirStunned;
+	int enemiesKilled, enemiesStunned;
 	int i;
 
 	CL_Drop();
@@ -104,20 +149,28 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		return;
 	}
 
-	theirKilled = theirStunned = 0;
+	enemiesKilled = enemiesStunned = 0;
 	for (i = 0; i < MAX_TEAMS; i++) {
-		if (i != cls.team) {
-			theirKilled += numKilled[cls.team][i];
-			theirStunned += numStunned[cls.team][i];
+		if (i != cls.team && i != TEAM_CIVILIAN) {
+			enemiesKilled += numKilled[cls.team][i];
+			enemiesStunned += numStunned[cls.team][i];
 		}
 	}
 
-	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), theirKilled + theirStunned, numAlive[cls.team]);
+	Com_sprintf(resultText, sizeof(resultText),
+			_("Enemies killed:\t\t%i\n"
+			  "Team survivors:\t\t%i\n"
+			  "Enemy survivors:\t\t%i\n"
+			  "Friendly fire:\t\t%i\n"
+			  "Civilians killed:\t\t%i\n"
+			  "Civilians killed by enemy:\t\t%i\n"),
+			enemiesKilled + enemiesStunned, numAlive[cls.team], numAlive[TEAM_ALIEN],
+			numKilled[cls.team][cls.team], numKilled[cls.team][TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN]);
 	if (winner == cls.team) {
-		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You won the game!"), resultText);
+		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You won the game!"), resultText);
 		MN_Popup(_("Congratulations"), popupText);
 	} else {
-		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
+		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You've lost the game!"), resultText);
 		MN_Popup(_("Better luck next time"), popupText);
 	}
 }

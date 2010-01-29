@@ -276,36 +276,28 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
  */
 static void G_FindEdictGroups (void)
 {
-	edict_t *e, *e2, *chain;
-	int i, j;
-	int c, c2;
+	edict_t *ent = G_EdictsGetFirst(); /* the first edict is always a world edict that can be skipped */
 
-	c = 0;
-	c2 = 0;
-	for (i = 1, e = g_edicts + i; i < globals.num_edicts; i++, e++) {
-		if (!e->inuse)
+	while ((ent = G_EdictsGetNextInUse(ent))) {
+		edict_t *ent2, *chain;
+
+		if (!ent->group)
 			continue;
-		if (!e->group)
+		if (ent->flags & FL_GROUPSLAVE)
 			continue;
-		if (e->flags & FL_GROUPSLAVE)
-			continue;
-		chain = e;
-		e->groupMaster = e;
-		c++;
-		c2++;
-		for (j = i + 1, e2 = e + 1; j < globals.num_edicts; j++, e2++) {
-			if (!e2->inuse)
+		chain = ent;
+		ent->groupMaster = ent;
+		ent2 = ent;			/* search only the remainder of the entities */
+		while ((ent2 = G_EdictsGetNextInUse(ent2))) {
+			if (!ent2->group)
 				continue;
-			if (!e2->group)
+			if (ent2->flags & FL_GROUPSLAVE)
 				continue;
-			if (e2->flags & FL_GROUPSLAVE)
-				continue;
-			if (!strcmp(e->group, e2->group)) {
-				c2++;
-				chain->groupChain = e2;
-				e2->groupMaster = e;
-				chain = e2;
-				e2->flags |= FL_GROUPSLAVE;
+			if (!strcmp(ent->group, ent2->group)) {
+				chain->groupChain = ent2;
+				ent2->groupMaster = ent;
+				chain = ent2;
+				ent2->flags |= FL_GROUPSLAVE;
 			}
 		}
 	}
@@ -325,7 +317,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	gi.FreeTags(TAG_LEVEL);
 
 	memset(&level, 0, sizeof(level));
-	memset(g_edicts, 0, game.sv_maxentities * sizeof(edict_t));
+	G_EdictsReset();
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 	level.day = day;
@@ -348,7 +340,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 			gi.error("ED_LoadFromFile: found %s when expecting {", token);
 
 		if (!ent)
-			ent = g_edicts;
+			ent = G_EdictsGetFirst();
 		else
 			ent = G_Spawn();
 
@@ -388,7 +380,7 @@ static inline void G_InitEdict (edict_t * e)
 {
 	e->inuse = qtrue;
 	e->classname = "noclass";
-	e->number = e - g_edicts;
+	e->number = G_EdictsGetNumber(e);
 	e->fieldSize = ACTOR_SIZE_NORMAL;
 }
 
@@ -403,23 +395,13 @@ static inline void G_InitEdict (edict_t * e)
  */
 edict_t *G_Spawn (void)
 {
-	int i;
-	edict_t *e;
+	edict_t *ent = G_EdictsGetNewEdict();
 
-	/* start at 1 to skip the world */
-	e = &g_edicts[1];
-	for (i = 1; i < globals.num_edicts; i++, e++)
-		if (!e->inuse) {
-			G_InitEdict(e);
-			return e;
-		}
-
-	if (i == game.sv_maxentities)
+	if (!ent)
 		gi.error("G_Spawn: no free edicts");
 
-	globals.num_edicts++;
-	G_InitEdict(e);
-	return e;
+	G_InitEdict(ent);
+	return ent;
 }
 
 /**

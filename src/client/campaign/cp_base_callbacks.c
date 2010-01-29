@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_ufo.h"
 
-/** @brief Used from menu scripts as parameter for mn_select_base */
+/** @brief Used from menu scripts as parameter for mn_base_select */
 #define CREATE_NEW_BASE_ID -1
 
 static cvar_t *mn_base_title;
@@ -854,10 +854,10 @@ void B_InitCallbacks (void)
 	Cvar_SetValue("mn_base_max", MAX_BASES);
 
 	Cmd_AddCommand("basemapshot", B_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
-	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
-	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
-	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
-	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
+	Cmd_AddCommand("mn_base_prev", B_PrevBase_f, "Go to the previous base");
+	Cmd_AddCommand("mn_base_next", B_NextBase_f, "Go to the next base");
+	Cmd_AddCommand("mn_base_select", B_SelectBase_f, "Select a founded base by index");
+	Cmd_AddCommand("mn_base_build", B_BuildBase_f, NULL);
 	Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
@@ -879,10 +879,10 @@ void B_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("basemapshot");
 	Cmd_RemoveCommand("basesummary_selectbase");
-	Cmd_RemoveCommand("mn_prev_base");
-	Cmd_RemoveCommand("mn_next_base");
-	Cmd_RemoveCommand("mn_select_base");
-	Cmd_RemoveCommand("mn_build_base");
+	Cmd_RemoveCommand("mn_base_prev");
+	Cmd_RemoveCommand("mn_base_next");
+	Cmd_RemoveCommand("mn_base_select");
+	Cmd_RemoveCommand("mn_base_build");
 	Cmd_RemoveCommand("base_changename");
 	Cmd_RemoveCommand("mn_set_base_title");
 	Cmd_RemoveCommand("base_init");

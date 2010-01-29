@@ -47,3 +47,42 @@
    fun:g_cclosure_marshal_VOID__OBJECT
    fun:g_closure_invoke
 }
+{
+   nvidia_gl
+   Memcheck:Cond
+   obj:/usr/lib/libGLcore.so.185.18.36
+   obj:/usr/lib/libGLcore.so.185.18.36
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   nvidia_gl2
+   Memcheck:Cond
+   obj:/usr/lib/libGLcore.so.185.18.36
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   nvidia_gl3
+   Memcheck:Cond
+   obj:/usr/lib/libGLcore.so.185.18.36
+   obj:*
+   obj:*
+   obj:*
+   obj:/usr/lib/libGLcore.so.185.18.36
+   obj:*
+}
+{
+   nvidia_gl4
+   Memcheck:Cond
+   obj:/usr/lib/libGLcore.so.185.18.36
+}
+

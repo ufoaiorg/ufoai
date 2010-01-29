@@ -369,12 +369,12 @@ window firemode_left {
 
 	/* Firemode console functions ===================================*/
 
-	confunc set_left_ina {
+	func set_left_ina {
 		*(pic)bt_left_fm<1>@texl = "0 64"
 		*(pic)bt_left_fm<1>@texh = "214 128"
 	}
 
-	confunc set_left_a {
+	func set_left_a {
 		*(pic)bt_left_fm<1>@texl = "0 0"
 		*(pic)bt_left_fm<1>@texh = "214 63"
 	}
@@ -383,8 +383,19 @@ window firemode_left {
 		*(pic)bt_left_fm<1>@invis = true
 	}
 
+	/**
+	 * @param<1> fd index
+	 * @param<2> status
+	 */
 	confunc set_left_vis {
+		*cvar:tmp = "<2>"
 		*(pic)bt_left_fm<1>@invis = false
+
+		if ( *cvar:tmp eq "1" ) {
+			call *node:root.set_left_a ( <1> ) 
+		} else {
+			call *node:root.set_left_ina ( <1> )
+		}		
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
@@ -663,12 +674,12 @@ window firemode_right {
 		hud/firemode (inactive)	->	texl "0 64"	texh "214 128"
 	*/
 
-	confunc set_right_ina {
+	func set_right_ina {
 		*(pic)bt_right_fm<1>@texl = "0 64"
 		*(pic)bt_right_fm<1>@texh = "214 128"
 	}
 
-	confunc set_right_a {
+	func set_right_a {
 		*(pic)bt_right_fm<1>@texl = "0 0"
 		*(pic)bt_right_fm<1>@texh = "214 63"
 	}
@@ -677,8 +688,19 @@ window firemode_right {
 		*(pic)bt_right_fm<1>@invis = true
 	}
 
+	/**
+	 * @param<1> fd index
+	 * @param<2> status
+	 */
 	confunc set_right_vis {
+		*cvar:tmp = "<2>"
 		*(pic)bt_right_fm<1>@invis = false
+
+		if ( *cvar:tmp eq "1" ) {
+			call *node:root.set_right_a ( <1> )
+		} else {
+			call *node:root.set_right_ina ( <1> )
+		}		
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/

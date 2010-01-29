@@ -39,7 +39,6 @@ edict_t *G_GetFloorItemsFromPos (const pos3_t pos)
  * @param[in] ent Pointer to an entity being an actor.
  * @return pointer to edict_t being a floor (with items) or @c NULL in case no items were found
  * on the edict grid position.
- * @todo This function is somehow broken - it returns NULL in some cases of items on the floor.
  */
 edict_t *G_GetFloorItems (edict_t * ent)
 {
@@ -55,6 +54,42 @@ edict_t *G_GetFloorItems (edict_t * ent)
 	return NULL;
 }
 
+/**
+ * @brief Checks whether the given container contains items that should be
+ * dropped to the floor
+ * @param[in,out] ent The entity to check the inventory containers for
+ * @param[in] container The container of the entity inventory to check
+ * @return @c true if there are items that should be dropped to floor, @c false otherwise
+ */
+static qboolean G_InventoryDropToFloorCheck (edict_t* ent, int container)
+{
+	invList_t* ic = ent->i.c[container];
+
+	if (container == gi.csi->idArmour)
+		return qfalse;
+
+	if (ic) {
+		qboolean check = qfalse;
+		while (ic) {
+			assert(ic->item.t);
+			if (ic->item.t->virtual) {
+				invList_t *next = ic->next;
+				/* remove the virtual item to update the inventory lists */
+				if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(container), ic))
+					gi.error("Could not remove virtual item '%s' from inventory %i",
+							ic->item.t->id, container);
+				ic = next;
+			} else {
+				/* there are none virtual items left that should be send to the client */
+				check = qtrue;
+				ic = ic->next;
+			}
+		}
+		return check;
+	}
+
+	return qfalse;
+}
 
 /** @brief Move items to adjacent locations if the containers on the current
  * floor edict are full */
@@ -78,7 +113,7 @@ void G_InventoryToFloor (edict_t *ent)
 
 	/* check for items */
 	for (k = 0; k < gi.csi->numIDs; k++)
-		if (k != gi.csi->idArmour && ent->i.c[k])
+		if (G_InventoryDropToFloorCheck(ent, k))
 			break;
 
 	/* edict is not carrying any items */
@@ -120,9 +155,12 @@ void G_InventoryToFloor (edict_t *ent)
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
-			game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(k), ic);
-			game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1);
-
+			if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(k), ic))
+				gi.error("Could not remove item '%s' from inventory %i of entity %i",
+						ic->item.t->id, k, ent->number);
+			if (game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
+				gi.error("Could not add item '%s' from inventory %i of entity %i to floor container",
+						ic->item.t->id, k, ent->number);
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
@@ -189,17 +227,22 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 
 	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
 
-	assert(t != NONE);
+	if (t < 0 || t >= gi.csi->numODs)
+		gi.error("Item index out of bounds: %i", t);
 	item->t = &gi.csi->ods[t];
 
-	item->m = NULL;
-	if (m != NONE)
+	if (m != NONE) {
+		if (m < 0 || m >= gi.csi->numODs)
+			gi.error("Ammo index out of bounds: %i", m);
 		item->m = &gi.csi->ods[m];
+	} else {
+		item->m = NULL;
+	}
 
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
 		*container = INVDEF(containerID);
 	else
-		*container = NULL;
+		gi.error("container id is out of bounds: %i", containerID);
 }
 
 /**

@@ -36,6 +36,9 @@ struct storedUFO_s;
 
 #define MAX_ASSEMBLIES	16
 
+/** @todo rename this after merging with savegame breakage branch and also change the value to -1 */
+#define	BYTES_NONE	0xFF
+
 #include "cp_rank.h"
 #include "cp_save.h"
 #include "cp_parse.h"
@@ -297,9 +300,6 @@ typedef struct campaign_s {
 	const campaignEvents_t *events;
 } campaign_t;
 
-extern campaign_t campaigns[MAX_CAMPAIGNS];
-extern int numCampaigns;
-
 /** salary values for a campaign */
 typedef struct salary_s {
 	int soldier_base;
@@ -446,7 +446,7 @@ typedef struct ccs_s {
 	int numNations;
 
 	/* == Cities == */
-	city_t cities[MAX_CITIES];
+	linkedList_t *cities;
 	int numCities;
 
 	/* Projectiles on geoscape (during fights) */
@@ -563,7 +563,6 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
-extern campaign_t *curCampaign;
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;

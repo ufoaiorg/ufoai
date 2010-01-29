@@ -335,7 +335,7 @@ static void CL_ConfirmAction_f (void)
 	if (time - cl.time < 1000) {
 		int i;
 		for (i = 0; i < cl.numLEs; i++) {
-			le_t *le = &LEs[i];
+			le_t *le = &cl.LEs[i];
 			if (LE_IsLivingActor(le) && le->team == cls.team)
 				CL_ConfirmAction(le);
 		}
@@ -501,7 +501,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		le_t *le;
 		if (++i >= cl.numLEs)
 			i = 0;
-		le = &LEs[i];
+		le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
 			VectorCopy(selActor->origin, from);
@@ -545,7 +545,7 @@ static void CL_NextAlien_f (void)
 	do {
 		if (++i >= cl.numLEs)
 			i = 0;
-		le = &LEs[i];
+		le = &cl.LEs[i];
 		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
@@ -1064,12 +1064,6 @@ void IN_Init (void)
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
 	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
-
-#ifdef DEBUG
-	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
-	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
-	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
-#endif /* DEBUG */
 
 	mousePosX = mousePosY = 0.0;
 

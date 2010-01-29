@@ -44,5 +44,6 @@ qboolean GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_CP_Drop(void);
 void GAME_CP_InitializeBattlescape(const chrList_t *team);
 void GAME_CP_Frame(void);
+const char* GAME_CP_GetModelForItem(const objDef_t *od, menuModel_t** menuModel);
 
 #endif

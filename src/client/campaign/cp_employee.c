@@ -1209,7 +1209,7 @@ qboolean E_SaveXML (mxml_node_t *p)
 				mxml_AddString(ssnode, SAVE_EMPLOYEE_UGV, e->ugv->id);
 			/* Character Data */
 			chrNode = mxml_AddNode(ssnode, SAVE_EMPLOYEE_CHR);
-			CL_SaveCharacterXML(chrNode, e->chr);
+			CL_SaveCharacterXML(chrNode, &e->chr);
 		}
 	}
 	Com_UnregisterConstList(saveEmployeeConstants);

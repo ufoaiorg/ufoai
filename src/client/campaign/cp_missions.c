@@ -269,7 +269,6 @@ static void CP_CreateAlienTeam (mission_t *mission)
 
 	assert(mission->posAssigned);
 
-	/** @todo Should it be scripted too? at least it should depend on the difficulty level. */
 	numAliens = 4 + (int) ccs.overallInterest / 50;
 	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
 		numAliens = mission->ufo->maxTeamSize;
@@ -642,6 +641,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		return "geoscape/alienbase";
 	/* Should not be reached, these mission categories are not drawn on geoscape */
 	case INTERESTCATEGORY_BASE_ATTACK:
+		return "geoscape/base2";
 	case INTERESTCATEGORY_SUPPLY:
 	case INTERESTCATEGORY_INTERCEPT:
 	case INTERESTCATEGORY_NONE:
@@ -1162,7 +1162,6 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(mission);
-			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CP_BaseAttackMissionDestroyBase(mission);
 	} else {

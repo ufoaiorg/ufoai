@@ -874,13 +874,20 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 	return writtenBytes;
 }
 
+/**
+ * @brief Parses a boolean from a string
+ * @param token The token to convert into a boolean
+ * @return @c false if the string could not get parsed
+ */
 qboolean Com_ParseBoolean (const char *token)
 {
 	qboolean b;
 	size_t writtenBytes;
-	Com_ParseValue(&b, token, V_BOOL, 0, sizeof(b), &writtenBytes);
-	assert(writtenBytes == sizeof(b));
-	return b;
+	if (Com_ParseValue(&b, token, V_BOOL, 0, sizeof(b), &writtenBytes) != RESULT_ERROR) {
+		assert(writtenBytes == sizeof(b));
+		return b;
+	}
+	return qfalse;
 }
 
 /**

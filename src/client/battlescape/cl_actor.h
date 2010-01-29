@@ -89,15 +89,6 @@ void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);
 
 int CL_MoveMode(const le_t *le, int length);
 
-#ifdef DEBUG
-void CL_ListReactionAndReservations_f (void);
-void CL_DisplayBlockedPaths_f(void);
-void LE_List_f(void);
-void LM_List_f(void);
-void CL_DumpTUs_f(void);
-void CL_DumpMoveMark_f(void);
-void CL_DebugPath_f(void);
-#endif
 void CL_ConditionalMoveCalcActor(le_t *le);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);
@@ -112,8 +103,8 @@ void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleCrouchReservation_f(void);
 void CL_ActorUseHeadgear_f(void);
-void CL_ActorStartMove(le_t *le, pos3_t to);
-void CL_ActorShoot(const le_t *le, pos3_t at);
+void CL_ActorStartMove(le_t *le, const pos3_t to);
+void CL_ActorShoot(const le_t *le, const pos3_t at);
 void CL_PlayActorSound(const le_t *le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);

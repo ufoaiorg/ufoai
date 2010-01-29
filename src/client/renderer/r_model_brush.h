@@ -176,6 +176,8 @@ typedef struct mBspLeaf_s {
 typedef struct mbsplight_s {
 	vec3_t org;
 	float radius;
+
+	struct mbsplight_s* next;
 } mBspLight_t;
 
 /** @brief brush model */
@@ -229,7 +231,6 @@ typedef struct mBspModel_s {
 	byte lightquant;
 	byte *lightdata;
 
-	int numbsplights;
 	mBspLight_t *bsplights;
 
 	/* sorted surfaces arrays */

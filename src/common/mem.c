@@ -379,13 +379,19 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	pool = mem->pool;
 
 	/* allocate memory for the new size */
-	new = _Mem_Alloc(size, qtrue, pool, mem->tagNum, fileName, fileLine);
+	new = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
 
 	/* copy old data */
 	memcpy(new, ptr, min(mem->memSize, size));
+	if (mem->memSize < size) {
+		const size_t delta = size - mem->memSize;
+		memset(new + mem->memSize, 0, delta);
+	}
 
 	/* if there was old data, free it */
 	_Mem_Free(ptr, fileName, fileLine);
+
+	_Mem_CheckSentinels(new, fileName, fileLine);
 
 	return new;
 }

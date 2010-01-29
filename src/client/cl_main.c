@@ -908,9 +908,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap_f, "Shows the whole server side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_croute", Grid_DumpClientRoutes_f, "Shows the whole client side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_sroute", Grid_DumpServerRoutes_f, "Shows the whole server side pathfinding grid of the current loaded map");
-	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");
-	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Triggers Grid_MoveMark in every direction at the current truePos.");
-	Cmd_AddCommand("debug_actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
 	/* forward commands again */

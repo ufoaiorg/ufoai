@@ -36,7 +36,8 @@ function download_archive()
 	pushd ${DOWNLOAD_DIR} > /dev/null
 	${WGET} -q -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
-	if [ ! -e "${DOWNLOAD_DIR}/${targetname}" ]; then
+	if [ ! -s "${DOWNLOAD_DIR}/${targetname}" ]; then
+    	rm -f ${DOWNLOAD_DIR}/${targetname}
 		failure "Could not fetch ${baseurl}${filename}"
 	fi
 }
@@ -77,10 +78,20 @@ function extract_archive_7z()
 	check_error $? "Failed to extract ${file}"
 }
 
+function extract_archive_tar7z() 
+{
+	file=${1}
+	target=${2}
+	pushd "${target}" > /dev/null
+	tar --lzma -xv -f "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
+	check_error $? "Failed to extract ${file}"
+	popd > /dev/null
+}
+
 function start_downloads()
 {
 	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ mingwrt-3.16.2-mingw32-dev.tar.gz mingwrt.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ mingwrt-3.17-mingw32-dev.tar.gz mingwrt.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-mingw32-dev.tar.gz w32api.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0-2-mingw32-bin.tar.gz gdb.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
@@ -157,6 +168,7 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ pkg-config_0.23-3_win32.zip pkg-config.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ libxml2-dev_2.7.4-1_win32.zip libxml2.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ fontconfig-dev_2.8.0-1_win32.zip fontconfig.zip
 
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 	download_archive http://mattn.ninex.info/download/ openal.zip libopenal-dev.zip
@@ -212,6 +224,7 @@ function extract_libs()
 	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
 	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
 	extract_archive_zip libxml2.zip "${MINGW_DIR}"
+	extract_archive_zip fontconfig.zip "${MINGW_DIR}"
 }
 
 function extract_cunit() 

@@ -710,6 +710,10 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 
 	size[0] = size[1] = MARKER_SIZE * zoom;
 	R_ModelAutoScale(size, &mi, scale, center);
+	/* reset the center, as we want to place the models onto the surface of the earth */
+	mi.center[0] = 0;
+	mi.center[1] = 0;
+	mi.center[2] = 0;
 
 	R_DrawModelDirect(&mi, NULL, NULL);
 }

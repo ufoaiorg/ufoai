@@ -696,7 +696,7 @@ void MN_SetNewWindowPos (menuNode_t* window, int x, int y)
  * @brief Add a new window to the list of all windows
  * @note Sort windows by alphabet
  */
-void MN_InsertWindow(menuNode_t* window)
+void MN_InsertWindow (menuNode_t* window)
 {
 	int pos = 0;
 	int i;

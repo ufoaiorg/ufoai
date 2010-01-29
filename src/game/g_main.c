@@ -220,9 +220,8 @@ static void G_Init (void)
 	game.sv_maxentities = sv_maxentities->integer;
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
 
-	/* initialize all entities for this game */
-	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
-	globals.edicts = g_edicts;
+	/* initialize the entity storage */
+	globals.edicts = G_EdictsInit();
 	globals.max_edicts = game.sv_maxentities;
 	globals.num_edicts = game.sv_maxplayersperteam;
 

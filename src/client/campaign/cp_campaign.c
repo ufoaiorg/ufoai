@@ -442,11 +442,15 @@ static void CP_CheckMissionEnd (void)
 {
 	const linkedList_t *list = ccs.missions;
 
-	for (; list; list = list->next) {
+	while (list) {
+		/* the mission might be removed inside this loop, so we have to ensure
+		 * that we have the correct next pointer */
+		linkedList_t *next = list->next;
 		mission_t *mission = (mission_t *)list->data;
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
 			CP_MissionStageEnd(mission);
 		}
+		list = next;
 	}
 }
 
@@ -1637,7 +1641,6 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
  * @param[in] won Determines whether we won the mission or not.
  * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
- * @sa GAME_CP_Results_f
  */
 void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
@@ -2004,8 +2007,6 @@ void CL_ResetSinglePlayerData (void)
 {
 	int i;
 
-	memset(&ccs, 0, sizeof(ccs));
-
 	LIST_Delete(&ccs.missions);
 	cp_messageStack = NULL;
 
@@ -2018,6 +2019,8 @@ void CL_ResetSinglePlayerData (void)
 	 * was maybe already called */
 	RS_ResetTechs();
 	E_ResetEmployees();
+
+	memset(&ccs, 0, sizeof(ccs));
 
 	/* Count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
