@@ -217,7 +217,7 @@ static void HUD_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, con
 		MN_ExecuteConfunc("set_right_vis %i %i", fd->fdIdx, status);
 	} else if (hand == ACTOR_HAND_CHAR_LEFT) {
 		/* Make this entry visible (in case it wasn't). */
-		MN_ExecuteConfunc("set_left_vis %i", fd->fdIdx, status);
+		MN_ExecuteConfunc("set_left_vis %i %i", fd->fdIdx, status);
 	}
 
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tt_tu%i", hand, fd->fdIdx);
