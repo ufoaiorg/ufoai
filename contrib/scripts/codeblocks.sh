@@ -37,6 +37,7 @@ function download_archive()
 	${WGET} -q -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
 	popd > /dev/null
 	if [ ! -s "${DOWNLOAD_DIR}/${targetname}" ]; then
+    	rm -f ${DOWNLOAD_DIR}/${targetname}
 		failure "Could not fetch ${baseurl}${filename}"
 	fi
 }
@@ -370,7 +371,7 @@ CURL_VERSION=7.16.4
 CUNIT_VERSION=2.1-0
 
 # Use an absolute path here
-TEMP_DIR=/tmp/tmp_codeblocks
+TEMP_DIR=/D/games/ufoai/contrib/scripts/tmp_codeblocks
 TARGET_DIR=${TEMP_DIR}/codeblocks
 DOWNLOAD_DIR=${TEMP_DIR}/downloads
 MINGW_DIR=${TARGET_DIR}/MinGW
