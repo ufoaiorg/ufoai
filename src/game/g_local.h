@@ -479,6 +479,7 @@ edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
+edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
 
 /*============================================================================ */
 

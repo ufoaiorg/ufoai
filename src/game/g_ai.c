@@ -47,8 +47,8 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	VectorNormalize(dtarget);
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (ent != check && check->team == ent->team) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
+		if (ent != check) {
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
 			if (DotProduct(dtarget, dcheck) > 0.0) {
@@ -893,8 +893,8 @@ void AI_Run (void)
 			/* find next actor to handle */
 			edict_t *ent = player->pers.last;
 
-			while ((ent = G_EdictsGetNextLivingActor(ent))) {
-				if (ent->TU && ent->team == player->pers.team) {
+			while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+				if (ent->TU) {
 					if (g_ailua->integer)
 						AIL_ActorThink(player, ent);
 					else

@@ -147,13 +147,11 @@ static void G_KillTeam_f (void)
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (teamToKill >= 0 && ent->team != teamToKill)
-			continue;
-
-		/* die */
-		G_ActorDie(ent, STATE_DEAD, NULL);
-	}
+	if (teamToKill >= 0)
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+			/* die */
+			G_ActorDie(ent, STATE_DEAD, NULL);
+		}
 
 	/* check for win conditions */
 	G_MatchEndCheck();
@@ -172,17 +170,16 @@ static void G_StunTeam_f (void)
 	if (gi.Cmd_Argc() == 2)
 		teamToKill = atoi(gi.Cmd_Argv(1));
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (teamToKill >= 0 && ent->team != teamToKill)
-			continue;
+	if (teamToKill >= 0) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+			/* die */
+			G_ActorDie(ent, STATE_STUN, NULL);
 
-		/* die */
-		G_ActorDie(ent, STATE_STUN, NULL);
-
-		if (teamToKill == TEAM_ALIEN)
-			level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
-		else
-			level.num_stuns[TEAM_ALIEN][teamToKill]++;
+			if (teamToKill == TEAM_ALIEN)
+				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
+			else
+				level.num_stuns[TEAM_ALIEN][teamToKill]++;
+		}
 	}
 
 	/* check for win conditions */
