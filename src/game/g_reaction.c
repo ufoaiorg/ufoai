@@ -419,12 +419,11 @@ void G_ResetReactionFire (int team)
 {
 	edict_t *ent = NULL;
 
-	while ((ent = G_EdictsGetNextLivingActor(ent)))
-		if (ent->team == team) {
-			/** @todo why do we send the state here and why do we change the "shaken" state? */
-			ent->state &= ~STATE_SHAKEN;
-			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
-			gi.WriteShort(ent->number);
-			gi.WriteShort(ent->state);
-		}
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+		/** @todo why do we send the state here and why do we change the "shaken" state? */
+		ent->state &= ~STATE_SHAKEN;
+		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
+		gi.WriteShort(ent->number);
+		gi.WriteShort(ent->state);
+	}
 }

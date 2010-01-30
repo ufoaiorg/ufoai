@@ -288,24 +288,22 @@ void G_InvList_f (const player_t *player)
 	edict_t *ent = NULL;
 
 	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->team == player->pers.team) {
-			int container;
-			gi.dprintf("actor: '%s'\n", ent->chr.name);
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+		int container;
+		gi.dprintf("actor: '%s'\n", ent->chr.name);
 
-			for (container = 0; container < gi.csi->numIDs; container++) {
-				const invList_t *ic = ent->i.c[container];
-				Com_Printf("Container: %i\n", container);
-				while (ic) {
-					Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
-							(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
-							ic->item.a, ic->x, ic->y);
-					if (ic->item.t)
-						Com_Printf(".... weapon: %s\n", ic->item.t->id);
-					if (ic->item.m)
-						Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
-					ic = ic->next;
-				}
+		for (container = 0; container < gi.csi->numIDs; container++) {
+			const invList_t *ic = ent->i.c[container];
+			Com_Printf("Container: %i\n", container);
+			while (ic) {
+				Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
+						(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
+						ic->item.a, ic->x, ic->y);
+				if (ic->item.t)
+					Com_Printf(".... weapon: %s\n", ic->item.t->id);
+				if (ic->item.m)
+					Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
+				ic = ic->next;
 			}
 		}
 	}
