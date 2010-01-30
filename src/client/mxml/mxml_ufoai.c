@@ -236,9 +236,9 @@ void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos)
 {
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
-	mxml_AddFloatValue(t, "x", pos[0]);
-	mxml_AddFloatValue(t, "y", pos[1]);
-	mxml_AddFloatValue(t, "z", pos[2]);
+	mxml_AddFloat(t, "x", pos[0]);
+	mxml_AddFloat(t, "y", pos[1]);
+	mxml_AddFloat(t, "z", pos[2]);
 }
 
 /*
@@ -253,8 +253,8 @@ void mxml_AddPos2(mxml_node_t *parent, const char *name, const vec2_t pos)
 {
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
-	mxml_AddFloatValue(t, "x", pos[0]);
-	mxml_AddFloatValue(t, "y", pos[1]);
+	mxml_AddFloat(t, "x", pos[0]);
+	mxml_AddFloat(t, "y", pos[1]);
 }
 
 /**
