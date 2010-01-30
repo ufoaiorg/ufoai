@@ -213,6 +213,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *n, *sn;
 	n = mxml_GetNode(p, SAVE_MESSAGES_MESSAGES);
+
 	if (!n)
 		return qfalse;
 
@@ -224,7 +225,9 @@ qboolean MS_LoadXML (mxml_node_t *p)
 	for (sn = mxml_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = mxml_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
 		int mtype;
-		char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
+		char title[MAX_VAR];
+		char text[MAX_MESSAGE_TEXT];
+
 		/* can contain high bits due to utf8 */
 		Q_strncpyz(title, mxml_GetString(sn, SAVE_MESSAGES_TITLE), sizeof(title));
 		Q_strncpyz(text,  mxml_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
@@ -239,15 +242,12 @@ qboolean MS_LoadXML (mxml_node_t *p)
 		/* event and not mail means, dynamic mail - we don't save or load them */
 		if (!((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1))) {
 			char id[MAX_VAR];
-			technology_t *tech;
+			technology_t *tech = NULL;
 			message_t *mess;
 
 			Q_strncpyz(id, mxml_GetString(sn, SAVE_MESSAGES_ID), sizeof(id));
-			if (id[0] == '\0')
-				/** Invalid tech found drop message. */
-				continue;
-			tech = RS_GetTechByID(id);
-
+			if (id[0] != '\0')
+				tech = RS_GetTechByID(id);
 			if (!tech && (mtype == MSG_RESEARCH_PROPOSAL || mtype == MSG_RESEARCH_FINISHED)) {
 				/** No tech found drop message. */
 				continue;
