@@ -61,6 +61,18 @@ int G_EdictsGetNumber (const edict_t* ent)
 }
 
 /**
+ * @brief Check if the given number could point to an existing entity
+ * @note entity must also be 'in use' to be really valid
+ * @param idx The entity's index in the array of entities
+ */
+qboolean G_EdictsIsValidNum (const int idx)
+{
+	if (idx >= 0 && idx < globals.num_edicts)
+		return qtrue;
+	return qfalse;
+}
+
+/**
  * @brief Get an entity by it's number
  * @param idx The entity's index in the array of entities
  */

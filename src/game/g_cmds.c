@@ -325,7 +325,7 @@ static void G_TouchEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts)
+	if (!G_EdictsIsValidNum(i))
 		return;
 
 	e = G_EdictsGetByNum(i);
@@ -353,7 +353,7 @@ static void G_UseEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts) {
+	if (!G_EdictsIsValidNum(i)) {
 		gi.dprintf("No entity with number %i\n", i);
 		return;
 	}
@@ -379,7 +379,7 @@ static void G_DestroyEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts)
+	if (!G_EdictsIsValidNum(i))
 		return;
 
 	e = G_EdictsGetByNum(i);

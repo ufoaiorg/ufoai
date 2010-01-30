@@ -361,12 +361,8 @@ static void CheckNeedPass (void)
 static void G_SendBoundingBoxes (void)
 {
 	if (sv_send_edicts->integer) {
-		int i;
-		/* skip the world */
-		for (i = 1; i < globals.num_edicts; i++) {
-			const edict_t *ent = &globals.edicts[i];
-			if (!ent->inuse)
-				continue;
+		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
+		while ((ent = G_EdictsGetNextInUse(ent))) {
 			gi.AddEvent(PM_ALL, EV_ADD_EDICT);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);

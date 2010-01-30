@@ -472,6 +472,7 @@ edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
 int G_EdictsGetNumber(const edict_t* ent);
+qboolean G_EdictsIsValidNum(const int idx);
 edict_t* G_EdictsGetByNum(const int idx);
 edict_t* G_EdictsGetFirst(void);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
