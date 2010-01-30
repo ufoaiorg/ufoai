@@ -1607,13 +1607,6 @@ static void CL_ReloadRight_f (void)
 	CL_ActorReload(selActor, csi.idRight);
 }
 
-static void CL_CenterCameraIntoMap_f (void)
-{
-	vec3_t center;
-	VectorCenterFromMinsMaxs(mapMin, mapMax, center);
-	VectorCopy(center, cl.cam.origin);
-}
-
 void HUD_InitStartup (void)
 {
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
@@ -1627,7 +1620,6 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("fireweap", HUD_FireWeapon_f, "Start aiming the weapon.");
-	Cmd_AddCommand("centercamera", CL_CenterCameraIntoMap_f, "Center camera into the map.");
 
 	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
