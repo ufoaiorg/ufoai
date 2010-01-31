@@ -372,7 +372,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
+			onClick	{ cmd "list_firemodes r;" }
 		}
 
 		pic bt_reload
@@ -438,7 +438,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
+			onClick	{ cmd "list_firemodes l;" }
 		}
 
 		pic bt_reload
@@ -479,16 +479,6 @@ window hud extends ahud
 			onMouseEnter		{ cmd "remaining_tus crouch 1;" }
 			onMouseLeave		{ cmd "remaining_tus crouch 0;" }
 		}
-
-		checkbox bt_crouch_reservation
-		{
-			tooltip	*cvar:mn_crouch_reservation_tt
-			image	"ui/checkbox_blue"
-			pos		"60 107"
-			size	"20 18"
-			current	0
-			onChange	{ cmd "togglecrouchreserve;" }
-		}
 	}
 
 	// ==================
@@ -510,18 +500,6 @@ window hud extends ahud
 			size	"457 119"
 			texh	"457 119"
 			ghost	true
-		}
-
-		pic bt_shot_reservation
-		{
-			tooltip	*cvar:mn_shot_reservation_tt
-			image hud/button_reserve_shot
-			pos		"11 32"
-			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
-			texh	"115 64"
-			mousefx	true
-			onClick	{ cmd "sel_shotreservation;" }
-			onRClick	{ cmd "sel_shotreservation 0;" }
 		}
 
 		pic bt_reaction_s
@@ -574,16 +552,6 @@ window hud extends ahud
 			size	"298 6"
 			color	".2 .2 1 1"
 			current	*cvar:mn_turemain
-			max		*cvar:mn_tumax
-			disabled	true
-		}
-
-		bar timereserved
-		{
-			pos		"130 21"
-			size	"298 3"
-			color	"0 .5 0 1"
-			current	*cvar:mn_tureserved
 			max		*cvar:mn_tumax
 			disabled	true
 		}
@@ -812,18 +780,6 @@ window hud extends ahud
 	// override ahud confunc
 	// ==================
 
-	confunc crouch_checkbox_disable {
-		*left.bt_crouch_reservation@disabled = true
-	}
-	confunc crouch_checkbox_clear	{
-		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 0
-	}
-	confunc crouch_checkbox_check	{
-		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 1
-	}
-
 	confunc hudselect {
 		*team_selection.bt_actor<1>@disabled = false
 		*cvar:selected_soldier = <1>
@@ -866,24 +822,6 @@ window hud extends ahud
 	confunc endround
 	{
 		*next.bt_nextround@disabled = true
-	}
-
-	// "RESERVATION FOR SHOT" BUTTON
-	confunc reserve_shot_clear
-	{
-		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		*info.bt_shot_reservation@texl	= "0 0"
-		*info.bt_shot_reservation@texh	= "51 32"
-	}
-	confunc reserve_shot_check
-	{
-		*info.bt_shot_reservation@texl	= "0 32"
-		*info.bt_shot_reservation@texh	= "51 64"
-	}
-	confunc reserve_shot_disable
-	{
-		*info.bt_shot_reservation@texl	= "64 32"
-		*info.bt_shot_reservation@texh	= "115 64"
 	}
 
 	// REACTION MODE BUTTON

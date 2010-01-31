@@ -38,15 +38,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actorstatechange.h"
 #include "event/actor/e_event_actordooraction.h"
 #include "event/actor/e_event_actorresetclientaction.h"
-#include "event/actor/e_event_actorreservationchange.h"
 #include "event/inventory/e_event_invadd.h"
 #include "event/inventory/e_event_invdel.h"
 #include "event/inventory/e_event_invammo.h"
 #include "event/inventory/e_event_invreload.h"
-#include "event/inventory/e_event_invcheckhands.h"
 #include "event/player/e_event_reset.h"
 #include "event/player/e_event_startgame.h"
-#include "event/player/e_event_startgamedone.h"
 #include "event/player/e_event_doendround.h"
 #include "event/player/e_event_endroundannounce.h"
 #include "event/player/e_event_results.h"
@@ -85,7 +82,6 @@ const eventRegister_t events[] = {
 	{E(EV_NULL), "", NULL, NULL, NULL},
 	{E(EV_RESET), "bb", CL_Reset, NULL, NULL},
 	{E(EV_START), "b", CL_StartGame, NULL, NULL},
-	{E(EV_START_DONE), "", CL_StartingGameDone, NULL, NULL},
 	{E(EV_ENDROUND), "b", CL_DoEndRound, NULL, NULL},
 	{E(EV_ENDROUNDANNOUNCE), "bb", CL_EndRoundAnnounce, NULL, NULL},
 
@@ -111,13 +107,11 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_DIE), "sss", CL_ActorDie, NULL, CL_CheckDefault},
 	{E(EV_ACTOR_STATS), "!sbsbb", CL_ActorStats, NULL, NULL},
 	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL, NULL},
-	{E(EV_ACTOR_RESERVATIONCHANGE), "ssss", CL_ActorReservationChange, NULL, NULL},
 
 	{E(EV_INV_ADD), "s*", CL_InvAdd, NULL, NULL},
 	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL, NULL},
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL, NULL},
 	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, NULL, NULL},
-	{E(EV_INV_HANDS_CHANGED), "ss", CL_InvCheckHands, NULL, NULL},
 	{E(EV_INV_TRANSFER), "sbsbbbbs", NULL, NULL, NULL},
 
 	{E(EV_MODEL_EXPLODE), "s", CL_Explode, NULL, NULL},

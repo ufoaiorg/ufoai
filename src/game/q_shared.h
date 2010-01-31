@@ -186,7 +186,6 @@ typedef enum {
 	EV_NULL,
 	EV_RESET,
 	EV_START,
-	EV_START_DONE,  /**< Signals that all initialization information was sent from the server. */
 	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
 	EV_ENDROUNDANNOUNCE,
 
@@ -213,13 +212,11 @@ typedef enum {
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
 	EV_ACTOR_STATECHANGE,	/**< set an actor to crouched or reaction fire */
-	EV_ACTOR_RESERVATIONCHANGE,
 
 	EV_INV_ADD,
 	EV_INV_DEL,
 	EV_INV_AMMO,
 	EV_INV_RELOAD,
-	EV_INV_HANDS_CHANGED,
 	EV_INV_TRANSFER,
 
 	/* func_breakables */
@@ -269,7 +266,6 @@ typedef enum {
 	PA_USE_DOOR,
 	PA_INVMOVE,
 	PA_REACT_SELECT,
-	PA_RESERVE_STATE,
 
 	PA_NUM_EVENTS
 } player_action_t;

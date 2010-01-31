@@ -575,35 +575,6 @@ typedef struct chrFiremodeSettings_s {
 	const objDef_t *weapon;
 } chrFiremodeSettings_t;
 
-/**
- * @brief How many TUs (and of what type) did a player reserve for a unit?
- * @sa CL_UsableTUs
- * @sa CL_ReservedTUs
- * @sa CL_ReserveTUs
- */
-typedef struct chrReservations_s {
-	/* Reaction fire reservation (for current round and next enemy round) */
-	int reaction;	/**< Did the player activate RF with a usable firemode?
-					 * (And at the same time storing the TU-costs of this firemode) */
-
-	/* Crouch reservation (for current round)	*/
-	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
-
-	/* Shot reservation (for current round) */
-	int shot;	/**< If non-zero we reserved a shot in this turn. */
-	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
-										 * (and hand) was used for "shot" reservation. */
-} chrReservations_t;
-
-typedef enum {
-	RES_REACTION,
-	RES_CROUCH,
-	RES_SHOT,
-	RES_ALL,
-	RES_ALL_ACTIVE,
-	RES_TYPES /**< Max. */
-} reservation_types_t;
-
 /** @brief Artificial intelligence of a character
  * @todo doesn't belong here  */
 typedef struct AI_s {
@@ -640,7 +611,6 @@ typedef struct character_s {
 
 	teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */
-	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 
 	AI_t AI; /**< The character's artificial intelligence */

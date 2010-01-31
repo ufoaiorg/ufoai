@@ -104,18 +104,6 @@ void G_EventDestroyEdict (const edict_t* ent)
 }
 
 /**
- * @brief Update reaction firemode when something is moved from/to a hand.
- * @param[in] ent The entity to change the reaction fire hand for
- * @param[in] hand The hand that should be used for the reaction fire.
- */
-void G_EventReactionFireHandChange (const edict_t* ent, int hand)
-{
-	gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(hand);
-}
-
-/**
  * @brief Change the amount of available ammo for the given entity
  * @param ent The entity to change the amount of ammo for
  * @param ammo The ammo to change

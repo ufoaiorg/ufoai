@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
-static qboolean firemodesChangeDisplay = qtrue;
 static qboolean visibleFiremodeListLeft = qfalse;
 static qboolean visibleFiremodeListRight = qfalse;
 
@@ -99,16 +98,6 @@ static const char *moveModeDescriptions[] = {
 	N_("Crouch walk")
 };
 CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
-
-typedef struct reserveShot_s {
-	int hand;
-	int fireModeIndex;
-	int weaponIndex;
-	int TUs;
-} reserveShot_t;
-
-/** Reservation-popup info */
-static qboolean popupReload = qfalse;
 
 static int hudTime;
 static char hudText[256];
@@ -189,241 +178,6 @@ void HUD_HideFiremodes (void)
 }
 
 /**
- * @brief Sets the display for a single weapon/reload HUD button.
- * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
- * @param[in] hand What list to display: 'l' for left hand list, 'r' for right hand list.
- * @todo Put the most of this function into the scripts
- */
-static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx, const char hand, int index)
-{
-	int usableTusForRF;
-	char tuString[MAX_VAR];
-	qboolean status;
-	const fireDef_t *fd;
-	const char *tooltip;
-
-	if (index < ammo->numFiredefs[weapFdsIdx]) {
-		/* We have a defined fd ... */
-		fd = &ammo->fd[weapFdsIdx][index];
-	} else {
-		/* Hide this entry */
-		if (hand == ACTOR_HAND_CHAR_RIGHT)
-			MN_ExecuteConfunc("set_right_inv %i", index);
-		else
-			MN_ExecuteConfunc("set_left_inv %i", index);
-		return;
-	}
-
-	assert(selActor);
-	assert(hand == ACTOR_HAND_CHAR_RIGHT || hand == ACTOR_HAND_CHAR_LEFT);
-
-	status = fd->time <= CL_UsableTUs(selActor);
-	usableTusForRF = CL_UsableReactionTUs(selActor);
-
-	if (usableTusForRF > fd->time) {
-		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
-		tooltip = tuString;
-	} else
-		tooltip = _("No remaining TUs left after shot.");
-
-	MN_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", hand,
-			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
-			va(_("Shots: %i"), fd->ammo), tooltip);
-
-	/* Display checkbox for reaction firemode */
-	if (fd->reaction) {
-		const qboolean active = THIS_FIREMODE(&selChr->RFmode, ACTOR_GET_HAND_INDEX(hand), fd->fdIdx);
-		/* Change the state of the checkbox. */
-		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", hand, fd->fdIdx, active);
-	}
-}
-
-/**
- * @brief Check if at least one firemode is available for reservation.
- * @return qtrue if there is at least one firemode - qfalse otherwise.
- * @sa HUD_RefreshWeaponButtons
- * @sa HUD_PopupFiremodeReservation_f
- */
-static qboolean CL_CheckFiremodeReservation (void)
-{
-	char hand = ACTOR_HAND_CHAR_RIGHT;
-
-	if (!selActor)
-		return qfalse;
-
-	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		const fireDef_t *fireDef;
-
-		/* Get weapon (and its ammo) from the hand. */
-		fireDef = CL_GetWeaponAndAmmo(selActor, hand);
-		if (fireDef) {
-			int i;
-			const objDef_t *ammo = fireDef->obj;
-			for (i = 0; i < ammo->numFiredefs[fireDef->weapFdsIdx]; i++) {
-				/* Check if at least one firemode is available for reservation. */
-				if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= ammo->fd[fireDef->weapFdsIdx][i].time)
-					return qtrue;
-			}
-		}
-
-		/* Prepare for next run or for end of loop. */
-		if (hand == ACTOR_HAND_CHAR_RIGHT)
-			hand = ACTOR_HAND_CHAR_LEFT;
-		else
-			break;
-	} while (qtrue);
-
-	/* No reservation possible */
-	return qfalse;
-}
-
-static linkedList_t* popupListData;
-static menuNode_t* popupListNode;
-
-/**
- * @brief Creates a (text) list of all firemodes of the currently selected actor.
- * @sa HUD_PopupFiremodeReservation_f
- * @sa CL_CheckFiremodeReservation
- */
-static void HUD_PopupFiremodeReservation (qboolean reset)
-{
-	char hand = ACTOR_HAND_CHAR_RIGHT;
-	int i;
-	static char text[MAX_VAR];
-	int selectedEntry;
-	linkedList_t* popupListText = NULL;
-	reserveShot_t reserveShotData;
-
-	if (!selActor)
-		return;
-
-	selChr = CL_GetActorChr(selActor);
-	assert(selChr);
-
-	if (reset) {
-		CL_ReserveTUs(selActor, RES_SHOT, 0);
-		CL_CharacterSetShotSettings(selChr, -1, -1, NULL);
-		return;
-	}
-
-	/* reset the list */
-	MN_ResetData(TEXT_LIST);
-
-	LIST_Delete(&popupListData);
-
-	/* Add list-entry for deactivation of the reservation. */
-	LIST_AddPointer(&popupListText, _("[0 TU] No reservation"));
-	reserveShotData.hand = ACTOR_HAND_NOT_SET;
-	reserveShotData.fireModeIndex = -1;
-	reserveShotData.weaponIndex = NONE;
-	reserveShotData.TUs = -1;
-	LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
-	selectedEntry = 0;
-
-	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		const fireDef_t *fd = CL_GetWeaponAndAmmo(selActor, hand);
-
-		if (fd) {
-			const objDef_t *ammo = fd->obj;
-
-			for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
-				if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= ammo->fd[fd->weapFdsIdx][i].time) {
-					/* Get firemode name and TUs. */
-					Com_sprintf(text, lengthof(text), _("[%i TU] %s"),
-						ammo->fd[fd->weapFdsIdx][i].time, ammo->fd[fd->weapFdsIdx][i].name);
-
-					/* Store text for popup */
-					LIST_AddString(&popupListText, text);
-
-					/* Store Data for popup-callback. */
-					reserveShotData.hand = ACTOR_GET_HAND_INDEX(hand);
-					reserveShotData.fireModeIndex = i;
-					reserveShotData.weaponIndex = ammo->weapons[fd->weapFdsIdx]->idx;
-					reserveShotData.TUs = ammo->fd[fd->weapFdsIdx][i].time;
-					LIST_Add(&popupListData, (byte *)&reserveShotData, sizeof(reserveShotData));
-
-					/* Remember the line that is currently selected (if any). */
-					if (selChr->reservedTus.shotSettings.hand == ACTOR_GET_HAND_INDEX(hand)
-					 && selChr->reservedTus.shotSettings.fmIdx == i
-					 && selChr->reservedTus.shotSettings.weapon == ammo->weapons[fd->weapFdsIdx])
-						selectedEntry = LIST_Count(popupListData) - 1;
-				}
-			}
-		}
-
-		/* Prepare for next run or for end of loop. */
-		if (hand == ACTOR_HAND_CHAR_RIGHT)
-			/* First run. Set hand for second run of the loop (other hand) */
-			hand = ACTOR_HAND_CHAR_LEFT;
-		else
-			break;
-	} while (qtrue);
-
-	if (LIST_Count(popupListData) > 1 || popupReload) {
-		/* We have more entries than the "0 TUs" one
-		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
-		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot <lineselected>");
-		/* Set color for selected entry. */
-		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);
-		popupListNode->selectedColor[3] = 1.0;
-		MN_TextNodeSelectLine(popupListNode, selectedEntry);
-		popupReload = qfalse;
-	}
-}
-
-/**
- * @brief Creates a (text) list of all firemodes of the currently selected actor.
- * @sa HUD_PopupFiremodeReservation
- */
-static void HUD_PopupFiremodeReservation_f (void)
-{
-	/* A second parameter (the value itself will be ignored) was given.
-	 * This is used to reset the shot-reservation.*/
-	HUD_PopupFiremodeReservation(Cmd_Argc() == 2);
-}
-
-/**
- * @brief Get selected firemode in the list of the currently selected actor.
- * @sa HUD_PopupFiremodeReservation_f
- * @note console command: cl_input.c:reserve_shot
- */
-static void HUD_ReserveShot_f (void)
-{
-	int selectedPopupIndex;
-	const reserveShot_t* reserveShotData;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <popupindex>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!selActor)
-		return;
-
-	selChr = CL_GetActorChr(selActor);
-	assert(selChr);
-
-	/* read and range check */
-	selectedPopupIndex = atoi(Cmd_Argv(1));
-	if (selectedPopupIndex < 0 || selectedPopupIndex >= LIST_Count(popupListData))
-		return;
-
-	reserveShotData = LIST_GetByIdx(popupListData, selectedPopupIndex);
-	if (!reserveShotData)
-		return;
-
-	/* Check if we have enough TUs (again) */
-	if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
-		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
-		CL_ReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
-		CL_CharacterSetShotSettings(selChr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
-		if (popupListNode)
-			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
-	}
-}
-
-
-/**
  * @brief Display 'usable" (blue) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  */
@@ -484,7 +238,8 @@ static void HUD_DisplayFiremodes_f (void)
 	if (!selActor)
 		return;
 
-	if (cls.team != cl.actTeam) {	/**< Not our turn */
+	/* Not our turn */
+	if (cls.team != cl.actTeam) {
 		HUD_HideFiremodes();
 		return;
 	}
@@ -505,62 +260,28 @@ static void HUD_DisplayFiremodes_f (void)
 		return;
 
 	ammo = fd->obj;
-	if (!ammo) {
-		Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: no weapon or ammo found.\n");
+	if (!ammo)
 		return;
-	}
 
 	Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: displaying %c firemodes.\n", hand);
 
-	if (firemodesChangeDisplay) {
-		/* Toggle firemode lists if needed. */
-		HUD_HideFiremodes();
-		if (hand == ACTOR_HAND_CHAR_RIGHT) {
-			if (visibleFiremodeListRight)
-				return;
-			visibleFiremodeListRight = qtrue;
-		} else { /* ACTOR_HAND_CHAR_LEFT */
-			if (visibleFiremodeListLeft)
-				return;
-			visibleFiremodeListLeft = qtrue;
-		}
-	}
-	firemodesChangeDisplay = qtrue;
-
 	actorIdx = CL_GetActorNumber(selActor);
-	Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: actor index: %i\n", actorIdx);
 	if (actorIdx == -1)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
-	selChr = CL_GetActorChr(selActor);
-	assert(selChr);
+	for (i = 0; i < ammo->numFiredefs[fd->weapFdsIdx]; i++) {
+		const fireDef_t *ammoFD = &ammo->fd[fd->weapFdsIdx][i];
+		const int status = ammoFD->time <= CL_UsableTUs(selActor);
+		qboolean reactionFireActive = qfalse;
 
-	/* Set default firemode if the currently selected one is not sane or for another weapon. */
-	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
-		/* Set default firemode */
-		CL_SetDefaultReactionFiremode(selActor, ACTOR_GET_HAND_CHAR(selChr->RFmode.hand));
-	}
+		if (ammoFD->reaction) {
+			const character_t* chr = CL_GetActorChr(selActor);
+			reactionFireActive = THIS_FIREMODE(&chr->RFmode, ACTOR_GET_HAND_INDEX(hand), ammoFD->fdIdx);
+		}
 
-	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		/* Display the firemode information (image + text). */
-		HUD_DisplayFiremodeEntry(ammo, fd->weapFdsIdx, hand, i);
-	}
-}
-
-/**
- * @brief Changes the display of the firemode-list to a given hand, but only if the list is visible already.
- * @note Console command: switch_firemode_list
- */
-static void HUD_SwitchFiremodeList_f (void)
-{
-	/* Cmd_Argv(1) ... = hand */
-	if (Cmd_Argc() < 2 || (Cmd_Argv(1)[0] != ACTOR_HAND_CHAR_RIGHT && Cmd_Argv(1)[0] != ACTOR_HAND_CHAR_LEFT)) { /* no argument given */
-		Com_Printf("Usage: %s [l|r]\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (visibleFiremodeListRight || visibleFiremodeListLeft) {
-		Cbuf_AddText(va("list_firemodes %s\n", Cmd_Argv(1)));
+		MN_ExecuteConfunc("add_firemode_entry %c %i \"%s\" \"%s\" \"%s\" %i %i %i", hand,
+				ammoFD->fdIdx, _(ammoFD->name), va(_("TU: %i"), ammoFD->time),
+				va(_("Shots: %i"), ammoFD->ammo), ammoFD->reaction, status, reactionFireActive);
 	}
 }
 
@@ -589,17 +310,13 @@ static void HUD_SelectReactionFiremode_f (void)
 
 	firemode = atoi(Cmd_Argv(2));
 
-	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("HUD_SelectReactionFiremode_f: Firemode index to big (%i). Highest possible number is %i.\n",
-			firemode, MAX_FIREDEFS_PER_WEAPON - 1);
+	if (firemode < 0 || firemode >= MAX_FIREDEFS_PER_WEAPON) {
+		Com_Printf("HUD_SelectReactionFiremode_f: Firemode index out of bounds (%i)\n",
+			firemode);
 		return;
 	}
 
 	CL_UpdateReactionFiremodes(selActor, hand, firemode);
-
-	/* Update display of firemode checkbuttons. */
-	firemodesChangeDisplay = qfalse; /* So HUD_DisplayFiremodes_f doesn't hide the list. */
-	HUD_DisplayFiremodes_f();
 }
 
 /**
@@ -774,6 +491,7 @@ static void HUD_FireWeapon_f (void)
 /**
  * @brief Remember if we hover over a button that would cost some TUs when pressed.
  * @note this is used in HUD_ActorUpdateCvars to update the "remaining TUs" bar correctly.
+ * @todo move into the scripts
  */
 static void HUD_RemainingTUs_f (void)
 {
@@ -836,6 +554,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  * @param[in] tu Remaining TU units of selected actor.
  * @param[in] hand ACTOR_HAND_LEFT for left, ACTOR_HAND_RIGHT for right hand
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
+ * @todo move parts of it into the scripts
  */
 static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, int hand)
 {
@@ -937,9 +656,34 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, i
 }
 
 /**
+ * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
+ * @param[in] actor What actor to check.
+ * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
+ */
+static qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
+{
+	int i;
+	const fireDef_t *fd;
+
+	/* Get ammo and weapon-index in ammo (if there is a weapon in that hand). */
+	fd = CL_GetWeaponAndAmmo(actor, hand);
+
+	if (fd == NULL)
+		return qfalse;
+
+	/* Check ammo for reaction-enabled firemodes. */
+	for (i = 0; i < fd->obj->numFiredefs[fd->weapFdsIdx]; i++)
+		if (fd[i].reaction)
+			return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
  * @sa HUD_ActorUpdateCvars
+ * @todo move parts of it into the scripts
  */
 static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 {
@@ -963,7 +707,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 
 	/* Crouch/stand button. */
 	if (LE_IsCrouched(le)) {
-		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
+		if (time < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		} else {
@@ -971,7 +715,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 		}
 	} else {
-		if (time + CL_ReservedTUs(le, RES_CROUCH) < TU_CROUCH) {
+		if (time < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		} else {
@@ -980,48 +724,20 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 		}
 	}
 
-	/* Crouch/stand reservation checkbox. */
-	if (CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
-		MN_ExecuteConfunc("crouch_checkbox_check");
-		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."),
-				CL_ReservedTUs(le, RES_CROUCH)));
-	} else if (time >= TU_CROUCH) {
-		MN_ExecuteConfunc("crouch_checkbox_clear");
-		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
-	} else {
-		MN_ExecuteConfunc("crouch_checkbox_disable");
-		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
-	}
-
-	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
-	if (CL_ReservedTUs(le, RES_SHOT)) {
-		MN_ExecuteConfunc("reserve_shot_check");
-		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
-				CL_ReservedTUs(le, RES_SHOT)));
-	} else if (CL_CheckFiremodeReservation()) {
-		MN_ExecuteConfunc("reserve_shot_clear");
-		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
-	} else {
-		MN_ExecuteConfunc("reserve_shot_disable");
-		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
-	}
-
 	/* reaction-fire button */
 	if (!(le->state & STATE_REACTION)) {
-		if (time >= CL_ReservedTUs(le, RES_REACTION)
-		 && (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT)))
+		if (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 	} else {
-		if (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT)) {
+		if (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT))
 			HUD_DisplayPossibleReaction(le);
-		} else {
+		else
 			HUD_DisplayImpossibleReaction(le);
-		}
 	}
 
-	/** Reload buttons @sa HUD_ActorUpdateCvars */
+	/* Reload buttons */
 	rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, weaponr, time, ACTOR_HAND_RIGHT);
 	if (rightCanBeReloaded > 0) {
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
@@ -1069,34 +785,15 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	} else {
 		HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 	}
-
-	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
-	{
-		const char* menuName = MN_GetActiveWindowName();
-		if (menuName[0] != '\0' && strstr(MN_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
-			Com_DPrintf(DEBUG_CLIENT, "HUD_RefreshWeaponButtons: reload popup\n");
-
-			/* Prevent firemode reservation popup from being closed if
-			 * no firemode is available because of insufficient TUs. */
-			popupReload = qtrue;
-
-			/* Update firemode reservation popup. */
-			/** @todo this is called every frames... is it really need? */
-			HUD_PopupFiremodeReservation(qfalse);
-		}
-	}
 }
-
-static const vec4_t cursorTextBg = { 0.0f, 0.0f, 0.0f, 0.7f };
 
 /**
  * @brief Draw the mouse cursor tooltips in battlescape
  * @param xOffset
  * @param yOffset
  * @param textId The text id to get the tooltip string from.
- * @param drawBg If @c true, we add a background to the string.
  */
-static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId, qboolean drawBg)
+static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 {
 	const char *string = MN_GetText(textId);
 
@@ -1109,8 +806,6 @@ static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId, qbool
 		if (!width)
 			return;
 
-		if (drawBg)
-			R_DrawFill(mousePosX + xOffset - 2, mousePosY - yOffset - 1, width + 4, height + 2, cursorTextBg);
 		MN_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
 	}
 }
@@ -1188,20 +883,20 @@ void HUD_UpdateCursor (void)
 		iconOffsetY += iconSpacing;
 
 		/* Display weaponmode (text) heR_ */
-		HUD_DrawMouseCursorText(iconOffsetX + iconW, -10, TEXT_MOUSECURSOR_RIGHT, qfalse);
+		HUD_DrawMouseCursorText(iconOffsetX + iconW, -10, TEXT_MOUSECURSOR_RIGHT);
 	}
 
 	/* playernames */
-	HUD_DrawMouseCursorText(iconOffsetX + 16, -26, TEXT_MOUSECURSOR_PLAYERNAMES, qfalse);
+	HUD_DrawMouseCursorText(iconOffsetX + 16, -26, TEXT_MOUSECURSOR_PLAYERNAMES);
 	MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
 
 	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
 		/* Display ceiling text */
-		HUD_DrawMouseCursorText(0, -64, TEXT_MOUSECURSOR_TOP, qtrue);
+		HUD_DrawMouseCursorText(0, -64, TEXT_MOUSECURSOR_TOP);
 		/* Display floor text */
-		HUD_DrawMouseCursorText(0, 64, TEXT_MOUSECURSOR_BOTTOM, qtrue);
+		HUD_DrawMouseCursorText(0, 64, TEXT_MOUSECURSOR_BOTTOM);
 		/* Display left text */
-		HUD_DrawMouseCursorText(-64, 0, TEXT_MOUSECURSOR_LEFT, qtrue);
+		HUD_DrawMouseCursorText(-64, 0, TEXT_MOUSECURSOR_LEFT);
 	}
 }
 
@@ -1246,12 +941,10 @@ void HUD_ActorUpdateCvars (void)
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
 		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
-		Cvar_Set("mn_tureserved", va("%i", CL_ReservedTUs(selActor, RES_ALL_ACTIVE)));
 
 		Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
-			_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
+			_("Time Units\n- Available: %i (of %i)\n- Remaining: %i\n"),
 			selActor->TU, selActor->maxTU,
-			CL_ReservedTUs(selActor, RES_ALL_ACTIVE),
 			CL_UsableTUs(selActor));
 		Cvar_Set("mn_tu_tooltips", tuTooltipText);
 
@@ -1308,26 +1001,17 @@ void HUD_ActorUpdateCvars (void)
 					time = TU_CROUCH;
 			}
 		} else if (selActor->actorMode == M_MOVE || selActor->actorMode == M_PEND_MOVE) {
-			const int reservedTUs = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, and we haven't placed the cursor in pend
 			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
 			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || selActor->actorMoveLength == ROUTING_NOT_REACHABLE) {
 				selActor->actorMoveLength = ROUTING_NOT_REACHABLE;
-				if (reservedTUs > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reservedTUs);
-				else
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
+				Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (selActor->actorMoveLength != ROUTING_NOT_REACHABLE) {
 				const int moveMode = CL_MoveMode(selActor, selActor->actorMoveLength);
-				if (reservedTUs > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-						selActor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), selActor->actorMoveLength,
-						selActor->TU - selActor->actorMoveLength, selActor->TU - reservedTUs - selActor->actorMoveLength);
-				else
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-						moveModeDescriptions[moveMode] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
+				Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
+					moveModeDescriptions[moveMode] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
 
 				if (selActor->actorMoveLength <= CL_UsableTUs(selActor))
 					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_UsableTUs(selActor));
@@ -1441,7 +1125,6 @@ void HUD_ActorUpdateCvars (void)
 		}
 
 		/* Calculate remaining TUs. */
-		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
 		time = max(0, selActor->TU - time);
 
 		Cvar_Set("mn_turemain", va("%i", time));
@@ -1461,7 +1144,6 @@ void HUD_ActorUpdateCvars (void)
 			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
 
 		selActor->oldstate = selActor->state;
-		/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
 		if (selActor->actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
 			time = CL_UsableTUs(selActor);
 
@@ -1494,28 +1176,6 @@ void HUD_ActorUpdateCvars (void)
 }
 
 /**
- * @brief Toggles if the current actor reserves Tus for crouching (e.g. at end of moving) or not.
- * @sa CL_StartingGameDone
- */
-void CL_ActorToggleCrouchReservation_f (void)
-{
-	if (!CL_CheckAction(selActor))
-		return;
-
-	selChr = CL_GetActorChr(selActor);
-	assert(selChr);
-
-	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
-		/* Reset reserved TUs to 0 */
-		CL_ReserveTUs(selActor, RES_CROUCH, 0);
-	} else {
-		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
-		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)
-			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-	}
-}
-
-/**
  * @brief Toggles reaction fire between the states off/single/multi.
  * @note RF mode will change as follows (Current mode -> resulting mode after click)
  * off	-> single
@@ -1527,13 +1187,8 @@ static void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
 
-	/** @todo most of this must be done on the server side */
-
 	if (!CL_CheckAction(selActor))
 		return;
-
-	selChr = CL_GetActorChr(selActor);
-	assert(selChr);
 
 	if (selActor->state & STATE_REACTION_MANY)
 		state = ~STATE_REACTION;
@@ -1542,33 +1197,8 @@ static void CL_ActorToggleReaction_f (void)
 	else if (selActor->state & STATE_REACTION_ONCE)
 		state = STATE_REACTION_MANY;
 
-	/* Check all hands for reaction-enabled ammo-firemodes. */
-	if (!CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT)
-	 && !CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT))
-	 	state = ~STATE_REACTION;
-
-	if (state & STATE_REACTION) {
-		if (!CL_WorkingFiremode(selActor, qtrue)) {
-			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
-		} else {
-			/* We would reserve more TUs than are available - reserve nothing and abort. */
-			if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
-				state = ~STATE_REACTION;
-		}
-	}
-
 	/* Send request to update actor's reaction state to the server. */
 	MSG_Write_PA(PA_STATE, selActor->entnum, state);
-
-	/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
-	if (state & STATE_REACTION)
-		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.weapon, selChr->RFmode.fmIdx);
-	else
-		CL_SetReactionFiremode(selActor, -1, NULL, -1); /* Includes PA_RESERVE_STATE */
-
-	/* Update RF list if it is visible. */
-	if (visibleFiremodeListLeft || visibleFiremodeListRight)
-		HUD_DisplayFiremodes_f();
 }
 
 /**
@@ -1612,10 +1242,6 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
 	Cmd_AddCommand("remaining_tus", HUD_RemainingTUs_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
-	Cmd_AddCommand("togglecrouchreserve", CL_ActorToggleCrouchReservation_f, _("Toggle reservation for crouching."));
-	Cmd_AddCommand("reserve_shot", HUD_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
-	Cmd_AddCommand("sel_shotreservation", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
-	Cmd_AddCommand("switch_firemode_list", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("sel_reactmode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));

@@ -46,17 +46,6 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 		return;
 	}
 
-	/* If standing up or crouching down remove the reserved-state for crouching. */
-	if (((state & STATE_CROUCHED) && !LE_IsCrouched(le)) ||
-		 (!(state & STATE_CROUCHED) && LE_IsCrouched(le))) {
-		if (CL_UsableTUs(le) < TU_CROUCH && CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
-			/* We have not enough non-reserved TUs,
-			 * but some reserved for crouching/standing up.
-			 * i.e. we only reset the reservation for crouching if it's the very last attempt. */
-			CL_ReserveTUs(le, RES_CROUCH, 0); /* Reset reserved TUs (0 TUs) */
-		}
-	}
-
 	/* killed by the server: no animation is played, etc. */
 	if ((state & STATE_DEAD) && !LE_IsDead(le)) {
 		le->state = state;
@@ -79,13 +68,19 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 
 	if (!(le->state & STATE_REACTION)) {
 		MN_ExecuteConfunc("disable_reaction");
+		CL_SetReactionFiremode(selActor, -1, NULL, -1); /* Includes PA_RESERVE_STATE */
 	} else {
+		CL_SetReactionFiremode(selActor, chr->RFmode.hand, chr->RFmode.weapon, chr->RFmode.fmIdx);
 		/* change reaction button state */
 		if (le->state & STATE_REACTION_MANY)
 			MN_ExecuteConfunc("startreactionmany");
 		else if (le->state & STATE_REACTION_ONCE)
 			MN_ExecuteConfunc("startreactiononce");
 	}
+
+	/* Update RF list if it is visible. */
+	/** @todo "if it is visible" */
+	Cmd_ExecuteString("list_firemodes");
 
 	/* state change may have affected move length */
 	CL_ConditionalMoveCalcActor(le);

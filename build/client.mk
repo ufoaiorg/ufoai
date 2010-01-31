@@ -46,7 +46,6 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/actor/e_event_actordooraction.c \
 	client/battlescape/events/event/actor/e_event_actormove.c \
 	client/battlescape/events/event/actor/e_event_actorresetclientaction.c \
-	client/battlescape/events/event/actor/e_event_actorreservationchange.c \
 	client/battlescape/events/event/actor/e_event_actorshoot.c \
 	client/battlescape/events/event/actor/e_event_actorshoothidden.c \
 	client/battlescape/events/event/actor/e_event_actorstartshoot.c \
@@ -56,7 +55,6 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/actor/e_event_actorturn.c \
 	client/battlescape/events/event/inventory/e_event_invadd.c \
 	client/battlescape/events/event/inventory/e_event_invammo.c \
-	client/battlescape/events/event/inventory/e_event_invcheckhands.c \
 	client/battlescape/events/event/inventory/e_event_invdel.c \
 	client/battlescape/events/event/inventory/e_event_invreload.c \
 	client/battlescape/events/event/player/e_event_centerview.c \
@@ -65,7 +63,6 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/player/e_event_reset.c \
 	client/battlescape/events/event/player/e_event_results.c \
 	client/battlescape/events/event/player/e_event_startgame.c \
-	client/battlescape/events/event/player/e_event_startgamedone.c \
 	client/battlescape/events/event/world/e_event_addbrushmodel.c \
 	client/battlescape/events/event/world/e_event_addedict.c \
 	client/battlescape/events/event/world/e_event_doorclose.c \

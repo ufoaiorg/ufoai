@@ -33,8 +33,8 @@
 <listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 <listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 <listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/include}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/libs}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-hud/src/tools/radiant/include}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-hud/src/tools/radiant/libs}&quot;"/>
 </option>
 <option id="org.eclipse.cdt.build.core.settings.holder.symbols.780864098" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="__cplusplus=0"/>

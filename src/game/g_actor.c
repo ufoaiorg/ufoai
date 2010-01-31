@@ -196,25 +196,6 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 }
 
 /**
- * @brief Calculates TU reservations for an actor.
- * @param[in] ent The pointer to the selected edict being soldier.
- * @return Sum of reserved TUs.
- * @todo See also CL_ReservedTUs and unify both functions to one
- * shared function in character_t code.
- */
-static int G_ActorTUReservations (edict_t *ent)
-{
-	int reservedTU = 0;
-
-	if (ent->chr.reservedTus.crouch)
-		reservedTU = ent->chr.reservedTus.crouch;
-	if (ent->chr.reservedTus.shot)
-		reservedTU = reservedTU + ent->chr.reservedTus.shot;
-
-	return reservedTU;
-}
-
-/**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
@@ -238,7 +219,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	inventory_action_t ia;
 	invList_t fItemBackup;
 	int fx, fy;
-	int originalTU, reservedTU = 0;
 
 	player = G_PLAYER_FROM_ENT(ent);
 
@@ -282,16 +262,8 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			return;
 	}
 
-	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
-	   we need to save original ent->TU for the sake of checking TU reservations. */
-	originalTU = ent->TU;
-	reservedTU = G_ActorTUReservations(ent);
-	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
-	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
 	ia = game.i.MoveInInventory(&game.i, &ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
-	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
-	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
 
 	switch (ia) {
 	case IA_NONE:
@@ -373,13 +345,6 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
 		G_WriteItem(item, to, tx, ty);
-	}
-
-	/* Update reaction firemode when something is moved from/to a hand. */
-	if (INV_IsRightDef(from) || INV_IsRightDef(to)) {
-		G_EventReactionFireHandChange(ent, ACTOR_HAND_RIGHT);
-	} else if (INV_IsLeftDef(from) || INV_IsLeftDef(to)) {
-		G_EventReactionFireHandChange(ent, ACTOR_HAND_LEFT);
 	}
 
 	/* Other players receive weapon info only. */

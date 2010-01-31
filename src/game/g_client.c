@@ -375,22 +375,6 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 }
 
 /**
- * @brief Will inform the player about the real TU reservation
- * @param ent The actors edict.
- */
-static void G_SendReservations (const edict_t *ent)
-{
-	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
-
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->chr.reservedTus.reaction);
-	gi.WriteShort(ent->chr.reservedTus.shot);
-	gi.WriteShort(ent->chr.reservedTus.crouch);
-
-	gi.EndEvents();
-}
-
-/**
  * @brief After an actor changed his state, he might get visible for other
  * players. Check the vis here and send the state change to the clients that
  * are seeing him already.
@@ -454,10 +438,12 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
-		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
-		/* Enable requested reaction fire. */
-		ent->state |= reqState;
+		if (G_CanEnableReactionFire(ent)) {
+			/* Disable reaction fire. */
+			ent->state &= ~STATE_REACTION;
+			/* Enable requested reaction fire. */
+			ent->state |= reqState;
+		}
 		break;
 	default:
 		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
@@ -599,7 +585,6 @@ int G_ClientAction (player_t * player)
 	int firemode;
 	int from, fx, fy, to, tx, ty;
 	int hand, fdIdx, objIdx;
-	int resReaction, resCrouch, resShot;
 	edict_t *ent;
 
 	/* read the header */
@@ -686,16 +671,6 @@ int G_ClientAction (player_t * player)
 		ent->chr.RFmode.hand = hand;
 		ent->chr.RFmode.fmIdx = fdIdx;
 		ent->chr.RFmode.weapon = &gi.csi->ods[objIdx];
-		break;
-
-	case PA_RESERVE_STATE:
-		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resReaction, &resShot, &resCrouch);
-
-		ent->chr.reservedTus.reaction = resReaction;
-		ent->chr.reservedTus.shot = resShot;
-		ent->chr.reservedTus.crouch = resCrouch;
-
-		G_SendReservations(ent);
 		break;
 
 	default:
@@ -1249,8 +1224,7 @@ void G_ClientSpawn (player_t * player)
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
 
-	gi.AddEvent(G_PlayerToPM(player), EV_START_DONE);
-	/* ensure that the last event is send, too */
+	/* send all pending events */
 	gi.EndEvents();
 
 	/* inform all clients */

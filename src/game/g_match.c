@@ -194,7 +194,6 @@ static void G_SendCharacterData (const edict_t* ent)
 	gi.WriteByte(ent->STUN);
 	gi.WriteByte(ent->morale);
 
-	/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 		gi.WriteLong(ent->chr.score.experience[k]);
 	for (k = 0; k < SKILL_NUM_TYPES; k++)

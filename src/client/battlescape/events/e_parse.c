@@ -136,7 +136,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 	evTimes_t *event = (evTimes_t *)data;
 	const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
-	if (event->eType <= EV_START_DONE || cls.state == ca_active) {
+	if (event->eType <= EV_START || cls.state == ca_active) {
 		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching at %d): %s %p\n", now, eventData->name, event);
 
 		CL_LogEvent(eventData);

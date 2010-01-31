@@ -55,7 +55,6 @@ typedef enum {
 	WALKTYPE_MAX
 } walkType_t;
 
-extern character_t *selChr;
 extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
@@ -74,19 +73,13 @@ const char *CL_GetSkillString(const int skill);
 const fireDef_t *CL_GetWeaponAndAmmo(const le_t * actor, const char hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
-qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
-int CL_UsableReactionTUs(const le_t * le);
+int CL_UsableTUs(const le_t * le);
 void CL_SetReactionFiremode(const le_t *actor, const int handidx, const objDef_t *od, const int fd_idx);
-void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
 void CL_UpdateReactionFiremodes(le_t * actor, const char hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
-qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);
 int CL_UsableTUs(const le_t *le);
-int CL_ReservedTUs(const le_t *le, reservation_types_t type);
-void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);
-
 int CL_MoveMode(const le_t *le, int length);
 
 void CL_ConditionalMoveCalcActor(le_t *le);
@@ -101,7 +94,6 @@ void CL_ActorReload(le_t *le, int hand);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
-void CL_ActorToggleCrouchReservation_f(void);
 void CL_ActorUseHeadgear_f(void);
 void CL_ActorStartMove(le_t *le, const pos3_t to);
 void CL_ActorShoot(const le_t *le, const pos3_t at);
@@ -124,7 +116,6 @@ void CL_AddTargeting(void);
 void CL_AddPathing(void);
 void CL_ActorTargetAlign_f(void);
 
-void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon);
 void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeInde, const objDef_t *weapon);
 
 void CL_DisplayFloorArrows(void);

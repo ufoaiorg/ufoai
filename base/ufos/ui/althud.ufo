@@ -615,7 +615,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.right.bt_primaryright ll;" }
+			onClick		{ cmd "list_firemodes r;" }
 		}
 		pic bt_primaryleft
 		{
@@ -625,7 +625,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.right.bt_primaryright ll;" }
+			onClick		{ cmd "list_firemodes l;" }
 		}
 
 		// ==================
@@ -670,17 +670,6 @@ window althud extends ahud
 			max			*cvar:mn_tumax
 			disabled	true
 			tooltip		"_TUs remaining"
-		}
-	
-		bar timereserved
-		{
-			pos			"118 268"
-			size		"120 2"
-			color		"0 .5 0 1"
-			current		*cvar:mn_tureserved
-			max			*cvar:mn_tumax
-			disabled	true
-			tooltip		"_TUs reserved"
 		}
 	
 		bar morale
@@ -789,29 +778,7 @@ window althud extends ahud
 			onMouseEnter			{ cmd "remaining_tus crouch 1;" }
 			onMouseLeave			{ cmd "remaining_tus crouch 0;" }
 		}
-	
-		checkbox bt_crouch_reservation
-		{
-			tooltip		*cvar:mn_crouch_reservation_tt
-			image		"ui/checkbox_blue"
-			pos			"201 472"
-			size		"20 18"
-			current		0
-			onChange	{ cmd "togglecrouchreserve;" }
-		}
-	
-		pic bt_shot_reservation
-		{
-			tooltip	*cvar:mn_shot_reservation_tt
-			image		althud/buttons_althud1g
-			pos			"222 433"
-			texl		"108 74"
-			texh		"134 107"
-			mousefx		true
-			onClick		{ cmd "sel_shotreservation;" }
-			onRClick	{ cmd "sel_shotreservation 0;" }
-		}
-		
+			
 		container right
 		{
 			pos			"114 340"
@@ -864,9 +831,10 @@ window althud extends ahud
 			texl		"0 0"
 			texh		"16 16"
 			mousefx		true
-			onWheelUp	{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
-			onWheelDown	{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
-			onClick		{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
+			// TODO: hide the other firemode list (if visible)
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "list_firemodes r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "list_firemodes l;" }
+			onClick		{ call *node:root.right.show_rightweapon cmd "list_firemodes r;" }
 		}
 		pic switch_to_left_hand
 		{
@@ -876,9 +844,10 @@ window althud extends ahud
 			texl		"16 0"
 			texh		"32 16"
 			mousefx		true
-			onWheelUp	{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
-			onWheelDown	{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
-			onClick		{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
+			// TODO: hide the other firemode list (if visible)
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "list_firemodes r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "list_firemodes l;" }
+			onClick		{ call *node:root.right.show_leftweapon cmd "list_firemodes l;" }
 		}
 	}
 
@@ -1118,18 +1087,6 @@ window althud extends ahud
 	// override ahud confunc
 	// ==================
 	
-	confunc crouch_checkbox_disable {
-		*right.bt_crouch_reservation@disabled = true
-	}
-	confunc crouch_checkbox_clear	{
-		*right.bt_crouch_reservation@disabled = false
-		*(checkbox)right.bt_crouch_reservation@current = 0
-	}
-	confunc crouch_checkbox_check	{
-		*right.bt_crouch_reservation@disabled = false
-		*(checkbox)right.bt_crouch_reservation@current = 1
-	}
-
 	confunc hudselect {
 		*floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 7 )
 	}
@@ -1196,21 +1153,6 @@ window althud extends ahud
 		*right.bt_reaction_a@image = althud/buttons_althud1g
 	}
 
-	// "RESERVATION FOR SHOT" BUTTON
-	confunc reserve_shot_clear
-	{
-		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		*right.bt_shot_reservation@image = althud/buttons_althud1
-	}
-	confunc reserve_shot_check
-	{
-		*right.bt_shot_reservation@image = althud/buttons_althud1
-	}
-	confunc reserve_shot_disable
-	{
-		*right.bt_shot_reservation@image = althud/buttons_althud1g
-	}
-	
 	// ==================
 	// init function
 	// ==================
