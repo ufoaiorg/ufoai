@@ -253,12 +253,12 @@ character_t *CL_GetActorChr (const le_t * le)
 }
 
 /**
- * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
+ * @brief Returns the fire definition of the item the actor has in the given hand.
  * @param[in] actor The pointer to the actor we want to get the data from.
  * @param[in] hand Which weapon(-hand) to use [l|r].
  * @return the used @c fireDef_t
  */
-const fireDef_t *CL_GetWeaponAndAmmo (const le_t * actor, const char hand)
+const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const char hand)
 {
 	const invList_t *invlistWeapon;
 
@@ -275,28 +275,6 @@ const fireDef_t *CL_GetWeaponAndAmmo (const le_t * actor, const char hand)
 
 	return FIRESH_FiredefForWeapon(&invlistWeapon->item);
 }
-
-#ifdef DEBUG
-/**
- * @brief Prints all reaction- and reservation-info for the team.
- * @note Console command: debug_listreservations
- */
-static void CL_ListReactionAndReservations_f (void)
-{
-	int actorIdx;
-
-	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
-		if (cl.teamList[actorIdx]) {
-			const character_t *chr = CL_GetActorChr(cl.teamList[actorIdx]);
-			Com_Printf("%s\n", chr->name);
-			Com_Printf(" - hand: %i | fm: %i | weapon: %s\n",
-				chr->RFmode.hand, chr->RFmode.fmIdx, chr->RFmode.weapon->id);
-			Com_Printf(" - res... reaction: %i | crouch: %i\n",
-				chr->reservedTus.reaction, chr->reservedTus.crouch);
-		}
-	}
-}
-#endif
 
 /**
  * @brief Sets reactionfire firemode for given actor.
@@ -360,7 +338,7 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 		return qfalse;
 	}
 
-	fd = CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_CHAR(fmSettings->hand));
+	fd = CL_GetFireDefinitionForHand(actor, ACTOR_GET_HAND_CHAR(fmSettings->hand));
 	if (fd == NULL)
 		return qfalse;
 
@@ -514,7 +492,7 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 	if (od != NULL && fdIdx >= 0) {
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		const fireDef_t *fd = CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_CHAR(handidx));
+		const fireDef_t *fd = CL_GetFireDefinitionForHand(actor, ACTOR_GET_HAND_CHAR(handidx));
 		if (fd) {
 			int time = fd[fdIdx].time;
 			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
@@ -541,7 +519,7 @@ qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 	const fireDef_t *fd;
 
 	/* Get ammo and weapon-index in ammo (if there is a weapon in that hand). */
-	fd = CL_GetWeaponAndAmmo(actor, hand);
+	fd = CL_GetFireDefinitionForHand(actor, hand);
 
 	if (fd == NULL)
 		return qfalse;
@@ -603,7 +581,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 		return;
 	}
 
-	fd = CL_GetWeaponAndAmmo(actor, hand);
+	fd = CL_GetFireDefinitionForHand(actor, hand);
 	if (fd == NULL) {
 		HUD_DisplayImpossibleReaction(actor);
 		return;
@@ -2878,7 +2856,6 @@ void ACTOR_InitStartup (void)
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
-	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 	Cmd_AddCommand("debug_movemark", CL_DumpMoveMark_f, "Triggers Grid_MoveMark in every direction at the current truePos.");
 	Cmd_AddCommand("debug_tus", CL_DumpTUs_f, "Shows a table of the TUs that would be used by the current actor to move relative to its current location");

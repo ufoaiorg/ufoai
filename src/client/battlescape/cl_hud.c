@@ -256,7 +256,7 @@ static qboolean CL_CheckFiremodeReservation (void)
 		const fireDef_t *fireDef;
 
 		/* Get weapon (and its ammo) from the hand. */
-		fireDef = CL_GetWeaponAndAmmo(selActor, hand);
+		fireDef = CL_GetFireDefinitionForHand(selActor, hand);
 		if (fireDef) {
 			int i;
 			const objDef_t *ammo = fireDef->obj;
@@ -323,7 +323,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	selectedEntry = 0;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		const fireDef_t *fd = CL_GetWeaponAndAmmo(selActor, hand);
+		const fireDef_t *fd = CL_GetFireDefinitionForHand(selActor, hand);
 
 		if (fd) {
 			const objDef_t *ammo = fd->obj;
@@ -504,7 +504,7 @@ static void HUD_DisplayFiremodes_f (void)
 		return;
 	}
 
-	fd = CL_GetWeaponAndAmmo(selActor, hand);
+	fd = CL_GetFireDefinitionForHand(selActor, hand);
 	if (fd == NULL)
 		return;
 
@@ -742,7 +742,7 @@ static void HUD_FireWeapon_f (void)
 		return;
 	}
 
-	fd = CL_GetWeaponAndAmmo(selActor, hand);
+	fd = CL_GetFireDefinitionForHand(selActor, hand);
 	if (fd == NULL)
 		return;
 

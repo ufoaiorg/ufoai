@@ -70,7 +70,7 @@ void ACTOR_InitStartup(void);
 void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
-const fireDef_t *CL_GetWeaponAndAmmo(const le_t * actor, const char hand);
+const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const char hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
 qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
