@@ -63,15 +63,9 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 			if (cl.teamList[actorIdx]) {
 				/* Check for unusable RF setting - just in case. */
 				if (!CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
-					Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actorIdx);
 					/* At this point the rest of the code forgot to update RF-settings somewhere. */
 					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_CHAR_RIGHT);
 				}
-
-				/** @todo Reset reservations for shots?
-				CL_ReserveTUs(cl.teamList[actorIdx], RES_SHOT, 0);
-				MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); * Update server-side settings *
-				*/
 			}
 		}
 	}

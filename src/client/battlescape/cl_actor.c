@@ -47,7 +47,6 @@ static cvar_t *cl_showactors;
 
 /* public */
 le_t *selActor;
-character_t *selChr;
 pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. */
 pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
 
@@ -796,6 +795,7 @@ void CL_RemoveActorFromTeamList (le_t * le)
 qboolean CL_ActorSelect (le_t * le)
 {
 	int actorIdx;
+	character_t* chr;
 
 	/* test team */
 	if (!le) {
@@ -831,17 +831,16 @@ qboolean CL_ActorSelect (le_t * le)
 	/* console commands, update cvars */
 	Cvar_ForceSet("cl_selected", va("%i", actorIdx));
 
-	selChr = CL_GetActorChr(le);
-	if (!selChr)
+	chr = CL_GetActorChr(le);
+	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
-	/* Right now we can only update this if the selChr is already set. */
 	switch (le->fieldSize) {
 	case ACTOR_SIZE_NORMAL:
-		CL_CharacterCvars(selChr);
+		CL_CharacterCvars(chr);
 		break;
 	case ACTOR_SIZE_2x2:
-		CL_UGVCvars(selChr);
+		CL_UGVCvars(chr);
 		break;
 	default:
 		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
@@ -1966,9 +1965,14 @@ static float CL_TargetingToHit (pos3_t toPos)
 		stdevupdown, stdevleftright, crouch, commonfactor;
 	int distx, disty, i, n;
 	le_t *le;
+	character_t *chr;
 
 	if (!selActor || !selActor->fd)
 		return 0.0;
+
+	chr = CL_GetActorChr(selActor);
+	if (!chr)
+		Com_Error(ERR_DROP, "No character given for local entity");
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (le->inuse && VectorCompare(le->pos, toPos))
@@ -1995,12 +1999,12 @@ static float CL_TargetingToHit (pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
 
-	acc = GET_ACC(selChr->score.skills[ABILITY_ACCURACY],
-			selActor->fd->weaponSkill ? selChr->score.skills[selActor->fd->weaponSkill] : 0);
+	acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY],
+			selActor->fd->weaponSkill ? chr->score.skills[selActor->fd->weaponSkill] : 0);
 
 	crouch = (LE_IsCrouched(selActor) && selActor->fd->crouch) ? selActor->fd->crouch : 1;
 
-	commonfactor = crouch * torad * distance * GET_INJURY_MULT(selChr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
+	commonfactor = crouch * torad * distance * GET_INJURY_MULT(chr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
 	stdevupdown = (selActor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	stdevleftright = (selActor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)

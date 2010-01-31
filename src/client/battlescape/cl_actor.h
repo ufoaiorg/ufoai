@@ -55,7 +55,6 @@ typedef enum {
 	WALKTYPE_MAX
 } walkType_t;
 
-extern character_t *selChr;
 extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
