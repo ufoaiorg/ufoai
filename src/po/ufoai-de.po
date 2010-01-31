@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-01-24 16:23+0100\n"
+"PO-Revision-Date: 2010-01-31 11:24+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1802,7 +1802,7 @@ msgstr "Pilot"
 #: ../base/ufos/team_humans.ufo:1666
 #: client/campaign/cp_employee.c:172
 msgid "UGV"
-msgstr "UGV"
+msgstr "UBF"
 
 #: ../base/ufos/medals.ufo:54
 #: ../base/ufos/team_humans.ufo:1281
@@ -6803,7 +6803,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4289
 #: ../base/ufos/team_humans.ufo:1637
 msgid "Phoenix UGV"
-msgstr "Phoenix UGV"
+msgstr "Phoenix UBF"
 
 #: ../base/ufos/research.ufo:4291
 #, fuzzy
@@ -6817,7 +6817,7 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:4309
 #: ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
-msgstr "Ares W (UGV)"
+msgstr "Ares W (UBF)"
 
 #: ../base/ufos/research.ufo:4311
 #, fuzzy
@@ -10239,7 +10239,7 @@ msgstr "Andere"
 #: ../base/ufos/ui/market.ufo:103
 #: ../base/ufos/ui/production.ufo:79
 msgid "UGV items"
-msgstr "UGV"
+msgstr "UBF"
 
 #: ../base/ufos/ui/market.ufo:310
 msgid "Storage (used/all):"
