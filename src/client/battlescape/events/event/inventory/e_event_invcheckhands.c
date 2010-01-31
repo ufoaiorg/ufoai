@@ -37,8 +37,8 @@ void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)
 {
 	int entnum;
 	le_t *le;
-	int actorIdx = -1;
-	int hand = -1;		/**< 0=right, 1=left -1=undef*/
+	/* 0=right, 1=left -1=undef */
+	int hand;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &hand);
 	if (entnum < 0 || hand < 0)
@@ -48,19 +48,11 @@ void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	actorIdx = CL_GetActorNumber(le);
-	if (actorIdx == -1)
-		Com_Error(ERR_DROP, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber: team=%i(%s) type=%i inuse=%i\n",
-			le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
-
 	/* No need to continue if stored firemode settings are still usable. */
 	if (!CL_WorkingFiremode(le, qtrue)) {
 		/* Firemode for reaction not sane and/or not usable. */
 		/* Update the changed hand with default firemode. */
-		if (hand == ACTOR_HAND_RIGHT)
-			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_RIGHT, -1);
-		else
-			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_LEFT, -1);
+		CL_UpdateReactionFiremodes(le, ACTOR_GET_HAND_CHAR(hand), -1);
 
 		HUD_HideFiremodes();
 	}
