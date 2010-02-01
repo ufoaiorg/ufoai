@@ -1389,10 +1389,13 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	len = strlen(name);
 	if (len >= sizeof(image->name))
 		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
+	if (len == 0)
+		Com_Error(ERR_DROP, "R_LoadImageData: name is empty");
 
 	/* look for it */
 	image = R_GetImage(name);
 	if (image) {
+		assert(image->texnum);
 		Com_Printf("R_LoadImageData: image '%s' is already uploaded\n", name);
 		return image;
 	}
