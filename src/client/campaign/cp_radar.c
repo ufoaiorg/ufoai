@@ -145,9 +145,7 @@ static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar
 void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t pos)
 {
 	int x, y;
-	int i;
 	const vec4_t color = {1., 1., 1., .3};
-	screenPoint_t pts[2];
 	qboolean display;
 
 	/* Show radar range zones */
@@ -162,17 +160,20 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 
 	/* Draw lines from radar to ufos sensored */
 	display = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
-	pts[0].x = x;
-	pts[0].y = y;
-	for (i = 0; i < radar->numUFOs; i++) {
-		/* we really want to avoid buffer overflow: numUFO is supposed to be UFO idx */
-		assert(radar->ufos[i] < MAX_UFOONGEOSCAPE && radar->ufos[i] >= 0);
-		if (UFO_IsUFOSeenOnGeoscape(UFO_GetByIDX(radar->ufos[i]))						/* Is UFO landed? */
-			&& MAP_AllMapToScreen(node, UFO_GetByIDX(radar->ufos[i])->pos, &x, &y, NULL)	/* UFO is on the screen */
-			&& display) {															/* radar is on the screen */
-			pts[1].x = x;
-			pts[1].y = y;
-			R_DrawLineStrip(2, (int*)pts); /** @todo */
+	if (display) {
+		int i;
+		screenPoint_t pts[2];
+
+		pts[0].x = x;
+		pts[0].y = y;
+
+		for (i = 0; i < radar->numUFOs; i++) {
+			aircraft_t *ufo = UFO_GetByIDX(radar->ufos[i]);
+			if (UFO_IsUFOSeenOnGeoscape(ufo) && MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL)) {
+				pts[1].x = x;
+				pts[1].y = y;
+				R_DrawLineStrip(2, (int*)pts); /** @todo */
+			}
 		}
 	}
 
