@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-01-28 19:06+0200\n"
+"PO-Revision-Date: 2010-02-01 20:27+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgstr "Moninpeli Coop"
 
 #: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
-msgstr "Moninpeli Deathmatch"
+msgstr "Moninpeli kuolemanottelu"
 
 #: ../base/maps/gasstation.ump:63
 msgid "Gasstation"
@@ -247,11 +247,11 @@ msgstr "Dragon Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:303
 msgid "Dragon"
-msgstr "Lohikäärme"
+msgstr "Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser-class Interceptor"
-msgstr "Starchaser-luokan Torjuntahävittäjä"
+msgstr "Tähdenmetsästäjä-luokan Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:344
 msgid "Starchaser"
@@ -429,7 +429,7 @@ msgstr "Polymeerinen Lentokone Panssari"
 #: ../base/ufos/aircraftmanagement.ufo:944
 #: ../base/ufos/research.ufo:4451
 msgid "Alien Aircraft Plating"
-msgstr "Alien Lentokone Panssarointi"
+msgstr "Alien Lentokone Panssari"
 
 #: ../base/ufos/aircraftmanagement.ufo:958
 #: ../base/ufos/research.ufo:4485
@@ -482,7 +482,7 @@ msgstr "plastma"
 
 #: ../base/ufos/armour.ufo:51
 msgid "particlebeam"
-msgstr "Partikkeli Hiukkassuihku"
+msgstr "partikkeli hiukkassuihku"
 
 #: ../base/ufos/armour.ufo:56
 msgid "stun_electro"
@@ -563,7 +563,7 @@ msgstr "Iso UFO-halli"
 
 #: ../base/ufos/basemanagement.ufo:212
 msgid "Team Room"
-msgstr "Ryhmän huone"
+msgstr "Ryhmähuone"
 
 #: ../base/ufos/basemanagement.ufo:226
 #: ../base/ufos/basemanagement.ufo:243
@@ -641,7 +641,7 @@ msgstr "Erittäin helppo kampanja"
 
 #: ../base/ufos/campaign.ufo:185
 msgid "Play the aliens"
-msgstr "Alien kampanja"
+msgstr "Pelaa alieneilla"
 
 #: ../base/ufos/campaign.ufo:186
 #, fuzzy
@@ -1124,7 +1124,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:145
 msgid "Equipment Order Received -- %s"
-msgstr "Laitteiden tilaus vastaanotettu -- %s"
+msgstr "Varusteiden tilaus vastaanotettu -- %s"
 
 #: ../base/ufos/events.ufo:146
 msgid "mail_equipment_order_received"
@@ -1156,7 +1156,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:189
 msgid "Mission Summary -- %s"
-msgstr "tehtävän yhteenveto -- %s"
+msgstr "Tehtävän yhteenveto -- %s"
 
 #: ../base/ufos/events.ufo:190
 msgid "mail_mission_summary"
@@ -1198,7 +1198,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
-msgstr "Reaktio liian myöhäinen -- %s"
+msgstr "Reaktio oli liian myöhäinen -- %s"
 
 #: ../base/ufos/events.ufo:234
 msgid "mail_response_too_late"
@@ -1450,7 +1450,7 @@ msgstr "Ei kieltä"
 #: ../base/ufos/maps.ufo:46
 #: ../base/ufos/maps.ufo:85
 msgid "Industrial theme."
-msgstr "Teollisuus teema"
+msgstr "Teollisuus teema."
 
 #: ../base/ufos/maps.ufo:132
 #: ../base/ufos/maps.ufo:171
@@ -1480,7 +1480,7 @@ msgstr "Teollisuusalue"
 
 #: ../base/ufos/maps.ufo:600
 msgid "Cemetery terror mission."
-msgstr "Hautausmaan taktinen tehtävä."
+msgstr "Taktinen tehtävä hautausmaalla."
 
 #: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
@@ -1496,7 +1496,7 @@ msgstr "Kulotettu alue keskellä viidakkoa."
 #: ../base/ufos/maps.ufo:862
 #: ../base/ufos/maps.ufo:902
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "Rauhanomainen naapuruus väestökeskuksen laitamilla"
+msgstr "Rauhanomainen naapuruus väestökeskuksen laitamilla."
 
 #: ../base/ufos/maps.ufo:941
 #: ../base/ufos/maps.ufo:983
@@ -1598,7 +1598,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:2289
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "Maanalainen putkityömaa."
 
 #: ../base/ufos/maps.ufo:2336
 msgid "A subway station in a suburban part of town."
@@ -1606,7 +1606,7 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:2382
 msgid "An office complex in the centre of town."
-msgstr ""
+msgstr "Toimistorakennuksia keskellä kaupunkia."
 
 #: ../base/ufos/maps.ufo:2430
 msgid "A suburban district."
@@ -1619,11 +1619,11 @@ msgstr ""
 #: ../base/ufos/maps.ufo:2522
 #: ../base/ufos/maps.ufo:2568
 msgid "A small UFO has crashed in this mining region."
-msgstr "Pieni UFO tuhoutunut kaivos alueelle."
+msgstr "Pieni tuhoutunut UFO kaivos alueella."
 
 #: ../base/ufos/maps.ufo:2617
 msgid "An office complex under construction."
-msgstr "Toimistorakennus rakenteilla"
+msgstr "Toimistorakennuksia rakenteilla."
 
 #: ../base/ufos/maps.ufo:2664
 msgid "A local harbour."
@@ -1652,7 +1652,7 @@ msgstr "Alienien sadonkorjaaja alus tuhoutunut joutomaalle."
 #: ../base/ufos/maps.ufo:2960
 #: ../base/ufos/maps.ufo:2994
 msgid "A small settlement in winter."
-msgstr "Pieni ratkaisu talvella."
+msgstr "Talvinen tehtävä."
 
 #: ../base/ufos/maps.ufo:3033
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
@@ -1660,11 +1660,12 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:3081
 msgid "A Bomber has landed in the middle of a city."
-msgstr ""
+msgstr "Pommittaja joka on laskeutunut lähelle kaupunkia."
 
 #: ../base/ufos/maps.ufo:3134
+#, fuzzy
 msgid "A place where people come to relax and mingle."
-msgstr ""
+msgstr "Paikka minne ihmiset tulevat rentoutumaan ja mingle"
 
 #: ../base/ufos/maps.ufo:3182
 msgid "A laboratory where they examined found UFO wreck tiles."
@@ -1672,11 +1673,11 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:3230
 msgid "A fuel depot the aliens try to destroy."
-msgstr ""
+msgstr "Bensa-asema mitä alienit yrittävät tuhota."
 
 #: ../base/ufos/maps.ufo:3269
 msgid "Wilderness terror mission."
-msgstr "Erämaan taktinen tehtävä."
+msgstr "Taktinen tehtävä erämaassa."
 
 #: ../base/ufos/maps.ufo:3315
 msgid "UFO Crashsite."
@@ -1696,7 +1697,7 @@ msgstr "Risti"
 
 #: ../base/ufos/medals.ufo:9
 msgid "Coin"
-msgstr "Kolikko"
+msgstr "Raha"
 
 #: ../base/ufos/medals.ufo:30
 #: ../base/ufos/team_humans.ufo:567
@@ -1715,7 +1716,7 @@ msgstr "Lentäjä"
 #: ../base/ufos/team_humans.ufo:1666
 #: client/campaign/cp_employee.c:172
 msgid "UGV"
-msgstr ""
+msgstr "UGV"
 
 #: ../base/ufos/medals.ufo:54
 #: ../base/ufos/team_humans.ufo:1281
@@ -1729,7 +1730,7 @@ msgstr "Kiväärimies"
 
 #: ../base/ufos/medals.ufo:63
 msgid "Rfn"
-msgstr ""
+msgstr "Kiv"
 
 #: ../base/ufos/medals.ufo:71
 msgid "Lance-Corporal"
@@ -1737,7 +1738,7 @@ msgstr "Korpraali"
 
 #: ../base/ufos/medals.ufo:72
 msgid "LCpl"
-msgstr ""
+msgstr "Kor"
 
 #: ../base/ufos/medals.ufo:83
 msgid "Corporal"
@@ -1745,7 +1746,7 @@ msgstr "Alikersantti"
 
 #: ../base/ufos/medals.ufo:84
 msgid "Cpl"
-msgstr ""
+msgstr "Alik"
 
 #: ../base/ufos/medals.ufo:95
 msgid "Sergeant"
@@ -1753,7 +1754,7 @@ msgstr "Kersantti"
 
 #: ../base/ufos/medals.ufo:96
 msgid "Sgt"
-msgstr ""
+msgstr "Kers"
 
 #: ../base/ufos/medals.ufo:107
 msgid "Warrant Officer"
@@ -1761,7 +1762,7 @@ msgstr "Vääpeli"
 
 #: ../base/ufos/medals.ufo:108
 msgid "WO"
-msgstr ""
+msgstr "Vääp"
 
 #: ../base/ufos/medals.ufo:119
 msgid "Senior Warrant Officer"
@@ -1769,7 +1770,7 @@ msgstr "Vanhempi toimiupseeri"
 
 #: ../base/ufos/medals.ufo:120
 msgid "SWO"
-msgstr ""
+msgstr "VTU"
 
 #: ../base/ufos/medals.ufo:130
 msgid "Second Lieutenant"
@@ -1777,7 +1778,7 @@ msgstr "Vänrikki"
 
 #: ../base/ufos/medals.ufo:131
 msgid "2Lt"
-msgstr ""
+msgstr "Vänr"
 
 #: ../base/ufos/medals.ufo:141
 msgid "Lieutenant"
@@ -1785,7 +1786,7 @@ msgstr "Luutnantti"
 
 #: ../base/ufos/medals.ufo:142
 msgid "Lt"
-msgstr ""
+msgstr "Luut"
 
 #: ../base/ufos/medals.ufo:152
 msgid "Captain"
@@ -1793,7 +1794,7 @@ msgstr "Kapteeni"
 
 #: ../base/ufos/medals.ufo:153
 msgid "Capt"
-msgstr ""
+msgstr "Kapt"
 
 #: ../base/ufos/medals.ufo:163
 msgid "Major"
@@ -1801,7 +1802,7 @@ msgstr "Majuri"
 
 #: ../base/ufos/medals.ufo:164
 msgid "Maj"
-msgstr ""
+msgstr "Maj"
 
 #: ../base/ufos/medals.ufo:174
 msgid "Lieutenant-Colonel"
@@ -1809,7 +1810,7 @@ msgstr "Eversti-Luutnantti"
 
 #: ../base/ufos/medals.ufo:175
 msgid "Lt Col"
-msgstr ""
+msgstr "Ev-Luut"
 
 #: ../base/ufos/medals.ufo:185
 msgid "Colonel"
@@ -1817,7 +1818,7 @@ msgstr "Eversti"
 
 #: ../base/ufos/medals.ufo:186
 msgid "Col"
-msgstr ""
+msgstr "Ever"
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
@@ -1889,13 +1890,13 @@ msgstr "Antimateriaali"
 #: ../base/ufos/research.ufo:340
 #: ../base/ufos/research.ufo:384
 msgid "Alien Breathing Apparatus"
-msgstr "Muukalaisten hengityslaitteet"
+msgstr "Alieneiden hengityslaitteet"
 
 #: ../base/ufos/otheritems.ufo:25
 #: ../base/ufos/research.ufo:4876
 #: ../base/ufos/research.ufo:4915
 msgid "Alien Materials"
-msgstr "Muukalaisien Materiaalit"
+msgstr "Alieneiden Materiaalit"
 
 #: ../base/ufos/otheritems.ufo:156
 #: ../base/ufos/weapons_melee.ufo:24
@@ -1921,7 +1922,7 @@ msgstr "Lentokoneet"
 
 #: ../base/ufos/research.ufo:109
 msgid "Base Facilities"
-msgstr "Rakennukset"
+msgstr "Tukikohdan Rakennukset"
 
 #: ../base/ufos/research.ufo:110
 msgid "Research Reports"
@@ -1938,16 +1939,15 @@ msgstr "Varusteet"
 
 #: ../base/ufos/research.ufo:112
 msgid "Alien Artifacts"
-msgstr "Muukalaisien Artifactit"
+msgstr "Alieneiden Artifactit"
 
 #: ../base/ufos/research.ufo:113
-#, fuzzy
 msgid "Autopsies & Observation"
 msgstr "Ruumiinavaus ja tarkkailu"
 
 #: ../base/ufos/research.ufo:114
 msgid "The Alien Threat"
-msgstr "Vihollisuhka"
+msgstr "Alieneiden Uhka"
 
 #: ../base/ufos/research.ufo:123
 msgid "Continuous Wave Laser Operation"
@@ -1956,7 +1956,7 @@ msgstr "Jatkuvan Aalto Laserin tutkiminen"
 #: ../base/ufos/research.ufo:128
 msgid "laser_txt"
 msgstr ""
-"Komentaja, olen erittäin iloinen voidessani kertoa, että projektimme on onnistunut.Liitän mukaan kuvat kannettavan laser aseen prototyypistä, joka saavuttaa jatkuvan aallon laser tehon.\n"
+"Komentaja, olen erittäin iloinen voidessani kertoa, että projektimme on onnistunut. Liitän mukaan kuvat kannettavan laser aseen prototyypistä, joka saavuttaa jatkuvan aaltomaisen laser tehon.\n"
 "\n"
 "Käytännöllisin ratkaisu ei ollut siinä, että yritettiin luoda suurempia akkuja, vaan käytännöllisin idea oli miniatyyrisointi, teknologian kevennys ja supistaminen käyttäen nykyisiä kemian käyttämiä laser komponentteja.\n"
 "\n"
@@ -1986,32 +1986,10 @@ msgstr ""
 #: ../base/ufos/research.ufo:161
 msgid "b_baselaser_txt"
 msgstr ""
-"Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
-"\n"
-"Here are the highlights.\n"
-"\n"
-"What we've done is we've stripped down our pre-existing SAM turret design and modified it to fit an upscaled deuterium-fluoride reaction chamber. We've beefed up the electrical systems to help amplify beam output, adding several megawatts to power and several dozen kilometres to effective range. The turret servos have been completely replaced with a computer-controlled mag-lev system to improve accuracy.\n"
-"\n"
-"The result is that our new Base Defence Laser Turret is capable of tracking targets at any conceivable speed within Earth's atmosphere. It can lock on to targets almost instantly, and is powerful enough even at long range to damage UFO armour after only a few seconds of fire. Accuracy is good; the laser suffers much less from alien EW (Electronic Warfare) activity than missiles and can even predict basic evasive manoeuvres.\n"
-"\n"
-"Of course, as with any laser, range remains a problem. Atmospheric blooming limits effective range to only a few hundred kilometres. Weather effects and cloud cover can provide even more serious challenges and, in some conditions, could slash effective range by more than 50%. Lastly, the laser can only fire continuously for about 120 seconds before overheating comes into play, and it requires up to 60 seconds to cool down and recharge capacitors before it's ready to fire again.\n"
-"\n"
-"Despite these limitations, the Base Defence Laser Turret should provide an effective deterrent for most UFOs straying near our bases, and can provide assistance in shooting down alien craft at short range. It's going to be a good facility to have when one of our bases is in a pinch.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:164
 msgid "b_baselaser_pre_txt"
 msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
-"\n"
-"Our CW laser program has been successful in miniaturising and lightening the necessary components for a powerful deuterium-fluoride reaction. However, the advances we've made aren't just useful for infantry weapons and small cannon. We want to prototype some of our upgrades in existing surface-to-air laser arrays, allowing us to track and fire continuous high-powered beams at a power level that our plants can comfortably handle.\n"
-"\n"
-"Given the various shortcomings of our SAMs (Surface-to-Air Missiles) against alien technology, I don't need to tell you all the advantages of having a direct-fire laser defence system. It won't be a full replacement for our missile installations, but it's definitely an avenue worth exploring in order to help defend our bases from alien incursions.\n"
-"\n"
-"Please approve this program at your discretion, Commander.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:210
 #: ../base/ufos/research.ufo:248
@@ -2193,45 +2171,15 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:479
 msgid "Alien Communication"
-msgstr "Muukalaisten kommunikaatio"
+msgstr "Alieneiden kommunikaatio"
 
 #: ../base/ufos/research.ufo:484
 msgid "alien_communication_txt"
 msgstr ""
-"Commander,\n"
-"\n"
-"I'm happy to report that we've received the first good results in our ongoing efforts to question captive aliens in our Containment unit. Dr. Yamamura's approach has gradually begun to bear fruit. The aliens have learned to convey messages in both binary code and human-readable sign language, and they appear to comprehend a wide range of questions and instructions. Yamamura and his staff are still working to refine the sign language we've been using, while the rest of my team has concentrated on trying to extract useful information from the hive mind. This hasn't been easy. The aliens are very reticent and require a great deal of chemical encouragement in order to put them into a more helpful frame of mind. The casualty rate has been high.\n"
-"\n"
-"However, what we have is significant. For instance, the hive mind seems to have no identity. It seems unable to grasp concepts like \"I\" or \"We\", or even \"You\" and \"Them\". It only accepts these words as numerical differentiations -- one specimen or several, one human or a group. This indicates a severe disconnect between human and alien thinking. The shared consciousness doesn't even think of itself as a single enclosed entity; it merely is. This, along with various other answers we've pieced together from our continued sessions, leads us to believe that all aliens do indeed share one single mind. And I mean all of them, Commander. It's not simply a means of increasing team efficiency or encouraging esprit de corps; it's an indispensible component of alien society. Every alien that lives and breathes is an equal and identical part of the greater hive mind, even specimens of completely different species. The only diversity the aliens will acknowledge is in the different substances required to keep the various species alive.\n"
-"\n"
-"Also, the hive mind has expressed puzzlement at our attempts to communicate with individual aliens, let alone through something as crude as sign language. A human-understandable analogy might be trying to have a deep conversation with someone's toenail, or talking to a single cell in your own body. Of course, that raises the question of where the alien ears and brain really are.\n"
-"\n"
-"Certainly the handful of aliens currently in our Containment unit are not part of the greater hive mind that we hypothesize exists on the alien homeworld. They seem to be cut off from it for the duration of their mission to Earth, only to rejoin it when they return later. Whether this is due to distance or some kind of atmospheric effect, we've not yet been able to tell. The aliens' answers are hazy on this subject.\n"
-"\n"
-"That is all I have to report, Commander. However, as a final note, I would like to request your permission to look into methods we could use to more effectively persuade our captives. I must also stress that we require a healthy influx of new alien specimens in order to replace losses. We have to maintain the isolated hive mind we have in Containment. Losing it now would be a significant setback to our research.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
 
 #: ../base/ufos/research.ufo:487
 msgid "alien_communication_pre_txt"
 msgstr ""
-"Commander,\n"
-"\n"
-"The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:\n"
-"\n"
-"(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"\n"
-"\n"
-"\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"\n"
-"\n"
-"Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.\n"
-"\n"
-"Thank you for your time, Commander. Please approve this program as soon as feasible.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
 
 #: ../base/ufos/research.ufo:518
 #: client/campaign/cp_alienbase.c:169
@@ -2242,33 +2190,6 @@ msgstr "Muukalaisten tukikohta"
 #: ../base/ufos/research.ufo:520
 msgid "alien_base_txt"
 msgstr ""
-"Proposal\n"
-"\n"
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Alien Base\n"
-"\n"
-"Good morning, Sir.\n"
-"\n"
-"As you're aware, we are facing an increasingly worsening threat from the XVI virus. Over the past few weeks, DivIntel has been making a push into the areas in which the infection is most concentrated, in order to try and find some piece of intel that could help us understand how and why this infection spreads so fast from these focal points. I have been personally supervising the effort.\n"
-"\n"
-"It paid off this morning.\n"
-"\n"
-"Our reconnaisance teams have located what appears to be a camouflaged alien installation. The size and purpose of this installation is unknown, but we've established that it is located at the exact heart of an infection hot-spot. I harbour grave suspicions that this facility is directly connected with the lightning spread of XVI in the region. At this point it also seems likely there are more of these planetside installations, built right under our noses, serving as command centres and bases of operation for the alien threat.\n"
-"\n"
-"Dealing with these bases has to be one of our top priorities. I recommend we send a heavily-armed team to pay them a visit, a bit of reconnaissance-in-force. We need more information about the layout and purpose of the base, and the best way to do that is to capture it. We should eliminate all aliens at the location and, once we've secured the area and salvaged what we need, destroy the entire installation. This should constitute a significant blow to alien operations and restrict -- if not halt -- the spread of XVI in the area.\n"
-"\n"
-"Of course this mission will be highly dangerous. The base is right in the middle of an infection hot-spot, so the entire area is hostile territory. We may encounter anti-air ordnance and UFOs scrambled to the base's defence. A heavy escort will certainly be required. And . . . there's worse.\n"
-"\n"
-"Satellite imagery and recon flyovers have indicated that infected humans appear to be actively cooperating with the aliens. There's a good probability our unit will encounter human hostiles during the assault. This may not sit well with everyone, but if they open fire on our troops, we must be ready to respond in kind.\n"
-"\n"
-"That's all the intel I've got for you on this one, Sir. Good luck and good hunting.\n"
-"\n"
-"With kind regards,Col. Falkland"
 
 #: ../base/ufos/research.ufo:542
 msgid "The Universal Serum"
@@ -2277,34 +2198,10 @@ msgstr "Universaalinen Seerumi"
 #: ../base/ufos/research.ufo:547
 msgid "universal_serum_txt"
 msgstr ""
-"Commander,\n"
-"\n"
-"Our development cycle on the new truth drug is complete. The new set of chemical mixtures we've tested are effective, and they seem to be the solution we've hoped for.\n"
-"\n"
-"The work we've done on alien biology since the start of the invasion, along with some help from our captives, has put us on the track of certain psychotropic substances -- notably LSD-derivatives -- that have very interesting effects on alien psychology. The divergence of species has been a problem, as some compounds will work on one type of alien but not on another, but with this new data it will be an easy task to whip up drugs specifically tailored to the individual alien species.\n"
-"\n"
-"Subjects under the influence of this drug have proven to be more pliable and loose-lipped, as long as we keep injecting all the specimens in our containment unit. Unfortunately the hive mind's natural resistance to interrogation is still throwing a spanner in the works. Even with all our specimens fully injected, we've not managed to break that resistance, and the accuracy of our test information has still not been 100% reliable. All data we receive still requires some degree of time-consuming verification work.\n"
-"\n"
-"On the positive side, the act of getting the information out of our subjects has become quicker and more painless, which should speed up some of our research. The danger of allergenic reaction is much lower and the number of subjects succumbing during interrogation has dropped significantly. The deeper effect of the new drugs may even give us access to more sensitive information that we would not have been able to extract from the hive mind with our old serum.\n"
-"\n"
-"We should keep up our interrogation efforts to get maximum benefit out of the new drugs.\n"
-"\n"
-"Sincerely,\n"
-"\n"
-"Dr. Connor"
 
 #: ../base/ufos/research.ufo:550
 msgid "universal_serum_pre_txt"
 msgstr ""
-"Commander,\n"
-"\n"
-"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
-"\n"
-"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
-"\n"
-"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
-"\n"
-"Sincerely,Dr. Connor"
 
 #: ../base/ufos/research.ufo:579
 msgid "Alien Origins"
@@ -2313,50 +2210,10 @@ msgstr "Muukalaisten alkuperä"
 #: ../base/ufos/research.ufo:584
 msgid "alien_origins_txt"
 msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"I've got the results of our Alien Origins project here and I believe you'll find them encouraging. Here is my summary of the data.\n"
-"\n"
-"The project overall has been a resounding success in integration and cooperation. For several short periods over the past few days, we had direct control over every civilian and military detection asset in the solar system, including several installations in the asteroid belt so secret that we have been sworn to silence by the UN. Our deep-space probes have scanned every inch of buildable surface to detect any sign of an alien base. With these resources at our disposal, we have achieved continuous detection coverage of approximately 90% of the solar system over the past two weeks. The remaining 10% has been uncovered no longer than forty minutes at a time.\n"
-"\n"
-"Unfortunately -- depending on your understanding of the word 'unfortunately' -- we could find no evidence of alien fleets hiding in our solar system. We have been so thorough that these results are all but conclusive. There is no way to be absolutely sure that our conclusions are correct, but I make the following statement with high confidence:\n"
-"\n"
-"We do not believe there are alien ships or bases in our solar system at this time.\n"
-"\n"
-"This answers one of our questions, but brings us no closer to understanding where the aliens come from or how they get here. In fact, the question of how they get here becomes an even greater conundrum than it was before. If the aliens are not based in our solar system, how can they be delivering UFOs to Earth?\n"
-"\n"
-"I have spoken at length with Cdr. Navarre and members of his team about this issue, trying to figure it out, and most of our theories still seem like crackpot speculations even to ourselves. However, fate gave us the proof we needed.\n"
-"\n"
-"We were having little luck with the issues of 'how' and 'where' until we got our hands on last week's video records from the MIMIR space telescope. Upon watching the footage, we realised that the MIMIR array had accidentally managed to catch a UFO arrival on film. We have full records in the visible and infrared spectra of a large, unfamiliar class of UFO 'popping' into existence approximately 10,000 kilometres from Earth, from where it ignited its engines and set a course for the planet.\n"
-"\n"
-"It is possible the aliens could have some manner of 'cloaking' technology that has prevented us from detecting the UFO beyond that range, but we have strong doubts about this; the appearance was highly sudden, accompanied by a burst of gamma rays and a momentary gravitic anomaly. There was not even the slightest evidence of this UFO's existence prior to its appearance 10,000 klicks from Earth.\n"
-"\n"
-"The most likely conclusion is also the most frightening: the aliens do not need to be located in our solar system, because they have a means of travel that is faster than light. Apparently this FTL (Faster-Than-Light) drive allows them to 'jump' into the Sol system from a distance well beyond our detection range. We don't know how this could be possible, as it clearly violates one or more concepts of general relativity (e.g. causality and/or special relativity), which remains the most accurate model of physics we have. The aliens clearly know something we don't.\n"
-"\n"
-"Our next priority must be the capture of an FTL-equipped UFO so that we may study and adapt this drive for our own spacecraft. Obviously, this will not be an easy task, but developing the ability to strike back is paramount -- just in case we need to end this invasion the hard way.\n"
-"\n"
-"Of course, the final decision on how to balance our short-term defence needs and long-term retaliation rests with you, Commander.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
 
 #: ../base/ufos/research.ufo:587
 msgid "alien_origins_pre_txt"
 msgstr ""
-"Good morning, Sir.\n"
-"\n"
-"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
-"\n"
-"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
-"\n"
-"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
-"\n"
-"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
-"\n"
-"With kind regards,\n"
-"\n"
-"Col. Falkland"
 
 #: ../base/ufos/research.ufo:614
 msgid "UFO Theory"
@@ -2365,196 +2222,26 @@ msgstr "Ufo Teoria"
 #: ../base/ufos/research.ufo:619
 msgid "alien_theory_txt"
 msgstr ""
-"Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
-"\n"
-"The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look at it up close and personal -- and test the alien hull materials under laboratory conditions -- we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
-"\n"
-"-- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and to reduce the infrared signature. Engine heat is also used to supply the craft's electrical needs.\n"
-"\n"
-"-- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when we found out what was in there. If a containment loss occurred on one of these tanks, even three tenths of a gramme of this antimatter would outstrip the explosive force of the Hiroshima atomic bomb. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that proton-antiproton explosions create little radioactive fallout.\n"
-"\n"
-"-- The craft is extremely difficult to see with human detection equipment, regardless of any electronic warfare capability on the aliens' part. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with passive infrared and gamma radiation detection, as the antimatter-based engines produce quite a lot of both.\n"
-"\n"
-"-- The slim design, generating poor lift and being difficult to handle in air, is partly due to the heavy weight of the hull materials. It would be impossible to create effective wings from the alien hull materials. Instead, every gramme of excess matter has been stripped off, and the craft moves at high speeds so as to need very little lift surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's stronger and tougher than any known material on Earth (barring pure carbon nanotubes) and far more versatile in aircraft design. More research is definitely required.\n"
-"\n"
-"Armed with these facts, we can now begin to analyse the different components and roles of the UFO. I recommend that our engineers begin dismantling this craft for parts right away. Who knows what we'll discover with the individual bits and pieces in front of us?\n"
-"\n"
-"More research on the UFO itself is also warranted. I think we can delve deeper into its intended function and perhaps gain some insight in how to counter its activities. I'll send you another proposal about it as soon as I can.\n"
-"\n"
-"Whatever we end up learning from these craft, Commander, it can only help us in the fight for Earth.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:622
 msgid "alien_theory_pre_txt"
 msgstr ""
-"Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
-"\n"
-"We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:667
 msgid "pistol_txt"
 msgstr ""
-"Technical Specifications: P-12 Pistol\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"With the return of armour to the battlefield, starting with steel helmets in World War 1 and fragmentation vests in Vietnam, pistols have had a harder and harder time keeping up. Due to their far lower muzzle velocity compared to longer-barreled and/or fully automatic weapons, they've had increasing trouble penetrating the new, ever-higher standards of human armour -- much less advanced alien composites. The very concept of the pistol in military use came under fire at one point in the 21st century, and was saved only by the advent of super-high-velocity powder.\n"
-"\n"
-"Chief among the new generation of super-pistols is the Dolvich DV762 from Russia. It follows the design philosophy of its home country; rugged, reliable power without frills. Its design is extremely basic, and though the materials used in its construction are far stronger to cope with the new powder, the DV762's internals are no more advanced than any pistol of the late 20th century.\n"
-"\n"
-"The DV762 does not compromise. It isn't a multi-function firearm. It's designed for only one thing: to punch through armour and kill the person inside. In order to do this, the DV fires the ancient 7.62mm Tokarev pistol round, either on semi-automatic or three-round burst mode, from a 12-round detachable box magazine. The Tokarev round is known for its excellent penetration, and it has been significantly upgraded on its return to military service. This pistol can shoot clean through the side of a modern ballistic helmet at ranges of up to 10 metres -- and then out the other side.\n"
-"\n"
-"Unfortunately, in order to achieve penetration, the DV sacrifices stopping power. The 7.62mm round makes a very clean hole in the enemy, which is the problem; it's very reluctant to fragment or tumble, requiring a direct hit on a vital organ or major artery to incapacitate or kill an enemy.\n"
-"\n"
-"For the purposes of the Excalibur program, we concluded that a guaranteed minor hit is better than one that may simply bounce off an alien's armour, especially as we have yet to gain a clear picture of how nasty alien armour can get. We need sidearms that we know will be effective in the crunch, and the DV762 is the best of them.\n"
-"\n"
-"For PHALANX use, we have given this pistol the classification P-12.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The P-12 is primarily a backup weapon. It is a significant step up from the combat knife as a weapon of last resort, and it lets a soldier respond to new close-range threats if the primary weapon is rendered ineffective at such ranges or has run out of ammo.\n"
-"\n"
-"Ambidextrous soldiers may even consider using two pistols at the same time, though this will negatively impact accuracy and reduce the soldier's already minimal effective range.\n"
-"\n"
-"A single P-12 should rarely be considered as a primary weapon, as it is outclassed in this role by nearly every other weapon in our arsenal. Its advantages are the advantages of a sidearm -- small size and weight. Still, it may find a use as a primary weapon with field medics and technicians who do not have room for larger weapons.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
 #: ../base/ufos/research.ufo:686
 msgid "pistol_mag_txt"
 msgstr ""
-"Technical Specifications: 7.62mm Pistol Magazine\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 12 rounds of 7.62x25mm TT (Tokarev) pistol ammunition. It is a conventional staggered-stack box design. Though the original TT bullet design is ancient, the rounds in this magazine are brand-new and ready for service, reinforced with steel and tungsten to withstand the tremendous force of the powder explosion. This round is an excellent penetrator, able to punch through heavy armour at close range. However, it's also reluctant to fragment or tumble, requiring a direct hit on a vital organ or major artery to incapacitate or kill an enemy. Combined with super-high-velocity powder, these rounds also have a kick like a mule. A two-handed firing stance is recommended for most users to avoid the chance of breaking a wrist.\n"
-"\n"
-"The magazine is meant to be loaded into a P-12 Pistol.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with pistols should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:708
 msgid "pistol2_txt"
 msgstr ""
-"Technical Specifications: MP-699 Machine Pistol\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"With the return of armour to the battlefield, starting with steel helmets in World War 1 and fragmentation vests in Vietnam, pistols have had a harder and harder time keeping up. Due to their far lower muzzle velocity compared to longer-barreled and/or fully automatic weapons, they've had increasing trouble penetrating the new, ever-higher standards of human armour -- much less advanced alien composites. The very concept of the pistol in military use came under fire at one point in the 21st century, and was saved only by the advent of super-high-velocity powder.\n"
-"\n"
-"The major drawback of super-high-velocity powder is that it cannot be used in fully-automatic weapons, since no firearms action on this Earth can survive that much violence for long without breaking. The British APMP pistol ignores these concerns by using more ordinary smokeless powder and a longer, almost SMG-length barrel to achieve higher velocities and greater kinetic power. It is a true machine pistol, fully automatic and capable of firing 600 rounds per minute from its surprisingly slim-lined 30-round detachable box magazine. It has three firing modes: semi-automatic, 3-round burst, and full-automatic.\n"
-"\n"
-"The APMP fires the specially-developed 4.2x24mm round that goes through kevlar like it wasn't there. Once inside a human body this tiny round tumbles like a madman and creates huge wound cavities. It has a deal of trouble penetrating modern body armour, but this is offset by the APMP's ability to deliver repeated hits from its large magazine, all in a pistol-sized package. Unfortunately, the APMP can be a little unwieldy due to its size. Accuracy during burst and fully-automatic fire suffers as a result.\n"
-"\n"
-"Whenever we need an automatic weapon no larger than our own P-12, this is the weapon that fills the gap.\n"
-"\n"
-"For PHALANX use, we have given this machine pistol the classification MP-699.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The MP-699 is primarily a backup weapon. It is a significant step up from the combat knife as a weapon of last resort, and it lets a soldier respond to new close-range threats if the primary weapon is rendered ineffective at such ranges or has run out of ammo. It is a good alternative for soldiers who have trouble hitting anything with the P-12, but the MP-699 is low-powered in comparison with the P-12. Furthermore, its magazines are large enough to preclude hanging them from a soldier's belt and far fewer of them can be carried conveniently.\n"
-"\n"
-"Ambidextrous soldiers may consider using two pistols at the same time, though this will negatively impact accuracy and reduce the soldier's already minimal effective range.\n"
-"\n"
-"A single MP-699 should rarely be considered as a primary weapon, as it is outclassed in this role by nearly every other weapon in our arsenal. Its advantages are the advantages of a sidearm -- small size and weight. Still, it may find a use as a primary weapon with field medics and technicians who do not have room for larger weapons.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:727
 msgid "pistol2_mag_txt"
 msgstr ""
-"Technical Specifications: 4.2mm MP Magazine\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 30 rounds of 4.2x24mm pistol ammunition. It is a double-column box design. The rounds are very small and have decent penetration, especially when causing several impacts close to each other, and they cause a great deal of tissue damage once they've penetrated skin. They're designed to have very little recoil, but this doesn't help the MP-699's accuracy very much.\n"
-"\n"
-"The magazine is meant to be loaded into an MP-699 Machine Pistol.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with machine pistols should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:747
 msgid "vhs_assault_txt"
@@ -2604,236 +2291,26 @@ msgstr ""
 #: ../base/ufos/research.ufo:782
 msgid "assault_mag_txt"
 msgstr ""
-"Technical Specifications: Assault Rifle Magazine\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 30 rounds of 4.7x33mm caseless ammunition, armour-piercing mod. It is of a classic curved box design with the rounds stacked in a dual-column arrangement. The rounds themselves are tungsten-cored steel penetrators, encased in their own propellant rather than heavy brass casings. They perform well against a variety of enemies at short and medium ranges.\n"
-"\n"
-"The magazine is meant to be loaded into an AR-80 Assault Rifle.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with assault rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:801
 msgid "machinegun_txt"
 msgstr ""
-"Technical Specifications: MG12 Machine Gun\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The British SA-3000 GPG (General-Purpose Gun), colloquially known as the Great British Gun, is a versatile drum-fed machine gun that has seen service throughout the world in its 16-year operational life. First deployed in 2068, it quickly found its niche as a light machine gun for infantry and ground-support helicopters, able to be fired from the hip as easily as from a bipod or pintle mount.\n"
-"\n"
-"The infantry version of the GPG is a highly versatile and reliable gun. Unlike most machine guns the GPG takes caseless ammunition from a large drum magazine instead of a belt. This limits fire rate and magazine endurance, but it's also the reason for the weapon's versatility. The reloading process for the GPG is almost as quick and easy as an assault rifle, and the drums contain 100 rounds each. This allows the GPG to be used almost as a heavy assault rifle. The magazines are on the bulky side, but still small and light enough for an average soldier to carry several of them into battle.\n"
-"\n"
-"The gun contains surprisingly few computerised components, only a powerful recoil compensator and shock absorbing system. This helps to improve accuracy above that of older machine guns, although it's never going to be a sniper rifle. The solid design and sheer simplicity of its internals combine to make the GPG a very reliable weapon. It has seen action in Mumbai and performed admirably there, providing effective and highly mobile suppressive fire, sometimes capable of pinning down whole alien squads depending on the terrain.\n"
-"\n"
-"The GPG fires the popular 4.7mm caseless round, also used in our AR-80 Assault Rifle. Unfortunately the magazines are not interchangeable between Assault Rifle and GPG, as the Assault Rifle uses a different feed system.\n"
-"\n"
-"We feel that the GPG is the best candidate for our arsenal in the machine gun category. Our troops can depend on this gun to deliver heaps of fire when and where they need it most.\n"
-"\n"
-"For PHALANX use, we have given this machine gun the classification MG12.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The MG12 will be an extremely valuable tool in controlling the battlefield. It can set up mobile strongpoints from which to stage attacks on alien positions, it can provide effective suppressive or diversionary fire from all ranges, or it can be used simply as a powerful medium-range assault weapon.\n"
-"\n"
-"It should be a prime candidate for any soldier with heavy weapons training.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:819
 msgid "machinegun_mag_txt"
 msgstr ""
-"Technical Specifications: Machine Gun Drum\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This drum contains 100 rounds of 4.7x33mm caseless ammunition, armour-piercing mod. Unlike rifle magazines, the rounds in this drum are linked together into a long belt rather than stacked onto a spring. The belt links are made of a special plastic that disintegrates upon exposure to open air.\n"
-"\n"
-"The rounds themselves are tungsten-cored steel penetrators, encased in their own propellant rather than heavy brass casings. They perform well against a variety of enemies at short and medium ranges.\n"
-"\n"
-"The magazine is meant to be loaded into an MG12 Machine Gun.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with machine guns should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:838
 msgid "rpg_txt"
 msgstr ""
-"Technical Specifications: HPML Rocket Launcher\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The South-African MPMDS (Multi-Purpose Missile Delivery System) has a classic, almost surgically clean name that completely belies its purpose. It is the heaviest infantry missile launcher on the market, able to fire anti-tank shells as easily as high-explosive rockets that turn infantry into hamburger. Originally intended as light field artillery, this weapon is fairly new; its only combat experience has been in Mumbai in the hands of Commonwealth troops. It was one of the handful of weapons that eventually turned the tide in the fighting -- and there is a good reason why.\n"
-"\n"
-"Alien craft on the ground emit fantastic amounts of jamming and other EW (Electronic Warfare) activity. In fact, they emit so much of it that ordinary 'smart' missiles are rendered completely ineffective. If one type of alien EW doesn't fool the missile's relatively stupid electronic brain, another will. No amount of tinkering by Earth's military engineers has been able to fix the situation. The MPMDS, however, will remain effective against the alien invaders -- one of the few human missile launchers that can -- because its rockets carry no onboard guidance.\n"
-"\n"
-"The rockets are 120mm monsters the size of artillery shells. They are fired out of a smoothbore barrel, fin-stabilised in flight, and have a maximum effective range of 70 metres. Surprisingly they are made up of only three parts: a rocket booster, a warhead and an impact trigger. This simplicity allows them to remain effective and reliable in the most hazardous situations. Though the rockets are not very accurate, they will devastate anything in their path, even aliens. It takes only one good hit from an MPMDS rocket to send the enemy flying.\n"
-"\n"
-"Standard ammunition for this launcher includes: HE (High-Explosive) rockets, AA (Anti-Armour) rockets, and IC (Incendiary) rockets. New types of MPMDS ammo were being researched by Commonwealth manufacturers before the start of the war. We have all their data on file and could use it to create revolutionary new rocket types.\n"
-"\n"
-"Along with the HPGL Grenade Launcher, this weapon will provide our troops the artillery support they need to survive and win through.\n"
-"\n"
-"For PHALANX use, we have given this rocket launcher the classification HPML.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The HPML is best used in a support role, providing covering fire for our assault troops with high-explosive and/or incendiary rockets. However, care should be taken that friendly fire incidents do not occur, as this could have disastrous effects in a combat mission.\n"
-"\n"
-"Friendly troops should be kept away from the rear of the launcher during firing; the hot exhaust gases are extremely dangerous to nearby humans. The HPML should not be fired at targets closer than 8 metres from the shooter. Violating these safety guidelines could result in serious injury or death to the shooter and other members of the team. If a target is closer than 8 metres, any shooter should immediately resort to his sidearm or a combat knife. Anything else would be suicide.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
 #: ../base/ufos/research.ufo:857
 msgid "rpg_ammo_txt"
 msgstr ""
-"Technical Specifications: HE Rocket\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This is a 120mm solid-fuel rocket fitted with a High-Explosive warhead. It is fired electronically by a spark igniter inside the launcher's barrel. The fuel is highly stable and resists concussion and heat, though it can cook off if exposed to high temperatures for a significant period of time. The warhead itself is completely inert unless armed by the impact trigger. Fire cannot set it off unless and until it's armed. Like C4 explosive, the unarmed compound inside the warhead will burn rather than explode when exposed to heat or open flame.\n"
-"\n"
-"Because it carries no onboard electronics, the rocket is impervious to EMP and electronic jamming. All high-tech aiming is done at the launcher. Therefore a properly-aimed rocket will arrive at its target regardless of anything that might happen during flight.\n"
-"\n"
-"The rocket is meant to be loaded into an HPML Rocket Launcher.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with rocket launchers should carry at least one reload whenever they go out in the field. Two or more are strongly recommended. It is not advisable to send our troops into combat without sufficient ammunition.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:877
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
-"Technical Specifications: IC Rocket\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This is a 120mm solid-fuel rocket fitted with an incendiary warhead. It is fired electronically by a spark igniter inside the launcher's barrel. The fuel is highly stable and resists concussion and heat, though it can cook off if exposed to high temperatures for a significant period of time. The warhead itself can spill its contents if damaged, but the thermite mix will not ignite unless exposed to a very high-temperature flame.\n"
-"\n"
-"Incendiary rockets are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent.\n"
-"\n"
-"Because it carries no onboard electronics, the rocket is impervious to EMP and electronic jamming. All high-tech aiming is done at the launcher. Therefore a properly-aimed rocket will arrive at its target regardless of anything that might happen during flight.\n"
-"\n"
-"The rocket is meant to be loaded into an HPML Rocket Launcher.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All soldiers equipped with rocket launchers should carry at least one reload whenever they go out in the field. Two or more are strongly recommended. It is not advisable to send our troops into combat without sufficient ammunition.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
 
 #: ../base/ufos/research.ufo:898
 msgid "xaw95_txt"
@@ -2881,35 +2358,11 @@ msgstr "Elektromagneettinen kivääri"
 
 #: ../base/ufos/research.ufo:1040
 msgid "bolterrifle_txt"
-msgstr ""
-"The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.\n"
-"\n"
-"The Bolter Rifle is equipped with a railgun configuration, as opposed to a coilgun/Gauss gun configuration, due to the high inefficiency and generally poor operation of coilguns. Railguns work by utilising electromagnetic force to propel an electrically conductive projectile along two conducting rails. The electric current flowing through the rails sets up a magnetic field between them and through the projectile. The direction of the magnetic field is perpendicular to the current flowing through the rails and the projectile; this results in the rails and projectile pushing each other, thereby accelerating the projectile along the rails.\n"
-"\n"
-"The world's first large-scale railgun, built in the 1970s, used 500 MJ of stored energy from the largest homopolar generator ever built. The electrical equipment needed to power these guns has become much more compact in the past century or so, but it is still not small or light enough to create man-portable weapons capable of replacing chemical-propellant firearms. Another major failing of railguns is their extreme susceptibility to rail erosion. The rails suffer heavy damage from every shot fired along them, and when the contact points are badly damaged, the electric current cannot properly pass from the rails through the projectile. This causes successive shots to lose more and more of their power. Each round needs at least a short length of undamaged rail in order to build up velocity.\n"
-"\n"
-"Fortunately, we've managed to find a way around this problem -- by loading new rails into the gun after every series of shots.\n"
-"\n"
-"The concept of pre-loading all of a weapon's ammunition into the barrel has been around for a long time. Until now it has only been applied to conventional firearms, but we have come up with a new concept; a small, individually-powered and insulated length of rail loaded with every round. This gives each round a viable contact point and will allow the weapon to sustain power through all its shots. When all rounds in the current barrel have been depleted -- and therefore the rails thoroughly destroyed -- the soldier can simply unlock the old barrel, let it drop to the ground, and slot in a fresh spare. Then he can replace the battery pack for a new series of shots.\n"
-"\n"
-"The projectiles are specially-developed 3.2x40mm finned flechettes, stamped from large sheets of tungsten alloy. They are razor-sharp, with excellent armour-piercing qualities, and they tumble like demons inside the target. The holes that these flechettes cause are many times larger than their actual size.\n"
-"\n"
-"This choice of loading system makes the Bolter slow and clumsy to reload, with expensive, oversized magazines (a new barrel and battery pack for each reload) and a small ammo capacity of 4 shots per barrel. On the other hand, the Bolter's stopping power is far greater than any chemical firearm in our arsenal. It can be used both as a sniper rifle and a powerful assault weapon, depending on whether it is fired on semi-automatic or 4-round burst mode. It is a highly versatile weapon with many possible applications; its tactical value will certainly become apparent once we get some real combat experience with it.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1043
 msgid "bolterrifle_pre_txt"
-msgstr ""
-"Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
-"\n"
-"At least, that's what we thought, until the aliens showed up.\n"
-"\n"
-"Seeing alien craft hurtling through our skies, advanced robots scuttling through our streets, and high-powered energy weapons tearing up our people has given us a whole host of new ideas. It has also caused us to take a very close look through our collected UN research data. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new weapon for our tactical teams that will be both man-portable and combat-effective. This weapon would have extreme range and power and may serve us well in the days ahead.\n"
-"\n"
-"This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1074
 #: ../base/ufos/weapons_human.ufo:1893
@@ -2919,44 +2372,7 @@ msgstr "Elektromagneettisen kiväärin lipas"
 
 #: ../base/ufos/research.ufo:1095
 msgid "combatknife_txt"
-msgstr ""
-"Technical Specifications: Combat Knife\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The combat knife is a solid, twenty-six centimetre bar of sharp steel that can be used for a number of everyday purposes. As a weapon, the combat knife's edge is reinforced with hard ceramics to give it extra armour-piercing power, and it is balanced for throwing should the need arise. It also has a bayonet ring for affixing the knife to the barrel of an old-style battle rifle.\n"
-"\n"
-"The inclusion of the combat knife in our arsenal was a subject of hot debate. Mumbai has taught us that even in the most favourable conditions, a knife is no match for the aliens' weaponry. If a knife-equipped soldier isn't shot down before he even reaches his target, he will almost certainly be gutted by one of the wicked alien blades that slice right through armour. Only in a handful of occasions have experienced knife-fighters been able to win out against alien opponents.\n"
-"\n"
-"Still, the combat knife has saved many a life over the years when firearms became inoperable or ran out of ammo. It has never been rendered obsolete by centuries of progressing technology; even the aliens use bladed weapons. When the chips are down, a knife in hand is still vastly better than a man's own fists.\n"
-"\n"
-"If a soldier makes it all the way to melee range, this weapon will serve him well.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"In combat, the knife is a weapon of last resort. If all other weapons are exhausted and the enemy is at the gates, then a good knife can save the day. However, even in such desperate situations it is risky business; using a knife on an enemy that hasn't been previously wounded or weakened is a fast way to end up in the morgue.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1111
 msgid "Monomolecular Blades"
@@ -2964,80 +2380,15 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1116
 msgid "monoknife_txt"
-msgstr ""
-"Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
-"\n"
-"The reproduction process has been very interesting on this one. After we'd figured out how to 'cook' the alien plastics to the right temperatures, we ended up with bars of incredibly hard material which we then tried to shape into knives. On our first attempts we tried to create a straight-edged blade with a powerful point, like most modern combat knives, so that it could be used for both cutting and stabbing. All of these models snapped in half during the cooling process. We had a devil of a time figuring out why until we placed a small camera inside the furnace.\n"
-"\n"
-"It turns out that the curve of the Kerrblade isn't a design choice -- it's a function of the material itself. The plastic radically curves and expands during heat-moulding in our furnace, and contracts again during cooling, which ended up cracking all of our straight-edged blades. It demands a particular curved shape to retain its durability as a blade. We had to completely redesign the knife to account for this effect, which brought it to its current shape.\n"
-"\n"
-"In length, it's either a long knife or a short sword, depending on who you ask. The design of the handle and crossguard are based on Middle-Eastern and Asian swordmaking traditions mixed in with modern-day science and know-how. The handle is made from semi-solid rubber, which automatically moulds itself to the wielder's hand to maximise comfort and gripping power. Both the triangular crossguard and pommel are unbreakable carbon-nanotube-reinforced plastic, a material that even Kerrblades have trouble with.\n"
-"\n"
-"This knife goes a long way towards evening the odds for our soldiers when they get caught in hand-to-hand. Though it's larger than our old combat knife, doesn't thrust as well, and doesn't have the power of the Kerrblade's sword-length swing, it strikes an ideal middle ground between these two weapons. The monomolecular knife is almost the equal of the Kerrblade in lethality but still small enough to be worn in our standard holster or in a sheath hung from the belt. It amounts to a significant upgrade of our melee combat capabilities, and I'm thoroughly pleased with the result.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1119
 msgid "monoknife_pre_txt"
-msgstr ""
-"Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
-"\n"
-"Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.\n"
-"\n"
-"Obviously it would be of great interest to us if we could create our own knives made from these materials, with edges tapering to the width of a single molecule. My team and I believe it may now be possible.\n"
-"\n"
-"If you give us the funding and lab time we need, we can design and create a new monomolecular combat knife that will even the playing field for our soldiers when forced into hand-to-hand combat. This knife will be far more compact than the Kerrblade and much easier for humans to wield, and it'll be small enough to be used one-handed.\n"
-"\n"
-"Equipping our troops with such weapons could give them a major advantage, as they'll be able to properly defend themselves in melee for the first time whilst using other weapons or equipment -- such as pistols, grenades, medikits, or other useful items of tactical or life-saving importance.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1155
 msgid "flamer_txt"
-msgstr ""
-"Technical Specifications: CRC-FL Flamethrower\n"
-"\n"
-"CLASSIFIED LEVEL YELLOW\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Delta Clearance\n"
-"\n"
-"Filed: 20 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"From our experiences in Mumbai and other stricken cities, we've concluded that the aliens seem to concentrate their efforts on population centres, especially dense urban areas. A majority of engagements have taken place at knife-fighting range. For the purposes of the Excalibur Program, we've chosen several high-performance weapons for our Close Range Combat package.\n"
-"\n"
-"The Iranian ADA 22 flamethrower (nicknamed 'The Torch of God' by Alliance troops) is a marvel of modern engineering. Unlike the old flamethrowers of the 20th century, it requires no heavy pressure tanks to be carried on a soldier's back -- the ADA is one unit carried in the hands without any hoses or tubes. It simply slots a relatively small 200mm gas canister into the feed, fires its deadly ammunition, and then ejects the empty canister to make room for a reload. The system is ingenious and surprisingly reliable.\n"
-"\n"
-"The muzzle of the weapon is a powerful pump that squirts gas into the air, then sets off the gas-air mixture by way of four parallel spark igniters, one main unit and three backups. These igniters each emit as many as ten sparks per second in order to ignite the fuel before it disperses. The backups are very important in preventing an explosion due to the special fuel the ADA uses, a substance called Compound 90.\n"
-"\n"
-"Compound 90 is a new flamethrower fuel that, when injected into the air, creates a slow thermobaric reaction -- a fuel-air ignition rather than a fuel-air explosion -- that can roast living tissue in seconds. C90 inflicts horrific damage on organic targets; the heat generated exceeds 1700 degrees celsius, enough to melt titanium. However, due to its gaseous nature it leaves no burning residue (like napalm) on the target or in the surrounding area and disperses its heat much more quickly. This makes it significantly safer for urban use than napalm-derivative substances.\n"
-"\n"
-"The ADA 22's main drawbacks are its short range and its complex internals, which are difficult to repair. However, our experienced technicians should have no problem doing maintenance on this model.\n"
-"\n"
-"For PHALANX use, we have given this flamethrower the classification CRC-FL.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The CRC-FL is a close-range weapon; the operator needs to be fast in order to get into weapons range and unleash as much hell as possible. It is also a rather weighty weapon despite its relatively slim design. Strength as well as speed is required to wield it effectively.\n"
-"\n"
-"Flamethrowers also make great ambush weapons -- just make sure that none of our soldiers are in the line of fire.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"This weapon should not be fired if there are civilians in or near the target zone."
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1174
 msgid "flamer_mag_txt"
@@ -6292,7 +5643,7 @@ msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid "Tactical mission"
-msgstr "Taktiset tehtävät"
+msgstr "Taktinen tehtävä"
 
 #: ../base/ufos/seq_tutorials.ufo:343
 msgid "Tactical mission tutorial"
@@ -6308,7 +5659,7 @@ msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:419
 msgid "The selected soldier"
-msgstr ""
+msgstr "Valittu sotilas"
 
 #: ../base/ufos/seq_tutorials.ufo:441
 msgid "Select soldiers via click"
@@ -6329,7 +5680,7 @@ msgstr ""
 #: ../base/ufos/seq_tutorials.ufo:518
 #: ../base/ufos/ui/hud.ufo:686
 msgid "Inventory"
-msgstr "tavaraluettelo"
+msgstr "Tavaraluettelo"
 
 #: ../base/ufos/seq_tutorials.ufo:547
 msgid "Weapon in right hand"
@@ -6345,11 +5696,11 @@ msgstr "Uudelleen lataa ase"
 
 #: ../base/ufos/seq_tutorials.ufo:630
 msgid "Primary attack"
-msgstr ""
+msgstr "Pää hyökkäys"
 
 #: ../base/ufos/seq_tutorials.ufo:660
 msgid "Secondary attack"
-msgstr ""
+msgstr "Toissijainen hyökkäys"
 
 #: ../base/ufos/seq_tutorials.ufo:683
 msgid "Turn reaction-fire on or off"
@@ -6409,7 +5760,7 @@ msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
-msgstr ""
+msgstr "Valitse pelattava kartta"
 
 #: ../base/ufos/seq_tutorials.ufo:974
 msgid "And..."
@@ -6510,7 +5861,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "Käytä [Välilyöntiä] näppäintä oven avaamiseen."
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
@@ -6767,24 +6118,24 @@ msgstr "Uudelleennimeä lentokone"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:86
 msgid "Selected item:"
-msgstr "Valitse kohde:"
+msgstr "Valitse tavara:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:151
 msgid "Equip this item"
-msgstr "Varusta tämä kohde"
+msgstr "Varusta tämä tavara"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:168
 msgid "Remove this item"
-msgstr ""
+msgstr "Poista tämä tavara"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:192
 msgid "Available equipment:"
-msgstr ""
+msgstr "Saatavissa olevat varusteet:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:207
 #: client/campaign/cp_fightequip_callbacks.c:164
 msgid "Weapons"
-msgstr "Aseet:"
+msgstr "Aseet"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:211
 #: client/campaign/cp_fightequip_callbacks.c:171
@@ -6804,7 +6155,7 @@ msgstr "Panssari"
 #: ../base/ufos/ui/aircraft_equip.ufo:219
 #: client/campaign/cp_fightequip_callbacks.c:168
 msgid "Items"
-msgstr ""
+msgstr "Tavarat"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:289
 #: ../base/ufos/ui/aircraft_equip.ufo:309
@@ -6813,7 +6164,7 @@ msgstr "Valitse alue"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:329
 msgid "Current item in slot"
-msgstr ""
+msgstr "Nykyinen tavara paikassa"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:340
 msgid "Ammo fitting this weapon"
@@ -6837,7 +6188,7 @@ msgstr "Miehitys:"
 
 #: ../base/ufos/ui/aircraft_info.ufo:94
 msgid "Start Aircraft"
-msgstr ""
+msgstr "Käynnistä Lentokone"
 
 #: ../base/ufos/ui/aircraft_info.ufo:100
 msgid "Call back"
@@ -6886,7 +6237,7 @@ msgstr "Ei enemmpää sotilaita voidaan siirtää tähän alukseen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:136
 msgid "Assign soldier to this craft"
-msgstr "Määritä sotilas tähän alukseen"
+msgstr "Siirrä sotilas tähän alukseen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:147
 msgid "Remove soldier from this craft"
@@ -6894,7 +6245,7 @@ msgstr "Poista sotilas tästä aluksesta"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:157
 msgid "Soldier carries equipment"
-msgstr "Sotilas kantaa vaeusteita"
+msgstr "Sotilas kantaa varusteita"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:166
 msgid "Soldier carries no equipment"
@@ -7013,7 +6364,7 @@ msgstr "Ei sotilaita asetettu"
 #: ../base/ufos/ui/aliencont.ufo:18
 #: ../base/ufos/ui/aliencont.ufo:114
 msgid "Kill this alien"
-msgstr "Tapa Tämä Muukalainen"
+msgstr "Tapa tämä Alien"
 
 #: ../base/ufos/ui/aliencont.ufo:24
 #: ../base/ufos/ui/aliencont.ufo:101
@@ -7128,16 +6479,16 @@ msgstr "Päätä vuoro"
 #: ../base/ufos/ui/althud.ufo:1172
 #: ../base/ufos/ui/hud.ufo:894
 msgid "Multiple-shot reaction fire"
-msgstr ""
+msgstr "Useita laukauksia rektio laukaus"
 
 #: ../base/ufos/ui/althud.ufo:1177
 msgid "Multiple-shot reaction fire (not possible)"
-msgstr ""
+msgstr "Useita laukauksia reaktio laukaus (ei toiminnassa)"
 
 #: ../base/ufos/ui/althud.ufo:1182
 #: ../base/ufos/ui/hud.ufo:906
 msgid "One-shot reaction fire"
-msgstr ""
+msgstr "Yhden laukauksen reaktio laukaus"
 
 #: ../base/ufos/ui/althud.ufo:1187
 msgid "One-shot reaction fire (not possible)"
@@ -7146,7 +6497,7 @@ msgstr ""
 #: ../base/ufos/ui/althud.ufo:1193
 #: ../base/ufos/ui/hud.ufo:918
 msgid "No reaction fire"
-msgstr ""
+msgstr "Ei reaktio laukauksia"
 
 #: ../base/ufos/ui/althud.ufo:1202
 #: ../base/ufos/ui/hud.ufo:874
@@ -7171,9 +6522,8 @@ msgid "Laser Defences"
 msgstr "Laser Puolustus"
 
 #: ../base/ufos/ui/basedefence.ufo:104
-#, fuzzy
 msgid "Weapon slots"
-msgstr "Aseet:"
+msgstr "Aseen paikat"
 
 #: ../base/ufos/ui/basedefence.ufo:155
 msgid "Add"
@@ -7205,7 +6555,7 @@ msgstr ""
 
 #: ../base/ufos/ui/basedefence.ufo:326
 msgid "Targetted UFO:"
-msgstr ""
+msgstr "UFO tähtäimessä:"
 
 #: ../base/ufos/ui/basedefence.ufo:339
 #: ../base/ufos/ui/geoscape.ufo:1419
@@ -7489,7 +6839,7 @@ msgstr "Vyö"
 #: ../base/ufos/ui/equipment.ufo:191
 #: ../base/ufos/ui/equipment.ufo:203
 msgid "Equip this soldier"
-msgstr "Varusta sotilas"
+msgstr "Varusta tämä sotilas"
 
 #: ../base/ufos/ui/equipment.ufo:310
 #: ../base/ufos/ui/market.ufo:71
@@ -7680,11 +7030,11 @@ msgstr "Mene Asetuksiin"
 
 #: ../base/ufos/ui/geoscape.ufo:661
 msgid "Ready"
-msgstr "Perillä kohteessa"
+msgstr "Valmis"
 
 #: ../base/ufos/ui/geoscape.ufo:667
 msgid "Aircraft reached desired location - what to do?"
-msgstr "Lentokone on saavuttanut kohteensa."
+msgstr "Lentokone on saavuttanut kohteensa - mitä tehdään?"
 
 #: ../base/ufos/ui/geoscape.ufo:675
 #: ../base/ufos/ui/geoscape.ufo:924
@@ -7866,7 +7216,6 @@ msgid "New radar tower"
 msgstr "Uusi tutka torni"
 
 #: ../base/ufos/ui/geoscape.ufo:1488
-#, fuzzy
 msgid "New SAM site"
 msgstr "Uusi SAM paikka"
 
@@ -7958,7 +7307,7 @@ msgstr "3D"
 
 #: ../base/ufos/ui/hire.ufo:7
 msgid "Hire/Unhire - Right click to remove"
-msgstr "Palkkaa/Anna potkut - oikea clikkaus poistaa"
+msgstr "Palkkaa/Anna potkut - oikea klikkaus poistaa"
 
 #: ../base/ufos/ui/hire.ufo:235
 msgid "Rename your employee"
@@ -7981,7 +7330,7 @@ msgstr "Tutkijat"
 #: ../base/ufos/ui/hospital.ufo:105
 #: ../base/ufos/ui/hospital.ufo:129
 msgid "Unused"
-msgstr "käyttämätön"
+msgstr "Käyttämätön"
 
 #: ../base/ufos/ui/hospital.ufo:114
 msgid "Heavily wounded"
@@ -8280,7 +7629,7 @@ msgstr "Seuraava"
 #: ../base/ufos/ui/main.ufo:294
 #: ../base/ufos/ui/main.ufo:307
 msgid "Next tip"
-msgstr "Seuraava neuvo"
+msgstr "Seuraava vihje"
 
 #: ../base/ufos/ui/main.ufo:310
 msgid "Close window"
@@ -8308,7 +7657,7 @@ msgstr ""
 
 #: ../base/ufos/ui/market.ufo:310
 msgid "Storage (used/all):"
-msgstr "Varasti (käytetty/kaikki)"
+msgstr "Varasto (käytetty/kaikki)"
 
 #: ../base/ufos/ui/market.ufo:503
 msgid "Item autosell enabled"
@@ -8349,7 +7698,7 @@ msgstr "-"
 #: ../base/ufos/ui/material_editor.ufo:277
 #: ../base/ufos/ui/material_editor.ufo:380
 msgid "S:"
-msgstr ""
+msgstr "S:"
 
 #: ../base/ufos/ui/material_editor.ufo:301
 #: ../base/ufos/ui/material_editor.ufo:404
@@ -8358,7 +7707,7 @@ msgstr "T:"
 
 #: ../base/ufos/ui/material_editor.ufo:332
 msgid "Ds:"
-msgstr ""
+msgstr "DS:"
 
 #: ../base/ufos/ui/material_editor.ufo:356
 msgid "Dt:"
@@ -8368,17 +7717,17 @@ msgstr "Dt:"
 #: ../base/ufos/ui/material_editor.ufo:490
 #: ../base/ufos/ui/material_editor.ufo:593
 msgid "Hz:"
-msgstr ""
+msgstr "Hz:"
 
 #: ../base/ufos/ui/material_editor.ufo:459
 #: ../base/ufos/ui/material_editor.ufo:514
 #: ../base/ufos/ui/material_editor.ufo:562
 msgid "DHz:"
-msgstr ""
+msgstr "DHz:"
 
 #: ../base/ufos/ui/material_editor.ufo:538
 msgid "Amp:"
-msgstr ""
+msgstr "Amp:"
 
 #: ../base/ufos/ui/material_editor.ufo:617
 msgid "Deg:"
@@ -8458,7 +7807,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer.ufo:37
 #: ../base/ufos/ui/multiplayer.ufo:155
 msgid "Team"
-msgstr "Joukkoe"
+msgstr "Joukkue"
 
 #: ../base/ufos/ui/multiplayer.ufo:44
 msgid "Join"
@@ -8474,7 +7823,7 @@ msgstr "Internet/Verkko"
 
 #: ../base/ufos/ui/multiplayer.ufo:87
 msgid "Lan"
-msgstr "Lan"
+msgstr "Verkko"
 
 #: ../base/ufos/ui/multiplayer.ufo:92
 #: ../base/ufos/ui/multiplayer.ufo:215
@@ -8503,7 +7852,7 @@ msgstr "Päivitä"
 
 #: ../base/ufos/ui/multiplayer.ufo:366
 msgid "Connect to IP"
-msgstr "Yhdistä osoitteeseen"
+msgstr "Yhdistä IP osoitteeseen"
 
 #: ../base/ufos/ui/multiplayer.ufo:429
 msgid "Bookmarks"
@@ -8593,7 +7942,7 @@ msgstr "Ota käyttöön moraali tilat:"
 
 #: ../base/ufos/ui/multiplayer.ufo:749
 msgid "Max. clients:"
-msgstr "Pelaajia enintään:"
+msgstr "Maks. yhteydet:"
 
 #: ../base/ufos/ui/multiplayer.ufo:750
 #, fuzzy
@@ -8602,7 +7951,7 @@ msgstr "Aseta maksimimäärä hyväksytyille asiakkaiden yhteyksille"
 
 #: ../base/ufos/ui/multiplayer.ufo:776
 msgid "Max. soldiers per team:"
-msgstr "Enintään sotilaita joukkueella:"
+msgstr "Maks. sotilaita joukkueella:"
 
 #: ../base/ufos/ui/multiplayer.ufo:777
 msgid "Sets the max allowed soldiers per team"
@@ -8610,7 +7959,7 @@ msgstr "Aseta sallittu enimmäismäärä sotilaita joukkueelle"
 
 #: ../base/ufos/ui/multiplayer.ufo:803
 msgid "Max. soldiers per player:"
-msgstr "Enintään sotilaita pelaajalla:"
+msgstr "Maks. sotilaita pelaajalla:"
 
 #: ../base/ufos/ui/multiplayer.ufo:804
 msgid "Sets the max allowed soldiers per player when in teamplay"
@@ -8618,20 +7967,20 @@ msgstr "Aseta sallittu maksimimäärä sotilaita pelaajalle joukkuepelissä"
 
 #: ../base/ufos/ui/multiplayer.ufo:831
 msgid "Max. human players per team:"
-msgstr "Enintään ihmispelaajia joukkueessa:"
+msgstr "Maks. ihmispelaajia joukkueessa:"
 
 #: ../base/ufos/ui/multiplayer.ufo:857
 #: ../base/ufos/ui/skirmish.ufo:106
 msgid "Max. AI actors:"
-msgstr "Enintään tekoäly pelaajia:"
+msgstr "Maks. tekoäly pelaajia:"
 
 #: ../base/ufos/ui/multiplayer.ufo:858
 msgid "Max AI actors for teamplay mode"
-msgstr "Enintään tekoäly pelaajia joukkuepeli moodissa"
+msgstr "Maks. tekoäly pelaajia joukkue peli moodissa"
 
 #: ../base/ufos/ui/multiplayer.ufo:891
 msgid "Make this server public:"
-msgstr "Julkinen palvelin:"
+msgstr "Tee tästä julkinen palvelin:"
 
 #: ../base/ufos/ui/multiplayer.ufo:908
 msgid "Server-Password:"
@@ -8647,7 +7996,7 @@ msgstr "Aloita palvelin"
 
 #: ../base/ufos/ui/multiplayer.ufo:1144
 msgid "Party info"
-msgstr "Miehistön tiedot"
+msgstr "Party tiedot"
 
 #: ../base/ufos/ui/multiplayer.ufo:1154
 msgid "Display/hide the panel"
@@ -8655,11 +8004,11 @@ msgstr "Näytä/piilota paneeli"
 
 #: ../base/ufos/ui/multiplayer.ufo:1199
 msgid "Max. players per team"
-msgstr "Max. määrä pelaajia tiimissä"
+msgstr "Maks. määrä pelaajia joukkueessa"
 
 #: ../base/ufos/ui/multiplayer.ufo:1213
 msgid "Max. teams for this map"
-msgstr "Max. määrä tiimejä kentässä."
+msgstr "Maks. määrä tiimejä kentässä."
 
 #: ../base/ufos/ui/multiplayer.ufo:1236
 msgid "Players connected"
@@ -8722,7 +8071,7 @@ msgstr "Kutsu muita"
 
 #: ../base/ufos/ui/multiplayer.ufo:1423
 msgid "Invite players that are online in the lobby"
-msgstr ""
+msgstr "Kutsu pelaajia jotka ovat yhteydessä aulaan"
 
 #: ../base/ufos/ui/multiplayer.ufo:1459
 msgid "Party chat"
@@ -8730,7 +8079,7 @@ msgstr "Bile rupattelu"
 
 #: ../base/ufos/ui/multiplayer.ufo:1463
 msgid "Global lobby (IRC)"
-msgstr ""
+msgstr "Globaali aula (IRC)"
 
 #: ../base/ufos/ui/multiplayer.ufo:1546
 #: ../base/ufos/ui/multiplayer.ufo:1619
@@ -8791,7 +8140,7 @@ msgstr "Joukkue:"
 #: ../base/ufos/ui/skirmish.ufo:148
 #: client/cl_game_campaign.c:198
 msgid "Human"
-msgstr "ihmiset"
+msgstr "Ihminen"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:920
 #: ../base/ufos/ui/skirmish.ufo:152
@@ -8804,7 +8153,7 @@ msgstr "Tallenna tiimisi"
 
 #: ../base/ufos/ui/multiplayeringame.ufo:52
 msgid "Abort Game"
-msgstr "Keskeytä peli"
+msgstr "Keskeytä Peli"
 
 #: ../base/ufos/ui/options.ufo:34
 msgid "Game"
@@ -8812,7 +8161,7 @@ msgstr "Peli"
 
 #: ../base/ufos/ui/options.ufo:44
 msgid "Video"
-msgstr "Kuva"
+msgstr "Video"
 
 #: ../base/ufos/ui/options.ufo:55
 msgid "Sound"
@@ -8820,11 +8169,11 @@ msgstr "Ääni"
 
 #: ../base/ufos/ui/options.ufo:65
 msgid "Input"
-msgstr "Syöte"
+msgstr "Sisääntulo"
 
 #: ../base/ufos/ui/options.ufo:93
 msgid "Video settings"
-msgstr "Kuva-asetukset"
+msgstr "Video asetukset"
 
 #: ../base/ufos/ui/options.ufo:102
 msgid "Resolution:"
@@ -8937,7 +8286,7 @@ msgstr "Korkea"
 #: ../base/ufos/ui/options.ufo:468
 #: client/battlescape/cl_actor.c:119
 msgid "Excellent"
-msgstr "loistava"
+msgstr "Loistava"
 
 #: ../base/ufos/ui/options.ufo:472
 msgid "Extreme"
@@ -8981,7 +8330,7 @@ msgstr "Vaihtoehtoinen HUD"
 
 #: ../base/ufos/ui/options.ufo:822
 msgid "Tooltips:"
-msgstr "Kontekstivihjeet:"
+msgstr "Vihjetekstit:"
 
 #: ../base/ufos/ui/options.ufo:829
 msgid "Activates tooltips"
@@ -8997,11 +8346,11 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:858
 msgid "Cursor tooltips:"
-msgstr ""
+msgstr "Kursorin työkaluvihjeet:"
 
 #: ../base/ufos/ui/options.ufo:865
 msgid "Activates cursor tooltips"
-msgstr ""
+msgstr "Aktivoi kursorin työkaluvihjeet"
 
 #: ../base/ufos/ui/options.ufo:876
 msgid "3D Geoscape:"
@@ -9054,7 +8403,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1082
 msgid "Joystick settings:"
-msgstr "Ohjaimen asetukset"
+msgstr "Peliohjaimen asetukset:"
 
 #: ../base/ufos/ui/options.ufo:1089
 msgid "Enable:"
@@ -9096,7 +8445,7 @@ msgstr "Hyväksy Tehtävät:"
 
 #: ../base/ufos/ui/options.ufo:1219
 msgid "Only for moving"
-msgstr ""
+msgstr "Ainoastaan liikkeessä"
 
 #: ../base/ufos/ui/options.ufo:1229
 msgid "Joystick:"
@@ -9220,7 +8569,7 @@ msgstr "Skirmish peliasetukset"
 
 #: ../base/ufos/ui/skirmish.ufo:109
 msgid "Max AI actors for this game"
-msgstr ""
+msgstr "Maks. Tekoäly hahmoja tässä pelissä"
 
 #: ../base/ufos/ui/skirmish.ufo:137
 msgid "Select which side you want to play with"
@@ -9240,7 +8589,7 @@ msgstr "Pudotusalus:"
 
 #: ../base/ufos/ui/skirmish.ufo:204
 msgid "Select the dropship that should be used"
-msgstr ""
+msgstr "Valitse pudotusalaus mitä haluat käyttää"
 
 #: ../base/ufos/ui/stats.ufo:37
 msgid "Missions"
@@ -9258,7 +8607,7 @@ msgstr "Asennukset"
 #: ../base/ufos/ui/transfer.ufo:37
 #: ../base/ufos/ui/transfer.ufo:49
 msgid "Employees"
-msgstr "Työntekijöitä"
+msgstr "Työntekijät"
 
 #: ../base/ufos/ui/stats.ufo:113
 msgid "Costs"
@@ -9285,8 +8634,9 @@ msgid "Current Funding"
 msgstr ""
 
 #: ../base/ufos/ui/stats.ufo:365
+#, fuzzy
 msgid "Month (Relative to current)"
-msgstr ""
+msgstr "Kuukausi"
 
 #: ../base/ufos/ui/stats.ufo:446
 msgid "Funding"
@@ -9294,7 +8644,7 @@ msgstr "Rahoitus"
 
 #: ../base/ufos/ui/stats.ufo:460
 msgid "max"
-msgstr ""
+msgstr "maks"
 
 #: ../base/ufos/ui/sys_editor.ufo:12
 #, fuzzy
@@ -9337,7 +8687,7 @@ msgstr ""
 #: ../base/ufos/ui/transfer.ufo:53
 #: client/cl_game_campaign.c:200
 msgid "Aliens"
-msgstr "muukalaiset"
+msgstr "Alienit"
 
 #: ../base/ufos/ui/transfer.ufo:90
 msgid "Amount/Transfer"
@@ -9364,8 +8714,9 @@ msgstr "Määrä/Siirto"
 #: ../base/ufos/ui/transfer.ufo:368
 #: ../base/ufos/ui/transfer.ufo:379
 #: ../base/ufos/ui/transfer.ufo:390
+#, fuzzy
 msgid "Add/Remove item to transfer cargo"
-msgstr ""
+msgstr "Lisää/Poista tuotteita siirto lavalta"
 
 #: ../base/ufos/ui/transfer.ufo:516
 msgid "Destination base"
@@ -9757,7 +9108,7 @@ msgstr ""
 
 #: ../base/ufos/weapons_laser.ufo:241
 msgid "Stun Shot"
-msgstr ""
+msgstr "Tainnutus laukaus"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -9769,7 +9120,7 @@ msgstr ""
 
 #: ../base/ufos/weapons_melee.ufo:124
 msgid "Stun Rod"
-msgstr ""
+msgstr "Tainnutusputki"
 
 #: ../base/ufos/weapons_melee.ufo:145
 msgid "Stun Charge"
@@ -9903,55 +9254,55 @@ msgstr ""
 
 #: ../base/ufos/weapons_ugv.ufo:64
 msgid "Chaingun Belt"
-msgstr "Chain aseen Vyö"
+msgstr "Chain-aseen Vyö"
 
 #: ../base/ufos/weapons_ugv.ufo:146
 msgid "Autocannon Module"
-msgstr ""
+msgstr "Autokanuunan Moduuli"
 
 #: client/battlescape/cl_actor.c:105
 msgid "Poor"
-msgstr "heikko"
+msgstr "Heikko"
 
 #: client/battlescape/cl_actor.c:107
 msgid "Mediocre"
-msgstr "kohtalainen"
+msgstr "Kohtalainen"
 
 #: client/battlescape/cl_actor.c:109
 msgid "Average"
-msgstr "keskiverto"
+msgstr "Keskiverto"
 
 #: client/battlescape/cl_actor.c:111
 msgid "Competent"
-msgstr "harjaantunut"
+msgstr "Harjaantunut"
 
 #: client/battlescape/cl_actor.c:113
 msgid "Proficient"
-msgstr "taitava"
+msgstr "Taitava"
 
 #: client/battlescape/cl_actor.c:115
 msgid "Very Good"
-msgstr "erittäin hyvä"
+msgstr "Erittäin hyvä"
 
 #: client/battlescape/cl_actor.c:117
 msgid "Highly Proficient"
-msgstr "erittäin taitava"
+msgstr "Erittäin taitava"
 
 #: client/battlescape/cl_actor.c:121
 msgid "Outstanding"
-msgstr "erinomainen"
+msgstr "Erinomainen"
 
 #: client/battlescape/cl_actor.c:124
 msgid "Superhuman"
-msgstr "yli-inhimillinen"
+msgstr "Yli-inhimillinen"
 
 #: client/battlescape/cl_actor.c:1052
 msgid "This isn't your round\n"
-msgstr ""
+msgstr "Tämä ei ole sinun vuorosi\n"
 
 #: client/battlescape/cl_actor.c:1293
 msgid "You cannot reload this unknown item.\n"
-msgstr ""
+msgstr "Et voi ladata tätä tuntematonta esinettä.\n"
 
 #: client/battlescape/cl_actor.c:2325
 msgid "Unknown alien race"
@@ -9959,7 +9310,7 @@ msgstr "Tuntemattoman alienin rotu"
 
 #: client/battlescape/cl_actor.c:2874
 msgid "Reselect the current soldier"
-msgstr ""
+msgstr "Uudelleen valitse nykyinen sotilaasi"
 
 #: client/battlescape/cl_actor.c:2875
 msgid "Toggle to next soldier"
@@ -9967,7 +9318,7 @@ msgstr ""
 
 #: client/battlescape/cl_actor.c:2876
 msgid "Select a soldier from list"
-msgstr ""
+msgstr "Valitse sotilas listalta"
 
 #: client/battlescape/cl_actor.c:2877
 msgid "Update a soldier"
@@ -10207,6 +9558,8 @@ msgid ""
 "%s\n"
 "(empty)\n"
 msgstr ""
+"%s\n"
+"(tyhjä)\n"
 
 #: client/battlescape/cl_hud.c:1466
 msgid "Currently panics!\n"
@@ -10241,7 +9594,7 @@ msgstr "ladataan malleja..."
 #: client/battlescape/cl_view.c:271
 #: client/cl_main.c:1015
 msgid "Awaiting game start"
-msgstr ""
+msgstr "Odottaa pelin alkamista"
 
 #: client/battlescape/events/event/actor/e_event_actorappear.c:159
 #, c-format
@@ -10268,45 +9621,45 @@ msgstr "%s tapettiin\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:89
 msgid "A civilian was stunned.\n"
-msgstr ""
+msgstr "Siviili on tainnoksissa.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:91
 msgid "A civilian was killed.\n"
-msgstr ""
+msgstr "Siviili on kuollut.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:95
 msgid "An alien was stunned.\n"
-msgstr ""
+msgstr "Alien on tainnoksissa.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:97
 msgid "An alien was killed.\n"
-msgstr ""
+msgstr "Siviili on kuollut.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:101
 msgid "A soldier was stunned.\n"
-msgstr ""
+msgstr "Sotilas on tainnoksissa.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:103
 msgid "A soldier was killed.\n"
-msgstr ""
+msgstr "Sotilas on kuollut.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:107
 #, c-format
 msgid "A member of team %i was stunned.\n"
-msgstr ""
+msgstr "Henkilö joukkueesta %i on tainnoksissa.\n"
 
 #: client/battlescape/events/event/actor/e_event_actordie.c:109
 #, c-format
 msgid "A member of team %i was killed.\n"
-msgstr ""
+msgstr "Henkilö joukkueesta %i on kuollut.\n"
 
 #: client/battlescape/events/event/player/e_event_doendround.c:58
 msgid "Your round started!\n"
-msgstr ""
+msgstr "Sinun kierros alkoi!\n"
 
 #: client/battlescape/events/event/player/e_event_endroundannounce.c:55
 msgid "You've ended your round\n"
-msgstr ""
+msgstr "Sinä lopetit kierroksen\n"
 
 #: client/battlescape/events/event/player/e_event_endroundannounce.c:58
 #, c-format
@@ -10315,11 +9668,11 @@ msgstr ""
 
 #: client/campaign/cp_aircraft.c:421
 msgid "ON RED ALERT"
-msgstr ""
+msgstr "PUNAINEN HÄLYTYS"
 
 #: client/campaign/cp_aircraft.c:425
 msgid "Nothing - should not be displayed"
-msgstr ""
+msgstr "Ei mitään - ei pitäisi näyttää"
 
 #: client/campaign/cp_aircraft.c:427
 msgid "at home base"
@@ -10327,7 +9680,7 @@ msgstr "kotitukikohdassa"
 
 #: client/campaign/cp_aircraft.c:429
 msgid "refuelling"
-msgstr ""
+msgstr "tankataan"
 
 #: client/campaign/cp_aircraft.c:431
 #, fuzzy
@@ -10374,7 +9727,7 @@ msgstr "Siirrä"
 #: client/campaign/cp_ufo.c:120
 #: client/campaign/cp_ufo.c:121
 msgid "UFO"
-msgstr ""
+msgstr "UFO"
 
 #: client/campaign/cp_aircraft.c:785
 #, c-format
@@ -10459,7 +9812,7 @@ msgstr ""
 #: client/cl_main.c:407
 #: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
-msgstr ""
+msgstr "Huomautus"
 
 #: client/campaign/cp_aircraft.c:851
 msgid "No operational hangars at that base."
@@ -10484,17 +9837,17 @@ msgstr ""
 #: client/campaign/cp_aircraft.c:1237
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
-msgstr ""
+msgstr "Alusta %s ei voida onnistuneesti tankata %s. Liian vähän antimateriaalia."
 
 #: client/campaign/cp_aircraft.c:1253
 #, c-format
 msgid "Craft %s has refueled at %s."
-msgstr ""
+msgstr "Alus %s on tankattu %s."
 
 #: client/campaign/cp_aircraft.c:1299
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
-msgstr ""
+msgstr "Aluksella %s on liian vähän polttoainetta ja sen on palattava tukikohtaan."
 
 #: client/campaign/cp_aircraft.c:1380
 msgid "Assign one or more soldiers to this aircraft first."
@@ -10507,7 +9860,7 @@ msgstr ""
 #: client/campaign/cp_aircraft.c:2180
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
-msgstr ""
+msgstr "Aluksella %s on liian vähän polttoainetta kohdatakseen UFO:n, lennä takaisin %s."
 
 #: client/campaign/cp_aircraft_callbacks.c:138
 msgid ""
@@ -10525,7 +9878,7 @@ msgstr ""
 
 #: client/campaign/cp_aircraft_callbacks.c:154
 msgid "Aircraft started"
-msgstr ""
+msgstr "Lentokone käynnistetty"
 
 #: client/campaign/cp_aircraft_callbacks.c:257
 #: client/campaign/cp_map.c:1592
@@ -10560,12 +9913,12 @@ msgstr "Panssarit:\t%i on 1\n"
 #: client/campaign/cp_aircraft_callbacks.c:264
 #, c-format
 msgid "Electronics:\t%i on %i"
-msgstr ""
+msgstr "Elektroniikka:\t%i on %i"
 
 #: client/campaign/cp_airfight.c:356
 #, c-format
 msgid "A UFO is shooting at %s"
-msgstr ""
+msgstr "UFOA tulitetaan %s"
 
 #: client/campaign/cp_airfight.c:376
 msgid "Our aircraft has no more ammo left - returning to home base now."
@@ -10583,23 +9936,25 @@ msgstr ""
 #: client/campaign/cp_airfight.c:478
 #: client/campaign/cp_campaign.c:1572
 msgid "You've lost the battle"
-msgstr ""
+msgstr "Sinä hävisit taistelun"
 
 #: client/campaign/cp_aliencont.c:194
+#, fuzzy
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
-msgstr ""
+msgstr "Alien säilytystila ei ole valmis tässä tukikohdassa."
 
 #: client/campaign/cp_aliencont.c:226
 msgid "You can't hold live aliens yet. Aliens died."
-msgstr ""
+msgstr "Et voi vielä pitää elossa alieneita. Alien kuoli."
 
 #: client/campaign/cp_aliencont.c:245
+#, fuzzy
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
-msgstr ""
+msgstr "Sinulla ei ole tarpeeksi tilaa Alienin säilitystilassa. Jotkut alienit kuolevat."
 
 #: client/campaign/cp_aliencont.c:255
 msgid "You've captured new aliens."
-msgstr ""
+msgstr "Sait kaapattua uusia alieneita."
 
 #: client/campaign/cp_aliencont_callbacks.c:205
 msgid "Already researched"
@@ -10607,11 +9962,11 @@ msgstr "Jo tutkittu"
 
 #: client/campaign/cp_aliencont_callbacks.c:207
 msgid "Needs autopsy!"
-msgstr ""
+msgstr "Tarvitaan ruumiinavauksia!"
 
 #: client/campaign/cp_aliencont_callbacks.c:230
 msgid "Free slot"
-msgstr ""
+msgstr "Tyhjä paikka"
 
 #: client/campaign/cp_aliencont_callbacks.c:231
 #: client/campaign/cp_basedefence_callbacks.c:180
@@ -10630,7 +9985,7 @@ msgstr "Tuhoa Sisääntulo"
 
 #: client/campaign/cp_base.c:879
 msgid "You can't destroy the entrance of the base!"
-msgstr ""
+msgstr "Et voi tuhota sisäänkäyntiä tukikohdassa."
 
 #: client/campaign/cp_base.c:888
 msgid "Destroy Hangar"
@@ -10641,6 +9996,8 @@ msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Jos tuhoat tämän hallin, sinä tuhoat myös täällä sisällä olevat lentokoneet.\n"
+"Oletko varma että haluat tuhota tämän rakennuksen?"
 
 #: client/campaign/cp_base.c:889
 msgid "Go to hangar"
@@ -10672,10 +10029,12 @@ msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Jos tuhoat tämän asuinhuoneiston sinä tapat sen sisällä olevat työlaiset.\n"
+"Oletko varma että haluat tuhota tämän rakennuksen?"
 
 #: client/campaign/cp_base.c:899
 msgid "Dismiss"
-msgstr ""
+msgstr "Poistu"
 
 #: client/campaign/cp_base.c:899
 msgid "Go to hiring menu without destroying building"
@@ -10690,6 +10049,8 @@ msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
+"Jos tuhoat tämän varaston, kaikki tavarat sen sisällä tuhotaan.\n"
+"Oletko varma että haluat tuhota tämän rakennuksen?"
 
 #: client/campaign/cp_base.c:909
 msgid "Go to buy/sell menu without destroying building"
@@ -10718,11 +10079,11 @@ msgstr "Tukikohdassa jo %i kappaletta"
 
 #: client/campaign/cp_base.c:952
 msgid "Construction finished"
-msgstr ""
+msgstr "Rakennus valmis"
 
 #: client/campaign/cp_base.c:956
 msgid "Working 100%"
-msgstr ""
+msgstr "Työskentelee 100%"
 
 #: client/campaign/cp_base.c:960
 msgid "Not operational, depends on"
@@ -10730,11 +10091,11 @@ msgstr ""
 
 #: client/campaign/cp_base.c:964
 msgid "Down"
-msgstr ""
+msgstr "Alas"
 
 #: client/campaign/cp_base.c:1442
 msgid "Not enough credits to build this\n"
-msgstr ""
+msgstr "Liian vähän rahaa rakentaaksesi tätä\n"
 
 #: client/campaign/cp_base.c:1524
 #, c-format
@@ -10787,7 +10148,7 @@ msgstr "Rakennuksen %s valmistus tuli valmiiksi. %s"
 
 #: client/campaign/cp_base.c:2479
 msgid "Building finished"
-msgstr ""
+msgstr "Rakennus valmis"
 
 #: client/campaign/cp_base.c:2581
 #, c-format
@@ -10951,7 +10312,7 @@ msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 #: client/campaign/cp_base_callbacks.c:776
 #: client/campaign/cp_base_callbacks.c:792
 msgid "Nothing\n"
-msgstr ""
+msgstr "Ei mitään\n"
 
 #: client/campaign/cp_base_callbacks.c:781
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
@@ -10990,19 +10351,19 @@ msgstr "Työskentelee"
 #: client/campaign/cp_basedefence_callbacks.c:287
 #: client/campaign/cp_basedefence_callbacks.c:315
 msgid "Installing"
-msgstr "Asennus"
+msgstr "Asentaa"
 
 #: client/campaign/cp_basedefence_callbacks.c:261
 #: client/campaign/cp_basedefence_callbacks.c:289
 #: client/campaign/cp_basedefence_callbacks.c:317
 msgid "Replacing"
-msgstr "Korvaaminen"
+msgstr "Korvaa"
 
 #: client/campaign/cp_basedefence_callbacks.c:263
 #: client/campaign/cp_basedefence_callbacks.c:291
 #: client/campaign/cp_basedefence_callbacks.c:319
 msgid "Removing"
-msgstr "Poistaminen"
+msgstr "Poistaa"
 
 #: client/campaign/cp_basedefence_callbacks.c:273
 #: client/campaign/cp_basedefence_callbacks.c:301
@@ -11051,7 +10412,7 @@ msgstr ""
 #: client/campaign/cp_ufopedia.c:1168
 #, c-format
 msgid "%s\t%s\n"
-msgstr ""
+msgstr "%s\t%s\n"
 
 #: client/campaign/cp_campaign.c:757
 #, c-format
@@ -11064,7 +10425,7 @@ msgstr ""
 #: client/cl_inventory_callbacks.c:137
 #, c-format
 msgid "%s\t%i\n"
-msgstr ""
+msgstr "%s\t%i\n"
 
 #: client/campaign/cp_campaign.c:801
 #, c-format
@@ -11079,7 +10440,7 @@ msgstr "Lentokone:\t%i k\n"
 #: client/campaign/cp_campaign.c:825
 #, c-format
 msgid "Base (%s):\t%i c\n"
-msgstr ""
+msgstr "Tukikohta (%s):\t%i c\n"
 
 #: client/campaign/cp_campaign.c:830
 #, c-format
@@ -11157,7 +10518,7 @@ msgstr ""
 #: client/campaign/cp_campaign.c:1594
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
-msgstr ""
+msgstr "PHALANX sotilas katosi tehtävässä\t%i\n"
 
 #: client/campaign/cp_campaign.c:1595
 #, c-format
@@ -11170,6 +10531,8 @@ msgid ""
 "PHALANX survivors\t%i\n"
 "\n"
 msgstr ""
+"PHALANX selviytyneet\t%i\n"
+"\n"
 
 #: client/campaign/cp_campaign.c:1598
 #, c-format
@@ -11187,6 +10550,8 @@ msgid ""
 "Civilians saved\t%i\n"
 "\n"
 msgstr ""
+"Siviilejä pelastettu\t%i\n"
+"\n"
 
 #: client/campaign/cp_campaign.c:1601
 #, c-format
@@ -11196,7 +10561,7 @@ msgstr ""
 #: client/campaign/cp_campaign.c:1678
 #, c-format
 msgid "%s has been promoted to %s.\n"
-msgstr ""
+msgstr "%s on ylennetty %s.\n"
 
 #: client/campaign/cp_campaign.c:1680
 #, c-format
@@ -11207,7 +10572,7 @@ msgstr ""
 
 #: client/campaign/cp_campaign.c:1681
 msgid "Soldier promoted"
-msgstr ""
+msgstr "Sotilas ylennetty"
 
 #: client/campaign/cp_employee.c:164
 msgid "Soldier"
@@ -11249,7 +10614,7 @@ msgstr "Sinulle on uusi viesti: %s"
 
 #: client/campaign/cp_fightequip_callbacks.c:173
 msgid "Unknown"
-msgstr ""
+msgstr "Tuntematon"
 
 #: client/campaign/cp_fightequip_callbacks.c:397
 msgid "No item assigned.\n"
@@ -11262,7 +10627,7 @@ msgstr ""
 
 #: client/campaign/cp_fightequip_callbacks.c:406
 msgid "This item is functional.\n"
-msgstr ""
+msgstr "Tämä tavara on funktionaalinen.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:408
 #, c-format
@@ -11291,7 +10656,7 @@ msgstr ""
 #: client/campaign/cp_fightequip_callbacks.c:433
 #: client/campaign/cp_fightequip_callbacks.c:438
 msgid "No ammo needed"
-msgstr ""
+msgstr "Ammuksia ei tarvita"
 
 #: client/campaign/cp_fightequip_callbacks.c:566
 msgid "No slot selected."
@@ -11431,18 +10796,18 @@ msgstr ""
 #: client/campaign/cp_map.c:1597
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
-msgstr ""
+msgstr "Nimi:\t%s (%i/%i)\n"
 
 #: client/campaign/cp_map.c:1590
 #: client/campaign/cp_map.c:1598
 #, c-format
 msgid "Status:\t%s\n"
-msgstr ""
+msgstr "Tila:\t%s\n"
 
 #: client/campaign/cp_map.c:1591
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
-msgstr ""
+msgstr "Matkaa kohteeseen:\t\t%.0f\n"
 
 #: client/campaign/cp_map.c:1595
 #: client/campaign/cp_map.c:1605
@@ -11739,7 +11104,7 @@ msgstr "Vihainen"
 
 #: client/campaign/cp_nation.c:131
 msgid "Mad"
-msgstr "Vihainen"
+msgstr "Surullinen"
 
 #: client/campaign/cp_nation.c:133
 msgid "Upset"
@@ -11751,7 +11116,7 @@ msgstr "Suvaitseva"
 
 #: client/campaign/cp_nation.c:137
 msgid "Neutral"
-msgstr "neutraali"
+msgstr "Neutraali"
 
 #: client/campaign/cp_nation.c:139
 msgid "Content"
@@ -11875,7 +11240,7 @@ msgstr "tukikohdassa voi säilyttää lentokonetta"
 
 #: client/campaign/cp_popup.c:150
 msgid "Base\tStatus"
-msgstr "Tukokohta\tTila"
+msgstr "Tukikohta\tTila"
 
 #: client/campaign/cp_popup.c:150
 msgid "Change homebase of aircraft"
@@ -11884,11 +11249,11 @@ msgstr "Vaihda lentokoneen kotitukikohtaa"
 #: client/campaign/cp_popup.c:233
 #, c-format
 msgid "Back to base\t%s\n"
-msgstr ""
+msgstr "Takaisin tukikohtaan\t%s\n"
 
 #: client/campaign/cp_popup.c:235
 msgid "Stop\n"
-msgstr ""
+msgstr "Pysäytä\n"
 
 #: client/campaign/cp_popup.c:237
 msgid "Change homebase\n"
@@ -11902,7 +11267,7 @@ msgstr ""
 #: client/campaign/cp_popup.c:345
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
-msgstr ""
+msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
 #: client/campaign/cp_popup.c:363
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
@@ -11911,7 +11276,7 @@ msgstr ""
 #: client/campaign/cp_popup.c:424
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
-msgstr ""
+msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/campaign/cp_popup.c:442
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
@@ -11932,11 +11297,11 @@ msgstr ""
 #: client/campaign/cp_produce.c:233
 #, c-format
 msgid "Production queue for %s is empty"
-msgstr "Tuotteen %s jono  on tyhjä"
+msgstr "Tuotteen %s jono on tyhjä"
 
 #: client/campaign/cp_produce.c:234
 msgid "Production queue empty"
-msgstr ""
+msgstr "Tuotannon lista tyhjä"
 
 #: client/campaign/cp_produce.c:340
 #: client/campaign/cp_produce.c:362
@@ -11962,7 +11327,7 @@ msgstr "Tuotteen %s valmistus tuli valmiiksi %s."
 #: client/campaign/cp_produce.c:406
 #: client/campaign/cp_produce.c:446
 msgid "Production finished"
-msgstr ""
+msgstr "Tuotanto valmis"
 
 #: client/campaign/cp_produce.c:433
 #, c-format
@@ -12007,7 +11372,7 @@ msgstr ""
 #: client/campaign/cp_transfer.c:283
 #: client/campaign/cp_transfer.c:286
 msgid "Hangars not ready"
-msgstr ""
+msgstr "Hallit eivät valmiit"
 
 #: client/campaign/cp_produce_callbacks.c:158
 msgid ""
@@ -12077,7 +11442,7 @@ msgstr "Yhtään lentokonetta ei ole valittu."
 
 #: client/campaign/cp_produce_callbacks.c:782
 msgid "Queue full!"
-msgstr ""
+msgstr "Lista täynnä!"
 
 #: client/campaign/cp_produce_callbacks.c:782
 msgid "You cannot queue any more items!"
@@ -12097,7 +11462,7 @@ msgstr ""
 #: client/campaign/cp_produce_callbacks.c:828
 #, c-format
 msgid "Production of %s started"
-msgstr "Tuotteen %s valmistus alkoi"
+msgstr "%s tuotteen valmistus alkoi"
 
 #: client/campaign/cp_produce_callbacks.c:809
 #: client/campaign/cp_produce_callbacks.c:829
@@ -12131,11 +11496,11 @@ msgstr "Uusi tutkimusehdotus: %s\n"
 
 #: client/campaign/cp_research.c:137
 msgid "Unknown Technology researchable"
-msgstr ""
+msgstr "Tuntematonta teknologiaa uudelleen tutkittavana"
 
 #: client/campaign/cp_research.c:331
 msgid "Unknown Technology found"
-msgstr ""
+msgstr "Tuntematonta teknologiaa löydetty"
 
 #: client/campaign/cp_research.c:704
 #: client/campaign/cp_research.c:708
@@ -12162,7 +11527,7 @@ msgstr "Tutkimus lopetettava"
 
 #: client/campaign/cp_research.c:1215
 msgid "No description available."
-msgstr "Ei kuvausta."
+msgstr "Ei kuvausta saatavissa."
 
 #: client/campaign/cp_research.c:1216
 msgid "No research proposal available."
@@ -12171,12 +11536,12 @@ msgstr "Tutkimusehdotuksia ei ole saatavilla"
 #: client/campaign/cp_research_callbacks.c:94
 #, c-format
 msgid "Laboratory space (used/all): %i/%i"
-msgstr ""
+msgstr "Laboratorion koko (käytössä/kaikki): %i/%i"
 
 #: client/campaign/cp_research_callbacks.c:100
 #, c-format
 msgid "Scientists (available/all): %i/%i"
-msgstr ""
+msgstr "Tutkijoita (saatavissa/kaikki): %i/%i"
 
 #: client/campaign/cp_research_callbacks.c:105
 msgid "Not researched in any base."
@@ -12185,7 +11550,7 @@ msgstr "Ei tutkittu missään tukikohdassa"
 #: client/campaign/cp_research_callbacks.c:111
 #, c-format
 msgid "Researched in %s"
-msgstr "Tutkittu tukikohdassa %s."
+msgstr "Tutkittu %s."
 
 #: client/campaign/cp_research_callbacks.c:113
 msgid "Researched in this base."
@@ -12198,7 +11563,7 @@ msgstr "Edistyminen: %.1f%%"
 
 #: client/campaign/cp_research_callbacks.c:128
 msgid "Progress: not available."
-msgstr "Tutkimusehdotuksia ei ole saatavilla"
+msgstr "Edistyminen: ei ole saatavilla"
 
 #: client/campaign/cp_research_callbacks.c:133
 msgid "Status: under research"
@@ -12240,7 +11605,7 @@ msgstr "Palkkaamattomat tutkijat"
 
 #: client/campaign/cp_research_callbacks.c:298
 msgid "Missing an artifact"
-msgstr ""
+msgstr "Artifact hukassa"
 
 #: client/campaign/cp_research_callbacks.c:308
 msgid "Unresearchable collected items"
@@ -12279,11 +11644,11 @@ msgstr ""
 
 #: client/campaign/cp_save.c:254
 msgid "No campaign active."
-msgstr ""
+msgstr "Ei aktiivista kampanjaa."
 
 #: client/campaign/cp_save.c:260
 msgid "Nothing to save yet."
-msgstr ""
+msgstr "Mitään ei ole tallennettu vielä."
 
 #: client/campaign/cp_save.c:306
 msgid "Could not allocate enough memory to save this game"
@@ -12319,7 +11684,7 @@ msgstr "Virhe"
 
 #: client/campaign/cp_save.c:603
 msgid "Campaign was successfully saved."
-msgstr ""
+msgstr "Kampanja on onnistuneesti talletettu."
 
 #: client/campaign/cp_save.c:603
 msgid "Quicksave"
@@ -12331,7 +11696,7 @@ msgstr "Kampanja ladattu"
 
 #: client/campaign/cp_save.c:627
 msgid "Quicksave campaign was successfully loaded."
-msgstr ""
+msgstr "Pikatallennus kampanja on onnistuneesti ladattu."
 
 #: client/campaign/cp_save.c:684
 msgid "Saves to the quick save slot"
@@ -12344,7 +11709,7 @@ msgstr "%i / %i"
 
 #: client/campaign/cp_time.c:42
 msgid "stopped"
-msgstr ""
+msgstr "pysäytetty"
 
 #: client/campaign/cp_time.c:43
 msgid "5 sec"
@@ -12525,7 +11890,7 @@ msgstr "Lentäjä %s"
 #: client/campaign/cp_transfer.c:557
 #, c-format
 msgid "Corpse of %s"
-msgstr ""
+msgstr "Ruumis %s"
 
 #: client/campaign/cp_transfer.c:407
 #: client/campaign/cp_transfer.c:601
@@ -12723,7 +12088,7 @@ msgstr ""
 
 #: client/campaign/cp_ufopedia.c:150
 msgid "ECM"
-msgstr ""
+msgstr "ECM"
 
 #: client/campaign/cp_ufopedia.c:152
 msgid "Aircraft damage"
@@ -12786,13 +12151,13 @@ msgstr "Paino:\t%s\n"
 #: client/campaign/cp_ufopedia.c:284
 #, c-format
 msgid "Ammo:\t%i\n"
-msgstr ""
+msgstr "Ammus:\t%i\n"
 
 #: client/campaign/cp_ufopedia.c:286
 #: client/cl_inventory_callbacks.c:174
 #, c-format
 msgid "Damage:\t%i\n"
-msgstr ""
+msgstr "Vahinko:\t%i\n"
 
 #: client/campaign/cp_ufopedia.c:287
 #, c-format
@@ -12821,7 +12186,7 @@ msgstr ""
 #: client/campaign/cp_ufopedia.c:344
 #, c-format
 msgid "%s:\t%i km/h\n"
-msgstr ""
+msgstr "%s:\t%i km/h\n"
 
 #: client/campaign/cp_ufopedia.c:351
 #, c-format
@@ -12843,7 +12208,7 @@ msgstr "Sotilaita enintään:\t%i\n"
 #: client/campaign/cp_ufopedia.c:404
 #: client/campaign/cp_ufopedia.c:406
 msgid "Unknown - need to research this"
-msgstr ""
+msgstr "Tuntematon - tämä pitää tutkia"
 
 #: client/campaign/cp_ufopedia.c:401
 #, c-format
@@ -12859,8 +12224,9 @@ msgid "Proposal: "
 msgstr "Ehdotus: "
 
 #: client/campaign/cp_ufopedia.c:528
+#, fuzzy
 msgid "Re: "
-msgstr ""
+msgstr "Re:"
 
 #: client/campaign/cp_ufopedia.c:539
 #, fuzzy, c-format
@@ -12922,7 +12288,7 @@ msgstr "^B%s\t%s\n"
 #: client/campaign/cp_uforecovery.c:75
 #, c-format
 msgid "%s was transfered to %s."
-msgstr "%s siirretty %s."
+msgstr "%s on siirretty %s."
 
 #: client/campaign/cp_uforecovery.c:76
 msgid "UFO Recovered"
@@ -12930,7 +12296,7 @@ msgstr "UFO Heräsi"
 
 #: client/campaign/cp_uforecovery_callbacks.c:170
 msgid "No free UFO yard available."
-msgstr "Ei yhtään UFO alusta saatavilla"
+msgstr "Ei yhtään UFO-hallia saatavissa."
 
 #: client/campaign/cp_uforecovery_callbacks.c:220
 #, c-format
@@ -12976,27 +12342,27 @@ msgstr ""
 
 #: client/cl_game_campaign.c:122
 msgid "Chicken-hearted"
-msgstr "pelkureille"
+msgstr "Pelkureille"
 
 #: client/cl_game_campaign.c:124
 msgid "Very Easy"
-msgstr "erittäin helppo"
+msgstr "Erittäin helppo"
 
 #: client/cl_game_campaign.c:127
 msgid "Easy"
-msgstr "helppo"
+msgstr "Helppo"
 
 #: client/cl_game_campaign.c:132
 msgid "Hard"
-msgstr "vaikea"
+msgstr "Vaikea"
 
 #: client/cl_game_campaign.c:134
 msgid "Very Hard"
-msgstr "erittäin vaikea"
+msgstr "Erittäin vaikea"
 
 #: client/cl_game_campaign.c:136
 msgid "Insane"
-msgstr "järjetön"
+msgstr "Järjetön"
 
 #: client/cl_game_campaign.c:202
 #, c-format
@@ -13048,13 +12414,17 @@ msgid "Game Drawn!"
 msgstr ""
 
 #: client/cl_game_multiplayer.c:203
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "\n"
 "Enemies killed:  %i\n"
 "Team survivors:  %i"
 msgstr ""
+"\n"
+"\n"
+"Vihollisia kuollut:  %i\n"
+"Joukkue pelastunut:  %i"
 
 #: client/cl_game_multiplayer.c:205
 #: client/cl_game_skirmish.c:136
@@ -13074,7 +12444,7 @@ msgstr "Hävisit pelin!"
 #: client/cl_game_multiplayer.c:209
 #: client/cl_game_skirmish.c:140
 msgid "Better luck next time"
-msgstr ""
+msgstr "Parempi onni seuraavalla kerralla"
 
 #: client/cl_game_multiplayer.c:240
 msgid "all"
@@ -13118,7 +12488,7 @@ msgstr "Koko:\t%i\n"
 
 #: client/cl_inventory_callbacks.c:133
 msgid "^BDamage type:\tProtection:\n"
-msgstr ""
+msgstr "^BVahinko tyyppi:\tSuojaus:\n"
 
 #: client/cl_inventory_callbacks.c:144
 #, c-format
@@ -13140,7 +12510,7 @@ msgstr "Kahdenkäden"
 #: client/cl_inventory_callbacks.c:146
 #, c-format
 msgid "Max ammo:\t%i\n"
-msgstr "Max. ammuksia:\t%i\n"
+msgstr "Maks. ammuksia:\t%i\n"
 
 #: client/cl_inventory_callbacks.c:173
 #, c-format
@@ -13181,15 +12551,15 @@ msgstr ""
 
 #: client/cl_inventory_callbacks.c:194
 msgid "Unknown - not useable"
-msgstr ""
+msgstr "Tuntematon - ei käytettävissä"
 
 #: client/cl_irc.c:1257
 msgid "Server closed connection"
-msgstr ""
+msgstr "Palvelin sulki yhteyden"
 
 #: client/cl_language.c:268
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: client/cl_main.c:507
 #, c-format
@@ -13202,7 +12572,7 @@ msgstr ""
 
 #: client/cl_main.c:519
 msgid "Script files are not the same"
-msgstr ""
+msgstr "Scripti tiedostot eivät ole samoja."
 
 #: client/cl_main.c:526
 #, c-format
@@ -13225,7 +12595,7 @@ msgstr "Ladataan [%s]"
 #: client/cl_screen.c:204
 #, c-format
 msgid "Loading Map [%s]"
-msgstr "Ladataan karttaa ”%s”"
+msgstr "Ladataan karttaa [%s]"
 
 #: client/cl_team.c:50
 #: client/cl_team.c:297
@@ -13259,7 +12629,7 @@ msgstr "Keltainen"
 #: client/cl_team.c:60
 #: client/cl_team.c:313
 msgid "CCCP"
-msgstr ""
+msgstr "CCCP"
 
 #: client/cl_team.c:415
 msgid "Update the GUI with the selected item"
@@ -13299,13 +12669,15 @@ msgstr ""
 
 #: client/input/cl_input.c:1035
 #: client/input/cl_input.c:1064
+#, fuzzy
 msgid "Zoom in"
-msgstr ""
+msgstr "Zoomaa sisään"
 
 #: client/input/cl_input.c:1037
 #: client/input/cl_input.c:1065
+#, fuzzy
 msgid "Zoom out"
-msgstr ""
+msgstr "Zoomaa ulos"
 
 #: client/input/cl_input.c:1040
 msgid "Left mouse button click (menu)"
@@ -13353,11 +12725,11 @@ msgstr ""
 
 #: client/input/cl_input.c:1060
 msgid "Ends current round"
-msgstr ""
+msgstr "Lopeta nykyinen vuoro"
 
 #: client/input/cl_input.c:1061
 msgid "Opens or closes a door"
-msgstr ""
+msgstr "Avaa tai sulje ovi"
 
 #: client/input/cl_input.c:1062
 msgid "Slice through terrain at a higher level"
@@ -13409,7 +12781,7 @@ msgstr "Panokset: %i\n"
 #: client/menu/node/m_node_container.c:429
 #, c-format
 msgid "%s loaded\n"
-msgstr ""
+msgstr "%s ladattu\n"
 
 #: client/menu/node/m_node_container.c:436
 msgid "Usable in:\n"
@@ -13418,7 +12790,7 @@ msgstr ""
 #: client/menu/node/m_node_container.c:477
 #, c-format
 msgid "In: %i Out: %i"
-msgstr ""
+msgstr "Sisään: %i Ulos: %i"
 
 #: client/menu/node/m_node_keybinding.c:94
 #, c-format
@@ -13427,7 +12799,7 @@ msgstr ""
 
 #: client/menu/node/m_node_keybinding.c:153
 msgid "NONE"
-msgstr ""
+msgstr "TYHJÄ"
 
 #: client/menu/node/m_node_window.c:260
 msgid "Drag to move window"
@@ -13449,12 +12821,12 @@ msgstr ""
 #: client/multiplayer/mp_callbacks.c:201
 #, c-format
 msgid "Current team: %i"
-msgstr ""
+msgstr "Nykyinen joukkue: %i"
 
 #: client/multiplayer/mp_callbacks.c:192
 #: client/multiplayer/mp_callbacks.c:205
 msgid "Team is already in use"
-msgstr ""
+msgstr "Joukkue on jo olemassa"
 
 #: client/multiplayer/mp_callbacks.c:214
 msgid "Invalid or full team"
@@ -13467,7 +12839,7 @@ msgstr "Joukkue %d"
 
 #: client/multiplayer/mp_serverlist.c:236
 msgid "No team"
-msgstr ""
+msgstr "Ei joukkuetta"
 
 #: client/multiplayer/mp_serverlist.c:299
 #, c-format
@@ -13475,31 +12847,33 @@ msgid ""
 "IP\t%s\n"
 "\n"
 msgstr ""
+"IP\t%s\n"
+"\n"
 
 #: client/multiplayer/mp_serverlist.c:310
 #, c-format
 msgid "Map:\t%s\n"
-msgstr ""
+msgstr "Kartta:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Servername:\t%s\n"
-msgstr ""
+msgstr "Palvelimen nimi:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Moralestates:\t%s\n"
-msgstr ""
+msgstr "Moraalin tila:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Gametype:\t%s\n"
-msgstr ""
+msgstr "Pelityyppi:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Gameversion:\t%s\n"
-msgstr ""
+msgstr "Pelinversio:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:319
 #, c-format
@@ -13519,17 +12893,17 @@ msgstr ""
 #: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Roundtime:\t%s\n"
-msgstr ""
+msgstr "Kierrosaika:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Teamplay:\t%s\n"
-msgstr ""
+msgstr "joukkuepeli:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. players per team:\t%s\n"
-msgstr ""
+msgstr "Maks. pelaajia per joukkue:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:325
 #, c-format
@@ -13554,15 +12928,16 @@ msgstr ""
 #: client/multiplayer/mp_serverlist.c:329
 #, c-format
 msgid "Password protected:\t%s\n"
-msgstr ""
+msgstr "Salasana suojattu:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:469
+#, fuzzy
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
-msgstr ""
+msgstr "Kaikki kirjanmerkki paikat ovat käytössä - poista niistä jokin ja tee tämä uudelleen"
 
 #: client/multiplayer/mp_team.c:178
 msgid "Error saving team. Nothing to save yet."
-msgstr ""
+msgstr "Virhe tallennettaessa joukkuetta. Mitään ei ole tallennettu."
 
 #: client/multiplayer/mp_team.c:194
 msgid "NewTeam"
@@ -13570,7 +12945,7 @@ msgstr "UusiJoukkue"
 
 #: client/multiplayer/mp_team.c:199
 msgid "Error saving team. Check free disk space!"
-msgstr ""
+msgstr "Virhe tallennettaessa joukkuetta. Kovalevyllä ei ole tilaa!"
 
 #: game/g_actor.c:296
 msgid "Can't perform action - not enough TUs!\n"
@@ -13688,27 +13063,27 @@ msgstr "%s ravistellaan.\n"
 
 #: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
-msgstr "4 minuuttia aikaa, kunnes kierroksen loppuun\n"
+msgstr "4 minuuttia aikaa kunnes kierros loppuu\n"
 
 #: game/g_round.c:48
 msgid "3 minutes left until forced round end\n"
-msgstr "3 minuuttia aikaa, kierroksen loppuun\n"
+msgstr "3 minuuttia aikaa kunnes kierros loppuu\n"
 
 #: game/g_round.c:51
 msgid "2 minutes left until forced round end\n"
-msgstr "2 minuuttia aikaa, kierroksen loppuun\n"
+msgstr "2 minuuttia aikaa kierroksen loppuun\n"
 
 #: game/g_round.c:54
 msgid "1 minute left until forced round end\n"
-msgstr "1 minuuttia aikaa, kierroksen loppuun\n"
+msgstr "1 minuuttia aikaa kierroksen loppuun\n"
 
 #: game/g_round.c:57
 msgid "30 seconds left until forced round end\n"
-msgstr "30 sekuntia aikaa, kierroksen loppuun\n"
+msgstr "30 sekuntia aikaa kierroksen loppuun\n"
 
 #: game/g_round.c:60
 msgid "15 seconds left until forced round end\n"
-msgstr "15 sekuntia aikaa, kierroksen loppuun\n"
+msgstr "15 sekuntia aikaa kierroksen loppuun\n"
 
 #: game/g_round.c:68
 #, fuzzy
