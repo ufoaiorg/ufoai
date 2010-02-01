@@ -736,11 +736,8 @@ static void HUD_FireWeapon_f (void)
 
 	firemode = atoi(Cmd_Argv(2));
 
-	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0) {
-		Com_Printf("HUD_FireWeapon_f: Firemode index to big (%i). Highest possible number is %i.\n",
-			firemode, MAX_FIREDEFS_PER_WEAPON - 1);
+	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0)
 		return;
-	}
 
 	fd = CL_GetFireDefinitionForHand(selActor, hand);
 	if (fd == NULL)
@@ -750,13 +747,8 @@ static void HUD_FireWeapon_f (void)
 
 	/* Let's check if shooting is possible.
 	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
-	if (hand == ACTOR_HAND_CHAR_RIGHT) {
-		if (!CL_CheckMenuAction(selActor, RIGHT(selActor), EV_INV_AMMO))
-			return;
-	} else {
-		if (!CL_CheckMenuAction(selActor, LEFT(selActor), EV_INV_AMMO))
-			return;
-	}
+	if (!CL_CheckMenuAction(selActor, ACTOR_GET_INV(selActor, hand), EV_INV_AMMO))
+		return;
 
 	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_UsableTUs(selActor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
@@ -770,8 +762,6 @@ static void HUD_FireWeapon_f (void)
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
 		HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
-		Com_DPrintf(DEBUG_CLIENT, "HUD_FireWeapon_f: Firemode not available (%c, %s).\n",
-			hand, ammo->fd[fd->weapFdsIdx][firemode].name);
 	}
 }
 
@@ -1078,8 +1068,6 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	{
 		const char* menuName = MN_GetActiveWindowName();
 		if (menuName[0] != '\0' && strstr(MN_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
-			Com_DPrintf(DEBUG_CLIENT, "HUD_RefreshWeaponButtons: reload popup\n");
-
 			/* Prevent firemode reservation popup from being closed if
 			 * no firemode is available because of insufficient TUs. */
 			popupReload = qtrue;

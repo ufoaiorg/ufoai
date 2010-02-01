@@ -265,11 +265,7 @@ const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const char han
 	if (!actor)
 		return NULL;
 
-	if (hand == ACTOR_HAND_CHAR_RIGHT)
-		invlistWeapon = RIGHT(actor);
-	else
-		invlistWeapon = LEFT(actor);
-
+	invlistWeapon = ACTOR_GET_INV(actor, hand);
 	if (!invlistWeapon || !invlistWeapon->item.t)
 		return NULL;
 

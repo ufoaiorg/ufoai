@@ -284,7 +284,7 @@ static void MN_PushDropDownWindow_f (void)
 	vec2_t destination;
 	menuNode_t *node;
 	byte pointPosition;
-	size_t writedByte;
+	size_t writtenBytes;
 	int result;
 
 	if (Cmd_Argc() != 4 && Cmd_Argc() != 5) {
@@ -298,7 +298,7 @@ static void MN_PushDropDownWindow_f (void)
 		Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
-	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
+	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writtenBytes);
 	if (result != RESULT_OK) {
 		Com_Printf("MN_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
 		return;
@@ -317,7 +317,7 @@ static void MN_PushDropDownWindow_f (void)
 			Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
 			return;
 		}
-		result = Com_ParseValue(&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
+		result = Com_ParseValue(&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writtenBytes);
 		if (result != RESULT_OK) {
 			Com_Printf("MN_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
 			return;
