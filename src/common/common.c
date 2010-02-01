@@ -217,8 +217,6 @@ void Com_Printf (const char* const fmt, ...)
  */
 void Com_DPrintf (int level, const char *fmt, ...)
 {
-	level |= DEBUG_ALL;
-
 	/* don't confuse non-developers with techie stuff... */
 	if (!developer || !(developer->integer & level))
 		return;
@@ -705,8 +703,8 @@ static void Com_DeveloperSet_f (void)
 		const char *debugLevel = Cmd_Argv(1);
 		while (debugLevels[i].str) {
 			if (!strcmp(debugLevel, debugLevels[i].str)) {
-				if (oldValue & debugLevels[i].debugLevel)
-					newValue &= ~debugLevels[i].debugLevel;
+				if (oldValue & debugLevels[i].debugLevel)	/* if it's already set... */
+					newValue &= ~debugLevels[i].debugLevel;	/* ...reset it. */
 				else
 					newValue |= debugLevels[i].debugLevel;
 				break;

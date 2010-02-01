@@ -331,7 +331,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 	if (!developer || developer->integer == 0)
 		return;
 
-	if (developer->integer != DEBUG_ALL && developer->integer & ~level)
+	if (!(developer->integer & level))
 		return;
 
 	va_start(argptr, msg);
