@@ -77,6 +77,97 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 }
 
 /**
+ * @brief Checks whether the actor has a reaction fire enabled weapon in on of his hands.
+ * @param[in] actor The actor to check the weapons for
+ * @return @c true if reaction fire enabled weapon was found in one of the hands
+ * of the actor, @c false otherwise
+ */
+static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *actor)
+{
+	const invList_t *invList;
+
+	/* no weapon that can be used for reaction fire */
+	if (!LEFT(actor) && !RIGHT(actor))
+		return qfalse;
+
+	invList = RIGHT(actor);
+	if (invList && invList->item.t) {
+		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
+		if (fd && fd->reaction)
+			return qtrue;
+	}
+
+	invList = LEFT(actor);
+	if (invList && invList->item.t) {
+		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
+		if (fd && fd->reaction)
+			return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Checks if the currently selected firemode is useable with the defined weapon.
+ * @param[in] actor The actor to check the firemode for.
+ */
+static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
+{
+	const fireDef_t *fd;
+	const chrFiremodeSettings_t *fmSettings = &actor->chr.RFmode;
+
+	if (!SANE_FIREMODE(fmSettings))
+		return qfalse;
+
+	if (fmSettings->hand == ACTOR_HAND_LEFT) {
+		const invList_t *invList = LEFT(actor);
+		fd = FIRESH_FiredefForWeapon(&invList->item);
+	} else if (fmSettings->hand == ACTOR_HAND_RIGHT) {
+		const invList_t *invList = RIGHT(actor);
+		fd = FIRESH_FiredefForWeapon(&invList->item);
+	} else {
+		fd = NULL;
+	}
+
+	if (fd == NULL)
+		return qfalse;
+
+	if (fd->obj->weapons[fd->weapFdsIdx] == fmSettings->weapon && fmSettings->fmIdx
+			< fd->obj->numFiredefs[fd->weapFdsIdx]) {
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Checks whether the actor is allowed to activate reaction fire
+ * @param ent The actor to check
+ * @return @c true if the actor is allowed to activate it, @c false otherwise
+ */
+qboolean G_CanEnableReactionFire (const edict_t *ent)
+{
+	/* check ent is a suitable shooter */
+	if (!ent->inuse || !G_IsLivingActor(ent))
+		return qfalse;
+
+	if (G_MatchIsRunning() && ent->team != level.activeTeam)
+		return qfalse;
+
+	/* actor may not carry weapons at all - so no further checking is needed */
+	if (!ent->chr.teamDef->weapons)
+		return qfalse;
+
+	if (!G_ActorHasReactionFireEnabledWeapon(ent))
+		return qfalse;
+
+	if (!G_ActorHasWorkingFireModeSet(ent))
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
  * @param[in] ent The entity that might be firing
  * @param[in] target The entity that might be fired at
@@ -91,20 +182,8 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	if (ent == target)
 		return qfalse;
 
-	/* check ent is a suitable shooter */
-	if (!ent->inuse || !G_IsLivingActor(ent))
-		return qfalse;
-
 	/* Don't react in your own turn */
 	if (ent->team == level.activeTeam)
-		return qfalse;
-
-	/* actor may not carry weapons at all - so no further checking is needed */
-	if (!ent->chr.teamDef->weapons)
-		return qfalse;
-
-	/* no weapon that can be used for reaction fire */
-	if (!LEFT(ent) && !RIGHT(ent) && !HEADGEAR(ent))
 		return qfalse;
 
 	/* check ent has reaction fire enabled */
@@ -177,8 +256,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 }
 
 /**
- * @brief
- * @todo This seems to be the function that is called for reaction fire isn't it?
+ * @brief Perform the reaction fire shot
  * @param[in] player The player this action belongs to (the human player or the ai)
  * @param[in] shooter The actor that is trying to shoot
  * @param[in] at Position to fire on.

@@ -454,10 +454,14 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
-		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
-		/* Enable requested reaction fire. */
-		ent->state |= reqState;
+		if (G_CanEnableReactionFire(ent)) {
+			/* Disable reaction fire. */
+			ent->state &= ~STATE_REACTION;
+			/* Enable requested reaction fire. */
+			ent->state |= reqState;
+		} else {
+			G_ClientPrintf(player, PRINT_HUD, _("Can't activate reaction fire.\n"));
+		}
 		break;
 	default:
 		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);

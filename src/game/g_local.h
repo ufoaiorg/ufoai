@@ -319,6 +319,10 @@ void G_TakeDamage(edict_t *ent, int damage);
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
 void G_ReactToPreFire(edict_t *target);
 void G_ReactToPostFire(edict_t *target);
+void G_ResetReactionFire(int team);
+qboolean G_CanEnableReactionFire(const edict_t *ent);
+qboolean G_ReactToMove(edict_t *target, qboolean mock);
+void G_ReactToEndTurn(void);
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);
@@ -436,9 +440,6 @@ float G_Vis(const int team, const edict_t * from, const edict_t * check, int fla
 
 /* g_combat.c */
 qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
-void G_ResetReactionFire(int team);
-qboolean G_ReactToMove(edict_t *target, qboolean mock);
-void G_ReactToEndTurn(void);
 
 /* g_ai.c */
 extern edict_t *ai_waypointList;
