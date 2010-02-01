@@ -810,15 +810,12 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  * @param[in] hand ACTOR_HAND_LEFT for left, ACTOR_HAND_RIGHT for right hand
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, actorHands_t hand)
+static int HUD_WeaponCanBeReloaded (const le_t *le, const invList_t *weapon, int tu, actorHands_t hand)
 {
 	int container;
 	qboolean notEnoughTU = qfalse;
 
-	assert(hand == ACTOR_HAND_LEFT || hand == ACTOR_HAND_RIGHT);
-
-	if (!le)
-		return -1;
+	assert(le);
 
 	/* No weapon in hand. */
 	if (!weapon) {
