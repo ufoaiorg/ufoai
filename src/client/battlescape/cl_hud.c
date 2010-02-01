@@ -895,7 +895,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, const invList_t *weapon, int
 	}
 
 	/* If notEnoughTU is qtrue, then we found backup ammo, but we don't have
-	   enough TU to reload. Otherwise, we don't have backup ammo. */
+	 * enough TU to reload. Otherwise, we don't have backup ammo. */
 	if (notEnoughTU) {
 		if (hand == ACTOR_HAND_RIGHT)
 			Cvar_Set("mn_reloadright_tt", _("Not enough TUs for reloading weapon in right hand."));
