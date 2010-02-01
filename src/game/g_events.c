@@ -108,7 +108,7 @@ void G_EventDestroyEdict (const edict_t* ent)
  * @param[in] ent The entity to change the reaction fire hand for
  * @param[in] hand The hand that should be used for the reaction fire.
  */
-void G_EventReactionFireHandChange (const edict_t* ent, int hand)
+void G_EventReactionFireHandChange (const edict_t* ent, actorHands_t hand)
 {
 	gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 	gi.WriteShort(ent->number);
