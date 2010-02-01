@@ -35,18 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* distance from vertical center of grid-point to head when crouched */
 #define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
 
-#define ACTOR_HAND_CHAR_RIGHT 'r'
-#define ACTOR_HAND_CHAR_LEFT 'l'
-
-/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
-#define ACTOR_GET_HAND_CHAR(hand) ((hand) == ACTOR_HAND_LEFT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
-/** @param[in] hand Hand index (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
-#define ACTOR_GET_HAND_INDEX(hand) ((hand) == ACTOR_HAND_CHAR_LEFT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
-/** @param[in] hand Hand char (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
-#define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_CHAR_RIGHT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
-
-#define ACTOR_GET_INV(le, hand) (((hand) == ACTOR_HAND_CHAR_RIGHT) ? RIGHT(le) : LEFT(le))
-
 /** @sa moveModeDescriptions */
 typedef enum {
 	WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH,
@@ -72,15 +60,15 @@ void ACTOR_InitStartup(void);
 void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
-const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const char hand);
+const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const int hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
-qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
+qboolean CL_WeaponWithReaction(const le_t * actor, const int hand);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
 int CL_UsableReactionTUs(const le_t * le);
 void CL_SetReactionFiremode(const le_t *actor, const int handidx, const objDef_t *od, const int fd_idx);
-void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
-void CL_UpdateReactionFiremodes(le_t * actor, const char hand, int firemodeActive);
+void CL_SetDefaultReactionFiremode(le_t *actor, const int hand);
+void CL_UpdateReactionFiremodes(le_t * actor, const int hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
 qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);

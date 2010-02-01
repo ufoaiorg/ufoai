@@ -115,20 +115,15 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 {
 	const fireDef_t *fd;
 	const chrFiremodeSettings_t *fmSettings = &actor->chr.RFmode;
+	const invList_t* invList;
 
 	if (!SANE_FIREMODE(fmSettings))
 		return qfalse;
 
-	if (fmSettings->hand == ACTOR_HAND_LEFT) {
-		const invList_t *invList = LEFT(actor);
-		fd = FIRESH_FiredefForWeapon(&invList->item);
-	} else if (fmSettings->hand == ACTOR_HAND_RIGHT) {
-		const invList_t *invList = RIGHT(actor);
-		fd = FIRESH_FiredefForWeapon(&invList->item);
-	} else {
-		fd = NULL;
-	}
-
+	invList = ACTOR_GET_INV(actor, fmSettings->hand);
+	if (!invList)
+		return qfalse;
+	fd = FIRESH_FiredefForWeapon(&invList->item);
 	if (fd == NULL)
 		return qfalse;
 

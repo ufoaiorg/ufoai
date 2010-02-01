@@ -64,7 +64,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 				/* Check for unusable RF setting - just in case. */
 				if (!CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
 					/* At this point the rest of the code forgot to update RF-settings somewhere. */
-					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_CHAR_RIGHT);
+					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_RIGHT);
 				}
 			}
 		}

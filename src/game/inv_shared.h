@@ -473,6 +473,10 @@ typedef struct csi_s {
 #define ACTOR_HAND_RIGHT 0
 #define ACTOR_HAND_LEFT 1
 
+#define ACTOR_GET_INV(actor, hand) (((hand) == ACTOR_HAND_RIGHT) ? RIGHT(actor) : LEFT(actor))
+/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
+#define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_RIGHT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
+
 qboolean INV_IsFloorDef(const invDef_t* invDef);
 qboolean INV_IsRightDef(const invDef_t* invDef);
 qboolean INV_IsLeftDef(const invDef_t* invDef);

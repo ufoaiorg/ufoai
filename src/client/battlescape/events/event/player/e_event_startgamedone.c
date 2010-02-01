@@ -55,7 +55,7 @@ void CL_StartingGameDone (const eventRegister_t *self, struct dbuffer *msg)
 				MN_ExecuteConfunc("crouch_checkbox_disable");
 			}
 		} else {
-			CL_SetDefaultReactionFiremode(le, ACTOR_HAND_CHAR_RIGHT);
+			CL_SetDefaultReactionFiremode(le, ACTOR_HAND_RIGHT);
 		}
 	}
 }

@@ -255,10 +255,10 @@ character_t *CL_GetActorChr (const le_t * le)
 /**
  * @brief Returns the fire definition of the item the actor has in the given hand.
  * @param[in] actor The pointer to the actor we want to get the data from.
- * @param[in] hand Which weapon(-hand) to use [l|r].
+ * @param[in] hand Which hand to use
  * @return the used @c fireDef_t
  */
-const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const char hand)
+const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const int hand)
 {
 	const invList_t *invlistWeapon;
 
@@ -334,7 +334,7 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 		return qfalse;
 	}
 
-	fd = CL_GetFireDefinitionForHand(actor, ACTOR_GET_HAND_CHAR(fmSettings->hand));
+	fd = CL_GetFireDefinitionForHand(actor, fmSettings->hand);
 	if (fd == NULL)
 		return qfalse;
 
@@ -488,7 +488,7 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 	if (od != NULL && fdIdx >= 0) {
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		const fireDef_t *fd = CL_GetFireDefinitionForHand(actor, ACTOR_GET_HAND_CHAR(handidx));
+		const fireDef_t *fd = CL_GetFireDefinitionForHand(actor, handidx);
 		if (fd) {
 			int time = fd[fdIdx].time;
 			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
@@ -507,9 +507,9 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 /**
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
- * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
+ * @param[in] hand Which hand to check
  */
-qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
+qboolean CL_WeaponWithReaction (const le_t * actor, const int hand)
 {
 	int i;
 	const fireDef_t *fd;
@@ -562,14 +562,13 @@ static int CL_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
 /**
  * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
  * @param[in] actor The actor we want to update the reaction-fire firemode for.
- * @param[in] hand Which weapon(-hand) to use (l|r).
+ * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActive)
+void CL_UpdateReactionFiremodes (le_t * actor, const int hand, int firemodeActive)
 {
 	const fireDef_t *fd;
 	character_t *chr;
-	const int handidx = ACTOR_GET_HAND_INDEX(hand);
 	const objDef_t *ammo;
 
 	if (!actor) {
@@ -603,7 +602,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 
 		if (reactionFiremodeIndex >= 0) {
 			/* Found usable firemode for the weapon in _this_ hand. */
-			CL_SetReactionFiremode(actor, handidx, ammo->weapons[fd->weapFdsIdx], reactionFiremodeIndex);
+			CL_SetReactionFiremode(actor, hand, ammo->weapons[fd->weapFdsIdx], reactionFiremodeIndex);
 
 			if (CL_UsableReactionTUs(actor) >= ammo->fd[fd->weapFdsIdx][reactionFiremodeIndex].time) {
 				/* Display 'usable" (blue) reaction buttons */
@@ -634,34 +633,29 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 	chr = CL_GetActorChr(actor);
 	assert(chr);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%s handidx%i weapfdidx%i\n",
-		chr->name, handidx, fd->weapFdsIdx);
-
-	if (chr->RFmode.weapon == ammo->weapons[fd->weapFdsIdx] && chr->RFmode.hand == handidx) {
-		if (ammo->fd[fd->weapFdsIdx][firemodeActive].reaction) {
-			if (chr->RFmode.fmIdx == firemodeActive)
-				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
-				return;
-		} else {
-			/* Weapon is the same and firemode is not reaction-usable*/
+	if (chr->RFmode.weapon == ammo->weapons[fd->weapFdsIdx] && chr->RFmode.hand == hand) {
+		/* Weapon is the same and firemode is not reaction-usable */
+		if (!ammo->fd[fd->weapFdsIdx][firemodeActive].reaction)
 			return;
-		}
+		/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
+		if (chr->RFmode.fmIdx == firemodeActive)
+			return;
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
 	if (ammo->fd[fd->weapFdsIdx][firemodeActive].reaction) {
 		/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
 		if (CL_UsableReactionTUs(actor) >= ammo->fd[fd->weapFdsIdx][firemodeActive].time)
-			CL_SetReactionFiremode(actor, handidx, ammo->weapons[fd->weapFdsIdx], firemodeActive);
+			CL_SetReactionFiremode(actor, hand, ammo->weapons[fd->weapFdsIdx], firemodeActive);
 	}
 }
 
 /**
  * @brief Sets the reaction-firemode of an actor/soldier to it's default value on client- and server-side.
  * @param[in] actor The actor to set the firemode for.
- * @param[in] hand Which weapon(-hand) to try first for reaction-firemode (r|l).
+ * @param[in] hand Which hand to try first for reaction-firemode.
  */
-void CL_SetDefaultReactionFiremode (le_t *actor, const char hand)
+void CL_SetDefaultReactionFiremode (le_t *actor, const int hand)
 {
 	if (!actor) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetDefaultReactionFiremode: No actor given! Abort.\n");

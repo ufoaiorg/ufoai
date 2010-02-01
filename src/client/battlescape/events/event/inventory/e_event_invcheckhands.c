@@ -52,7 +52,7 @@ void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)
 	if (!CL_WorkingFiremode(le, qtrue)) {
 		/* Firemode for reaction not sane and/or not usable. */
 		/* Update the changed hand with default firemode. */
-		CL_UpdateReactionFiremodes(le, ACTOR_GET_HAND_CHAR(hand), -1);
+		CL_UpdateReactionFiremodes(le, hand, -1);
 
 		HUD_HideFiremodes();
 	}

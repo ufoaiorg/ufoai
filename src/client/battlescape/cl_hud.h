@@ -28,6 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern int hitProbability;
 
+#define ACTOR_HAND_CHAR_RIGHT (char)'r'
+#define ACTOR_HAND_CHAR_LEFT (char)'l'
+
+/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
+#define ACTOR_GET_HAND_CHAR(hand) ((hand) == ACTOR_HAND_LEFT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
+/** @param[in] hand Hand index (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
+#define ACTOR_GET_HAND_INDEX(hand) ((hand) == ACTOR_HAND_CHAR_LEFT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
+
 /* these should probably not be called from other places than menu */
 qboolean HUD_DisplayImpossibleReaction(const le_t * actor);
 void HUD_DisplayPossibleReaction(const le_t * actor);
