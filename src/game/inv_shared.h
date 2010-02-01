@@ -469,9 +469,13 @@ typedef struct csi_s {
 #define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
 #define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
 
-#define ACTOR_HAND_NOT_SET -1
-#define ACTOR_HAND_RIGHT 0
-#define ACTOR_HAND_LEFT 1
+typedef enum {
+	ACTOR_HAND_NOT_SET = -1,
+	ACTOR_HAND_RIGHT = 0,
+	ACTOR_HAND_LEFT = 1,
+
+	ACTOR_HAND_ENSURE_32BIT = 0x7FFFFFFF
+} actorHands_t;
 
 #define ACTOR_GET_INV(actor, hand) (((hand) == ACTOR_HAND_RIGHT) ? RIGHT(actor) : LEFT(actor))
 /** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
@@ -574,7 +578,7 @@ typedef struct chrScoreGlobal_s {
 } chrScoreGlobal_t;
 
 typedef struct chrFiremodeSettings_s {
-	int hand;	/**< Stores the used hand (0=right, 1=left, -1=undef) */
+	actorHands_t hand;	/**< Stores the used hand */
 	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
 } chrFiremodeSettings_t;

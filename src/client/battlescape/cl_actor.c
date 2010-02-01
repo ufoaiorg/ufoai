@@ -258,7 +258,7 @@ character_t *CL_GetActorChr (const le_t * le)
  * @param[in] hand Which hand to use
  * @return the used @c fireDef_t
  */
-const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const int hand)
+const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const actorHands_t hand)
 {
 	const invList_t *invlistWeapon;
 
@@ -279,7 +279,7 @@ const fireDef_t *CL_GetFireDefinitionForHand (const le_t * actor, const int hand
  * @param[in] fireModeIndex Store the given firemode for this hand.
  * @param[in] weapon Pointer to weapon in the hand.
  */
-void CL_CharacterSetRFMode (character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon)
+void CL_CharacterSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
 {
 	chr->RFmode.hand = hand;
 	chr->RFmode.fmIdx = fireModeIndex;
@@ -293,7 +293,7 @@ void CL_CharacterSetRFMode (character_t *chr, int hand, int fireModeIndex, const
  * @param[in] fireModeIndex Store the given firemode for this hand.
  * @param[in] weapon Pointer to weapon in the hand.
  */
-void CL_CharacterSetShotSettings (character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon)
+void CL_CharacterSetShotSettings (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
 {
 	chr->reservedTus.shotSettings.hand = hand;
 	chr->reservedTus.shotSettings.fmIdx = fireModeIndex;
@@ -470,7 +470,7 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
  * @param[in] od Pointer to objDef_t for which we set up firemode.
  * @param[in] fdIdx Index of firedefinition for an item in given hand.
  */
-void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef_t *od, const int fdIdx)
+void CL_SetReactionFiremode (const le_t * actor, const actorHands_t hand, const objDef_t *od, const int fdIdx)
 {
 	character_t *chr;
 	int usableTusForRF = 0;
@@ -480,15 +480,12 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 
 	usableTusForRF = CL_UsableReactionTUs(actor);
 
-	if (handidx != ACTOR_HAND_NOT_SET && handidx != ACTOR_HAND_RIGHT && handidx != ACTOR_HAND_LEFT)
-		return;
-
 	chr = CL_GetActorChr(actor);
 
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 	if (od != NULL && fdIdx >= 0) {
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		const fireDef_t *fd = CL_GetFireDefinitionForHand(actor, handidx);
+		const fireDef_t *fd = CL_GetFireDefinitionForHand(actor, hand);
 		if (fd) {
 			int time = fd[fdIdx].time;
 			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
@@ -499,9 +496,9 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
 		}
 	}
 
-	CL_CharacterSetRFMode(chr, handidx, fdIdx, od);
+	CL_CharacterSetRFMode(chr, hand, fdIdx, od);
 	/* Send RFmode[] to server-side storage as well. See g_local.h for more. */
-	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fdIdx, od ? od->idx : NONE);
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, hand, fdIdx, od ? od->idx : NONE);
 }
 
 /**
@@ -509,7 +506,7 @@ void CL_SetReactionFiremode (const le_t * actor, const int handidx, const objDef
  * @param[in] actor What actor to check.
  * @param[in] hand Which hand to check
  */
-qboolean CL_WeaponWithReaction (const le_t * actor, const int hand)
+qboolean CL_WeaponWithReaction (const le_t * actor, const actorHands_t hand)
 {
 	int i;
 	const fireDef_t *fd;
@@ -565,7 +562,7 @@ static int CL_GetDefaultReactionFire (const objDef_t *ammo, int weaponFdsIdx)
  * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-void CL_UpdateReactionFiremodes (le_t * actor, const int hand, int firemodeActive)
+void CL_UpdateReactionFiremodes (le_t * actor, const actorHands_t hand, int firemodeActive)
 {
 	const fireDef_t *fd;
 	character_t *chr;
@@ -655,7 +652,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const int hand, int firemodeActiv
  * @param[in] actor The actor to set the firemode for.
  * @param[in] hand Which hand to try first for reaction-firemode.
  */
-void CL_SetDefaultReactionFiremode (le_t *actor, const int hand)
+void CL_SetDefaultReactionFiremode (le_t *actor, const actorHands_t hand)
 {
 	if (!actor) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetDefaultReactionFiremode: No actor given! Abort.\n");
@@ -1211,10 +1208,10 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
 /**
  * @brief Reload weapon with actor.
  * @param[in,out] le The actor to reload the weapon for
- * @param[in] hand
+ * @param[in] containerID The container to reload
  * @sa CL_CheckAction
  */
-void CL_ActorReload (le_t *le, int hand)
+void CL_ActorReload (le_t *le, int containerID)
 {
 	inventory_t *inv;
 	invList_t *ic;
@@ -1234,12 +1231,12 @@ void CL_ActorReload (le_t *le, int hand)
 	tu = 100;
 	bestContainer = NONE;
 
-	if (inv->c[hand]) {
-		weapon = inv->c[hand]->item.t;
-	} else if (hand == csi.idLeft && inv->c[csi.idRight]->item.t->holdTwoHanded) {
+	if (inv->c[containerID]) {
+		weapon = inv->c[containerID]->item.t;
+	} else if (containerID == csi.idLeft && inv->c[csi.idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = csi.idRight;
-		weapon = inv->c[hand]->item.t;
+		containerID = csi.idRight;
+		weapon = inv->c[containerID]->item.t;
 	} else
 		/* otherwise we could use weapon uninitialized */
 		return;
@@ -1277,7 +1274,7 @@ void CL_ActorReload (le_t *le, int hand)
 
 	/* send request */
 	if (bestContainer != NONE)
-		CL_ActorInvMove(le, bestContainer, x, y, hand, 0, 0);
+		CL_ActorInvMove(le, bestContainer, x, y, containerID, 0, 0);
 }
 
 /**

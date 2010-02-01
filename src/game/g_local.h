@@ -336,7 +336,7 @@ void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* 
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventDestroyEdict(const edict_t* ent);
-void G_EventReactionFireHandChange(const edict_t* ent, int hand);
+void G_EventReactionFireHandChange(const edict_t* ent, actorHands_t hand);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
 void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);

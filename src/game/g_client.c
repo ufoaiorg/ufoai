@@ -483,21 +483,21 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 {
 	edict_t *ent;
 	invList_t *ic;
-	int hand;
+	int containerID;
 	objDef_t *weapon;
 	int container;
 
 	ent = G_EdictsGetByNum(entnum);
 
 	/* search for clips and select the one that is available easily */
-	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
+	containerID = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
 
-	if (ent->i.c[hand]) {
-		weapon = ent->i.c[hand]->item.t;
-	} else if (hand == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	if (ent->i.c[containerID]) {
+		weapon = ent->i.c[containerID]->item.t;
+	} else if (containerID == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = gi.csi->idRight;
-		weapon = ent->i.c[hand]->item.t;
+		containerID = gi.csi->idRight;
+		weapon = ent->i.c[containerID]->item.t;
 	} else
 		return qfalse;
 
@@ -602,7 +602,7 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	int hand, fdIdx, objIdx;
+	actorHands_t hand, fdIdx, objIdx;
 	int resReaction, resCrouch, resShot;
 	edict_t *ent;
 
@@ -686,7 +686,6 @@ int G_ClientAction (player_t * player)
 
 	case PA_REACT_SELECT:
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
-		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
 		ent->chr.RFmode.hand = hand;
 		ent->chr.RFmode.fmIdx = fdIdx;
 		ent->chr.RFmode.weapon = &gi.csi->ods[objIdx];

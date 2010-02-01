@@ -101,7 +101,7 @@ static const char *moveModeDescriptions[] = {
 CASSERT(lengthof(moveModeDescriptions) == WALKTYPE_MAX);
 
 typedef struct reserveShot_s {
-	int hand;
+	actorHands_t hand;
 	int fireModeIndex;
 	int weaponIndex;
 	int TUs;
@@ -194,7 +194,7 @@ void HUD_HideFiremodes (void)
  * @param[in] hand What list to display
  * @todo Put the most of this function into the scripts
  */
-static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx, const int hand, int index)
+static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
@@ -247,7 +247,7 @@ static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx
  */
 static qboolean CL_CheckFiremodeReservation (void)
 {
-	int hand = ACTOR_HAND_RIGHT;
+	actorHands_t hand = ACTOR_HAND_RIGHT;
 
 	if (!selActor)
 		return qfalse;
@@ -288,7 +288,7 @@ static menuNode_t* popupListNode;
  */
 static void HUD_PopupFiremodeReservation (qboolean reset)
 {
-	int hand = ACTOR_HAND_RIGHT;
+	actorHands_t hand = ACTOR_HAND_RIGHT;
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
@@ -700,7 +700,7 @@ static qboolean CL_CheckMenuAction (const le_t* le, invList_t *weapon, int mode)
  */
 static void HUD_FireWeapon_f (void)
 {
-	int hand;
+	actorHands_t hand;
 	int firemode;
 	const objDef_t *ammo;
 	const fireDef_t *fd;
@@ -810,7 +810,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  * @param[in] hand ACTOR_HAND_LEFT for left, ACTOR_HAND_RIGHT for right hand
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, int hand)
+static int HUD_WeaponCanBeReloaded (const le_t *le, invList_t *weapon, int tu, actorHands_t hand)
 {
 	int container;
 	qboolean notEnoughTU = qfalse;

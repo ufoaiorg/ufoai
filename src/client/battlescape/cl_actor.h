@@ -60,15 +60,15 @@ void ACTOR_InitStartup(void);
 void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
-const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const int hand);
+const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const actorHands_t hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
-qboolean CL_WeaponWithReaction(const le_t * actor, const int hand);
+qboolean CL_WeaponWithReaction(const le_t * actor, const actorHands_t hand);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
 int CL_UsableReactionTUs(const le_t * le);
-void CL_SetReactionFiremode(const le_t *actor, const int handidx, const objDef_t *od, const int fd_idx);
-void CL_SetDefaultReactionFiremode(le_t *actor, const int hand);
-void CL_UpdateReactionFiremodes(le_t * actor, const int hand, int firemodeActive);
+void CL_SetReactionFiremode(const le_t *actor, const actorHands_t hand, const objDef_t *od, const int fd_idx);
+void CL_SetDefaultReactionFiremode(le_t *actor, const actorHands_t hand);
+void CL_UpdateReactionFiremodes(le_t * actor, const actorHands_t hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
 qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);
@@ -86,7 +86,7 @@ void CL_AddActorToTeamList(le_t *le);
 void CL_RemoveActorFromTeamList(le_t *le);
 void CL_ActorCleanup(le_t *le);
 void CL_ActorSelectMouse(void);
-void CL_ActorReload(le_t *le, int hand);
+void CL_ActorReload(le_t *le, int containerID);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
@@ -113,8 +113,8 @@ void CL_AddTargeting(void);
 void CL_AddPathing(void);
 void CL_ActorTargetAlign_f(void);
 
-void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon);
-void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeInde, const objDef_t *weapon);
+void CL_CharacterSetShotSettings(character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon);
+void CL_CharacterSetRFMode(character_t *chr, actorHands_t hand, int fireModeInde, const objDef_t *weapon);
 
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);

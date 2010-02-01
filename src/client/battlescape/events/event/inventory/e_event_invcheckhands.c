@@ -37,8 +37,7 @@ void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)
 {
 	int entnum;
 	le_t *le;
-	/* 0=right, 1=left -1=undef */
-	int hand;
+	actorHands_t hand;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &hand);
 	if (entnum < 0 || hand < 0)
