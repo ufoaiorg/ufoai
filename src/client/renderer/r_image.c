@@ -1507,10 +1507,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		loader++;
 	}
 
-	if (!loader->load) {
-		/* no fitting texture found */
+	/* no fitting texture found */
+	if (!image)
 		image = r_noTexture;
-	}
 
 	return image;
 }
