@@ -501,13 +501,12 @@ static void HUD_DisplayFiremodes (le_t* actor, actorHands_t hand, qboolean firem
 			if (visibleFiremodeListRight)
 				return;
 			visibleFiremodeListRight = qtrue;
-		} else { /* ACTOR_HAND_CHAR_LEFT */
+		} else {
 			if (visibleFiremodeListLeft)
 				return;
 			visibleFiremodeListLeft = qtrue;
 		}
 	}
-	firemodesChangeDisplay = qtrue;
 
 	actorIdx = CL_GetActorNumber(actor);
 	if (actorIdx == -1)
