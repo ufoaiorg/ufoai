@@ -593,7 +593,7 @@ static void AIRFIGHT_GetNextPointInPathFromVector (const float *movement, const 
  * @param[in] movement The distance that the object needs to move.
  * @param[in] originalPoint The point from which the object is moving.
  * @param[in] targetPoint The final point to which the object is moving.
- * @param[in] angle The direction that the object moving in.
+ * @param[out] angle The direction that the object moving in.
  * @param[out] finalPoint The next point from the original point + movement in "angle" direction.
  * @param[out] orthogonalVector The orthogonal vector.
  */
@@ -641,7 +641,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 				AIRFIGHT_GetNextPointInPath(&movement, finalPoint, projectile->idleTarget, &angle, projectedPoint, ortogonalVector);
 			}
 
-			/* udpate angle of the projectile */
+			/* update angle of the projectile */
 			projectile->angle = angle;
 			VectorCopy(finalPoint, projectile->pos[0]);
 			VectorCopy(projectedPoint, projectile->projectedPos[0]);
