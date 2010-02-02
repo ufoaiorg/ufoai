@@ -448,8 +448,6 @@ void R_Setup3D (void)
 	/* retrieve the resulting matrix for other manipulations  */
 	glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
 
-	r_state.ortho = qfalse;
-
 	/* set vertex array pointer */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
@@ -479,8 +477,6 @@ void R_Setup2D (void)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	r_state.ortho = qtrue;
 
 	/* bind default vertex array */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);

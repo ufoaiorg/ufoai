@@ -65,8 +65,6 @@ extern cvar_t *r_screenshot_jpeg_quality;
 extern cvar_t *r_lightmap;
 extern cvar_t *r_deluxemap;
 extern cvar_t *r_ext_texture_compression;
-extern cvar_t *r_ext_s3tc_compression;
-extern cvar_t *r_intel_hack;
 extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;
 extern cvar_t *r_shadows;
@@ -164,6 +162,8 @@ typedef struct {
 	int gl_filter_max;	/**< filter to use if the image is larger than the original texture or stretched on the screen */
 
 	qboolean lod_bias;
+
+	qboolean nonPowerOfTwo;	/**< support for non power of two textures */
 
 	hardwareType_t hardwareType;
 } rconfig_t;

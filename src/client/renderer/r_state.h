@@ -76,8 +76,6 @@ typedef struct {
 	/* blend function */
 	GLenum blend_src, blend_dest;
 
-	qboolean ortho;
-
 	material_t *active_material;
 
 	/* states */
