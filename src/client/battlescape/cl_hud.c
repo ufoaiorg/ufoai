@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
-static qboolean firemodesChangeDisplay = qtrue;
 static qboolean visibleFiremodeListLeft = qfalse;
 static qboolean visibleFiremodeListRight = qfalse;
 
@@ -190,7 +189,7 @@ void HUD_HideFiremodes (void)
  * @param[in] hand What list to display
  * @todo Put the most of this function into the scripts
  */
-static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
+static void HUD_DisplayFiremodeEntry (le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
@@ -210,11 +209,11 @@ static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx
 		return;
 	}
 
-	assert(selActor);
+	assert(actor);
 	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
 
-	status = fd->time <= CL_UsableTUs(selActor);
-	usableTusForRF = CL_UsableReactionTUs(selActor);
+	status = fd->time <= CL_UsableTUs(actor);
+	usableTusForRF = CL_UsableReactionTUs(actor);
 
 	if (usableTusForRF > fd->time) {
 		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
@@ -228,7 +227,7 @@ static void HUD_DisplayFiremodeEntry (const objDef_t* ammo, const int weapFdsIdx
 
 	/* Display checkbox for reaction firemode */
 	if (fd->reaction) {
-		character_t* chr = CL_GetActorChr(selActor);
+		character_t* chr = CL_GetActorChr(actor);
 		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
 		/* Change the state of the checkbox. */
 		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", ACTOR_GET_HAND_CHAR(hand), fd->fdIdx, active);
@@ -469,20 +468,15 @@ qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 	return qfalse;
 }
 
-/**
- * @brief Displays the firemodes for the given hand.
- * @note Console command: list_firemodes
- */
-static void HUD_DisplayFiremodes_f (void)
+static void HUD_DisplayFiremodes (le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay)
 {
 	int actorIdx;
 	const objDef_t *ammo;
 	const fireDef_t *fd;
 	int i;
-	char hand;
 	character_t* chr;
 
-	if (!selActor)
+	if (!actor)
 		return;
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
@@ -490,19 +484,13 @@ static void HUD_DisplayFiremodes_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() < 2) { /* no argument given */
-		hand = ACTOR_HAND_RIGHT;
-	} else {
-		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
-	}
-
-	fd = CL_GetFireDefinitionForHand(selActor, hand);
+	fd = CL_GetFireDefinitionForHand(actor, hand);
 	if (fd == NULL)
 		return;
 
 	ammo = fd->obj;
 	if (!ammo) {
-		Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: no weapon or ammo found.\n");
+		Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes: no weapon or ammo found.\n");
 		return;
 	}
 
@@ -521,24 +509,43 @@ static void HUD_DisplayFiremodes_f (void)
 	}
 	firemodesChangeDisplay = qtrue;
 
-	actorIdx = CL_GetActorNumber(selActor);
-	Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: actor index: %i\n", actorIdx);
+	actorIdx = CL_GetActorNumber(actor);
 	if (actorIdx == -1)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
-	chr = CL_GetActorChr(selActor);
+	chr = CL_GetActorChr(actor);
 	assert(chr);
 
 	/* Set default firemode if the currently selected one is not sane or for another weapon. */
-	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
+	if (!CL_WorkingFiremode(actor, qtrue)) {	/* No usable firemode selected. */
 		/* Set default firemode */
-		CL_SetDefaultReactionFiremode(selActor, chr->RFmode.hand);
+		CL_SetDefaultReactionFiremode(actor, chr->RFmode.hand);
 	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		/* Display the firemode information (image + text). */
-		HUD_DisplayFiremodeEntry(ammo, fd->weapFdsIdx, hand, i);
+		HUD_DisplayFiremodeEntry(actor, ammo, fd->weapFdsIdx, hand, i);
 	}
+}
+
+/**
+ * @brief Displays the firemodes for the given hand.
+ * @note Console command: list_firemodes
+ */
+static void HUD_DisplayFiremodes_f (void)
+{
+	actorHands_t hand;
+
+	if (!selActor)
+		return;
+
+	if (Cmd_Argc() < 2)
+		/* no argument given */
+		hand = ACTOR_HAND_RIGHT;
+	else
+		hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
+
+	HUD_DisplayFiremodes(selActor, hand, qtrue);
 }
 
 /**
@@ -576,17 +583,15 @@ static void HUD_SelectReactionFiremode_f (void)
 	hand = ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]);
 	firemode = atoi(Cmd_Argv(2));
 
-	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("HUD_SelectReactionFiremode_f: Firemode index to big (%i). Highest possible number is %i.\n",
-			firemode, MAX_FIREDEFS_PER_WEAPON - 1);
+	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0) {
+		Com_Printf("HUD_SelectReactionFiremode_f: Firemode out of bounds (%i).\n", firemode);
 		return;
 	}
 
 	CL_UpdateReactionFiremodes(selActor, hand, firemode);
 
 	/* Update display of firemode checkbuttons. */
-	firemodesChangeDisplay = qfalse; /* So HUD_DisplayFiremodes_f doesn't hide the list. */
-	HUD_DisplayFiremodes_f();
+	HUD_DisplayFiremodes(selActor, hand, qfalse);
 }
 
 /**
@@ -1440,8 +1445,6 @@ void HUD_ActorUpdateCvars (void)
 		if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
 			MN_ExecuteConfunc("huddisable %i", i);
 		} else if (i == cl_selected->integer) {
-			/* stored in menu_nohud.ufo - confunc that calls all the different
-			 * hud select confuncs */
 			MN_ExecuteConfunc("hudselect %i", i);
 		} else {
 			MN_ExecuteConfunc("huddeselect %i", i);
@@ -1495,11 +1498,6 @@ static void CL_ActorToggleReaction_f (void)
 		state = STATE_REACTION_ONCE;
 	else if (selActor->state & STATE_REACTION_ONCE)
 		state = STATE_REACTION_MANY;
-
-	/* Check all hands for reaction-enabled ammo-firemodes. */
-	if (!CL_WeaponWithReaction(selActor, ACTOR_HAND_RIGHT)
-	 && !CL_WeaponWithReaction(selActor, ACTOR_HAND_LEFT))
-	 	state = ~STATE_REACTION;
 
 	if (state & STATE_REACTION) {
 		if (!CL_WorkingFiremode(selActor, qtrue)) {
