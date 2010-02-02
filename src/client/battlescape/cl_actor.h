@@ -77,7 +77,8 @@ int CL_ReservedTUs(const le_t *le, reservation_types_t type);
 void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);
 
 int CL_MoveMode(const le_t *le, int length);
-
+void CL_SetActorMode(le_t *actor, actorModes_t actorMode);
+qboolean CL_ActorFireModeActivated(const actorModes_t mode);
 void CL_ConditionalMoveCalcActor(le_t *le);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);

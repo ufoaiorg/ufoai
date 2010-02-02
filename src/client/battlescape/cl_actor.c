@@ -1126,6 +1126,10 @@ static void CL_MaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 	}
 }
 
+void CL_SetActorMode (le_t *actor, actorModes_t actorMode)
+{
+	actor->actorMode = actorMode;
+}
 
 /**
  * @brief Starts moving actor.
@@ -1165,7 +1169,7 @@ void CL_ActorStartMove (le_t * le, const pos3_t to)
 	}
 
 	/* change mode to move now */
-	le->actorMode = M_MOVE;
+	CL_SetActorMode(le, M_MOVE);
 
 	/* move seems to be possible; send request to server */
 	MSG_Write_PA(PA_MOVE, le->entnum, toReal);
@@ -1335,7 +1339,7 @@ void CL_ActorDoorAction_f (void)
  * @param mode The actor mode
  * @return @c true if we are in fire mode, @c false otherwise
  */
-static qboolean CL_ActorFireModeActivated (const actorModes_t mode)
+qboolean CL_ActorFireModeActivated (const actorModes_t mode)
 {
 	return IS_MODE_FIRE_RIGHT(mode) || IS_MODE_FIRE_LEFT(mode) || IS_MODE_FIRE_HEADGEAR(mode);
 }
@@ -1412,10 +1416,10 @@ void CL_ActorUseHeadgear_f (void)
 	if (!headgear)
 		return;
 
-	selActor->actorMode = M_FIRE_HEADGEAR;
+	CL_SetActorMode(selActor, M_FIRE_HEADGEAR);
 	selActor->currentSelectedFiremode = 0; /** @todo make this a variable somewhere? */
 	CL_ActorShoot(selActor, selActor->pos);
-	selActor->actorMode = M_MOVE;
+	CL_SetActorMode(selActor, M_MOVE);
 
 	/* restore old mouse space */
 	mouseSpace = tmpMouseSpace;
@@ -1456,7 +1460,7 @@ static void CL_ActorMoveMouse (void)
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, selActor->mousePendPos);
 
-			selActor->actorMode = M_PEND_MOVE;
+			CL_SetActorMode(selActor, M_PEND_MOVE);
 		} else {
 			/* Just move there */
 			CL_ActorStartMove(selActor, mousePos);
@@ -1480,7 +1484,7 @@ void CL_ActorSelectMouse (void)
 		/* Try and select another team member */
 		if (mouseActor && !mouseActor->selected && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
-			selActor->actorMode = M_MOVE;
+			CL_SetActorMode(selActor, M_MOVE);
 		} else {
 			CL_ActorMoveMouse();
 		}
@@ -1493,9 +1497,9 @@ void CL_ActorSelectMouse (void)
 
 			/* We switch back to aiming mode. */
 			if (selActor->actorMode == M_PEND_FIRE_R)
-				selActor->actorMode = M_FIRE_R;
+				CL_SetActorMode(selActor, M_FIRE_R);
 			else
-				selActor->actorMode = M_FIRE_L;
+				CL_SetActorMode(selActor, M_FIRE_L);
 		} else {
 			/* Clicked different spot. */
 			VectorCopy(mousePos, selActor->mousePendPos);
@@ -1507,7 +1511,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			selActor->actorMode = M_PEND_FIRE_R;
+			CL_SetActorMode(selActor, M_PEND_FIRE_R);
 			VectorCopy(mousePos, selActor->mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -1519,7 +1523,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			selActor->actorMode = M_PEND_FIRE_L;
+			CL_SetActorMode(selActor, M_PEND_FIRE_L);
 			VectorCopy(mousePos, selActor->mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -1541,10 +1545,10 @@ void CL_ActorActionMouse (void)
 	if (!selActor || mouseSpace != MS_WORLD)
 		return;
 
-	if (selActor->actorMode == M_MOVE || selActor->actorMode == M_PEND_MOVE) {
-		CL_ActorMoveMouse();
+	if (CL_ActorFireModeActivated(selActor->actorMode)) {
+		CL_SetActorMode(selActor, M_MOVE);
 	} else {
-		selActor->actorMode = M_MOVE;
+		CL_ActorMoveMouse();
 	}
 }
 
@@ -2352,8 +2356,7 @@ void CL_ActorTargetAlign_f (void)
 	/* no firedef selected */
 	if (!selActor || !selActor->fd)
 		return;
-	if (selActor->actorMode != M_FIRE_R && selActor->actorMode != M_FIRE_L
-	 && selActor->actorMode != M_PEND_FIRE_R && selActor->actorMode != M_PEND_FIRE_L)
+	if (!CL_ActorFireModeActivated(selActor->actorMode))
 		return;
 
 	/* user defined height align */
@@ -2425,7 +2428,7 @@ void CL_AddTargeting (void)
 			/* Also display a box for the pending move if we have one. */
 			CL_AddTargetingBox(selActor->mousePendPos, qtrue);
 			if (!CL_TraceMove(selActor->mousePendPos))
-				selActor->actorMode = M_MOVE;
+				CL_SetActorMode(selActor, M_MOVE);
 		}
 		break;
 	case M_FIRE_R:

@@ -107,9 +107,6 @@ typedef struct reserveShot_s {
 	int TUs;
 } reserveShot_t;
 
-/** Reservation-popup info */
-static qboolean popupReload = qfalse;
-
 static int hudTime;
 static char hudText[256];
 
@@ -124,7 +121,6 @@ void HUD_DisplayMessage (const char *text)
 	MN_DisplayNotice(text, cl_hud_message_timeout->integer, mn_hud->string);
 }
 
-static void HUD_RefreshWeaponButtons(const le_t* le, int additionalTime);
 /**
  * @brief Updates the global character cvars for battlescape.
  * @note This is only called when we are in battlescape rendering mode
@@ -283,10 +279,12 @@ static menuNode_t* popupListNode;
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.
+ * @param[in] popupReload Prevent firemode reservation popup from being closed if
+ * no firemode is available because of insufficient TUs.
  * @sa HUD_PopupFiremodeReservation_f
  * @sa CL_CheckFiremodeReservation
  */
-static void HUD_PopupFiremodeReservation (qboolean reset)
+static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 {
 	actorHands_t hand = ACTOR_HAND_RIGHT;
 	int i;
@@ -369,7 +367,6 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);
 		popupListNode->selectedColor[3] = 1.0;
 		MN_TextNodeSelectLine(popupListNode, selectedEntry);
-		popupReload = qfalse;
 	}
 }
 
@@ -381,7 +378,7 @@ static void HUD_PopupFiremodeReservation_f (void)
 {
 	/* A second parameter (the value itself will be ignored) was given.
 	 * This is used to reset the shot-reservation.*/
-	HUD_PopupFiremodeReservation(Cmd_Argc() == 2);
+	HUD_PopupFiremodeReservation(Cmd_Argc() == 2, qfalse);
 }
 
 /**
@@ -732,9 +729,9 @@ static void HUD_FireWeapon_f (void)
 	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_UsableTUs(selActor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand == ACTOR_HAND_RIGHT)
-			selActor->actorMode = M_FIRE_R;
+			CL_SetActorMode(selActor, M_FIRE_R);
 		else
-			selActor->actorMode = M_FIRE_L;
+			CL_SetActorMode(selActor, M_FIRE_L);
 		selActor->currentSelectedFiremode = firemode;	/* Store firemode. */
 		HUD_HideFiremodes();
 	} else {
@@ -1044,13 +1041,9 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	{
 		const char* menuName = MN_GetActiveWindowName();
 		if (menuName[0] != '\0' && strstr(MN_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
-			/* Prevent firemode reservation popup from being closed if
-			 * no firemode is available because of insufficient TUs. */
-			popupReload = qtrue;
-
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is it really need? */
-			HUD_PopupFiremodeReservation(qfalse);
+			HUD_PopupFiremodeReservation(qfalse, qtrue);
 		}
 	}
 }
@@ -1270,37 +1263,7 @@ void HUD_ActorUpdateCvars (void)
 				if (CL_UsableTUs(selActor) >= TU_CROUCH)
 					time = TU_CROUCH;
 			}
-		} else if (selActor->actorMode == M_MOVE || selActor->actorMode == M_PEND_MOVE) {
-			const int reservedTUs = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
-			/* If the mouse is outside the world, and we haven't placed the cursor in pend
-			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
-			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || selActor->actorMoveLength == ROUTING_NOT_REACHABLE) {
-				selActor->actorMoveLength = ROUTING_NOT_REACHABLE;
-				if (reservedTUs > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reservedTUs);
-				else
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
-				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
-			}
-			if (selActor->actorMoveLength != ROUTING_NOT_REACHABLE) {
-				const int moveMode = CL_MoveMode(selActor, selActor->actorMoveLength);
-				if (reservedTUs > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-						selActor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), selActor->actorMoveLength,
-						selActor->TU - selActor->actorMoveLength, selActor->TU - reservedTUs - selActor->actorMoveLength);
-				else
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-						moveModeDescriptions[moveMode] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
-
-				if (selActor->actorMoveLength <= CL_UsableTUs(selActor))
-					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_UsableTUs(selActor));
-				else
-					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
-
-				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
-			}
-			time = selActor->actorMoveLength;
-		} else {
+		} else if (CL_ActorFireModeActivated(selActor->actorMode)) {
 			const invList_t *selWeapon;
 
 			/* get weapon */
@@ -1349,7 +1312,7 @@ void HUD_ActorUpdateCvars (void)
 
 				if (!GAME_ItemIsUseable(selWeapon->item.t)) {
 					HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
-					selActor->actorMode = M_MOVE;
+					CL_SetActorMode(selActor, M_MOVE);
 				} else if (selActor->fd) {
 					Com_sprintf(infoText, lengthof(infoText),
 								"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selActor->fd->name),
@@ -1364,13 +1327,43 @@ void HUD_ActorUpdateCvars (void)
 					 * or if the weapon is reloadable and out of ammo,
 					 * then change to move mode */
 					if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time)
-						selActor->actorMode = M_MOVE;
+						CL_SetActorMode(selActor, M_MOVE);
 				} else if (selWeapon) {
 					Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
 				}
 			} else {
-				selActor->actorMode = M_MOVE;
+				CL_SetActorMode(selActor, M_MOVE);
 			}
+		} else {
+			const int reservedTUs = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
+			/* If the mouse is outside the world, and we haven't placed the cursor in pend
+			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
+			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || selActor->actorMoveLength == ROUTING_NOT_REACHABLE) {
+				selActor->actorMoveLength = ROUTING_NOT_REACHABLE;
+				if (reservedTUs > 0)
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reservedTUs);
+				else
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
+				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+			}
+			if (selActor->actorMoveLength != ROUTING_NOT_REACHABLE) {
+				const int moveMode = CL_MoveMode(selActor, selActor->actorMoveLength);
+				if (reservedTUs > 0)
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
+						selActor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), selActor->actorMoveLength,
+						selActor->TU - selActor->actorMoveLength, selActor->TU - reservedTUs - selActor->actorMoveLength);
+				else
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
+						moveModeDescriptions[moveMode] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
+
+				if (selActor->actorMoveLength <= CL_UsableTUs(selActor))
+					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_UsableTUs(selActor));
+				else
+					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
+
+				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+			}
+			time = selActor->actorMoveLength;
 		}
 
 		/* handle actor in a panic */
