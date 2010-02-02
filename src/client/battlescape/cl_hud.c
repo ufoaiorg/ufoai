@@ -560,7 +560,7 @@ static void HUD_SwitchFiremodeList_f (void)
 	}
 
 	if (visibleFiremodeListRight || visibleFiremodeListLeft)
-		Cbuf_AddText(va("list_firemodes %s\n", Cmd_Argv(1)));
+		HUD_DisplayFiremodes(selActor, ACTOR_GET_HAND_INDEX(Cmd_Argv(1)[0]), qfalse);
 }
 
 /**
