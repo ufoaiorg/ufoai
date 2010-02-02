@@ -189,7 +189,7 @@ void HUD_HideFiremodes (void)
  * @param[in] hand What list to display
  * @todo Put the most of this function into the scripts
  */
-static void HUD_DisplayFiremodeEntry (le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
+static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
