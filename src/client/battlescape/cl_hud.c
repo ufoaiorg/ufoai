@@ -1523,7 +1523,10 @@ static void CL_ActorToggleReaction_f (void)
 }
 
 /**
- * @brief returns the weapon the actor's left hand is touching
+ * @brief returns the weapon the actor's left hand is touching. In case the actor
+ * holds a two handed weapon in his right hand, this weapon is returned here.
+ * This function only returns @c NULL if no two handed weapon is in the right hand
+ * and the left hand is empty.
  */
 static invList_t* CL_GetLeftHandWeapon (le_t *actor)
 {
