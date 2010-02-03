@@ -685,17 +685,39 @@ void R_DrawPolygon (int points, int *verts)
 }
 
 #define MARKER_SIZE 60.0
+
 /**
- * @brief Draw a 3D Marker on the 3D geoscape
- * @sa MAP_Draw3DMarkerIfVisible
+ * @brief Draw 3D Marker on the 3D geoscape.
+ * @param[in] x menu node x position
+ * @param[in] y menu node y position
+ * @param[in] w menu node widht
+ * @param[in] h menu node height
+ * @param[in] rotate vector giving the angles of earth rotation due to player view.
+ * @param[in] pos longitude and latitude of the model to draw.
+ * @param[in] direction angle giving the direction the model is heading toward.
+ * @param[in] earthRadius Radius of earth on screen (this include zoom).
  */
-void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model, int skin)
+void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin)
 {
+	/* normalize */
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
+
+	/* Earth center is in the middle of node.
+	 * Due to Orthographic view, this is also camera position */
+	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};
+
+	vec3_t modelPos, v, v1, rotationAxis;
 	modelInfo_t mi;
 	vec2_t size;
-	vec3_t scale, center;
+	vec3_t scale, center, position, angles;
+	float zoom = 0.4f;
 
 	memset(&mi, 0, sizeof(mi));
+	VectorCopy(vec3_origin, position);
+	VectorCopy(vec3_origin, angles);
 
 	mi.model = R_RegisterModelShort(model);
 	if (!mi.model) {
@@ -711,11 +733,33 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 	size[0] = size[1] = MARKER_SIZE * zoom;
 	R_ModelAutoScale(size, &mi, scale, center);
 	/* reset the center, as we want to place the models onto the surface of the earth */
-	mi.center[0] = 0;
-	mi.center[1] = 0;
-	mi.center[2] = 0;
+	mi.center = NULL;
+
+	PolarToVec(pos, modelPos);
+	VectorSet(v, modelPos[0], modelPos[1], modelPos[2]);
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
+	VectorSet(modelPos, earthPos[0] - earthRadius * v[1], earthPos[1] - earthRadius * v[0], earthRadius * v[2]);
+
+	/* go to a new matrix */
+	glPushMatrix();
+
+	/* move the model on earth surface */
+	glTranslatef(modelPos[0], modelPos[1], modelPos[2]);
+
+	/* rotates model: make it tangent to earth surface, heading toward it. */
+	glRotatef(-rotate[1], 1, 0, 0);
+	glRotatef(rotate[2], 0, 1, 0);
+	glRotatef(rotate[0] - pos[0], 0, 0, 1);
+	glRotatef(90.0f - pos[1] , 1, 0, 0);
+	glRotatef(-90.0f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
+
+	/* restore previous matrix */
+	glPopMatrix();
 }
 
 /**

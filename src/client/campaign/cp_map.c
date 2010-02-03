@@ -120,7 +120,6 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 /* static variables */
 static char textStandard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx;		/**< Current Event centered on 3D geoscape */
-static const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
 
 /* Colors */
 static const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
@@ -134,6 +133,7 @@ static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we n
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
+static const float defaultBaseAngle = 90.0f;	/**< Default angle value for 3D models like bases */
 
 static byte *terrainPic;				/**< this is the terrain mask for separating the clima
 										 * zone and water by different color values */
@@ -533,44 +533,13 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] model The name of the model of the marker.
  * @param[in] skin Number of modelskin to draw on marker
  */
-qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
+void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
-	int x, y, z;
-	vec3_t screenPos, angles, v;
-	float zoom;
-	float costheta, sintheta;
-	const float radius = GLOBE_RADIUS;
-	qboolean test;
+	int x, y;
+	const qboolean test = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
 
-	test = MAP_AllMapToScreen(node, pos, &x, &y, &z);
-
-	if (test) {
-		/* Set position of the model on the screen */
-		VectorSet(screenPos, x, y, z);
-
-		if (cl_3dmap->integer) {
-			/* Set angles of the model */
-			VectorCopy(screenPos, v);
-			v[0] -= ccs.mapPos[0] + ccs.mapSize[0] / 2.0f;
-			v[1] -= ccs.mapPos[1] + ccs.mapSize[1] / 2.0f;
-
-			angles[0] = theta;
-			costheta = cos(angles[0] * torad);
-			sintheta = sin(angles[0] * torad);
-
-			angles[1] = 180.0f - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
-			angles[2] = asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
-		} else {
-			VectorSet(angles, theta, 180, 0);
-		}
-		/* Set zoomed scale of markers. */
-		zoom = 0.4f;
-
-		/* Draw */
-		R_Draw3DMapMarkers(angles, zoom, screenPos, model, skin);
-		return qtrue;
-	}
-	return qfalse;
+	if (test)
+		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);
 }
 
 
@@ -877,61 +846,58 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
  * @param[in] end Latitude and longitude of aimed point.
  * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
  * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
- * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
+ * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
 float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	float angle = 0.0f;
-	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
+	vec3_t start3D, end3D, north3D, ortToDest, ortToPole, v, rotationAxis;
 	float dist;
+	const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
 
-	/* calculate the vector tangent to movement */
 	PolarToVec(start, start3D);
 	PolarToVec(end, end3D);
-	if (ortVector) {
-		CrossProduct(start3D, end3D, ortVector);
-		VectorNormalize(ortVector);
-		CrossProduct(ortVector, start3D, tangentVector);
-	} else {
-		CrossProduct(start3D, end3D, v);
-		CrossProduct(v, start3D, tangentVector);
-	}
-	VectorNormalize(tangentVector);
+	PolarToVec(northPole, north3D);
 
+	/* calculate the vector othogonal to movement */
+	CrossProduct(start3D, end3D, ortToDest);
+	VectorNormalize(ortToDest);
+	if (ortVector) {
+		VectorCopy(ortToDest, ortVector);
+	}
+
+	/* calculate the vector othogonal to north pole (from model location) */
+	CrossProduct(start3D, north3D, ortToPole);
+	VectorNormalize(ortToPole);
+
+
+/**
+ * @todo Save the value angle instead of direction: we don't need a vector here,
+	we could just compare angle to current angle.
+ */
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
-		VectorSubtract(tangentVector, direction, v);
+		VectorSubtract(ortToDest, direction, v);
 		dist = VectorLength(v);
 		if (dist > 0.01) {
-			CrossProduct(direction, tangentVector, rotationAxis);
+			CrossProduct(direction, ortToDest, rotationAxis);
 			VectorNormalize(rotationAxis);
 			RotatePointAroundVector(v, rotationAxis, direction, 5.0);
 			VectorCopy(v, direction);
-			VectorSubtract(tangentVector, direction, v);
+			VectorSubtract(ortToDest, direction, v);
 			if (VectorLength(v) < dist)
-				VectorCopy(direction, tangentVector);
+				VectorCopy(direction, ortToDest);
 			else
-				VectorCopy(tangentVector, direction);
+				VectorCopy(ortToDest, direction);
 		}
 	}
 
-	if (cl_3dmap->integer) {
-		/* rotate vector tangent to movement in the frame of the screen */
-		VectorSet(rotationAxis, 0, 0, 1);
-		RotatePointAroundVector(v, rotationAxis, tangentVector, - ccs.angles[PITCH]);
-		VectorSet(rotationAxis, 0, 1, 0);
-		RotatePointAroundVector(tangentVector, rotationAxis, v, - ccs.angles[YAW]);
-	} else {
-		VectorSet(rotationAxis, 0, 0, 1);
-		RotatePointAroundVector(v, rotationAxis, tangentVector, - start[0]);
-		VectorSet(rotationAxis, 0, 1, 0);
-		RotatePointAroundVector(tangentVector, rotationAxis, v, start[1] + 90.0f);
-	}
-
-	/* calculate the orientation angle of the model around axis perpendicular to the screen */
-	angle = todeg * atan(tangentVector[0] / tangentVector[1]);
-	if (tangentVector[1] > 0)
-		angle += 180.0f;
+	/* calculate the angle the model is making at earth surface with north pole direction */
+	angle = todeg * acos(DotProduct(ortToDest, ortToPole));
+	/* with arcos, you only get the absolute value of the angle: get the sign */
+	CrossProduct(ortToDest, ortToPole, v);
+	if (DotProduct(start3D, v) < 0)
+		angle = - angle;
 
 	return angle;
 }
@@ -1363,8 +1329,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 
 	/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 	if (cl_3dmap->integer) {
-		const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
-		MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
+		MAP_Draw3DMarkerIfVisible(node, ms->pos, defaultBaseAngle, MAP_GetMissionModel(ms), 0);
 	} else {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
@@ -1405,8 +1370,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 
 	/* Draw installation */
 	if (cl_3dmap->integer) {
-		const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
-		MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, tpl->model, 0);
+		MAP_Draw3DMarkerIfVisible(node, installation->pos, defaultBaseAngle, tpl->model, 0);
 	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
 		const image_t *image = R_FindImage(tpl->image, it_pic);
 		if (image)
@@ -1455,12 +1419,11 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 
 	/* Draw base */
 	if (cl_3dmap->integer) {
-		const float angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
 		if (base->baseStatus == BASE_UNDER_ATTACK)
 			/* two skins - second skin is for baseattack */
-			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 1);
+			MAP_Draw3DMarkerIfVisible(node, base->pos, defaultBaseAngle, "geoscape/base", 1);
 		else
-			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 0);
+			MAP_Draw3DMarkerIfVisible(node, base->pos, defaultBaseAngle, "geoscape/base", 0);
 	} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 		const image_t *image;
 		if (base->baseStatus == BASE_UNDER_ATTACK)
@@ -1513,7 +1476,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 	} else {
 		/* aircraft is idle */
-		angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL);
+		angle = 0.0f;
 	}
 
 	/* Draw a circle around selected aircraft */

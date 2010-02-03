@@ -33,7 +33,7 @@ void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, const vec4_t color);
 void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
 void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient);
-void R_Draw3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model, int skin);
+void R_Draw3DMapMarkers(int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
 int R_UploadData(const char *name, byte *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);
 void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
