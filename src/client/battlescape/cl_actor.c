@@ -2127,6 +2127,13 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
 	}
 
+	/** @todo The hit probability should work somewhat differently for splash damage weapons.
+	* Since splash damage weapons can deal damage even when they don't directly hit an actor,
+	* the hit probability should be defined as the predicted percentage of the maximum splash
+	* damage of the firemode, assuming the projectile explodes at the desired location. This
+	* means that a percentage should be displayed for EVERY actor in the predicted blast
+	* radius. This will likely require specialized code.
+	*/
 	hitProbability = 100 * CL_TargetingToHit(toPos);
 }
 
@@ -2230,6 +2237,13 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
 
+	/** @todo The hit probability should work somewhat differently for splash damage weapons.
+	* Since splash damage weapons can deal damage even when they don't directly hit an actor,
+	* the hit probability should be defined as the predicted percentage of the maximum splash
+	* damage of the firemode, assuming the projectile explodes at the desired location. This
+	* means that a percentage should be displayed for EVERY actor in the predicted blast
+	* radius. This will likely require specialized code.
+	*/
 	hitProbability = 100 * CL_TargetingToHit(toPos);
 }
 
