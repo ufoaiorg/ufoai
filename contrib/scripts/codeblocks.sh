@@ -326,7 +326,7 @@ function extract_gtk()
 		check_error $? "Could not remove $i lib/include files"
 	done
 
-	for i in $(echo "gtksourceview-2.0 gail-1.0 pango-1.0 atk-1.0 cairo" ); do
+	for i in $(echo "gtksourceview-2.0 gail-1.0 pango-1.0 atk-1.0 cairo libxml2" ); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
 		check_error $? "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
