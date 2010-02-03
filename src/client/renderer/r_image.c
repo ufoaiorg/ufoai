@@ -732,17 +732,17 @@ By Robert 'Heffo' Heffernan
 =================================================================
 */
 
-static void jpg_null (j_decompress_ptr cinfo)
+static void ufo_jpg_null (j_decompress_ptr cinfo)
 {
 }
 
-static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
+static boolean ufo_jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
 	Com_Printf("Premature end of JPEG data\n");
 	return 1;
 }
 
-static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
+static void ufo_jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
 		Com_Printf("Premature end of JPEG data\n");
@@ -751,14 +751,14 @@ static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
-static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
+static void ufo_jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
-	cinfo->src->init_source = jpg_null;
-	cinfo->src->fill_input_buffer = jpg_fill_input_buffer;
-	cinfo->src->skip_input_data = jpg_skip_input_data;
+	cinfo->src->init_source = ufo_jpg_null;
+	cinfo->src->fill_input_buffer = ufo_jpg_fill_input_buffer;
+	cinfo->src->skip_input_data = ufo_jpg_skip_input_data;
 	cinfo->src->resync_to_restart = jpeg_resync_to_restart;
-	cinfo->src->term_source = jpg_null;
+	cinfo->src->term_source = ufo_jpg_null;
 	cinfo->src->bytes_in_buffer = len;
 	cinfo->src->next_input_byte = mem;
 }
@@ -796,7 +796,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	jpeg_create_decompress(&cinfo);
 
 	/* Feed JPEG memory into the libJpeg Object */
-	jpeg_mem_src(&cinfo, rawdata, rawsize);
+	ufo_jpeg_mem_src(&cinfo, rawdata, rawsize);
 
 	/* Process JPEG header */
 	jpeg_read_header(&cinfo, qtrue);
