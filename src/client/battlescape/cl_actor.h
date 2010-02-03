@@ -63,15 +63,11 @@ const char *CL_GetSkillString(const int skill);
 const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const actorHands_t hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
-qboolean CL_WeaponWithReaction(const le_t * actor, const actorHands_t hand);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
 int CL_UsableReactionTUs(const le_t * le);
-void CL_SetReactionFiremode(const le_t *actor, const actorHands_t hand, const objDef_t *od, const int fd_idx);
-void CL_SetDefaultReactionFiremode(le_t *actor, const actorHands_t hand);
 void CL_UpdateReactionFiremodes(le_t * actor, const actorHands_t hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
-qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);
 int CL_UsableTUs(const le_t *le);
 int CL_ReservedTUs(const le_t *le, reservation_types_t type);
 void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);

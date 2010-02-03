@@ -426,7 +426,7 @@ static void HUD_ReserveShot_f (void)
  * @brief Display 'usable" (blue) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  */
-void HUD_DisplayPossibleReaction (const le_t * actor)
+static void HUD_DisplayPossibleReaction (const le_t * actor)
 {
 	if (!actor)
 		return;
@@ -448,7 +448,7 @@ void HUD_DisplayPossibleReaction (const le_t * actor)
  * @param[in] actor the actor to check for his reaction state.
  * @return qtrue if nothing changed message was sent otherwise qfalse.
  */
-qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
+static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 {
 	if (!actor)
 		return qfalse;
@@ -468,7 +468,7 @@ qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 	return qfalse;
 }
 
-static void HUD_DisplayFiremodes (le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay)
+void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay)
 {
 	int actorIdx;
 	const objDef_t *ammo;
@@ -498,12 +498,8 @@ static void HUD_DisplayFiremodes (le_t* actor, actorHands_t hand, qboolean firem
 		/* Toggle firemode lists if needed. */
 		HUD_HideFiremodes();
 		if (hand == ACTOR_HAND_RIGHT) {
-			if (visibleFiremodeListRight)
-				return;
 			visibleFiremodeListRight = qtrue;
 		} else {
-			if (visibleFiremodeListLeft)
-				return;
 			visibleFiremodeListLeft = qtrue;
 		}
 	}
@@ -514,12 +510,6 @@ static void HUD_DisplayFiremodes (le_t* actor, actorHands_t hand, qboolean firem
 
 	chr = CL_GetActorChr(actor);
 	assert(chr);
-
-	/* Set default firemode if the currently selected one is not sane or for another weapon. */
-	if (!CL_WorkingFiremode(actor, qtrue)) {	/* No usable firemode selected. */
-		/* Set default firemode */
-		CL_SetDefaultReactionFiremode(actor, chr->RFmode.hand);
-	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		/* Display the firemode information (image + text). */
@@ -568,7 +558,7 @@ static void HUD_SwitchFiremodeList_f (void)
  */
 static void HUD_SelectReactionFiremode_f (void)
 {
-	char hand;
+	actorHands_t hand;
 	int firemode;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
@@ -588,9 +578,6 @@ static void HUD_SelectReactionFiremode_f (void)
 	}
 
 	CL_UpdateReactionFiremodes(selActor, hand, firemode);
-
-	/* Update display of firemode checkbuttons. */
-	HUD_DisplayFiremodes(selActor, hand, qfalse);
 }
 
 /**
@@ -905,6 +892,31 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, const invList_t *weapon, int
 	}
 
 	return -1;
+}
+
+
+/**
+ * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
+ * @param[in] actor What actor to check.
+ * @param[in] hand Which hand to check
+ */
+static qboolean CL_WeaponWithReaction (const le_t * actor, const actorHands_t hand)
+{
+	int i;
+	const fireDef_t *fd;
+
+	/* Get ammo and weapon-index in ammo (if there is a weapon in that hand). */
+	fd = CL_GetFireDefinitionForHand(actor, hand);
+
+	if (fd == NULL)
+		return qfalse;
+
+	/* Check ammo for reaction-enabled firemodes. */
+	for (i = 0; i < fd->obj->numFiredefs[fd->weapFdsIdx]; i++)
+		if (fd[i].reaction)
+			return qtrue;
+
+	return qfalse;
 }
 
 /**
@@ -1656,8 +1668,6 @@ static void CL_ActorToggleReaction_f (void)
 	int state = 0;
 	character_t* chr;
 
-	/** @todo most of this must be done on the server side */
-
 	if (!CL_CheckAction(selActor))
 		return;
 
@@ -1671,28 +1681,15 @@ static void CL_ActorToggleReaction_f (void)
 	else if (selActor->state & STATE_REACTION_ONCE)
 		state = STATE_REACTION_MANY;
 
+	/** @todo server side please */
 	if (state & STATE_REACTION) {
-		if (!CL_WorkingFiremode(selActor, qtrue)) {
-			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_RIGHT);
-		} else {
-			/* We would reserve more TUs than are available - reserve nothing and abort. */
-			if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
-				state = ~STATE_REACTION;
-		}
+		/* We would reserve more TUs than are available - reserve nothing and abort. */
+		if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+			state = ~STATE_REACTION;
 	}
 
 	/* Send request to update actor's reaction state to the server. */
 	MSG_Write_PA(PA_STATE, selActor->entnum, state);
-
-	/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
-	if (state & STATE_REACTION)
-		CL_SetReactionFiremode(selActor, chr->RFmode.hand, chr->RFmode.weapon, chr->RFmode.fmIdx);
-	else
-		CL_SetReactionFiremode(selActor, -1, NULL, -1); /* Includes PA_RESERVE_STATE */
-
-	/* Update RF list if it is visible. */
-	if (visibleFiremodeListLeft || visibleFiremodeListRight)
-		HUD_DisplayFiremodes_f();
 }
 
 /**

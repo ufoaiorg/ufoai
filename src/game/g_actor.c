@@ -375,14 +375,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		G_WriteItem(item, to, tx, ty);
 	}
 
-/*	if (!G_ActorHasWorkingFireModeSet(ent)) {*/
-		/* Update reaction firemode when something is moved from/to a hand. */
-		if (INV_IsRightDef(from) || INV_IsRightDef(to)) {
-			G_EventReactionFireHandChange(ent, ACTOR_HAND_RIGHT);
-		} else if (INV_IsLeftDef(from) || INV_IsLeftDef(to)) {
-			G_EventReactionFireHandChange(ent, ACTOR_HAND_LEFT);
-		}
-/*	}*/
+	G_UpdateReactionFire(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);

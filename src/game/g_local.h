@@ -321,6 +321,7 @@ void G_ReactToPreFire(edict_t *target);
 void G_ReactToPostFire(edict_t *target);
 void G_ResetReactionFire(int team);
 qboolean G_CanEnableReactionFire(const edict_t *ent);
+void G_UpdateReactionFire(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
 qboolean G_ReactToMove(edict_t *target, qboolean mock);
 void G_ReactToEndTurn(void);
 
@@ -336,7 +337,6 @@ void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* 
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventDestroyEdict(const edict_t* ent);
-void G_EventReactionFireHandChange(const edict_t* ent, actorHands_t hand);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
 void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
@@ -346,6 +346,7 @@ void G_EventActorStats(const edict_t* ent);
 void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
+void G_EventReactionFireChange(const edict_t* ent);
 
 /* g_vis.c */
 #define VIS_APPEAR	1

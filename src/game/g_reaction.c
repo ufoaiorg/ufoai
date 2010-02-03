@@ -79,32 +79,31 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 /**
  * @brief Checks whether the actor has a reaction fire enabled weapon in on of his hands.
  * @param[in] actor The actor to check the weapons for
- * @return @c true if reaction fire enabled weapon was found in one of the hands
- * of the actor, @c false otherwise
+ * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
  */
-static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *actor)
+static const fireDef_t* G_ActorHasReactionFireEnabledWeapon (const edict_t *actor)
 {
 	const invList_t *invList;
 
 	/* no weapon that can be used for reaction fire */
 	if (!LEFT(actor) && !RIGHT(actor))
-		return qfalse;
+		return NULL;
 
 	invList = RIGHT(actor);
 	if (invList && invList->item.t) {
 		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 		if (fd && fd->reaction)
-			return qtrue;
+			return fd;
 	}
 
 	invList = LEFT(actor);
 	if (invList && invList->item.t) {
 		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 		if (fd && fd->reaction)
-			return qtrue;
+			return fd;
 	}
 
-	return qfalse;
+	return NULL;
 }
 
 /**
@@ -133,6 +132,28 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
 	}
 
 	return qfalse;
+}
+
+/**
+ * @brief Updates the reaction fire settings in case something was moved into a hand or from a hand
+ * that would make the current settings invalid
+ * @param ent The actor edict to check the settings for
+ */
+void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od)
+{
+	chrFiremodeSettings_t *fm = &ent->chr.RFmode;
+	fm->fmIdx = fmIdx;
+	fm->hand = hand;
+	fm->weapon = od;
+
+	if (!G_ActorHasWorkingFireModeSet(ent)) {
+		/* Disable reaction fire if no valid firemode was found. */
+		ent->state &= ~STATE_REACTION;
+		G_SendState(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), ent);
+		return;
+	}
+
+	G_EventReactionFireChange(ent);
 }
 
 /**
@@ -493,7 +514,8 @@ void G_ResetReactionFire (int team)
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		/** @todo why do we send the state here and why do we change the "shaken" state? */
+		/** @todo why do we send the state here and why do we change the "shaken"
+		 * state? - see G_MoraleBehaviour */
 		ent->state &= ~STATE_SHAKEN;
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 		gi.WriteShort(ent->number);

@@ -47,6 +47,7 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/actor/e_event_actormove.c \
 	client/battlescape/events/event/actor/e_event_actorresetclientaction.c \
 	client/battlescape/events/event/actor/e_event_actorreservationchange.c \
+	client/battlescape/events/event/actor/e_event_actorreactionfirechange.c \
 	client/battlescape/events/event/actor/e_event_actorshoot.c \
 	client/battlescape/events/event/actor/e_event_actorshoothidden.c \
 	client/battlescape/events/event/actor/e_event_actorstartshoot.c \
@@ -56,7 +57,6 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/actor/e_event_actorturn.c \
 	client/battlescape/events/event/inventory/e_event_invadd.c \
 	client/battlescape/events/event/inventory/e_event_invammo.c \
-	client/battlescape/events/event/inventory/e_event_invcheckhands.c \
 	client/battlescape/events/event/inventory/e_event_invdel.c \
 	client/battlescape/events/event/inventory/e_event_invreload.c \
 	client/battlescape/events/event/player/e_event_centerview.c \

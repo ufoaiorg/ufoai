@@ -204,6 +204,7 @@ typedef enum {
 	EV_ACTOR_ADD,
 	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
+	EV_ACTOR_REACTIONFIRECHANGE,
 
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
@@ -219,7 +220,6 @@ typedef enum {
 	EV_INV_DEL,
 	EV_INV_AMMO,
 	EV_INV_RELOAD,
-	EV_INV_HANDS_CHANGED,
 	EV_INV_TRANSFER,
 
 	/* func_breakables */

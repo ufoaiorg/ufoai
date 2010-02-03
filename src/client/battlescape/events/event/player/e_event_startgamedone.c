@@ -40,22 +40,13 @@ void CL_StartingGameDone (const eventRegister_t *self, struct dbuffer *msg)
 	/* Set default reaction-firemode (or set already working again one to update TUs) on game-start. */
 	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
 		le_t *le = cl.teamList[actorIdx];
-		if (CL_WorkingFiremode(le, qtrue)) {
-			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
-			const character_t *chr = CL_GetActorChr(le);
-			if (!chr)
-				Com_Error(ERR_DROP, "No character struct assigned to actor");
-			CL_SetReactionFiremode(le, chr->RFmode.hand, chr->RFmode.weapon, chr->RFmode.fmIdx);
 
-			/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
-			if (CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
-				CL_ReserveTUs(le, RES_CROUCH, TU_CROUCH);
-				MN_ExecuteConfunc("crouch_checkbox_check");
-			} else {
-				MN_ExecuteConfunc("crouch_checkbox_disable");
-			}
+		/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
+		if (CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
+			CL_ReserveTUs(le, RES_CROUCH, TU_CROUCH);
+			MN_ExecuteConfunc("crouch_checkbox_check");
 		} else {
-			CL_SetDefaultReactionFiremode(le, ACTOR_HAND_RIGHT);
+			MN_ExecuteConfunc("crouch_checkbox_disable");
 		}
 	}
 }

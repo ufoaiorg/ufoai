@@ -320,6 +320,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorresetclientaction.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfirechange.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorreactionfirechange.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorshoot.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -360,10 +364,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/inventory/e_event_invammo.h" />
-		<Unit filename="../../src/client/battlescape/events/event/inventory/e_event_invcheckhands.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/events/event/inventory/e_event_invcheckhands.h" />
 		<Unit filename="../../src/client/battlescape/events/event/inventory/e_event_invdel.c">
 			<Option compilerVar="CC" />
 		</Unit>

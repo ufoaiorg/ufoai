@@ -1,5 +1,5 @@
 /**
- * @file e_event_invcheckhands.c
+ * @file e_event_actorreactionfirechange.c
  */
 
 /*
@@ -23,37 +23,44 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
+#include "../../../../menu/m_main.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
-#include "e_event_invcheckhands.h"
+#include "e_event_actorreactionfirechange.h"
 
 /**
- * @brief The client changed something in his hand-containers. This function updates the reactionfire info.
- * @param[in] self Pointer to the event structure that is currently executed
- * @param[in] msg The netchannel message
+ * @brief Network event function for TU reservation. Responsible for updating the HUD with the information
+ * that were received from the server
+ * @param self The event pointer
+ * @param msg The network message to parse the event data from
+ * @sa CL_UpdateReactionFiremodes
  */
-void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *msg)
 {
-	int entnum;
 	le_t *le;
 	actorHands_t hand;
+	int entnum, fmIdx, odIdx;
+	character_t *chr;
+	const objDef_t *od;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &hand);
-	if (entnum < 0 || hand < 0)
-		Com_Error(ERR_DROP, "CL_InvCheckHands: entnum or hand not sent/received correctly. (number: %i)\n", entnum);
+	NET_ReadFormat(msg, self->formatString, &entnum, &fmIdx, &hand, &odIdx);
 
 	le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	/** @todo this should be done on the server side and the event should be removed */
-	/* No need to continue if stored firemode settings are still usable. */
-	if (!CL_WorkingFiremode(le, qtrue)) {
-		/* Firemode for reaction not sane and/or not usable. */
-		/* Update the changed hand with default firemode. */
-		CL_UpdateReactionFiremodes(le, hand, -1);
+	chr = CL_GetActorChr(le);
+	if (!chr)
+		return;
 
-		HUD_HideFiremodes();
-	}
+	if (odIdx != NONE)
+		od = INVSH_GetItemByIDX(odIdx);
+	else
+		od = NULL;
+
+	CL_CharacterSetRFMode(chr, hand, fmIdx, od);
+
+	/* Update display of firemode checkbuttons. */
+	HUD_DisplayFiremodes(le, hand, qtrue);
 }

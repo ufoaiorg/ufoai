@@ -51,23 +51,12 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* hud changes */
 	if (cls.team == cl.actTeam) {
-		int actorIdx;
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
 		MN_ExecuteConfunc("startround");
 		HUD_DisplayMessage(_("Your round started!\n"));
 		S_StartLocalSample("misc/roundstart", SND_VOLUME_DEFAULT);
 		CL_ConditionalMoveCalcActor(selActor);
-
-		for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
-			if (cl.teamList[actorIdx]) {
-				/* Check for unusable RF setting - just in case. */
-				if (!CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
-					/* At this point the rest of the code forgot to update RF-settings somewhere. */
-					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_RIGHT);
-				}
-			}
-		}
 	}
 }
 

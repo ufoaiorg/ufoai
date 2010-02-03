@@ -378,7 +378,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
  * @brief Will inform the player about the real TU reservation
  * @param ent The actors edict.
  */
-static void G_SendReservations (const edict_t *ent)
+static void G_EventSendReservations (const edict_t *ent)
 {
 	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
 
@@ -602,7 +602,7 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	actorHands_t hand, fdIdx, objIdx;
+	actorHands_t hand, fmIdx, objIdx;
 	int resReaction, resCrouch, resShot;
 	edict_t *ent;
 
@@ -685,10 +685,8 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_REACT_SELECT:
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
-		ent->chr.RFmode.hand = hand;
-		ent->chr.RFmode.fmIdx = fdIdx;
-		ent->chr.RFmode.weapon = &gi.csi->ods[objIdx];
+		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fmIdx, &objIdx);
+		G_UpdateReactionFire(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
@@ -698,7 +696,7 @@ int G_ClientAction (player_t * player)
 		ent->chr.reservedTus.shot = resShot;
 		ent->chr.reservedTus.crouch = resCrouch;
 
-		G_SendReservations(ent);
+		G_EventSendReservations(ent);
 		break;
 
 	default:
@@ -1246,7 +1244,7 @@ void G_ClientSpawn (player_t * player)
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
-	/* submit stats */
+	/* submit stats and default reaction fire */
 	G_SendPlayerStats(player);
 
 	/* give time units */
