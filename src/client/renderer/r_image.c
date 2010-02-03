@@ -176,7 +176,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return;
 
 	/* Parse the PNG file */
-	if ((png_sig_cmp(PngFileBuffer.buffer, 0, 8)) == 0) {
+	if ((png_sig_cmp(PngFileBuffer.buffer, 0, 8)) != 0) {
 		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
 		return;
