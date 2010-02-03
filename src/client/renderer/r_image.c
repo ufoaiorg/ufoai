@@ -174,7 +174,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return;
 
 	/* Parse the PNG file */
-	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
+	if ((png_sig_cmp(PngFileBuffer.buffer, 0, 8)) == 0) {
 		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
 		return;
@@ -221,7 +221,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		png_set_palette_to_rgb(png_ptr);
 	/* convert 1-2-4 bits grayscale images to 8 bits grayscale */
 	if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
-		png_set_gray_1_2_4_to_8(png_ptr);
+		png_set_expand_gray_1_2_4_to_8(png_ptr);
 	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
 		png_set_tRNS_to_alpha(png_ptr);
 
