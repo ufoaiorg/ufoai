@@ -47,6 +47,7 @@ void CL_InvCheckHands (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(entnum);
 
+	/** @todo this should be done on the server side and the event should be removed */
 	/* No need to continue if stored firemode settings are still usable. */
 	if (!CL_WorkingFiremode(le, qtrue)) {
 		/* Firemode for reaction not sane and/or not usable. */
