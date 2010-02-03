@@ -741,11 +741,18 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	VectorSet(modelPos, earthPos[0] - earthRadius * v[1], earthPos[1] - earthRadius * v[0], earthRadius * v[2]);
+	VectorSet(modelPos, - earthRadius * v[1], - earthRadius * v[0], earthRadius * v[2]);
 
 	/* go to a new matrix */
 	glPushMatrix();
 
+	/* Apply all transformation to model. Note that the transformation are applied starting
+	from the last one and ending with the first one */
+
+	/* center model on earth */
+	glTranslatef(earthPos[0], earthPos[1], 0);
+	/* scale model to proper resolution */
+	glScalef(viddef.rx, viddef.ry, 1.0f);
 	/* move the model on earth surface */
 	glTranslatef(modelPos[0], modelPos[1], modelPos[2]);
 
