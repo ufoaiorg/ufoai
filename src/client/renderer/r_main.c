@@ -595,6 +595,7 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("using GL_ARB_texture_non_power_of_two\n");
 			r_config.nonPowerOfTwo = qtrue;
 		} else {
+			r_config.nonPowerOfTwo = qfalse;
 			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
 		}
 	} else {

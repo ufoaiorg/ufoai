@@ -1534,6 +1534,8 @@ void R_FreeWorldImages (void)
 			continue;			/* keep them */
 
 		/* free it */
+		if (image->normalmap)
+			R_DeleteImage(image->normalmap);
 		R_DeleteImage(image);
 	}
 }
