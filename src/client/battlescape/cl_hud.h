@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_HUD_H
 #define CL_HUD_H
 
-extern int hitProbability;
-
 #define ACTOR_HAND_CHAR_RIGHT (char)'r'
 #define ACTOR_HAND_CHAR_LEFT (char)'l'
 

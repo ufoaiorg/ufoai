@@ -280,7 +280,7 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
- * @sa CL_TargetingToHit
+ * @sa CL_GetHitProbability
  * @note This function uses levels and levelmasks.  The levels are as following:
  * 0-255: brushes are assigned to a level based on their assigned viewing levels.  A brush with
  *    no levels assigned will be stuck in 0, a brush viewable from all 8 levels will be in 255, and
@@ -369,7 +369,7 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *head
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @note Special levels are LEVEL_ACTORCLIP and LEVEL_WEAPONCLIP.
  * @sa TR_TestLine_r
- * @sa CL_TargetingToHit
+ * @sa CL_GetHitProbability
  * @return qfalse if not blocked
  */
 qboolean TR_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)

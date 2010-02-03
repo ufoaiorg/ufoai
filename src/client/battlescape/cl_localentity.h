@@ -40,9 +40,10 @@ typedef enum {
 	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */
 } actorModes_t;
 
-#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
+#define IS_MODE_FIRE_RIGHT(x)		((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
 #define IS_MODE_FIRE_LEFT(x)		((x) == M_FIRE_L || (x) == M_PEND_FIRE_L)
-#define IS_MODE_FIRE_HEADGEAR(x)		((x) == M_FIRE_HEADGEAR)
+#define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
+#define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
 /** @brief a local entity */
 typedef struct le_s {
@@ -226,7 +227,8 @@ void LE_Unlock(le_t *le);
 qboolean LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, const char *file, const int line) __attribute__((noreturn));
-le_t *LE_Find(int type, pos3_t pos);
+le_t *LE_Find(int type, const pos3_t pos);
+le_t *LE_GetFromPos(const pos3_t pos);
 void LE_PlaceItem(le_t *le);
 void LE_Cleanup(void);
 void LE_AddToScene(void);

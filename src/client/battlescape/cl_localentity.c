@@ -1115,7 +1115,25 @@ void LE_Unlock (le_t *le)
  * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type
  */
-le_t *LE_Find (int type, pos3_t pos)
+le_t *LE_GetFromPos (const pos3_t pos)
+{
+	int i;
+	le_t *le;
+
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
+		if (le->inuse && VectorCompare(le->pos, pos))
+			return le;
+
+	/* didn't find it */
+	return NULL;
+}
+
+/**
+ * @brief Searches a local entity on a given grid field
+ * @param[in] type Entity type
+ * @param[in] pos The grid pos to search for an item of the given type
+ */
+le_t *LE_Find (int type, const pos3_t pos)
 {
 	int i;
 	le_t *le;

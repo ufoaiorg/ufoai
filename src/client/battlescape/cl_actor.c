@@ -1871,168 +1871,6 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
-#define LOOKUP_EPSILON 0.0001f
-
-/**
- * @brief table for lookup_erf
- * lookup[]= {erf(0), erf(0.1), ...}
- */
-static const float lookup[30]= {
-	0.0f,    0.1125f, 0.2227f, 0.3286f, 0.4284f, 0.5205f, 0.6039f,
-	0.6778f, 0.7421f, 0.7969f, 0.8427f, 0.8802f, 0.9103f, 0.9340f,
-	0.9523f, 0.9661f, 0.9763f, 0.9838f, 0.9891f, 0.9928f, 0.9953f,
-	0.9970f, 0.9981f, 0.9989f, 0.9993f, 0.9996f, 0.9998f, 0.9999f,
-	0.9999f, 1.0000f
-};
-
-/**
- * @brief table for lookup_erf
- * lookup[]= {10*(erf(0.1)-erf(0.0)), 10*(erf(0.2)-erf(0.1)), ...}
- */
-static const float lookupdiff[30]= {
-	1.1246f, 1.1024f, 1.0592f, 0.9977f, 0.9211f, 0.8336f, 0.7395f,
-	0.6430f, 0.5481f, 0.4579f, 0.3750f, 0.3011f, 0.2369f, 0.1828f,
-	0.1382f, 0.1024f, 0.0744f, 0.0530f, 0.0370f, 0.0253f, 0.0170f,
-	0.0112f, 0.0072f, 0.0045f, 0.0028f, 0.0017f, 0.0010f, 0.0006f,
-	0.0003f, 0.0002f
-};
-
-/**
- * @brief calculate approximate erf, the error function
- * http://en.wikipedia.org/wiki/Error_function
- * uses lookup table and linear interpolation
- * approximation good to around 0.001.
- * easily good enough for the job.
- * @param[in] z the number to calculate the erf of.
- * @return for positive arg, returns approximate erf. for -ve arg returns 0.0f.
- */
-static float CL_LookupErrorFunction (float z)
-{
-	float ifloat;
-	int iint;
-
-	/* erf(-z)=-erf(z), but erf of -ve number should never be used here
-	 * so return 0 here */
-	if (z < LOOKUP_EPSILON)
-		return 0.0f;
-	if (z > 2.8f)
-		return 1.0f;
-	ifloat = floor(z * 10.0f);
-	iint = (int)ifloat;
-	assert(iint < 30);
-	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint];
-}
-
-/**
- * @brief Calculates chance to hit.
- * @param[in] toPos
- */
-static float CL_TargetingToHit (pos3_t toPos)
-{
-	vec3_t shooter, target;
-	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance,
-		stdevupdown, stdevleftright, crouch, commonfactor;
-	int distx, disty, i, n;
-	le_t *le;
-	character_t *chr;
-
-	if (!selActor || !selActor->fd)
-		return 0.0;
-
-	chr = CL_GetActorChr(selActor);
-	if (!chr)
-		Com_Error(ERR_DROP, "No character given for local entity");
-
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && VectorCompare(le->pos, toPos))
-			break;
-
-	if (i >= cl.numLEs)
-		/* no target there */
-		return 0.0;
-	/* or suicide attempted */
-	if (le->selected && !FIRESH_IsMedikit(le->fd))
-		return 0.0;
-
-	VectorCopy(selActor->origin, shooter);
-	VectorCopy(le->origin, target);
-
-	/* Calculate HitZone: */
-	distx = fabs(shooter[0] - target[0]);
-	disty = fabs(shooter[1] - target[1]);
-	distance = sqrt(distx * distx + disty * disty);
-	if (distx > disty)
-		pseudosin = distance / distx;
-	else
-		pseudosin = distance / disty;
-	width = 2 * PLAYER_WIDTH * pseudosin;
-	height = LE_IsCrouched(le) ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT;
-
-	acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY],
-			selActor->fd->weaponSkill ? chr->score.skills[selActor->fd->weaponSkill] : 0);
-
-	crouch = (LE_IsCrouched(selActor) && selActor->fd->crouch) ? selActor->fd->crouch : 1;
-
-	commonfactor = crouch * torad * distance * GET_INJURY_MULT(chr->score.skills[ABILITY_MIND], selActor->HP, selActor->maxHP);
-	stdevupdown = (selActor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	stdevleftright = (selActor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
-			  * (stdevleftright > LOOKUP_EPSILON ? CL_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
-	/* 0.3536=sqrt(2)/4 */
-
-	/* Calculate cover: */
-	n = 0;
-	height = height / 18;
-	width = width / 18;
-	target[2] -= UNIT_HEIGHT / 2;
-	target[2] += height * 9;
-	perpX = disty / distance * width;
-	perpY = 0 - distx / distance * width;
-
-	target[0] += perpX;
-	perpX *= 2;
-	target[1] += perpY;
-	perpY *= 2;
-	target[2] += 6 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[0] += perpX;
-	target[1] += perpY;
-	target[2] -= 6 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[0] += perpX;
-	target[1] += perpY;
-	target[2] += 4 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[2] += 4 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[0] -= perpX * 3;
-	target[1] -= perpY * 3;
-	target[2] -= 12 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[0] -= perpX;
-	target[1] -= perpY;
-	target[2] += 6 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[0] -= perpX;
-	target[1] -= perpY;
-	target[2] -= 4 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-	target[0] -= perpX;
-	target[1] -= perpY;
-	target[2] += 10 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
-		n++;
-
-	return (hitchance * (0.125) * n);
-}
-
 /**
  * @brief Show weapon radius
  * @param[in] center The center of the circle
@@ -2044,7 +1882,6 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
 	particle->size[0] = radius;
 }
 
-
 /**
  * @brief Draws line to target.
  * @param[in] fromPos The (grid-) position of the aiming actor.
@@ -2055,7 +1892,7 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
  * @sa CL_Trace
  * @sa G_ShootSingle
  */
-static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPos)
+static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
@@ -2126,15 +1963,6 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
 	} else {
 		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
 	}
-
-	/** @todo The hit probability should work somewhat differently for splash damage weapons.
-	* Since splash damage weapons can deal damage even when they don't directly hit an actor,
-	* the hit probability should be defined as the predicted percentage of the maximum splash
-	* damage of the firemode, assuming the projectile explodes at the desired location. This
-	* means that a percentage should be displayed for EVERY actor in the predicted blast
-	* radius. This will likely require specialized code.
-	*/
-	hitProbability = 100 * CL_TargetingToHit(toPos);
 }
 
 
@@ -2147,7 +1975,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int fromActorSize, pos3_t toPo
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
-static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos)
+static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;
@@ -2236,15 +2064,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, int fromActorSize, pos3_t toPos
 		Grid_PosToVec(clMap, toActorSize, toPos, at);
 		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
-
-	/** @todo The hit probability should work somewhat differently for splash damage weapons.
-	* Since splash damage weapons can deal damage even when they don't directly hit an actor,
-	* the hit probability should be defined as the predicted percentage of the maximum splash
-	* damage of the firemode, assuming the projectile explodes at the desired location. This
-	* means that a percentage should be displayed for EVERY actor in the predicted blast
-	* radius. This will likely require specialized code.
-	*/
-	hitProbability = 100 * CL_TargetingToHit(toPos);
 }
 
 /**
