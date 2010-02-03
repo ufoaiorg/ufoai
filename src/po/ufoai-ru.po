@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-19 19:35+0600\n"
-"PO-Revision-Date: 2010-02-01 14:34+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"PO-Revision-Date: 2010-02-03 09:08+0600\n"
+"Last-Translator: Vadimuzzz <vadimuzzz@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +60,7 @@ msgstr "Разбитый НЛО - Охотник"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
-msgstr ""
+msgstr "Наркобарон"
 
 #: ../base/maps/eaglenest.ump:66
 msgid "Eaglenest"
@@ -68,11 +68,11 @@ msgstr "Орлиное гнездо"
 
 #: ../base/maps/forest.ump:404
 msgid "Little forest"
-msgstr ""
+msgstr "Маленький лес"
 
 #: ../base/maps/forest.ump:435
 msgid "Little bungalo in forest"
-msgstr ""
+msgstr "Маленькое бунгало в лесу"
 
 #: ../base/maps/frozen.ump:284
 msgid "Snow"
@@ -92,11 +92,11 @@ msgstr "Место высадки пришельцев - Промышленны�
 
 #: ../base/maps/frozen.ump:362
 msgid "Multiplayer Coop"
-msgstr ""
+msgstr "Многопользовательская командная"
 
 #: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
-msgstr ""
+msgstr "Многопользовательская все-против-всех"
 
 #: ../base/maps/gasstation.ump:63
 msgid "Gasstation"
@@ -120,9 +120,8 @@ msgid "Small eastern park."
 msgstr "Небольшой восточный парк"
 
 #: ../base/maps/japan.ump:321
-#, fuzzy
 msgid "Harvester"
-msgstr "Охотник Н"
+msgstr "Охотник"
 
 #: ../base/maps/laboratory.ump:63
 #: ../base/ufos/basemanagement.ufo:283
@@ -132,7 +131,7 @@ msgstr "Лаборатория"
 
 #: ../base/maps/mart.ump:64
 msgid "Mart"
-msgstr ""
+msgstr "Торговый центр"
 
 #: ../base/maps/military_convoy.ump:69
 msgid "Military convoy"
@@ -326,13 +325,12 @@ msgstr "Транспорт НЛО"
 #: ../base/ufos/aircraftmanagement.ufo:626
 #: ../base/ufos/otheritems.ufo:79
 #: ../base/ufos/research.ufo:3892
-#, fuzzy
 msgid "UFO - Ripper"
-msgstr "НЛО - Носитель"
+msgstr "НЛО - Gjnhjibntkm"
 
 #: ../base/ufos/aircraftmanagement.ufo:627
 msgid "Ripper U"
-msgstr ""
+msgstr "Потрошитель Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:654
 #: ../base/ufos/otheritems.ufo:69
@@ -351,20 +349,18 @@ msgid "UFO - Carrier"
 msgstr "НЛО - Носитель"
 
 #: ../base/ufos/aircraftmanagement.ufo:690
-#, fuzzy
 msgid "Carrier U"
-msgstr "! "
+msgstr "Носитель Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:712
 #: ../base/ufos/otheritems.ufo:89
 #: ../base/ufos/research.ufo:3978
-#, fuzzy
 msgid "UFO - Mothership"
-msgstr "НЛО - Разрушитель"
+msgstr "НЛО - База"
 
 #: ../base/ufos/aircraftmanagement.ufo:713
 msgid "Mothership U"
-msgstr ""
+msgstr "База Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:729
 #: ../base/ufos/research.ufo:4599
@@ -1537,7 +1533,7 @@ msgstr "Тихий пригород на окраине населенного �
 #: ../base/ufos/maps.ufo:941
 #: ../base/ufos/maps.ufo:983
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Пришельцы появились не к добру в этом малонаселенном лесном регионе."
 
 #: ../base/ufos/maps.ufo:1025
 #: ../base/ufos/maps.ufo:1067
@@ -1711,9 +1707,8 @@ msgid "A fuel depot the aliens try to destroy."
 msgstr "Пришельцы пытаются уничтожить топливный склад."
 
 #: ../base/ufos/maps.ufo:3269
-#, fuzzy
 msgid "Wilderness terror mission."
-msgstr "Террористическая операция"
+msgstr "Контр-террористическая операция в пустынной местности."
 
 #: ../base/ufos/maps.ufo:3315
 msgid "UFO Crashsite."
@@ -2312,7 +2307,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:479
 msgid "Alien Communication"
-msgstr ""
+msgstr "Связь пришельцев"
 
 #: ../base/ufos/research.ufo:484
 msgid "alien_communication_txt"
@@ -7418,7 +7413,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5041
 msgid "XVI Census"
-msgstr ""
+msgstr "XVI Перепись населения"
 
 #: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
@@ -7855,9 +7850,8 @@ msgid "How to play skirmish"
 msgstr "Как играть в стычки"
 
 #: ../base/ufos/seq_tutorials.ufo:785
-#, fuzzy
 msgid "Skirmish tutorial"
-msgstr "Стычка"
+msgstr "Учебная схватка"
 
 #: ../base/ufos/seq_tutorials.ufo:796
 msgid "Skirmish is type of fast game."
@@ -7942,7 +7936,7 @@ msgstr "Кровосос"
 
 #: ../base/ufos/team_humans.ufo:58
 msgid "Phalanx"
-msgstr ""
+msgstr "ФАЛАНКС"
 
 #: ../base/ufos/team_humans.ufo:1644
 msgid "Phoenix"
@@ -7958,15 +7952,15 @@ msgstr "Используйте [Shift] чтоб вручную выставит�
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr ""
+msgstr "Создайте и сохраните различные команды для многопользовательских матчей - команды из 4 игроков, из 8 и так далее. Так вы сможете быстро загрузить нужную для быстрой игры."
 
 #: ../base/ufos/tips.ufo:7
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
-msgstr ""
+msgstr "Всегда следите за тем, что у вас достаточно единиц времени (ЕВ), чтобы спрятаться после выстрела."
 
 #: ../base/ufos/tips.ufo:8
 msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
-msgstr ""
+msgstr "Создавая команды для многопользовательской игры, убедитесь, что лучшие ваши солдаты находятся на вершине списка. Когда лимит на число солдат ниже, чем их количество в вашей команде, для игры будут использованы солдаты из вершины списка."
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
@@ -7974,7 +7968,7 @@ msgstr "При использовании ответного огня помни
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
-msgstr ""
+msgstr "Не забывайте снабжать ваших солдат различными видами оружия; никогда не знаете, какое окажется удобнее."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
@@ -7986,15 +7980,15 @@ msgstr "Не забывайте экипировать солдат защитн
 
 #: ../base/ufos/tips.ufo:13
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
-msgstr ""
+msgstr "Вы можете использовать ослепляющую гранату, чтобы отключить режим ответного огня у противника или отобрать все его единицы времени (ЕВ), оставшиеся для следующего раунда."
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr ""
+msgstr "В многопользовательской игре вы можете писать сообщения, нажав [k] (всем), [l] (только членам команды) или, нажав кнопку чата на панели управления."
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr ""
+msgstr "Чтобы повернуть солдата лицом в каком-нибудь направлении, наведите туда курсор и нажмите правую кнопку мыши или клавишу [Ctrl]. Это будет стоить ЕВ."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
@@ -8005,13 +7999,12 @@ msgid "Be sure to hire as many scientists as you can. The better you know your e
 msgstr "Нанимайте столько учёных, сколько можете. Чем раньше вы узнаете врага, тем легче будет его уничтожить."
 
 #: ../base/ufos/tips.ufo:18
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
-msgstr "Нанимайте столько рабочих, сколько можете. Чем раньше вы узнаете врага, тем легче будет его уничтожить."
+msgstr "Нанимайте столько рабочих, сколько можете. Чем быстрее работают ваши производственные линии, тем скорее вы получите доступ к лучшему оборудованию и пополните запасы."
 
 #: ../base/ufos/tips.ufo:19
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr ""
+msgstr "Посетите наш веб-сайт http://ufoai.sourceforge.net/ и присоединяйтесь к каналу нашего сообщества #ufoai на irc.freenode.net."
 
 #: ../base/ufos/tips.ufo:20
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
@@ -8026,9 +8019,8 @@ msgid "Watch your back! Your soldiers can only see enemies in an arc in front of
 msgstr "Следи за спиной! Твои солдаты могут засечь пришельцев только спереди, в поле своего зрения."
 
 #: ../base/ufos/tips.ufo:23
-#, fuzzy
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "Постройте мастерскую и ангары для НЛО чтоб иметь возможность разбирать НЛО."
+msgstr "Постройка мастерских и ангаров для НЛО вне базы дает возможность разбирать НЛО."
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -8044,16 +8036,15 @@ msgstr "Используйте клавишу [c] для того чтоб пр�
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
-msgstr ""
+msgstr "Если у вас мало единиц времени (ЕВ), и поблизости опасные враги, использование ослепляющей гранаты, чтобы обездвижить их до вашего следующего хода, может быть самым лучшим выбором. 2 ЕВ (достать из кобуры) + 12 ЕВ (бросок) = 14 ЕВ."
 
 #: ../base/ufos/tips.ufo:28
 msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
-msgstr ""
+msgstr "Используйте вид от первого лица (включается кнопкой [v]), чтобы проверить, можно ли, сдвинувшись на одну клетку, произвести выстрел через здание."
 
 #: ../base/ufos/tips.ufo:29
-#, fuzzy
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
-msgstr "Солдат с большим количеством Ед.Времени можно использовать как врачей или солдат ближнего боя."
+msgstr "Используйте быстрого солдата с пистолетом, одноручным холодным оружием, гранатами и медкомплектом в качестве санитара."
 
 #: ../base/ufos/tips.ufo:30
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
@@ -8069,31 +8060,31 @@ msgstr "Используйте [x] для переключения режимо�
 
 #: ../base/ufos/tips.ufo:33
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
-msgstr ""
+msgstr "Держите солдат близко друг к другу, тогда они смогут оказывать поддержку (лечить или стрелять, когда у одного из них кончатся единицы времени (ЕВ)). Старайтесь, чтобы в конце хода их разделяла стена, тогда их не смогут убить одной гранатой."
 
 #: ../base/ufos/tips.ufo:34
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
-msgstr ""
+msgstr "Всегда держите в резерве одного или двух солдат, также ваши основные силы не должны влезать в очень рискованные ситуации."
 
 #: ../base/ufos/tips.ufo:35
 msgid "You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
-msgstr ""
+msgstr "Вы можете увеличить дальность радара, построив модернизированную радарную установку. Помните, что сначала вы должны ее исследовать!"
 
 #: ../base/ufos/tips.ufo:36
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
-msgstr ""
+msgstr "Ответный огонь может истощить ваши единицы времени (ЕВ) до 0. Если вы выключили ответный огонь, то не сможете вернуть его назад, пока не будет достаточно единиц времени (ЕВ). Однако вы можете оставить его включенным. Старайтесь не подстраивать солдат с 0 ЕВ, до тех пор пока не уверены."
 
 #: ../base/ufos/tips.ufo:37
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
-msgstr ""
+msgstr "Импульс сжатого воздуха из гранатомета позволит вам подрывать гранаты в заданном месте. Очень полезно, когда целитесь куда-то вблизи края карты или выступа."
 
 #: ../base/ufos/tips.ufo:38
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
-msgstr ""
+msgstr "Когда используете гранаты, старайтесь избегать прямых бросков вдоль линий сетки. Даже маленький угол значительно уменьшает вероятность рикошета в вашу сторону в случае промаха."
 
 #: ../base/ufos/tips.ufo:39
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
-msgstr ""
+msgstr "Перед броском гранаты, внимательно осмотрите землю. Даже небольшой наклон повлияет на направление отскока гранаты."
 
 #: ../base/ufos/tips.ufo:40
 msgid "Grenades don't bounce well on sand or dirt."
@@ -8101,7 +8092,7 @@ msgstr "Осколки гранат будут разлетаться хуже �
 
 #: ../base/ufos/tips.ufo:41
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
-msgstr ""
+msgstr "Вы можете включить свои карты для многопользовательской игры или создать свои кампании. Загляните на нашу вики, чтобы прочесть инструкции по созданию контента."
 
 #: ../base/ufos/tips.ufo:42
 msgid "You can use [space] to cycle between all geoscape items."
@@ -8109,7 +8100,7 @@ msgstr "Вы можете использовать [Пробел] для пер�
 
 #: ../base/ufos/tips.ufo:43
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr ""
+msgstr "Вы можете ускорить/замедлить время на глобусе, используя колесо мыши, кнопки управления временем или, нажимая [-], [+/=]. Также вы можете нажимать [n] и [m]. Нажатие [backspace] остановит течение времени."
 
 #: ../base/ufos/tips.ufo:44
 msgid "Be sure to equip your interceptor with weapons before launching it."
@@ -8117,11 +8108,11 @@ msgstr "Убедитесь, что вы снарядили перехватчи�
 
 #: ../base/ufos/tips.ufo:45
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
-msgstr ""
+msgstr "Запомните, что дополнительное оборудование замедляет самолет. Для перехвата быстрых НЛО вы можете предпочесть послать несколько легко экипированных судов."
 
 #: ../base/ufos/tips.ufo:46
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
-msgstr ""
+msgstr "Ваша атакованные самолеты могут вернуться на одну из баз, чтобы избежать уничтожения вражескими НЛО."
 
 #: ../base/ufos/tips.ufo:47
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -8133,59 +8124,59 @@ msgstr "Замеченные противники: Во время наземн�
 
 #: ../base/ufos/tips.ufo:49
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
-msgstr ""
+msgstr "Вы можете использовать правую кнопку мыши на экране экипировки солдата, чтобы снарядить его оружием, боеприпасами и броней, или разоружить его. Это работает только на базе, не в тактических миссиях, где такие действия будут занимать ЕВ."
 
 #: ../base/ufos/tips.ufo:50
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
-msgstr ""
+msgstr "Убедитесь, что не слишком много гражданских погибает. Иначе вы можете проиграть игру раньше, чем рассчитываете."
 
 #: ../base/ufos/tips.ufo:51
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr ""
+msgstr "Используйте снайперское прикрытие. Обеспечьте снайперу место с хорошим обзором (возвышенности и углы на крыше, например). Оставьте их в согнутом положении, а режим ответного огня установите в «множественные выстрелы», чтобы стрелять  в появляющихся пришельцев."
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr ""
+msgstr "Рассмотрите вариант запуска перехватчиков для перехвата быстрых НЛО, когда враг будет поблизости от базы, чтобы избежать погони, и ваши истребители могли применять оружие сразу после старта."
 
 #: ../base/ufos/tips.ufo:53
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr ""
+msgstr "Рассмотрите вариант оглушения гражданских во время контр-террористических операций, чтобы они не ходили по округе. Судя по всему, пришельцы предпочитают убивать тех, кто находится в сознании."
 
 #: ../base/ufos/tips.ufo:54
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
-msgstr ""
+msgstr "Не забудьте установить ракетные установки и ракеты на ваши батареи ПВО."
 
 #: ../base/ufos/tips.ufo:55
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
-msgstr ""
+msgstr "Не можете вспомнить, у кого в ранце есть аптечка? Нажмите [i] для просмотра инвентаря, а затем от [1] до [8], чтобы переключаться между вашими бойцами."
 
 #: ../base/ufos/tips.ufo:56
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "Для захвата быстрых НЛО посылайте перехватчики с нескольких направлений."
 
 #: ../base/ufos/tips.ufo:57
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
-msgstr ""
+msgstr "Чтобы быстро купить или продать предметы, поместите курсор над стрелками и покрутите колесико мышки."
 
 #: ../base/ufos/tips.ufo:58
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr ""
+msgstr "Берегите солдат от огня своих войск! Хотя бросок гранаты во внезапно появившегося пришельца может легко убить его, есть шанс, что вы сделаете работу пришельца за него. То же можно сказать о пулях: убедитесь, что если враг упадет мертвым, пули не полетят в своих."
 
 #: ../base/ufos/tips.ufo:59
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr ""
+msgstr "Проверяйте ваши очереди исследований и производства почаще! Хороший ВПК — действующий ВПК!"
 
 #: ../base/ufos/tips.ufo:60
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
-msgstr ""
+msgstr "Наличие живых гражданских вероятно означает, что поблизости нет живых пришельцев. Это может сократить время зачистки карты."
 
 #: ../base/ufos/tips.ufo:61
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr ""
+msgstr "Следите за здоровьем ваших солдат, не позволяйте им умереть. Опытные солдаты намного эффективнее в бою, чем новые рекруты."
 
 #: ../base/ufos/tips.ufo:62
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
-msgstr ""
+msgstr "Вы можете подготовить действия на следующий раунд, пока ожидаете. Нажатие кнопки [Enter] дважды произведет все запланированные действия, как только начнется ваш ход."
 
 #: ../base/ufos/ui/_hud.ufo:156
 #: ../base/ufos/ui/_hud.ufo:185
@@ -8261,14 +8252,12 @@ msgid "Selected item:"
 msgstr "Выбрать предмет:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:151
-#, fuzzy
 msgid "Equip this item"
-msgstr "Снарядить этого солдата"
+msgstr "Снарядить этим агрегатом"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:168
-#, fuzzy
 msgid "Remove this item"
-msgstr "Убрать эту систему защиты"
+msgstr "Убрать этот агрегат"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:192
 msgid "Available equipment:"
@@ -8549,7 +8538,7 @@ msgstr "Использовать"
 #: ../base/ufos/ui/althud.ufo:662
 #: ../base/ufos/ui/althud.ufo:722
 msgid "TUs"
-msgstr ""
+msgstr "ЕВ"
 
 #: ../base/ufos/ui/althud.ufo:672
 msgid "TUs remaining"
@@ -8557,7 +8546,7 @@ msgstr "Осталось очков времени"
 
 #: ../base/ufos/ui/althud.ufo:683
 msgid "TUs reserved"
-msgstr ""
+msgstr "ЕВ зарезервировано"
 
 #: ../base/ufos/ui/althud.ufo:694
 #: ../base/ufos/ui/althud.ufo:730
@@ -8665,9 +8654,8 @@ msgid "Laser Defences"
 msgstr "Лазерная защита"
 
 #: ../base/ufos/ui/basedefence.ufo:104
-#, fuzzy
 msgid "Weapon slots"
-msgstr "Вооружение"
+msgstr "Слоты вооружения"
 
 #: ../base/ufos/ui/basedefence.ufo:155
 msgid "Add"
@@ -9257,9 +9245,8 @@ msgid "Not implemented"
 msgstr "не реализовано"
 
 #: ../base/ufos/ui/geoscape.ufo:792
-#, fuzzy
 msgid "Lift aircraft"
-msgstr "Следующий самолет"
+msgstr "Поднять самолет в воздух"
 
 #: ../base/ufos/ui/geoscape.ufo:810
 msgid "Disable Power Plant"
@@ -9421,7 +9408,7 @@ msgstr "Выберите самолёт"
 
 #: ../base/ufos/ui/geoscape.ufo:1807
 msgid "ETA:"
-msgstr ""
+msgstr "РВП:"
 
 #: ../base/ufos/ui/geoscape.ufo:1851
 msgid "Select item"
@@ -9464,9 +9451,8 @@ msgid "Rename your employee"
 msgstr "Переименуйте персонал"
 
 #: ../base/ufos/ui/hire.ufo:406
-#, fuzzy
 msgid "Occupation"
-msgstr "Настройки"
+msgstr "Заселенность"
 
 #: ../base/ufos/ui/hire.ufo:499
 msgid "Workers"
@@ -9818,9 +9804,8 @@ msgid "Material editor"
 msgstr "Редактор материалов"
 
 #: ../base/ufos/ui/material_editor.ufo:71
-#, fuzzy
 msgid "Hardness:"
-msgstr "сложная"
+msgstr "Жесткость:"
 
 #: ../base/ufos/ui/material_editor.ufo:94
 msgid "Bump:"
@@ -10847,9 +10832,8 @@ msgid "Aliens"
 msgstr "Пришельцы"
 
 #: ../base/ufos/ui/transfer.ufo:90
-#, fuzzy
 msgid "Amount/Transfer"
-msgstr "Пересылка"
+msgstr "Доступное количество/Для передачи"
 
 #: ../base/ufos/ui/transfer.ufo:168
 #: ../base/ufos/ui/transfer.ufo:179
@@ -10872,9 +10856,8 @@ msgstr "Пересылка"
 #: ../base/ufos/ui/transfer.ufo:368
 #: ../base/ufos/ui/transfer.ufo:379
 #: ../base/ufos/ui/transfer.ufo:390
-#, fuzzy
 msgid "Add/Remove item to transfer cargo"
-msgstr "Выберите базу назначения для транспортировки"
+msgstr "Добавить/Убрать предмет для транспортировки"
 
 #: ../base/ufos/ui/transfer.ufo:516
 msgid "Destination base"
@@ -11607,25 +11590,21 @@ msgstr "Нельзя перезарядить оружие в левой рук�
 
 #: client/battlescape/cl_hud.c:945
 #: client/battlescape/cl_hud.c:969
-#, fuzzy
 msgid "No reload possible for right hand, you don't have backup ammo."
-msgstr "Нельзя перезарядить оружие в правой руке солдата, полностью заряжено"
+msgstr "Невозможно перезарядить оружие в правой руке солдата, у вас нет запасных боеприпасов."
 
 #: client/battlescape/cl_hud.c:947
 #: client/battlescape/cl_hud.c:971
-#, fuzzy
 msgid "No reload possible for left hand, you don't have backup ammo."
-msgstr "Нельзя перезарядить оружие в левой руке солдата, полностью заряжено"
+msgstr "Невозможно перезарядить оружие в левой руке солдата, у вас нет запасных боеприпасов."
 
 #: client/battlescape/cl_hud.c:978
-#, fuzzy
 msgid "Not enough TUs for reloading weapon in right hand."
-msgstr "Недостаточно ЕВ чтоб встать."
+msgstr "Недостаточно ЕВ, чтобы перезарядить оружие в правой руке."
 
 #: client/battlescape/cl_hud.c:980
-#, fuzzy
 msgid "Not enough TUs for reloading weapon in left hand."
-msgstr "Недостаточно ЕВ чтоб встать."
+msgstr "Недостаточно ЕВ, чтобы перезарядить оружие в левой руке."
 
 #: client/battlescape/cl_hud.c:1014
 msgid "Not enough TUs for standing up."
@@ -12861,19 +12840,16 @@ msgstr "Нет патронов, подходящих к этому оружию
 
 #: client/campaign/cp_fightequip_callbacks.c:433
 #: client/campaign/cp_fightequip_callbacks.c:438
-#, fuzzy
 msgid "No ammo needed"
-msgstr "Ничего не выбрано"
+msgstr "Не требуется боеприпасов"
 
 #: client/campaign/cp_fightequip_callbacks.c:566
-#, fuzzy
 msgid "No slot selected."
-msgstr "Ничего не выбрано"
+msgstr "Не выбран слот."
 
 #: client/campaign/cp_fightequip_callbacks.c:569
-#, fuzzy
 msgid "No item selected."
-msgstr "Ничего не выбрано"
+msgstr "Не выбран предмет."
 
 #: client/campaign/cp_fightequip_callbacks.c:572
 msgid "You can't equip an alien technology."
@@ -12884,14 +12860,12 @@ msgid "Technology requested is not yet completed."
 msgstr "Требуемая технология неисследована."
 
 #: client/campaign/cp_fightequip_callbacks.c:578
-#, fuzzy
 msgid "This item is too heavy for the selected slot."
-msgstr "Убрать вооружение из выбранного слота"
+msgstr "Предмет слишком тяжел для выбранного слота."
 
 #: client/campaign/cp_fightequip_callbacks.c:581
-#, fuzzy
 msgid "Equip a weapon first."
-msgstr "Снарядить защитные системы"
+msgstr "Сначала укомплектуйте оружием."
 
 #: client/campaign/cp_fightequip_callbacks.c:584
 msgid "Ammo not usable with current weapon."
@@ -14564,9 +14538,8 @@ msgid "%s was transfered to %s."
 msgstr "%s был переслан: %s."
 
 #: client/campaign/cp_uforecovery.c:76
-#, fuzzy
 msgid "UFO Recovered"
-msgstr "Захват НЛО"
+msgstr "Захвачен НЛО"
 
 #: client/campaign/cp_uforecovery_callbacks.c:170
 msgid "No free UFO yard available."
