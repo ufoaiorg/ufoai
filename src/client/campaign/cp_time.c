@@ -93,6 +93,14 @@ void CL_GameTimeStop (void)
 }
 
 /**
+ * @brief Check if time is stopped
+ */
+qboolean CL_IsTimeStopped (void)
+{
+	return !gameLapse;
+}
+
+/**
  * Time scaling is only allowed when you are on the geoscape and when you had at least one base built.
  */
 static qboolean CL_AllowTimeScale (void)

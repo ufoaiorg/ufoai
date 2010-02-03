@@ -567,6 +567,30 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 }
 
 /**
+ * @brief Functions that should be called with a minimum time lapse (will be called at least every DETECTION_INTERVAL)
+ * @param[in] dt Ellapsed second since last call.
+ * @param[in] updateRadarOverlay true if radar overlay should be updated (only for drawing purpose)
+ * @sa CL_CampaignRun
+ */
+static void CL_CampaignFunctionPeriodicCall (int dt, qboolean updateRadarOverlay)
+{
+	UFO_CampaignRunUFOs(dt);
+	CL_CampaignRunAircraft(dt, updateRadarOverlay);
+
+	AIRFIGHT_CampaignRunBaseDefence(dt);
+	AIRFIGHT_CampaignRunProjectiles(dt);
+	CP_CheckNewMissionDetectedOnGeoscape();
+
+	/* Update alien interest for bases */
+	UFO_UpdateAlienInterestForAllBasesAndInstallations();
+
+	/* Update how phalanx troop know alien bases */
+	AB_UpdateStealthForAllBase();
+
+	UFO_CampaignCheckEvents();
+}
+
+/**
  * @brief delay between actions that must be executed independently of time scale
  * @sa RADAR_CheckUFOSensored
  * @sa UFO_UpdateAlienInterestForAllBasesAndInstallations
@@ -585,7 +609,6 @@ void CL_CampaignRun (void)
 {
 	const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
 	int checks, dt, i;
-	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detection interval */
 
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
@@ -593,42 +616,34 @@ void CL_CampaignRun (void)
 	checks = (int)(checks / DETECTION_INTERVAL);
 	dt = DETECTION_INTERVAL - currentinterval;
 
-	UP_GetUnreadMails();
-
-	/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
-	 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
-	 *	- Check if any new mission is detected
-	 *	- Update stealth value of phalanx bases and installations ; alien bases */
-	for (i = 0; i < checks; i++) {
-		qboolean detection;
-		UFO_CampaignRunUFOs(dt);
-		CL_CampaignRunAircraft(dt, qfalse);
-		detection = CP_CheckNewMissionDetectedOnGeoscape();
-
-		/* Update alien interest for bases */
-		UFO_UpdateAlienInterestForAllBasesAndInstallations();
-
-		/* Update how phalanx troop know alien bases */
-		AB_UpdateStealthForAllBase();
-
-		timeAlreadyFlied += dt;
-		detection |= UFO_CampaignCheckEvents();
-		if (detection) {
-			ccs.timer = (i + 1) * DETECTION_INTERVAL - currentinterval;
-			break;
-		}
-		dt = DETECTION_INTERVAL;
-	}
-
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
 		int currenthour;
 		int currentmin;
 		dateLong_t date;
 
-		dt = (int)floor(ccs.timer);
 		currenthour = (int)floor(ccs.date.sec / SECONDS_PER_HOUR);
 		currentmin = (int)floor(ccs.date.sec / SECONDS_PER_MINUTE);
+
+		/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
+		 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
+		 *	- Check if any new mission is detected
+		 *	- Update stealth value of phalanx bases and installations ; alien bases */
+		for (i = 0; i < checks; i++) {
+			ccs.date.sec += dt;
+			ccs.timer -= dt;
+			CL_CampaignFunctionPeriodicCall(dt, qfalse);
+
+			/* if something stopped time, we must stop here the loop */
+			if (CL_IsTimeStopped()) {
+				ccs.timer = 0.0f;
+				break;
+			}
+			dt = DETECTION_INTERVAL;
+		}
+
+		dt = (int)floor(ccs.timer);
+
 		ccs.date.sec += dt;
 		ccs.timer -= dt;
 
@@ -674,14 +689,11 @@ void CL_CampaignRun (void)
 		/* check for campaign events
 		 * aircraft and UFO already moved during radar detection (see above),
 		 * just make them move the missing part -- if any */
-		UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
-		/* must be called even if dt = timeAlreadyFlied in order to update radar overlay */
-		CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
-		UFO_CampaignCheckEvents();
-		AIRFIGHT_CampaignRunBaseDefence(dt);
+		CL_CampaignFunctionPeriodicCall(dt, qtrue);
+
+		UP_GetUnreadMails();
 		CP_CheckMissionEnd();
 		CP_CheckLostCondition();
-		AIRFIGHT_CampaignRunProjectiles(dt);
 		/* Check if there is a base attack mission */
 		CP_CheckBaseAttacks_f();
 		BDEF_AutoSelectTarget();
