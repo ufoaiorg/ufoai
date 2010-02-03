@@ -709,7 +709,6 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	 * Due to Orthographic view, this is also camera position */
 	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};
 
-	vec3_t modelPos, v, v1, rotationAxis;
 	modelInfo_t mi;
 	vec2_t size;
 	vec3_t scale, center, position, angles;
@@ -735,32 +734,22 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	/* reset the center, as we want to place the models onto the surface of the earth */
 	mi.center = NULL;
 
-	PolarToVec(pos, modelPos);
-	VectorSet(v, modelPos[0], modelPos[1], modelPos[2]);
-	VectorSet(rotationAxis, 0, 0, 1);
-	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
-	VectorSet(rotationAxis, 0, 1, 0);
-	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	VectorSet(modelPos, - earthRadius * v[1], - earthRadius * v[0], earthRadius * v[2]);
-
 	/* go to a new matrix */
 	glPushMatrix();
 
-	/* Apply all transformation to model. Note that the transformation are applied starting
+	/* Apply all transformation to model. Note that the transformations are applied starting
 	from the last one and ending with the first one */
 
 	/* center model on earth */
 	glTranslatef(earthPos[0], earthPos[1], 0);
 	/* scale model to proper resolution */
 	glScalef(viddef.rx, viddef.ry, 1.0f);
-	/* move the model on earth surface */
-	glTranslatef(modelPos[0], modelPos[1], modelPos[2]);
-
-	/* rotates model: make it tangent to earth surface, heading toward it. */
+	/* place model on earth: make it tangent to earth surface, heading toward it if direction is used. */
 	glRotatef(-rotate[1], 1, 0, 0);
 	glRotatef(rotate[2], 0, 1, 0);
 	glRotatef(rotate[0] - pos[0], 0, 0, 1);
 	glRotatef(90.0f - pos[1] , 1, 0, 0);
+	glTranslatef(0, 0, earthRadius);
 	glRotatef(-90.0f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
