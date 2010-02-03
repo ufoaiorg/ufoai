@@ -222,7 +222,7 @@ void RADAR_DeactivateRadarOverlay (void)
 /**
  * @brief Check if UFO is in the sensored list
  */
-static const qboolean RADAR_IsUFOSensored (const radar_t* radar, const aircraft_t* ufo)
+static qboolean RADAR_IsUFOSensored (const radar_t* radar, const aircraft_t* ufo)
 {
 	int i;
 
