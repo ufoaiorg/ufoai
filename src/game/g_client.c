@@ -1244,7 +1244,7 @@ void G_ClientSpawn (player_t * player)
 	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
-	/* submit stats and default reaction fire */
+	/* submit stats */
 	G_SendPlayerStats(player);
 
 	/* give time units */
