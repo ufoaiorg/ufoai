@@ -386,6 +386,7 @@ typedef struct mapDef_s {
 
 	/* singleplayer */
 	int maxAliens;				/**< Number of spawning points on the map */
+	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
