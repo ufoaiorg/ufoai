@@ -38,14 +38,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVEGAME_EXTENSION "savx"
 
-typedef struct saveFileHeaderXML_s {
-	uint32_t version; /**< which savegame version */
-	uint32_t compressed; /**< is this file compressed via zlib */
-	uint32_t dummy[14]; /**< maybe we have to extend this later */
-	char gameVersion[16]; /**< game version that was used to save this file */
-	char name[32]; /**< savefile name */
-	char gameDate[32]; /**< internal game date */
-	char realDate[32]; /**< real datestring when the user saved this game */
+typedef struct saveFileHeader_s {
+	uint32_t version;			/**< which savegame version */
+	uint32_t compressed;		/**< is this file compressed via zlib */
+	uint32_t dummy[14];			/**< maybe we have to extend this later */
+	char gameVersion[16];		/**< game version that was used to save this file */
+	char name[32];				/**< savefile name */
+	char gameDate[32];			/**< internal game date */
+	char realDate[32];			/**< real datestring when the user saved this game */
 	uint32_t xmlSize;
 } saveFileHeader_t;
 
@@ -61,6 +61,8 @@ static cvar_t* save_compressed;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
+ * @param[out] error On failure an errormessage may be set.
+ * @note error parameter not used actually
  * @sa SAV_GameLoad
  */
 static qboolean SAV_GameActionsAfterLoad (char **error)
@@ -77,10 +79,10 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 }
 
 /**
- * @brief Tries to verify the Header of the Xml File
+ * @brief Tries to verify the Header of the savegame
  * @param[in] header a pointer to the header to verify
  */
-static qboolean SAV_VerifyXMLHeader (saveFileHeader_t const * const header)
+static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
 {
 	int len;
 	/*check the length of the string*/
@@ -158,7 +160,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	header.version = LittleLong(header.version);
 	header.xmlSize = LittleLong(header.xmlSize);
 	/* doing some header verification */
-	if (!SAV_VerifyXMLHeader(&header)) {
+	if (!SAV_VerifyHeader(&header)) {
 		/* our header is not valid, we MUST abort loading the game! */
 		Com_Printf("The Header of the savegame '%s.%s' is corrupted. Loading aborted\n", filename, SAVEGAME_EXTENSION);
 		Mem_Free(cbuf);
@@ -202,7 +204,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	/* doing a subsystem run ;) */
 	GAME_RestartMode(GAME_CAMPAIGN);
-	node = mxml_GetNode(topNode, "savegame");
+	node = mxml_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		Mem_Free(buf);
@@ -236,6 +238,9 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 /**
  * @brief This is a savegame function which stores the game in xml-Format.
+ * @param[in] filename The Filename to save to (without extension)
+ * @param[in] comment Description of the savegame
+ * @param[out] error On failure an errormessage may be set.
  */
 static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
 {
@@ -350,6 +355,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 /**
  * @brief Console command binding for save function
  * @sa SAV_GameSave
+ * @note called via 'game_save' command
  */
 static void SAV_GameSave_f (void)
 {
@@ -391,18 +397,18 @@ static void SAV_GameSave_f (void)
  */
 static void SAV_GameReadGameComment (const int idx)
 {
-	saveFileHeader_t headerXML;
+	saveFileHeader_t header;
 	qFILE f;
 
 	FS_OpenFile(va("save/slot%i.%s", idx, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (f.f || f.z) {
-		if (FS_Read(&headerXML, sizeof(headerXML), &f) != sizeof(headerXML))
-			Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
+		if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
+			Com_Printf("Warning: Savefile header may be corrupted\n");
 
-		if (!SAV_VerifyXMLHeader(&headerXML))
-			Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", idx);
+		if (!SAV_VerifyHeader(&header))
+			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
-			MN_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, headerXML.name, headerXML.gameDate, headerXML.realDate);
+			MN_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
 
 		FS_CloseFile(&f);
 	}
@@ -697,3 +703,4 @@ void SAV_Init (void)
 	Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
 	save_compressed = Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
 }
+
