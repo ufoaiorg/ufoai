@@ -1073,7 +1073,12 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 	checkcount++;	/* for multi-check avoidance */
 	c_traces++;		/* for statistics, may be zeroed */
 
+#ifdef COMPILE_UFO
+	if (headnode >= tile->numnodes + 6)
+		Com_Error(ERR_DROP, "headnode (%i) is out of bounds: %i", headnode, tile->numnodes + 6);
+#else
 	assert(headnode < tile->numnodes + 6); /* +6 => bbox */
+#endif
 
 	/* fill in a default trace */
 	memset(&traceData.trace, 0, sizeof(traceData.trace));
