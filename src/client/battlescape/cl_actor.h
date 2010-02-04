@@ -87,7 +87,6 @@ void CL_ActorReload(le_t *le, int containerID);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
-void CL_ActorToggleCrouchReservation_f(void);
 void CL_ActorUseHeadgear_f(void);
 void CL_ActorStartMove(le_t *le, const pos3_t to);
 void CL_ActorShoot(const le_t *le, const pos3_t at);

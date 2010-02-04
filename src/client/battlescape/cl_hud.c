@@ -240,7 +240,7 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
  * @sa HUD_RefreshWeaponButtons
  * @sa HUD_PopupFiremodeReservation_f
  */
-static qboolean CL_CheckFiremodeReservation (void)
+static qboolean HUD_CheckFiremodeReservation (void)
 {
 	actorHands_t hand = ACTOR_HAND_RIGHT;
 
@@ -281,7 +281,7 @@ static menuNode_t* popupListNode;
  * @param[in] popupReload Prevent firemode reservation popup from being closed if
  * no firemode is available because of insufficient TUs.
  * @sa HUD_PopupFiremodeReservation_f
- * @sa CL_CheckFiremodeReservation
+ * @sa HUD_CheckFiremodeReservation
  */
 static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 {
@@ -361,7 +361,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	if (LIST_Count(popupListData) > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
 		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
-		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot <lineselected>");
+		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "hud_shotreserve <lineselected>");
 		/* Set color for selected entry. */
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);
 		popupListNode->selectedColor[3] = 1.0;
@@ -383,9 +383,8 @@ static void HUD_PopupFiremodeReservation_f (void)
 /**
  * @brief Get selected firemode in the list of the currently selected actor.
  * @sa HUD_PopupFiremodeReservation_f
- * @note console command: cl_input.c:reserve_shot
  */
-static void HUD_ReserveShot_f (void)
+static void HUD_ShotReserve_f (void)
 {
 	int selectedPopupIndex;
 	const reserveShot_t* reserveShotData;
@@ -435,8 +434,7 @@ static void HUD_DisplayPossibleReaction (const le_t * actor)
 	if (!actor->selected)
 		return;
 
-	/* Display 'usable" (blue) reaction buttons
-	 * Code also used in CL_ActorToggleReaction_f */
+	/* Display 'usable" (blue) reaction buttons */
 	if (actor->state & STATE_REACTION_ONCE)
 		MN_ExecuteConfunc("startreactiononce");
 	else if (actor->state & STATE_REACTION_MANY)
@@ -519,7 +517,6 @@ void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemo
 
 /**
  * @brief Displays the firemodes for the given hand.
- * @note Console command: list_firemodes
  */
 static void HUD_DisplayFiremodes_f (void)
 {
@@ -539,7 +536,6 @@ static void HUD_DisplayFiremodes_f (void)
 
 /**
  * @brief Changes the display of the firemode-list to a given hand, but only if the list is visible already.
- * @note Console command: switch_firemode_list
  */
 static void HUD_SwitchFiremodeList_f (void)
 {
@@ -588,10 +584,10 @@ static void HUD_SelectReactionFiremode_f (void)
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
  * @sa HUD_RefreshWeaponButtons
- * @sa CL_CheckMenuAction
+ * @sa HUD_CheckAction
  * @todo Fix it - we can have different weapons in hands.
  */
-static int CL_CalcReloadTime (const le_t *le, const objDef_t *weapon)
+static int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon)
 {
 	int container;
 	int tu = 999;
@@ -626,11 +622,11 @@ static int CL_CalcReloadTime (const le_t *le, const objDef_t *weapon)
  * @param[in] mode EV_INV_AMMO in case of fire button, EV_INV_RELOAD in case of reload button
  * @return qfalse when action is not possible, otherwise qtrue
  * @sa HUD_FireWeapon_f
- * @sa CL_ReloadLeft_f
- * @sa CL_ReloadRight_f
+ * @sa HUD_ReloadLeft_f
+ * @sa HUD_ReloadRight_f
  * @todo Check for ammo in hand and give correct feedback in all cases.
  */
-static qboolean CL_CheckMenuAction (const le_t* le, invList_t *weapon, int mode)
+static qboolean HUD_CheckAction (const le_t* le, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
 	/** @todo Ignore this condition when ammo in hand. */
@@ -666,12 +662,12 @@ static qboolean CL_CheckMenuAction (const le_t* le, invList_t *weapon, int mode)
 			return qfalse;
 		}
 		/* Cannot reload because of no ammo in inventory. */
-		if (CL_CalcReloadTime(le, weapon->item.t) >= 999) {
+		if (HUD_CalcReloadTime(le, weapon->item.t) >= 999) {
 			HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
 			return qfalse;
 		}
 		/* Cannot reload because of not enough TUs. */
-		if (le->TU < CL_CalcReloadTime(le, weapon->item.t)) {
+		if (le->TU < HUD_CalcReloadTime(le, weapon->item.t)) {
 			HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
 			return qfalse;
 		}
@@ -714,7 +710,7 @@ static void HUD_FireWeapon_f (void)
 
 	/* Let's check if shooting is possible.
 	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
-	if (!CL_CheckMenuAction(selActor, ACTOR_GET_INV(selActor, hand), EV_INV_AMMO))
+	if (!HUD_CheckAction(selActor, ACTOR_GET_INV(selActor, hand), EV_INV_AMMO))
 		return;
 
 	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_UsableTUs(selActor)) {
@@ -900,7 +896,7 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, const invList_t *weapon, int
  * @param[in] actor What actor to check.
  * @param[in] hand Which hand to check
  */
-static qboolean CL_WeaponWithReaction (const le_t * actor, const actorHands_t hand)
+static qboolean HUD_WeaponWithReaction (const le_t * actor, const actorHands_t hand)
 {
 	int i;
 	const fireDef_t *fd;
@@ -981,7 +977,7 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 		MN_ExecuteConfunc("reserve_shot_check");
 		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
 				CL_ReservedTUs(le, RES_SHOT)));
-	} else if (CL_CheckFiremodeReservation()) {
+	} else if (HUD_CheckFiremodeReservation()) {
 		MN_ExecuteConfunc("reserve_shot_clear");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
 	} else {
@@ -992,12 +988,12 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	/* reaction-fire button */
 	if (!(le->state & STATE_REACTION)) {
 		if (time >= CL_ReservedTUs(le, RES_REACTION)
-		 && (CL_WeaponWithReaction(le, ACTOR_HAND_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_LEFT)))
+		 && (HUD_WeaponWithReaction(le, ACTOR_HAND_RIGHT) || HUD_WeaponWithReaction(le, ACTOR_HAND_LEFT)))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 	} else {
-		if (CL_WeaponWithReaction(le, ACTOR_HAND_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_LEFT)) {
+		if (HUD_WeaponWithReaction(le, ACTOR_HAND_RIGHT) || HUD_WeaponWithReaction(le, ACTOR_HAND_LEFT)) {
 			HUD_DisplayPossibleReaction(le);
 		} else {
 			HUD_DisplayImpossibleReaction(le);
@@ -1212,7 +1208,7 @@ static const float lookupdiff[30]= {
  * @param[in] z the number to calculate the erf of.
  * @return for positive arg, returns approximate erf. for -ve arg returns 0.0f.
  */
-static float CL_LookupErrorFunction (float z)
+static float HUD_LookupErrorFunction (float z)
 {
 	float ifloat;
 	int iint;
@@ -1239,7 +1235,7 @@ static float CL_LookupErrorFunction (float z)
  * means that a percentage should be displayed for EVERY actor in the predicted blast
  * radius. This will likely require specialized code.
  */
-static int CL_GetHitProbability (const le_t* actor)
+static int HUD_GetHitProbability (const le_t* actor)
 {
 	vec3_t shooter, target;
 	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance,
@@ -1291,8 +1287,8 @@ static int CL_GetHitProbability (const le_t* actor)
 	commonfactor = crouch * torad * distance * GET_INJURY_MULT(chr->score.skills[ABILITY_MIND], actor->HP, actor->maxHP);
 	stdevupdown = (actor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
 	stdevleftright = (actor->fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;
-	hitchance = (stdevupdown > LOOKUP_EPSILON ? CL_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
-			  * (stdevleftright > LOOKUP_EPSILON ? CL_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
+	hitchance = (stdevupdown > LOOKUP_EPSILON ? HUD_LookupErrorFunction(height * 0.3536f / stdevupdown) : 1.0f)
+			  * (stdevleftright > LOOKUP_EPSILON ? HUD_LookupErrorFunction(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
 
 	/* Calculate cover: */
@@ -1434,14 +1430,14 @@ void HUD_ActorUpdateCvars (void)
 			/** @sa HUD_RefreshWeaponButtons */
 			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
 				const invList_t *weapon = RIGHT(selActor);
-				const int reloadtime = CL_CalcReloadTime(selActor, weapon->item.t);
+				const int reloadtime = HUD_CalcReloadTime(selActor, weapon->item.t);
 				if (weapon->item.m && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
 				}
 			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
 				const invList_t *weapon = LEFT(selActor);
-				const int reloadtime = CL_CalcReloadTime(selActor, weapon->item.t);
+				const int reloadtime = HUD_CalcReloadTime(selActor, weapon->item.t);
 				if (weapon && weapon->item.m && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
@@ -1501,7 +1497,7 @@ void HUD_ActorUpdateCvars (void)
 					HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
 					CL_SetActorMode(selActor, M_MOVE);
 				} else if (selActor->fd) {
-					const int hitProbability = CL_GetHitProbability(selActor);
+					const int hitProbability = HUD_GetHitProbability(selActor);
 
 					Com_sprintf(infoText, lengthof(infoText),
 								"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selActor->fd->name),
@@ -1637,10 +1633,9 @@ void HUD_ActorUpdateCvars (void)
 }
 
 /**
- * @brief Toggles if the current actor reserves Tus for crouching (e.g. at end of moving) or not.
- * @sa CL_StartingGameDone
+ * @brief Toggles if the current actor reserves Tus for crouching.
  */
-void CL_ActorToggleCrouchReservation_f (void)
+static void HUD_ToggleCrouchReservation_f (void)
 {
 	if (!CL_CheckAction(selActor))
 		return;
@@ -1650,8 +1645,7 @@ void CL_ActorToggleCrouchReservation_f (void)
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
-		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)
-			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+		CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
 	}
 }
 
@@ -1663,7 +1657,7 @@ void CL_ActorToggleCrouchReservation_f (void)
  * multi	-> off
  * single	-> off (if no TUs for multi available)
  */
-static void CL_ActorToggleReaction_f (void)
+static void HUD_ToggleReaction_f (void)
 {
 	int state = 0;
 	character_t* chr;
@@ -1698,7 +1692,7 @@ static void CL_ActorToggleReaction_f (void)
  * This function only returns @c NULL if no two handed weapon is in the right hand
  * and the left hand is empty.
  */
-static invList_t* CL_GetLeftHandWeapon (le_t *actor)
+static invList_t* HUD_GetLeftHandWeapon (le_t *actor)
 {
 	invList_t *weapon = LEFT(actor);
 
@@ -1714,9 +1708,9 @@ static invList_t* CL_GetLeftHandWeapon (le_t *actor)
 /**
  * @brief Reload left weapon.
  */
-static void CL_ReloadLeft_f (void)
+static void HUD_ReloadLeft_f (void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
+	if (!selActor || !HUD_CheckAction(selActor, HUD_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
 		return;
 	CL_ActorReload(selActor, csi.idLeft);
 }
@@ -1724,26 +1718,26 @@ static void CL_ReloadLeft_f (void)
 /**
  * @brief Reload right weapon.
  */
-static void CL_ReloadRight_f (void)
+static void HUD_ReloadRight_f (void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor, RIGHT(selActor), EV_INV_RELOAD))
+	if (!selActor || !HUD_CheckAction(selActor, RIGHT(selActor), EV_INV_RELOAD))
 		return;
 	CL_ActorReload(selActor, csi.idRight);
 }
 
 void HUD_InitStartup (void)
 {
-	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
-	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
-	Cmd_AddCommand("remaining_tus", HUD_RemainingTUs_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
-	Cmd_AddCommand("togglecrouchreserve", CL_ActorToggleCrouchReservation_f, _("Toggle reservation for crouching."));
-	Cmd_AddCommand("reserve_shot", HUD_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
-	Cmd_AddCommand("sel_shotreservation", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
-	Cmd_AddCommand("switch_firemode_list", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
-	Cmd_AddCommand("sel_reactmode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
-	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
-	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
-	Cmd_AddCommand("fireweap", HUD_FireWeapon_f, "Start aiming the weapon.");
+	Cmd_AddCommand("hud_reloadleft", HUD_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
+	Cmd_AddCommand("hud_reloadright", HUD_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
+	Cmd_AddCommand("hud_remainingtus", HUD_RemainingTUs_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
+	Cmd_AddCommand("hud_togglecrouchreserve", HUD_ToggleCrouchReservation_f, _("Toggle reservation for crouching."));
+	Cmd_AddCommand("hud_shotreserve", HUD_ShotReserve_f, "Reserve The TUs for the selected entry in the popup.");
+	Cmd_AddCommand("hud_shotreservationpopup", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
+	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
+	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
+	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("hud_togglereaction", HUD_ToggleReaction_f, _("Toggle reaction fire"));
+	Cmd_AddCommand("hud_fireweapon", HUD_FireWeapon_f, "Start aiming the weapon.");
 
 	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");

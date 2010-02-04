@@ -615,7 +615,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.right.bt_primaryright ll;" }
+			onClick		{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor lr althud.right.bt_primaryright ll;" }
 		}
 		pic bt_primaryleft
 		{
@@ -625,7 +625,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.right.bt_primaryright ll;" }
+			onClick		{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor lr althud.right.bt_primaryright ll;" }
 		}
 
 		// ==================
@@ -737,7 +737,7 @@ window althud extends ahud
 			texl		"81 37"
 			texh		"106 70"
 			mousefx		true
-			onClick		{ cmd "togglereaction;" }
+			onClick		{ cmd "hud_togglereaction;" }
 		}
 	
 		pic bt_reloadright
@@ -748,9 +748,9 @@ window althud extends ahud
 			texl		"0 37"
 			texh		"25 70"
 			mousefx		true
-			onClick		{ cmd "reloadright;" }
-			onMouseEnter			{ cmd "remaining_tus reload_r 1;" }
-			onMouseLeave			{ cmd "remaining_tus reload_r 0;" }
+			onClick		{ cmd "hud_reloadright;" }
+			onMouseEnter			{ cmd "hud_remainingtus reload_r 1;" }
+			onMouseLeave			{ cmd "hud_remainingtus reload_r 0;" }
 		}
 	
 		pic bt_reloadleft
@@ -761,9 +761,9 @@ window althud extends ahud
 			texl		"0 37"
 			texh		"25 70"
 			mousefx		true
-			onClick		{ cmd "reloadleft;" }
-			onMouseEnter			{ cmd "remaining_tus reload_l 1;" }
-			onMouseLeave			{ cmd "remaining_tus reload_l 0;" }
+			onClick		{ cmd "hud_reloadleft;" }
+			onMouseEnter			{ cmd "hud_remainingtus reload_l 1;" }
+			onMouseLeave			{ cmd "hud_remainingtus reload_l 0;" }
 		}
 	
 		pic althud_bt_use_headgear
@@ -786,8 +786,8 @@ window althud extends ahud
 			texl		"27 37"
 			texh		"52 70"
 			onClick		{ cmd "standcrouch;" }
-			onMouseEnter			{ cmd "remaining_tus crouch 1;" }
-			onMouseLeave			{ cmd "remaining_tus crouch 0;" }
+			onMouseEnter			{ cmd "hud_remainingtus crouch 1;" }
+			onMouseLeave			{ cmd "hud_remainingtus crouch 0;" }
 		}
 	
 		checkbox bt_crouch_reservation
@@ -797,7 +797,7 @@ window althud extends ahud
 			pos			"201 472"
 			size		"20 18"
 			current		0
-			onChange	{ cmd "togglecrouchreserve;" }
+			onChange	{ cmd "hud_togglecrouchreserve;" }
 		}
 	
 		pic bt_shot_reservation
@@ -808,8 +808,8 @@ window althud extends ahud
 			texl		"108 74"
 			texh		"134 107"
 			mousefx		true
-			onClick		{ cmd "sel_shotreservation;" }
-			onRClick	{ cmd "sel_shotreservation 0;" }
+			onClick		{ cmd "hud_shotreservationpopup;" }
+			onRClick	{ cmd "hud_shotreservationpopup 0;" }
 		}
 		
 		container right
@@ -864,9 +864,9 @@ window althud extends ahud
 			texl		"0 0"
 			texh		"16 16"
 			mousefx		true
-			onWheelUp	{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
-			onWheelDown	{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
-			onClick		{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
+			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 		}
 		pic switch_to_left_hand
 		{
@@ -876,9 +876,9 @@ window althud extends ahud
 			texl		"16 0"
 			texh		"32 16"
 			mousefx		true
-			onWheelUp	{ call *node:root.right.show_rightweapon cmd "switch_firemode_list r;" }
-			onWheelDown	{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
-			onClick		{ call *node:root.right.show_leftweapon cmd "switch_firemode_list l;" }
+			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
+			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
+			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
 		}
 	}
 

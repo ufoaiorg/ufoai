@@ -692,9 +692,11 @@ int G_ClientAction (player_t * player)
 	case PA_RESERVE_STATE:
 		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resReaction, &resShot, &resCrouch);
 
-		ent->chr.reservedTus.reaction = resReaction;
-		ent->chr.reservedTus.shot = resShot;
-		ent->chr.reservedTus.crouch = resCrouch;
+		/*if (ent->TU >= resReaction + resShot + resCrouch)*/ {
+			ent->chr.reservedTus.reaction = resReaction;
+			ent->chr.reservedTus.shot = resShot;
+			ent->chr.reservedTus.crouch = resCrouch;
+		}
 
 		G_EventSendReservations(ent);
 		break;
