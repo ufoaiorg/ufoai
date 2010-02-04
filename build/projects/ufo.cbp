@@ -396,10 +396,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/player/e_event_startgame.h" />
-		<Unit filename="../../src/client/battlescape/events/event/player/e_event_startgamedone.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/battlescape/events/event/player/e_event_startgamedone.h" />
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_addbrushmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1250,7 +1250,6 @@ void G_ClientSpawn (player_t * player)
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
 
-	gi.AddEvent(G_PlayerToPM(player), EV_START_DONE);
 	/* ensure that the last event is send, too */
 	gi.EndEvents();
 

@@ -46,7 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/inventory/e_event_invreload.h"
 #include "event/player/e_event_reset.h"
 #include "event/player/e_event_startgame.h"
-#include "event/player/e_event_startgamedone.h"
 #include "event/player/e_event_doendround.h"
 #include "event/player/e_event_endroundannounce.h"
 #include "event/player/e_event_results.h"
@@ -85,7 +84,6 @@ const eventRegister_t events[] = {
 	{E(EV_NULL), "", NULL, NULL, NULL},
 	{E(EV_RESET), "bb", CL_Reset, NULL, NULL},
 	{E(EV_START), "b", CL_StartGame, NULL, NULL},
-	{E(EV_START_DONE), "", CL_StartingGameDone, NULL, NULL},
 	{E(EV_ENDROUND), "b", CL_DoEndRound, NULL, NULL},
 	{E(EV_ENDROUNDANNOUNCE), "bb", CL_EndRoundAnnounce, NULL, NULL},
 

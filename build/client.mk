@@ -65,7 +65,6 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/player/e_event_reset.c \
 	client/battlescape/events/event/player/e_event_results.c \
 	client/battlescape/events/event/player/e_event_startgame.c \
-	client/battlescape/events/event/player/e_event_startgamedone.c \
 	client/battlescape/events/event/world/e_event_addbrushmodel.c \
 	client/battlescape/events/event/world/e_event_addedict.c \
 	client/battlescape/events/event/world/e_event_doorclose.c \

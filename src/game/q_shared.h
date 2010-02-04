@@ -186,7 +186,6 @@ typedef enum {
 	EV_NULL,
 	EV_RESET,
 	EV_START,
-	EV_START_DONE,  /**< Signals that all initialization information was sent from the server. */
 	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
 	EV_ENDROUNDANNOUNCE,
 
