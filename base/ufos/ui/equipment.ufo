@@ -105,6 +105,7 @@ window equipment extends objectinfo
 
 	confunc equipdisable {
 		*bt_actor<1>@disabled = true
+		*cvar:mn_name<1> = ""
 	}
 
 	radiobutton bt_actor0

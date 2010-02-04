@@ -222,10 +222,8 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	else
 		menuInventory = NULL;
 
-	for (; p < MAX_ACTIVETEAM; p++) {
-		Cvar_ForceSet(va("mn_name%i", p), "");
+	for (; p < MAX_ACTIVETEAM; p++)
 		MN_ExecuteConfunc("equipdisable %i", p);
-	}
 
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
