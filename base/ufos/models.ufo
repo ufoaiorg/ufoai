@@ -4,7 +4,7 @@
 // parent	(string)	The "menu_model" parent with the tag specified - never in main model.
 // need		(string)	"menu_model" name of e.g. head. (i.e. children menu-models)
 // anim		(string)	The animation from *.anm files.
-// skin	(int)			The index of hte skin (texture) to use in the file. Default 0.
+// skin	(int)			The index of the skin (texture) to use in the file. Default 0.
 // color	(color)
 // =================================================
 // NOTE: The entries have to be ordered (top-down) to start with children and end with parents (e.g. head, then body)

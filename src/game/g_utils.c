@@ -473,7 +473,7 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
  * @brief Searches the edict that has the given target as @c targetname set
  * @param target The target name of the edict that you are searching
  * @return @c NULL if no edict with the given target name was found, otherwise
- * the edict that has hte targetname set you were looking for.
+ * the edict that has the targetname set you were looking for.
  */
 edict_t *G_FindTargetEntity (const char *target)
 {
@@ -604,7 +604,7 @@ void G_TouchSolids (edict_t *ent)
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_SOLID);
 
 	/* be careful, it is possible to have an entity in this
-	 * list removed before we get to it(killtriggered) */
+	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
 		if (!hit->inuse)
