@@ -402,7 +402,6 @@ typedef enum {
 
 #define MAX_TEAMDEFS	128
 
-#define LASTNAME	3
 typedef enum {
 	NAME_NEUTRAL,
 	NAME_FEMALE,

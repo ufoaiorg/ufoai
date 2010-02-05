@@ -2217,7 +2217,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 			continue;
 		Q_strncpyz(chr->name, str, sizeof(chr->name));
 		Q_strcat(chr->name, " ", sizeof(chr->name));
-		str = Com_GiveName(gender + LASTNAME, chr->teamDef);
+		str = Com_GiveName(gender + NAME_LAST, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strcat(chr->name, str, sizeof(chr->name));

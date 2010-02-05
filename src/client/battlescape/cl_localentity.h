@@ -50,7 +50,7 @@ typedef struct le_s {
 	qboolean inuse;
 	qboolean removeNextFrame;	/**< will set the inuse value to false in the next frame */
 	qboolean invis;
-	qboolean selected;
+	qboolean selected;		/**< used for actors - for the current selected actor this is true */
 	int type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
@@ -66,8 +66,8 @@ typedef struct le_s {
 	int STUN;					/**< if stunned - state STATE_STUN */
 	int state;					/**< rf states, dead, crouched and so on */
 
-	float angles[3];
-	float alpha;
+	float angles[3];	/**< rotation angle, for actors only the YAW is used */
+	float alpha;		/**< alpha color value for rendering */
 
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
@@ -123,10 +123,10 @@ typedef struct le_s {
 	const char *ref1, *ref2;
 	const struct le_s *ref3;
 	inventory_t i;
-	int left, right, extension, headgear;
+	int left, right, extension, headgear; /**< item indices that the actor holds in his hands */
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
-	int gender;
+	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
 
 	pathing_t *pathMap;	/**< This is where the data for TUS used to move and actor
