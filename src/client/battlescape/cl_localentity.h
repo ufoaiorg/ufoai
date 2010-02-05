@@ -65,7 +65,6 @@ typedef struct le_s {
 	int HP, maxHP;				/**< health points */
 	int STUN;					/**< if stunned - state STATE_STUN */
 	int state;					/**< rf states, dead, crouched and so on */
-	int oldstate;
 
 	float angles[3];
 	float alpha;

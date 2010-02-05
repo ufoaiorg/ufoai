@@ -791,24 +791,22 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 /**
  * @brief Checks every case for reload buttons on the HUD.
  * @param[in] le Pointer of local entity being an actor.
- * @param[in] weapon Pointer to weapon in hand.
  * @param[in] tu Remaining TU units of selected actor.
- * @param[in] hand ACTOR_HAND_LEFT for left, ACTOR_HAND_RIGHT for right hand
+ * @param[in] containerID of the container to reload the weapon in. Used to get the movement TUs for moving something into the container.
+ * @param[out] reason The reason why the reload didn't work - only set if @c -1 is the return value
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, const invList_t *weapon, int tu, actorHands_t hand)
+static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char **reason)
 {
 	int container;
-	qboolean notEnoughTU = qfalse;
+	const int tu = CL_UsableTUs(le);
+	const invList_t *weapon = CONTAINER(le, containerID);
 
 	assert(le);
 
 	/* No weapon in hand. */
 	if (!weapon) {
-		if (hand == ACTOR_HAND_RIGHT)
-			Cvar_Set("mn_reloadright_tt", _("No weapon in right hand."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("No weapon in left hand."));
+		*reason = _("No weapon.");
 		return -1;
 	}
 
@@ -816,77 +814,31 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, const invList_t *weapon, int
 
 	/* This weapon cannot be reloaded. */
 	if (!weapon->item.t->reload) {
-		if (hand == ACTOR_HAND_RIGHT)
-			Cvar_Set("mn_reloadright_tt", _("Weapon in right hand cannot be reloaded."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("Weapon in left hand cannot be reloaded."));
+		*reason = _("Weapon cannot be reloaded.");
 		return -1;
 	}
 
 	/* Weapon is fully loaded. */
-	if (weapon->item.m && weapon->item.a && weapon->item.t->ammo == weapon->item.a) {
-		if (hand == ACTOR_HAND_RIGHT)
-			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, already fully loaded."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, already fully loaded."));
+	if (weapon->item.m && weapon->item.t->ammo == weapon->item.a) {
+		*reason = _("No reload possible, already fully loaded.");
 		return -1;
 	}
 
-	/* Weapon is empty, find ammo of any type loadable to this weapon. */
-	if (!weapon->item.m || (weapon->item.a == 0)) {
-		for (container = 0; container < csi.numIDs; container++) {
-			if (csi.ids[container].out < tu && !csi.ids[container].temp)  {
-				const invList_t *ic;
-				for (ic = le->i.c[container]; ic; ic = ic->next) {
-					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t)) {
-						notEnoughTU = qtrue;
-						break;
-					}
-				}
-				/* If we have enough TU to reload, return here. Otherwise
-				 * search in another container, maybe another needs less TU. */
-				if (tu >= weapon->item.t->reload + csi.ids[container].out)
-					return (weapon->item.t->reload + csi.ids[container].out);
-			}
+	/* Weapon is empty or not fully loaded, find ammo of any type loadable to this weapon. */
+	if (!weapon->item.m || weapon->item.t->ammo > weapon->item.a) {
+		invList_t *ic;
+		container = CL_ActorGetContainerForReload(&ic, &le->i, weapon->item.t);
+		if (container != NONE) {
+			const int tuCosts = weapon->item.t->reload + csi.ids[container].out + csi.ids[containerID].in;
+			/* If we have enough TU to reload, return here. Otherwise
+			 * search in another container, maybe another needs less TU. */
+			if (tu >= tuCosts)
+				return tuCosts;
+			*reason = _("Not enough TUs for reloading weapon.");
+		} else {
+			/* Found no ammo which could be used for this weapon. */
+			*reason = _("No reload possible, you don't have backup ammo.");
 		}
-		/* Found no ammo which could be used for this weapon. */
-		if (hand == ACTOR_HAND_RIGHT)
-			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, you don't have backup ammo."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
-	}
-
-	/* Weapon is not fully loaded but there is similar clip in the inventory. */
-	if (weapon->item.m && weapon->item.a && weapon->item.t->ammo > weapon->item.a) {
-		for (container = 0; container < csi.numIDs; container++) {
-			if (csi.ids[container].out < tu && !csi.ids[container].temp)  {
-				const invList_t *ic;
-				for (ic = le->i.c[container]; ic; ic = ic->next) {
-					if (INVSH_LoadableInWeapon(ic->item.t, weapon->item.t) && weapon->item.m == ic->item.t) {
-						notEnoughTU = qtrue;
-						break;
-					}
-				}
-				/* If we have enough TU to reload, return here. Otherwise
-				 * search in another container, maybe another needs less TU. */
-				if (tu >= weapon->item.t->reload + csi.ids[container].out)
-					return (weapon->item.t->reload + csi.ids[container].out);
-			}
-		}
-		/* Found no backup ammo of the same type as loaded. */
-		if (hand == ACTOR_HAND_RIGHT)
-			Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, you don't have backup ammo."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, you don't have backup ammo."));
-	}
-
-	/* If notEnoughTU is qtrue, then we found backup ammo, but we don't have
-	 * enough TU to reload. Otherwise, we don't have backup ammo. */
-	if (notEnoughTU) {
-		if (hand == ACTOR_HAND_RIGHT)
-			Cvar_Set("mn_reloadright_tt", _("Not enough TUs for reloading weapon in right hand."));
-		else
-			Cvar_Set("mn_reloadleft_tt", _("Not enough TUs for reloading weapon in left hand."));
 	}
 
 	return -1;
@@ -922,13 +874,14 @@ static qboolean HUD_WeaponWithReaction (const le_t * actor, const actorHands_t h
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
  * @sa HUD_ActorUpdateCvars
  */
-static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
+static void HUD_RefreshWeaponButtons (const le_t *le)
 {
 	invList_t *weaponr;
 	invList_t *weaponl;
 	invList_t *headgear;
 	int rightCanBeReloaded = -1, leftCanBeReloaded = -1;
-	const int time = additionalTime + CL_UsableTUs(le);
+	const int time = CL_UsableTUs(le);
+	const char *reason;
 
 	if (!le)
 		return;
@@ -1003,19 +956,21 @@ static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 	}
 
 	/* Reload buttons */
-	rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, weaponr, time, ACTOR_HAND_RIGHT);
-	if (rightCanBeReloaded > 0) {
+	rightCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idRight, &reason);
+	if (rightCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), rightCanBeReloaded));
 	} else {
+		Cvar_Set("mn_reloadright_tt", reason);
 		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	}
 
-	leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, weaponl, time, ACTOR_HAND_LEFT);
-	if (leftCanBeReloaded > 0) {
+	leftCanBeReloaded = HUD_WeaponCanBeReloaded(le, csi.idLeft, &reason);
+	if (leftCanBeReloaded != -1) {
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), leftCanBeReloaded));
 	} else {
+		Cvar_Set("mn_reloadleft_tt", reason);
 		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 	}
 
@@ -1601,12 +1556,6 @@ void HUD_ActorUpdateCvars (void)
 			MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
 		}
 
-		/* Calculate remaining TUs. */
-		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
-		time = max(0, selActor->TU - time);
-
-		Cvar_Set("mn_turemain", va("%i", time));
-
 		/* print ammo */
 		if (RIGHT(selActor))
 			Cvar_SetValue("mn_ammoright", RIGHT(selActor)->item.a);
@@ -1621,12 +1570,14 @@ void HUD_ActorUpdateCvars (void)
 		if (!LEFT(selActor) && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
 			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
 
-		selActor->oldstate = selActor->state;
-		/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
-		if (selActor->actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
-			time = CL_UsableTUs(selActor);
+		/* Calculate remaining TUs. */
+		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
+		time = max(0, selActor->TU - time);
+		if (Cvar_GetInteger("mn_turemain") != time) {
+			Cvar_Set("mn_turemain", va("%i", time));
 
-		HUD_RefreshWeaponButtons(selActor, time);
+			HUD_RefreshWeaponButtons(selActor);
+		}
 
 		MN_RegisterText(TEXT_STANDARD, infoText);
 	} else if (!cl.numTeamList) {
