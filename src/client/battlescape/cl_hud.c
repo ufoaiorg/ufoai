@@ -584,94 +584,99 @@ static void HUD_SelectReactionFiremode_f (void)
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
  * @sa HUD_RefreshWeaponButtons
- * @sa HUD_CheckAction
- * @todo Fix it - we can have different weapons in hands.
+ * @sa HUD_CheckReload
+ * @todo Unify with the reload function
  */
-static int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon)
+static int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toContainer)
 {
 	int container;
-	int tu = 999;
+	invList_t *ic;
 
-	if (!le)
-		return tu;
+	assert(le);
+	assert(weapon);
 
-	if (!weapon)
-		return tu;
-
-	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].out < tu) {
-			const invList_t *ic;
-			for (ic = le->i.c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
-					tu = csi.ids[container].out;
-					break;
-				}
-		}
-	}
+	container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
+	if (container == NONE)
+		return 0;
 
 	/* total TU cost is the sum of 3 numbers:
 	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
-	tu += weapon->reload + csi.ids[csi.idRight].in;
-	return tu;
+	return csi.ids[container].out + weapon->reload + csi.ids[toContainer].in;
 }
 
 /**
- * @brief Checks whether an action on hud menu is valid and displays proper message.
- * @param[in] le Pointer to local entity for which we handle an action on hud menu.
- * @param[in] weapon An item in hands.
- * @param[in] mode EV_INV_AMMO in case of fire button, EV_INV_RELOAD in case of reload button
- * @return qfalse when action is not possible, otherwise qtrue
+ * @brief Check if shooting is possible.
+ * i.e. The weapon has ammo and can be fired with the 'available' hands.
+ * TUs (i.e. "time") are are _not_ checked here, this needs to be done
+ * elsewhere for the correct firemode.
  * @sa HUD_FireWeapon_f
- * @sa HUD_ReloadLeft_f
- * @sa HUD_ReloadRight_f
+ * @return qfalse when action is not possible, otherwise qtrue
  * @todo Check for ammo in hand and give correct feedback in all cases.
  */
-static qboolean HUD_CheckAction (const le_t* le, invList_t *weapon, int mode)
+static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 {
+	if (!le)
+		return qfalse;
+
 	/* No item in hand. */
-	/** @todo Ignore this condition when ammo in hand. */
 	if (!weapon || !weapon->item.t) {
 		HUD_DisplayMessage(_("No item in hand.\n"));
 		return qfalse;
 	}
 
-	switch (mode) {
-	case EV_INV_AMMO:
-		/* Check if shooting is possible.
-		 * i.e. The weapon has ammo and can be fired with the 'available' hands.
-		 * TUs (i.e. "time") are are _not_ checked here, this needs to be done
-		 * elsewhere for the correct firemode. */
+	/* Cannot shoot because of lack of ammo. */
+	if (weapon->item.a <= 0 && weapon->item.t->reload) {
+		HUD_DisplayMessage(_("Can't perform action:\nout of ammo.\n"));
+		return qfalse;
+	}
+	/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
+	if (weapon->item.t->fireTwoHanded && LEFT(le)) {
+		HUD_DisplayMessage(_("This weapon cannot be fired\none handed.\n"));
+		return qfalse;
+	}
 
-		/* Cannot shoot because of lack of ammo. */
-		if (weapon->item.a <= 0 && weapon->item.t->reload) {
-			HUD_DisplayMessage(_("Can't perform action:\nout of ammo.\n"));
-			return qfalse;
-		}
-		/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
-		if (weapon->item.t->fireTwoHanded && LEFT(le)) {
-			HUD_DisplayMessage(_("This weapon cannot be fired\none handed.\n"));
-			return qfalse;
-		}
-		break;
-	case EV_INV_RELOAD:
-		/* Check if reload is possible. Also checks for the correct amount of TUs. */
+	return qtrue;
+}
 
-		/* Cannot reload because this item is not reloadable. */
-		if (!weapon->item.t->reload) {
-			HUD_DisplayMessage(_("Can't perform action:\nthis item is not reloadable.\n"));
-			return qfalse;
-		}
-		/* Cannot reload because of no ammo in inventory. */
-		if (HUD_CalcReloadTime(le, weapon->item.t) >= 999) {
-			HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
-			return qfalse;
-		}
-		/* Cannot reload because of not enough TUs. */
-		if (le->TU < HUD_CalcReloadTime(le, weapon->item.t)) {
-			HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
-			return qfalse;
-		}
-		break;
+/**
+ * @brief Check if reload is possible.
+ * @param[in] le Pointer to local entity for which we handle an action on hud menu.
+ * @param[in] weapon An item in hands.
+ * @return qfalse when action is not possible, otherwise qtrue
+ * @sa HUD_ReloadLeft_f
+ * @sa HUD_ReloadRight_f
+ * @todo Check for ammo in hand and give correct feedback in all cases.
+ */
+static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, int container)
+{
+	int tus;
+
+	if (!le)
+		return qfalse;
+
+	/* No item in hand. */
+	if (!weapon || !weapon->item.t) {
+		HUD_DisplayMessage(_("No item in hand.\n"));
+		return qfalse;
+	}
+
+	/* Cannot reload because this item is not reloadable. */
+	if (!weapon->item.t->reload) {
+		HUD_DisplayMessage(_("Can't perform action:\nthis item is not reloadable.\n"));
+		return qfalse;
+	}
+
+	tus = HUD_CalcReloadTime(le, weapon->item.t, container);
+
+	/* Cannot reload because of no ammo in inventory. */
+	if (tus >= 999) {
+		HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
+		return qfalse;
+	}
+	/* Cannot reload because of not enough TUs. */
+	if (le->TU < tus) {
+		HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
+		return qfalse;
 	}
 
 	return qtrue;
@@ -708,9 +713,8 @@ static void HUD_FireWeapon_f (void)
 
 	ammo = fd->obj;
 
-	/* Let's check if shooting is possible.
-	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
-	if (!HUD_CheckAction(selActor, ACTOR_GET_INV(selActor, hand), EV_INV_AMMO))
+	/* Let's check if shooting is possible. */
+	if (!HUD_CheckShooting(selActor, ACTOR_GET_INV(selActor, hand)))
 		return;
 
 	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_UsableTUs(selActor)) {
@@ -744,6 +748,8 @@ static void HUD_RemainingTUs_f (void)
 
 	type = Cmd_Argv(1);
 	state = Com_ParseBoolean(Cmd_Argv(2));
+
+	memset(displayRemainingTus, 0, sizeof(displayRemainingTus));
 
 	if (!strcmp(type, "reload_r")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;
@@ -1345,6 +1351,27 @@ static int HUD_GetHitProbability (const le_t* actor)
 }
 
 /**
+ * @brief returns the weapon the actor's left hand is touching. In case the actor
+ * holds a two handed weapon in his right hand, this weapon is returned here.
+ * This function only returns @c NULL if no two handed weapon is in the right hand
+ * and the left hand is empty.
+ */
+static invList_t* HUD_GetLeftHandWeapon (le_t *actor, int *container)
+{
+	invList_t *weapon = LEFT(actor);
+
+	if (!weapon || !weapon->item.m) {
+		weapon = RIGHT(actor);
+		if (!weapon->item.t->holdTwoHanded)
+			weapon = NULL;
+		else if (container != NULL)
+			*container = csi.idRight;
+	}
+
+	return weapon;
+}
+
+/**
  * @brief Updates console vars for an actor.
  *
  * This function updates the cvars for the hud (battlefield)
@@ -1428,18 +1455,22 @@ void HUD_ActorUpdateCvars (void)
 				time = TU_CROUCH;
 		} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
 		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
-			const invList_t *weapon;
+			const invList_t *invList;
+			int container;
 
-			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor))
-				weapon = RIGHT(selActor);
-			else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor))
-				weapon = LEFT(selActor);
-			else
-				weapon = NULL;
+			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
+				invList = RIGHT(selActor);
+				container = csi.idRight;
+			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
+				invList = HUD_GetLeftHandWeapon(selActor, &container);
+			} else {
+				invList = NULL;
+				container = 0;
+			}
 
-			if (weapon && weapon->item.t) {
-				const int reloadtime = HUD_CalcReloadTime(selActor, weapon->item.t);
-				if (reloadtime <= CL_UsableTUs(selActor) && weapon->item.m && weapon->item.t->reload)
+			if (invList && invList->item.t) {
+				const int reloadtime = HUD_CalcReloadTime(selActor, invList->item.t, container);
+				if (reloadtime <= CL_UsableTUs(selActor) && invList->item.m && invList->item.t->reload)
 					time = reloadtime;
 			}
 		} else if (CL_ActorFireModeActivated(selActor->actorMode)) {
@@ -1449,7 +1480,7 @@ void HUD_ActorUpdateCvars (void)
 			if (IS_MODE_FIRE_HEADGEAR(selActor->actorMode)) {
 				selWeapon = HEADGEAR(selActor);
 			} else if (IS_MODE_FIRE_LEFT(selActor->actorMode)) {
-				selWeapon = HUD_GetLeftHandWeapon(selActor);
+				selWeapon = HUD_GetLeftHandWeapon(selActor, NULL);
 			} else {
 				selWeapon = RIGHT(selActor);
 			}
@@ -1680,32 +1711,14 @@ static void HUD_ToggleReaction_f (void)
 }
 
 /**
- * @brief returns the weapon the actor's left hand is touching. In case the actor
- * holds a two handed weapon in his right hand, this weapon is returned here.
- * This function only returns @c NULL if no two handed weapon is in the right hand
- * and the left hand is empty.
- */
-static invList_t* HUD_GetLeftHandWeapon (le_t *actor)
-{
-	invList_t *weapon = LEFT(actor);
-
-	if (!weapon || !weapon->item.m) {
-		weapon = RIGHT(actor);
-		if (!weapon->item.t->holdTwoHanded)
-			weapon = NULL;
-	}
-
-	return weapon;
-}
-
-/**
  * @brief Reload left weapon.
  */
 static void HUD_ReloadLeft_f (void)
 {
-	if (!selActor || !HUD_CheckAction(selActor, HUD_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
+	int container = csi.idLeft;
+	if (!HUD_CheckReload(selActor, HUD_GetLeftHandWeapon(selActor, &container), container))
 		return;
-	CL_ActorReload(selActor, csi.idLeft);
+	CL_ActorReload(selActor, container);
 }
 
 /**
@@ -1713,7 +1726,7 @@ static void HUD_ReloadLeft_f (void)
  */
 static void HUD_ReloadRight_f (void)
 {
-	if (!selActor || !HUD_CheckAction(selActor, RIGHT(selActor), EV_INV_RELOAD))
+	if (!selActor || !HUD_CheckReload(selActor, RIGHT(selActor), csi.idRight))
 		return;
 	CL_ActorReload(selActor, csi.idRight);
 }

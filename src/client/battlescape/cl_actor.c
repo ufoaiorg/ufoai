@@ -1021,6 +1021,39 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
 	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, le->currentSelectedFiremode, mousePosTargettingAlign);
 }
 
+/**
+ * @brief Searches the clip with the least TU usage to put it into the weapon
+ * @param invList The inventory list that can be used outside of this function for the found ammo
+ * @param inv The inventory to do the search in
+ * @param weapon The weapon to reload
+ * @return @c NONE if no container was found, the container id otherwise.
+ */
+int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, const objDef_t *weapon)
+{
+	int container;
+	int tu = 100;
+	int bestContainer = NONE;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		if (csi.ids[container].out < tu) {
+			invList_t *ic;
+			/* Once we've found at least one clip, there's no point
+			 * searching other containers if it would take longer
+			 * to retrieve the ammo from them than the one
+			 * we've already found. */
+			for (ic = inv->c[container]; ic; ic = ic->next) {
+				objDef_t *od = ic->item.t;
+				if (INVSH_LoadableInWeapon(od, weapon) && GAME_ItemIsUseable(od)) {
+					tu = csi.ids[container].out;
+					bestContainer = container;
+					*invList = ic;
+					break;
+				}
+			}
+		}
+	}
+	return bestContainer;
+}
 
 /**
  * @brief Reload weapon with actor.
@@ -1033,20 +1066,13 @@ void CL_ActorReload (le_t *le, int containerID)
 	inventory_t *inv;
 	invList_t *ic;
 	objDef_t *weapon;
-	int x, y, tu;
-	int container, bestContainer;
+	int bestContainer;
 
 	if (!CL_CheckAction(le))
 		return;
 
 	/* check weapon */
 	inv = &le->i;
-
-	/* search for clips and select the one that is available easily */
-	x = 0;
-	y = 0;
-	tu = 100;
-	bestContainer = NONE;
 
 	if (inv->c[containerID]) {
 		weapon = inv->c[containerID]->item.t;
@@ -1070,28 +1096,17 @@ void CL_ActorReload (le_t *le, int containerID)
 		return;
 	}
 
-	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].out < tu) {
-			/* Once we've found at least one clip, there's no point
-			 * searching other containers if it would take longer
-			 * to retrieve the ammo from them than the one
-			 * we've already found. */
-			for (ic = inv->c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
-				 && GAME_ItemIsUseable(ic->item.t)) {
-					INVSH_GetFirstShapePosition(ic, &x, &y);
-					x += ic->x;
-					y += ic->y;
-					tu = csi.ids[container].out;
-					bestContainer = container;
-					break;
-				}
-		}
-	}
-
+	bestContainer = CL_ActorGetContainerForReload(&ic, inv, weapon);
 	/* send request */
-	if (bestContainer != NONE)
+	if (bestContainer != NONE) {
+		int x, y;
+
+		INVSH_GetFirstShapePosition(ic, &x, &y);
+		x += ic->x;
+		y += ic->y;
+
 		CL_ActorInvMove(le, bestContainer, x, y, containerID, 0, 0);
+	}
 }
 
 /**
