@@ -276,7 +276,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
 
-	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
+	CL_CharacterSetShotSettings(chr, ACTOR_HAND_NOT_SET, -1, NULL);
 
 	Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */
