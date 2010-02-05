@@ -89,7 +89,7 @@ ACTOR MENU UPDATING
 /**
  * @brief Return the skill string for the given skill level
  * @return skill string
- * @param[in] skill a skill value between 0 and MAX_SKILL (@todo 0? never reached?)
+ * @param[in] skill a skill value between 0 and MAX_SKILL
  */
 const char *CL_GetSkillString (const int skill)
 {
@@ -221,7 +221,7 @@ void CL_CharacterCvars (const character_t * chr)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist. Or @c -1 if the given entity is not in the team list.
  */
-int CL_GetActorNumber (const le_t * le)
+static int CL_GetActorNumber (const le_t * le)
 {
 	int actorIdx;
 
@@ -243,7 +243,7 @@ int CL_GetActorNumber (const le_t * le)
 character_t *CL_GetActorChr (const le_t * le)
 {
 	const int actorIdx = CL_GetActorNumber(le);
-	if (actorIdx < 0) {
+	if (actorIdx == -1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: Could not find actor in the team list - maybe already dead? (state is %i)!\n",
 				le->state);
 		return NULL;
@@ -492,7 +492,7 @@ ACTOR SELECTION AND TEAM LIST
  */
 void CL_AddActorToTeamList (le_t * le)
 {
-	int i;
+	int actorIdx;
 
 	/* test team */
 	if (!le || le->team != cls.team || le->pnum != cl.pnum || LE_IsDead(le))
@@ -503,16 +503,16 @@ void CL_AddActorToTeamList (le_t * le)
 		return;
 
 	/* check list for that actor */
-	i = CL_GetActorNumber(le);
+	actorIdx = CL_GetActorNumber(le);
 
 	/* add it */
-	if (i == -1) {
-		i = cl.numTeamList;
+	if (actorIdx == -1) {
+		actorIdx = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("numonteam%i", cl.numTeamList); /* althud */
-		MN_ExecuteConfunc("huddeselect %i", i);
+		MN_ExecuteConfunc("huddeselect %i", actorIdx);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}

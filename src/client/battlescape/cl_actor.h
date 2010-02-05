@@ -61,7 +61,6 @@ void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
 const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const actorHands_t hand);
-int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(const le_t *le);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
 int CL_UsableReactionTUs(const le_t * le);

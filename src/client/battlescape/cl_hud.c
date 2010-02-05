@@ -468,7 +468,6 @@ static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 
 void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay)
 {
-	int actorIdx;
 	const objDef_t *ammo;
 	const fireDef_t *fd;
 	int i;
@@ -501,10 +500,6 @@ void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemo
 			visibleFiremodeListLeft = qtrue;
 		}
 	}
-
-	actorIdx = CL_GetActorNumber(actor);
-	if (actorIdx == -1)
-		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
 	chr = CL_GetActorChr(actor);
 	assert(chr);
