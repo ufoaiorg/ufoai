@@ -187,7 +187,6 @@ void HUD_HideFiremodes (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
  * @param[in] hand What list to display
- * @todo Put the most of this function into the scripts
  */
 static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
 {

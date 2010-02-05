@@ -2791,7 +2791,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		/* Gettext marker (also indicates that it is a dmgtype value - additional to beeing a dmgweight value) */
+		/* Gettext marker (also indicates that it is a dmgtype value - additional to being a dmgweight value) */
 		if (*token == '_') {
 			token++;
 			csi.dts[csi.numDTs].showInMenu = qtrue;
@@ -2799,7 +2799,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* search for damage types with same name */
 		for (i = 0; i < csi.numDTs; i++)
-			if (!strncmp(token, csi.dts[i].id, MAX_VAR))
+			if (!strcmp(token, csi.dts[i].id))
 				break;
 
 		/* Not found in the for loop. */

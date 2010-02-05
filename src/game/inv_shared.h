@@ -405,7 +405,7 @@ typedef struct mapDef_s {
 
 typedef struct damageType_s {
 	char id[MAX_VAR];
-	qboolean showInMenu;
+	qboolean showInMenu;	/**< true for values that contains a translatable id */
 } damageType_t;
 
 /**
@@ -459,16 +459,6 @@ typedef struct csi_s {
 	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 } csi_t;
-
-#define MAX_SKILL	100
-
-#define GET_HP_HEALING( ab ) (1 + (ab) * 15/MAX_SKILL)
-#define GET_HP( ab )        (min((80 + (ab) * 90/MAX_SKILL), 255))
-#define GET_INJURY_MULT( mind, hp, hpmax )  ((float)(hp) / (float)(hpmax) > 0.5f ? 1.0f : 1.0f + INJURY_BALANCE * ((1.0f / ((float)(hp) / (float)(hpmax) + INJURY_THRESHOLD)) -1.0f)* (float)MAX_SKILL / (float)(mind))
-/** @todo Skill-influence needs some balancing. */
-#define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
-#define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
-#define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
 
 typedef enum {
 	ACTOR_HAND_NOT_SET = 0,

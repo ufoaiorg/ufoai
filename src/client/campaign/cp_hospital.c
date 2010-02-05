@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_hospital.h"
 
+#define GET_HP_HEALING( ab ) (1 + (ab) * 15/MAX_SKILL)
+
 /**
  * @brief Heals character.
  * @param[in] chr Character data of an employee
