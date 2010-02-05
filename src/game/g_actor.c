@@ -402,7 +402,7 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t * hand;
+	invDef_t *invDef;
 	objDef_t *weapon;
 	int tu;
 	int containerID;
@@ -411,16 +411,16 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;
 	tu = 100;
-	hand = (st == ST_RIGHT_RELOAD) ? INVDEF(gi.csi->idRight) : INVDEF(gi.csi->idLeft);
+	invDef = (st == ST_RIGHT_RELOAD) ? INVDEF(gi.csi->idRight) : INVDEF(gi.csi->idLeft);
 	bestContainer = NULL;
 
-	if (CONTAINER(ent, hand->id)) {
-		weapon = CONTAINER(ent, hand->id)->item.t;
+	if (CONTAINER(ent, invDef->id)) {
+		weapon = CONTAINER(ent, invDef->id)->item.t;
 	/** @todo What if there is no item in the right hand - this would segfault then */
-	} else if (INV_IsLeftDef(hand) && RIGHT(ent)->item.t->holdTwoHanded) {
+	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = INVDEF(gi.csi->idRight);
-		weapon = CONTAINER(ent, hand->id)->item.t;
+		invDef = INVDEF(gi.csi->idRight);
+		weapon = CONTAINER(ent, invDef->id)->item.t;
 	} else
 		return;
 
@@ -448,5 +448,5 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
+		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, qtrue);
 }
