@@ -2398,7 +2398,7 @@ static void CL_DebugPath_f (void)
 /**
  * @brief implements the "nextsoldier" command
  */
-static void CL_NextSoldier_f (void)
+static void CL_ActorNext_f (void)
 {
 	if (CL_BattlescapeRunning()) {
 		CL_ActorSelectNext();
@@ -2408,7 +2408,7 @@ static void CL_NextSoldier_f (void)
 /**
  * @brief implements the reselect command
  */
-static void CL_ThisSoldier_f (void)
+static void CL_ActorReselectf (void)
 {
 	if (CL_BattlescapeRunning()) {
 		CL_ActorSelectList(cl_selected->integer);
@@ -2457,7 +2457,7 @@ static void CL_ActorEquipmentSelect_f (void)
 /**
  * @brief Selects a soldier while we are on battlescape
  */
-static void CL_ActorSoldierSelect_f (void)
+static void CL_ActorSelect_f (void)
 {
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -2475,7 +2475,7 @@ static void CL_ActorSoldierSelect_f (void)
 /**
  * @brief Update the skin of the current soldier
  */
-static void CL_UpdateSoldier_f (void)
+static void CL_ActorUpdate_f (void)
 {
 	const int num = cl_selected->integer;
 
@@ -2495,11 +2495,11 @@ void ACTOR_InitStartup (void)
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
 	/** @todo unify console command and function names */
-	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
-	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
-	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
-	Cmd_AddCommand("soldier_updatecurrent", CL_UpdateSoldier_f, _("Update a soldier"));
-	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
+	Cmd_AddCommand("soldier_reselect", CL_ActorReselectf, _("Reselect the current actor"));
+	Cmd_AddCommand("nextsoldier", CL_ActorNext_f, _("Toggle to next actor"));
+	Cmd_AddCommand("soldier_select", CL_ActorSelect_f, _("Select an actor from list"));
+	Cmd_AddCommand("soldier_updatecurrent", CL_ActorUpdate_f, _("Update an actor"));
+	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select an actor in the equipment menu");
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
