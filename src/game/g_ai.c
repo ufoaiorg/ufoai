@@ -817,7 +817,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ActorReload(ent, INVDEF(gi.csi->idRight));
+				G_ActorReload(ent, INVDEF(gi.csi->idLeft));
 			} else {
 				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 			}
