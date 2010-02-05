@@ -603,7 +603,7 @@ qboolean CL_ActorSelect (le_t * le)
 	menuInventory = &selActor->i;
 
 	actorIdx = CL_GetActorNumber(le);
-	if (actorIdx < 0)
+	if (actorIdx == -1)
 		return qfalse;
 
 	/* console commands, update cvars */
