@@ -398,11 +398,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
  * @param[in] st Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-void G_ActorReload (edict_t* ent, shoot_types_t st)
+void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t *invDef;
 	objDef_t *weapon;
 	int tu;
 	int containerID;
@@ -411,7 +410,6 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;
 	tu = 100;
-	invDef = (st == ST_RIGHT_RELOAD) ? INVDEF(gi.csi->idRight) : INVDEF(gi.csi->idLeft);
 	bestContainer = NULL;
 
 	if (CONTAINER(ent, invDef->id)) {

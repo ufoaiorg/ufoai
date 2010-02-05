@@ -404,7 +404,7 @@ void G_ClientSpawn(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
-void G_ActorReload(edict_t* ent, shoot_types_t st);
+void G_ActorReload(edict_t* ent, const invDef_t *invDef);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
