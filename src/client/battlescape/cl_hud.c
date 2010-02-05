@@ -301,7 +301,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 
 	if (reset) {
 		CL_ReserveTUs(selActor, RES_SHOT, 0);
-		CL_CharacterSetShotSettings(chr, -1, -1, NULL);
+		CL_CharacterSetShotSettings(chr, ACTOR_HAND_NOT_SET, -1, NULL);
 		return;
 	}
 
@@ -718,7 +718,8 @@ static void HUD_FireWeapon_f (void)
 			CL_SetActorMode(selActor, M_FIRE_R);
 		else
 			CL_SetActorMode(selActor, M_FIRE_L);
-		selActor->currentSelectedFiremode = firemode;	/* Store firemode. */
+		/* Store firemode. */
+		selActor->currentSelectedFiremode = firemode;
 		HUD_HideFiremodes();
 	} else {
 		/* Cannot shoot because of not enough TUs - every other

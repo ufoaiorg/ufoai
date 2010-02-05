@@ -1004,11 +1004,6 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
 	if (!CL_CheckAction(le))
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorShoot: cl.firemode %i.\n", le->currentSelectedFiremode);
-
-	/** @todo Is there a better way to do this?
-	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
-	 */
 	if (IS_MODE_FIRE_RIGHT(le->actorMode)) {
 		type = ST_RIGHT;
 	} else if (IS_MODE_FIRE_LEFT(le->actorMode)) {
@@ -1245,7 +1240,8 @@ void CL_ActorUseHeadgear_f (void)
 		return;
 
 	CL_SetActorMode(selActor, M_FIRE_HEADGEAR);
-	selActor->currentSelectedFiremode = 0; /** @todo make this a variable somewhere? */
+	/** @todo make this a variable somewhere? */
+	selActor->currentSelectedFiremode = 0;
 	CL_ActorShoot(selActor, selActor->pos);
 	CL_SetActorMode(selActor, M_MOVE);
 
