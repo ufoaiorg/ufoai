@@ -254,7 +254,7 @@ typedef struct objDef_s {
 
 	/* Weapon specific. */
 	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
-					     would have, if that clip would be full. In other words, max bullets for this type of
+					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
