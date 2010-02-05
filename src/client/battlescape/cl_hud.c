@@ -574,12 +574,11 @@ static void HUD_SelectReactionFiremode_f (void)
  * @brief Calculate total reload time for selected actor.
  * @param[in] le Pointer to local entity handling the weapon.
  * @param[in] weapon Item in (currently only right) hand.
- * @return Time needed to reload or >= 999 if no suitable ammo found.
+ * @return Time needed to reload or @c -1 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
  * @sa HUD_RefreshWeaponButtons
  * @sa HUD_CheckReload
- * @todo Unify with the reload function
  */
 static int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toContainer)
 {
@@ -591,11 +590,11 @@ static int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toCon
 
 	container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
 	if (container == NONE)
-		return 0;
+		return -1;
 
 	/* total TU cost is the sum of 3 numbers:
 	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
-	return csi.ids[container].out + weapon->reload + csi.ids[toContainer].in;
+	return TU_GET_RELOAD(container, toContainer, weapon);
 }
 
 /**
@@ -605,7 +604,6 @@ static int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toCon
  * elsewhere for the correct firemode.
  * @sa HUD_FireWeapon_f
  * @return qfalse when action is not possible, otherwise qtrue
- * @todo Check for ammo in hand and give correct feedback in all cases.
  */
 static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 {
@@ -639,7 +637,6 @@ static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
  * @return qfalse when action is not possible, otherwise qtrue
  * @sa HUD_ReloadLeft_f
  * @sa HUD_ReloadRight_f
- * @todo Check for ammo in hand and give correct feedback in all cases.
  */
 static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, int container)
 {
@@ -661,9 +658,8 @@ static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, int co
 	}
 
 	tus = HUD_CalcReloadTime(le, weapon->item.t, container);
-
 	/* Cannot reload because of no ammo in inventory. */
-	if (tus >= 999) {
+	if (tus == -1) {
 		HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
 		return qfalse;
 	}
@@ -797,38 +793,39 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  */
 static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char **reason)
 {
-	int container;
 	const int tu = CL_UsableTUs(le);
-	const invList_t *weapon = CONTAINER(le, containerID);
+	const invList_t *invList = CONTAINER(le, containerID);
+	const objDef_t *weapon;
 
 	assert(le);
 
 	/* No weapon in hand. */
-	if (!weapon) {
+	if (!invList) {
 		*reason = _("No weapon.");
 		return -1;
 	}
 
-	assert(weapon->item.t);
+	weapon = invList->item.t;
+	assert(weapon);
 
 	/* This weapon cannot be reloaded. */
-	if (!weapon->item.t->reload) {
+	if (!weapon->reload) {
 		*reason = _("Weapon cannot be reloaded.");
 		return -1;
 	}
 
 	/* Weapon is fully loaded. */
-	if (weapon->item.m && weapon->item.t->ammo == weapon->item.a) {
+	if (invList->item.m && weapon->ammo == invList->item.a) {
 		*reason = _("No reload possible, already fully loaded.");
 		return -1;
 	}
 
 	/* Weapon is empty or not fully loaded, find ammo of any type loadable to this weapon. */
-	if (!weapon->item.m || weapon->item.t->ammo > weapon->item.a) {
+	if (!invList->item.m || weapon->ammo > invList->item.a) {
 		invList_t *ic;
-		container = CL_ActorGetContainerForReload(&ic, &le->i, weapon->item.t);
+		const int container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
 		if (container != NONE) {
-			const int tuCosts = weapon->item.t->reload + csi.ids[container].out + csi.ids[containerID].in;
+			const int tuCosts = TU_GET_RELOAD(container, containerID, weapon);
 			/* If we have enough TU to reload, return here. Otherwise
 			 * search in another container, maybe another needs less TU. */
 			if (tu >= tuCosts)
@@ -1418,9 +1415,9 @@ void HUD_ActorUpdateCvars (void)
 				container = 0;
 			}
 
-			if (invList && invList->item.t) {
+			if (invList && invList->item.t && invList->item.m && invList->item.t->reload) {
 				const int reloadtime = HUD_CalcReloadTime(selActor, invList->item.t, container);
-				if (reloadtime <= CL_UsableTUs(selActor) && invList->item.m && invList->item.t->reload)
+				if (reloadtime != -1 && reloadtime <= CL_UsableTUs(selActor))
 					time = reloadtime;
 			}
 		} else if (CL_ActorFireModeActivated(selActor->actorMode)) {
