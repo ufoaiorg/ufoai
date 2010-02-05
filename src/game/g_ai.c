@@ -794,6 +794,17 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 }
 
 /**
+ * @brief if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it
+ */
+static void AI_TryToReloadWeapon (edict_t *ent, int containerID)
+{
+	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, containerID)) {
+		G_ActorReload(ent, INVDEF(containerID));
+	} else {
+		G_ActorInvMove(ent, INVDEF(containerID), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
+	}
+}
+/**
  * @brief The think function for the ai controlled aliens
  * @param[in] player
  * @param[in] ent
@@ -808,20 +819,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!G_IsPaniced(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
-			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
-				G_ActorReload(ent, INVDEF(gi.csi->idRight));
-			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
-			}
-		}
-		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
-			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ActorReload(ent, INVDEF(gi.csi->idLeft));
-			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
-			}
-		}
+		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0)
+			AI_TryToReloadWeapon(ent, gi.csi->idRight);
+		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0)
+			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
