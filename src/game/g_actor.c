@@ -282,8 +282,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			return;
 	}
 
+	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
 	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
-	   we need to save original ent->TU for the sake of checking TU reservations. */
+	 * we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
 	reservedTU = G_ActorTUReservations(ent);
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */

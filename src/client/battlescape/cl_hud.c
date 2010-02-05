@@ -1423,28 +1423,24 @@ void HUD_ActorUpdateCvars (void)
 			Q_strncpyz(infoText, hudText, sizeof(infoText));
 
 		/* update HUD stats etc in more or shoot modes */
-		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
-		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]
-		 || displayRemainingTus[REMAINING_TU_CROUCH]) {
-			/* We are hovering over a "reload" button */
-			/** @sa HUD_RefreshWeaponButtons */
-			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
-				const invList_t *weapon = RIGHT(selActor);
+		if (displayRemainingTus[REMAINING_TU_CROUCH]) {
+			if (CL_UsableTUs(selActor) >= TU_CROUCH)
+				time = TU_CROUCH;
+		} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
+		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
+			const invList_t *weapon;
+
+			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor))
+				weapon = RIGHT(selActor);
+			else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor))
+				weapon = LEFT(selActor);
+			else
+				weapon = NULL;
+
+			if (weapon && weapon->item.t) {
 				const int reloadtime = HUD_CalcReloadTime(selActor, weapon->item.t);
-				if (weapon->item.m && weapon->item.t->reload
-					 && CL_UsableTUs(selActor) >= reloadtime) {
+				if (reloadtime <= CL_UsableTUs(selActor) && weapon->item.m && weapon->item.t->reload)
 					time = reloadtime;
-				}
-			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
-				const invList_t *weapon = LEFT(selActor);
-				const int reloadtime = HUD_CalcReloadTime(selActor, weapon->item.t);
-				if (weapon && weapon->item.m && weapon->item.t->reload
-					 && CL_UsableTUs(selActor) >= reloadtime) {
-					time = reloadtime;
-				}
-			} else if (displayRemainingTus[REMAINING_TU_CROUCH]) {
-				if (CL_UsableTUs(selActor) >= TU_CROUCH)
-					time = TU_CROUCH;
 			}
 		} else if (CL_ActorFireModeActivated(selActor->actorMode)) {
 			const invList_t *selWeapon;
@@ -1453,13 +1449,10 @@ void HUD_ActorUpdateCvars (void)
 			if (IS_MODE_FIRE_HEADGEAR(selActor->actorMode)) {
 				selWeapon = HEADGEAR(selActor);
 			} else if (IS_MODE_FIRE_LEFT(selActor->actorMode)) {
-				selWeapon = LEFT(selActor);
+				selWeapon = HUD_GetLeftHandWeapon(selActor);
 			} else {
 				selWeapon = RIGHT(selActor);
 			}
-
-			if (!selWeapon && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
-				selWeapon = RIGHT(selActor);
 
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 
