@@ -116,7 +116,7 @@ window equipment extends objectinfo
 		value	0
 		cvar	*cvar:selected_actor
 		icon	number_1
-		onChange { cmd "equip_select 0;" }
+		onChange { cmd "actor_select_equip 0;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -128,7 +128,7 @@ window equipment extends objectinfo
 		value	1
 		cvar	*cvar:selected_actor
 		icon	number_2
-		onChange { cmd "equip_select 1;" }
+		onChange { cmd "actor_select_equip 1;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -140,7 +140,7 @@ window equipment extends objectinfo
 		value	2
 		cvar	*cvar:selected_actor
 		icon	number_3
-		onChange { cmd "equip_select 2;" }
+		onChange { cmd "actor_select_equip 2;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -152,7 +152,7 @@ window equipment extends objectinfo
 		value	3
 		cvar	*cvar:selected_actor
 		icon	number_4
-		onChange { cmd "equip_select 3;" }
+		onChange { cmd "actor_select_equip 3;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -164,7 +164,7 @@ window equipment extends objectinfo
 		value	4
 		cvar	*cvar:selected_actor
 		icon	number_5
-		onChange { cmd "equip_select 4;" }
+		onChange { cmd "actor_select_equip 4;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -176,7 +176,7 @@ window equipment extends objectinfo
 		value	5
 		cvar	*cvar:selected_actor
 		icon	number_6
-		onChange { cmd "equip_select 5;" }
+		onChange { cmd "actor_select_equip 5;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -188,7 +188,7 @@ window equipment extends objectinfo
 		value	6
 		cvar	*cvar:selected_actor
 		icon	number_7
-		onChange { cmd "equip_select 6;" }
+		onChange { cmd "actor_select_equip 6;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -200,7 +200,7 @@ window equipment extends objectinfo
 		value	7
 		cvar	*cvar:selected_actor
 		icon	number_8
-		onChange { cmd "equip_select 7;" }
+		onChange { cmd "actor_select_equip 7;" }
 		tooltip	"_Equip this soldier"
 	}
 
@@ -210,7 +210,7 @@ window equipment extends objectinfo
 		pos		"60 13"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 0;" }
+		onClick { cmd "actor_select_equip 0;" }
 	}
 	string txt_actor1
 	{
@@ -218,7 +218,7 @@ window equipment extends objectinfo
 		pos		"60 54"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 1;" }
+		onClick { cmd "actor_select_equip 1;" }
 	}
 	string txt_actor2
 	{
@@ -226,7 +226,7 @@ window equipment extends objectinfo
 		pos		"60 95"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 2;" }
+		onClick { cmd "actor_select_equip 2;" }
 	}
 	string txt_actor3
 	{
@@ -234,7 +234,7 @@ window equipment extends objectinfo
 		pos		"60 136"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 3;" }
+		onClick { cmd "actor_select_equip 3;" }
 	}
 	string txt_actor4
 	{
@@ -242,7 +242,7 @@ window equipment extends objectinfo
 		pos		"60 177"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 4;" }
+		onClick { cmd "actor_select_equip 4;" }
 	}
 	string txt_actor5
 	{
@@ -250,7 +250,7 @@ window equipment extends objectinfo
 		pos		"60 218"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 5;" }
+		onClick { cmd "actor_select_equip 5;" }
 	}
 	string txt_actor6
 	{
@@ -258,7 +258,7 @@ window equipment extends objectinfo
 		pos		"60 259"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 6;" }
+		onClick { cmd "actor_select_equip 6;" }
 	}
 	string txt_actor7
 	{
@@ -266,7 +266,7 @@ window equipment extends objectinfo
 		pos		"60 300"
 		size	"270 40"
 		textalign cl
-		onClick { cmd "equip_select 7;" }
+		onClick { cmd "actor_select_equip 7;" }
 	}
 
 	// ==================
@@ -612,7 +612,7 @@ window equipment extends objectinfo
 		pos			"544 24"
 		size		"230 20"
 		onChange	{
-			cmd "employee_changename; team_updateequip; equip_select <cvar:cl_selected>;"
+			cmd "employee_changename; team_updateequip; actor_select_equip <cvar:cl_selected>;"
 		}
 	}
 
@@ -679,7 +679,7 @@ window equipment extends objectinfo
 	container armour	{
 		pos "735 100"
 		color "1 1 1 0"		// active, but display it transparent
-		onChange { cmd "soldier_updatecurrent;" }
+		onChange { cmd "actor_updatecurrent;" }
 		onSelect { cmd "object_update <lastselectedid>;" }
 	}
 
@@ -759,6 +759,6 @@ window equipment extends objectinfo
 		*cvar:mn_equiptype = 0		
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
-		cmd "team_initskin;team_updateequip;update_item_list;equip_select 0;"
+		cmd "team_initskin;team_updateequip;update_item_list;actor_select_equip 0;"
 	}
 }

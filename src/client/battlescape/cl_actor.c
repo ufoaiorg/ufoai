@@ -666,7 +666,7 @@ qboolean CL_ActorSelectList (int num)
 qboolean CL_ActorSelectNext (void)
 {
 	int selIndex = -1;
-	int num = cl.numTeamList;
+	const int num = cl.numTeamList;
 	int i;
 
 	/* find index of currently selected actor */
@@ -2396,22 +2396,12 @@ static void CL_DebugPath_f (void)
 
 
 /**
- * @brief implements the "nextsoldier" command
+ * @brief Switch to the next living soldier
  */
 static void CL_ActorNext_f (void)
 {
 	if (CL_BattlescapeRunning()) {
 		CL_ActorSelectNext();
-	}
-}
-
-/**
- * @brief implements the reselect command
- */
-static void CL_ActorReselectf (void)
-{
-	if (CL_BattlescapeRunning()) {
-		CL_ActorSelectList(cl_selected->integer);
 	}
 }
 
@@ -2494,12 +2484,10 @@ void ACTOR_InitStartup (void)
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");
-	/** @todo unify console command and function names */
-	Cmd_AddCommand("soldier_reselect", CL_ActorReselectf, _("Reselect the current actor"));
-	Cmd_AddCommand("nextsoldier", CL_ActorNext_f, _("Toggle to next actor"));
-	Cmd_AddCommand("soldier_select", CL_ActorSelect_f, _("Select an actor from list"));
-	Cmd_AddCommand("soldier_updatecurrent", CL_ActorUpdate_f, _("Update an actor"));
-	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select an actor in the equipment menu");
+	Cmd_AddCommand("actor_next", CL_ActorNext_f, _("Toggle to next actor"));
+	Cmd_AddCommand("actor_select", CL_ActorSelect_f, _("Select an actor from list"));
+	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, _("Update an actor"));
+	Cmd_AddCommand("actor_select_equip", CL_ActorEquipmentSelect_f, "Select an actor in the equipment menu");
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");
