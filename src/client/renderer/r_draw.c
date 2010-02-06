@@ -725,7 +725,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	from the last one and ending with the first one */
 
 	/* move model to its location */
-	glTranslatef(screenPos[0], screenPos[1], 0);
+	glTranslatef(screenPos[0]* viddef.rx, screenPos[1]* viddef.ry, 0);
 	/* scale model to proper resolution */
 	glScalef(viddef.rx, viddef.ry, 1.0f);
 	/* rotate model to proper direction. */
