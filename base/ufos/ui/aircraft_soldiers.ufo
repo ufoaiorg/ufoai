@@ -90,8 +90,8 @@ window team extends iaircraft
 		image	ui/button_blue
 		onClick	{
 			*cvar:cl_selected2 = <cvar:cl_selected>
-			cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment"
-			cmd "mn_push equipment"
+			cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment;"
+			cmd "mn_push equipment;"
 		}
 		color	"1 1 1 0.8"
 		selectcolor "1 1 1 1"

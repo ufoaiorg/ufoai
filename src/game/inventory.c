@@ -301,7 +301,8 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		if (!self->RemoveFromInventory(self, i, from, fItem))
 			return IA_NONE;
 		else
-			alreadyRemovedSource = qtrue;	/**< Removal successful - store this info. */
+			/* Removal successful - store this info. */
+			alreadyRemovedSource = qtrue;
 
 		cacheItem2 = self->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
 
