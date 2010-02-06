@@ -792,8 +792,9 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	/* Apply all transformation to model. Note that the transformations are applied starting
 	from the last one and ending with the first one */
 
-	/* center model on earth */
-	glTranslatef(earthPos[0], earthPos[1], 0);
+	/* center model on earth. Translate also along z to avoid seeing
+	bottom part of the model through earth (only half of earth is drawn) */
+	glTranslatef(earthPos[0], earthPos[1], 10.0f);
 	/* scale model to proper resolution */
 	glScalef(viddef.rx, viddef.ry, 1.0f);
 	/* place model on earth: make it tangent to earth surface, heading toward it if direction is used. */
@@ -801,9 +802,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	glRotatef(rotate[2], 0, 1, 0);
 	glRotatef(rotate[0] - pos[0], 0, 0, 1);
 	glRotatef(90.0f - pos[1] , 1, 0, 0);
-	/* Make model a little bit higher than earth surface, or you can see
-	bottom part of the model through earth (only half of earth is drawn) */
-	glTranslatef(0, 0, 1.002f * earthRadius);
+	glTranslatef(0, 0, earthRadius);
 	glRotatef(-90.0f + direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
