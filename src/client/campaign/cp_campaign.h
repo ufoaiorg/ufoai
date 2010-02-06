@@ -160,7 +160,7 @@ typedef enum missionStage_s {
 } missionStage_t;
 
 /** @brief alien team group definition.
- * @note This is the definition of one groupe of aliens (several races) that can
+ * @note This is the definition of one groups of aliens (several races) that can
  * be used on the same map.
  * @sa alienTeamCategory_s
  */
@@ -176,7 +176,7 @@ typedef struct alienTeamGroup_s {
 } alienTeamGroup_t;
 
 /** @brief alien team category definition
- * @note This is the definition of all groupe of aliens that can be used for
+ * @note This is the definition of all groups of aliens that can be used for
  * a mission category
  * @sa alienTeamGroup_s
  */
@@ -195,7 +195,7 @@ typedef struct alienTeamCategory_s {
 
 /** @brief mission definition
  * @note A mission is different from a map: a mission is the whole set of actions aliens will carry.
- * For example, comming with a UFO on earth, land, explore earth, and leave with UFO
+ * For example, coming with a UFO on earth, land, explore earth, and leave with UFO
  */
 typedef struct mission_s {
 	char id[MAX_VAR];				/**< script id (must be first element of mission_t to use LIST_ContainsString) */
@@ -476,7 +476,7 @@ typedef struct ccs_s {
 	/* == ufopedia == */
 	/* A list of all UFOpaedia chapters. */
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];
-	/* Total number uf UFOpaedia chapters */
+	/* Total number of UFOpaedia chapters */
 	int numChapters;
 	int numUnreadMails; /**< only for faster access (don't cycle all techs every frame) */
 
