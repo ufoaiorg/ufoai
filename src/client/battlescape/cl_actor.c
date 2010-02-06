@@ -1029,6 +1029,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 	int tu = 100;
 	int bestContainer = NONE;
 
+	/* also search the linked ground floor tile (temp container) */
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
 			invList_t *ic;
