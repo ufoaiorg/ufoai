@@ -103,7 +103,7 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, int container)
 void G_InventoryToFloor (edict_t *ent)
 {
 	invList_t *ic, *next;
-	int k;
+	int container;
 	edict_t *floor;
 	item_t item;
 #ifdef ADJACENT
@@ -112,12 +112,16 @@ void G_InventoryToFloor (edict_t *ent)
 #endif
 
 	/* check for items */
-	for (k = 0; k < gi.csi->numIDs; k++)
-		if (G_InventoryDropToFloorCheck(ent, k))
+	for (container = 0; container < gi.csi->numIDs; container++) {
+		/* ignore items linked from any temp container */
+		if (gi.csi->ids[container].temp)
+			continue;
+		if (G_InventoryDropToFloorCheck(ent, container))
 			break;
+	}
 
 	/* edict is not carrying any items */
-	if (k >= gi.csi->numIDs)
+	if (container >= gi.csi->numIDs)
 		return;
 
 	/* find the floor */
@@ -132,18 +136,18 @@ void G_InventoryToFloor (edict_t *ent)
 
 	/* drop items */
 	/* cycle through all containers */
-	for (k = 0; k < gi.csi->numIDs; k++) {
+	for (container = 0; container < gi.csi->numIDs; container++) {
 		/* skip floor - we want to drop to floor */
-		if (k == gi.csi->idFloor)
+		if (container == gi.csi->idFloor)
 			continue;
 
 		/* skip csi->idArmour, we will collect armours using idArmour container,
 		 * not idFloor */
-		if (k == gi.csi->idArmour)
+		if (container == gi.csi->idArmour)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */
-		for (ic = ent->i.c[k]; ic; ic = next) {
+		for (ic = ent->i.c[container]; ic; ic = next) {
 #ifdef ADJACENT
 			vec2_t oldPos; /* if we have to place it to adjacent  */
 #endif
@@ -155,12 +159,12 @@ void G_InventoryToFloor (edict_t *ent)
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
-			if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(k), ic))
+			if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(container), ic))
 				gi.error("Could not remove item '%s' from inventory %i of entity %i",
-						ic->item.t->id, k, ent->number);
+						ic->item.t->id, container, ent->number);
 			if (game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.error("Could not add item '%s' from inventory %i of entity %i to floor container",
-						ic->item.t->id, k, ent->number);
+						ic->item.t->id, container, ent->number);
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
@@ -198,7 +202,7 @@ void G_InventoryToFloor (edict_t *ent)
 #endif
 		}
 		/* destroy link */
-		ent->i.c[k] = NULL;
+		ent->i.c[container] = NULL;
 	}
 
 	FLOOR(ent) = FLOOR(floor);
@@ -271,25 +275,27 @@ void G_SendInventory (unsigned int playerMask, edict_t *ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;
-	int j;
+	int container;
 
 	/* test for pointless player mask */
 	if (!playerMask)
 		return;
 
-	for (j = 0; j < gi.csi->numIDs; j++)
-		for (ic = ent->i.c[j]; ic; ic = ic->next)
+	for (container = 0; container < gi.csi->numIDs; container++) {
+		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
 			nr++;
+	}
 
 	/* return if no inventory items to send */
 	if (nr == 0)
 		return;
 
 	G_EventInventoryAdd(ent, playerMask, nr);
-	for (j = 0; j < gi.csi->numIDs; j++)
-		for (ic = ent->i.c[j]; ic; ic = ic->next) {
+	for (container = 0; container < gi.csi->numIDs; container++) {
+		for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 			/* send a single item */
 			assert(ic->item.t);
-			G_WriteItem(ic->item, INVDEF(j), ic->x, ic->y);
+			G_WriteItem(ic->item, INVDEF(container), ic->x, ic->y);
 		}
+	}
 }
