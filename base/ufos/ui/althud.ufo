@@ -157,95 +157,23 @@ window althud extends ahud
 			size		"32 128"
 		}
 		
-		confunc numonteam1
+		confunc numonteam
 		{
-			*floor.bar_teambox1@invis = true  *floor.bar_teamsep1@invis = true  *floor.head1@invis = true
-			*floor.bar_teambox2@invis = true  *floor.bar_teamsep2@invis = true  *floor.head2@invis = true
-			*floor.bar_teambox3@invis = true  *floor.bar_teamsep3@invis = true  *floor.head3@invis = true
-			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
-			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
-			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox0@left> + <node:root.floor.bar_teambox0@width> ) 
+			*cvar:tmp = ( <1> )
+			*cvar:i = 1
+			while ( *cvar:i < *cvar:tmp ) {
+				*floor.bar_teambox<cvar:i>@invis = false  *floor.bar_teamsep<cvar:i>@invis = false  *floor.head<cvar:i>@invis = false
+				*cvar:i = ( *cvar:i + 1 )
+			} 
+
+			while ( *cvar:tmp < 7 ) {
+				*floor.bar_teambox<cvar:i>@invis = true  *floor.bar_teamsep<cvar:i>@invis = true  *floor.head<cvar:i>@invis = true
+				*cvar:tmp = ( *cvar:tmp + 1 )
+			} 
+			delete *cvar:tmp
+			delete *cvar:i
 		}
-		confunc numonteam2
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = true  *floor.bar_teamsep2@invis = true  *floor.head2@invis = true
-			*floor.bar_teambox3@invis = true  *floor.bar_teamsep3@invis = true  *floor.head3@invis = true
-			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
-			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
-			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox1@left> + <node:root.floor.bar_teambox1@width> ) 
-		}
-		confunc numonteam3
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
-			*floor.bar_teambox3@invis = true  *floor.bar_teamsep3@invis = true  *floor.head3@invis = true
-			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
-			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
-			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox2@left> + <node:root.floor.bar_teambox2@width> ) 
-		}
-		confunc numonteam4
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
-			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
-			*floor.bar_teambox4@invis = true  *floor.bar_teamsep4@invis = true  *floor.head4@invis = true
-			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
-			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox3@left> + <node:root.floor.bar_teambox3@width> ) 
-		}
-		confunc numonteam5
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
-			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
-			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
-			*floor.bar_teambox5@invis = true  *floor.bar_teamsep5@invis = true  *floor.head5@invis = true
-			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox4@left> + <node:root.floor.bar_teambox4@width> ) 
-		}
-		confunc numonteam6
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
-			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
-			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
-			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
-			*floor.bar_teambox6@invis = true  *floor.bar_teamsep6@invis = true  *floor.head6@invis = true
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox5@left> + <node:root.floor.bar_teambox5@width> ) 
-		}
-		confunc numonteam7
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
-			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
-			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
-			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
-			*floor.bar_teambox6@invis = false *floor.bar_teamsep6@invis = false *floor.head6@invis = false
-			*floor.bar_teambox7@invis = true  *floor.bar_teamsep7@invis = true  *floor.head7@invis = true
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox6@left> + <node:root.floor.bar_teambox6@width> ) 
-		}
-		confunc numonteam8
-		{
-			*floor.bar_teambox1@invis = false *floor.bar_teamsep1@invis = false *floor.head1@invis = false
-			*floor.bar_teambox2@invis = false *floor.bar_teamsep2@invis = false *floor.head2@invis = false
-			*floor.bar_teambox3@invis = false *floor.bar_teamsep3@invis = false *floor.head3@invis = false
-			*floor.bar_teambox4@invis = false *floor.bar_teamsep4@invis = false *floor.head4@invis = false
-			*floor.bar_teambox5@invis = false *floor.bar_teamsep5@invis = false *floor.head5@invis = false
-			*floor.bar_teambox6@invis = false *floor.bar_teamsep6@invis = false *floor.head6@invis = false
-			*floor.bar_teambox7@invis = false *floor.bar_teamsep7@invis = false *floor.head7@invis = false
-			*floor.bar_teamright@left = ( <node:root.floor.bar_teambox7@left> + <node:root.floor.bar_teambox7@width> ) 
-		}
-	
+			
 		pic bar_selbox
 		{
 			image		althud/bar_selbox
