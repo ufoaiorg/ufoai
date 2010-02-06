@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-06 01:18+0100\n"
-"PO-Revision-Date: 2010-02-06 14:14+0100\n"
+"PO-Revision-Date: 2010-02-06 15:19+0100\n"
 "Last-Translator: kracken\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -147,9 +147,8 @@ msgid "Oriental big"
 msgstr "Oriental grand"
 
 #: ../base/maps/spedition.ump:63
-#, fuzzy
 msgid "Spedition"
-msgstr "Options"
+msgstr "Entreprise de transport"
 
 #: ../base/maps/stadium.ump:65
 msgid "Stadium"
