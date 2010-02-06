@@ -282,31 +282,29 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 static void AII_CarriedItems (const le_t *soldier)
 {
 	int container;
-	invList_t *item;
+	invList_t *invList;
 	technology_t *tech;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].temp) /* Items collected as ET_ITEM */
+		/* Items on the ground are collected as ET_ITEM */
+		if (csi.ids[container].temp)
 			continue;
-		for (item = soldier->i.c[container]; item; item = item->next) {
-			/* Fake item. */
-			assert(item->item.t);
-			/* Twohanded weapons and container is left hand container. */
-			/** @todo */
-			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
+		for (invList = soldier->i.c[container]; invList; invList = invList->next) {
+			const objDef_t *item = invList->item.t;
+			assert(item);
 
-			ccs.eMission.numItems[item->item.t->idx]++;
-			tech = item->item.t->tech;
+			ccs.eMission.numItems[item->idx]++;
+			tech = item->tech;
 			if (!tech)
-				Com_Error(ERR_DROP, "AII_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
+				Com_Error(ERR_DROP, "AII_CarriedItems: No tech for %s / %s\n", item->id, item->name);
 			RS_MarkCollected(tech);
 
-			if (!item->item.t->reload || item->item.a == 0)
+			if (!item->reload || invList->item.a == 0)
 				continue;
-			ccs.eMission.numItemsLoose[item->item.m->idx] += item->item.a;
-			if (ccs.eMission.numItemsLoose[item->item.m->idx] >= item->item.t->ammo) {
-				ccs.eMission.numItemsLoose[item->item.m->idx] -= item->item.t->ammo;
-				ccs.eMission.numItems[item->item.m->idx]++;
+			ccs.eMission.numItemsLoose[invList->item.m->idx] += invList->item.a;
+			if (ccs.eMission.numItemsLoose[invList->item.m->idx] >= item->ammo) {
+				ccs.eMission.numItemsLoose[invList->item.m->idx] -= item->ammo;
+				ccs.eMission.numItems[invList->item.m->idx]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload
 			 * will happen at equip screen or at the start of next mission,
@@ -830,6 +828,11 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 		if (aircraft->acTeam[i]) {
 			const employee_t const *employee = aircraft->acTeam[i];
 			for (container = 0; container < csi.numIDs; container++) {
+#if 0
+				/* ignore items linked from any temp container */
+				if (csi.ids[container].temp)
+					continue;
+#endif
 				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
 					const objDef_t *obj = ic->item.t;
 					size += obj->size;
@@ -879,6 +882,11 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 	int container;
 
 	for (container = 0; container < csi.numIDs; container++) {
+#if 0
+		/* ignore items linked from any temp container */
+		if (csi.ids[container].temp)
+			continue;
+#endif
 		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
 			const objDef_t *obj = ic->item.t;
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
@@ -1047,9 +1055,9 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	/* move other aircraft if the deleted aircraft was not the last one of the base */
 	if (i != AIRCRAFT_INBASE_INVALID) {
 		int j;
-		
+
 		REMOVE_ELEM(base->aircraft, i, base->numAircraftInBase);
-		
+
 		for (j = i; j < base->numAircraftInBase; j++) {
 			aircraft_t *aircraftTemp = AIR_GetAircraftFromBaseByIDX(base, j);
 
@@ -1106,7 +1114,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	assert(aircraft->teamSize == 0);
 	/* remove the pilot */
 	if (aircraft->pilot && E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type)) {
-		aircraft->pilot = NULL;		
+		aircraft->pilot = NULL;
 	} else {
 		/* This shouldn't ever happen. */
 		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
@@ -3156,10 +3164,10 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
  */
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_t *ed)
 {
-	int p, container;
+	int container;
 
 	if (!aircraft) {
-		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aicraft (and thus no carried equipment to add).\n");
+		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aircraft (and thus no carried equipment to add).\n");
 		return;
 	}
 	if (!ed) {
@@ -3173,10 +3181,15 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
+		int p;
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
 				character_t *chr = &aircraft->acTeam[p]->chr;
 				invList_t *ic = chr->inv.c[container];
+#if 0
+				if (csi.ids[container].temp)
+					continue;
+#endif
 				while (ic) {
 					const item_t item = ic->item;
 					const objDef_t *type = item.t;

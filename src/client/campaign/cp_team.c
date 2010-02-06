@@ -140,19 +140,18 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * @param[in] aircraft Pointer to an aircraft for given team.
  * @param[in] ed equipDef_t pointer to equipment
  * @sa CL_AddWeaponAmmo
+ * @note Iterate through in container order (right hand, left hand, belt,
+ * holster, backpack) at the top level, i.e. each squad member reloads
+ * the right hand, then each reloads the left hand, etc. The effect
+ * of this is that when things are tight, everyone has the opportunity
+ * to get their preferred weapon(s) loaded before anyone is allowed
+ * to keep her spares in the backpack or on the floor. We don't want
+ * the first person in the squad filling their backpack with spare ammo
+ * leaving others with unloaded guns in their hands...
  */
 void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
 	int p, container;
-
-	/* Iterate through in container order (right hand, left hand, belt,
-	 * holster, backpack) at the top level, i.e. each squad member reloads
-	 * her right hand, then each reloads his left hand, etc. The effect
-	 * of this is that when things are tight, everyone has the opportunity
-	 * to get their preferred weapon(s) loaded before anyone is allowed
-	 * to keep her spares in the backpack or on the floor. We don't want
-	 * the first person in the squad filling their backpack with spare ammo
-	 * leaving others with unloaded guns in their hands... */
 
 	assert(aircraft);
 
@@ -180,6 +179,11 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 				invList_t *ic, *next;
 				character_t *chr = &aircraft->acTeam[p]->chr;
 				assert(chr);
+#if 0
+				/* ignore items linked from any temp container */
+				if (csi.ids[container].temp)
+					continue;
+#endif
 				for (ic = chr->inv.c[container]; ic; ic = next) {
 					next = ic->next;
 					if (ed->numItems[ic->item.t->idx] > 0) {
