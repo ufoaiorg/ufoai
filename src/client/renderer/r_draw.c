@@ -1033,6 +1033,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glScalef(2, 1, 1);
 	glMatrixMode(GL_MODELVIEW);
 
+	/* activate depth to hide 3D models behind earth */
+	glEnable(GL_DEPTH_TEST);
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* load nation overlay */
@@ -1058,6 +1060,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
+	glDisable(GL_DEPTH_TEST);
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
 

@@ -535,16 +535,13 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  */
 void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
-	int x, y;
-	const qboolean test = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
-	vec3_t screenPos;
-
-	if (!test)
-		return;
-
 	if (cl_3dmap->integer) {
 		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);
 	} else {
+		int x, y;
+		vec3_t screenPos;
+
+		MAP_AllMapToScreen(node, pos, &x, &y, NULL);
 		VectorSet(screenPos, x, y, 0);
 		/* models are used on 2D geoscape for aircraft */
 		R_Draw2DMapMarkers(screenPos, theta, model, skin);
@@ -1792,7 +1789,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_MapDrawLine(node, &aircraft->route);
 		} else
 #endif
-		if (!oneUFOVisible || !UFO_IsUFOSeenOnGeoscape(aircraft) || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
+		if (!oneUFOVisible || !UFO_IsUFOSeenOnGeoscape(aircraft))
 			continue;
 
 		{
@@ -1805,6 +1802,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
 					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
+					MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
 					R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 				}
 			}
