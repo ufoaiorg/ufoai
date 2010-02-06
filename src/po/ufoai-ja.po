@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-01-18 20:52+0100\n"
+"POT-Creation-Date: 2010-02-06 01:18+0100\n"
 "PO-Revision-Date: 2009-01-20 18:18+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO: Alien Invasion JP\n"
@@ -587,8 +587,7 @@ msgstr "Standard Campaign"
 
 #: ../base/ufos/campaign.ufo:59
 msgid "standard_campaign_txt"
-msgstr ""
-"1人用の、侵略に対抗するシナリオです。プレイヤーはPHALANX計画の司令官となり、エイリアンの脅威に対応していく事になります。ランダムな要素とストーリー的な要素の混ざったダイナミックキャンペーンをプレイする事ができます。また、このキャンペーンは複数の難易度でプレイ可能です。この難易度は、挑戦を望む初心者向けの標準的なモードです。"
+msgstr "1人用の、侵略に対抗するシナリオです。プレイヤーはPHALANX計画の司令官となり、エイリアンの脅威に対応していく事になります。ランダムな要素とストーリー的な要素の混ざったダイナミックキャンペーンをプレイする事ができます。また、このキャンペーンは複数の難易度でプレイ可能です。この難易度は、挑戦を望む初心者向けの標準的なモードです。"
 
 #: ../base/ufos/campaign.ufo:107
 msgid "Easy Campaign"
@@ -621,102 +620,1987 @@ msgid "alien_campaign_txt"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:15
-msgid "Stockholm"
-msgstr ""
-
-#: ../base/ufos/cities.ufo:21
 msgid "Amsterdam"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:27
-msgid "Athens"
-msgstr "アテネ"
-
-#: ../base/ufos/cities.ufo:33
-msgid "Bangkok"
-msgstr "バンコク"
-
-#: ../base/ufos/cities.ufo:39
-#, fuzzy
-msgid "Beijing"
-msgstr "Buildings"
-
-#: ../base/ufos/cities.ufo:45
-msgid "Berlin"
-msgstr "ベルリン"
-
-#: ../base/ufos/cities.ufo:51
+#: ../base/ufos/cities.ufo:21
 msgid "Mumbai"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:57
+#: ../base/ufos/cities.ufo:27
 msgid "Cape Town"
 msgstr "ケープタウン"
 
-#: ../base/ufos/cities.ufo:63
-msgid "Cairo"
-msgstr ""
-
-#: ../base/ufos/cities.ufo:69
+#: ../base/ufos/cities.ufo:33
 msgid "Cayenne"
 msgstr "カイエン"
 
-#: ../base/ufos/cities.ufo:75
+#: ../base/ufos/cities.ufo:39
 #, fuzzy
 msgid "Dakar"
 msgstr "レーダー"
 
-#: ../base/ufos/cities.ufo:81
-msgid "Mexico City"
-msgstr ""
-
-#: ../base/ufos/cities.ufo:87
-msgid "Novosibirsk"
-msgstr ""
-
-#: ../base/ufos/cities.ufo:93
-#, fuzzy
-msgid "Paris"
-msgstr "停止"
-
-#: ../base/ufos/cities.ufo:99
-#, fuzzy
-msgid "Sacramento"
-msgstr "Saracen I"
-
-#: ../base/ufos/cities.ufo:105
-msgid "Santiago"
-msgstr ""
-
-#: ../base/ufos/cities.ufo:111
-msgid "Sydney"
-msgstr "シドニー"
-
-#: ../base/ufos/cities.ufo:117
+#: ../base/ufos/cities.ufo:45
 #, fuzzy
 msgid "Teheran"
 msgstr "ドイツ語"
 
-#: ../base/ufos/cities.ufo:123
-msgid "Tokyo"
-msgstr ""
-
-#: ../base/ufos/cities.ufo:129
-msgid "Washington D.C."
-msgstr ""
-
-#: ../base/ufos/cities.ufo:135
+#: ../base/ufos/cities.ufo:51
 msgid "Wellington"
 msgstr "ウエリントン"
 
-#: ../base/ufos/cities.ufo:141
+#: ../base/ufos/cities.ufo:57 ../base/ufos/cities.ufo:2631
 msgid "Wichita"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:63
+msgid "Aarhus"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:69
+msgid "Aberdeen"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:75
+msgid "Abidjan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:81
+msgid "Abuja"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:87
+#, fuzzy
+msgid "Accra"
+msgstr "精度"
+
+#: ../base/ufos/cities.ufo:93
+msgid "Adana"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:99
+msgid "Addis Ababa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:105
+msgid "Agartala"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:111
+msgid "Ahmedabad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:117
+msgid "Albuquerque"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:123
+msgid "Almaty"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:129
+#, fuzzy
+msgid "Amman"
+msgstr "Taman"
+
+#: ../base/ufos/cities.ufo:135
+msgid "Amritsar"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:141
+msgid "Anadyr"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:147
+#, fuzzy
+msgid "Anchorage"
+msgstr "倉庫"
+
+#: ../base/ufos/cities.ufo:153
+msgid "Andorra la Vella"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:159
+msgid "Ankara"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:165
+msgid "Antananarivo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:171
+#, fuzzy
+msgid "Antwerp"
+msgstr "Enter"
+
+#: ../base/ufos/cities.ufo:177
+msgid "Arbil"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:183
+#, fuzzy
+msgid "Arequipa"
+msgstr "Equip Aircraft"
+
+#: ../base/ufos/cities.ufo:189
+msgid "Asmara"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:195
+#, fuzzy
+msgid "Assis"
+msgstr "作戦"
+
+#: ../base/ufos/cities.ufo:201
+msgid "Astana"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:207
+#, fuzzy
+msgid "Asuncion"
+msgstr "行動:"
+
+#: ../base/ufos/cities.ufo:213
+msgid "Athens"
+msgstr "アテネ"
+
+#: ../base/ufos/cities.ufo:219
+msgid "Atlanta"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:225
+#, fuzzy
+msgid "Austin"
+msgstr "ロシア語"
+
+#: ../base/ufos/cities.ufo:231
+msgid "Baghdad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:237
+msgid "Balikpapan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:243
+msgid "Baltimore"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:249
+#, fuzzy
+msgid "Bamako"
+msgstr "バンコク"
+
+#: ../base/ufos/cities.ufo:255
+msgid "Bandung"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:261
+#, fuzzy
+msgid "Bangalore"
+msgstr "バンコク"
+
+#: ../base/ufos/cities.ufo:267
+msgid "Bangkok"
+msgstr "バンコク"
+
+#: ../base/ufos/cities.ufo:273
+#, fuzzy
+msgid "Bangui"
+msgstr "バンコク"
+
+#: ../base/ufos/cities.ufo:279
+msgid "Barcelona"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:285
+#, fuzzy
+msgid "Basra"
+msgstr "レーザー"
+
+#: ../base/ufos/cities.ufo:291
+msgid "Batticaloa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:297
+#, fuzzy
+msgid "Beijing"
+msgstr "Buildings"
+
+#: ../base/ufos/cities.ufo:303
+#, fuzzy
+msgid "Belfast"
+msgstr "ベルト"
+
+#: ../base/ufos/cities.ufo:309
+msgid "Belgrade"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:315
+msgid "Belmopan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:321
+msgid "Berlin"
+msgstr "ベルリン"
+
+#: ../base/ufos/cities.ufo:327
+#, fuzzy
+msgid "Berne"
+msgstr "ベルリン"
+
+#: ../base/ufos/cities.ufo:333
+msgid "Birmingham"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:339
+msgid "Bissau"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:345
+msgid "Blantyre"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:351
+msgid "Bloemfontein"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:357
+#, fuzzy
+msgid "Bogor"
+msgstr "低い"
+
+#: ../base/ufos/cities.ufo:363
+msgid "Bogota"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:369
+#, fuzzy
+msgid "Boston"
+msgstr "費用"
+
+#: ../base/ufos/cities.ufo:375
+msgid "Brasilia"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:381
+msgid "Bratislava"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:387
+#, fuzzy
+msgid "Bratsk"
+msgstr "Back"
+
+#: ../base/ufos/cities.ufo:393
+msgid "Brazzaville"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:399
+#, fuzzy
+msgid "Brisbane"
+msgstr "都市迷彩"
+
+#: ../base/ufos/cities.ufo:405
+#, fuzzy
+msgid "Brussels"
+msgstr "基地"
+
+#: ../base/ufos/cities.ufo:411
+msgid "Bucharest"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:417
+#, fuzzy
+msgid "Budapest"
+msgstr "基地"
+
+#: ../base/ufos/cities.ufo:423
+msgid "Buenos Aires"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:429
+msgid "Bujumbura"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:435
+#, fuzzy
+msgid "Busan"
+msgstr "ロシア語"
+
+#: ../base/ufos/cities.ufo:441
+#, fuzzy
+msgid "Cairns"
+msgstr "Campaigns"
+
+#: ../base/ufos/cities.ufo:447
+msgid "Cairo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:453
+#, fuzzy
+msgid "Calama"
+msgstr "プラズマ"
+
+#: ../base/ufos/cities.ufo:459
+msgid "Calgary"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:465
+#, fuzzy
+msgid "Campinas"
+msgstr "Campaigns"
+
+#: ../base/ufos/cities.ufo:471
+#, fuzzy
+msgid "Canberra"
+msgstr "カメラ"
+
+#: ../base/ufos/cities.ufo:477
+#, fuzzy
+msgid "Cannes"
+msgstr "カイエン"
+
+#: ../base/ufos/cities.ufo:483
+msgid "Cardiff"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:489
+msgid "Changchun"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:495
+#, fuzzy
+msgid "Charlotte Amalie"
+msgstr "白兵戦:"
+
+#: ../base/ufos/cities.ufo:501
+msgid "Charlotte"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:507
+msgid "Chengdu"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:513
+msgid "Chennai"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:519
+msgid "Chiang Mai"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:525
+msgid "Chicago"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:531
+msgid "Chihuahua"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:537
+msgid "Chisinau"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:543
+msgid "Chittagong"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:549
+#, fuzzy
+msgid "Chongjin"
+msgstr "Continue"
+
+#: ../base/ufos/cities.ufo:555
+msgid "Chongqing"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:561
+msgid "Christchurch"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:567
+msgid "Chui"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:573
+msgid "Cincinnati"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:579
+msgid "Ciudad del Este"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:585
+#, fuzzy
+msgid "Cologne"
+msgstr "大佐"
+
+#: ../base/ufos/cities.ufo:591
+msgid "Columbus"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:597
+#, fuzzy
+msgid "Conakry"
+msgstr "Secondary"
+
+#: ../base/ufos/cities.ufo:603
+#, fuzzy
+msgid "Copenhagen"
+msgstr "有能"
+
+#: ../base/ufos/cities.ufo:609
+#, fuzzy
+msgid "Cordoba"
+msgstr "伍長"
+
+#: ../base/ufos/cities.ufo:615
+#, fuzzy
+msgid "Cork"
+msgstr "作業員"
+
+#: ../base/ufos/cities.ufo:621
+#, fuzzy
+msgid "Cotonou"
+msgstr "Continue"
+
+#: ../base/ufos/cities.ufo:627
+#, fuzzy
+msgid "Cusco"
+msgstr "音楽"
+
+#: ../base/ufos/cities.ufo:633
+#, fuzzy
+msgid "Daegu"
+msgstr "死亡:"
+
+#: ../base/ufos/cities.ufo:639
+#, fuzzy
+msgid "Dalian"
+msgstr "イタリア語"
+
+#: ../base/ufos/cities.ufo:645
+msgid "Dallas"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:651
+msgid "Damascus"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:657
+#, fuzzy
+msgid "Dammam"
+msgstr "ガンマ:"
+
+#: ../base/ufos/cities.ufo:663
+msgid "Da Nang"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:669
+msgid "Dar es Salaam"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:675
+msgid "Davao City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:681
+#, fuzzy
+msgid "Denpasar"
+msgstr "レーダー"
+
+#: ../base/ufos/cities.ufo:687
+#, fuzzy
+msgid "Denver"
+msgstr "砂漠迷彩"
+
+#: ../base/ufos/cities.ufo:693
+#, fuzzy
+msgid "Detroit"
+msgstr "Destroy"
+
+#: ../base/ufos/cities.ufo:699
+#, fuzzy
+msgid "Dhaka"
+msgstr "レーダー"
+
+#: ../base/ufos/cities.ufo:705
+msgid "Dibrugarh"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:711
+msgid "Dodoma"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:717
+msgid "Doha"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:723
+msgid "Dongguan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:729
+msgid "Douala"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:735
+msgid "Douglas"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:741
+msgid "Dublin"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:747
+#, fuzzy
+msgid "Durango"
+msgstr "Dragon"
+
+#: ../base/ufos/cities.ufo:753
+#, fuzzy
+msgid "Durban"
+msgstr "都市迷彩"
+
+#: ../base/ufos/cities.ufo:759
+msgid "Dushanbe"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:765
+msgid "Dusseldorf"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:771
+msgid "Edinburgh"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:777
+msgid "Edmonton"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:783
+msgid "El Paso"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:789
+msgid "Enugu"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:795
+msgid "Espoo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:801
+msgid "Fairbanks"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:807
+msgid "Faisalabad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:813
+msgid "Frankfurt am Main"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:819
+#, fuzzy
+msgid "Fredericton"
+msgstr "Spedition"
+
+#: ../base/ufos/cities.ufo:825
+#, fuzzy
+msgid "Gangtok"
+msgstr "バンコク"
+
+#: ../base/ufos/cities.ufo:831
+msgid "Gaziantep"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:837
+msgid "Geneva"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:843
+msgid "Georgetown"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:849
+msgid "Gibraltar"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:855
+msgid "Glasgow"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:861
+msgid "Gold Coast"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:867
+msgid "Gothenburg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:873
+#, fuzzy
+msgid "Graz"
+msgstr "ドイツ語"
+
+#: ../base/ufos/cities.ufo:879
+#, fuzzy
+msgid "Greenwich"
+msgstr "フランス語"
+
+#: ../base/ufos/cities.ufo:885
+msgid "Guadalajara"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:891
+msgid "Guangzhou"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:897
+msgid "Guatemala City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:903
+msgid "Guwahati"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:909
+msgid "Hai Phong"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:915
+msgid "Halifax"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:921
+msgid "Hamburg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:927
+#, fuzzy
+msgid "Handan"
+msgstr "難しい"
+
+#: ../base/ufos/cities.ufo:933
+msgid "Hanga Roa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:939
+msgid "Hangzhou"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:945
+msgid "Hanoi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:951
+#, fuzzy
+msgid "Hanover"
+msgstr "Harvester U"
+
+#: ../base/ufos/cities.ufo:957
+#, fuzzy
+msgid "Harare"
+msgstr "難しい"
+
+#: ../base/ufos/cities.ufo:963
+#, fuzzy
+msgid "Harbin"
+msgstr "ハンガリー語"
+
+#: ../base/ufos/cities.ufo:969
+msgid "Hat Yai"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:975
+msgid "Helsinki"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:981
+#, fuzzy
+msgid "Hobart"
+msgstr "Mart"
+
+#: ../base/ufos/cities.ufo:987
+msgid "Ho Chi Minh City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:993
+msgid "Hong Kong"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:999
+#, fuzzy
+msgid "Houston"
+msgstr "サーバ名:"
+
+#: ../base/ufos/cities.ufo:1005 ../base/ufos/cities.ufo:1011
+msgid "Hyderabad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1017
+msgid "Ibadan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1023
+msgid "Ilheus"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1029
+msgid "Iloilo City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1035
+msgid "Incheon"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1041
+msgid "Indianapolis"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1047
+msgid "Innsbruck"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1053
+msgid "Invercargill"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1059
+msgid "Ipoh"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1065
+msgid "Iqaluit"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1071
+msgid "Iquitos"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1077
+msgid "Islamabad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1083
+#, fuzzy
+msgid "Istanbul"
+msgstr "Italy"
+
+#: ../base/ufos/cities.ufo:1089
+msgid "Izmir"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1095
+msgid "Jacksonville"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1101
+msgid "Jaipur"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1107
+msgid "Jersey City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1113
+msgid "Jerusalem"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1119
+#, fuzzy
+msgid "Jinan"
+msgstr "1月"
+
+#: ../base/ufos/cities.ufo:1125
+msgid "Johannesburg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1131
+msgid "Johor Bahru"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1137
+#, fuzzy
+msgid "Juneau"
+msgstr "6月"
+
+#: ../base/ufos/cities.ufo:1143
+msgid "Kabul"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1149
+msgid "Kaesong"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1155
+msgid "Kaliningrad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1161
+#, fuzzy
+msgid "Kandahar"
+msgstr "レーダー"
+
+#: ../base/ufos/cities.ufo:1167
+#, fuzzy
+msgid "Kandy"
+msgstr "Ready"
+
+#: ../base/ufos/cities.ufo:1173
+#, fuzzy
+msgid "Kano"
+msgstr "Kracken"
+
+#: ../base/ufos/cities.ufo:1179
+msgid "Kanpur"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1185
+msgid "Kansas City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1191
+msgid "Kaohsiung"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1197
+msgid "Karachi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1203
+msgid "Kathmandu"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1209
+msgid "Kawasaki"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1215
+msgid "Kharkiv"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1221
+msgid "Khartoum"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1227
+msgid "Kiev"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1233
+msgid "Kigali"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1239
+#, fuzzy
+msgid "Kingston"
+msgstr "ウエリントン"
+
+#: ../base/ufos/cities.ufo:1245
+msgid "Kinshasa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1251
+#, fuzzy
+msgid "Kobe"
+msgstr "Kracken"
+
+#: ../base/ufos/cities.ufo:1257
+msgid "Kolkata"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1263
+msgid "Konya"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1269
+msgid "Koulikoro"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1275
+#, fuzzy
+msgid "Krakow"
+msgstr "Kracken"
+
+#: ../base/ufos/cities.ufo:1281
+msgid "Kuala Lumpur"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1287
+#, fuzzy
+msgid "Kunming"
+msgstr "出資額"
+
+#: ../base/ufos/cities.ufo:1293
+msgid "Kuwait City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1299
+msgid "Kyoto"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1305
+msgid "Lagos"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1311
+msgid "Lahore"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1317
+#, fuzzy
+msgid "Lanzhou"
+msgstr "1月"
+
+#: ../base/ufos/cities.ufo:1323
+msgid "La Paz"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1329
+msgid "Las Vegas"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1335
+msgid "Leeds"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1341
+msgid "Leipzig"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1347
+msgid "Lhasa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1353
+msgid "Lilongwe"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1359
+msgid "Linz"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1365
+#, fuzzy
+msgid "Livingstone"
+msgstr "居住区"
+
+#: ../base/ufos/cities.ufo:1371
+msgid "Ljubljana"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1377
+#, fuzzy
+msgid "Lobamba"
+msgstr "Lobby"
+
+#: ../base/ufos/cities.ufo:1383
+#, fuzzy
+msgid "Lome"
+msgstr "Phalanx 本部"
+
+#: ../base/ufos/cities.ufo:1389
+#, fuzzy
+msgid "London"
+msgstr "1 vs 1 vs 1"
+
+#: ../base/ufos/cities.ufo:1395
+msgid "Longyearbyen"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1401
+msgid "Los Angeles"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1407
+msgid "Louisville"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1413
+msgid "Lubumbashi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1419
+#, fuzzy
+msgid "Lucknow"
+msgstr "低い"
+
+#: ../base/ufos/cities.ufo:1425
+msgid "Ludhiana"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1431
+msgid "Lusaka"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1437
+msgid "Luxembourg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1443
+msgid "Luxor"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1449
+msgid "Lviv"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1455
+msgid "Lyon"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1461
+#, fuzzy
+msgid "Macapa"
+msgstr "Map"
+
+#: ../base/ufos/cities.ufo:1467
+msgid "Macau"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1473
+msgid "Maceio"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1479
+#, fuzzy
+msgid "Madrid"
+msgstr "3月"
+
+#: ../base/ufos/cities.ufo:1485
+msgid "Magadan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1491
+msgid "Makati City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1497
+msgid "Malacca Town"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1503
+#, fuzzy
+msgid "Malaga"
+msgstr "Manage"
+
+#: ../base/ufos/cities.ufo:1509
+#, fuzzy
+msgid "Malang"
+msgstr "Manage"
+
+#: ../base/ufos/cities.ufo:1515
+#, fuzzy
+msgid "Malmo"
+msgstr "少佐"
+
+#: ../base/ufos/cities.ufo:1521
+#, fuzzy
+msgid "Managua"
+msgstr "Manage"
+
+#: ../base/ufos/cities.ufo:1527
+#, fuzzy
+msgid "Manaus"
+msgstr "Manage"
+
+#: ../base/ufos/cities.ufo:1533
+#, fuzzy
+msgid "Manchester"
+msgstr "Harvester U"
+
+#: ../base/ufos/cities.ufo:1539
+#, fuzzy
+msgid "Manila"
+msgstr "Manage"
+
+#: ../base/ufos/cities.ufo:1545
+msgid "Manzini"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1551
+#, fuzzy
+msgid "Maputo"
+msgstr "Capt"
+
+#: ../base/ufos/cities.ufo:1557
+msgid "Maracaibo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1563
+msgid "Marrakech"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1569
+#, fuzzy
+msgid "Marseille"
+msgstr "メールクライアント"
+
+#: ../base/ufos/cities.ufo:1575
+#, fuzzy
+msgid "Maseru"
+msgstr "レーザー"
+
+#: ../base/ufos/cities.ufo:1581
+msgid "Mashhad"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1587
+#, fuzzy
+msgid "Mbabane"
+msgstr "Manage"
+
+#: ../base/ufos/cities.ufo:1593
+#, fuzzy
+msgid "Medan"
+msgstr "Mattn"
+
+#: ../base/ufos/cities.ufo:1599
+#, fuzzy
+msgid "Medina"
+msgstr "医師"
+
+#: ../base/ufos/cities.ufo:1605
+#, fuzzy
+msgid "Memphis"
+msgstr "Medics"
+
+#: ../base/ufos/cities.ufo:1611
+msgid "Mendoza"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1617
+msgid "Merida"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1623
+#, fuzzy
+msgid "Mexicali"
+msgstr "医師"
+
+#: ../base/ufos/cities.ufo:1629
+msgid "Mexico City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1635
+msgid "Miami"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1641
+#, fuzzy
+msgid "Milan"
+msgstr "ライフルマン"
+
+#: ../base/ufos/cities.ufo:1647
+msgid "Minneapolis"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1653
+#, fuzzy
+msgid "Minsk"
+msgstr "Misc"
+
+#: ../base/ufos/cities.ufo:1659
+msgid "Monaco"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1665
+msgid "Monterrey"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1671
+msgid "Montevideo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1677
+#, fuzzy
+msgid "Montreal"
+msgstr "通常"
+
+#: ../base/ufos/cities.ufo:1683
+#, fuzzy
+msgid "Moscow"
+msgstr "Misc"
+
+#: ../base/ufos/cities.ufo:1689
+msgid "Multan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1695
+#, fuzzy
+msgid "Munich"
+msgstr "音楽"
+
+#: ../base/ufos/cities.ufo:1701
+msgid "Murmansk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1707
+msgid "Nagoya"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1713
+msgid "Nagpur"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1719
+#, fuzzy
+msgid "Nairobi"
+msgstr "国"
+
+#: ../base/ufos/cities.ufo:1725
+msgid "Nakhon Ratchasima"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1731
+#, fuzzy
+msgid "Namangan"
+msgstr "その他"
+
+#: ../base/ufos/cities.ufo:1737
+#, fuzzy
+msgid "Nanjing"
+msgstr "国"
+
+#: ../base/ufos/cities.ufo:1743
+#, fuzzy
+msgid "Nanning"
+msgstr "国"
+
+#: ../base/ufos/cities.ufo:1749
+#, fuzzy
+msgid "Nantes"
+msgstr "各国家の状態"
+
+#: ../base/ufos/cities.ufo:1755
+#, fuzzy
+msgid "Naples"
+msgstr "名前"
+
+#: ../base/ufos/cities.ufo:1761
+msgid "Nashville"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1767
+msgid "Naypyidaw"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1773
+#, fuzzy
+msgid "N'Djamena"
+msgstr "名前"
+
+#: ../base/ufos/cities.ufo:1779
+msgid "Ndola"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1785
+#, fuzzy
+msgid "Newcastle"
+msgstr "新しい基地"
+
+#: ../base/ufos/cities.ufo:1791
+msgid "New Delhi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1797
+#, fuzzy
+msgid "Niamey"
+msgstr "名前"
+
+#: ../base/ufos/cities.ufo:1803
+#, fuzzy
+msgid "Nice"
+msgstr "Notice"
+
+#: ../base/ufos/cities.ufo:1809
+msgid "Nizhny Novgorod"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1815
+#, fuzzy
+msgid "Norilsk"
+msgstr "Tutorials"
+
+#: ../base/ufos/cities.ufo:1821
+#, fuzzy
+msgid "Noumea"
+msgstr "普通"
+
+#: ../base/ufos/cities.ufo:1827
+msgid "Novosibirsk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1833
+msgid "Odessa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1839
+msgid "Oklahoma City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1845
+msgid "Omdurman"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1851
+msgid "Omsk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1857
+#, fuzzy
+msgid "Osaka"
+msgstr "レーダー"
+
+#: ../base/ufos/cities.ufo:1863
+msgid "Oslo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1869
+msgid "Ottawa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1875
+msgid "Ouagadougou"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1881
+#, fuzzy
+msgid "Palembang"
+msgstr "Playing"
+
+#: ../base/ufos/cities.ufo:1887
+msgid "Panama City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1893
+#, fuzzy
+msgid "Paris"
+msgstr "停止"
+
+#: ../base/ufos/cities.ufo:1899
+#, fuzzy
+msgid "Patna"
+msgstr "Mattn"
+
+#: ../base/ufos/cities.ufo:1905
+msgid "Pekanbaru"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1911
+#, fuzzy
+msgid "Pelotas"
+msgstr "Pilots"
+
+#: ../base/ufos/cities.ufo:1917
+#, fuzzy
+msgid "Perm"
+msgstr "ドイツ語"
+
+#: ../base/ufos/cities.ufo:1923
+msgid "Peshawar"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1929
+msgid "Petropavlovsk-Kamchatsky"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1935
+msgid "Philadelphia"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1941
+msgid "Phnom Penh"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1644
+msgid "Phoenix"
+msgstr "Phoenix"
+
+#: ../base/ufos/cities.ufo:1953
+msgid "Pittsburgh"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1959
+#, fuzzy
+msgid "Podgorica"
+msgstr "低い"
+
+#: ../base/ufos/cities.ufo:1965
+#, fuzzy
+msgid "Portland"
+msgstr "動力炉"
+
+#: ../base/ufos/cities.ufo:1971
+msgid "Port Moresby"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1977
+#, fuzzy
+msgid "Prague"
+msgstr "停止"
+
+#: ../base/ufos/cities.ufo:1983
+msgid "Pretoria"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:1989
+#, fuzzy
+msgid "Pristina"
+msgstr "停止"
+
+#: ../base/ufos/cities.ufo:1995
+#, fuzzy
+msgid "Providence"
+msgstr "熟練"
+
+#: ../base/ufos/cities.ufo:2001
+msgid "Puebla"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2007
+msgid "Puerto Williams"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2013
+#, fuzzy
+msgid "Pune"
+msgstr "停止"
+
+#: ../base/ufos/cities.ufo:2019
+msgid "Punta Arenas"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2025
+msgid "Pyongyang"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2031
+msgid "Qingdao"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2037
+msgid "Quebec City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2043
+msgid "Quetzaltenango"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2049
+msgid "Quezon City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2055
+msgid "Quito"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2061
+msgid "Raleigh"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2067
+msgid "Rawalpindi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2073
+#, fuzzy
+msgid "Recife"
+msgstr "Refresh"
+
+#: ../base/ufos/cities.ufo:2079
+msgid "Regina"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2085
+msgid "Rio de Janeiro"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2091
+msgid "Riverside"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2097
+msgid "Rockhampton"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2103
+#, fuzzy
+msgid "Rome"
+msgstr "Phalanx 本部"
+
+#: ../base/ufos/cities.ufo:2109
+msgid "Rosario"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2115
+#, fuzzy
+msgid "Sabha"
+msgstr "Stab"
+
+#: ../base/ufos/cities.ufo:2121
+#, fuzzy
+msgid "Sacramento"
+msgstr "Saracen I"
+
+#: ../base/ufos/cities.ufo:2127
+msgid "Saint John"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2133
+#, fuzzy
+msgid "Saint Petersburg"
+msgstr "Sitters"
+
+#: ../base/ufos/cities.ufo:2139
+msgid "Salzburg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2145
+#, fuzzy
+msgid "Samara"
+msgstr "カメラ"
+
+#: ../base/ufos/cities.ufo:2151
+msgid "Sana'a"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2157
+msgid "San Antonio"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2163
+msgid "San Carlos de Bariloche"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2169
+msgid "San Francisco"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2175
+msgid "San Jose"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2181
+msgid "San Marino"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2187
+msgid "San Salvador"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2193
+msgid "Santa Cruz de la Sierra"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2199
+msgid "Santiago"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2205
+msgid "Santiago de Cuba"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2211
+msgid "Santo Domingo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2217
+msgid "Sao Jose dos Campos"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2223
+msgid "Sao Paulo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2229
+#, fuzzy
+msgid "Sarajevo"
+msgstr "Saracen I"
+
+#: ../base/ufos/cities.ufo:2235
+#, fuzzy
+msgid "Saskatoon"
+msgstr "Gasstation"
+
+#: ../base/ufos/cities.ufo:2241
+#, fuzzy
+msgid "Seattle"
+msgstr "Save"
+
+#: ../base/ufos/cities.ufo:2247
+#, fuzzy
+msgid "Seoul"
+msgstr "Sound"
+
+#: ../base/ufos/cities.ufo:2253
+#, fuzzy
+msgid "Seville"
+msgstr "この装備を売却します"
+
+#: ../base/ufos/cities.ufo:2259
+msgid "Shanghai"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2265
+msgid "Shenzhen"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2271
+msgid "Shenyang"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2277
+msgid "Shijiazhuang"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2283
+msgid "Shillong"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2289
+msgid "Siem Reap"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2295
+msgid "Simferopol"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2301
+msgid "Singapore"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2307
+#, fuzzy
+msgid "Sitka"
+msgstr "Stab"
+
+#: ../base/ufos/cities.ufo:2313
+msgid "Skopje"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2319
+msgid "Sofia"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2325
+msgid "Split"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2331
+#, fuzzy
+msgid "Srinagar"
+msgstr "Stingray"
+
+#: ../base/ufos/cities.ufo:2337
+#, fuzzy
+msgid "Stanley"
+msgstr "Italy"
+
+#: ../base/ufos/cities.ufo:2343
+msgid "Stepanakert"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2349
+msgid "St. Louis"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2355
+msgid "Stockholm"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2361
+#, fuzzy
+msgid "Strasbourg"
+msgstr "Starchaser"
+
+#: ../base/ufos/cities.ufo:2367
+msgid "Stuttgart"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2373
+#, fuzzy
+msgid "Sucre"
+msgstr "Save"
+
+#: ../base/ufos/cities.ufo:2379
+msgid "Suez"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2385
+msgid "Sukhumi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2391
+msgid "Surabaya"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2397
+#, fuzzy
+msgid "Surat"
+msgstr "音声の質:"
+
+#: ../base/ufos/cities.ufo:2403
+msgid "Surat Thani"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2409
+msgid "Suva"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2415
+msgid "Sydney"
+msgstr "シドニー"
+
+#: ../base/ufos/cities.ufo:2421
+#, fuzzy
+msgid "Tabriz"
+msgstr "タイ語"
+
+#: ../base/ufos/cities.ufo:2427
+#, fuzzy
+msgid "Taiyuan"
+msgstr "Taman"
+
+#: ../base/ufos/cities.ufo:2433
+#, fuzzy
+msgid "Tamale"
+msgstr "Taman"
+
+#: ../base/ufos/cities.ufo:2439
+#, fuzzy
+msgid "Tampa"
+msgstr "Taman"
+
+#: ../base/ufos/cities.ufo:2445
+#, fuzzy
+msgid "Tampere"
+msgstr "カメラ"
+
+#: ../base/ufos/cities.ufo:2451
+#, fuzzy
+msgid "Tartu"
+msgstr "Mart"
+
+#: ../base/ufos/cities.ufo:2457
+msgid "Tashkent"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2463
+msgid "Tbilisi"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2469
+msgid "Tegucigalpa"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2475
+#, fuzzy
+msgid "Tehran"
+msgstr "ドイツ語"
+
+#: ../base/ufos/cities.ufo:2481
+msgid "Thessaloniki"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2487
+msgid "Thimphu"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2493
+msgid "Tianjin"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2499
+msgid "Tijuana"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2505
+#, fuzzy
+msgid "Tirana"
+msgstr "ドイツ語"
+
+#: ../base/ufos/cities.ufo:2511
+#, fuzzy
+msgid "Tiraspol"
+msgstr "Transport"
+
+#: ../base/ufos/cities.ufo:2517
+msgid "Tokyo"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2523
+#, fuzzy
+msgid "Toronto"
+msgstr "Tron"
+
+#: ../base/ufos/cities.ufo:2529
+#, fuzzy
+msgid "Toulouse"
+msgstr "白兵"
+
+#: ../base/ufos/cities.ufo:2535
+msgid "Tskhinvali"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2541
+#, fuzzy
+msgid "Tucson"
+msgstr "Tron"
+
+#: ../base/ufos/cities.ufo:2547
+msgid "Tunis"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2553
+#, fuzzy
+msgid "Turin"
+msgstr "Tron"
+
+#: ../base/ufos/cities.ufo:2559
+msgid "Udon Thani"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2565
+msgid "Ushuaia"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2571
+msgid "Vaduz"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2577
+msgid "Valencia"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2583
+msgid "Vancouver"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2589
+msgid "Vienna"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2595
+#, fuzzy
+msgid "Vientiane"
+msgstr "Vanethian"
+
+#: ../base/ufos/cities.ufo:2601
+msgid "Vilnius"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2607
+#, fuzzy
+msgid "Vitoria"
+msgstr "Tutorials"
+
+#: ../base/ufos/cities.ufo:2613
+msgid "Warsaw"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2619
+#, fuzzy
+msgid "Washington"
+msgstr "ウエリントン"
+
+#: ../base/ufos/cities.ufo:2625
+msgid "Whitehorse"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2637
+msgid "Winnipeg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2643
+#, fuzzy
+msgid "Wollongong"
+msgstr "ウエリントン"
+
+#: ../base/ufos/cities.ufo:2649
+#, fuzzy
+msgid "Wonsan"
+msgstr "狂気的"
+
+#: ../base/ufos/cities.ufo:2655
+msgid "Wuhan"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2661
+msgid "Xi'an"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2667
+#, fuzzy
+msgid "Xining"
+msgstr "Buildings"
+
+#: ../base/ufos/cities.ufo:2673
+msgid "Yakutsk"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2679
+msgid "Yamoussoukro"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2685
+#, fuzzy
+msgid "Yangon"
+msgstr "Dragon"
+
+#: ../base/ufos/cities.ufo:2691
+#, fuzzy
+msgid "Yaounde"
+msgstr "Sound"
+
+#: ../base/ufos/cities.ufo:2697
+msgid "Yekaterinburg"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2703
+msgid "Yellowknife"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2709
+#, fuzzy
+msgid "Yerevan"
+msgstr "軍曹"
+
+#: ../base/ufos/cities.ufo:2715
+msgid "Yogyakarta"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2721
+msgid "Yokohama"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2727
+msgid "Zagreb"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2733
+msgid "Zamboanga City"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2739
+#, fuzzy
+msgid "Zapopan"
+msgstr "Japan"
+
+#: ../base/ufos/cities.ufo:2745
+msgid "Zhengzhou"
+msgstr ""
+
+#: ../base/ufos/cities.ufo:2751
+msgid "Zurich"
 msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr ""
-"Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨーク"
+msgstr "Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨーク"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -802,8 +2686,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
 msgid "mail_to_base_commander"
-msgstr ""
-"基地指令, PHALANX 大西洋作戦司令部"
+msgstr "基地指令, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -876,8 +2759,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
 #: ../base/ufos/research.ufo:4897
 msgid "mail_from_paul_navarre"
-msgstr ""
-"Paul Navarre 中佐, R&D: 技術セクション, PHALANX 大西洋作戦司令部"
+msgstr "Paul Navarre 中佐, R&D: 技術セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -929,8 +2811,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr ""
-"Abel S 副司令. Howard, 指令部, PHALANX 大西洋作戦司令部"
+msgstr "Abel S 副司令. Howard, 指令部, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -1025,8 +2906,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
 msgid "mail_from_col_falkland"
-msgstr ""
-"Ingrid Falkland 大佐, 諜報セクション, PHALANX 大西洋作戦司令部"
+msgstr "Ingrid Falkland 大佐, 諜報セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -1056,8 +2936,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr ""
-"Subakh al-Kuhar 中佐, 航空機隊, PHALANX 大西洋作戦司令部"
+msgstr "Subakh al-Kuhar 中佐, 航空機隊, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -1163,7 +3042,7 @@ msgstr "レーダータワー"
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1212
+#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1234
 #: ../base/ufos/ui/lostwon.ufo:212
 msgid "UFO Yard"
 msgstr ""
@@ -1172,7 +3051,7 @@ msgstr ""
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
 msgstr ""
 
-#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1170
+#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1192
 msgid "SAM Site"
 msgstr "SAMサイト"
 
@@ -1258,18 +3137,23 @@ msgid "Thai"
 msgstr "タイ語"
 
 #: ../base/ufos/language.ufo:274
+#, fuzzy
+msgid "Ukrainian"
+msgstr "残弾数が表示されます"
+
+#: ../base/ufos/language.ufo:284
 msgid "Japanese"
 msgstr "日本語"
 
-#: ../base/ufos/language.ufo:282
+#: ../base/ufos/language.ufo:292
 msgid "Chinese"
 msgstr "中国語"
 
-#: ../base/ufos/language.ufo:290
+#: ../base/ufos/language.ufo:300
 msgid "Bulgarian"
 msgstr "ブルガリア語"
 
-#: ../base/ufos/language.ufo:298
+#: ../base/ufos/language.ufo:308
 msgid "No language"
 msgstr "No language"
 
@@ -1459,47 +3343,47 @@ msgstr ""
 msgid "A suburb that has received a visit from a Harvester."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2914
+#: ../base/ufos/maps.ufo:2915
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2960 ../base/ufos/maps.ufo:2994
+#: ../base/ufos/maps.ufo:2961 ../base/ufos/maps.ufo:2995
 msgid "A small settlement in winter."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3033
+#: ../base/ufos/maps.ufo:3034
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3081
+#: ../base/ufos/maps.ufo:3082
 msgid "A Bomber has landed in the middle of a city."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3134
+#: ../base/ufos/maps.ufo:3135
 msgid "A place where people come to relax and mingle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3182
+#: ../base/ufos/maps.ufo:3183
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3230
+#: ../base/ufos/maps.ufo:3231
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3269
+#: ../base/ufos/maps.ufo:3270
 msgid "Wilderness terror mission."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3315
+#: ../base/ufos/maps.ufo:3316
 msgid "UFO Crashsite."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3345
+#: ../base/ufos/maps.ufo:3347
 msgid "An alien base."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3360
+#: ../base/ufos/maps.ufo:3362
 msgid "Base is under attack."
 msgstr ""
 
@@ -1712,7 +3596,7 @@ msgid "Background"
 msgstr "世界背景"
 
 #: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:129
-#: ../base/ufos/ui/geoscape.ufo:1924 ../base/ufos/ui/market.ufo:95
+#: ../base/ufos/ui/geoscape.ufo:1946 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
 #: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
 msgid "Aircraft"
@@ -1727,7 +3611,7 @@ msgid "Research Reports"
 msgstr "研究報告"
 
 #: ../base/ufos/research.ufo:111 ../base/ufos/ui/aircraft.ufo:67
-#: ../base/ufos/ui/skirmish.ufo:46 ../base/ufos/ui/transfer.ufo:35
+#: ../base/ufos/ui/skirmish.ufo:87 ../base/ufos/ui/transfer.ufo:35
 #: ../base/ufos/ui/transfer.ufo:45 ../base/ufos/ui/transfer.ufo:612
 msgid "Equipment"
 msgstr "装備"
@@ -1931,8 +3815,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
 #: ../base/ufos/research.ufo:5102
 msgid "mail_from_dr_connor"
-msgstr ""
-"Dr. Connor, R&D: 生物 & 収容セクション, PHALANX 大西洋作戦司令部"
+msgstr "Dr. Connor, R&D: 生物 & 収容セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
@@ -5525,8 +7408,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3557
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3597
 msgid "ufo_scout_txt"
@@ -6160,8 +8042,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4370
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
@@ -7214,8 +9095,8 @@ msgid "Copyright 2004-2009 by UFO: AI Team"
 msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_ingame.ufo:13 ../base/ufos/seq_ingame.ufo:42
-#: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/ui/singleplayer.ufo:164
-#: ../base/ufos/ui/singleplayer.ufo:243
+#: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/ui/campaign.ufo:598
+#: ../base/ufos/ui/campaign.ufo:671
 msgid "Click to continue"
 msgstr "クリックで先に進みます"
 
@@ -7492,10 +9373,6 @@ msgstr "Bloodspider"
 msgid "Phalanx"
 msgstr ""
 
-#: ../base/ufos/team_humans.ufo:1644
-msgid "Phoenix"
-msgstr "Phoenix"
-
 #: ../base/ufos/team_humans.ufo:1669
 msgid "Ares W"
 msgstr "Ares W"
@@ -7752,19 +9629,19 @@ msgstr ""
 #: ../base/ufos/ui/_hud.ufo:214 ../base/ufos/ui/_hud.ufo:243
 #: ../base/ufos/ui/_hud.ufo:272 ../base/ufos/ui/_hud.ufo:301
 #: ../base/ufos/ui/_hud.ufo:330 ../base/ufos/ui/_hud.ufo:359
-#: ../base/ufos/ui/_hud.ufo:441 ../base/ufos/ui/_hud.ufo:470
-#: ../base/ufos/ui/_hud.ufo:499 ../base/ufos/ui/_hud.ufo:528
-#: ../base/ufos/ui/_hud.ufo:557 ../base/ufos/ui/_hud.ufo:586
-#: ../base/ufos/ui/_hud.ufo:615 ../base/ufos/ui/_hud.ufo:644
+#: ../base/ufos/ui/_hud.ufo:445 ../base/ufos/ui/_hud.ufo:474
+#: ../base/ufos/ui/_hud.ufo:503 ../base/ufos/ui/_hud.ufo:532
+#: ../base/ufos/ui/_hud.ufo:561 ../base/ufos/ui/_hud.ufo:590
+#: ../base/ufos/ui/_hud.ufo:619 ../base/ufos/ui/_hud.ufo:648
 msgid "Check to use this firemode for reaction fire"
 msgstr ""
 
-#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:271
+#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:209
 #: ../base/ufos/ui/hospital.ufo:70
 msgid "CREDITS"
 msgstr "所持金"
 
-#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:280
+#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:218
 #: ../base/ufos/ui/hospital.ufo:78
 msgid "Organisation capital"
 msgstr "組織の予算"
@@ -7833,7 +9710,7 @@ msgstr ""
 msgid "Ammo"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_equip.ufo:215 ../base/ufos/ui/equipment.ufo:326
+#: ../base/ufos/ui/aircraft_equip.ufo:215 ../base/ufos/ui/equipment.ufo:327
 #: ../base/ufos/ui/market.ufo:87 ../base/ufos/ui/multiplayer_team.ufo:307
 #: ../base/ufos/ui/production.ufo:67
 #: client/campaign/cp_fightequip_callbacks.c:166
@@ -7913,7 +9790,7 @@ msgid "Add/remove this soldier"
 msgstr "この兵士をチームへ加える/外す"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:87
-#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:761
+#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:783
 #, fuzzy
 msgid "Equip soldiers"
 msgstr "この兵士を武装させます"
@@ -7945,56 +9822,56 @@ msgstr "装備所持済みの兵士"
 msgid "Soldier carries no equipment"
 msgstr "装備未所持の兵士"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:482
+#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "体力:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:511 ../base/ufos/ui/equipment.ufo:491
+#: ../base/ufos/ui/aircraft_soldiers.ufo:511 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
 #: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1133
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "速度:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:519 ../base/ufos/ui/equipment.ufo:500
+#: ../base/ufos/ui/aircraft_soldiers.ufo:519 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "精度:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:527 ../base/ufos/ui/equipment.ufo:509
+#: ../base/ufos/ui/aircraft_soldiers.ufo:527 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "精神力:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/equipment.ufo:518
+#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "白兵戦:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:527
+#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "重火器:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:553 ../base/ufos/ui/equipment.ufo:536
+#: ../base/ufos/ui/aircraft_soldiers.ufo:553 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
 msgstr "近距離戦技能:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:562 ../base/ufos/ui/equipment.ufo:545
+#: ../base/ufos/ui/aircraft_soldiers.ufo:562 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "スナイパーライフル:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:571 ../base/ufos/ui/equipment.ufo:554
+#: ../base/ufos/ui/aircraft_soldiers.ufo:571 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
@@ -8054,105 +9931,105 @@ msgstr "施設容量:"
 msgid "Kill all aliens in this base"
 msgstr "この基地の全てのエイリアンを処刑します"
 
-#: ../base/ufos/ui/althud.ufo:576 ../base/ufos/ui/inventory.ufo:192
+#: ../base/ufos/ui/althud.ufo:508 ../base/ufos/ui/inventory.ufo:192
 #: ../base/ufos/ui/physdat.ufo:233
 msgid "Inventory and physical stats"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:612 ../base/ufos/ui/althud.ufo:622
+#: ../base/ufos/ui/althud.ufo:544 ../base/ufos/ui/althud.ufo:554
 #: ../base/ufos/ui/hud.ufo:436
 msgid "Use Item"
 msgstr "装備を使用します"
 
-#: ../base/ufos/ui/althud.ufo:662 ../base/ufos/ui/althud.ufo:722
+#: ../base/ufos/ui/althud.ufo:594 ../base/ufos/ui/althud.ufo:654
 msgid "TUs"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:672
+#: ../base/ufos/ui/althud.ufo:604
 #, fuzzy
 msgid "TUs remaining"
 msgstr "残弾数が表示されます"
 
-#: ../base/ufos/ui/althud.ufo:683
+#: ../base/ufos/ui/althud.ufo:615
 msgid "TUs reserved"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:694 ../base/ufos/ui/althud.ufo:730
+#: ../base/ufos/ui/althud.ufo:626 ../base/ufos/ui/althud.ufo:662
 #, fuzzy
 msgid "Morale"
 msgstr "通常"
 
-#: ../base/ufos/ui/althud.ufo:714
+#: ../base/ufos/ui/althud.ufo:646
 #, fuzzy
 msgid "Health"
 msgstr "生命力:"
 
-#: ../base/ufos/ui/althud.ufo:771 ../base/ufos/ui/hud.ufo:406
+#: ../base/ufos/ui/althud.ufo:703 ../base/ufos/ui/hud.ufo:406
 msgid "Use headgear"
 msgstr "ヘッドギアを使用します"
 
-#: ../base/ufos/ui/althud.ufo:861
+#: ../base/ufos/ui/althud.ufo:793
 msgid "Switch to right hand weapon"
 msgstr "右手の武器に切り替えます"
 
-#: ../base/ufos/ui/althud.ufo:873
+#: ../base/ufos/ui/althud.ufo:805
 msgid "Switch to left hand weapon"
 msgstr "左手の武器に切り替えます"
 
-#: ../base/ufos/ui/althud.ufo:923 ../base/ufos/ui/hud.ufo:734
+#: ../base/ufos/ui/althud.ufo:855 ../base/ufos/ui/hud.ufo:734
 msgid "Chat"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:934 ../base/ufos/ui/hud.ufo:745
+#: ../base/ufos/ui/althud.ufo:866 ../base/ufos/ui/hud.ufo:745
 msgid "Teamchat"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:945 ../base/ufos/ui/hud.ufo:756
+#: ../base/ufos/ui/althud.ufo:877 ../base/ufos/ui/hud.ufo:756
 msgid "Show chat history"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:966 ../base/ufos/ui/hud.ufo:777
+#: ../base/ufos/ui/althud.ufo:898 ../base/ufos/ui/hud.ufo:777
 msgid "Chat messages"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:1018
+#: ../base/ufos/ui/althud.ufo:950
 msgid "Level up"
 msgstr "視点レベルを増加します"
 
-#: ../base/ufos/ui/althud.ufo:1028
+#: ../base/ufos/ui/althud.ufo:960
 msgid "Level down"
 msgstr "視点レベルを減少します"
 
-#: ../base/ufos/ui/althud.ufo:1082 ../base/ufos/ui/hud.ufo:338
+#: ../base/ufos/ui/althud.ufo:1014 ../base/ufos/ui/hud.ufo:338
 msgid "Click to cycle through spotted enemies"
 msgstr "クリックで発見中の敵を切り替えます"
 
-#: ../base/ufos/ui/althud.ufo:1090 ../base/ufos/ui/hud.ufo:326
+#: ../base/ufos/ui/althud.ufo:1022 ../base/ufos/ui/hud.ufo:326
 msgid "Finish round"
 msgstr "ラウンドを終了します"
 
-#: ../base/ufos/ui/althud.ufo:1172 ../base/ufos/ui/hud.ufo:894
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:894
 msgid "Multiple-shot reaction fire"
 msgstr "複数回の臨機射撃"
 
-#: ../base/ufos/ui/althud.ufo:1177
+#: ../base/ufos/ui/althud.ufo:1109
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:1182 ../base/ufos/ui/hud.ufo:906
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:906
 msgid "One-shot reaction fire"
 msgstr "1回のみ臨機射撃"
 
-#: ../base/ufos/ui/althud.ufo:1187
+#: ../base/ufos/ui/althud.ufo:1119
 msgid "One-shot reaction fire (not possible)"
 msgstr ""
 
-#: ../base/ufos/ui/althud.ufo:1193 ../base/ufos/ui/hud.ufo:918
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:918
 msgid "No reaction fire"
 msgstr "臨機射撃を使用しない"
 
-#: ../base/ufos/ui/althud.ufo:1202 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:1050
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
+#: client/battlescape/cl_hud.c:933
 msgid "Reserve TUs for shooting."
 msgstr ""
 
@@ -8213,8 +10090,8 @@ msgstr ""
 msgid "Targetted UFO:"
 msgstr ""
 
-#: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1419
-#: ../base/ufos/ui/geoscape.ufo:1527
+#: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1441
+#: ../base/ufos/ui/geoscape.ufo:1549
 msgid "Time to build:"
 msgstr "完成予定:"
 
@@ -8223,20 +10100,20 @@ msgstr "完成予定:"
 msgid "Autofire"
 msgstr "火炎"
 
-#: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1564
+#: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1586
 #: client/campaign/cp_base.c:890 client/campaign/cp_base.c:900
 #: client/campaign/cp_base.c:910 client/campaign/cp_base.c:923
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy"
 msgstr "Destroy"
 
-#: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1565
+#: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1587
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy installation"
 msgstr "施設を破壊します"
 
-#: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1313
-#: ../base/ufos/ui/geoscape.ufo:1540 ../base/ufos/ui/main.ufo:309
+#: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1335
+#: ../base/ufos/ui/geoscape.ufo:1562 ../base/ufos/ui/main.ufo:309
 msgid "Close"
 msgstr "白兵"
 
@@ -8244,7 +10121,7 @@ msgstr "白兵"
 msgid "Back to geoscape"
 msgstr "マップへ戻ります"
 
-#: ../base/ufos/ui/bases.ufo:40 ../base/ufos/ui/geoscape.ufo:965
+#: ../base/ufos/ui/bases.ufo:40 ../base/ufos/ui/geoscape.ufo:987
 msgid "Rename your base"
 msgstr "基地の名前を変更します"
 
@@ -8340,7 +10217,7 @@ msgstr "建築物の概要"
 msgid "Select building"
 msgstr "基地施設を選択してください"
 
-#: ../base/ufos/ui/buildings.ufo:175 ../base/ufos/ui/geoscape.ufo:545
+#: ../base/ufos/ui/buildings.ufo:175 ../base/ufos/ui/geoscape.ufo:483
 #: ../base/ufos/ui/market.ufo:362 client/campaign/cp_ufopedia.c:121
 #: client/campaign/cp_ufopedia.c:614 client/campaign/cp_ufopedia.c:666
 #: client/campaign/cp_ufopedia.c:675 client/campaign/cp_ufopedia.c:835
@@ -8387,12 +10264,12 @@ msgstr "Save"
 #: ../base/ufos/ui/campaign.ufo:169 ../base/ufos/ui/hud.ufo:664
 #: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:530
 #: ../base/ufos/ui/multiplayeringame.ufo:37
-#: ../base/ufos/ui/singleplayer.ufo:99
+#: ../base/ufos/ui/singleplayer.ufo:98
 msgid "Options"
 msgstr "Options"
 
 #: ../base/ufos/ui/campaign.ufo:176 ../base/ufos/ui/main.ufo:69
-#: ../base/ufos/ui/singleplayer.ufo:106
+#: ../base/ufos/ui/singleplayer.ufo:105
 msgid "Exit"
 msgstr "Exit"
 
@@ -8406,6 +10283,14 @@ msgstr ""
 
 #: ../base/ufos/ui/campaign.ufo:208
 msgid "Reload the last automatically saved campaign state"
+msgstr ""
+
+#: ../base/ufos/ui/campaign.ufo:588
+msgid "You've lost the game"
+msgstr "ゲームオーバー"
+
+#: ../base/ufos/ui/campaign.ufo:661
+msgid "Thank you for playing UFO:Alien Invasion"
 msgstr ""
 
 #: ../base/ufos/ui/equipment.ufo:20 ../base/ufos/ui/inventory.ufo:30
@@ -8443,63 +10328,68 @@ msgstr "ホルスター"
 msgid "Belt"
 msgstr "ベルト"
 
-#: ../base/ufos/ui/equipment.ufo:119 ../base/ufos/ui/equipment.ufo:131
-#: ../base/ufos/ui/equipment.ufo:143 ../base/ufos/ui/equipment.ufo:155
-#: ../base/ufos/ui/equipment.ufo:167 ../base/ufos/ui/equipment.ufo:179
-#: ../base/ufos/ui/equipment.ufo:191 ../base/ufos/ui/equipment.ufo:203
+#: ../base/ufos/ui/equipment.ufo:120 ../base/ufos/ui/equipment.ufo:132
+#: ../base/ufos/ui/equipment.ufo:144 ../base/ufos/ui/equipment.ufo:156
+#: ../base/ufos/ui/equipment.ufo:168 ../base/ufos/ui/equipment.ufo:180
+#: ../base/ufos/ui/equipment.ufo:192 ../base/ufos/ui/equipment.ufo:204
 msgid "Equip this soldier"
 msgstr "この兵士を武装させます"
 
-#: ../base/ufos/ui/equipment.ufo:310 ../base/ufos/ui/market.ufo:71
+#: ../base/ufos/ui/equipment.ufo:311 ../base/ufos/ui/market.ufo:71
 #: ../base/ufos/ui/multiplayer_team.ufo:291 ../base/ufos/ui/production.ufo:51
 msgid "Primary"
 msgstr "Primary"
 
-#: ../base/ufos/ui/equipment.ufo:314 ../base/ufos/ui/market.ufo:75
+#: ../base/ufos/ui/equipment.ufo:315 ../base/ufos/ui/market.ufo:75
 #: ../base/ufos/ui/multiplayer_team.ufo:295 ../base/ufos/ui/production.ufo:55
 msgid "Secondary"
 msgstr "Secondary"
 
-#: ../base/ufos/ui/equipment.ufo:318 ../base/ufos/ui/market.ufo:79
+#: ../base/ufos/ui/equipment.ufo:319 ../base/ufos/ui/market.ufo:79
 #: ../base/ufos/ui/multiplayer_team.ufo:299 ../base/ufos/ui/production.ufo:59
 msgid "Heavy"
 msgstr "Heavy"
 
-#: ../base/ufos/ui/equipment.ufo:322 ../base/ufos/ui/market.ufo:83
+#: ../base/ufos/ui/equipment.ufo:323 ../base/ufos/ui/market.ufo:83
 #: ../base/ufos/ui/multiplayer_team.ufo:303 ../base/ufos/ui/production.ufo:63
 msgid "Misc"
 msgstr "Misc"
 
-#: ../base/ufos/ui/equipment.ufo:393 ../base/ufos/ui/market.ufo:416
+#: ../base/ufos/ui/equipment.ufo:394 ../base/ufos/ui/market.ufo:416
 #: ../base/ufos/ui/multiplayer_team.ufo:377 ../base/ufos/ui/ufopedia.ufo:241
 #, fuzzy
 msgid "With:"
 msgstr "使用弾薬:"
 
-#: ../base/ufos/ui/equipment.ufo:432 ../base/ufos/ui/market.ufo:455
+#: ../base/ufos/ui/equipment.ufo:433 ../base/ufos/ui/market.ufo:455
 #: ../base/ufos/ui/multiplayer_team.ufo:416 ../base/ufos/ui/ufopedia.ufo:280
 msgid "Firemode:"
 msgstr "攻撃方法:"
 
-#: ../base/ufos/ui/equipment.ufo:440 ../base/ufos/ui/market.ufo:463
+#: ../base/ufos/ui/equipment.ufo:441 ../base/ufos/ui/market.ufo:463
 #: ../base/ufos/ui/multiplayer_team.ufo:424 ../base/ufos/ui/ufopedia.ufo:288
 msgid "Previous firemode"
 msgstr "前の攻撃方法"
 
-#: ../base/ufos/ui/equipment.ufo:459 ../base/ufos/ui/market.ufo:482
+#: ../base/ufos/ui/equipment.ufo:460 ../base/ufos/ui/market.ufo:482
 #: ../base/ufos/ui/multiplayer_team.ufo:443 ../base/ufos/ui/ufopedia.ufo:307
 msgid "Next firemode"
 msgstr "次の攻撃方法"
 
-#: ../base/ufos/ui/equipment.ufo:587 ../base/ufos/ui/multiplayer_team.ufo:572
+#: ../base/ufos/ui/equipment.ufo:588 ../base/ufos/ui/multiplayer_team.ufo:572
 msgid "Actor Abilities"
 msgstr "キャラクタの能力値"
 
-#: ../base/ufos/ui/equipment.ufo:591 ../base/ufos/ui/multiplayer_team.ufo:576
+#: ../base/ufos/ui/equipment.ufo:592 ../base/ufos/ui/multiplayer_team.ufo:576
 msgid "Object Info"
 msgstr "アイテムの詳細"
 
-#: ../base/ufos/ui/equipment.ufo:722 ../base/ufos/ui/multiplayer_team.ufo:708
+#: ../base/ufos/ui/equipment.ufo:611 ../base/ufos/ui/equipment.ufo:621
+#, fuzzy
+msgid "Rename your unit"
+msgstr "基地の名前を変更します"
+
+#: ../base/ufos/ui/equipment.ufo:738 ../base/ufos/ui/multiplayer_team.ufo:708
 msgid "Done"
 msgstr "完了"
 
@@ -8520,358 +10410,358 @@ msgstr ""
 msgid "Gen all levels"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:199
+#: ../base/ufos/ui/geoscape.ufo:137
 msgid "Open up messages"
 msgstr "メッセージ一覧を開きます"
 
-#: ../base/ufos/ui/geoscape.ufo:302
+#: ../base/ufos/ui/geoscape.ufo:240
 msgid "Pause"
 msgstr "停止"
 
-#: ../base/ufos/ui/geoscape.ufo:314
+#: ../base/ufos/ui/geoscape.ufo:252
 msgid "Time lapse: 5 seconds"
 msgstr "時間経過速度: 5 秒"
 
-#: ../base/ufos/ui/geoscape.ufo:326
+#: ../base/ufos/ui/geoscape.ufo:264
 msgid "Time lapse: 5 minutes"
 msgstr "時間経過速度: 5 分"
 
-#: ../base/ufos/ui/geoscape.ufo:339
+#: ../base/ufos/ui/geoscape.ufo:277
 msgid "Time lapse: 20 minutes"
 msgstr "時間経過速度: 20 分"
 
-#: ../base/ufos/ui/geoscape.ufo:351
+#: ../base/ufos/ui/geoscape.ufo:289
 msgid "Time lapse: 1 hour"
 msgstr "時間経過速度: 1 時間"
 
-#: ../base/ufos/ui/geoscape.ufo:363
+#: ../base/ufos/ui/geoscape.ufo:301
 msgid "Time lapse: 12 hours"
 msgstr "時間経過速度: 12 時間"
 
-#: ../base/ufos/ui/geoscape.ufo:376
+#: ../base/ufos/ui/geoscape.ufo:314
 msgid "Time lapse: 1 day"
 msgstr "時間経過速度: 1 日"
 
-#: ../base/ufos/ui/geoscape.ufo:388
+#: ../base/ufos/ui/geoscape.ufo:326
 msgid "Time lapse: 5 days"
 msgstr "時間経過速度: 5 日"
 
-#: ../base/ufos/ui/geoscape.ufo:485
+#: ../base/ufos/ui/geoscape.ufo:423
 #, fuzzy
 msgid "Message settings"
 msgstr "時間停止/メッセージ 設定"
 
-#: ../base/ufos/ui/geoscape.ufo:486
+#: ../base/ufos/ui/geoscape.ufo:424
 msgid "Change message and pause settings"
 msgstr "メッセージ表示と時間停止設定"
 
-#: ../base/ufos/ui/geoscape.ufo:501 ../base/ufos/ui/geoscape.ufo:517
+#: ../base/ufos/ui/geoscape.ufo:439 ../base/ufos/ui/geoscape.ufo:455
 #: ../base/ufos/ui/mailclient.ufo:122
 msgid "Mailclient"
 msgstr "メールクライアント"
 
-#: ../base/ufos/ui/geoscape.ufo:502
+#: ../base/ufos/ui/geoscape.ufo:440
 msgid "INBOX (with unread mails)"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:518
+#: ../base/ufos/ui/geoscape.ufo:456
 msgid "INBOX"
 msgstr "メールを閲覧します"
 
-#: ../base/ufos/ui/geoscape.ufo:531 ../base/ufos/ui/stats.ufo:28
+#: ../base/ufos/ui/geoscape.ufo:469 ../base/ufos/ui/stats.ufo:28
 #: ../base/ufos/ui/ufopedia.ufo:87
 msgid "Statistics"
 msgstr "組織の活動統計"
 
-#: ../base/ufos/ui/geoscape.ufo:532
+#: ../base/ufos/ui/geoscape.ufo:470
 msgid "Organisation statistics"
 msgstr "組織の活動統計"
 
-#: ../base/ufos/ui/geoscape.ufo:546
+#: ../base/ufos/ui/geoscape.ufo:484
 msgid "Open UFOpaedia"
 msgstr "UFOpaedia を閲覧します"
 
-#: ../base/ufos/ui/geoscape.ufo:559 ../base/ufos/ui/geoscape.ufo:560
+#: ../base/ufos/ui/geoscape.ufo:497 ../base/ufos/ui/geoscape.ufo:498
 msgid "Create installation"
 msgstr "施設の建設"
 
-#: ../base/ufos/ui/geoscape.ufo:577 ../base/ufos/ui/geoscape.ufo:2045
+#: ../base/ufos/ui/geoscape.ufo:515 ../base/ufos/ui/geoscape.ufo:2067
 msgid "Highlight nation borders"
 msgstr "国境を色分け表示します"
 
-#: ../base/ufos/ui/geoscape.ufo:589 ../base/ufos/ui/geoscape.ufo:2070
+#: ../base/ufos/ui/geoscape.ufo:527 ../base/ufos/ui/geoscape.ufo:2092
 msgid "Show radar range"
 msgstr "レーダーのレンジを表示します"
 
-#: ../base/ufos/ui/geoscape.ufo:602 ../base/ufos/ui/geoscape.ufo:2091
+#: ../base/ufos/ui/geoscape.ufo:540 ../base/ufos/ui/geoscape.ufo:2113
 msgid "Show XVI map"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:614
+#: ../base/ufos/ui/geoscape.ufo:552
 msgid "Center objects on the map"
 msgstr "オブジェクトをマップの中心に表示"
 
-#: ../base/ufos/ui/geoscape.ufo:625
+#: ../base/ufos/ui/geoscape.ufo:563
 msgid "Go to Options"
 msgstr "オプションを開きます"
 
-#: ../base/ufos/ui/geoscape.ufo:661
+#: ../base/ufos/ui/geoscape.ufo:683
 msgid "Ready"
 msgstr "Ready"
 
-#: ../base/ufos/ui/geoscape.ufo:667
+#: ../base/ufos/ui/geoscape.ufo:689
 msgid "Aircraft reached desired location - what to do?"
 msgstr "航空機が予定地点に到着しました: どうしますか？"
 
-#: ../base/ufos/ui/geoscape.ufo:675 ../base/ufos/ui/geoscape.ufo:924
-#: ../base/ufos/ui/geoscape.ufo:1035 ../base/ufos/ui/geoscape.ufo:1456
-#: ../base/ufos/ui/geoscape.ufo:1738 ../base/ufos/ui/geoscape.ufo:1828
-#: ../base/ufos/ui/geoscape.ufo:1901 ../base/ufos/ui/geoscape.ufo:1974
+#: ../base/ufos/ui/geoscape.ufo:697 ../base/ufos/ui/geoscape.ufo:946
+#: ../base/ufos/ui/geoscape.ufo:1057 ../base/ufos/ui/geoscape.ufo:1478
+#: ../base/ufos/ui/geoscape.ufo:1760 ../base/ufos/ui/geoscape.ufo:1850
+#: ../base/ufos/ui/geoscape.ufo:1923 ../base/ufos/ui/geoscape.ufo:1996
 #: ../base/ufos/ui/irc.ufo:211 ../base/ufos/ui/messageoptions.ufo:66
 #: ../base/ufos/ui/options.ufo:1290 ../base/ufos/ui/transfer.ufo:594
 #: client/campaign/cp_installation_callbacks.c:224
 msgid "Cancel"
 msgstr "Cancel"
 
-#: ../base/ufos/ui/geoscape.ufo:676 ../base/ufos/ui/geoscape.ufo:925
-#: ../base/ufos/ui/geoscape.ufo:1036 ../base/ufos/ui/geoscape.ufo:1314
-#: ../base/ufos/ui/geoscape.ufo:1457 ../base/ufos/ui/geoscape.ufo:1541
-#: ../base/ufos/ui/geoscape.ufo:1739 ../base/ufos/ui/geoscape.ufo:1829
-#: ../base/ufos/ui/geoscape.ufo:1902 ../base/ufos/ui/geoscape.ufo:1975
+#: ../base/ufos/ui/geoscape.ufo:698 ../base/ufos/ui/geoscape.ufo:947
+#: ../base/ufos/ui/geoscape.ufo:1058 ../base/ufos/ui/geoscape.ufo:1336
+#: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1563
+#: ../base/ufos/ui/geoscape.ufo:1761 ../base/ufos/ui/geoscape.ufo:1851
+#: ../base/ufos/ui/geoscape.ufo:1924 ../base/ufos/ui/geoscape.ufo:1997
 #: ../base/ufos/ui/irc.ufo:212 ../base/ufos/ui/options.ufo:1291
 #: ../base/ufos/ui/sys_popup.ufo:50 ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "このダイアログを閉じます"
 
-#: ../base/ufos/ui/geoscape.ufo:690 ../base/ufos/ui/geoscape.ufo:858
+#: ../base/ufos/ui/geoscape.ufo:712 ../base/ufos/ui/geoscape.ufo:880
 msgid "Enter"
 msgstr "Enter"
 
-#: ../base/ufos/ui/geoscape.ufo:691 ../base/ufos/ui/geoscape.ufo:859
+#: ../base/ufos/ui/geoscape.ufo:713 ../base/ufos/ui/geoscape.ufo:881
 msgid "Enter the battlefield"
 msgstr "戦闘に移行します"
 
-#: ../base/ufos/ui/geoscape.ufo:702 ../base/ufos/ui/geoscape.ufo:825
+#: ../base/ufos/ui/geoscape.ufo:724 ../base/ufos/ui/geoscape.ufo:847
 msgid "Auto mission"
 msgstr "Auto mission"
 
-#: ../base/ufos/ui/geoscape.ufo:703 ../base/ufos/ui/geoscape.ufo:826
+#: ../base/ufos/ui/geoscape.ufo:725 ../base/ufos/ui/geoscape.ufo:848
 msgid "Automatically finish mission"
 msgstr "自動的に戦闘を行ないます"
 
-#: ../base/ufos/ui/geoscape.ufo:740
+#: ../base/ufos/ui/geoscape.ufo:762
 msgid "Base is under attack"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:762
+#: ../base/ufos/ui/geoscape.ufo:784
 #, fuzzy
 msgid "Go to soldier equipment screen before the battle"
 msgstr "この兵士を武装させます"
 
-#: ../base/ufos/ui/geoscape.ufo:776
+#: ../base/ufos/ui/geoscape.ufo:798
 #, fuzzy
 msgid "Kill aliens in container"
 msgstr "この基地の全てのエイリアンを処刑します"
 
-#: ../base/ufos/ui/geoscape.ufo:785 ../base/ufos/ui/geoscape.ufo:794
-#: ../base/ufos/ui/geoscape.ufo:803 ../base/ufos/ui/geoscape.ufo:812
+#: ../base/ufos/ui/geoscape.ufo:807 ../base/ufos/ui/geoscape.ufo:816
+#: ../base/ufos/ui/geoscape.ufo:825 ../base/ufos/ui/geoscape.ufo:834
 #: ../base/ufos/ui/hospital.ufo:568
 #, fuzzy
 msgid "Not implemented"
 msgstr "アイテムが選択されていません"
 
-#: ../base/ufos/ui/geoscape.ufo:792
+#: ../base/ufos/ui/geoscape.ufo:814
 #, fuzzy
 msgid "Lift aircraft"
 msgstr "次の航空機へ移ります"
 
-#: ../base/ufos/ui/geoscape.ufo:810
+#: ../base/ufos/ui/geoscape.ufo:832
 #, fuzzy
 msgid "Disable Power Plant"
 msgstr "動力炉"
 
-#: ../base/ufos/ui/geoscape.ufo:900
+#: ../base/ufos/ui/geoscape.ufo:922
 msgid "Select base to transfer to"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:905
+#: ../base/ufos/ui/geoscape.ufo:927
 msgid "Choose a base to host alien bodies:"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:946
+#: ../base/ufos/ui/geoscape.ufo:968
 msgid "New base"
 msgstr "新しい基地"
 
-#: ../base/ufos/ui/geoscape.ufo:951 ../base/ufos/ui/geoscape.ufo:1390
-#: ../base/ufos/ui/geoscape.ufo:1509 ../base/ufos/ui/geoscape.ufo:1786
-#: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/main.ufo:107
+#: ../base/ufos/ui/geoscape.ufo:973 ../base/ufos/ui/geoscape.ufo:1412
+#: ../base/ufos/ui/geoscape.ufo:1531 ../base/ufos/ui/geoscape.ufo:1808
+#: ../base/ufos/ui/geoscape.ufo:1886 ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/multiplayer.ufo:342 ../base/ufos/ui/options.ufo:736
 msgid "Name:"
 msgstr "名前:"
 
-#: ../base/ufos/ui/geoscape.ufo:975 ../base/ufos/ui/geoscape.ufo:1407
+#: ../base/ufos/ui/geoscape.ufo:997 ../base/ufos/ui/geoscape.ufo:1429
 msgid "Cost:"
 msgstr "費用:"
 
-#: ../base/ufos/ui/geoscape.ufo:999
+#: ../base/ufos/ui/geoscape.ufo:1021
 msgid "Buildings already built in the initial base"
 msgstr "初めの基地の建設時に自動で設備を建設します"
 
-#: ../base/ufos/ui/geoscape.ufo:1008
+#: ../base/ufos/ui/geoscape.ufo:1030
 #, fuzzy
 msgid "Start with buildings"
 msgstr "開始時の基地設備:"
 
-#: ../base/ufos/ui/geoscape.ufo:1018
+#: ../base/ufos/ui/geoscape.ufo:1040
 msgid "Employees already hired at campaign start"
 msgstr "キャンペーン開始時に人員を雇用した状態で始めます"
 
-#: ../base/ufos/ui/geoscape.ufo:1026
+#: ../base/ufos/ui/geoscape.ufo:1048
 #, fuzzy
 msgid "Start with employees"
 msgstr "開始時の人員雇用:"
 
-#: ../base/ufos/ui/geoscape.ufo:1048 ../base/ufos/ui/geoscape.ufo:1467
+#: ../base/ufos/ui/geoscape.ufo:1070 ../base/ufos/ui/geoscape.ufo:1489
 msgid "Build"
 msgstr "Build"
 
-#: ../base/ufos/ui/geoscape.ufo:1049
+#: ../base/ufos/ui/geoscape.ufo:1071
 msgid "Build the base"
 msgstr "基地を建設します"
 
-#: ../base/ufos/ui/geoscape.ufo:1088
+#: ../base/ufos/ui/geoscape.ufo:1110
 msgid "New installation"
 msgstr "新しい施設"
 
-#: ../base/ufos/ui/geoscape.ufo:1093
+#: ../base/ufos/ui/geoscape.ufo:1115
 msgid "Type"
 msgstr "種類"
 
-#: ../base/ufos/ui/geoscape.ufo:1100
+#: ../base/ufos/ui/geoscape.ufo:1122
 msgid "Build Time"
 msgstr "建設時間"
 
-#: ../base/ufos/ui/geoscape.ufo:1108
+#: ../base/ufos/ui/geoscape.ufo:1130
 msgid "Cost"
 msgstr "費用"
 
-#: ../base/ufos/ui/geoscape.ufo:1128
+#: ../base/ufos/ui/geoscape.ufo:1150
 msgid "Radar tower"
 msgstr "レーダータワー"
 
-#: ../base/ufos/ui/geoscape.ufo:1259 client/campaign/cp_map.c:339
+#: ../base/ufos/ui/geoscape.ufo:1281 client/campaign/cp_map.c:339
 msgid "Base"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1267
+#: ../base/ufos/ui/geoscape.ufo:1289
 #, fuzzy
 msgid "0 day"
 msgstr "1 日"
 
-#: ../base/ufos/ui/geoscape.ufo:1296
+#: ../base/ufos/ui/geoscape.ufo:1318
 msgid "Installation limit reached. Build more bases."
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1303
+#: ../base/ufos/ui/geoscape.ufo:1325
 msgid "Base limit reached."
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1468
+#: ../base/ufos/ui/geoscape.ufo:1490
 msgid "Build the radar tower"
 msgstr "レーダータワーを建設します"
 
-#: ../base/ufos/ui/geoscape.ufo:1485
+#: ../base/ufos/ui/geoscape.ufo:1507
 msgid "New radar tower"
 msgstr "新しいレーダータワー"
 
-#: ../base/ufos/ui/geoscape.ufo:1488
+#: ../base/ufos/ui/geoscape.ufo:1510
 msgid "New SAM site"
 msgstr "新しいSAMサイト"
 
-#: ../base/ufos/ui/geoscape.ufo:1491
+#: ../base/ufos/ui/geoscape.ufo:1513
 msgid "New UFO yard"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1504
+#: ../base/ufos/ui/geoscape.ufo:1526
 msgid "Installation Status"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1551
+#: ../base/ufos/ui/geoscape.ufo:1573
 msgid "Manage"
 msgstr "Manage"
 
-#: ../base/ufos/ui/geoscape.ufo:1552
+#: ../base/ufos/ui/geoscape.ufo:1574
 msgid "Manage installation"
 msgstr "施設の管理"
 
-#: ../base/ufos/ui/geoscape.ufo:1609
+#: ../base/ufos/ui/geoscape.ufo:1631
 msgid "Anti-UFO defence"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1617
+#: ../base/ufos/ui/geoscape.ufo:1639
 #, fuzzy
 msgid "Aircraft interception"
 msgstr "航空機を発進させました"
 
-#: ../base/ufos/ui/geoscape.ufo:1621
+#: ../base/ufos/ui/geoscape.ufo:1643
 #, fuzzy
 msgid "SAM defence"
 msgstr "選択された装備:"
 
-#: ../base/ufos/ui/geoscape.ufo:1638
+#: ../base/ufos/ui/geoscape.ufo:1660
 msgid "Aircraft:"
 msgstr "航空機:"
 
-#: ../base/ufos/ui/geoscape.ufo:1645 ../base/ufos/ui/geoscape.ufo:1793
+#: ../base/ufos/ui/geoscape.ufo:1667 ../base/ufos/ui/geoscape.ufo:1815
 msgid "Status:"
 msgstr "状態:"
 
-#: ../base/ufos/ui/geoscape.ufo:1652 ../base/ufos/ui/geoscape.ufo:1800
+#: ../base/ufos/ui/geoscape.ufo:1674 ../base/ufos/ui/geoscape.ufo:1822
 msgid "Base:"
 msgstr "基地:"
 
-#: ../base/ufos/ui/geoscape.ufo:1700
+#: ../base/ufos/ui/geoscape.ufo:1722
 msgid "Surface-to-air missile site:"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:1781
+#: ../base/ufos/ui/geoscape.ufo:1803
 msgid "Select aircraft"
 msgstr "航空機の選択"
 
-#: ../base/ufos/ui/geoscape.ufo:1807
+#: ../base/ufos/ui/geoscape.ufo:1829
 msgid "ETA:"
 msgstr "ETA:"
 
-#: ../base/ufos/ui/geoscape.ufo:1851
+#: ../base/ufos/ui/geoscape.ufo:1873
 msgid "Select item"
 msgstr "項目の選択"
 
-#: ../base/ufos/ui/geoscape.ufo:1856
+#: ../base/ufos/ui/geoscape.ufo:1878
 msgid "Type:"
 msgstr "種類:"
 
-#: ../base/ufos/ui/geoscape.ufo:1929
+#: ../base/ufos/ui/geoscape.ufo:1951
 msgid "Action:"
 msgstr "行動:"
 
-#: ../base/ufos/ui/geoscape.ufo:1937
+#: ../base/ufos/ui/geoscape.ufo:1959
 msgid "Description:"
 msgstr "目的地:"
 
-#: ../base/ufos/ui/geoscape.ufo:1998
+#: ../base/ufos/ui/geoscape.ufo:2020
 #, fuzzy
 msgid "Geoscape options"
 msgstr "オプションを開きます"
 
-#: ../base/ufos/ui/geoscape.ufo:2010
+#: ../base/ufos/ui/geoscape.ufo:2032
 msgid "Geoscape projection mode:"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:2020
+#: ../base/ufos/ui/geoscape.ufo:2042
 msgid "2D"
 msgstr ""
 
-#: ../base/ufos/ui/geoscape.ufo:2024
+#: ../base/ufos/ui/geoscape.ufo:2046
 msgid "3D"
 msgstr ""
 
@@ -9428,7 +11318,7 @@ msgstr "IPアドレスへ接続"
 msgid "Delete this bookmark"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:526 ../base/ufos/ui/skirmish.ufo:222
+#: ../base/ufos/ui/multiplayer.ufo:526 ../base/ufos/ui/skirmish.ufo:264
 msgid "Map"
 msgstr "Map"
 
@@ -9463,7 +11353,7 @@ msgstr "Manage"
 msgid "Allowed gametype:"
 msgstr "ゲームの種類:"
 
-#: ../base/ufos/ui/multiplayer.ufo:708 ../base/ufos/ui/skirmish.ufo:89
+#: ../base/ufos/ui/multiplayer.ufo:708 ../base/ufos/ui/skirmish.ufo:131
 msgid "Day version:"
 msgstr "昼間戦:"
 
@@ -9499,7 +11389,7 @@ msgstr "チーム戦時のプレイヤー毎の最大兵士数を設定します
 msgid "Max. human players per team:"
 msgstr "チーム毎の人間プレイヤー最大数:"
 
-#: ../base/ufos/ui/multiplayer.ufo:857 ../base/ufos/ui/skirmish.ufo:106
+#: ../base/ufos/ui/multiplayer.ufo:857 ../base/ufos/ui/skirmish.ufo:148
 msgid "Max. AI actors:"
 msgstr "AIキャラの数:"
 
@@ -9664,17 +11554,17 @@ msgstr "New"
 msgid "Save the current team"
 msgstr "現在のスロットにチームをセーブします"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:134
+#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:176
 #, fuzzy
 msgid "Team:"
 msgstr "Team"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:190
 #: client/cl_game_campaign.c:198
 msgid "Human"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:152
+#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:194
 #, fuzzy
 msgid "Alien"
 msgstr "生存:"
@@ -9805,7 +11695,7 @@ msgstr "普通"
 msgid "High"
 msgstr "高い"
 
-#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:118
 msgid "Excellent"
 msgstr "素晴らしい"
 
@@ -9944,7 +11834,7 @@ msgstr "入力しきい値:"
 msgid "Keys"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:98
+#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:96
 msgid "Autostand"
 msgstr ""
 
@@ -10064,17 +11954,9 @@ msgstr "Skirmish"
 msgid "Abort"
 msgstr "Abort"
 
-#: ../base/ufos/ui/singleplayer.ufo:92
+#: ../base/ufos/ui/singleplayer.ufo:91
 msgid "Retry"
 msgstr "Retry"
-
-#: ../base/ufos/ui/singleplayer.ufo:125
-msgid "You've lost the game"
-msgstr "ゲームオーバー"
-
-#: ../base/ufos/ui/singleplayer.ufo:204
-msgid "Thank you for playing UFO:Alien Invasion"
-msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:28
 msgid "Start game"
@@ -10084,28 +11966,33 @@ msgstr ""
 msgid "Skirmish game settings"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:109
+#: ../base/ufos/ui/skirmish.ufo:46
+#, fuzzy
+msgid "Equipment AI"
+msgstr "装備"
+
+#: ../base/ufos/ui/skirmish.ufo:151
 msgid "Max AI actors for this game"
 msgstr "このゲーム中のAIキャラの数"
 
-#: ../base/ufos/ui/skirmish.ufo:137
+#: ../base/ufos/ui/skirmish.ufo:179
 msgid "Select which side you want to play with"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:171
+#: ../base/ufos/ui/skirmish.ufo:213
 #, fuzzy
 msgid "UFO:"
 msgstr "UFO"
 
-#: ../base/ufos/ui/skirmish.ufo:174
+#: ../base/ufos/ui/skirmish.ufo:216
 msgid "Select the ufo that should be used"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:201
+#: ../base/ufos/ui/skirmish.ufo:243
 msgid "Dropship:"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:204
+#: ../base/ufos/ui/skirmish.ufo:246
 msgid "Select the dropship that should be used"
 msgstr ""
 
@@ -10721,83 +12608,81 @@ msgstr ""
 msgid "Autocannon Module"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:105
+#: client/battlescape/cl_actor.c:104
 msgid "Poor"
 msgstr "低い"
 
-#: client/battlescape/cl_actor.c:107
+#: client/battlescape/cl_actor.c:106
 msgid "Mediocre"
 msgstr "平凡"
 
-#: client/battlescape/cl_actor.c:109
+#: client/battlescape/cl_actor.c:108
 msgid "Average"
 msgstr "平均的"
 
-#: client/battlescape/cl_actor.c:111
+#: client/battlescape/cl_actor.c:110
 msgid "Competent"
 msgstr "有能"
 
-#: client/battlescape/cl_actor.c:113
+#: client/battlescape/cl_actor.c:112
 msgid "Proficient"
 msgstr "熟練"
 
-#: client/battlescape/cl_actor.c:115
+#: client/battlescape/cl_actor.c:114
 msgid "Very Good"
 msgstr "とても良い"
 
-#: client/battlescape/cl_actor.c:117
+#: client/battlescape/cl_actor.c:116
 msgid "Highly Proficient"
 msgstr "非常に熟練"
 
-#: client/battlescape/cl_actor.c:121
+#: client/battlescape/cl_actor.c:120
 msgid "Outstanding"
 msgstr "突出している"
 
-#: client/battlescape/cl_actor.c:124
+#: client/battlescape/cl_actor.c:123
 msgid "Superhuman"
 msgstr "超人的"
 
-#: client/battlescape/cl_actor.c:1052
+#: client/battlescape/cl_actor.c:829
 msgid "This isn't your round\n"
 msgstr "今はあなたのラウンドではありません\n"
 
-#: client/battlescape/cl_actor.c:1293
+#: client/battlescape/cl_actor.c:1090
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "未知のアイテムを使用することは出来ません。\n"
 "このアイテムを使用するためには研究が必要です。\n"
 
-#: client/battlescape/cl_actor.c:2325
+#: client/battlescape/cl_actor.c:1949
 msgid "Unknown alien race"
 msgstr "詳細不明なエイリアン"
 
-#: client/battlescape/cl_actor.c:2874
-msgid "Reselect the current soldier"
-msgstr ""
-
-#: client/battlescape/cl_actor.c:2875
-msgid "Toggle to next soldier"
+#: client/battlescape/cl_actor.c:2487
+#, fuzzy
+msgid "Toggle to next actor"
 msgstr "次の兵士を選択"
 
-#: client/battlescape/cl_actor.c:2876
-msgid "Select a soldier from list"
+#: client/battlescape/cl_actor.c:2488
+#, fuzzy
+msgid "Select an actor from list"
 msgstr "リストから兵士を選択"
 
-#: client/battlescape/cl_actor.c:2877
+#: client/battlescape/cl_actor.c:2489
 #, fuzzy
-msgid "Update a soldier"
+msgid "Update an actor"
 msgstr "兵士の名前を変更します"
 
-#: client/battlescape/cl_hud.c:97 client/battlescape/cl_hud.c:100
+#: client/battlescape/cl_hud.c:95 client/battlescape/cl_hud.c:98
 msgid "Crouch walk"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:99
+#: client/battlescape/cl_hud.c:97
 msgid "Walk"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:151
+#: client/battlescape/cl_hud.c:145
 #, c-format
 msgid ""
 "%s\n"
@@ -10805,48 +12690,48 @@ msgid ""
 "%s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:234
+#: client/battlescape/cl_hud.c:218
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "残り TUs: %i"
 
-#: client/battlescape/cl_hud.c:236
+#: client/battlescape/cl_hud.c:221
 msgid "No remaining TUs left after shot."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:241
+#: client/battlescape/cl_hud.c:224
 #, c-format
 msgid "TU: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:243
+#: client/battlescape/cl_hud.c:225
 #, fuzzy, c-format
 msgid "Shots: %i"
 msgstr "使用弾数: %i"
 
-#: client/battlescape/cl_hud.c:320
+#: client/battlescape/cl_hud.c:313
 msgid "[0 TU] No reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:337
+#: client/battlescape/cl_hud.c:331
 #, c-format
 msgid "[%i TU] %s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:370
+#: client/battlescape/cl_hud.c:363
 msgid "Reserve TUs for firing/using."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:370
+#: client/battlescape/cl_hud.c:363
 msgid "Shot Reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:707
+#: client/battlescape/cl_hud.c:615 client/battlescape/cl_hud.c:650
 #, fuzzy
 msgid "No item in hand.\n"
 msgstr "何も装備されていません\n"
 
-#: client/battlescape/cl_hud.c:720
+#: client/battlescape/cl_hud.c:621
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
@@ -10855,13 +12740,13 @@ msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: client/battlescape/cl_hud.c:725
+#: client/battlescape/cl_hud.c:626
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:734
+#: client/battlescape/cl_hud.c:656
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
@@ -10870,7 +12755,7 @@ msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: client/battlescape/cl_hud.c:739
+#: client/battlescape/cl_hud.c:663
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
@@ -10879,7 +12764,7 @@ msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: client/battlescape/cl_hud.c:744 client/battlescape/cl_hud.c:815
+#: client/battlescape/cl_hud.c:668 client/battlescape/cl_hud.c:722
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -10887,84 +12772,63 @@ msgstr ""
 "行動は不可能です:\n"
 "TU が不足しています\n"
 
-#: client/battlescape/cl_hud.c:900
+#: client/battlescape/cl_hud.c:804
 #, fuzzy
-msgid "No weapon in right hand."
+msgid "No weapon."
+msgstr "%s 武器\n"
+
+#: client/battlescape/cl_hud.c:813
+#, fuzzy
+msgid "Weapon cannot be reloaded."
 msgstr "右手に装備した武器が表示されます"
 
-#: client/battlescape/cl_hud.c:902
-#, fuzzy
-msgid "No weapon in left hand."
-msgstr "右手に装備した武器が表示されます"
-
-#: client/battlescape/cl_hud.c:911
-#, fuzzy
-msgid "Weapon in right hand cannot be reloaded."
-msgstr "右手に装備した武器が表示されます"
-
-#: client/battlescape/cl_hud.c:913
-msgid "Weapon in left hand cannot be reloaded."
+#: client/battlescape/cl_hud.c:819
+msgid "No reload possible, already fully loaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:920
-msgid "No reload possible for right hand, already fully loaded."
+#: client/battlescape/cl_hud.c:833
+msgid "Not enough TUs for reloading weapon."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:922
-msgid "No reload possible for left hand, already fully loaded."
+#: client/battlescape/cl_hud.c:836
+msgid "No reload possible, you don't have backup ammo."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:945 client/battlescape/cl_hud.c:969
-msgid "No reload possible for right hand, you don't have backup ammo."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:947 client/battlescape/cl_hud.c:971
-msgid "No reload possible for left hand, you don't have backup ammo."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:978
-msgid "Not enough TUs for reloading weapon in right hand."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:980
-msgid "Not enough TUs for reloading weapon in left hand."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1014
+#: client/battlescape/cl_hud.c:897
 msgid "Not enough TUs for standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1017
+#: client/battlescape/cl_hud.c:900
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1022
+#: client/battlescape/cl_hud.c:905
 msgid "Not enough TUs for crouching."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1025
+#: client/battlescape/cl_hud.c:908
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1033
+#: client/battlescape/cl_hud.c:916
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1037
+#: client/battlescape/cl_hud.c:920
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1040
+#: client/battlescape/cl_hud.c:923
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1046
+#: client/battlescape/cl_hud.c:929
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -10972,16 +12836,16 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1053
+#: client/battlescape/cl_hud.c:936
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1075 client/battlescape/cl_hud.c:1083
+#: client/battlescape/cl_hud.c:958 client/battlescape/cl_hud.c:967
 #, fuzzy, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "弾薬を装填します"
 
-#: client/battlescape/cl_hud.c:1303
+#: client/battlescape/cl_hud.c:1365
 #, c-format
 msgid ""
 "Time Units\n"
@@ -10990,31 +12854,7 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1368
-#, c-format
-msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1370
-#, c-format
-msgid "Morale  %i"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1376
-#, c-format
-msgid ""
-"Morale  %i | Reserved TUs: %i\n"
-"%s %i (%i|%i TU left)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1380
-#, c-format
-msgid ""
-"Morale  %i\n"
-"%s %i (%i TU left)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1439
+#: client/battlescape/cl_hud.c:1468
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -11023,32 +12863,56 @@ msgstr ""
 "未知のアイテムを装填することは出来ません。\n"
 "このアイテムを装填するためには研究が必要です。\n"
 
-#: client/battlescape/cl_hud.c:1457
+#: client/battlescape/cl_hud.c:1488
 #, c-format
 msgid ""
 "%s\n"
 "(empty)\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1466
+#: client/battlescape/cl_hud.c:1500
+#, c-format
+msgid "Morale  %i | Reserved TUs: %i\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1502
+#, c-format
+msgid "Morale  %i"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1508
+#, c-format
+msgid ""
+"Morale  %i | Reserved TUs: %i\n"
+"%s %i (%i|%i TU left)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1512
+#, c-format
+msgid ""
+"Morale  %i\n"
+"%s %i (%i TU left)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1527
 #, fuzzy
 msgid "Currently panics!\n"
 msgstr "治療中の人数"
 
-#: client/battlescape/cl_hud.c:1670
+#: client/battlescape/cl_hud.c:1679
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1671
+#: client/battlescape/cl_hud.c:1680
 msgid "Reload the weapon in the soldiers right hand"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1673
+#: client/battlescape/cl_hud.c:1682
 #, fuzzy
 msgid "Toggle reservation for crouching."
 msgstr "臨機射撃モードの切り替え"
 
-#: client/battlescape/cl_hud.c:1679
+#: client/battlescape/cl_hud.c:1688
 msgid "Toggle reaction fire"
 msgstr "臨機射撃モードの切り替え"
 
@@ -11061,7 +12925,7 @@ msgstr "ロード中 %s"
 msgid "loading models..."
 msgstr "モデルのロード中..."
 
-#: client/battlescape/cl_view.c:271 client/cl_main.c:1015
+#: client/battlescape/cl_view.c:271 client/cl_main.c:1012
 msgid "Awaiting game start"
 msgstr "ゲーム開始を待っています"
 
@@ -11122,7 +12986,7 @@ msgstr ""
 msgid "A member of team %i was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/player/e_event_doendround.c:58
+#: client/battlescape/events/event/player/e_event_doendround.c:57
 msgid "Your round started!\n"
 msgstr "あなたのラウンドです！\n"
 
@@ -11224,22 +13088,22 @@ msgstr "新しい航空機 (%s) の準備が基地 %s で完了しました"
 #: client/campaign/cp_base_callbacks.c:645
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
-#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1459
-#: client/campaign/cp_campaign.c:1504 client/campaign/cp_campaign.c:1557
-#: client/campaign/cp_campaign.c:1570 client/campaign/cp_campaign.c:1572
+#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1475
+#: client/campaign/cp_campaign.c:1520 client/campaign/cp_campaign.c:1573
+#: client/campaign/cp_campaign.c:1586 client/campaign/cp_campaign.c:1588
 #: client/campaign/cp_installation_callbacks.c:156
 #: client/campaign/cp_mapfightequip.c:332
 #: client/campaign/cp_mapfightequip.c:353
 #: client/campaign/cp_mapfightequip.c:359
 #: client/campaign/cp_mapfightequip.c:371
 #: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620 client/campaign/cp_missions.c:734
-#: client/campaign/cp_missions.c:1162 client/campaign/cp_nations.c:88
+#: client/campaign/cp_market_callbacks.c:620 client/campaign/cp_missions.c:735
+#: client/campaign/cp_missions.c:1163 client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100 client/campaign/cp_nations.c:110
 #: client/campaign/cp_nations.c:120 client/campaign/cp_nations.c:130
 #: client/campaign/cp_nations.c:141 client/campaign/cp_nations.c:157
 #: client/campaign/cp_nations.c:173 client/campaign/cp_nations.c:179
-#: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:507
+#: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:506
 #: client/campaign/cp_produce.c:341 client/campaign/cp_produce.c:351
 #: client/campaign/cp_produce.c:363 client/campaign/cp_produce.c:373
 #: client/campaign/cp_produce.c:434
@@ -11323,14 +13187,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "航空機を発進させました"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1592
-#: client/campaign/cp_map.c:1599
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1554
+#: client/campaign/cp_map.c:1561
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "速度:\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1593
-#: client/campaign/cp_map.c:1600
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1555
+#: client/campaign/cp_map.c:1562
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "燃料:\t%i/%i\n"
@@ -11373,7 +13237,7 @@ msgstr ""
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO の迎撃に成功しました -- UFO は海に消えました"
 
-#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1572
+#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1588
 msgid "You've lost the battle"
 msgstr "戦闘に敗北しました"
 
@@ -11554,8 +13418,8 @@ msgstr ""
 #: client/campaign/cp_market_callbacks.c:597
 #: client/campaign/cp_market_callbacks.c:602
 #: client/campaign/cp_market_callbacks.c:708
-#: client/campaign/cp_market_callbacks.c:710 client/campaign/cp_save.c:376
-#: client/multiplayer/mp_team.c:178 client/multiplayer/mp_team.c:199
+#: client/campaign/cp_market_callbacks.c:710 client/campaign/cp_save.c:380
+#: client/multiplayer/mp_team.c:181 client/multiplayer/mp_team.c:202
 msgid "Note"
 msgstr ""
 
@@ -11747,7 +13611,7 @@ msgstr "^B研究内容\t\t\t\t\t\t科学者数\t\t\t\t進捗率\n"
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:852 client/campaign/cp_campaign.c:712
+#: client/campaign/cp_base_callbacks.c:852 client/campaign/cp_campaign.c:728
 #: client/campaign/cp_market_callbacks.c:307
 #, c-format
 msgid "%i c"
@@ -11814,7 +13678,7 @@ msgstr ""
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:734
+#: client/campaign/cp_campaign.c:750
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11825,7 +13689,7 @@ msgstr ""
 "敗北回数:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:739
+#: client/campaign/cp_campaign.c:755
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11836,49 +13700,49 @@ msgstr ""
 "稼動中:\t%i\n"
 "攻撃を受けた回数:\t%i\n"
 
-#: client/campaign/cp_campaign.c:754 client/campaign/cp_ufopedia.c:1168
+#: client/campaign/cp_campaign.c:770 client/campaign/cp_ufopedia.c:1168
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:757
+#: client/campaign/cp_campaign.c:773
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:795 client/cl_inventory_callbacks.c:137
+#: client/campaign/cp_campaign.c:811 client/cl_inventory_callbacks.c:137
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:801
+#: client/campaign/cp_campaign.c:817
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "雇用費:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:814
+#: client/campaign/cp_campaign.c:830
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "航空機整備代:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:825
+#: client/campaign/cp_campaign.c:841
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "基地維持費 (%s):\t%i c\n"
 
-#: client/campaign/cp_campaign.c:830
+#: client/campaign/cp_campaign.c:846
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "管理費:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:837
+#: client/campaign/cp_campaign.c:853
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "借金:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:840
+#: client/campaign/cp_campaign.c:856
 #, c-format
 msgid ""
 "\n"
@@ -11889,12 +13753,12 @@ msgstr ""
 "\t-------\n"
 "合計:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:845
+#: client/campaign/cp_campaign.c:861
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "許容される借金: %i c\n"
 
-#: client/campaign/cp_campaign.c:850
+#: client/campaign/cp_campaign.c:866
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -11903,34 +13767,34 @@ msgstr ""
 "許容される eXtraterrestial Viral Infection 値: %i \n"
 "現在の eXtraterrestial Viral Infection 値: %i"
 
-#: client/campaign/cp_campaign.c:1459
+#: client/campaign/cp_campaign.c:1475
 msgid "Collected dead alien bodies"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1504
+#: client/campaign/cp_campaign.c:1520
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1556 client/campaign/cp_missions.c:1161
+#: client/campaign/cp_campaign.c:1572 client/campaign/cp_missions.c:1162
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1570
+#: client/campaign/cp_campaign.c:1586
 msgid "You've won the battle"
 msgstr "戦闘に勝利しました"
 
-#: client/campaign/cp_campaign.c:1589
+#: client/campaign/cp_campaign.c:1605
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "エイリアンの撃破数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1590
+#: client/campaign/cp_campaign.c:1606
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "エイリアンの捕獲数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1591
+#: client/campaign/cp_campaign.c:1607
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -11939,22 +13803,22 @@ msgstr ""
 "エイリアンの生存者数\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1593
+#: client/campaign/cp_campaign.c:1609
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "エイリアンに殺害されたPHALANX兵士数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_campaign.c:1610
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "行方不明のPHALANX兵士数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1595
+#: client/campaign/cp_campaign.c:1611
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "誤射によるPHALANX死傷者数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1596
+#: client/campaign/cp_campaign.c:1612
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11963,17 +13827,17 @@ msgstr ""
 "PHALANXの生存者数\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1598
+#: client/campaign/cp_campaign.c:1614
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "エイリアンに殺害された市民の数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1599
+#: client/campaign/cp_campaign.c:1615
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "誤射による市民の死傷者数\t%i\n"
 
-#: client/campaign/cp_campaign.c:1600
+#: client/campaign/cp_campaign.c:1616
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11982,24 +13846,24 @@ msgstr ""
 "救出した市民の数\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1601
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "入手したアイテム (種類数/総量)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1678
+#: client/campaign/cp_campaign.c:1694
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s は %s に昇進しました\n"
 
-#: client/campaign/cp_campaign.c:1680
+#: client/campaign/cp_campaign.c:1696
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1681
+#: client/campaign/cp_campaign.c:1697
 msgid "Soldier promoted"
 msgstr ""
 
@@ -12017,17 +13881,17 @@ msgid ""
 "Build more quarters."
 msgstr ""
 
-#: client/campaign/cp_employee_callbacks.c:286
-#: client/campaign/cp_employee_callbacks.c:340
+#: client/campaign/cp_employee_callbacks.c:285
+#: client/campaign/cp_employee_callbacks.c:339
 msgid "Could not fire employee"
 msgstr "人員を解雇する事が出来ません"
 
-#: client/campaign/cp_employee_callbacks.c:346
+#: client/campaign/cp_employee_callbacks.c:345
 msgid "Could not hire employee"
 msgstr "人員を雇う事が出来ません"
 
-#: client/campaign/cp_event.c:359 client/campaign/cp_save.c:278
-#: client/campaign/cp_save.c:297 client/campaign/cp_time.c:74
+#: client/campaign/cp_event.c:359 client/campaign/cp_save.c:280
+#: client/campaign/cp_save.c:299 client/campaign/cp_time.c:74
 #: client/campaign/cp_ufopedia.c:503 client/campaign/cp_ufopedia.c:508
 #, c-format
 msgid "%i %s %02i"
@@ -12194,15 +14058,15 @@ msgstr "キャンセルする"
 msgid "UFO Sighting"
 msgstr ""
 
-#: client/campaign/cp_map.c:1348
+#: client/campaign/cp_map.c:1313
 msgid "Day"
 msgstr "日中"
 
-#: client/campaign/cp_map.c:1348
+#: client/campaign/cp_map.c:1313
 msgid "Night"
 msgstr "夜間"
 
-#: client/campaign/cp_map.c:1553
+#: client/campaign/cp_map.c:1515
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12213,60 +14077,60 @@ msgstr ""
 "状況: %s\n"
 "目的: %s"
 
-#: client/campaign/cp_map.c:1569
+#: client/campaign/cp_map.c:1531
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s (%i) "
 
-#: client/campaign/cp_map.c:1589 client/campaign/cp_map.c:1597
+#: client/campaign/cp_map.c:1551 client/campaign/cp_map.c:1559
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "名前:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1590 client/campaign/cp_map.c:1598
+#: client/campaign/cp_map.c:1552 client/campaign/cp_map.c:1560
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "状態:\t%s\n"
 
-#: client/campaign/cp_map.c:1591
+#: client/campaign/cp_map.c:1553
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1595 client/campaign/cp_map.c:1605
+#: client/campaign/cp_map.c:1557 client/campaign/cp_map.c:1567
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sh\n"
 
-#: client/campaign/cp_map.c:1623
+#: client/campaign/cp_map.c:1585
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "速度:\t%i km/h\n"
 
-#: client/campaign/cp_map.c:1823
+#: client/campaign/cp_map.c:1785
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1874
+#: client/campaign/cp_map.c:1836
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "新しい基地を建設するマップ上の位置を選択してください\n"
 
-#: client/campaign/cp_map.c:1877
+#: client/campaign/cp_map.c:1839
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "新しい施設を建設するマップ上の位置を選択してください\n"
 
-#: client/campaign/cp_map.c:1882
+#: client/campaign/cp_map.c:1844
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1887
+#: client/campaign/cp_map.c:1849
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1892
+#: client/campaign/cp_map.c:1854
 msgid "UFO in radar range\n"
 msgstr ""
 
@@ -12504,12 +14368,12 @@ msgstr ""
 msgid "Harvesting mission"
 msgstr ""
 
-#: client/campaign/cp_missions.c:733
+#: client/campaign/cp_missions.c:734
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr ""
 
-#: client/campaign/cp_missions.c:1257
+#: client/campaign/cp_missions.c:1258
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
@@ -12668,47 +14532,47 @@ msgstr ""
 msgid "Change homebase of aircraft"
 msgstr ""
 
-#: client/campaign/cp_popup.c:233
+#: client/campaign/cp_popup.c:231
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "基地への帰還\t%s\n"
 
-#: client/campaign/cp_popup.c:235
+#: client/campaign/cp_popup.c:233
 msgid "Stop\n"
 msgstr "この場で待機\n"
 
-#: client/campaign/cp_popup.c:237
+#: client/campaign/cp_popup.c:235
 msgid "Change homebase\n"
 msgstr ""
 
-#: client/campaign/cp_popup.c:249
+#: client/campaign/cp_popup.c:248
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "ミッションへ移動\t%s (%s)\n"
 
-#: client/campaign/cp_popup.c:345
+#: client/campaign/cp_popup.c:344
 #, c-format
 msgid "%s (%i/%i)\t%s\t%s\t%s"
 msgstr ""
 
-#: client/campaign/cp_popup.c:363
+#: client/campaign/cp_popup.c:362
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr ""
 
-#: client/campaign/cp_popup.c:424
+#: client/campaign/cp_popup.c:423
 #, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
 msgstr ""
 
-#: client/campaign/cp_popup.c:442
+#: client/campaign/cp_popup.c:441
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr ""
 
-#: client/campaign/cp_popup.c:458
+#: client/campaign/cp_popup.c:457
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr ""
 
-#: client/campaign/cp_popup.c:507
+#: client/campaign/cp_popup.c:506
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -13061,55 +14925,55 @@ msgstr "研究を行なう前に、まず研究所を建設してください"
 msgid "Error decompressing data"
 msgstr ""
 
-#: client/campaign/cp_save.c:254
+#: client/campaign/cp_save.c:256
 msgid "No campaign active."
 msgstr ""
 
-#: client/campaign/cp_save.c:260
+#: client/campaign/cp_save.c:262
 msgid "Nothing to save yet."
 msgstr ""
 
-#: client/campaign/cp_save.c:306
+#: client/campaign/cp_save.c:309
 msgid "Could not allocate enough memory to save this game"
 msgstr ""
 
-#: client/campaign/cp_save.c:327
+#: client/campaign/cp_save.c:331
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 
-#: client/campaign/cp_save.c:373 client/campaign/cp_save.c:375
+#: client/campaign/cp_save.c:377 client/campaign/cp_save.c:379
 msgid "Error saving game."
 msgstr "ゲームのセーブでエラーが発生しました。"
 
-#: client/campaign/cp_save.c:463 client/campaign/cp_save.c:487
-#: client/campaign/cp_save.c:624
+#: client/campaign/cp_save.c:467 client/campaign/cp_save.c:491
+#: client/campaign/cp_save.c:628
 msgid "Error loading game."
 msgstr "ゲームのロードでエラーが発生しました。"
 
-#: client/campaign/cp_save.c:464 client/campaign/cp_save.c:488
-#: client/campaign/cp_save.c:625 client/cl_irc.c:1020 client/cl_irc.c:1257
+#: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
+#: client/campaign/cp_save.c:629 client/cl_irc.c:1020 client/cl_irc.c:1257
 #: client/cl_main.c:508 client/cl_main.c:513 client/cl_main.c:519
 #: client/cl_main.c:527 client/multiplayer/mp_callbacks.c:49
 msgid "Error"
 msgstr "Error"
 
-#: client/campaign/cp_save.c:603
+#: client/campaign/cp_save.c:607
 msgid "Campaign was successfully saved."
 msgstr ""
 
-#: client/campaign/cp_save.c:603
+#: client/campaign/cp_save.c:607
 msgid "Quicksave"
 msgstr ""
 
-#: client/campaign/cp_save.c:627
+#: client/campaign/cp_save.c:631
 msgid "Campaign loaded"
 msgstr ""
 
-#: client/campaign/cp_save.c:627
+#: client/campaign/cp_save.c:631
 msgid "Quicksave campaign was successfully loaded."
 msgstr ""
 
-#: client/campaign/cp_save.c:684
+#: client/campaign/cp_save.c:688
 msgid "Saves to the quick save slot"
 msgstr "クイックセーブ"
 
@@ -13155,51 +15019,51 @@ msgstr "5 日"
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/campaign/cp_time.c:232
+#: client/campaign/cp_time.c:240
 msgid "Jan"
 msgstr "1月"
 
-#: client/campaign/cp_time.c:234
+#: client/campaign/cp_time.c:242
 msgid "Feb"
 msgstr "2月"
 
-#: client/campaign/cp_time.c:236
+#: client/campaign/cp_time.c:244
 msgid "Mar"
 msgstr "3月"
 
-#: client/campaign/cp_time.c:238
+#: client/campaign/cp_time.c:246
 msgid "Apr"
 msgstr "4月"
 
-#: client/campaign/cp_time.c:240
+#: client/campaign/cp_time.c:248
 msgid "May"
 msgstr "5月"
 
-#: client/campaign/cp_time.c:242
+#: client/campaign/cp_time.c:250
 msgid "Jun"
 msgstr "6月"
 
-#: client/campaign/cp_time.c:244
+#: client/campaign/cp_time.c:252
 msgid "Jul"
 msgstr "7月"
 
-#: client/campaign/cp_time.c:246
+#: client/campaign/cp_time.c:254
 msgid "Aug"
 msgstr "8月"
 
-#: client/campaign/cp_time.c:248
+#: client/campaign/cp_time.c:256
 msgid "Sep"
 msgstr "9月"
 
-#: client/campaign/cp_time.c:250
+#: client/campaign/cp_time.c:258
 msgid "Oct"
 msgstr "10月"
 
-#: client/campaign/cp_time.c:252
+#: client/campaign/cp_time.c:260
 msgid "Nov"
 msgstr "11月"
 
-#: client/campaign/cp_time.c:254
+#: client/campaign/cp_time.c:262
 msgid "Dec"
 msgstr "12月"
 
@@ -13779,7 +15643,7 @@ msgstr ""
 "許容される借金: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:441
+#: client/cl_game_campaign.c:461
 #, c-format
 msgid "Rank: %s"
 msgstr "階級: %s"
@@ -13792,14 +15656,14 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:113
+#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:147
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:114
+#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:148
 msgid "Game Drawn!"
 msgstr ""
 
@@ -13812,19 +15676,19 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:136
+#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:170
 msgid "You won the game!"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:137
+#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:171
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:139
+#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:173
 msgid "You've lost the game!"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:140
+#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:174
 msgid "Better luck next time"
 msgstr ""
 
@@ -13832,7 +15696,7 @@ msgstr ""
 msgid "all"
 msgstr ""
 
-#: client/cl_game_skirmish.c:127
+#: client/cl_game_skirmish.c:161
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -13965,7 +15829,7 @@ msgstr ""
 msgid "Target your shot to the ground"
 msgstr "攻撃目標を地面に設定します"
 
-#: client/cl_main.c:1057
+#: client/cl_main.c:1054
 msgid "Custom"
 msgstr ""
 
@@ -13979,31 +15843,31 @@ msgstr "ダウンロード中 [%s]"
 msgid "Loading Map [%s]"
 msgstr "マップのロード中 [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:297 client/cl_team.c:308
+#: client/cl_team.c:50 client/cl_team.c:296 client/cl_team.c:307
 msgid "Urban"
 msgstr "都市迷彩"
 
-#: client/cl_team.c:52 client/cl_team.c:298 client/cl_team.c:309
+#: client/cl_team.c:52 client/cl_team.c:297 client/cl_team.c:308
 msgid "Jungle"
 msgstr "森林用迷彩"
 
-#: client/cl_team.c:54 client/cl_team.c:299 client/cl_team.c:310
+#: client/cl_team.c:54 client/cl_team.c:298 client/cl_team.c:309
 msgid "Desert"
 msgstr "砂漠迷彩"
 
-#: client/cl_team.c:56 client/cl_team.c:300 client/cl_team.c:311
+#: client/cl_team.c:56 client/cl_team.c:299 client/cl_team.c:310
 msgid "Arctic"
 msgstr "寒冷地用迷彩"
 
-#: client/cl_team.c:58 client/cl_team.c:312
+#: client/cl_team.c:58 client/cl_team.c:311
 msgid "Yellow"
 msgstr ""
 
-#: client/cl_team.c:60 client/cl_team.c:313
+#: client/cl_team.c:60 client/cl_team.c:312
 msgid "CCCP"
 msgstr ""
 
-#: client/cl_team.c:415
+#: client/cl_team.c:414
 msgid "Update the GUI with the selected item"
 msgstr ""
 
@@ -14139,22 +16003,22 @@ msgstr[1] "残り %i 日"
 msgid "not operational, depends on"
 msgstr ""
 
-#: client/menu/node/m_node_container.c:425
-#: client/menu/node/m_node_container.c:430
+#: client/menu/node/m_node_container.c:417
+#: client/menu/node/m_node_container.c:422
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "弾数:\t%i\n"
 
-#: client/menu/node/m_node_container.c:429
+#: client/menu/node/m_node_container.c:421
 #, c-format
 msgid "%s loaded\n"
 msgstr "装填弾薬: %s\n"
 
-#: client/menu/node/m_node_container.c:436
+#: client/menu/node/m_node_container.c:428
 msgid "Usable in:\n"
 msgstr "使用兵器:\n"
 
-#: client/menu/node/m_node_container.c:477
+#: client/menu/node/m_node_container.c:469
 #, c-format
 msgid "In: %i Out: %i"
 msgstr ""
@@ -14298,57 +16162,62 @@ msgstr ""
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
-#: client/multiplayer/mp_team.c:178
+#: client/multiplayer/mp_team.c:181
 msgid "Error saving team. Nothing to save yet."
 msgstr "チームのセーブでエラーが発生しました。まだセーブは行われていません。"
 
-#: client/multiplayer/mp_team.c:194
+#: client/multiplayer/mp_team.c:197
 msgid "NewTeam"
 msgstr ""
 
-#: client/multiplayer/mp_team.c:199
+#: client/multiplayer/mp_team.c:202
 msgid "Error saving team. Check free disk space!"
 msgstr "チームのセーブでエラーが発生しました。ディスク容量を確認してください！"
 
-#: game/g_actor.c:296
+#: game/g_actor.c:302
 msgid "Can't perform action - not enough TUs!\n"
 msgstr ""
 
-#: game/g_actor.c:300
+#: game/g_actor.c:306
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
-#: game/g_client.c:301
+#: game/g_client.c:306
 msgid "Can't perform action - this isn't your round!\n"
 msgstr ""
 
-#: game/g_client.c:306
+#: game/g_client.c:311
 msgid "Can't perform action - object not present!\n"
 msgstr ""
 
-#: game/g_client.c:311
+#: game/g_client.c:316
 msgid "Can't perform action - not an actor!\n"
 msgstr ""
 
-#: game/g_client.c:316
+#: game/g_client.c:321
 msgid "Can't perform action - actor is stunned!\n"
 msgstr ""
 
-#: game/g_client.c:321
+#: game/g_client.c:326
 msgid "Can't perform action - actor is dead!\n"
 msgstr ""
 
-#: game/g_client.c:326
+#: game/g_client.c:331
 msgid "Can't perform action - not on same team!\n"
 msgstr ""
 
-#: game/g_client.c:331
+#: game/g_client.c:336
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 
-#: game/g_client.c:442
+#: game/g_client.c:447
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr ""
+
+#: game/g_client.c:463
+#, fuzzy
+msgid "Can't activate reaction fire.\n"
+msgstr "1回のみ臨機射撃"
 
 #: game/g_cmds.c:71
 #, c-format
@@ -14366,27 +16235,27 @@ msgid ""
 "Enemy used flashbang!\n"
 msgstr ""
 
-#: game/g_combat.c:633
+#: game/g_combat.c:626
 msgid "Can't perform action - impossible throw!\n"
 msgstr ""
 
-#: game/g_combat.c:1097
+#: game/g_combat.c:1090
 msgid "Can't perform action - object not activateable!\n"
 msgstr ""
 
-#: game/g_combat.c:1115
+#: game/g_combat.c:1108
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr ""
 
-#: game/g_combat.c:1122
+#: game/g_combat.c:1115
 msgid "Can't perform action - no ammo!\n"
 msgstr ""
 
-#: game/g_combat.c:1130
+#: game/g_combat.c:1123
 msgid "Can't perform action - target out of range!\n"
 msgstr ""
 
-#: game/g_combat.c:1176
+#: game/g_combat.c:1169
 msgid "Can't perform action - not enough ammo!\n"
 msgstr ""
 
@@ -14475,6 +16344,14 @@ msgid "Playing"
 msgstr "Playing"
 
 #, fuzzy
+#~ msgid "No weapon in right hand."
+#~ msgstr "右手に装備した武器が表示されます"
+
+#, fuzzy
+#~ msgid "No weapon in left hand."
+#~ msgstr "右手に装備した武器が表示されます"
+
+#, fuzzy
 #~ msgid "Base-Defense Laser Turret"
 #~ msgstr "その後、研究も開始した方が良いでしょう"
 
@@ -14534,10 +16411,6 @@ msgstr "Playing"
 
 #~ msgid "Next category"
 #~ msgstr "次のカテゴリ"
-
-#, fuzzy
-#~ msgid "Close mail"
-#~ msgstr "白兵戦:"
 
 #~ msgid "Selected base"
 #~ msgstr "選択中の基地"
@@ -14665,9 +16538,6 @@ msgstr "Playing"
 
 #~ msgid "Create base"
 #~ msgstr "新基地の建設"
-
-#~ msgid "Equip"
-#~ msgstr "Equip Aircraft"
 
 #~ msgid "No UFO hangars or no power supply"
 #~ msgstr "UFO格納庫か動力炉がありません"
@@ -14931,9 +16801,6 @@ msgstr "Playing"
 #~ msgid "Buy item"
 #~ msgstr "この装備を購入します"
 
-#~ msgid "Sell item"
-#~ msgstr "この装備を売却します"
-
 #~ msgid "Add scientist"
 #~ msgstr "この研究に科学者を加えます"
 
@@ -15030,14 +16897,8 @@ msgstr "Playing"
 #~ msgid "Assign heavy equipment"
 #~ msgstr "重兵器の編成に移ります"
 
-#~ msgid "Medic"
-#~ msgstr "医師"
-
 #~ msgid "Hire medics"
 #~ msgstr "医師を雇用します"
-
-#~ msgid "Medics"
-#~ msgstr "Medics"
 
 #~ msgid "Capacity"
 #~ msgstr "最大収容人数"
