@@ -2417,7 +2417,7 @@ static void CL_ActorEquipmentSelect_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num >= chrDisplayList.num)
+	if (num < 0 || num >= chrDisplayList.num)
 		return;
 
 	/* update menu inventory */
