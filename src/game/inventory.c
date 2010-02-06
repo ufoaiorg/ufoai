@@ -335,7 +335,8 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 						return IA_NONE;
 
 					/* Add the currently used ammo in a free place of the "from" container. */
-					self->AddToInventory(self, i, item, from, NONE, NONE, 1);
+					if (self->AddToInventory(self, i, item, from, NONE, NONE, 1) == NULL)
+						Sys_Error("Could not reload the weapon - add to inventory failed");
 
 					ic->item.m = self->cacheItem.t;
 					if (icp)

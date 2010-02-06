@@ -143,7 +143,6 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  */
 void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
-	invList_t *ic, *next;
 	int p, container;
 
 	/* Iterate through in container order (right hand, left hand, belt,
@@ -178,6 +177,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
+				invList_t *ic, *next;
 				character_t *chr = &aircraft->acTeam[p]->chr;
 				assert(chr);
 				for (ic = chr->inv.c[container]; ic; ic = next) {
@@ -186,7 +186,8 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 						ic->item = CP_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						cls.i.RemoveFromInventory(&cls.i, &chr->inv, &csi.ids[container], ic);
+						if (!cls.i.RemoveFromInventory(&cls.i, &chr->inv, &csi.ids[container], ic))
+							Com_Error(ERR_DROP, "Could not remove item from inventory");
 					}
 				}
 			}
@@ -251,14 +252,15 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		employee_t *empl = aircraft->acTeam[i];
 		assert(chrDisplayList.num < MAX_ACTIVETEAM);
-		if (!aircraft->acTeam[i])
+		if (!empl)
 			continue; /* Skip unused team-slot. */
 
-		if (aircraft->acTeam[i]->type != employeeType)
+		if (empl->type != employeeType)
 			continue;
 
-		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
+		chrDisplayList.chr[chrDisplayList.num] = &empl->chr;
 
 		/* Sanity check(s) */
 		if (!chrDisplayList.chr[chrDisplayList.num])

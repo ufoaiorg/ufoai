@@ -645,7 +645,6 @@ int G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-
 		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
 		 * the item up hasn't moved at all */
 		G_GetFloorItems(ent);
