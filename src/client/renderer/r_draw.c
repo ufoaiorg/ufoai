@@ -687,6 +687,58 @@ void R_DrawPolygon (int points, int *verts)
 #define MARKER_SIZE 60.0
 
 /**
+ * @brief Draw 3D Marker on the 2D geoscape.
+ * @param[in] screenPos Position on screenlongitude and latitude of the model to draw.
+ * @param[in] direction angle giving the direction the model is heading toward.
+ */
+void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *model, int skin)
+{
+	modelInfo_t mi;
+	vec2_t size;
+	vec3_t scale, center, position, angles;
+	float zoom = 0.4f;
+
+	memset(&mi, 0, sizeof(mi));
+	VectorCopy(vec3_origin, position);
+	VectorCopy(vec3_origin, angles);
+
+	mi.model = R_RegisterModelShort(model);
+	if (!mi.model) {
+		Com_Printf("Could not find model '%s'\n", model);
+		return;
+	}
+
+	mi.name = model;
+	mi.origin = position;
+	mi.angles = angles;
+	mi.skin = skin;
+
+	size[0] = size[1] = MARKER_SIZE * zoom;
+	R_ModelAutoScale(size, &mi, scale, center);
+	/* reset the center, as we want to place the models onto the surface of the earth */
+	mi.center = NULL;
+
+	/* go to a new matrix */
+	glPushMatrix();
+
+	/* Apply all transformation to model. Note that the transformations are applied starting
+	from the last one and ending with the first one */
+
+	/* move model to its location */
+	glTranslatef(screenPos[0], screenPos[1], 0);
+	/* scale model to proper resolution */
+	glScalef(viddef.rx, viddef.ry, 1.0f);
+	/* rotate model to proper direction. */
+	glRotatef(180.0f, 0, 1, 0);
+	glRotatef(90.f - direction, 0, 0, 1);
+
+	R_DrawModelDirect(&mi, NULL, NULL);
+
+	/* restore previous matrix */
+	glPopMatrix();
+}
+
+/**
  * @brief Draw 3D Marker on the 3D geoscape.
  * @param[in] x menu node x position
  * @param[in] y menu node y position

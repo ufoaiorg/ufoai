@@ -537,9 +537,18 @@ void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float 
 {
 	int x, y;
 	const qboolean test = MAP_AllMapToScreen(node, pos, &x, &y, NULL);
+	vec3_t screenPos;
 
-	if (test)
+	if (!test)
+		return;
+
+	if (cl_3dmap->integer) {
 		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);
+	} else {
+		VectorSet(screenPos, x, y, 0);
+		/* models are used on 2D geoscape for aircraft */
+		R_Draw2DMapMarkers(screenPos, theta, model, skin);
+	}
 }
 
 
@@ -841,14 +850,14 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, 
 }
 
 /**
- * @brief Return the angle of a model given its position and destination.
+ * @brief Return the angle of a model given its position and destination, on 3D geoscape.
  * @param[in] start Latitude and longitude of the position of the model.
  * @param[in] end Latitude and longitude of aimed point.
  * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
  * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
  * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
  */
-float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
+static float MAP_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, north3D, ortToDest, ortToPole, v, rotationAxis;
@@ -898,6 +907,85 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 	CrossProduct(ortToDest, ortToPole, v);
 	if (DotProduct(start3D, v) < 0)
 		angle = - angle;
+
+	return angle;
+}
+
+/**
+ * @brief Return the angle of a model given its position and destination, on 2D geoscape.
+ * @param[in] start Latitude and longitude of the position of the model.
+ * @param[in] end Latitude and longitude of aimed point.
+ * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
+ * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
+ * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
+ */
+static float MAP_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
+{
+	float angle = 0.0f;
+	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
+	float dist;
+
+	/* calculate the vector tangent to movement */
+	PolarToVec(start, start3D);
+	PolarToVec(end, end3D);
+	if (ortVector) {
+		CrossProduct(start3D, end3D, ortVector);
+		VectorNormalize(ortVector);
+		CrossProduct(ortVector, start3D, tangentVector);
+	} else {
+		CrossProduct(start3D, end3D, v);
+		CrossProduct(v, start3D, tangentVector);
+	}
+	VectorNormalize(tangentVector);
+
+	/* smooth change of direction if the model is not idle */
+	if (direction) {
+		VectorSubtract(tangentVector, direction, v);
+		dist = VectorLength(v);
+		if (dist > 0.01) {
+			CrossProduct(direction, tangentVector, rotationAxis);
+			VectorNormalize(rotationAxis);
+			RotatePointAroundVector(v, rotationAxis, direction, 5.0);
+			VectorSubtract(tangentVector, direction, v);
+			if (VectorLength(v) < dist)
+				VectorCopy(direction, tangentVector);
+			else
+				VectorCopy(tangentVector, direction);
+		}
+	}
+
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v, rotationAxis, tangentVector, - start[0]);
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(tangentVector, rotationAxis, v, start[1] + 90.0f);
+
+
+	/* calculate the orientation angle of the model around axis perpendicular to the screen */
+	angle = todeg * atan(tangentVector[0] / tangentVector[1]);
+	if (tangentVector[1] > 0)
+		angle -= 90.0f;
+	else
+		angle += 90.0f;
+
+	return angle;
+}
+
+/**
+ * @brief Select which function should be used for calculating the direction of model on 2D or 3D geoscape.
+ * @param[in] start Latitude and longitude of the position of the model.
+ * @param[in] end Latitude and longitude of aimed point.
+ * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
+ * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
+ * @return Angle (degrees) of rotation around the radius axis of earth for @c start going toward @c end. Zero value is the direction of North pole.
+ */
+float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
+{
+	float angle;
+
+	if (cl_3dmap->integer)
+		angle = MAP_AngleOfPath3D(start, end, direction, ortVector);
+	else
+		angle = MAP_AngleOfPath2D(start, end, direction, ortVector);
 
 	return angle;
 }
