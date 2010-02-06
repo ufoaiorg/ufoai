@@ -1551,7 +1551,7 @@ void CL_GameAutoGo (mission_t *mis)
 	/* if a UFO has been recovered, send it to a base */
 	if (won && ccs.missionResults.recovery) {
 		int counts[MAX_MISSIONRESULTCOUNT];
-		memset(counts,0,sizeof(counts));
+		memset(counts, 0, sizeof(counts));
 		/** @todo set other counts, use the counts above */
 		counts[MRC_ALIENS_KILLED] = ccs.battleParameters.aliens;
 		counts[MRC_CIVILIAN_SURVIVOR] = ccs.battleParameters.civilians;
@@ -1648,7 +1648,7 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 }
 
 /**
- * @brief Update employeer stats after mission.
+ * @brief Update employees stats after mission.
  * @param[in] base The base where the team lives.
  * @param[in] won Determines whether we won the mission or not.
  * @param[in] aircraft The aircraft used for the mission.
@@ -1783,7 +1783,7 @@ static void CL_DebugFullCredits_f (void)
 static void CL_DebugNewEmployees_f (void)
 {
 	int j;
-	nation_t *nation = &ccs.nations[0];	/**< This is just a debuging function, nation does not matter */
+	nation_t *nation = &ccs.nations[0];	/**< This is just a debugging function, nation does not matter */
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
@@ -1932,7 +1932,7 @@ static void CP_RemoveCampaignCommands (void)
 
 /**
  * @brief Called at new game and load game
- * @param[in] load qtrue if we are loading game, qfalse otherwise
+ * @param[in] load @c true if we are loading game, @c false otherwise
  * @param[in] campaign Pointer to campaign - it will be set to @c ccs.curCampaign here.
  */
 void CP_CampaignInit (campaign_t *campaign, qboolean load)
@@ -1995,7 +1995,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();
 
-	/* now check the parsed values for errors that are not catched at parsing stage */
+	/* now check the parsed values for errors that are not caught at parsing stage */
 	if (!load)
 		CL_ScriptSanityCheck();
 }
@@ -2069,7 +2069,6 @@ void CL_ResetSinglePlayerData (void)
 static void CL_DebugChangeCharacterStats_f (void)
 {
 	int i, j;
-	character_t *chr;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -2077,6 +2076,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 
 	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
 		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+		character_t *chr;
 
 		if (!employee->hired && employee->baseHired != base)
 			continue;
@@ -2147,7 +2147,7 @@ base_t *CP_GetMissionBase (void)
 }
 
 /**
- * @brief Determines a random position on Geoscape
+ * @brief Determines a random position on geoscape
  * @param[out] pos The position that will be overwritten. pos[0] is within -180, +180. pos[1] within -90, +90.
  * @param[in] noWater True if the position should not be on water
  * @sa CP_GetRandomPosOnGeoscapeWithParameters
@@ -2165,8 +2165,8 @@ void CP_GetRandomPosOnGeoscape (vec2_t pos, qboolean noWater)
 }
 
 /**
- * @brief Determines a random position on Geoscape that fulfills certain criteria given via parameters
- * @param[out] pos The position that will be overwritten with the random point fulfilling the criterias. pos[0] is within -180, +180. pos[1] within -90, +90.
+ * @brief Determines a random position on geoscape that fulfills certain criteria given via parameters
+ * @param[out] pos The position that will be overwritten with the random point fulfilling the criteria. pos[0] is within -180, +180. pos[1] within -90, +90.
  * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass") May be NULL.
  * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western") May be NULL.
  * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban") May be NULL.
@@ -2243,7 +2243,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscapeWithParameters: New random coordinates for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
 		pos[0], pos[1], num, hits);
 
 	/** @todo add EQUAL_EPSILON here? */
