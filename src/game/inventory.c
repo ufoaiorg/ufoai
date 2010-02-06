@@ -476,14 +476,14 @@ static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, 
  */
 static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i)
 {
-	int k;
+	int container;
 
 	if (!i)
 		return;
 
-	for (k = 0; k < self->csi->numIDs; k++)
-		if (!self->csi->ids[k].temp)
-			self->EmptyContainer(self, i, &self->csi->ids[k]);
+	for (container = 0; container < self->csi->numIDs; container++)
+		if (!self->csi->ids[container].temp)
+			self->EmptyContainer(self, i, &self->csi->ids[container]);
 
 	memset(i, 0, sizeof(*i));
 }
