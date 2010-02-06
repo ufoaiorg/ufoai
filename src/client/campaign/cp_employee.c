@@ -1284,7 +1284,7 @@ qboolean E_HireAllowed (const base_t* base)
 void E_RemoveInventoryFromStorage (employee_t *employee)
 {
 	const inventory_t *inv;
-	int i;
+	int container;
 
 	assert(employee);
 	assert(employee->baseHired);
@@ -1294,10 +1294,10 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 	if (!inv)
 		return;
 
-	for (i = 0; i < csi.numIDs; i++) {
-		const invList_t *invList = inv->c[csi.ids[i].id];
+	for (container = 0; container < csi.numIDs; container++) {
+		const invList_t *invList = inv->c[container];
 
-		if (csi.ids[i].temp)
+		if (csi.ids[container].temp)
 			continue;
 
 		while (invList) {

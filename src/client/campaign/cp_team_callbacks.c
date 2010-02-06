@@ -78,7 +78,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		qboolean alreadyInOtherShip;
 		const aircraft_t *otherShip;
 		int guiId = id - beginIndex;
-		int j;
+		int container;
 
 		assert(employee->hired);
 		assert(!employee->transfer);
@@ -112,11 +112,11 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 			MN_ExecuteConfunc("aircraft_%s_unassigned %i", nodeTag, guiId);
 
 		/* Check if the employee has something equipped. */
-		for (j = 0; j < csi.numIDs; j++) {
-			if (!csi.ids[j].temp && employee->chr.inv.c[j])
+		for (container = 0; container < csi.numIDs; container++) {
+			if (!csi.ids[container].temp && employee->chr.inv.c[container])
 				break;
 		}
-		if (j < csi.numIDs)
+		if (container < csi.numIDs)
 			MN_ExecuteConfunc("aircraft_%s_holdsequip %i", nodeTag, guiId);
 		else
 			MN_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
