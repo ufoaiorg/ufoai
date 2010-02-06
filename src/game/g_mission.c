@@ -59,24 +59,29 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 				self->owner->count = level.actualRound;
 				if (self->owner->item) {
 					/* search the item in the activator's inventory */
-					int j;
-					invList_t *ic;
+					int container;
 
-					for (j = 0; j < gi.csi->numIDs; j++)
-						for (ic = activator->i.c[j]; ic; ic = ic->next) {
-							objDef_t *od = ic->item.t;
+					for (container = 0; container < gi.csi->numIDs; container++) {
+						invDef_t *invDef = INVDEF(container);
+						invList_t *ic;
+						/* ignore items linked from any temp container the actor
+						 * must have this in his hands */
+						if (invDef->temp)
+							continue;
+						for (ic = CONTAINER(activator, container); ic; ic = ic->next) {
+							const objDef_t *od = ic->item.t;
 							/* check whether we found the searched item in the
 							 * actor's inventory */
 							if (!strcmp(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
-								G_ActorInvMove(activator,
-									INVDEF(j), ic, INVDEF(gi.csi->idFloor),
+								G_ActorInvMove(activator, invDef, ic, INVDEF(gi.csi->idFloor),
 									NONE, NONE, qfalse);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));
 								self->owner->count = level.actualRound;
 								return qtrue;
 							}
 						}
+					}
 				} else {
 					gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied\n"));
 				}
