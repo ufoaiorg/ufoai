@@ -503,6 +503,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 
 	assert(weapon);
 
+	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
 			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
@@ -537,6 +538,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 	bestContainer = NULL;
 	icFinal = NULL;
 
+	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
 			/* Once we've found at least one clip, there's no point

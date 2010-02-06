@@ -428,6 +428,7 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
 	 * network buffer, and in multiplayer everything is researched */
 
+	/* also try the temp containers */
 	for (containerID = 0; containerID < gi.csi->numIDs; containerID++) {
 		if (INVDEF(containerID)->out < tu) {
 			/* Once we've found at least one clip, there's no point
