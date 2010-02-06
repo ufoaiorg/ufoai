@@ -1307,9 +1307,9 @@ static invList_t* HUD_GetLeftHandWeapon (le_t *actor, int *container)
 {
 	invList_t *weapon = LEFT(actor);
 
-	if (!weapon || !weapon->item.m) {
+	if (!weapon || (weapon->item.t->reload && !weapon->item.m)) {
 		weapon = RIGHT(actor);
-		if (!weapon->item.t->holdTwoHanded)
+		if (weapon == NULL || !weapon->item.t->holdTwoHanded)
 			weapon = NULL;
 		else if (container != NULL)
 			*container = csi.idRight;
