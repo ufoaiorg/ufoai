@@ -339,7 +339,7 @@ static void BS_BuyType (const base_t *base)
 				continue;
 			tech = aircraftTemplate->tech;
 			assert(tech);
-			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
+			if (BS_GetStorageAmountInBase(base, aircraftTemplate->id) + BS_GetAircraftOnMarket(aircraftTemplate) > 0) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -365,7 +365,6 @@ static void BS_BuyType (const base_t *base)
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i])
-			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
