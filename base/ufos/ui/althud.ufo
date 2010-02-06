@@ -166,10 +166,14 @@ window althud extends ahud
 				*cvar:i = ( *cvar:i + 1 )
 			} 
 
-			while ( *cvar:tmp < 7 ) {
-				*floor.bar_teambox<cvar:i>@invis = true  *floor.bar_teamsep<cvar:i>@invis = true  *floor.head<cvar:i>@invis = true
+			while ( *cvar:tmp < 8 ) {
+				*floor.bar_teambox<cvar:tmp>@invis = true  *floor.bar_teamsep<cvar:tmp>@invis = true  *floor.head<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
-			} 
+			}
+			
+			*cvar:i = ( <1> - 1 )
+			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<cvar:i>@left + *node:root.floor.bar_teambox<cvar:i>@width )
+
 			delete *cvar:tmp
 			delete *cvar:i
 		}
