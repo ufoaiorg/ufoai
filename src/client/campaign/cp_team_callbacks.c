@@ -113,8 +113,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 		/* Check if the employee has something equipped. */
 		for (j = 0; j < csi.numIDs; j++) {
-			/** @todo Wouldn't it be better here to check for temp containers */
-			if (j != csi.idFloor && j != csi.idEquip && employee->chr.inv.c[j])
+			if (!csi.ids[j].temp && employee->chr.inv.c[j])
 				break;
 		}
 		if (j < csi.numIDs)
