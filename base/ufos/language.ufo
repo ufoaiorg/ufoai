@@ -285,10 +285,10 @@ language th {
 language uk {
 	"_Ukrainian"
 	{
-	uk.UTF-8
-	uk.utf8
-	uk_UA.utf8
-	uk_UA.UTF-8
+		uk.UTF-8
+		uk.utf8
+		uk_UA.utf8
+		uk_UA.UTF-8
 	}
 }
 
