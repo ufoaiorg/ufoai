@@ -2430,9 +2430,13 @@ static void CL_NextAlien_f (void)
  * Performs pending actions for the given actor
  * @param le The actor that should perform the pending actions
  */
-static void CL_ConfirmAction (le_t *le)
+static void CL_ActorConfirmAction (le_t *le)
 {
 	if (le->team != cl.actTeam)
+		return;
+
+	/* might be a friendly player controlled actor */
+	if (le->pnum != cl.pnum)
 		return;
 
 	switch (le->actorMode) {
@@ -2451,24 +2455,25 @@ static void CL_ConfirmAction (le_t *le)
 /**
  * @brief Executes "pending" actions such as walking and firing.
  * @note Manually triggered by the player when hitting the "confirm" button.
+ * @note When triggering this twice in 1000ms all pending actions are performed, otherwise only
+ * the current selected actor is handled.
  */
-static void CL_ConfirmAction_f (void)
+static void CL_ActorConfirmAction_f (void)
 {
 	static int time = 0;
-
-	if (!selActor)
-		return;
 
 	if (time - cl.time < 1000) {
 		int i;
 		for (i = 0; i < cl.numLEs; i++) {
 			le_t *le = &cl.LEs[i];
 			if (LE_IsLivingActor(le) && le->team == cls.team)
-				CL_ConfirmAction(le);
+				CL_ActorConfirmAction(le);
 		}
 	} else {
 		time = cl.time;
-		CL_ConfirmAction(selActor);
+		if (!selActor)
+			return;
+		CL_ActorConfirmAction(selActor);
 	}
 }
 
@@ -2484,7 +2489,7 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
 	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
-	Cmd_AddCommand("actor_confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
+	Cmd_AddCommand("actor_confirmaction", CL_ActorConfirmAction_f, _("Confirm the current action"));
 	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
 
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
