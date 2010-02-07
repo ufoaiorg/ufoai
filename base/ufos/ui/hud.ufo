@@ -409,7 +409,7 @@ window hud extends ahud
 			texl	"64 0"
 			texh	"128 37"
 			mousefx	true
-			onClick	{ cmd "useheadgear;" }
+			onClick	{ cmd "actor_useheadgear;" }
 		}
 	}
 
@@ -475,7 +475,7 @@ window hud extends ahud
 			pos		"8 107"
 			texl	"0 75"
 			texh	"52 112"
-			onClick	{ cmd "standcrouch;" }
+			onClick	{ cmd "actor_standcrouch;" }
 			onMouseEnter		{ cmd "hud_remainingtus crouch 1;" }
 			onMouseLeave		{ cmd "hud_remainingtus crouch 0;" }
 		}

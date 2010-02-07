@@ -576,9 +576,9 @@ typedef struct chrFiremodeSettings_s {
 
 /**
  * @brief How many TUs (and of what type) did a player reserve for a unit?
- * @sa CL_UsableTUs
- * @sa CL_ReservedTUs
- * @sa CL_ReserveTUs
+ * @sa CL_ActorUsableTUs
+ * @sa CL_ActorReservedTUs
+ * @sa CL_ActorReserveTUs
  */
 typedef struct chrReservations_s {
 	/* Reaction fire reservation (for current round and next enemy round) */

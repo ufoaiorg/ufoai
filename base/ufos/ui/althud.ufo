@@ -706,7 +706,7 @@ window althud extends ahud
 			pos			"192 433"
 			texl		"108 37"
 			texh		"134 70"
-			onClick		{ cmd "useheadgear;" }
+			onClick		{ cmd "actor_useheadgear;" }
 		}
 		
 		pic bt_duck
@@ -717,7 +717,7 @@ window althud extends ahud
 			pos			"223 472"
 			texl		"27 37"
 			texh		"52 70"
-			onClick		{ cmd "standcrouch;" }
+			onClick		{ cmd "actor_standcrouch;" }
 			onMouseEnter			{ cmd "hud_remainingtus crouch 1;" }
 			onMouseLeave			{ cmd "hud_remainingtus crouch 0;" }
 		}

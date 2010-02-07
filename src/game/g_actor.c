@@ -199,7 +199,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
  * @brief Calculates TU reservations for an actor.
  * @param[in] ent The pointer to the selected edict being soldier.
  * @return Sum of reserved TUs.
- * @todo See also CL_ReservedTUs and unify both functions to one
+ * @todo See also CL_ActorReservedTUs and unify both functions to one
  * shared function in character_t code.
  */
 static int G_ActorTUReservations (edict_t *ent)

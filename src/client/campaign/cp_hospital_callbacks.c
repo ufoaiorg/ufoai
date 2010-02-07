@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"	/**< for CL_CharacterCvars() */
+#include "../battlescape/cl_actor.h"	/**< for CL_ActorCvars() */
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "cp_campaign.h"
@@ -230,7 +230,7 @@ static void HOS_EmployeeInit_f (void)
 
 	c = &currentEmployeeInHospital->chr;
 	assert(c);
-	CL_CharacterCvars(c);
+	CL_ActorCvars(c);
 
 	Cvar_SetValue("mn_hp", c->HP);
 	Cvar_SetValue("mn_hpmax", c->maxHP);

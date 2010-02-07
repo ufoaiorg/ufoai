@@ -56,7 +56,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 		MN_ExecuteConfunc("startround");
 		HUD_DisplayMessage(_("Your round started!\n"));
 		S_StartLocalSample("misc/roundstart", SND_VOLUME_DEFAULT);
-		CL_ConditionalMoveCalcActor(selActor);
+		CL_ActorConditionalMoveCalc(selActor);
 	}
 }
 

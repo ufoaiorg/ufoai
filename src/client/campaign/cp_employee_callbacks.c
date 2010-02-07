@@ -82,7 +82,7 @@ static void E_EmployeeSelect (employee_t *employee)
 		Cvar_SetValue("mn_ucn", selectedEmployee->chr.ucn);
 
 		/* set info cvars */
-		CL_CharacterCvars(&(selectedEmployee->chr));
+		CL_ActorCvars(&(selectedEmployee->chr));
 	}
 }
 

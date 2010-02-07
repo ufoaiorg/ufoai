@@ -67,5 +67,5 @@ void CL_ActorStats (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* if selActor's timeunits have changed, update movelength */
 	if (le->TU != oldTUs && le->selected)
-		CL_ResetActorMoveLength(le);
+		CL_ActorResetMoveLength(le);
 }

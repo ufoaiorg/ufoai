@@ -82,7 +82,7 @@ void CL_RecalcRouting (const le_t* le)
 	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
 
-	CL_ConditionalMoveCalcActor(selActor);
+	CL_ActorConditionalMoveCalc(selActor);
 }
 
 /**
@@ -578,7 +578,7 @@ void LE_DoEndPathMove (le_t *le)
 		Com_Error(ERR_DROP, "LE_DoEndPathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
 				le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength, le->team);
 
-	CL_ConditionalMoveCalcActor(le);
+	CL_ActorConditionalMoveCalc(le);
 
 	/* link any floor container into the actor temp floor container */
 	floor = LE_Find(ET_ITEM, le->pos);

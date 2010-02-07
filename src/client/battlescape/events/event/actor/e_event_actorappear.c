@@ -64,7 +64,7 @@ static void CL_DrawLineOfSight (const le_t *watcher, const le_t *target)
 }
 
 /**
- * @sa CL_AddActorToTeamList
+ * @sa CL_ActorAddToTeamList
  * @sa G_AppearPerishEvent
  * @sa CL_ActorAdd
  * @note EV_ACTOR_APPEAR
@@ -164,11 +164,11 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 				HUD_DisplayMessage(_("Civilian spotted!\n"));
 
 			/* update pathing as new actor could block path */
-			CL_ConditionalMoveCalcActor(leResponsible ? leResponsible : selActor);
+			CL_ActorConditionalMoveCalc(leResponsible ? leResponsible : selActor);
 		}
 	}
 
 	/* add team members to the actor list */
-	CL_AddActorToTeamList(le);
+	CL_ActorAddToTeamList(le);
 	LE_Unlock(le);
 }

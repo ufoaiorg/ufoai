@@ -300,52 +300,6 @@ static void CL_ZoomOutQuant_f (void)
 }
 
 /**
- * Performs pending actions for the given actor
- * @param le The actor that should perform the pending actions
- */
-static void CL_ConfirmAction (le_t *le)
-{
-	if (le->team != cl.actTeam)
-		return;
-
-	switch (le->actorMode) {
-	case M_PEND_MOVE:
-		CL_ActorStartMove(le, le->mousePendPos);
-		break;
-	case M_PEND_FIRE_R:
-	case M_PEND_FIRE_L:
-		CL_ActorShoot(le, le->mousePendPos);
-		break;
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Executes "pending" actions such as walking and firing.
- * @note Manually triggered by the player when hitting the "confirm" button.
- */
-static void CL_ConfirmAction_f (void)
-{
-	static int time = 0;
-
-	if (!selActor)
-		return;
-
-	if (time - cl.time < 1000) {
-		int i;
-		for (i = 0; i < cl.numLEs; i++) {
-			le_t *le = &cl.LEs[i];
-			if (LE_IsLivingActor(le) && le->team == cls.team)
-				CL_ConfirmAction(le);
-		}
-	} else {
-		time = cl.time;
-		CL_ConfirmAction(selActor);
-	}
-}
-
-/**
  * @brief Left mouse click
  */
 static void CL_SelectDown_f (void)
@@ -476,85 +430,6 @@ static void CL_LeftClickUp_f (void)
 		MN_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
-
-static int lastAlien = 0;
-
-/**
- * @brief Cycles between visible (to selected actor) aliens.
- * @sa CL_DrawSpottedLines_f (Shares quite some code)
- * @sa CL_NextAlien_f
- */
-static void CL_NextAlienVisibleFromActor_f (void)
-{
-	int i;
-	trace_t tr;
-	vec3_t from, at;
-
-	if (!selActor)
-		return;
-
-	if (lastAlien >= cl.numLEs)
-		lastAlien = 0;
-
-	i = lastAlien;
-	do {
-		le_t *le;
-		if (++i >= cl.numLEs)
-			i = 0;
-		le = &cl.LEs[i];
-		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
-		 && !LE_IsCivilian(le)) {
-			VectorCopy(selActor->origin, from);
-			VectorCopy(le->origin, at);
-			/* actor eye height */
-			if (LE_IsCrouched(selActor))
-				from[2] += EYE_HT_CROUCH;
-			else
-				from[2] += EYE_HT_STAND;
-			/* target height */
-			if (LE_IsCrouched(le))
-				at[2] += EYE_HT_CROUCH;
-			else
-				at[2] += UNIT_HEIGHT; /* full unit */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0)
-				continue;
-
-			lastAlien = i;
-			V_CenterView(le->pos);
-			return;
-		}
-	} while (i != lastAlien);
-}
-
-/**
- * @brief Cycles between visible aliens
- * @sa CL_NextAlienVisibleFromActor_f
- */
-
-static void CL_NextAlien_f (void)
-{
-	le_t *le;
-	int i;
-
-	if (lastAlien >= cl.numLEs)
-		lastAlien = 0;
-
-	i = lastAlien;
-	do {
-		if (++i >= cl.numLEs)
-			i = 0;
-		le = &cl.LEs[i];
-		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
-		 && le->team != TEAM_CIVILIAN) {
-			lastAlien = i;
-			V_CenterView(le->pos);
-			return;
-		}
-	} while (i != lastAlien);
-}
-
 
 #define SCROLL_BORDER	4
 
@@ -1052,18 +927,10 @@ void IN_Init (void)
 	Cmd_AddCommand("+hudradar", CL_HudRadarDown_f, _("Toggles the hud radar mode"));
 	Cmd_AddCommand("-hudradar", CL_HudRadarUp_f, NULL);
 
-	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
-	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
-	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
-	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
-
-	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
-	Cmd_AddCommand("dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
 	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
 	Cmd_AddCommand("leveldown", CL_LevelDown_f, _("Slice through terrain at a lower level"));
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
-	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
 
 	mousePosX = mousePosY = 0.0;
 

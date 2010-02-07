@@ -57,33 +57,31 @@ void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void ACTOR_InitStartup(void);
 
-void CL_CharacterCvars(const character_t *chr);
-const char *CL_GetSkillString(const int skill);
+void CL_ActorCvars(const character_t *chr);
+const char *CL_ActorGetSkillString(const int skill);
 
-int CL_CheckAction(const le_t *le);
+int CL_ActorCheckAction(const le_t *le);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
 
-character_t *CL_GetActorChr(const le_t *le);
-int CL_UsableTUs(const le_t *le);
-int CL_ReservedTUs(const le_t *le, reservation_types_t type);
-void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);
+character_t *CL_ActorGetChr(const le_t *le);
+int CL_ActorUsableTUs(const le_t *le);
+int CL_ActorReservedTUs(const le_t *le, reservation_types_t type);
+void CL_ActorReserveTUs(const le_t *le, reservation_types_t type, int tus);
 
-int CL_MoveMode(const le_t *le, int length);
-void CL_SetActorMode(le_t *actor, actorModes_t actorMode);
+int CL_ActorMoveMode(const le_t *le, int length);
+void CL_ActorSetMode(le_t *actor, actorModes_t actorMode);
 qboolean CL_ActorFireModeActivated(const actorModes_t mode);
-void CL_ConditionalMoveCalcActor(le_t *le);
+void CL_ActorConditionalMoveCalc(le_t *le);
 qboolean CL_ActorSelect(le_t *le);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);
-void CL_AddActorToTeamList(le_t *le);
-void CL_RemoveActorFromTeamList(le_t *le);
+void CL_ActorAddToTeamList(le_t *le);
+void CL_ActorRemoveFromTeamList(le_t *le);
 void CL_ActorCleanup(le_t *le);
 void CL_ActorSelectMouse(void);
 void CL_ActorReload(le_t *le, int containerID);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
-void CL_ActorStandCrouch_f(void);
-void CL_ActorUseHeadgear_f(void);
 void CL_ActorStartMove(le_t *le, const pos3_t to);
 void CL_ActorShoot(const le_t *le, const pos3_t at);
 int CL_ActorGetContainerForReload(invList_t **ic, const inventory_t *inv, const objDef_t *weapon);
@@ -96,7 +94,7 @@ void CL_ActorDoorAction_f(void);
 void CL_NextRound_f(void);
 
 void CL_ResetMouseLastPos(void);
-void CL_ResetActorMoveLength(le_t *le);
+void CL_ActorResetMoveLength(le_t *le);
 void CL_ActorMouseTrace(void);
 
 qboolean CL_AddActor(le_t *le, entity_t *ent);
@@ -106,8 +104,8 @@ void CL_AddTargeting(void);
 void CL_AddPathing(void);
 void CL_ActorTargetAlign_f(void);
 
-void CL_CharacterSetShotSettings(character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon);
-void CL_CharacterSetRFMode(character_t *chr, actorHands_t hand, int fireModeInde, const objDef_t *weapon);
+void CL_ActorSetShotSettings(character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon);
+void CL_ActorSetRFMode(character_t *chr, actorHands_t hand, int fireModeInde, const objDef_t *weapon);
 
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);

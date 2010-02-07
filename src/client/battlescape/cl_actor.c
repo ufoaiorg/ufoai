@@ -91,7 +91,7 @@ ACTOR MENU UPDATING
  * @return skill string
  * @param[in] skill a skill value between 0 and MAX_SKILL
  */
-const char *CL_GetSkillString (const int skill)
+const char *CL_ActorGetSkillString (const int skill)
 {
 	const int skillLevel = skill * 10 / MAX_SKILL;
 #ifdef DEBUG
@@ -132,7 +132,7 @@ const char *CL_GetSkillString (const int skill)
  * @param[in] le Pointer to an actor for which we set the moving mode.
  * @param[in] length The distance to move: units are TU required assuming actor is standing.
  */
-int CL_MoveMode (const le_t *le, int length)
+int CL_ActorMoveMode (const le_t *le, int length)
 {
 	assert(le);
 	if (LE_IsCrouched(le)) {
@@ -160,7 +160,7 @@ int CL_MoveMode (const le_t *le, int length)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-void CL_CharacterCvars (const character_t * chr)
+void CL_ActorCvars (const character_t * chr)
 {
 	invList_t *weapon;
 	assert(chr);
@@ -204,15 +204,15 @@ void CL_CharacterCvars (const character_t * chr)
 	Cvar_Set("mn_vhp", va("%i", chr->HP));
 	Cvar_Set("mn_vhpmax", va("%i", chr->maxHP));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_MIND]), chr->score.skills[ABILITY_MIND]));
-	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND]), chr->score.skills[ABILITY_MIND]));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
 	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
 }
 
@@ -221,7 +221,7 @@ void CL_CharacterCvars (const character_t * chr)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist. Or @c -1 if the given entity is not in the team list.
  */
-static int CL_GetActorNumber (const le_t * le)
+static int CL_ActorGetNumber (const le_t * le)
 {
 	int actorIdx;
 
@@ -240,9 +240,9 @@ static int CL_GetActorNumber (const le_t * le)
  * @return A pointer to a character struct.
  * @todo We really needs a better way to sync this up.
  */
-character_t *CL_GetActorChr (const le_t * le)
+character_t *CL_ActorGetChr (const le_t * le)
 {
-	const int actorIdx = CL_GetActorNumber(le);
+	const int actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: Could not find actor in the team list - maybe already dead? (state is %i)!\n",
 				le->state);
@@ -259,7 +259,7 @@ character_t *CL_GetActorChr (const le_t * le)
  * @param[in] fireModeIndex Store the given firemode for this hand.
  * @param[in] weapon Pointer to weapon in the hand.
  */
-void CL_CharacterSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
+void CL_ActorSetRFMode (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
 {
 	chr->RFmode.hand = hand;
 	chr->RFmode.fmIdx = fireModeIndex;
@@ -273,7 +273,7 @@ void CL_CharacterSetRFMode (character_t *chr, actorHands_t hand, int fireModeInd
  * @param[in] fireModeIndex Store the given firemode for this hand.
  * @param[in] weapon Pointer to weapon in the hand.
  */
-void CL_CharacterSetShotSettings (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
+void CL_ActorSetShotSettings (character_t *chr, actorHands_t hand, int fireModeIndex, const objDef_t *weapon)
 {
 	chr->reservedTus.shotSettings.hand = hand;
 	chr->reservedTus.shotSettings.fmIdx = fireModeIndex;
@@ -287,19 +287,17 @@ void CL_CharacterSetShotSettings (character_t *chr, actorHands_t hand, int fireM
  * @return The reserved TUs for the given type.
  * @return -1 on error.
  */
-int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
+int CL_ActorReservedTUs (const le_t * le, const reservation_types_t type)
 {
 	character_t *chr;
 	int reservedReaction, reservedCrouch, reservedShot;
 
-	if (!le) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No le_t given.\n");
+	if (!le)
 		return -1;
-	}
 
-	chr = CL_GetActorChr(le);
+	chr = CL_ActorGetChr(le);
 	if (!chr) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No character found for le.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorReservedTUs: No character found for le.\n");
 		return -1;
 	}
 
@@ -326,25 +324,23 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 	case RES_SHOT:
 		return reservedShot;
 	default:
-		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: Bad type given: %i\n", type);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorReservedTUs: Bad type given: %i\n", type);
 		return -1;
 	}
 }
 
 /**
- * @brief Returns the amount of usable (overall-reserved) TUs for this actor.
+ * @brief Returns the amount of usable (overall-reserved) TUs for an actor.
  * @param[in] le The actor to check.
  * @return The remaining/usable TUs for this actor
  * @return -1 on error (this includes bad [very large] numbers stored in the struct).
  */
-int CL_UsableTUs (const le_t * le)
+int CL_ActorUsableTUs (const le_t * le)
 {
-	if (!le) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_UsableTUs: No le_t given.\n");
+	if (!le)
 		return -1;
-	}
 
-	return le->TU - CL_ReservedTUs(le, RES_ALL_ACTIVE);
+	return le->TU - CL_ActorReservedTUs(le, RES_ALL_ACTIVE);
 }
 
 /**
@@ -354,14 +350,14 @@ int CL_UsableTUs (const le_t * le)
  * @param[in] tus How many TUs to set.
  * @todo Make the "type" into enum
  */
-void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int tus)
+void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const int tus)
 {
 	character_t *chr;
 
 	if (!le || tus < 0)
 		return;
 
-	chr = CL_GetActorChr(le);
+	chr = CL_ActorGetChr(le);
 	if (chr) {
 		chrReservations_t res = chr->reservedTus;
 
@@ -385,10 +381,10 @@ ACTOR SELECTION AND TEAM LIST
 /**
  * @brief Adds the actor the the team list.
  * @sa CL_ActorAppear
- * @sa CL_RemoveActorFromTeamList
+ * @sa CL_ActorRemoveFromTeamList
  * @param le Pointer to local entity struct
  */
-void CL_AddActorToTeamList (le_t * le)
+void CL_ActorAddToTeamList (le_t * le)
 {
 	int actorIdx;
 
@@ -401,7 +397,7 @@ void CL_AddActorToTeamList (le_t * le)
 		return;
 
 	/* check list for that actor */
-	actorIdx = CL_GetActorNumber(le);
+	actorIdx = CL_ActorGetNumber(le);
 
 	/* add it */
 	if (actorIdx == -1) {
@@ -426,10 +422,10 @@ void CL_ActorCleanup (le_t *le)
 /**
  * @brief Removes an actor (from your team) from the team list.
  * @sa CL_ActorStateChange
- * @sa CL_AddActorToTeamList
+ * @sa CL_ActorAddToTeamList
  * @param[in,out] le Pointer to local entity struct of the actor of your team
  */
-void CL_RemoveActorFromTeamList (le_t * le)
+void CL_ActorRemoveFromTeamList (le_t * le)
 {
 	int i;
 
@@ -465,7 +461,7 @@ void CL_RemoveActorFromTeamList (le_t * le)
  * @brief Selects an actor.
  * @param le Pointer to local entity struct. If this is @c NULL the menuInventory that is linked from the actors
  * @sa CL_UGVCvars
- * @sa CL_CharacterCvars
+ * @sa CL_ActorCvars
  */
 qboolean CL_ActorSelect (le_t * le)
 {
@@ -500,20 +496,20 @@ qboolean CL_ActorSelect (le_t * le)
 	selActor->selected = qtrue;
 	menuInventory = &selActor->i;
 
-	actorIdx = CL_GetActorNumber(le);
+	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
 		return qfalse;
 
 	/* console commands, update cvars */
 	Cvar_ForceSet("cl_selected", va("%i", actorIdx));
 
-	chr = CL_GetActorChr(le);
+	chr = CL_ActorGetChr(le);
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
 	switch (le->fieldSize) {
 	case ACTOR_SIZE_NORMAL:
-		CL_CharacterCvars(chr);
+		CL_ActorCvars(chr);
 		break;
 	case ACTOR_SIZE_2x2:
 		CL_UGVCvars(chr);
@@ -522,7 +518,7 @@ qboolean CL_ActorSelect (le_t * le)
 		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
 	}
 
-	CL_ConditionalMoveCalcActor(le);
+	CL_ActorConditionalMoveCalc(le);
 
 	return qtrue;
 }
@@ -699,13 +695,13 @@ static void CL_DisplayBlockedPaths_f (void)
  * @brief Recalculate forbidden list, available moves and actor's move length
  * for the current selected actor.
  */
-void CL_ConditionalMoveCalcActor (le_t *le)
+void CL_ActorConditionalMoveCalc (le_t *le)
 {
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
-		CL_ResetActorMoveLength(le);
+		CL_ActorResetMoveLength(le);
 	}
 }
 
@@ -714,7 +710,7 @@ void CL_ConditionalMoveCalcActor (le_t *le)
  * @param[in] le Pointer to actor for which we check an action.
  * @return qtrue if action is valid.
  */
-int CL_CheckAction (const le_t *le)
+int CL_ActorCheckAction (const le_t *le)
 {
 	if (!le)
 		return qfalse;
@@ -739,7 +735,7 @@ int CL_CheckAction (const le_t *le)
  * @param[in] le Pointer to actor for which we calculate move lenght.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
-static byte CL_MoveLength (const le_t *le, const pos3_t to)
+static byte CL_ActorMoveLength (const le_t *le, const pos3_t to)
 {
 	const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
 	const byte length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
@@ -750,9 +746,9 @@ static byte CL_MoveLength (const le_t *le, const pos3_t to)
  * @brief Recalculates the currently selected Actor's move length.
  * @param[in,out] le Pointer to actor for which we reset move lenght.
  */
-void CL_ResetActorMoveLength (le_t *le)
+void CL_ActorResetMoveLength (le_t *le)
 {
-	le->actorMoveLength = CL_MoveLength(le, mousePos);
+	le->actorMoveLength = CL_ActorMoveLength(le, mousePos);
 }
 
 /**
@@ -762,7 +758,7 @@ void CL_ResetActorMoveLength (le_t *le)
  * @sa CL_MaximumMove (similar algo.)
  * @sa CL_AddTargetingBox
  */
-static qboolean CL_TraceMove (pos3_t to)
+static qboolean CL_ActorTraceMove (const pos3_t to)
 {
 	byte length;
 	vec3_t vec, oldVec;
@@ -776,7 +772,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	if (!selActor)
 		return qfalse;
 
-	length = CL_MoveLength(selActor, to);
+	length = CL_ActorMoveLength(selActor, to);
 	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return qfalse;
 
@@ -796,11 +792,11 @@ static qboolean CL_TraceMove (pos3_t to)
 			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
 		}
 #endif
-		length = CL_MoveLength(selActor, pos);
+		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dv);
 		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
-		if (length > CL_UsableTUs(selActor))
+		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
 		else if (crouchingState)
 			CL_ParticleSpawn("crawlTracer", 0, vec, oldVec, NULL);
@@ -818,26 +814,26 @@ static qboolean CL_TraceMove (pos3_t to)
  * @param[in,out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
-static void CL_MaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
+static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 {
 	int dv;
 	byte crouchingState = le && LE_IsCrouched(le) ? 1 : 0;
-	const int tus = CL_UsableTUs(le);
-	const byte length = CL_MoveLength(le, to);
+	const int tus = CL_ActorUsableTUs(le);
+	const byte length = CL_ActorMoveLength(le, to);
 	if (!length || length >= ROUTING_NOT_REACHABLE)
 		return;
 
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(clMap, le->fieldSize, le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
-		const byte length2 = CL_MoveLength(le, pos);
+		const byte length2 = CL_ActorMoveLength(le, pos);
 		if (length2 <= tus)
 			return;
 		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
 	}
 }
 
-void CL_SetActorMode (le_t *actor, actorModes_t actorMode)
+void CL_ActorSetMode (le_t *actor, actorModes_t actorMode)
 {
 	actor->actorMode = actorMode;
 }
@@ -857,10 +853,10 @@ void CL_ActorStartMove (le_t * le, const pos3_t to)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (!CL_CheckAction(le))
+	if (!CL_ActorCheckAction(le))
 		return;
 
-	length = CL_MoveLength(le, to);
+	length = CL_ActorMoveLength(le, to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
 		/* move not valid, don't even care to send */
@@ -868,19 +864,19 @@ void CL_ActorStartMove (le_t * le, const pos3_t to)
 	}
 
 	/* Get the last position we can walk to with the usable TUs. */
-	CL_MaximumMove(to, le, toReal);
+	CL_ActorMaximumMove(to, le, toReal);
 
 	/* Get the cost of the new position just in case. */
-	length = CL_MoveLength(le, toReal);
+	length = CL_ActorMoveLength(le, toReal);
 
-	if (CL_UsableTUs(le) < length) {
+	if (CL_ActorUsableTUs(le) < length) {
 		/* We do not have enough _usable_ TUs to move so don't even try to send. */
 		/* This includes a check for reserved TUs (which isn't done on the server!) */
 		return;
 	}
 
 	/* change mode to move now */
-	CL_SetActorMode(le, M_MOVE);
+	CL_ActorSetMode(le, M_MOVE);
 
 	/* move seems to be possible; send request to server */
 	MSG_Write_PA(PA_MOVE, le->entnum, toReal);
@@ -899,7 +895,7 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (!CL_CheckAction(le))
+	if (!CL_ActorCheckAction(le))
 		return;
 
 	if (IS_MODE_FIRE_RIGHT(le->actorMode)) {
@@ -953,7 +949,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
  * @brief Reload weapon with actor.
  * @param[in,out] le The actor to reload the weapon for
  * @param[in] containerID The container to reload
- * @sa CL_CheckAction
+ * @sa CL_ActorCheckAction
  */
 void CL_ActorReload (le_t *le, int containerID)
 {
@@ -962,7 +958,7 @@ void CL_ActorReload (le_t *le, int containerID)
 	objDef_t *weapon;
 	int bestContainer;
 
-	if (!CL_CheckAction(le))
+	if (!CL_ActorCheckAction(le))
 		return;
 
 	/* check weapon */
@@ -1028,7 +1024,7 @@ void CL_ActorInvMove (const le_t *le, int fromContainer, int fromX, int fromY, i
  */
 void CL_ActorUseDoor (const le_t *le)
 {
-	if (!CL_CheckAction(le))
+	if (!CL_ActorCheckAction(le))
 		return;
 
 	assert(le->clientAction);
@@ -1042,7 +1038,7 @@ void CL_ActorUseDoor (const le_t *le)
  */
 void CL_ActorDoorAction_f (void)
 {
-	if (!CL_CheckAction(selActor))
+	if (!CL_ActorCheckAction(selActor))
 		return;
 
 	/* no client action */
@@ -1052,7 +1048,7 @@ void CL_ActorDoorAction_f (void)
 	}
 
 	/* Check if we should even try to send this command (no TUs left or). */
-	if (CL_UsableTUs(selActor) >= TU_DOOR_ACTION)
+	if (CL_ActorUsableTUs(selActor) >= TU_DOOR_ACTION)
 		CL_ActorUseDoor(selActor);
 }
 
@@ -1077,10 +1073,10 @@ void CL_ActorTurnMouse (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (!CL_CheckAction(selActor))
+	if (!CL_ActorCheckAction(selActor))
 		return;
 
-	if (CL_UsableTUs(selActor) < TU_TURN) {
+	if (CL_ActorUsableTUs(selActor) < TU_TURN) {
 		/* Cannot turn because of not enough usable TUs. */
 		return;
 	}
@@ -1102,9 +1098,9 @@ void CL_ActorTurnMouse (void)
 /**
  * @brief Stands or crouches actor.
  */
-void CL_ActorStandCrouch_f (void)
+static void CL_ActorStandCrouch_f (void)
 {
-	if (!CL_CheckAction(selActor))
+	if (!CL_ActorCheckAction(selActor))
 		return;
 
 	if (selActor->fieldSize == ACTOR_SIZE_2x2)
@@ -1112,7 +1108,7 @@ void CL_ActorStandCrouch_f (void)
 		return;
 
 	/* Check if we should even try to send this command (no TUs left or). */
-	if (CL_UsableTUs(selActor) >= TU_CROUCH || CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+	if (CL_ActorUsableTUs(selActor) >= TU_CROUCH || CL_ActorReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		/* send a request to toggle crouch to the server */
 		MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
 	}
@@ -1121,7 +1117,7 @@ void CL_ActorStandCrouch_f (void)
 /**
  * @brief Toggles the headgear for the current selected player
  */
-void CL_ActorUseHeadgear_f (void)
+static void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
 	const int tmpMouseSpace = mouseSpace;
@@ -1131,18 +1127,18 @@ void CL_ActorUseHeadgear_f (void)
 	 * function work */
 	mouseSpace = MS_WORLD;
 
-	if (!CL_CheckAction(selActor))
+	if (!CL_ActorCheckAction(selActor))
 		return;
 
 	headgear = HEADGEAR(selActor);
 	if (!headgear)
 		return;
 
-	CL_SetActorMode(selActor, M_FIRE_HEADGEAR);
+	CL_ActorSetMode(selActor, M_FIRE_HEADGEAR);
 	/** @todo make this a variable somewhere? */
 	selActor->currentSelectedFiremode = 0;
 	CL_ActorShoot(selActor, selActor->pos);
-	CL_SetActorMode(selActor, M_MOVE);
+	CL_ActorSetMode(selActor, M_MOVE);
 
 	/* restore old mouse space */
 	mouseSpace = tmpMouseSpace;
@@ -1183,7 +1179,7 @@ static void CL_ActorMoveMouse (void)
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, selActor->mousePendPos);
 
-			CL_SetActorMode(selActor, M_PEND_MOVE);
+			CL_ActorSetMode(selActor, M_PEND_MOVE);
 		} else {
 			/* Just move there */
 			CL_ActorStartMove(selActor, mousePos);
@@ -1207,7 +1203,7 @@ void CL_ActorSelectMouse (void)
 		/* Try and select another team member */
 		if (mouseActor && !mouseActor->selected && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
-			CL_SetActorMode(selActor, M_MOVE);
+			CL_ActorSetMode(selActor, M_MOVE);
 		} else {
 			CL_ActorMoveMouse();
 		}
@@ -1220,9 +1216,9 @@ void CL_ActorSelectMouse (void)
 
 			/* We switch back to aiming mode. */
 			if (selActor->actorMode == M_PEND_FIRE_R)
-				CL_SetActorMode(selActor, M_FIRE_R);
+				CL_ActorSetMode(selActor, M_FIRE_R);
 			else
-				CL_SetActorMode(selActor, M_FIRE_L);
+				CL_ActorSetMode(selActor, M_FIRE_L);
 		} else {
 			/* Clicked different spot. */
 			VectorCopy(mousePos, selActor->mousePendPos);
@@ -1234,7 +1230,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			CL_SetActorMode(selActor, M_PEND_FIRE_R);
+			CL_ActorSetMode(selActor, M_PEND_FIRE_R);
 			VectorCopy(mousePos, selActor->mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -1246,7 +1242,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			CL_SetActorMode(selActor, M_PEND_FIRE_L);
+			CL_ActorSetMode(selActor, M_PEND_FIRE_L);
 			VectorCopy(mousePos, selActor->mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -1269,35 +1265,10 @@ void CL_ActorActionMouse (void)
 		return;
 
 	if (CL_ActorFireModeActivated(selActor->actorMode)) {
-		CL_SetActorMode(selActor, M_MOVE);
+		CL_ActorSetMode(selActor, M_MOVE);
 	} else {
 		CL_ActorMoveMouse();
 	}
-}
-
-
-/*==============================================================
-ROUND MANAGEMENT
-==============================================================*/
-
-/**
- * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
- */
-void CL_NextRound_f (void)
-{
-	struct dbuffer *msg;
-	/* can't end round if we are not in battlescape */
-	if (!CL_BattlescapeRunning())
-		return;
-
-	/* can't end round if we're not active */
-	if (cls.team != cl.actTeam)
-		return;
-
-	/* send endround */
-	msg = new_dbuffer();
-	NET_WriteByte(msg, clc_endround);
-	NET_WriteMsg(cls.netStream, msg);
 }
 
 /*
@@ -1460,7 +1431,7 @@ void CL_ActorMouseTrace (void)
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
 		VectorCopy(mousePos, mouseLastPos);
-		CL_ResetActorMoveLength(selActor);
+		CL_ActorResetMoveLength(selActor);
 	}
 
 	/* mouse is in the world */
@@ -1822,7 +1793,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
 	 * soldier does not have enough TimeUnits left. */
-	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE && selActor->actorMoveLength <= CL_UsableTUs(selActor))
+	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE && selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
 		VectorSet(ent.color, 0, 1, 0); /* Green */
 	else
 		VectorSet(ent.color, 0, 0, 0.6); /* Dark Blue */
@@ -1861,7 +1832,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 			} else {
 				/* we know the names of our own actors */
-				character_t* chr = CL_GetActorChr(mouseActor);
+				character_t* chr = CL_ActorGetChr(mouseActor);
 				assert(chr);
 				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
 			}
@@ -1983,8 +1954,8 @@ void CL_AddTargeting (void)
 		if (selActor->actorMode == M_PEND_MOVE) {
 			/* Also display a box for the pending move if we have one. */
 			CL_AddTargetingBox(selActor->mousePendPos, qtrue);
-			if (!CL_TraceMove(selActor->mousePendPos))
-				CL_SetActorMode(selActor, M_MOVE);
+			if (!CL_ActorTraceMove(selActor->mousePendPos))
+				CL_ActorSetMode(selActor, M_MOVE);
 		}
 		break;
 	case M_FIRE_R:
@@ -2035,7 +2006,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		const int fieldSize = selActor->fieldSize;
 		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
-		const int TUhave = CL_UsableTUs(selActor);
+		const int TUhave = CL_ActorUsableTUs(selActor);
 
 		memset(&ent, 0, sizeof(ent));
 		ent.flags = RF_PATH;
@@ -2180,7 +2151,7 @@ static void CL_DumpMoveMark_f (void)
 
 	developer->integer ^= DEBUG_PATHING;
 
-	CL_ConditionalMoveCalcActor(selActor);
+	CL_ActorConditionalMoveCalc(selActor);
 	developer->integer = temp;
 }
 
@@ -2340,7 +2311,7 @@ static void CL_ActorEquipmentSelect_f (void)
 	if (chr->teamDef->race == RACE_ROBOT)
 		CL_UGVCvars(chr);
 	else
-		CL_CharacterCvars(chr);
+		CL_ActorCvars(chr);
 }
 
 /**
@@ -2374,7 +2345,130 @@ static void CL_ActorUpdate_f (void)
 		if (chrDisplayList.chr[num]->teamDef->race == RACE_ROBOT)
 			CL_UGVCvars(chrDisplayList.chr[num]);
 		else
-			CL_CharacterCvars(chrDisplayList.chr[num]);
+			CL_ActorCvars(chrDisplayList.chr[num]);
+	}
+}
+
+/**
+ * @brief Cycles between visible (to selected actor) aliens.
+ * @sa CL_DrawSpottedLines_f (Shares quite some code)
+ * @sa CL_NextAlien_f
+ */
+static void CL_NextAlienVisibleFromActor_f (void)
+{
+	static int lastAlien = 0;
+	int i;
+
+	if (!selActor)
+		return;
+
+	if (lastAlien >= cl.numLEs)
+		lastAlien = 0;
+
+	i = lastAlien;
+	do {
+		const le_t *le;
+		if (++i >= cl.numLEs)
+			i = 0;
+		le = &cl.LEs[i];
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
+		 && !LE_IsCivilian(le)) {
+			vec3_t from, at;
+			trace_t tr;
+			VectorCopy(selActor->origin, from);
+			VectorCopy(le->origin, at);
+			/* actor eye height */
+			if (LE_IsCrouched(selActor))
+				from[2] += EYE_HT_CROUCH;
+			else
+				from[2] += EYE_HT_STAND;
+			/* target height */
+			if (LE_IsCrouched(le))
+				at[2] += EYE_HT_CROUCH;
+			else
+				at[2] += UNIT_HEIGHT; /* full unit */
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
+			/* trace didn't reach the target - something was hit before */
+			if (tr.fraction < 1.0)
+				continue;
+
+			lastAlien = i;
+			V_CenterView(le->pos);
+			return;
+		}
+	} while (i != lastAlien);
+}
+
+/**
+ * @brief Cycles between visible aliens
+ * @sa CL_NextAlienVisibleFromActor_f
+ */
+static void CL_NextAlien_f (void)
+{
+	static int lastAlien = 0;
+	int i;
+
+	if (lastAlien >= cl.numLEs)
+		lastAlien = 0;
+
+	i = lastAlien;
+	do {
+		const le_t *le;
+		if (++i >= cl.numLEs)
+			i = 0;
+		le = &cl.LEs[i];
+		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
+		 && le->team != TEAM_CIVILIAN) {
+			lastAlien = i;
+			V_CenterView(le->pos);
+			return;
+		}
+	} while (i != lastAlien);
+}
+
+/**
+ * Performs pending actions for the given actor
+ * @param le The actor that should perform the pending actions
+ */
+static void CL_ConfirmAction (le_t *le)
+{
+	if (le->team != cl.actTeam)
+		return;
+
+	switch (le->actorMode) {
+	case M_PEND_MOVE:
+		CL_ActorStartMove(le, le->mousePendPos);
+		break;
+	case M_PEND_FIRE_R:
+	case M_PEND_FIRE_L:
+		CL_ActorShoot(le, le->mousePendPos);
+		break;
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief Executes "pending" actions such as walking and firing.
+ * @note Manually triggered by the player when hitting the "confirm" button.
+ */
+static void CL_ConfirmAction_f (void)
+{
+	static int time = 0;
+
+	if (!selActor)
+		return;
+
+	if (time - cl.time < 1000) {
+		int i;
+		for (i = 0; i < cl.numLEs; i++) {
+			le_t *le = &cl.LEs[i];
+			if (LE_IsLivingActor(le) && le->team == cls.team)
+				CL_ConfirmAction(le);
+		}
+	} else {
+		time = cl.time;
+		CL_ConfirmAction(selActor);
 	}
 }
 
@@ -2387,6 +2481,13 @@ void ACTOR_InitStartup (void)
 	Cmd_AddCommand("actor_select", CL_ActorSelect_f, _("Select an actor from list"));
 	Cmd_AddCommand("actor_updatecurrent", CL_ActorUpdate_f, _("Update an actor"));
 	Cmd_AddCommand("actor_select_equip", CL_ActorEquipmentSelect_f, "Select an actor in the equipment menu");
+	Cmd_AddCommand("actor_standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
+	Cmd_AddCommand("actor_useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
+	Cmd_AddCommand("actor_dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
+	Cmd_AddCommand("actor_confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
+	Cmd_AddCommand("actor_nextalien", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
+
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_path", CL_DebugPath_f, "Display routing data for current mouse position.");

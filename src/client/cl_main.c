@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "battlescape/cl_localentity.h"
+#include "battlescape/events/e_server.h"
 #include "cl_console.h"
 #include "cl_screen.h"
 #include "cl_game.h"
@@ -838,6 +839,7 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	IN_Init();
+	CL_ServerEventsInit();
 	CL_CameraInit();
 
 	CLMN_InitStartup();

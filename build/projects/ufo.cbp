@@ -292,6 +292,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/e_parse.h" />
+		<Unit filename="../../src/client/battlescape/events/e_server.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/e_server.h" />
 		<Unit filename="../../src/client/battlescape/events/e_time.c">
 			<Option compilerVar="CC" />
 		</Unit>

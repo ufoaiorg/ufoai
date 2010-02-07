@@ -50,7 +50,7 @@ void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *ms
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	chr = CL_GetActorChr(le);
+	chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 
@@ -59,7 +59,7 @@ void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *ms
 	else
 		od = NULL;
 
-	CL_CharacterSetRFMode(chr, hand, fmIdx, od);
+	CL_ActorSetRFMode(chr, hand, fmIdx, od);
 
 	/* Update display of firemode checkbuttons. */
 	HUD_DisplayFiremodes(le, hand, qtrue);
