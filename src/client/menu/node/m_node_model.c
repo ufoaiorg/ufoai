@@ -290,16 +290,16 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		return;
 	}
 
-	/* autoscale? */
-	if (EXTRADATA(node).autoscale)
-		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
-
 	/* if the node is linked to a parent, the parent will display it */
 	if (EXTRADATA(node).tag) {
 		if (EXTRADATA(node).clipOverflow)
 			R_PopClipRect();
 		return;
 	}
+
+	/* autoscale? */
+	if (EXTRADATA(node).autoscale)
+		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
 
 	/* no animation */
 	mi.frame = 0;

@@ -49,7 +49,6 @@ window team extends iaircraft
 	// ==================
 	// aircraft
 	// ==================
-
 	model aircraft
 	{
 		model		*cvar:mn_aircraft_model
@@ -57,7 +56,8 @@ window team extends iaircraft
 		size		"529 260"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
-		view		aircraft
+		view		"aircraft"
+		autoscale	true
 	}
 
 	string team_members

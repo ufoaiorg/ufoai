@@ -37,7 +37,8 @@ window aircraft_pilots extends iaircraft
 		size		"529 260"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
-		view		aircraft
+		view		"aircraft"
+		autoscale	true
 	}
 
 	pic aircraft_slot
