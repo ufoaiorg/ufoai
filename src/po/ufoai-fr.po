@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-06 01:18+0100\n"
-"PO-Revision-Date: 2010-02-06 15:19+0100\n"
+"PO-Revision-Date: 2010-02-07 10:12+0100\n"
 "Last-Translator: kracken\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9397,7 +9397,7 @@ msgstr "La communauté"
 
 #: ../base/ufos/seq_credits.ufo:678
 msgid "Everyone who supported us"
-msgstr "Tous ceux qui nous ont supporté"
+msgstr "Tous ceux qui nous ont soutenu"
 
 #: ../base/ufos/seq_credits.ufo:727
 msgid "http://ufoai.sf.net"
@@ -9517,7 +9517,7 @@ msgstr "Cliquer sur Entrer ou Mission automatique pour combattre les aliens"
 
 #: ../base/ufos/seq_tutorials.ufo:298
 msgid "For further instructions watch the tactical mission tutorial"
-msgstr "Pour plus d'information, regardez le tutorial de mission tactique"
+msgstr "Pour plus d'information, regardez le tutoriel de mission tactique"
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid "Tactical mission"
@@ -9537,11 +9537,11 @@ msgstr "Vous pouvez aussi utiliser les flèches du clavier pour changer le nivea
 
 #: ../base/ufos/seq_tutorials.ufo:419
 msgid "The selected soldier"
-msgstr "Le soldat sélectionné"
+msgstr "Soldat sélectionné"
 
 #: ../base/ufos/seq_tutorials.ufo:441
 msgid "Select soldiers via click"
-msgstr "Sélectionner un soldat en cliquant"
+msgstr "Sélectionnez un soldat en cliquant"
 
 #: ../base/ufos/seq_tutorials.ufo:453
 msgid "Or via the keys 1-8 or Tab"
@@ -9566,11 +9566,11 @@ msgstr "Arme dans la main droite"
 
 #: ../base/ufos/seq_tutorials.ufo:570
 msgid "Shots remaining"
-msgstr "Nb. tirs restants"
+msgstr "Nombre de tirs restants"
 
 #: ../base/ufos/seq_tutorials.ufo:600
 msgid "Reload weapon"
-msgstr "Recharger l'arme"
+msgstr "Rechargez l'arme"
 
 #: ../base/ufos/seq_tutorials.ufo:630
 msgid "Primary attack"
@@ -9582,7 +9582,7 @@ msgstr "Attaque secondaire"
 
 #: ../base/ufos/seq_tutorials.ufo:683
 msgid "Turn reaction-fire on or off"
-msgstr "Activer/désactiver le tir réflexe"
+msgstr "Activez/désactivez le tir réflexe"
 
 #: ../base/ufos/seq_tutorials.ufo:705
 msgid "Crouch (kneel down) or stand up"
@@ -9590,7 +9590,7 @@ msgstr "S'accroupir ou se relever"
 
 #: ../base/ufos/seq_tutorials.ufo:727
 msgid "Cycle through visible enemies"
-msgstr "Parcourir les ennemis repérés"
+msgstr "Faites défiler les ennemis repérés"
 
 #: ../base/ufos/seq_tutorials.ufo:749
 msgid "End round"
@@ -11314,7 +11314,7 @@ msgstr "Sol"
 #: ../base/ufos/ui/multiplayer.ufo:1854
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 msgid "Lobby"
-msgstr "IRC"
+msgstr "Salon IRC"
 
 #: ../base/ufos/ui/irc.ufo:28
 msgid "Disconnect"
@@ -11338,7 +11338,7 @@ msgstr "Non connecté"
 
 #: ../base/ufos/ui/irc.ufo:191
 msgid "You are not connected to the lobby. Do you want to connect?"
-msgstr "Vous n'êtes pas connecté à l'IRC. Voulez-vous vous connecter ?"
+msgstr "Vous n'êtes pas connecté au salon. Voulez-vous vous connecter ?"
 
 #: ../base/ufos/ui/irc.ufo:199
 #: ../base/ufos/ui/multiplayer.ufo:197
@@ -11349,7 +11349,7 @@ msgstr "Connexion"
 
 #: ../base/ufos/ui/irc.ufo:200
 msgid "Connect to the lobby"
-msgstr "Se connecter à l'IRC"
+msgstr "Se connecter au salon"
 
 #: ../base/ufos/ui/lostwon.ufo:36
 #: ../base/ufos/ui/lostwon.ufo:118
@@ -11448,7 +11448,7 @@ msgstr "Multijoueur"
 #: ../base/ufos/ui/main.ufo:55
 #: ../base/ufos/ui/tutorials.ufo:18
 msgid "Tutorials"
-msgstr "Tutoriaux"
+msgstr "Tutoriels"
 
 #: ../base/ufos/ui/main.ufo:61
 msgid "Credits"
@@ -11827,7 +11827,7 @@ msgstr "Type de jeu possible :"
 #: ../base/ufos/ui/multiplayer.ufo:708
 #: ../base/ufos/ui/skirmish.ufo:131
 msgid "Day version:"
-msgstr "Version du jeu:"
+msgstr "Version diurne:"
 
 #: ../base/ufos/ui/multiplayer.ufo:732
 msgid "Enable morale states:"
@@ -11963,7 +11963,7 @@ msgstr "Inviter d'autres personnes"
 
 #: ../base/ufos/ui/multiplayer.ufo:1423
 msgid "Invite players that are online in the lobby"
-msgstr "Inviter les joueurs en ligne au lobby"
+msgstr "Inviter les joueurs en ligne à se joindre au salon"
 
 #: ../base/ufos/ui/multiplayer.ufo:1459
 msgid "Party chat"
@@ -11971,7 +11971,7 @@ msgstr "Discussions"
 
 #: ../base/ufos/ui/multiplayer.ufo:1463
 msgid "Global lobby (IRC)"
-msgstr ""
+msgstr "Salon principal (IRC)"
 
 #: ../base/ufos/ui/multiplayer.ufo:1546
 #: ../base/ufos/ui/multiplayer.ufo:1619
@@ -11993,7 +11993,7 @@ msgstr "Message personnel"
 #: ../base/ufos/ui/multiplayer.ufo:1802
 #: ../base/ufos/ui/multiplayer.ufo:1855
 msgid "Go into the lobby"
-msgstr "Se connecter à l'IRC"
+msgstr "Se connecter au salon"
 
 #: ../base/ufos/ui/multiplayer.ufo:1819
 msgid "Game invitation"
@@ -12263,7 +12263,7 @@ msgstr "Modèles en pré-cache (menus plus rapides)"
 
 #: ../base/ufos/ui/options.ufo:955
 msgid "Actor speed:"
-msgstr "Vitesse personnages:"
+msgstr "Vitesse des personnages :"
 
 #: ../base/ufos/ui/options.ufo:989
 msgid "Input settings"
@@ -16392,7 +16392,7 @@ msgstr ""
 "Ennemis tués:\t\t%i\n"
 "Survivants de l'équipe:\t\t%i\n"
 "Survivants ennemis:\t\t%i\n"
-"Tir amis:\t\t%i\n"
+"Tirs alliés:\t\t%i\n"
 "Civils tués:\t\t%i\n"
 "Civils tués par l'ennemi:\t\t%i\n"
 
