@@ -217,10 +217,10 @@ static void MN_SpinnerNodeLoaded (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* @override size
-	 * The size of the widget is uneditable. Fixed to 15�19.
+	 * The size of the widget is uneditable. Fixed to 15x19.
 	 */
 	/* @override image
-	 * Texture used for the widget. Its a 64�64 template image with all four
+	 * Texture used for the widget. Its a 64x64 template image with all four
 	 * status. The top button take the first vertical 9 pixels, the bottom
 	 * button use the last 10 pixels. See the sample image.
 	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png
