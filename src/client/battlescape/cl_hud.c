@@ -1405,17 +1405,17 @@ static int HUD_GetHitProbability (const le_t* actor)
  */
 static invList_t* HUD_GetLeftHandWeapon (le_t *actor, int *container)
 {
-	invList_t *weapon = LEFT(actor);
+	invList_t *invList = LEFT(actor);
 
-	if (!weapon || (weapon->item.t->reload && !weapon->item.m)) {
-		weapon = RIGHT(actor);
-		if (weapon == NULL || !weapon->item.t->holdTwoHanded)
-			weapon = NULL;
+	if (!invList) {
+		invList = RIGHT(actor);
+		if (invList == NULL || !invList->item.t->holdTwoHanded)
+			invList = NULL;
 		else if (container != NULL)
 			*container = csi.idRight;
 	}
 
-	return weapon;
+	return invList;
 }
 
 /**
