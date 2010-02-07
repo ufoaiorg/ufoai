@@ -217,11 +217,17 @@ language nl_NL {
 language pt_BR {
 	"_Portuguese"
 	{
-		pt.UTF-8
 		pt_BR.UTF-8
+		pt_BR.utf8
+	}
+}
+
+language pt {
+	"_Portuguese"
+	{
+		pt.UTF-8
 		pt_PT.UTF-8
 		pt.utf8
-		pt_BR.utf8
 		pt_PT.utf8
 	}
 }
