@@ -1276,8 +1276,7 @@ static void PTL_DebugSpawnMarker_f (void)
 }
 
 /**
- * @brief Inits some fixed particles that are not in our script files
- * @note fixed particles start with a * in their name
+ * @brief Initializes cvars and commands
  */
 void CL_InitParticles (void)
 {
