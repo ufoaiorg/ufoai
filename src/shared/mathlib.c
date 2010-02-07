@@ -319,7 +319,8 @@ void GLMatrixAssemble (const vec3_t origin, const vec3_t angles, float* matrix)
 /**
  * @brief Multiply 4*4 matrix by 4*4 matrix.
  * @sa MatrixMultiply
- * @param[out] c The result of the multiplication matrix = @c a * @c b (not the same as @c b * @c a !)
+ * @param[out] c The result of the multiplication matrix = @c a * @c b (not the same as @c b * @c a as matrix
+ * multiplication is not commutative)
  * @param[in] a First matrix.
  * @param[in] b Second matrix.
  */

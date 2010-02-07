@@ -483,7 +483,8 @@ static cmd_function_t *cmd_functions;	/* possible commands to execute */
 static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
 
 /**
- * @return the number of arguments
+ * @return the number of arguments including the command itself.
+ * @example "command parameter" will result in a argc of 2, not 1
  * @sa Cmd_Argv
  */
 int Cmd_Argc (void)
@@ -493,7 +494,7 @@ int Cmd_Argc (void)
 
 /**
  * @brief Returns a given argument
- * @param[in] arg The argument at position arg in cmd_argv
+ * @param[in] arg The argument at position arg in cmd_argv. @c 0 will return the command name.
  * @return the argument from cmd_argv
  * @sa Cmd_Argc
  */
