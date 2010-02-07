@@ -1373,7 +1373,8 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		} else {
 			/* might intersect, so do an exact clip */
 			/** @todo make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
-			headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
+			tile = 0;
+			headnode = CM_HeadnodeForBox(tile, le->mins, le->maxs);
 			angles = vec3_origin;
 			VectorCopy(vec3_origin, shift);
 		}
