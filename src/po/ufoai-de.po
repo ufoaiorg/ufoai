@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-07 15:45+0100\n"
-"PO-Revision-Date: 2010-02-07 15:58+0100\n"
+"PO-Revision-Date: 2010-02-07 16:03+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1621,7 +1621,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1341
 msgid "Leipzig"
-msgstr ""
+msgstr "Leipzig"
 
 #: ../base/ufos/cities.ufo:1347
 msgid "Lhasa"
@@ -2180,7 +2180,7 @@ msgstr "Medikit"
 
 #: ../base/ufos/cities.ufo:2085
 msgid "Rio de Janeiro"
-msgstr ""
+msgstr "Rio de Janeiro"
 
 #: ../base/ufos/cities.ufo:2091
 msgid "Riverside"
@@ -2385,7 +2385,7 @@ msgstr "Starchaser"
 
 #: ../base/ufos/cities.ufo:2367
 msgid "Stuttgart"
-msgstr ""
+msgstr "Stuttgart"
 
 #: ../base/ufos/cities.ufo:2373
 #, fuzzy
@@ -2667,7 +2667,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2751
 msgid "Zurich"
-msgstr ""
+msgstr "ZÜrich"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -10350,15 +10350,15 @@ msgstr "Der TCP Port 27910 muss in der Firewall geöffnet sein"
 
 #: ../base/ufos/seq_tutorials.ufo:1066
 msgid "You should connect to the lobby and wait for invitations or start your own server"
-msgstr ""
+msgstr "Du solltest dich zur Lobby verbinden und auf Einladungen warten, oder aber deinen eigenen Server starten."
 
 #: ../base/ufos/seq_tutorials.ufo:1075
 msgid "While you are connected to the lobby you can play singleplayer until someone invites you"
-msgstr ""
+msgstr "Während du in der Lobby auf Einladungen wartest kannst du ganz normal in deiner Kampagne weiterspielen"
 
 #: ../base/ufos/seq_tutorials.ufo:1084
 msgid "As a server admin you should consider setting a round time limit."
-msgstr ""
+msgstr "Als Administrator eines Servers solltest du in Erwägung ziehen die Beschränkung für die Rundenzeit zu setzen."
 
 #: ../base/ufos/team_aliens.ufo:25
 msgid "Taman"
@@ -12563,7 +12563,7 @@ msgstr "Max. KI-Spieler für kooperativen Modus"
 
 #: ../base/ufos/ui/multiplayer.ufo:885
 msgid "Round time limit in seconds:"
-msgstr ""
+msgstr "Rundenzeitbeschränkung in Sekunden:"
 
 #: ../base/ufos/ui/multiplayer.ufo:918
 msgid "Make this server public:"
