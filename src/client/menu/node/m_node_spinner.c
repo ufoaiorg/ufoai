@@ -57,22 +57,28 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 	float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float last = value;
 	const float delta = MN_GetReferenceFloat(node, EXTRADATA(node).delta);
+	const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
+	const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
 
 	if (!down) {
-		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
 		if (value + delta <= max) {
 			value += delta;
 		} else {
 			value = max;
 		}
 	} else {
-		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
 		if (value - delta >= min) {
 			value -= delta;
 		} else {
 			value = min;
 		}
 	}
+
+	/* ensure sane values */
+	if (value < min)
+		value = min;
+	else if (value > max)
+		value = max;
 
 	/* nothing change? */
 	if (last == value)

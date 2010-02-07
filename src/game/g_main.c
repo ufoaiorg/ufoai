@@ -144,7 +144,7 @@ static void G_Init (void)
 	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
-	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
+	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 	sv_roundtimelimit->modified = qfalse;
 	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, NULL);
 

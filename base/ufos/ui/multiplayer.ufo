@@ -875,6 +875,33 @@ window mp_create_server extends abstract_multiplayer
 			max			8
 			delta		1
 		}
+
+		// TODO: Allow to set this to 0 to deactivate the round time limit
+		// ===================
+		// ROUND TIMELIMIT
+		// ===================
+		string timelimit_str
+		{
+			string		"_Round time limit in seconds:"
+			pos			"25 140"
+			size		"250 20"
+		}
+		string timelimit_value
+		{
+			string		*cvar:sv_roundtimelimit
+			pos			"335 140"
+			size		"50 20"
+			textalign	uc
+		}
+		spinner timelimit_change
+		{
+			current		*cvar:sv_roundtimelimit
+			image		ui/spinner_blue
+			pos			"390 140"
+			min			30
+			max			500
+			delta		5
+		}
 	}
 
 	panel panel_security {
