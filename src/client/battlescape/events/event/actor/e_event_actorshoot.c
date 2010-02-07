@@ -134,9 +134,6 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	muzzle[0] = mc[12];
 	muzzle[1] = mc[13];
 	muzzle[2] = mc[14];
-#if 0
-	CL_ParticleSpawn("debug_marker", 0, muzzle, NULL, NULL);
-#endif
 }
 
 /**
