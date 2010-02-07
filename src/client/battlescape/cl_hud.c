@@ -43,7 +43,6 @@ static qboolean visibleFiremodeListRight = qfalse;
 
 static cvar_t *cl_hud_message_timeout;
 static cvar_t *cl_show_cursor_tooltips;
-int hitProbability;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
