@@ -88,7 +88,7 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, const
  */
 static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t shootType)
 {
-#if 1
+#if 0
 	const struct model_s *model;
 	const char *tag;
 	const float *shooterTag, *muzzleTag;
