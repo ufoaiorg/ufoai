@@ -184,6 +184,24 @@ void HUD_HideFiremodes (void)
 }
 
 /**
+ * @brief Returns the amount of usable "reaction fire" TUs for this actor (depends on active/inactive RF)
+ * @param[in] le The actor to check.
+ * @return The remaining/usable TUs for this actor
+ * @return -1 on error (this includes bad [very large] numbers stored in the struct).
+ * @todo Maybe only return "reaction" value if reaction-state is active? The value _should_ be 0, but one never knows :)
+ */
+static int HUD_UsableReactionTUs (const le_t * le)
+{
+	/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) */
+	if (le->state & STATE_REACTION)
+		/* CL_UsableTUs DOES NOT return the stored value for "reaction" here. */
+		return CL_UsableTUs(le) + CL_ReservedTUs(le, RES_REACTION);
+	else
+		/* CL_UsableTUs DOES return the stored value for "reaction" here. */
+		return CL_UsableTUs(le);
+}
+
+/**
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
  * @param[in] hand What list to display
@@ -212,7 +230,7 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
 	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
 
 	status = fd->time <= CL_UsableTUs(actor);
-	usableTusForRF = CL_UsableReactionTUs(actor);
+	usableTusForRF = HUD_UsableReactionTUs(actor);
 
 	if (usableTusForRF > fd->time) {
 		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
@@ -234,6 +252,26 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
 }
 
 /**
+ * @brief Returns the fire definition of the item the actor has in the given hand.
+ * @param[in] actor The pointer to the actor we want to get the data from.
+ * @param[in] hand Which hand to use
+ * @return the used @c fireDef_t
+ */
+static const fireDef_t *HUD_GetFireDefinitionForHand (const le_t * actor, const actorHands_t hand)
+{
+	const invList_t *invlistWeapon;
+
+	if (!actor)
+		return NULL;
+
+	invlistWeapon = ACTOR_GET_INV(actor, hand);
+	if (!invlistWeapon || !invlistWeapon->item.t)
+		return NULL;
+
+	return FIRESH_FiredefForWeapon(&invlistWeapon->item);
+}
+
+/**
  * @brief Check if at least one firemode is available for reservation.
  * @return qtrue if there is at least one firemode - qfalse otherwise.
  * @sa HUD_RefreshWeaponButtons
@@ -250,7 +288,7 @@ static qboolean HUD_CheckFiremodeReservation (void)
 		const fireDef_t *fireDef;
 
 		/* Get weapon (and its ammo) from the hand. */
-		fireDef = CL_GetFireDefinitionForHand(selActor, hand);
+		fireDef = HUD_GetFireDefinitionForHand(selActor, hand);
 		if (fireDef) {
 			int i;
 			const objDef_t *ammo = fireDef->obj;
@@ -319,7 +357,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	selectedEntry = 0;
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
-		const fireDef_t *fd = CL_GetFireDefinitionForHand(selActor, hand);
+		const fireDef_t *fd = HUD_GetFireDefinitionForHand(selActor, hand);
 
 		if (fd) {
 			const objDef_t *ammo = fd->obj;
@@ -480,7 +518,7 @@ void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemo
 		return;
 	}
 
-	fd = CL_GetFireDefinitionForHand(actor, hand);
+	fd = HUD_GetFireDefinitionForHand(actor, hand);
 	if (fd == NULL)
 		return;
 
@@ -544,6 +582,69 @@ static void HUD_SwitchFiremodeList_f (void)
 }
 
 /**
+ * @brief Requests firemode settings from the server
+ * @param[in] actor The actor to update the firemode for.
+ * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
+ * @param[in] od Pointer to objDef_t for which we set up firemode.
+ * @param[in] fdIdx Index of firedefinition for an item in given hand.
+ */
+static void HUD_RequestReactionFiremode (const le_t * actor, const actorHands_t hand, const objDef_t *od, const int fdIdx)
+{
+	character_t *chr;
+	int usableTusForRF = 0;
+
+	if (!actor)
+		return;
+
+	usableTusForRF = HUD_UsableReactionTUs(actor);
+
+	chr = CL_GetActorChr(actor);
+
+	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
+	if (od != NULL && fdIdx >= 0) {
+		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
+		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
+		if (fd) {
+			int time = fd[fdIdx].time;
+			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
+			if (actor->state & STATE_REACTION_MANY)
+				time *= (usableTusForRF / fd[fdIdx].time);
+
+			CL_ReserveTUs(actor, RES_REACTION, time);
+		}
+	}
+
+	/* Send RFmode[] to server-side storage as well. See g_local.h for more. */
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, hand, fdIdx, od ? od->idx : NONE);
+}
+
+/**
+ * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
+ * @param[in] actor The actor we want to update the reaction-fire firemode for.
+ * @param[in] hand Which weapon(-hand) to use.
+ * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
+ */
+static void HUD_UpdateReactionFiremodes (le_t * actor, const actorHands_t hand, int firemodeActive)
+{
+	const fireDef_t *fd;
+	const objDef_t *ammo, *od;
+
+	assert(actor);
+
+	fd = HUD_GetFireDefinitionForHand(actor, hand);
+	if (fd == NULL)
+		return;
+
+	ammo = fd->obj;
+	od = ammo->weapons[fd->weapFdsIdx];
+
+	if (!GAME_ItemIsUseable(od))
+		return;
+
+	HUD_RequestReactionFiremode(actor, hand, od, firemodeActive);
+}
+
+/**
  * @brief Checks if the selected firemode checkbox is ok as a reaction firemode and updates data+display.
  */
 static void HUD_SelectReactionFiremode_f (void)
@@ -567,7 +668,7 @@ static void HUD_SelectReactionFiremode_f (void)
 		return;
 	}
 
-	CL_UpdateReactionFiremodes(selActor, hand, firemode);
+	HUD_UpdateReactionFiremodes(selActor, hand, firemode);
 }
 
 /**
@@ -697,7 +798,7 @@ static void HUD_FireWeapon_f (void)
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0)
 		return;
 
-	fd = CL_GetFireDefinitionForHand(selActor, hand);
+	fd = HUD_GetFireDefinitionForHand(selActor, hand);
 	if (fd == NULL)
 		return;
 
@@ -725,7 +826,7 @@ static void HUD_FireWeapon_f (void)
 
 /**
  * @brief Remember if we hover over a button that would cost some TUs when pressed.
- * @note this is used in HUD_ActorUpdateCvars to update the "remaining TUs" bar correctly.
+ * @note this is used in HUD_Update to update the "remaining TUs" bar correctly.
  */
 static void HUD_RemainingTUs_f (void)
 {
@@ -852,7 +953,7 @@ static qboolean HUD_WeaponWithReaction (const le_t * actor, const actorHands_t h
 	const fireDef_t *fd;
 
 	/* Get ammo and weapon-index in ammo (if there is a weapon in that hand). */
-	fd = CL_GetFireDefinitionForHand(actor, hand);
+	fd = HUD_GetFireDefinitionForHand(actor, hand);
 
 	if (fd == NULL)
 		return qfalse;
@@ -868,7 +969,7 @@ static qboolean HUD_WeaponWithReaction (const le_t * actor, const actorHands_t h
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
- * @sa HUD_ActorUpdateCvars
+ * @sa HUD_Update
  */
 static void HUD_RefreshWeaponButtons (const le_t *le)
 {
@@ -1328,7 +1429,7 @@ static invList_t* HUD_GetLeftHandWeapon (le_t *actor, int *container)
  * @sa CL_CharacterCvars
  * @sa CL_UGVCvars
  */
-void HUD_ActorUpdateCvars (void)
+void HUD_Update (void)
 {
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
@@ -1645,7 +1746,7 @@ static void HUD_ToggleReaction_f (void)
 	/** @todo server side please */
 	if (state & STATE_REACTION) {
 		/* We would reserve more TUs than are available - reserve nothing and abort. */
-		if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
+		if (HUD_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
 			state = ~STATE_REACTION;
 	}
 

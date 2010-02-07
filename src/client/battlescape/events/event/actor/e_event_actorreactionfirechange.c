@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * that were received from the server
  * @param self The event pointer
  * @param msg The network message to parse the event data from
- * @sa CL_UpdateReactionFiremodes
+ * @sa HUD_UpdateReactionFiremodes
  */
 void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *msg)
 {

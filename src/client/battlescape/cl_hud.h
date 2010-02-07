@@ -41,7 +41,7 @@ void HUD_HideFiremodes(void);
 
 void HUD_InitStartup(void);
 void HUD_DisplayMessage(const char * text);
-void HUD_ActorUpdateCvars(void);
+void HUD_Update(void);
 void HUD_UpdateCursor(void);
 
 #endif

@@ -60,11 +60,8 @@ void ACTOR_InitStartup(void);
 void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
-const fireDef_t *CL_GetFireDefinitionForHand(const le_t * actor, const actorHands_t hand);
 int CL_CheckAction(const le_t *le);
 void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
-int CL_UsableReactionTUs(const le_t * le);
-void CL_UpdateReactionFiremodes(le_t * actor, const actorHands_t hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
 int CL_UsableTUs(const le_t *le);
