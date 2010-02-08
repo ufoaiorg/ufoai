@@ -96,6 +96,9 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0-2-mingw32-bin.tar.gz gdb.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
 
+# TODO mingw64 support
+#	download_archive http://downloads.sourceforge.net/mingw-w64 mingw-w64-bin_x86_64-mingw_20100123_sezero.zip
+
 	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 msys-bash.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 msys-bzip2.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz msys-tar.tar.gz
