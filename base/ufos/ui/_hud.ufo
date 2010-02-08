@@ -2,6 +2,73 @@
 // HUD INTERFACE
 // ==================
 
+component panel cmpFiremodeEntry {
+	{
+		pos		"0 0"
+		size	"280 60"
+		align	LAYOUTALIGN_TOP
+	}
+
+	pic bg 
+	{
+		image	hud/firemode
+		pos		"0 576"
+		texl	"0 0"
+		texh	"214  63"
+		size	"214  63"
+		invis true
+		onClick	{ cmd "hud_fireweapon <node:parent.hand@string> <node:parent.id@string>;" }
+		onMouseEnter { *node:this@image = "hud/firemode_hover" }
+		onMouseLeave { *node:this@image = "hud/firemode" }
+	}
+
+	pic cb
+	{
+		image	hud/checkbox
+		tooltip	"_Check to use this firemode for reaction fire"
+		pos		"0 32"
+		texl	"0 0"
+		texh	"31 31"
+		onClick	{ cmd "sel_reactmode r 0;" }
+	}
+	
+	/** store the hand */
+	string hand {
+		size	"0 0"
+		invis	true
+	}
+
+	/** store the id of the firemode */
+	string id {
+		size	"0 0"
+		invis	true
+	}
+	
+	string name	
+	{ 
+		pos "27 4"	
+		size "183 25"	
+		textalign cl	
+		ghost true
+	}
+	string tu	
+	{ 
+		pos "27 32"	
+		size "69 28"	
+		textalign cc	
+		ghost true 
+		font		f_verysmall
+	}
+	string shot
+	{
+		pos "99 32"	
+		size "111 28"	
+		textalign cc	
+		ghost true 
+		font		f_verysmall
+	}
+}
+
 window levelbuttons {
 	confunc updateLevelStatus { }
 }
@@ -80,6 +147,56 @@ window ahud extends levelbuttons {
 		*cvar:mn_moralemax<1> = "<8>"
 		*cvar:mn_stun<1> = "<9>"
 		*cvar:mn_soldier<1>_tt = "<10>"
+	}
+
+	confunc clean_firemode_entries {
+		call *node:root.firemodes.dock@removeAllChild
+	}
+
+	/**
+	 * @param<1> hand [l|r]
+	 * @param<2> firedef id (int)
+	 * @param<3> name (string)
+	 * @param<4> TUs (string)
+	 * @param<5> shots (int)
+	 * @param<6> reaction [0|1]
+	 * @param<7> status [0|1]
+	 * @param<6> firedef selected [0|1]
+	 */
+	confunc add_firemode_entry
+	{
+		call *node:root.firemodes.dock@createChild ( "<1><2>" , "cmpFiremodeEntry" )
+		*node:root.firemodes.dock.<1><2>.hand@string = <1>
+		*node:root.firemodes.dock.<1><2>.id@string = <2>
+		*node:root.firemodes.dock.<1><2>.name@string = <3>
+		*node:root.firemodes.dock.<1><2>.tu@string = <4>
+		*node:root.firemodes.dock.<1><2>.shot@string = <5>
+	}
+
+	panel firemodes {
+		{
+			align	LAYOUTALIGN_FILL
+			layout	LAYOUT_PACK
+			ghost	true
+			size	"1024 768"
+		}
+
+		panel dock {
+			{
+				pos				"0 0"
+				size			"300 768"
+				align			LAYOUTALIGN_LEFT
+				layout			LAYOUT_PACK
+				ghost			true
+				padding			0
+				layoutmargin	2
+			}
+
+			panel bottomMargin {
+				align		LAYOUTALIGN_TOP
+				size		"280 30"
+			}
+		}
 	}
 }
 
