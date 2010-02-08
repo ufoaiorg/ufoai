@@ -375,7 +375,6 @@ static void HUD_ShotReserve_f (void)
 {
 	int selectedPopupIndex;
 	const reserveShot_t* reserveShotData;
-	character_t* chr;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <popupindex>\n", Cmd_Argv(0));
@@ -385,8 +384,6 @@ static void HUD_ShotReserve_f (void)
 	if (!selActor)
 		return;
 
-	chr = CL_ActorGetChr(selActor);
-	assert(chr);
 
 	/* read and range check */
 	selectedPopupIndex = atoi(Cmd_Argv(1));
@@ -400,6 +397,8 @@ static void HUD_ShotReserve_f (void)
 	/* Check if we have enough TUs (again) */
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
+		character_t* chr = CL_ActorGetChr(selActor);
+		assert(chr);
 		CL_ActorReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
 		CL_ActorSetShotSettings(chr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
 		if (popupListNode)
@@ -1711,7 +1710,7 @@ static void HUD_ToggleCrouchReservation_f (void)
 		/* Reset reserved TUs to 0 */
 		CL_ActorReserveTUs(selActor, RES_CROUCH, 0);
 	} else {
-		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
+		/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
 		CL_ActorReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
 	}
 }
