@@ -1305,6 +1305,7 @@ static int HUD_GetHitProbability (const le_t* actor)
 	else
 		VectorCopy(mousePos, toPos);
 
+	/** @todo use LE_FindRadius */
 	le = LE_GetFromPos(toPos);
 	if (!le)
 		return 0;

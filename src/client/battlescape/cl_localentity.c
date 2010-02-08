@@ -1129,6 +1129,72 @@ le_t *LE_GetFromPos (const pos3_t pos)
 }
 
 /**
+ * @brief Iterate through the list of entities
+ * @param lastLE The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+le_t* LE_GetNext (le_t* lastLE)
+{
+	le_t* endOfLEs = &cl.LEs[cl.numLEs];
+	le_t* le;
+
+	if (!lastLE)
+		lastLE = cl.LEs;
+	assert(lastLE >= cl.LEs);
+	assert(lastLE < endOfLEs);
+
+	le = lastLE;
+
+	le++;
+	if (le >= endOfLEs)
+		return NULL;
+	else
+		return le;
+}
+
+/**
+ * @brief Iterate through the entities that are in use
+ * @note we can hopefully get rid of this function once we know when it makes sense
+ * to iterate through entities that are NOT in use
+ * @param lastLE The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+le_t* LE_GetNextInUse (le_t* lastLE)
+{
+	le_t* le = lastLE;
+
+	while ((le = LE_GetNext(le))) {
+		if (le->inuse)
+			break;
+	}
+	return le;
+}
+
+/**
+ * @brief Returns entities that have origins within a spherical area.
+ * @param[in] from The entity to start the search from. @c NULL will start from the beginning.
+ * @param[in] org The origin that is the center of the circle.
+ * @param[in] rad radius to search an edict in.
+ * @param[in] type Type of local entity. @c ET_NULL to ignore the type.
+ */
+le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type)
+{
+	le_t *le = from;
+
+	while ((le = LE_GetNextInUse(le))) {
+		int j;
+		vec3_t eorg;
+		for (j = 0; j < 3; j++)
+			eorg[j] = org[j] - (le->origin[j] + (le->mins[j] + le->maxs[j]) * 0.5);
+		if (VectorLength(eorg) > rad)
+			continue;
+		if (type != ET_NULL && le->type != type)
+			continue;
+		return le;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Searches a local entity on a given grid field
  * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type

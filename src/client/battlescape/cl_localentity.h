@@ -221,12 +221,15 @@ qboolean LE_IsLivingActor(const le_t *le);
 qboolean LE_IsActor(const le_t *le);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
+le_t* LE_GetNextInUse(le_t* lastLE);
+le_t* LE_GetNext(le_t* lastLE);
 void LE_Lock(le_t *le);
 void LE_Unlock(le_t *le);
 qboolean LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, const char *file, const int line) __attribute__((noreturn));
 le_t *LE_Find(int type, const pos3_t pos);
+le_t *LE_FindRadius(le_t *from, const vec3_t org, float rad, entity_type_t type);
 le_t *LE_GetFromPos(const pos3_t pos);
 void LE_PlaceItem(le_t *le);
 void LE_Cleanup(void);

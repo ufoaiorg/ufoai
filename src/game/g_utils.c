@@ -139,7 +139,7 @@ edict_t* G_EdictsGetNewEdict (void)
 
 /**
  * @brief Iterate through the entities that are in use
- * @note we can hopefully get rid of this funtion once we know when it makes sense
+ * @note we can hopefully get rid of this function once we know when it makes sense
  * to iterate through entities that are NOT in use
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
