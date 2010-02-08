@@ -1485,7 +1485,6 @@ item grenl_incendiary_ammo
 			reaction			false
 		}
 
-
 		firedef
 		{
 			name				"_Aimed Shot - Airburst"
