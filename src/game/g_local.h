@@ -297,7 +297,7 @@ void G_MissionThink(edict_t *self);
 
 /* g_utils.c */
 edict_t *G_Find(edict_t *from, int fieldofs, char *match);
-edict_t *G_FindRadius(edict_t *from, vec3_t org, float rad, entity_type_t type);
+edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type);
 edict_t *G_FindTargetEntity(const char *target);
 const char* G_GetPlayerName(int pnum);
 player_t* G_GetPlayerForTeam(int team);

@@ -501,7 +501,7 @@ edict_t *G_FindTargetEntity (const char *target)
  * }
  * @endcode
  */
-edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type)
+edict_t *G_FindRadius (edict_t * from, const vec3_t org, float rad, entity_type_t type)
 {
 	edict_t *ent = from;
 
