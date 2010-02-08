@@ -268,6 +268,7 @@ static menuNode_t* popupListNode;
  * no firemode is available because of insufficient TUs.
  * @sa HUD_PopupFiremodeReservation_f
  * @sa HUD_CheckFiremodeReservation
+ * @todo use components and confuncs here
  */
 static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 {
