@@ -201,56 +201,6 @@ static int HUD_UsableReactionTUs (const le_t * le)
 }
 
 /**
- * @brief Sets the display for a single weapon/reload HUD button.
- * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
- * @param[in] hand What list to display
- */
-static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
-{
-	int usableTusForRF;
-	char tuString[MAX_VAR];
-	qboolean status;
-	const fireDef_t *fd;
-	const char *tooltip;
-
-	if (index < ammo->numFiredefs[weapFdsIdx]) {
-		/* We have a defined fd ... */
-		fd = &ammo->fd[weapFdsIdx][index];
-	} else {
-		/* Hide this entry */
-		if (hand == ACTOR_HAND_RIGHT)
-			MN_ExecuteConfunc("set_right_inv %i", index);
-		else
-			MN_ExecuteConfunc("set_left_inv %i", index);
-		return;
-	}
-
-	assert(actor);
-	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
-
-	status = fd->time <= CL_ActorUsableTUs(actor);
-	usableTusForRF = HUD_UsableReactionTUs(actor);
-
-	if (usableTusForRF > fd->time) {
-		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
-		tooltip = tuString;
-	} else
-		tooltip = _("No remaining TUs left after shot.");
-
-	MN_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", ACTOR_GET_HAND_CHAR(hand),
-			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
-			va(_("Shots: %i"), fd->ammo), tooltip);
-
-	/* Display checkbox for reaction firemode */
-	if (fd->reaction) {
-		character_t* chr = CL_ActorGetChr(actor);
-		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
-		/* Change the state of the checkbox. */
-		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", ACTOR_GET_HAND_CHAR(hand), fd->fdIdx, active);
-	}
-}
-
-/**
  * @brief Returns the fire definition of the item the actor has in the given hand.
  * @param[in] actor The pointer to the actor we want to get the data from.
  * @param[in] hand Which hand to use
@@ -456,50 +406,54 @@ static void HUD_ShotReserve_f (void)
 	}
 }
 
-
 /**
- * @brief Display 'usable" (blue) reaction buttons.
- * @param[in] actor the actor to check for his reaction state.
+ * @brief Sets the display for a single weapon/reload HUD button.
+ * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
+ * @param[in] hand What list to display
  */
-static void HUD_DisplayPossibleReaction (const le_t * actor)
+static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
 {
-	if (!actor)
+	int usableTusForRF;
+	char tuString[MAX_VAR];
+	qboolean status;
+	const fireDef_t *fd;
+	const char *tooltip;
+
+	if (index < ammo->numFiredefs[weapFdsIdx]) {
+		/* We have a defined fd ... */
+		fd = &ammo->fd[weapFdsIdx][index];
+	} else {
+		/* Hide this entry */
+		if (hand == ACTOR_HAND_RIGHT)
+			MN_ExecuteConfunc("set_right_inv %i", index);
+		else
+			MN_ExecuteConfunc("set_left_inv %i", index);
 		return;
+	}
 
-	/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
-	if (!actor->selected)
-		return;
+	assert(actor);
+	assert(hand == ACTOR_HAND_RIGHT || hand == ACTOR_HAND_LEFT);
 
-	/* Display 'usable" (blue) reaction buttons */
-	if (actor->state & STATE_REACTION_ONCE)
-		MN_ExecuteConfunc("startreactiononce");
-	else if (actor->state & STATE_REACTION_MANY)
-		MN_ExecuteConfunc("startreactionmany");
-}
+	status = fd->time <= CL_ActorUsableTUs(actor);
+	usableTusForRF = HUD_UsableReactionTUs(actor);
 
-/**
- * @brief Display 'impossible" (red) reaction buttons.
- * @param[in] actor the actor to check for his reaction state.
- * @return qtrue if nothing changed message was sent otherwise qfalse.
- */
-static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
-{
-	if (!actor)
-		return qfalse;
+	if (usableTusForRF > fd->time) {
+		Com_sprintf(tuString, sizeof(tuString), _("Remaining TUs: %i"), usableTusForRF - fd->time);
+		tooltip = tuString;
+	} else
+		tooltip = _("No remaining TUs left after shot.");
 
-	/* Given actor does not equal the currently selected actor. */
-	if (!actor->selected)
-		return qfalse;
+	MN_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", ACTOR_GET_HAND_CHAR(hand),
+			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
+			va(_("Shots: %i"), fd->ammo), tooltip);
 
-	/* Display 'impossible" (red) reaction buttons */
-	if (actor->state & STATE_REACTION_ONCE)
-		MN_ExecuteConfunc("startreactiononce_impos");
-	else if (actor->state & STATE_REACTION_MANY)
-		MN_ExecuteConfunc("startreactionmany_impos");
-	else
-		return qtrue;
-
-	return qfalse;
+	/* Display checkbox for reaction firemode */
+	if (fd->reaction) {
+		character_t* chr = CL_ActorGetChr(actor);
+		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
+		/* Change the state of the checkbox. */
+		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", ACTOR_GET_HAND_CHAR(hand), fd->fdIdx, active);
+	}
 }
 
 void HUD_DisplayFiremodes (const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay)
@@ -940,7 +894,6 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char 
 	return -1;
 }
 
-
 /**
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
@@ -963,6 +916,51 @@ static qboolean HUD_WeaponWithReaction (const le_t * actor, const actorHands_t h
 			return qtrue;
 
 	return qfalse;
+}
+
+/**
+ * @brief Display 'impossible" (red) reaction buttons.
+ * @param[in] actor the actor to check for his reaction state.
+ * @return qtrue if nothing changed message was sent otherwise qfalse.
+ */
+static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
+{
+	if (!actor)
+		return qfalse;
+
+	/* Given actor does not equal the currently selected actor. */
+	if (!actor->selected)
+		return qfalse;
+
+	/* Display 'impossible" (red) reaction buttons */
+	if (actor->state & STATE_REACTION_ONCE)
+		MN_ExecuteConfunc("startreactiononce_impos");
+	else if (actor->state & STATE_REACTION_MANY)
+		MN_ExecuteConfunc("startreactionmany_impos");
+	else
+		return qtrue;
+
+	return qfalse;
+}
+
+/**
+ * @brief Display 'usable" (blue) reaction buttons.
+ * @param[in] actor the actor to check for his reaction state.
+ */
+static void HUD_DisplayPossibleReaction (const le_t * actor)
+{
+	if (!actor)
+		return;
+
+	/* Given actor does not equal the currently selected actor. This normally only happens on game-start. */
+	if (!actor->selected)
+		return;
+
+	/* Display 'usable" (blue) reaction buttons */
+	if (actor->state & STATE_REACTION_ONCE)
+		MN_ExecuteConfunc("startreactiononce");
+	else if (actor->state & STATE_REACTION_MANY)
+		MN_ExecuteConfunc("startreactionmany");
 }
 
 /**
