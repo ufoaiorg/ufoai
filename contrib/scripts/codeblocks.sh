@@ -92,8 +92,8 @@ function start_downloads()
 {
 	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingwrt-3.17-mingw32-dev.tar.gz mingwrt.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-mingw32-dev.tar.gz w32api.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0-2-mingw32-bin.tar.gz gdb.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-3-msys-1.0.12-dev.tar.lzma w32api.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0.50.20100202-mingw32-bin.tar.gz gdb.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
 
 # TODO mingw64 support
@@ -191,7 +191,7 @@ function extract_mingw()
 {
 	extract_archive_gz binutils.tar.gz "${MINGW_DIR}"
 	extract_archive_gz mingwrt.tar.gz "${MINGW_DIR}"
-	extract_archive_gz w32api.tar.gz "${MINGW_DIR}"
+	extract_archive_tar7z w32api.tar.lzma "${MINGW_DIR}"
 	extract_archive_gz gdb.tar.gz "${MINGW_DIR}"
 	extract_archive_gz gcc.tar.gz "${MINGW_DIR}"
 	extract_archive_gz g++.tar.gz "${MINGW_DIR}"
