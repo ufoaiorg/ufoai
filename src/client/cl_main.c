@@ -88,8 +88,6 @@ client_state_t cl;
 
 static int precache_check;
 
-static void CL_SpawnSoldiers_f(void);
-
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
 struct memPool_s *cl_soundSysPool;

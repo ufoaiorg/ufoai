@@ -784,7 +784,7 @@ static inline void R_VerifyDriver (void)
 		r_config.hardwareType = GLHW_INTEL;
 	} else if (R_SearchForVendor("NVIDIA")) {
 		r_config.hardwareType = GLHW_NVIDIA;
-	} else if (R_SearchForVendor("ATI")) {
+	} else if (R_SearchForVendor("ATI") || R_SearchForVendor("Advanced Micro Devices") || R_SearchForVendor("AMD")) {
 		r_config.hardwareType = GLHW_ATI;
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;
