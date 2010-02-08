@@ -90,9 +90,15 @@ void INV_ItemDescription (const objDef_t *od)
 			if (GAME_ItemIsUseable(od->weapons[i]))
 				count++;
 		if (itemIndex >= od->numWeapons || itemIndex < 0)
-			itemIndex = count - 1;
-		if (count > 0)
+			itemIndex = 0;
+		if (count > 0) {
+			while (!GAME_ItemIsUseable(od->weapons[itemIndex])) {
+				itemIndex++;
+				if (itemIndex >= od->numWeapons)
+					itemIndex = 0;
+			}
 			Cvar_ForceSet("mn_linkname", _(od->weapons[itemIndex]->name));
+		}
 	} else if (od->weapon && od->reload) {
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo
 		 * we are counting the number of ammo that is usable with this weapon */
@@ -101,24 +107,17 @@ void INV_ItemDescription (const objDef_t *od)
 				count++;
 
 		if (itemIndex >= od->numAmmos || itemIndex < 0)
-			itemIndex = count - 1;
+			itemIndex = 0;
 
 		/* Only display ammos if at least one has been researched */
 		if (count > 0) {
 			/* We have a weapon that uses ammos */
-			const objDef_t *odAmmo = od->ammos[itemIndex];
-			const char *name = _(odAmmo->name);
-			if (!GAME_ItemIsUseable(odAmmo)) {
-				for (i = 0; i < od->numWeapons; i++) {
-					itemIndex++;
-					odAmmo = od->ammos[itemIndex];
-					if (GAME_ItemIsUseable(odAmmo)) {
-						name = _(odAmmo->name);
-						break;
-					}
-				}
+			while (!GAME_ItemIsUseable(od->ammos[itemIndex])) {
+				itemIndex++;
+				if (itemIndex >= od->numAmmos)
+					itemIndex = 0;
 			}
-			Cvar_ForceSet("mn_linkname", name);
+			Cvar_ForceSet("mn_linkname", _(od->ammos[itemIndex]->name));
 		}
 	}
 
@@ -140,41 +139,45 @@ void INV_ItemDescription (const objDef_t *od)
 			const objDef_t *odAmmo;
 			int weaponIndex;
 
-			if (od->weapon) {
-				Com_sprintf(itemText, sizeof(itemText), _("%s weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-				if (od->ammo > 0)
-					Q_strcat(itemText, va(_("Max ammo:\t%i\n"), od->ammo), sizeof(itemText));
-				odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od;
-				assert(odAmmo);
-				for (weaponIndex = 0; (weaponIndex < odAmmo->numWeapons) && (odAmmo->weapons[weaponIndex] != od); weaponIndex++);
+			if (count > 0) {
+				if (od->weapon) {
+					Com_sprintf(itemText, sizeof(itemText), _("%s weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
+					if (od->ammo > 0)
+						Q_strcat(itemText, va(_("Max ammo:\t%i\n"), od->ammo), sizeof(itemText));
+					odAmmo = (od->numAmmos) ? od->ammos[itemIndex] : od;
+					assert(odAmmo);
+					for (weaponIndex = 0; (weaponIndex < odAmmo->numWeapons) && (odAmmo->weapons[weaponIndex] != od); weaponIndex++);
+				} else {
+					odAmmo = od;
+					weaponIndex = itemIndex;
+				}
+
+				/** @todo is there ammo with no firedefs? */
+				if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
+					const fireDef_t *fd;
+					numFiredefs = odAmmo->numFiredefs[weaponIndex];
+
+					/* This contains everything common for weapons and ammos */
+					/* We check if the wanted firemode to display exists. */
+					if (fireModeIndex > numFiredefs - 1)
+						fireModeIndex = 0;
+					if (fireModeIndex < 0)
+						fireModeIndex = numFiredefs - 1;
+
+					fd = &odAmmo->fd[weaponIndex][fireModeIndex];
+
+					/* We always display the name of the firemode for an ammo */
+					Cvar_Set("mn_firemodename", _(fd->name));
+
+					/* We display the characteristics of this firemode */
+					Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill)), sizeof(itemText));
+					Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) (fd->damage[0] + fd->spldmg[0]) * fd->shots), sizeof(itemText));
+					Q_strcat(itemText, va(_("Time units:\t%i\n"), fd->time), sizeof(itemText));
+					Q_strcat(itemText, va(_("Range:\t%g\n"), fd->range / UNIT_SIZE), sizeof(itemText));
+					Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
+				}
 			} else {
-				odAmmo = od;
-				weaponIndex = itemIndex;
-			}
-
-			/** @todo is there ammo with no firedefs? */
-			if (GAME_ItemIsUseable(odAmmo) && odAmmo->numFiredefs[weaponIndex] > 0) {
-				const fireDef_t *fd;
-				numFiredefs = odAmmo->numFiredefs[weaponIndex];
-
-				/* This contains everything common for weapons and ammos */
-				/* We check if the wanted firemode to display exists. */
-				if (fireModeIndex > numFiredefs - 1)
-					fireModeIndex = 0;
-				if (fireModeIndex < 0)
-					fireModeIndex = numFiredefs - 1;
-
-				fd = &odAmmo->fd[weaponIndex][fireModeIndex];
-
-				/* We always display the name of the firemode for an ammo */
-				Cvar_Set("mn_firemodename", _(fd->name));
-
-				/* We display the characteristics of this firemode */
-				Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill)), sizeof(itemText));
-				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) (fd->damage[0] + fd->spldmg[0]) * fd->shots), sizeof(itemText));
-				Q_strcat(itemText, va(_("Time units:\t%i\n"), fd->time), sizeof(itemText));
-				Q_strcat(itemText, va(_("Range:\t%g\n"), fd->range / UNIT_SIZE), sizeof(itemText));
-				Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
+				Com_sprintf(itemText, sizeof(itemText), _("%s. No detailed info available.\n"), INV_IsAmmo(od) ? _("Ammunition") : _("Weapon"));
 			}
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
@@ -233,31 +236,26 @@ static void INV_DecreaseFiremode_f (void)
 static void INV_IncreaseItem_f (void)
 {
 	const objDef_t *od = currentDisplayedObject;
-	qboolean overflow = qfalse;
 
 	if (!od)
 		return;
 
 	if (od->numWeapons) {
+		const int current = itemIndex;
 		do {
-			if (overflow)
-				break;
 			itemIndex++;
 			if (itemIndex > od->numWeapons - 1) {
 				itemIndex = 0;
-				overflow = qtrue;
 			}
-		} while (!GAME_ItemIsUseable(od->weapons[itemIndex]));
+		} while (itemIndex != current && !GAME_ItemIsUseable(od->weapons[itemIndex]));
 	} else if (od->numAmmos) {
+		const int current = itemIndex;
 		do {
-			if (overflow)
-				break;
 			itemIndex++;
 			if (itemIndex > od->numAmmos - 1) {
 				itemIndex = 0;
-				overflow = qtrue;
 			}
-		} while (!GAME_ItemIsUseable(od->ammos[itemIndex]));
+		} while (itemIndex != current && !GAME_ItemIsUseable(od->ammos[itemIndex]));
 	}
 	INV_ItemDescription(od);
 }
@@ -269,31 +267,26 @@ static void INV_IncreaseItem_f (void)
 static void INV_DecreaseItem_f (void)
 {
 	const objDef_t *od = currentDisplayedObject;
-	qboolean underflow = qfalse;
 
 	if (!od)
 		return;
 
 	if (od->numWeapons) {
+		const int current = itemIndex;
 		do {
-			if (underflow)
-				break;
 			itemIndex--;
 			if (itemIndex < 0) {
 				itemIndex = od->numWeapons - 1;
-				underflow = qtrue;
 			}
-		} while (!GAME_ItemIsUseable(od->weapons[itemIndex]));
+		} while (itemIndex != current && !GAME_ItemIsUseable(od->weapons[itemIndex]));
 	} else if (od->numAmmos) {
+		const int current = itemIndex;
 		do {
-			if (underflow)
-				break;
 			itemIndex--;
 			if (itemIndex < 0) {
 				itemIndex = od->numAmmos - 1;
-				underflow = qtrue;
 			}
-		} while (!GAME_ItemIsUseable(od->ammos[itemIndex]));
+		} while (itemIndex != current && !GAME_ItemIsUseable(od->ammos[itemIndex]));
 	}
 	INV_ItemDescription(od);
 }
