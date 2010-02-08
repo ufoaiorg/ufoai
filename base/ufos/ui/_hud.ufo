@@ -16,7 +16,6 @@ component panel cmpFiremodeEntry {
 		texl	"0 0"
 		texh	"214  63"
 		size	"214  63"
-		invis true
 		onClick	{ cmd "hud_fireweapon <node:parent.hand@string> <node:parent.id@string>;" }
 		onMouseEnter { *node:this@image = "hud/firemode_hover" }
 		onMouseLeave { *node:this@image = "hud/firemode" }
@@ -29,7 +28,7 @@ component panel cmpFiremodeEntry {
 		pos		"0 32"
 		texl	"0 0"
 		texh	"31 31"
-		onClick	{ cmd "sel_reactmode r 0;" }
+		onClick	{ cmd "hud_selectreactionfiremode r 0;" }
 	}
 	
 	/** store the hand */
@@ -175,9 +174,7 @@ window ahud extends levelbuttons {
 
 	panel firemodes {
 		{
-			align	LAYOUTALIGN_FILL
 			layout	LAYOUT_PACK
-			ghost	true
 			size	"1024 768"
 		}
 
@@ -185,9 +182,7 @@ window ahud extends levelbuttons {
 			{
 				pos				"0 0"
 				size			"300 768"
-				align			LAYOUTALIGN_LEFT
 				layout			LAYOUT_PACK
-				ghost			true
 				padding			0
 				layoutmargin	2
 			}
