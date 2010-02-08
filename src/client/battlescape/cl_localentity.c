@@ -1332,6 +1332,38 @@ typedef struct {
 	int contentmask;			/**< search these in your trace - see MASK_* */
 } moveclip_t;
 
+/**
+ * @brief Returns a headnode that can be used for testing or clipping an
+ * object of mins/maxs size.
+ * Offset is filled in to contain the adjustment that must be added to the
+ * testing object's origin to get a point to use with the returned hull.
+ * @param[in] le The local entity to get the bmodel from
+ * @param[out] tile The maptile the bmodel belongs, too
+ * @param[out] rmaShift the shift vector in case of an RMA (needed for doors)
+ * @return The headnode for the local entity
+ * @sa SV_HullForEntity
+ */
+static int CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t angles)
+{
+	/* special case for bmodels */
+	if (le->contents & CONTENTS_SOLID) {
+		cBspModel_t *model = cl.model_clip[le->modelnum1];
+		/* special value for bmodel */
+		assert(le->modelnum1 < MAX_MODELS);
+		if (!model)
+			Com_Error(ERR_DROP, "CL_HullForEntity: Error - le with NULL bmodel (%i)\n", le->type);
+		*tile = model->tile;
+		VectorCopy(le->angles, angles);
+		VectorCopy(model->shift, rmaShift);
+		return model->headnode;
+	} else {
+		/* might intersect, so do an exact clip */
+		*tile = 0;
+		VectorCopy(vec3_origin, angles);
+		VectorCopy(vec3_origin, rmaShift);
+		return CM_HeadnodeForBox(*tile, le->mins, le->maxs);
+	}
+}
 
 /**
  * @brief Clip against solid entities
@@ -1344,8 +1376,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	le_t *le;
 	trace_t trace;
 	int headnode;
-	cBspModel_t *model;
-	const float *angles;
+	vec3_t angles;
 	vec3_t origin, shift;
 
 	if (clip->trace.allsolid)
@@ -1357,30 +1388,11 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		if (le == clip->passle || le == clip->passle2)
 			continue;
 
-		/* special case for bmodels */
-		if (le->contents & CONTENTS_SOLID) {
-			/* special value for bmodel */
-			assert(le->modelnum1 < MAX_MODELS);
-			model = cl.model_clip[le->modelnum1];
-			if (!model) {
-				Com_Printf("CL_ClipMoveToLEs: Error - le with no NULL bmodel (%i)\n", le->type);
-				continue;
-			}
-			headnode = model->headnode;
-			tile = model->tile;
-			angles = le->angles;
-			VectorCopy(model->shift, shift);
-		} else {
-			/* might intersect, so do an exact clip */
-			/** @todo make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
-			tile = 0;
-			headnode = CM_HeadnodeForBox(tile, le->mins, le->maxs);
-			angles = vec3_origin;
-			VectorCopy(vec3_origin, shift);
-		}
+		headnode = CL_HullForEntity(le, &tile, shift, angles);
+		assert(headnode < MAX_MAP_NODES);
+
 		VectorCopy(le->origin, origin);
 
-		assert(headnode < MAX_MAP_NODES);
 		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
