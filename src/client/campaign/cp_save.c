@@ -579,17 +579,11 @@ static void SAV_GameQuickLoadInit_f (void)
 {
 	qFILE f;
 
-	/* only allow quickload while there is already a running campaign */
-	if (!GAME_CP_IsRunning()) {
-		MN_PopWindow(qfalse);
-		return;
-	}
-
 	FS_OpenFile("save/slotquick.xml", &f, FILE_READ);
-	if (!f.f && !f.z)
-		MN_PopWindow(qfalse);
-	else
+	if (f.f || f.z) {
+		MN_PushWindow("quickload", NULL);
 		FS_CloseFile(&f);
+	}
 }
 
 /**
@@ -614,9 +608,6 @@ static void SAV_GameQuickSave_f (void)
 static void SAV_GameQuickLoad_f (void)
 {
 	char *error = NULL;
-
-	if (!GAME_CP_IsRunning())
-		return;
 
 	if (CL_OnBattlescape()) {
 		Com_Printf("Could not load the campaign while you are on the battlefield\n");
