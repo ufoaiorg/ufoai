@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2009 UFO: Alien Invasion.
+Copyright (C) 2002-2010 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -176,6 +176,7 @@ void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, con
 
 /**
  * @brief Save callback for savegames
+ * @param[out] parent XML Node structure, where we write the information to
  * @sa BS_LoadXML
  * @sa SAV_GameSaveXML
  */
@@ -186,25 +187,24 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	/* store market */
 	node = mxml_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (csi.ods[i].id[0] != '\0') {
-			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ELEMENT);
+		if (csi.ods[i].id[0] != '\0' && BS_IsOnMarket(&csi.ods[i])) {
+			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ITEM);
 			mxml_AddString(snode, SAVE_MARKET_ID, csi.ods[i].id);
-			mxml_AddInt(snode, SAVE_MARKET_NUM, ccs.eMarket.numItems[i]);
-			mxml_AddInt(snode, SAVE_MARKET_BID, ccs.eMarket.bidItems[i]);
-			mxml_AddInt(snode, SAVE_MARKET_ASK, ccs.eMarket.askItems[i]);
-			mxml_AddDouble(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionItems[i]);
-			mxml_AddBool(snode, SAVE_MARKET_AUTOSELL, ccs.autosell[i]);
-			mxml_AddBool(snode, "autosell", ccs.autosell[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numItems[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidItems[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askItems[i]);
+			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionItems[i]);
+			mxml_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, ccs.autosell[i]);
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		if (ccs.eMarket.numAircraft[i]) {
-			mxml_node_t * snode = mxml_AddNode(node, "elementaircraft");
-			mxml_AddString(snode, "aircrafttype", Com_DropShipTypeToShortName(i));
-			mxml_AddInt(snode, "numaircraft", ccs.eMarket.numAircraft[i]);
-			mxml_AddInt(snode, "bidaircraft", ccs.eMarket.bidAircraft[i]);
-			mxml_AddInt(snode, "askaircraft", ccs.eMarket.askAircraft[i]);
-			mxml_AddDouble(snode, "evoaircraft", ccs.eMarket.currentEvolutionAircraft[i]);
+		if ((ccs.eMarket.bidAircraft[i] > 0) || (ccs.eMarket.askAircraft > 0)) {
+			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_AIRCRAFT);
+			mxml_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
+			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askAircraft[i]);
+			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionAircraft[i]);
 		}
 	}
 	return qtrue;
@@ -212,40 +212,41 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 
 /**
  * @brief Load callback for savegames
+ * @param[in] parent XML Node structure, where we get the information from
  * @sa BS_Save
  * @sa SAV_GameLoad
  */
 qboolean BS_LoadXML (mxml_node_t *parent)
 {
-	int i;
 	mxml_node_t *node, *snode;
 	node = mxml_GetNode(parent, SAVE_MARKET_MARKET);
+
 	if (!node)
 		return qfalse;
-	for(i = 0, snode = mxml_GetNode(node, SAVE_MARKET_ELEMENT); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, SAVE_MARKET_ELEMENT)) {
-		if (snode) {
-			const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
-			const objDef_t *od = INVSH_GetItemByID(s);
-			if (!od) {
-				Com_Printf("BS_Load: Could not find item '%s'\n", s);
-			} else {
-				ccs.eMarket.numItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
-				ccs.eMarket.bidItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
-				ccs.eMarket.askItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
-				ccs.eMarket.currentEvolutionItems[od->idx] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
-				ccs.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
-			}
+
+	for (snode = mxml_GetNode(node, SAVE_MARKET_ITEM); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_ITEM)) {
+		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
+		const objDef_t *od = INVSH_GetItemByID(s);
+
+		if (!od) {
+			Com_Printf("BS_LoadXML: Could not find item '%s'\n", s);
+			continue;
 		}
+
+		ccs.eMarket.numItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
+		ccs.eMarket.bidItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
+		ccs.eMarket.askItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
+		ccs.eMarket.currentEvolutionItems[od->idx] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
+		ccs.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
 	}
-	for (i = 0, snode = mxml_GetNode(node, "elementaircraft"); i < AIRCRAFTTYPE_MAX; i++, snode = mxml_GetNextNode(snode, node, "elementaircraft")) {
-		if (snode) {
-			const char *s = mxml_GetString(snode, "aircrafttype");
-			humanAircraftType_t type = Com_DropShipShortNameToID(s);
-			ccs.eMarket.numAircraft[type] = mxml_GetInt(snode, "numaircraft", 0);
-			ccs.eMarket.bidAircraft[type] = mxml_GetInt(snode, "bidaircraft", 0);
-			ccs.eMarket.askAircraft[type] = mxml_GetInt(snode, "askaircraft", 0);
-			ccs.eMarket.currentEvolutionAircraft[type] = mxml_GetDouble(snode, "evoaircraft", 0.0);
-		}
+	for (snode = mxml_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
+		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
+		humanAircraftType_t type = Com_DropShipShortNameToID(s);
+		
+		ccs.eMarket.numAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
+		ccs.eMarket.bidAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
+		ccs.eMarket.askAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
+		ccs.eMarket.currentEvolutionAircraft[type] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
 	}
 
 	return qtrue;
