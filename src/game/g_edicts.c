@@ -175,6 +175,7 @@ edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 /**
  * @brief Iterate through the living actor entities of the given team
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ * @param team The team we are looking for
  */
 edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team)
 {
