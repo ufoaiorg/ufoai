@@ -8,8 +8,8 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../base/game" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/game" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -23,11 +23,11 @@
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
-				<Option output="../../base/game" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/game" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
-				<Option host_application="../../ufo.exe" />
+				<Option host_application="..\..\ufo.exe" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />
@@ -42,8 +42,8 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../base/game" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/game" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -51,8 +51,8 @@
 				</Compiler>
 			</Target>
 			<Target title="macosx">
-				<Option output="../../base/game" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/game" />
+				<Option output="..\..\base\game" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -67,202 +67,205 @@
 		<Compiler>
 			<Add option="-DCOMPILE_UFO" />
 		</Compiler>
-		<Unit filename="../../base/ai/alien.lua" />
-		<Unit filename="../../base/ai/civilian.lua" />
-		<Unit filename="../../src/game/g_ai.h" />
-		<Unit filename="../../src/game/g_ai.c">
+		<Unit filename="..\..\base\ai\alien.lua" />
+		<Unit filename="..\..\base\ai\civilian.lua" />
+		<Unit filename="..\..\src\game\g_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_ai_lua.c">
+		<Unit filename="..\..\src\game\g_ai.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_client.c">
+		<Unit filename="..\..\src\game\g_ai.h" />
+		<Unit filename="..\..\src\game\g_ai_lua.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_cmds.c">
+		<Unit filename="..\..\src\game\g_client.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_combat.c">
+		<Unit filename="..\..\src\game\g_cmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_func.c">
+		<Unit filename="..\..\src\game\g_combat.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_local.h" />
-		<Unit filename="../../src/game/g_main.c">
+		<Unit filename="..\..\src\game\g_edicts.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_events.c">
+		<Unit filename="..\..\src\game\g_events.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_match.c">
+		<Unit filename="..\..\src\game\g_func.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_morale.c">
+		<Unit filename="..\..\src\game\g_inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_mission.c">
+		<Unit filename="..\..\src\game\g_local.h" />
+		<Unit filename="..\..\src\game\g_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_move.c">
+		<Unit filename="..\..\src\game\g_match.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_vis.c">
+		<Unit filename="..\..\src\game\g_mission.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_inventory.c">
+		<Unit filename="..\..\src\game\g_morale.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_round.c">
+		<Unit filename="..\..\src\game\g_move.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_stats.c">
+		<Unit filename="..\..\src\game\g_phys.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_actor.c">
+		<Unit filename="..\..\src\game\g_reaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_phys.c">
+		<Unit filename="..\..\src\game\g_round.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_reaction.c">
+		<Unit filename="..\..\src\game\g_spawn.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_spawn.c">
+		<Unit filename="..\..\src\game\g_stats.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_svcmds.c">
+		<Unit filename="..\..\src\game\g_svcmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_trigger.c">
+		<Unit filename="..\..\src\game\g_trigger.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/g_utils.c">
+		<Unit filename="..\..\src\game\g_utils.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/game.def">
+		<Unit filename="..\..\src\game\g_vis.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/game.h" />
-		<Unit filename="../../src/game/inventory.c">
+		<Unit filename="..\..\src\game\game.def">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/inv_shared.c">
+		<Unit filename="..\..\src\game\game.h" />
+		<Unit filename="..\..\src\game\inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/inv_shared.h" />
-		<Unit filename="../../src/game/lua/lapi.c">
+		<Unit filename="..\..\src\game\inv_shared.h" />
+		<Unit filename="..\..\src\game\inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lauxlib.c">
+		<Unit filename="..\..\src\game\lua\lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lbaselib.c">
+		<Unit filename="..\..\src\game\lua\lauxlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lcode.c">
+		<Unit filename="..\..\src\game\lua\lbaselib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ldblib.c">
+		<Unit filename="..\..\src\game\lua\lcode.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ldebug.c">
+		<Unit filename="..\..\src\game\lua\ldblib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ldo.c">
+		<Unit filename="..\..\src\game\lua\ldebug.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ldump.c">
+		<Unit filename="..\..\src\game\lua\ldo.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lfunc.c">
+		<Unit filename="..\..\src\game\lua\ldump.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lgc.c">
+		<Unit filename="..\..\src\game\lua\lfunc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/linit.c">
+		<Unit filename="..\..\src\game\lua\lgc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/liolib.c">
+		<Unit filename="..\..\src\game\lua\linit.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/llex.c">
+		<Unit filename="..\..\src\game\lua\liolib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lmathlib.c">
+		<Unit filename="..\..\src\game\lua\llex.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lmem.c">
+		<Unit filename="..\..\src\game\lua\lmathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/loadlib.c">
+		<Unit filename="..\..\src\game\lua\lmem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lobject.c">
+		<Unit filename="..\..\src\game\lua\loadlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lopcodes.c">
+		<Unit filename="..\..\src\game\lua\lobject.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/loslib.c">
+		<Unit filename="..\..\src\game\lua\lopcodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lparser.c">
+		<Unit filename="..\..\src\game\lua\loslib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lstate.c">
+		<Unit filename="..\..\src\game\lua\lparser.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lstring.c">
+		<Unit filename="..\..\src\game\lua\lstate.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lstrlib.c">
+		<Unit filename="..\..\src\game\lua\lstring.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ltable.c">
+		<Unit filename="..\..\src\game\lua\lstrlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ltablib.c">
+		<Unit filename="..\..\src\game\lua\ltable.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/ltm.c">
+		<Unit filename="..\..\src\game\lua\ltablib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lua.c">
+		<Unit filename="..\..\src\game\lua\ltm.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lundump.c">
+		<Unit filename="..\..\src\game\lua\lua.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lvm.c">
+		<Unit filename="..\..\src\game\lua\lundump.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/lzio.c">
+		<Unit filename="..\..\src\game\lua\lvm.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/lua/print.c">
+		<Unit filename="..\..\src\game\lua\lzio.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/q_shared.c">
+		<Unit filename="..\..\src\game\lua\print.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/q_shared.h" />
-		<Unit filename="../../src/shared/infostring.c">
+		<Unit filename="..\..\src\game\q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/mathlib.c">
+		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/mathlib.h" />
-		<Unit filename="../../src/shared/shared.c">
+		<Unit filename="..\..\src\shared\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/shared.h" />
-		<Unit filename="../../src/shared/parse.c">
+		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/parse.h" />
+		<Unit filename="..\..\src\shared\parse.h" />
+		<Unit filename="..\..\src\shared\shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\shared.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
