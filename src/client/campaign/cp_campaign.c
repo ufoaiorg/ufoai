@@ -952,6 +952,8 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		qboolean defaultAssigned = qfalse;
 
 		memset(&mission, 0, sizeof(mission));
+
+		mission.idx = mxml_GetInt(act_node, "IDX", ++ccs.campaignStats.missions);
 		name = mxml_GetString(act_node, "mapDef_id");
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
@@ -1173,6 +1175,8 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		mxml_node_t * missions = mxml_AddNode(campaign, "mission");
+
+		mxml_AddInt(missions, "IDX", mission->idx);
 		if (mission->mapDef) {
 			mxml_AddString(missions, "mapDef_id", mission->mapDef->id);
 			mxml_AddInt(missions, "mapdeftimes", mission->mapDef->timesAlreadyUsed);
@@ -1253,6 +1257,7 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 
 	stats = mxml_AddNode(parent, "stats");
 
+	mxml_AddInt(stats, "missions", ccs.campaignStats.missions);
 	mxml_AddInt(stats, "missionswon", ccs.campaignStats.missionsWon);
 	mxml_AddInt(stats, "missionslost", ccs.campaignStats.missionsLost);
 	mxml_AddInt(stats, "basesbuild", ccs.campaignStats.basesBuild);
@@ -1280,6 +1285,7 @@ qboolean STATS_LoadXML (mxml_node_t *tree)
 		Com_Printf("Did not find stats entry in xml!\n");
 		return qfalse;
 	}
+	ccs.campaignStats.missions = max(mxml_GetInt(stats, "missions", 0), ccs.campaignStats.missions);
 	ccs.campaignStats.missionsWon = mxml_GetInt(stats, "missionswon", 0);
 	ccs.campaignStats.missionsLost = mxml_GetInt(stats, "missionslost", 0);
 	ccs.campaignStats.basesBuild = mxml_GetInt(stats, "basesbuild", 0);

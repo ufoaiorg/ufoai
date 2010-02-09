@@ -390,12 +390,15 @@ mission_t* CP_GetMissionByID (const char *missionId)
  */
 mission_t* MAP_GetMissionByIDX (int id)
 {
-	int i;
-	const linkedList_t *list = ccs.missions;
+	const linkedList_t *list;
 
-	for (i = 0; list; list = list->next, i++) {
+	/* first element start to 1 */
+	if (id == 0)
+		return NULL;
+
+	for (list = ccs.missions; list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
-		if (i == id)
+		if (mission->idx == id)
 			return mission;
 	}
 
@@ -408,17 +411,7 @@ mission_t* MAP_GetMissionByIDX (int id)
  */
 int MAP_GetIDXByMission (const mission_t *mis)
 {
-	int i;
-	const linkedList_t *list = ccs.missions;
-
-	for (i = 0; list; list = list->next, i++) {
-		mission_t *mission = (mission_t *)list->data;
-		if (mission == mis)
-			return i;
-	}
-
-	Com_Printf("MAP_GetIDXByMission: Mission does not exist\n");
-	return 0;
+	return mis->idx;
 }
 
 /**
@@ -1302,6 +1295,7 @@ qboolean CP_MissionCreate (mission_t *mission)
 		CP_MissionDisableTimeLimit(mission);
 	}
 
+	mission->idx = ++ccs.campaignStats.missions;
 	return qtrue;
 }
 
@@ -1444,6 +1438,8 @@ mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	} else
 		mission.startDate = Date_Add(ccs.date, Date_Random(minNextSpawningDate, nextSpawningDate));
 	mission.finalDate = mission.startDate;
+	mission.idx = ++ccs.campaignStats.missions;
+
 	CP_SetMissionName(&mission);
 
 	/* Lower alien interest in base building if a base building mission is

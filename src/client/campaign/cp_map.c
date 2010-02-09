@@ -271,7 +271,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	aircraft_t *aircraft;
 	int i;
 	vec2_t pos;
-	const linkedList_t *list = ccs.missions;
+	const linkedList_t *list;
 
 	/* get map position */
 	if (cl_3dmap->integer)
@@ -319,7 +319,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	memset(multiSelect.popupText, 0, sizeof(multiSelect.popupText));
 
 	/* Get selected missions */
-	for (; list; list = list->next) {
+	for (list = ccs.missions; list; list = list->next) {
 		const mission_t *tempMission = (mission_t *)list->data;
 		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
 			break;
@@ -1005,18 +1005,10 @@ static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const ve
  */
 static void MAP_GetMissionAngle (float *vector, int id)
 {
-	int missionID = 0;
-	/* Cycle through missions */
-	const linkedList_t *list;
-	for (list = ccs.missions ;list; list = list->next, missionID++) {
-		mission_t *mission = (mission_t *)list->data;
-		if (missionID == id) {
-			assert(mission);
-			MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
-			MAP_SelectMission(mission);
-			return;
-		}
-	}
+	mission_t *mission = MAP_GetMissionByIDX(id);
+	assert(mission);
+	MAP_ConvertObjectPositionToGeoscapePosition(vector, mission->pos);
+	MAP_SelectMission(mission);
 }
 
 /**
@@ -1676,20 +1668,19 @@ static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* 
  */
 void MAP_UpdateGeoscapeDock (void)
 {
-	const linkedList_t *list = ccs.missions;
+	const linkedList_t *list;
 	int ufoIDX;
-	int missionID = 0;
 	char buf[MAX_SMALLMENUTEXTLEN];
 
 	MN_ExecuteConfunc("clean_geoscape_object");
 
 	/* draw mission pics */
-	for (; list; list = list->next, missionID++) {
+	for (list = ccs.missions; list; list = list->next) {
 		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
 		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
-				missionID, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
+				ms->idx, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
 	}
 
 	/* draws ufos */
@@ -1714,7 +1705,7 @@ void MAP_UpdateGeoscapeDock (void)
  */
 static void MAP_DrawMapMarkers (const menuNode_t* node)
 {
-	const linkedList_t *list = ccs.missions;
+	const linkedList_t *list;
 	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
 	const char* font;
 
@@ -1743,7 +1734,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
-	for (; list; list = list->next) {
+	for (list = ccs.missions; list; list = list->next) {
 		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;

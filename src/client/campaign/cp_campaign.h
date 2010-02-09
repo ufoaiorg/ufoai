@@ -198,6 +198,7 @@ typedef struct alienTeamCategory_s {
  * For example, coming with a UFO on earth, land, explore earth, and leave with UFO
  */
 typedef struct mission_s {
+	int idx;						/**< unique id of this mission */
 	char id[MAX_VAR];				/**< script id (must be first element of mission_t to use LIST_ContainsString) */
 	mapDef_t* mapDef;				/**< mapDef used for this mission */
 	qboolean active;				/**< aircraft at place? */
@@ -248,6 +249,7 @@ typedef struct missionResults_s {
 extern missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
 
 typedef struct stats_s {
+	int missions;				/**< all missions (used for unique mission idx generation) */
 	int missionsWon;
 	int missionsLost;
 	int basesBuild;
@@ -545,6 +547,7 @@ typedef struct ccs_s {
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
 
 	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
+	/** @todo remove this. it has nothing with ccs, it should be handled by menuscripts/cvars */
 	qboolean displayHeavyEquipmentList;
 } ccs_t;
 
