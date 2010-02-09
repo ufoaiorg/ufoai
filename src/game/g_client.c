@@ -479,18 +479,14 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
+qboolean G_ClientCanReload (player_t *player, int entnum, int containerID)
 {
 	edict_t *ent;
 	invList_t *ic;
-	int containerID;
-	objDef_t *weapon;
 	int container;
+	objDef_t *weapon;
 
 	ent = G_EdictsGetByNum(entnum);
-
-	/* search for clips and select the one that is available easily */
-	containerID = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
 
 	if (ent->i.c[containerID]) {
 		weapon = ent->i.c[containerID]->item.t;

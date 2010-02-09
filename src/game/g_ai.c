@@ -801,9 +801,10 @@ static void AI_TryToReloadWeapon (edict_t *ent, int containerID)
 	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
-		G_ActorInvMove(ent, INVDEF(containerID), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
+		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
 	}
 }
+
 /**
  * @brief The think function for the ai controlled aliens
  * @param[in] player

@@ -460,6 +460,7 @@ typedef struct csi_s {
 	int numAlienTeams;
 } csi_t;
 
+/** @todo remove this and use the container id - not every unit must have two hands */
 typedef enum {
 	ACTOR_HAND_NOT_SET = 0,
 	ACTOR_HAND_RIGHT = 1,
