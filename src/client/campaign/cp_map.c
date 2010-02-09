@@ -1589,8 +1589,9 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
  */
 static const char *MAP_GetMissionText (char *buffer, size_t size, const mission_t *mission)
 {
+	assert(mission);
 	Com_sprintf(buffer, size, _("Location: %s\nType: %s\nObjective: %s"), mission->location,
-			CP_MissionToTypeString(mission), _(mission->mapDef->description));
+			CP_MissionToTypeString(mission), (mission->mapDef) ? _(mission->mapDef->description) : _("Unknown"));
 	return buffer;
 }
 
@@ -1605,10 +1606,11 @@ static const char *MAP_GetMissionText (char *buffer, size_t size, const mission_
  */
 static const char *MAP_GetShortMissionText (char *buffer, size_t size, const mission_t *mission)
 {
+	assert(mission);
 	Com_sprintf(buffer, size, _("%s (%s)\n%s"),
 			CP_MissionToTypeString(mission),
 			mission->location,
-			_(mission->mapDef->description));
+			(mission->mapDef) ? _(mission->mapDef->description) : _("Unknown"));
 	return buffer;
 }
 
