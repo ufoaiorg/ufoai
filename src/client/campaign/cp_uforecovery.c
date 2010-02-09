@@ -35,17 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aircraft.h"
 #include "save/save_uforecovery.h"
 
-/**
- * @brief status names for savegames
- * @sa storedUFOStatus_t
- */
-const char *ufostatus_strings[MAX_SUFO_STATUS] = {
-	"recovered",
-	"stored",
-	"transfered"
-};
-CASSERT(lengthof(ufostatus_strings) == MAX_SUFO_STATUS);
-
 /*==================================
 Backend functions
 ==================================*/
@@ -315,23 +304,8 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 }
 
 /**
- * @brief returns ufostatus from stringid
- * @param[in] id identifier string to look for
- * @returns storedUFOStatus_t Stored UFO status
- */
-storedUFOStatus_t US_UFOStatusByID (const char *id)
-{
-	int i;
-
-	for (i = 0; i < MAX_SUFO_STATUS; i++) {
-		if (!strcmp(id, ufostatus_strings[i]))
-			return i;
-	}
-	return MAX_SUFO_STATUS;
-}
-
-/**
  * @brief Save callback for savegames in XML Format
+ * @param[out] p XML Node structure, where we write the information to
  * @sa US_LoadXML
  * @sa SAV_GameSaveXML
  */
@@ -339,6 +313,8 @@ qboolean US_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *node = mxml_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
+
+	Com_RegisterConstList(saveStoredUFOConstants);
 	for (i = 0; i < ccs.numStoredUFOs; i++) {
 		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
 		mxml_node_t * snode = mxml_AddNode(node, SAVE_UFORECOVERY_UFO);
@@ -346,17 +322,19 @@ qboolean US_SaveXML (mxml_node_t *p)
 		mxml_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
 		mxml_AddInt(snode, SAVE_UFORECOVERY_DAY, ufo->arrive.day);
 		mxml_AddInt(snode, SAVE_UFORECOVERY_SEC, ufo->arrive.sec);
-		mxml_AddString(snode, SAVE_UFORECOVERY_STATUS, ufostatus_strings[ufo->status]);
+		mxml_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
 		mxml_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
 		if (ufo->installation)
 			mxml_AddInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, ufo->installation->idx);
 	}
+	Com_UnregisterConstList(saveStoredUFOConstants);
 	return qtrue;
 }
 
 /**
  * @brief Load callback for xml savegames
+ * @param[in] p XML Node structure, where we get the information from
  * @sa US_SaveXML
  * @sa SAV_GameLoadXML
  */
@@ -367,34 +345,45 @@ qboolean US_LoadXML (mxml_node_t *p)
 
 	node = mxml_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
+	Com_RegisterConstList(saveStoredUFOConstants);
 	for (i = 0, snode = mxml_GetNode(node, SAVE_UFORECOVERY_UFO); i < MAX_STOREDUFOS && snode;
-			i++, snode = mxml_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
+			snode = mxml_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
 
 		aircraft_t *ufoTemplate = AIR_GetAircraft(mxml_GetString(snode, SAVE_UFORECOVERY_UFOID));
 		installation_t *inst = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
-		storedUFOStatus_t status = US_UFOStatusByID(mxml_GetString(snode, SAVE_UFORECOVERY_STATUS));
 		date_t arrive;
 		storedUFO_t *ufo;
 		float condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
+		const char *statusId = mxml_GetString(snode, SAVE_UFORECOVERY_STATUS);
+		storedUFOStatus_t status;
 
 		arrive.day = mxml_GetInt(snode, SAVE_UFORECOVERY_DAY, 0);
 		arrive.sec = mxml_GetInt(snode, SAVE_UFORECOVERY_SEC, 0);
 
-		if (!ufoTemplate)
-			return qfalse;
+		if (!ufoTemplate) {
+			Com_Printf("Invalid ufo type\n");
+			continue;
+		}
 
-		if (!inst)
-			return qfalse;
+		if (!inst) {
+			Com_Printf("UFO has no/invalid installation assigned\n");
+			continue;
+		}
 
-		if (status == MAX_SUFO_STATUS)
-			return qfalse;
+		if (!Com_GetConstInt(statusId, (int*) &status)) {
+			Com_Printf("Invalid storedUFOStatus '%s'\n", statusId);
+			continue;
+		}
 
 		ufo = US_StoreUFO(ufoTemplate, inst, arrive, condition);
 		if (!ufo)
 			Com_Printf("Cannot store ufo %s at installation idx=%i.\n", ufoTemplate->id, inst->idx);
-		else
+		else {
 			ufo->status = status;
+			i++;
+		}
 	}
+	Com_UnregisterConstList(saveStoredUFOConstants);
 	return qtrue;
 }
 
