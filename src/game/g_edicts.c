@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <time.h>
 
 /** This is where we store the edicts */
-edict_t *g_edicts;
+static edict_t *g_edicts;
 
 /**
  * @brief Allocate space for the entity pointers.
