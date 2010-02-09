@@ -593,7 +593,7 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
-	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
+	clip.trace.ent = ge->edicts; /* the first edict is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
 

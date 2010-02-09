@@ -34,8 +34,6 @@ level_locals_t level;
 game_import_t gi;
 game_export_t globals;
 
-edict_t *g_edicts;
-
 cvar_t *password;
 
 cvar_t *sv_needpass;
