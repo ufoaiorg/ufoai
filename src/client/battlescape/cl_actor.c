@@ -616,13 +616,12 @@ int fb_length;
  */
 static void CL_BuildForbiddenList (void)
 {
-	le_t *le;
-	int i;
+	le_t *le = NULL;
 
 	fb_length = 0;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse || le->invis)
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
 		if (le->type == ET_ACTOR2x2 || LE_IsLivingAndVisibleActor(le)) {
@@ -647,15 +646,12 @@ static void CL_BuildForbiddenList (void)
  */
 static void CL_DisplayBlockedPaths_f (void)
 {
-	le_t *le;
-	int i, j;
+	le_t *le = NULL;
+	int j;
 	ptl_t *ptl;
 	vec3_t s;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse)
-			continue;
-
+	while ((le = LE_GetNextInUse(le))) {
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
@@ -1591,10 +1587,9 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	trace_t tr;
-	int i;
 	float d;
 	qboolean crossNo;
-	le_t *le;
+	le_t *le = NULL;
 	le_t *target = NULL;
 	int toActorSize;
 
@@ -1602,11 +1597,12 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
+	}
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1677,7 +1673,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const 
 	trace_t tr;
 	qboolean obstructed = qfalse;
 	int i;
-	le_t *le;
+	le_t *le = NULL;
 	le_t *target = NULL;
 	int toActorSize;
 
@@ -1685,11 +1681,12 @@ static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const 
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
+	}
 
 	/* Determine the target's size. */
 	toActorSize = target
