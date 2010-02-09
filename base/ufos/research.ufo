@@ -5019,3 +5019,60 @@ tech rs_enemy_on_earth_revisited
 
 	time		7000
 }
+
+// http://ufoai.ninex.info/wiki/index.php/Research/The_Alien_Strategy
+tech rs_alien_strategy 
+{
+	name		"_The Alien Strategy"
+	type		tech
+	up_chapter	news
+
+	description {
+		default "_alien_strategy_txt"
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	icons/intelligence
+	}
+	require_OR
+	{
+		tech	news_new_twist
+	}
+
+	time		7000
+	image		"techs/alien_strategy"
+}
+
+// http://ufoai.ninex.info/wiki/index.php/Research/Orbital_UFO_Activity
+// TODO: Deactivate for 2.3 - because it requires some kind of cutscene and a specially scripted mission
+tech rs_orbital_ufo_activity
+{
+	name		"_Orbital UFO Activity"
+	type		tech
+	up_chapter	news
+
+	description {
+		default "_orbital_ufo_activity_txt"
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		// subject	defined by "name"
+		model	"characters/falkland"
+		icon	icons/intelligence
+	}
+	require_AND
+	{
+		tech	rs_alien_strategy
+	}
+
+	time		14000
+	image		"techs/orbital_ufo_activity"
+}

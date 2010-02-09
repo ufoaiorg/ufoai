@@ -61,6 +61,18 @@ int G_EdictsGetNumber (const edict_t* ent)
 }
 
 /**
+ * @brief Check if the given number could point to an existing entity
+ * @note entity must also be 'in use' to be really valid
+ * @param idx The entity's index in the array of entities
+ */
+qboolean G_EdictsIsValidNum (const int idx)
+{
+	if (idx >= 0 && idx < globals.num_edicts)
+		return qtrue;
+	return qfalse;
+}
+
+/**
  * @brief Get an entity by it's number
  * @param idx The entity's index in the array of entities
  */
@@ -127,7 +139,7 @@ edict_t* G_EdictsGetNewEdict (void)
 
 /**
  * @brief Iterate through the entities that are in use
- * @note we can hopefully get rid of this funtion once we know when it makes sense
+ * @note we can hopefully get rid of this function once we know when it makes sense
  * to iterate through entities that are NOT in use
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
@@ -152,6 +164,21 @@ edict_t* G_EdictsGetNextLivingActor (edict_t* lastEnt)
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (G_IsLivingActor(ent))
+			break;
+	}
+	return ent;
+}
+
+/**
+ * @brief Iterate through the living actor entities of the given team
+ * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team)
+{
+	edict_t* ent = lastEnt;
+
+	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		if (ent->team == team)
 			break;
 	}
 	return ent;
@@ -446,7 +473,7 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
  * @brief Searches the edict that has the given target as @c targetname set
  * @param target The target name of the edict that you are searching
  * @return @c NULL if no edict with the given target name was found, otherwise
- * the edict that has hte targetname set you were looking for.
+ * the edict that has the targetname set you were looking for.
  */
 edict_t *G_FindTargetEntity (const char *target)
 {
@@ -463,12 +490,18 @@ edict_t *G_FindTargetEntity (const char *target)
 
 /**
  * @brief Returns entities that have origins within a spherical area.
- * @param[in] from The origin that is the center of the circle
- * @param[in] org origin
- * @param[in] rad radius to search an edict in
- * @param[in] type Type of entity.
+ * @param[in] from The entity to start the search from. @c NULL will start from the beginning.
+ * @param[in] org The origin that is the center of the circle.
+ * @param[in] rad radius to search an edict in.
+ * @param[in] type Type of entity. @c ET_NULL to ignore the type.
+ * @code
+ * edict_t* ent = NULL;
+ * while ((ent = G_FindRadius(ent, origin, rad, type)) != NULL) {
+ *   [...]
+ * }
+ * @endcode
  */
-edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type)
+edict_t *G_FindRadius (edict_t * from, const vec3_t org, float rad, entity_type_t type)
 {
 	edict_t *ent = from;
 
@@ -571,7 +604,7 @@ void G_TouchSolids (edict_t *ent)
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_SOLID);
 
 	/* be careful, it is possible to have an entity in this
-	 * list removed before we get to it(killtriggered) */
+	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
 		if (!hit->inuse)

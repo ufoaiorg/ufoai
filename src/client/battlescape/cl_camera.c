@@ -348,6 +348,13 @@ static void CL_CamSetZoom_f (void)
 	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 }
 
+static void CL_CenterCameraIntoMap_f (void)
+{
+	vec3_t center;
+	VectorCenterFromMinsMaxs(mapMin, mapMax, center);
+	VectorCopy(center, cl.cam.origin);
+}
+
 void CL_CameraInit (void)
 {
 	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
@@ -365,4 +372,5 @@ void CL_CameraInit (void)
 #endif /* DEBUG */
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
 	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
+	Cmd_AddCommand("centercamera", CL_CenterCameraIntoMap_f, "Center camera into the map.");
 }

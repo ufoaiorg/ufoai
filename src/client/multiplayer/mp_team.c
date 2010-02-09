@@ -403,5 +403,5 @@ void MP_TeamSelect_f (void)
 
 	MN_ExecuteConfunc("mp_soldier_select %i", num);
 	MN_ExecuteConfunc("mp_soldier_unselect %i", old);
-	Cmd_ExecuteString(va("equip_select %i", num));
+	Cmd_ExecuteString(va("actor_select_equip %i", num));
 }

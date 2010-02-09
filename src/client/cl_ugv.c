@@ -147,7 +147,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
  * These cvars are updated here when you select another character.
  *
  * @param chr Pointer to character_t (may not be null)
- * @sa CL_CharacterCvars
+ * @sa CL_ActorCvars
  * @sa CL_ActorSelect
  */
 void CL_UGVCvars (const character_t *chr)
@@ -178,15 +178,15 @@ void CL_UGVCvars (const character_t *chr)
 	Cvar_Set("mn_vsnp", va("%i", chr->score.skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->score.skills[SKILL_EXPLOSIVE]));
 
-	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", CL_GetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (0)", CL_GetSkillString(chr->score.skills[ABILITY_MIND])));
-	Cvar_Set("mn_tcls", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND])));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
 }
 
 static const value_t ugvValues[] = {

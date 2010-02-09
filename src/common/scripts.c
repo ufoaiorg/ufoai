@@ -2217,7 +2217,7 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 			continue;
 		Q_strncpyz(chr->name, str, sizeof(chr->name));
 		Q_strcat(chr->name, " ", sizeof(chr->name));
-		str = Com_GiveName(gender + LASTNAME, chr->teamDef);
+		str = Com_GiveName(gender + NAME_LAST, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strcat(chr->name, str, sizeof(chr->name));
@@ -2791,7 +2791,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		/* Gettext marker (also indicates that it is a dmgtype value - additional to beeing a dmgweight value) */
+		/* Gettext marker (also indicates that it is a dmgtype value - additional to being a dmgweight value) */
 		if (*token == '_') {
 			token++;
 			csi.dts[csi.numDTs].showInMenu = qtrue;
@@ -2799,7 +2799,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* search for damage types with same name */
 		for (i = 0; i < csi.numDTs; i++)
-			if (!strncmp(token, csi.dts[i].id, MAX_VAR))
+			if (!strcmp(token, csi.dts[i].id))
 				break;
 
 		/* Not found in the for loop. */
@@ -3001,6 +3001,7 @@ static const value_t mapdef_vals[] = {
 
 	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
 	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
+	{"hurtaliens", V_BOOL, offsetof(mapDef_t, hurtAliens), MEMBER_SIZEOF(mapDef_t, hurtAliens)},
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},

@@ -255,13 +255,20 @@ static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, i
  */
 void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 {
-	int j;
+	int container;
 
-	for (j = 0; j < csi.numIDs; j++) {
-		invList_t *ic = i->c[j];
+	for (container = 0; container < csi.numIDs; container++) {
+		invList_t *ic = i->c[container];
+
+#if 0
+		/* ignore items linked from any temp container */
+		if (csi.ids[container].temp)
+			continue;
+#endif
+
 		for (; ic; ic = ic->next) {
 			mxml_node_t *s = mxml_AddNode(p, SAVE_INVENTORY_ITEM);
-			CL_SaveItemXML(s, ic->item, j, ic->x, ic->y);
+			CL_SaveItemXML(s, ic->item, container, ic->x, ic->y);
 		}
 	}
 }
@@ -330,7 +337,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;
 
-	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
+	CL_ActorSetShotSettings(chr, ACTOR_HAND_NOT_SET, -1, NULL);
 
 	Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */

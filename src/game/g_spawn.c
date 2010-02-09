@@ -427,7 +427,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
  * This is only for particles that are spawned during a match - not for map particles.
  * @return A particle edict
  */
-edict_t *G_ParticleSpawn (vec3_t origin, int spawnflags, const char *particle)
+edict_t *G_ParticleSpawn (const vec3_t origin, int spawnflags, const char *particle)
 {
 	edict_t *ent = G_Spawn();
 	ent->classname = "particle";
@@ -600,7 +600,7 @@ static void SP_alien_start (edict_t *ent)
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
 	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
-	if (gi.csi->currentMD && strcmp(gi.csi->currentMD->id, "ufocrash") == 0) {
+	if (gi.csi->currentMD && gi.csi->currentMD->hurtAliens) {
 		const float random = frand();
 		if (random <= .05f) {
 			ent->STUN = 50;

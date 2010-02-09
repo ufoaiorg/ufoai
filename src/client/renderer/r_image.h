@@ -43,14 +43,14 @@ typedef enum {
 	it_static,
 	it_pic,
 	it_wrappic,
+	it_skin,
+	it_normalmap,
 
 	/** the following are freed with every mapchange */
 	it_world,
 	it_lightmap,
 	it_deluxemap,
-	it_normalmap,
-	it_material,
-	it_skin
+	it_material
 } imagetype_t;
 
 typedef enum {

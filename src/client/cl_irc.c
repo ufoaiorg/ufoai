@@ -1638,8 +1638,8 @@ static void Irc_Client_Invite_f (void)
 	char buf[128];
 	const char *node;
 
-	if (!Com_ServerState()) {
-		Com_Printf("You must have a server running to invite others\n");
+	if (!CL_OnBattlescape()) {
+		Com_Printf("You must be connected to a running server to invite others\n");
 		return;
 	}
 

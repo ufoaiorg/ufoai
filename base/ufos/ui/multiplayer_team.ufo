@@ -649,7 +649,7 @@ window mp_team_edit extends objectinfo
 	container armour	{
 		pos "735 100"
 		color "1 1 1 0"		// active, but display it transparent
-		onChange { cmd "soldier_updatecurrent;" }
+		onChange { cmd "actor_updatecurrent;" }
 		onSelect { cmd "object_update <lastselectedid>;" }
 	}
 

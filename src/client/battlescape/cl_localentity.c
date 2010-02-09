@@ -82,7 +82,7 @@ void CL_RecalcRouting (const le_t* le)
 	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
 
-	CL_ConditionalMoveCalcActor(selActor);
+	CL_ActorConditionalMoveCalc(selActor);
 }
 
 /**
@@ -578,7 +578,7 @@ void LE_DoEndPathMove (le_t *le)
 		Com_Error(ERR_DROP, "LE_DoEndPathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i) (team %i)",
 				le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength, le->team);
 
-	CL_ConditionalMoveCalcActor(le);
+	CL_ActorConditionalMoveCalc(le);
 
 	/* link any floor container into the actor temp floor container */
 	floor = LE_Find(ET_ITEM, le->pos);
@@ -1115,7 +1115,91 @@ void LE_Unlock (le_t *le)
  * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type
  */
-le_t *LE_Find (int type, pos3_t pos)
+le_t *LE_GetFromPos (const pos3_t pos)
+{
+	int i;
+	le_t *le;
+
+	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
+		if (le->inuse && VectorCompare(le->pos, pos))
+			return le;
+
+	/* didn't find it */
+	return NULL;
+}
+
+/**
+ * @brief Iterate through the list of entities
+ * @param lastLE The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+le_t* LE_GetNext (le_t* lastLE)
+{
+	le_t* endOfLEs = &cl.LEs[cl.numLEs];
+	le_t* le;
+
+	if (!lastLE)
+		lastLE = cl.LEs;
+	assert(lastLE >= cl.LEs);
+	assert(lastLE < endOfLEs);
+
+	le = lastLE;
+
+	le++;
+	if (le >= endOfLEs)
+		return NULL;
+	else
+		return le;
+}
+
+/**
+ * @brief Iterate through the entities that are in use
+ * @note we can hopefully get rid of this function once we know when it makes sense
+ * to iterate through entities that are NOT in use
+ * @param lastLE The entity found in the previous iteration; if NULL, we start at the beginning
+ */
+le_t* LE_GetNextInUse (le_t* lastLE)
+{
+	le_t* le = lastLE;
+
+	while ((le = LE_GetNext(le))) {
+		if (le->inuse)
+			break;
+	}
+	return le;
+}
+
+/**
+ * @brief Returns entities that have origins within a spherical area.
+ * @param[in] from The entity to start the search from. @c NULL will start from the beginning.
+ * @param[in] org The origin that is the center of the circle.
+ * @param[in] rad radius to search an edict in.
+ * @param[in] type Type of local entity. @c ET_NULL to ignore the type.
+ */
+le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type)
+{
+	le_t *le = from;
+
+	while ((le = LE_GetNextInUse(le))) {
+		int j;
+		vec3_t eorg;
+		for (j = 0; j < 3; j++)
+			eorg[j] = org[j] - (le->origin[j] + (le->mins[j] + le->maxs[j]) * 0.5);
+		if (VectorLength(eorg) > rad)
+			continue;
+		if (type != ET_NULL && le->type != type)
+			continue;
+		return le;
+	}
+
+	return NULL;
+}
+
+/**
+ * @brief Searches a local entity on a given grid field
+ * @param[in] type Entity type
+ * @param[in] pos The grid pos to search for an item of the given type
+ */
+le_t *LE_Find (int type, const pos3_t pos)
 {
 	int i;
 	le_t *le;
@@ -1314,6 +1398,38 @@ typedef struct {
 	int contentmask;			/**< search these in your trace - see MASK_* */
 } moveclip_t;
 
+/**
+ * @brief Returns a headnode that can be used for testing or clipping an
+ * object of mins/maxs size.
+ * Offset is filled in to contain the adjustment that must be added to the
+ * testing object's origin to get a point to use with the returned hull.
+ * @param[in] le The local entity to get the bmodel from
+ * @param[out] tile The maptile the bmodel belongs, too
+ * @param[out] rmaShift the shift vector in case of an RMA (needed for doors)
+ * @return The headnode for the local entity
+ * @sa SV_HullForEntity
+ */
+static int CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t angles)
+{
+	/* special case for bmodels */
+	if (le->contents & CONTENTS_SOLID) {
+		cBspModel_t *model = cl.model_clip[le->modelnum1];
+		/* special value for bmodel */
+		assert(le->modelnum1 < MAX_MODELS);
+		if (!model)
+			Com_Error(ERR_DROP, "CL_HullForEntity: Error - le with NULL bmodel (%i)\n", le->type);
+		*tile = model->tile;
+		VectorCopy(le->angles, angles);
+		VectorCopy(model->shift, rmaShift);
+		return model->headnode;
+	} else {
+		/* might intersect, so do an exact clip */
+		*tile = 0;
+		VectorCopy(vec3_origin, angles);
+		VectorCopy(vec3_origin, rmaShift);
+		return CM_HeadnodeForBox(*tile, le->mins, le->maxs);
+	}
+}
 
 /**
  * @brief Clip against solid entities
@@ -1326,8 +1442,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	le_t *le;
 	trace_t trace;
 	int headnode;
-	cBspModel_t *model;
-	const float *angles;
+	vec3_t angles;
 	vec3_t origin, shift;
 
 	if (clip->trace.allsolid)
@@ -1339,29 +1454,11 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		if (le == clip->passle || le == clip->passle2)
 			continue;
 
-		/* special case for bmodels */
-		if (le->contents & CONTENTS_SOLID) {
-			/* special value for bmodel */
-			assert(le->modelnum1 < MAX_MODELS);
-			model = cl.model_clip[le->modelnum1];
-			if (!model) {
-				Com_Printf("CL_ClipMoveToLEs: Error - le with no NULL bmodel (%i)\n", le->type);
-				continue;
-			}
-			headnode = model->headnode;
-			tile = model->tile;
-			angles = le->angles;
-			VectorCopy(model->shift, shift);
-		} else {
-			/* might intersect, so do an exact clip */
-			/** @todo make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
-			headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
-			angles = vec3_origin;
-			VectorCopy(vec3_origin, shift);
-		}
+		headnode = CL_HullForEntity(le, &tile, shift, angles);
+		assert(headnode < MAX_MAP_NODES);
+
 		VectorCopy(le->origin, origin);
 
-		assert(headnode < MAX_MAP_NODES);
 		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {

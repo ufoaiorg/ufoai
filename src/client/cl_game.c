@@ -354,17 +354,19 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
  */
 static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 {
-	int j, nr = 0;
+	int container, nr = 0;
 	const invList_t *ic;
 
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
+	for (container = 0; container < csi.numIDs; container++) {
+		for (ic = i->c[container]; ic; ic = ic->next)
 			nr++;
+	}
 
 	NET_WriteShort(buf, nr * INV_INVENTORY_BYTES);
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			CL_NetSendItem(buf, ic->item, j, ic->x, ic->y);
+	for (container = 0; container < csi.numIDs; container++) {
+		for (ic = i->c[container]; ic; ic = ic->next)
+			CL_NetSendItem(buf, ic->item, container, ic->x, ic->y);
+	}
 }
 
 /**

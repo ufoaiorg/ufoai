@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "battlescape/cl_localentity.h"
+#include "battlescape/events/e_server.h"
 #include "cl_console.h"
 #include "cl_screen.h"
 #include "cl_game.h"
@@ -86,8 +87,6 @@ client_static_t cls;
 client_state_t cl;
 
 static int precache_check;
-
-static void CL_SpawnSoldiers_f(void);
 
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
@@ -838,6 +837,7 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	IN_Init();
+	CL_ServerEventsInit();
 	CL_CameraInit();
 
 	CLMN_InitStartup();
@@ -1155,7 +1155,7 @@ void CL_SlowFrame (int now, void *data)
 {
 	CL_CvarCheck();
 
-	HUD_ActorUpdateCvars();
+	HUD_Update();
 }
 
 /**

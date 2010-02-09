@@ -301,7 +301,8 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		if (!self->RemoveFromInventory(self, i, from, fItem))
 			return IA_NONE;
 		else
-			alreadyRemovedSource = qtrue;	/**< Removal successful - store this info. */
+			/* Removal successful - store this info. */
+			alreadyRemovedSource = qtrue;
 
 		cacheItem2 = self->cacheItem; /* Save/cache (source) item. The cacheItem is modified in I_MoveInInventory. */
 
@@ -335,7 +336,8 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 						return IA_NONE;
 
 					/* Add the currently used ammo in a free place of the "from" container. */
-					self->AddToInventory(self, i, item, from, NONE, NONE, 1);
+					if (self->AddToInventory(self, i, item, from, NONE, NONE, 1) == NULL)
+						Sys_Error("Could not reload the weapon - add to inventory failed");
 
 					ic->item.m = self->cacheItem.t;
 					if (icp)
@@ -474,14 +476,14 @@ static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, 
  */
 static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i)
 {
-	int k;
+	int container;
 
 	if (!i)
 		return;
 
-	for (k = 0; k < self->csi->numIDs; k++)
-		if (!self->csi->ids[k].temp)
-			self->EmptyContainer(self, i, &self->csi->ids[k]);
+	for (container = 0; container < self->csi->numIDs; container++)
+		if (!self->csi->ids[container].temp)
+			self->EmptyContainer(self, i, &self->csi->ids[container]);
 
 	memset(i, 0, sizeof(*i));
 }

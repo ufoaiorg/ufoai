@@ -253,6 +253,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 			mail = NULL;
 
 		/* event and not mail means, dynamic mail - we don't save or load them */
+		/** @todo is this really meant to depend on DEBUG_ALL with NO individual bit like DEBUG_MSG ?? */
 		if (!((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1))) {
 			char id[MAX_VAR];
 			technology_t *tech = NULL;

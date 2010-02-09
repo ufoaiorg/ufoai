@@ -78,7 +78,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		qboolean alreadyInOtherShip;
 		const aircraft_t *otherShip;
 		int guiId = id - beginIndex;
-		int j;
+		int container;
 
 		assert(employee->hired);
 		assert(!employee->transfer);
@@ -112,12 +112,11 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 			MN_ExecuteConfunc("aircraft_%s_unassigned %i", nodeTag, guiId);
 
 		/* Check if the employee has something equipped. */
-		for (j = 0; j < csi.numIDs; j++) {
-			/** @todo Wouldn't it be better here to check for temp containers */
-			if (j != csi.idFloor && j != csi.idEquip && employee->chr.inv.c[j])
+		for (container = 0; container < csi.numIDs; container++) {
+			if (!csi.ids[container].temp && employee->chr.inv.c[container])
 				break;
 		}
-		if (j < csi.numIDs)
+		if (container < csi.numIDs)
 			MN_ExecuteConfunc("aircraft_%s_holdsequip %i", nodeTag, guiId);
 		else
 			MN_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
@@ -222,15 +221,8 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	else
 		menuInventory = NULL;
 
-	for (; p < MAX_ACTIVETEAM; p++) {
-		Cvar_ForceSet(va("mn_name%i", p), "");
+	for (; p < MAX_ACTIVETEAM; p++)
 		MN_ExecuteConfunc("equipdisable %i", p);
-	}
-
-	/* reset description */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
-	MN_ResetData(TEXT_ITEMDESCRIPTION);
 
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
@@ -421,7 +413,7 @@ static void CL_ActorPilotSelect_f (void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	CL_CharacterCvars(chr);
+	CL_ActorCvars(chr);
 	MN_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
 }
 
@@ -468,7 +460,7 @@ static void CL_ActorTeamSelect_f (void)
 	if (chr->teamDef->race == RACE_ROBOT)
 		CL_UGVCvars(chr);
 	else
-		CL_CharacterCvars(chr);
+		CL_ActorCvars(chr);
 	MN_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
 }
 

@@ -47,8 +47,8 @@ static qboolean AI_CheckFF (const edict_t * ent, const vec3_t target, float spre
 	VectorNormalize(dtarget);
 	VectorScale(dtarget, PLAYER_WIDTH / spread, back);
 
-	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (ent != check && check->team == ent->team) {
+	while ((check = G_EdictsGetNextLivingActorOfTeam(check, ent->team))) {
+		if (ent != check) {
 			/* found ally */
 			VectorSubtract(check->origin, ent->origin, dcheck);
 			if (DotProduct(dtarget, dcheck) > 0.0) {
@@ -794,6 +794,18 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 }
 
 /**
+ * @brief if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it
+ */
+static void AI_TryToReloadWeapon (edict_t *ent, int containerID)
+{
+	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, containerID)) {
+		G_ActorReload(ent, INVDEF(containerID));
+	} else {
+		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
+	}
+}
+
+/**
  * @brief The think function for the ai controlled aliens
  * @param[in] player
  * @param[in] ent
@@ -808,20 +820,10 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!G_IsPaniced(ent)) {
-		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
-			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
-				G_ActorReload(ent, ST_RIGHT_RELOAD);
-			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idRight), RIGHT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
-			}
-		}
-		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
-			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
-				G_ActorReload(ent, ST_LEFT_RELOAD);
-			} else {
-				G_ActorInvMove(ent, INVDEF(gi.csi->idLeft), LEFT(ent), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
-			}
-		}
+		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0)
+			AI_TryToReloadWeapon(ent, gi.csi->idRight);
+		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0)
+			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
@@ -893,8 +895,8 @@ void AI_Run (void)
 			/* find next actor to handle */
 			edict_t *ent = player->pers.last;
 
-			while ((ent = G_EdictsGetNextLivingActor(ent))) {
-				if (ent->TU && ent->team == player->pers.team) {
+			while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+				if (ent->TU) {
 					if (g_ailua->integer)
 						AIL_ActorThink(player, ent);
 					else

@@ -297,7 +297,7 @@ void G_MissionThink(edict_t *self);
 
 /* g_utils.c */
 edict_t *G_Find(edict_t *from, int fieldofs, char *match);
-edict_t *G_FindRadius(edict_t *from, vec3_t org, float rad, entity_type_t type);
+edict_t *G_FindRadius(edict_t *from, const vec3_t org, float rad, entity_type_t type);
 edict_t *G_FindTargetEntity(const char *target);
 const char* G_GetPlayerName(int pnum);
 player_t* G_GetPlayerForTeam(int team);
@@ -309,7 +309,7 @@ int G_TouchTriggers(edict_t *ent);
 void G_TouchSolids(edict_t *ent);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
-edict_t *G_ParticleSpawn(vec3_t origin, int spawnflags, const char *particle);
+edict_t *G_ParticleSpawn(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const int type);
@@ -319,6 +319,11 @@ void G_TakeDamage(edict_t *ent, int damage);
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
 void G_ReactToPreFire(edict_t *target);
 void G_ReactToPostFire(edict_t *target);
+void G_ResetReactionFire(int team);
+qboolean G_CanEnableReactionFire(const edict_t *ent);
+void G_UpdateReactionFire(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
+qboolean G_ReactToMove(edict_t *target, qboolean mock);
+void G_ReactToEndTurn(void);
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);
@@ -332,7 +337,6 @@ void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* 
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventDestroyEdict(const edict_t* ent);
-void G_EventReactionFireHandChange(const edict_t* ent, int hand);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
 void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
@@ -342,6 +346,7 @@ void G_EventActorStats(const edict_t* ent);
 void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
+void G_EventReactionFireChange(const edict_t* ent);
 
 /* g_vis.c */
 #define VIS_APPEAR	1
@@ -399,8 +404,8 @@ void G_ClientSpawn(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
-void G_ActorReload(edict_t* ent, shoot_types_t st);
-qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
+void G_ActorReload(edict_t* ent, const invDef_t *invDef);
+qboolean G_ClientCanReload(player_t *player, int entnum, int containerID);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
 void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to);
@@ -436,9 +441,6 @@ float G_Vis(const int team, const edict_t * from, const edict_t * check, int fla
 
 /* g_combat.c */
 qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
-void G_ResetReactionFire(int team);
-qboolean G_ReactToMove(edict_t *target, qboolean mock);
-void G_ReactToEndTurn(void);
 
 /* g_ai.c */
 extern edict_t *ai_waypointList;
@@ -472,12 +474,14 @@ edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
 int G_EdictsGetNumber(const edict_t* ent);
+qboolean G_EdictsIsValidNum(const int idx);
 edict_t* G_EdictsGetByNum(const int idx);
 edict_t* G_EdictsGetFirst(void);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
+edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
 
 /*============================================================================ */
 

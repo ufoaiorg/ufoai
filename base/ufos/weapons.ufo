@@ -193,7 +193,7 @@ item flashbang
 	type		grenade
 	animationindex	0
 	shape		"0 0 1 1"
-	center		"0 1.5 1.5"
+	center		"0 1.5 0.6"
 	scale		2.4
 	price		70
 	size		4

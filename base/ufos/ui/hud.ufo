@@ -217,7 +217,7 @@ window hud extends ahud
 			value		0
 			cvar		*cvar:selected_soldier
 			icon		number_1
-			onClick		{ cmd "soldier_select 0;" }
+			onClick		{ cmd "actor_select 0;" }
 		}
 
 		radiobutton bt_actor1
@@ -229,7 +229,7 @@ window hud extends ahud
 			value		1
 			cvar		*cvar:selected_soldier
 			icon		number_2
-			onClick		{ cmd "soldier_select 1;" }
+			onClick		{ cmd "actor_select 1;" }
 		}
 
 		radiobutton bt_actor2
@@ -241,7 +241,7 @@ window hud extends ahud
 			value		2
 			cvar		*cvar:selected_soldier
 			icon		number_3
-			onClick		{ cmd "soldier_select 2;" }
+			onClick		{ cmd "actor_select 2;" }
 		}
 
 		radiobutton bt_actor3
@@ -253,7 +253,7 @@ window hud extends ahud
 			value		3
 			cvar		*cvar:selected_soldier
 			icon		number_4
-			onClick		{ cmd "soldier_select 3;" }
+			onClick		{ cmd "actor_select 3;" }
 		}
 
 		radiobutton bt_actor4
@@ -265,7 +265,7 @@ window hud extends ahud
 			value		4
 			cvar		*cvar:selected_soldier
 			icon		number_5
-			onClick		{ cmd "soldier_select 4;" }
+			onClick		{ cmd "actor_select 4;" }
 		}
 
 		radiobutton bt_actor5
@@ -277,7 +277,7 @@ window hud extends ahud
 			value		5
 			cvar		*cvar:selected_soldier
 			icon		number_6
-			onClick		{ cmd "soldier_select 5;" }
+			onClick		{ cmd "actor_select 5;" }
 		}
 
 		radiobutton bt_actor6
@@ -289,7 +289,7 @@ window hud extends ahud
 			value		6
 			cvar		*cvar:selected_soldier
 			icon		number_7
-			onClick		{ cmd "soldier_select 6;" }
+			onClick		{ cmd "actor_select 6;" }
 		}
 
 		radiobutton bt_actor7
@@ -301,7 +301,7 @@ window hud extends ahud
 			value		7
 			cvar		*cvar:selected_soldier
 			icon		number_8
-			onClick		{ cmd "soldier_select 7;" }
+			onClick		{ cmd "actor_select 7;" }
 		}
 	}
 
@@ -372,7 +372,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
+			onClick	{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
 		}
 
 		pic bt_reload
@@ -383,9 +383,9 @@ window hud extends ahud
 			texl	"0 38"
 			texh	"64 74"
 			mousefx	true
-			onClick	{ cmd "reloadright;" }
-			onMouseEnter		{ cmd "remaining_tus reload_r 1;" }
-			onMouseLeave		{ cmd "remaining_tus reload_r 0;" }
+			onClick	{ cmd "hud_reloadright;" }
+			onMouseEnter		{ cmd "hud_remainingtus reload_r 1;" }
+			onMouseLeave		{ cmd "hud_remainingtus reload_r 0;" }
 		}
 
 		string ammoright
@@ -409,7 +409,7 @@ window hud extends ahud
 			texl	"64 0"
 			texh	"128 37"
 			mousefx	true
-			onClick	{ cmd "useheadgear;" }
+			onClick	{ cmd "actor_useheadgear;" }
 		}
 	}
 
@@ -438,7 +438,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
+			onClick	{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
 		}
 
 		pic bt_reload
@@ -449,9 +449,9 @@ window hud extends ahud
 			texl	"0 38"
 			texh	"64 74"
 			mousefx	true
-			onClick	{ cmd "reloadleft;" }
-			onMouseEnter		{ cmd "remaining_tus reload_l 1;" }
-			onMouseLeave		{ cmd "remaining_tus reload_l 0;" }
+			onClick	{ cmd "hud_reloadleft;" }
+			onMouseEnter		{ cmd "hud_remainingtus reload_l 1;" }
+			onMouseLeave		{ cmd "hud_remainingtus reload_l 0;" }
 		}
 
 		string ammoleft
@@ -475,9 +475,9 @@ window hud extends ahud
 			pos		"8 107"
 			texl	"0 75"
 			texh	"52 112"
-			onClick	{ cmd "standcrouch;" }
-			onMouseEnter		{ cmd "remaining_tus crouch 1;" }
-			onMouseLeave		{ cmd "remaining_tus crouch 0;" }
+			onClick	{ cmd "actor_standcrouch;" }
+			onMouseEnter		{ cmd "hud_remainingtus crouch 1;" }
+			onMouseLeave		{ cmd "hud_remainingtus crouch 0;" }
 		}
 
 		checkbox bt_crouch_reservation
@@ -487,7 +487,7 @@ window hud extends ahud
 			pos		"60 107"
 			size	"20 18"
 			current	0
-			onChange	{ cmd "togglecrouchreserve;" }
+			onChange	{ cmd "hud_togglecrouchreserve;" }
 		}
 	}
 
@@ -520,8 +520,8 @@ window hud extends ahud
 			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
 			texh	"115 64"
 			mousefx	true
-			onClick	{ cmd "sel_shotreservation;" }
-			onRClick	{ cmd "sel_shotreservation 0;" }
+			onClick	{ cmd "hud_shotreservationpopup;" }
+			onRClick	{ cmd "hud_shotreservationpopup 0;" }
 		}
 
 		pic bt_reaction_s
@@ -531,7 +531,7 @@ window hud extends ahud
 			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
 			mousefx	true
-			onClick	{ cmd "togglereaction;" }
+			onClick	{ cmd "hud_togglereaction;" }
 		}
 
 		string tus

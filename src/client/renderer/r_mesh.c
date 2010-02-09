@@ -216,8 +216,10 @@ const float* R_GetTagMatrix (const model_t* mod, const char* tagName)
 void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3_t center)
 {
 	const float width = mi->model->maxs[0] - mi->model->mins[0];
-	const float height = mi->model->maxs[1] - mi->model->mins[1];
-	const float size = min(boxSize[0], boxSize[1]) / max(width, height);
+	const float height = mi->model->maxs[2] - mi->model->mins[2];
+	const float factorX = boxSize[0] / width;
+	const float factorY = boxSize[1] / height;
+	const float size = min(factorX, factorY);
 
 	/* get center */
 	VectorCenterFromMinsMaxs(mi->model->mins, mi->model->maxs, center);

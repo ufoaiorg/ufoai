@@ -2541,7 +2541,7 @@ TARGETING FUNCTIONS
  * @param[in,out] v0 The velocity vector
  * @todo refactor and move me
  * @todo Com_GrenadeTarget() is called from CL_TargetingGrenade() with speed
- * param as (fireDef_s) fd->range, while it is being used here for speed
+ * param as (fireDef_s) fd->range (gi.GrenadeTarget, too), while it is being used here for speed
  * calculations - a bug or just misleading documentation?
  * @sa CL_TargetingGrenade
  */

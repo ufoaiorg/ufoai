@@ -280,7 +280,6 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
- * @sa CL_TargetingToHit
  * @note This function uses levels and levelmasks.  The levels are as following:
  * 0-255: brushes are assigned to a level based on their assigned viewing levels.  A brush with
  *    no levels assigned will be stuck in 0, a brush viewable from all 8 levels will be in 255, and
@@ -369,7 +368,6 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *head
  * @param[in] levelmask Indicates which special levels, if any, to include in the trace.
  * @note Special levels are LEVEL_ACTORCLIP and LEVEL_WEAPONCLIP.
  * @sa TR_TestLine_r
- * @sa CL_TargetingToHit
  * @return qfalse if not blocked
  */
 qboolean TR_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
@@ -1075,7 +1073,12 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 	checkcount++;	/* for multi-check avoidance */
 	c_traces++;		/* for statistics, may be zeroed */
 
+#ifdef COMPILE_UFO
+	if (headnode >= tile->numnodes + 6)
+		Com_Error(ERR_DROP, "headnode (%i) is out of bounds: %i", headnode, tile->numnodes + 6);
+#else
 	assert(headnode < tile->numnodes + 6); /* +6 => bbox */
+#endif
 
 	/* fill in a default trace */
 	memset(&traceData.trace, 0, sizeof(traceData.trace));

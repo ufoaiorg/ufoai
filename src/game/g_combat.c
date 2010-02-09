@@ -44,8 +44,8 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 	vec3_t eye;
 
 	/* test if point is visible from team */
-	while ((from = G_EdictsGetNextLivingActor(from))) {
-		if (from->team == team && G_FrustumVis(from, point)) {
+	while ((from = G_EdictsGetNextLivingActorOfTeam(from, team))) {
+		if (G_FrustumVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
 			if (G_IsCrouched(from))

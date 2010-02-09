@@ -144,7 +144,7 @@ static void G_Init (void)
 	sv_maxsoldiersperplayer = gi.Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
-	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
+	sv_roundtimelimit = gi.Cvar_Get("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit in seconds for multiplayer rounds");
 	sv_roundtimelimit->modified = qfalse;
 	sv_maxentities = gi.Cvar_Get("sv_maxentities", "1024", CVAR_LATCH, NULL);
 
@@ -331,7 +331,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 	if (!developer || developer->integer == 0)
 		return;
 
-	if (developer->integer != DEBUG_ALL && developer->integer & ~level)
+	if (!(developer->integer & level))
 		return;
 
 	va_start(argptr, msg);
@@ -361,12 +361,8 @@ static void CheckNeedPass (void)
 static void G_SendBoundingBoxes (void)
 {
 	if (sv_send_edicts->integer) {
-		int i;
-		/* skip the world */
-		for (i = 1; i < globals.num_edicts; i++) {
-			const edict_t *ent = &globals.edicts[i];
-			if (!ent->inuse)
-				continue;
+		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
+		while ((ent = G_EdictsGetNextInUse(ent))) {
 			gi.AddEvent(PM_ALL, EV_ADD_EDICT);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);

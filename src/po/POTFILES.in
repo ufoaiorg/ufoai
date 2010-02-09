@@ -1,6 +1,7 @@
 ./client/battlescape/cl_actor.c
 ./client/battlescape/cl_hud.c
 ./client/battlescape/cl_view.c
+./client/battlescape/events/e_server.c
 ./client/battlescape/events/event/actor/e_event_actorappear.c
 ./client/battlescape/events/event/actor/e_event_actordie.c
 ./client/battlescape/events/event/player/e_event_doendround.c

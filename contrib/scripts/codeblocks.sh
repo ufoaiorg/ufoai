@@ -92,9 +92,12 @@ function start_downloads()
 {
 	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingwrt-3.17-mingw32-dev.tar.gz mingwrt.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-mingw32-dev.tar.gz w32api.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0-2-mingw32-bin.tar.gz gdb.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-3-msys-1.0.12-dev.tar.lzma w32api.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0.50.20100202-mingw32-bin.tar.gz gdb.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
+
+# TODO mingw64 support
+#	download_archive http://downloads.sourceforge.net/mingw-w64 mingw-w64-bin_x86_64-mingw_20100123_sezero.zip
 
 	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 msys-bash.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 msys-bzip2.tar.bz2
@@ -110,6 +113,7 @@ function start_downloads()
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-libtool-1.5.tar.bz2 msys-libtool.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ libtool1.5-1.5.25a-20070701-MSYS-1.0.11-1.tar.bz2 msys-libtool.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ gettext-0.17-1-mingw32-dev.tar.lzma gettext.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ gawk-3.1.7-1-msys-1.0.11-bin.tar.lzma gawk.tar.lzma
 
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-core.tar.gz gcc.tar.gz
 	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-g++.tar.gz g++.tar.gz
@@ -127,8 +131,6 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ unzip-5.51-1-bin.zip unzip.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ openssl-0.9.8h-1-bin.zip openssl.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ gawk-3.1.6-1-bin.zip gawk.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ sed-4.2-bin.zip sed.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ regex-2.7-bin.zip regex.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ pcre-7.0-bin.zip pcre.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ grep-2.5.4-bin.zip grep.zip
@@ -189,7 +191,7 @@ function extract_mingw()
 {
 	extract_archive_gz binutils.tar.gz "${MINGW_DIR}"
 	extract_archive_gz mingwrt.tar.gz "${MINGW_DIR}"
-	extract_archive_gz w32api.tar.gz "${MINGW_DIR}"
+	extract_archive_tar7z w32api.tar.lzma "${MINGW_DIR}"
 	extract_archive_gz gdb.tar.gz "${MINGW_DIR}"
 	extract_archive_gz gcc.tar.gz "${MINGW_DIR}"
 	extract_archive_gz g++.tar.gz "${MINGW_DIR}"
@@ -284,8 +286,7 @@ function extract_tools()
 	extract_archive_zip wget.zip "${MINGW_DIR}"
 	extract_archive_zip unzip.zip "${MINGW_DIR}"
 	extract_archive_zip openssl.zip "${MINGW_DIR}"
-	extract_archive_zip gawk.zip "${MINGW_DIR}"
-	extract_archive_zip sed.zip "${MINGW_DIR}"
+	extract_archive_tar7z gawk.tar.lzma "${MINGW_DIR}"
 	extract_archive_zip regex.zip "${MINGW_DIR}"
 	extract_archive_zip pcre.zip "${MINGW_DIR}"
 	extract_archive_zip grep.zip "${MINGW_DIR}"
@@ -328,7 +329,7 @@ function extract_gtk()
 		check_error $? "Could not remove $i lib/include files"
 	done
 
-	for i in $(echo "gtksourceview-2.0 gail-1.0 pango-1.0 atk-1.0 cairo" ); do
+	for i in $(echo "gtksourceview-2.0 gail-1.0 pango-1.0 atk-1.0 cairo libxml2" ); do
 		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
 		check_error $? "Could not copy $i include files"
 		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1

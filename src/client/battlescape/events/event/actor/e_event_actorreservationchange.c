@@ -46,7 +46,7 @@ void CL_ActorReservationChange (const eventRegister_t *self, struct dbuffer *msg
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	chr = CL_GetActorChr(le);
+	chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 

@@ -26,17 +26,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_HUD_H
 #define CL_HUD_H
 
-extern int hitProbability;
+#define ACTOR_HAND_CHAR_RIGHT (char)'r'
+#define ACTOR_HAND_CHAR_LEFT (char)'l'
 
-/* these should probably not be called from other places than menu */
-qboolean HUD_DisplayImpossibleReaction(const le_t * actor);
-void HUD_DisplayPossibleReaction(const le_t * actor);
+/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
+#define ACTOR_GET_HAND_CHAR(hand) ((hand) == ACTOR_HAND_LEFT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
+/** @param[in] hand Hand index (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
+#define ACTOR_GET_HAND_INDEX(hand) ((hand) == ACTOR_HAND_CHAR_LEFT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
+
+/** @todo these should probably not be called from other places than menu */
+void HUD_DisplayFiremodes(const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay);
 void HUD_HideFiremodes(void);
 /* check above for removal */
 
 void HUD_InitStartup(void);
 void HUD_DisplayMessage(const char * text);
-void HUD_ActorUpdateCvars(void);
+void HUD_Update(void);
 void HUD_UpdateCursor(void);
 
 #endif

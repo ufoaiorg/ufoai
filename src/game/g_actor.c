@@ -199,7 +199,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
  * @brief Calculates TU reservations for an actor.
  * @param[in] ent The pointer to the selected edict being soldier.
  * @return Sum of reserved TUs.
- * @todo See also CL_ReservedTUs and unify both functions to one
+ * @todo See also CL_ActorReservedTUs and unify both functions to one
  * shared function in character_t code.
  */
 static int G_ActorTUReservations (edict_t *ent)
@@ -282,8 +282,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			return;
 	}
 
+	/** @todo what if we don't have enough TUs after subtracting the reserved ones? */
 	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
-	   we need to save original ent->TU for the sake of checking TU reservations. */
+	 * we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
 	reservedTU = G_ActorTUReservations(ent);
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
@@ -375,12 +376,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		G_WriteItem(item, to, tx, ty);
 	}
 
-	/* Update reaction firemode when something is moved from/to a hand. */
-	if (INV_IsRightDef(from) || INV_IsRightDef(to)) {
-		G_EventReactionFireHandChange(ent, ACTOR_HAND_RIGHT);
-	} else if (INV_IsLeftDef(from) || INV_IsLeftDef(to)) {
-		G_EventReactionFireHandChange(ent, ACTOR_HAND_LEFT);
-	}
+	G_UpdateReactionFire(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
@@ -402,11 +398,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
  * @param[in] st Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
-void G_ActorReload (edict_t* ent, shoot_types_t st)
+void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 {
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t * hand;
 	objDef_t *weapon;
 	int tu;
 	int containerID;
@@ -415,16 +410,15 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 	/* search for clips and select the one that is available easily */
 	icFinal = NULL;
 	tu = 100;
-	hand = (st == ST_RIGHT_RELOAD) ? INVDEF(gi.csi->idRight) : INVDEF(gi.csi->idLeft);
 	bestContainer = NULL;
 
-	if (CONTAINER(ent, hand->id)) {
-		weapon = CONTAINER(ent, hand->id)->item.t;
+	if (CONTAINER(ent, invDef->id)) {
+		weapon = CONTAINER(ent, invDef->id)->item.t;
 	/** @todo What if there is no item in the right hand - this would segfault then */
-	} else if (INV_IsLeftDef(hand) && RIGHT(ent)->item.t->holdTwoHanded) {
+	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = INVDEF(gi.csi->idRight);
-		weapon = CONTAINER(ent, hand->id)->item.t;
+		invDef = INVDEF(gi.csi->idRight);
+		weapon = CONTAINER(ent, invDef->id)->item.t;
 	} else
 		return;
 
@@ -434,6 +428,7 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
 	 * network buffer, and in multiplayer everything is researched */
 
+	/* also try the temp containers */
 	for (containerID = 0; containerID < gi.csi->numIDs; containerID++) {
 		if (INVDEF(containerID)->out < tu) {
 			/* Once we've found at least one clip, there's no point
@@ -452,5 +447,5 @@ void G_ActorReload (edict_t* ent, shoot_types_t st)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
+		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, qtrue);
 }

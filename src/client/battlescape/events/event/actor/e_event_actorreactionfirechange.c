@@ -1,5 +1,5 @@
 /**
- * @file e_event_actorstats.c
+ * @file e_event_actorreactionfirechange.c
  */
 
 /*
@@ -23,49 +23,44 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
+#include "../../../../menu/m_main.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
-#include "e_event_actorstats.h"
+#include "../../../cl_hud.h"
+#include "e_event_actorreactionfirechange.h"
 
 /**
- * @brief Parses the actor stats that comes from the netchannel
- * @sa CL_ParseEvent
- * @sa G_SendStats
- * @sa ev_func
+ * @brief Network event function for TU reservation. Responsible for updating the HUD with the information
+ * that were received from the server
+ * @param self The event pointer
+ * @param msg The network message to parse the event data from
+ * @sa HUD_UpdateReactionFiremodes
  */
-void CL_ActorStats (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorReactionFireChange (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, oldTUs = 0;
+	actorHands_t hand;
+	int entnum, fmIdx, odIdx;
+	character_t *chr;
+	const objDef_t *od;
 
-	entnum = NET_ReadShort(msg);
+	NET_ReadFormat(msg, self->formatString, &entnum, &fmIdx, &hand, &odIdx);
+
 	le = LE_Get(entnum);
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
-		Com_Printf("CL_ActorStats: LE (%i) not an actor (type: %i)\n", entnum, le->type);
+	chr = CL_ActorGetChr(le);
+	if (!chr)
 		return;
-	}
 
-	if (le->selected)
-		oldTUs = le->TU;
+	if (odIdx != NONE)
+		od = INVSH_GetItemByIDX(odIdx);
+	else
+		od = NULL;
 
-	NET_ReadFormat(msg, self->formatString, &le->TU, &le->HP, &le->STUN, &le->morale);
+	CL_ActorSetRFMode(chr, hand, fmIdx, od);
 
-	if (le->TU > le->maxTU)
-		le->maxTU = le->TU;
-	if (le->HP > le->maxHP)
-		le->maxHP = le->HP;
-	if (le->morale > le->maxMorale)
-		le->maxMorale = le->morale;
-
-	/* if selActor's timeunits have changed, update movelength */
-	if (le->TU != oldTUs && le->selected)
-		CL_ActorResetMoveLength(le);
+	/* Update display of firemode checkbuttons. */
+	HUD_DisplayFiremodes(le, hand, qtrue);
 }

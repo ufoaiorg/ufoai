@@ -49,11 +49,11 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	/* If standing up or crouching down remove the reserved-state for crouching. */
 	if (((state & STATE_CROUCHED) && !LE_IsCrouched(le)) ||
 		 (!(state & STATE_CROUCHED) && LE_IsCrouched(le))) {
-		if (CL_UsableTUs(le) < TU_CROUCH && CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
+		if (CL_ActorUsableTUs(le) < TU_CROUCH && CL_ActorReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
 			/* We have not enough non-reserved TUs,
 			 * but some reserved for crouching/standing up.
 			 * i.e. we only reset the reservation for crouching if it's the very last attempt. */
-			CL_ReserveTUs(le, RES_CROUCH, 0); /* Reset reserved TUs (0 TUs) */
+			CL_ActorReserveTUs(le, RES_CROUCH, 0); /* Reset reserved TUs (0 TUs) */
 		}
 	}
 
@@ -63,7 +63,7 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 		FLOOR(le) = NULL;
 		LE_SetThink(le, NULL);
 		VectorCopy(player_dead_maxs, le->maxs);
-		CL_RemoveActorFromTeamList(le);
+		CL_ActorRemoveFromTeamList(le);
 		return;
 	} else {
 		le->state = state;
@@ -71,7 +71,7 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	}
 
 	/* save those states that the actor should also carry over to other missions */
-	chr = CL_GetActorChr(le);
+	chr = CL_ActorGetChr(le);
 	if (!chr)
 		return;
 
@@ -88,5 +88,5 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	}
 
 	/* state change may have affected move length */
-	CL_ConditionalMoveCalcActor(le);
+	CL_ActorConditionalMoveCalc(le);
 }

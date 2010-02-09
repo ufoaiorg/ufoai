@@ -108,14 +108,12 @@ static void G_UpdateStunState (int team)
 	edict_t *ent = NULL;
 	const int regen = 1;
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->team == team) {
-			if (ent->STUN > 0 && (ent->state & ~STATE_STUN)) {
-				if (regen > ent->STUN)
-					ent->STUN = 0;
-				else
-					ent->STUN -= regen;
-			}
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+		if (ent->STUN > 0 && (ent->state & ~STATE_STUN)) {
+			if (regen > ent->STUN)
+				ent->STUN = 0;
+			else
+				ent->STUN -= regen;
 		}
 	}
 }

@@ -54,19 +54,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @sa Com_DeveloperSet_f */
 /* {game}, {ufo}, {ufo_ded} */
-#define	DEBUG_ALL		(1<<0)
-#define	DEBUG_SHARED	(1<<1)
-#define	DEBUG_ENGINE	(1<<2)
-#define	DEBUG_SYSTEM	(1<<3)
-#define	DEBUG_COMMANDS	(1<<4)
-#define	DEBUG_CLIENT	(1<<5)
-#define	DEBUG_SERVER	(1<<6)
-#define	DEBUG_GAME		(1<<7)
-#define	DEBUG_RENDERER	(1<<8)
-#define	DEBUG_SOUND		(1<<9)
-#define DEBUG_EVENTSYS	(1<<10)
-#define DEBUG_PATHING	(1<<11)
-#define DEBUG_ROUTING	(1<<12)
+#define	DEBUG_ALL		0x07FE
+#define	DEBUG_SHARED	0x02
+#define	DEBUG_ENGINE	0x04
+#define	DEBUG_SYSTEM	0x08
+#define	DEBUG_COMMANDS	0x10
+#define	DEBUG_CLIENT	0x20
+#define	DEBUG_SERVER	0x40
+#define	DEBUG_GAME		0x80
+#define	DEBUG_RENDERER	0x0100
+#define	DEBUG_SOUND		0x0200
+#define DEBUG_EVENTSYS	0x0400
+/* note that pathing and routing are not included in DEBUG_ALL (too much output) */
+#define DEBUG_PATHING	0x0800
+#define DEBUG_ROUTING	0x1000
 
 /* {game}, [client], common/scripts.c */
 #define	NONE		-1
@@ -90,6 +91,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TU_DOOR_ACTION		1	/**< Time units used to interact with doors */
 #define	TU_CROUCH_MOVING_FACTOR	1.5	/**< The factor the normal movement is multiplied when in crouching mode */
 #define	TU_FLYING_MOVING_FACTOR	2	/**< The factor the normal movement is multiplied when flying */
+
+#define TU_GET_RELOAD(containerOut, containerIn, weapon) (csi.ids[(containerOut)].out + (weapon)->reload + csi.ids[(containerIn)].in)
 
 /* door states */
 /* game/g_client.c, game/g_func.c */

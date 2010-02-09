@@ -156,7 +156,7 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
 	int rowptr;
-	int samples, color_type, bit_depth;
+	int color_type, bit_depth;
 	png_structp png_ptr;
 	png_infop info_ptr;
 	png_infop end_info;
@@ -164,6 +164,8 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	byte *img;
 	uint32_t i;
 	pngBuf_t PngFileBuffer = {NULL, 0};
+	png_uint_32 png_height, png_width, rowbytes;
+	png_byte channels;
 
 	if (*pic != NULL)
 		Com_Error(ERR_FATAL, "possible mem leak in LoadPNG");
@@ -174,7 +176,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return;
 
 	/* Parse the PNG file */
-	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
+	if ((png_sig_cmp(PngFileBuffer.buffer, 0, 8)) != 0) {
 		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
 		FS_FreeFile(PngFileBuffer.buffer);
 		return;
@@ -221,7 +223,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		png_set_palette_to_rgb(png_ptr);
 	/* convert 1-2-4 bits grayscale images to 8 bits grayscale */
 	if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
-		png_set_gray_1_2_4_to_8(png_ptr);
+		png_set_expand_gray_1_2_4_to_8(png_ptr);
 	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
 		png_set_tRNS_to_alpha(png_ptr);
 
@@ -235,32 +237,35 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	row_pointers = png_get_rows(png_ptr, info_ptr);
 	rowptr = 0;
 
-	img = Mem_PoolAllocExt(info_ptr->width * info_ptr->height * 4, qfalse, vid_imagePool, 0);
+	png_height = png_get_image_height(png_ptr, info_ptr);
+	png_width = png_get_image_width(png_ptr, info_ptr);
+	img = Mem_PoolAllocExt(png_width * png_height * 4, qfalse, vid_imagePool, 0);
 	if (pic)
 		*pic = img;
 
-	if (info_ptr->channels == 4) {
-		for (i = 0; i < info_ptr->height; i++) {
-			memcpy(img + rowptr, row_pointers[i], info_ptr->rowbytes);
-			rowptr += info_ptr->rowbytes;
+	channels = png_get_channels(png_ptr, info_ptr);
+	rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+	if (channels == 4) {
+		for (i = 0; i < png_height; i++) {
+			memcpy(img + rowptr, row_pointers[i], rowbytes);
+			rowptr += rowbytes;
 		}
 	} else {
 		uint32_t j;
 
-		memset(img, 255, info_ptr->width * info_ptr->height * 4);
-		for (rowptr = 0, i = 0; i < info_ptr->height; i++) {
-			for (j = 0; j < info_ptr->rowbytes; j += info_ptr->channels) {
-				memcpy(img + rowptr, row_pointers[i] + j, info_ptr->channels);
+		memset(img, 255, png_width * png_height * 4);
+		for (rowptr = 0, i = 0; i < png_height; i++) {
+			for (j = 0; j < rowbytes; j += channels) {
+				memcpy(img + rowptr, row_pointers[i] + j, channels);
 				rowptr += 4;
 			}
 		}
 	}
 
 	if (width)
-		*width = info_ptr->width;
+		*width = (int)png_width;
 	if (height)
-		*height = info_ptr->height;
-	samples = info_ptr->channels;
+		*height = (int)png_height;
 
 	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
 
@@ -732,17 +737,17 @@ By Robert 'Heffo' Heffernan
 =================================================================
 */
 
-static void jpg_null (j_decompress_ptr cinfo)
+static void ufo_jpg_null (j_decompress_ptr cinfo)
 {
 }
 
-static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
+static boolean ufo_jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
 	Com_Printf("Premature end of JPEG data\n");
 	return 1;
 }
 
-static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
+static void ufo_jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
 		Com_Printf("Premature end of JPEG data\n");
@@ -751,14 +756,14 @@ static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
-static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
+static void ufo_jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
-	cinfo->src->init_source = jpg_null;
-	cinfo->src->fill_input_buffer = jpg_fill_input_buffer;
-	cinfo->src->skip_input_data = jpg_skip_input_data;
+	cinfo->src->init_source = ufo_jpg_null;
+	cinfo->src->fill_input_buffer = ufo_jpg_fill_input_buffer;
+	cinfo->src->skip_input_data = ufo_jpg_skip_input_data;
 	cinfo->src->resync_to_restart = jpeg_resync_to_restart;
-	cinfo->src->term_source = jpg_null;
+	cinfo->src->term_source = ufo_jpg_null;
 	cinfo->src->bytes_in_buffer = len;
 	cinfo->src->next_input_byte = mem;
 }
@@ -796,7 +801,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	jpeg_create_decompress(&cinfo);
 
 	/* Feed JPEG memory into the libJpeg Object */
-	jpeg_mem_src(&cinfo, rawdata, rawsize);
+	ufo_jpeg_mem_src(&cinfo, rawdata, rawsize);
 
 	/* Process JPEG header */
 	jpeg_read_header(&cinfo, qtrue);
@@ -1389,10 +1394,13 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	len = strlen(name);
 	if (len >= sizeof(image->name))
 		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
+	if (len == 0)
+		Com_Error(ERR_DROP, "R_LoadImageData: name is empty");
 
 	/* look for it */
 	image = R_GetImage(name);
 	if (image) {
+		assert(image->texnum);
 		Com_Printf("R_LoadImageData: image '%s' is already uploaded\n", name);
 		return image;
 	}
@@ -1507,10 +1515,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		loader++;
 	}
 
-	if (!loader->load) {
-		/* no fitting texture found */
+	/* no fitting texture found */
+	if (!image)
 		image = r_noTexture;
-	}
 
 	return image;
 }
@@ -1532,6 +1539,8 @@ void R_FreeWorldImages (void)
 			continue;			/* keep them */
 
 		/* free it */
+		if (image->normalmap)
+			R_DeleteImage(image->normalmap);
 		R_DeleteImage(image);
 	}
 }

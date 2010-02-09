@@ -71,7 +71,6 @@ language es {
 		es_CR.UTF-8
 		es_DO.UTF-8
 		es_EC.UTF-8
-		es_ES.UTF-8	/* FIXME: This should go in a separate column */
 		es_GT.UTF-8
 		es_HN.UTF-8
 		es_MX.UTF-8
@@ -90,7 +89,6 @@ language es {
 		es_CR.utf8
 		es_DO.utf8
 		es_EC.utf8
-		es_ES.utf8	/* FIXME: This should go in a separate column */
 		es_GT.utf8
 		es_HN.utf8
 		es_MX.utf8
@@ -101,6 +99,14 @@ language es {
 		es_US.utf8
 		es_UY.utf8
 		es_VE.utf8
+	}
+}
+
+language es_ES {
+	"_Spanish"
+	{
+		es_ES.UTF-8
+		es_ES.utf8
 	}
 }
 
@@ -217,11 +223,17 @@ language nl_NL {
 language pt_BR {
 	"_Portuguese"
 	{
-		pt.UTF-8
 		pt_BR.UTF-8
+		pt_BR.utf8
+	}
+}
+
+language pt {
+	"_Portuguese"
+	{
+		pt.UTF-8
 		pt_PT.UTF-8
 		pt.utf8
-		pt_BR.utf8
 		pt_PT.utf8
 	}
 }
@@ -267,6 +279,16 @@ language th {
 		th.uft8
 		th_TH.UTF-8
 		th_TH.uft8
+	}
+}
+
+language uk {
+	"_Ukrainian"
+	{
+		uk.UTF-8
+		uk.utf8
+		uk_UA.utf8
+		uk_UA.UTF-8
 	}
 }
 

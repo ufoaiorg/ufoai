@@ -160,7 +160,7 @@ typedef enum missionStage_s {
 } missionStage_t;
 
 /** @brief alien team group definition.
- * @note This is the definition of one groupe of aliens (several races) that can
+ * @note This is the definition of one groups of aliens (several races) that can
  * be used on the same map.
  * @sa alienTeamCategory_s
  */
@@ -176,7 +176,7 @@ typedef struct alienTeamGroup_s {
 } alienTeamGroup_t;
 
 /** @brief alien team category definition
- * @note This is the definition of all groupe of aliens that can be used for
+ * @note This is the definition of all groups of aliens that can be used for
  * a mission category
  * @sa alienTeamGroup_s
  */
@@ -195,9 +195,10 @@ typedef struct alienTeamCategory_s {
 
 /** @brief mission definition
  * @note A mission is different from a map: a mission is the whole set of actions aliens will carry.
- * For example, comming with a UFO on earth, land, explore earth, and leave with UFO
+ * For example, coming with a UFO on earth, land, explore earth, and leave with UFO
  */
 typedef struct mission_s {
+	int idx;						/**< unique id of this mission */
 	char id[MAX_VAR];				/**< script id (must be first element of mission_t to use LIST_ContainsString) */
 	mapDef_t* mapDef;				/**< mapDef used for this mission */
 	qboolean active;				/**< aircraft at place? */
@@ -248,6 +249,7 @@ typedef struct missionResults_s {
 extern missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
 
 typedef struct stats_s {
+	int missions;				/**< all missions (used for unique mission idx generation) */
 	int missionsWon;
 	int missionsLost;
 	int basesBuild;
@@ -476,7 +478,7 @@ typedef struct ccs_s {
 	/* == ufopedia == */
 	/* A list of all UFOpaedia chapters. */
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];
-	/* Total number uf UFOpaedia chapters */
+	/* Total number of UFOpaedia chapters */
 	int numChapters;
 	int numUnreadMails; /**< only for faster access (don't cycle all techs every frame) */
 
@@ -545,6 +547,7 @@ typedef struct ccs_s {
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
 
 	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
+	/** @todo remove this. it has nothing with ccs, it should be handled by menuscripts/cvars */
 	qboolean displayHeavyEquipmentList;
 } ccs_t;
 

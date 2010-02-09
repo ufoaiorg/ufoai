@@ -72,7 +72,7 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
-		const character_t *chr = CL_GetActorChr(le);
+		const character_t *chr = CL_ActorGetChr(le);
 		if (chr) {
 			char tmpbuf[128];
 			if (LE_IsStunned(le)) {
@@ -114,9 +114,9 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 	CL_PlayActorSound(le, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);
-	CL_RemoveActorFromTeamList(le);
+	CL_ActorRemoveFromTeamList(le);
 
 	/* update pathing as we maybe can walk onto the dead actor now */
-	CL_ConditionalMoveCalcActor(selActor);
+	CL_ActorConditionalMoveCalc(selActor);
 	LE_Unlock(le);
 }

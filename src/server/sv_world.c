@@ -411,6 +411,8 @@ typedef struct {
  * @param[in] ent The edict to get the bmodel from (at least in case of SOLID_BSP)
  * @param[out] tile The maptile the bmodel belongs, too (at least in case of SOLID_BSP)
  * @param[out] rmaShift the shift vector in case of an RMA (needed for doors)
+ * @return The headnode for the edict
+ * @sa CL_HullForEntity
  */
 static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
 {
@@ -436,7 +438,7 @@ static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
 	/* create a temp hull from bounding box sizes */
 	*tile = 0;
 	VectorCopy(vec3_origin, rmaShift);
-	return CM_HeadnodeForBox(0, ent->mins, ent->maxs);
+	return CM_HeadnodeForBox(*tile, ent->mins, ent->maxs);
 }
 
 

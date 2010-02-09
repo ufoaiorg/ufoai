@@ -1156,16 +1156,19 @@ void E_InitStartup (void)
 }
 
 /**
- * @brief Searches all soldiers employees for the ucn (character id)
+ * @brief Searches all employee for the ucn (character id)
+ * @param[in] uniqueCharacterNumber unique character number (UCN)
  */
 employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
 	int i;
+	int j;
 
 	/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
-	for (i = 0; i < MAX_EMPLOYEES; i++)
-		if (ccs.employees[EMPL_SOLDIER][i].chr.ucn == uniqueCharacterNumber)
-			return &(ccs.employees[EMPL_SOLDIER][i]);
+	for (j = 0; j < MAX_EMPL; j++)
+		for (i = 0; i < MAX_EMPLOYEES; i++)
+			if (ccs.employees[j][i].chr.ucn == uniqueCharacterNumber)
+				return &(ccs.employees[j][i]);
 
 	return NULL;
 }
@@ -1316,7 +1319,7 @@ qboolean E_HireAllowed (const base_t* base)
 void E_RemoveInventoryFromStorage (employee_t *employee)
 {
 	const inventory_t *inv;
-	int i;
+	int container;
 
 	assert(employee);
 	assert(employee->baseHired);
@@ -1326,10 +1329,10 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 	if (!inv)
 		return;
 
-	for (i = 0; i < csi.numIDs; i++) {
-		const invList_t *invList = inv->c[csi.ids[i].id];
+	for (container = 0; container < csi.numIDs; container++) {
+		const invList_t *invList = inv->c[container];
 
-		if (csi.ids[i].temp)
+		if (csi.ids[container].temp)
 			continue;
 
 		while (invList) {

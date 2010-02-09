@@ -685,17 +685,22 @@ void R_DrawPolygon (int points, int *verts)
 }
 
 #define MARKER_SIZE 60.0
+
 /**
- * @brief Draw a 3D Marker on the 3D geoscape
- * @sa MAP_Draw3DMarkerIfVisible
+ * @brief Draw 3D Marker on the 2D geoscape.
+ * @param[in] screenPos Position on screenlongitude and latitude of the model to draw.
+ * @param[in] direction angle giving the direction the model is heading toward.
  */
-void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model, int skin)
+void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *model, int skin)
 {
 	modelInfo_t mi;
 	vec2_t size;
-	vec3_t scale, center;
+	vec3_t scale, center, position, angles;
+	float zoom = 0.4f;
 
 	memset(&mi, 0, sizeof(mi));
+	VectorCopy(vec3_origin, position);
+	VectorCopy(vec3_origin, angles);
 
 	mi.model = R_RegisterModelShort(model);
 	if (!mi.model) {
@@ -711,11 +716,99 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 	size[0] = size[1] = MARKER_SIZE * zoom;
 	R_ModelAutoScale(size, &mi, scale, center);
 	/* reset the center, as we want to place the models onto the surface of the earth */
-	mi.center[0] = 0;
-	mi.center[1] = 0;
-	mi.center[2] = 0;
+	mi.center = NULL;
+
+	/* go to a new matrix */
+	glPushMatrix();
+
+	/* Apply all transformation to model. Note that the transformations are applied starting
+	from the last one and ending with the first one */
+
+	/* move model to its location */
+	glTranslatef(screenPos[0]* viddef.rx, screenPos[1]* viddef.ry, 0);
+	/* scale model to proper resolution */
+	glScalef(viddef.rx, viddef.ry, 1.0f);
+	/* rotate model to proper direction. */
+	glRotatef(180.0f, 0, 1, 0);
+	glRotatef(90.f - direction, 0, 0, 1);
 
 	R_DrawModelDirect(&mi, NULL, NULL);
+
+	/* restore previous matrix */
+	glPopMatrix();
+}
+
+/**
+ * @brief Draw 3D Marker on the 3D geoscape.
+ * @param[in] x menu node x position
+ * @param[in] y menu node y position
+ * @param[in] w menu node widht
+ * @param[in] h menu node height
+ * @param[in] rotate vector giving the angles of earth rotation due to player view.
+ * @param[in] pos longitude and latitude of the model to draw.
+ * @param[in] direction angle giving the direction the model is heading toward.
+ * @param[in] earthRadius Radius of earth on screen (this include zoom).
+ */
+void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin)
+{
+	/* normalize */
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
+
+	/* Earth center is in the middle of node.
+	 * Due to Orthographic view, this is also camera position */
+	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};
+
+	modelInfo_t mi;
+	vec2_t size;
+	vec3_t scale, center, position, angles;
+	float zoom = 0.4f;
+
+	memset(&mi, 0, sizeof(mi));
+	VectorCopy(vec3_origin, position);
+	VectorCopy(vec3_origin, angles);
+
+	mi.model = R_RegisterModelShort(model);
+	if (!mi.model) {
+		Com_Printf("Could not find model '%s'\n", model);
+		return;
+	}
+
+	mi.name = model;
+	mi.origin = position;
+	mi.angles = angles;
+	mi.skin = skin;
+
+	size[0] = size[1] = MARKER_SIZE * zoom;
+	R_ModelAutoScale(size, &mi, scale, center);
+	/* reset the center, as we want to place the models onto the surface of the earth */
+	mi.center = NULL;
+
+	/* go to a new matrix */
+	glPushMatrix();
+
+	/* Apply all transformation to model. Note that the transformations are applied starting
+	from the last one and ending with the first one */
+
+	/* center model on earth. Translate also along z to avoid seeing
+	bottom part of the model through earth (only half of earth is drawn) */
+	glTranslatef(earthPos[0], earthPos[1], 10.0f);
+	/* scale model to proper resolution */
+	glScalef(viddef.rx, viddef.ry, 1.0f);
+	/* place model on earth: make it tangent to earth surface, heading toward it if direction is used. */
+	glRotatef(-rotate[1], 1, 0, 0);
+	glRotatef(rotate[2], 0, 1, 0);
+	glRotatef(rotate[0] - pos[0], 0, 0, 1);
+	glRotatef(90.0f - pos[1] , 1, 0, 0);
+	glTranslatef(0, 0, earthRadius);
+	glRotatef(-90.0f + direction, 0, 0, 1);
+
+	R_DrawModelDirect(&mi, NULL, NULL);
+
+	/* restore previous matrix */
+	glPopMatrix();
 }
 
 /**
@@ -941,6 +1034,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glScalef(2, 1, 1);
 	glMatrixMode(GL_MODELVIEW);
 
+	/* activate depth to hide 3D models behind earth */
+	glEnable(GL_DEPTH_TEST);
 	/* draw the globe */
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
 	/* load nation overlay */
@@ -966,6 +1061,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
+	glDisable(GL_DEPTH_TEST);
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
 

@@ -1,5 +1,6 @@
 /**
- * @file e_event_startgamedone.h
+ * @file e_server.h
+ * @brief Events that are send from the client to the server
  */
 
 /*
@@ -22,11 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef E_EVENT_STARTGAMEDONE_H_
-#define E_EVENT_STARTGAMEDONE_H_
+#ifndef E_SERVER_H_
+#define E_SERVER_H_
 
-#include "../../e_main.h"
+void CL_ServerEventsInit(void);
 
-void CL_StartingGameDone(const eventRegister_t *self, struct dbuffer *msg);
-
-#endif
+#endif /* E_SERVER_H_ */

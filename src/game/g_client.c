@@ -100,12 +100,10 @@ void G_GiveTimeUnits (int team)
 {
 	edict_t *ent = NULL;
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->team == team) {
-			ent->state &= ~STATE_DAZED;
-			ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
-			G_SendStats(ent);
-		}
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
+		ent->state &= ~STATE_DAZED;
+		ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+		G_SendStats(ent);
 	}
 }
 
@@ -380,7 +378,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
  * @brief Will inform the player about the real TU reservation
  * @param ent The actors edict.
  */
-static void G_SendReservations (const edict_t *ent)
+static void G_EventSendReservations (const edict_t *ent)
 {
 	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
 
@@ -456,10 +454,14 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
-		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
-		/* Enable requested reaction fire. */
-		ent->state |= reqState;
+		if (G_CanEnableReactionFire(ent)) {
+			/* Disable reaction fire. */
+			ent->state &= ~STATE_REACTION;
+			/* Enable requested reaction fire. */
+			ent->state |= reqState;
+		} else {
+			G_ClientPrintf(player, PRINT_HUD, _("Can't activate reaction fire.\n"));
+		}
 		break;
 	default:
 		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
@@ -477,30 +479,27 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
+qboolean G_ClientCanReload (player_t *player, int entnum, int containerID)
 {
 	edict_t *ent;
 	invList_t *ic;
-	int hand;
-	objDef_t *weapon;
 	int container;
+	objDef_t *weapon;
 
 	ent = G_EdictsGetByNum(entnum);
 
-	/* search for clips and select the one that is available easily */
-	hand = st == ST_RIGHT_RELOAD ? gi.csi->idRight : gi.csi->idLeft;
-
-	if (ent->i.c[hand]) {
-		weapon = ent->i.c[hand]->item.t;
-	} else if (hand == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	if (ent->i.c[containerID]) {
+		weapon = ent->i.c[containerID]->item.t;
+	} else if (containerID == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
-		hand = gi.csi->idRight;
-		weapon = ent->i.c[hand]->item.t;
+		containerID = gi.csi->idRight;
+		weapon = ent->i.c[containerID]->item.t;
 	} else
 		return qfalse;
 
 	assert(weapon);
 
+	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
 			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
@@ -535,6 +534,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 	bestContainer = NULL;
 	icFinal = NULL;
 
+	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
 			/* Once we've found at least one clip, there's no point
@@ -600,7 +600,7 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	int hand, fdIdx, objIdx;
+	actorHands_t hand, fmIdx, objIdx;
 	int resReaction, resCrouch, resShot;
 	edict_t *ent;
 
@@ -643,7 +643,6 @@ int G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-
 		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
 		 * the item up hasn't moved at all */
 		G_GetFloorItems(ent);
@@ -683,21 +682,20 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_REACT_SELECT:
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
-		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
-		ent->chr.RFmode.hand = hand;
-		ent->chr.RFmode.fmIdx = fdIdx;
-		ent->chr.RFmode.weapon = &gi.csi->ods[objIdx];
+		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fmIdx, &objIdx);
+		G_UpdateReactionFire(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
 		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resReaction, &resShot, &resCrouch);
 
-		ent->chr.reservedTus.reaction = resReaction;
-		ent->chr.reservedTus.shot = resShot;
-		ent->chr.reservedTus.crouch = resCrouch;
+		/*if (ent->TU >= resReaction + resShot + resCrouch)*/ {
+			ent->chr.reservedTus.reaction = resReaction;
+			ent->chr.reservedTus.shot = resShot;
+			ent->chr.reservedTus.crouch = resCrouch;
+		}
 
-		G_SendReservations(ent);
+		G_EventSendReservations(ent);
 		break;
 
 	default:
@@ -1251,7 +1249,6 @@ void G_ClientSpawn (player_t * player)
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
 
-	gi.AddEvent(G_PlayerToPM(player), EV_START_DONE);
 	/* ensure that the last event is send, too */
 	gi.EndEvents();
 

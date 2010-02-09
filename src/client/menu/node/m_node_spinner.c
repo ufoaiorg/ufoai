@@ -57,22 +57,28 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 	float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float last = value;
 	const float delta = MN_GetReferenceFloat(node, EXTRADATA(node).delta);
+	const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
+	const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
 
 	if (!down) {
-		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
 		if (value + delta <= max) {
 			value += delta;
 		} else {
 			value = max;
 		}
 	} else {
-		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
 		if (value - delta >= min) {
 			value -= delta;
 		} else {
 			value = min;
 		}
 	}
+
+	/* ensure sane values */
+	if (value < min)
+		value = min;
+	else if (value > max)
+		value = max;
 
 	/* nothing change? */
 	if (last == value)
@@ -211,10 +217,10 @@ static void MN_SpinnerNodeLoaded (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* @override size
-	 * The size of the widget is uneditable. Fixed to 15�19.
+	 * The size of the widget is uneditable. Fixed to 15x19.
 	 */
 	/* @override image
-	 * Texture used for the widget. Its a 64�64 template image with all four
+	 * Texture used for the widget. Its a 64x64 template image with all four
 	 * status. The top button take the first vertical 9 pixels, the bottom
 	 * button use the last 10 pixels. See the sample image.
 	 * @image html http://ufoai.ninex.info/wiki/images/Spinner_blue.png

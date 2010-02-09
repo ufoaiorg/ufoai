@@ -1257,10 +1257,29 @@ int CL_ParseParticle (const char *name, const char **text)
 }
 
 /**
- * @brief Inits some fixed particles that are not in our script files
- * @note fixed particles start with a * in their name
+ * @brief Spawns a debug marker particle in the world
+ */
+static void PTL_DebugSpawnMarker_f (void)
+{
+	vec3_t worldOrigin;
+
+	if (Cmd_Argc() < 4) {
+		Com_Printf("Usage: %s <x> <y> <z>\n", Cmd_Argv(0));
+		return;
+	}
+
+	worldOrigin[0] = atof(Cmd_Argv(1));
+	worldOrigin[1] = atof(Cmd_Argv(2));
+	worldOrigin[2] = atof(Cmd_Argv(3));
+
+	CL_ParticleSpawn("debug_marker", 0, worldOrigin, NULL, NULL);
+}
+
+/**
+ * @brief Initializes cvars and commands
  */
 void CL_InitParticles (void)
 {
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
+	Cmd_AddCommand("debug_spawnmarker", PTL_DebugSpawnMarker_f, "Spawn a marker particle in the world at a given location");
 }

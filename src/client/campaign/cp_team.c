@@ -140,20 +140,18 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * @param[in] aircraft Pointer to an aircraft for given team.
  * @param[in] ed equipDef_t pointer to equipment
  * @sa CL_AddWeaponAmmo
+ * @note Iterate through in container order (right hand, left hand, belt,
+ * holster, backpack) at the top level, i.e. each squad member reloads
+ * the right hand, then each reloads the left hand, etc. The effect
+ * of this is that when things are tight, everyone has the opportunity
+ * to get their preferred weapon(s) loaded before anyone is allowed
+ * to keep her spares in the backpack or on the floor. We don't want
+ * the first person in the squad filling their backpack with spare ammo
+ * leaving others with unloaded guns in their hands...
  */
 void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
-	invList_t *ic, *next;
 	int p, container;
-
-	/* Iterate through in container order (right hand, left hand, belt,
-	 * holster, backpack) at the top level, i.e. each squad member reloads
-	 * her right hand, then each reloads his left hand, etc. The effect
-	 * of this is that when things are tight, everyone has the opportunity
-	 * to get their preferred weapon(s) loaded before anyone is allowed
-	 * to keep her spares in the backpack or on the floor. We don't want
-	 * the first person in the squad filling their backpack with spare ammo
-	 * leaving others with unloaded guns in their hands... */
 
 	assert(aircraft);
 
@@ -178,15 +176,22 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
+				invList_t *ic, *next;
 				character_t *chr = &aircraft->acTeam[p]->chr;
 				assert(chr);
+#if 0
+				/* ignore items linked from any temp container */
+				if (csi.ids[container].temp)
+					continue;
+#endif
 				for (ic = chr->inv.c[container]; ic; ic = next) {
 					next = ic->next;
 					if (ed->numItems[ic->item.t->idx] > 0) {
 						ic->item = CP_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						cls.i.RemoveFromInventory(&cls.i, &chr->inv, &csi.ids[container], ic);
+						if (!cls.i.RemoveFromInventory(&cls.i, &chr->inv, &csi.ids[container], ic))
+							Com_Error(ERR_DROP, "Could not remove item from inventory");
 					}
 				}
 			}
@@ -251,14 +256,15 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		employee_t *empl = aircraft->acTeam[i];
 		assert(chrDisplayList.num < MAX_ACTIVETEAM);
-		if (!aircraft->acTeam[i])
+		if (!empl)
 			continue; /* Skip unused team-slot. */
 
-		if (aircraft->acTeam[i]->type != employeeType)
+		if (empl->type != employeeType)
 			continue;
 
-		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
+		chrDisplayList.chr[chrDisplayList.num] = &empl->chr;
 
 		/* Sanity check(s) */
 		if (!chrDisplayList.chr[chrDisplayList.num])

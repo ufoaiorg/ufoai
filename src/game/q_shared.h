@@ -186,7 +186,6 @@ typedef enum {
 	EV_NULL,
 	EV_RESET,
 	EV_START,
-	EV_START_DONE,  /**< Signals that all initialization information was sent from the server. */
 	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
 	EV_ENDROUNDANNOUNCE,
 
@@ -204,6 +203,7 @@ typedef enum {
 	EV_ACTOR_ADD,
 	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
+	EV_ACTOR_REACTIONFIRECHANGE,
 
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
@@ -219,7 +219,6 @@ typedef enum {
 	EV_INV_DEL,
 	EV_INV_AMMO,
 	EV_INV_RELOAD,
-	EV_INV_HANDS_CHANGED,
 	EV_INV_TRANSFER,
 
 	/* func_breakables */
@@ -356,6 +355,15 @@ typedef enum {
 
 #define GRAVITY				500.0
 
+#define MAX_SKILL	100
+
+#define GET_HP( ab )        (min((80 + (ab) * 90/MAX_SKILL), 255))
+#define GET_INJURY_MULT( mind, hp, hpmax )  ((float)(hp) / (float)(hpmax) > 0.5f ? 1.0f : 1.0f + INJURY_BALANCE * ((1.0f / ((float)(hp) / (float)(hpmax) + INJURY_THRESHOLD)) -1.0f)* (float)MAX_SKILL / (float)(mind))
+/** @todo Skill-influence needs some balancing. */
+#define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
+#define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
+#define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
+
 /**
  * config strings are a general means of communication from
  * the server to all connected clients.
@@ -403,7 +411,6 @@ typedef enum {
 
 #define MAX_TEAMDEFS	128
 
-#define LASTNAME	3
 typedef enum {
 	NAME_NEUTRAL,
 	NAME_FEMALE,

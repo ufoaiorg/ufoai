@@ -254,7 +254,7 @@ typedef struct objDef_s {
 
 	/* Weapon specific. */
 	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
-					     would have, if that clip would be full. In other words, max bullets for this type of
+					     have, if that clip would be full. In other words, max bullets for this type of
 					     weapon with currently loaded type of ammo. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	qboolean oneshot;	/**< This weapon contains its own ammo (it is loaded in the base).
@@ -386,6 +386,7 @@ typedef struct mapDef_s {
 
 	/* singleplayer */
 	int maxAliens;				/**< Number of spawning points on the map */
+	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
 
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
@@ -404,7 +405,7 @@ typedef struct mapDef_s {
 
 typedef struct damageType_s {
 	char id[MAX_VAR];
-	qboolean showInMenu;
+	qboolean showInMenu;	/**< true for values that contains a translatable id */
 } damageType_t;
 
 /**
@@ -459,19 +460,18 @@ typedef struct csi_s {
 	int numAlienTeams;
 } csi_t;
 
-#define MAX_SKILL	100
+/** @todo remove this and use the container id - not every unit must have two hands */
+typedef enum {
+	ACTOR_HAND_NOT_SET = 0,
+	ACTOR_HAND_RIGHT = 1,
+	ACTOR_HAND_LEFT = 2,
 
-#define GET_HP_HEALING( ab ) (1 + (ab) * 15/MAX_SKILL)
-#define GET_HP( ab )        (min((80 + (ab) * 90/MAX_SKILL), 255))
-#define GET_INJURY_MULT( mind, hp, hpmax )  ((float)(hp) / (float)(hpmax) > 0.5f ? 1.0f : 1.0f + INJURY_BALANCE * ((1.0f / ((float)(hp) / (float)(hpmax) + INJURY_THRESHOLD)) -1.0f)* (float)MAX_SKILL / (float)(mind))
-/** @todo Skill-influence needs some balancing. */
-#define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2))
-#define GET_TU( ab )        (min((27 + (ab) * 20/MAX_SKILL), 255))
-#define GET_MORALE( ab )        (min((100 + (ab) * 150/MAX_SKILL), 255))
+	ACTOR_HAND_ENSURE_32BIT = 0x7FFFFFFF
+} actorHands_t;
 
-#define ACTOR_HAND_NOT_SET -1
-#define ACTOR_HAND_RIGHT 0
-#define ACTOR_HAND_LEFT 1
+#define ACTOR_GET_INV(actor, hand) (((hand) == ACTOR_HAND_RIGHT) ? RIGHT(actor) : (((hand) == ACTOR_HAND_LEFT) ? LEFT(actor) : NULL))
+/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
+#define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_RIGHT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
 
 qboolean INV_IsFloorDef(const invDef_t* invDef);
 qboolean INV_IsRightDef(const invDef_t* invDef);
@@ -570,16 +570,16 @@ typedef struct chrScoreGlobal_s {
 } chrScoreGlobal_t;
 
 typedef struct chrFiremodeSettings_s {
-	int hand;	/**< Stores the used hand (0=right, 1=left, -1=undef) */
+	actorHands_t hand;	/**< Stores the used hand */
 	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
 } chrFiremodeSettings_t;
 
 /**
  * @brief How many TUs (and of what type) did a player reserve for a unit?
- * @sa CL_UsableTUs
- * @sa CL_ReservedTUs
- * @sa CL_ReserveTUs
+ * @sa CL_ActorUsableTUs
+ * @sa CL_ActorReservedTUs
+ * @sa CL_ActorReserveTUs
  */
 typedef struct chrReservations_s {
 	/* Reaction fire reservation (for current round and next enemy round) */
@@ -647,7 +647,7 @@ typedef struct character_s {
 } character_t;
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)
-#define SANE_FIREMODE(fm)	((((fm)->hand >= 0) && ((fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON) && ((fm)->fmIdx >= 0)))
+#define SANE_FIREMODE(fm)	(((fm)->hand >= 0 && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
 
 #define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
 #define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))

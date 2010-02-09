@@ -40,16 +40,17 @@ typedef enum {
 	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */
 } actorModes_t;
 
-#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
+#define IS_MODE_FIRE_RIGHT(x)		((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
 #define IS_MODE_FIRE_LEFT(x)		((x) == M_FIRE_L || (x) == M_PEND_FIRE_L)
-#define IS_MODE_FIRE_HEADGEAR(x)		((x) == M_FIRE_HEADGEAR)
+#define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
+#define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
 /** @brief a local entity */
 typedef struct le_s {
 	qboolean inuse;
 	qboolean removeNextFrame;	/**< will set the inuse value to false in the next frame */
 	qboolean invis;
-	qboolean selected;
+	qboolean selected;		/**< used for actors - for the current selected actor this is true */
 	int type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
@@ -64,10 +65,9 @@ typedef struct le_s {
 	int HP, maxHP;				/**< health points */
 	int STUN;					/**< if stunned - state STATE_STUN */
 	int state;					/**< rf states, dead, crouched and so on */
-	int oldstate;
 
-	float angles[3];
-	float alpha;
+	float angles[3];	/**< rotation angle, for actors only the YAW is used */
+	float alpha;		/**< alpha color value for rendering */
 
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
@@ -123,10 +123,10 @@ typedef struct le_s {
 	const char *ref1, *ref2;
 	const struct le_s *ref3;
 	inventory_t i;
-	int left, right, extension, headgear;
+	int left, right, extension, headgear; /**< item indices that the actor holds in his hands */
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
-	int gender;
+	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */
 
 	pathing_t *pathMap;	/**< This is where the data for TUS used to move and actor
@@ -221,12 +221,16 @@ qboolean LE_IsLivingActor(const le_t *le);
 qboolean LE_IsActor(const le_t *le);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
+le_t* LE_GetNextInUse(le_t* lastLE);
+le_t* LE_GetNext(le_t* lastLE);
 void LE_Lock(le_t *le);
 void LE_Unlock(le_t *le);
 qboolean LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, const char *file, const int line) __attribute__((noreturn));
-le_t *LE_Find(int type, pos3_t pos);
+le_t *LE_Find(int type, const pos3_t pos);
+le_t *LE_FindRadius(le_t *from, const vec3_t org, float rad, entity_type_t type);
+le_t *LE_GetFromPos(const pos3_t pos);
 void LE_PlaceItem(le_t *le);
 void LE_Cleanup(void);
 void LE_AddToScene(void);

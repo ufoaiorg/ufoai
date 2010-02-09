@@ -1027,8 +1027,8 @@ sequence tut_skirmish
 		font	f_big
 	}
 	wait 5
-  rem or_text
-  rem exit_text
+	rem or_text
+	rem exit_text
 	rem skirmish_bg
 	rem text_bg
 
@@ -1060,9 +1060,38 @@ sequence tut_multiplayer
 		color	"1 1 1 1"
 		font	f_normal
 	}
-	wait 5
+	
+	2dobj lobby_text
+	{
+		text	"_You should connect to the lobby and wait for invitations or start your own server"
+		pos	"512 40"
+		align	uc
+		color	"1 1 1 1"
+		font	f_normal
+	}
 
+	2dobj lobby2_text
+	{
+		text	"_While you are connected to the lobby you can play singleplayer until someone invites you"
+		pos	"512 70"
+		align	uc
+		color	"1 1 1 1"
+		font	f_normal
+	}
 
+	2dobj timeout_text
+	{
+		text	"_As a server admin you should consider setting a round time limit."
+		pos	"512 100"
+		align	uc
+		color	"1 1 1 1"
+		font	f_normal
+	}
 
+	wait 20
+	
+	rem timeout_text
+	rem lobby_text
+	rem lobby2_text
 	rem port_text
 }

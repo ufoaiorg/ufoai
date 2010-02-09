@@ -104,18 +104,6 @@ void G_EventDestroyEdict (const edict_t* ent)
 }
 
 /**
- * @brief Update reaction firemode when something is moved from/to a hand.
- * @param[in] ent The entity to change the reaction fire hand for
- * @param[in] hand The hand that should be used for the reaction fire.
- */
-void G_EventReactionFireHandChange (const edict_t* ent, int hand)
-{
-	gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-	gi.WriteShort(ent->number);
-	gi.WriteShort(hand);
-}
-
-/**
  * @brief Change the amount of available ammo for the given entity
  * @param ent The entity to change the amount of ammo for
  * @param ammo The ammo to change
@@ -203,6 +191,21 @@ void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, int sho
 	gi.WritePos(impact);
 	gi.WriteDir(trace->plane.normal);
 }
+
+void G_EventReactionFireChange (const edict_t* ent)
+{
+	const objDef_t *od = ent->chr.RFmode.weapon;
+
+	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_REACTIONFIRECHANGE);
+
+	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->chr.RFmode.fmIdx);
+	gi.WriteByte(ent->chr.RFmode.hand);
+	gi.WriteShort(od ? od->idx : NONE);
+
+	gi.EndEvents();
+}
+
 
 void G_EventActorFall (const edict_t* ent)
 {

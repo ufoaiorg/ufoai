@@ -88,11 +88,10 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, const
  */
 static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t shootType)
 {
-#if 0
 	const struct model_s *model;
 	const char *tag;
 	const float *shooterTag, *muzzleTag;
-	float matrix[16], mc[16];
+	float matrix[16], mc[16], modifiedMatrix[16];
 	const objDef_t* od;
 	const invList_t *invlistWeapon;
 
@@ -123,15 +122,18 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 		Com_Error(ERR_DROP, "Could not find tag %s for actor model %s", tag, actor->model1->name);
 
 	GLMatrixAssemble(actor->origin, actor->angles, mc);
-	GLMatrixMultiply(mc, shooterTag, matrix);
-	GLMatrixMultiply(matrix, muzzleTag, mc);
+
+	memcpy(modifiedMatrix, shooterTag, sizeof(modifiedMatrix));
+	modifiedMatrix[12] = -modifiedMatrix[12];
+	GLMatrixMultiply(mc, modifiedMatrix, matrix);
+
+	memcpy(modifiedMatrix, muzzleTag, sizeof(modifiedMatrix));
+	modifiedMatrix[12] = -modifiedMatrix[12];
+	GLMatrixMultiply(matrix, modifiedMatrix, mc);
 
 	muzzle[0] = mc[12];
-	muzzle[1] = -mc[13];
+	muzzle[1] = mc[13];
 	muzzle[2] = mc[14];
-
-	CL_ParticleSpawn("debug_marker", 0, muzzle, NULL, NULL);
-#endif
 }
 
 /**

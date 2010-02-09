@@ -37,16 +37,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actorstats.h"
 #include "event/actor/e_event_actorstatechange.h"
 #include "event/actor/e_event_actordooraction.h"
+#include "event/actor/e_event_actorreactionfirechange.h"
 #include "event/actor/e_event_actorresetclientaction.h"
 #include "event/actor/e_event_actorreservationchange.h"
 #include "event/inventory/e_event_invadd.h"
 #include "event/inventory/e_event_invdel.h"
 #include "event/inventory/e_event_invammo.h"
 #include "event/inventory/e_event_invreload.h"
-#include "event/inventory/e_event_invcheckhands.h"
 #include "event/player/e_event_reset.h"
 #include "event/player/e_event_startgame.h"
-#include "event/player/e_event_startgamedone.h"
 #include "event/player/e_event_doendround.h"
 #include "event/player/e_event_endroundannounce.h"
 #include "event/player/e_event_results.h"
@@ -85,7 +84,6 @@ const eventRegister_t events[] = {
 	{E(EV_NULL), "", NULL, NULL, NULL},
 	{E(EV_RESET), "bb", CL_Reset, NULL, NULL},
 	{E(EV_START), "b", CL_StartGame, NULL, NULL},
-	{E(EV_START_DONE), "", CL_StartingGameDone, NULL, NULL},
 	{E(EV_ENDROUND), "b", CL_DoEndRound, NULL, NULL},
 	{E(EV_ENDROUNDANNOUNCE), "bb", CL_EndRoundAnnounce, NULL, NULL},
 
@@ -102,6 +100,7 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_ADD), "!sbbbbgsb", CL_ActorAdd, NULL, NULL},
 	{E(EV_ACTOR_TURN), "sb", CL_ActorDoTurn, NULL, NULL},
 	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
+	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, NULL, NULL},
 
 	{E(EV_ACTOR_START_SHOOT), "ssbbbgg", CL_ActorStartShoot, NULL, NULL},
 	{E(EV_ACTOR_SHOOT), "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, NULL}, /**< @sa NET_WriteDir */
@@ -117,7 +116,6 @@ const eventRegister_t events[] = {
 	{E(EV_INV_DEL), "sbbb", CL_InvDel, NULL, NULL},
 	{E(EV_INV_AMMO), "sbbbbb", CL_InvAmmo, NULL, NULL},
 	{E(EV_INV_RELOAD), "sbbbbb", CL_InvReload, NULL, NULL},
-	{E(EV_INV_HANDS_CHANGED), "ss", CL_InvCheckHands, NULL, NULL},
 	{E(EV_INV_TRANSFER), "sbsbbbbs", NULL, NULL, NULL},
 
 	{E(EV_MODEL_EXPLODE), "s", CL_Explode, NULL, NULL},

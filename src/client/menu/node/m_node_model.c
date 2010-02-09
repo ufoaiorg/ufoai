@@ -200,7 +200,10 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			 */
 			if (EXTRADATA(node).autoscale) {
 				if (!autoScaleComputed) {
-					R_ModelAutoScale(node->size, mi, autoScale, autoCenter);
+					vec2_t size;
+					size[0] = node->size[0] - node->padding;
+					size[1] = node->size[1] - node->padding;
+					R_ModelAutoScale(size, mi, autoScale, autoCenter);
 					autoScaleComputed = qtrue;
 				} else {
 					mi->scale = autoScale;
@@ -290,15 +293,19 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		return;
 	}
 
-	/* autoscale? */
-	if (EXTRADATA(node).autoscale)
-		R_ModelAutoScale(node->size, &mi, autoScale, autoCenter);
-
 	/* if the node is linked to a parent, the parent will display it */
 	if (EXTRADATA(node).tag) {
 		if (EXTRADATA(node).clipOverflow)
 			R_PopClipRect();
 		return;
+	}
+
+	/* autoscale? */
+	if (EXTRADATA(node).autoscale) {
+		vec2_t size;
+		size[0] = node->size[0] - node->padding;
+		size[1] = node->size[1] - node->padding;
+		R_ModelAutoScale(size, &mi, autoScale, autoCenter);
 	}
 
 	/* no animation */

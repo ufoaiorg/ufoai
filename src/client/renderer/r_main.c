@@ -62,8 +62,9 @@ cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
 cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
-cvar_t *r_ext_s3tc_compression;
-cvar_t *r_intel_hack;
+static cvar_t *r_ext_s3tc_compression;
+static cvar_t *r_ext_nonpoweroftwo;
+static cvar_t *r_intel_hack;
 cvar_t *r_materials;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
@@ -410,6 +411,7 @@ static void R_RegisterSystemVars (void)
 	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");
 	r_deluxemap->modified = qfalse;
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
+	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
 	r_vertexbuffers = Cvar_Get("r_vertexbuffers", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls usage of OpenGL Vertex Buffer Objects (VBO) versus legacy vertex arrays.");
@@ -586,6 +588,18 @@ static qboolean R_InitExtensions (void)
 				r_config.gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}
 		}
+	}
+
+	if (strstr(r_config.extensionsString, "GL_ARB_texture_non_power_of_two")) {
+		if (r_ext_nonpoweroftwo->integer) {
+			Com_Printf("using GL_ARB_texture_non_power_of_two\n");
+			r_config.nonPowerOfTwo = qtrue;
+		} else {
+			r_config.nonPowerOfTwo = qfalse;
+			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
+		}
+	} else {
+		r_config.nonPowerOfTwo = qfalse;
 	}
 
 	/* anisotropy */
@@ -770,7 +784,7 @@ static inline void R_VerifyDriver (void)
 		r_config.hardwareType = GLHW_INTEL;
 	} else if (R_SearchForVendor("NVIDIA")) {
 		r_config.hardwareType = GLHW_NVIDIA;
-	} else if (R_SearchForVendor("ATI")) {
+	} else if (R_SearchForVendor("ATI") || R_SearchForVendor("Advanced Micro Devices") || R_SearchForVendor("AMD")) {
 		r_config.hardwareType = GLHW_ATI;
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;

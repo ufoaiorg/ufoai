@@ -1,6 +1,6 @@
 /**
- * @file cp_time.h
- * @brief Campaign geoscape time header
+ * @file e_server.c
+ * @brief Events that are send from the client to the server
  */
 
 /*
@@ -23,20 +23,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_TIME_H
-#define CP_TIME_H
+#include "../../client.h"
+#include "e_server.h"
 
-void CL_UpdateTime(void);
-void CL_GameTimeStop(void);
-qboolean CL_IsTimeStopped(void);
-void CL_GameTimeFast(void);
-void CL_GameTimeSlow(void);
-void CL_SetGameTime_f(void);
+/**
+ * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
+ */
+static void CL_NextRound_f (void)
+{
+	struct dbuffer *msg;
+	/* can't end round if we are not in battlescape */
+	if (!CL_BattlescapeRunning())
+		return;
 
-qboolean Date_LaterThan(date_t now, date_t compare);
-date_t Date_Add(date_t a, date_t b);
-date_t Date_Random(date_t minFrame, date_t maxFrame);
-const char *Date_GetMonthName(int month);
+	/* can't end round if we're not active */
+	if (cls.team != cl.actTeam)
+		return;
 
-#endif
+	/* send endround */
+	msg = new_dbuffer();
+	NET_WriteByte(msg, clc_endround);
+	NET_WriteMsg(cls.netStream, msg);
+}
 
+void CL_ServerEventsInit (void)
+{
+	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
+}

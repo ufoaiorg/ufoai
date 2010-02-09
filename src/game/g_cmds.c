@@ -147,13 +147,11 @@ static void G_KillTeam_f (void)
 
 	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (teamToKill >= 0 && ent->team != teamToKill)
-			continue;
-
-		/* die */
-		G_ActorDie(ent, STATE_DEAD, NULL);
-	}
+	if (teamToKill >= 0)
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+			/* die */
+			G_ActorDie(ent, STATE_DEAD, NULL);
+		}
 
 	/* check for win conditions */
 	G_MatchEndCheck();
@@ -172,17 +170,16 @@ static void G_StunTeam_f (void)
 	if (gi.Cmd_Argc() == 2)
 		teamToKill = atoi(gi.Cmd_Argv(1));
 
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (teamToKill >= 0 && ent->team != teamToKill)
-			continue;
+	if (teamToKill >= 0) {
+		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
+			/* die */
+			G_ActorDie(ent, STATE_STUN, NULL);
 
-		/* die */
-		G_ActorDie(ent, STATE_STUN, NULL);
-
-		if (teamToKill == TEAM_ALIEN)
-			level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
-		else
-			level.num_stuns[TEAM_ALIEN][teamToKill]++;
+			if (teamToKill == TEAM_ALIEN)
+				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
+			else
+				level.num_stuns[TEAM_ALIEN][teamToKill]++;
+		}
 	}
 
 	/* check for win conditions */
@@ -291,24 +288,22 @@ void G_InvList_f (const player_t *player)
 	edict_t *ent = NULL;
 
 	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
-	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (ent->team == player->pers.team) {
-			int container;
-			gi.dprintf("actor: '%s'\n", ent->chr.name);
+	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
+		int container;
+		gi.dprintf("actor: '%s'\n", ent->chr.name);
 
-			for (container = 0; container < gi.csi->numIDs; container++) {
-				const invList_t *ic = ent->i.c[container];
-				Com_Printf("Container: %i\n", container);
-				while (ic) {
-					Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
-							(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
-							ic->item.a, ic->x, ic->y);
-					if (ic->item.t)
-						Com_Printf(".... weapon: %s\n", ic->item.t->id);
-					if (ic->item.m)
-						Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
-					ic = ic->next;
-				}
+		for (container = 0; container < gi.csi->numIDs; container++) {
+			const invList_t *ic = ent->i.c[container];
+			Com_Printf("Container: %i\n", container);
+			while (ic) {
+				Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n",
+						(ic->item.t ? ic->item.t->idx : NONE), (ic->item.m ? ic->item.m->idx : NONE),
+						ic->item.a, ic->x, ic->y);
+				if (ic->item.t)
+					Com_Printf(".... weapon: %s\n", ic->item.t->id);
+				if (ic->item.m)
+					Com_Printf(".... ammo:   %s (%i)\n", ic->item.m->id, ic->item.a);
+				ic = ic->next;
 			}
 		}
 	}
@@ -325,7 +320,7 @@ static void G_TouchEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts)
+	if (!G_EdictsIsValidNum(i))
 		return;
 
 	e = G_EdictsGetByNum(i);
@@ -353,7 +348,7 @@ static void G_UseEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts) {
+	if (!G_EdictsIsValidNum(i)) {
 		gi.dprintf("No entity with number %i\n", i);
 		return;
 	}
@@ -379,7 +374,7 @@ static void G_DestroyEdict_f (void)
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
-	if (i < 0 || i >= globals.num_edicts)
+	if (!G_EdictsIsValidNum(i))
 		return;
 
 	e = G_EdictsGetByNum(i);
