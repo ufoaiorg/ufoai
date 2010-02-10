@@ -1141,9 +1141,6 @@ le_t* LE_GetNext (le_t* lastLE)
 
 	assert(lastLE >= cl.LEs);
 
-	if (lastLE >= endOfLEs)
-		return NULL;
-
 	le = lastLE;
 
 	le++;
