@@ -250,19 +250,19 @@ void V_LoadMedia (void)
 	}
 
 	/* update le model references */
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse) {
-			if (le->modelnum1) {
-				le->model1 = cl.model_draw[le->modelnum1];
-				if (!le->model1)
-					Com_Error(ERR_DROP, "No model for %i", le->modelnum1);
-			}
-			if (le->modelnum2) {
-				le->model2 = cl.model_draw[le->modelnum2];
-				if (!le->model2)
-					Com_Error(ERR_DROP, "No model for %i", le->modelnum2);
-			}
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->modelnum1) {
+			le->model1 = cl.model_draw[le->modelnum1];
+			if (!le->model1)
+				Com_Error(ERR_DROP, "No model for %i", le->modelnum1);
 		}
+		if (le->modelnum2) {
+			le->model2 = cl.model_draw[le->modelnum2];
+			if (!le->model2)
+				Com_Error(ERR_DROP, "No model for %i", le->modelnum2);
+		}
+	}
 
 	cls.loadingPercent = 100.0f;
 	SCR_UpdateScreen();

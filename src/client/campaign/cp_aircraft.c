@@ -327,7 +327,7 @@ static void AII_CarriedItems (const le_t *soldier)
 void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
 	int i, j;
-	le_t *le;
+	le_t *le = NULL;
 	itemsTmp_t *cargo;
 	itemsTmp_t prevItemCargo[MAX_CARGO];
 	int prevItemTypes;
@@ -344,12 +344,10 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	cargo = aircraft->itemcargo;
 	aircraft->itemtypes = 0;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
+	while ((le = LE_GetNextInUse(le))) {
 		/* Winner collects everything on the floor, and everything carried
 		 * by surviving actors. Loser only gets what their living team
 		 * members carry. */
-		if (!le->inuse)
-			continue;
 		if (LE_IsItem(le)) {
 			if (won) {
 				invList_t *item;
