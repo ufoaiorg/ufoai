@@ -2462,9 +2462,8 @@ static void CL_ActorConfirmAction_f (void)
 	static int time = 0;
 
 	if (time - cl.time < 1000) {
-		int i;
-		for (i = 0; i < cl.numLEs; i++) {
-			le_t *le = &cl.LEs[i];
+		le_t *le = NULL;
+		while ((le = LE_GetNextInUse(le))) {
 			if (LE_IsLivingActor(le) && le->team == cls.team)
 				CL_ActorConfirmAction(le);
 		}

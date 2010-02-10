@@ -305,13 +305,12 @@ void LE_ExecuteThink (le_t *le)
  */
 void LE_Think (void)
 {
-	le_t *le;
-	int i;
+	le_t *le = NULL;
 
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
+	while ((le = LE_GetNextInUse(le))) {
 		LE_ExecuteThink(le);
 		/* do animation */
 		R_AnimRun(&le->as, le->model1, cls.frametime * 1000);
@@ -822,18 +821,18 @@ static objDef_t *LE_BiggestItem (const invList_t *ic)
  */
 void LE_PlaceItem (le_t *le)
 {
-	le_t *actor;
-	int i;
+	le_t *actor = NULL;
 
 	assert(le->type == ET_ITEM);
 
 	/* search owners (there can be many, some of them dead) */
-	for (i = 0, actor = cl.LEs; i < cl.numLEs; i++, actor++)
-		if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+	while ((actor = LE_GetNextInUse(actor))) {
+		if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
 			if (FLOOR(le))
 				FLOOR(actor) = FLOOR(le);
 		}
+	}
 
 	/* the le is an ET_ITEM entity, this entity is there to render dropped items
 	 * if there are no items in the floor container, this entity can be
@@ -992,22 +991,23 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
  */
 le_t *LE_Add (int entnum)
 {
-	int i;
 	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
+	while ((le = LE_GetNext(le))) {
 		if (!le->inuse)
 			/* found a free LE */
 			break;
+	}
 
 	/* list full, try to make list longer */
-	if (i == cl.numLEs) {
+	if (!le) {
 		if (cl.numLEs >= MAX_EDICTS) {
 			/* no free LEs */
 			Com_Error(ERR_DROP, "Too many LEs");
 		}
 
 		/* list isn't too long */
+		le = &cl.LEs[cl.numLEs];
 		cl.numLEs++;
 	}
 
