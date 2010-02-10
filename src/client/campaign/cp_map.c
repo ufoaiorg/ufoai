@@ -2334,7 +2334,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 
 	/* 4 => RGBA */
 	/* terrainWidth is the width of the image */
-	/* this calulation returns the pixel in col x and in row y */
+	/* this calculation returns the pixel in col x and in row y */
 	assert(4 * (x + y * width) < width * height * 4);
 	return mask + 4 * (x + y * width);
 }
