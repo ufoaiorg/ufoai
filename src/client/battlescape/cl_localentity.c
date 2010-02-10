@@ -1140,7 +1140,7 @@ le_t* LE_GetNext (le_t* lastLE)
 		return NULL;
 
 	if (!lastLE)
-		lastLE = cl.LEs;
+		return cl.LEs;
 
 	assert(lastLE >= cl.LEs);
 	assert(lastLE < endOfLEs);
