@@ -1150,6 +1150,7 @@ void G_ClientTeamInfo (const player_t * player)
 static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
 	const int mask = G_PlayerToPM(player);
+	/* skip the world */
 	edict_t *ent = G_EdictsGetFirst();
 
 	/* make SOLID_BSP edicts visible to the client */

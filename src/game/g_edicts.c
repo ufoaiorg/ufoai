@@ -103,8 +103,11 @@ edict_t* G_EdictsGetNext (edict_t* lastEnt)
 	edict_t* endOfEnts = &g_edicts[globals.num_edicts];
 	edict_t* ent;
 
+	if (!globals.num_edicts)
+		return NULL;
+
 	if (!lastEnt)
-		lastEnt = g_edicts;
+		return g_edicts;
 	assert(lastEnt >= g_edicts);
 	assert(lastEnt < endOfEnts);
 
