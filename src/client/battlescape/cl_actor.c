@@ -1280,7 +1280,7 @@ MOUSE SCANNING
  */
 void CL_ActorMouseTrace (void)
 {
-	int i, restingLevel;
+	int restingLevel;
 	float cur[2], frustumSlope[2], projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
@@ -1401,8 +1401,9 @@ void CL_ActorMouseTrace (void)
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingAndVisibleActor(le))
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				if (VectorCompare(le->pos, mousePos)) {
@@ -1423,6 +1424,7 @@ void CL_ActorMouseTrace (void)
 			default:
 				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
 		}
+	}
 
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {

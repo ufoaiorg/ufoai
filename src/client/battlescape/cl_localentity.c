@@ -41,14 +41,14 @@ Local Model (LM) handling
 
 static inline void LE_GenerateInlineModelList (void)
 {
-	le_t *le;
-	int i, l;
+	le_t *le = NULL;
+	int i = 0;
 
-	l = 0;
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
-			cl.leInlineModelList[l++] = le->inlineModelName;
-	cl.leInlineModelList[l] = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->model1 && le->inlineModelName[0] == '*')
+			cl.leInlineModelList[i++] = le->inlineModelName;
+	}
+	cl.leInlineModelList[i] = NULL;
 }
 
 /**
@@ -481,13 +481,13 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
  */
 le_t* LE_GetClosestActor (const vec3_t origin)
 {
-	int i, tmp;
 	int dist = 999999;
-	le_t *actor = NULL, *le;
+	le_t *actor = NULL, *le = NULL;
 	vec3_t leOrigin;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse || le->pnum != cl.pnum)
+	while ((le = LE_GetNextInUse(le))) {
+		int tmp;
+		if (le->pnum != cl.pnum)
 			continue;
 		/* visible because it's our team - so we just check for living actor here */
 		if (!LE_IsLivingActor(le))
@@ -993,7 +993,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
 le_t *LE_Add (int entnum)
 {
 	int i;
-	le_t *le;
+	le_t *le = NULL;
 
 	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
 		if (!le->inuse)
@@ -1050,16 +1050,16 @@ void LE_CenterView (const le_t *le)
  */
 le_t *LE_Get (int entnum)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
 	if (entnum == SKIP_LOCAL_ENTITY)
 		return NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && le->entnum == entnum)
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->entnum == entnum)
 			/* found the LE */
 			return le;
+	}
 
 	/* didn't find it */
 	return NULL;
@@ -1112,17 +1112,16 @@ void LE_Unlock (le_t *le)
 
 /**
  * @brief Searches a local entity on a given grid field
- * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type
  */
 le_t *LE_GetFromPos (const pos3_t pos)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && VectorCompare(le->pos, pos))
+	while ((le = LE_GetNextInUse(le))) {
+		if (VectorCompare(le->pos, pos))
 			return le;
+	}
 
 	/* didn't find it */
 	return NULL;
@@ -1201,13 +1200,13 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
  */
 le_t *LE_Find (int type, const pos3_t pos)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && le->type == type && VectorCompare(le->pos, pos))
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->type == type && VectorCompare(le->pos, pos))
 			/* found the LE */
 			return le;
+	}
 
 	/* didn't find it */
 	return NULL;
@@ -1438,18 +1437,19 @@ static int CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t 
  */
 static void CL_ClipMoveToLEs (moveclip_t * clip)
 {
-	int i, tile = 0;
-	le_t *le;
-	trace_t trace;
-	int headnode;
-	vec3_t angles;
-	vec3_t origin, shift;
+	le_t *le = NULL;
 
 	if (clip->trace.allsolid)
 		return;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse || !(le->contents & clip->contentmask))
+	while ((le = LE_GetNextInUse(le))) {
+		int tile = 0;
+		trace_t trace;
+		int headnode;
+		vec3_t angles;
+		vec3_t origin, shift;
+
+		if (!(le->contents & clip->contentmask))
 			continue;
 		if (le == clip->passle || le == clip->passle2)
 			continue;
