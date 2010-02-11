@@ -154,6 +154,7 @@ static void HUD_ActorGlobalCvars (void)
 
 /**
  * @brief Sets the display for a single weapon/reload HUD button.
+ * @todo This should be a confunc which also sets the tooltips
  */
 static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 {
