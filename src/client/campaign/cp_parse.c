@@ -621,7 +621,7 @@ components_t *CL_GetComponentsByItem (const objDef_t *item)
  * @param[in] id assemblyId of the component definition.
  * @return comp Pointer to components_t definition.
  */
-components_t *CL_GetComponentsByID(const char *id)
+components_t *CL_GetComponentsByID (const char *id)
 {
 	int i;
 

@@ -606,29 +606,6 @@ const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 	return od->model;
 }
 
-static void GAME_InitMenuOptions (void)
-{
-	int i;
-	menuOption_t* ufoOptions = NULL;
-	menuOption_t* aircraftOptions = NULL;
-
-	for (i = 0; i < UFO_MAX; i++) {
-		const char *shortName = Com_UFOTypeToShortName(i);
-		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
-	}
-	for (i = 0; i < UFO_MAX; i++) {
-		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
-	}
-	MN_RegisterOption(OPTION_UFOS, ufoOptions);
-
-	for (i = 0; i < DROPSHIP_MAX; i++) {
-		const char *shortName = Com_DropShipTypeToShortName(i);
-		MN_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
-	}
-	MN_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
-}
-
 void GAME_InitStartup (void)
 {
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
@@ -638,6 +615,4 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("mn_nextmap", MN_ChangeMap_f, "Switch to the next valid map for the selected gametype");
 	Cmd_AddCommand("mn_prevmap", MN_ChangeMap_f, "Switch to the previous valid map for the selected gametype");
 	Cmd_AddCommand("mn_selectmap", MN_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
-
-	GAME_InitMenuOptions();
 }

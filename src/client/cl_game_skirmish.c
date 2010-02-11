@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
 
+#define DROPSHIP_MAX INTERCEPTOR_STILETTO
+
 static cvar_t *cl_equip;
 
 /**
@@ -224,6 +226,29 @@ int GAME_SK_GetTeam (void)
 	return cl_team->integer;
 }
 
+static void GAME_InitMenuOptions (void)
+{
+	int i;
+	menuOption_t* ufoOptions = NULL;
+	menuOption_t* aircraftOptions = NULL;
+
+	for (i = 0; i < UFO_MAX; i++) {
+		const char *shortName = Com_UFOTypeToShortName(i);
+		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+	}
+	for (i = 0; i < UFO_MAX; i++) {
+		const char *shortName = Com_UFOCrashedTypeToShortName(i);
+		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+	}
+	MN_RegisterOption(OPTION_UFOS, ufoOptions);
+
+	for (i = 0; i < DROPSHIP_MAX; i++) {
+		const char *shortName = Com_DropShipTypeToShortName(i);
+		MN_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+	}
+	MN_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
+}
+
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
@@ -233,6 +258,8 @@ void GAME_SK_InitStartup (void)
 	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
 	Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
 	Cmd_AddCommand("game_go", GAME_SK_Restart_f, "Restart the skirmish mission");
+
+	GAME_InitMenuOptions();
 }
 
 void GAME_SK_Shutdown (void)
@@ -243,6 +270,9 @@ void GAME_SK_Shutdown (void)
 	Cmd_RemoveCommand("sk_nextequip");
 	Cmd_RemoveCommand("sk_prevequip");
 	Cmd_RemoveCommand("game_go");
+
+	MN_ResetData(OPTION_DROPSHIPS);
+	MN_ResetData(OPTION_UFOS);
 
 	SV_Shutdown("Quitting server.", qfalse);
 }
