@@ -29,10 +29,10 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/polylib.c \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
-	tools/ufo2map/common/imagelib.c \
 	\
 	shared/mathlib.c \
 	shared/byte.c \
+	shared/images.c \
 	shared/parse.c \
 	shared/shared.c \
 	shared/entitiesdef.c \

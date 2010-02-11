@@ -363,20 +363,6 @@ typedef struct dpmvertex_s {
 } dpmvertex_t;
 
 /*==============================================================================
-texture file format
-==============================================================================*/
-
-#define	MIPLEVELS	4
-typedef struct miptex_s {
-	char name[MAX_QPATH];	/**< texture name - relative to base/textures */
-	unsigned width, height;
-	unsigned offsets[MIPLEVELS];	/**< four mip maps stored */
-	uint32_t surfaceFlagsFromFile;
-	uint32_t contentFlagsFromFile;
-	uint32_t value;
-} miptex_t;
-
-/*==============================================================================
 .BSP file format
 ==============================================================================*/
 

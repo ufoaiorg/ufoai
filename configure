@@ -1357,7 +1357,7 @@ Optional Features:
   --disable-dedicated     build dedicated server [default=enabled]
   --disable-client        build client [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
-  --enable-uforadiant     build uforadiant [default=enabled]
+  --disable-uforadiant    build uforadiant [default=enabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
   --disable-signals       build with signal handling [default=enabled]
@@ -6225,86 +6225,6 @@ fi
 	fi
 
 	#---------------------------------------------------------------------------------------------
-	# Check for SDL image headers and libraries
-	#---------------------------------------------------------------------------------------------
-	for ac_header in SDL_image.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL_image.h" "ac_cv_header_SDL_image_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_image_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_IMAGE_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		as_fn_error "You must have the SDL_image development headers" "$LINENO" 5
-	fi
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
-$as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
-if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char IMG_LoadTyped_RW ();
-int
-main ()
-{
-return IMG_LoadTyped_RW ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL_image; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_IMG_LoadTyped_RW=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-
-else
-  ac_cv_search_IMG_LoadTyped_RW=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_IMG_LoadTyped_RW" >&5
-$as_echo "$ac_cv_search_IMG_LoadTyped_RW" >&6; }
-ac_res=$ac_cv_search_IMG_LoadTyped_RW
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
-	fi
-
-	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
 	for ac_header in SDL_ttf.h
@@ -6383,6 +6303,97 @@ fi
 	then
 		as_fn_error "You must have the SDL_ttf development libraries" "$LINENO" 5
 	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Set the client clags and libs - the rest are shared libs
+	#---------------------------------------------------------------------------------------------
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	CLIENT_CFLAGS="$CFLAGS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL image headers and libraries
+	#---------------------------------------------------------------------------------------------
+
+	LIBS=
+	for ac_header in SDL_image.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "SDL_image.h" "ac_cv_header_SDL_image_h" "$ac_includes_default"
+if test "x$ac_cv_header_SDL_image_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_SDL_IMAGE_H 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_SDL_image_h" != "yes"
+	then
+		as_fn_error "You must have the SDL_image development headers" "$LINENO" 5
+	fi
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
+$as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
+if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char IMG_LoadTyped_RW ();
+int
+main ()
+{
+return IMG_LoadTyped_RW ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' SDL_image; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_IMG_LoadTyped_RW=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+  break
+fi
+done
+if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+
+else
+  ac_cv_search_IMG_LoadTyped_RW=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_IMG_LoadTyped_RW" >&5
+$as_echo "$ac_cv_search_IMG_LoadTyped_RW" >&6; }
+ac_res=$ac_cv_search_IMG_LoadTyped_RW
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
+	fi
+	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	LIBS=
 
 	CPPFLAGS=$OLD_CPPFLAGS
 	CFLAGS=$OLD_CFLAGS
@@ -6525,6 +6536,89 @@ done
 	then
 		as_fn_error "You must have the SDL development headers" "$LINENO" 5
 	fi
+
+	LIBS=
+	for ac_header in SDL_image.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "SDL_image.h" "ac_cv_header_SDL_image_h" "$ac_includes_default"
+if test "x$ac_cv_header_SDL_image_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_SDL_IMAGE_H 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_SDL_image_h" != "yes"
+	then
+		as_fn_error "You must have the SDL_image development headers" "$LINENO" 5
+	fi
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
+$as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
+if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char IMG_LoadTyped_RW ();
+int
+main ()
+{
+return IMG_LoadTyped_RW ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' SDL_image; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_IMG_LoadTyped_RW=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+  break
+fi
+done
+if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+
+else
+  ac_cv_search_IMG_LoadTyped_RW=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_IMG_LoadTyped_RW" >&5
+$as_echo "$ac_cv_search_IMG_LoadTyped_RW" >&6; }
+ac_res=$ac_cv_search_IMG_LoadTyped_RW
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
+	fi
+	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+
+	CPPFLAGS=$OLD_CPPFLAGS
+	CFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
 fi
 
 #---------------------------------------------------------------------------------------------

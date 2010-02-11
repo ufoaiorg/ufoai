@@ -33,11 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/scriplib.h"
 #include "common/polylib.h"
 #include "common/bspfile.h"
-#include "common/imagelib.h"
 
 #include "../../common/tracing.h"
-
-
 
 typedef struct bspbrush_s {
 	struct bspbrush_s	*next;
