@@ -958,6 +958,28 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 }
 
 /**
+ * @brief Checks whether the given list contains a reaction fire enabled weapon.
+ * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
+ * fire definition otherwise.
+ */
+const fireDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
+{
+	if (!invList)
+		return NULL;
+
+	while (invList) {
+		if (invList->item.t) {
+			const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
+			if (fd && fd->reaction)
+				return fd;
+		}
+		invList = invList->next;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Will merge the second shape (=itemShape) into the first one (=big container shape) on the position x/y.
  * @note The function expects an already rotated shape for itemShape. Use INVSH_ShapeRotate if needed.
  * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'

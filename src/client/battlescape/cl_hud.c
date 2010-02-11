@@ -898,25 +898,13 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char 
 /**
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
- * @param[in] hand Which hand to check
  */
-static qboolean HUD_WeaponWithReaction (const le_t * actor, const actorHands_t hand)
+static qboolean HUD_WeaponWithReaction (const le_t * actor)
 {
-	int i;
-	const fireDef_t *fd;
-
-	/* Get ammo and weapon-index in ammo (if there is a weapon in that hand). */
-	fd = HUD_GetFireDefinitionForHand(actor, hand);
-
-	if (fd == NULL)
-		return qfalse;
-
-	/* Check ammo for reaction-enabled firemodes. */
-	for (i = 0; i < fd->obj->numFiredefs[fd->weapFdsIdx]; i++)
-		if (fd[i].reaction)
-			return qtrue;
-
-	return qfalse;
+	const fireDef_t *fd = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
+	if (fd)
+		return qtrue;
+	return INVSH_HasReactionFireEnabledWeapon(LEFT(actor)) != NULL;
 }
 
 /**
@@ -1037,13 +1025,12 @@ static void HUD_RefreshWeaponButtons (const le_t *le)
 
 	/* reaction-fire button */
 	if (!(le->state & STATE_REACTION)) {
-		if (time >= CL_ActorReservedTUs(le, RES_REACTION)
-		 && (HUD_WeaponWithReaction(le, ACTOR_HAND_RIGHT) || HUD_WeaponWithReaction(le, ACTOR_HAND_LEFT)))
+		if (time >= CL_ActorReservedTUs(le, RES_REACTION) && HUD_WeaponWithReaction(le))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 	} else {
-		if (HUD_WeaponWithReaction(le, ACTOR_HAND_RIGHT) || HUD_WeaponWithReaction(le, ACTOR_HAND_LEFT)) {
+		if (HUD_WeaponWithReaction(le)) {
 			HUD_DisplayPossibleReaction(le);
 		} else {
 			HUD_DisplayImpossibleReaction(le);

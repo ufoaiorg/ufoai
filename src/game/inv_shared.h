@@ -692,11 +692,12 @@ invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
-
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 qboolean INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
 uint32_t INVSH_ShapeRotate(const uint32_t shape);
+
+const fireDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
 #define INV_INVENTORY_BYTES 11
