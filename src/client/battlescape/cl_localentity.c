@@ -310,9 +310,9 @@ void LE_Think (void)
 	if (cls.state != ca_active)
 		return;
 
-	while ((le = LE_GetNextInUse(le))) {
+	while ((le = LE_GetNext(le))) {
 		LE_ExecuteThink(le);
-		/* do animation */
+		/* do animation - even for invisible entities */
 		R_AnimRun(&le->as, le->model1, cls.frametime * 1000);
 	}
 }
