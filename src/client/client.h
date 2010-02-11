@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sound/s_main.h"
 #include "input/cl_input.h"
 #include "input/cl_keys.h"
+#include "battlescape/cl_battlescape.h"
 #include "battlescape/cl_camera.h"
 #include "battlescape/cl_localentity.h"
 
@@ -244,8 +245,6 @@ extern cvar_t *cl_teamnum;
 extern cvar_t *s_language;
 
 /* cl_main.c */
-qboolean CL_OnBattlescape(void);
-qboolean CL_BattlescapeRunning(void);
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);

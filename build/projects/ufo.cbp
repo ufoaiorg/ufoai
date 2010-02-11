@@ -270,6 +270,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_camera.h" />
+		<Unit filename="../../src/client/battlescape/cl_battlescape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_battlescape.h" />
 		<Unit filename="../../src/client/battlescape/cl_localentity.c">
 			<Option compilerVar="CC" />
 		</Unit>
