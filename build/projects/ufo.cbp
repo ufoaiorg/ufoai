@@ -266,6 +266,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_hud.h" />
+		<Unit filename="../../src/client/battlescape/cl_hud_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_hud_callbacks.h" />
 		<Unit filename="../../src/client/battlescape/cl_camera.c">
 			<Option compilerVar="CC" />
 		</Unit>

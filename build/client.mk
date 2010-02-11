@@ -33,6 +33,7 @@ CLIENT_SRCS = \
 	client/battlescape/cl_battlescape.c \
 	client/battlescape/cl_camera.c \
 	client/battlescape/cl_hud.c \
+	client/battlescape/cl_hud_callbacks.c \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
