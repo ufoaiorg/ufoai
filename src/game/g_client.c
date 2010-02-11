@@ -337,7 +337,7 @@ qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 		return qfalse;
 	}
 
-	if (TU > ent->TU) {
+	if (TU > G_ActorUsableTUs(ent)) {
 		return qfalse;
 	}
 
@@ -459,8 +459,6 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 			ent->state &= ~STATE_REACTION;
 			/* Enable requested reaction fire. */
 			ent->state |= reqState;
-		} else {
-			G_ClientPrintf(player, PRINT_HUD, _("Can't activate reaction fire.\n"));
 		}
 		break;
 	default:

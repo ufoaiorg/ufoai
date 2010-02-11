@@ -35,6 +35,30 @@ qboolean G_IsLivingActor (const edict_t *ent)
 }
 
 /**
+ * @brief Calculates the amount of all currently reserved TUs
+ * @param ent The actor to calculate the reserved TUs for
+ * @return The amount of reserved TUs for the given actor edict
+ */
+int G_ActorGetReservedTUs (const edict_t *ent)
+{
+	const chrReservations_t *res = &ent->chr.reservedTus;
+	return res->reaction + res->shot + res->crouch;
+}
+
+/**
+ * @brief Calculates the amount of usable TUs
+ * @param ent The actor to calculate the amount of usable TUs for
+ * @return The amount of usable TUs for the given actor edict
+ */
+int G_ActorUsableTUs (const edict_t *ent)
+{
+	if (!ent)
+		return 0;
+
+	return ent->TU - G_ActorGetReservedTUs(ent);
+}
+
+/**
  * @brief Searches an actor by a unique character number
  * @param[in] ucn The unique character number
  * @param[in] team The team to get the actor with the ucn from
@@ -196,25 +220,6 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 }
 
 /**
- * @brief Calculates TU reservations for an actor.
- * @param[in] ent The pointer to the selected edict being soldier.
- * @return Sum of reserved TUs.
- * @todo See also CL_ActorReservedTUs and unify both functions to one
- * shared function in character_t code.
- */
-static int G_ActorTUReservations (edict_t *ent)
-{
-	int reservedTU = 0;
-
-	if (ent->chr.reservedTus.crouch)
-		reservedTU = ent->chr.reservedTus.crouch;
-	if (ent->chr.reservedTus.shot)
-		reservedTU = reservedTU + ent->chr.reservedTus.shot;
-
-	return reservedTU;
-}
-
-/**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
@@ -286,7 +291,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
 	 * we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
-	reservedTU = G_ActorTUReservations(ent);
+	reservedTU = G_ActorGetReservedTUs(ent);
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */

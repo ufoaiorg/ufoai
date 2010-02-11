@@ -1716,37 +1716,21 @@ static void HUD_ToggleCrouchReservation_f (void)
 }
 
 /**
- * @brief Toggles reaction fire between the states off/single/multi.
- * @note RF mode will change as follows (Current mode -> resulting mode after click)
- * off	-> single
- * single	-> multi
- * multi	-> off
- * single	-> off (if no TUs for multi available)
+ * @brief Toggles reaction fire states for the current selected actor
  */
 static void HUD_ToggleReaction_f (void)
 {
 	int state = 0;
-	character_t* chr;
 
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
-	chr = CL_ActorGetChr(selActor);
-	assert(chr);
-
-	if (selActor->state & STATE_REACTION_MANY)
-		state = ~STATE_REACTION;
-	else if (!(selActor->state & STATE_REACTION))
+	if (!(selActor->state & STATE_REACTION))
 		state = STATE_REACTION_ONCE;
 	else if (selActor->state & STATE_REACTION_ONCE)
 		state = STATE_REACTION_MANY;
-
-	/** @todo server side please */
-	if (state & STATE_REACTION) {
-		/* We would reserve more TUs than are available - reserve nothing and abort. */
-		if (HUD_UsableReactionTUs(selActor) < CL_ActorReservedTUs(selActor, RES_REACTION))
-			state = ~STATE_REACTION;
-	}
+	else if (selActor->state & STATE_REACTION_MANY)
+		state = ~STATE_REACTION;
 
 	/* Send request to update actor's reaction state to the server. */
 	MSG_Write_PA(PA_STATE, selActor->entnum, state);

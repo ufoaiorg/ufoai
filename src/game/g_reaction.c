@@ -156,8 +156,17 @@ void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const obj
 	G_EventReactionFireChange(ent);
 }
 
+static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
+{
+	/** @todo */
+	/*const int tu = G_ActorUsableTUs(ent) + ent->chr.reservedTus.reaction;*/
+
+	return qtrue;
+}
+
 /**
- * @brief Checks whether the actor is allowed to activate reaction fire
+ * @brief Checks whether the actor is allowed to activate reaction fire and will informs the player about
+ * the reason if this would not work.
  * @param ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
@@ -174,11 +183,20 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
 	if (!ent->chr.teamDef->weapons)
 		return qfalse;
 
-	if (!G_ActorHasReactionFireEnabledWeapon(ent))
+	if (!G_ActorHasReactionFireEnabledWeapon(ent)) {
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon.\n"));
 		return qfalse;
+	}
 
-	if (!G_ActorHasWorkingFireModeSet(ent))
+	if (!G_ActorHasWorkingFireModeSet(ent)) {
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire.\n"));
 		return qfalse;
+	}
+
+	if (!G_ActorHasEnoughTUsReactionFire(ent)) {
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire.\n"));
+		return qfalse;
+	}
 
 	return qtrue;
 }

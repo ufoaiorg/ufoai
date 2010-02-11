@@ -287,6 +287,10 @@ void G_MoraleBehaviour(int team);
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
+/* g_actor.c */
+int G_ActorUsableTUs(const edict_t *ent);
+int G_ActorGetReservedTUs(const edict_t *ent);
+
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
 qboolean G_MissionUse(edict_t *self, edict_t *activator);
