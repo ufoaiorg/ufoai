@@ -1078,6 +1078,8 @@ void HUD_Update (void)
 	Cvar_Set("mn_lweapon", "");
 
 	if (selActor) {
+		invList_t* invList;
+
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
 		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
@@ -1280,13 +1282,11 @@ void HUD_Update (void)
 		else
 			Cvar_Set("mn_ammoright", "");
 
-		if (LEFT(selActor))
-			Cvar_SetValue("mn_ammoleft", LEFT(selActor)->item.a);
+		invList = HUD_GetLeftHandWeapon(selActor, NULL);
+		if (invList)
+			Cvar_SetValue("mn_ammoleft", invList->item.a);
 		else
 			Cvar_Set("mn_ammoleft", "");
-
-		if (!LEFT(selActor) && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
-			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
 
 		/* Calculate remaining TUs. */
 		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
