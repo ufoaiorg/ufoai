@@ -181,6 +181,13 @@ then
 		else
 			AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
 		fi
+		if test -d /Library/Frameworks/SDL_image.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_image.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_image"
+		else
+			AC_MSG_ERROR([Could not find SDL_image Framework at /Library/Frameworks.])
+		fi
 		if test -d /Library/Frameworks/SDL_ttf.framework
 		then
 			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
@@ -606,10 +613,24 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL_mixer development libraries])
 	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL image headers and libraries
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([SDL_image.h])
+	if test "$ac_cv_header_SDL_image_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development headers])
+	fi
+	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development libraries])
+	fi
+
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
-
 	AC_CHECK_HEADERS([SDL_ttf.h])
 	if test "$ac_cv_header_SDL_ttf_h" != "yes"
 	then

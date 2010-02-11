@@ -113,6 +113,7 @@
 					<Add option="-framework SDL" />
 					<Add option="-framework SDL_ttf" />
 					<Add option="-framework SDL_mixer" />
+					<Add option="-framework SDL_image" />
 					<Add option="-framework IOKit" />
 					<Add option="-framework,Cocoa" />
 					<Add option="-framework foundation" />
@@ -132,6 +133,7 @@
 		<Linker>
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
+			<Add library="SDL_image" />
 			<Add library="SDL_mixer" />
 			<Add library="z" />
 			<Add library="jpeg" />

@@ -114,7 +114,6 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 
 	/* Set necessary values */
 	switch (type) {
-	case SSHOTTYPE_TGA:
 	case SSHOTTYPE_TGA_COMP:
 		Com_Printf("Taking TGA screenshot...\n");
 		ext = "tga";
@@ -174,10 +173,6 @@ void R_ScreenShot (int x, int y, int width, int height, const char *filename, co
 
 	/* Write */
 	switch (type) {
-	case SSHOTTYPE_TGA:
-		R_WriteTGA(&f, buffer, width, height, 3);
-		break;
-
 	case SSHOTTYPE_TGA_COMP:
 		R_WriteCompressedTGA(&f, buffer, width, height);
 		break;
