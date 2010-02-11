@@ -81,12 +81,12 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
  * @param[in] actor The actor to check the weapons for
  * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
  */
-static const fireDef_t* G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
+static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 {
 	const fireDef_t *fd = INVSH_HasReactionFireEnabledWeapon(RIGHT(ent));
 	if (fd)
-		return fd;
-	return INVSH_HasReactionFireEnabledWeapon(LEFT(ent));
+		return qtrue;
+	return INVSH_HasReactionFireEnabledWeapon(LEFT(ent)) != NULL;
 }
 
 /**
