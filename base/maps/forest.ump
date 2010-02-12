@@ -42,8 +42,8 @@ tile +craft_drop_herakles
 
 0     abfg    abfg    abfg    0
 acdg   +a      +a      +a     acef
-acdg   +a      +a      +a     acef 
-0     abde    abde    abde	  0
+acdg   +a      +a      +a     acef
+0     abde    abde    abde    0
 }
 
 tile +craft_drop_raptor
@@ -53,52 +53,52 @@ tile +craft_drop_raptor
 0     abfg    abfg    abfg    0
 acdg   +a      +a      +a     acef
 acdg   +a      +a      +a     acef
-acdg   +a      +a      +a     acef 
-0     abde    abde    abde	  0
+acdg   +a      +a      +a     acef
+0     abde    abde    abde    0
 }
 
 tile +craft_crash_scout
 {
 4 5
 
-0      abfg    abfg	  0
-acdg     +u     +u	  acef
-acdg     +u     +u	  acef
-acdg     +u     +u	  acef
-0      abde    abde	  0
+0      abfg    abfg    0
+acdg     +u     +u     acef
+acdg     +u     +u     acef
+acdg     +u     +u     acef
+0      abde    abde    0
 }
 
 tile +craft_ufo_scout
 {
 4 5
 
-0      abfg    abfg	  0
-acdg     +u     +u	  acef
-acdg     +u     +u	  acef
-acdg     +u     +u	  acef
-0      abde    abde	  0
+0      abfg    abfg    0
+acdg     +u     +u     acef
+acdg     +u     +u     acef
+acdg     +u     +u     acef
+0      abde    abde    0
 }
 
 tile +craft_ufo_fighter
 {
 5 5
 
-0      abfg    abfg    abfg	  0
-acdg     +u     +u     +u	  acef
-acdg     +u     +u     +u	  acef
-acdg     +u     +u     +u	  acef
-0      abde    abde    abde	  0
+0      abfg    abfg    abfg   0
+acdg     +u     +u     +u     acef
+acdg     +u     +u     +u     acef
+acdg     +u     +u     +u     acef
+0      abde    abde    abde   0
 }
 
 tile +craft_crash_fighter
 {
 5 5
 
-0      abfg    abfg    abfg	  0
-acdg     +u     +u     +u	  acef
-acdg     +u     +u     +u	  acef
-acdg     +u     +u     +u	  acef
-0      abde    abde    abde	  0
+0      abfg    abfg    abfg   0
+acdg     +u     +u     +u     acef
+acdg     +u     +u     +u     acef
+acdg     +u     +u     +u     acef
+0      abde    abde    abde   0
 }
 
 
@@ -106,25 +106,25 @@ tile +craft_ufo_harvester
 {
 7 6
 
-0      abfg    abfg    abfg    abfg    abfg	  0
-acdg     +u      +u      +u     +u     +u	  acef
-acdg     +u      +u      +u     +u     +u	  acef
-acdg     +u      +u      +u     +u     +u	  acef
-0        ad      +u      +u     +u     +u	  acef
-0         0    abde    abde    abde    abde	  0
+0      abfg    abfg    abfg    abfg    abfg        0
+acdg     +u      +u      +u     +u     +u   acef
+acdg     +u      +u      +u     +u     +u   acef
+acdg     +u      +u      +u     +u     +u   acef
+0        ad      +u      +u     +u     +u   acef
+0         0    abde    abde    abde    abde        0
 }
 
 tile +craft_crash_harvester
 {
 7 7
 
-0         0       0    abfg    abfg    abfg	  0
-0         a       a      +u     +u     +u	  acef
-acdg     +u      +u      +u     +u     +u	  acef
-acdg     +u      +u      +u     +u     +u	  acef
-0         a       a      +u     +u     +u	  acef
-0         0       a      +u     +u     +u	  acef
-0         0       0    abde    abde    abde	  0
+0         0       0    abfg    abfg    abfg        0
+0         a       a      +u     +u     +u   acef
+acdg     +u      +u      +u     +u     +u   acef
+acdg     +u      +u      +u     +u     +u   acef
+0         a       a      +u     +u     +u   acef
+0         0       a      +u     +u     +u   acef
+0         0       0    abde    abde    abde        0
 }
 
 
@@ -282,7 +282,7 @@ acdgu   +a     acefu
 }
 
 //** Water tiles
-                   
+
 //  .   .
 //  ==,
 //  . I .
@@ -426,6 +426,37 @@ size "5 10"
 +h2 "1 1"
 +a1 "0 4"
 +a2 "0 2"
+*rm_ufo +craft_ufo_scout "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly small_crash
+{
+title "_Little forest"
+size "5 10"
+
++w1 "0 5"
++w2 "0 5"
++w3 "0 5"
++w4 "0 5"
++w5 "0 5"
++w6 "1 1"
++w7 "0 5"
++w8 "1 1"
++f1 "0 5"
++f2 "0 5"
++f3 "0 5"
++f4 "0 5"
++f5 "0 5"
++f6 "0 5"
++f7 "0 5"
++f8 "0 5"
++f9 "0 5"
++f10 "0 1"
++h1 "1 1"
++h2 "1 1"
++a1 "0 4"
++a2 "0 2"
 *rm_ufo +craft_crash_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -458,5 +489,36 @@ size "8 9"
 +a1 "2 3"
 +a2 "1 2"
 *rm_ufo +craft_ufo_fighter "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+}
+
+assembly large_crash
+{
+title "_Little bungalo in forest"
+size "8 9"
+
++w1 "0 5"
++w2 "0 6"
++w3 "0 6"
++w4 "0 6"
++w5 "0 6"
++w6 "1 4"
++w7 "0 6"
++w8 "1 1"
++f1 "0 3"
++f2 "0 3"
++f3 "0 3"
++f4 "0 3"
++f5 "0 3"
++f6 "0 2"
++f7 "0 1"
++f8 "0 3"
++f9 "0 1"
++f10 "0 2"
++h1 "1 2"
++h2 "1 1"
++a1 "2 3"
++a2 "1 2"
+*rm_ufo +craft_crash_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
