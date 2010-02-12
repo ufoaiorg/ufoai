@@ -468,6 +468,7 @@ typedef struct ccs_s {
 	int numStoredUFOs;
 
 	/* Alien Team Definitions. */
+	teamDef_t *alienTeams[MAX_TEAMDEFS];
 	int numAliensTD;
 
 	/* Alien Team Package used during battle */
@@ -570,9 +571,6 @@ extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;
 extern cvar_t *cp_start_employees;
-
-void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
-void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 
 void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(aircraft_t *ufo);

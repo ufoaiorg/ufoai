@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2009 UFO: Alien Invasion.
+Copyright (C) 2002-2010 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1800,6 +1800,7 @@ static void TR_ListTransfers_f (void)
 
 /**
  * @brief Save callback for xml savegames
+ * @param[out] p XML Node structure, where we write the information to
  * @sa TR_LoadXML
  * @sa SAV_GameSaveXML
  */
@@ -1815,25 +1816,32 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		mxml_node_t *s;
 
 		s = mxml_AddNode(n, SAVE_TRANSFER_TRANSFER);
+		mxml_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
+		mxml_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
-				if (transfer->itemAmount[j] >0) {
+				if (transfer->itemAmount[j] > 0) {
+					const objDef_t *od = INVSH_GetItemByIDX(j);
 					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_ITEM);
-					mxml_AddInt(ss, SAVE_TRANSFER_ITEMID, j);
+
+					assert(od);
+					mxml_AddString(ss, SAVE_TRANSFER_ITEMID, od->id);
 					mxml_AddInt(ss, SAVE_TRANSFER_AMOUNT, transfer->itemAmount[j]);
 				}
 			}
 		}
 		if (transfer->hasAliens) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
-				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0 || transfer->alienAmount[j][TRANS_ALIEN_DEAD]> 0)
+				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] > 0
+				 || transfer->alienAmount[j][TRANS_ALIEN_DEAD] > 0)
 				{
+					teamDef_t *team = ccs.alienTeams[j];
 					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_ALIEN);
-					mxml_AddInt(ss, SAVE_TRANSFER_ALIENID, j);
-					if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] > 0)
-						mxml_AddInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
-					if (transfer->alienAmount[j][TRANS_ALIEN_DEAD] > 0)
-						mxml_AddInt(ss, SAVE_TRANSFER_DEADAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+
+					assert(team);
+					mxml_AddString(ss, SAVE_TRANSFER_ALIENID, team->id);
+					mxml_AddIntValue(ss, SAVE_TRANSFER_ALIVEAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
+					mxml_AddIntValue(ss, SAVE_TRANSFER_DEADAMOUNT, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 				}
 			}
 		}
@@ -1865,36 +1873,42 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			Com_Printf("Could not save transfer, active is true, but no destBase is set\n");
 			return qfalse;
 		}
-		mxml_AddBool(s, SAVE_TRANSFER_ACTIVE, transfer->active);
-		mxml_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
-		mxml_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
 	}
 	return qtrue;
 }
 
 /**
  * @brief Load callback for xml savegames
+ * @param[in] p XML Node structure, where we get the information from
  * @sa TR_SaveXML
  * @sa SAV_GameLoadXML
  */
 qboolean TR_LoadXML (mxml_node_t *p)
 {
-	int i;
 	mxml_node_t *n, *s;
+
 	n = mxml_GetNode(p, SAVE_TRANSFER_TRANSFERS);
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && i < MAX_TRANSFERS; i++, s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
+	assert(ccs.numBases);
+
+	for (s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && ccs.numTransfers < MAX_TRANSFERS; s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
 		byte destBase, srcBase;
 		mxml_node_t *ss;
-		transfer_t *transfer = &ccs.transfers[i];
+		transfer_t *transfer = &ccs.transfers[ccs.numTransfers];
+
+		destBase = mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE);
+		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
+		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
+		 * for transfer->destbase and return qfalse here */
+		srcBase = mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE);
+		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
 
 		transfer->event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
 		transfer->event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
-		transfer->active = mxml_GetBool(s, SAVE_TRANSFER_ACTIVE, qfalse);
-		if (transfer->active)
-			ccs.numTransfers++;
+		transfer->active = qtrue;
+
 		/* Initializing some variables */
 		transfer->hasItems = qfalse;
 		transfer->hasEmployees = qfalse;
@@ -1910,9 +1924,11 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		if (ss) {
 			transfer->hasItems = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_ITEM)) {
-				const int itemId = mxml_GetInt(ss, SAVE_TRANSFER_ITEMID, 0);
-				if (itemId < MAX_OBJDEFS)
-					transfer->itemAmount[itemId] = mxml_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
+				const char *itemId = mxml_GetString(ss, SAVE_TRANSFER_ITEMID);
+				const objDef_t *od = INVSH_GetItemByID(itemId);
+
+				if (od)
+					transfer->itemAmount[od->idx] = mxml_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
 			}
 		}
 
@@ -1922,15 +1938,24 @@ qboolean TR_LoadXML (mxml_node_t *p)
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_ALIEN)) {
 				const int alive = mxml_GetInt(ss, SAVE_TRANSFER_ALIVEAMOUNT, 0);
 				const int dead  = mxml_GetInt(ss, SAVE_TRANSFER_DEADAMOUNT, 0);
-				const int id = mxml_GetInt(ss, SAVE_TRANSFER_ALIENID, 0);
-				if (id >= 0 && id < ccs.numAliensTD) {
-					transfer->alienAmount[id][TRANS_ALIEN_ALIVE] = alive;
-					transfer->alienAmount[id][TRANS_ALIEN_DEAD] = dead;
+				const char *id = mxml_GetString(ss, SAVE_TRANSFER_ALIENID);
+				int j;
+
+				/* look for alien teamDef */
+				for (j = 0; j < ccs.numAliensTD; j++) {
+					if (ccs.alienTeams[j] && !strcmp(id, ccs.alienTeams[j]->id))
+						break;
+				}
+
+				if (j < ccs.numAliensTD) {
+					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = alive;
+					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = dead;
 				} else {
-					Com_Printf("CL_LoadXML: AlienId %d is invalid\n", id);
+					Com_Printf("CL_LoadXML: AlienId '%s' is invalid\n", id);
 				}
 			}
 		}
+
 		ss = mxml_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
 		if (ss) {
 			transfer->hasEmployees = qtrue;
@@ -1958,13 +1983,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 					transfer->aircraftArray[j] = airc;
 			}
 		}
-		assert(ccs.numBases);
-		destBase = mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE);
-		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
-		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
-		 * for transfer->destbase and return qfalse here */
-		srcBase = mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE);
-		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
+		ccs.numTransfers++;
 	}
 
 	return qtrue;

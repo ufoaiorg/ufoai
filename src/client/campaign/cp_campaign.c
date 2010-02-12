@@ -2043,10 +2043,10 @@ void CL_ResetSinglePlayerData (void)
 
 	memset(&ccs, 0, sizeof(ccs));
 
-	/* Count Alien team definitions. */
+	/* Collect and count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
-			ccs.numAliensTD++;
+			ccs.alienTeams[ccs.numAliensTD++] = &csi.teamDef[i];
 	}
 }
 
