@@ -2886,8 +2886,8 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		ccs.ufos[i] = *craft;
 		craft = &ccs.ufos[i];	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 		craft->idx = i;
-		/* AIR_SaveAircraftXML(ssnode, ccs.ufos[i], qtrue); */
-		AIR_LoadAircraftXML(craft, qtrue, ssnode);
+		if (!AIR_LoadAircraftXML(craft, qtrue, ssnode))
+			return qfalse;
 	}
 	ccs.numUFOs = i;
 
