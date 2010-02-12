@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-07 15:45+0100\n"
-"PO-Revision-Date: 2010-02-11 17:04+0600\n"
+"PO-Revision-Date: 2010-02-12 11:03+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "Штаб-квартира"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
-msgstr ""
+msgstr "Террористы в городе"
 
 #: ../base/maps/bridge.ump:67
 msgid "Bridge"
@@ -220,7 +220,7 @@ msgstr "Десантный транспорт«Хищник»"
 
 #: ../base/ufos/aircraftmanagement.ufo:168
 msgid "Raptor"
-msgstr "Раптор"
+msgstr "Хищник ДТ"
 
 #: ../base/ufos/aircraftmanagement.ufo:216
 msgid "Stiletto-class Interceptor"
@@ -326,7 +326,7 @@ msgstr "Транспорт НЛО"
 #: ../base/ufos/otheritems.ufo:79
 #: ../base/ufos/research.ufo:3892
 msgid "UFO - Ripper"
-msgstr "НЛО - Gjnhjibntkm"
+msgstr "НЛО - Потрошитель"
 
 #: ../base/ufos/aircraftmanagement.ufo:627
 msgid "Ripper U"
@@ -340,7 +340,7 @@ msgstr "НЛО - Бомбардировщик"
 
 #: ../base/ufos/aircraftmanagement.ufo:655
 msgid "Bomber U"
-msgstr "НЛО бомбер."
+msgstr "Бомбардировщик Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:689
 #: ../base/ufos/otheritems.ufo:119
@@ -555,12 +555,12 @@ msgstr "Малый ангар"
 
 #: ../base/ufos/basemanagement.ufo:169
 msgid "Small UFO Hangar"
-msgstr "Малый Ангар НЛО"
+msgstr "Малый ангар НЛО"
 
 #: ../base/ufos/basemanagement.ufo:186
 #: ../base/ufos/basemanagement.ufo:203
 msgid "Large UFO Hangar"
-msgstr "Большой Ангар НЛО"
+msgstr "Большой ангар НЛО"
 
 #: ../base/ufos/basemanagement.ufo:212
 msgid "Team Room"
@@ -3245,7 +3245,7 @@ msgstr "Ферма в сельской местности. Покрывает о
 #: ../base/ufos/maps.ufo:465
 #: ../base/ufos/maps.ufo:506
 msgid "An industrial area in a cold region."
-msgstr "Промышленная область в холодном регионе"
+msgstr "Промышленная область в холодном регионе."
 
 #: ../base/ufos/maps.ufo:426
 msgid "An underpopulated area in a cold region."
@@ -3273,7 +3273,7 @@ msgstr "Расчищенный участок земли среди джунгл
 #: ../base/ufos/maps.ufo:862
 #: ../base/ufos/maps.ufo:902
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr "Тихий пригород на окраине населенного пункта"
+msgstr "Тихий пригород на окраине населенного пункта."
 
 #: ../base/ufos/maps.ufo:941
 #: ../base/ufos/maps.ufo:983
@@ -3287,7 +3287,7 @@ msgstr "Несколько зданий посреди пустыни"
 
 #: ../base/ufos/maps.ufo:1108
 msgid "An excavation site that has fallen under alien attack."
-msgstr "Карьер, разрушенный атакой пришельцев"
+msgstr "Карьер, разрушенный атакой пришельцев."
 
 #: ../base/ufos/maps.ufo:1155
 msgid "An estate owned by rich and influential people."
@@ -3303,11 +3303,11 @@ msgstr "Небольшой офис в горной местности."
 
 #: ../base/ufos/maps.ufo:1293
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr "Вид общественного центра с дополнительными продовольственными возможностями, известный как супермаркет"
+msgstr "Вид общественного центра с дополнительными продовольственными возможностями, известный как супермаркет."
 
 #: ../base/ufos/maps.ufo:1343
 msgid "An old mine."
-msgstr "Старая шахта"
+msgstr "Старая шахта."
 
 #: ../base/ufos/maps.ufo:1391
 msgid "An industrial area, used for loading and unloading goods."
@@ -3319,7 +3319,7 @@ msgstr "Бункер, использовавшийся в предыдущем �
 
 #: ../base/ufos/maps.ufo:1483
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Плотина гидроэлектростанции, которой угрожают оккупанты"
+msgstr "Плотина гидроэлектростанции, которой угрожают оккупанты."
 
 #: ../base/ufos/maps.ufo:1527
 #: ../base/ufos/maps.ufo:1577
@@ -3329,7 +3329,7 @@ msgstr "Классические восточные пригороды."
 
 #: ../base/ufos/maps.ufo:1676
 msgid "A small industrial area."
-msgstr "Маленькая промышленная зона"
+msgstr "Маленькая промышленная зона."
 
 #: ../base/ufos/maps.ufo:1722
 msgid "A stadium used for various recreational events."
@@ -3353,16 +3353,16 @@ msgstr "Сельский дом, окруженный полями и сарая
 
 #: ../base/ufos/maps.ufo:1960
 msgid "A ferry."
-msgstr "Паром"
+msgstr "Паром."
 
 #: ../base/ufos/maps.ufo:2008
 msgid "A rather old-fashioned suburban district."
-msgstr "Довольно старомодный пригородный район"
+msgstr "Довольно старомодный пригородный район."
 
 #: ../base/ufos/maps.ufo:2057
 #: ../base/ufos/maps.ufo:2104
 msgid "A small neighbourhood in a warm urban region."
-msgstr "Маленький пригородный район в теплом городском регионе"
+msgstr "Маленький пригородный район в теплом городском регионе."
 
 #: ../base/ufos/maps.ufo:2152
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
@@ -3400,15 +3400,15 @@ msgstr "Малый корабль пришельцев потерпел круш
 
 #: ../base/ufos/maps.ufo:2617
 msgid "An office complex under construction."
-msgstr "Строительство офисного комплекса"
+msgstr "Строительство офисного комплекса."
 
 #: ../base/ufos/maps.ufo:2664
 msgid "A local harbour."
-msgstr "Местный порт"
+msgstr "Местный порт."
 
 #: ../base/ufos/maps.ufo:2709
 msgid "An office complex on the outskirts of town."
-msgstr "Офисный комплекс на окраине города"
+msgstr "Офисный комплекс на окраине города."
 
 #: ../base/ufos/maps.ufo:2754
 msgid "A luxurious vacation resort."
@@ -3424,7 +3424,7 @@ msgstr "Пригород, который посетил Охотник."
 
 #: ../base/ufos/maps.ufo:2915
 msgid "An alien Harvester has crashed in the wastelands."
-msgstr "Охотник, разбившийся на пустыре"
+msgstr "Охотник, разбившийся на пустыре."
 
 #: ../base/ufos/maps.ufo:2961
 #: ../base/ufos/maps.ufo:2995
@@ -3457,11 +3457,11 @@ msgstr "Контр-террористическая операция в пуст
 
 #: ../base/ufos/maps.ufo:3316
 msgid "UFO Crashsite."
-msgstr "Место крушения НЛО"
+msgstr "Место крушения НЛО."
 
 #: ../base/ufos/maps.ufo:3347
 msgid "An alien base."
-msgstr "База пришельцев"
+msgstr "База пришельцев."
 
 #: ../base/ufos/maps.ufo:3362
 msgid "Base is under attack."
@@ -6166,7 +6166,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2274
 msgid "Alien Anti-Human Gas"
-msgstr ""
+msgstr "Противочеловеческий газ пришельцев"
 
 #: ../base/ufos/research.ufo:2279
 msgid "stungren_alien_txt"
@@ -9158,16 +9158,16 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5041
 msgid "XVI Census"
-msgstr "XVI Перепись населения"
+msgstr "ВВИ - Перепись населения"
 
 #: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
 msgstr ""
 "Доброе утро, Командир.\n"
 "\n"
-"Программа переписи населения XVI только что начала работу. Еженедельные тесты начались сегодня утром, и я уже получил полный отчет по уровню обслуживания и деталям процесса.\n"
+"Программа переписи населения ВВИ только что начала работу. Еженедельные тесты начались сегодня утром, и я уже получил полный отчет по уровню обслуживания и деталям процесса.\n"
 "\n"
-"Наша стратегия базируется на местных медицинских центрах, в которых проводится тестирование на XVI обслуживающим персоналом под контролем полиции или вооруженной охраны. Если тест окажется положительным, охрана выполнит арест и передаст зараженного под контроль ООН для изоляции и исследования. Если захватчики поймут схему наших действий – я не думаю, что на это уйдет много времени – зараженные люди начнут избегать переписи, таким образом, давая нам данные своим отсутствием.\n"
+"Наша стратегия базируется на местных медицинских центрах, в которых проводится тестирование на ВВИ обслуживающим персоналом под контролем полиции или вооруженной охраны. Если тест окажется положительным, охрана выполнит арест и передаст зараженного под контроль ООН для изоляции и исследования. Если захватчики поймут схему наших действий – я не думаю, что на это уйдет много времени – зараженные люди начнут избегать переписи, таким образом, давая нам данные своим отсутствием.\n"
 "\n"
 "Как обычно есть хорошая и плохая новость. Начну с плохой.\n"
 "\n"
@@ -10307,7 +10307,7 @@ msgstr "Информация о базе"
 # Речь о вместимости изолятора
 #: ../base/ufos/ui/aliencont.ufo:355
 msgid "Base capacity:"
-msgstr "Вместимость"
+msgstr "Вместимость:"
 
 #: ../base/ufos/ui/aliencont.ufo:376
 msgid "Kill all aliens in this base"
@@ -10425,7 +10425,7 @@ msgstr "Без ответного огня"
 #: ../base/ufos/ui/hud.ufo:874
 #: client/battlescape/cl_hud.c:1034
 msgid "Reserve TUs for shooting."
-msgstr "Отложить TU для выстрела."
+msgstr "Отложить ЕВ для выстрела."
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
@@ -10468,17 +10468,16 @@ msgid "Stores"
 msgstr "Склады"
 
 #: ../base/ufos/ui/basedefence.ufo:238
-#, fuzzy
 msgid "Selected Item"
 msgstr "Выбранный предмет"
 
 #: ../base/ufos/ui/basedefence.ufo:296
 msgid "Surface to Air defences"
-msgstr "Защитные системы Земля-воздух"
+msgstr "Защитные системы земля-воздух"
 
 #: ../base/ufos/ui/basedefence.ufo:326
 msgid "Targetted UFO:"
-msgstr "Выбранное НЛО"
+msgstr "Выбранное НЛО:"
 
 #: ../base/ufos/ui/basedefence.ufo:339
 #: ../base/ufos/ui/geoscape.ufo:1441
@@ -10545,7 +10544,7 @@ msgstr "Управление авиацией"
 
 #: ../base/ufos/ui/bases.ufo:142
 msgid "Buy/Sell Equipment"
-msgstr "Снаряжение"
+msgstr "Купить/продать снаряжение"
 
 #: ../base/ufos/ui/bases.ufo:143
 #: client/campaign/cp_base_callbacks.c:301
@@ -10840,9 +10839,8 @@ msgstr "Описание оружия"
 
 #: ../base/ufos/ui/equipment.ufo:611
 #: ../base/ufos/ui/equipment.ufo:621
-#, fuzzy
 msgid "Rename your unit"
-msgstr "Переименовать базу"
+msgstr "Переименовать солдата"
 
 #: ../base/ufos/ui/equipment.ufo:738
 #: ../base/ufos/ui/multiplayer_team.ufo:708
@@ -10956,7 +10954,7 @@ msgstr "Показать радарное покрытие"
 #: ../base/ufos/ui/geoscape.ufo:540
 #: ../base/ufos/ui/geoscape.ufo:2113
 msgid "Show XVI map"
-msgstr "Показать карту распостранения АБИ"
+msgstr "Показать карту распостранения ВВИ"
 
 #: ../base/ufos/ui/geoscape.ufo:552
 msgid "Center objects on the map"
@@ -11045,7 +11043,7 @@ msgstr "Умертвить всех пришельцев на базе"
 #: ../base/ufos/ui/geoscape.ufo:834
 #: ../base/ufos/ui/hospital.ufo:568
 msgid "Not implemented"
-msgstr "не реализовано"
+msgstr "Не реализовано"
 
 #: ../base/ufos/ui/geoscape.ufo:814
 msgid "Lift aircraft"
@@ -11076,7 +11074,7 @@ msgstr "Новая база"
 #: ../base/ufos/ui/multiplayer.ufo:342
 #: ../base/ufos/ui/options.ufo:736
 msgid "Name:"
-msgstr "Имя:"
+msgstr "Название:"
 
 #: ../base/ufos/ui/geoscape.ufo:997
 #: ../base/ufos/ui/geoscape.ufo:1429
@@ -11110,11 +11108,11 @@ msgstr "Основать базу"
 
 #: ../base/ufos/ui/geoscape.ufo:1110
 msgid "New installation"
-msgstr "Построить объект."
+msgstr "Построить объект"
 
 #: ../base/ufos/ui/geoscape.ufo:1115
 msgid "Type"
-msgstr "Тип:"
+msgstr "Тип"
 
 #: ../base/ufos/ui/geoscape.ufo:1122
 msgid "Build Time"
@@ -11122,7 +11120,7 @@ msgstr "Время"
 
 #: ../base/ufos/ui/geoscape.ufo:1130
 msgid "Cost"
-msgstr "Стоимость:"
+msgstr "Стоимость"
 
 #: ../base/ufos/ui/geoscape.ufo:1150
 msgid "Radar tower"
@@ -11231,7 +11229,7 @@ msgstr "Описание:"
 
 #: ../base/ufos/ui/geoscape.ufo:2020
 msgid "Geoscape options"
-msgstr "Настройки геоскейпа"
+msgstr "Настройки глобуса"
 
 #: ../base/ufos/ui/geoscape.ufo:2032
 msgid "Geoscape projection mode:"
@@ -11702,7 +11700,7 @@ msgstr "включить/отключить звуковые сигналы"
 
 #: ../base/ufos/ui/messageoptions.ufo:48
 msgid "Pause/message settings"
-msgstr "Настройки паузы"
+msgstr "Настройки паузы/сообщений"
 
 #: ../base/ufos/ui/messageoptions.ufo:53
 msgid "Apply"
@@ -11761,7 +11759,7 @@ msgstr "Создать"
 
 #: ../base/ufos/ui/multiplayer.ufo:83
 msgid "Internet/Lan"
-msgstr "Интернет/Lan"
+msgstr "Интернет/LAN"
 
 #: ../base/ufos/ui/multiplayer.ufo:87
 msgid "Lan"
@@ -11782,7 +11780,7 @@ msgstr "Имя"
 
 #: ../base/ufos/ui/multiplayer.ufo:204
 msgid "Leave Serverbrowser"
-msgstr ""
+msgstr "Покинуть обзор серверов"
 
 #: ../base/ufos/ui/multiplayer.ufo:252
 msgid "Serverfilter:"
@@ -11865,7 +11863,7 @@ msgstr "Предпросмотр:"
 
 #: ../base/ufos/ui/multiplayer.ufo:669
 msgid "Map name:"
-msgstr "Имя карты:"
+msgstr "Название карты:"
 
 #: ../base/ufos/ui/multiplayer.ufo:685
 msgid "Allowed gametype:"
@@ -12017,9 +12015,8 @@ msgid "Invite players that are online in the lobby"
 msgstr "Пригласить игроков, которые на связи с холлом"
 
 #: ../base/ufos/ui/multiplayer.ufo:1486
-#, fuzzy
 msgid "Party chat"
-msgstr "Включить чат"
+msgstr "Чат игры"
 
 #: ../base/ufos/ui/multiplayer.ufo:1490
 msgid "Global lobby (IRC)"
@@ -12235,7 +12232,7 @@ msgstr "Настройки звука"
 
 #: ../base/ufos/ui/options.ufo:608
 msgid "Sound rate:"
-msgstr "Частота:"
+msgstr "Частота дискретизации:"
 
 #: ../base/ufos/ui/options.ufo:614
 msgid "Restart sound to change the settings"
@@ -12343,9 +12340,8 @@ msgid "Joystick settings:"
 msgstr "Настройки джойстика:"
 
 #: ../base/ufos/ui/options.ufo:1089
-#, fuzzy
 msgid "Enable:"
-msgstr "Включить всё"
+msgstr "Включить:"
 
 #: ../base/ufos/ui/options.ufo:1097
 msgid "Enables/Disables Joysticks"
@@ -12496,9 +12492,8 @@ msgid "Skirmish game settings"
 msgstr "Настройки быстрой игры"
 
 #: ../base/ufos/ui/skirmish.ufo:46
-#, fuzzy
 msgid "Equipment AI"
-msgstr "Вооружение"
+msgstr "Вооружение ИИ"
 
 #: ../base/ufos/ui/skirmish.ufo:151
 msgid "Max AI actors for this game"
@@ -12580,46 +12575,39 @@ msgstr "max"
 
 #: ../base/ufos/ui/sys_editor.ufo:12
 msgid "Node editor"
-msgstr ""
+msgstr "Редактор меню"
 
 #: ../base/ufos/ui/sys_editor.ufo:30
-#, fuzzy
 msgid "Capture a node"
-msgstr "Уже загружено:"
+msgstr "Ввести элемент"
 
 #: ../base/ufos/ui/sys_editor.ufo:42
-#, fuzzy
 msgid "Select parent node"
-msgstr "Выбрать зону"
+msgstr "Выбрать родительский элемент"
 
 #: ../base/ufos/ui/sys_editor.ufo:54
-#, fuzzy
 msgid "Select first child node"
-msgstr "Выбрать зону"
+msgstr "Выбрать первый вложенный элемент"
 
 #: ../base/ufos/ui/sys_editor.ufo:66
-#, fuzzy
 msgid "Select next node"
-msgstr "Выбрать зону"
+msgstr "Выбрать следующий элемент"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
-#, fuzzy
 msgid "Extract window"
-msgstr "Тащите, чтоб передвинуть окно"
+msgstr "Получить окно"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
 msgid "Extract the window of the last/current selected node"
-msgstr ""
+msgstr "Получить окно последнего/текущего выбранного элемента"
 
 #: ../base/ufos/ui/sys_editor.ufo:93
-#, fuzzy
 msgid "Current window:"
-msgstr "Закрыть окно"
+msgstr "Текущее окно:"
 
 #: ../base/ufos/ui/sys_editor.ufo:107
-#, fuzzy
 msgid "Current node:"
-msgstr "Уже загружено:"
+msgstr "Текущий элемент:"
 
 #: ../base/ufos/ui/transfer.ufo:39
 #: ../base/ufos/ui/transfer.ufo:53
@@ -12689,7 +12677,7 @@ msgstr "Лечение"
 #: ../base/ufos/weapons_melee.ufo:99
 #: ../base/ufos/weapons_melee.ufo:301
 msgid "Throw"
-msgstr "бросок"
+msgstr "Бросок"
 
 #: ../base/ufos/weapons.ufo:63
 msgid "IR Goggles"
@@ -13083,7 +13071,7 @@ msgstr "Плазменный меч"
 
 #: ../base/ufos/weapons_melee.ufo:283
 msgid "Lock"
-msgstr ""
+msgstr "Вплотную"
 
 #: ../base/ufos/weapons_multiplayer.ufo:10
 msgid "Minigun"
@@ -13244,19 +13232,16 @@ msgid "Unknown alien race"
 msgstr "Пришелец неизвестной расы"
 
 #: client/battlescape/cl_actor.c:2485
-#, fuzzy
 msgid "Toggle to next actor"
-msgstr "Переход к следующему содату"
+msgstr "Переключиться на следующего солдата"
 
 #: client/battlescape/cl_actor.c:2486
-#, fuzzy
 msgid "Select an actor from list"
-msgstr "Выбор солдата из списка"
+msgstr "Выбрать солдата из списка"
 
 #: client/battlescape/cl_actor.c:2487
-#, fuzzy
 msgid "Update an actor"
-msgstr "Обновить солдата"
+msgstr "Обновить вид солдата"
 
 #: client/battlescape/cl_actor.c:2489
 msgid "Toggle stand/crounch"
@@ -13285,7 +13270,7 @@ msgstr "Переключение между пришельцами в облас
 #: client/battlescape/cl_hud.c:95
 #: client/battlescape/cl_hud.c:98
 msgid "Crouch walk"
-msgstr "Хотьба вприсядку"
+msgstr "Ходьба в приседе"
 
 #: client/battlescape/cl_hud.c:97
 msgid "Walk"
@@ -13299,7 +13284,7 @@ msgid ""
 "%s"
 msgstr ""
 "%s\n"
-"HP: %i/%i TU: %i\n"
+"HP: %i/%i ЕВ: %i\n"
 "%s"
 
 #: client/battlescape/cl_hud.c:236
@@ -13314,7 +13299,7 @@ msgstr "После выстрела не осталось ед.времени."
 #: client/battlescape/cl_hud.c:242
 #, c-format
 msgid "TU: %i"
-msgstr "Ед.Вр.: %i"
+msgstr "ЕВ: %i"
 
 #: client/battlescape/cl_hud.c:243
 #, c-format
@@ -13323,16 +13308,16 @@ msgstr "Выстрелов: %i"
 
 #: client/battlescape/cl_hud.c:351
 msgid "[0 TU] No reservation"
-msgstr "[0 TU] Нет запаса"
+msgstr "[0 ЕВ] Нет запаса"
 
 #: client/battlescape/cl_hud.c:369
 #, c-format
 msgid "[%i TU] %s"
-msgstr "[%i TU] %s"
+msgstr "[%i ЕВ] %s"
 
 #: client/battlescape/cl_hud.c:401
 msgid "Reserve TUs for firing/using."
-msgstr "Отложить TU для стрельбы/использования."
+msgstr "Отложить ЕВ для стрельбы/использования."
 
 #: client/battlescape/cl_hud.c:401
 msgid "Shot Reservation"
@@ -13428,17 +13413,17 @@ msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
-"%i TU отложено для приседания/вставания.\n"
+"%i ЕВ отложено для приседания/вставания.\n"
 "Нажмите для очистки."
 
 #: client/battlescape/cl_hud.c:1021
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
-msgstr "Отложить %i TU для приседания/вставания."
+msgstr "Отложить %i ЕВ для приседания/вставания."
 
 #: client/battlescape/cl_hud.c:1024
 msgid "Not enough TUs left to reserve for crouching/standing up."
-msgstr "Осталось слишком мало TU чтоб отложить для приседания."
+msgstr "Осталось слишком мало ЕВ чтоб отложить для приседания."
 
 #: client/battlescape/cl_hud.c:1030
 #, c-format
@@ -13447,13 +13432,13 @@ msgid ""
 "Click to change.\n"
 "Right-Click to clear."
 msgstr ""
-"%i TU отложено для стрельбы.\n"
+"%i ЕВ отложено для стрельбы.\n"
 "Нажмите чтоб изменить.\n"
 "Правой кнопкой чтоб очистить."
 
 #: client/battlescape/cl_hud.c:1037
 msgid "Reserving TUs for shooting not possible."
-msgstr "Невозможно отложить TU для выстрела."
+msgstr "Невозможно отложить ЕВ для выстрела."
 
 #: client/battlescape/cl_hud.c:1059
 #: client/battlescape/cl_hud.c:1068
@@ -13829,7 +13814,7 @@ msgid ""
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
-"На этой базе нет рабочего Центра Управления\n"
+"На этой базе нет рабочего центра управления\n"
 "\n"
 "Самолёт не может быть запущен.\n"
 
@@ -14035,7 +14020,7 @@ msgstr "Демонтировать строение"
 
 #: client/campaign/cp_base.c:940
 msgid "Not set"
-msgstr "не задано"
+msgstr "Не задано"
 
 #: client/campaign/cp_base.c:946
 #, c-format
@@ -14573,7 +14558,7 @@ msgid ""
 "Build more quarters."
 msgstr ""
 "У Вас нет достаточного кол-ва казарм для размещения служащих.\n"
-"Постройте ещё казармы"
+"Постройте ещё казармы."
 
 #: client/campaign/cp_employee_callbacks.c:285
 #: client/campaign/cp_employee_callbacks.c:339
@@ -14675,7 +14660,7 @@ msgstr "Боеприпасы несовместимы с текущим оруж
 
 #: client/campaign/cp_fightequip_callbacks.c:587
 msgid "Unknown problem."
-msgstr "Низвестная проблема"
+msgstr "Неизвестная проблема"
 
 #: client/campaign/cp_fightequip_callbacks.c:590
 msgid "Ok"
@@ -14801,7 +14786,7 @@ msgstr "Расстояние до цели:\t\t%.0f\n"
 #: client/campaign/cp_map.c:1652
 #, c-format
 msgid "ETA:\t%sh\n"
-msgstr "ETA:\t%sч\n"
+msgstr "РВП:\t%sч\n"
 
 #: client/campaign/cp_map.c:1670
 #, c-format
@@ -14910,7 +14895,7 @@ msgstr ""
 
 #: client/campaign/cp_market_callbacks.c:601
 msgid "Build a hangar first."
-msgstr "Сначала необходимо построить Ангар."
+msgstr "Сначала необходимо построить ангар."
 
 #: client/campaign/cp_market_callbacks.c:614
 msgid ""
@@ -15077,7 +15062,7 @@ msgstr "Место посадки НЛО"
 
 #: client/campaign/cp_missions.c:434
 msgid "Terror mission"
-msgstr "Террористическая операция"
+msgstr "Анти-террористическая операция"
 
 #: client/campaign/cp_missions.c:436
 msgid "Base attack"
@@ -15086,7 +15071,7 @@ msgstr "Нападение на базу"
 # Или лучше не извращаться так? :-D
 #: client/campaign/cp_missions.c:440
 msgid "Harvesting mission"
-msgstr "Сбор урожая"
+msgstr "Сбор биоматерала"
 
 #: client/campaign/cp_missions.c:734
 #, c-format
@@ -15617,7 +15602,7 @@ msgstr "Состояние: невозможно исследовать"
 
 #: client/campaign/cp_research_callbacks.c:148
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
-msgstr "Статус: Мы не имеем всех необходимых материалов или знаний нужных для этого исследования."
+msgstr "Статус: мы не имеем всех необходимых материалов или знаний нужных для этого исследования."
 
 #: client/campaign/cp_research_callbacks.c:150
 #: client/campaign/cp_research_callbacks.c:151
@@ -15822,7 +15807,7 @@ msgstr "Дек"
 
 #: client/campaign/cp_transfer.c:144
 msgid "Destination base does not have an Antimatter Storage.\n"
-msgstr "На базе назначения нет Хранилища Антиматерии.\n"
+msgstr "На базе назначения нет хранилища антиматерии.\n"
 
 #: client/campaign/cp_transfer.c:144
 msgid "Missing storage"
@@ -15871,7 +15856,7 @@ msgstr ""
 
 #: client/campaign/cp_transfer.c:206
 msgid "Soldier in aircraft"
-msgstr "Солдат в авиатехнике"
+msgstr "Солдат в самолете"
 
 #: client/campaign/cp_transfer.c:213
 #, c-format
@@ -15912,11 +15897,11 @@ msgstr ""
 
 #: client/campaign/cp_transfer.c:286
 msgid "Destination base does not have any hangar."
-msgstr "На базе назначения нет ангара"
+msgstr "На базе назначения нет ни одного ангара."
 
 #: client/campaign/cp_transfer.c:292
 msgid "Destination base does not have enough space in hangars.\n"
-msgstr "На базе назначения недостаточно места в ангарах\n"
+msgstr "На базе назначения недостаточно места в ангарах.\n"
 
 #: client/campaign/cp_transfer.c:340
 #: client/campaign/cp_transfer.c:517
@@ -15953,11 +15938,11 @@ msgstr "Транспортировка невозможна - база не им
 #: client/campaign/cp_transfer.c:498
 #: client/campaign/cp_transfer.c:589
 msgid "Transfer is not possible - the base does not have power supplies."
-msgstr "Транспортировка невозможна - на базе назначения недостаточно энергии"
+msgstr "Транспортировка невозможна - на базе назначения недостаточно энергии."
 
 #: client/campaign/cp_transfer.c:542
 msgid "Living Quarters empty."
-msgstr "Казармы пусты"
+msgstr "Казармы пусты."
 
 #: client/campaign/cp_transfer.c:547
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
@@ -15974,7 +15959,7 @@ msgstr "В изоляторе никто не содержится."
 
 #: client/campaign/cp_transfer.c:585
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
-msgstr "Транспортировка невозможна - на базе назначения нет изолятора"
+msgstr "Транспортировка невозможна - на базе назначения нет изолятора."
 
 #: client/campaign/cp_transfer.c:610
 msgid "No aircraft available for transfer."
@@ -16048,11 +16033,11 @@ msgstr "Пожалуйста, выберите базу назначения и�
 
 #: client/campaign/cp_transfer.c:1321
 msgid "You can transfer equipment - this base has a Storage.\n"
-msgstr "Вы можете переслать снаряжение - на этой базе есть складские помещения\n"
+msgstr "Вы можете переслать снаряжение - на этой базе есть складские помещения.\n"
 
 #: client/campaign/cp_transfer.c:1324
 msgid "No Storage in this base.\n"
-msgstr "На этой базе нет складских помещений\n"
+msgstr "На этой базе нет складских помещений.\n"
 
 #: client/campaign/cp_transfer.c:1328
 msgid "You can transfer employees - this base has Living Quarters.\n"
@@ -16060,23 +16045,23 @@ msgstr "Вы можете переслать персонал - на этой б
 
 #: client/campaign/cp_transfer.c:1330
 msgid "No Living Quarters in this base.\n"
-msgstr "На этой базе нет казарм\n"
+msgstr "На этой базе нет казарм.\n"
 
 #: client/campaign/cp_transfer.c:1334
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
-msgstr "Вы можете переслать живых пришельцев - на этой базе есть изолятор\n"
+msgstr "Вы можете переслать живых пришельцев - на этой базе есть изолятор.\n"
 
 #: client/campaign/cp_transfer.c:1336
 msgid "No Alien Containment in this base.\n"
-msgstr "На этой базе нет изолятора\n"
+msgstr "На этой базе нет изолятора.\n"
 
 #: client/campaign/cp_transfer.c:1340
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
-msgstr "Вы можете переслать антиматерию - на этой базе есть хранилище\n"
+msgstr "Вы можете переслать антиматерию - на этой базе есть хранилище.\n"
 
 #: client/campaign/cp_transfer.c:1342
 msgid "No Antimatter Storage in this base.\n"
-msgstr "На этой базе нет хранилища антиматерии\n"
+msgstr "На этой базе нет хранилища антиматерии.\n"
 
 #: client/campaign/cp_transfer.c:1346
 msgid "You can transfer aircraft - this base has a Hangar.\n"
@@ -16088,7 +16073,7 @@ msgstr "Доставка авиатехники невозможна, база �
 
 #: client/campaign/cp_transfer.c:1350
 msgid "No Hangar in this base.\n"
-msgstr "На этой базе нет Ангара.\n"
+msgstr "На этой базе нет ангара.\n"
 
 #: client/campaign/cp_transfer.c:1354
 msgid "No power supplies in this base.\n"
@@ -16129,7 +16114,7 @@ msgstr "Радар потерял  НЛО"
 
 #: client/campaign/cp_ufopedia.c:144
 msgid "Cruising speed"
-msgstr "Средняя скорость"
+msgstr "Крейсерская скорость"
 
 #: client/campaign/cp_ufopedia.c:146
 msgid "Maximum speed"
@@ -16609,7 +16594,7 @@ msgstr "Действие:\t      %s\n"
 
 #: client/cl_inventory_callbacks.c:194
 msgid "Unknown - not useable"
-msgstr "Низвестная технология - нельзя использовать"
+msgstr "Неизвестная технология - нельзя использовать"
 
 #: client/cl_irc.c:1257
 msgid "Server closed connection"
@@ -16643,7 +16628,7 @@ msgstr "Прицелиться в поверхность земли"
 
 #: client/cl_main.c:1056
 msgid "Custom"
-msgstr ""
+msgstr "Пользовательский"
 
 #: client/cl_screen.c:165
 #, c-format
@@ -16691,7 +16676,7 @@ msgstr "СССР"
 
 #: client/cl_team.c:421
 msgid "Update the GUI with the selected item"
-msgstr ""
+msgstr "Обновить графический интерфейс с учетом выбранных предметов"
 
 #: client/input/cl_input.c:894
 msgid "Rotate battlescape camera anti-clockwise"
