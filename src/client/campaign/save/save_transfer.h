@@ -32,14 +32,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_TRANSFER_ITEM "item"
 #define SAVE_TRANSFER_ITEMID "itemid"
 #define SAVE_TRANSFER_AMOUNT "amount"
+
 #define SAVE_TRANSFER_ALIEN "alien"
 #define SAVE_TRANSFER_ALIENID "alienid"
 #define SAVE_TRANSFER_ALIVEAMOUNT "aliveAmount"
 #define SAVE_TRANSFER_DEADAMOUNT "deadAmount"
+
 #define SAVE_TRANSFER_EMPLOYEE "employee"
-#define SAVE_TRANSFER_GROUP "group"
-#define SAVE_TRANSFER_EMPL "empl"
-#define SAVE_TRANSFER_IDX "IDX"
+#define SAVE_TRANSFER_UCN "UCN"
+
 #define SAVE_TRANSFER_AIRCRAFT "aircraft"
 #define SAVE_TRANSFER_ID "id"
 #define SAVE_TRANSFER_AIR "air"
@@ -66,6 +67,10 @@ DTD:  (incomplete)
 	alienid		CDATA		#REQUIRED
 	aliveAmount	CDATA		0
 	deadAmount	CDATA		0
+>
+<!ELEMENT employee EMPTY>
+<!ATTLIST employee
+	UCN			CDATA		#REQUIRED
 >
 
 */

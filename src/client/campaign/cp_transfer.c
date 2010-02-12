@@ -1818,6 +1818,17 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		s = mxml_AddNode(n, SAVE_TRANSFER_TRANSFER);
 		mxml_AddInt(s, SAVE_TRANSFER_DAY, transfer->event.day);
 		mxml_AddInt(s, SAVE_TRANSFER_SEC, transfer->event.sec);
+		if (!transfer->destBase) {
+			Com_Printf("Could not save transfer, no destBase is set\n");
+			return qfalse;
+		}
+		mxml_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
+		if (!transfer->srcBase) {
+			Com_Printf("Could not save transfer, no srcBase is set\n");
+			return qfalse;
+		}
+		mxml_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
+		/* save items */
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
 				if (transfer->itemAmount[j] > 0) {
@@ -1830,6 +1841,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				}
 			}
 		}
+		/* save aliens */
 		if (transfer->hasAliens) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] > 0
@@ -1845,33 +1857,27 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				}
 			}
 		}
+		/* save employee */
 		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
 				int k;
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					if (transfer->employeeArray[j][k]) {
+					const employee_t *empl = transfer->employeeArray[j][k];
+					if (empl) {
 						mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
-						mxml_AddInt(ss, SAVE_TRANSFER_GROUP, j);
-						mxml_AddInt(ss, SAVE_TRANSFER_EMPL, k);
-						mxml_AddInt(ss, SAVE_TRANSFER_IDX, transfer->employeeArray[j][k]->idx);
+
+						mxml_AddInt(ss, SAVE_TRANSFER_UCN, empl->chr.ucn);
 					}
 				}
 			}
 		}
+		/* save aircraft */
 		if (transfer->hasAircraft) {
 			for (j = 0; j < MAX_AIRCRAFT; j++) {
 				mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
 				mxml_AddInt(ss, SAVE_TRANSFER_ID, j);
 				mxml_AddInt(ss, SAVE_TRANSFER_AIR, transfer->aircraftArray[j]);
 			}
-		}
-		if (transfer->destBase)
-			mxml_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
-		if (transfer->srcBase)
-			mxml_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
-		if (transfer->active && !transfer->destBase) {
-			Com_Printf("Could not save transfer, active is true, but no destBase is set\n");
-			return qfalse;
 		}
 	}
 	return qtrue;
@@ -1894,17 +1900,19 @@ qboolean TR_LoadXML (mxml_node_t *p)
 	assert(ccs.numBases);
 
 	for (s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && ccs.numTransfers < MAX_TRANSFERS; s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
-		byte destBase, srcBase;
 		mxml_node_t *ss;
 		transfer_t *transfer = &ccs.transfers[ccs.numTransfers];
 
-		destBase = mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE);
-		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
-		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
-		 * for transfer->destbase and return qfalse here */
-		srcBase = mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE);
-		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
-
+		transfer->destBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
+		if (!transfer->destBase) {
+			Com_Printf("Error: Transfer has no destBase set\n");
+			return qfalse;
+		}
+		transfer->srcBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
+		if (!transfer->srcBase) {
+			Com_Printf("Error: Transfer has no srcBase set\n");
+			return qfalse;
+		}
 		transfer->event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
 		transfer->event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
 		transfer->active = qtrue;
@@ -1919,6 +1927,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		memset(transfer->employeeArray, 0, sizeof(transfer->employeeArray));
 		memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
 
+		/* load items */
 		/* If there is at last one element, hasItems is true */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_ITEM);
 		if (ss) {
@@ -1931,7 +1940,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 					transfer->itemAmount[od->idx] = mxml_GetInt(ss, SAVE_TRANSFER_AMOUNT, 1);
 			}
 		}
-
+		/* load aliens */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_ALIEN);
 		if (ss) {
 			transfer->hasAliens = qtrue;
@@ -1955,24 +1964,24 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				}
 			}
 		}
-
+		/* load employee */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_EMPLOYEE);
 		if (ss) {
 			transfer->hasEmployees = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_EMPLOYEE)) {
-				const int emplIdx = mxml_GetInt(ss, SAVE_TRANSFER_IDX, 0);
-				const int group = mxml_GetInt(ss, SAVE_TRANSFER_GROUP, 0);
-				const int empl = mxml_GetInt(ss, SAVE_TRANSFER_EMPL, 0);
-				if (group >= 0 && group < MAX_EMPL && empl >= 0 && empl < MAX_EMPLOYEES) {
-					if (emplIdx >= 0) {
-						transfer->employeeArray[group][empl] = &ccs.employees[group][emplIdx];
-						transfer->employeeArray[group][empl]->transfer = qtrue;
-					} else {
-						transfer->employeeArray[group][empl] = NULL;
-					}
+				const int ucn = mxml_GetInt(ss, SAVE_TRANSFER_UCN, -1);
+				employee_t *empl = E_GetEmployeeFromChrUCN(ucn);
+
+				if (!empl) {
+					Com_Printf("Error: No employee found with UCN: %i\n", ucn);
+					return qfalse;
 				}
+
+				transfer->employeeArray[empl->type][empl->idx] = empl;
+				transfer->employeeArray[empl->type][empl->idx]->transfer = qtrue;
 			}
 		}
+		/* load aircraft */
 		ss = mxml_GetNode(s, SAVE_TRANSFER_AIRCRAFT);
 		if (ss) {
 			transfer->hasAircraft = qtrue;

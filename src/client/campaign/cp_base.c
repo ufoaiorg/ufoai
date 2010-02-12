@@ -57,7 +57,8 @@ static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 base_t* B_GetBaseByIDX (int baseIdx)
 {
 	if (baseIdx >= MAX_BASES || baseIdx < 0)
-		Com_Error(ERR_DROP, "Invalid base index of %i given", baseIdx);
+		return NULL;
+
 	return &ccs.bases[baseIdx];
 }
 
