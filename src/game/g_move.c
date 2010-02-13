@@ -141,14 +141,17 @@ qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvt
 		 VectorCopy(ent->pos, pos);
 		 while (max >= 0) {
 			 int tmp = 0;
-			 const edict_t *blockEdict = G_GetEdictFromPos(pos, ET_NULL);
+			 const edict_t *blockEdict;
+
+			 PosAddDV(pos, tmp, dvtab[max]);
+			 max--;
+			 blockEdict = G_GetEdictFromPos(pos, ET_NULL);
+
 			 if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
 				 const qboolean visible = G_IsVisibleForTeam(blockEdict, ent->team);
 				 if (visible)
 					 return qtrue;
 			 }
-			 PosAddDV(pos, tmp, dvtab[max]);
-			 max--;
 		 }
 	 }
 	 return qfalse;
@@ -263,11 +266,6 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				break;
 			}
 
-			/* This is now a flag to indicate a change in crouching - we need this for
-			 * the stop in mid move call(s), because we need the updated entity position */
-			crouchFlag = 0;
-			PosAddDV(ent->pos, crouchFlag, dv);
-
 			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
@@ -279,6 +277,11 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				}
 				break;
 			}
+
+			/* This is now a flag to indicate a change in crouching - we need this for
+			 * the stop in mid move call(s), because we need the updated entity position */
+			crouchFlag = 0;
+			PosAddDV(ent->pos, crouchFlag, dv);
 
 			/* decrease TUs */
 			div = gi.GetTUsForDirection(dir);
