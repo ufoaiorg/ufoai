@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-07 15:45+0100\n"
-"PO-Revision-Date: 2010-02-07 16:03+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2010-02-12 15:32+0100\n"
+"Last-Translator: Borsti67 <i-c-q@hiereinwerfen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -330,8 +330,9 @@ msgid "UFO - Ripper"
 msgstr "UFO - Jäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:627
+#, fuzzy
 msgid "Ripper U"
-msgstr ""
+msgstr "Jäger U"
 
 #: ../base/ufos/aircraftmanagement.ufo:654
 #: ../base/ufos/otheritems.ufo:69
@@ -696,11 +697,11 @@ msgstr "Wichita"
 
 #: ../base/ufos/cities.ufo:63
 msgid "Aarhus"
-msgstr ""
+msgstr "Aarhus"
 
 #: ../base/ufos/cities.ufo:69
 msgid "Aberdeen"
-msgstr ""
+msgstr "Aberdeen"
 
 #: ../base/ufos/cities.ufo:75
 msgid "Abidjan"
@@ -711,9 +712,8 @@ msgid "Abuja"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:87
-#, fuzzy
 msgid "Accra"
-msgstr "Genauigkeit"
+msgstr "Accra"
 
 #: ../base/ufos/cities.ufo:93
 msgid "Adana"
@@ -729,20 +729,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:111
 msgid "Ahmedabad"
-msgstr ""
+msgstr "Ahmedabad"
 
 #: ../base/ufos/cities.ufo:117
 msgid "Albuquerque"
-msgstr ""
+msgstr "Albuquerque"
 
 #: ../base/ufos/cities.ufo:123
 msgid "Almaty"
-msgstr ""
+msgstr "Almaty"
 
 #: ../base/ufos/cities.ufo:129
-#, fuzzy
 msgid "Amman"
-msgstr "Munition"
+msgstr "Amman"
 
 #: ../base/ufos/cities.ufo:135
 msgid "Amritsar"
@@ -753,9 +752,8 @@ msgid "Anadyr"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:147
-#, fuzzy
 msgid "Anchorage"
-msgstr "Lager"
+msgstr "Anchorage"
 
 #: ../base/ufos/cities.ufo:153
 msgid "Andorra la Vella"
@@ -763,16 +761,15 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:159
 msgid "Ankara"
-msgstr ""
+msgstr "Ankara"
 
 #: ../base/ufos/cities.ufo:165
 msgid "Antananarivo"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:171
-#, fuzzy
 msgid "Antwerp"
-msgstr "Starten"
+msgstr "Antwerpen"
 
 #: ../base/ufos/cities.ufo:177
 msgid "Arbil"
@@ -787,19 +784,16 @@ msgid "Asmara"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:195
-#, fuzzy
 msgid "Assis"
-msgstr "Missionen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:201
-#, fuzzy
 msgid "Astana"
-msgstr "Automatisches Aufstehen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:207
-#, fuzzy
 msgid "Asuncion"
-msgstr "Aktion:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:213
 msgid "Athens"
@@ -807,16 +801,15 @@ msgstr "Athen"
 
 #: ../base/ufos/cities.ufo:219
 msgid "Atlanta"
-msgstr ""
+msgstr "Atlanta"
 
 #: ../base/ufos/cities.ufo:225
-#, fuzzy
 msgid "Austin"
-msgstr "Automatisches Aufstehen"
+msgstr "Austin"
 
 #: ../base/ufos/cities.ufo:231
 msgid "Baghdad"
-msgstr ""
+msgstr "Bagdad"
 
 #: ../base/ufos/cities.ufo:237
 msgid "Balikpapan"
@@ -824,39 +817,35 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:243
 msgid "Baltimore"
-msgstr ""
+msgstr "Baltimore"
 
 #: ../base/ufos/cities.ufo:249
-#, fuzzy
 msgid "Bamako"
-msgstr "Bangkok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:255
 msgid "Bandung"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:261
-#, fuzzy
 msgid "Bangalore"
-msgstr "Bangkok"
+msgstr "Bangalore"
 
 #: ../base/ufos/cities.ufo:267
 msgid "Bangkok"
 msgstr "Bangkok"
 
 #: ../base/ufos/cities.ufo:273
-#, fuzzy
 msgid "Bangui"
-msgstr "Bangkok"
+msgstr "Bangui"
 
 #: ../base/ufos/cities.ufo:279
 msgid "Barcelona"
-msgstr ""
+msgstr "Barcelona"
 
 #: ../base/ufos/cities.ufo:285
-#, fuzzy
 msgid "Basra"
-msgstr "Basis"
+msgstr "Basra"
 
 #: ../base/ufos/cities.ufo:291
 msgid "Batticaloa"
@@ -867,13 +856,12 @@ msgid "Beijing"
 msgstr "Peking"
 
 #: ../base/ufos/cities.ufo:303
-#, fuzzy
 msgid "Belfast"
-msgstr "Gürtel"
+msgstr "Belfast"
 
 #: ../base/ufos/cities.ufo:309
 msgid "Belgrade"
-msgstr ""
+msgstr "Belgrad"
 
 #: ../base/ufos/cities.ufo:315
 msgid "Belmopan"
@@ -884,13 +872,12 @@ msgid "Berlin"
 msgstr "Berlin"
 
 #: ../base/ufos/cities.ufo:327
-#, fuzzy
 msgid "Berne"
-msgstr "Berlin"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:333
 msgid "Birmingham"
-msgstr ""
+msgstr "Birmingham"
 
 #: ../base/ufos/cities.ufo:339
 msgid "Bissau"
@@ -905,17 +892,16 @@ msgid "Bloemfontein"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:357
-#, fuzzy
 msgid "Bogor"
-msgstr "Schlecht"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:363
 msgid "Bogota"
-msgstr ""
+msgstr "Bogota"
 
 #: ../base/ufos/cities.ufo:369
 msgid "Boston"
-msgstr ""
+msgstr "Boston"
 
 #: ../base/ufos/cities.ufo:375
 msgid "Brasilia"
@@ -923,105 +909,91 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:381
 msgid "Bratislava"
-msgstr ""
+msgstr "Bratislava"
 
 #: ../base/ufos/cities.ufo:387
-#, fuzzy
 msgid "Bratsk"
-msgstr "Zurück"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:393
 msgid "Brazzaville"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:399
-#, fuzzy
 msgid "Brisbane"
-msgstr "Stadt"
+msgstr "Brisbane"
 
 #: ../base/ufos/cities.ufo:405
-#, fuzzy
 msgid "Brussels"
-msgstr "Basen"
+msgstr "Brüssel"
 
 #: ../base/ufos/cities.ufo:411
-#, fuzzy
 msgid "Bucharest"
-msgstr "Feuerstoß"
+msgstr "Bukarest"
 
 #: ../base/ufos/cities.ufo:417
-#, fuzzy
 msgid "Budapest"
-msgstr "Basen"
+msgstr "Budapest"
 
 #: ../base/ufos/cities.ufo:423
 msgid "Buenos Aires"
-msgstr ""
+msgstr "Buenos Aires"
 
 #: ../base/ufos/cities.ufo:429
 msgid "Bujumbura"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:435
-#, fuzzy
 msgid "Busan"
-msgstr "Russisch"
+msgstr "Busan"
 
 #: ../base/ufos/cities.ufo:441
-#, fuzzy
 msgid "Cairns"
-msgstr "Kairo"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:447
 msgid "Cairo"
 msgstr "Kairo"
 
 #: ../base/ufos/cities.ufo:453
-#, fuzzy
 msgid "Calama"
-msgstr "Plasma"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:459
 msgid "Calgary"
-msgstr ""
+msgstr "Calgary"
 
 #: ../base/ufos/cities.ufo:465
-#, fuzzy
 msgid "Campinas"
-msgstr "Kampagnen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:471
-#, fuzzy
 msgid "Canberra"
-msgstr "Kamera"
+msgstr "Canberra"
 
 #: ../base/ufos/cities.ufo:477
-#, fuzzy
 msgid "Cannes"
-msgstr "Cayenne"
+msgstr "Cannes"
 
 #: ../base/ufos/cities.ufo:483
 msgid "Cardiff"
-msgstr ""
+msgstr "Cardiff"
 
 #: ../base/ufos/cities.ufo:489
-#, fuzzy
 msgid "Changchun"
-msgstr "Maschinenkanone"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:495
 msgid "Charlotte Amalie"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:501
-#, fuzzy
 msgid "Charlotte"
-msgstr "Chat"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:507
-#, fuzzy
 msgid "Chengdu"
-msgstr "Maschinenkanone"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:513
 msgid "Chennai"
@@ -1033,30 +1005,27 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:525
 msgid "Chicago"
-msgstr ""
+msgstr "Chicago"
 
 #: ../base/ufos/cities.ufo:531
 msgid "Chihuahua"
-msgstr ""
+msgstr "Chihuahua"
 
 #: ../base/ufos/cities.ufo:537
-#, fuzzy
 msgid "Chisinau"
-msgstr "Maschinenkanone"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:543
 msgid "Chittagong"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:549
-#, fuzzy
 msgid "Chongjin"
-msgstr "Medaille"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:555
-#, fuzzy
 msgid "Chongqing"
-msgstr "Medaille"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:561
 msgid "Christchurch"
@@ -1068,74 +1037,63 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:573
 msgid "Cincinnati"
-msgstr ""
+msgstr "Cincinnati"
 
 #: ../base/ufos/cities.ufo:579
 msgid "Ciudad del Este"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:585
-#, fuzzy
 msgid "Cologne"
-msgstr "Oberst"
+msgstr "Köln"
 
 #: ../base/ufos/cities.ufo:591
 msgid "Columbus"
-msgstr ""
+msgstr "Columbus"
 
 #: ../base/ufos/cities.ufo:597
-#, fuzzy
 msgid "Conakry"
-msgstr "Sekundär"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:603
-#, fuzzy
 msgid "Copenhagen"
-msgstr "Kompetent"
+msgstr "Kopenhagen"
 
 #: ../base/ufos/cities.ufo:609
-#, fuzzy
 msgid "Cordoba"
-msgstr "Oberstabsgefreiter"
+msgstr "Cordoba"
 
 #: ../base/ufos/cities.ufo:615
-#, fuzzy
 msgid "Cork"
-msgstr "Arbeiter"
+msgstr "Cork"
 
 #: ../base/ufos/cities.ufo:621
-#, fuzzy
 msgid "Cotonou"
-msgstr "Fortfahren"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:627
-#, fuzzy
 msgid "Cusco"
-msgstr "Benutzerdefiniert"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:633
-#, fuzzy
 msgid "Daegu"
-msgstr "Deg:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:639
-#, fuzzy
 msgid "Dalian"
-msgstr "Alien"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:645
-#, fuzzy
 msgid "Dallas"
-msgstr "alle"
+msgstr "Dallas"
 
 #: ../base/ufos/cities.ufo:651
 msgid "Damascus"
-msgstr ""
+msgstr "Damaskus"
 
 #: ../base/ufos/cities.ufo:657
-#, fuzzy
 msgid "Dammam"
-msgstr "Gamma:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:663
 msgid "Da Nang"
@@ -1150,24 +1108,20 @@ msgid "Davao City"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:681
-#, fuzzy
 msgid "Denpasar"
-msgstr "Dakar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:687
-#, fuzzy
 msgid "Denver"
-msgstr "Wüste"
+msgstr "Denver"
 
 #: ../base/ufos/cities.ufo:693
-#, fuzzy
 msgid "Detroit"
-msgstr "Abreißen"
+msgstr "Detroit"
 
 #: ../base/ufos/cities.ufo:699
-#, fuzzy
 msgid "Dhaka"
-msgstr "Dakar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:705
 msgid "Dibrugarh"
@@ -1195,17 +1149,15 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:741
 msgid "Dublin"
-msgstr ""
+msgstr "Dublin"
 
 #: ../base/ufos/cities.ufo:747
-#, fuzzy
 msgid "Durango"
-msgstr "Dragon"
+msgstr "Durango"
 
 #: ../base/ufos/cities.ufo:753
-#, fuzzy
 msgid "Durban"
-msgstr "Stadt"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:759
 msgid "Dushanbe"
@@ -1217,15 +1169,15 @@ msgstr "Düsseldorf"
 
 #: ../base/ufos/cities.ufo:771
 msgid "Edinburgh"
-msgstr ""
+msgstr "Edinburgh"
 
 #: ../base/ufos/cities.ufo:777
 msgid "Edmonton"
-msgstr ""
+msgstr "Edmonton"
 
 #: ../base/ufos/cities.ufo:783
 msgid "El Paso"
-msgstr ""
+msgstr "El Paso"
 
 #: ../base/ufos/cities.ufo:789
 msgid "Enugu"
@@ -1237,7 +1189,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:801
 msgid "Fairbanks"
-msgstr ""
+msgstr "Fairbanks"
 
 #: ../base/ufos/cities.ufo:807
 msgid "Faisalabad"
@@ -1248,14 +1200,12 @@ msgid "Frankfurt am Main"
 msgstr "Frankfurt am Main"
 
 #: ../base/ufos/cities.ufo:819
-#, fuzzy
 msgid "Fredericton"
-msgstr "Spedition"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:825
-#, fuzzy
 msgid "Gangtok"
-msgstr "Bangkok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:831
 msgid "Gaziantep"
@@ -1263,19 +1213,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:837
 msgid "Geneva"
-msgstr ""
+msgstr "Genf"
 
 #: ../base/ufos/cities.ufo:843
 msgid "Georgetown"
-msgstr ""
+msgstr "Georgetown"
 
 #: ../base/ufos/cities.ufo:849
 msgid "Gibraltar"
-msgstr ""
+msgstr "Gibraltar"
 
 #: ../base/ufos/cities.ufo:855
 msgid "Glasgow"
-msgstr ""
+msgstr "Glasgow"
 
 #: ../base/ufos/cities.ufo:861
 msgid "Gold Coast"
@@ -1286,14 +1236,12 @@ msgid "Gothenburg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:873
-#, fuzzy
 msgid "Graz"
-msgstr "Deutsch"
+msgstr "Graz"
 
 #: ../base/ufos/cities.ufo:879
-#, fuzzy
 msgid "Greenwich"
-msgstr "Französisch"
+msgstr "Greenwich"
 
 #: ../base/ufos/cities.ufo:885
 msgid "Guadalajara"
@@ -1317,45 +1265,39 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:915
 msgid "Halifax"
-msgstr ""
+msgstr "Halifax"
 
 #: ../base/ufos/cities.ufo:921
 msgid "Hamburg"
 msgstr "Hamburg"
 
 #: ../base/ufos/cities.ufo:927
-#, fuzzy
 msgid "Handan"
-msgstr "Schwer"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:933
-#, fuzzy
 msgid "Hanga Roa"
-msgstr "Hangars nicht bereit"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:939
 msgid "Hangzhou"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:945
-#, fuzzy
 msgid "Hanoi"
-msgstr "Menschen"
+msgstr "Hanoi"
 
 #: ../base/ufos/cities.ufo:951
-#, fuzzy
 msgid "Hanover"
-msgstr "Sammler"
+msgstr "Hannover"
 
 #: ../base/ufos/cities.ufo:957
-#, fuzzy
 msgid "Harare"
-msgstr "Schwer"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:963
-#, fuzzy
 msgid "Harbin"
-msgstr "Ungarisch"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:969
 msgid "Hat Yai"
@@ -1363,12 +1305,11 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:975
 msgid "Helsinki"
-msgstr ""
+msgstr "Helsinki"
 
 #: ../base/ufos/cities.ufo:981
-#, fuzzy
 msgid "Hobart"
-msgstr "Supermarkt"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:987
 msgid "Ho Chi Minh City"
@@ -1379,9 +1320,8 @@ msgid "Hong Kong"
 msgstr "Hong Kong"
 
 #: ../base/ufos/cities.ufo:999
-#, fuzzy
 msgid "Houston"
-msgstr "Servername:"
+msgstr "Houston"
 
 #: ../base/ufos/cities.ufo:1005
 #: ../base/ufos/cities.ufo:1011
@@ -1397,14 +1337,12 @@ msgid "Ilheus"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1029
-#, fuzzy
 msgid "Iloilo City"
-msgstr "Mexico City"
+msgstr "Iloilo City"
 
 #: ../base/ufos/cities.ufo:1035
-#, fuzzy
 msgid "Incheon"
-msgstr "Abfangen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1041
 msgid "Indianapolis"
@@ -1412,7 +1350,7 @@ msgstr "Indianapolis"
 
 #: ../base/ufos/cities.ufo:1047
 msgid "Innsbruck"
-msgstr ""
+msgstr "Innsbruck"
 
 #: ../base/ufos/cities.ufo:1053
 msgid "Invercargill"
@@ -1432,20 +1370,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1077
 msgid "Islamabad"
-msgstr ""
+msgstr "Islamabad"
 
 #: ../base/ufos/cities.ufo:1083
-#, fuzzy
 msgid "Istanbul"
-msgstr "Italien"
+msgstr "Istanbul"
 
 #: ../base/ufos/cities.ufo:1089
 msgid "Izmir"
-msgstr ""
+msgstr "Izmir"
 
 #: ../base/ufos/cities.ufo:1095
 msgid "Jacksonville"
-msgstr ""
+msgstr "Jacksonville"
 
 #: ../base/ufos/cities.ufo:1101
 msgid "Jaipur"
@@ -1453,33 +1390,31 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1107
 msgid "Jersey City"
-msgstr ""
+msgstr "Jersey City"
 
 #: ../base/ufos/cities.ufo:1113
 msgid "Jerusalem"
-msgstr ""
+msgstr "Jerusalem"
 
 #: ../base/ufos/cities.ufo:1119
-#, fuzzy
 msgid "Jinan"
-msgstr "Jan"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1125
 msgid "Johannesburg"
-msgstr ""
+msgstr "Johannesburg"
 
 #: ../base/ufos/cities.ufo:1131
 msgid "Johor Bahru"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1137
-#, fuzzy
 msgid "Juneau"
-msgstr "Jun"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1143
 msgid "Kabul"
-msgstr ""
+msgstr "Kabul"
 
 #: ../base/ufos/cities.ufo:1149
 msgid "Kaesong"
@@ -1487,22 +1422,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1155
 msgid "Kaliningrad"
-msgstr ""
+msgstr "Kaliningrad"
 
 #: ../base/ufos/cities.ufo:1161
-#, fuzzy
 msgid "Kandahar"
-msgstr "Radar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1167
-#, fuzzy
 msgid "Kandy"
-msgstr "Bereit"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1173
-#, fuzzy
 msgid "Kano"
-msgstr "Koreanisch"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1179
 msgid "Kanpur"
@@ -1510,7 +1442,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1185
 msgid "Kansas City"
-msgstr ""
+msgstr "Kansas City"
 
 #: ../base/ufos/cities.ufo:1191
 msgid "Kaohsiung"
@@ -1526,7 +1458,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1209
 msgid "Kawasaki"
-msgstr ""
+msgstr "Kawasaki"
 
 #: ../base/ufos/cities.ufo:1215
 msgid "Kharkiv"
@@ -1538,25 +1470,23 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1227
 msgid "Kiev"
-msgstr ""
+msgstr "Kiev"
 
 #: ../base/ufos/cities.ufo:1233
 msgid "Kigali"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1239
-#, fuzzy
 msgid "Kingston"
-msgstr "Wellington"
+msgstr "Kingston"
 
 #: ../base/ufos/cities.ufo:1245
 msgid "Kinshasa"
-msgstr ""
+msgstr "Kinshasa"
 
 #: ../base/ufos/cities.ufo:1251
-#, fuzzy
 msgid "Kobe"
-msgstr "Koreanisch"
+msgstr "Kobe"
 
 #: ../base/ufos/cities.ufo:1257
 msgid "Kolkata"
@@ -1571,45 +1501,40 @@ msgid "Koulikoro"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1275
-#, fuzzy
 msgid "Krakow"
-msgstr "Kracken"
+msgstr "Krakau"
 
 #: ../base/ufos/cities.ufo:1281
 msgid "Kuala Lumpur"
-msgstr ""
+msgstr "Kuala Lumpur"
 
 #: ../base/ufos/cities.ufo:1287
-#, fuzzy
 msgid "Kunming"
-msgstr "Finanzierung"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1293
 msgid "Kuwait City"
-msgstr ""
+msgstr "Kuwait City"
 
 #: ../base/ufos/cities.ufo:1299
 msgid "Kyoto"
-msgstr ""
+msgstr "Kyoto"
 
 #: ../base/ufos/cities.ufo:1305
-#, fuzzy
 msgid "Lagos"
-msgstr "Groß"
+msgstr "Lagos"
 
 #: ../base/ufos/cities.ufo:1311
-#, fuzzy
 msgid "Lahore"
-msgstr "Groß"
+msgstr "Lahore"
 
 #: ../base/ufos/cities.ufo:1317
-#, fuzzy
 msgid "Lanzhou"
-msgstr "Lan"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1323
 msgid "La Paz"
-msgstr ""
+msgstr "La Paz"
 
 #: ../base/ufos/cities.ufo:1329
 msgid "Las Vegas"
@@ -1617,7 +1542,7 @@ msgstr "Las Vegas"
 
 #: ../base/ufos/cities.ufo:1335
 msgid "Leeds"
-msgstr ""
+msgstr "Leeds"
 
 #: ../base/ufos/cities.ufo:1341
 msgid "Leipzig"
@@ -1625,7 +1550,7 @@ msgstr "Leipzig"
 
 #: ../base/ufos/cities.ufo:1347
 msgid "Lhasa"
-msgstr ""
+msgstr "Lhasa"
 
 #: ../base/ufos/cities.ufo:1353
 msgid "Lilongwe"
@@ -1636,28 +1561,24 @@ msgid "Linz"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1365
-#, fuzzy
 msgid "Livingstone"
-msgstr "Quartiere"
+msgstr "Livingstone"
 
 #: ../base/ufos/cities.ufo:1371
 msgid "Ljubljana"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1377
-#, fuzzy
 msgid "Lobamba"
-msgstr "Lobby"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1383
-#, fuzzy
 msgid "Lome"
-msgstr "Heimatbasis"
+msgstr "Lome"
 
 #: ../base/ufos/cities.ufo:1389
-#, fuzzy
 msgid "London"
-msgstr "1 on 1 on 1"
+msgstr "London"
 
 #: ../base/ufos/cities.ufo:1395
 msgid "Longyearbyen"
@@ -1665,21 +1586,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1401
 msgid "Los Angeles"
-msgstr ""
+msgstr "Los Angeles"
 
 #: ../base/ufos/cities.ufo:1407
 msgid "Louisville"
-msgstr ""
+msgstr "Louisville"
 
 #: ../base/ufos/cities.ufo:1413
-#, fuzzy
 msgid "Lubumbashi"
-msgstr "Mumbai"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1419
-#, fuzzy
 msgid "Lucknow"
-msgstr "Niedrig"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1425
 msgid "Ludhiana"
@@ -1691,11 +1610,11 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1437
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxemburg"
 
 #: ../base/ufos/cities.ufo:1443
 msgid "Luxor"
-msgstr ""
+msgstr "Luxor"
 
 #: ../base/ufos/cities.ufo:1449
 msgid "Lviv"
@@ -1703,84 +1622,71 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1455
 msgid "Lyon"
-msgstr ""
+msgstr "Lyon"
 
 #: ../base/ufos/cities.ufo:1461
-#, fuzzy
 msgid "Macapa"
-msgstr "Map"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1467
 msgid "Macau"
-msgstr ""
+msgstr "Macau"
 
 #: ../base/ufos/cities.ufo:1473
-#, fuzzy
 msgid "Maceio"
-msgstr "Maschinenpistole"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1479
-#, fuzzy
 msgid "Madrid"
-msgstr "Tobend"
+msgstr "Madrid"
 
 #: ../base/ufos/cities.ufo:1485
-#, fuzzy
 msgid "Magadan"
-msgstr "Tobend"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1491
-#, fuzzy
 msgid "Makati City"
-msgstr "Mexico City"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1497
 msgid "Malacca Town"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1503
-#, fuzzy
 msgid "Malaga"
-msgstr "Verwalten"
+msgstr "Malaga"
 
 #: ../base/ufos/cities.ufo:1509
-#, fuzzy
 msgid "Malang"
-msgstr "Verwalten"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1515
-#, fuzzy
 msgid "Malmo"
-msgstr "Major"
+msgstr "Malmö"
 
 #: ../base/ufos/cities.ufo:1521
-#, fuzzy
 msgid "Managua"
-msgstr "Verwalten"
+msgstr "Managua"
 
 #: ../base/ufos/cities.ufo:1527
-#, fuzzy
 msgid "Manaus"
-msgstr "Verwalten"
+msgstr "Manaus"
 
 #: ../base/ufos/cities.ufo:1533
-#, fuzzy
 msgid "Manchester"
-msgstr "Sammler"
+msgstr "Manchester"
 
 #: ../base/ufos/cities.ufo:1539
-#, fuzzy
 msgid "Manila"
-msgstr "Verwalten"
+msgstr "Manila"
 
 #: ../base/ufos/cities.ufo:1545
 msgid "Manzini"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1551
-#, fuzzy
 msgid "Maputo"
-msgstr "Raptor"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1557
 msgid "Maracaibo"
@@ -1788,54 +1694,47 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1563
 msgid "Marrakech"
-msgstr ""
+msgstr "Marrakesch"
 
 #: ../base/ufos/cities.ufo:1569
-#, fuzzy
 msgid "Marseille"
-msgstr "Emailclient"
+msgstr "Marseille"
 
 #: ../base/ufos/cities.ufo:1575
-#, fuzzy
 msgid "Maseru"
-msgstr "Laser"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1581
-#, fuzzy
 msgid "Mashhad"
-msgstr "Tobend"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1587
-#, fuzzy
 msgid "Mbabane"
-msgstr "Verwalten"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1593
-#, fuzzy
 msgid "Medan"
-msgstr "Mattn"
+msgstr "Medan"
 
 #: ../base/ufos/cities.ufo:1599
-#, fuzzy
 msgid "Medina"
-msgstr "Mittel"
+msgstr "Medina"
 
 #: ../base/ufos/cities.ufo:1605
 msgid "Memphis"
-msgstr ""
+msgstr "Memphis"
 
 #: ../base/ufos/cities.ufo:1611
 msgid "Mendoza"
-msgstr ""
+msgstr "Mendoza"
 
 #: ../base/ufos/cities.ufo:1617
 msgid "Merida"
-msgstr ""
+msgstr "Merida"
 
 #: ../base/ufos/cities.ufo:1623
-#, fuzzy
 msgid "Mexicali"
-msgstr "Mexico City"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1629
 msgid "Mexico City"
@@ -1843,25 +1742,23 @@ msgstr "Mexico City"
 
 #: ../base/ufos/cities.ufo:1635
 msgid "Miami"
-msgstr ""
+msgstr "Miami"
 
 #: ../base/ufos/cities.ufo:1641
-#, fuzzy
 msgid "Milan"
-msgstr "Soldat"
+msgstr "Milan"
 
 #: ../base/ufos/cities.ufo:1647
 msgid "Minneapolis"
-msgstr ""
+msgstr "Minneapolis"
 
 #: ../base/ufos/cities.ufo:1653
-#, fuzzy
 msgid "Minsk"
-msgstr "Ausrüstung"
+msgstr "Minsk"
 
 #: ../base/ufos/cities.ufo:1659
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: ../base/ufos/cities.ufo:1665
 msgid "Monterrey"
@@ -1869,31 +1766,27 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1671
 msgid "Montevideo"
-msgstr ""
+msgstr "Montevideo"
 
 #: ../base/ufos/cities.ufo:1677
-#, fuzzy
 msgid "Montreal"
-msgstr "Moral"
+msgstr "Montreal"
 
 #: ../base/ufos/cities.ufo:1683
-#, fuzzy
 msgid "Moscow"
-msgstr "Ausrüstung"
+msgstr "Moskau"
 
 #: ../base/ufos/cities.ufo:1689
 msgid "Multan"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1695
-#, fuzzy
 msgid "Munich"
-msgstr "Musik"
+msgstr "München"
 
 #: ../base/ufos/cities.ufo:1701
-#, fuzzy
 msgid "Murmansk"
-msgstr "Menschen"
+msgstr "Murmansk"
 
 #: ../base/ufos/cities.ufo:1707
 msgid "Nagoya"
@@ -1904,88 +1797,76 @@ msgid "Nagpur"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1719
-#, fuzzy
 msgid "Nairobi"
-msgstr "Kairo"
+msgstr "Nairobi"
 
 #: ../base/ufos/cities.ufo:1725
 msgid "Nakhon Ratchasima"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1731
-#, fuzzy
 msgid "Namangan"
-msgstr "Kampagne"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1737
-#, fuzzy
 msgid "Nanjing"
-msgstr "Nation"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1743
-#, fuzzy
 msgid "Nanning"
-msgstr "Nation"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1749
-#, fuzzy
 msgid "Nantes"
-msgstr "Nationen"
+msgstr "Nantes"
 
 #: ../base/ufos/cities.ufo:1755
-#, fuzzy
 msgid "Naples"
-msgstr "Name"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1761
 msgid "Nashville"
-msgstr ""
+msgstr "Nashville"
 
 #: ../base/ufos/cities.ufo:1767
 msgid "Naypyidaw"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1773
-#, fuzzy
 msgid "N'Djamena"
-msgstr "Name"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1779
 msgid "Ndola"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1785
-#, fuzzy
 msgid "Newcastle"
-msgstr "Neue Basis anlegen"
+msgstr "Newcastle"
 
 #: ../base/ufos/cities.ufo:1791
 msgid "New Delhi"
-msgstr ""
+msgstr "New Delhi"
 
 #: ../base/ufos/cities.ufo:1797
-#, fuzzy
 msgid "Niamey"
-msgstr "Name"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1803
-#, fuzzy
 msgid "Nice"
-msgstr "Hinweis"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1809
 msgid "Nizhny Novgorod"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1815
-#, fuzzy
 msgid "Norilsk"
-msgstr "Tutorials"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1821
-#, fuzzy
 msgid "Noumea"
-msgstr "Normal"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1827
 msgid "Novosibirsk"
@@ -1993,70 +1874,63 @@ msgstr "Novosibirsk"
 
 #: ../base/ufos/cities.ufo:1833
 msgid "Odessa"
-msgstr ""
+msgstr "Odessa"
 
 #: ../base/ufos/cities.ufo:1839
 msgid "Oklahoma City"
-msgstr ""
+msgstr "Oklahoma City"
 
 #: ../base/ufos/cities.ufo:1845
-#, fuzzy
 msgid "Omdurman"
-msgstr "Menschen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1851
-#, fuzzy
 msgid "Omsk"
-msgstr "OK"
+msgstr "Omsk"
 
 #: ../base/ufos/cities.ufo:1857
-#, fuzzy
 msgid "Osaka"
-msgstr "Dakar"
+msgstr "Osaka"
 
 #: ../base/ufos/cities.ufo:1863
 msgid "Oslo"
-msgstr ""
+msgstr "Oslo"
 
 #: ../base/ufos/cities.ufo:1869
 msgid "Ottawa"
-msgstr ""
+msgstr "Ottawa"
 
 #: ../base/ufos/cities.ufo:1875
 msgid "Ouagadougou"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1881
-#, fuzzy
 msgid "Palembang"
-msgstr "Phalanx"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1887
 msgid "Panama City"
-msgstr ""
+msgstr "Panama City"
 
 #: ../base/ufos/cities.ufo:1893
 msgid "Paris"
 msgstr "Paris"
 
 #: ../base/ufos/cities.ufo:1899
-#, fuzzy
 msgid "Patna"
-msgstr "Mattn"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1905
 msgid "Pekanbaru"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1911
-#, fuzzy
 msgid "Pelotas"
-msgstr "Piloten"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1917
-#, fuzzy
 msgid "Perm"
-msgstr "Deutsch"
+msgstr "Perm"
 
 #: ../base/ufos/cities.ufo:1923
 msgid "Peshawar"
@@ -2072,7 +1946,7 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1941
 msgid "Phnom Penh"
-msgstr ""
+msgstr "Phnom Penh"
 
 #: ../base/ufos/cities.ufo:1947
 #: ../base/ufos/team_humans.ufo:1644
@@ -2081,53 +1955,47 @@ msgstr "Phoenix"
 
 #: ../base/ufos/cities.ufo:1953
 msgid "Pittsburgh"
-msgstr ""
+msgstr "Pittsburgh"
 
 #: ../base/ufos/cities.ufo:1959
-#, fuzzy
 msgid "Podgorica"
-msgstr "Schlecht"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1965
-#, fuzzy
 msgid "Portland"
-msgstr "Kraftwerk"
+msgstr "Portland"
 
 #: ../base/ufos/cities.ufo:1971
 msgid "Port Moresby"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1977
-#, fuzzy
 msgid "Prague"
-msgstr " [angehalten]"
+msgstr "Prag"
 
 #: ../base/ufos/cities.ufo:1983
 msgid "Pretoria"
-msgstr ""
+msgstr "Pretoria"
 
 #: ../base/ufos/cities.ufo:1989
-#, fuzzy
 msgid "Pristina"
-msgstr "Paris"
+msgstr "Pristina"
 
 #: ../base/ufos/cities.ufo:1995
-#, fuzzy
 msgid "Providence"
-msgstr "Preis:"
+msgstr "Providence"
 
 #: ../base/ufos/cities.ufo:2001
 msgid "Puebla"
-msgstr ""
+msgstr "Puebla"
 
 #: ../base/ufos/cities.ufo:2007
 msgid "Puerto Williams"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2013
-#, fuzzy
 msgid "Pune"
-msgstr " [angehalten]"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2019
 msgid "Punta Arenas"
@@ -2142,41 +2010,36 @@ msgid "Qingdao"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2037
-#, fuzzy
 msgid "Quebec City"
-msgstr "Mexico City"
+msgstr "Quebec City"
 
 #: ../base/ufos/cities.ufo:2043
 msgid "Quetzaltenango"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2049
-#, fuzzy
 msgid "Quezon City"
-msgstr "Mexico City"
+msgstr "Quezon City"
 
 #: ../base/ufos/cities.ufo:2055
 msgid "Quito"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2061
-#, fuzzy
 msgid "Raleigh"
-msgstr "Kerzenschein"
+msgstr "Raleigh"
 
 #: ../base/ufos/cities.ufo:2067
 msgid "Rawalpindi"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2073
-#, fuzzy
 msgid "Recife"
-msgstr "Bergen"
+msgstr "Recife"
 
 #: ../base/ufos/cities.ufo:2079
-#, fuzzy
 msgid "Regina"
-msgstr "Medikit"
+msgstr "Regina"
 
 #: ../base/ufos/cities.ufo:2085
 msgid "Rio de Janeiro"
@@ -2191,18 +2054,16 @@ msgid "Rockhampton"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2103
-#, fuzzy
 msgid "Rome"
-msgstr "Heimatbasis"
+msgstr "Rom"
 
 #: ../base/ufos/cities.ufo:2109
 msgid "Rosario"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2115
-#, fuzzy
 msgid "Sabha"
-msgstr "Stich"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2121
 msgid "Sacramento"
@@ -2213,28 +2074,24 @@ msgid "Saint John"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2133
-#, fuzzy
 msgid "Saint Petersburg"
-msgstr "Sitters"
+msgstr "St. Petersburg"
 
 #: ../base/ufos/cities.ufo:2139
 msgid "Salzburg"
-msgstr ""
+msgstr "Salzburg"
 
 #: ../base/ufos/cities.ufo:2145
-#, fuzzy
 msgid "Samara"
-msgstr "Kamera"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2151
-#, fuzzy
 msgid "Sana'a"
-msgstr "Scanner"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2157
-#, fuzzy
 msgid "San Antonio"
-msgstr "Santiago"
+msgstr "San Antonio"
 
 #: ../base/ufos/cities.ufo:2163
 msgid "San Carlos de Bariloche"
@@ -2246,15 +2103,15 @@ msgstr "San Francisco"
 
 #: ../base/ufos/cities.ufo:2175
 msgid "San Jose"
-msgstr ""
+msgstr "San Jose"
 
 #: ../base/ufos/cities.ufo:2181
 msgid "San Marino"
-msgstr ""
+msgstr "San Marino"
 
 #: ../base/ufos/cities.ufo:2187
 msgid "San Salvador"
-msgstr ""
+msgstr "San Salvador"
 
 #: ../base/ufos/cities.ufo:2193
 msgid "Santa Cruz de la Sierra"
@@ -2265,14 +2122,12 @@ msgid "Santiago"
 msgstr "Santiago"
 
 #: ../base/ufos/cities.ufo:2205
-#, fuzzy
 msgid "Santiago de Cuba"
-msgstr "Santiago"
+msgstr "Santiago de Cuba"
 
 #: ../base/ufos/cities.ufo:2211
-#, fuzzy
 msgid "Santo Domingo"
-msgstr "Santiago"
+msgstr "Santo Domingo"
 
 #: ../base/ufos/cities.ufo:2217
 msgid "Sao Jose dos Campos"
@@ -2280,36 +2135,31 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2223
 msgid "Sao Paulo"
-msgstr ""
+msgstr "Sao Paulo"
 
 #: ../base/ufos/cities.ufo:2229
-#, fuzzy
 msgid "Sarajevo"
-msgstr "Sacramento"
+msgstr "Sarajevo"
 
 #: ../base/ufos/cities.ufo:2235
-#, fuzzy
 msgid "Saskatoon"
-msgstr "Tankstelle"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2241
-#, fuzzy
 msgid "Seattle"
-msgstr "Skalieren"
+msgstr "Seattle"
 
 #: ../base/ufos/cities.ufo:2247
-#, fuzzy
 msgid "Seoul"
-msgstr "Verkaufen"
+msgstr "Seoul"
 
 #: ../base/ufos/cities.ufo:2253
-#, fuzzy
 msgid "Seville"
-msgstr "Verkaufen"
+msgstr "Sevilla"
 
 #: ../base/ufos/cities.ufo:2259
 msgid "Shanghai"
-msgstr ""
+msgstr "Shanghai"
 
 #: ../base/ufos/cities.ufo:2265
 msgid "Shenzhen"
@@ -2337,12 +2187,11 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2301
 msgid "Singapore"
-msgstr ""
+msgstr "Singapur"
 
 #: ../base/ufos/cities.ufo:2307
-#, fuzzy
 msgid "Sitka"
-msgstr "Stich"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2313
 msgid "Skopje"
@@ -2350,21 +2199,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2319
 msgid "Sofia"
-msgstr ""
+msgstr "Sofia"
 
 #: ../base/ufos/cities.ufo:2325
 msgid "Split"
-msgstr ""
+msgstr "Split"
 
 #: ../base/ufos/cities.ufo:2331
-#, fuzzy
 msgid "Srinagar"
-msgstr "Stingray"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2337
-#, fuzzy
 msgid "Stanley"
-msgstr "Italien"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2343
 msgid "Stepanakert"
@@ -2372,29 +2219,27 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2349
 msgid "St. Louis"
-msgstr ""
+msgstr "St. Louis"
 
 #: ../base/ufos/cities.ufo:2355
 msgid "Stockholm"
 msgstr "Stockholm"
 
 #: ../base/ufos/cities.ufo:2361
-#, fuzzy
 msgid "Strasbourg"
-msgstr "Starchaser"
+msgstr "Strasbourg"
 
 #: ../base/ufos/cities.ufo:2367
 msgid "Stuttgart"
 msgstr "Stuttgart"
 
 #: ../base/ufos/cities.ufo:2373
-#, fuzzy
 msgid "Sucre"
-msgstr "Skalieren"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2379
 msgid "Suez"
-msgstr ""
+msgstr "Suez"
 
 #: ../base/ufos/cities.ufo:2385
 msgid "Sukhumi"
@@ -2405,9 +2250,8 @@ msgid "Surabaya"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2397
-#, fuzzy
 msgid "Surat"
-msgstr "Soundfrequenz:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2403
 msgid "Surat Thani"
@@ -2422,38 +2266,32 @@ msgid "Sydney"
 msgstr "Sydney"
 
 #: ../base/ufos/cities.ufo:2421
-#, fuzzy
 msgid "Tabriz"
-msgstr "Thailändisch"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2427
-#, fuzzy
 msgid "Taiyuan"
-msgstr "Taman"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2433
-#, fuzzy
 msgid "Tamale"
-msgstr "Taman"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2439
-#, fuzzy
 msgid "Tampa"
-msgstr "Taman"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2445
-#, fuzzy
 msgid "Tampere"
-msgstr "Kamera"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2451
-#, fuzzy
 msgid "Tartu"
-msgstr "Supermarkt"
+msgstr "Tartu"
 
 #: ../base/ufos/cities.ufo:2457
 msgid "Tashkent"
-msgstr ""
+msgstr "Taschkent"
 
 #: ../base/ufos/cities.ufo:2463
 msgid "Tbilisi"
@@ -2464,13 +2302,12 @@ msgid "Tegucigalpa"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2475
-#, fuzzy
 msgid "Tehran"
 msgstr "Teheran"
 
 #: ../base/ufos/cities.ufo:2481
 msgid "Thessaloniki"
-msgstr ""
+msgstr "Thessaloniki"
 
 #: ../base/ufos/cities.ufo:2487
 msgid "Thimphu"
@@ -2485,47 +2322,40 @@ msgid "Tijuana"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2505
-#, fuzzy
 msgid "Tirana"
-msgstr "Teheran"
+msgstr "Tirana"
 
 #: ../base/ufos/cities.ufo:2511
-#, fuzzy
 msgid "Tiraspol"
-msgstr "Transport"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2517
 msgid "Tokyo"
 msgstr "Tokio"
 
 #: ../base/ufos/cities.ufo:2523
-#, fuzzy
 msgid "Toronto"
-msgstr "Tron"
+msgstr "Toronto"
 
 #: ../base/ufos/cities.ufo:2529
-#, fuzzy
 msgid "Toulouse"
-msgstr "Schließen"
+msgstr "Toulouse"
 
 #: ../base/ufos/cities.ufo:2535
 msgid "Tskhinvali"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2541
-#, fuzzy
 msgid "Tucson"
-msgstr "Tron"
+msgstr "Tucson"
 
 #: ../base/ufos/cities.ufo:2547
-#, fuzzy
 msgid "Tunis"
-msgstr "Panzerfahrzeug"
+msgstr "Tunis"
 
 #: ../base/ufos/cities.ufo:2553
-#, fuzzy
 msgid "Turin"
-msgstr "Tron"
+msgstr "Turin"
 
 #: ../base/ufos/cities.ufo:2559
 msgid "Udon Thani"
@@ -2540,39 +2370,34 @@ msgid "Vaduz"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2577
-#, fuzzy
 msgid "Valencia"
-msgstr "Alien"
+msgstr "Valencia"
 
 #: ../base/ufos/cities.ufo:2583
-#, fuzzy
 msgid "Vancouver"
-msgstr "Bergen"
+msgstr "Vancouver"
 
 #: ../base/ufos/cities.ufo:2589
 msgid "Vienna"
-msgstr ""
+msgstr "Wien"
 
 #: ../base/ufos/cities.ufo:2595
-#, fuzzy
 msgid "Vientiane"
-msgstr "Vanethian"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2601
 msgid "Vilnius"
-msgstr ""
+msgstr "Vilnius"
 
 #: ../base/ufos/cities.ufo:2607
-#, fuzzy
 msgid "Vitoria"
-msgstr "Tutorials"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2613
 msgid "Warsaw"
-msgstr ""
+msgstr "Warschau"
 
 #: ../base/ufos/cities.ufo:2619
-#, fuzzy
 msgid "Washington"
 msgstr "Washington D.C."
 
@@ -2585,28 +2410,24 @@ msgid "Winnipeg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2643
-#, fuzzy
 msgid "Wollongong"
-msgstr "Wellington"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2649
-#, fuzzy
 msgid "Wonsan"
-msgstr "Wahnsinnig schwer"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2655
-#, fuzzy
 msgid "Wuhan"
-msgstr "Menschen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2661
 msgid "Xi'an"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2667
-#, fuzzy
 msgid "Xining"
-msgstr "Peking"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2673
 msgid "Yakutsk"
@@ -2617,28 +2438,24 @@ msgid "Yamoussoukro"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2685
-#, fuzzy
 msgid "Yangon"
-msgstr "Dragon"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2691
-#, fuzzy
 msgid "Yaounde"
-msgstr "Sound"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2697
 msgid "Yekaterinburg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2703
-#, fuzzy
 msgid "Yellowknife"
-msgstr "Gelb"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2709
-#, fuzzy
 msgid "Yerevan"
-msgstr "Unteroffizier"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2715
 msgid "Yogyakarta"
@@ -2646,20 +2463,19 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2721
 msgid "Yokohama"
-msgstr ""
+msgstr "Yokohama"
 
 #: ../base/ufos/cities.ufo:2727
 msgid "Zagreb"
-msgstr ""
+msgstr "Zagreb"
 
 #: ../base/ufos/cities.ufo:2733
 msgid "Zamboanga City"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2739
-#, fuzzy
 msgid "Zapopan"
-msgstr "Japan"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2745
 msgid "Zhengzhou"
@@ -3444,9 +3260,8 @@ msgid "Thai"
 msgstr "Thailändisch"
 
 #: ../base/ufos/language.ufo:286
-#, fuzzy
 msgid "Ukrainian"
-msgstr "Übrige ZEs"
+msgstr ""
 
 #: ../base/ufos/language.ufo:296
 msgid "Japanese"
@@ -9884,7 +9699,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5149
 msgid "Orbital UFO Activity"
-msgstr ""
+msgstr "Orbitale UFO Aktivität"
 
 #: ../base/ufos/research.ufo:5154
 #, fuzzy
@@ -11495,9 +11310,8 @@ msgid "Done"
 msgstr "Fertig"
 
 #: ../base/ufos/ui/genradarhud.ufo:58
-#, fuzzy
 msgid "Reinit"
-msgstr "Medikit"
+msgstr ""
 
 #: ../base/ufos/ui/genradarhud.ufo:73
 msgid "Preview"
@@ -12316,9 +12130,8 @@ msgid "Stretch"
 msgstr "Strecken"
 
 #: ../base/ufos/ui/material_editor.ufo:657
-#, fuzzy
 msgid "Pulse"
-msgstr " [angehalten]"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:661
 msgid "Scroll"
