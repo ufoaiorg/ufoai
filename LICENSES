@@ -795,6 +795,8 @@ base/models/objects/aircraft/heli_military/helicopter.md2 | GNU General Public L
 base/models/objects/aircraft/heli_military/helicopter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/hheli/hheli.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/hheli/hheli.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/airpipe/airpipe.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/airpipe/airpipe.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/barrel/barrel.md2 |  | GNU General Public License 2.0 or later
 base/models/objects/alien/barrel/barrel.png |  | GNU General Public License 2.0 or later
 base/models/objects/alien/barrel/barrel_nm.png |  | GNU General Public License 2.0 or later
@@ -870,6 +872,8 @@ base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or l
 base/models/objects/base/turret/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret2/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
@@ -1014,6 +1018,14 @@ base/models/objects/construct/mixer/mixer.md2 | GNU General Public License 2.0 o
 base/models/objects/construct/mixer/mixer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/workbench/workbench.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/workbench/workbench.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
+base/models/objects/crane/crane.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/crane/crane.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/crate/crate.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/crate/crate.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/fence/fence.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/fence/fence.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/firehose/firehose.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/firehose/firehose.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat_nm.tga | GNU General Public License 2.0 or later
@@ -1068,6 +1080,10 @@ base/models/objects/furniture/water_dispenser/waterk.jpg | GNU General Public Li
 base/models/objects/furniture/water_dispenser/waterk.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/gascylinder/gascylinder.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/generator/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/generator/generator.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/heating/heating.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/heating/heating.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hovercraft.tga | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1085,13 +1101,23 @@ base/models/objects/industrial/valve/valve.tga | Creative Commons Attribution-Sh
 base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitter
+base/models/objects/liftingcart/liftingcart.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/liftingcart/liftingcart.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/lorry/lorry.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/lorry/lorry.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/money/money.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/money/money.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/money/moneycase.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/oiltank/oiltank.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/oiltank/oiltank.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/pharaoh/pharaoh.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/pharaoh/pharaoh.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/pushcart/pushcart.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/pushcart/pushcart.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/rail/rail.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/rail/rail.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/railcar/railcar.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/railcar/railcar.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/rubbish/barrel.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/blue_car.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/bottle1.md2 | GNU General Public License 2.0 | Yoshiboy
@@ -1141,6 +1167,8 @@ base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Wi
 base/models/objects/store/box.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/store/pellet.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/store/pellet.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/switchboard/switchboard.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/switchboard/switchboard.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/tanker/small_pipes.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tanker/tanker.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tanker/tanker_a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
