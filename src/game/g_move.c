@@ -141,12 +141,14 @@ qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvt
 		 VectorCopy(ent->pos, pos);
 		 while (max >= 0) {
 			 int tmp = 0;
-			 edict_t *blockEdict;
+			 const edict_t *blockEdict = G_GetEdictFromPos(pos, ET_NULL);
+			 if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
+				 const qboolean visible = G_IsVisibleForTeam(blockEdict, ent->team);
+				 if (visible)
+					 return qtrue;
+			 }
 			 PosAddDV(pos, tmp, dvtab[max]);
 			 max--;
-			 blockEdict = G_GetEdictFromPos(pos, 0);
-			 if (blockEdict && G_IsBlockingMovementActor(blockEdict) && G_IsVisibleForTeam(blockEdict, ent->team))
-				 return qtrue;
 		 }
 	 }
 	 return qfalse;
@@ -266,7 +268,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 			crouchFlag = 0;
 			PosAddDV(ent->pos, crouchFlag, dv);
 
-			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
+			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
