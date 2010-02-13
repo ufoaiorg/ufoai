@@ -661,6 +661,8 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 		case ET_ITEM:
 			MN_RadarNodeDrawItem(le, itempos);
 			break;
+		default:
+			break;
 		}
 #ifdef RADARSIZE_DEBUG
 		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]), LONGLINES_PRETTYCHOP);

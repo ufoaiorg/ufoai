@@ -51,7 +51,7 @@ typedef struct le_s {
 	qboolean removeNextFrame;	/**< will set the inuse value to false in the next frame */
 	qboolean invis;
 	qboolean selected;		/**< used for actors - for the current selected actor this is true */
-	int type;				/**< the local entity type */
+	entity_type_t type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */

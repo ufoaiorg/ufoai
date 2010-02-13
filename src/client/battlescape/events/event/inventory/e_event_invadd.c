@@ -92,6 +92,8 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	case ET_ITEM:
 		LE_PlaceItem(le);
 		break;
+	default:
+		break;
 	}
 }
 
