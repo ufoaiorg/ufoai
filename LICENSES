@@ -1119,6 +1119,8 @@ base/models/objects/rail/rail.png | GNU General Public License 2.0 or later | Wi
 base/models/objects/railcar/railcar.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/railcar/railcar.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/rubbish/barrel.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/barrel2.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/rubbish/barrel2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/rubbish/blue_car.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/bottle1.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/bottle2.md2 | GNU General Public License 2.0 | Yoshiboy
