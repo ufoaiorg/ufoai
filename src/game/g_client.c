@@ -1160,9 +1160,9 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 			continue;
 
 		/* skip the world(s) in case of map assembly */
-		if (ent->type) {
+		if (ent->type > ET_NULL) {
 			gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
-			gi.WriteShort(ent->type);
+			gi.WriteByte(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
 			/* strip the higher bits - only send levelflags */
