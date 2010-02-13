@@ -366,7 +366,6 @@ static void HUD_ShotReserve_f (void)
 	if (!selActor)
 		return;
 
-
 	/* read and range check */
 	selectedPopupIndex = atoi(Cmd_Argv(1));
 	if (selectedPopupIndex < 0 || selectedPopupIndex >= LIST_Count(popupListData))
@@ -376,6 +375,7 @@ static void HUD_ShotReserve_f (void)
 	if (!reserveShotData)
 		return;
 
+	/** @todo do this on the server */
 	/* Check if we have enough TUs (again) */
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
@@ -705,12 +705,8 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char 
 
 	/* Weapon is empty or not fully loaded, find ammo of any type loadable to this weapon. */
 	if (!invList->item.m || weapon->ammo > invList->item.a) {
-		invList_t *ic;
-		const int container = CL_ActorGetContainerForReload(&ic, &le->i, weapon);
-		if (container != NONE) {
-			const int tuCosts = TU_GET_RELOAD(container, containerID, weapon);
-			/* If we have enough TU to reload, return here. Otherwise
-			 * search in another container, maybe another needs less TU. */
+		const int tuCosts = HUD_CalcReloadTime(le, weapon, containerID);
+		if (tuCosts >= 0) {
 			if (tu >= tuCosts)
 				return tuCosts;
 			*reason = _("Not enough TUs for reloading weapon.");
