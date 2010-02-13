@@ -108,7 +108,7 @@ void G_ActorFall (edict_t *ent)
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 
 	entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
-	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsActor(entAtPos))) {
+	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 	}
