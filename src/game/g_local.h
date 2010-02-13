@@ -314,7 +314,7 @@ edict_t *G_Spawn(void);
 edict_t *G_ParticleSpawn(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
-edict_t *G_GetEdictFromPos(const pos3_t pos, const int type);
+edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
 void G_TakeDamage(edict_t *ent, int damage);
 
 /* g_reaction.c */

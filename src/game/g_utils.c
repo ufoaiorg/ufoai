@@ -51,12 +51,12 @@ void G_FreeEdict (edict_t *ent)
  * @param type The type of the edict to look for or @c -1 to look for any type in the search.
  * @return @c NULL if nothing was found, otherwise the entity located at the given grid position.
  */
-edict_t *G_GetEdictFromPos (const pos3_t pos, const int type)
+edict_t *G_GetEdictFromPos (const pos3_t pos, const entity_type_t type)
 {
 	edict_t *floor = NULL;
 
 	while ((floor = G_EdictsGetNextInUse(floor))) {
-		if ((type > ET_NULL && floor->type != type))
+		if (type > ET_NULL && floor->type != type)
 			continue;
 		if (!VectorCompare(pos, floor->pos))
 			continue;
