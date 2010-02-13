@@ -524,6 +524,8 @@ sub model_info ($) {
 		print "NumST: ", $model_file->NumST, "\n";
 		print "NumTris: ", $model_file->NumTris, " (max is 4096)\n";
 		print "NumGLcmds: ", $model_file->NumGLcmds, "\n";
+		print "SkinWidth: ", $model_file->SkinWidth, "\n";
+		print "SkinHeight: ", $model_file->SkinHeight, "\n";
 	} elsif (ref($model_file) eq "MD3") {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
@@ -670,8 +672,11 @@ if ($param_action eq 'skinedit') {
 	} elsif ($#ARGV >= 3) {
 		$MODEL_IN	= $ARGV[1];
 		$MODEL_OUT	= $ARGV[2];
+		if ($MODEL_OUT eq '-') {
+			$MODEL_OUT = $MODEL_IN;
+		}
 		for (my $i = 1; $i <= $#ARGV - 2; $i++) {
-			$TextureString[$i] = $ARGV[$i+2];
+			$TextureString[$i - 1] = $ARGV[$i+2];
 		}
 		print "IN = \"$MODEL_IN\"\n";
 		print "OUT= \"$MODEL_OUT\"\n";
