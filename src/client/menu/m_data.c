@@ -481,7 +481,7 @@ menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, men
 
 /**
  * @brief Find the next element from the iterator
- * Iterator skipCollapsed and skipInvisible attribute can controle the option flow
+ * Iterator skipCollapsed and skipInvisible attribute can control the option flow
  */
 menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 {
@@ -517,9 +517,8 @@ menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 
 /**
  * @brief Find an option (and all his parents) by is value.
+ * @param[in,out] iterator If it found an option, the iterator contain all option parent
  * @param[in] value The value we search
- * @param[in] option The first option from the list/tree of option
- * @param[inout] iterator If it found an option, the iterator contain all option parent
  * @return The right option, else NULL
  */
 menuOption_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* value)
@@ -534,8 +533,8 @@ menuOption_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* 
 
 /**
  * @brief Find an option position from an option iterator
- * @param[inout] iterator Context of the iteration. If it found an option, the iterator contain all option parent
- * @param[in] value The value we search
+ * @param[in,out] iterator Context of the iteration. If it found an option, the iterator contain all option parent
+ * @param[in] option The value we search
  * @return The option index, else -1
  */
 int MN_FindOptionPosition (menuOptionIterator_t* iterator, const menuOption_t* option)

@@ -400,7 +400,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 /**
  * @brief Reload weapon with actor.
  * @param[in] ent Pointer to an actor reloading weapon.
- * @param[in] st Reloading weapon in right or left hand.
+ * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
 void G_ActorReload (edict_t* ent, const invDef_t *invDef)
@@ -419,7 +419,6 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 
 	if (CONTAINER(ent, invDef->id)) {
 		weapon = CONTAINER(ent, invDef->id)->item.t;
-	/** @todo What if there is no item in the right hand - this would segfault then */
 	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);
