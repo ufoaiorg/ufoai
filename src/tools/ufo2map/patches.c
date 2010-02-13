@@ -40,7 +40,6 @@ void CalcTextureReflectivity (void)
 	int i, j, texels = 0;
 	char path[MAX_QPATH];
 	int color[3];
-	const char *gamedir = FS_Gamedir();
 	SDL_Surface *surf;
 
 	/* always set index 0 even if no textures */
@@ -60,7 +59,7 @@ void CalcTextureReflectivity (void)
 			continue;
 
 		/* load the image file */
-		Com_sprintf(path, sizeof(path), "%stextures/%s", gamedir, curTile->texinfo[i].texture);
+		Com_sprintf(path, sizeof(path), "textures/%s", curTile->texinfo[i].texture);
 		if (!Img_LoadImage(path, &surf)) {
 			Verb_Printf(VERB_NORMAL, "Couldn't load %s\n", path);
 			VectorSet(texture_reflectivity[i], 0.5, 0.5, 0.5);
