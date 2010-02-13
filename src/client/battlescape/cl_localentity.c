@@ -823,7 +823,7 @@ void LE_PlaceItem (le_t *le)
 {
 	le_t *actor = NULL;
 
-	assert(le->type == ET_ITEM);
+	assert(LE_IsItem(le));
 
 	/* search owners (there can be many, some of them dead) */
 	while ((actor = LE_GetNextInUse(actor))) {

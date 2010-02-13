@@ -36,7 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t *le;
-	int entnum, modelnum1, type, levelflags, speed;
+	int entnum, modelnum1, levelflags, speed;
+	entity_type_t type;
 	cBspModel_t *model;
 	int angle;
 	vec3_t origin, angles;

@@ -65,7 +65,7 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 
 	/* update the rendered item after it was removed from the floor container */
-	if (le->type == ET_ITEM)
+	if (LE_IsItem(le))
 		LE_PlaceItem(le);
 }
 
