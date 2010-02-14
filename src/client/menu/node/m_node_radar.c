@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../battlescape/cl_localentity.h"
+#include "../../battlescape/cl_hud.h"
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_misc.h"
 #include "../../../shared/parse.h"

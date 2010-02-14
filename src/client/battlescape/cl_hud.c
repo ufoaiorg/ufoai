@@ -44,6 +44,7 @@ static qboolean visibleFiremodeListRight = qfalse;
 
 static cvar_t *cl_hud_message_timeout;
 static cvar_t *cl_show_cursor_tooltips;
+cvar_t *cl_worldlevel;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
@@ -1387,6 +1388,12 @@ static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, co
 	HUD_RefreshButtons(selActor);
 }
 
+static qboolean CL_CvarWorldLevel (cvar_t *cvar)
+{
+	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : PATHFINDING_HEIGHT - 1;
+	return Cvar_AssertValue(cvar, 0, maxLevel, qtrue);
+}
+
 void HUD_InitStartup (void)
 {
 	HUD_InitCallbacks();
@@ -1397,6 +1404,10 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+
+	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
+	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
+	cl_worldlevel->modified = qfalse;
 
 	Cvar_Get("mn_ammoleft", "", 0, "The remaining amount of ammunition in for the left hand weapon");
 	Cvar_Get("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon");

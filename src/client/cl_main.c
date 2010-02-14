@@ -29,6 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/events/e_server.h"
+#include "battlescape/cl_particle.h"
+#include "battlescape/cl_actor.h"
+#include "battlescape/cl_hud.h"
+#include "battlescape/cl_parse.h"
+#include "battlescape/events/e_parse.h"
+#include "battlescape/cl_view.h"
 #include "cl_console.h"
 #include "cl_screen.h"
 #include "cl_game.h"
@@ -37,21 +43,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_team.h"
 #include "cl_language.h"
 #include "cl_irc.h"
-#include "battlescape/cl_particle.h"
-#include "battlescape/cl_actor.h"
-#include "battlescape/cl_hud.h"
 #include "cl_sequence.h"
-#include "battlescape/cl_parse.h"
-#include "battlescape/events/e_parse.h"
 #include "cl_inventory.h"
-#include "battlescape/cl_view.h"
-#include "input/cl_joystick.h"
-#include "cinematic/cl_cinematic.h"
 #include "cl_menu.h"
 #include "cl_http.h"
+#include "input/cl_joystick.h"
+#include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
 #include "sound/s_sample.h"
-#include "../shared/infostring.h"
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
 #include "menu/m_main.h"
@@ -63,10 +62,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
+#include "../shared/infostring.h"
 
 cvar_t *cl_fps;
 cvar_t *cl_leshowinvis;
-cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
 cvar_t *cl_lastsave;
@@ -819,12 +818,6 @@ static void CL_ShowConfigstrings_f (void)
 	}
 }
 
-static qboolean CL_CvarWorldLevel (cvar_t *cvar)
-{
-	const int maxLevel = cl.mapMaxLevel ? cl.mapMaxLevel - 1 : PATHFINDING_HEIGHT - 1;
-	return Cvar_AssertValue(cvar, 0, maxLevel, qtrue);
-}
-
 /**
  * @brief Calls all reset functions for all subsystems like production and research
  * also initializes the cvars and commands
@@ -838,12 +831,8 @@ static void CL_InitLocal (void)
 	/* register our variables */
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
-	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
-	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
-	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
-	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "15000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
@@ -859,6 +848,7 @@ static void CL_InitLocal (void)
 
 	cl_map_debug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
 	cl_le_debug = Cvar_Get("debug_le", "0", 0, "Activates some local entity debug rendering");
+	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
@@ -991,6 +981,7 @@ static void CL_CvarCheck (void)
 {
 	int v;
 
+	/** @todo move into hud code */
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
 		int i;

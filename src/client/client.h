@@ -38,37 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_battlescape.h"
 
-/* Map debugging constants */
-/** @brief cvar debug_map options:
- * debug_map is a bit mask, like the developer cvar.  There is no ALL bit.
- * 1 (1<<0) = Turn on pathfinding floor tiles.  Red can not be entered, green can be
- *     reached with current TUs, yellow can be reached but actor does not have needed
- *     TUs, and black should never be able to be reached because there is not floor to
- *     support an actor there (not tuned for flyers yet)
- * 2  (1<<1) = Turn on cursor debug text display.  The information at the top is the
- *     ceiling value where the cursor is and the (x, y, z) coordinates for the cursor
- *     *at the current level*.  The z value will always match the level - 1.  The bottom
- *     information is the floor value at teh cursor at the current level and the location
- *     of the actual displayed cursor.  The distinction is made because our GUI currently
- *     always places the cursor on the ground beneath the mouse pointer, even if the
- *     ground is a few levels beneath the current level.  Eventually, we will need to be
- *     able to disable that for actors that can fly and remain in the air between turns,
- *     if any.
- * 4 (1<<2) = Turn on obstruction arrows for the floor and the ceiling.  These arrows point
- *     to the ceiling surface and the floor surface for teh current cell.
- * 8 (1<<3) = Turn on obstruction arrows.  These currently look broken from what I've
- *     seen in screenshots.  These arrows are supposed to point to the brushes that limit
- *     movement in a given direction. The arrows either touch the floor/ceiling of the
- *     current cell in the tested direction if it is possible to move in that direction,
- *     or touch the obstruction (surface) that prevents movement in a given direction.
- *     I want to redo these anyhow, as they are meant for map editors to be able to see what
- *     surfaces are actually preventing movement at the routing level.  Feedback is encouraged.
-*/
-#define MAPDEBUG_PATHING	(1<<0) /* Turns on pathing tracing. */
-#define MAPDEBUG_TEXT		(1<<1) /* Creates arrows pointing at floors and ceilings at mouse cursor */
-#define MAPDEBUG_CELLS		(1<<2) /* Creates arrows pointing at floors and ceilings at mouse cursor */
-#define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
-
 /* Macros for faster access to the inventory-container. */
 #define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
 #define ARMOUR(e) ((e)->i.c[csi.idArmour])
@@ -169,9 +138,7 @@ extern struct memPool_s *cl_soundSysPool;
 #define N_(String) gettext_noop (String)
 
 /* cvars */
-extern cvar_t *cl_leshowinvis;
 extern cvar_t *cl_fps;
-extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 extern cvar_t *cl_team;
 extern cvar_t *cl_teamnum;
