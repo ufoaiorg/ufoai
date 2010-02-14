@@ -1082,21 +1082,14 @@ static void HUD_UpdateActor (le_t *actor)
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
 	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
 
-	/* set generic cvars */
-	Cvar_Set("mn_tu", va("%i", actor->TU));
-	Cvar_Set("mn_tumax", va("%i", actor->maxTU));
-	Cvar_Set("mn_tureserved", va("%i", CL_ActorReservedTUs(actor, RES_ALL_ACTIVE)));
+	MN_ExecuteConfunc("updateselectedactorvalues %i %i %i %i %i %i %i %i",
+			actor->HP, actor->maxHP, actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE),
+			actor->morale, actor->maxMorale, actor->STUN);
 
 	Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
 		_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
 				actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
 	Cvar_Set("mn_tu_tooltips", tuTooltipText);
-
-	Cvar_Set("mn_morale", va("%i", actor->morale));
-	Cvar_Set("mn_moralemax", va("%i", actor->maxMorale));
-	Cvar_Set("mn_hp", va("%i", actor->HP));
-	Cvar_Set("mn_hpmax", va("%i", actor->maxHP));
-	Cvar_Set("mn_stun", va("%i", actor->STUN));
 
 	/* animation and weapons */
 	animName = R_AnimGetName(&actor->as, actor->model1);
@@ -1115,10 +1108,6 @@ static void HUD_UpdateActor (le_t *actor)
 
 	/* write info */
 	time = 0;
-
-	/* display special message */
-	if (cl.time < hudTime)
-		Q_strncpyz(infoText, hudText, sizeof(infoText));
 
 	/* update HUD stats etc in more or shoot modes */
 	if (displayRemainingTus[REMAINING_TU_CROUCH]) {
@@ -1286,7 +1275,6 @@ static void HUD_UpdateActor (le_t *actor)
  */
 void HUD_Update (void)
 {
-
 	if (cls.state != ca_active)
 		return;
 
@@ -1310,6 +1298,10 @@ void HUD_Update (void)
 		Cvar_SetValue("mn_hpmax", 100);
 		Cvar_SetValue("mn_stun", 0);
 	}
+
+	/* display special message */
+	if (cl.time < hudTime)
+		MN_RegisterText(TEXT_STANDARD, hudText);
 }
 
 /**
