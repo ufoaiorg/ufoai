@@ -1291,11 +1291,7 @@ void LE_AddToScene (void)
 				VectorCopy(le->origin, ent.oldorigin);
 			}
 
-			/**
-			 * Offset the model to be inside the cursor box
-			 * @todo Dunno if this is the best place to do it - what happens to
-			 * shot-origin and stuff? le->origin is never changed.
-			 */
+			/* Offset the model to be inside the cursor box */
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 			case ACTOR_SIZE_2x2:
