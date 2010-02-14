@@ -1153,7 +1153,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 }
 
 /**
- * @param actor The actor to update the hud for
+ * @param[in] actor The actor to update the hud for
  * @return The amount of TUs needed for the current pending action
  */
 static int HUD_UpdateActorMove (const le_t *actor)

@@ -114,7 +114,7 @@ static void HUD_FireWeapon_f (void)
 	const fireDef_t *fd;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
-		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <l|r> <firemode number>\n", Cmd_Argv(0));
 		return;
 	}
 
