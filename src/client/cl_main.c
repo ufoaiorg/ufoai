@@ -1037,6 +1037,7 @@ void CL_SetClientState (int state)
 	case ca_disconnected:
 		cls.waitingForStart = 0;
 	case ca_connected:
+		/* wipe the client_state_t struct */
 		CL_ClearState();
 		break;
 	default:

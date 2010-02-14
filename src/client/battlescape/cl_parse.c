@@ -68,7 +68,6 @@ static void CL_ParseServerData (struct dbuffer *msg)
 
 	Com_DPrintf(DEBUG_CLIENT, "Serverdata packet received.\n");
 
-	/* wipe the client_state_t struct */
 	CL_SetClientState(ca_connected);
 
 	/* parse protocol version number */

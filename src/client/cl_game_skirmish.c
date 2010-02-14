@@ -57,8 +57,6 @@ static void GAME_SK_SetMissionParameters (void)
 
 /**
  * @brief Starts a new skirmish game
- * @todo Check the stuff in this function - maybe not every function call
- * is needed here or maybe some are missing
  */
 static void GAME_SK_Start_f (void)
 {
