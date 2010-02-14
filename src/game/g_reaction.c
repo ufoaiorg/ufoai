@@ -288,6 +288,8 @@ static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos
 	shot_mock_t mock;
 	int ff, i, maxff;
 
+	/** @todo maxff is the number of edicts that is hit by the reaction fire shot - we will never hit 100
+	 * who ever wrote this, please explain this to me. */
 	if (G_IsInsane(shooter))
 		maxff = 100;
 	else if (G_IsRaged(shooter))
