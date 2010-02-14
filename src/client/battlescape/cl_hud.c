@@ -1313,6 +1313,9 @@ void HUD_Update (void)
  */
 static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
 {
+	if (!CL_OnBattlescape())
+		return;
+
 	if (oldValue[0] != '\0') {
 		const int actorIdx = atoi(oldValue);
 		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST) {
