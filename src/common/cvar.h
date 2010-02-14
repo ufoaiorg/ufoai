@@ -129,6 +129,15 @@ qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
 qboolean Cvar_SetCheckFunction(const char *var_name, qboolean (*check) (cvar_t* cvar));
 
 /**
+ * @brief Registers a listener that is executed each time a cvar changed its value.
+ * @sa Cvar_ExecuteChangeListener
+ * @param varName The cvar name to register the listener for
+ * @param listener The listener to register
+ */
+void Cvar_RegisterChangeListener(const char *varName, cvarChangeListenerFunc_t listenerFunc);
+void Cvar_UnRegisterChangeListener(const char *varName, cvarChangeListenerFunc_t listenerFunc);
+
+/**
  * @brief Reset cheat cvar values to default
  */
 void Cvar_FixCheatVars(void);

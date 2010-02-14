@@ -286,6 +286,7 @@ qboolean Cvar_Delete (const char *var_name)
 	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
 		if (!Q_strcasecmp(var_name, var->name)) {
+			cvarChangeListener_t *changeListener;
 			if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NOSET | CVAR_LATCH)) {
 				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", var_name);
 				return qfalse;
@@ -314,6 +315,13 @@ qboolean Cvar_Delete (const char *var_name)
 			/* latched cvars should not be removable */
 			assert(var->latchedString == NULL);
 			Mem_Free(var);
+			changeListener = var->changeListener;
+			while (changeListener) {
+				cvarChangeListener_t *changeListener2 = changeListener->next;
+				Mem_Free(changeListener);
+				changeListener = changeListener2;
+			}
+
 			return qtrue;
 		}
 		previousVar = var;
@@ -389,6 +397,99 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 		var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 
 	return var;
+}
+
+/**
+ * @brief Executes the change listeners for a cvar
+ * @param cvar The cvar which change listeners are executed
+ */
+static void Cvar_ExecuteChangeListener (const cvar_t* cvar)
+{
+	const cvarChangeListener_t *listener = cvar->changeListener;
+	while (listener) {
+		listener->exec(cvar->name, cvar->oldString, cvar->string);
+		listener = listener->next;
+	}
+}
+
+static cvarChangeListener_t *Cvar_GetChangeListener (cvarChangeListenerFunc_t listenerFunc)
+{
+	cvarChangeListener_t *listener = Mem_PoolAlloc(sizeof(*listener), com_cvarSysPool, 0);
+	listener->exec = listenerFunc;
+	return listener;
+}
+
+/**
+ * @brief Registers a listener that is executed each time a cvar changed its value.
+ * @sa Cvar_ExecuteChangeListener
+ * @param varName The cvar name to register the listener for
+ * @param listener The listener to register
+ */
+void Cvar_RegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
+{
+	cvarChangeListener_t *listener;
+	cvar_t *var = Cvar_FindVar(varName);
+	if (!var) {
+		Com_Printf("Could not register change listener, cvar '%s' wasn't found\n", varName);
+		return;
+	}
+
+	listener = Cvar_GetChangeListener(listenerFunc);
+	if (!var->changeListener) {
+		var->changeListener = listener;
+	} else {
+		cvarChangeListener_t *l = var->changeListener;
+		while (l) {
+			if (l->exec == listenerFunc) {
+				Com_Printf("Cvar change listener already registered\n");
+				return;
+			}
+			l = l->next;
+		}
+
+		l = var->changeListener;
+		while (l) {
+			if (!l->next) {
+				l->next = listener;
+				l->next->next = NULL;
+				break;
+			}
+			l = l->next;
+		}
+	}
+}
+
+/**
+ * @brief Registers a listener that is executed each time a cvar changed its value.
+ * @sa Cvar_ExecuteChangeListener
+ * @param varName The cvar name to register the listener for
+ * @param listener The listener to register
+ */
+void Cvar_UnRegisterChangeListener (const char *varName, cvarChangeListenerFunc_t listenerFunc)
+{
+	cvar_t *var = Cvar_FindVar(varName);
+	cvarChangeListener_t *l, *prev;
+
+	if (!var) {
+		Com_Printf("Could not unregister change listener, cvar '%s' wasn't found\n", varName);
+		return;
+	}
+
+	l = var->changeListener;
+	prev = NULL;
+	while (l) {
+		if (l->exec == listenerFunc) {
+			if (prev) {
+				prev->next = l->next;
+			} else {
+				var->changeListener = l->next;
+			}
+			Mem_Free(l);
+			return;
+		}
+		prev = l;
+		l = l->next;
+	}
 }
 
 /**
@@ -476,6 +577,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	if (var->flags & CVAR_USERINFO)
 		userinfoModified = qtrue;	/* transmit at next opportunity */
 
+
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
@@ -485,6 +587,8 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 			Com_Printf("Invalid value for cvar %s\n", varName);
 			return var;
 		}
+
+	Cvar_ExecuteChangeListener(var);
 
 	return var;
 }

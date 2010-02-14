@@ -102,6 +102,19 @@ CVARS (console variables)
 #define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
 
 /**
+ * @brief Callback for the listener
+ * @param cvarName The name of the cvar that was changed.
+ * @param oldValue The old value of the cvar - this is never @c NULL, but can be empty.
+ * @param newValue The new value of the cvar - this is never @c NULL, but can be empty.
+ */
+typedef void (*cvarChangeListenerFunc_t) (const char *cvarName, const char *oldValue, const char *newValue);
+
+typedef struct cvarListener_s {
+	cvarChangeListenerFunc_t exec;
+	struct cvarListener_s *next;
+} cvarChangeListener_t;
+
+/**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
  * @note nothing outside the Cvar_*() functions should modify these fields!
  */
@@ -117,6 +130,7 @@ typedef struct cvar_s {
 	float value;			/**< value as float */
 	int integer;			/**< value as integer */
 	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
+	cvarChangeListener_t *changeListener;
 	struct cvar_s *next;
 	struct cvar_s *prev;
 	struct cvar_s *hash_next;
