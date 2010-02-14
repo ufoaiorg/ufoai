@@ -132,9 +132,14 @@ qboolean Cvar_SetCheckFunction(const char *var_name, qboolean (*check) (cvar_t* 
  * @brief Registers a listener that is executed each time a cvar changed its value.
  * @sa Cvar_ExecuteChangeListener
  * @param varName The cvar name to register the listener for
- * @param listener The listener to register
+ * @param listenerFunc The listener callback to register
  */
 void Cvar_RegisterChangeListener(const char *varName, cvarChangeListenerFunc_t listenerFunc);
+/**
+ * @brief Unregisters a cvar change listener
+ * @param varName The cvar name to register the listener for
+ * @param listenerFunc The listener callback to unregister
+ */
 void Cvar_UnRegisterChangeListener(const char *varName, cvarChangeListenerFunc_t listenerFunc);
 
 /**
