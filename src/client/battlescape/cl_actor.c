@@ -406,7 +406,6 @@ void CL_ActorAddToTeamList (le_t * le)
 		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
-		MN_ExecuteConfunc("huddeselect %i", actorIdx);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}

@@ -1307,8 +1307,17 @@ void HUD_Update (void)
 
 static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
 {
-	if (oldValue[0] != '\0')
-		MN_ExecuteConfunc("huddeselect %s", oldValue);
+	if (oldValue[0] != '\0') {
+		/* we can assume that the values are sane because the cl_selected
+		 * also has a value checker callback assigned */
+		const int actorIdx = atoi(oldValue);
+		assert(actorIdx >= 0);
+		assert(actorIdx < MAX_TEAMLIST);
+		/* if the actor is still living */
+		if (cl.teamList[actorIdx])
+			MN_ExecuteConfunc("huddeselect %s", oldValue);
+	}
+
 	if (newValue[0] != '\0')
 		MN_ExecuteConfunc("hudselect %s", newValue);
 }
