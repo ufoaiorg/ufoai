@@ -1290,13 +1290,7 @@ void HUD_Update (void)
 		HUD_UpdateActor(selActor);
 	} else if (!cl.numTeamList) {
 		/* This will stop the drawing of the bars over the whole screen when we test maps. */
-		Cvar_SetValue("mn_tu", 0);
-		Cvar_SetValue("mn_tumax", 100);
-		Cvar_SetValue("mn_morale", 0);
-		Cvar_SetValue("mn_moralemax", 100);
-		Cvar_SetValue("mn_hp", 0);
-		Cvar_SetValue("mn_hpmax", 100);
-		Cvar_SetValue("mn_stun", 0);
+		MN_ExecuteConfunc("updateselectedactorvalues 0 100 0 100 0 0 100 0");
 	}
 
 	/* display special message */
