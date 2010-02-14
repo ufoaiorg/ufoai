@@ -1094,11 +1094,11 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 		if (!selWeapon->item.t) {
 			/* No valid weapon in the hand. */
-			actor->fd = NULL;
+			CL_ActorSetFireDef(actor, NULL);
 		} else {
 			/* Check whether this item uses/has ammo. */
 			if (!selWeapon->item.m) {
-				actor->fd = NULL;
+				CL_ActorSetFireDef(actor, NULL);
 				/* This item does not use ammo, check for existing firedefs in this item. */
 				/* This is supposed to be a weapon or other usable item. */
 				if (selWeapon->item.t->numWeapons > 0) {
@@ -1106,7 +1106,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 						/* Get firedef from the weapon (or other usable item) entry instead. */
 						if (fdArray != NULL)
-							actor->fd = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, actor->currentSelectedFiremode);
+							CL_ActorSetFireDef(actor, FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, actor->currentSelectedFiremode));
 					}
 				}
 			} else {
@@ -1114,9 +1114,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				if (fdArray != NULL) {
 					const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, actor->currentSelectedFiremode);
 					/* reset the align if we switched the firemode */
-					if (old != actor->fd)
-						mousePosTargettingAlign = 0;
-					actor->fd = old;
+					CL_ActorSetFireDef(actor, old);
 				}
 			}
 		}

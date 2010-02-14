@@ -58,7 +58,7 @@ pos3_t mousePos; /**< The cell that an actor will move to when directed to move.
  * @sa G_ShootGrenade
  * @sa G_ShootSingle
  */
-int mousePosTargettingAlign = 0;
+static int mousePosTargettingAlign = 0;
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -125,6 +125,13 @@ const char *CL_ActorGetSkillString (const int skill)
 		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skillLevel);
 		return "";
 	}
+}
+
+void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
+{
+	if (actor->fd != fd)
+		mousePosTargettingAlign = 0;
+	actor->fd = fd;
 }
 
 /**
