@@ -150,6 +150,4 @@ void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);
 
-void CL_ClearState(void);
-
 #endif /* CLIENT_CLIENT_H */

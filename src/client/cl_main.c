@@ -222,7 +222,7 @@ static void CL_Connect (void)
  * @sa CL_Disconnect
  * @sa R_ClearScene
  */
-void CL_ClearState (void)
+static void CL_ClearState (void)
 {
 	LE_Cleanup();
 
@@ -1037,6 +1037,7 @@ void CL_SetClientState (int state)
 	case ca_disconnected:
 		cls.waitingForStart = 0;
 	case ca_connected:
+		CL_ClearState();
 		break;
 	default:
 		break;
