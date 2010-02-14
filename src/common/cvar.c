@@ -577,7 +577,6 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	if (var->flags & CVAR_USERINFO)
 		userinfoModified = qtrue;	/* transmit at next opportunity */
 
-
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
