@@ -197,7 +197,7 @@ static void HUD_ToggleReaction_f (void)
  * @return Time needed to reload or @c -1 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
- * @sa HUD_RefreshWeaponButtons
+ * @sa HUD_RefreshButtons
  * @sa HUD_CheckReload
  */
 int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toContainer)

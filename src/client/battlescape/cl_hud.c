@@ -205,7 +205,7 @@ static int HUD_UsableReactionTUs (const le_t * le)
 /**
  * @brief Check if at least one firemode is available for reservation.
  * @return qtrue if there is at least one firemode - qfalse otherwise.
- * @sa HUD_RefreshWeaponButtons
+ * @sa HUD_RefreshButtons
  * @sa HUD_PopupFiremodeReservation_f
  */
 static qboolean HUD_CheckFiremodeReservation (void)
@@ -778,9 +778,9 @@ static void HUD_DisplayPossibleReaction (const le_t * actor)
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
- * @sa HUD_Update
+ * @param[in] remainingTUs The amount of TUs left if the pending action is performed
  */
-static void HUD_RefreshWeaponButtons (const le_t *le)
+static void HUD_RefreshButtons (const le_t *le)
 {
 	invList_t *weaponr;
 	invList_t *weaponl;
@@ -1286,11 +1286,7 @@ void HUD_Update (void)
 		/* Calculate remaining TUs. */
 		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
 		time = max(0, selActor->TU - time);
-		if (Cvar_GetInteger("mn_turemain") != time) {
-			Cvar_Set("mn_turemain", va("%i", time));
-
-			HUD_RefreshWeaponButtons(selActor);
-		}
+		Cvar_Set("mn_turemain", va("%i", time));
 
 		MN_RegisterText(TEXT_STANDARD, infoText);
 	} else if (!cl.numTeamList) {
@@ -1307,9 +1303,9 @@ void HUD_Update (void)
 
 /**
  * @brief Callback that is called when the cl_selected cvar was changed
- * @param cvarName The cvarname (cl_selected)
- * @param oldValue The old value (a sane actor idx)
- * @param newValue The new value (a sane actor idx)
+ * @param cvarName The cvar name (cl_selected)
+ * @param oldValue The old value of the cvar (a sane actor idx)
+ * @param newValue The new value of the cvar (a sane actor idx)
  */
 static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
 {
@@ -1332,6 +1328,48 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
 	}
 }
 
+/**
+ * @brief Callback that is called when the right hand weapon of the current selected actor changed
+ * @param cvarName The cvar name
+ * @param oldValue The old value of the cvar
+ * @param newValue The new value of the cvar
+ */
+static void HUD_RightHandChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	if (!CL_OnBattlescape())
+		return;
+
+	HUD_RefreshButtons(selActor);
+}
+
+/**
+ * @brief Callback that is called when the left hand weapon of the current selected actor changed
+ * @param cvarName The cvar name
+ * @param oldValue The old value of the cvar
+ * @param newValue The new value of the cvar
+ */
+static void HUD_LeftHandChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	if (!CL_OnBattlescape())
+		return;
+
+	HUD_RefreshButtons(selActor);
+}
+
+/**
+ * @brief Callback that is called when the remaining TUs for the current selected actor changed
+ * @param cvarName The cvar name
+ * @param oldValue The old value of the cvar
+ * @param newValue The new value of the cvar
+ */
+static void HUD_TUChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	if (!CL_OnBattlescape())
+		return;
+
+	HUD_RefreshButtons(selActor);
+}
+
 void HUD_InitStartup (void)
 {
 	HUD_InitCallbacks();
@@ -1342,6 +1380,19 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+
+	Cvar_Get("mn_ammoleft", "", 0, "The remaining amount of ammunition in for the left hand weapon");
+	Cvar_Get("mn_lweapon", "", 0, "The left hand weapon model of the current selected actor - empty if no weapon");
+	Cvar_RegisterChangeListener("mn_ammoleft", HUD_LeftHandChangeListener);
+	Cvar_RegisterChangeListener("mn_lweapon", HUD_LeftHandChangeListener);
+
+	Cvar_Get("mn_ammoright", "", 0, "The remaining amount of ammunition in for the right hand weapon");
+	Cvar_Get("mn_rweapon", "", 0, "The right hand weapon model of the current selected actor - empty if no weapon");
+	Cvar_RegisterChangeListener("mn_ammoright", HUD_RightHandChangeListener);
+	Cvar_RegisterChangeListener("mn_rweapon", HUD_RightHandChangeListener);
+
+	Cvar_Get("mn_turemain", "", 0, "Remaining TUs for the current selected actor");
+	Cvar_RegisterChangeListener("mn_turemain", HUD_TUChangeListener);
 
 	Cvar_RegisterChangeListener("cl_selected", HUD_ActorSelectionChangeListener);
 
