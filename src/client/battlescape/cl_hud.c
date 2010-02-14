@@ -1036,6 +1036,40 @@ void HUD_UpdateCursor (void)
 }
 
 /**
+ * @brief Shows map pathfinding debugging parameters (if activated)
+ * @param[in] le The current selected actors entity
+ */
+static void HUD_MapDebugCursor (const le_t *le)
+{
+	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
+		int dv;
+		const int fieldSize = le /**< Get size of selected actor or fall back to 1x1. */
+			? le->fieldSize
+			: ACTOR_SIZE_NORMAL;
+
+		static char topText[MAX_SMALLMENUTEXTLEN];
+		static char bottomText[MAX_SMALLMENUTEXTLEN];
+		static char leftText[MAX_SMALLMENUTEXTLEN];
+
+		/* Display the floor and ceiling values for the current cell. */
+		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
+		/* Save the text for later display next to the cursor. */
+		MN_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
+
+		/* Display the floor and ceiling values for the current cell. */
+		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
+		/* Save the text for later display next to the cursor. */
+		MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
+
+		/* Display the floor and ceiling values for the current cell. */
+		dv = Grid_MoveNext(clMap, fieldSize, le->pathMap, mousePos, 0);
+		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
+		/* Save the text for later display next to the cursor. */
+		MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
+	}
+}
+
+/**
  * @brief Updates console vars for an actor.
  *
  * This function updates the cvars for the hud (battlefield)
@@ -1049,17 +1083,10 @@ void HUD_Update (void)
 {
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
-	static char topText[MAX_SMALLMENUTEXTLEN];
-	static char bottomText[MAX_SMALLMENUTEXTLEN];
-	static char leftText[MAX_SMALLMENUTEXTLEN];
 	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
 	const char *animName;
 	int time;
 	pos3_t pos;
-
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
 
 	if (cls.state != ca_active)
 		return;
@@ -1251,25 +1278,7 @@ void HUD_Update (void)
 		VectorCopy(mousePos, pos);
 		pos[2] = cl_worldlevel->integer;
 
-		if (cl_map_debug->integer & MAPDEBUG_TEXT) {
-			int dv;
-
-			/* Display the floor and ceiling values for the current cell. */
-			Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
-			/* Save the text for later display next to the cursor. */
-			MN_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
-
-			/* Display the floor and ceiling values for the current cell. */
-			Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
-			/* Save the text for later display next to the cursor. */
-			MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
-
-			/* Display the floor and ceiling values for the current cell. */
-			dv = Grid_MoveNext(clMap, fieldSize, selActor->pathMap, mousePos, 0);
-			Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
-			/* Save the text for later display next to the cursor. */
-			MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
-		}
+		HUD_MapDebugCursor(selActor);
 
 		/* print ammo */
 		if (RIGHT(selActor))
