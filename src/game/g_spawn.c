@@ -229,7 +229,7 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 static const char *ED_ParseEdict (const char *data, edict_t * ent)
 {
 	qboolean init;
-	char keyname[256];
+	char keyname[MAX_VAR];
 
 	init = qfalse;
 	memset(&st, 0, sizeof(st));

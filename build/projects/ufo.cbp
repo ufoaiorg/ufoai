@@ -294,6 +294,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_view.h" />
+		<Unit filename="../../src/client/battlescape/cl_spawn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_spawn.h" />
 		<Unit filename="../../src/client/battlescape/events/e_main.c">
 			<Option compilerVar="CC" />
 		</Unit>

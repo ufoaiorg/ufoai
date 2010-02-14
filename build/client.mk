@@ -38,6 +38,7 @@ CLIENT_SRCS = \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
 	client/battlescape/cl_view.c \
+	client/battlescape/cl_spawn.c \
 	\
 	client/battlescape/events/e_main.c \
 	client/battlescape/events/e_parse.c \

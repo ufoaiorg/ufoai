@@ -211,7 +211,7 @@ static byte stackType[MAX_STACK_DEPTH];
  * @param[in] info
  * @param[in] levelflags The levelflag mask to show the particle on
  */
-void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char *info, int levelflags)
+void CL_AddMapParticle (const char *ptl, const vec3_t origin, const vec2_t wait, const char *info, int levelflags)
 {
 	mapParticle_t *mp;
 
