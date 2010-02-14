@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_MESH_ANIM_H
 #define R_MESH_ANIM_H
 
-void R_AnimAppend(animState_t *as, struct model_s *mod, const char *name);
-void R_AnimChange(animState_t *as, struct model_s *mod, const char *name);
+void R_AnimAppend(animState_t *as, const struct model_s *mod, const char *name);
+void R_AnimChange(animState_t *as, const struct model_s *mod, const char *name);
 void R_AnimRun(animState_t *as, const struct model_s *mod, int msec);
 const char *R_AnimGetName(const animState_t *as, const struct model_s *mod);
 void R_InterpolateTransform(animState_t *as, int numframes, const float *tag, float *interpolated);
