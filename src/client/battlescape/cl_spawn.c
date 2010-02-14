@@ -175,10 +175,6 @@ void V_ParseEntitystring (void)
 					Com_EParseValue(&entData, entityToken, v->type, v->ofs, v->size);
 					break;
 				}
-
-			if (!v->string)
-				Com_Printf("Unknown token: '%s'\n", entityToken);
-
 		}
 		CL_CallSpawn(&entData);
 
