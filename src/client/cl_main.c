@@ -84,7 +84,6 @@ cvar_t *cl_teamnum;
 cvar_t *cl_team;
 
 client_static_t cls;
-client_state_t cl;
 
 static int precache_check;
 
