@@ -200,12 +200,16 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 
 
 /**
+ * @brief Get the current running animation for a model
  * @sa R_AnimGet
  * @sa R_AnimAppend
  * @sa R_AnimRun
  * @sa R_AnimChange
+ * @param[in] as The animation state to check
+ * @param[in] mod The model to check
+ * @return @c NULL if no animation is set or running or the name of the current running animation otherwise.
  */
-const char *R_AnimGetName (animState_t * as, const model_t * mod)
+const char *R_AnimGetName (const animState_t * as, const model_t * mod)
 {
 	const mAliasAnim_t *anim;
 
