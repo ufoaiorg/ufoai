@@ -1156,22 +1156,18 @@ static int HUD_UpdateActorFireMode (le_t *actor)
  * @param actor The actor to update the hud for
  * @return The amount of TUs needed for the current pending action
  */
-static int HUD_UpdateActorMove (le_t *actor)
+static int HUD_UpdateActorMove (const le_t *actor)
 {
 	const int reservedTUs = CL_ActorReservedTUs(actor, RES_ALL_ACTIVE);
 	static char infoText[MAX_SMALLMENUTEXTLEN];
-	static char mouseText[MAX_SMALLMENUTEXTLEN];
-	/* If the mouse is outside the world, and we haven't placed the cursor in pend
-	 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
-	if ((mouseSpace != MS_WORLD && actor->actorMode < M_PEND_MOVE) || actor->actorMoveLength == ROUTING_NOT_REACHABLE) {
-		actor->actorMoveLength = ROUTING_NOT_REACHABLE;
+	if (actor->actorMoveLength == ROUTING_NOT_REACHABLE) {
 		MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 		if (reservedTUs > 0)
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), actor->morale, reservedTUs);
 		else
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), actor->morale);
-	}
-	if (actor->actorMoveLength != ROUTING_NOT_REACHABLE) {
+	} else {
+		static char mouseText[MAX_SMALLMENUTEXTLEN];
 		const int moveMode = CL_ActorMoveMode(actor, actor->actorMoveLength);
 		if (reservedTUs > 0)
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
@@ -1261,6 +1257,10 @@ static void HUD_UpdateActor (le_t *actor)
 	} else if (CL_ActorFireModeActivated(actor->actorMode)) {
 		time = HUD_UpdateActorFireMode(actor);
 	} else {
+		/* If the mouse is outside the world, and we haven't placed the cursor in pend
+		 * mode already */
+		if (mouseSpace != MS_WORLD && actor->actorMode < M_PEND_MOVE)
+			actor->actorMoveLength = ROUTING_NOT_REACHABLE;
 		time = HUD_UpdateActorMove(actor);
 	}
 
