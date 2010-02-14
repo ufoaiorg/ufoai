@@ -518,7 +518,7 @@ static void HUD_SwitchFiremodeList_f (void)
 /**
  * @brief Requests firemode settings from the server
  * @param[in] actor The actor to update the firemode for.
- * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
+ * @param[in] hand Index of hand with item, which will be used for reactionfire
  * @param[in] od Pointer to objDef_t for which we set up firemode.
  * @param[in] fdIdx Index of firedefinition for an item in given hand.
  */
@@ -778,7 +778,6 @@ static void HUD_DisplayPossibleReaction (const le_t * actor)
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] le Pointer to local entity for which we refresh HUD buttons.
- * @param[in] remainingTUs The amount of TUs left if the pending action is performed
  */
 static void HUD_RefreshButtons (const le_t *le)
 {
