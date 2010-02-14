@@ -284,7 +284,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
  */
 static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos3_t at, int type, int firemode)
 {
-	const int minhit = shooter->reaction_minhit;
+	const int minhit = 30;
 	shot_mock_t mock;
 	int ff, i, maxff;
 
