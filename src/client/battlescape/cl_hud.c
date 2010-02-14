@@ -1305,21 +1305,28 @@ void HUD_Update (void)
 	}
 }
 
+/**
+ * @brief Callback that is called when the cl_selected cvar was changed
+ * @param cvarName The cvarname (cl_selected)
+ * @param oldValue The old value (a sane actor idx)
+ * @param newValue The new value (a sane actor idx)
+ */
 static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
 {
 	if (oldValue[0] != '\0') {
-		/* we can assume that the values are sane because the cl_selected
-		 * also has a value checker callback assigned */
 		const int actorIdx = atoi(oldValue);
-		assert(actorIdx >= 0);
-		assert(actorIdx < MAX_TEAMLIST);
-		/* if the actor is still living */
-		if (cl.teamList[actorIdx])
-			MN_ExecuteConfunc("huddeselect %s", oldValue);
+		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST) {
+			/* if the actor is still living */
+			if (cl.teamList[actorIdx])
+				MN_ExecuteConfunc("huddeselect %s", oldValue);
+		}
 	}
 
-	if (newValue[0] != '\0')
-		MN_ExecuteConfunc("hudselect %s", newValue);
+	if (newValue[0] != '\0') {
+		const int actorIdx = atoi(newValue);
+		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST)
+			MN_ExecuteConfunc("hudselect %s", newValue);
+	}
 }
 
 void HUD_InitStartup (void)
