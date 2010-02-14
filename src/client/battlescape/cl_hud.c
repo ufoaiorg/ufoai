@@ -1070,6 +1070,211 @@ static void HUD_MapDebugCursor (const le_t *le)
 }
 
 /**
+ * @brief Updates the hud for one actor
+ * @param actor The actor to update the hud values for
+ */
+static void HUD_UpdateActor (le_t *actor)
+{
+	const invList_t* invList;
+	const char *animName;
+	int time;
+	static char infoText[MAX_SMALLMENUTEXTLEN];
+	static char mouseText[MAX_SMALLMENUTEXTLEN];
+	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
+
+	/* set generic cvars */
+	Cvar_Set("mn_tu", va("%i", actor->TU));
+	Cvar_Set("mn_tumax", va("%i", actor->maxTU));
+	Cvar_Set("mn_tureserved", va("%i", CL_ActorReservedTUs(actor, RES_ALL_ACTIVE)));
+
+	Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
+		_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
+				actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
+	Cvar_Set("mn_tu_tooltips", tuTooltipText);
+
+	Cvar_Set("mn_morale", va("%i", actor->morale));
+	Cvar_Set("mn_moralemax", va("%i", actor->maxMorale));
+	Cvar_Set("mn_hp", va("%i", actor->HP));
+	Cvar_Set("mn_hpmax", va("%i", actor->maxHP));
+	Cvar_Set("mn_stun", va("%i", actor->STUN));
+
+	/* animation and weapons */
+	animName = R_AnimGetName(&actor->as, actor->model1);
+	if (animName)
+		Cvar_Set("mn_anim", animName);
+	if (RIGHT(actor)) {
+		const invList_t *i = RIGHT(actor);
+		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
+		Cvar_Set("mn_rweapon", i->item.t->model);
+	}
+	if (LEFT(actor)) {
+		const invList_t *i = LEFT(actor);
+		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
+		Cvar_Set("mn_lweapon", i->item.t->model);
+	}
+
+	/* write info */
+	time = 0;
+
+	/* display special message */
+	if (cl.time < hudTime)
+		Q_strncpyz(infoText, hudText, sizeof(infoText));
+
+	/* update HUD stats etc in more or shoot modes */
+	if (displayRemainingTus[REMAINING_TU_CROUCH]) {
+		if (CL_ActorUsableTUs(actor) >= TU_CROUCH)
+			time = TU_CROUCH;
+	} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
+	 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
+		const invList_t *invList;
+		int container;
+
+		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(actor)) {
+			invList = RIGHT(actor);
+			container = csi.idRight;
+		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(actor)) {
+			invList = HUD_GetLeftHandWeapon(actor, &container);
+		} else {
+			invList = NULL;
+			container = 0;
+		}
+
+		if (invList && invList->item.t && invList->item.m && invList->item.t->reload) {
+			const int reloadtime = HUD_CalcReloadTime(actor, invList->item.t, container);
+			if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(actor))
+				time = reloadtime;
+		}
+	} else if (CL_ActorFireModeActivated(actor->actorMode)) {
+		const invList_t *selWeapon;
+
+		/* get weapon */
+		if (IS_MODE_FIRE_HEADGEAR(actor->actorMode)) {
+			selWeapon = HEADGEAR(actor);
+		} else if (IS_MODE_FIRE_LEFT(actor->actorMode)) {
+			selWeapon = HUD_GetLeftHandWeapon(actor, NULL);
+		} else {
+			selWeapon = RIGHT(actor);
+		}
+
+		MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+
+		if (selWeapon) {
+			if (!selWeapon->item.t) {
+				/* No valid weapon in the hand. */
+				actor->fd = NULL;
+			} else {
+				/* Check whether this item uses/has ammo. */
+				if (!selWeapon->item.m) {
+					actor->fd = NULL;
+					/* This item does not use ammo, check for existing firedefs in this item. */
+					/* This is supposed to be a weapon or other usable item. */
+					if (selWeapon->item.t->numWeapons > 0) {
+						if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
+							const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+							/* Get firedef from the weapon (or other usable item) entry instead. */
+							if (fdArray != NULL)
+								actor->fd = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, actor->currentSelectedFiremode);
+						}
+					}
+				} else {
+					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
+					if (fdArray != NULL) {
+						const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, actor->currentSelectedFiremode);
+						/* reset the align if we switched the firemode */
+						if (old != actor->fd)
+							mousePosTargettingAlign = 0;
+						actor->fd = old;
+					}
+				}
+			}
+
+			if (!GAME_ItemIsUseable(selWeapon->item.t)) {
+				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
+				CL_ActorSetMode(actor, M_MOVE);
+			} else if (actor->fd) {
+				const int hitProbability = CL_GetHitProbability(actor);
+
+				Com_sprintf(infoText, lengthof(infoText),
+							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(actor->fd->name),
+							actor->fd->ammo, hitProbability, actor->fd->time);
+
+				/* Save the text for later display next to the cursor. */
+				Q_strncpyz(mouseText, infoText, lengthof(mouseText));
+				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+
+				time = actor->fd->time;
+				/* if no TUs left for this firing action
+				 * or if the weapon is reloadable and out of ammo,
+				 * then change to move mode */
+				if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_ActorUsableTUs(actor) < time)
+					CL_ActorSetMode(actor, M_MOVE);
+			} else if (selWeapon) {
+				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
+			}
+		} else {
+			CL_ActorSetMode(actor, M_MOVE);
+		}
+	} else {
+		const int reservedTUs = CL_ActorReservedTUs(actor, RES_ALL_ACTIVE);
+		/* If the mouse is outside the world, and we haven't placed the cursor in pend
+		 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
+		if ((mouseSpace != MS_WORLD && actor->actorMode < M_PEND_MOVE) || actor->actorMoveLength == ROUTING_NOT_REACHABLE) {
+			actor->actorMoveLength = ROUTING_NOT_REACHABLE;
+			if (reservedTUs > 0)
+				Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), actor->morale, reservedTUs);
+			else
+				Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), actor->morale);
+			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+		}
+		if (actor->actorMoveLength != ROUTING_NOT_REACHABLE) {
+			const int moveMode = CL_ActorMoveMode(actor, actor->actorMoveLength);
+			if (reservedTUs > 0)
+				Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
+					actor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), actor->actorMoveLength,
+					actor->TU - actor->actorMoveLength, actor->TU - reservedTUs - actor->actorMoveLength);
+			else
+				Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), actor->morale,
+					moveModeDescriptions[moveMode] , actor->actorMoveLength, actor->TU - actor->actorMoveLength);
+
+			if (actor->actorMoveLength <= CL_ActorUsableTUs(actor))
+				Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actor->actorMoveLength, CL_ActorUsableTUs(actor));
+			else
+				Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
+
+			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+		}
+		time = actor->actorMoveLength;
+	}
+
+	/* handle actor in a panic */
+	if (LE_IsPaniced(actor)) {
+		Com_sprintf(infoText, lengthof(infoText), _("Currently panics!\n"));
+		MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+	}
+
+	HUD_MapDebugCursor(actor);
+
+	/* print ammo */
+	if (RIGHT(actor))
+		Cvar_SetValue("mn_ammoright", RIGHT(actor)->item.a);
+	else
+		Cvar_Set("mn_ammoright", "");
+
+	invList = HUD_GetLeftHandWeapon(actor, NULL);
+	if (invList)
+		Cvar_SetValue("mn_ammoleft", invList->item.a);
+	else
+		Cvar_Set("mn_ammoleft", "");
+
+	/* Calculate remaining TUs. */
+	/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
+	time = max(0, actor->TU - time);
+	Cvar_Set("mn_turemain", va("%i", time));
+
+	MN_RegisterText(TEXT_STANDARD, infoText);
+}
+
+/**
  * @brief Updates console vars for an actor.
  *
  * This function updates the cvars for the hud (battlefield)
@@ -1081,12 +1286,6 @@ static void HUD_MapDebugCursor (const le_t *le)
  */
 void HUD_Update (void)
 {
-	static char infoText[MAX_SMALLMENUTEXTLEN];
-	static char mouseText[MAX_SMALLMENUTEXTLEN];
-	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
-	const char *animName;
-	int time;
-	pos3_t pos;
 
 	if (cls.state != ca_active)
 		return;
@@ -1100,204 +1299,7 @@ void HUD_Update (void)
 	Cvar_Set("mn_lweapon", "");
 
 	if (selActor) {
-		invList_t* invList;
-
-		/* set generic cvars */
-		Cvar_Set("mn_tu", va("%i", selActor->TU));
-		Cvar_Set("mn_tumax", va("%i", selActor->maxTU));
-		Cvar_Set("mn_tureserved", va("%i", CL_ActorReservedTUs(selActor, RES_ALL_ACTIVE)));
-
-		Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
-			_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
-			selActor->TU, selActor->maxTU,
-			CL_ActorReservedTUs(selActor, RES_ALL_ACTIVE),
-			CL_ActorUsableTUs(selActor));
-		Cvar_Set("mn_tu_tooltips", tuTooltipText);
-
-		Cvar_Set("mn_morale", va("%i", selActor->morale));
-		Cvar_Set("mn_moralemax", va("%i", selActor->maxMorale));
-		Cvar_Set("mn_hp", va("%i", selActor->HP));
-		Cvar_Set("mn_hpmax", va("%i", selActor->maxHP));
-		Cvar_Set("mn_stun", va("%i", selActor->STUN));
-
-		/* animation and weapons */
-		animName = R_AnimGetName(&selActor->as, selActor->model1);
-		if (animName)
-			Cvar_Set("mn_anim", animName);
-		if (RIGHT(selActor)) {
-			const invList_t *i = RIGHT(selActor);
-			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
-			Cvar_Set("mn_rweapon", i->item.t->model);
-		}
-		if (LEFT(selActor)) {
-			const invList_t *i = LEFT(selActor);
-			assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
-			Cvar_Set("mn_lweapon", i->item.t->model);
-		}
-
-		/* write info */
-		time = 0;
-
-		/* display special message */
-		if (cl.time < hudTime)
-			Q_strncpyz(infoText, hudText, sizeof(infoText));
-
-		/* update HUD stats etc in more or shoot modes */
-		if (displayRemainingTus[REMAINING_TU_CROUCH]) {
-			if (CL_ActorUsableTUs(selActor) >= TU_CROUCH)
-				time = TU_CROUCH;
-		} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
-		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
-			const invList_t *invList;
-			int container;
-
-			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
-				invList = RIGHT(selActor);
-				container = csi.idRight;
-			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
-				invList = HUD_GetLeftHandWeapon(selActor, &container);
-			} else {
-				invList = NULL;
-				container = 0;
-			}
-
-			if (invList && invList->item.t && invList->item.m && invList->item.t->reload) {
-				const int reloadtime = HUD_CalcReloadTime(selActor, invList->item.t, container);
-				if (reloadtime != -1 && reloadtime <= CL_ActorUsableTUs(selActor))
-					time = reloadtime;
-			}
-		} else if (CL_ActorFireModeActivated(selActor->actorMode)) {
-			const invList_t *selWeapon;
-
-			/* get weapon */
-			if (IS_MODE_FIRE_HEADGEAR(selActor->actorMode)) {
-				selWeapon = HEADGEAR(selActor);
-			} else if (IS_MODE_FIRE_LEFT(selActor->actorMode)) {
-				selWeapon = HUD_GetLeftHandWeapon(selActor, NULL);
-			} else {
-				selWeapon = RIGHT(selActor);
-			}
-
-			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
-
-			if (selWeapon) {
-				if (!selWeapon->item.t) {
-					/* No valid weapon in the hand. */
-					selActor->fd = NULL;
-				} else {
-					/* Check whether this item uses/has ammo. */
-					if (!selWeapon->item.m) {
-						selActor->fd = NULL;
-						/* This item does not use ammo, check for existing firedefs in this item. */
-						/* This is supposed to be a weapon or other usable item. */
-						if (selWeapon->item.t->numWeapons > 0) {
-							if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
-								const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-								/* Get firedef from the weapon (or other usable item) entry instead. */
-								if (fdArray != NULL)
-									selActor->fd = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, selActor->currentSelectedFiremode);
-							}
-						}
-					} else {
-						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-						if (fdArray != NULL) {
-							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, selActor->currentSelectedFiremode);
-							/* reset the align if we switched the firemode */
-							if (old != selActor->fd)
-								mousePosTargettingAlign = 0;
-							selActor->fd = old;
-						}
-					}
-				}
-
-				if (!GAME_ItemIsUseable(selWeapon->item.t)) {
-					HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
-					CL_ActorSetMode(selActor, M_MOVE);
-				} else if (selActor->fd) {
-					const int hitProbability = CL_GetHitProbability(selActor);
-
-					Com_sprintf(infoText, lengthof(infoText),
-								"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selActor->fd->name),
-								selActor->fd->ammo, hitProbability, selActor->fd->time);
-
-					/* Save the text for later display next to the cursor. */
-					Q_strncpyz(mouseText, infoText, lengthof(mouseText));
-					MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
-
-					time = selActor->fd->time;
-					/* if no TUs left for this firing action
-					 * or if the weapon is reloadable and out of ammo,
-					 * then change to move mode */
-					if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_ActorUsableTUs(selActor) < time)
-						CL_ActorSetMode(selActor, M_MOVE);
-				} else if (selWeapon) {
-					Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
-				}
-			} else {
-				CL_ActorSetMode(selActor, M_MOVE);
-			}
-		} else {
-			const int reservedTUs = CL_ActorReservedTUs(selActor, RES_ALL_ACTIVE);
-			/* If the mouse is outside the world, and we haven't placed the cursor in pend
-			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
-			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || selActor->actorMoveLength == ROUTING_NOT_REACHABLE) {
-				selActor->actorMoveLength = ROUTING_NOT_REACHABLE;
-				if (reservedTUs > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reservedTUs);
-				else
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
-				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
-			}
-			if (selActor->actorMoveLength != ROUTING_NOT_REACHABLE) {
-				const int moveMode = CL_ActorMoveMode(selActor, selActor->actorMoveLength);
-				if (reservedTUs > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-						selActor->morale, reservedTUs, _(moveModeDescriptions[moveMode]), selActor->actorMoveLength,
-						selActor->TU - selActor->actorMoveLength, selActor->TU - reservedTUs - selActor->actorMoveLength);
-				else
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-						moveModeDescriptions[moveMode] , selActor->actorMoveLength, selActor->TU - selActor->actorMoveLength);
-
-				if (selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
-					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", selActor->actorMoveLength, CL_ActorUsableTUs(selActor));
-				else
-					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
-
-				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
-			}
-			time = selActor->actorMoveLength;
-		}
-
-		/* handle actor in a panic */
-		if (LE_IsPaniced(selActor)) {
-			Com_sprintf(infoText, lengthof(infoText), _("Currently panics!\n"));
-			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
-		}
-
-		/* Find the coordinates of the ceiling and floor we want. */
-		VectorCopy(mousePos, pos);
-		pos[2] = cl_worldlevel->integer;
-
-		HUD_MapDebugCursor(selActor);
-
-		/* print ammo */
-		if (RIGHT(selActor))
-			Cvar_SetValue("mn_ammoright", RIGHT(selActor)->item.a);
-		else
-			Cvar_Set("mn_ammoright", "");
-
-		invList = HUD_GetLeftHandWeapon(selActor, NULL);
-		if (invList)
-			Cvar_SetValue("mn_ammoleft", invList->item.a);
-		else
-			Cvar_Set("mn_ammoleft", "");
-
-		/* Calculate remaining TUs. */
-		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
-		time = max(0, selActor->TU - time);
-		Cvar_Set("mn_turemain", va("%i", time));
-
-		MN_RegisterText(TEXT_STANDARD, infoText);
+		HUD_UpdateActor(selActor);
 	} else if (!cl.numTeamList) {
 		/* This will stop the drawing of the bars over the whole screen when we test maps. */
 		Cvar_SetValue("mn_tu", 0);
