@@ -244,7 +244,7 @@ void Com_Error (int code, const char *fmt, ...)
 	recursive = qtrue;
 
 	va_start(argptr, fmt);
-	Q_vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
 	switch (code) {

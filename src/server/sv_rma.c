@@ -281,6 +281,13 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 						Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s - could not get coordinates for fixed tile", filename);
 
 					sscanf(token, "%i %i", &x, &y);
+					if (x < 0 || x > 31) {
+						Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i].",
+								x, MAX_RANDOM_MAP_WIDTH);
+					} else if (y < 0 || y > 31) {
+						Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i].",
+								y, MAX_RANDOM_MAP_HEIGHT);
+					}
 					a->fX[a->numFixed] = x;
 					a->fY[a->numFixed] = y;
 					a->fT[a->numFixed] = i;
