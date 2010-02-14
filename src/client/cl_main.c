@@ -836,22 +836,6 @@ static void CL_InitLocal (void)
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
 
-	IN_Init();
-	CL_ServerEventsInit();
-	CL_CameraInit();
-
-	CLMN_InitStartup();
-	TUT_InitStartup();
-	PTL_InitStartup();
-	GAME_InitStartup();
-	SEQ_InitStartup();
-	ACTOR_InitStartup();
-	TEAM_InitStartup();
-	TOTD_InitStartup();
-	HUD_InitStartup();
-	INV_InitStartup();
-	HTTP_InitStartup();
-
 	/* register our variables */
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
@@ -918,6 +902,22 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_stunteam", NULL, "Stuns a given team");
 	Cmd_AddCommand("debug_listscore", NULL, "Shows mission-score entries of all team members");
 #endif
+
+	IN_Init();
+	CL_ServerEventsInit();
+	CL_CameraInit();
+
+	CLMN_InitStartup();
+	TUT_InitStartup();
+	PTL_InitStartup();
+	GAME_InitStartup();
+	SEQ_InitStartup();
+	ACTOR_InitStartup();
+	TEAM_InitStartup();
+	TOTD_InitStartup();
+	HUD_InitStartup();
+	INV_InitStartup();
+	HTTP_InitStartup();
 }
 
 /**

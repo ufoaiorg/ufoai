@@ -125,7 +125,7 @@ void HUD_DisplayMessage (const char *text)
  * @note This is only called when we are in battlescape rendering mode
  * It's assumed that every living actor - @c le_t - has a character assigned, too
  */
-static void HUD_ActorGlobalCvars (void)
+static void HUD_UpdateAllActors (void)
 {
 	int i;
 
@@ -1054,7 +1054,7 @@ void HUD_Update (void)
 	static char leftText[MAX_SMALLMENUTEXTLEN];
 	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
 	const char *animName;
-	int time, i;
+	int time;
 	pos3_t pos;
 
 	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
@@ -1065,7 +1065,7 @@ void HUD_Update (void)
 		return;
 
 	/* set Cvars for all actors */
-	HUD_ActorGlobalCvars();
+	HUD_UpdateAllActors();
 
 	/* force them empty first */
 	Cvar_Set("mn_anim", "stand0");
@@ -1303,17 +1303,14 @@ void HUD_Update (void)
 		Cvar_SetValue("mn_hpmax", 100);
 		Cvar_SetValue("mn_stun", 0);
 	}
+}
 
-	/* player bar */
-	for (i = 0; i < MAX_TEAMLIST; i++) {
-		if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
-			MN_ExecuteConfunc("huddisable %i", i);
-		} else if (i == cl_selected->integer) {
-			MN_ExecuteConfunc("hudselect %i", i);
-		} else {
-			MN_ExecuteConfunc("huddeselect %i", i);
-		}
-	}
+static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *oldValue, const char *newValue)
+{
+	if (oldValue[0] != '\0')
+		MN_ExecuteConfunc("huddeselect %s", oldValue);
+	if (newValue[0] != '\0')
+		MN_ExecuteConfunc("hudselect %s", newValue);
 }
 
 void HUD_InitStartup (void)
@@ -1326,6 +1323,8 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+
+	Cvar_RegisterChangeListener("cl_selected", HUD_ActorSelectionChangeListener);
 
 	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
