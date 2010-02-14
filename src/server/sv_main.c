@@ -294,7 +294,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->player->num = playernum;
 
 	/* get the game a chance to reject this connection or modify the userinfo */
-	if (!ge->ClientConnect(player, userinfo)) {
+	if (!ge->ClientConnect(player, userinfo, sizeof(userinfo))) {
 		const char *rejmsg = Info_ValueForKey(userinfo, "rejmsg");
 		if (rejmsg[0] != '\0') {
 			NET_OOB_Printf(stream, "print\n%s\nConnection refused.\n", rejmsg);

@@ -1307,7 +1307,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
  * and reject connection if so
  * @return @c false if the connection is refused, @c true otherwise
  */
-qboolean G_ClientConnect (player_t * player, char *userinfo)
+qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize)
 {
 	const char *value;
 
@@ -1317,18 +1317,18 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	/* check to see if they are on the banned IP list */
 	if (SV_FilterPacket(value)) {
-		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_BANNED);
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_BANNED);
 		return qfalse;
 	}
 
 	if (!G_PlayerToPM(player)) {
-		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", "Server is full");
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", "Server is full");
 		return qfalse;
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
 	if (password->string[0] != '\0' && strcmp(password->string, "none") && strcmp(password->string, value)) {
-		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}
 
