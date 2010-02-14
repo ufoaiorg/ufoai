@@ -1017,7 +1017,7 @@ void CL_ActorInvMove (const le_t *le, int fromContainer, int fromX, int fromY, i
  * @sa CL_ActorDoorAction
  * @sa G_ClientUseEdict
  */
-void CL_ActorUseDoor (const le_t *le)
+static void CL_ActorUseDoor (const le_t *le)
 {
 	if (!CL_ActorCheckAction(le))
 		return;
