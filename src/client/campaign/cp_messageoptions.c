@@ -212,10 +212,11 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		messageSettings_t actualSetting = messageSettings[type];
 		mxml_node_t *s = mxml_AddNode(n, SAVE_MESSAGEOPTIONS_TYPE);
+
 		mxml_AddString(s, SAVE_MESSAGEOPTIONS_NAME, nt_strings[type]);
-		mxml_AddBool(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
-		mxml_AddBool(s, SAVE_MESSAGEOPTIONS_PAUSE, actualSetting.doPause);
-		mxml_AddBool(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
+		mxml_AddBoolValue(s, SAVE_MESSAGEOPTIONS_NOTIFY, actualSetting.doNotify);
+		mxml_AddBoolValue(s, SAVE_MESSAGEOPTIONS_PAUSE, actualSetting.doPause);
+		mxml_AddBoolValue(s, SAVE_MESSAGEOPTIONS_SOUND, actualSetting.doSound);
 	}
 
 	return qtrue;
