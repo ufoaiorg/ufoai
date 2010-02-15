@@ -35,14 +35,14 @@ DTD:
 
 <!ELEMENT base pos>
 <!ATTLIST base
-	supply		NMTOKEN		0
-	stealth		NMTOKEN		0.0
+	supply		CDATA		0
+	stealth		CDATA		0.0
 >
 
 <!ELEMENT pos EMPTY>
 <!ATTLIST pos
-	x			NMTOKEN		0.0
-	y			NMTOKEN		0.0
+	x			CDATA		0.0
+	y			CDATA		0.0
 >
 */
 

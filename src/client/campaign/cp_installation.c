@@ -536,6 +536,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 /**
  * @brief Save callback for savegames in xml
+ * @param[out] p XML Node structure, where we write the information to
  * @sa INS_LoadXML
  * @sa SAV_GameSaveXML
  */
@@ -544,6 +545,8 @@ qboolean INS_SaveXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *n;
 	n = mxml_AddNode(p, SAVE_INSTALLATION_INSTALLATIONS);
+
+	Com_RegisterConstList(saveInstallationConstants);
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		mxml_node_t *s, *ss;
@@ -555,20 +558,22 @@ qboolean INS_SaveXML (mxml_node_t *p)
 		mxml_AddString(s, SAVE_INSTALLATION_TEMPLATEID, inst->installationTemplate->id);
 		mxml_AddString(s, SAVE_INSTALLATION_NAME, inst->name);
 		mxml_AddPos3(s, SAVE_INSTALLATION_POS, inst->pos);
-		mxml_AddInt(s, SAVE_INSTALLATION_STATUS, inst->installationStatus);
+		mxml_AddString(s, SAVE_INSTALLATION_STATUS, Com_GetConstVariable(SAVE_INSTALLATIONSTATUS_NAMESPACE, inst->installationStatus));
 		mxml_AddInt(s, SAVE_INSTALLATION_DAMAGE, inst->installationDamage);
 		mxml_AddFloat(s, SAVE_INSTALLATION_ALIENINTEREST, inst->alienInterest);
 		mxml_AddInt(s, SAVE_INSTALLATION_BUILDSTART, inst->buildStart);
 
 		ss = mxml_AddNode(s, SAVE_INSTALLATION_BATTERIES);
-		mxml_AddInt(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
+		mxml_AddIntValue(ss, SAVE_INSTALLATION_NUM, inst->numBatteries);
 		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 	}
+	Com_UnregisterConstList(saveInstallationConstants);
 	return qtrue;
 }
 
 /**
  * @brief Load callback for savegames
+ * @param[in] p XML Node structure, where we get the information from
  * @sa INS_SaveXML
  * @sa SAV_GameLoadXML
  * @sa INS_LoadItemSlots
@@ -578,26 +583,37 @@ qboolean INS_LoadXML (mxml_node_t *p)
 	mxml_node_t *s;
 	mxml_node_t *n = mxml_GetNode(p, SAVE_INSTALLATION_INSTALLATIONS);
 	int i;
+	qboolean success = qtrue;
 
 	if (!n)
 		return qfalse;
 
+	Com_RegisterConstList(saveInstallationConstants);
 	for (i = 0, s = mxml_GetNode(n, SAVE_INSTALLATION_INSTALLATION); s && i < MAX_INSTALLATIONS; s = mxml_GetNextNode(s,n, SAVE_INSTALLATION_INSTALLATION), i++) {
 		mxml_node_t *ss;
 		installation_t *inst = INS_GetInstallationByIDX(i);
+		const char *instID = mxml_GetString(s, SAVE_INSTALLATION_TEMPLATEID);
+		const char *instStat = mxml_GetString(s, SAVE_INSTALLATION_STATUS);
+
 		inst->idx = INS_GetInstallationIDX(inst);
 		inst->founded = qtrue;
 
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(mxml_GetString(s, SAVE_INSTALLATION_TEMPLATEID));
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(instID);
 		if (!inst->installationTemplate) {
-			Com_Printf("Could not find installation template\n");
-			return qfalse;
+			Com_Printf("Could not find installation template '%s'\n", instID);
+			success = qfalse;
+			break;
+		}
+
+		if (!Com_GetConstInt(instStat, (int*) &inst->installationStatus)) {
+			Com_Printf("Invaild installation status '%s'\n", instStat);
+			success = qfalse;
+			break;
 		}
 
 		Q_strncpyz(inst->name, mxml_GetString(s, SAVE_INSTALLATION_NAME), sizeof(inst->name));
 		mxml_GetPos3(s, SAVE_INSTALLATION_POS, inst->pos);
 
-		inst->installationStatus = mxml_GetInt(s, SAVE_INSTALLATION_STATUS, 0);
 		inst->installationDamage = mxml_GetInt(s, SAVE_INSTALLATION_DAMAGE, 0);
 		inst->alienInterest = mxml_GetFloat(s, SAVE_INSTALLATION_ALIENINTEREST, 0.0);
 		inst->buildStart = mxml_GetInt(s, SAVE_INSTALLATION_BUILDSTART, 0);
@@ -619,7 +635,8 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		ss = mxml_GetNode(s, SAVE_INSTALLATION_BATTERIES);
 		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
-			return qfalse;
+			success = qfalse;
+			break;
 		}
 		inst->numBatteries = mxml_GetInt(ss, SAVE_INSTALLATION_NUM, 0);
 		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
@@ -630,8 +647,9 @@ qboolean INS_LoadXML (mxml_node_t *p)
 
 		ccs.numInstallations++;
 	}
-
+	Com_UnregisterConstList(saveInstallationConstants);
 	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 
-	return qtrue;
+	return success;
 }
+
