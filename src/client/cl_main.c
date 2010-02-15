@@ -361,7 +361,6 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "new\n");
 		NET_WriteMsg(cls.netStream, msg);
-		CL_SetClientState(ca_connected);
 		return;
 	}
 
@@ -1036,6 +1035,7 @@ void CL_SetClientState (int state)
 		break;
 	case ca_disconnected:
 		cls.waitingForStart = 0;
+		break;
 	case ca_connected:
 		/* wipe the client_state_t struct */
 		CL_ClearState();
