@@ -369,11 +369,16 @@ void CP_CreateBattleParameters (mission_t *mission)
 ====================================*/
 
 /**
- * @brief Get a mission in ccs.missions by Id.
+ * @brief Get a mission in ccs.missions by Id without error messages.
+ * @param[in] missionId Unique string id for the mission
+ * @return pointer to the mission or NULL if Id was NULL or mission not found
  */
-mission_t* CP_GetMissionByID (const char *missionId)
+mission_t* CP_GetMissionByIDSilent (const char *missionId)
 {
 	const linkedList_t *list = ccs.missions;
+
+	if (!missionId)
+		return NULL;
 
 	for (;list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
@@ -381,8 +386,24 @@ mission_t* CP_GetMissionByID (const char *missionId)
 			return mission;
 	}
 
-	Com_Printf("CP_GetMissionByID: Could not find mission %s\n", missionId);
 	return NULL;
+}
+
+/**
+ * @brief Get a mission in ccs.missions by Id.
+ * @param[in] missionId Unique string id for the mission
+ * @return pointer to the mission or NULL if Id was NULL or mission not found
+ */
+mission_t* CP_GetMissionByID (const char *missionId)
+{
+	mission_t *mission = CP_GetMissionByIDSilent(missionId);
+
+	if (!missionId)
+		Com_Printf("CP_GetMissionByID: missionId was NULL!\n");
+	else if (!mission)
+		Com_Printf("CP_GetMissionByID: Could not find mission %s\n", missionId);
+
+	return mission;
 }
 
 /**
@@ -1399,7 +1420,7 @@ static inline void CP_SetMissionName (mission_t *mission)
 		/* check whether a mission with the same id already exists in the list
 		 * if so, generate a new name by using an increased num values - otherwise
 		 * just use the mission->id we just stored - it should be unique now */
-		if (!LIST_ContainsString(ccs.missions, mission->id))
+		if (!CP_GetMissionByIDSilent(mission->id))
 			break;
 
 		num++;

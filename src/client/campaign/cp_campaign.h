@@ -199,7 +199,7 @@ typedef struct alienTeamCategory_s {
  */
 typedef struct mission_s {
 	int idx;						/**< unique id of this mission */
-	char id[MAX_VAR];				/**< script id (must be first element of mission_t to use LIST_ContainsString) */
+	char id[MAX_VAR];				/**< script id */
 	mapDef_t* mapDef;				/**< mapDef used for this mission */
 	qboolean active;				/**< aircraft at place? */
 	void* data;						/**< may be related to mission type (like pointer to base attacked, or to alien base) */
