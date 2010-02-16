@@ -807,8 +807,6 @@ void CP_UpdateMissionVisibleOnGeoscape (void)
  */
 void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 {
-	linkedList_t *list;
-
 	assert(mission->ufo);
 
 	/* UFO is landed even if it's destroyed: crash site mission is spawned */
@@ -819,13 +817,15 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 	MAP_NotifyUFORemoved(mission->ufo, destroyed);
 
 	if (destroyed) {
+		linkedList_t *list;
+
 		/* remove UFO from radar and update idx of ufo in radar array */
 		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 		/* Update UFO idx */
-		list = ccs.missions;
-		for (; list; list = list->next) {
+		for (list = ccs.missions; list; list = list->next) {
 			mission_t *removedMission = (mission_t *)list->data;
+
 			if (removedMission->ufo && (removedMission->ufo > mission->ufo))
 				removedMission->ufo--;
 		}
