@@ -2715,34 +2715,20 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	}
 }
 
-static void B_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboolean weapon)
-{
-	const objDef_t *ammo = slot->ammo;
-	const objDef_t *nextAmmo = slot->nextAmmo;
-	if (slot->item)
-		mxml_AddString(p, SAVE_BASES_ITEMID, slot->item->id);
-	if (weapon && ammo)
-		mxml_AddString(p, SAVE_BASES_AMMOID, ammo->id);
-	if (slot->nextItem)
-		mxml_AddString(p, SAVE_BASES_NEXTITEMID, slot->nextItem->id);
-	if (weapon && nextAmmo)
-		mxml_AddString(p, SAVE_BASES_NEXTAMMOID, nextAmmo->id);
-	mxml_AddInt(p, SAVE_BASES_INSTALLATIONTIME, slot->installationTime);
-	/* everything below is only for weapon */
-	if (!weapon)
-		return;
-	mxml_AddInt(p, SAVE_BASES_AMMOLEFT, slot->ammoLeft);
-	mxml_AddInt(p, SAVE_BASES_DELAYNEXTSHOT, slot->delayNextShot);
-}
-
+/**
+ * @brief Saves the missile and laser slots of a base or sam site.
+ * @param[in] weapons Defence weapons array
+ * @param[in] numWeapons Number of entries in weapons array
+ * @param[out] parent XML Node structure, where we write the information to
+ */
 void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml_node_t *node)
 {
 	int i;
 
 	for (i = 0; i < numWeapons; i++) {
 		mxml_node_t *sub = mxml_AddNode(node, SAVE_BASES_WEAPON);
-		B_SaveOneSlotXML(&weapons[i].slot, sub, qtrue);
-		mxml_AddBool(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
+		AIR_SaveOneSlotXML(&weapons[i].slot, sub, qtrue);
+		mxml_AddBoolValue(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
 			mxml_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
 	}
@@ -2862,7 +2848,10 @@ qboolean B_SaveXML (mxml_node_t *parent)
 }
 
 /**
- * @brief Loads the missile and laser slots of a base.
+ * @brief Loads the missile and laser slots of a base or sam site.
+ * @param[out] weapons Defence weapons array
+ * @param[out] numWeapons Number of entries in weapons array
+ * @param[in] parent XML Node structure, where we load the information from
  * @sa B_Load
  * @sa B_SaveBaseSlots
  */

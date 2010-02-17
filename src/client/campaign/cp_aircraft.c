@@ -2411,7 +2411,7 @@ static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t route)
 	}
 }
 
-static void AIR_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboolean weapon)
+void AIR_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboolean weapon)
 {
 	mxml_AddString(p, SAVE_AIRCRAFT_ITEMID, slot->item ? slot->item->id : "");
 	mxml_AddString(p, SAVE_AIRCRAFT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
