@@ -55,11 +55,11 @@ DTD:
 
 <!ELEMENT employee character>
 <!ATTLIST employee
-	IDX			#NMTOKEN	#REQUIRED
-	baseHired	#NMTOKEN	#IMPLIED
-	building	#NMTOKEN	#IMPLIED
-	nation		#CDATA		#REQUIRED
-	UGV			#CDATA		#IMPLIED
+	IDX			CDATA		#REQUIRED
+	baseHired	CDATA		#IMPLIED
+	building	CDATA		#IMPLIED
+	nation		CDATA		#REQUIRED
+	UGV			CDATA		#IMPLIED
 >
 
 ** for <character> check save_character.h

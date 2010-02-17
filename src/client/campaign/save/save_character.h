@@ -79,40 +79,40 @@ DTD: (incomplete)
 
 <!ELEMENT character (scores, inventory)>
 <!ATTLIST character
-	name			#CDATA		#IMPLIED
-	body			#CDATA		#IMPLIED
-	path			#CDATA		#IMPLIED
-	head			#CDATA		#IMPLIED
-	skin			#NMTOKEN	0
-	teamdefIDX		#NMTOKEN	#REQUIRED
-	gender			#NMTOKEN	0
-	ucn				#NMTOKEN	0
-	maxHp			#NMTOKEN	0
-	hp				#NMTOKEN	0
-	stun			#NMTOKEN	0
-	morale			#NMTOKEN	0
-	fieldSize		#NMTOKEN	1
+	name			CDATA		#IMPLIED
+	body			CDATA		#IMPLIED
+	path			CDATA		#IMPLIED
+	head			CDATA		#IMPLIED
+	skin			CDATA		0
+	teamdefIDX		CDATA		#REQUIRED
+	gender			CDATA		0
+	ucn				CDATA		0
+	maxHp			CDATA		0
+	hp				CDATA		0
+	stun			CDATA		0
+	morale			CDATA		0
+	fieldSize		CDATA		1
 >
 
 <!ELEMENT scores (skill*, kill*)>
 <!ATTLIST scores
-	missions		#NMTOKEN	0
-	rank			#NMTOKEN	-1
+	missions		CDATA		0
+	rank			CDATA		-1
 >
 
 <!ELEMENT skill EMPTY>
 <!ATTLIST skill
-	type			#CDATA		#REQUIRED
-	initial			#NMTOKEN	0
-	experience		#NMTOKEN	0
-	improve			#NMTOKEN	0
+	type			CDATA		#REQUIRED
+	initial			CDATA		0
+	experience		CDATA		0
+	improve			CDATA		0
 >
 
 <!ELEMENT kill EMPTY>
 <!ATTLIST kill
-	type			#CDATA		#REQUIRED
-	killed			#NMTOKEN	0
-	stunned			#NMTOKEN	0
+	type			CDATA		#REQUIRED
+	killed			CDATA		0
+	stunned			CDATA		0
 >
 
 */

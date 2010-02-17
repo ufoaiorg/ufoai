@@ -79,9 +79,9 @@ DTD: (incomplete)
 
 <!ELEMENT item EMPTY>
 <!ATTLIST item
-	id			#CDATA		#REQUIRED
-	num			#NMTOKEN	0
-	numLoose	#NMTOKEN	0
+	id			CDATA		#REQUIRED
+	num			CDATA		0
+	numLoose	CDATA		0
 >
 */
 

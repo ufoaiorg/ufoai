@@ -231,18 +231,25 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 }
 
 /**
+ * @brief Save one item
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] item Pointer to the item to save
+ * @param[in] container Index of the container the item is in
+ * @param[in] x Horizontal coordinate of the item in the container
+ * @param[in] y Vertical coordinate of the item in the container
  * @sa CL_LoadItemXML
  */
 static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, int y)
 {
 	assert(item.t);
 
-	mxml_AddInt(p, SAVE_INVENTORY_CONTAINER, container);
+	mxml_AddString(p, SAVE_INVENTORY_CONTAINER, csi.ids[container].name);
 	mxml_AddInt(p, SAVE_INVENTORY_X, x);
 	mxml_AddInt(p, SAVE_INVENTORY_Y, y);
-	mxml_AddInt(p, SAVE_INVENTORY_ROTATED, item.rotated);
-	mxml_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
+	mxml_AddIntValue(p, SAVE_INVENTORY_ROTATED, item.rotated);
 	mxml_AddString(p, SAVE_INVENTORY_WEAPONID, item.t->id);
+	/** @todo: is there any case when amount != 1 for soldier inventory item? */
+	mxml_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
 	if (item.a > NONE_AMMO) {
 		mxml_AddString(p, SAVE_INVENTORY_MUNITIONID, item.m->id);
 		mxml_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
@@ -250,6 +257,9 @@ static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, i
 }
 
 /**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] i Pointerto the inventory to save
  * @sa CL_SaveItemXML
  * @sa CL_LoadInventoryXML
  */
@@ -274,23 +284,38 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 }
 
 /**
+ * @brief Load one item
+ * @param[in] p XML Node structure, where we write the information to
+ * @param[out] item Pointer to the item
+ * @param[out] container Index of the container the item is in
+ * @param[out] x Horizontal coordinate of the item in the container
+ * @param[out] y Vertical coordinate of the item in the container
  * @sa CL_SaveItemXML
  */
 static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x, int *y)
 {
-	const char *itemID;
+	const char *itemID = mxml_GetString(n, SAVE_INVENTORY_WEAPONID);
+	const char *contID = mxml_GetString(n, SAVE_INVENTORY_CONTAINER);
+	int i;
 
 	/* reset */
 	memset(item, 0, sizeof(*item));
-	item->a = mxml_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
-	item->rotated = mxml_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
-	item->amount = mxml_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
+
+	for (i = 0; i < csi.numIDs; i++) {
+		if (!strcmp(csi.ids[i].name, contID))
+			break;
+	}
+	if (i >= csi.numIDs) {
+		Com_Printf("Invalid container id '%s'\n", contID);
+	}
+	*container = i;
+
+	item->t = INVSH_GetItemByID(itemID);
 	*x = mxml_GetInt(n, SAVE_INVENTORY_X, 0);
 	*y = mxml_GetInt(n, SAVE_INVENTORY_Y, 0);
-	*container = mxml_GetInt(n, SAVE_INVENTORY_CONTAINER, 0);
-	itemID = mxml_GetString(n, SAVE_INVENTORY_WEAPONID);
-	item->t = INVSH_GetItemByID(itemID);
-
+	item->rotated = mxml_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
+	item->amount = mxml_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
+	item->a = mxml_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
 	if (item->a > NONE_AMMO) {
 		itemID = mxml_GetString(n, SAVE_INVENTORY_MUNITIONID);
 		item->m = INVSH_GetItemByID(itemID);
@@ -302,6 +327,9 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 }
 
 /**
+ * @brief Load callback for savegames in XML Format
+ * @param[in] p XML Node structure, where we load the information from
+ * @param[out] i Pointerto the inventory
  * @sa CL_SaveInventoryXML
  * @sa CL_LoadItemXML
  * @sa I_AddToInventory
@@ -313,7 +341,11 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 	for (s = mxml_GetNode(p, SAVE_INVENTORY_ITEM); s; s = mxml_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		item_t item;
 		int container, x, y;
+
 		CL_LoadItemXML(s, &item, &container, &x, &y);
+		if ((container < 0) || (container >= csi.numIDs))
+			continue;
+
 		if (!cls.i.AddToInventory(&cls.i, i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}

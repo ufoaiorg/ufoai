@@ -37,14 +37,14 @@ DTD:
 
 <!ELEMENT nation month*>
 <!ATTLIST nation
-	id			#CDATA		#REQUIRED
+	id			CDATA		#REQUIRED
 >
 
 <!ELEMENT month EMPTY>
 <!ATTLIST month
-	IDX			#NMTOKEN	#REQUIRED
-	happiness	#NMTOKEN	0.0
-	XVI			#NMTOKEN	0
+	IDX			CDATA		#REQUIRED
+	happiness	CDATA		0.0
+	XVI			CDATA		0
 >
 */
 
