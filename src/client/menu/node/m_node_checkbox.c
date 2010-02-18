@@ -115,6 +115,9 @@ static void MN_CheckBoxNodeCallActivate (menuNode_t *node, const menuCallContext
  */
 static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 {
+	if (node->onClick)
+		MN_ExecuteEventActions(node, node->onClick);
+
 	MN_CheckBoxNodeActivate(node);
 }
 
