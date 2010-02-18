@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-02-13 04:13+0200\n"
+"PO-Revision-Date: 2010-02-17 01:37+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -1055,9 +1055,8 @@ msgid "mail_alien_ufo_crashed"
 msgstr ""
 
 #: ../base/ufos/events.ufo:69
-#, fuzzy
 msgid "mail_alien_ufo_recovered"
-msgstr "Muukalaistoimintaa havaittu: %s"
+msgstr ""
 
 #: ../base/ufos/events.ufo:79
 msgid "Not Enough Money -- %s"
@@ -1583,16 +1582,16 @@ msgstr "Vanhanaikainen esikaupunki alue."
 #: ../base/ufos/maps.ufo:2057
 #: ../base/ufos/maps.ufo:2104
 msgid "A small neighbourhood in a warm urban region."
-msgstr ""
+msgstr "Pieni asuinalue lämpimässä kaupungissa."
 
 #: ../base/ufos/maps.ufo:2152
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr ""
+msgstr "Paikka, johon kansalaiset tulevat täydennettämään ajoneuvojen polttoaine säiliön."
 
 #: ../base/ufos/maps.ufo:2201
 #: ../base/ufos/maps.ufo:2245
 msgid "An urban district in an oriental region."
-msgstr ""
+msgstr "Itämainen taajama-alue"
 
 #: ../base/ufos/maps.ufo:2289
 msgid "Underground pipe construction site."
@@ -1600,7 +1599,7 @@ msgstr "Maanalainen putkityömaa."
 
 #: ../base/ufos/maps.ufo:2336
 msgid "A subway station in a suburban part of town."
-msgstr ""
+msgstr "Metroasema esikaupunki alueella."
 
 #: ../base/ufos/maps.ufo:2382
 msgid "An office complex in the centre of town."
@@ -1608,11 +1607,11 @@ msgstr "Toimistorakennuksia keskellä kaupunkia."
 
 #: ../base/ufos/maps.ufo:2430
 msgid "A suburban district."
-msgstr ""
+msgstr "Esikaupunkien alueella."
 
 #: ../base/ufos/maps.ufo:2475
 msgid "A military convoy has caught the eye of the aliens."
-msgstr ""
+msgstr "Sotilas-saattue, joka tarkkailee alieneita."
 
 #: ../base/ufos/maps.ufo:2522
 #: ../base/ufos/maps.ufo:2568
@@ -1629,19 +1628,19 @@ msgstr "Paikallinen satama"
 
 #: ../base/ufos/maps.ufo:2709
 msgid "An office complex on the outskirts of town."
-msgstr ""
+msgstr "Toimistokompleksi kaupungin laitamilla."
 
 #: ../base/ufos/maps.ufo:2754
 msgid "A luxurious vacation resort."
-msgstr ""
+msgstr "Ylellinen matkakohde."
 
 #: ../base/ufos/maps.ufo:2811
 msgid "A suburb that has been visited by UFO."
-msgstr ""
+msgstr "Lähiö, jossa UFO on käynyt."
 
 #: ../base/ufos/maps.ufo:2863
 msgid "A suburb that has received a visit from a Harvester."
-msgstr ""
+msgstr "Lähiö, jossa on vierauiltu UFO sadonkorjaajalla."
 
 #: ../base/ufos/maps.ufo:2914
 msgid "An alien Harvester has crashed in the wastelands."
@@ -1654,7 +1653,7 @@ msgstr "Talvinen tehtävä."
 
 #: ../base/ufos/maps.ufo:3033
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr ""
+msgstr "Turvakoti, joka rakennettiin ihmisille suuronnettomuuksien ajaksi. Jotkut sisäiset räjähdysovet voivat olla suljettu."
 
 #: ../base/ufos/maps.ufo:3081
 msgid "A Bomber has landed in the middle of a city."
@@ -1666,7 +1665,7 @@ msgstr "Paikka minne ihmiset tulevat rentoutumaan."
 
 #: ../base/ufos/maps.ufo:3182
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
+msgstr "Laboratorio, jossa tutkitaan löytyneitä UFO hylyn laattoja."
 
 #: ../base/ufos/maps.ufo:3230
 msgid "A fuel depot the aliens try to destroy."
@@ -2105,11 +2104,11 @@ msgid "alien_breathing_txt"
 msgstr ""
 "Komentaja,\n"
 "\n"
-"Olemme tehneet perusteellisen selvityksen muukalaisen ruumiinavauksesta löytyneestä laitteesta.Mielestäni olemme nyt valmiita tekemään siitä päätelmiä.Meidän tutkimus osoittaa, että alienin kudokset ovat kasvaneet. Arpia on löytynyt alienin kurkunpäästä. Voimme näin päätellä, että laitteita on kirurgisesti istutettu kurkkuun hyvin varhaisessa iässä.Jossain vaiheessa murrosiässä, lapsille tarkoitettu laite poistetaan ja aikuisten versio istutetaan.\n"
+"Olemme tehneet perusteellisen selvityksen alienin ruumiinavauksesta löytyneestä laitteesta.Mielestäni olemme nyt valmiita tekemään siitä päätelmiä.Meidän tutkimus osoittaa, että alienin kudokset ovat kasvaneet. Arpia on löytynyt alienin kurkunpäästä. Voimme näin päätellä, että laitteita on kirurgisesti istutettu kurkkuun hyvin varhaisessa iässä.Jossain vaiheessa murrosiässä, lapsille tarkoitettu laite poistetaan ja aikuisten versio istutetaan.\n"
 "\n"
 "Olemme tutkineet useita eri vaihtoehtoja laitteen toiminnasta ravinnon jalostamiseen ja itsemurhalaitteeseen, mutta selvä vastaus osoittautui olevan oikea.Se on jonkinlainen hengityssuojain, jolloin alienit voivat selviytyä meidän ilmakehässä ja mahdollisesti myös muissa ilmakehissä. Jokainen orgaanisessa mallissa on tällainen laite, jossa on kaikki samat toiminnot, mikä tarkoittaa ette ne toimivat funktionaalisesti ja he voivat selviytyä missä tahansa ilmakehässä.Tai sitten me näemme vain yksilöitä, jotka ovat tarkoitettu vain planeettojen toimintaa varten.Varmasti ulkoinen hengityssuojain olisi helpompi ja edullisempi käyttää, jos näillä yksilöillä olisi tarkoitus tehdä vain lyhyitä retkiä vihamielisiin atmosfääreihin.\n"
 "\n"
-"Laite koostuu hienostuneesta suodattimesta, joka on laitettu kohteen henkitorveen, ja kahdesta pienestä pallomaisesta säilöstä, jotka ovat sijoitettu molemmin puolin aivokudosta, joka yhdistyy henkitorveen pienen metalliputken avulla. Nämä säiliöt ovat täytetty kaasuseoksella, joka puristetaan nestemäisessä olomuodossa, niiden toiminta näyttää perustuvan samanlaiseen ideaan kuin scuba diverin happipullot. Suodatin mekanismi on älykäs, se tunnollisesti poistaa kaikki haitalliset aineet, mutta antaa hyödyllistä osia vain läpi. Säiliöt voidaan täyttää tekemällä pieni mekaaninen napa muukalaisen kaulaan takana.\n"
+"Laite koostuu hienostuneesta suodattimesta, joka on laitettu kohteen henkitorveen, ja kahdesta pienestä pallomaisesta säilöstä, jotka ovat sijoitettu molemmin puolin aivokudosta, joka yhdistyy henkitorveen pienen metalliputken avulla. Nämä säiliöt ovat täytetty kaasuseoksella, joka puristetaan nestemäisessä olomuodossa, niiden toiminta näyttää perustuvan samanlaiseen ideaan kuin scuba diverin happipullot. Suodatin mekanismi on älykäs, se tunnollisesti poistaa kaikki haitalliset aineet, mutta antaa hyödyllistä osia vain läpi. Säiliöt voidaan täyttää tekemällä pieni mekaaninen napa alienin kaulaan takana.\n"
 "\n"
 "Tarkastelu säiliöiden sisällöstä on antanut meille tarkkaa tietoa alieneiden ilmakehästä.Meillä on nyt useita seoksia varastoitu, uskomme että voimme tukea erilaisten alieneiden säilyttämistä alienin säilytystilassa. Muutamia seoksia ovat typpi-happi-yhdisteet, hyvin samankaltainen kuin omamme, mutta toiset eivät sisällä happea lainkaan. Jos näitä kaikkia seoksia käyttävät yksi tai useampi alien lajeista, jotkut näistä vihollisista näyttävät hengittävän ilmakehässä melkein lähes puhdasta metaania.\n"
 "\n"
@@ -2180,7 +2179,7 @@ msgstr ""
 #: client/campaign/cp_alienbase.c:169
 #: client/campaign/cp_missions.c:438
 msgid "Alien base"
-msgstr "Muukalaisten tukikohta"
+msgstr "Alienin tukikohta"
 
 #: ../base/ufos/research.ufo:520
 msgid "alien_base_txt"
@@ -2200,7 +2199,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:579
 msgid "Alien Origins"
-msgstr "Muukalaisten alkuperä"
+msgstr "Alieneiden alkuperä"
 
 #: ../base/ufos/research.ufo:584
 msgid "alien_origins_txt"
@@ -2261,11 +2260,11 @@ msgstr ""
 "\n"
 "Yleisesti\n"
 "\n"
-"Alienhyökkäys Mumbaihin on tehnyt meidän tilanteemme valitettavan selväksi. Heidän teknologiansa on paljon omaamme kehittyneempää. Kansainyhteisön täydellinen kyvyttömyys edes naarmuttaa vihollisen hyökkääjiä on paljastanut kriittisen heikkouden nykyisessä sotilaskoulutksessa ja välineistössä. He menettivät kolme pataljoonaa pakottaakseen muukalaiset edes tasatilanteeseen aiheuttamatta yhtään suurta vahinkoa. PHALANXin pitää ylittää nuo kertoimet ja sen tehdäkseen me tarvitsemme parhaimmat mahdolliset välineet mitä ihmisteknologia tarjoaa.\n"
+"Alienhyökkäys Mumbaihin on tehnyt meidän tilanteemme valitettavan selväksi. Heidän teknologiansa on paljon omaamme kehittyneempää. Kansainyhteisön täydellinen kyvyttömyys edes naarmuttaa vihollisen hyökkääjiä on paljastanut kriittisen heikkouden nykyisessä sotilaskoulutksessa ja välineistössä. He menettivät kolme pataljoonaa pakottaakseen alienit edes tasatilanteeseen aiheuttamatta yhtään suurta vahinkoa. PHALANXin pitää ylittää nuo kertoimet ja sen tehdäkseen me tarvitsemme parhaimmat mahdolliset välineet mitä ihmisteknologia tarjoaa.\n"
 "\n"
-"Excalibur-ohjelma tehtiin löytämään tehokkaimmat mahdolliset aseet maan päällä on tarkistamalla niiden valmistusstantardit, kestävyys, käyttöhistoria ja taistelusta suoriutuminen tilanteissa missä onnistuimme taistelemaan muukalaisten kanssa.\n"
+"Excalibur-ohjelma tehtiin löytämään tehokkaimmat mahdolliset aseet maan päällä on tarkistamalla niiden valmistusstantardit, kestävyys, käyttöhistoria ja taistelusta suoriutuminen tilanteissa missä onnistuimme taistelemaan alieneiden kanssa.\n"
 "\n"
-"Ranskalainen Leblanc FAA-191 (Fusil Assaut Automatique) tarjoaa parhaan mahdollisen yhdistelmän kantamaa, alieneiden panssarin läpäisyä ja lipaskokoa rynnäkköaseluokassa. Sillä on bullpup-tyyppinen rakenne, tarkoittaen että lipas ja lukkokoneisto ovat liipaisimen takana lyhentäen aseen kokonaispituutta. 191 ampuu 30-panoksen lippaista 4.7mm hylsytöntä panosta, volframi-sisuksilla varustettuja teräsläpäisijöitä, joilla on huomattava läpäisykyky keskilyhyellä kantamalla. Panos ei suoriudu hyvin pitkällä kantamalla, mutta rynnäkökiväärejä ei ikinä suunniteltukkaan pitkän matkan taisteluihin.\n"
+"Ranskalainen Leblanc FAA-191 (Fusil Assaut Automatique) tarjoaa parhaan mahdollisen yhdistelmän kantamaa, alienin panssarin läpäisyä ja lipaskokoa rynnäkköaseluokassa. Sillä on bullpup-tyyppinen rakenne, tarkoittaen että lipas ja lukkokoneisto ovat liipaisimen takana lyhentäen aseen kokonaispituutta. 191 ampuu 30-panoksen lippaista 4.7mm hylsytöntä panosta, volframi-sisuksilla varustettuja teräsläpäisijöitä, joilla on huomattava läpäisykyky keskilyhyellä kantamalla. Panos ei suoriudu hyvin pitkällä kantamalla, mutta rynnäkökiväärejä ei ikinä suunniteltukkaan pitkän matkan taisteluihin.\n"
 "\n"
 "Vaikkakin se ei ole uusi ase, ensimmäinen prototyyppi vuonna 2057, yksikään kivääri ei ole täysin päihittänyt 191: stä. Se on tarkka ja sen lipas on nopea vaihtaa. Sen kestävä rakenne tekee siitä luotettavan taistelussa ja se ei todennäköisesti hajoa. Se on kuumuuden, kylmyyden, pölyn ja kosteuden kestävä samaan aikaan. Panoksia ja varaosia on yleisesti saatavilla kiitos aseen iän ja suhteellisen suosion Maan sotavoimien keskuudessa. Se on kivääri, jonka varaan voit laittaa henkesi.\n"
 "\n"
@@ -2369,7 +2368,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1111
 msgid "Monomolecular Blades"
-msgstr ""
+msgstr "Monomolekulaarinen Terä"
 
 #: ../base/ufos/research.ufo:1116
 msgid "monoknife_txt"
@@ -2554,7 +2553,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1975
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
-msgstr ""
+msgstr "Neula Ase"
 
 #: ../base/ufos/research.ufo:1900
 msgid "needlergun_txt"
@@ -2567,7 +2566,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1935
 #: ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
-msgstr ""
+msgstr "Raskas Neula Ase"
 
 #: ../base/ufos/research.ufo:1940
 msgid "needlerheavy_txt"
@@ -2589,7 +2588,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2015
 #: ../base/ufos/weapons_human.ufo:392
 msgid "Coilgun"
-msgstr ""
+msgstr "Silmukka-ase"
 
 #: ../base/ufos/research.ufo:2053
 msgid "shotgun2_txt"
@@ -2700,7 +2699,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2536
 msgid "Man-Portable Particle Beams"
-msgstr ""
+msgstr "Miehen Kannettava hiukkassäde"
 
 #: ../base/ufos/research.ufo:2541
 msgid "pbeamammo_txt"
@@ -2744,7 +2743,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2765
 msgid "Blast Damage Type"
-msgstr ""
+msgstr "Räjähdyksen Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2768
 #: ../base/ufos/research.ufo:2781
@@ -2768,51 +2767,51 @@ msgstr "ei mitään"
 
 #: ../base/ufos/research.ufo:2778
 msgid "Fire Damage Type"
-msgstr ""
+msgstr "Palon Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2791
 msgid "Laser Damage Type"
-msgstr ""
+msgstr "Laserin Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2809
 msgid "Impact Damage Type"
-msgstr ""
+msgstr "Törmäyksen Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2822
 msgid "Shock Damage Type"
-msgstr ""
+msgstr "Shokin Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2835
 msgid "Plasma Damage Type"
-msgstr ""
+msgstr "Plastman Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2856
 msgid "Stun Damage Type"
-msgstr ""
+msgstr "Tainnutuksen Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2869
 msgid "Particle Beam Damage Type"
-msgstr ""
+msgstr "Hiukkassäteen Vahinkotyyppi"
 
 #: ../base/ufos/research.ufo:2887
 msgid "Accuracy Attribute"
-msgstr ""
+msgstr "Tarkkuus Attribuutti"
 
 #: ../base/ufos/research.ufo:2900
 msgid "Assault Guns Proficiency"
-msgstr ""
+msgstr "Rynnäkköaseiden Asiantuntemus"
 
 #: ../base/ufos/research.ufo:2913
 msgid "Close Combat Proficiency"
-msgstr ""
+msgstr "Lähi Aseiden Asiantuntemus"
 
 #: ../base/ufos/research.ufo:2926
 msgid "High-Explosives Proficiency"
-msgstr ""
+msgstr "Räjähteiden Asiantuntemus"
 
 #: ../base/ufos/research.ufo:2939
 msgid "Heavy Weapons Proficiency"
-msgstr ""
+msgstr "Raskaiden Aseiden Asiantuntemus"
 
 #: ../base/ufos/research.ufo:2952
 msgid "Mind Attribute"
@@ -3320,24 +3319,24 @@ msgstr ""
 #: ../base/ufos/research.ufo:4917
 msgid "alien_materials_txt"
 msgstr ""
-"Komentaja, mielestäni olemme löytäneet salaiset muukalaisien materiaalit. Olemme tehneet joitakin muutoksia meidän koneihimme työpajoilla, olemme nyt onnistuneet käyttämään materiaalia ja \"ohjelmoida\" se uuteen kehittyneeseen muotoon.\n"
+"Komentaja, mielestäni olemme löytäneet salaiset alienien materiaalit. Olemme tehneet joitakin muutoksia meidän koneihimme työpajoilla, olemme nyt onnistuneet käyttämään materiaalia ja \"ohjelmoida\" se uuteen kehittyneeseen muotoon.\n"
 "\n"
-"Kuten olen aiemmin mainitsin, muukalaisien materiaali muodostaa ns. \"muisti seoksen\", joka muistaa monia muotoja. Se voi muuttua jos materiaalit saavat oikean ärsykkeen. Uskomatonta, muukalaisien seoksella olla kaksi eri asiaa: lämpö ja sähkö. Lämpö on itsestään selvä valinta tehdä muukalaisen aluksen lentorunko, joka leviää ilmakehä lennon aikana.\n"
+"Kuten olen aiemmin mainitsin, alieneiden materiaali muodostaa ns. \"muisti seoksen\", joka muistaa monia muotoja. Se voi muuttua jos materiaalit saavat oikean ärsykkeen. Uskomatonta, alieneiden seoksella olla kaksi eri asiaa: lämpö ja sähkö. Lämpö on itsestään selvä valinta tehdä alieneiden aluksen lentorunko, joka leviää ilmakehä lennon aikana.\n"
 "\n"
 "Hakiessaan sähköä, seos vastaa vain jatkuvan, matalajännitteisenä siinä virtaa hyvin erityinen ampeeriluku. Materiaalin muoto on muodossa niin kauan kuin jännite säilyy. Kun virta on kytketty pois päältä, muoto palautuu normaaliksi, \"levossa\" olevaan muotoon tai lämmön aiheuttamaan muotoon jos tarpeeksi lämpöä on läsnä. Sähkön aiheuttama muoto menee myös lämmön aiheuttamaan muotoon.\n"
 "\n"
-"Tämä tarkoittaa sitä, että muukalaisien lentokoneen rungonmuoto voidaan muuttaa mieleisekseen, joko komento-operaattorilla tai automaattisella elektroniikalla.\n"
+"Tämä tarkoittaa sitä, että alieneiden lentokoneen rungonmuoto voidaan muuttaa mieleisekseen, joko komento-operaattorilla tai automaattisella elektroniikalla.\n"
 "\n"
 "Tämä on antanut hämmästyttävän paljon uusia ideoita. Meidän tulee vain pystyä kehittämään joitakin näistä ideoista käytettäväksi sodassa, mutta teidän pitäisi kuitenkin antaa meille mahdollisuus kehittää asioita joita ei olisi koskaan yritetty aiemmin.\n"
 "\n"
-"Muukalaisien materiaalit ovat nyt käytettävissä tuotannossa. Valitettavasti ne vaativat paljon harvinaisia ja kalliita komponentteja, joita voidaan löytää vain maan päältä pieniä määriä. Ei ole mitään keinoa saada materiaaleja tarvittavia määriä, että se tekisi tuotannosta mahdollisen. Meidän täytyy pelastaa ja varastaa muukalaisilta kaikki komponentit mitä me tarvitsemme, koska emme pysty tuottamaan mitään vielä lähitulevaisuudessa."
+"Alieneiden materiaalit ovat nyt käytettävissä tuotannossa. Valitettavasti ne vaativat paljon harvinaisia ja kalliita komponentteja, joita voidaan löytää vain maan päältä pieniä määriä. Ei ole mitään keinoa saada materiaaleja tarvittavia määriä, että se tekisi tuotannosta mahdollisen. Meidän täytyy pelastaa ja varastaa alieneilta kaikki komponentit mitä me tarvitsemme, koska emme pysty tuottamaan mitään vielä lähitulevaisuudessa."
 
 #: ../base/ufos/research.ufo:4884
 msgid "alien_materials_pre_txt"
 msgstr ""
-"Komentaja, kuten edellisessä kertomuksessa sanoin, muukalaiset olivat päällystäneet aluksensa erittäin mielenkiintoisella seoksella. Seoksella joka sekoittaa sulaa muovia ja metallia yhteen yhdeksi materiaaliksi. Nämä materiaalit näyttävät olevan muukalaisten teknologian perusta. Se on kehittynyttä ainetta, joka mahdollistaa sen käytettäväksi tuhannissa eri sovelluksissa.\n"
+"Komentaja, kuten edellisessä kertomuksessa sanoin, alienit olivat päällystäneet aluksensa erittäin mielenkiintoisella seoksella. Seoksella joka sekoittaa sulaa muovia ja metallia yhteen yhdeksi materiaaliksi. Nämä materiaalit näyttävät olevan alieneiden teknologian perusta. Se on kehittynyttä ainetta, joka mahdollistaa sen käytettäväksi tuhannissa eri sovelluksissa.\n"
 "\n"
-"Mielestäni on perusteltua tehdä tutkimus, jos voisimme kopioida tätä ainetta meidän työpajoilla.Tulemme varmasti löytämään uusia käyttötarkoituksia, mutta vaikka emme voi valmistaa sitä, me voidaan saada käsiimme suuria määriä tätä ainetta mitä muukalaisilta saamme pelastettua.\n"
+"Mielestäni on perusteltua tehdä tutkimus, jos voisimme kopioida tätä ainetta meidän työpajoilla.Tulemme varmasti löytämään uusia käyttötarkoituksia, mutta vaikka emme voi valmistaa sitä, me voidaan saada käsiimme suuria määriä tätä ainetta mitä alieneilta saamme pelastettua.\n"
 "\n"
 "Tulemme varmasti löytämään tästä aineesta uusia käyttötarkoituksia ihmisille.\n"
 "\n"
@@ -3345,7 +3344,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4937
 msgid "Political Situation Before The Invasion"
-msgstr "Poliittinen tilanne ennen muukalaisten hyökkäystä"
+msgstr "Poliittinen tilanne ennen alieneiden hyökkäystä"
 
 #: ../base/ufos/research.ufo:4939
 msgid "news_initial_political_situation_txt"
@@ -3708,19 +3707,19 @@ msgstr "Varusta lentokoneesi sotilailla ja aseilla"
 
 #: ../base/ufos/seq_tutorials.ufo:226
 msgid "Speed up time on geoscape until the first alien mission appears"
-msgstr ""
+msgstr "Nopeuta aikaa maailmankartalla kunnes ensimmäinen alien tehtävä ilmaantuu"
 
 #: ../base/ufos/seq_tutorials.ufo:254
 msgid "Select the mission (doubleclick) and choose aircraft from list"
-msgstr ""
+msgstr "Valitse tehtävä (tupla klikkaamalla) ja valitse lentokone listalta"
 
 #: ../base/ufos/seq_tutorials.ufo:273
 msgid "Hit the start or auto-mission button to fight the aliens"
-msgstr ""
+msgstr "Paina Aloita tai Automaattinen Tehtävä näppäintä taistellaksesi alieneita vastaan"
 
 #: ../base/ufos/seq_tutorials.ufo:298
 msgid "For further instructions watch the tactical mission tutorial"
-msgstr ""
+msgstr "Lisäohjeita näet taktisen tehtävän opetusohjelmasta"
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid "Tactical mission"
@@ -3732,11 +3731,11 @@ msgstr "Taktisen tehtävän opas"
 
 #: ../base/ufos/seq_tutorials.ufo:386
 msgid "Switch view level via left mouseclick"
-msgstr ""
+msgstr "Vaihda näytä taso vasemman hiiren klikkauksen avulla"
 
 #: ../base/ufos/seq_tutorials.ufo:398
 msgid "You can also use the cursor keys to switch the levels"
-msgstr ""
+msgstr "Voit myös käyttää kohdistin näppäimiä tasoille siirtymiseen"
 
 #: ../base/ufos/seq_tutorials.ufo:419
 msgid "The selected soldier"
@@ -3744,11 +3743,11 @@ msgstr "Valittu sotilas"
 
 #: ../base/ufos/seq_tutorials.ufo:441
 msgid "Select soldiers via click"
-msgstr ""
+msgstr "Valitse sotilaat klikkaamalla"
 
 #: ../base/ufos/seq_tutorials.ufo:453
 msgid "Or via the keys 1-8 or Tab"
-msgstr ""
+msgstr "tai näppäimillä 1-8 tai Tabulaattorin avulla"
 
 #: ../base/ufos/seq_tutorials.ufo:474
 msgid "Physical stats"
@@ -3768,7 +3767,6 @@ msgid "Weapon in right hand"
 msgstr "Ase oikeassa kädessä"
 
 #: ../base/ufos/seq_tutorials.ufo:570
-#, fuzzy
 msgid "Shots remaining"
 msgstr "Osumia jäljellä"
 
@@ -3793,8 +3791,9 @@ msgid "Crouch (kneel down) or stand up"
 msgstr "Kyyristy (polvistu alas) tai nouse ylös"
 
 #: ../base/ufos/seq_tutorials.ufo:727
+#, fuzzy
 msgid "Cycle through visible enemies"
-msgstr ""
+msgstr "Jakson läpinäkyviä vihollisia"
 
 #: ../base/ufos/seq_tutorials.ufo:749
 msgid "End round"
@@ -3822,7 +3821,7 @@ msgstr "Päivä tai yö versio kentästä"
 
 #: ../base/ufos/seq_tutorials.ufo:877
 msgid "How many aliens will fight versus you"
-msgstr ""
+msgstr "Kuinka monta alienia vastaan haluat taistella"
 
 #: ../base/ufos/seq_tutorials.ufo:898
 msgid "Select your team"
@@ -3833,12 +3832,16 @@ msgid ""
 "Select UFO to secure \\n"
 "(if possible for current map)"
 msgstr ""
+"Valitse UFO varmista \\n"
+"(jos mahdollista nykyisellä kartalla)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
 msgid ""
 "Select dropship \\n"
 "(if possible for current map)"
 msgstr ""
+"Valitse pudotusalus \\n"
+"(jos mahdollista nykyisellä kartalla)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
@@ -3894,8 +3897,9 @@ msgid "Phoenix"
 msgstr "Phoenix"
 
 #: ../base/ufos/team_humans.ufo:1669
+#, fuzzy
 msgid "Ares W"
-msgstr ""
+msgstr "Aari W"
 
 #: ../base/ufos/tips.ufo:5
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -3935,7 +3939,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr ""
+msgstr "Moninpelissä, voit keskustella painamalla [k] (kaikki), [l] (tiimin jäsenille vain), tai painamalla Keskustele-painikketta HUDissa."
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
@@ -3943,7 +3947,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr "Käytä [Välilyöntiä] näppäintä oven avaamiseen."
+msgstr "Käytä [Välilyönti] näppäintä oven avaamiseen."
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
@@ -3955,7 +3959,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:19
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr ""
+msgstr "Muista käydä sivuillamme, http://ufoai.sourceforge.net/ ja yhteisömme kanavalla #ufoai irc.freenode.net."
 
 #: ../base/ufos/tips.ufo:20
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
@@ -3967,7 +3971,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:22
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
-msgstr ""
+msgstr "Tarkkaile selkääsi! Sotilaasi voivat nähdä vain vihollisia edessään."
 
 #: ../base/ufos/tips.ufo:23
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
@@ -4146,7 +4150,7 @@ msgstr ""
 #: ../base/ufos/ui/_hud.ufo:615
 #: ../base/ufos/ui/_hud.ufo:644
 msgid "Check to use this firemode for reaction fire"
-msgstr ""
+msgstr "Tarkista tulitila käyttääksesi tätä reagointiaikaa "
 
 #: ../base/ufos/ui/_menu.ufo:104
 #: ../base/ufos/ui/geoscape.ufo:271
@@ -4471,7 +4475,7 @@ msgstr "Tukikohdan kapasiteetti:"
 
 #: ../base/ufos/ui/aliencont.ufo:376
 msgid "Kill all aliens in this base"
-msgstr "Tapa kaikki muukalaiset tästä tukikohdasta"
+msgstr "Tapa kaikki alienit tästä tukikohdasta"
 
 #: ../base/ufos/ui/althud.ufo:576
 #: ../base/ufos/ui/inventory.ufo:192
@@ -4565,7 +4569,7 @@ msgstr "Useita laukauksia rektio laukaus"
 
 #: ../base/ufos/ui/althud.ufo:1177
 msgid "Multiple-shot reaction fire (not possible)"
-msgstr "Useita laukauksia reaktio laukaus (ei toiminnassa)"
+msgstr "Useita laukauksia reaktio laukaus (ei mahdollinen)"
 
 #: ../base/ufos/ui/althud.ufo:1182
 #: ../base/ufos/ui/hud.ufo:906
@@ -4574,7 +4578,7 @@ msgstr "Yhden laukauksen reaktio laukaus"
 
 #: ../base/ufos/ui/althud.ufo:1187
 msgid "One-shot reaction fire (not possible)"
-msgstr ""
+msgstr "Yhden laukauksen reaktio laukaus (ei mahdollinen)"
 
 #: ../base/ufos/ui/althud.ufo:1193
 #: ../base/ufos/ui/hud.ufo:918
@@ -4585,7 +4589,7 @@ msgstr "Ei reaktio laukauksia"
 #: ../base/ufos/ui/hud.ufo:874
 #: client/battlescape/cl_hud.c:1050
 msgid "Reserve TUs for shooting."
-msgstr ""
+msgstr "Varattu Tu:ta ampumiseen"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
@@ -4633,7 +4637,7 @@ msgstr "Valitse kohde"
 
 #: ../base/ufos/ui/basedefence.ufo:296
 msgid "Surface to Air defences"
-msgstr ""
+msgstr "Pinta ilmapuolustus"
 
 #: ../base/ufos/ui/basedefence.ufo:326
 msgid "Targetted UFO:"
@@ -4670,7 +4674,7 @@ msgstr "Tuhoa asennus"
 #: ../base/ufos/ui/geoscape.ufo:1540
 #: ../base/ufos/ui/main.ufo:309
 msgid "Close"
-msgstr "Sulje"
+msgstr "Lähi"
 
 #: ../base/ufos/ui/bases.ufo:13
 msgid "Back to geoscape"
@@ -4756,7 +4760,7 @@ msgstr "Eristämistoimenpide"
 #: ../base/ufos/ui/bases.ufo:208
 #: client/campaign/cp_base_callbacks.c:326
 msgid "Deal with Aliens in Alien Containment"
-msgstr ""
+msgstr "Käsittele Alieneita Alienin säilytystilassa"
 
 #: ../base/ufos/ui/bases.ufo:221
 #: client/campaign/cp_base_callbacks.c:331
@@ -4864,11 +4868,11 @@ msgstr "Uudelleen lataa kampanja"
 
 #: ../base/ufos/ui/campaign.ufo:199
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
-msgstr ""
+msgstr "Oletko varma että haluat ladata uudelleen viimeksi automaattisesti tallennetun kampanjan tilan?"
 
 #: ../base/ufos/ui/campaign.ufo:208
 msgid "Reload the last automatically saved campaign state"
-msgstr ""
+msgstr "Uudelleenlataa edellinen automaattisesti tallennettu kampanja"
 
 #: ../base/ufos/ui/equipment.ufo:20
 #: ../base/ufos/ui/inventory.ufo:30
@@ -4955,8 +4959,9 @@ msgstr "Muut"
 #: ../base/ufos/ui/market.ufo:416
 #: ../base/ufos/ui/multiplayer_team.ufo:377
 #: ../base/ufos/ui/ufopedia.ufo:241
+#, fuzzy
 msgid "With:"
-msgstr ""
+msgstr "Koko:"
 
 #: ../base/ufos/ui/equipment.ufo:432
 #: ../base/ufos/ui/market.ufo:455
@@ -5003,12 +5008,14 @@ msgid "Preview"
 msgstr "Esikatselu"
 
 #: ../base/ufos/ui/genradarhud.ufo:89
+#, fuzzy
 msgid "Gen this level"
-msgstr ""
+msgstr "Gen tällä tasolla"
 
 #: ../base/ufos/ui/genradarhud.ufo:104
+#, fuzzy
 msgid "Gen all levels"
-msgstr ""
+msgstr "Gen kaikki tasot"
 
 #: ../base/ufos/ui/geoscape.ufo:199
 msgid "Open up messages"
@@ -5090,7 +5097,7 @@ msgstr "Luo asennus"
 #: ../base/ufos/ui/geoscape.ufo:577
 #: ../base/ufos/ui/geoscape.ufo:2045
 msgid "Highlight nation borders"
-msgstr ""
+msgstr "Korosta kansakunnan rajat"
 
 #: ../base/ufos/ui/geoscape.ufo:589
 #: ../base/ufos/ui/geoscape.ufo:2070
@@ -5164,7 +5171,7 @@ msgstr "Siirry taistelukentälle"
 #: ../base/ufos/ui/geoscape.ufo:702
 #: ../base/ufos/ui/geoscape.ufo:825
 msgid "Auto mission"
-msgstr "Automaattinen tehtävä"
+msgstr "Automaattinen Tehtävä"
 
 #: ../base/ufos/ui/geoscape.ufo:703
 #: ../base/ufos/ui/geoscape.ufo:826
@@ -5181,7 +5188,7 @@ msgstr "Mene sotilaan tarvikenäyttöön ennen taistelua"
 
 #: ../base/ufos/ui/geoscape.ufo:776
 msgid "Kill aliens in container"
-msgstr "Tapa muukalaiset säilytyksessä"
+msgstr "Tapa alienit säilönnässä"
 
 #: ../base/ufos/ui/geoscape.ufo:785
 #: ../base/ufos/ui/geoscape.ufo:794
@@ -5345,7 +5352,7 @@ msgstr "Tukikohta:"
 
 #: ../base/ufos/ui/geoscape.ufo:1700
 msgid "Surface-to-air missile site:"
-msgstr ""
+msgstr "Pinta-ilma ohjus paikka:"
 
 #: ../base/ufos/ui/geoscape.ufo:1781
 msgid "Select aircraft"
@@ -5529,7 +5536,7 @@ msgstr "Ei yhteyttä"
 
 #: ../base/ufos/ui/irc.ufo:191
 msgid "You are not connected to the lobby. Do you want to connect?"
-msgstr ""
+msgstr "Et ole yhteydessä aulaan. Haluatko että yhdistetään?"
 
 #: ../base/ufos/ui/irc.ufo:199
 #: ../base/ufos/ui/multiplayer.ufo:197
@@ -5592,16 +5599,18 @@ msgid "Price:"
 msgstr "Hinta:"
 
 #: ../base/ufos/ui/lostwon.ufo:317
+#, fuzzy
 msgid "Sort nations by price"
-msgstr ""
+msgstr "Lajittele kansakunnat hinnan mukaan"
 
 #: ../base/ufos/ui/lostwon.ufo:327
 msgid "Relations:"
 msgstr "Suhteet:"
 
 #: ../base/ufos/ui/lostwon.ufo:328
+#, fuzzy
 msgid "Sort nations by relation"
-msgstr ""
+msgstr "Lajittele kansakunnat yhteydessä"
 
 #: ../base/ufos/ui/lostwon.ufo:377
 msgid "Selected nation:"
@@ -5735,7 +5744,7 @@ msgstr "Muut"
 #: ../base/ufos/ui/market.ufo:103
 #: ../base/ufos/ui/production.ufo:79
 msgid "UGV items"
-msgstr ""
+msgstr "Miehittämättömän maakulkuneuvon varusteet"
 
 #: ../base/ufos/ui/market.ufo:310
 msgid "Storage (used/all):"
@@ -6332,7 +6341,7 @@ msgstr "Kirkkaus:"
 
 #: ../base/ufos/ui/options.ufo:386
 msgid "Lightmap scale:"
-msgstr ""
+msgstr "Valaistuskartan skaala:"
 
 #: ../base/ufos/ui/options.ufo:407
 msgid "Strech the screen with a 4:3 ratio:"
@@ -6414,11 +6423,12 @@ msgstr "Aktivoi vihjetekstit"
 
 #: ../base/ufos/ui/options.ufo:840
 msgid "Centre view:"
-msgstr ""
+msgstr "Keskitä näkymä:"
 
 #: ../base/ufos/ui/options.ufo:847
+#, fuzzy
 msgid "Centring at soldier selecting, shooting and appearing"
-msgstr ""
+msgstr "Keskitä sotilas valitsemalla, ammunta ja ilmaantuminen"
 
 #: ../base/ufos/ui/options.ufo:858
 msgid "Cursor tooltips:"
@@ -6446,11 +6456,11 @@ msgstr "Näytä vinkki päivässä:"
 
 #: ../base/ufos/ui/options.ufo:937
 msgid "Precache models:"
-msgstr ""
+msgstr "Esivälimuisti mallit:"
 
 #: ../base/ufos/ui/options.ufo:944
 msgid "Precache models (faster menus)"
-msgstr ""
+msgstr "Esivälimuisti mallit (nopeat menut)"
 
 #: ../base/ufos/ui/options.ufo:955
 msgid "Actor speed:"
@@ -6470,11 +6480,11 @@ msgstr "Rullausnopeus:"
 
 #: ../base/ufos/ui/options.ufo:1032
 msgid "Rotation Speed:"
-msgstr ""
+msgstr "Pyörimisnopeus:"
 
 #: ../base/ufos/ui/options.ufo:1057
 msgid "Move Acceleration:"
-msgstr ""
+msgstr "Siirrä Kiihtyvyys:"
 
 #: ../base/ufos/ui/options.ufo:1082
 msgid "Joystick settings:"
@@ -6482,15 +6492,15 @@ msgstr "Peliohjaimen asetukset:"
 
 #: ../base/ufos/ui/options.ufo:1089
 msgid "Enable:"
-msgstr ""
+msgstr "Salli:"
 
 #: ../base/ufos/ui/options.ufo:1097
 msgid "Enables/Disables Joysticks"
-msgstr ""
+msgstr "Salli/poista peliohjaimet"
 
 #: ../base/ufos/ui/options.ufo:1108
 msgid "Threshold:"
-msgstr ""
+msgstr "Kynnysarvo:"
 
 #: ../base/ufos/ui/options.ufo:1158
 msgid "Keys"
@@ -6498,9 +6508,8 @@ msgstr "Pikanäppäimet"
 
 #: ../base/ufos/ui/options.ufo:1173
 #: client/battlescape/cl_hud.c:98
-#, fuzzy
 msgid "Autostand"
-msgstr "erinomainen"
+msgstr "Seiso automaattisesti"
 
 #: ../base/ufos/ui/options.ufo:1185
 #: ../base/ufos/ui/options.ufo:1211
@@ -6567,7 +6576,7 @@ msgstr "Tuotantorajoitus:"
 #: ../base/ufos/ui/production.ufo:379
 #: ../base/ufos/ui/production.ufo:390
 msgid "Change the production amount"
-msgstr ""
+msgstr "Muuta tuotannon määrää"
 
 #: ../base/ufos/ui/production.ufo:402
 msgid "Start this production"
@@ -6648,7 +6657,7 @@ msgstr "Maks. Tekoäly hahmoja tässä pelissä"
 
 #: ../base/ufos/ui/skirmish.ufo:137
 msgid "Select which side you want to play with"
-msgstr ""
+msgstr "Valitse millä puolella haluat pelata"
 
 #: ../base/ufos/ui/skirmish.ufo:171
 msgid "UFO:"
@@ -6706,7 +6715,7 @@ msgstr "Kansakunta"
 
 #: ../base/ufos/ui/stats.ufo:303
 msgid "Current Funding"
-msgstr ""
+msgstr "Nykyinen rahoitus"
 
 #: ../base/ufos/ui/stats.ufo:365
 msgid "Month (Relative to current)"
@@ -6742,7 +6751,7 @@ msgstr "Valitse seuraava solmu"
 
 #: ../base/ufos/ui/sys_editor.ufo:79
 msgid "Extract window"
-msgstr ""
+msgstr "Suurenna ikkuna"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
 msgid "Extract the window of the last/current selected node"
@@ -6804,7 +6813,7 @@ msgstr "Lentokenttä varasto on tyhjä"
 
 #: ../base/ufos/ui/ufopedia.ufo:83
 msgid "Pre research text"
-msgstr ""
+msgstr "Esitutkimus teksti"
 
 #: ../base/ufos/ui/ufopedia.ufo:194
 msgid "Requirement:"
@@ -6889,7 +6898,7 @@ msgstr "Pommi"
 
 #: ../base/ufos/weapons_aliens.ufo:46
 msgid "Needler Gun Magazine"
-msgstr ""
+msgstr "Neula Aseen Lipas"
 
 #: ../base/ufos/weapons_aliens.ufo:62
 #: ../base/ufos/weapons_aliens.ufo:125
@@ -6908,7 +6917,7 @@ msgstr ""
 #: ../base/ufos/weapons_plasma.ufo:143
 #: ../base/ufos/weapons_plasma.ufo:268
 msgid "Snap Shot"
-msgstr "Napsauslaukaus"
+msgstr "Pikalaukaus"
 
 #: ../base/ufos/weapons_aliens.ufo:82
 #: ../base/ufos/weapons_aliens.ufo:145
@@ -6938,7 +6947,7 @@ msgstr "Rynnäkkökiväärin lipas"
 #: ../base/ufos/weapons_human.ufo:1670
 #: ../base/ufos/weapons_human.ufo:1930
 msgid "3-Round Burst"
-msgstr "3-laukaisun sarja"
+msgstr "3-Kierroksen Sarja"
 
 #: ../base/ufos/weapons_human.ufo:81
 #: ../base/ufos/weapons_human.ufo:163
@@ -6956,7 +6965,7 @@ msgstr "Täysin automaattinen"
 #: ../base/ufos/weapons_human.ufo:101
 #: ../base/ufos/weapons_human.ufo:183
 msgid "Aimed shot"
-msgstr "Tähdätty laukaisu"
+msgstr "Tähdätty Laukaus"
 
 #: ../base/ufos/weapons_human.ufo:208
 msgid "Machine Gun"
@@ -6968,7 +6977,7 @@ msgstr "Konekiväärin lipas"
 
 #: ../base/ufos/weapons_human.ufo:246
 msgid "5-Shot Burst"
-msgstr "5-ammunnan sarja"
+msgstr "5-Laukauksen Sarja"
 
 #: ../base/ufos/weapons_human.ufo:286
 #: ../base/ufos/weapons_multiplayer.ufo:88
@@ -6996,7 +7005,7 @@ msgstr "Tarkkuuskiväärin lipas"
 #: ../base/ufos/weapons_plasma.ufo:61
 #: ../base/ufos/weapons_plasma.ufo:163
 msgid "Aimed Shot"
-msgstr "Tähtää ja ammu"
+msgstr "Tähdätty Laukaus"
 
 #: ../base/ufos/weapons_human.ufo:412
 msgid "Coilgun Clip"
@@ -7029,11 +7038,11 @@ msgstr "SMG Lipas"
 #: ../base/ufos/weapons_human.ufo:727
 #: ../base/ufos/weapons_multiplayer.ufo:48
 msgid "5-Round Burst"
-msgstr ""
+msgstr "5-kierroksen sarja"
 
 #: ../base/ufos/weapons_human.ufo:792
 msgid "Riot Shotgun"
-msgstr ""
+msgstr "Mellakka haulikko"
 
 #: ../base/ufos/weapons_human.ufo:812
 msgid "Saboted Slugs"
@@ -7045,7 +7054,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:1649
 #: ../base/ufos/weapons_multiplayer.ufo:150
 msgid "Single Shot"
-msgstr ""
+msgstr "Kerta Laukaus"
 
 #: ../base/ufos/weapons_human.ufo:877
 msgid "Micro Shotgun"
@@ -7066,15 +7075,17 @@ msgstr "C90 Kanisteri"
 
 #: ../base/ufos/weapons_human.ufo:1067
 msgid "Candlelight"
-msgstr ""
+msgstr "Kynttilänvalo"
 
 #: ../base/ufos/weapons_human.ufo:1088
+#, fuzzy
 msgid "Inferno"
-msgstr ""
+msgstr "Liekkimeri"
 
 #: ../base/ufos/weapons_human.ufo:1109
+#, fuzzy
 msgid "Inferno Sweep"
-msgstr ""
+msgstr "Liekkimeri Pyyhkäisy"
 
 #: ../base/ufos/weapons_human.ufo:1137
 msgid "Rocket Launcher"
@@ -7100,37 +7111,37 @@ msgstr "25mm HIT Granaatti"
 #: ../base/ufos/weapons_human.ufo:1464
 #: ../base/ufos/weapons_human.ufo:1710
 msgid "Snap Shot - Airburst"
-msgstr ""
+msgstr "Pikalaukaus - Ilmasarja"
 
 #: ../base/ufos/weapons_human.ufo:1309
 #: ../base/ufos/weapons_human.ufo:1491
 #: ../base/ufos/weapons_human.ufo:1736
 msgid "Aimed Shot - Airburst"
-msgstr ""
+msgstr "Tähdätty Laukaus - Ilmasarja"
 
 #: ../base/ufos/weapons_human.ufo:1335
 #: ../base/ufos/weapons_human.ufo:1517
 #: ../base/ufos/weapons_human.ufo:1761
 msgid "3-Round Burst - Airburst"
-msgstr ""
+msgstr "3-Kierroksen Sarja - Ilmasarja"
 
 #: ../base/ufos/weapons_human.ufo:1361
 #: ../base/ufos/weapons_human.ufo:1543
 #: ../base/ufos/weapons_human.ufo:1786
 msgid "Snap Shot - Timed"
-msgstr ""
+msgstr "Pikalaukaus - Ajoitettu"
 
 #: ../base/ufos/weapons_human.ufo:1389
 #: ../base/ufos/weapons_human.ufo:1571
 #: ../base/ufos/weapons_human.ufo:1813
 msgid "Aimed Shot - Timed"
-msgstr ""
+msgstr "Tähdätty Laukaus - Ajoitettu"
 
 #: ../base/ufos/weapons_human.ufo:1417
 #: ../base/ufos/weapons_human.ufo:1599
 #: ../base/ufos/weapons_human.ufo:1840
 msgid "3-Round Burst - Timed"
-msgstr ""
+msgstr "3-Kierroksen Sarja - Ajoitettu"
 
 #: ../base/ufos/weapons_human.ufo:1447
 msgid "25mm IC Grenades"
@@ -7162,23 +7173,23 @@ msgstr "Elektrofotografinen Laser"
 
 #: ../base/ufos/weapons_laser.ufo:96
 msgid "D-F Cartridge"
-msgstr ""
+msgstr "D-F Patruuna"
 
 #: ../base/ufos/weapons_laser.ufo:112
 #: ../base/ufos/weapons_laser.ufo:155
 #: ../base/ufos/weapons_laser.ufo:198
 msgid "Wave Fire"
-msgstr ""
+msgstr "Aalto Ammunta"
 
 #: ../base/ufos/weapons_laser.ufo:131
 #: ../base/ufos/weapons_laser.ufo:174
 #: ../base/ufos/weapons_laser.ufo:217
 msgid "Pulsed Fire"
-msgstr ""
+msgstr "Pulssi Ammunta"
 
 #: ../base/ufos/weapons_laser.ufo:241
 msgid "Stun Shot"
-msgstr "Tainnutus laukaus"
+msgstr "Tainnutus Laukaus"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -7186,7 +7197,7 @@ msgstr "Taktinen Puukko"
 
 #: ../base/ufos/weapons_melee.ufo:65
 msgid "Monomolecular Knife"
-msgstr ""
+msgstr "Monomolekulaarinen Puukko"
 
 #: ../base/ufos/weapons_melee.ufo:124
 msgid "Stun Rod"
@@ -7194,39 +7205,39 @@ msgstr "Tainnutusputki"
 
 #: ../base/ufos/weapons_melee.ufo:145
 msgid "Stun Charge"
-msgstr ""
+msgstr "Tainnutus Panos"
 
 #: ../base/ufos/weapons_melee.ufo:163
 msgid "Double Charge"
-msgstr ""
+msgstr "Kaksinkertainen PAnos"
 
 #: ../base/ufos/weapons_melee.ufo:181
 msgid "Bludgeon"
-msgstr ""
+msgstr "Ryhmysauva"
 
 #: ../base/ufos/weapons_melee.ufo:204
 msgid "Kerrblade"
-msgstr ""
+msgstr "Kerr-Veitsi"
 
 #: ../base/ufos/weapons_melee.ufo:239
 msgid "Slash"
-msgstr ""
+msgstr "Viilto"
 
 #: ../base/ufos/weapons_melee.ufo:262
 msgid "Plasma Blade"
-msgstr ""
+msgstr "Plastma veitsi"
 
 #: ../base/ufos/weapons_melee.ufo:283
 msgid "Lock"
-msgstr ""
+msgstr "Lukko"
 
 #: ../base/ufos/weapons_multiplayer.ufo:10
 msgid "Minigun"
-msgstr ""
+msgstr "Miniase"
 
 #: ../base/ufos/weapons_multiplayer.ufo:31
 msgid "Minigun Magazine"
-msgstr ""
+msgstr "Miniaseen Lipas"
 
 #: ../base/ufos/weapons_multiplayer.ufo:115
 msgid "Shotgun"
@@ -7234,32 +7245,32 @@ msgstr "Haulikko"
 
 #: ../base/ufos/weapons_multiplayer.ufo:172
 msgid "Double Shot"
-msgstr ""
+msgstr "Kaksinkertainen laukaus"
 
 #: ../base/ufos/weapons_multiplayer.ufo:199
 msgid "VHS Assault Rifle"
-msgstr ""
+msgstr "VHS Rynnäkkö Kivääri"
 
 #: ../base/ufos/weapons_multiplayer.ufo:222
 msgid "XAW95"
-msgstr ""
+msgstr "XAW95"
 
 #: ../base/ufos/weapons_multiplayer.ufo:243
 msgid "XAW95 Magazine"
-msgstr ""
+msgstr "XAW95 Lipas"
 
 #: ../base/ufos/weapons_multiplayer.ufo:260
 #: ../base/ufos/weapons_ugv.ufo:80
 msgid "10-Round Burst"
-msgstr ""
+msgstr "10-kierroksen sarja"
 
 #: ../base/ufos/weapons_particle.ufo:6
 msgid "Particle Beam Pistol"
-msgstr ""
+msgstr "Hiukkassuihkujärjestelmä Pistooli"
 
 #: ../base/ufos/weapons_particle.ufo:25
 msgid "Pistol Particle Accelerator"
-msgstr ""
+msgstr "Hiukkassuihkujärjestelmä Kiihdytin"
 
 #: ../base/ufos/weapons_particle.ufo:60
 #: ../base/ufos/weapons_particle.ufo:160
@@ -7268,59 +7279,60 @@ msgstr ""
 #: ../base/ufos/weapons_plasma.ufo:183
 #: ../base/ufos/weapons_plasma.ufo:311
 msgid "Burst"
-msgstr ""
+msgstr "Sarja"
 
 #: ../base/ufos/weapons_particle.ufo:86
 msgid "Particle Beam Rifle"
-msgstr ""
+msgstr "Hiukkassuihkujärjestelmä Kivääri"
 
 #: ../base/ufos/weapons_particle.ufo:106
 msgid "Rifle Particle Accelerator"
-msgstr ""
+msgstr "Kivääri hiukkassuihkujärjestelmä Kiihdytin"
 
 #: ../base/ufos/weapons_particle.ufo:187
 msgid "Particle Beam Cannon"
-msgstr ""
+msgstr "Hiukkassuihkujärjestelmä Kanuuna"
 
 #: ../base/ufos/weapons_particle.ufo:207
 msgid "Cannon Particle Accelerator"
-msgstr ""
+msgstr "Kanuuna hiukkassuihkujärjestelmä Kiihdytin"
 
 #: ../base/ufos/weapons_particle.ufo:264
+#, fuzzy
 msgid "Unrestricted Blast"
-msgstr ""
+msgstr "Rajoittamaton Räjähdys"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
-msgstr ""
+msgstr "Plasma Pistooli"
 
 #: ../base/ufos/weapons_plasma.ufo:25
 msgid "Plasma Pistol Charger"
-msgstr ""
+msgstr "Plasma Pistoolin Laturi"
 
 #: ../base/ufos/weapons_plasma.ufo:108
 msgid "Plasma Rifle"
-msgstr ""
+msgstr "Plasma Kivääri"
 
 #: ../base/ufos/weapons_plasma.ufo:127
 msgid "Plasma Rifle Charger"
-msgstr ""
+msgstr "Plasma Kiväärin Laturi"
 
 #: ../base/ufos/weapons_plasma.ufo:230
 msgid "Plasma Blaster"
-msgstr ""
+msgstr "Plasma Puhallin"
 
 #: ../base/ufos/weapons_plasma.ufo:251
 msgid "Plasma Blaster Charge"
-msgstr ""
+msgstr "Plasma Puhaltimen Laturi"
 
 #: ../base/ufos/weapons_plasma.ufo:289
 msgid "Ball"
-msgstr ""
+msgstr "Kuula"
 
 #: ../base/ufos/weapons_ugv.ufo:44
 msgid "Chaingun"
-msgstr ""
+msgstr "Ketjuase"
 
 #: ../base/ufos/weapons_ugv.ufo:64
 msgid "Chaingun Belt"
@@ -7421,7 +7433,7 @@ msgstr "TU:ta jäljellä: %i"
 
 #: client/battlescape/cl_hud.c:236
 msgid "No remaining TUs left after shot."
-msgstr ""
+msgstr "Laukauksen jälkeen ei TU aikaa jäljellä."
 
 #: client/battlescape/cl_hud.c:241
 #, c-format
@@ -7444,7 +7456,7 @@ msgstr "[%i TU] %s"
 
 #: client/battlescape/cl_hud.c:370
 msgid "Reserve TUs for firing/using."
-msgstr ""
+msgstr "Varattu Tu:ta ampumiseen/käyttämiseen."
 
 #: client/battlescape/cl_hud.c:370
 msgid "Shot Reservation"
@@ -7465,6 +7477,8 @@ msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr ""
+"Tällä asella ei voi ampua\n"
+"yhdellä kädellä.\n"
 
 #: client/battlescape/cl_hud.c:734
 msgid ""
@@ -7477,6 +7491,8 @@ msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
 msgstr ""
+"Ei voi tehdä tehtävää:\n"
+"ammuksia ei ole jäljellä.\n"
 
 #: client/battlescape/cl_hud.c:744
 #: client/battlescape/cl_hud.c:815
@@ -7551,6 +7567,8 @@ msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
+"%i TU:ta varattu kyyristymiseen/nousemiseen ylös.\n"
+"Klikkaa poistaaksesi."
 
 #: client/battlescape/cl_hud.c:1037
 #, c-format
@@ -7568,10 +7586,13 @@ msgid ""
 "Click to change.\n"
 "Right-Click to clear."
 msgstr ""
+"%i TU:ta varattu ampumiseen.\n"
+"Klikkaa muuttaksesi.\n"
+"Oikea klikkaus poistaa."
 
 #: client/battlescape/cl_hud.c:1053
 msgid "Reserving TUs for shooting not possible."
-msgstr ""
+msgstr "Varattu TU:ta ampuminen ei mahdollinen."
 
 #: client/battlescape/cl_hud.c:1075
 #: client/battlescape/cl_hud.c:1083
@@ -7587,6 +7608,10 @@ msgid ""
 "- Reserved:  %i\n"
 "- Remaining: %i\n"
 msgstr ""
+"Aikayksiköt\n"
+"- Saatavilla: %i (of %i)\n"
+"- Varattu:  %i\n"
+"- Jäljellä: %i\n"
 
 #: client/battlescape/cl_hud.c:1368
 #, c-format
@@ -7651,7 +7676,7 @@ msgstr "Säädä kyykistymiselle varausta."
 
 #: client/battlescape/cl_hud.c:1679
 msgid "Toggle reaction fire"
-msgstr ""
+msgstr "Vaihda reaktio tilaa"
 
 #: client/battlescape/cl_view.c:211
 #: client/battlescape/cl_view.c:236
@@ -7776,11 +7801,12 @@ msgstr "valmiina pudottamaan sotilaita"
 
 #: client/campaign/cp_aircraft.c:441
 msgid "intercepting a UFO"
-msgstr ""
+msgstr "Torju UFO"
 
 #: client/campaign/cp_aircraft.c:443
+#, fuzzy
 msgid "enroute to new home base"
-msgstr ""
+msgstr "Matkan varrelta uusi kotitukikohta."
 
 #: client/campaign/cp_aircraft.c:445
 msgid "returning to base"
@@ -7803,7 +7829,7 @@ msgstr "UFO"
 #: client/campaign/cp_aircraft.c:785
 #, c-format
 msgid "A new %s is ready in %s"
-msgstr ""
+msgstr "Uusi %s on valmis %s"
 
 #: client/campaign/cp_aircraft.c:786
 #: client/campaign/cp_aircraft.c:1238
@@ -7939,6 +7965,9 @@ msgid ""
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
+"Komentokeskus ei toiminnassa tässä tukikohdassa.\n"
+"\n"
+"Lentokone ei käynnisty.\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:146
 msgid ""
@@ -7969,7 +7998,7 @@ msgstr "Polttoaine:\t%i/%i\n"
 #: client/campaign/cp_ufopedia.c:348
 #, c-format
 msgid "Operational range:\t%i km\n"
-msgstr ""
+msgstr "Toimintamatka:\t%i km\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:262
 #, c-format
@@ -7993,16 +8022,16 @@ msgstr "UFOA tulitetaan %s"
 
 #: client/campaign/cp_airfight.c:376
 msgid "Our aircraft has no more ammo left - returning to home base now."
-msgstr ""
+msgstr "Meidän lentokoneessa ei ole enää ammuksia jäljellä - palataan kotitukikohtaan nyt."
 
 #: client/campaign/cp_airfight.c:455
 #: client/campaign/cp_airfight.c:478
 msgid "Interception"
-msgstr ""
+msgstr "Torjunta"
 
 #: client/campaign/cp_airfight.c:455
 msgid "UFO interception successful -- UFO lost to sea."
-msgstr ""
+msgstr "UFO:n torjunta onnistui - UFO putosi mereen."
 
 #: client/campaign/cp_airfight.c:478
 #: client/campaign/cp_campaign.c:1572
@@ -8361,7 +8390,7 @@ msgstr "^BAlienit\n"
 
 #: client/campaign/cp_base_callbacks.c:718
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
-msgstr ""
+msgstr "^BRakennuksett\t\t\t\t\tKapasiteetti\t\t\t\tSumma\n"
 
 #: client/campaign/cp_base_callbacks.c:742
 msgid "day"
@@ -8371,7 +8400,7 @@ msgstr[1] "päivää"
 
 #: client/campaign/cp_base_callbacks.c:752
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
-msgstr ""
+msgstr "^BTuotanto\t\t\t\t\t\tMäärä\t\t\t\tProsentti\n"
 
 #: client/campaign/cp_base_callbacks.c:772
 #, c-format
@@ -8385,7 +8414,7 @@ msgstr "Ei mitään\n"
 
 #: client/campaign/cp_base_callbacks.c:781
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
-msgstr ""
+msgstr "^BTutkimus\t\t\t\t\t\tTiedemiehet\t\t\t\tProsentti\n"
 
 #: client/campaign/cp_base_callbacks.c:786
 #, c-format
@@ -8580,11 +8609,13 @@ msgid ""
 "Alien survivors\t%i\n"
 "\n"
 msgstr ""
+"Alien selviytyjät\t%i\n"
+"\n"
 
 #: client/campaign/cp_campaign.c:1593
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
-msgstr ""
+msgstr "Alienit tappoivat PHALANX sotilaita\t%i\n"
 
 #: client/campaign/cp_campaign.c:1594
 #, c-format
@@ -8594,7 +8625,7 @@ msgstr "PHALANX sotilas katosi tehtävässä\t%i\n"
 #: client/campaign/cp_campaign.c:1595
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
-msgstr ""
+msgstr "PHALANX vahinko tulitus tappiot\t%i\n"
 
 #: client/campaign/cp_campaign.c:1596
 #, c-format
@@ -8627,7 +8658,7 @@ msgstr ""
 #: client/campaign/cp_campaign.c:1601
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
-msgstr ""
+msgstr "Kerätyt tuotteet (lajit/kaikki)\t%i/%i\n"
 
 #: client/campaign/cp_campaign.c:1678
 #, c-format
@@ -8694,7 +8725,7 @@ msgstr ""
 #: client/campaign/cp_fightequip_callbacks.c:398
 #, c-format
 msgid "This slot is for %s or smaller items."
-msgstr ""
+msgstr "Tämä paikka on %s tai pienemmille tavaroille."
 
 #: client/campaign/cp_fightequip_callbacks.c:406
 msgid "This item is functional.\n"
@@ -8703,22 +8734,22 @@ msgstr "Tämä tavara on funktionaalinen.\n"
 #: client/campaign/cp_fightequip_callbacks.c:408
 #, c-format
 msgid "This item will be installed in %i hours.\n"
-msgstr ""
+msgstr "Tämä tuote asennetaan %i tunnissa.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:411
 #, c-format
 msgid "%s will be removed in %i hours.\n"
-msgstr ""
+msgstr "%s poistetaan %i tunnissa.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:413
 #, c-format
 msgid "%s will be installed in %i hours.\n"
-msgstr ""
+msgstr "%s asennetaan %i tunnissa.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:416
 #, c-format
 msgid "This item will be removed in %i hours.\n"
-msgstr ""
+msgstr "Tämä tuote poistetaan %i tunnissa.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:425
 msgid "No ammo assigned to this weapon."
@@ -8833,7 +8864,7 @@ msgstr "Unohda se"
 
 #: client/campaign/cp_map.c:365
 msgid "UFO Sighting"
-msgstr ""
+msgstr "UFO Havainto"
 
 #: client/campaign/cp_map.c:1348
 msgid "Day"
@@ -8906,11 +8937,11 @@ msgstr "Valitse uuden laitoksen sijainti kartalta.\n"
 
 #: client/campaign/cp_map.c:1882
 msgid "Aliens are attacking our base at this very moment.\n"
-msgstr "Muukalaiset hyökkäävät tukikohtaasi juuri tällä hetkellä.\n"
+msgstr "Alienit hyökkäävät tukikohtaasi juuri tällä hetkellä.\n"
 
 #: client/campaign/cp_map.c:1887
 msgid "Select ufo or mission on map\n"
-msgstr "Valitse muukalaisalus tai tehtävä kartalta\n"
+msgstr "Valitse alien alus tai tehtävä kartalta\n"
 
 #: client/campaign/cp_map.c:1892
 msgid "UFO in radar range\n"
@@ -9219,26 +9250,26 @@ msgstr "Ylenpalttinen"
 #: client/campaign/cp_nation.c:171
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
-msgstr ""
+msgstr "Kansakunta %s muuttunut onnea %s % s"
 
 #: client/campaign/cp_nation.c:175
 #, c-format
 msgid "Nation %s changed happiness to %s"
-msgstr ""
+msgstr "Kansakunta %s muutti iloisuutta %s"
 
 #: client/campaign/cp_nation.c:179
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
-msgstr ""
+msgstr "Onnellinen kansakunta %s on %s ja on tyytymätön kampanjaan."
 
 #: client/campaign/cp_nation.c:185
 msgid "Nation changed happiness"
-msgstr ""
+msgstr "Kansakunta muutti onnellisuutta"
 
 #: client/campaign/cp_nations.c:82
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
-msgstr ""
+msgstr "Kokemukset %i %s, %i %s, %i %s, ja %i %s kansakunnalta %s (%s)"
 
 #: client/campaign/cp_nations.c:83
 msgid "credit"
@@ -9290,31 +9321,31 @@ msgstr "Maksettu %i kredittiä lentäjille"
 #: client/campaign/cp_nations.c:140
 #, c-format
 msgid "Paid %i credits for robots"
-msgstr ""
+msgstr "Maksettu %i crediittejä roboteista"
 
 #: client/campaign/cp_nations.c:156
 #, c-format
 msgid "Paid %i credits for aircraft"
-msgstr ""
+msgstr "Maksettu %i crediittejä lentokoneesta"
 
 #: client/campaign/cp_nations.c:172
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr ""
+msgstr "Maksettu %i crediittejä ylläpidosta %s"
 
 #: client/campaign/cp_nations.c:177
 #, c-format
 msgid "Paid %i credits for administrative overhead."
-msgstr ""
+msgstr "Maksettu %i crediittejä hallinnollisiin yleiskuluihin."
 
 #: client/campaign/cp_nations.c:185
 #, c-format
 msgid "Paid %i credits in interest on your debt."
-msgstr ""
+msgstr "Maksettu %i crediittejä velan koroista."
 
 #: client/campaign/cp_popup.c:129
 msgid "current homebase of aircraft"
-msgstr ""
+msgstr "Nykyinen kotitukikohta lentokoneella"
 
 #: client/campaign/cp_popup.c:135
 msgid "base can hold aircraft"
@@ -9353,7 +9384,7 @@ msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
 #: client/campaign/cp_popup.c:363
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
-msgstr ""
+msgstr "Ei alusta saatavissa, ei lentäjää valittu, tai ei taktisista ryhmää valittu saatavilla olevaan alukseen."
 
 #: client/campaign/cp_popup.c:424
 #, c-format
@@ -9362,11 +9393,11 @@ msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/campaign/cp_popup.c:442
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
-msgstr ""
+msgstr "Ei alusta saatavissa, ei lentäjää valittu, tai ei aseita tai ammuksia varustettu."
 
 #: client/campaign/cp_popup.c:458
 msgid "No defence system operational or no weapon or ammo equipped."
-msgstr ""
+msgstr "Ei puolustusjärjestelmä toiminnassa tai ei aseita tai ammuksia varustettu."
 
 #: client/campaign/cp_popup.c:507
 msgid ""
@@ -9375,6 +9406,10 @@ msgid ""
 "\n"
 "Aircraft cannot start.\n"
 msgstr ""
+"Komentokeskus ei toiminnassa tälle\n"
+" lentokoneelle kotitukikohdassa.\n"
+"\n"
+"Lentokone ei käynnisty.\n"
 
 #: client/campaign/cp_produce.c:233
 #, c-format
@@ -10502,7 +10537,7 @@ msgstr ""
 #: client/cl_game_multiplayer.c:191
 #: client/cl_game_skirmish.c:114
 msgid "Game Drawn!"
-msgstr ""
+msgstr "Pelin piirtänyt!"
 
 #: client/cl_game_multiplayer.c:203
 #, fuzzy, c-format
