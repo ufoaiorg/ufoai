@@ -143,10 +143,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 
 	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
-		mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_MULTIPLAYER_EMISSION);
-		mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, csi.ods[i].id);
-		mxml_AddInt(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[i]);
-		mxml_AddInt(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[i]);
+		if (ed->numItems[i] || ed->numItemsLoose[i]) {
+			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_MULTIPLAYER_ITEM);
+			mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, csi.ods[i].id);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[i]);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[i]);
+		}
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
@@ -214,7 +216,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	uLongf len;
 	qFILE f;
 	byte *cbuf;
-	int i, clen;
+	int clen;
 	mxml_node_t *topNode, *node, *snode, *ssnode;
 	mpSaveFileHeader_t header;
 	equipDef_t *ed;
@@ -282,9 +284,10 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	}
 
 	ed = GAME_GetEquipmentDefinition();
-	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_MULTIPLAYER_EMISSION); ssnode && i < csi.numODs; i++, ssnode = mxml_GetNextNode(ssnode, snode, SAVE_MULTIPLAYER_EMISSION)) {
+	for (ssnode = mxml_GetNode(snode, SAVE_MULTIPLAYER_ITEM); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_MULTIPLAYER_ITEM)) {
 		const char *objID = mxml_GetString(ssnode, SAVE_MULTIPLAYER_ID);
 		const objDef_t *od = INVSH_GetItemByID(objID);
+
 		if (od) {
 			ed->numItems[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUM, 0);
 			ed->numItemsLoose[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUMLOOSE, 0);

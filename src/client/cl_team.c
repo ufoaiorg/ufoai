@@ -270,11 +270,9 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 	for (container = 0; container < csi.numIDs; container++) {
 		invList_t *ic = i->c[container];
 
-#if 0
 		/* ignore items linked from any temp container */
 		if (csi.ids[container].temp)
 			continue;
-#endif
 
 		for (; ic; ic = ic->next) {
 			mxml_node_t *s = mxml_AddNode(p, SAVE_INVENTORY_ITEM);
