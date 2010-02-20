@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-02-17 01:37+0200\n"
+"PO-Revision-Date: 2010-02-19 03:06+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -94,11 +94,11 @@ msgstr "Alienit laskeutuvat - Tehdasalueelle"
 
 #: ../base/maps/frozen.ump:362
 msgid "Multiplayer Coop"
-msgstr "Moninpeli Coop"
+msgstr "Moninpeli Kenttä"
 
 #: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
-msgstr "Moninpeli kuolemanottelu"
+msgstr "Moninpeli Kuolemanottelu"
 
 #: ../base/maps/gasstation.ump:63
 msgid "Gasstation"
@@ -152,9 +152,8 @@ msgid "Oriental big"
 msgstr "Suuri Lähi-idän kaupunki"
 
 #: ../base/maps/spedition.ump:63
-#, fuzzy
 msgid "Spedition"
-msgstr "Asetukset"
+msgstr "Huolinta"
 
 #: ../base/maps/stadium.ump:65
 msgid "Stadium"
@@ -1195,7 +1194,7 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
-msgstr "Reaktio oli liian myöhäinen -- %s"
+msgstr "Vastatoimi oli liian myöhäinen -- %s"
 
 #: ../base/ufos/events.ufo:234
 msgid "mail_response_too_late"
@@ -1814,7 +1813,7 @@ msgstr "Eversti"
 
 #: ../base/ufos/medals.ufo:186
 msgid "Col"
-msgstr "Ever"
+msgstr "Ev"
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
@@ -1947,7 +1946,7 @@ msgstr "Alieneiden Uhka"
 
 #: ../base/ufos/research.ufo:123
 msgid "Continuous Wave Laser Operation"
-msgstr "Jatkuvan Aalto Laserin tutkiminen"
+msgstr "Yhtäjaksoisen Laserin Käyttö"
 
 #: ../base/ufos/research.ufo:128
 msgid "laser_txt"
@@ -2344,9 +2343,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1035
 #: ../base/ufos/weapons_human.ufo:1873
-#, fuzzy
 msgid "Electromagnetic Rifle"
-msgstr "Elektromagneettinen kivääri"
+msgstr "Sähkömagneettinen kivääri"
 
 #: ../base/ufos/research.ufo:1040
 msgid "bolterrifle_txt"
@@ -2358,9 +2356,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1074
 #: ../base/ufos/weapons_human.ufo:1893
-#, fuzzy
 msgid "Electromagnetic Rifle Magazine"
-msgstr "Elektromagneettisen kiväärin lipas"
+msgstr "Sähkömagneettisen kiväärin lipas"
 
 #: ../base/ufos/research.ufo:1095
 msgid "combatknife_txt"
@@ -2815,19 +2812,19 @@ msgstr "Raskaiden Aseiden Asiantuntemus"
 
 #: ../base/ufos/research.ufo:2952
 msgid "Mind Attribute"
-msgstr ""
+msgstr "Mielen Ominaisuus"
 
 #: ../base/ufos/research.ufo:2965
 msgid "Power Attribute"
-msgstr ""
+msgstr "Voiman Ominaisuus"
 
 #: ../base/ufos/research.ufo:2978
 msgid "Sniper Rifles Proficiency"
-msgstr ""
+msgstr "Tarkkuuskiväärin Pätevyys"
 
 #: ../base/ufos/research.ufo:2991
 msgid "Speed Attribute"
-msgstr ""
+msgstr "Nopeus Ominaisuus"
 
 #: ../base/ufos/research.ufo:3009
 msgid "b_aliencontainment_txt"
@@ -2907,7 +2904,7 @@ msgstr ""
 "\n"
 "PHALANX Extraterrestrial Response Unit\n"
 "\n"
-"Rakennuskooste, Sigma Clearance -- Vain Komentajan silmille.\n"
+"Rakennuskooste, Sigma lupa -- Vain Komentajan silmille.\n"
 "\n"
 "Jätetty: 28 tammikuu 1958\n"
 "\n"
@@ -3457,7 +3454,7 @@ msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
 
 #: ../base/ufos/seq_credits.ufo:297
 msgid "Technology Consultants"
-msgstr "Tekniikkakonsultit"
+msgstr "Tekniikka konsultit"
 
 #: ../base/ufos/seq_credits.ufo:308
 msgid "Forest Hale (LordHavoc)"
@@ -3508,9 +3505,8 @@ msgid "Kostia Romanov (Kildor)"
 msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:487
-#, fuzzy
 msgid "This game is now community driven"
-msgstr "Peliyhteisön ajaja"
+msgstr "Tämä peli on nyt yhteisön rakentama"
 
 #: ../base/ufos/seq_credits.ufo:494
 msgid "To honor the original development team:"
@@ -3574,7 +3570,7 @@ msgstr "NineX"
 
 #: ../base/ufos/seq_credits.ufo:635
 msgid "Our Host"
-msgstr ""
+msgstr "Meidän Isäntä"
 
 #: ../base/ufos/seq_credits.ufo:643
 msgid "Additional Thanks To"
@@ -3589,9 +3585,8 @@ msgid "Mattn"
 msgstr "Mattn"
 
 #: ../base/ufos/seq_credits.ufo:664
-#, fuzzy
 msgid "Sitters"
-msgstr "Sotilaat"
+msgstr "Mallit"
 
 #: ../base/ufos/seq_credits.ufo:671
 msgid "The Community"
@@ -3607,7 +3602,7 @@ msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:733
 msgid "Copyright 2004-2009 by UFO: AI Team"
-msgstr "© 2004–2010 UFO: AI -kehittäjät"
+msgstr "© 2004–2010 UFO: Alien Invasionin kehittäjät"
 
 #: ../base/ufos/seq_ingame.ufo:13
 #: ../base/ufos/seq_ingame.ufo:42
@@ -3691,7 +3686,7 @@ msgstr "Aseta tukikohta"
 
 #: ../base/ufos/seq_tutorials.ufo:95
 msgid "Hire employees: scientists, soldiers"
-msgstr "Palkaa työlaisiä: tutkijoita, sotilaita"
+msgstr "Palkaa henkilöstöä: tutkijoita, sotilaita"
 
 #: ../base/ufos/seq_tutorials.ufo:132
 msgid "Start some research"
@@ -3772,7 +3767,7 @@ msgstr "Osumia jäljellä"
 
 #: ../base/ufos/seq_tutorials.ufo:600
 msgid "Reload weapon"
-msgstr "Uudelleen lataa ase"
+msgstr "Lataa ase"
 
 #: ../base/ufos/seq_tutorials.ufo:630
 msgid "Primary attack"
@@ -3784,7 +3779,7 @@ msgstr "Toissijainen hyökkäys"
 
 #: ../base/ufos/seq_tutorials.ufo:683
 msgid "Turn reaction-fire on or off"
-msgstr "Laita reaktio laukaus päälle tai pois"
+msgstr "Laita reagointi laukaus päälle tai pois"
 
 #: ../base/ufos/seq_tutorials.ufo:705
 msgid "Crouch (kneel down) or stand up"
@@ -3793,7 +3788,7 @@ msgstr "Kyyristy (polvistu alas) tai nouse ylös"
 #: ../base/ufos/seq_tutorials.ufo:727
 #, fuzzy
 msgid "Cycle through visible enemies"
-msgstr "Jakson läpinäkyviä vihollisia"
+msgstr "Jakson läpikulkevia näkyviä vihollisia"
 
 #: ../base/ufos/seq_tutorials.ufo:749
 msgid "End round"
@@ -3899,31 +3894,31 @@ msgstr "Phoenix"
 #: ../base/ufos/team_humans.ufo:1669
 #, fuzzy
 msgid "Ares W"
-msgstr "Aari W"
+msgstr "Aareissa W"
 
 #: ../base/ufos/tips.ufo:5
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
-msgstr ""
+msgstr "Käytä [Shift] näppäintä kohdistaaksesi tähtäyksen haluttuun korkeuteen - on esimerkiksi hyödyllistä ampua raketinheittimellä alien ryhmän eteen."
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr ""
+msgstr "Kasaa ja tallenna eri joukkueet moninpeli ottelussa - 4 pelaajan joukkueet, 8 pelaajan joukkueet ja niin edelleen. Näin voit ladata nopeasti oikean ja aloittaa nopea ottelun."
 
 #: ../base/ufos/tips.ufo:7
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
-msgstr ""
+msgstr "Moninpeli joukkueiden kanssa varmista, että sinulla on parhaat sotilaat ylimmäisinä joukkue luettelossa. Kun sotilasraja on pienempi kuin mitä sotilaita mahtuu joukkueeseen, näitä ylempiä sotilaita käytetään pelin."
 
 #: ../base/ufos/tips.ufo:8
 msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
-msgstr ""
+msgstr "Varmista että sinulla on aina tarpeeksi aikayksiköitä (TU):ta, että voit mennä piiloon kun olet ampunut."
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr ""
+msgstr "Käytettäessä Reagointitilaa. Muista, että voit vaihtaa eri Reagointi tilojen välillä, valintaruutu siitä tulee paneeliin."
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
-msgstr ""
+msgstr "Muista antaa sotilaille vaihteleva valikoima aseita, et koskaan tiedä, milloin tietystä aseesta voi olla hyötyä."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
@@ -3987,7 +3982,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
-msgstr ""
+msgstr "Käytä [c] näppäintä kyyristyäksesi. Kyyristyminen tekee joistakin aseista huomattavan tarkkoja. Ja se myös tekee omasta sotilaasta pienemmmän kohteen."
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
@@ -3999,7 +3994,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:29
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
-msgstr ""
+msgstr "Käytä nopealla sotilaalla pistoolia, yhdessä kädessä lähitaistelu asetta, kranaatteja, sokaisu granaattia ja ensiapulaukkua lääkintämiehellä."
 
 #: ../base/ufos/tips.ufo:30
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
@@ -4011,11 +4006,11 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:32
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
+msgstr "Käytä [x] painiketta selataksesi Reagointitilan asetuksia: ei mitään, yksi laukaus, useita laukauksia."
 
 #: ../base/ufos/tips.ufo:33
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
-msgstr ""
+msgstr "Pidä sotilaat lähellä, niin että he voivat tukea toisiaan (parantaa toisiaan, ampuvat kun aikayksikkö (TU) loppuvat). Pidä seinän lähellä kun sinun vuoro loppuu, joten niitä ei voi yksi kranaatti tappaa."
 
 #: ../base/ufos/tips.ufo:34
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
@@ -4050,8 +4045,9 @@ msgid "You can include your own maps for multiplayer games or create your own ca
 msgstr ""
 
 #: ../base/ufos/tips.ufo:42
+#, fuzzy
 msgid "You can use [space] to cycle between all geoscape items."
-msgstr ""
+msgstr "Voit käyttää [välilyönti] näppäintä keskittääksesi maailmankartta tukikohdan lähelle."
 
 #: ../base/ufos/tips.ufo:43
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
@@ -4071,11 +4067,11 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:47
 msgid "Build an alien containment to be able to imprison live aliens."
-msgstr ""
+msgstr "Rakenna alien säilytystila, jotta voit vangita elävän alienin."
 
 #: ../base/ufos/tips.ufo:48
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
-msgstr ""
+msgstr "Havaitut viholliset: Kun on olet maan päällisessä tehtävässä voit painaa [välilyönti] näppäintä selataksesi kaikkia havaittuja vihollisia. Painamalla [t] näppäintä se tekee viivan jokaiselle havaitulle viholliselle, jonka sotilas voi nähdä."
 
 #: ../base/ufos/tips.ufo:49
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
@@ -4254,7 +4250,7 @@ msgstr "Nykyinen tavara paikassa"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:340
 msgid "Ammo fitting this weapon"
-msgstr ""
+msgstr "Asenna ammukset tähän aseeseen"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:355
 #: ../base/ufos/ui/aircraft_equip.ufo:375
@@ -4278,7 +4274,7 @@ msgstr "Käynnistä Lentokone"
 
 #: ../base/ufos/ui/aircraft_info.ufo:100
 msgid "Call back"
-msgstr "Pyydä takaisin"
+msgstr "Kutsu takaisin"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:123
 msgid "Pilot is assigned to another craft"
@@ -4437,11 +4433,11 @@ msgstr "Tapettuja vihollisia:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:601
 msgid "Assign tanks"
-msgstr "Aseta tankit"
+msgstr "Valitse tankit"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:605
 msgid "Assign soldiers"
-msgstr "Määritä sotilaat"
+msgstr "Valitse sotilaat"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:619
 msgid "No soldiers assigned"
@@ -4514,7 +4510,7 @@ msgstr "Terveys"
 #: ../base/ufos/ui/althud.ufo:771
 #: ../base/ufos/ui/hud.ufo:406
 msgid "Use headgear"
-msgstr "Käytä päähinettä"
+msgstr "Käytä kasvosuojusta"
 
 #: ../base/ufos/ui/althud.ufo:861
 msgid "Switch to right hand weapon"
@@ -4569,16 +4565,16 @@ msgstr "Useita laukauksia rektio laukaus"
 
 #: ../base/ufos/ui/althud.ufo:1177
 msgid "Multiple-shot reaction fire (not possible)"
-msgstr "Useita laukauksia reaktio laukaus (ei mahdollinen)"
+msgstr "Reagointitilassa useita laukauksia (ei mahdollinen)"
 
 #: ../base/ufos/ui/althud.ufo:1182
 #: ../base/ufos/ui/hud.ufo:906
 msgid "One-shot reaction fire"
-msgstr "Yhden laukauksen reaktio laukaus"
+msgstr "Reagointitilassa yksi laukaus"
 
 #: ../base/ufos/ui/althud.ufo:1187
 msgid "One-shot reaction fire (not possible)"
-msgstr "Yhden laukauksen reaktio laukaus (ei mahdollinen)"
+msgstr "Reagointitilassa yksi laukaus (ei mahdollinen)"
 
 #: ../base/ufos/ui/althud.ufo:1193
 #: ../base/ufos/ui/hud.ufo:918
@@ -4617,7 +4613,7 @@ msgstr "Lisää"
 
 #: ../base/ufos/ui/basedefence.ufo:156
 msgid "Equip the selected slot with this weapon"
-msgstr ""
+msgstr "Varusta valittu paikka tällä asella"
 
 #: ../base/ufos/ui/basedefence.ufo:167
 msgid "Remove"
@@ -4625,7 +4621,7 @@ msgstr "Poista"
 
 #: ../base/ufos/ui/basedefence.ufo:168
 msgid "Remove weapon from the selected slot"
-msgstr ""
+msgstr "Poista ase valitusta paikasta"
 
 #: ../base/ufos/ui/basedefence.ufo:185
 msgid "Stores"
@@ -4699,7 +4695,7 @@ msgstr "Rakennukset"
 
 #: ../base/ufos/ui/bases.ufo:117
 msgid "Build base facilities"
-msgstr "Tukikohdan rakennuksien rakennus"
+msgstr "Rakenna tukikohdan rakennuksia"
 
 #: ../base/ufos/ui/bases.ufo:130
 #: client/campaign/cp_base_callbacks.c:293
@@ -4713,7 +4709,7 @@ msgstr "Tarvikekauppa"
 #: ../base/ufos/ui/bases.ufo:143
 #: client/campaign/cp_base_callbacks.c:301
 msgid "Buy/Sell equipment"
-msgstr "Tarvikekauppa"
+msgstr "Osta/Myy tarvikkeita"
 
 #: ../base/ufos/ui/bases.ufo:155
 #: ../base/ufos/ui/transfer.ufo:581
@@ -4750,7 +4746,7 @@ msgstr "Tarvikkeiden valmistus"
 #: ../base/ufos/ui/bases.ufo:195
 #: client/campaign/cp_base_callbacks.c:321
 msgid "Hire employees"
-msgstr "Palkkaa työntekijöitä"
+msgstr "Palkkaa henkilöstöä"
 
 #: ../base/ufos/ui/bases.ufo:207
 #: client/campaign/cp_base_callbacks.c:328
@@ -4765,7 +4761,7 @@ msgstr "Käsittele Alieneita Alienin säilytystilassa"
 #: ../base/ufos/ui/bases.ufo:221
 #: client/campaign/cp_base_callbacks.c:331
 msgid "Medical and Surgery operations"
-msgstr "Lääketieteen ja kirurgian toiminta"
+msgstr "Lääketieteen ja Kirurgian toiminta"
 
 #: ../base/ufos/ui/bases.ufo:233
 msgid "Base Summary"
@@ -4902,7 +4898,7 @@ msgstr "Lisäosa"
 #: ../base/ufos/ui/inventory.ufo:66
 #: ../base/ufos/ui/multiplayer_team.ufo:56
 msgid "Headgear"
-msgstr "Päähine"
+msgstr "Kasvosuojus"
 
 #: ../base/ufos/ui/equipment.ufo:65
 #: ../base/ufos/ui/inventory.ufo:75
@@ -4959,7 +4955,6 @@ msgstr "Muut"
 #: ../base/ufos/ui/market.ufo:416
 #: ../base/ufos/ui/multiplayer_team.ufo:377
 #: ../base/ufos/ui/ufopedia.ufo:241
-#, fuzzy
 msgid "With:"
 msgstr "Koko:"
 
@@ -5008,14 +5003,12 @@ msgid "Preview"
 msgstr "Esikatselu"
 
 #: ../base/ufos/ui/genradarhud.ufo:89
-#, fuzzy
 msgid "Gen this level"
-msgstr "Gen tällä tasolla"
+msgstr "Tiedotus tällä tasolla"
 
 #: ../base/ufos/ui/genradarhud.ufo:104
-#, fuzzy
 msgid "Gen all levels"
-msgstr "Gen kaikki tasot"
+msgstr "Tiedotus kaikkilla tasoilla"
 
 #: ../base/ufos/ui/geoscape.ufo:199
 msgid "Open up messages"
@@ -5161,7 +5154,7 @@ msgstr "Sulje tämä dialogi"
 #: ../base/ufos/ui/geoscape.ufo:690
 #: ../base/ufos/ui/geoscape.ufo:858
 msgid "Enter"
-msgstr "Sotimaan"
+msgstr "Siirry"
 
 #: ../base/ufos/ui/geoscape.ufo:691
 #: ../base/ufos/ui/geoscape.ufo:859
@@ -5176,7 +5169,7 @@ msgstr "Automaattinen Tehtävä"
 #: ../base/ufos/ui/geoscape.ufo:703
 #: ../base/ufos/ui/geoscape.ufo:826
 msgid "Automatically finish mission"
-msgstr "Tee automaattisesti loppuun tehtävä"
+msgstr "Lopeta automaattisesti tehtävä"
 
 #: ../base/ufos/ui/geoscape.ufo:740
 msgid "Base is under attack"
@@ -5244,11 +5237,11 @@ msgstr "Aloita rakennuksilla"
 
 #: ../base/ufos/ui/geoscape.ufo:1018
 msgid "Employees already hired at campaign start"
-msgstr "Kampanjan alussa on valmiiksi palkattuja työntekijöitä"
+msgstr "Kampanjan alussa on valmiiksi palkattua henkilöstöä"
 
 #: ../base/ufos/ui/geoscape.ufo:1026
 msgid "Start with employees"
-msgstr "Aloita työntekijöillä"
+msgstr "Aloita henkilöstöllä"
 
 #: ../base/ufos/ui/geoscape.ufo:1048
 #: ../base/ufos/ui/geoscape.ufo:1467
@@ -5403,9 +5396,8 @@ msgid "Rename your employee"
 msgstr "Nimeä työntekijä"
 
 #: ../base/ufos/ui/hire.ufo:406
-#, fuzzy
 msgid "Occupation"
-msgstr "Hallussapito"
+msgstr "Tehtävä"
 
 #: ../base/ufos/ui/hire.ufo:499
 msgid "Workers"
@@ -5495,11 +5487,11 @@ msgstr "Tämän sotilaan fyysiset tilastot"
 
 #: ../base/ufos/ui/hud.ufo:900
 msgid "Multiple-shot reaction fire (Not possible)"
-msgstr "Reaktio tilassa useita laukauksia  (Ei mahdollinen)"
+msgstr "Reagointitilassa useita laukauksia  (Ei mahdollinen)"
 
 #: ../base/ufos/ui/hud.ufo:912
 msgid "One-shot reaction fire (Not possible)"
-msgstr "Reaktio tilassa yksi laukaus  (Ei mahdollinen)"
+msgstr "Reagointi tilassa yksi laukaus  (Ei mahdollinen)"
 
 #: ../base/ufos/ui/inventory.ufo:93
 msgid "Floor"
@@ -5560,9 +5552,8 @@ msgid "Retry this mission"
 msgstr "Yritä uudelleen tätä tehtävää"
 
 #: ../base/ufos/ui/lostwon.ufo:165
-#, fuzzy
 msgid "UFO recovery"
-msgstr "UFOn elpyminen"
+msgstr "UFOn toipuminen"
 
 #: ../base/ufos/ui/lostwon.ufo:176
 msgid "Store UFO"
@@ -5577,14 +5568,12 @@ msgid "Capacity (free/all)"
 msgstr "Kapasiteetti (vapaa/kaikki)"
 
 #: ../base/ufos/ui/lostwon.ufo:282
-#, fuzzy
 msgid "Recover"
-msgstr "Elpyä"
+msgstr "Elpyminen"
 
 #: ../base/ufos/ui/lostwon.ufo:283
-#, fuzzy
 msgid "Begin UFO recovery process"
-msgstr "Aloita UFO:n toipumis prosessi"
+msgstr "Aloita UFO:n elpymis prosessi"
 
 #: ../base/ufos/ui/lostwon.ufo:305
 msgid "Nation:"
@@ -5732,9 +5721,8 @@ msgstr "Osta ja myy tavaraa"
 
 #: ../base/ufos/ui/market.ufo:91
 #: ../base/ufos/ui/production.ufo:71
-#, fuzzy
 msgid "Craft items"
-msgstr "Ammatti tuotteet"
+msgstr "Aluksen varusteet"
 
 #: ../base/ufos/ui/market.ufo:99
 #: ../base/ufos/ui/production.ufo:83
@@ -6060,11 +6048,11 @@ msgstr "Maks. ihmispelaajia joukkueessa:"
 #: ../base/ufos/ui/multiplayer.ufo:857
 #: ../base/ufos/ui/skirmish.ufo:106
 msgid "Max. AI actors:"
-msgstr "Maks. tekoäly pelaajia:"
+msgstr "Maks. tekoäly hahmoja:"
 
 #: ../base/ufos/ui/multiplayer.ufo:858
 msgid "Max AI actors for teamplay mode"
-msgstr "Maks. tekoäly pelaajia joukkue peli moodissa"
+msgstr "Maks. tekoäly hahmoja joukkue peli moodissa"
 
 #: ../base/ufos/ui/multiplayer.ufo:891
 msgid "Make this server public:"
@@ -6268,9 +6256,8 @@ msgid "Resolution:"
 msgstr "Resoluutio:"
 
 #: ../base/ufos/ui/options.ufo:109
-#, fuzzy
 msgid "Texture resolution cap:"
-msgstr "Pintarakenteen resoluutio cap:"
+msgstr "Pintarakenteen resoluutio:"
 
 #: ../base/ufos/ui/options.ufo:117
 #, fuzzy
@@ -6298,7 +6285,6 @@ msgid "Texture Lod:"
 msgstr "Tekstuurin Lod:"
 
 #: ../base/ufos/ui/options.ufo:206
-#, fuzzy
 msgid "Isometric Mode:"
 msgstr "Isometrinen Tila:"
 
@@ -6426,9 +6412,8 @@ msgid "Centre view:"
 msgstr "Keskitä näkymä:"
 
 #: ../base/ufos/ui/options.ufo:847
-#, fuzzy
 msgid "Centring at soldier selecting, shooting and appearing"
-msgstr "Keskitä sotilas valitsemalla, ammunta ja ilmaantuminen"
+msgstr "Keskitä sotilas valitsemalla, ammu ja ilmaannu"
 
 #: ../base/ufos/ui/options.ufo:858
 msgid "Cursor tooltips:"
@@ -6571,7 +6556,7 @@ msgstr "Varaston kapasiteetti:"
 
 #: ../base/ufos/ui/production.ufo:202
 msgid "Production limit:"
-msgstr "Tuotantorajoitus:"
+msgstr "Tuotanto rajoitus:"
 
 #: ../base/ufos/ui/production.ufo:379
 #: ../base/ufos/ui/production.ufo:390
@@ -6665,7 +6650,7 @@ msgstr "UFO:"
 
 #: ../base/ufos/ui/skirmish.ufo:174
 msgid "Select the ufo that should be used"
-msgstr ""
+msgstr "Valitse ufo mitä pitäisi käyttää"
 
 #: ../base/ufos/ui/skirmish.ufo:201
 msgid "Dropship:"
@@ -6691,7 +6676,7 @@ msgstr "Asennukset"
 #: ../base/ufos/ui/transfer.ufo:37
 #: ../base/ufos/ui/transfer.ufo:49
 msgid "Employees"
-msgstr "Työntekijät"
+msgstr "Henkilöstö"
 
 #: ../base/ufos/ui/stats.ufo:113
 msgid "Costs"
@@ -6703,7 +6688,7 @@ msgstr "Kansakunnat"
 
 #: ../base/ufos/ui/stats.ufo:142
 msgid "Click for funding graphs"
-msgstr ""
+msgstr "Klikkaa rahoitus kaavioita"
 
 #: ../base/ufos/ui/stats.ufo:205
 msgid "Nation Statistics"
@@ -6755,7 +6740,7 @@ msgstr "Suurenna ikkuna"
 
 #: ../base/ufos/ui/sys_editor.ufo:80
 msgid "Extract the window of the last/current selected node"
-msgstr ""
+msgstr "Suurenna ikkuna viimeksi/nykyiseen valittuun kohtaan"
 
 #: ../base/ufos/ui/sys_editor.ufo:93
 msgid "Current window:"
@@ -6763,7 +6748,7 @@ msgstr "Nykyinen ikkuna:"
 
 #: ../base/ufos/ui/sys_editor.ufo:107
 msgid "Current node:"
-msgstr ""
+msgstr "Nykyinen solmu:"
 
 #: ../base/ufos/ui/transfer.ufo:39
 #: ../base/ufos/ui/transfer.ufo:53
@@ -6845,7 +6830,7 @@ msgstr "Tutki"
 
 #: ../base/ufos/weapons.ufo:116
 msgid "Frag Grenade"
-msgstr ""
+msgstr "Frägi Granaatti"
 
 #: ../base/ufos/weapons.ufo:134
 #: ../base/ufos/weapons.ufo:208
@@ -6885,7 +6870,7 @@ msgstr "Alienin Kaasu Granaatti"
 
 #: ../base/ufos/weapons.ufo:492
 msgid "Incendiary grenade"
-msgstr ""
+msgstr "Palo granaatti"
 
 #: ../base/ufos/weapons.ufo:567
 msgid "Plasma Grenade"
@@ -6982,9 +6967,8 @@ msgstr "5-Laukauksen Sarja"
 #: ../base/ufos/weapons_human.ufo:286
 #: ../base/ufos/weapons_multiplayer.ufo:88
 #: ../base/ufos/weapons_multiplayer.ufo:300
-#, fuzzy
 msgid "Full-Auto Sweep"
-msgstr "Täysin automaattinen pyyhkäisy"
+msgstr "Täysi Automaattinen Pyyhkäisy"
 
 #: ../base/ufos/weapons_human.ufo:312
 msgid "Sniper Rifle"
@@ -7009,7 +6993,7 @@ msgstr "Tähdätty Laukaus"
 
 #: ../base/ufos/weapons_human.ufo:412
 msgid "Coilgun Clip"
-msgstr ""
+msgstr "Käämitykin Patruunalipas"
 
 #: ../base/ufos/weapons_human.ufo:472
 msgid "7.62mm Pistol"
@@ -7029,7 +7013,7 @@ msgstr "4.2mm MP Lipas"
 
 #: ../base/ufos/weapons_human.ufo:673
 msgid "Submachine Gun"
-msgstr ""
+msgstr "Konepistooli"
 
 #: ../base/ufos/weapons_human.ufo:692
 msgid "SMG Magazine"
@@ -7046,7 +7030,7 @@ msgstr "Mellakka haulikko"
 
 #: ../base/ufos/weapons_human.ufo:812
 msgid "Saboted Slugs"
-msgstr ""
+msgstr "Saboted Luodit"
 
 #: ../base/ufos/weapons_human.ufo:828
 #: ../base/ufos/weapons_human.ufo:912
@@ -7058,12 +7042,12 @@ msgstr "Kerta Laukaus"
 
 #: ../base/ufos/weapons_human.ufo:877
 msgid "Micro Shotgun"
-msgstr ""
+msgstr "Mikro Haulikko"
 
 #: ../base/ufos/weapons_human.ufo:896
 #: ../base/ufos/weapons_multiplayer.ufo:134
 msgid "Flechette Shells"
-msgstr ""
+msgstr "Flechette Säiliöt"
 
 #: ../base/ufos/weapons_human.ufo:1030
 msgid "Flamethrower"
@@ -7145,15 +7129,15 @@ msgstr "3-Kierroksen Sarja - Ajoitettu"
 
 #: ../base/ufos/weapons_human.ufo:1447
 msgid "25mm IC Grenades"
-msgstr ""
+msgstr "25mm IC Granaatti"
 
 #: ../base/ufos/weapons_human.ufo:1632
 msgid "25mm Flechette Grenades"
-msgstr ""
+msgstr "25mm Flechette Granaatti"
 
 #: ../base/ufos/weapons_human.ufo:1693
 msgid "25mm PB Grenades"
-msgstr ""
+msgstr "25mm PB Granaatti"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
@@ -7298,7 +7282,6 @@ msgid "Cannon Particle Accelerator"
 msgstr "Kanuuna hiukkassuihkujärjestelmä Kiihdytin"
 
 #: ../base/ufos/weapons_particle.ufo:264
-#, fuzzy
 msgid "Unrestricted Blast"
 msgstr "Rajoittamaton Räjähdys"
 
@@ -7447,7 +7430,7 @@ msgstr "Laukaukset: %i"
 
 #: client/battlescape/cl_hud.c:320
 msgid "[0 TU] No reservation"
-msgstr ""
+msgstr "[0 TU] Ei varauksia"
 
 #: client/battlescape/cl_hud.c:337
 #, c-format
@@ -7471,6 +7454,8 @@ msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
 msgstr ""
+"Ei voida suorittaa tehtävää:\n"
+"ammukset ovat loppu.\n"
 
 #: client/battlescape/cl_hud.c:725
 msgid ""
@@ -7485,6 +7470,8 @@ msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 msgstr ""
+"Ei voida suorittaa tehtävää:\n"
+"tämä kohde ei ole ladattava.\n"
 
 #: client/battlescape/cl_hud.c:739
 msgid ""
@@ -7500,6 +7487,8 @@ msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
 msgstr ""
+"Ei voida suorittaa tehtävää:\n"
+"ei tapeeksi TU:ta.\n"
 
 #: client/battlescape/cl_hud.c:900
 msgid "No weapon in right hand."
@@ -7511,29 +7500,29 @@ msgstr "Ei asetta vasemmassa kädessä."
 
 #: client/battlescape/cl_hud.c:911
 msgid "Weapon in right hand cannot be reloaded."
-msgstr ""
+msgstr "Asetta oikeassa kädessä ei voi ladata."
 
 #: client/battlescape/cl_hud.c:913
 msgid "Weapon in left hand cannot be reloaded."
-msgstr ""
+msgstr "Asetta vasemmassa kädessä ei voi ladata."
 
 #: client/battlescape/cl_hud.c:920
 msgid "No reload possible for right hand, already fully loaded."
-msgstr ""
+msgstr "Lataaminen ei onnistu oikeassa kädessä, on jo ladattu täyteen."
 
 #: client/battlescape/cl_hud.c:922
 msgid "No reload possible for left hand, already fully loaded."
-msgstr ""
+msgstr "Lataaminen ei onnistu vasemmassa kädessä, on jo ladattu täyteen."
 
 #: client/battlescape/cl_hud.c:945
 #: client/battlescape/cl_hud.c:969
 msgid "No reload possible for right hand, you don't have backup ammo."
-msgstr ""
+msgstr "Lataaminen ei onnistu oikeassa kädessä, sinulla ei ole vara ammuksia."
 
 #: client/battlescape/cl_hud.c:947
 #: client/battlescape/cl_hud.c:971
 msgid "No reload possible for left hand, you don't have backup ammo."
-msgstr ""
+msgstr "Lataaminen ei onnistu vasemmassa kädessä, sinulla ei ole vara ammuksia."
 
 #: client/battlescape/cl_hud.c:978
 msgid "Not enough TUs for reloading weapon in right hand."
@@ -7676,7 +7665,7 @@ msgstr "Säädä kyykistymiselle varausta."
 
 #: client/battlescape/cl_hud.c:1679
 msgid "Toggle reaction fire"
-msgstr "Vaihda reaktio tilaa"
+msgstr "Vaihda Reagointitilaa"
 
 #: client/battlescape/cl_view.c:211
 #: client/battlescape/cl_view.c:236
@@ -7761,7 +7750,7 @@ msgstr "Sinä lopetit kierroksen\n"
 #: client/battlescape/events/event/player/e_event_endroundannounce.c:58
 #, c-format
 msgid "%s ended his round (team %i)\n"
-msgstr ""
+msgstr "%s päättyi hänen kierros (joukkue %i)\n"
 
 #: client/campaign/cp_aircraft.c:421
 msgid "ON RED ALERT"
@@ -7773,7 +7762,7 @@ msgstr "Ei mitään - ei pitäisi näyttää"
 
 #: client/campaign/cp_aircraft.c:427
 msgid "at home base"
-msgstr "kotitukikohdassa"
+msgstr "kotitukikohta"
 
 #: client/campaign/cp_aircraft.c:429
 msgid "refuelling"
@@ -7804,7 +7793,6 @@ msgid "intercepting a UFO"
 msgstr "Torju UFO"
 
 #: client/campaign/cp_aircraft.c:443
-#, fuzzy
 msgid "enroute to new home base"
 msgstr "Matkan varrelta uusi kotitukikohta."
 
@@ -7913,11 +7901,11 @@ msgstr "Huomautus"
 
 #: client/campaign/cp_aircraft.c:851
 msgid "No operational hangars at that base."
-msgstr "Ei käytössä olevia lentokonehalleja tässä tukikohdassa"
+msgstr "Ei käytössä olevia lentokonehalleja tässä tukikohdassa."
 
 #: client/campaign/cp_aircraft.c:855
 msgid "No free hangars at that base."
-msgstr "Ei vapaita lentokonehalleja tässä tukikohdassa"
+msgstr "Ei vapaita lentokonehalleja tässä tukikohdassa."
 
 #: client/campaign/cp_aircraft.c:858
 msgid "Insufficient free crew quarter space at that base."
@@ -7925,11 +7913,11 @@ msgstr ""
 
 #: client/campaign/cp_aircraft.c:861
 msgid "Insufficient storage space at that base."
-msgstr ""
+msgstr "Liian vähän Varasto tilaa tukikohdassa."
 
 #: client/campaign/cp_aircraft.c:865
 msgid "That base is beyond this aircraft's range."
-msgstr ""
+msgstr "Tämä tukikohta on liian kaukana tälle lentokoneelle."
 
 #: client/campaign/cp_aircraft.c:1237
 #, c-format
@@ -7948,7 +7936,7 @@ msgstr "Aluksella %s on liian vähän polttoainetta ja sen on palattava tukikoht
 
 #: client/campaign/cp_aircraft.c:1380
 msgid "Assign one or more soldiers to this aircraft first."
-msgstr ""
+msgstr "Valitse yksi tai useampi sotilas tähän lentokoneeseen ensimmäisenä."
 
 #: client/campaign/cp_aircraft.c:1404
 msgid "Insufficient fuel."
@@ -7975,6 +7963,9 @@ msgid ""
 "\n"
 "Aircraft can not start.\n"
 msgstr ""
+"Tähän lentokoneeseen ei ole valittu lentäjää.\n"
+"\n"
+"Lentokone ei käynnisty.\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:154
 msgid "Aircraft started"
@@ -8003,17 +7994,17 @@ msgstr "Toimintamatka:\t%i km\n"
 #: client/campaign/cp_aircraft_callbacks.c:262
 #, c-format
 msgid "Weapons:\t%i on %i\n"
-msgstr "Aseet:\t%i on %i\n"
+msgstr "Aseet:\t%i / %i\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:263
 #, c-format
 msgid "Armour:\t%i on 1\n"
-msgstr "Panssarit:\t%i on 1\n"
+msgstr "Panssarit:\t%i / 1\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:264
 #, c-format
 msgid "Electronics:\t%i on %i"
-msgstr "Elektroniikka:\t%i on %i"
+msgstr "Elektroniikka:\t%i / %i"
 
 #: client/campaign/cp_airfight.c:356
 #, c-format
@@ -8185,7 +8176,7 @@ msgstr "Työskentelee 100%"
 
 #: client/campaign/cp_base.c:960
 msgid "Not operational, depends on"
-msgstr ""
+msgstr "Ei toiminnassa, riippuu"
 
 #: client/campaign/cp_base.c:964
 msgid "Down"
@@ -8237,7 +8228,7 @@ msgstr "Muistiinpano"
 
 #: client/campaign/cp_base.c:2324
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
-msgstr ""
+msgstr "Ei lentokonetta tässä tukikohdassa - Ensin sinun täytyy ostaa lentokone\n"
 
 #: client/campaign/cp_base.c:2478
 #, c-format
@@ -8251,14 +8242,14 @@ msgstr "Rakennus valmis"
 #: client/campaign/cp_base.c:2581
 #, c-format
 msgid "By selling %s you gathered %i credits."
-msgstr ""
+msgstr "Myymällä %s olet kerännyt %i rahaa."
 
 #: client/campaign/cp_base.c:2582
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i kerätty tuote"
+msgstr[1] "%i kerätyt tuotteet"
 
 #: client/campaign/cp_base.c:2586
 #, c-format
@@ -8269,18 +8260,18 @@ msgstr "Ei tarpeeksi varastointitilaa %s. %s"
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i tuote myytiin %i krediitillä. "
+msgstr[1] "%i tuotteet myytiin %i krediitillä. "
 
 #: client/campaign/cp_base.c:3270
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
-msgstr ""
+msgstr "%s ei ole Antimateriaali varastoa. %i yksikköä antimateriaa on tuhottu."
 
 #: client/campaign/cp_base_callbacks.c:71
 #, c-format
 msgid "%s has been destroyed by an antimatter storage breach."
-msgstr ""
+msgstr "%s on tuhonnut Antimateriaali varaston."
 
 #: client/campaign/cp_base_callbacks.c:179
 #, c-format
@@ -8289,7 +8280,7 @@ msgstr "Tukikohta #%i"
 
 #: client/campaign/cp_base_callbacks.c:187
 msgid "You've reached the base limit."
-msgstr ""
+msgstr "Olet saavuttanut tukikohdan ylärajan."
 
 #: client/campaign/cp_base_callbacks.c:220
 #, c-format
@@ -8307,11 +8298,11 @@ msgstr "Tukikohdan rakennus"
 
 #: client/campaign/cp_base_callbacks.c:236
 msgid "Not enough credits to set up a new base."
-msgstr ""
+msgstr "Ei tarpeeksi rahaa uuden tukikohdan perustamiseen."
 
 #: client/campaign/cp_base_callbacks.c:295
 msgid "Buy or produce at least one aircraft first."
-msgstr "Osta tai tuota vähintään yksi lentokone ensin."
+msgstr "Osta tai valmista vähintään yksi lentokone ensin."
 
 #: client/campaign/cp_base_callbacks.c:297
 msgid "No Hangar functional in base."
@@ -8323,13 +8314,13 @@ msgstr "Tukikohdassa ei ole lentokonehallia."
 #: client/campaign/cp_base_callbacks.c:323
 #: client/campaign/cp_base_callbacks.c:328
 #: client/campaign/cp_base_callbacks.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "No %s functional in base."
-msgstr ""
+msgstr "Ei %s toimiva tukikohdassa."
 
 #: client/campaign/cp_base_callbacks.c:308
 msgid "Build at least a second base to transfer equipment or personnel"
-msgstr "Rakenna vähintään toinen tukikohta jotta voit siirtää välineitä tai henkilökuntaa"
+msgstr "Rakenna vähintään toinen tukikohta, jotta voit siirtää välineitä tai henkilöitä"
 
 #: client/campaign/cp_base_callbacks.c:587
 msgid "Base is under attack, you can't access this building !"
@@ -8337,7 +8328,7 @@ msgstr "Tukikohta on uhattuna, et voi käyttää tätä rakennusta !"
 
 #: client/campaign/cp_base_callbacks.c:596
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
-msgstr ""
+msgstr "Sinulla pitää olla vähintään yksi lentokonehalli (ja sen riippuvuudet) käyttääksesi lentokonetta."
 
 #: client/campaign/cp_base_callbacks.c:615
 #, c-format
@@ -8353,12 +8344,12 @@ msgstr[1] ""
 #: client/campaign/cp_base_callbacks.c:626
 #, c-format
 msgid "You need a building %s to make building %s functional."
-msgstr ""
+msgstr "Sinun pitää rakentaa %s jotta rakennus %s olisi toimiva."
 
 #: client/campaign/cp_base_callbacks.c:636
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
-msgstr ""
+msgstr "Rakennus %s ei ole vielä valmis ja sitä tarvitaan rakennuksen %s käyttöön."
 
 #: client/campaign/cp_base_callbacks.c:643
 #, c-format
@@ -8382,7 +8373,7 @@ msgstr "^BLentokonetta\n"
 
 #: client/campaign/cp_base_callbacks.c:697
 msgid "^BEmployees\n"
-msgstr "^BTyöntekijää\n"
+msgstr "^BHenkilöstö\n"
 
 #: client/campaign/cp_base_callbacks.c:706
 msgid "^BAliens\n"
@@ -8530,7 +8521,7 @@ msgstr "%s\t%i\n"
 #: client/campaign/cp_campaign.c:801
 #, c-format
 msgid "Employees:\t%i c\n"
-msgstr "Työntekijät:\t%i k\n"
+msgstr "Henkilöstö:\t%i k\n"
 
 #: client/campaign/cp_campaign.c:814
 #, c-format
@@ -8689,6 +8680,8 @@ msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
 msgstr ""
+"Sinulla ei ole tarpeeksi asuinhuoneistoja henkilöstölle.\n"
+"Rakenna lisää asuinhuoneistoja."
 
 #: client/campaign/cp_employee_callbacks.c:286
 #: client/campaign/cp_employee_callbacks.c:340
@@ -8720,12 +8713,12 @@ msgstr "Tuntematon"
 
 #: client/campaign/cp_fightequip_callbacks.c:397
 msgid "No item assigned.\n"
-msgstr ""
+msgstr "Esinettä ei ole asetettu.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:398
 #, c-format
 msgid "This slot is for %s or smaller items."
-msgstr "Tämä paikka on %s tai pienemmille tavaroille."
+msgstr "Tämä paikka on %s tai pienelle varusteelle tarkoitettu."
 
 #: client/campaign/cp_fightequip_callbacks.c:406
 msgid "This item is functional.\n"
@@ -8753,7 +8746,7 @@ msgstr "Tämä tuote poistetaan %i tunnissa.\n"
 
 #: client/campaign/cp_fightequip_callbacks.c:425
 msgid "No ammo assigned to this weapon."
-msgstr ""
+msgstr "Ammuksia ei ole asetettu tähän aseeseen."
 
 #: client/campaign/cp_fightequip_callbacks.c:433
 #: client/campaign/cp_fightequip_callbacks.c:438
@@ -8770,15 +8763,15 @@ msgstr "Tavaraa ei ole valittu."
 
 #: client/campaign/cp_fightequip_callbacks.c:572
 msgid "You can't equip an alien technology."
-msgstr ""
+msgstr "Et voi varustaa alienin tekniikalla."
 
 #: client/campaign/cp_fightequip_callbacks.c:575
 msgid "Technology requested is not yet completed."
-msgstr ""
+msgstr "Teknologia ei valitettavasti ole vielä valmis."
 
 #: client/campaign/cp_fightequip_callbacks.c:578
 msgid "This item is too heavy for the selected slot."
-msgstr ""
+msgstr "Tämä esine on liian raskas valittuun paikkaan."
 
 #: client/campaign/cp_fightequip_callbacks.c:581
 msgid "Equip a weapon first."
@@ -8786,7 +8779,7 @@ msgstr "Varusta ase ensimmäisenä."
 
 #: client/campaign/cp_fightequip_callbacks.c:584
 msgid "Ammo not usable with current weapon."
-msgstr ""
+msgstr "Ammuksia ei voi käyttää nykyisessä aseessa."
 
 #: client/campaign/cp_fightequip_callbacks.c:587
 msgid "Unknown problem."
@@ -8848,7 +8841,7 @@ msgstr "Asenna rakennus"
 
 #: client/campaign/cp_installation_callbacks.c:155
 msgid "Not enough credits to set up a new installation."
-msgstr ""
+msgstr "Ei tarpeeksi rahaa uuden laitoksen perustamiseen."
 
 #: client/campaign/cp_installation_callbacks.c:222
 msgid "Destroy Installation"
@@ -8950,12 +8943,12 @@ msgstr "UFO tutkan kantamassa\n"
 #: client/campaign/cp_mapfightequip.c:323
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
-msgstr ""
+msgstr "%s on onnistuneesti asennettu %s lentokoneeseen %s"
 
 #: client/campaign/cp_mapfightequip.c:326
 #, c-format
 msgid "%s was successfully installed at installation %s."
-msgstr ""
+msgstr "%s on onnistuneesti asennettu laitokseen %s"
 
 #: client/campaign/cp_mapfightequip.c:329
 #, c-format
@@ -8970,12 +8963,12 @@ msgstr "%s on onnistuneesti poistettu lentokoneesta %s %s."
 #: client/campaign/cp_mapfightequip.c:357
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
-msgstr ""
+msgstr "%s on onnistuneesti poistettu, aloitamme %s asentamista %s lentokoneeseen %s"
 
 #: client/campaign/cp_mapfightequip.c:365
 #, c-format
 msgid "%s was successfully removed from installation %s."
-msgstr ""
+msgstr "%s on onnistuneesti poistettu laitoksesta %s"
 
 #: client/campaign/cp_mapfightequip.c:368
 #, c-format
@@ -8984,19 +8977,19 @@ msgstr "%s on onnistuneesti poistettu %s."
 
 #: client/campaign/cp_mapfightequip.c:1325
 msgid "Light weight"
-msgstr "Kevyt paino"
+msgstr "Kevyt painoiselle"
 
 #: client/campaign/cp_mapfightequip.c:1328
 msgid "Medium weight"
-msgstr "Keskikokoinen paino"
+msgstr "Keskikokoisen painoiselle"
 
 #: client/campaign/cp_mapfightequip.c:1331
 msgid "Heavy weight"
-msgstr "Raskas paino"
+msgstr "Raskas painoiselle"
 
 #: client/campaign/cp_mapfightequip.c:1334
 msgid "Unknown weight"
-msgstr "Tuntematon paino"
+msgstr "Tuntemattoman painoiselle"
 
 #: client/campaign/cp_market.c:153
 #: client/campaign/cp_market_callbacks.c:767
@@ -9039,7 +9032,7 @@ msgstr ""
 
 #: client/campaign/cp_market_callbacks.c:710
 msgid "You can't sell an aircraft that is not in base"
-msgstr "Et voi myydä lentokonetta joka ei ole tukikohdassa"
+msgstr "Et voi myydä lentokonetta, joka ei ole tukikohdassa"
 
 #: client/campaign/cp_messageoptions.c:36
 msgid "installation_installed"
@@ -9164,7 +9157,7 @@ msgid ""
 "\n"
 "   - The UFO:AI development team"
 msgstr ""
-"Onnittelut! Olet päässyt loppuun UFO: AI kampanjan.\n"
+"Onnittelut! Olet päässyt loppuun UFO: Alien Invasion kampanjan.\n"
 "Kuitenkaan, tämä peli ei ole tien päässä. Peliä edelleen kehittetään.\n"
 "Kampanjaa on tarkoitus laajentaa uusilla tehtävillä, vihollisilla, ufoilla, aluksilla ja tutkimuksella.\n"
 "\n"
@@ -9174,7 +9167,7 @@ msgstr ""
 "\n"
 "Kiitos pelaamisesta ja toivomme että pidit pelistä.\n"
 "\n"
-"   - UFO: AI Kehitystiimi"
+"   - UFO: Alien Invasionin Kehitystiimi"
 
 #: client/campaign/cp_missions.c:432
 msgid "Landed UFO"
@@ -9275,7 +9268,7 @@ msgstr "Kokemukset %i %s, %i %s, %i %s, ja %i %s kansakunnalta %s (%s)"
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "raha"
-msgstr[1] "rahaa"
+msgstr[1] "rahat"
 
 #: client/campaign/cp_nations.c:84
 #: client/cl_game_campaign.c:208
@@ -9301,51 +9294,51 @@ msgstr[1] "työläistä"
 #: client/campaign/cp_nations.c:98
 #, c-format
 msgid "Paid %i credits to soldiers"
-msgstr "Maksettu%i kredittiä sotilaalle"
+msgstr "Maksettu %i krediittiä sotilaille"
 
 #: client/campaign/cp_nations.c:109
 #, c-format
 msgid "Paid %i credits to workers"
-msgstr "Maksettu %i kredittiä työläiselle"
+msgstr "Maksettu %i krediittiä työläisille"
 
 #: client/campaign/cp_nations.c:119
 #, c-format
 msgid "Paid %i credits to scientists"
-msgstr "Maksettu %i kredittiä tutkijoille"
+msgstr "Maksettu %i krediittiä tutkijoille"
 
 #: client/campaign/cp_nations.c:129
 #, c-format
 msgid "Paid %i credits to pilots"
-msgstr "Maksettu %i kredittiä lentäjille"
+msgstr "Maksettu %i krediittiä lentäjille"
 
 #: client/campaign/cp_nations.c:140
 #, c-format
 msgid "Paid %i credits for robots"
-msgstr "Maksettu %i crediittejä roboteista"
+msgstr "Maksettu %i krediittiä roboteista"
 
 #: client/campaign/cp_nations.c:156
 #, c-format
 msgid "Paid %i credits for aircraft"
-msgstr "Maksettu %i crediittejä lentokoneesta"
+msgstr "Maksettu %i krediittiä lentokoneesta"
 
 #: client/campaign/cp_nations.c:172
 #, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr "Maksettu %i crediittejä ylläpidosta %s"
+msgstr "Maksettu %i krediittiä ylläpidosta %s"
 
 #: client/campaign/cp_nations.c:177
 #, c-format
 msgid "Paid %i credits for administrative overhead."
-msgstr "Maksettu %i crediittejä hallinnollisiin yleiskuluihin."
+msgstr "Maksettu %i krediittiä hallinnollisiin yleiskuluihin."
 
 #: client/campaign/cp_nations.c:185
 #, c-format
 msgid "Paid %i credits in interest on your debt."
-msgstr "Maksettu %i crediittejä velan koroista."
+msgstr "Maksettu %i krediittejä velan koroista."
 
 #: client/campaign/cp_popup.c:129
 msgid "current homebase of aircraft"
-msgstr "Nykyinen kotitukikohta lentokoneella"
+msgstr "nykyinen kotitukikohta lentokoneella"
 
 #: client/campaign/cp_popup.c:135
 msgid "base can hold aircraft"
@@ -9424,17 +9417,17 @@ msgstr "Tuotannon lista tyhjä"
 #: client/campaign/cp_produce.c:362
 #, c-format
 msgid "Not enough credits to finish production in %s.\n"
-msgstr ""
+msgstr "Ei tarpeeksi rahaa tuotannon valmistumiseen %s.\n"
 
 #: client/campaign/cp_produce.c:350
 #, c-format
 msgid "Not enough free storage space in %s. Production postponed.\n"
-msgstr ""
+msgstr "Ei ole vapaata tilaa %s varastossa. Tuotanto siirretty.\n"
 
 #: client/campaign/cp_produce.c:372
 #, c-format
 msgid "Not enough free hangar space in %s. Production postponed.\n"
-msgstr ""
+msgstr "Ei ole vapaata tilaa %s lentokonehallissa. Tuotanto siirretty.\n"
 
 #: client/campaign/cp_produce.c:405
 #, c-format
@@ -9449,12 +9442,12 @@ msgstr "Tuotanto valmis"
 #: client/campaign/cp_produce.c:433
 #, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed.\n"
-msgstr ""
+msgstr "Ei ole vapaata tilaa %s varastossa. Purkamista lykätty.\n"
 
 #: client/campaign/cp_produce.c:445
 #, c-format
 msgid "The disassembling of %s at %s has finished."
-msgstr ""
+msgstr "%s purkaminen on valmistunut %s."
 
 #: client/campaign/cp_produce_callbacks.c:130
 msgid "Not enough workers"
@@ -9573,7 +9566,7 @@ msgstr "Ei tarpeeksi materiaaleja!"
 #: client/campaign/cp_produce_callbacks.c:804
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
-msgstr ""
+msgstr "Sinulla ei ole tarpeeksi materiaalia tuottaaksesi kaikkia näitä (%i) tuotteita. Tuotanto jatkaa alennetulla (%i) määrällä."
 
 #: client/campaign/cp_produce_callbacks.c:808
 #: client/campaign/cp_produce_callbacks.c:828
@@ -9599,7 +9592,7 @@ msgstr "%s:n purku on aloitettu"
 #: client/campaign/cp_research.c:89
 #, c-format
 msgid "A research project has been completed: %s\n"
-msgstr ""
+msgstr "Tutkimushanke on saatu päätökseen: %s\n"
 
 #: client/campaign/cp_research.c:90
 msgid "Research finished"
@@ -9735,17 +9728,19 @@ msgstr ""
 #: client/campaign/cp_research_callbacks.c:584
 #: client/campaign/cp_research_callbacks.c:629
 msgid "The research on this item is complete."
-msgstr ""
+msgstr "Tämän tuoteen tutkimus on valmis."
 
 #: client/campaign/cp_research_callbacks.c:590
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
+"Tämän tuoteen tutkimus ei ole mahdollinen.\n"
+"Sinun täytyy tutkia tekniikka mihin se ensimmäisenä perustuu."
 
 #: client/campaign/cp_research_callbacks.c:659
 msgid "No research proposal available for this project."
-msgstr ""
+msgstr "Tutkimus ehdotuksia ei ole tälle hankkeelle."
 
 #: client/campaign/cp_research_callbacks.c:826
 msgid "Nothing to research"
@@ -10082,7 +10077,7 @@ msgstr "Kuljetus tehtävä"
 #: client/campaign/cp_transfer.c:732
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
-msgstr "%s ei ole asuinhuoneistoja, työntekijöitä ei palkattu!"
+msgstr "%s ei ole asuinhuoneistoja, henkilöstöä ei palkattu!"
 
 #: client/campaign/cp_transfer.c:768
 #, c-format
@@ -10173,7 +10168,7 @@ msgid "No power supplies in this base.\n"
 msgstr "Tässä tukikohdassa ei ole Voimalaitosta.\n"
 
 #: client/campaign/cp_ufo.c:131
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
@@ -10430,9 +10425,8 @@ msgstr ""
 
 #: client/campaign/cp_uforecovery_callbacks.c:222
 #: client/campaign/cp_uforecovery_callbacks.c:510
-#, fuzzy
 msgid "UFO Recovery"
-msgstr "UFO toipui"
+msgstr "UFO Toipuminen"
 
 #: client/campaign/cp_uforecovery_callbacks.c:502
 #, c-format
@@ -10447,7 +10441,7 @@ msgstr ""
 #: client/campaign/missions/cp_mission_baseattack.c:126
 #, c-format
 msgid "Your base: %s has been destroyed! All employees killed and all equipment destroyed."
-msgstr "Sinun tukikohtasi: %s on tuhottu! Kaikki työntekijät tapettu ja kaikki laitteet tuhottu."
+msgstr "Sinun tukikohtasi: %s on tuhottu! Kaikki henkilöstö on tapettu ja kaikki laitteet tuhottu."
 
 #: client/campaign/missions/cp_mission_baseattack.c:213
 #, c-format
@@ -10507,7 +10501,7 @@ msgstr ""
 "\n"
 "Rotu: %s\n"
 "Henkilöstö: %i %s, %i %s, %i %s\n"
-"Rahaa: %i k\n"
+"Rahat: %i k\n"
 "Vaikeusaste: %s\n"
 "Pienin kansakuntien onnellisuus: %i %%\n"
 "Suurimmat sallitut velat: %ic\n"
@@ -10540,7 +10534,7 @@ msgid "Game Drawn!"
 msgstr "Pelin piirtänyt!"
 
 #: client/cl_game_multiplayer.c:203
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "\n"
@@ -10550,7 +10544,7 @@ msgstr ""
 "\n"
 "\n"
 "Vihollisia kuollut:  %i\n"
-"Joukkueen pelastautuneet:  %i"
+"Joukkueesta pelastautui:  %i"
 
 #: client/cl_game_multiplayer.c:205
 #: client/cl_game_skirmish.c:136
@@ -10677,7 +10671,7 @@ msgid "%s auxiliary equipment\n"
 msgstr "%s ylimääräiset tarvikkeet\n"
 
 #: client/cl_inventory_callbacks.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Action:\t%s\n"
 msgstr "Toiminta:\t%s\n"
 
@@ -10696,11 +10690,11 @@ msgstr "..."
 #: client/cl_main.c:507
 #, c-format
 msgid "Local game version (%s) differs from the servers"
-msgstr ""
+msgstr "Paikallisen pelin versio (%s) eroaa palvelimen versiosta"
 
 #: client/cl_main.c:513
 msgid "Local map version differs from server"
-msgstr ""
+msgstr "Paikallisen kartan versio on ei kuin palvelimella"
 
 #: client/cl_main.c:519
 msgid "Script files are not the same"
@@ -10709,11 +10703,11 @@ msgstr "Scripti tiedostot eivät ole samoja."
 #: client/cl_main.c:526
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
-msgstr ""
+msgstr "Paikallisen pelin versio (%s) eroaa palvelimen versiosta (%s)"
 
 #: client/cl_main.c:882
 msgid "Target your shot to the ground"
-msgstr ""
+msgstr "Kohdista ammunta maahan"
 
 #: client/cl_main.c:1057
 msgid "Custom"
@@ -10764,40 +10758,41 @@ msgid "CCCP"
 msgstr "CCCP"
 
 #: client/cl_team.c:415
+#, fuzzy
 msgid "Update the GUI with the selected item"
-msgstr ""
+msgstr "Päivitä GUI kanssa valitun kohteen"
 
 #: client/input/cl_input.c:1019
 msgid "Rotate battlescape camera anti-clockwise"
-msgstr ""
+msgstr "Kierrä taistelukentän kameraa vastapäivään"
 
 #: client/input/cl_input.c:1021
 msgid "Rotate battlescape camera clockwise"
-msgstr ""
+msgstr "Kierrä taistelukentän kameraa myötäpäivään"
 
 #: client/input/cl_input.c:1023
 msgid "Tilt battlescape camera up"
-msgstr ""
+msgstr "Kallista taistelukentän kameraa ylös"
 
 #: client/input/cl_input.c:1025
 msgid "Tilt battlescape camera down"
-msgstr ""
+msgstr "Kallista taistelukentän kameraa alas"
 
 #: client/input/cl_input.c:1027
 msgid "Move battlescape camera left"
-msgstr ""
+msgstr "Siirrä taistelukentän kameraa vasemmalle"
 
 #: client/input/cl_input.c:1029
 msgid "Move battlescape camera right"
-msgstr ""
+msgstr "Siirrä taistelukentän kameraa oikealle"
 
 #: client/input/cl_input.c:1031
 msgid "Move battlescape camera forward"
-msgstr ""
+msgstr "Siirrä taistelukentän kameraa eteenpäin"
 
 #: client/input/cl_input.c:1033
 msgid "Move battlescape camera backward"
-msgstr ""
+msgstr "Siirrä taistelukentän kameraa taaksepäin"
 
 #: client/input/cl_input.c:1035
 #: client/input/cl_input.c:1064
@@ -10811,31 +10806,31 @@ msgstr "Zoomaa ulos"
 
 #: client/input/cl_input.c:1040
 msgid "Left mouse button click (menu)"
-msgstr ""
+msgstr "Vasemman hiiren painiketta klikkaamalla (valikko)"
 
 #: client/input/cl_input.c:1042
 msgid "Middle mouse button click (menu)"
-msgstr ""
+msgstr "Keskimmäisen hiiren painiketta klikkaamalla (valikko)"
 
 #: client/input/cl_input.c:1044
 msgid "Right mouse button click (menu)"
-msgstr ""
+msgstr "Oikean hiiren painiketta klikkaamalla (valikko)"
 
 #: client/input/cl_input.c:1046
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr ""
+msgstr "Valitse kohteet/Kävele aukiolle/tulitilassa, ammu jne."
 
 #: client/input/cl_input.c:1048
 msgid "Walk to a square/In fire mode, cancel action"
-msgstr ""
+msgstr "Kävele aukiolle/tulitilassa, peruuta toiminto"
 
 #: client/input/cl_input.c:1050
 msgid "Turn soldier toward mouse pointer"
-msgstr ""
+msgstr "Käännä sotilas kohti hiiren osoitinta"
 
 #: client/input/cl_input.c:1052
 msgid "Toggles the hud radar mode"
-msgstr ""
+msgstr "Vaihtaa hud tutka-tilan"
 
 #: client/input/cl_input.c:1055
 msgid "Toggle stand/crounch"
@@ -10850,7 +10845,6 @@ msgid "Toggle to next alien"
 msgstr "Vaihda seuraavaan alieniin"
 
 #: client/input/cl_input.c:1058
-#, fuzzy
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Vaihda seuraavaan alieniin, joka näkyy hahmolle."
 
@@ -10864,15 +10858,15 @@ msgstr "Avaa tai sulje ovi"
 
 #: client/input/cl_input.c:1062
 msgid "Slice through terrain at a higher level"
-msgstr ""
+msgstr "Siivuta maasto korkeammalla tasolla"
 
 #: client/input/cl_input.c:1063
 msgid "Slice through terrain at a lower level"
-msgstr ""
+msgstr "Siivuta maasto matalalla tasolla"
 
 #: client/input/cl_input.c:1066
 msgid "Confirm the current action"
-msgstr "Vahvista nykyinen toiminta"
+msgstr "Vahvista nykyinen toimintasi"
 
 #: client/menu/m_main.c:53
 msgid "This change requires a restart"
@@ -10916,7 +10910,7 @@ msgstr "%s ladattu\n"
 
 #: client/menu/node/m_node_container.c:436
 msgid "Usable in:\n"
-msgstr "Toimii:\n"
+msgstr "Käytettävissä:\n"
 
 #: client/menu/node/m_node_container.c:477
 #, c-format
@@ -10924,16 +10918,15 @@ msgid "In: %i Out: %i"
 msgstr "Sisään: %i Ulos: %i"
 
 #: client/menu/node/m_node_keybinding.c:94
-#, fuzzy, c-format
+#, c-format
 msgid "Key %s already bound"
-msgstr "Pikanäppäin %s on sidottu"
+msgstr "%s pikanäppäin on jo olemassa"
 
 #: client/menu/node/m_node_keybinding.c:153
 msgid "NONE"
 msgstr "TYHJÄ"
 
 #: client/menu/node/m_node_window.c:260
-#, fuzzy
 msgid "Drag to move window"
 msgstr "Vedä toiseen ikkunaan"
 
@@ -10943,11 +10936,11 @@ msgstr "Sulje ikkuna"
 
 #: client/multiplayer/mp_callbacks.c:49
 msgid "Assemble a team first"
-msgstr ""
+msgstr "Kokoa joukkue ensimmäisenä"
 
 #: client/multiplayer/mp_callbacks.c:160
 msgid "Select a free team or your coop team"
-msgstr ""
+msgstr "Valitse vapaa joukkue tai oma kenttä joukkueellesi"
 
 #: client/multiplayer/mp_callbacks.c:188
 #: client/multiplayer/mp_callbacks.c:201
@@ -10962,7 +10955,7 @@ msgstr "Joukkue on jo olemassa"
 
 #: client/multiplayer/mp_callbacks.c:214
 msgid "Invalid or full team"
-msgstr ""
+msgstr "Virheellinen tai täysi tiimi"
 
 #: client/multiplayer/mp_serverlist.c:234
 #, c-format
@@ -11015,12 +11008,12 @@ msgstr "Jakamaton palvelin:\t%s\n"
 #: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Operating system:\t%s\n"
-msgstr ""
+msgstr "Käyttöjärjestelmä:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Network protocol:\t%s\n"
-msgstr ""
+msgstr "Verkkoprotokolla:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:322
 #, c-format
@@ -11040,22 +11033,22 @@ msgstr "Maks. pelaajia per joukkue:\t%s\n"
 #: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr ""
+msgstr "Maks. joukkueita sallittu tässä kartassa:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. clients:\t%s\n"
-msgstr ""
+msgstr "Maks. asiakkaita:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
-msgstr ""
+msgstr "Maks. sotilaita pelaajalla:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:328
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
-msgstr ""
+msgstr "Maks. sotilaita joukkueessa:\t%s\n"
 
 #: client/multiplayer/mp_serverlist.c:329
 #, c-format
@@ -11080,53 +11073,53 @@ msgstr "Virhe tallennettaessa joukkuetta. Kovalevyllä ei ole tilaa!"
 
 #: game/g_actor.c:296
 msgid "Can't perform action - not enough TUs!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - ei riitä TU!\n"
 
 #: game/g_actor.c:300
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - ase on jo täysin ladattu samoilla ammuksilla!\n"
 
 #: game/g_client.c:301
 msgid "Can't perform action - this isn't your round!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - tämä ei ole sinun vuorosi!\n"
 
 #: game/g_client.c:306
 msgid "Can't perform action - object not present!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - objekti ei ole läsnä!\n"
 
 #: game/g_client.c:311
 msgid "Can't perform action - not an actor!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - ei ole hahmosi!\n"
 
 #: game/g_client.c:316
 msgid "Can't perform action - actor is stunned!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - hahmo on tainnoksissa!\n"
 
 #: game/g_client.c:321
 msgid "Can't perform action - actor is dead!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - hahmo on kuollut!\n"
 
 #: game/g_client.c:326
 msgid "Can't perform action - not on same team!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - ei ole samassa joukkueessa!\n"
 
 #: game/g_client.c:331
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr ""
+msgstr "Voi suorittaa toimenpidettä - ei kontrollia yli liittoutuneiden hahmojen!\n"
 
 #: game/g_client.c:442
 msgid "Currently shaken, won't let their guard down.\n"
-msgstr ""
+msgstr "Tällä hetkellä ravisteltu, eivät anna heidän vartijaa alas.\n"
 
 #: game/g_cmds.c:71
 #, c-format
 msgid "You can't talk for %d more seconds\n"
-msgstr ""
+msgstr "Et voi puhua vielä %d sekuntiin\n"
 
 #: game/g_cmds.c:80
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
-msgstr ""
+msgstr "Huutosuojaus: Et voi puhua %d sekuntiin.\n"
 
 #: game/g_combat.c:395
 msgid ""
@@ -11183,7 +11176,7 @@ msgid "%s is on a rampage.\n"
 msgstr "%s riehuu.\n"
 
 #: game/g_morale.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s on kuluttaa hullun raivolla!\n"
 
