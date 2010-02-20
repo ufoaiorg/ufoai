@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-17 20:15+0600\n"
-"PO-Revision-Date: 2010-02-17 20:51+0600\n"
+"PO-Revision-Date: 2010-02-20 13:55+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3239,9 +3239,8 @@ msgid "A suburban district of an oriental area."
 msgstr "Пригородный район в ближневосточном регионе."
 
 #: ../base/ufos/maps.ufo:211
-#, fuzzy
 msgid "Crashed UFO in oriental suburban district."
-msgstr "Довольно старомодный пригородный район."
+msgstr "Разбившийся НЛО в пригородном районе на Ближнем востоке."
 
 #: ../base/ufos/maps.ufo:292
 #: ../base/ufos/maps.ufo:334
@@ -3292,9 +3291,8 @@ msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Пришельцы появились не к добру в этом малонаселенном лесном регионе."
 
 #: ../base/ufos/maps.ufo:1097
-#, fuzzy
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr "Пришельцы появились не к добру в этом малонаселенном лесном регионе."
+msgstr "В этом малонаселенном лесном регионе разбился НЛО."
 
 #: ../base/ufos/maps.ufo:1217
 #: ../base/ufos/maps.ufo:1259
@@ -5250,9 +5248,8 @@ msgstr ""
 "Отсутствуют."
 
 #: ../base/ufos/research.ufo:1322
-#, fuzzy
 msgid "Plasma And The Grenade Launcher"
-msgstr "Plasma And The Grenade Launcher"
+msgstr "Плазма и ручной гранатомёт"
 
 #: ../base/ufos/research.ufo:1327
 msgid "grenl_plasma_ammo_txt"
@@ -13158,7 +13155,7 @@ msgstr "Штурмовая винтовка VHS"
 
 #: ../base/ufos/weapons_multiplayer.ufo:222
 msgid "XAW95"
-msgstr ""
+msgstr "XAW95"
 
 #: ../base/ufos/weapons_multiplayer.ufo:243
 msgid "XAW95 Magazine"
@@ -16581,19 +16578,17 @@ msgid "Spreads:\t%g\n"
 msgstr "Разброс:\t%g\n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%s. No detailed info available.\n"
-msgstr "Описание отсутствует."
+msgstr "%s. Детальное описание отсутствует. \n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy
 msgid "Ammunition"
-msgstr "Связь пришельцев"
+msgstr "Боеприпасы"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy
 msgid "Weapon"
-msgstr "Вооружение"
+msgstr "Оружие"
 
 #: client/cl_inventory_callbacks.c:183
 #, c-format
@@ -17020,20 +17015,20 @@ msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Испуган, отказывается исполнять приказ.\n"
 
 #: game/g_cmds.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "You can't talk for %d more second\n"
 msgid_plural "You can't talk for %d more seconds\n"
-msgstr[0] "Вы не можете разговаривать больше %d секунд\n"
-msgstr[1] "Вы не можете разговаривать больше %d секунд\n"
-msgstr[2] "Вы не можете разговаривать больше %d секунд\n"
+msgstr[0] "Вы не можете разговаривать еще %d секунду\n"
+msgstr[1] "Вы не можете разговаривать еще %d секунды\n"
+msgstr[2] "Вы не можете разговаривать еще %d секунд\n"
 
 #: game/g_cmds.c:80
-#, fuzzy, c-format
+#, c-format
 msgid "Flood protection: You can't talk for %d more second\n"
 msgid_plural "Flood protection: You can't talk for %d more seconds\n"
-msgstr[0] "Защита от флуда: вы не можете разговаривать %d секунд\n"
-msgstr[1] "Защита от флуда: вы не можете разговаривать %d секунд\n"
-msgstr[2] "Защита от флуда: вы не можете разговаривать %d секунд\n"
+msgstr[0] "Защита от флуда: вы не можете разговаривать еще %d секунду\n"
+msgstr[1] "Защита от флуда: вы не можете разговаривать еще %d секунды\n"
+msgstr[2] "Защита от флуда: вы не можете разговаривать еще %d секунд\n"
 
 #: game/g_combat.c:395
 msgid ""
