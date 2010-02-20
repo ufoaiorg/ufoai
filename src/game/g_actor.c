@@ -122,11 +122,13 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 	 * that is used below to check in each of the rotation steps
 	 * (1/8, 22.5 degree) whether something became visible while turning */
 	if (angleDiv > 0) {
+		const int angleStep = (360.0 / CORE_DIRECTIONS);
 		rot = dvleft;
-		num = (angleDiv + 22.5) / 45.0;
+		num = (angleDiv + angleStep / 2) / angleStep;
 	} else {
+		const int angleStep = (360.0 / CORE_DIRECTIONS);
 		rot = dvright;
-		num = (-angleDiv + 22.5) / 45.0;
+		num = (-angleDiv + angleStep / 2) / angleStep;
 	}
 
 	/* do rotation and vis checks */
