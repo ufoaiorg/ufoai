@@ -50,13 +50,13 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
  * @brief Calculates the fraction (percentage) of production of an item in 1 hour.
  * @param[in] base Pointer to the base with given production.
  * @param[in] tech Pointer to the technology for given production.
- * @param[in] sufo Pointer to disassembled UFO.
+ * @param[in] storedUFO Pointer to disassembled UFO.
  * @sa PR_ProductionRun
  * @sa PR_ItemProductionInfo
  * @sa PR_DisassemblyInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
-float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const storedUFO_t *const sufo)
+float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const storedUFO_t *const storedUFO)
 {
 	signed int allWorkers = 0;
 	signed int maxWorkers = 0;
