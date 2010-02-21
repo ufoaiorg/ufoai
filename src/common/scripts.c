@@ -2193,7 +2193,10 @@ void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 	if (chr->teamDef == NULL)
 		Com_Error(ERR_DROP, "Com_GetCharacterValues: could not find team '%s' in team definitions", teamDefition);
 
-	chr->fieldSize = chr->teamDef->size;
+	if (chr->teamDef->size != ACTOR_SIZE_INVALID)
+		chr->fieldSize = chr->teamDef->size;
+	else
+		chr->fieldSize = ACTOR_SIZE_NORMAL;
 
 	/* get the models */
 	while (retry--) {
