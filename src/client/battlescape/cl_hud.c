@@ -84,6 +84,8 @@ CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
 /**
  * @brief Defines the various states of a button.
  * @note Not all buttons do have all of these states (e.g. "unusable" is not very common).
+ * @todo is BT_STATE_UNUSABLE still needed? (e.g. rpg had this state for the reaction fire buttons if rf was enabled
+ * but imo one should not have reaction fire enabled for a none-reaction fire weapon)
  */
 typedef enum {
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
