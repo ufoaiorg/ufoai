@@ -646,8 +646,8 @@ typedef struct character_s {
 	AI_t AI; /**< The character's artificial intelligence */
 } character_t;
 
-#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)
-#define SANE_FIREMODE(fm)	(((fm)->hand >= 0 && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
+#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
+#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
 
 #define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
 #define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))

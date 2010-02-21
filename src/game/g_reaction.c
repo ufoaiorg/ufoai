@@ -90,7 +90,7 @@ static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 }
 
 /**
- * @brief Checks if the currently selected firemode is useable with the defined weapon.
+ * @brief Checks if the currently selected firemode is usable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  */
 static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
