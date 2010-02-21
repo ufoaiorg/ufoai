@@ -37,9 +37,6 @@ textureref_t textureref[MAX_MAP_TEXTURES];
 int FindMiptex (const char *name)
 {
 	int i;
-	char path[1024];
-	qboolean loaded = qfalse;
-	miptex_t *mt;
 
 	/* search through textures that have already been loaded. */
 	for (i = 0; i < nummiptex; i++)
@@ -49,38 +46,6 @@ int FindMiptex (const char *name)
 	if (nummiptex == MAX_MAP_TEXTURES)
 		Sys_Error("MAX_MAP_TEXTURES");
 	Q_strncpyz(textureref[i].name, name, sizeof(textureref[i].name));
-
-	/* load the miptex to get the flags and values */
-	Com_sprintf(path, sizeof(path), "textures/%s.tga", name);
-	if (TryLoadTGA(path, &mt) != -1) {
-		Mem_Free(mt);
-		loaded = qtrue;
-	}
-
-	if (!loaded) {	/* fall back to jpg */
-		Com_sprintf(path, sizeof(path), "textures/%s.jpg", name);
-		if (TryLoadJPG(path, &mt) != -1) {
-			Mem_Free(mt);
-			loaded = qtrue;
-		}
-	}
-
-	if (!loaded) {	/* fall back to png */
-		Com_sprintf(path, sizeof(path), "textures/%s.png", name);
-		if (TryLoadPNG(path, &mt) != -1) {
-			Mem_Free(mt);
-			loaded = qtrue;
-		}
-	}
-
-	if (!loaded) {
-		if (!(config.performMapCheck || config.fixMap)) {
-			Com_Printf("Could not find texture '%s'\n", name);
-		}
-		i = -1;
-	} else {
-		nummiptex++;
-	}
 
 	return i;
 }

@@ -33,9 +33,9 @@ typedef struct mp_s {
 	vec2_t wait;
 	int nextTime;
 	int levelflags;
-} mapParticle_t;							/* mapparticles */
+} mapParticle_t;
 
-void CL_AddMapParticle(const char *particle, vec3_t origin, vec2_t wait, const char *info, int levelflags);
+void CL_AddMapParticle(const char *particle, const vec3_t origin, const vec2_t wait, const char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
 void CL_ParticleFree(ptl_t *p);
 

@@ -182,6 +182,45 @@ mapdef or_medium
 	ufos
 	{
 		craft_ufo_scout
+	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+mapdef or_medium_crash
+{
+	map			"+oriental"
+	param		medium_crash
+	multiplayer	false
+	hurtaliens true
+	description	"_Crashed UFO in oriental suburban district."
+	size		"small"
+	maxaliens	8
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
 		craft_crash_fighter
 	}
 
@@ -221,7 +260,6 @@ mapdef or_big
 
 	ufos
 	{
-		craft_crash_fighter
 		craft_ufo_harvester
 	}
 
@@ -664,6 +702,45 @@ mapdef tropic_river
 	{
 		craft_ufo_scout
 		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef tropic_river_crash
+{
+	map			"+tropic"
+	description	"_A river runs through this piece of jungle."
+	param		river_crash
+	hurtaliens true
+	multiplayer	false
+	maxaliens	6
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
 		craft_crash_scout
 		craft_crash_fighter
 	}
@@ -707,6 +784,44 @@ mapdef tropic_drug
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef tropic_drug_crash
+{
+	map			"+tropic"
+	description	"_A cleared stretch of land in the middle of the jungle."
+	param		drug_crash
+	multiplayer	false
+	maxaliens	14
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
 		craft_crash_scout
 		craft_crash_fighter
 	}
@@ -951,10 +1066,49 @@ mapdef forest_small
 
 	ufos
 	{
-		craft_crash_scout
-		craft_crash_fighter
 		craft_ufo_scout
 		craft_ufo_fighter
+	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
+
+mapdef forest_small_crash
+{
+	map			"+forest"
+	param		small_crash
+	multiplayer	false
+	hurtaliens true
+	description	"_UFO crashed in this sparsely populated forest region."
+	size		"small"
+	maxaliens	6
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_crash_scout
+		craft_crash_fighter
 	}
 
 	terrains
@@ -994,8 +1148,46 @@ mapdef forest_large
 	ufos
 	{
 		craft_ufo_fighter
-		craft_crash_fighter
 		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		rural
+		nopopulation
+	}
+}
+
+mapdef forest_large_crash
+{
+	map			"+forest"
+	param		large_crash
+	multiplayer	false
+	description	"_Aliens are up to no good in this sparsely populated forest region."
+	size		"large"
+	maxaliens	15
+
+	aircraft 
+	{
+		craft_drop_firebird
+		craft_drop_raptor
+		craft_drop_herakles
+	}
+
+	ufos
+	{
+		craft_crash_fighter
 		craft_crash_harvester
 	}
 
@@ -2580,6 +2772,7 @@ mapdef bridge
 		coop4
 	}
 	maxaliens		6
+	hurtaliens	true
 
 	aircraft 
 	{

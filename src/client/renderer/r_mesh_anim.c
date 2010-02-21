@@ -29,12 +29,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LNEXT(x) ((x + 1 < MAX_ANIMLIST) ? x + 1 : 0)
 
 /**
+ * @brief Searches a given animation id in the given model data
  * @sa R_AnimChange
  * @sa R_AnimAppend
  * @sa R_AnimRun
  * @sa R_AnimGetName
+ * @param[in] mod The model to search the given animation id in
+ * @param[in] name The animation name (from the *.anm file) to search
+ * @return @c NULL if not found, otherwise the animation data
  */
-static mAliasAnim_t *R_AnimGet (model_t * mod, const char *name)
+static const mAliasAnim_t *R_AnimGet (const model_t * mod, const char *name)
 {
 	mAliasAnim_t *anim;
 	int i;
@@ -52,14 +56,18 @@ static mAliasAnim_t *R_AnimGet (model_t * mod, const char *name)
 
 
 /**
+ * @brief Appends a new animation to the current running one
  * @sa R_AnimGet
  * @sa R_AnimChange
  * @sa R_AnimRun
  * @sa R_AnimGetName
+ * @param[in,out] as The animation state to append the new animation to
+ * @param[in] mod The model to append the animation for
+ * @param[in] name The animation name (from the *.anm file) to append
  */
-void R_AnimAppend (animState_t * as, model_t * mod, const char *name)
+void R_AnimAppend (animState_t * as, const model_t * mod, const char *name)
 {
-	mAliasAnim_t *anim;
+	const mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 
@@ -100,13 +108,13 @@ void R_AnimAppend (animState_t * as, model_t * mod, const char *name)
  * @sa R_AnimAppend
  * @sa R_AnimRun
  * @sa R_AnimGetName
- * @param[in] as Client side animation state of the model
- * @param[in] mod Model structure to change the animation for (md2/mod_alias_md2)
+ * @param[in,out] as Client side animation state of the model
+ * @param[in] mod Model structure to change the animation for
  * @param[in] name Animation state name to switch to
  */
-void R_AnimChange (animState_t * as, model_t * mod, const char *name)
+void R_AnimChange (animState_t * as, const model_t * mod, const char *name)
 {
-	mAliasAnim_t *anim;
+	const mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 
@@ -152,11 +160,14 @@ void R_AnimChange (animState_t * as, model_t * mod, const char *name)
 
 
 /**
- * @brief Run the animation of the given md2 model
+ * @brief Run the animation of the given model
  * @sa R_AnimGet
  * @sa R_AnimAppend
  * @sa R_AnimChange
  * @sa R_AnimGetName
+ * @param[in,out] as The animation state to run
+ * @param[in] mod The model to run the animation for
+ * @param[in] msec The milliseconds since this was called last
  */
 void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 {
@@ -200,12 +211,16 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 
 
 /**
+ * @brief Get the current running animation for a model
  * @sa R_AnimGet
  * @sa R_AnimAppend
  * @sa R_AnimRun
  * @sa R_AnimChange
+ * @param[in] as The animation state to check
+ * @param[in] mod The model to check
+ * @return @c NULL if no animation is set or running or the name of the current running animation otherwise.
  */
-const char *R_AnimGetName (animState_t * as, const model_t * mod)
+const char *R_AnimGetName (const animState_t * as, const model_t * mod)
 {
 	const mAliasAnim_t *anim;
 

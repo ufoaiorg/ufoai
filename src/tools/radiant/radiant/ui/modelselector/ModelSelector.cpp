@@ -258,8 +258,10 @@ namespace ui
 		ModelFileFunctor functor(_treeStore);
 		GlobalFileSystem().forEachFile(MODELS_FOLDER, "*", makeCallback1(functor), 0);
 
-		GtkWidget* treeView = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_treeStore));
+		GtkTreeModel *model = gtk_tree_model_filter_new(GTK_TREE_MODEL(_treeStore), NULL);
+		GtkTreeModel *modelSorted = gtk_tree_model_sort_new_with_model(model);
 
+		GtkWidget* treeView = gtk_tree_view_new_with_model(GTK_TREE_MODEL(modelSorted));
 		// Single column, containing model pathname
 		GtkTreeViewColumn* col = gtk_tree_view_column_new();
 		gtk_tree_view_column_set_title(col, _("Value"));
@@ -275,6 +277,8 @@ namespace ui
 
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeView), col);
 		gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeView), FALSE);
+
+		gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(modelSorted), NAME_COLUMN, GTK_SORT_ASCENDING);
 
 		// Pack treeview into a scrolled window and return
 

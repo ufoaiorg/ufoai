@@ -337,7 +337,7 @@ qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 		return qfalse;
 	}
 
-	if (TU > ent->TU) {
+	if (TU > G_ActorUsableTUs(ent)) {
 		return qfalse;
 	}
 
@@ -371,22 +371,6 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 	G_SendStats(ent);
 
 	/* end the event */
-	gi.EndEvents();
-}
-
-/**
- * @brief Will inform the player about the real TU reservation
- * @param ent The actors edict.
- */
-static void G_EventSendReservations (const edict_t *ent)
-{
-	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
-
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->chr.reservedTus.reaction);
-	gi.WriteShort(ent->chr.reservedTus.shot);
-	gi.WriteShort(ent->chr.reservedTus.crouch);
-
 	gi.EndEvents();
 }
 
@@ -448,19 +432,23 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
+				G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 			}
 		}
 		break;
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
+		/* Disable reaction fire. */
+		ent->state &= ~STATE_REACTION;
+
 		if (G_CanEnableReactionFire(ent)) {
-			/* Disable reaction fire. */
-			ent->state &= ~STATE_REACTION;
+			const int TUs = G_ActorGetTUForReactionFire(ent);
 			/* Enable requested reaction fire. */
 			ent->state |= reqState;
+			G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		} else {
-			G_ClientPrintf(player, PRINT_HUD, _("Can't activate reaction fire.\n"));
+			G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		}
 		break;
 	default:
@@ -601,7 +589,7 @@ int G_ClientAction (player_t * player)
 	int firemode;
 	int from, fx, fy, to, tx, ty;
 	actorHands_t hand, fmIdx, objIdx;
-	int resReaction, resCrouch, resShot;
+	int resCrouch, resShot;
 	edict_t *ent;
 
 	/* read the header */
@@ -687,15 +675,9 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_RESERVE_STATE:
-		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resReaction, &resShot, &resCrouch);
+		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resShot, &resCrouch);
 
-		/*if (ent->TU >= resReaction + resShot + resCrouch)*/ {
-			ent->chr.reservedTus.reaction = resReaction;
-			ent->chr.reservedTus.shot = resShot;
-			ent->chr.reservedTus.crouch = resCrouch;
-		}
-
-		G_EventSendReservations(ent);
+		G_ActorReserveTUs(ent, ent->chr.reservedTus.reaction, resShot, resCrouch);
 		break;
 
 	default:
@@ -1069,9 +1051,6 @@ static void G_ClientAssignDefaultActorValues (edict_t *ent)
 	/* set models */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
-
-	/** @todo allow later changes from GUI */
-	ent->reaction_minhit = 30;
 }
 
 /**
@@ -1150,6 +1129,7 @@ void G_ClientTeamInfo (const player_t * player)
 static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
 	const int mask = G_PlayerToPM(player);
+	/* skip the world */
 	edict_t *ent = G_EdictsGetFirst();
 
 	/* make SOLID_BSP edicts visible to the client */
@@ -1161,9 +1141,9 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 			continue;
 
 		/* skip the world(s) in case of map assembly */
-		if (ent->type) {
+		if (ent->type > ET_NULL) {
 			gi.AddEvent(mask, EV_ADD_BRUSH_MODEL);
-			gi.WriteShort(ent->type);
+			gi.WriteByte(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
 			/* strip the higher bits - only send levelflags */
@@ -1308,7 +1288,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
  * and reject connection if so
  * @return @c false if the connection is refused, @c true otherwise
  */
-qboolean G_ClientConnect (player_t * player, char *userinfo)
+qboolean G_ClientConnect (player_t * player, char *userinfo, size_t userinfoSize)
 {
 	const char *value;
 
@@ -1318,18 +1298,18 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	/* check to see if they are on the banned IP list */
 	if (SV_FilterPacket(value)) {
-		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_BANNED);
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_BANNED);
 		return qfalse;
 	}
 
 	if (!G_PlayerToPM(player)) {
-		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", "Server is full");
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", "Server is full");
 		return qfalse;
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
 	if (password->string[0] != '\0' && strcmp(password->string, "none") && strcmp(password->string, value)) {
-		Info_SetValueForKey(userinfo, MAX_INFO_STRING, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
+		Info_SetValueForKey(userinfo, userinfoSize, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}
 

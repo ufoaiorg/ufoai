@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @param[in] hand Hand index (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
 #define ACTOR_GET_HAND_INDEX(hand) ((hand) == ACTOR_HAND_CHAR_LEFT ? ACTOR_HAND_LEFT : ACTOR_HAND_RIGHT)
 
+extern cvar_t *cl_worldlevel;
+
 /** @todo these should probably not be called from other places than menu */
 void HUD_DisplayFiremodes(const le_t* actor, actorHands_t hand, qboolean firemodesChangeDisplay);
 void HUD_HideFiremodes(void);

@@ -989,8 +989,8 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 
 /**
  * @brief Will set the vector for the geoscape position
- * @param vector[out] The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
- * @param objectPos[in] The position vector of the object to transform.
+ * @param[out] vector The output vector. A two-dim vector for the flat geoscape, and a three-dim vector for the 3d geoscape
+ * @param[in] objectPos The position vector of the object to transform.
  */
 static void MAP_ConvertObjectPositionToGeoscapePosition (float* vector, const vec2_t objectPos)
 {
@@ -2334,7 +2334,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 
 	/* 4 => RGBA */
 	/* terrainWidth is the width of the image */
-	/* this calulation returns the pixel in col x and in row y */
+	/* this calculation returns the pixel in col x and in row y */
 	assert(4 * (x + y * width) < width * height * 4);
 	return mask + 4 * (x + y * width);
 }

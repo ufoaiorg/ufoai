@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 {
-	int		entnum, i;
+	int		entnum;
 	le_t	*le, *actor;
 
 	NET_ReadFormat(msg, self->formatString, &entnum);
@@ -52,12 +52,14 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 		cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
 
 		/* search owners (there can be many, some of them dead) */
-		for (i = 0, actor = cl.LEs; i < cl.numLEs; i++, actor++)
-			if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+		actor = NULL;
+		while ((actor = LE_GetNextInUse(actor))) {
+			if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 			 && VectorCompare(actor->pos, le->pos)) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: le of type ET_ITEM hidden\n");
 				FLOOR(actor) = NULL;
 			}
+		}
 		break;
 	case ET_ACTOR:
 	case ET_ACTOR2x2:

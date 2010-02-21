@@ -48,7 +48,6 @@ typedef enum {
 extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
-extern int mousePosTargettingAlign;
 
 extern pos_t *fb_list[MAX_FORBIDDENLIST];
 extern int fb_length;
@@ -88,8 +87,8 @@ int CL_ActorGetContainerForReload(invList_t **ic, const inventory_t *inv, const 
 void CL_PlayActorSound(const le_t *le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
-void CL_ActorUseDoor(const le_t *le);
 void CL_ActorDoorAction_f(void);
+void CL_ActorSetFireDef(le_t *actor, const fireDef_t *fd);
 
 void CL_NextRound_f(void);
 

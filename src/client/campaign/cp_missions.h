@@ -42,6 +42,7 @@ extern const int MAX_POS_LOOP;
 void CP_SetMissionVars(const mission_t *mission);
 void CP_CreateBattleParameters(mission_t *mission);
 void CP_StartMissionMap(mission_t* mission);
+mission_t* CP_GetMissionByIDSilent(const char *missionId);
 mission_t *CP_GetMissionByID(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
 int MAP_GetIDXByMission(const mission_t *mis);

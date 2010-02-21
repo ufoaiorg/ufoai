@@ -614,9 +614,8 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 		int i = 0;
 		/* find waypoints in a closer distance - if civilians are not close enough, let them walk
 		 * around until they came close */
-		checkPoint = ai_waypointList;
-		while (checkPoint != NULL) {
-			if (!checkPoint->inuse)
+		for (checkPoint = ai_waypointList; checkPoint != NULL; checkPoint = checkPoint->groupChain) {
+			if (checkPoint->inuse)
 				continue;
 
 			/* the lower the count value - the nearer the final target */
@@ -626,6 +625,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 					i++;
 					if (move == ROUTING_NOT_REACHABLE)
 						continue;
+
 					/* test for time and distance */
 					length = ent->TU - move;
 					bestActionPoints = GUETE_MISSION_TARGET + length;
@@ -634,7 +634,6 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 					VectorCopy(checkPoint->pos, aia->to);
 				}
 			}
-			checkPoint = checkPoint->groupChain;
 		}
 		/* reset the count value for this civilian to restart the search */
 		if (!i)
@@ -744,6 +743,10 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	/* do the move */
 	G_ClientMove(player, 0, ent, bestAia.to);
+	/** @todo not yet working */
+	/* make ai use doors if they touched a door trigger and stopped in mid-move */
+	if (ent->clientAction && bestAia.target == NULL)
+		G_ClientUseEdict(player, ent->clientAction, ent);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))

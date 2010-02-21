@@ -67,7 +67,7 @@ void BS_RemoveAircraftFromMarket (const aircraft_t *aircraft, int amount)
 
 /**
  * @brief Get the number of aircraft of the given type on the market
- * @param aircraft The aircraft to search the market for
+ * @param[in] aircraft The aircraft to search the market for
  * @return The amount of aircraft for the given type
  */
 int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
@@ -79,7 +79,7 @@ int BS_GetAircraftOnMarket (const aircraft_t *aircraft)
 
 /**
  * @brief Get the price for an aircraft that you want to sell on the market
- * @param od The aircraft to sell
+ * @param[in] aircraft The aircraft to sell
  * @return The price of the aircraft
  */
 int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
@@ -91,7 +91,7 @@ int BS_GetAircraftSellingPrice (const aircraft_t *aircraft)
 
 /**
  * @brief Get the price for an aircraft that you want to buy on the market
- * @param od The aircraft to buy
+ * @param[in] aircraft The aircraft to buy
  * @return The price of the aircraft
  */
 int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
@@ -103,7 +103,7 @@ int BS_GetAircraftBuyingPrice (const aircraft_t *aircraft)
 
 /**
  * @brief Get the price for an item that you want to sell on the market
- * @param od The item to sell
+ * @param[in] od The item to sell
  * @return The price of the item
  */
 int BS_GetItemSellingPrice (const objDef_t *od)
@@ -113,7 +113,7 @@ int BS_GetItemSellingPrice (const objDef_t *od)
 
 /**
  * @brief Get the price for an item that you want to buy on the market
- * @param od The item to buy
+ * @param[in] od The item to buy
  * @return The price of the item
  */
 int BS_GetItemBuyingPrice (const objDef_t *od)

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "lighting.h"
 #include "../../common/tracing.h"
+#include "../../shared/images.h"
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];
 patch_t *face_patches[MAX_MAP_FACES];
@@ -37,11 +38,9 @@ TEXTURE LIGHT VALUES
 void CalcTextureReflectivity (void)
 {
 	int i, j, texels = 0;
-	char path[1024];
+	char path[MAX_QPATH];
 	int color[3];
-	miptex_t *mt;
-	qboolean loaded = qfalse;
-	const char *gamedir = FS_Gamedir();
+	SDL_Surface *surf;
 
 	/* always set index 0 even if no textures */
 	VectorSet(texture_reflectivity[0], 0.5, 0.5, 0.5);
@@ -59,70 +58,32 @@ void CalcTextureReflectivity (void)
 		if (j != i) /* earlier texinfo found, continue */
 			continue;
 
-		/* load the tga file */
-		Com_sprintf(path, sizeof(path), "%stextures/%s.tga", gamedir, curTile->texinfo[i].texture);
-		if (TryLoadTGA(path, &mt) != -1) {
-			/* load rgba from the tga */
-			texels = mt->width * mt->height;  /* these are already endian-correct */
-
-			for (j = 0; j < texels; j++) {
-				const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
-				color[0] += *pos++; /* r */
-				color[1] += *pos++; /* g */
-				color[2] += *pos++; /* b */
-			}
-			Mem_Free(mt);
-			loaded = qtrue;
-			Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use tga colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+		/* load the image file */
+		Com_sprintf(path, sizeof(path), "textures/%s", curTile->texinfo[i].texture);
+		if (!Img_LoadImage(path, &surf)) {
+			Verb_Printf(VERB_NORMAL, "Couldn't load %s\n", path);
+			VectorSet(texture_reflectivity[i], 0.5, 0.5, 0.5);
+			continue;
 		}
 
-		if (!loaded) {
-			/* try jpeg */
-			Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, curTile->texinfo[i].texture);
-			if (TryLoadJPG(path, &mt) != -1) {
-				/* load rgba from the jpg */
-				texels = mt->width * mt->height;  /* these are already endian-correct */
+		/* calculate average color */
+		texels = surf->w * surf->h;
+		color[0] = color[1] = color[2] = 0;
 
-				for (j = 0; j < texels; j++) {
-					const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
-					color[0] += *pos++; /* r */
-					color[1] += *pos++; /* g */
-					color[2] += *pos++; /* b */
-				}
-				Mem_Free(mt);
-				loaded = qtrue;
-				Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use jpeg colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
-			}
+		for(j = 0; j < texels; j++){
+			const byte *pos = (byte *)surf->pixels + j * 4;
+			color[0] += *pos++; /* r */
+			color[1] += *pos++; /* g */
+			color[2] += *pos++; /* b */
 		}
 
-		if (!loaded) {
-			/* try png */
-			Com_sprintf(path, sizeof(path), "%stextures/%s.png", gamedir, curTile->texinfo[i].texture);
-			if (TryLoadPNG(path, &mt) != -1) {
-				/* load rgba from the png */
-				texels = mt->width * mt->height;  /* these are already endian-correct */
+		Verb_Printf(VERB_EXTRA, "Loaded %s (%dx%d)\n", curTile->texinfo[i].texture, surf->w, surf->h);
 
-				for (j = 0; j < texels; j++) {
-					const byte *pos = ((byte *)mt + mt->offsets[0]) + j * 4;
-					color[0] += *pos++; /* r */
-					color[1] += *pos++; /* g */
-					color[2] += *pos++; /* b */
-				}
-				Mem_Free(mt);
-				loaded = qtrue;
-				Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use png colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
-			}
-		}
+		SDL_FreeSurface(surf);
 
-		if (!loaded) {
-			texture_reflectivity[i][0] = 0.5;
-			texture_reflectivity[i][1] = 0.5;
-			texture_reflectivity[i][2] = 0.5;
-		} else {
-			for (j = 0; j < 3; j++) {
-				const float r = color[j] / texels / 255.0;
-				texture_reflectivity[i][j] = r;
-			}
+		for(j = 0; j < 3; j++){
+			const float r = color[j] / texels / 255.0;
+			texture_reflectivity[i][j] = r;
 		}
 	}
 }

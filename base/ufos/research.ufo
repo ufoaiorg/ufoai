@@ -2561,7 +2561,7 @@ tech rs_advanced_combat_armour
 	// pre_description	"_advanced_combat_armour_pre_txt"
 
 	provides	armour_lightadv
-	time		0
+	time		-1
 	producetime	-1
 }
 

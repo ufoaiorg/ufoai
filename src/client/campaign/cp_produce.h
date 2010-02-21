@@ -78,11 +78,11 @@ void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 void PR_UpdateProductionCap(struct base_s *base);
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
-void PR_QueueMove (production_queue_t *queue, int index, int dir);
-void PR_QueueDelete (base_t *base, production_queue_t *queue, int index);
+void PR_QueueMove(production_queue_t *queue, int index, int dir);
+void PR_QueueDelete(base_t *base, production_queue_t *queue, int index);
 void PR_QueueNext(base_t *base);
-void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs);
-float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const struct storedUFO_s *const sufo);
+void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, requirements_t *reqs);
+float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
 base_t *PR_ProductionBase(production_t *production);
 
 #endif /* CLIENT_CP_PRODUCE */

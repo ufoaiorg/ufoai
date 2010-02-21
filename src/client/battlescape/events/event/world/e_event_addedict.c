@@ -49,7 +49,8 @@ static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
 void CL_AddEdict (const eventRegister_t *self, struct dbuffer * msg)
 {
 	le_t *le;
-	int entnum, type;
+	int entnum;
+	entity_type_t type;
 	vec3_t mins, maxs;
 
 	NET_ReadFormat(msg, self->formatString, &type, &entnum, &mins, &maxs);

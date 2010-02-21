@@ -30,12 +30,15 @@ CLIENT_SRCS = \
 	client/cinematic/cl_cinematic_ogm.c \
 	\
 	client/battlescape/cl_actor.c \
+	client/battlescape/cl_battlescape.c \
 	client/battlescape/cl_camera.c \
 	client/battlescape/cl_hud.c \
+	client/battlescape/cl_hud_callbacks.c \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
 	client/battlescape/cl_view.c \
+	client/battlescape/cl_spawn.c \
 	\
 	client/battlescape/events/e_main.c \
 	client/battlescape/events/e_parse.c \
@@ -283,6 +286,7 @@ CLIENT_SRCS = \
 	shared/byte.c \
 	shared/mathlib.c \
 	shared/utf8.c \
+	shared/images.c \
 	shared/infostring.c \
 	shared/parse.c \
 	shared/shared.c

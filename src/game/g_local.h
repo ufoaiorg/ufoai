@@ -161,8 +161,6 @@ extern level_locals_t level;
 extern game_import_t gi;
 extern game_export_t globals;
 
-extern edict_t *g_edicts;
-
 #define random()	((rand() & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
@@ -289,6 +287,12 @@ void G_MoraleBehaviour(int team);
 void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
+/* g_actor.c */
+void G_ActorReserveTUs(edict_t *ent, int resReaction, int resShot, int resCrouch);
+int G_ActorGetTUForReactionFire(const edict_t *ent);
+int G_ActorUsableTUs(const edict_t *ent);
+int G_ActorGetReservedTUs(const edict_t *ent);
+
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);
 qboolean G_MissionUse(edict_t *self, edict_t *activator);
@@ -312,7 +316,7 @@ edict_t *G_Spawn(void);
 edict_t *G_ParticleSpawn(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
-edict_t *G_GetEdictFromPos(const pos3_t pos, const int type);
+edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
 void G_TakeDamage(edict_t *ent, int damage);
 
 /* g_reaction.c */
@@ -333,6 +337,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventActorFall(const edict_t* ent);
 void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
+void G_EventActorSendReservations(const edict_t *ent);
 void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y);
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
@@ -401,7 +406,7 @@ void G_ClientCommand(player_t * player);
 void G_ClientUserinfoChanged(player_t * player, char *userinfo);
 qboolean G_ClientBegin(player_t * player);
 void G_ClientSpawn(player_t * player);
-qboolean G_ClientConnect(player_t * player, char *userinfo);
+qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize);
 void G_ClientDisconnect(player_t * player);
 
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
@@ -602,7 +607,7 @@ struct edict_s {
 
 	/** only used locally in game, not by server */
 
-	int type;
+	entity_type_t type;
 	int visflags;				/**< bitmask of teams that can see this edict */
 
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
@@ -620,8 +625,6 @@ struct edict_s {
 	int morale;					/**< the current morale value */
 
 	int state;					/**< the player state - dead, shaken.... */
-
-	int reaction_minhit;		/**< acceptable odds for reaction shots */
 
 	int team;					/**< player of which team? */
 	int pnum;					/**< the actual player slot */

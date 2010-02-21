@@ -209,9 +209,8 @@ void G_MissionThink (edict_t *self)
 	/* still active mission edicts left */
 	ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent)))
-		if ((ent->type == ET_MISSION) && ent->team == self->team) {
+		if (ent->type == ET_MISSION && ent->team == self->team)
 			return;
-		}
 
 	G_MatchEndTrigger(self->team, 10);
 }

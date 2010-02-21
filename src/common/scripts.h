@@ -173,8 +173,6 @@ typedef enum {
 	UFO_MAX
 } ufoType_t;
 
-#define DROPSHIP_MAX INTERCEPTOR_STILETTO
-
 extern const char *const align_names[];
 extern const char *const blend_names[];
 extern const char *const style_names[];

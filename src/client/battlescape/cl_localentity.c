@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_particle.h"
 #include "cl_actor.h"
 #include "cl_parse.h"
+#include "cl_hud.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../../common/tracing.h"
 
@@ -41,14 +42,14 @@ Local Model (LM) handling
 
 static inline void LE_GenerateInlineModelList (void)
 {
-	le_t *le;
-	int i, l;
+	le_t *le = NULL;
+	int i = 0;
 
-	l = 0;
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && le->model1 && le->inlineModelName[0] == '*')
-			cl.leInlineModelList[l++] = le->inlineModelName;
-	cl.leInlineModelList[l] = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->model1 && le->inlineModelName[0] == '*')
+			cl.leInlineModelList[i++] = le->inlineModelName;
+	}
+	cl.leInlineModelList[i] = NULL;
 }
 
 /**
@@ -305,15 +306,14 @@ void LE_ExecuteThink (le_t *le)
  */
 void LE_Think (void)
 {
-	le_t *le;
-	int i;
+	le_t *le = NULL;
 
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
+	while ((le = LE_GetNext(le))) {
 		LE_ExecuteThink(le);
-		/* do animation */
+		/* do animation - even for invisible entities */
 		R_AnimRun(&le->as, le->model1, cls.frametime * 1000);
 	}
 }
@@ -481,13 +481,13 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
  */
 le_t* LE_GetClosestActor (const vec3_t origin)
 {
-	int i, tmp;
 	int dist = 999999;
-	le_t *actor = NULL, *le;
+	le_t *actor = NULL, *le = NULL;
 	vec3_t leOrigin;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse || le->pnum != cl.pnum)
+	while ((le = LE_GetNextInUse(le))) {
+		int tmp;
+		if (le->pnum != cl.pnum)
 			continue;
 		/* visible because it's our team - so we just check for living actor here */
 		if (!LE_IsLivingActor(le))
@@ -822,18 +822,18 @@ static objDef_t *LE_BiggestItem (const invList_t *ic)
  */
 void LE_PlaceItem (le_t *le)
 {
-	le_t *actor;
-	int i;
+	le_t *actor = NULL;
 
-	assert(le->type == ET_ITEM);
+	assert(LE_IsItem(le));
 
 	/* search owners (there can be many, some of them dead) */
-	for (i = 0, actor = cl.LEs; i < cl.numLEs; i++, actor++)
-		if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+	while ((actor = LE_GetNextInUse(actor))) {
+		if ((actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
 			if (FLOOR(le))
 				FLOOR(actor) = FLOOR(le);
 		}
+	}
 
 	/* the le is an ET_ITEM entity, this entity is there to render dropped items
 	 * if there are no items in the floor container, this entity can be
@@ -925,6 +925,8 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		break;
 	case ET_BREAKABLE:
 		break;
+	default:
+		break;
 	}
 
 	return qtrue;
@@ -992,22 +994,23 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
  */
 le_t *LE_Add (int entnum)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
+	while ((le = LE_GetNext(le))) {
 		if (!le->inuse)
 			/* found a free LE */
 			break;
+	}
 
 	/* list full, try to make list longer */
-	if (i == cl.numLEs) {
+	if (!le) {
 		if (cl.numLEs >= MAX_EDICTS) {
 			/* no free LEs */
 			Com_Error(ERR_DROP, "Too many LEs");
 		}
 
 		/* list isn't too long */
+		le = &cl.LEs[cl.numLEs];
 		cl.numLEs++;
 	}
 
@@ -1050,16 +1053,16 @@ void LE_CenterView (const le_t *le)
  */
 le_t *LE_Get (int entnum)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
 	if (entnum == SKIP_LOCAL_ENTITY)
 		return NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && le->entnum == entnum)
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->entnum == entnum)
 			/* found the LE */
 			return le;
+	}
 
 	/* didn't find it */
 	return NULL;
@@ -1112,17 +1115,16 @@ void LE_Unlock (le_t *le)
 
 /**
  * @brief Searches a local entity on a given grid field
- * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type
  */
 le_t *LE_GetFromPos (const pos3_t pos)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && VectorCompare(le->pos, pos))
+	while ((le = LE_GetNextInUse(le))) {
+		if (VectorCompare(le->pos, pos))
 			return le;
+	}
 
 	/* didn't find it */
 	return NULL;
@@ -1137,8 +1139,12 @@ le_t* LE_GetNext (le_t* lastLE)
 	le_t* endOfLEs = &cl.LEs[cl.numLEs];
 	le_t* le;
 
+	if (!cl.numLEs)
+		return NULL;
+
 	if (!lastLE)
-		lastLE = cl.LEs;
+		return cl.LEs;
+
 	assert(lastLE >= cl.LEs);
 	assert(lastLE < endOfLEs);
 
@@ -1201,13 +1207,13 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
  */
 le_t *LE_Find (int type, const pos3_t pos)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && le->type == type && VectorCompare(le->pos, pos))
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->type == type && VectorCompare(le->pos, pos))
 			/* found the LE */
 			return le;
+	}
 
 	/* didn't find it */
 	return NULL;
@@ -1285,11 +1291,7 @@ void LE_AddToScene (void)
 				VectorCopy(le->origin, ent.oldorigin);
 			}
 
-			/**
-			 * Offset the model to be inside the cursor box
-			 * @todo Dunno if this is the best place to do it - what happens to
-			 * shot-origin and stuff? le->origin is never changed.
-			 */
+			/* Offset the model to be inside the cursor box */
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 			case ACTOR_SIZE_2x2:
@@ -1438,18 +1440,19 @@ static int CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t 
  */
 static void CL_ClipMoveToLEs (moveclip_t * clip)
 {
-	int i, tile = 0;
-	le_t *le;
-	trace_t trace;
-	int headnode;
-	vec3_t angles;
-	vec3_t origin, shift;
+	le_t *le = NULL;
 
 	if (clip->trace.allsolid)
 		return;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse || !(le->contents & clip->contentmask))
+	while ((le = LE_GetNextInUse(le))) {
+		int tile = 0;
+		trace_t trace;
+		int headnode;
+		vec3_t angles;
+		vec3_t origin, shift;
+
+		if (!(le->contents & clip->contentmask))
 			continue;
 		if (le == clip->passle || le == clip->passle2)
 			continue;

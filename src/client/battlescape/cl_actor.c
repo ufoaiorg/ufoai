@@ -58,7 +58,7 @@ pos3_t mousePos; /**< The cell that an actor will move to when directed to move.
  * @sa G_ShootGrenade
  * @sa G_ShootSingle
  */
-int mousePosTargettingAlign = 0;
+static int mousePosTargettingAlign = 0;
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -125,6 +125,13 @@ const char *CL_ActorGetSkillString (const int skill)
 		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skillLevel);
 		return "";
 	}
+}
+
+void CL_ActorSetFireDef (le_t *actor, const fireDef_t *fd)
+{
+	if (actor->fd != fd)
+		mousePosTargettingAlign = 0;
+	actor->fd = fd;
 }
 
 /**
@@ -354,6 +361,8 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 {
 	character_t *chr;
 
+	assert(type != RES_REACTION);
+
 	if (!le || tus < 0)
 		return;
 
@@ -361,14 +370,12 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 	if (chr) {
 		chrReservations_t res = chr->reservedTus;
 
-		if (type == RES_REACTION)
-			res.reaction = tus;
-		else if (type == RES_CROUCH)
+		if (type == RES_CROUCH)
 			res.crouch = tus;
 		else if (type == RES_SHOT)
 			res.shot = tus;
 
-		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res.reaction, res.shot, res.crouch);
+		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res.shot, res.crouch);
 	}
 }
 
@@ -406,7 +413,6 @@ void CL_ActorAddToTeamList (le_t * le)
 		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
-		MN_ExecuteConfunc("huddeselect %i", actorIdx);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}
@@ -616,13 +622,12 @@ int fb_length;
  */
 static void CL_BuildForbiddenList (void)
 {
-	le_t *le;
-	int i;
+	le_t *le = NULL;
 
 	fb_length = 0;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse || le->invis)
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
 		if (le->type == ET_ACTOR2x2 || LE_IsLivingAndVisibleActor(le)) {
@@ -647,15 +652,12 @@ static void CL_BuildForbiddenList (void)
  */
 static void CL_DisplayBlockedPaths_f (void)
 {
-	le_t *le;
-	int i, j;
+	le_t *le = NULL;
+	int j;
 	ptl_t *ptl;
 	vec3_t s;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse)
-			continue;
-
+	while ((le = LE_GetNextInUse(le))) {
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
@@ -1022,7 +1024,7 @@ void CL_ActorInvMove (const le_t *le, int fromContainer, int fromX, int fromY, i
  * @sa CL_ActorDoorAction
  * @sa G_ClientUseEdict
  */
-void CL_ActorUseDoor (const le_t *le)
+static void CL_ActorUseDoor (const le_t *le)
 {
 	if (!CL_ActorCheckAction(le))
 		return;
@@ -1284,7 +1286,7 @@ MOUSE SCANNING
  */
 void CL_ActorMouseTrace (void)
 {
-	int i, restingLevel;
+	int restingLevel;
 	float cur[2], frustumSlope[2], projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
@@ -1405,8 +1407,9 @@ void CL_ActorMouseTrace (void)
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingAndVisibleActor(le))
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				if (VectorCompare(le->pos, mousePos)) {
@@ -1427,6 +1430,7 @@ void CL_ActorMouseTrace (void)
 			default:
 				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
 		}
+	}
 
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
@@ -1591,10 +1595,9 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	trace_t tr;
-	int i;
 	float d;
 	qboolean crossNo;
-	le_t *le;
+	le_t *le = NULL;
 	le_t *target = NULL;
 	int toActorSize;
 
@@ -1602,11 +1605,12 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
+	}
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1677,7 +1681,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const 
 	trace_t tr;
 	qboolean obstructed = qfalse;
 	int i;
-	le_t *le;
+	le_t *le = NULL;
 	le_t *target = NULL;
 	int toActorSize;
 
@@ -1685,11 +1689,12 @@ static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const 
 		return;
 
 	/* search for an actor at target */
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
+	}
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -2463,9 +2468,8 @@ static void CL_ActorConfirmAction_f (void)
 	static int time = 0;
 
 	if (time - cl.time < 1000) {
-		int i;
-		for (i = 0; i < cl.numLEs; i++) {
-			le_t *le = &cl.LEs[i];
+		le_t *le = NULL;
+		while ((le = LE_GetNextInUse(le))) {
 			if (LE_IsLivingActor(le) && le->team == cls.team)
 				CL_ActorConfirmAction(le);
 		}

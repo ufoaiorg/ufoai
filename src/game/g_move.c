@@ -107,8 +107,8 @@ void G_ActorFall (edict_t *ent)
 
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 
-	entAtPos = G_GetEdictFromPos(ent->pos, -1);
-	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsActor(entAtPos))) {
+	entAtPos = G_GetEdictFromPos(ent->pos, ET_NULL);
+	if (entAtPos != NULL && (G_IsBreakable(entAtPos) || G_IsBlockingMovementActor(entAtPos))) {
 		const int diff = oldZ - ent->pos[2];
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 	}
@@ -141,12 +141,17 @@ qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvt
 		 VectorCopy(ent->pos, pos);
 		 while (max >= 0) {
 			 int tmp = 0;
-			 edict_t *blockEdict;
+			 const edict_t *blockEdict;
+
 			 PosAddDV(pos, tmp, dvtab[max]);
 			 max--;
-			 blockEdict = G_GetEdictFromPos(pos, 0);
-			 if (blockEdict && G_IsBlockingMovementActor(blockEdict) && G_IsVisibleForTeam(blockEdict, ent->team))
-				 return qtrue;
+			 blockEdict = G_GetEdictFromPos(pos, ET_NULL);
+
+			 if (blockEdict && G_IsBlockingMovementActor(blockEdict)) {
+				 const qboolean visible = G_IsVisibleForTeam(blockEdict, ent->team);
+				 if (visible)
+					 return qtrue;
+			 }
 		 }
 	 }
 	 return qfalse;
@@ -261,12 +266,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				break;
 			}
 
-			/* This is now a flag to indicate a change in crouching - we need this for
-			 * the stop in mid move call(s), because we need the updated entity position */
-			crouchFlag = 0;
-			PosAddDV(ent->pos, crouchFlag, dv);
-
-			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv - 1)) {
+			if (G_ActorShouldStopInMidMove(ent, status, dvtab, numdv)) {
 				/* don't autocrouch if new enemy becomes visible */
 				autoCrouchRequired = qfalse;
 				/* if something appears on our route that didn't trigger a VIS_STOP, we have to
@@ -277,6 +277,11 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 				}
 				break;
 			}
+
+			/* This is now a flag to indicate a change in crouching - we need this for
+			 * the stop in mid move call(s), because we need the updated entity position */
+			crouchFlag = 0;
+			PosAddDV(ent->pos, crouchFlag, dv);
 
 			/* decrease TUs */
 			div = gi.GetTUsForDirection(dir);

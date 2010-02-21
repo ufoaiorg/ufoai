@@ -36,37 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "input/cl_keys.h"
 #include "battlescape/cl_camera.h"
 #include "battlescape/cl_localentity.h"
-
-/* Map debugging constants */
-/** @brief cvar debug_map options:
- * debug_map is a bit mask, like the developer cvar.  There is no ALL bit.
- * 1 (1<<0) = Turn on pathfinding floor tiles.  Red can not be entered, green can be
- *     reached with current TUs, yellow can be reached but actor does not have needed
- *     TUs, and black should never be able to be reached because there is not floor to
- *     support an actor there (not tuned for flyers yet)
- * 2  (1<<1) = Turn on cursor debug text display.  The information at the top is the
- *     ceiling value where the cursor is and the (x, y, z) coordinates for the cursor
- *     *at the current level*.  The z value will always match the level - 1.  The bottom
- *     information is the floor value at teh cursor at the current level and the location
- *     of the actual displayed cursor.  The distinction is made because our GUI currently
- *     always places the cursor on the ground beneath the mouse pointer, even if the
- *     ground is a few levels beneath the current level.  Eventually, we will need to be
- *     able to disable that for actors that can fly and remain in the air between turns,
- *     if any.
- * 4 (1<<2) = Turn on obstruction arrows for the floor and the ceiling.  These arrows point
- *     to the ceiling surface and the floor surface for teh current cell.
- * 8 (1<<3) = Turn on obstruction arrows.  These currently look broken from what I've
- *     seen in screenshots.  These arrows are supposed to point to the brushes that limit
- *     movement in a given direction. The arrows either touch the floor/ceiling of the
- *     current cell in the tested direction if it is possible to move in that direction,
- *     or touch the obstruction (surface) that prevents movement in a given direction.
- *     I want to redo these anyhow, as they are meant for map editors to be able to see what
- *     surfaces are actually preventing movement at the routing level.  Feedback is encouraged.
-*/
-#define MAPDEBUG_PATHING	(1<<0) /* Turns on pathing tracing. */
-#define MAPDEBUG_TEXT		(1<<1) /* Creates arrows pointing at floors and ceilings at mouse cursor */
-#define MAPDEBUG_CELLS		(1<<2) /* Creates arrows pointing at floors and ceilings at mouse cursor */
-#define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
+#include "battlescape/cl_battlescape.h"
 
 /* Macros for faster access to the inventory-container. */
 #define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
@@ -76,72 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
 #define HEADGEAR(e) ((e)->i.c[csi.idHeadgear])
 #define EXTENSION(e) ((e)->i.c[csi.idExtension])
-
-typedef struct {
-	char name[MAX_VAR];
-	char cinfo[MAX_VAR];
-} clientinfo_t;
-
-/** @todo There should be better places for these two macros */
-/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
-#define MAX_ACTIVETEAM	8
-#define MAX_TEAMLIST	8
-
-typedef struct chr_list_s {
-	character_t* chr[MAX_ACTIVETEAM];
-	int num;	/* Number of entries */
-} chrList_t;
-
-/**
- * @brief This is the structure that should be used for data that is needed for tactical missions only.
- * @note the client_state_t structure is wiped completely at every server map change
- * @sa client_static_t
- */
-typedef struct client_state_s {
-	int time;					/**< this is the time value that the client
-								 * is rendering at.  always <= cls.realtime */
-	camera_t cam;
-
-	le_t *teamList[MAX_TEAMLIST];
-	int numTeamList;
-	int numAliensSpotted;
-
-	qboolean eventsBlocked;		/**< if the client interrupts the event execution, this is true */
-
-	/** server state information */
-	int pnum;			/**< player num you have on the server */
-	int actTeam;		/**< the currently active team (in this round) */
-
-	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
-
-	/** locally derived information from server state */
-	model_t *model_draw[MAX_MODELS];
-	struct cBspModel_s *model_clip[MAX_MODELS];
-
-	qboolean radarInited;		/**< every radar image (for every level [1-8]) is loaded */
-
-	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
-
-	int mapMaxLevel;
-	int mapMaxLevelBase;
-
-	int numMapParticles;
-
-	int numLMs;
-	localModel_t LMs[MAX_LOCALMODELS];
-
-	int numLEs;
-	le_t LEs[MAX_EDICTS];
-
-	const char *leInlineModelList[MAX_EDICTS + 1];
-
-	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
-							 * our team is not yet spawned */
-
-	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
-} client_state_t;
-
-extern client_state_t cl;
 
 typedef enum {
 	ca_uninitialized,
@@ -234,9 +138,7 @@ extern struct memPool_s *cl_soundSysPool;
 #define N_(String) gettext_noop (String)
 
 /* cvars */
-extern cvar_t *cl_leshowinvis;
 extern cvar_t *cl_fps;
-extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 extern cvar_t *cl_team;
 extern cvar_t *cl_teamnum;
@@ -244,12 +146,8 @@ extern cvar_t *cl_teamnum;
 extern cvar_t *s_language;
 
 /* cl_main.c */
-qboolean CL_OnBattlescape(void);
-qboolean CL_BattlescapeRunning(void);
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);
-
-void CL_ClearState(void);
 
 #endif /* CLIENT_CLIENT_H */

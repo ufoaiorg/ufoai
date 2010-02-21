@@ -51,7 +51,7 @@ typedef struct le_s {
 	qboolean removeNextFrame;	/**< will set the inuse value to false in the next frame */
 	qboolean invis;
 	qboolean selected;		/**< used for actors - for the current selected actor this is true */
-	int type;				/**< the local entity type */
+	entity_type_t type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
 	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
@@ -170,6 +170,7 @@ static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 
 extern cvar_t* cl_le_debug;
+extern cvar_t *cl_leshowinvis;
 
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);

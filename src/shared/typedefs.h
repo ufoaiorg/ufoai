@@ -363,10 +363,4 @@ typedef struct {
 	dBspBrushSide_t	brushsides[MAX_MAP_BRUSHSIDES];
 } dMapTile_t;
 
-typedef struct crossPoints_s {
-	vec3_t floor;
-	vec3_t ceiling;
-	qboolean obstructed;
-} crossPoints_t;
-
 #endif /* SHARED_TYPEDEFS_H */

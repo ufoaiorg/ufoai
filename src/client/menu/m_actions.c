@@ -477,8 +477,7 @@ static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuC
 
 /**
  * @brief Execute an action from a source
- * @param[in] source Context node
- * @param[in] useCmdParam If true, inject every where its possible command line param
+ * @param[in] context Context node
  * @param[in] action Action to execute
  */
 static void MN_ExecuteInjectedAction (const menuAction_t* action, menuCallContext_t *context)

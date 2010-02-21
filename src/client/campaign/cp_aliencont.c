@@ -150,12 +150,9 @@ const char *AL_AlienTypeToName (int teamDefIdx)
  */
 void AL_CollectingAliens (aircraft_t *aircraft)
 {
-	int i;
-	le_t *le;
+	le_t *le = NULL;
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
-		if (!le->inuse)
-			continue;
+	while ((le = LE_GetNextInUse(le))) {
 		if (LE_IsActor(le) && LE_IsAlien(le)) {
 			assert(le->teamDef);
 

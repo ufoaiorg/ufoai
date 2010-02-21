@@ -81,33 +81,16 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
  * @param[in] actor The actor to check the weapons for
  * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
  */
-static const fireDef_t* G_ActorHasReactionFireEnabledWeapon (const edict_t *actor)
+static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 {
-	const invList_t *invList;
-
-	/* no weapon that can be used for reaction fire */
-	if (!LEFT(actor) && !RIGHT(actor))
-		return NULL;
-
-	invList = RIGHT(actor);
-	if (invList && invList->item.t) {
-		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
-		if (fd && fd->reaction)
-			return fd;
-	}
-
-	invList = LEFT(actor);
-	if (invList && invList->item.t) {
-		const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
-		if (fd && fd->reaction)
-			return fd;
-	}
-
-	return NULL;
+	const fireDef_t *fd = INVSH_HasReactionFireEnabledWeapon(RIGHT(ent));
+	if (fd)
+		return qtrue;
+	return INVSH_HasReactionFireEnabledWeapon(LEFT(ent)) != NULL;
 }
 
 /**
- * @brief Checks if the currently selected firemode is useable with the defined weapon.
+ * @brief Checks if the currently selected firemode is usable with the defined weapon.
  * @param[in] actor The actor to check the firemode for.
  */
 static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
@@ -148,8 +131,7 @@ void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const obj
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		ent->state &= ~STATE_REACTION;
-		G_SendState(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), ent);
+		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, qfalse);
 		return;
 	}
 
@@ -157,7 +139,20 @@ void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const obj
 }
 
 /**
- * @brief Checks whether the actor is allowed to activate reaction fire
+ * @brief Checks whether an actor has enough TUs left to activate reaction fire.
+ * @param ent The actors edict to check for TUs for
+ * @return @c true if the given actor has enough TUs left to activate reaction fire, @c false otherwise.
+ */
+static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
+{
+	const int TUs = G_ActorGetTUForReactionFire(ent);
+	const chrReservations_t *res = &ent->chr.reservedTus;
+	return ent->TU - TUs >= res->shot + res->crouch;
+}
+
+/**
+ * @brief Checks whether the actor is allowed to activate reaction fire and will informs the player about
+ * the reason if this would not work.
  * @param ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
@@ -174,11 +169,20 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
 	if (!ent->chr.teamDef->weapons)
 		return qfalse;
 
-	if (!G_ActorHasReactionFireEnabledWeapon(ent))
+	if (!G_ActorHasReactionFireEnabledWeapon(ent)) {
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No reaction fire enabled weapon.\n"));
 		return qfalse;
+	}
 
-	if (!G_ActorHasWorkingFireModeSet(ent))
+	if (!G_ActorHasWorkingFireModeSet(ent)) {
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("No fire mode selected for reaction fire.\n"));
 		return qfalse;
+	}
+
+	if (!G_ActorHasEnoughTUsReactionFire(ent)) {
+		G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("Not enough TUs left for activating reaction fire.\n"));
+		return qfalse;
+	}
 
 	return qtrue;
 }
@@ -187,7 +191,7 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
  * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
  * @param[in] ent The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @returns Whether 'ent' can actually fire at 'target'
+ * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
 static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 {
@@ -283,10 +287,12 @@ static qboolean G_CheckRFTrigger (edict_t *target)
  */
 static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos3_t at, int type, int firemode)
 {
-	const int minhit = shooter->reaction_minhit;
+	const int minhit = 30;
 	shot_mock_t mock;
 	int ff, i, maxff;
 
+	/** @todo maxff is the number of edicts that is hit by the reaction fire shot - we will never hit 100
+	 * who ever wrote this, please explain this to me. */
 	if (G_IsInsane(shooter))
 		maxff = 100;
 	else if (G_IsRaged(shooter))

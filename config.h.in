@@ -66,6 +66,9 @@
 /* Define to 1 if you have the <SDL.h> header file. */
 #undef HAVE_SDL_H
 
+/* Define to 1 if you have the <SDL_image.h> header file. */
+#undef HAVE_SDL_IMAGE_H
+
 /* Define to 1 if you have the <SDL_mixer.h> header file. */
 #undef HAVE_SDL_MIXER_H
 

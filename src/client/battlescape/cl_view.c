@@ -33,166 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_localentity.h"
 #include "cl_actor.h"
 #include "cl_hud.h"
+#include "cl_spawn.h"
 #include "../cl_sequence.h"
 #include "cl_view.h"
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
-#include "../../shared/parse.h"
-
-/** position in the spawnflags */
-#define MISC_MODEL_GLOW 9
-#define SPAWNFLAG_NO_DAY 8
 
 cvar_t* cl_map_debug;
-
-/**
- * @brief Parse the map entity string and spawns those entities that are client-side only
- * @sa G_SendEdictsAndBrushModels
- * @sa CL_AddBrushModel
- */
-static void V_ParseEntitystring (void)
-{
-	char keyname[256];
-	char classname[MAX_VAR];
-	char animname[MAX_QPATH], model[MAX_QPATH], particle[MAX_QPATH], sound[MAX_QPATH];
-	vec3_t origin, angles, scale;
-	vec2_t wait;
-	int maxLevel = PATHFINDING_HEIGHT, maxMultiplayerTeams = 2, entnum = 0;
-	int skin, frame, spawnflags;
-	float volume;
-	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
-	const char *es = CM_EntityString();
-
-	cl.mapMaxLevel = PATHFINDING_HEIGHT;
-	if (cl.mapMaxLevelBase > 0 && cl.mapMaxLevelBase < PATHFINDING_HEIGHT)
-		cl.mapMaxLevel = maxLevel = cl.mapMaxLevelBase;
-
-	/* vid restart? */
-	if (cl.numMapParticles || cl.numLMs)
-		return;
-
-	/* parse ents */
-	while (1) {
-		/* parse the opening brace */
-		const char *entityToken = Com_Parse(&es);
-		/* memorize the start */
-		const char *strstart = es;
-		if (!es)
-			break;
-
-		if (entityToken[0] != '{')
-			Com_Error(ERR_DROP, "V_ParseEntitystring: found %s when expecting {", entityToken);
-
-		/* initialize */
-		VectorCopy(vec3_origin, origin);
-		VectorCopy(vec3_origin, angles);
-		VectorSet(scale, 1, 1, 1);
-		Vector2Clear(wait);
-		volume = SND_VOLUME_DEFAULT;
-		spawnflags = frame = skin = 0;
-		animname[0] = model[0] = particle[0] = '\0';
-
-		/* go through all the dictionary pairs */
-		while (1) {
-			/* parse key */
-			entityToken = Com_Parse(&es);
-			if (entityToken[0] == '}')
-				break;
-			if (!es)
-				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
-
-			Q_strncpyz(keyname, entityToken, sizeof(keyname));
-
-			/* parse value */
-			entityToken = Com_Parse(&es);
-			if (!es)
-				Com_Error(ERR_DROP, "V_ParseEntitystring: EOF without closing brace");
-
-			if (entityToken[0] == '}')
-				Com_Error(ERR_DROP, "V_ParseEntitystring: closing brace without data");
-
-			/* filter interesting keys */
-			if (!strcmp(keyname, "classname"))
-				Q_strncpyz(classname, entityToken, sizeof(classname));
-			else if (!strcmp(keyname, "model"))
-				Q_strncpyz(model, entityToken, sizeof(model));
-			else if (!strcmp(keyname, "frame"))
-				frame = atoi(entityToken);
-			else if (!strcmp(keyname, "volume"))
-				volume = atof(entityToken);
-			else if (!strcmp(keyname, "anim"))
-				Q_strncpyz(animname, entityToken, sizeof(animname));
-			else if (!strcmp(keyname, "particle"))
-				Q_strncpyz(particle, entityToken, sizeof(particle));
-			else if (!strcmp(keyname, "noise"))
-				Q_strncpyz(sound, entityToken, sizeof(sound));
-			else if (!strcmp(keyname, "modelscale_vec"))
-				Com_EParseValue(scale, entityToken, V_VECTOR, 0, sizeof(scale));
-			else if (!strcmp(keyname, "origin"))
-				Com_EParseValue(origin, entityToken, V_VECTOR, 0, sizeof(origin));
-			else if (!strcmp(keyname, "angles") && !angles[YAW])
-				/* pitch, yaw, roll */
-				Com_EParseValue(angles, entityToken, V_VECTOR, 0, sizeof(angles));
-			else if (!strcmp(keyname, "angle") && !angles[YAW])
-				angles[YAW] = atof(entityToken);
-			else if (!strcmp(keyname, "wait"))
-				Com_EParseValue(wait, entityToken, V_POS, 0, sizeof(wait));
-			else if (!strcmp(keyname, "spawnflags"))
-				spawnflags = atoi(entityToken);
-			else if (!strcmp(keyname, "maxlevel"))
-				maxLevel = atoi(entityToken);
-			else if (!strcmp(keyname, "maxteams"))
-				maxMultiplayerTeams = atoi(entityToken);
-			else if (!strcmp(keyname, "skin"))
-				skin = atoi(entityToken);
-		}
-
-		/* analyze values - there is one worlspawn per maptile */
-		if (!strcmp(classname, "worldspawn")) {
-			/* maximum level */
-			cl.mapMaxLevel = maxLevel;
-
-			if (GAME_IsMultiplayer() && (cl_teamnum->integer > maxMultiplayerTeams
-			 || cl_teamnum->integer <= TEAM_CIVILIAN)) {
-				Com_Printf("The selected team is not usable. "
-					"The map doesn't support %i teams but only %i teams\n",
-					cl_teamnum->integer, maxMultiplayerTeams);
-				Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
-				Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
-			}
-		} else if (!strcmp(classname, "misc_model")) {
-			localModel_t *lm;
-			int renderFlags = 0;
-
-			if (model[0] == '\0') {
-				Com_Printf("misc_model without \"model\" specified\n");
-				continue;
-			}
-
-			if (spawnflags & (1 << MISC_MODEL_GLOW))
-				renderFlags |= RF_PULSE;
-
-			/* add it */
-			lm = LM_AddModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF), renderFlags, scale);
-			if (lm) {
-				lm->skin = skin;
-				lm->frame = frame;
-				if (!lm->frame)
-					Q_strncpyz(lm->animname, animname, sizeof(lm->animname));
-				else
-					Com_Printf("Warning: Model has frame and anim parameters - using frame (no animation)\n");
-			}
-		} else if (!strcmp(classname, "misc_particle")) {
-			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
-		} else if (!strcmp(classname, "misc_sound")) {
-			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-				LE_AddAmbientSound(sound, origin, (spawnflags & 0xFF), volume);
-		}
-
-		entnum++;
-	}
-}
 
 /**
  * @brief Call before entering a new level, or after vid_restart
@@ -250,19 +97,19 @@ void V_LoadMedia (void)
 	}
 
 	/* update le model references */
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++)
-		if (le->inuse) {
-			if (le->modelnum1) {
-				le->model1 = cl.model_draw[le->modelnum1];
-				if (!le->model1)
-					Com_Error(ERR_DROP, "No model for %i", le->modelnum1);
-			}
-			if (le->modelnum2) {
-				le->model2 = cl.model_draw[le->modelnum2];
-				if (!le->model2)
-					Com_Error(ERR_DROP, "No model for %i", le->modelnum2);
-			}
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (le->modelnum1) {
+			le->model1 = cl.model_draw[le->modelnum1];
+			if (!le->model1)
+				Com_Error(ERR_DROP, "No model for %i", le->modelnum1);
 		}
+		if (le->modelnum2) {
+			le->model2 = cl.model_draw[le->modelnum2];
+			if (!le->model2)
+				Com_Error(ERR_DROP, "No model for %i", le->modelnum2);
+		}
+	}
 
 	cls.loadingPercent = 100.0f;
 	SCR_UpdateScreen();

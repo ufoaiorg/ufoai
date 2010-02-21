@@ -51,6 +51,8 @@ static qboolean Touch_Breakable (edict_t *self, edict_t *activator)
 static qboolean Destroy_Breakable (edict_t *self)
 {
 	vec3_t origin;
+	int i;
+
 	VectorCenterFromMinsMaxs(self->absmin, self->absmax, origin);
 
 	/* the HP value is used to decide whether this was a triggered call or a
@@ -81,10 +83,18 @@ static qboolean Destroy_Breakable (edict_t *self)
 		break;
 	}
 
+
 	/* unlink to update the routing */
 	gi.UnlinkEdict(self);
 	self->inuse = qfalse;
 	self->HP = 0;
+
+	/* check whether the removal changes the vis mask
+	 * for the teams that were seeing this edict */
+	for (i = 0; i < MAX_TEAMS; i++)
+		if (level.num_alive[i] && self->visflags & i)
+			G_CheckVisTeam(i, self, qfalse, self);
+
 	G_RecalcRouting(self);
 	G_TouchEdicts(self, 10.0f);
 
@@ -179,6 +189,14 @@ static qboolean Door_Use (edict_t *door, edict_t *activator)
 
 	/* Update path finding table */
 	G_RecalcRouting(door);
+
+	if (activator && G_IsLivingActor(activator)) {
+		/* Check if the player appears/perishes, seen from other teams. */
+		G_CheckVis(activator, qtrue);
+
+		/* Calc new vis for the activator. */
+		G_CheckVisTeamAll(activator->team, qfalse, activator);
+	}
 
 	return qtrue;
 }

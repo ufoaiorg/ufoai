@@ -35,7 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_EntAppear (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t	*le;
-	int		entnum, type;
+	int		entnum;
+	entity_type_t type;
 	pos3_t	pos;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &type, &pos);

@@ -147,7 +147,28 @@ window ahud extends levelbuttons {
 		*cvar:mn_stun<1> = "<9>"
 		*cvar:mn_soldier<1>_tt = "<10>"
 	}
-
+	
+	/**
+	 * @param <1> the hp of the actor 
+	 * @param <2> the max hp of the actor
+	 * @param <3> the tus of the actor
+	 * @param <4> the max tus of the actor
+	 * @param <5> the reserved tus of the actor
+	 * @param <6> the morale of the actor
+	 * @param <7> the max morale of the actor
+	 * @param <8> the stun value of the actor
+	 */
+	confunc updateselectedactorvalues {
+		*cvar:mn_hp = "<1>"
+		*cvar:mn_hpmax = "<2>"
+		*cvar:mn_tu = "<3>"
+		*cvar:mn_tumax = "<4>"
+		*cvar:mn_tureserved = "<5>"
+		*cvar:mn_morale = "<6>"
+		*cvar:mn_moralemax = "<7>"
+		*cvar:mn_stun = "<8>"
+	}
+	
 	confunc clean_firemode_entries {
 		call *node:root.firemodes.dock@removeAllChild
 	}

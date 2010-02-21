@@ -76,7 +76,7 @@ AC_ARG_ENABLE(ufo2map,
 	[], [enable_ufo2map=yes])
 
 AC_ARG_ENABLE(uforadiant,
-	[AS_HELP_STRING([--enable-uforadiant], [build uforadiant @<:@default=enabled@:>@])],
+	[AS_HELP_STRING([--disable-uforadiant], [build uforadiant @<:@default=enabled@:>@])],
 	[], [enable_uforadiant=yes])
 
 AC_ARG_ENABLE(release,
@@ -180,6 +180,13 @@ then
 			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
 		else
 			AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
+		fi
+		if test -d /Library/Frameworks/SDL_image.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_image.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_image"
+		else
+			AC_MSG_ERROR([Could not find SDL_image Framework at /Library/Frameworks.])
 		fi
 		if test -d /Library/Frameworks/SDL_ttf.framework
 		then
@@ -606,10 +613,10 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL_mixer development libraries])
 	fi
+
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
-
 	AC_CHECK_HEADERS([SDL_ttf.h])
 	if test "$ac_cv_header_SDL_ttf_h" != "yes"
 	then
@@ -620,6 +627,31 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
 	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Set the client clags and libs - the rest are shared libs
+	#---------------------------------------------------------------------------------------------
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	CLIENT_CFLAGS="$CFLAGS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL image headers and libraries
+	#---------------------------------------------------------------------------------------------
+	
+	LIBS=
+	AC_CHECK_HEADERS([SDL_image.h])
+	if test "$ac_cv_header_SDL_image_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development headers])
+	fi
+	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development libraries])
+	fi
+	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	LIBS=
 
 	CPPFLAGS=$OLD_CPPFLAGS
 	CFLAGS=$OLD_CFLAGS
@@ -684,6 +716,23 @@ else
 	then
 		AC_MSG_ERROR([You must have the SDL development headers])
 	fi
+
+	LIBS=
+	AC_CHECK_HEADERS([SDL_image.h])
+	if test "$ac_cv_header_SDL_image_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development headers])
+	fi
+	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development libraries])
+	fi
+	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+
+	CPPFLAGS=$OLD_CPPFLAGS
+	CFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
 fi
 
 #---------------------------------------------------------------------------------------------

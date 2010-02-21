@@ -646,13 +646,11 @@ typedef struct character_s {
 	AI_t AI; /**< The character's artificial intelligence */
 } character_t;
 
-#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == HAND && (fm)->fmIdx == fdIdx)
-#define SANE_FIREMODE(fm)	(((fm)->hand >= 0 && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
+#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
+#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
 
 #define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
 #define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))
-
-#define MAX_CAMPAIGNS	16
 
 /* ================================ */
 /*  CHARACTER GENERATING FUNCTIONS  */
@@ -692,11 +690,12 @@ invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
-
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 qboolean INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
 uint32_t INVSH_ShapeRotate(const uint32_t shape);
+
+const fireDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
 #define INV_INVENTORY_BYTES 11

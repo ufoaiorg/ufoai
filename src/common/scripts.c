@@ -1953,7 +1953,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
-		if (!strncmp(name, csi.eds[i].name, MAX_VAR))
+		if (!strcmp(name, csi.eds[i].name))
 			break;
 
 	if (i < csi.numEDs) {

@@ -55,9 +55,6 @@ void S_Stop (void)
  */
 void S_Frame (void)
 {
-	int i;
-	s_channel_t *ch;
-
 	if (snd_init && snd_init->modified) {
 		S_Restart_f();
 		snd_init->modified = qfalse;
@@ -68,35 +65,40 @@ void S_Frame (void)
 
 	M_Frame();
 
-	/* update right angle for stereo panning */
-	AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
+	if (CL_OnBattlescape()) {
+		int i;
+		s_channel_t *ch;
+		le_t *le;
 
-	/* update spatialization for current sounds */
-	ch = s_env.channels;
+		/* update right angle for stereo panning */
+		AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
 
-	for (i = 0; i < MAX_CHANNELS; i++, ch++) {
-		if (!ch->sample)
-			continue;
+		/* update spatialization for current sounds */
+		ch = s_env.channels;
 
-		/* reset channel's count for loop samples */
-		ch->count = 0;
+		for (i = 0; i < MAX_CHANNELS; i++, ch++) {
+			if (!ch->sample)
+				continue;
 
-		S_SpatializeChannel(ch);
-	}
+			/* reset channel's count for loop samples */
+			ch->count = 0;
 
-	/* ambient sounds */
-	for (i = 0; i < cl.numLEs; i++) {
-		const le_t *le = &cl.LEs[i];
-		int j;
+			S_SpatializeChannel(ch);
+		}
 
-		if (le->inuse && le->type == ET_SOUND) {
-			for (j = 0; j < MAX_CHANNELS; j++) {
-				if (s_env.channels[j].sample == le->sample)
-					break;
+		/* ambient sounds */
+		le = NULL;
+		while ((le = LE_GetNextInUse(le))) {
+			if (le->type == ET_SOUND) {
+				int j;
+				for (j = 0; j < MAX_CHANNELS; j++) {
+					if (s_env.channels[j].sample == le->sample)
+						break;
+				}
+
+				if (j == MAX_CHANNELS)
+					S_LoopSample(le->origin, le->sample, le->volume);
 			}
-
-			if (j == MAX_CHANNELS)
-				S_LoopSample(le->origin, le->sample, le->volume);
 		}
 	}
 }

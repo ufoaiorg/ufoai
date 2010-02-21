@@ -4,17 +4,89 @@
 #set -e
 #set -x
 
+###################################################
+# signal handlers
+###################################################
+trap exitscript SIGINT
+
+#######################################################
+# variables
+#######################################################
+
+# Some packages are using the version information at several places
+# because we have to copy some files around
+SDL_VERSION=1.2.14
+SDL_MIXER_VERSION=1.2.8
+SDL_TTF_VERSION=2.0.9
+SDL_IMAGE_VERSION=1.2.6
+CURL_VERSION=7.16.4
+#CURL_VERSION=7.17.1
+CUNIT_VERSION=2.1-0
+
+# Use an absolute path here
+TEMP_DIR=/tmp/tmp_codeblocks
+TARGET_DIR=${TEMP_DIR}/codeblocks
+DOWNLOAD_DIR=${TEMP_DIR}/downloads
+EXTRACT_DIR=${DOWNLOAD_DIR}/extract
+MINGW_DIR=${TARGET_DIR}/MinGW
+CODEBLOCKS_DIR=${TARGET_DIR}
+NSIS_DIR=${TARGET_DIR}/NSIS
+CB_DIR=${TARGET_DIR}/codeblocks
+#//	ARCHIVE_NAME=codeblocks
+LOGFILE_NAME=codeblocks.log
+UN7ZIP=$(which 7za)
+WGET=$(which wget)
+UNZIP=$(which unzip)
+TAR=$(which tar)
+sfx7ZIP=$(which 7z.sfx)
+
+if [ -x "${sfx7ZIP}" ]; then
+	ARCHIVE_NAME=codeblocks.exe
+else
+	ARCHIVE_NAME=codeblocks.7z
+fi
+
+
+declare what_do_we_try
+
 export LC_ALL=C
 
 #######################################################
 # functions
 #######################################################
 
+function infooutput()
+{
+	magentaecho "${1}"
+	what_do_we_try="${1}"
+}
+
+function redecho() 
+{
+	echo -e "\033[1;31m${1}\033[0m"
+}
+
+function whiteecho() 
+{
+	echo -e "\033[1;37m${1}\033[0m"
+}
+
+function magentaecho() 
+{
+	echo -e "\033[1;35m${1}\033[0m"
+}
+
+function greenecho() 
+{
+	echo -e "\033[1;32m${1}\033[0m"
+}
+
 function failure() 
 {
-	errormessage=${1}
-	echo ${errormessage}
-	echo ${errormessage} >> ${LOGFILE_NAME} 2>&1
+	magentaecho "${2}"
+	redecho "${1}"
+	echo -e "tried to do: ${2}\nFailed: ${1}"
+	echo -e "tried to do: ${2}\nFailed: ${1}" >> ${LOGFILE_NAME} 2>&1
 	exit 1
 }
 
@@ -27,85 +99,243 @@ function check_error()
 	fi
 }
 
+function create()
+{
+	mkdir -p "${TEMP_DIR}"
+	rm -rf "${TARGET_DIR}"
+	mkdir -p "${TARGET_DIR}"
+	mkdir -p "${CODEBLOCKS_DIR}"
+	mkdir -p "${MINGW_DIR}"
+	mkdir -p "${DOWNLOAD_DIR}"
+	mkdir -p "${CB_DIR}"
+	mkdir -p "${NSIS_DIR}"
+	echo $(date) > ${LOGFILE_NAME}
+
+	start_downloads
+	
+	correctme
+
+	echo -n "Used space in ${CODEBLOCKS_DIR}: "
+	echo $(du -h -c ${CODEBLOCKS_DIR} | tail -1)
+
+	infooutput "Start to create ${ARCHIVE_NAME}"
+
+	if [ -x "${sfx7ZIP}" ]; then
+		rm -f ~/${ARCHIVE_NAME}
+		echo ${UN7ZIP} a -t7z -mx=9 -sfx7z.sfx ~/${ARCHIVE_NAME} "${CODEBLOCKS_DIR}"
+		${UN7ZIP} a -t7z -mx=9 -sfx7z.sfx ~/${ARCHIVE_NAME} "${CODEBLOCKS_DIR}" || failure "cant create ${ARCHIVE_NAME}" "$what_do_we_try"
+	else
+		rm -f ~/${ARCHIVE_NAME}
+		echo ${UN7ZIP} a -t7z -mx=9 ~/${ARCHIVE_NAME} "${CODEBLOCKS_DIR}"
+		${UN7ZIP} a -t7z -mx=9 ~/${ARCHIVE_NAME} "${CODEBLOCKS_DIR}" || failure "cant create ${ARCHIVE_NAME}" "$what_do_we_try"
+	fi
+	greenecho "codeblock created\nFINISHED"
+	
+	echo $(date) >> ${LOGFILE_NAME} 2>&1
+	echo "finished creating $(du -h ~/${ARCHIVE_NAME})"
+}
+
+function download() 
+{
+	mkdir -p "${TEMP_DIR}"
+	mkdir -p "${TARGET_DIR}"
+	mkdir -p "${CODEBLOCKS_DIR}"
+	mkdir -p "${CB_DIR}"
+	mkdir -p "${NSIS_DIR}"
+	mkdir -p "${MINGW_DIR}"
+	mkdir -p "${DOWNLOAD_DIR}"
+
+	start_downloads
+}
+
 function download_archive()
 {
 	baseurl=${1}
 	filename=${2}
 	targetname=${3}
-	echo "downloading ${filename}..."
-	pushd ${DOWNLOAD_DIR} > /dev/null
-	${WGET} -q -nc ${baseurl}${filename} -O ${targetname} || true >> ${LOGFILE_NAME} 2>&1
-	popd > /dev/null
-	if [ ! -s "${DOWNLOAD_DIR}/${targetname}" ]; then
-    	rm -f ${DOWNLOAD_DIR}/${targetname}
-		failure "Could not fetch ${baseurl}${filename}"
+	
+	local what_do_we_try="downloading ${filename}..."
+	magentaecho "$what_do_we_try"
+	
+	for ((a=0; a<=25; a++))
+	do
+		# if the mirror is down get another mirror
+		sleep 1
+		${WGET} -c --tries=1 --timeout=30 --progress=bar:force -O "${DOWNLOAD_DIR}/${targetname}" ${baseurl}${filename} && break
+		if [ ${a} -eq 5 ] ;then
+			failure "Could not fetch ${baseurl}${filename}" "$what_do_we_try"
+		fi
+	done
+	greenecho "${filename} successfully downloaded"
+	
+	extract ${3}
+}
+
+function extract()
+{
+	infooutput "test for extraction ${1}"
+	
+	rm -rf "${DOWNLOAD_DIR}/extract"
+	${UN7ZIP} l "${DOWNLOAD_DIR}/${1}" || failure "${1} cant be extracted" "$what_do_we_try"
+	greenecho "a 7z extractable archive"
+	
+	infooutput "extracting ${1}"
+	
+	${UN7ZIP} x -y -o"${EXTRACT_DIR}" "${DOWNLOAD_DIR}/${1}" || failure "unable to extract ${1}" "$what_do_we_try"
+	greenecho "${1} extracted"
+
+	local isTAR=$(find "${EXTRACT_DIR}" -iname "*.tar" -type f)
+	echo "[$isTAR]"
+	if [ -n "$isTAR" ] ;then
+		infooutput "extracting $isTAR"
+	
+		${UN7ZIP} x -y -o"${EXTRACT_DIR}" "$isTAR" || failure "unable to extract $isTAR" "$what_do_we_try"
+		rm -f "$isTAR"
+		greenecho "$isTAR extracted"
+	fi
+	
+	
+	if [ $(echo ${1} | grep -i -c -e "^codeblocks" -e "^7zip" -e "^NSIS.zip$" -e "^rxvt.7z$" -e "^make_UfoAI_win32.7z$") -eq 0 ] ;then
+		infooutput "try to find usable directories"
+
+		for ((a=0; a<=25; a++))
+		do
+			local find_output=$(find "${EXTRACT_DIR}" -maxdepth ${a} -type d -iname "bin" -o -iname "contrib" -o -iname "doc" -o -iname "etc" -o -iname "home" -o -iname "include" -o -iname "info" -o -iname "lib" -o -iname "libexec" -o -iname "man" -o -iname "manifest" -o -iname "mingw32" -o -iname "share")
+			if [ -n "$find_output" ] ;then
+				greenecho "found usable directories"
+				infooutput "move usable directories"
+
+				local -a array
+				array=(`echo -e "$find_output" | tr '\n' ' '`) 
+
+				for s in ${array[@]}
+				do 
+					cp -v -R "$s" "${MINGW_DIR}" || failure "unable to move $line" "$what_do_we_try"
+					greenecho "$s moved"
+				done
+				break
+			fi
+			if [ ${a} -eq 25 ] ;then
+				failure "cant find usable directories" "$what_do_we_try"
+			fi
+		done
+	else
+		infooutput "found codeblocks or 7zip or NSIS or rxvt archive"
+		
+		if [ $(echo ${1} | grep -i -c -e "^codeblocks") -gt 0 ] ;then
+			infooutput "try to move codeblocks files"
+			
+			cp -v -R "${EXTRACT_DIR}/"* "${CB_DIR}" || failure "unable to move codeblocks files" "$what_do_we_try"
+			greenecho "codeblocks moved"
+		fi
+		if [ $(echo ${1} | grep -i -c -e "^7zip") -gt 0 ] ;then
+			infooutput "try to move 7zip files"
+			
+			if [ -e "${EXTRACT_DIR}/7za.exe" ] ;then
+				cp -v -R "${EXTRACT_DIR}/7za.exe" "${MINGW_DIR}/bin" || failure "unable to move 7za.exe" "$what_do_we_try"
+				greenecho "7za.exe moved"
+			else
+				failure "unable to find 7za.exe" "$what_do_we_try"
+			fi
+#			if [ -e "${EXTRACT_DIR}/7zS.sfx" ] ;then
+#				cp -v -R "${EXTRACT_DIR}/7zS.sfx" "${MINGW_DIR}/bin" || failure "unable to move 7zS.sfx" "$what_do_we_try"
+#				greenecho "7zS.sfx moved"
+#			else
+#				failure "unable to find 7zS.sfx" "$what_do_we_try"
+#			fi
+		fi
+		if [ $(echo ${1} | grep -i -c -e "^NSIS.zip$") -gt 0 ] ;then
+			infooutput "try to move NSIS files"
+			
+			local makenspath=$(find "${EXTRACT_DIR}" -iname "makensisw.exe" -type f | sed 's/makensisw.exe//gI')
+			if [ -n "$makenspath" ] ;then
+				cp -v -R "$makenspath"* "${NSIS_DIR}" || failure "unable to move NSIS files" "$what_do_we_try"
+				greenecho "NSIS moved"
+			else
+				failure "unable to find makensisw.exe" "$what_do_we_try"
+			fi
+		fi
+		if [ $(echo ${1} | grep -i -c -e "^rxvt.7z$") -gt 0 ] ;then
+			infooutput "try to move rxvt files"
+			
+			cp -v -R "${EXTRACT_DIR}/"* "${MINGW_DIR}" || failure "unable to move rxvt files" "$what_do_we_try"
+			greenecho "rxvt moved"
+		fi
+		if [ $(echo ${1} | grep -i -c -e "^make_UfoAI_win32.7z$") -gt 0 ] ;then
+			infooutput "try to move make_UfoAI_win32 files"
+			
+			cp -v -R "${EXTRACT_DIR}/"* "${CODEBLOCKS_DIR}" || failure "unable to move rxvt make_UfoAI_win32" "$what_do_we_try"
+			greenecho "make_UfoAI_win32 moved"
+		fi
+	fi
+	sleep 1
+#	rm -rf "${DOWNLOAD_DIR}/extract"
+}
+
+function correctme()
+{
+	#here we do some correction for all possible things
+	
+	#libxml2
+	if [ -e "${MINGW_DIR}/include/libxml2/libxml" ] ;then
+		infooutput "try to move header for libxml2"
+	
+		mv -f -v "${MINGW_DIR}/include/libxml2/libxml" "${MINGW_DIR}/include" || failure "unable to move headers" "$what_do_we_try"
+		greenecho "headers moved"
+		rm -rf "${MINGW_DIR}/include/libxml2"
 	fi
 }
 
-function extract_archive_gz() 
-{
-	file=${1}
-	target=${2}
-	pushd "${target}" > /dev/null
-	${TAR} -xzf "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	popd > /dev/null
-	check_error $? "Failed to extract ${file}"
-}
-
-function extract_archive_bz2() 
-{
-	file=${1}
-	target=${2}
-	pushd "${target}" > /dev/null
-	${TAR} -xjf "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	popd > /dev/null
-	check_error $? "Failed to extract ${file}"
-}
-
-function extract_archive_zip() 
-{
-	file=${1}
-	target=${2}
-	${UNZIP} -o "${DOWNLOAD_DIR}/${file}" -d "${target}" >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Failed to extract ${file}"
-}
-
-function extract_archive_7z() 
-{
-	file=${1}
-	target=${2}
-	${UN7ZIP} x -y -o"${target}" "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Failed to extract ${file}"
-}
-
-function extract_archive_tar7z() 
-{
-	file=${1}
-	target=${2}
-	pushd "${target}" > /dev/null
-	tar --lzma -xv -f "${DOWNLOAD_DIR}/${file}" >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Failed to extract ${file}"
-	popd > /dev/null
-}
-
 function start_downloads()
-{
-	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
+{		
+	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.20-1-mingw32-bin.tar.gz binutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingwrt-3.17-mingw32-dev.tar.gz mingwrt.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-3-msys-1.0.12-dev.tar.lzma w32api.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-mingw32-dev.tar.gz w32api.tar.gz
+#	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0-2-mingw32-bin.tar.gz gdb.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0.50.20100202-mingw32-bin.tar.gz gdb.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
+#	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ make-3.81-20090914-mingw32-bin.tar.gz make.tar.gz
 
-# TODO mingw64 support
-#	download_archive http://downloads.sourceforge.net/mingw-w64 mingw-w64-bin_x86_64-mingw_20100123_sezero.zip
+#	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 msys-bash.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1.17-2-msys-1.0.11-bin.tar.lzma msys-bash.tar.bz2
+#	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 msys-bzip2.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.5-2-mingw32-bin.tar.gz msys-bzip2.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ libbz2-1.0.5-2-mingw32-dll-2.tar.gz libbz2-bzip2.tar.gz
+	
+#	download_archive http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz msys-tar.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ tar-1.22-1-msys-1.0.11-bin.tar.lzma msys-tar.tar.lzma
+	
+#	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-MSYS-1.0.11-snapshot.tar.bz2 msys-coreutils.tar.bz2
+	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-2-msys-1.0.11-bin.tar.lzma msys-coreutils.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-2-msys-1.0.11-ext.tar.lzma msys-coreutils-ext.tar.lzma
 
-	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 msys-bash.tar.bz2
-	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 msys-bzip2.tar.bz2
-	download_archive http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz msys-tar.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-MSYS-1.0.11-snapshot.tar.bz2 msys-coreutils.tar.bz2
-	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.3.0-MSYS-1.0.11-3-bin.tar.gz msys-findutils.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ MSYS-1.0.11-20090120-dll.tar.gz msys.tar.gz
-	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
+#	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.3.0-MSYS-1.0.11-3-bin.tar.gz msys-findutils.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.4.2-1-msys-1.0.11-bin.tar.lzma msys-findutils.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ locate-4.4.2-1-msys-1.0.11-bin.tar.lzma msys-locate.tar.lzma
+
+#	download_archive http://downloads.sourceforge.net/mingw/ MSYS-1.0.11-20090120-dll.tar.gz msys.tar.gz
+#	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
+	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.13-2-msys-1.0.13-bin.tar.lzma msys-core.tar.lzma
+
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-core.tar.gz gcc.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-g++.tar.gz g++.tar.gz
+	
+	download_archive http://downloads.sourceforge.net/mingw/ m4-1.4.13-1-msys-1.0.11-bin.tar.lzma m4.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ sed-4.2.1-1-msys-1.0.11-bin.tar.lzma sed.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ patch-2.5.9-1-msys-1.0.11-bin.tar.lzma patch.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ diffutils-2.8.7.20071206cvs-2-msys-1.0.11-bin.tar.lzma diffutils.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ grep-2.5.4-1-msys-1.0.11-bin.tar.lzma grep.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ make-3.81-2-msys-1.0.11-bin.tar.lzma make.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ less-436-1-msys-1.0.11-bin.tar.lzma less.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ texinfo-4.13a-1-msys-1.0.11-bin.tar.lzma texinfo.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ gzip-1.3.12-1-msys-1.0.11-bin.tar.lzma gzip.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ file-5.03-1-msys-1.0.11-bin.tar.lzma file.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ mktemp-1.6-1-msys-1.0.11-bin.tar.lzma mktemp.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ perl-5.6.1_2-1-msys-1.0.11-bin.tar.lzma perl.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ gawk-3.1.7-1-msys-1.0.11-bin.tar.lzma gawk.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ libiconv-1.13.1-1-msys-1.0.11-dev.tar.lzma libiconv-dev.tar.lzma
+	download_archive http://downloads.sourceforge.net/mingw/ libiconv-1.13.1-1-msys-1.0.11-bin.tar.lzma libiconv-bin.tar.lzma
+	
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-autoconf-2.59.tar.bz2 msys-autoconf.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ autoconf-2.61-MSYS-1.0.11-1.tar.bz2 msys-autoconf.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-automake-1.8.2.tar.bz2 msys-automake.tar.bz2
@@ -113,31 +343,29 @@ function start_downloads()
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-libtool-1.5.tar.bz2 msys-libtool.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ libtool1.5-1.5.25a-20070701-MSYS-1.0.11-1.tar.bz2 msys-libtool.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ gettext-0.17-1-mingw32-dev.tar.lzma gettext.lzma
-	download_archive http://downloads.sourceforge.net/mingw/ gawk-3.1.7-1-msys-1.0.11-bin.tar.lzma gawk.tar.lzma
-
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-core.tar.gz gcc.tar.gz
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-g++.tar.gz g++.tar.gz
 
 	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.5-1-lib.zip freetype.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
+#	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
+#	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-bin.zip libintl-bin.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
+#	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.37-lib.zip libpng.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ pdcurses-2.6-lib.zip libpdcurses.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
+	download_archive http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-dep.zip wget-dep.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ unzip-5.51-1-bin.zip unzip.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ openssl-0.9.8h-1-bin.zip openssl.zip
+#	download_archive http://downloads.sourceforge.net/gnuwin32/ openssl-0.9.8h-1-bin.zip openssl.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ regex-2.7-bin.zip regex.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ pcre-7.0-bin.zip pcre.zip
-	download_archive http://downloads.sourceforge.net/gnuwin32/ grep-2.5.4-bin.zip grep.zip
+#	download_archive http://downloads.sourceforge.net/gnuwin32/ grep-2.5.4-bin.zip grep.zip
 
 	download_archive http://downloads.sourceforge.net/cunit/ CUnit-${CUNIT_VERSION}-winlib.zip cunit.zip
 
-	download_archive http://downloads.sourceforge.net/sevenzip/ 7za465.zip 7zip.zip
+	download_archive http://downloads.sourceforge.net/sevenzip/ 7za910.zip 7zip.zip
 
 	download_archive http://curl.oslevel.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
@@ -158,13 +386,20 @@ function start_downloads()
 	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
 	download_archive http://download.berlios.de/codeblocks/ CB_20100116_rev6088_win32.7z codeblocks.7z
 
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.2-1_win32.zip glib.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib-dev_2.22.2-1_win32.zip glib-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.18/ gtk+-dev_2.18.3-1_win32.zip gtk+-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtksourceview/2.8/ gtksourceview-dev-2.8.1.zip gtksourceview-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.26/ pango-dev_1.26.0-1_win32.zip pango-dev.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.2-1_win32.zip glib.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.3-1_win32.zip glib.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib-dev_2.22.2-1_win32.zip glib-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib-dev_2.22.3-1_win32.zip glib-dev.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.18/ gtk+-dev_2.18.3-1_win32.zip gtk+-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.18/ gtk+-dev_2.18.5-1_win32.zip gtk+-dev.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtksourceview/2.8/ gtksourceview-dev-2.8.1.zip gtksourceview-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtksourceview/2.9/ gtksourceview-dev-2.9.3.zip gtksourceview-dev.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.26/ pango-dev_1.26.0-1_win32.zip pango-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.26/ pango-dev_1.26.1-1_win32.zip pango-dev.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.28/ atk-dev_1.28.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.28/ atk-dev_1.28.0-1_win32.zip atk-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-3_win32.zip cairo-dev.zip
+#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-3_win32.zip cairo-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-2_win32.zip cairo-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
@@ -175,179 +410,16 @@ function start_downloads()
 	download_archive http://mattn.ninex.info/download/ gtkglext-1.2.zip gtkglext-dev.zip
 	download_archive http://mattn.ninex.info/download/ openal.zip libopenal-dev.zip
 
-	download_archive http://subversion.tigris.org/files/documents/15/45600/ svn-win32-1.6.1.zip svn.zip
+#	download_archive http://subversion.tigris.org/files/documents/15/45600/ svn-win32-1.6.1.zip svn.zip
+	download_archive http://subversion.tigris.org/files/documents/15/46880/ svn-win32-1.6.6.zip svn.zip
 
 	download_archive http://www.libsdl.org/extras/win32/common/ directx-devel.tar.gz directx.tar.gz
-}
-
-function extract_codeblocks()
-{
-	extract_archive_7z codeblocks_mingw.7z "${CODEBLOCKS_DIR}"
-	extract_archive_7z codeblocks_gcc.7z "${CODEBLOCKS_DIR}"
-	extract_archive_7z codeblocks.7z "${CODEBLOCKS_DIR}"
-}
-
-function extract_mingw()
-{
-	extract_archive_gz binutils.tar.gz "${MINGW_DIR}"
-	extract_archive_gz mingwrt.tar.gz "${MINGW_DIR}"
-	extract_archive_tar7z w32api.tar.lzma "${MINGW_DIR}"
-	extract_archive_gz gdb.tar.gz "${MINGW_DIR}"
-	extract_archive_gz gcc.tar.gz "${MINGW_DIR}"
-	extract_archive_gz g++.tar.gz "${MINGW_DIR}"
-	extract_archive_gz make.tar.gz "${MINGW_DIR}"
-	extract_archive_bz2 msys-bash.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-bzip2.tar.bz2 "${MINGW_DIR}"
-	extract_archive_gz msys-tar.tar.gz "${MINGW_DIR}"
-	extract_archive_gz msys-findutils.tar.gz "${MINGW_DIR}"
-	extract_archive_gz msys.tar.gz "${MINGW_DIR}"
-	extract_archive_gz msys-core.tar.gz "${MINGW_DIR}"
-	extract_archive_bz2 msys-autoconf.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-automake.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-libtool.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 msys-coreutils.tar.bz2 "${MINGW_DIR}"
-	cp -R ${MINGW_DIR}/coreutils*/* "${MINGW_DIR}"
-	check_error $? "Could not copy coreutils files"
-	rm -rf ${MINGW_DIR}/coreutils*
-	check_error $? "Could not remove coreutils files"
-}
-
-function extract_libs()
-{
-	extract_archive_zip zlib.zip "${MINGW_DIR}"
-	extract_archive_zip libjpeg.zip "${MINGW_DIR}"
-	extract_archive_zip libpng.zip "${MINGW_DIR}"
-	extract_archive_zip libiconv-bin.zip "${MINGW_DIR}"
-	extract_archive_zip libiconv.zip "${MINGW_DIR}"
-	extract_archive_zip libintl.zip "${MINGW_DIR}"
-	extract_archive_zip libintl-bin.zip "${MINGW_DIR}"
-	extract_archive_zip freetype.zip "${MINGW_DIR}"
-	extract_archive_zip libtiff.zip "${MINGW_DIR}"
-	extract_archive_gz directx.tar.gz "${MINGW_DIR}"
-	extract_archive_zip libpdcurses.zip "${MINGW_DIR}"
-	extract_archive_zip libxml2.zip "${MINGW_DIR}"
-	extract_archive_zip fontconfig.zip "${MINGW_DIR}"
-}
-
-function extract_cunit() 
-{
-	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not create temp cunit directory"
-	extract_archive_zip cunit.zip "${TEMP_DIR}/tmp"
-	cp ${TEMP_DIR}/tmp/CUnit-${CUNIT_VERSION}/* -R ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy cunit files"
-	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not remove cunit files"
-}
-
-function extract_libcurl()
-{
-	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not create temp libcurl directory"
-	extract_archive_zip libcurl.zip "${TEMP_DIR}/tmp"
-	cp ${TEMP_DIR}/tmp/libcurl-${CURL_VERSION}/* -R ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy libcurl files"
-	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not remove libcurl files"
-}
-
-function extract_sdl()
-{
-	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not create temp sdl directory"
-	extract_archive_zip sdl_mixer.zip "${TEMP_DIR}/tmp"
-	extract_archive_zip sdl_ttf.zip "${TEMP_DIR}/tmp"
-	extract_archive_zip sdl_image.zip "${TEMP_DIR}/tmp"
-	extract_archive_gz sdl.tar.gz "${TEMP_DIR}/tmp"
-	pushd ${TEMP_DIR}/tmp/SDL-${SDL_VERSION} > /dev/null
-	make install-sdl prefix="${MINGW_DIR}" >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not install sdl files"
-	popd > /dev/null
-	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy sdl mixer header files"
-	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy sdl mixer files"
-	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy sdl ttf header files"
-	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy sdl ttf files"
-	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/include/* ${MINGW_DIR}/include/SDL >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy sdl image header files"
-	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/lib/* ${MINGW_DIR}/lib >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy sdl image files"
-	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not remove sdl files"
-}
-
-function extract_tools()
-{
-	mkdir -p ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not create temp tools directory"
-	extract_archive_zip wget.zip "${MINGW_DIR}"
-	extract_archive_zip unzip.zip "${MINGW_DIR}"
-	extract_archive_zip openssl.zip "${MINGW_DIR}"
-	extract_archive_tar7z gawk.tar.lzma "${MINGW_DIR}"
-	extract_archive_zip regex.zip "${MINGW_DIR}"
-	extract_archive_zip pcre.zip "${MINGW_DIR}"
-	extract_archive_zip grep.zip "${MINGW_DIR}"
-	extract_archive_zip pkg-config.zip "${MINGW_DIR}"
-	extract_archive_zip gettext-runtime.zip "${MINGW_DIR}"
-	extract_archive_zip gettext-tools.zip "${MINGW_DIR}"
-	extract_archive_zip gettext-runtime-dev.zip "${MINGW_DIR}"
-	extract_archive_zip 7zip.zip "${TEMP_DIR}/tmp"
-	extract_archive_zip svn.zip "${TEMP_DIR}/tmp"
-	#some parts of openssl are also included in the svn package
-	cp ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7z.exe >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy 7za files"
-	cp ${TEMP_DIR}/tmp/7za.exe ${MINGW_DIR}/bin/7za.exe >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy 7za files"
-	cp -R ${TEMP_DIR}/tmp/svn-win32*/* ${MINGW_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not copy svn files"
-	rm -rf ${TEMP_DIR}/tmp >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not remove tools files"
-}
-
-function extract_gtk()
-{
-	extract_archive_zip glib.zip "${MINGW_DIR}"
-	extract_archive_zip glib-dev.zip "${MINGW_DIR}"
-	extract_archive_zip gtk+-dev.zip "${MINGW_DIR}"
-	extract_archive_zip gtksourceview-dev.zip "${MINGW_DIR}"
-	extract_archive_zip pango-dev.zip "${MINGW_DIR}"
-	extract_archive_zip atk-dev.zip "${MINGW_DIR}"
-	extract_archive_zip cairo-dev.zip "${MINGW_DIR}"
-	extract_archive_zip gtkglext-dev.zip "${MINGW_DIR}"
-
-	for i in $(echo "glib-2.0 gtk-2.0 gtkglext-1.0"); do
-		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-		check_error $? "Could not copy $i include files"
-		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
-		check_error $? "Could not remove $i include files"
-		cp -R ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-		check_error $? "Could not copy $i lib/include files"
-		rm -r ${MINGW_DIR}/lib/${i} >> ${LOGFILE_NAME} 2>&1
-		check_error $? "Could not remove $i lib/include files"
-	done
-
-	for i in $(echo "gtksourceview-2.0 gail-1.0 pango-1.0 atk-1.0 cairo libxml2" ); do
-		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include >> ${LOGFILE_NAME} 2>&1
-		check_error $? "Could not copy $i include files"
-		rm -r ${MINGW_DIR}/include/${i} >> ${LOGFILE_NAME} 2>&1
-		check_error $? "Could not remove $i include files"
-	done
-}
-
-function extract_openal()
-{
-	extract_archive_zip libopenal-dev.zip "${MINGW_DIR}"
-}
-
-function extract_ogg()
-{
-	extract_archive_bz2 libogg.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 xvidcore.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 libtheora.tar.bz2 "${MINGW_DIR}"
-	extract_archive_bz2 libvorbis.tar.bz2 "${MINGW_DIR}"
+	
+	download_archive http://www.meduniwien.ac.at/user/michael.zellhofer/ufoai/ rxvt.7z rxvt.7z
+	download_archive http://www.meduniwien.ac.at/user/michael.zellhofer/ufoai/ make_UfoAI_win32.7z make_UfoAI_win32.7z
+	download_archive http://www.meduniwien.ac.at/user/michael.zellhofer/ufoai/ 7z_sfx.7z 7z_sfx.7z
+	
+	download_archive http://downloads.sourceforge.net/nsis/ nsis-2.46.zip NSIS.zip
 }
 
 function exitscript() 
@@ -355,36 +427,9 @@ function exitscript()
 	exit 2
 }
 
-###################################################
-# signal handlers
-###################################################
-trap exitscript SIGINT
-
 #######################################################
-# variables
+# don't change anything below here
 #######################################################
-
-# Some packages are using the version information at several places
-# because we have to copy some files around
-SDL_VERSION=1.2.14
-SDL_MIXER_VERSION=1.2.8
-SDL_TTF_VERSION=2.0.9
-SDL_IMAGE_VERSION=1.2.6
-CURL_VERSION=7.16.4
-CUNIT_VERSION=2.1-0
-
-# Use an absolute path here
-TEMP_DIR=/tmp/tmp_codeblocks
-TARGET_DIR=${TEMP_DIR}/codeblocks
-DOWNLOAD_DIR=${TEMP_DIR}/downloads
-MINGW_DIR=${TARGET_DIR}/MinGW
-CODEBLOCKS_DIR=${TARGET_DIR}
-ARCHIVE_NAME=codeblocks.zip
-LOGFILE_NAME=codeblocks.log
-UN7ZIP=$(which 7z)
-WGET=$(which wget)
-UNZIP=$(which unzip)
-TAR=$(which tar)
 
 if [ ! -x "${UN7ZIP}" ]; then
 	echo "you need 7zip installed to run this script"
@@ -395,81 +440,6 @@ if [ ! -x "${WGET}" ]; then
 	echo "you need wget installed to run this script"
 	exit 1
 fi
-
-if [ ! -x "${UNZIP}" ]; then
-	echo "you need unzip installed to run this script"
-	exit 1
-fi
-
-if [ ! -x "${TAR}" ]; then
-	echo "you need tar installed to run this script"
-	exit 1
-fi
-
-#######################################################
-# don't change anything below here
-#######################################################
-
-create()
-{
-	mkdir -p "${TEMP_DIR}"
-	rm -rf "${TARGET_DIR}"
-	mkdir -p "${TARGET_DIR}"
-	mkdir -p "${CODEBLOCKS_DIR}"
-	mkdir -p "${MINGW_DIR}"
-	mkdir -p "${DOWNLOAD_DIR}"
-	echo $(date) > ${LOGFILE_NAME}
-
-	start_downloads
-
-	echo "Start to extract and prepare the downloaded archives into ${MINGW_DIR}"
-
-	extract_codeblocks
-
-	extract_mingw
-
-	extract_libs
-
-	extract_sdl
-
-	extract_libcurl
-
-	extract_cunit
-
-	extract_gtk
-
-	extract_openal
-
-	extract_ogg
-
-	extract_tools
-
-	echo -n "Used space in ${CODEBLOCKS_DIR}: "
-	echo $(du -h -c ${CODEBLOCKS_DIR} | tail -1)
-
-	echo "Start to create ${ARCHIVE_NAME}"
-
-	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR} >> ${LOGFILE_NAME} 2>&1
-	check_error $? "Could not create ${ARCHIVE_NAME}"
-
-	if [ ! -e "${ARCHIVE_NAME}" ]; then
-		echo "Failed to create ${ARCHIVE_NAME}"
-		exit 1
-	fi
-	echo $(date) >> ${LOGFILE_NAME} 2>&1
-	echo "finished creating $(du -h ${ARCHIVE_NAME})"
-}
-
-download() 
-{
-	mkdir -p "${TEMP_DIR}"
-	mkdir -p "${TARGET_DIR}"
-	mkdir -p "${CODEBLOCKS_DIR}"
-	mkdir -p "${MINGW_DIR}"
-	mkdir -p "${DOWNLOAD_DIR}"
-
-	start_downloads
-}
 
 ACTION=${1:-help}
 

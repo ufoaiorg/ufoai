@@ -139,6 +139,9 @@ static void MN_DrawDebugMenuNodeNames (void)
 	if (mousePosX > 2 * viddef.virtualWidth / 3)
 		debugPositionX = 0;
 
+	/* mouse position */
+	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, va("Mouse X: %i Y: %i", mousePosX, mousePosY), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
 	/* main menus */
 	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main active menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;

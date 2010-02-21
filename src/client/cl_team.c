@@ -458,6 +458,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
  * @brief Update the GUI with the selected item
  * @todo Doesn't belong into cl_team.c
  * @todo function is used for multiplayer, too - should be splitted
+ * @todo function does not belong into the team code
  */
 static void CL_UpdateObject_f (void)
 {

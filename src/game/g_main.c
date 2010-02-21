@@ -34,8 +34,6 @@ level_locals_t level;
 game_import_t gi;
 game_export_t globals;
 
-edict_t *g_edicts;
-
 cvar_t *password;
 
 cvar_t *sv_needpass;
@@ -364,7 +362,7 @@ static void G_SendBoundingBoxes (void)
 		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
 		while ((ent = G_EdictsGetNextInUse(ent))) {
 			gi.AddEvent(PM_ALL, EV_ADD_EDICT);
-			gi.WriteShort(ent->type);
+			gi.WriteByte(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WritePos(ent->absmin);
 			gi.WritePos(ent->absmax);

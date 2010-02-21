@@ -1192,6 +1192,10 @@ static void TR_TransferListSelect_f (void)
 			}
 			cnt++;
 		}
+
+		if (added) /* We already added a soldier, so break. */
+			break;
+
 		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
 			employee_t *employee = &ccs.employees[EMPL_PILOT][i];
 			if (!E_IsInBase(employee, base))
@@ -1209,7 +1213,7 @@ static void TR_TransferListSelect_f (void)
 			cnt++;
 		}
 
-		if (added) /* We already added a soldier, so break. */
+		if (added) /* We already added a pilot, so break. */
 			break;
 
 		/* Reset and fill temp employees arrays. */
@@ -1468,6 +1472,8 @@ static void TR_CargoListSelect_f (void)
 				cnt++;
 			}
 		}
+		if (removed)	/* We already removed soldier, break here. */
+			break;
 		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
 			if (td.trEmployeesTmp[EMPL_PILOT][i]) {
 				if (cnt == num) {
@@ -1478,7 +1484,7 @@ static void TR_CargoListSelect_f (void)
 				cnt++;
 			}
 		}
-		if (removed)	/* We already removed soldier, break here. */
+		if (removed)	/* We already removed pilot, break here. */
 			break;
 
 		Com_DPrintf(DEBUG_CLIENT, "TR_CargoListSelect_f: cnt: %i, num: %i\n", cnt, num);

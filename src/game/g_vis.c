@@ -297,9 +297,10 @@ int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *en
 	/* check visibility */
 	if (check->inuse) {
 		/* check if he's visible */
-		const int vis = G_TestVis(team, check, perish);
+		const int visFlags = perish ? VT_PERISH : 0;
+		const int vis = G_TestVis(team, check, visFlags);
 
-		/* visiblity has changed ... */
+		/* visibility has changed ... */
 		if (vis & VIS_CHANGE) {
 			/* swap the vis mask for the given team */
 			check->visflags ^= G_TeamToVisMask(team);
@@ -349,7 +350,7 @@ int G_CheckVis (edict_t * check, qboolean perish)
 	status = 0;
 	for (team = 0; team < MAX_TEAMS; team++)
 		if (level.num_alive[team]) {
-			if (!check)	/* no special entity given, so check them ll */
+			if (!check)	/* no special entity given, so check them all */
 				status |= G_CheckVisTeamAll(team, perish, NULL);
 			else
 				status |= G_CheckVisTeam(team, check, perish, NULL);

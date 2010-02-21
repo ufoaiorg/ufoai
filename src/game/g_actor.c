@@ -35,6 +35,62 @@ qboolean G_IsLivingActor (const edict_t *ent)
 }
 
 /**
+ * @brief Calculates the amount of all currently reserved TUs
+ * @param ent The actor to calculate the reserved TUs for
+ * @return The amount of reserved TUs for the given actor edict
+ */
+int G_ActorGetReservedTUs (const edict_t *ent)
+{
+	const chrReservations_t *res = &ent->chr.reservedTus;
+	return res->reaction + res->shot + res->crouch;
+}
+
+/**
+ * @brief Calculates the amount of usable TUs
+ * @param ent The actor to calculate the amount of usable TUs for
+ * @return The amount of usable TUs for the given actor edict
+ */
+int G_ActorUsableTUs (const edict_t *ent)
+{
+	if (!ent)
+		return 0;
+
+	return ent->TU - G_ActorGetReservedTUs(ent);
+}
+
+/**
+ * @brief Calculates the amount of TUs that are needed for the current selected reaction fire mode.
+ * @note It's assumed that there is a sane fire mode selected for reaction fire
+ * @param ent The actors edict
+ * @return The amount of TUs that are needed for the current selected reaction fire mode.
+ */
+int G_ActorGetTUForReactionFire (const edict_t *ent)
+{
+	const invList_t *invlistWeapon;
+	const chrFiremodeSettings_t *fm = &ent->chr.RFmode;
+	const fireDef_t *fd;
+
+	invlistWeapon = ACTOR_GET_INV(ent, fm->hand);
+	assert(invlistWeapon);
+	assert(invlistWeapon->item.t);
+
+	fd = FIRESH_FiredefForWeapon(&invlistWeapon->item);
+	assert(fd);
+	return fd[fm->fmIdx].time;
+}
+
+void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouch)
+{
+	if (ent->TU >= resReaction + resShot + resCrouch) {
+		ent->chr.reservedTus.reaction = resReaction;
+		ent->chr.reservedTus.shot = resShot;
+		ent->chr.reservedTus.crouch = resCrouch;
+	}
+
+	G_EventActorSendReservations(ent);
+}
+
+/**
  * @brief Searches an actor by a unique character number
  * @param[in] ucn The unique character number
  * @param[in] team The team to get the actor with the ucn from
@@ -98,11 +154,13 @@ int G_ActorDoTurn (edict_t * ent, byte dir)
 	 * that is used below to check in each of the rotation steps
 	 * (1/8, 22.5 degree) whether something became visible while turning */
 	if (angleDiv > 0) {
+		const int angleStep = (360.0 / CORE_DIRECTIONS);
 		rot = dvleft;
-		num = (angleDiv + 22.5) / 45.0;
+		num = (angleDiv + angleStep / 2) / angleStep;
 	} else {
+		const int angleStep = (360.0 / CORE_DIRECTIONS);
 		rot = dvright;
-		num = (-angleDiv + 22.5) / 45.0;
+		num = (-angleDiv + angleStep / 2) / angleStep;
 	}
 
 	/* do rotation and vis checks */
@@ -196,25 +254,6 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 }
 
 /**
- * @brief Calculates TU reservations for an actor.
- * @param[in] ent The pointer to the selected edict being soldier.
- * @return Sum of reserved TUs.
- * @todo See also CL_ActorReservedTUs and unify both functions to one
- * shared function in character_t code.
- */
-static int G_ActorTUReservations (edict_t *ent)
-{
-	int reservedTU = 0;
-
-	if (ent->chr.reservedTus.crouch)
-		reservedTU = ent->chr.reservedTus.crouch;
-	if (ent->chr.reservedTus.shot)
-		reservedTU = reservedTU + ent->chr.reservedTus.shot;
-
-	return reservedTU;
-}
-
-/**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] ent The pointer to the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
@@ -286,7 +325,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* Because I_MoveInInventory don't know anything about character_t and it updates ent->TU,
 	 * we need to save original ent->TU for the sake of checking TU reservations. */
 	originalTU = ent->TU;
-	reservedTU = G_ActorTUReservations(ent);
+	reservedTU = G_ActorGetReservedTUs(ent);
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
@@ -395,7 +434,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 /**
  * @brief Reload weapon with actor.
  * @param[in] ent Pointer to an actor reloading weapon.
- * @param[in] st Reloading weapon in right or left hand.
+ * @param[in] invDef Reloading weapon in right or left hand.
  * @sa AI_ActorThink
  */
 void G_ActorReload (edict_t* ent, const invDef_t *invDef)
@@ -414,7 +453,6 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 
 	if (CONTAINER(ent, invDef->id)) {
 		weapon = CONTAINER(ent, invDef->id)->item.t;
-	/** @todo What if there is no item in the right hand - this would segfault then */
 	} else if (INV_IsLeftDef(invDef) && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		invDef = INVDEF(gi.csi->idRight);

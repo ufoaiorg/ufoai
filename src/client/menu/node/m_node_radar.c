@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../battlescape/cl_localentity.h"
+#include "../../battlescape/cl_hud.h"
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_misc.h"
 #include "../../../shared/parse.h"
@@ -565,7 +566,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
  */
 static void MN_RadarNodeDraw (menuNode_t *node)
 {
-	const le_t *le;
+	le_t *le;
 	int i;
 	vec3_t pos;
 #ifdef RADARSIZE_DEBUG
@@ -643,9 +644,10 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	MN_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
 #endif
 
-	for (i = 0, le = cl.LEs; i < cl.numLEs; i++, le++) {
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
 		vec3_t itempos;
-		if (!le->inuse || le->invis)
+		if (le->invis)
 			continue;
 
 		/* convert to radar area coordinates */
@@ -659,6 +661,8 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 			break;
 		case ET_ITEM:
 			MN_RadarNodeDrawItem(le, itempos);
+			break;
+		default:
 			break;
 		}
 #ifdef RADARSIZE_DEBUG

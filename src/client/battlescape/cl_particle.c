@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_localentity.h"
 #include "cl_view.h"
 #include "cl_parse.h"
+#include "cl_hud.h"
 #include "../renderer/r_light.h"
 #include "../renderer/r_particle.h"
 #include "../../shared/parse.h"
@@ -211,7 +212,7 @@ static byte stackType[MAX_STACK_DEPTH];
  * @param[in] info
  * @param[in] levelflags The levelflag mask to show the particle on
  */
-void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char *info, int levelflags)
+void CL_AddMapParticle (const char *ptl, const vec3_t origin, const vec2_t wait, const char *info, int levelflags)
 {
 	mapParticle_t *mp;
 

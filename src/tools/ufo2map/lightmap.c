@@ -254,12 +254,12 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	}
 }
 
-/** @brief buckets for sample accumulation */
+/** @brief buckets for sample accumulation - clipped by the surface */
 typedef struct facelight_s {
 	int numsamples;
 	float *origins;
-	float *samples;
-	float *directions;
+	float *samples;		/**< lightmap samples */
+	float *directions;	/**< for specular lighting/bumpmapping */
 } facelight_t;
 
 static facelight_t facelight[LIGHTMAP_MAX][MAX_MAP_FACES];
@@ -493,9 +493,11 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 
 
 /**
+ * @param[out] sample The sample color
+ * @param[in] normal The light direction (normal vector)
  * @param[in] pos The point in the world that receives the light
  * @param[in] scale is the normalizer for multisampling
- * @param[in] headhints An array of theads for each light to optimize the tracing
+ * @param[in,out] headhints An array of theads for each light to optimize the tracing
  */
 static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhints)
 {

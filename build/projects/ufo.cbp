@@ -113,6 +113,7 @@
 					<Add option="-framework SDL" />
 					<Add option="-framework SDL_ttf" />
 					<Add option="-framework SDL_mixer" />
+					<Add option="-framework SDL_image" />
 					<Add option="-framework IOKit" />
 					<Add option="-framework,Cocoa" />
 					<Add option="-framework foundation" />
@@ -132,6 +133,7 @@
 		<Linker>
 			<Add library="SDL" />
 			<Add library="SDL_ttf" />
+			<Add library="SDL_image" />
 			<Add library="SDL_mixer" />
 			<Add library="z" />
 			<Add library="jpeg" />
@@ -264,10 +266,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_hud.h" />
+		<Unit filename="../../src/client/battlescape/cl_hud_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_hud_callbacks.h" />
 		<Unit filename="../../src/client/battlescape/cl_camera.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_camera.h" />
+		<Unit filename="../../src/client/battlescape/cl_battlescape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_battlescape.h" />
 		<Unit filename="../../src/client/battlescape/cl_localentity.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -284,6 +294,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_view.h" />
+		<Unit filename="../../src/client/battlescape/cl_spawn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_spawn.h" />
 		<Unit filename="../../src/client/battlescape/events/e_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1372,6 +1386,9 @@
 		<Unit filename="../../src/shared/typedefs.h" />
 		<Unit filename="../../src/shared/ufotypes.h" />
 		<Unit filename="../../src/shared/utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/images.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/vertex_normals.h" />
