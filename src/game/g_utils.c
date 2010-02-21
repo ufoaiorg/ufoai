@@ -284,11 +284,10 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
  */
 edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 {
-	const char *s;
 	edict_t *ent = from;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		s = *(const char **) ((byte *) ent + fieldofs);
+		const char *s = *(const char **) ((byte *) ent + fieldofs);
 		if (!s)
 			continue;
 		if (!Q_strcasecmp(s, match))
