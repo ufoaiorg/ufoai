@@ -139,11 +139,11 @@ void CP_UpdateNationXVIInfection (void)
 				previousNationColor = nationColor;
 				nation = MAP_GetNation(currentPos);
 			}
-			if (!nation)
-				continue;
-
-			if (out[y * width + x] > INITIAL_ALPHA_VALUE)
-				sum[nation->idx] += out[y * width + x] - INITIAL_ALPHA_VALUE;
+			if (nation) {
+				const int xviLevel = R_GetXVILevel(x, y);
+				if (xviLevel > 0)
+					sum[nation->idx] += xviLevel;
+			}
 		}
 		/* divide the total XVI infection by the area of a pixel
 		 * because pixel are smaller as you go closer from the pole */
