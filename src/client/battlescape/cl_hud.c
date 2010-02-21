@@ -750,7 +750,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	invList_t *weaponr;
 	invList_t *weaponl;
 	invList_t *headgear;
-	int rightCanBeReloaded = -1, leftCanBeReloaded = -1;
+	int rightCanBeReloaded, leftCanBeReloaded;
 	const int time = CL_ActorUsableTUs(le);
 	const char *reason;
 
