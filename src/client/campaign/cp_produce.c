@@ -71,15 +71,15 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 	/* We will not use more workers than base capacity. */
 	maxWorkers = min(allWorkers, base->capacities[CAP_WORKSPACE].max);
 
-	if (!sufo) {
+	if (!storedUFO) {
 		/* This is the default production time for 10 workers. */
 		timeDefault = tech->produceTime;
 	} else {
-		assert(sufo->comp);
+		assert(storedUFO->comp);
 		/* This is the default disassembly time for 10 workers. */
-		timeDefault = sufo->comp->time;
+		timeDefault = storedUFO->comp->time;
 		/* Production is 4 times longer when installation is on Antipodes */
-		distanceFactor = GetDistanceOnGlobe(sufo->installation->pos, base->pos) / 45.0f;
+		distanceFactor = GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0f;
 		assert(distanceFactor >= 0.0f);
 		/* Penalty starts when distance is greater than 45 degrees */
 		distanceFactor = max(1.0f, distanceFactor);
@@ -87,7 +87,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 	}
 	if (maxWorkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		const float fraction =  1.0f / ((NULL != sufo) ? (distanceFactor * timeDefault) : timeDefault);
+		const float fraction =  1.0f / ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault);
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxWorkers, tech->id, fraction);
 		return fraction;
@@ -95,7 +95,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 		/* Calculate the fraction of item produced for our amount of workers. */
 		/* NOTE: I changed algorithm for a more realistic one, varying like maxworkers^2 -- Kracken 2007/11/18
 		 * now, production time is divided by 4 each time you double the number of worker */
-		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * ((NULL != sufo) ? (distanceFactor * timeDefault) : timeDefault ))
+		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault))
 			* ((float)maxWorkers / PRODUCE_WORKERS));
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxWorkers, tech->id, fraction);
