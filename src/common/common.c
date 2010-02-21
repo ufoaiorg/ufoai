@@ -118,6 +118,8 @@ void Com_BeginRedirect (struct net_stream *stream, char *buffer, int buffersize)
 
 	rd_stream = stream;
 	rd_buffer = buffer;
+	if (buffersize > MAXPRINTMSG)
+		Com_Error(ERR_DROP, "redirect buffer may not be bigger than MAXPRINTMSG (%i)", MAXPRINTMSG);
 	rd_buffersize = buffersize;
 	rd_buffer[0] = '\0';
 }
@@ -158,7 +160,6 @@ void Com_MakeTimestamp (char* ts, const size_t tslen)
 void Com_vPrintf (const char *fmt, va_list ap)
 {
 	char msg[MAXPRINTMSG];
-	char timestamp[40];
 
 	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 
@@ -180,7 +181,6 @@ void Com_vPrintf (const char *fmt, va_list ap)
 	Sys_ConsoleOutput(msg);
 
 	/* logfile */
-	Com_MakeTimestamp(timestamp, sizeof(timestamp));
 	if (logfile_active && logfile_active->integer) {
 		char name[MAX_OSPATH];
 
@@ -194,6 +194,9 @@ void Com_vPrintf (const char *fmt, va_list ap)
 		if (logfile) {
 			/* strip color codes */
 			const char *output = msg;
+			char timestamp[40];
+			Com_MakeTimestamp(timestamp, sizeof(timestamp));
+
 			if (output[0] < 32)
 				output++;
 			fprintf(logfile, "%s %s", timestamp, output);
