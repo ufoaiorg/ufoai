@@ -652,22 +652,18 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 		Com_Error(ERR_DROP, "Unknown employee type\n");
 	}
 
+	CL_GenerateCharacter(&employee->chr, teamDefName);
 	switch (type) {
 	case EMPL_SOLDIER:
-		CL_GenerateCharacter(&employee->chr, teamDefName, NULL);
 		break;
 	case EMPL_SCIENTIST:
 	case EMPL_PILOT:
 	case EMPL_WORKER:
-		CL_GenerateCharacter(&employee->chr, teamDefName, NULL);
 		employee->speed = 100;
 		break;
 	case EMPL_ROBOT:
-		if (!ugvType) {
-			Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: No ugvType given!\n");
-			return NULL;
-		}
-		CL_GenerateCharacter(&employee->chr, teamDefName, ugvType);
+		if (!ugvType)
+			Com_Error(ERR_DROP, "E_CreateEmployee: No ugvType given!\n");
 		employee->ugv = ugvType;
 		break;
 	default:

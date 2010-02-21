@@ -301,11 +301,10 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
  * @brief Generates the skills and inventory for a character and for a 2x2 unit
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
- * @param[in] ugvType Currently unused.
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_t *ugvType)
+void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {
 	memset(chr, 0, sizeof(*chr));
 

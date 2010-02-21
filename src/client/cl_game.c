@@ -87,7 +87,7 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 	memset(&characters, 0, sizeof(characters));
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		CL_GenerateCharacter(&characters[i], teamDefID, NULL);
+		CL_GenerateCharacter(&characters[i], teamDefID);
 		/* pack equipment */
 		cls.i.EquipActor(&cls.i, &characters[i].inv, ed, &characters[i]);
 
