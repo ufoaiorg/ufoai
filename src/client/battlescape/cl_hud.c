@@ -134,7 +134,7 @@ static void HUD_UpdateAllActors (void)
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {
-			invList_t *invList;
+			const invList_t *invList;
 			const char* tooltip;
 			const character_t *chr = CL_ActorGetChr(le);
 			assert(chr);
@@ -1267,8 +1267,9 @@ static void HUD_UpdateActor (le_t *actor)
 	HUD_MapDebugCursor(actor);
 
 	/* print ammo */
-	if (RIGHT(actor))
-		Cvar_SetValue("mn_ammoright", RIGHT(actor)->item.a);
+	invList = RIGHT(actor);
+	if (invList)
+		Cvar_SetValue("mn_ammoright", invList->item.a);
 	else
 		Cvar_Set("mn_ammoright", "");
 
