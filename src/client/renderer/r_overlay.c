@@ -263,7 +263,7 @@ void R_DecreaseXVILevelEverywhere (void)
 	R_UploadAlpha(r_xviTexture, r_xviAlpha);
 }
 
-void R_ChangeXVILevel (const vec2_t pos, const int xviLevel, float factor)
+void R_ChangeXVILevel (const vec2_t pos, float factor)
 {
 	const int xCenter = round((180 - pos[0]) * XVI_WIDTH / 360.0f);
 	const int yCenter = round((90 - pos[1]) * XVI_HEIGHT / 180.0f);

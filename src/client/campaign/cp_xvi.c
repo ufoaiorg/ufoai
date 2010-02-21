@@ -57,7 +57,7 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 	if (!CP_IsXVIResearched())
 		return;
 
-	R_ChangeXVILevel(pos, MAX_ALPHA_VALUE - INITIAL_ALPHA_VALUE, XVI_FACTOR);
+	R_ChangeXVILevel(pos, XVI_FACTOR);
 
 	xviNationInfectionNeedsUpdate = qtrue;
 }
