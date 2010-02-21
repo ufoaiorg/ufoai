@@ -46,6 +46,8 @@ void CL_UGVCvars (const character_t *chr)
 
 	CL_CharacterSkillAndScoreCvars(chr);
 
+	Cvar_Set("mn_lweapon", "");
+	Cvar_Set("mn_rweapon", "");
 	Cvar_Set("mn_vmnd", "0");
 	Cvar_Set("mn_tmnd", va("%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND])));
 }
