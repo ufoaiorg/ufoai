@@ -665,15 +665,17 @@ entity_t *R_GetEntity (int id)
 /**
  * @brief Adds a copy of the specified entity to the list of all known render entities.
  * @sa R_GetFreeEntity
+ * @return The position of the entity in the render entity array or @c -1 in case the entity wasn't added.
  */
-void R_AddEntity (entity_t *ent)
+int R_AddEntity (const entity_t *ent)
 {
 	if (r_numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_AddEntity: MAX_ENTITIES exceeded");
 
 	/* don't add the bsp tiles from random map assemblies */
 	if (ent->model && ent->model->type == mod_bsp)
-		return;
+		return -1;
 
 	r_entities[r_numEntities++] = *ent;
+	return r_numEntities - 1;
 }

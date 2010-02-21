@@ -124,12 +124,17 @@ void LM_AddToScene (void)
 			lm->lighting.dirty = qtrue;
 		}
 
+		if (lm->parent) {
+			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
+			ent.tagname = lm->tag;
+		}
+
 		/* renderflags like RF_PULSE */
 		ent.flags = lm->renderFlags;
 		ent.lighting = &lm->lighting;
 
 		/* add it to the scene */
-		R_AddEntity(&ent);
+		lm->renderEntityNum = R_AddEntity(&ent);
 	}
 }
 
@@ -214,6 +219,17 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
 	Com_DPrintf(DEBUG_EVENTSYS, "LE_SetThink: Set think function for le %i to %p\n",
 			le->entnum, think);
 	le->think = think;
+}
+
+localModel_t *LM_GetByID (const char *id)
+{
+	int i;
+
+	for (i = 0; i < cl.numLMs; i++) {
+		if (!strcmp(cl.LMs[i].id, id))
+			return &cl.LMs[i];
+	}
+	return NULL;
 }
 
 /**

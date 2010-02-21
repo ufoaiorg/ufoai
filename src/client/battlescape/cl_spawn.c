@@ -34,6 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct {
 	char classname[MAX_VAR];
+	char target[MAX_VAR];
+	char targetname[MAX_VAR];
+	char tag[MAX_VAR];
 	char anim[MAX_VAR];
 	char model[MAX_QPATH];
 	char particle[MAX_VAR];
@@ -74,6 +77,8 @@ static const value_t localEntityValues[] = {
 	{"anim", V_STRING, offsetof(localEntityParse_t, anim), 0},
 	{"particle", V_STRING, offsetof(localEntityParse_t, particle), 0},
 	{"noise", V_STRING, offsetof(localEntityParse_t, noise), 0},
+	{"target", V_STRING, offsetof(localEntityParse_t, target), 0},
+	{"targetname", V_STRING, offsetof(localEntityParse_t, targetname), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -215,6 +220,13 @@ static void SP_misc_model (const localEntityParse_t *entData)
 	/* add it */
 	lm = LM_AddModel(entData->model, entData->particle, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
 	if (lm) {
+		Q_strncpyz(lm->id, entData->targetname, sizeof(lm->id));
+		Q_strncpyz(lm->tag, entData->tag, sizeof(lm->tag));
+		if (entData->target[0] != '\0') {
+			lm->parent = LM_GetByID(entData->target);
+			if (!lm->parent)
+				Com_Error(ERR_DROP, "Could not find local model entity with the id: '%s'. Make sure the order of the entities is correct", entData->target);
+		}
 		lm->skin = entData->skin;
 		lm->frame = entData->frame;
 		if (!lm->frame)

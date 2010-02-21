@@ -90,7 +90,7 @@ typedef struct entity_s {
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
-void R_AddEntity(entity_t *ent);
+int R_AddEntity(const entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
 void R_EntityDrawBBox(const vec3_t mins, const vec3_t maxs);

@@ -144,15 +144,20 @@ typedef struct le_s {
 
 /** @brief local models */
 typedef struct lm_s {
-	char name[MAX_VAR];
+	char id[MAX_VAR];	/**< in case this local model is referenced by some other local
+						 * model (e.g. for tags) - this id is set in the mapeditor */
+	char name[MAX_QPATH];	/**< the name of the model file */
 	char particle[MAX_VAR];
+	char tag[MAX_VAR];		/**< in case a tag should be used to place the model */
+	struct lm_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	qboolean inuse;
 
 	vec3_t origin;
 	vec3_t angles;
 	vec3_t scale;	/**< default is 1.0 - no scaling */
 
-	int entnum;
+	int entnum;	/**< entnum from the entity string (if available in the server, they match) */
+	int renderEntityNum;	/**< entity number in the renderer entity array */
 	int skin;
 	int renderFlags;	/**< effect flags */
 	int frame;	/**< which frame to show */
@@ -240,5 +245,6 @@ void LE_CenterView(const le_t *le);
 trace_t CL_Trace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel);
 
 void LM_Register(void);
+localModel_t *LM_GetByID(const char *id);
 
 #endif

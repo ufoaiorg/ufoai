@@ -198,6 +198,9 @@ entity misc_model {
 		skin			"Skin number"
 		frame			"Frame number - use frame or anim - but not both"
 		anim			"If this is this an animated model you can set the animation name from the *.anm file here"
+		tag				"The tag to place the model to (a target of a misc_model must be given, too)"
+		targetname		"The id of this misc_model in case you want to place a tag"
+		target			"The target must match the given targetname of the parent misc_model entity"
 	}
 
 	type {
