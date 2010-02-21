@@ -122,35 +122,28 @@ void CP_UpdateNationXVIInfection (void)
 	for (y = 0; y < height; y++) {
 		int x;
 		int sum[MAX_NATIONS];
-		byte* nationColor;
-		byte* previousNationColor;
+		const byte* previousNationColor;
 		const nation_t* nation;
 
 		memset(sum, 0, sizeof(sum));
 
-		Vector2Set(currentPos,
-			180.0f,
-			90.0f - y / heightPerDegree);
-		nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);
-		previousNationColor = nationColor;
+		Vector2Set(currentPos, 180.0f, 90.0f - y / heightPerDegree);
+		previousNationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);
 		nation = MAP_GetNation(currentPos);
-		if (nation)
-			nationIdx = nation->idx;
 
 		for (x = 0; x < width; x++) {
+			const byte* nationColor;
 			currentPos[0] = 180.0f - x / widthPerDegree;
 			nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);
 			if (nationColor != previousNationColor) {
 				previousNationColor = nationColor;
 				nation = MAP_GetNation(currentPos);
-				if (nation)
-					nationIdx = nation->idx;
 			}
 			if (!nation)
 				continue;
 
 			if (out[y * width + x] > INITIAL_ALPHA_VALUE)
-				sum[nationIdx] += out[y * width + x] - INITIAL_ALPHA_VALUE;
+				sum[nation->idx] += out[y * width + x] - INITIAL_ALPHA_VALUE;
 		}
 		/* divide the total XVI infection by the area of a pixel
 		 * because pixel are smaller as you go closer from the pole */
