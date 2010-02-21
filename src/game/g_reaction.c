@@ -138,6 +138,11 @@ void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const obj
 	G_EventReactionFireChange(ent);
 }
 
+/**
+ * @brief Checks whether an actor has enough TUs left to activate reaction fire.
+ * @param ent The actors edict to check for TUs for
+ * @return @c true if the given actor has enough TUs left to activate reaction fire, @c false otherwise.
+ */
 static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
 {
 	const int TUs = G_ActorGetTUForReactionFire(ent);
@@ -186,7 +191,7 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
  * @brief Check whether ent can reaction fire at target, i.e. that it can see it and neither is dead etc.
  * @param[in] ent The entity that might be firing
  * @param[in] target The entity that might be fired at
- * @returns Whether 'ent' can actually fire at 'target'
+ * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
 static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 {
