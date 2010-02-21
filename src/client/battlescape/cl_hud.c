@@ -517,49 +517,12 @@ static void HUD_SwitchFiremodeList_f (void)
 }
 
 /**
- * @brief Requests firemode settings from the server
- * @param[in] actor The actor to update the firemode for.
- * @param[in] hand Index of hand with item, which will be used for reactionfire
- * @param[in] od Pointer to objDef_t for which we set up firemode.
- * @param[in] fdIdx Index of firedefinition for an item in given hand.
- */
-static void HUD_RequestReactionFiremode (const le_t * actor, const actorHands_t hand, const objDef_t *od, const int fdIdx)
-{
-	character_t *chr;
-	int usableTusForRF = 0;
-
-	if (!actor)
-		return;
-
-	usableTusForRF = HUD_UsableReactionTUs(actor);
-
-	chr = CL_ActorGetChr(actor);
-
-	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
-	if (od != NULL && fdIdx >= 0) {
-		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		const fireDef_t *fd = HUD_GetFireDefinitionForHand(actor, hand);
-		if (fd) {
-			int time = fd[fdIdx].time;
-			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
-			if (actor->state & STATE_REACTION_MANY)
-				time *= (usableTusForRF / fd[fdIdx].time);
-
-			CL_ActorReserveTUs(actor, RES_REACTION, time);
-		}
-	}
-
-	/* Send RFmode[] to server-side storage as well. See g_local.h for more. */
-	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, hand, fdIdx, od ? od->idx : NONE);
-}
-
-/**
  * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
  * @param[in] actor The actor we want to update the reaction-fire firemode for.
  * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-static void HUD_UpdateReactionFiremodes (le_t * actor, const actorHands_t hand, int firemodeActive)
+static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t hand, int firemodeActive)
 {
 	const fireDef_t *fd;
 	const objDef_t *ammo, *od;
@@ -576,7 +539,7 @@ static void HUD_UpdateReactionFiremodes (le_t * actor, const actorHands_t hand, 
 	if (!GAME_ItemIsUseable(od))
 		return;
 
-	HUD_RequestReactionFiremode(actor, hand, od, firemodeActive);
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, hand, firemodeActive, od ? od->idx : NONE);
 }
 
 /**

@@ -59,6 +59,38 @@ int G_ActorUsableTUs (const edict_t *ent)
 }
 
 /**
+ * @brief Calculates the amount of TUs that are needed for the current selected reaction fire mode.
+ * @note It's assumed that there is a sane fire mode selected for reaction fire
+ * @param ent The actors edict
+ * @return The amount of TUs that are needed for the current selected reaction fire mode.
+ */
+int G_ActorGetTUForReactionFire (const edict_t *ent)
+{
+	const invList_t *invlistWeapon;
+	const chrFiremodeSettings_t *fm = &ent->chr.RFmode;
+	const fireDef_t *fd;
+
+	invlistWeapon = ACTOR_GET_INV(ent, fm->hand);
+	assert(invlistWeapon);
+	assert(invlistWeapon->item.t);
+
+	fd = FIRESH_FiredefForWeapon(&invlistWeapon->item);
+	assert(fd);
+	return fd[fm->fmIdx].time;
+}
+
+void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouch)
+{
+	if (ent->TU >= resReaction + resShot + resCrouch) {
+		ent->chr.reservedTus.reaction = resReaction;
+		ent->chr.reservedTus.shot = resShot;
+		ent->chr.reservedTus.crouch = resCrouch;
+	}
+
+	G_EventActorSendReservations(ent);
+}
+
+/**
  * @brief Searches an actor by a unique character number
  * @param[in] ucn The unique character number
  * @param[in] team The team to get the actor with the ucn from

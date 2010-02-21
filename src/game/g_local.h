@@ -288,6 +288,8 @@ void G_PhysicsRun(void);
 void G_PhysicsStep(edict_t *ent);
 
 /* g_actor.c */
+void G_ActorReserveTUs(edict_t *ent, int resReaction, int resShot, int resCrouch);
+int G_ActorGetTUForReactionFire(const edict_t *ent);
 int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetReservedTUs(const edict_t *ent);
 
@@ -335,6 +337,7 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventActorFall(const edict_t* ent);
 void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
+void G_EventActorSendReservations(const edict_t *ent);
 void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y);
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);

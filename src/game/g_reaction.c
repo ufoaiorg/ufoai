@@ -141,10 +141,9 @@ void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const obj
 
 static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
 {
-	/** @todo */
-	/*const int tu = G_ActorUsableTUs(ent) + ent->chr.reservedTus.reaction;*/
-
-	return qtrue;
+	const int TUs = G_ActorGetTUForReactionFire(ent);
+	const chrReservations_t *res = &ent->chr.reservedTus;
+	return ent->TU - TUs >= res->shot + res->crouch;
 }
 
 /**

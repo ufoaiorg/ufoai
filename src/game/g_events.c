@@ -53,6 +53,22 @@ void G_EventActorDie (const edict_t* ent, const edict_t* attacker)
 }
 
 /**
+ * @brief Will inform the player about the real TU reservation
+ * @param ent The actors edict.
+ */
+void G_EventActorSendReservations (const edict_t *ent)
+{
+	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
+
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->chr.reservedTus.reaction);
+	gi.WriteShort(ent->chr.reservedTus.shot);
+	gi.WriteShort(ent->chr.reservedTus.crouch);
+
+	gi.EndEvents();
+}
+
+/**
  * @brief Tell the client to remove the item from the container
  * @param[in] ent Pointer to entity having given inventory.
  * @param[in] playerMask The player mask to determine which clients should receive the event (e.g. @c G_VisToPM(ent->visflags))

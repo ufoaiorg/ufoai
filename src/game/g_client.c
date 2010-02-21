@@ -375,22 +375,6 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 }
 
 /**
- * @brief Will inform the player about the real TU reservation
- * @param ent The actors edict.
- */
-static void G_EventSendReservations (const edict_t *ent)
-{
-	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_ACTOR_RESERVATIONCHANGE);
-
-	gi.WriteShort(ent->number);
-	gi.WriteShort(ent->chr.reservedTus.reaction);
-	gi.WriteShort(ent->chr.reservedTus.shot);
-	gi.WriteShort(ent->chr.reservedTus.crouch);
-
-	gi.EndEvents();
-}
-
-/**
  * @brief After an actor changed his state, he might get visible for other
  * players. Check the vis here and send the state change to the clients that
  * are seeing him already.
@@ -448,17 +432,23 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
+				G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 			}
 		}
 		break;
 	/* Request to turn on multi- or single-reaction fire mode. */
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
+		/* Disable reaction fire. */
+		ent->state &= ~STATE_REACTION;
+
 		if (G_CanEnableReactionFire(ent)) {
-			/* Disable reaction fire. */
-			ent->state &= ~STATE_REACTION;
+			const int TUs = G_ActorGetTUForReactionFire(ent);
 			/* Enable requested reaction fire. */
 			ent->state |= reqState;
+			G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
+		} else {
+			G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		}
 		break;
 	default:
@@ -599,7 +589,7 @@ int G_ClientAction (player_t * player)
 	int firemode;
 	int from, fx, fy, to, tx, ty;
 	actorHands_t hand, fmIdx, objIdx;
-	int resReaction, resCrouch, resShot;
+	int resCrouch, resShot;
 	edict_t *ent;
 
 	/* read the header */
@@ -685,15 +675,9 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_RESERVE_STATE:
-		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resReaction, &resShot, &resCrouch);
+		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resShot, &resCrouch);
 
-		/*if (ent->TU >= resReaction + resShot + resCrouch)*/ {
-			ent->chr.reservedTus.reaction = resReaction;
-			ent->chr.reservedTus.shot = resShot;
-			ent->chr.reservedTus.crouch = resCrouch;
-		}
-
-		G_EventSendReservations(ent);
+		G_ActorReserveTUs(ent, ent->chr.reservedTus.reaction, resShot, resCrouch);
 		break;
 
 	default:

@@ -368,14 +368,12 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 	if (chr) {
 		chrReservations_t res = chr->reservedTus;
 
-		if (type == RES_REACTION)
-			res.reaction = tus;
-		else if (type == RES_CROUCH)
+		if (type == RES_CROUCH)
 			res.crouch = tus;
 		else if (type == RES_SHOT)
 			res.shot = tus;
 
-		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res.reaction, res.shot, res.crouch);
+		MSG_Write_PA(PA_RESERVE_STATE, le->entnum, res.shot, res.crouch);
 	}
 }
 
