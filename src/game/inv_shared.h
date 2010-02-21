@@ -652,8 +652,6 @@ typedef struct character_s {
 #define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
 #define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))
 
-#define MAX_CAMPAIGNS	16
-
 /* ================================ */
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
