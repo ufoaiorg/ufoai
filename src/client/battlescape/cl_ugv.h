@@ -1,6 +1,5 @@
 /**
  * @file cl_ugv.h
- * @brief UGV related headers
  */
 
 /*
@@ -23,24 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_UGV_H
-#define CL_UGV_H
+#ifndef CL_UGV_H_
+#define CL_UGV_H_
 
-/** @brief Defines a type of UGV/Robot */
-typedef struct ugv_s {
-	char *id;
-	char weapon[MAX_VAR];
-	char armour[MAX_VAR];
-	int tu;
-	char actors[MAX_VAR];
-	int price;
-} ugv_t;
+#include "../client.h"
+#include "cl_localentity.h"
 
-void CL_ParseUGVs(const char *name, const char **text);
-ugv_t *CL_GetUGVByIDSilent(const char *ugvID);
-ugv_t *CL_GetUGVByID(const char *ugvID);
+qboolean CL_AddUGV(le_t * le, entity_t * ent);
+void CL_UGVCvars(const character_t *chr);
 
-extern ugv_t ugvs[MAX_UGV];
-extern int numUGV;
-
-#endif
+#endif /* CL_UGV_H_ */
