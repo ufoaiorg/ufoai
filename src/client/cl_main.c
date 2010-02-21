@@ -1081,8 +1081,6 @@ void CL_Frame (int now, void *data)
 
 	CL_SendCommand();
 
-	Irc_Logic_Frame();
-
 	IN_Frame();
 
 	GAME_Frame();
@@ -1116,6 +1114,8 @@ void CL_Frame (int now, void *data)
 void CL_SlowFrame (int now, void *data)
 {
 	CL_CvarCheck();
+
+	Irc_Logic_Frame();
 
 	HUD_Update();
 }

@@ -515,20 +515,18 @@ static qboolean Irc_Proto_Notice (const char *target, const char *text)
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
 
-#if 0
 /**
  * @sa Irc_Net_Send
  */
-static qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
+static void Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = cookie
 		? snprintf(msg, sizeof(msg) - 1, "PONG %s %s :%s\r\n", nick, server, cookie)
 		: snprintf(msg, sizeof(msg) - 1, "PONG %s %s\r\n", nick, server);
 	msg[sizeof(msg) - 1] = '\0';
-	return Irc_Net_Send(msg, msg_len);	/* send immediately */
+	Irc_Net_Send(msg, msg_len);	/* send immediately */
 }
-#endif
 
 /**
  * @sa Irc_Proto_Enqueue
@@ -930,6 +928,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/*Irc_Proto_Notice(nick, IRC_CTCP_MARKER_STR "VERSION " UFO_VERSION " " CPUSTRING " " __DATE__ " " BUILDSTRING);*/
 			Com_DPrintf(DEBUG_CLIENT, "Irc_Client_CmdPrivmsg: Response to version query\n");
 		} else if (!strncmp(trailing + 1, "PING", 4)) {
+			/* Used to measure the delay of the IRC network between clients. */
 			char response[IRC_SEND_BUF_SIZE];
 			strcpy(response, trailing);
 			response[2] = 'O'; /* PING => PONG */
@@ -1202,7 +1201,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!strncmp(cmd.id.string, "KICK", 4))
 			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
 		else if (!strncmp(cmd.id.string, "PING", 4))
-			Com_DPrintf(DEBUG_CLIENT, "IRC: <PING> %s\n", msg->trailing);
+			Irc_Proto_Pong(irc_nick->string, msg->params, msg->trailing[0] ? msg->trailing : NULL);
 		else if (!strncmp(cmd.id.string, "ERROR", 5)) {
 			Irc_Logic_Disconnect(msg->trailing);
 			Q_strncpyz(popupText, msg->trailing, sizeof(popupText));
