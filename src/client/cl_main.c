@@ -979,8 +979,6 @@ static void CL_SendCommand (void)
 
 static void CL_CvarCheck (void)
 {
-	int v;
-
 	/** @todo move into hud code */
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
@@ -999,18 +997,6 @@ static void CL_CvarCheck (void)
 	/* language */
 	if (s_language->modified)
 		CL_LanguageTryToSet(s_language->string);
-
-	/* r_mode and fullscreen */
-	v = Cvar_GetInteger("mn_vidmode");
-	if (v < -1 || v >= VID_GetModeNums()) {
-		Com_Printf("Max vid_mode value is %i (%i)\n", VID_GetModeNums(), v);
-		v = Cvar_GetInteger("vid_mode");
-		Cvar_SetValue("mn_vidmode", v);
-	}
-	if (v >= 0)
-		Cvar_Set("mn_vidmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
-	else
-		Cvar_Set("mn_vidmodestr", _("Custom"));
 }
 
 /**
