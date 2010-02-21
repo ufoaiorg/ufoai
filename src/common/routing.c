@@ -695,7 +695,7 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
-	const box_t* box = (actorSize == 1 ? &actor1x1Box : &actor2x2Box);
+	const box_t* box = (actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 
 	/* Position mstart and mend at the fraction point */
 	VectorInterpolation(start, end, frac, mstart);
@@ -728,7 +728,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
-	const box_t* box = (actorSize == 1 ? &actor1x1Box : &actor2x2Box);	/**< Tracing box extents */
+	const box_t* box = (actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);	/**< Tracing box extents */
 
 	/* Position mstart and mend at the midpoint */
 	VectorInterpolation(start, end, frac, mstart);
@@ -885,7 +885,7 @@ static int RT_TraceOpening (routing_t * map, const actorSizeEnum_t actorSize, co
 			*lo_val = lo;
 			*hi_val = hi;
 			/* Find the floor for the highest adjacent cell in this passage. */
-			temp_z = RT_CalcNewZ (map, actorSize, ax, ay, top, hi);
+			temp_z = RT_CalcNewZ(map, actorSize, ax, ay, top, hi);
 			if (temp_z != RT_NO_OPENING)
 				return temp_z;
 		}
@@ -942,7 +942,7 @@ static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, pla
 	if (from->ceiling >= PATHFINDING_HEIGHT * CELL_HEIGHT
 	 && from->cell[2] * CELL_HEIGHT + RT_CEILING(map, actorSize, ax, ay, from->cell[2]) >= PATHFINDING_HEIGHT * CELL_HEIGHT) {
 		vec3_t sky, earth;
-		const box_t* box = (actorSize == 1 ? &actor1x1Box : &actor2x2Box);
+		const box_t* box = (actorSize == ACTOR_SIZE_NORMAL ? &actor1x1Box : &actor2x2Box);
 		trace_t tr;
 		int tempBottom;
 
@@ -992,7 +992,7 @@ static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, pla
 				break;
 			/* Credit to Duke: We skip the minimum opening, as if there is a
 			 * viable opening, even one slice above, that opening would be open. */
-			lo = *hi_val + PATHFINDING_MIN_OPENING;
+			lo += *hi_val + PATHFINDING_MIN_OPENING;
 		}
 	}
 	return temp_z;
@@ -1408,7 +1408,7 @@ static int RT_UpdateConnection (routing_t * map, const actorSizeEnum_t actorSize
 	/* In case the adjacent floor has no ceiling, swap the current and adjacent cells. */
 	if (RT_IS_BIDIRECTIONAL) {
 		if (ceiling == 0 && adjCeiling != 0) {
-			return RT_UpdateConnection (map, actorSize, ax, ay, x, y, z, dir ^ 1);
+			return RT_UpdateConnection(map, actorSize, ax, ay, x, y, z, dir ^ 1);
 		}
 	}
 

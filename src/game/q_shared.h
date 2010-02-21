@@ -411,6 +411,7 @@ typedef enum {
 
 /* NOTE: this only allows quadratic units */
 typedef enum {
+	ACTOR_SIZE_INVALID = 0,
 	ACTOR_SIZE_NORMAL = 1,
 	ACTOR_SIZE_2x2 = 2,
 
