@@ -1558,7 +1558,7 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
  * @sa CL_Trace
  * @sa G_ShootSingle
  */
-static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const pos3_t toPos)
+static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActorSize, const pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
@@ -1567,7 +1567,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
 	qboolean crossNo;
 	le_t *le = NULL;
 	le_t *target = NULL;
-	int toActorSize;
+	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd)
 		return;
@@ -1641,7 +1641,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
-static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const pos3_t toPos)
+static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActorSize, const pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;
@@ -1651,7 +1651,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const 
 	int i;
 	le_t *le = NULL;
 	le_t *target = NULL;
-	int toActorSize;
+	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
 		return;
