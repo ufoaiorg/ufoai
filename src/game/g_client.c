@@ -980,6 +980,7 @@ static void G_ClientReadInventory (edict_t *ent)
 static void G_ClientReadCharacter (edict_t *ent)
 {
 	int k;
+	int teamDefIdx;
 
 	/* model */
 	ent->chr.ucn = gi.ReadShort();
@@ -992,7 +993,10 @@ static void G_ClientReadCharacter (edict_t *ent)
 	ent->chr.HP = gi.ReadShort();
 	ent->chr.minHP = ent->chr.HP;
 	ent->chr.maxHP = gi.ReadShort();
-	ent->chr.teamDef = &gi.csi->teamDef[gi.ReadByte()];
+	teamDefIdx = gi.ReadByte();
+	if (teamDefIdx < 0 || teamDefIdx >= MAX_TEAMDEFS)
+		gi.error("Invalid team definition index given: %i", teamDefIdx);
+	ent->chr.teamDef = &gi.csi->teamDef[teamDefIdx];
 
 	ent->chr.gender = gi.ReadByte();
 	ent->chr.STUN = gi.ReadByte();
@@ -1090,7 +1094,7 @@ void G_ClientTeamInfo (const player_t * player)
 
 	for (i = 0; i < length; i++) {
 		edict_t *ent;
-		const int actorFieldSize = gi.ReadByte();
+		const actorSizeEnum_t actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
 		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team))
 			ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);

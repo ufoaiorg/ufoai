@@ -414,9 +414,12 @@ typedef enum {
 	ACTOR_SIZE_INVALID = 0,
 	ACTOR_SIZE_NORMAL = 1,
 	ACTOR_SIZE_2x2 = 2,
+	ACTOR_SIZE_LIMIT,
 
 	ACTOR_SIZE_ENSURE_32BIT = 0x7FFFFFFF
 } actorSizeEnum_t;
+
+#define	ACTOR_MAX_SIZE			(ACTOR_SIZE_LIMIT - 1)
 
 /** @brief Types of actor sounds being issued by CL_PlayActorSound(). */
 typedef enum {

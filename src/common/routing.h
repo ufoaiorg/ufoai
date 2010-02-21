@@ -54,8 +54,8 @@ MACROS
  */
 /* route - Used by Grid_* only  */
 /** @note IMPORTANT: actorSize is 1 or greater!!! */
-#define RT_CONN(map, actorSize, x, y, z, dir)			map[(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
-#define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) >= 1); assert((actorSize) <= ACTOR_MAX_SIZE); \
+#define RT_CONN(map, actorSize, x, y, z, dir)			map[(int)(actorSize) - 1].route[(z)][(y)][(x)][(dir)]
+#define RT_CONN_TEST(map, actorSize, x, y, z, dir)		assert((actorSize) > ACTOR_SIZE_INVALID); assert((actorSize) <= ACTOR_MAX_SIZE); \
 															assert((z) >= 0); assert((z) < PATHFINDING_HEIGHT);\
 															assert((y) >= 0); assert((y) < PATHFINDING_WIDTH);\
 															assert((x) >= 0); assert((x) < PATHFINDING_WIDTH);\
@@ -71,7 +71,7 @@ MACROS
 #define RT_CONN_NX_PY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 6))
 #define RT_CONN_NX_NY(map, actorSize, x, y, z)	    (RT_CONN(map, actorSize, x, y, z, 5))
 
-#define RT_STEPUP(map, actorSize, x, y, z, dir)	map[(actorSize) - 1].stepup[(z)][(y)][(x)][(dir)]
+#define RT_STEPUP(map, actorSize, x, y, z, dir)	map[(int)(actorSize) - 1].stepup[(z)][(y)][(x)][(dir)]
 
 #define RT_STEPUP_PX(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 0))
 #define RT_STEPUP_NX(map, actorSize, x, y, z)		(RT_STEPUP(map, actorSize, x, y, z, 1))
@@ -83,8 +83,8 @@ MACROS
 #define RT_STEPUP_NX_PY(map, actorSize, x, y, z)	    (RT_STEPUP(map, actorSize, x, y, z, 6))
 #define RT_STEPUP_NX_NY(map, actorSize, x, y, z)	    (RT_STEPUP(map, actorSize, x, y, z, 5))
 
-#define RT_FLOOR(map, actorSize, x, y, z)			map[(actorSize) - 1].floor[(z)][(y)][(x)]
-#define RT_CEILING(map, actorSize, x, y, z)			map[(actorSize) - 1].ceil[(z)][(y)][(x)]
+#define RT_FLOOR(map, actorSize, x, y, z)			map[(int)(actorSize) - 1].floor[(z)][(y)][(x)]
+#define RT_CEILING(map, actorSize, x, y, z)			map[(int)(actorSize) - 1].ceil[(z)][(y)][(x)]
 #define RT_FILLED(map, actorSize, x, y, z)			(RT_CEILING(map, actorSize, x, y, z) - RT_FLOOR(map, actorSize, x, y, z) < PATHFINDING_MIN_OPENING)
 
 /* area - Used by Grid_* only */
@@ -109,9 +109,10 @@ MACROS
  * @brief SizedPosToVect locates the center of an actor based on size and position.
  */
 #define SizedPosToVec(p, actorSize, v) { \
-	assert(actorSize > 0); \
-	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + (UNIT_SIZE * actorSize)  / 2; \
-	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + (UNIT_SIZE * actorSize)  / 2; \
+	assert(actorSize > ACTOR_SIZE_INVALID); \
+	assert(actorSize <= ACTOR_MAX_SIZE); \
+	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + (UNIT_SIZE * (int)actorSize)  / 2; \
+	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + (UNIT_SIZE * (int)actorSize)  / 2; \
 	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2;  \
 }
 
