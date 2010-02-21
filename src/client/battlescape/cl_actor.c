@@ -361,6 +361,8 @@ void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const 
 {
 	character_t *chr;
 
+	assert(type != RES_REACTION);
+
 	if (!le || tus < 0)
 		return;
 
