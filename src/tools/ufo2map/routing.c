@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
+#include "../../game/q_shared.h"
 #include "../../common/tracing.h"
 #include "../../common/routing.h"
 
@@ -100,7 +101,6 @@ static void CheckConnectionsThread (unsigned int unitnum)
 	const int y = (unitnum / numDirs) % PATHFINDING_WIDTH;
 	const int x = (unitnum / numDirs / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
 	const int actorSize = unitnum / numDirs / PATHFINDING_WIDTH / PATHFINDING_WIDTH;
-
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
 	if (x > wpMaxs[0] - actorSize || y > wpMaxs[1] - actorSize

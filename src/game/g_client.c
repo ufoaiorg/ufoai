@@ -923,7 +923,7 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
  * @param actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const int actorSize)
+static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
 {
 	if (actorSize == ACTOR_SIZE_NORMAL) {
 		/* Find valid actor spawn fields for this player. */

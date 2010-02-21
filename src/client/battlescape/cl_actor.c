@@ -1265,7 +1265,7 @@ void CL_ActorMouseTrace (void)
 	pos3_t actor2x2[3];
 
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -1751,7 +1751,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	entity_t ent;
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	const actorSizeEnum_t fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -1976,7 +1976,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		int base; /* The floor relative to this cell */
 
 		/* Get size of selected actor */
-		const int fieldSize = selActor->fieldSize;
+		const actorSizeEnum_t fieldSize = selActor->fieldSize;
 		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 		const int TUhave = CL_ActorUsableTUs(selActor);
@@ -2073,7 +2073,7 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
 void CL_DisplayFloorArrows (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
@@ -2091,7 +2091,7 @@ void CL_DisplayFloorArrows (void)
 void CL_DisplayObstructionArrows (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
@@ -2108,7 +2108,7 @@ void CL_DisplayObstructionArrows (void)
 static void CL_DumpMoveMark_f (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	const byte crouchingState = selActor ? (LE_IsCrouched(selActor) ? 1 : 0) : 0;
@@ -2160,7 +2160,7 @@ static void CL_DumpTUs_f (void)
  * directly use the debugger on some vital pathfinding functions.
  * Will probably be removed for the release.
  */
-static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
+static void CL_DebugPathDisplay (actorSizeEnum_t actorSize, int x, int y, int z)
 {
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_FLOOR(clMap, actorSize, x, y, z),
@@ -2184,7 +2184,7 @@ static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
 
 static void CL_DebugPath_f (void)
 {
-	const int actorSize = 1;
+	const actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
 	const pos_t x = mousePos[0];
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];

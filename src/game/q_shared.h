@@ -412,7 +412,9 @@ typedef enum {
 /* NOTE: this only allows quadratic units */
 typedef enum {
 	ACTOR_SIZE_NORMAL = 1,
-	ACTOR_SIZE_2x2 = 2
+	ACTOR_SIZE_2x2 = 2,
+
+	ACTOR_SIZE_ENSURE_32BIT = 0x7FFFFFFF
 } actorSizeEnum_t;
 
 /** @brief Types of actor sounds being issued by CL_PlayActorSound(). */
@@ -480,7 +482,7 @@ typedef struct teamDef_s {
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefitions */
 
-	int size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit.
 								* @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
 								* @todo "hitbody" will not spawn blood in the future. */

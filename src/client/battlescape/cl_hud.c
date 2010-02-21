@@ -1006,7 +1006,7 @@ static void HUD_MapDebugCursor (const le_t *le)
 {
 	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
 		int dv;
-		const int fieldSize = le /**< Get size of selected actor or fall back to 1x1. */
+		const actorSizeEnum_t fieldSize = le /**< Get size of selected actor or fall back to 1x1. */
 			? le->fieldSize
 			: ACTOR_SIZE_NORMAL;
 

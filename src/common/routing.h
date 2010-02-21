@@ -131,9 +131,9 @@ GAME RELATED TRACING
 */
 
 
-int RT_CheckCell(routing_t * map, const int actorSize, const int x, const int y, const int z);
-void RT_UpdateConnectionColumn(routing_t * map, const int actorSize, const int x, const int y, const int dir);
-qboolean RT_AllCellsBelowAreFilled(const routing_t * map, const int actorSize, const pos3_t pos);
+int RT_CheckCell(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z);
+void RT_UpdateConnectionColumn(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int dir);
+qboolean RT_AllCellsBelowAreFilled(const routing_t * map, const actorSizeEnum_t actorSize, const pos3_t pos);
 void RT_GetMapSize(vec3_t map_min, vec3_t map_max);
 
 
@@ -143,6 +143,6 @@ DEBUGGING CODE
 ==========================================================
 */
 
-void RT_DumpMap(const routing_t *map, int size, int lx, int ly, int lz, int hx, int hy, int hz);
+void RT_DumpMap(const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz);
 void RT_DumpWholeMap(const routing_t *map);
 void RT_WriteCSVFiles(const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);

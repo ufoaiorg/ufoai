@@ -676,7 +676,7 @@ struct edict_s {
 	int sounds;		/**< type of sounds to play - e.g. doors */
 	int dmg;		/**< damage done by entity */
 	/** @sa memcpy in Grid_CheckForbidden */
-	int fieldSize;	/* ACTOR_SIZE_* */
+	actorSizeEnum_t fieldSize;	/* ACTOR_SIZE_* */
 	qboolean hiding;		/**< for ai actors - when they try to hide after the performed their action */
 
 	/** function to call when triggered - this function should only return true when there is

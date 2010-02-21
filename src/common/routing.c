@@ -77,7 +77,7 @@ typedef struct place_s {
 	qboolean usable;/**< does an actor fit in here ? */
 } place_t;
 
-static inline void RT_PlaceInit (routing_t *map, const int actorSize, place_t *p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (routing_t *map, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
 {
 	const int relCeiling = RT_CEILING(map, actorSize, x, y, z);
 	p->cell[0] = x;
@@ -143,7 +143,7 @@ typedef struct opening_s {
  * @param[in] hy  The high end of the y range updated
  * @param[in] hz  The high end of the z range updated
  */
-void RT_DumpMap (const routing_t *map, int actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
@@ -317,7 +317,7 @@ NEW MAP TRACING FUNCTIONS
  * @return true if solid
  * @sa CL_AddTargetingBox
  */
-qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, const pos3_t pos)
+qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -347,7 +347,7 @@ qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, 
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y, const int z)
+int RT_CheckCell (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z)
 {
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -372,6 +372,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	int fz, cz; /* Floor and ceiling Z cell coordinates */
 	trace_t tr;
 
+	assert(actorSize == ACTOR_SIZE_2x2 || actorSize == ACTOR_SIZE_NORMAL);
 	assert(map);
 	/* x and y cannot exceed PATHFINDING_WIDTH - actorSize */
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
@@ -380,7 +381,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 
 	/* calculate tracing coordinates */
 	VectorSet(pos, x, y, z);
-	SizedPosToVec(pos, actorSize, end); /** end is now at the center of the cells the actor occupies. */
+	SizedPosToVec(pos, actorSize, end); /* end is now at the center of the cells the actor occupies. */
 
 	/* prepare fall down check */
 	VectorCopy(end, start);
@@ -390,7 +391,6 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
 	initial = start[2] + UNIT_HEIGHT / 2; /* This is the top-most starting point in this cell. */
 	start[2] += UNIT_HEIGHT / 2 - QUANT; /* This one QUANT unit below initial. */
 	end[2] = -UNIT_HEIGHT * 2; /* To the bottom of the model! (Plus some for good measure) */
-
 
 	/*
 	 * Trace for a floor.  Steps:
@@ -595,7 +595,7 @@ int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y
  * @param[in] openingBase Absolute height in QUANT units of the bottom of the opening.
  * @param[in] stepup Required stepup to travel in this direction.
  */
-static int RT_FillPassageData (routing_t * map, const int actorSize, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
+static int RT_FillPassageData (routing_t * map, const actorSizeEnum_t actorSize, const int dir, const int  x, const int y, const int z, const int openingSize, const int openingBase, const int stepup)
 {
 	const int openingTop = openingBase + openingSize;
 	int fz, cz; /**< Floor and ceiling Z cell coordinates */
@@ -668,7 +668,7 @@ static int RT_FillPassageData (routing_t * map, const int actorSize, const int d
  * @param[in] hi The upper height ABOVE THE FLOOR of the bounding box.
  * @param[in] lo The lower height ABOVE THE FLOOR of the bounding box.
  */
-static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int actorSize, int hi, int lo)
+static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, actorSizeEnum_t actorSize, int hi, int lo)
 {
 	box_t box; /**< Tracing box extents */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -691,7 +691,7 @@ static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int act
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const int actorSize, const float frac, const int startingHeight)
+static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */	/**< Tracing box extents */
 	trace_t tr;
@@ -724,7 +724,7 @@ static int RT_FindOpeningFloorFrac (const vec3_t start, const vec3_t end, const 
  * @param[in] startingHeight The starting height for this upward trace.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, const int actorSize, const float frac, const int startingHeight)
+static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const float frac, const int startingHeight)
 {
 	vec3_t mstart, mend;	/**< Midpoint line to trace across */
 	trace_t tr;
@@ -756,7 +756,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
  * @param[in] floorLimit The lowest limit of the found floor.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloor (const vec3_t start, const vec3_t end, const int actorSize, const int startingHeight, const int floorLimit)
+static int RT_FindOpeningFloor (const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int floorLimit)
 {
 	/* Look for additional space below init_bottom, down to lowest_bottom. */
 	int midfloor, midfloor2;
@@ -794,7 +794,7 @@ static int RT_FindOpeningFloor (const vec3_t start, const vec3_t end, const int 
  * @param[in] ceilLimit The highest the ceiling may be.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const int actorSize, const int startingHeight, const int ceilLimit)
+static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int ceilLimit)
 {
 	int midceil, midceil2;
 
@@ -822,7 +822,7 @@ static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const in
 }
 
 
-static int RT_CalcNewZ (routing_t * map, const int actorSize, const int ax, const int ay, const int top, const int hi)
+static int RT_CalcNewZ (routing_t * map, const actorSizeEnum_t actorSize, const int ax, const int ay, const int top, const int hi)
 {
 	int temp_z, adj_lo;
 
@@ -865,7 +865,7 @@ static int RT_CalcNewZ (routing_t * map, const int actorSize, const int ax, cons
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (routing_t * map, const int actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val)
+static int RT_TraceOpening (routing_t * map, const actorSizeEnum_t actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val)
 {
 	trace_t tr;
 	int temp_z;
@@ -908,7 +908,7 @@ static int RT_TraceOpening (routing_t * map, const int actorSize, const vec3_t s
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
+static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -1011,7 +1011,7 @@ static int RT_FindOpening (routing_t * map, const int actorSize, place_t* from, 
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
+static int RT_MicroTrace (routing_t * map, const actorSizeEnum_t actorSize, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1206,7 +1206,7 @@ static int RT_MicroTrace (routing_t * map, const int actorSize, place_t* from, c
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* from, place_t* to, opening_t* opening)
+static int RT_TraceOnePassage (routing_t * map, const actorSizeEnum_t actorSize, place_t* from, place_t* to, opening_t* opening)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1292,7 +1292,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actorSize, place_t* fr
  * @param[in] ay Ending y coordinate
  * @param[out] opening descriptor of the opening found, if any
  */
-static void RT_TracePassage (routing_t * map, const int actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
+static void RT_TracePassage (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening)
 {
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
@@ -1375,7 +1375,7 @@ static void RT_TracePassage (routing_t * map, const int actorSize, const int x, 
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
  */
-static int RT_UpdateConnection (routing_t * map, const int actorSize, const int x, const int y, const int ax, const int ay, const int z, const int dir)
+static int RT_UpdateConnection (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int ax, const int ay, const int z, const int dir)
 {
 	const int ceiling = RT_CEILING(map, actorSize, x, y, z);
 	const int adjCeiling = RT_CEILING(map, actorSize, ax, ay, z);
@@ -1466,7 +1466,7 @@ static int RT_UpdateConnection (routing_t * map, const int actorSize, const int 
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  */
-void RT_UpdateConnectionColumn (routing_t * map, const int actorSize, const int x, const int y, const int dir)
+void RT_UpdateConnectionColumn (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int dir)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */
