@@ -331,6 +331,8 @@ void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *
 	const gameTypeList_t *list = GAME_GetCurrentType();
 	if (list)
 		list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
+	else
+		CL_Drop();
 }
 
 /**
@@ -556,13 +558,12 @@ void GAME_Drop (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	if (list) {
-		if (!list->drop) {
-			GAME_SetMode(GAME_NONE);
-			MN_InitStack("main", NULL, qfalse, qtrue);
-		} else {
-			list->drop();
-		}
+	if (list && list->drop) {
+		list->drop();
+	} else {
+		SV_Shutdown("Drop", qfalse);
+		GAME_SetMode(GAME_NONE);
+		MN_InitStack("main", NULL, qfalse, qtrue);
 	}
 }
 
