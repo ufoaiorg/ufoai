@@ -1265,6 +1265,20 @@ void HUD_Update (void)
 	if (cls.state != ca_active)
 		return;
 
+	/* worldlevel */
+	if (cl_worldlevel->modified) {
+		int i;
+		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+			int status = 0;
+			if (i == cl_worldlevel->integer)
+				status = 2;
+			else if (i < cl.mapMaxLevel)
+				status = 1;
+			MN_ExecuteConfunc("updateLevelStatus %i %i", i, status);
+		}
+		cl_worldlevel->modified = qfalse;
+	}
+
 	/* set Cvars for all actors */
 	HUD_UpdateAllActors();
 

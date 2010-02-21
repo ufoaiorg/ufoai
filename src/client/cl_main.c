@@ -977,28 +977,6 @@ static void CL_SendCommand (void)
 	}
 }
 
-static void CL_CvarCheck (void)
-{
-	/** @todo move into hud code */
-	/* worldlevel */
-	if (cl_worldlevel->modified) {
-		int i;
-		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
-			int status = 0;
-			if (i == cl_worldlevel->integer)
-				status = 2;
-			else if (i < cl.mapMaxLevel)
-				status = 1;
-			MN_ExecuteConfunc("updateLevelStatus %i %i", i, status);
-		}
-		cl_worldlevel->modified = qfalse;
-	}
-
-	/* language */
-	if (s_language->modified)
-		CL_LanguageTryToSet(s_language->string);
-}
-
 /**
  * @brief Sets the client state
  */
@@ -1099,7 +1077,9 @@ void CL_Frame (int now, void *data)
  */
 void CL_SlowFrame (int now, void *data)
 {
-	CL_CvarCheck();
+	/* language */
+	if (s_language->modified)
+		CL_LanguageTryToSet(s_language->string);
 
 	Irc_Logic_Frame();
 
