@@ -461,7 +461,15 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(rank->name));
 		Cvar_Set("mn_chrrank", buf);
 		Cvar_Set("mn_chrrank_img", rank->image);
+	} else {
+		Cvar_Set("mn_chrrank_img", "");
+		Cvar_Set("mn_chrrank", "");
 	}
+
+	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
+	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ENEMIES]));
+	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
+	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 }
 
 void GAME_CP_DisplayItemInfo (menuNode_t *node, const char *string)
