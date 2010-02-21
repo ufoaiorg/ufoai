@@ -131,8 +131,7 @@ void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const obj
 
 	if (!G_ActorHasWorkingFireModeSet(ent)) {
 		/* Disable reaction fire if no valid firemode was found. */
-		ent->state &= ~STATE_REACTION;
-		G_SendState(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), ent);
+		G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, ~STATE_REACTION, qfalse);
 		return;
 	}
 
