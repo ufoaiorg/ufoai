@@ -77,6 +77,7 @@ static const value_t localEntityValues[] = {
 	{"anim", V_STRING, offsetof(localEntityParse_t, anim), 0},
 	{"particle", V_STRING, offsetof(localEntityParse_t, particle), 0},
 	{"noise", V_STRING, offsetof(localEntityParse_t, noise), 0},
+	{"tag", V_STRING, offsetof(localEntityParse_t, tag), 0},
 	{"target", V_STRING, offsetof(localEntityParse_t, target), 0},
 	{"targetname", V_STRING, offsetof(localEntityParse_t, targetname), 0},
 
