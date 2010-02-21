@@ -155,6 +155,7 @@ void V_ParseEntitystring (void)
 		entData.maxLevel = maxLevel;
 		entData.entStringPos = es;
 		entData.entnum = entnum;
+		entData.maxMultiplayerTeams = TEAM_MAX_HUMAN;
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -187,13 +188,14 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	/* maximum level */
 	cl.mapMaxLevel = entData->maxLevel;
 
-	if (GAME_IsMultiplayer() && (cl_teamnum->integer > entData->maxMultiplayerTeams
-	 || cl_teamnum->integer <= TEAM_CIVILIAN)) {
-		Com_Printf("The selected team is not usable. "
-			"The map doesn't support %i teams but only %i teams\n",
-			cl_teamnum->integer, entData->maxMultiplayerTeams);
-		Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
-		Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
+	if (GAME_IsMultiplayer()) {
+		if (cl_teamnum->integer > entData->maxMultiplayerTeams || cl_teamnum->integer <= TEAM_CIVILIAN) {
+			Com_Printf("The selected team is not usable. "
+				"The map doesn't support %i teams but only %i teams\n",
+				cl_teamnum->integer, entData->maxMultiplayerTeams);
+			Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
+			Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
+		}
 	}
 }
 

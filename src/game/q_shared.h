@@ -181,6 +181,7 @@ void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 
 #define TEAM_CIVILIAN   0
 #define TEAM_PHALANX    1
 #define TEAM_ALIEN      7
+#define TEAM_MAX_HUMAN	TEAM_ALIEN - 1
 
 /*
 ==========================================================
