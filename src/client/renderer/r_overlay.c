@@ -49,11 +49,10 @@ static byte r_radarPic[RADAR_WIDTH * RADAR_HEIGHT];
 /** this is the data that is used with r_radarTexture */
 static byte r_radarSourcePic[RADAR_WIDTH * RADAR_HEIGHT];
 
-byte* R_GetXVIMap (int *width, int *height)
+void R_GetXVIMapDimensions (int *width, int *height)
 {
 	*width = XVI_WIDTH;
 	*height = XVI_HEIGHT;
-	return r_xviAlpha;
 }
 
 static void R_UploadAlpha (const image_t *image, const byte *alphaData)
@@ -68,7 +67,7 @@ static void R_UploadAlpha (const image_t *image, const byte *alphaData)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-static inline void R_SetXVILevel (int x, int y, int value)
+void R_SetXVILevel (int x, int y, int value)
 {
 	assert(x >= 0);
 	assert(x < XVI_WIDTH);

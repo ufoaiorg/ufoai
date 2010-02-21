@@ -95,8 +95,6 @@ void CP_UpdateNationXVIInfection (void)
 	int width;
 	/* height in pixel of the XVI overlay */
 	int height;
-	/* pointer to XVI overlay */
-	const byte *out = R_GetXVIMap(&width, &height);
 	const float heightPerDegree = height / 180.0f;
 	const float widthPerDegree = width / 360.0f;
 	/* current position (in latitude / longitude) */
@@ -117,8 +115,7 @@ void CP_UpdateNationXVIInfection (void)
 	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
 		xviInfection[nationIdx] = 0;
 
-	if (!out)
-		return;
+	R_GetXVIMapDimensions(&width, &height);
 
 	for (y = 0; y < height; y++) {
 		int x;
@@ -136,7 +133,7 @@ void CP_UpdateNationXVIInfection (void)
 			const byte* nationColor;
 			currentPos[0] = 180.0f - x / widthPerDegree;
 			nationColor = MAP_GetColor(currentPos, MAPTYPE_NATIONS);
-			if (nationColor != previousNationColor) {
+			if (!VectorCompare(nationColor, previousNationColor)) {
 				previousNationColor = nationColor;
 				nation = MAP_GetNation(currentPos);
 			}
@@ -232,26 +229,23 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 	int width;
 	int height;
 	mxml_node_t *n;
-	int defaultval = 0; /* that value should be the value, which is the most used one in the array */
-	byte *out = R_GetXVIMap(&width, &height);
-	if (!out)
-		return qtrue;
 
-	/* ok, do the saving... */
+	R_GetXVIMapDimensions(&width, &height);
+
 	n = mxml_AddNode(p, SAVE_XVI_XVI);
 	mxml_AddInt(n, SAVE_XVI_WIDTH, width);
 	mxml_AddInt(n, SAVE_XVI_HEIGHT, height);
-	mxml_AddInt(n, SAVE_XVI_DEFAULT, defaultval);
 
 	for (y = 0; y < height; y++) {
 		int x;
 		for (x = 0; x < width; x++) {
+			const int xviLevel = R_GetXVILevel(x, y);
 			/* That saves many bytes in the savegame */
-			if (out[y * width + x] != defaultval) {
+			if (xviLevel > 0) {
 				mxml_node_t *s = mxml_AddNode(n, SAVE_XVI_ENTRY);
 				mxml_AddInt(s, SAVE_XVI_Y, x);
 				mxml_AddInt(s, SAVE_XVI_Y, y);
-				mxml_AddInt(s, SAVE_XVI_XV, out[y * width + x]);
+				mxml_AddInt(s, SAVE_XVI_XV, xviLevel);
 			}
 		}
 	}
@@ -269,7 +263,6 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	byte *out;
 	int width, height;
 	mxml_node_t *s;
-	int defaultval;
 	mxml_node_t *n = mxml_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
@@ -279,19 +272,16 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 
 	width = mxml_GetInt(n, SAVE_XVI_WIDTH, 0);
 	height = mxml_GetInt(n, SAVE_XVI_HEIGHT, 0);
-	defaultval = mxml_GetInt(n, SAVE_XVI_DEFAULT, 0);
 
 	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
 	if (!out)
 		Com_Error(ERR_DROP, "TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
 
-	memset(out, defaultval, sizeof(out)); /*setting the whole array to the defaultval. That saves much memory in saving */
-
 	for (s = mxml_GetNode(n, SAVE_XVI_ENTRY); s; s = mxml_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
 		const int x = mxml_GetInt(s, SAVE_XVI_X, 0);
 		const int y = mxml_GetInt(s, SAVE_XVI_Y, 0);
 		if (x >= 0 && x < width && y >= 0 && y <= height)
-			out[y * width + x] = mxml_GetInt(s, SAVE_XVI_XV, 0);
+			R_SetXVILevel(x, y,  mxml_GetInt(s, SAVE_XVI_XV, 0));
 	}
 
 	R_InitializeXVIOverlay(out);
