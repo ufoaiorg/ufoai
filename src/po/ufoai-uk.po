@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-06 01:18+0100\n"
+"POT-Creation-Date: 2010-02-22 15:10+0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
@@ -13,8 +13,8 @@ msgstr ""
 "X-Poedit-Country: UKRAINE\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../base/maps/africa.ump:225
-#: ../base/maps/africa.ump:246
+#: ../base/maps/africa.ump:231
+#: ../base/maps/africa.ump:250
 msgid "Africa"
 msgstr "Африка"
 
@@ -70,10 +70,12 @@ msgstr "Орлине гніздо"
 
 # гай, діброва
 #: ../base/maps/forest.ump:404
+#: ../base/maps/forest.ump:435
 msgid "Little forest"
 msgstr "Невеличкий ліс"
 
-#: ../base/maps/forest.ump:435
+#: ../base/maps/forest.ump:466
+#: ../base/maps/forest.ump:497
 msgid "Little bungalo in forest"
 msgstr "Садиба в лісі"
 
@@ -146,14 +148,15 @@ msgid "Oriental small"
 msgstr "Східний малий"
 
 #: ../base/maps/oriental.ump:291
+#: ../base/maps/oriental.ump:314
 msgid "Oriental medium"
 msgstr "Східний середній"
 
-#: ../base/maps/oriental.ump:314
+#: ../base/maps/oriental.ump:337
 msgid "Oriental big"
 msgstr "Східний великий"
 
-#: ../base/maps/spedition.ump:63
+#: ../base/maps/spedition.ump:62
 msgid "Spedition"
 msgstr "Доставка"
 
@@ -167,22 +170,25 @@ msgid "Transport"
 msgstr "Транспорт"
 
 #: ../base/maps/tropic.ump:359
+#: ../base/maps/tropic.ump:391
 msgid "Tropical river"
 msgstr "Тропічна ріка"
 
-#: ../base/maps/tropic.ump:391
+#: ../base/maps/tropic.ump:423
+#: ../base/maps/tropic.ump:448
 msgid "Tropical drug"
 msgstr "Тропічні наркотики"
 
-#: ../base/maps/tropic.ump:416
+#: ../base/maps/tropic.ump:473
 msgid "Tropical UFO"
 msgstr "Тропічний НЛО"
 
 #: ../base/maps/ufocrash.ump:352
 #: ../base/maps/ufocrash.ump:369
 #: ../base/maps/ufocrash.ump:386
-#: ../base/maps/ufocrash.ump:404
-#: client/campaign/cp_missions.c:442
+#: ../base/maps/ufocrash.ump:403
+#: ../base/maps/ufocrash.ump:420
+#: client/campaign/cp_missions.c:456
 msgid "Crashed UFO"
 msgstr "Розбитий НЛО"
 
@@ -592,7 +598,7 @@ msgid "Workshop"
 msgstr "Майстерня"
 
 #: ../base/ufos/basemanagement.ufo:251
-#: ../base/ufos/ui/_hud.ufo:93
+#: ../base/ufos/ui/_hud.ufo:226
 msgid "Radar"
 msgstr "Радар"
 
@@ -629,7 +635,7 @@ msgid "veryhard_campaign_txt"
 msgstr ""
 "Це екстремально важкий варіант Стандартної Кампанії. В цьому сценарії все настроєно проти Вас. Ви отримаєте лише кілька найманців, а уряди країн будуть виключно вимогливі. Прибульці не подарують вам жодного шансу.\n"
 "\n"
-"Цей пункт репрезентує Дуже Важкий рівень складності, тому рекомендується для тих, хто подужав Важкий рівень і йому цього виявилося мало."
+"Цей пункт репрезентує Дуже Важкий рівень складності, тому рекомендується для тих, хто подужав Важкий рівень, але йому цього виявилося замало."
 
 #: ../base/ufos/campaign.ufo:29
 msgid "Hard Campaign"
@@ -638,7 +644,7 @@ msgstr "Важка кампанія"
 #: ../base/ufos/campaign.ufo:30
 msgid "hard_campaign_txt"
 msgstr ""
-"Це більш складний варіант Стандартної Кампанії. Ви отримаєте менше військових найманців, техпрацівників та вчених, уряди країн буде важче задовільнити, дослідження будуть проходити повільніше та вимагати більше ресурсів. Прибульці будуть більш небезпечні.\n"
+"Це більш складний варіант Стандартної Кампанії. Ви отримаєте менше військових найманців, робітників та вчених, уряди країн буде важче задовільнити, дослідження будуть проходити повільніше та вимагати більше ресурсів. Прибульці будуть більш небезпечні.\n"
 "\n"
 "Цей пункт репрезентує Важкий рівень складності, то ж рекомендується для досвідчених гравців."
 
@@ -651,7 +657,7 @@ msgid "standard_campaign_txt"
 msgstr ""
 "Це сценарій військового протистояння іншопланетному Вторгненню для одного гравця. Ви отримаєте командування над проектом PHALANX, що протистоїть іншопланетній загрозі від імені всієї Землі, і зможете грати в динамічну гру з великою кількістю різноманітних подій та всеохоплюючим сюжетом.\n"
 "\n"
-"Ця кампанія доступна з кількома рівнями складності. Цей пункт репрезентує стандартний рівень складності, рекомендований для нових гравців,що хочуть прийняти виклик."
+"Ця кампанія доступна з кількома рівнями складності. Цей пункт репрезентує Стандартний рівень складності, рекомендований для нових гравців,що хочуть прийняти виклик."
 
 #: ../base/ufos/campaign.ufo:107
 msgid "Easy Campaign"
@@ -671,7 +677,7 @@ msgstr "Дуже легка кампанія"
 #: ../base/ufos/campaign.ufo:137
 msgid "veryeasy_campaign_txt"
 msgstr ""
-"Це зовсім спрощена версія Стандартної Кампанії.Ваші сили будуть більш потужніші, а прибульці - відчутно вразливіші, тому ви зможете закінчити кампанію з мінімальними втратами.\n"
+"Це зовсім спрощена версія Стандартної Кампанії. Ваші сили будуть більш потужніші, а прибульці - відчутно вразливіші, тому ви зможете закінчити кампанію з мінімальними втратами.\n"
 "\n"
 "Ця каманія репрезентує Дуже Легкий рівень складності, тому підійде для тих гравців-початківців, хто тільки знайомиться з UFO: AI."
 
@@ -2675,6 +2681,8 @@ msgstr "Ген.Сек. Махоуф Серра, OOH, Нью-Йорк"
 #: ../base/ufos/research.ufo:5064
 #: ../base/ufos/research.ufo:5096
 #: ../base/ufos/research.ufo:5103
+#: ../base/ufos/research.ufo:5131
+#: ../base/ufos/research.ufo:5160
 msgid "mail_to_base_commander"
 msgstr "Командувачу PHALANX, Атлантична оперативна група"
 
@@ -2888,7 +2896,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Абель С. Говард, Голова ЦПО, PHALANX,  Атлантична оперативна група"
+msgstr "Абель С. Говард, Голова ЦПО, PHALANX, Атлантична оперативна група"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2959,9 +2967,8 @@ msgid "Alien Base Discovered -- %s"
 msgstr "Виявлено базу прибульців -- %s"
 
 #: ../base/ufos/events.ufo:201
-#, fuzzy
 msgid "mail_alien_base_discovered"
-msgstr "Командоре, наші оперативники викрили місцезнаходження значних сил прибульців на Землі. Вони знаходяться на території %s. Це становить серйозну загрозу для PHALANX і для людства вцілому, we must take it out ASAP."
+msgstr "Командоре, наші оперативники викрили місцезнаходження значної споруди прибульців на Землі. Вона знаходяться на території %s. Це становить серйозну загрозу для PHALANX і для людства вцілому, ми повинні захопити її якомога швидше."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2986,6 +2993,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:601
 #: ../base/ufos/research.ufo:5054
 #: ../base/ufos/research.ufo:5063
+#: ../base/ufos/research.ufo:5130
+#: ../base/ufos/research.ufo:5159
 msgid "mail_from_col_falkland"
 msgstr "Плк. Інгрід Фолкленд, Управління Розвідкою, PHALANX, Атлантична оперативна група"
 
@@ -3068,14 +3077,11 @@ msgstr ""
 #: ../base/ufos/fonts.ufo:41
 #: ../base/ufos/fonts.ufo:48
 #: ../base/ufos/fonts.ufo:54
-msgid "media/DejaVuSans.ttf"
-msgstr "media/DejaVuSans.ttf"
-
 #: ../base/ufos/fonts.ufo:60
 #: ../base/ufos/fonts.ufo:66
 #: ../base/ufos/fonts.ufo:73
-msgid "media/FreeSans.ttf"
-msgstr "media/FreeSans.ttf"
+msgid "media/DejaVuSans.ttf"
+msgstr "media/DejaVuSans.ttf"
 
 #: ../base/ufos/gametypes.ufo:4
 msgid "1on1"
@@ -3161,86 +3167,88 @@ msgid "Polish"
 msgstr "Польська"
 
 #: ../base/ufos/language.ufo:64
+#: ../base/ufos/language.ufo:106
 msgid "Spanish"
 msgstr "Іспанська"
 
-#: ../base/ufos/language.ufo:108
+#: ../base/ufos/language.ufo:114
 msgid "Czech"
 msgstr "Чеська"
 
-#: ../base/ufos/language.ufo:118
+#: ../base/ufos/language.ufo:124
 msgid "Danish"
 msgstr "Данська"
 
-#: ../base/ufos/language.ufo:128
+#: ../base/ufos/language.ufo:134
 msgid "Estonian"
 msgstr "Естонська"
 
-#: ../base/ufos/language.ufo:138
+#: ../base/ufos/language.ufo:144
 msgid "Finnish"
 msgstr "Фінська"
 
-#: ../base/ufos/language.ufo:148
+#: ../base/ufos/language.ufo:154
 msgid "French"
 msgstr "Французька"
 
-#: ../base/ufos/language.ufo:166
+#: ../base/ufos/language.ufo:172
 msgid "Greek"
 msgstr "Грецька"
 
-#: ../base/ufos/language.ufo:176
+#: ../base/ufos/language.ufo:182
 msgid "Hungarian"
 msgstr "Мадярська"
 
-#: ../base/ufos/language.ufo:186
+#: ../base/ufos/language.ufo:192
 msgid "Italien"
 msgstr "Італійська"
 
-#: ../base/ufos/language.ufo:198
+#: ../base/ufos/language.ufo:204
 msgid "Korean"
 msgstr "Корейська"
 
-#: ../base/ufos/language.ufo:208
+#: ../base/ufos/language.ufo:214
 msgid "Dutch"
 msgstr "Голандська"
 
-#: ../base/ufos/language.ufo:218
+#: ../base/ufos/language.ufo:224
+#: ../base/ufos/language.ufo:232
 msgid "Portuguese"
 msgstr "Португальська"
 
-#: ../base/ufos/language.ufo:230
+#: ../base/ufos/language.ufo:242
 msgid "Russian"
 msgstr "Російська"
 
-#: ../base/ufos/language.ufo:242
+#: ../base/ufos/language.ufo:254
 msgid "Slovenian"
 msgstr "Словенська"
 
-#: ../base/ufos/language.ufo:252
+#: ../base/ufos/language.ufo:264
 msgid "Swedish"
 msgstr "Швецька"
 
-#: ../base/ufos/language.ufo:264
+#: ../base/ufos/language.ufo:276
 msgid "Thai"
 msgstr "Тайська"
 
-#: ../base/ufos/language.ufo:274
+#: ../base/ufos/language.ufo:286
 msgid "Ukrainian"
 msgstr "Українська"
 
-#: ../base/ufos/language.ufo:284
+#: ../base/ufos/language.ufo:296
 msgid "Japanese"
 msgstr "Японська"
 
-#: ../base/ufos/language.ufo:292
+#: ../base/ufos/language.ufo:304
 msgid "Chinese"
 msgstr "Китайська"
 
-#: ../base/ufos/language.ufo:300
+#: ../base/ufos/language.ufo:312
 msgid "Bulgarian"
 msgstr "Болгарська"
 
-#: ../base/ufos/language.ufo:308
+#: ../base/ufos/language.ufo:320
 msgid "No language"
 msgstr "Безіменна"
 
@@ -3251,239 +3259,250 @@ msgstr ""
 
 #: ../base/ufos/maps.ufo:132
 #: ../base/ufos/maps.ufo:171
-#: ../base/ufos/maps.ufo:211
+#: ../base/ufos/maps.ufo:250
 msgid "A suburban district of an oriental area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:254
-#: ../base/ufos/maps.ufo:296
-#: ../base/ufos/maps.ufo:335
+#: ../base/ufos/maps.ufo:211
+msgid "Crashed UFO in oriental suburban district."
+msgstr ""
+
+#: ../base/ufos/maps.ufo:292
+#: ../base/ufos/maps.ufo:334
+#: ../base/ufos/maps.ufo:373
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:384
-#: ../base/ufos/maps.ufo:465
-#: ../base/ufos/maps.ufo:506
+#: ../base/ufos/maps.ufo:422
+#: ../base/ufos/maps.ufo:503
+#: ../base/ufos/maps.ufo:544
 msgid "An industrial area in a cold region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:426
+#: ../base/ufos/maps.ufo:464
 msgid "An underpopulated area in a cold region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:545
+#: ../base/ufos/maps.ufo:583
 msgid "An industrial compound."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:600
+#: ../base/ufos/maps.ufo:638
 msgid "Cemetery terror mission."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:651
+#: ../base/ufos/maps.ufo:689
+#: ../base/ufos/maps.ufo:729
 msgid "A river runs through this piece of jungle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:693
-#: ../base/ufos/maps.ufo:736
+#: ../base/ufos/maps.ufo:770
+#: ../base/ufos/maps.ufo:811
+#: ../base/ufos/maps.ufo:851
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:782
-#: ../base/ufos/maps.ufo:821
-#: ../base/ufos/maps.ufo:862
-#: ../base/ufos/maps.ufo:902
+#: ../base/ufos/maps.ufo:897
+#: ../base/ufos/maps.ufo:936
+#: ../base/ufos/maps.ufo:977
+#: ../base/ufos/maps.ufo:1017
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:941
-#: ../base/ufos/maps.ufo:983
+#: ../base/ufos/maps.ufo:1056
+#: ../base/ufos/maps.ufo:1137
+#: ../base/ufos/maps.ufo:1177
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1025
-#: ../base/ufos/maps.ufo:1067
+#: ../base/ufos/maps.ufo:1097
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr ""
+
+#: ../base/ufos/maps.ufo:1217
+#: ../base/ufos/maps.ufo:1259
 msgid "Some houses in desert"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1108
+#: ../base/ufos/maps.ufo:1300
 msgid "An excavation site that has fallen under alien attack."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1155
+#: ../base/ufos/maps.ufo:1347
 msgid "An estate owned by rich and influential people."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1199
+#: ../base/ufos/maps.ufo:1391
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1245
+#: ../base/ufos/maps.ufo:1437
 msgid "A small office in a mountainous region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1293
+#: ../base/ufos/maps.ufo:1485
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1343
+#: ../base/ufos/maps.ufo:1535
 msgid "An old mine."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1391
+#: ../base/ufos/maps.ufo:1583
 msgid "An industrial area, used for loading and unloading goods."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1437
+#: ../base/ufos/maps.ufo:1629
 msgid "A bunker used in a previous conflict."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1483
+#: ../base/ufos/maps.ufo:1675
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1527
-#: ../base/ufos/maps.ufo:1577
-#: ../base/ufos/maps.ufo:1627
+#: ../base/ufos/maps.ufo:1719
+#: ../base/ufos/maps.ufo:1769
+#: ../base/ufos/maps.ufo:1819
 msgid "A classic eastern suburban area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1676
+#: ../base/ufos/maps.ufo:1868
 msgid "A small industrial area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1722
+#: ../base/ufos/maps.ufo:1914
 msgid "A stadium used for various recreational events."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1771
+#: ../base/ufos/maps.ufo:1963
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1829
+#: ../base/ufos/maps.ufo:2021
 msgid "A small estate in the mountains"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1878
+#: ../base/ufos/maps.ufo:2070
 msgid "A crashed Scout UFO"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1913
+#: ../base/ufos/maps.ufo:2105
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1960
+#: ../base/ufos/maps.ufo:2152
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2008
+#: ../base/ufos/maps.ufo:2200
 msgid "A rather old-fashioned suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2057
-#: ../base/ufos/maps.ufo:2104
+#: ../base/ufos/maps.ufo:2249
+#: ../base/ufos/maps.ufo:2296
 msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2152
+#: ../base/ufos/maps.ufo:2344
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2201
-#: ../base/ufos/maps.ufo:2245
+#: ../base/ufos/maps.ufo:2393
+#: ../base/ufos/maps.ufo:2437
 msgid "An urban district in an oriental region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2289
+#: ../base/ufos/maps.ufo:2481
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2336
+#: ../base/ufos/maps.ufo:2528
 msgid "A subway station in a suburban part of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2382
+#: ../base/ufos/maps.ufo:2574
 msgid "An office complex in the centre of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2430
+#: ../base/ufos/maps.ufo:2622
 msgid "A suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2475
+#: ../base/ufos/maps.ufo:2667
 msgid "A military convoy has caught the eye of the aliens."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2522
-#: ../base/ufos/maps.ufo:2568
+#: ../base/ufos/maps.ufo:2714
+#: ../base/ufos/maps.ufo:2760
 msgid "A small UFO has crashed in this mining region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2617
+#: ../base/ufos/maps.ufo:2810
 msgid "An office complex under construction."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2664
+#: ../base/ufos/maps.ufo:2857
 msgid "A local harbour."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2709
+#: ../base/ufos/maps.ufo:2902
 msgid "An office complex on the outskirts of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2754
+#: ../base/ufos/maps.ufo:2947
 msgid "A luxurious vacation resort."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2811
+#: ../base/ufos/maps.ufo:3004
 msgid "A suburb that has been visited by UFO."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2863
+#: ../base/ufos/maps.ufo:3056
 msgid "A suburb that has received a visit from a Harvester."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2915
+#: ../base/ufos/maps.ufo:3108
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2961
-#: ../base/ufos/maps.ufo:2995
+#: ../base/ufos/maps.ufo:3154
+#: ../base/ufos/maps.ufo:3188
 msgid "A small settlement in winter."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3034
+#: ../base/ufos/maps.ufo:3227
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3082
+#: ../base/ufos/maps.ufo:3275
 msgid "A Bomber has landed in the middle of a city."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3135
+#: ../base/ufos/maps.ufo:3328
 msgid "A place where people come to relax and mingle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3183
+#: ../base/ufos/maps.ufo:3376
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3231
+#: ../base/ufos/maps.ufo:3424
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3270
+#: ../base/ufos/maps.ufo:3463
 msgid "Wilderness terror mission."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3316
+#: ../base/ufos/maps.ufo:3509
 msgid "UFO Crashsite."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3347
+#: ../base/ufos/maps.ufo:3540
 msgid "An alien base."
 msgstr "База прибульців."
 
-#: ../base/ufos/maps.ufo:3362
+#: ../base/ufos/maps.ufo:3555
 msgid "Base is under attack."
 msgstr "Базу атаковано."
 
@@ -3753,10 +3772,36 @@ msgstr ""
 #: ../base/ufos/research.ufo:128
 msgid "laser_txt"
 msgstr ""
+"Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+"\n"
+"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+"\n"
+"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+"\n"
+"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+"\n"
+"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+"\n"
+"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
+"\n"
+"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
+"\n"
+"Let me know when you want us to start working on them, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:131
 msgid "laser_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
+"\n"
+"Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
+"\n"
+"Commander, we should pursue this research as soon as possible. Varying our arsenal will make it much more difficult to defend against, and our experience may lead us to develop viable aircraft lasers that could more effectively target high-speed UFOs than conventional firearms.\n"
+"\n"
+"As far as I'm concerned, we at PHALANX are going to do the impossible, and we can start doing it as soon as you approve this proposal.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:161
 msgid "b_baselaser_txt"
@@ -3770,18 +3815,60 @@ msgstr "Попередні відомості про дослідження ві
 #: ../base/ufos/research.ufo:248
 msgid "antimatter_txt"
 msgstr ""
+"Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
+"\n"
+"There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .\n"
+"\n"
+"The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.\n"
+"\n"
+"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a Scout UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
+"\n"
+"Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.\n"
+"\n"
+"Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing up to ten grammes of antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin incorporating it.\n"
+"\n"
+"For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:211
 msgid "antimatter_extra_txt"
 msgstr ""
+"Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
+"\n"
+"There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .\n"
+"\n"
+"The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.\n"
+"\n"
+"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a Scout UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
+"\n"
+"Another worrying point is that the aliens also seem to be using antimatter as part of their weapons systems. Antimatter-fuelled alien missiles are one thing; what if they begin using antimatter itself as an explosive? My staff has come up with more than one disconcerting idea along these lines. For myself, I think we should try to head the aliens off at the pass in this regard. A special program regarding antimatter-based weapons may be a highly interesting option to pursue -- it may be a more economical prospect than trying to adapt alien rockets to our interceptor craft.\n"
+"\n"
+"Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.\n"
+"\n"
+"Our only major successes have come from studying how the aliens store their antimatter. We're confident we can employ the same magnetic storage techniques, creating special facilities for safely storing up to ten grammes of antimatter. I've sent you a set of blueprints in a separate message to peruse at your convenience. We've also designed antimatter fuel tanks that should fit in our interceptors given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin incorporating it.\n"
+"\n"
+"For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:214
 msgid "antimatter_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
+"\n"
+"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:215
 msgid "antimatter_extra_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
+"\n"
+"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:266
 msgid "Upgrade - Antimatter engines"
@@ -3841,10 +3928,42 @@ msgstr "Док. Д. Коннор, ДВБ, Відділ біозахисту, PHA
 #: ../base/ufos/research.ufo:386
 msgid "alien_breathing_txt"
 msgstr ""
+"Commander,\n"
+"\n"
+"I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.\n"
+"\n"
+"From our investigation of tissue growth and scarring around the alien larynx, we conclude that these artifacts are surgically implanted in an alien's throat at a very early age. Somewhere during adolescence, the child-sized device is removed and an adult version is implanted.\n"
+"\n"
+"We've examined several different possibilities for the device's function, from food preprocessors to suicide equipment, but the obvious answer turned out to be the correct one. It is some kind of respirator, allowing the aliens to survive in our atmosphere, and possibly other atmospheres as well. Every organic specimen we've autopsied has carried one of these devices, all with the same basic functionality, implying that their constant operation is either required for survival on the alien homeworld or that we are seeing only specimens which are intended for frequent planetary operations. Certainly external breathing apparatus would be easier and more economical to use if these specimens were only intended to take short trips into hostile atmospheres.\n"
+"\n"
+"The device itself consists of a sophisticated filter stretched across the subject's windpipe, and two small spherical tanks positioned on either side of the brainstem, connected to the windpipe by a small metal tube. These tanks are filled with a gas mixture compressed into a liquid state, functioning much like a scuba diver's oxygen bottles. The filter mechanism is semi-intelligent; it scrupulously removes all elements that are harmful to the subject, but allows beneficial elements to pass through. The tanks are refilled by way of a small mechanical navel at the back of the alien's neck.\n"
+"\n"
+"An examination of the tanks' contents has given us our first accurate data on the alien atmosphere. We now have several mixtures on record that we believe will be able to support various alien lifeforms in our Containment unit. A few of the mixtures are nitrogen-oxygen compounds, very similar to our own, but others don't contain any oxygen at all. If all of these mixtures are actively used by one or more alien species, some of our enemies seem to breathe an atmosphere of almost pure methane.\n"
+"\n"
+"The vastly different mixtures are actually giving us a bit of a puzzle. Surely it would be more economical to use segregated crews than to force these species to coexist in the same place?\n"
+"\n"
+"Future questions aside, I'm well pleased with our present results. We can now store aliens in our Containment unit for prolonged periods of time -- they will no longer suffocate when their atmosphere tanks run out. This usually happens after 24 hours without replenishment, so no delays should be afforded when we manage to capture a specimen.\n"
+"\n"
+"My team and I are all looking forward to finally getting our hands on a live one, Commander.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:348
 msgid "alien_breathing_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander,\n"
+"\n"
+"During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
+"\n"
+"I would like your permission and funding to examine these items more closely than our autopsy would allow. At this point in the war, anything that enhances our knowledge base about the alien threat is useful, and we may discover critical clues about alien technology and biology. Certainly we need to find out what the aliens breathe before we can accomodate them in our Containment unit for any period of time.\n"
+"\n"
+"Cdr. Navarre and his team will be assisting us on the technical side. He has committed his full support to the proposal.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:403
 msgid "The Alien Mind"
@@ -3877,20 +3996,77 @@ msgstr ""
 #: ../base/ufos/research.ufo:484
 msgid "alien_communication_txt"
 msgstr ""
+"Commander,\n"
+"\n"
+"I'm happy to report that we've received the first good results in our ongoing efforts to question captive aliens in our Containment unit. Dr. Yamamura's approach has gradually begun to bear fruit. The aliens have learned to convey messages in both binary code and human-readable sign language, and they appear to comprehend a wide range of questions and instructions. Yamamura and his staff are still working to refine the sign language we've been using, while the rest of my team has concentrated on trying to extract useful information from the hive mind. This hasn't been easy. The aliens are very reticent and require a great deal of chemical encouragement in order to put them into a more helpful frame of mind. The casualty rate has been high.\n"
+"\n"
+"However, what we have is significant. For instance, the hive mind seems to have no identity. It seems unable to grasp concepts like \"I\" or \"We\", or even \"You\" and \"Them\". It only accepts these words as numerical differentiations -- one specimen or several, one human or a group. This indicates a severe disconnect between human and alien thinking. The shared consciousness doesn't even think of itself as a single enclosed entity; it merely is. This, along with various other answers we've pieced together from our continued sessions, leads us to believe that all aliens do indeed share one single mind. And I mean all of them, Commander. It's not simply a means of increasing team efficiency or encouraging esprit de corps; it's an indispensible component of alien society. Every alien that lives and breathes is an equal and identical part of the greater hive mind, even specimens of completely different species. The only diversity the aliens will acknowledge is in the different substances required to keep the various species alive.\n"
+"\n"
+"Also, the hive mind has expressed puzzlement at our attempts to communicate with individual aliens, let alone through something as crude as sign language. A human-understandable analogy might be trying to have a deep conversation with someone's toenail, or talking to a single cell in your own body. Of course, that raises the question of where the alien ears and brain really are.\n"
+"\n"
+"Certainly the handful of aliens currently in our Containment unit are not part of the greater hive mind that we hypothesize exists on the alien homeworld. They seem to be cut off from it for the duration of their mission to Earth, only to rejoin it when they return later. Whether this is due to distance or some kind of atmospheric effect, we've not yet been able to tell. The aliens' answers are hazy on this subject.\n"
+"\n"
+"That is all I have to report, Commander. However, as a final note, I would like to request your permission to look into methods we could use to more effectively persuade our captives. I must also stress that we require a healthy influx of new alien specimens in order to replace losses. We have to maintain the isolated hive mind we have in Containment. Losing it now would be a significant setback to our research.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:487
 msgid "alien_communication_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander,\n"
+"\n"
+"The increasing intellect of the captive aliens in our Containment unit leads me to conclude that we can finally begin to get a real handle on alien communication and, more importantly, getting some useable information out of them. Quoting from my report:\n"
+"\n"
+"(Odd Behaviour)\"There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers.\"\n"
+"\n"
+"\"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\"\n"
+"\n"
+"Dr. Yamamura is beginning to make real progress on this front, teaching the aliens several new words of sign language every day, but we require lab time and funding for a proper study of what these aliens know and how it can help us. The ability to interrogate aliens about their own technology could be of incomparable value to our soldiers and engineers. Cdr. Navarre was so excited at the prospect, he almost argued in favour of DivBio on this one.\n"
+"\n"
+"Thank you for your time, Commander. Please approve this program as soon as feasible.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:518
 #: client/campaign/cp_alienbase.c:169
-#: client/campaign/cp_missions.c:438
+#: client/campaign/cp_missions.c:452
 msgid "Alien base"
 msgstr ""
 
 #: ../base/ufos/research.ufo:520
 msgid "alien_base_txt"
 msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Alien Base\n"
+"\n"
+"Good morning, Sir.\n"
+"\n"
+"As you're aware, we are facing an increasingly worsening threat from the XVI virus. Over the past few weeks, DivIntel has been making a push into the areas in which the infection is most concentrated, in order to try and find some piece of intel that could help us understand how and why this infection spreads so fast from these focal points. I have been personally supervising the effort.\n"
+"\n"
+"It paid off this morning.\n"
+"\n"
+"Our reconnaisance teams have located what appears to be a camouflaged alien installation. The size and purpose of this installation is unknown, but we've established that it is located at the exact heart of an infection hot-spot. I harbour grave suspicions that this facility is directly connected with the lightning spread of XVI in the region. At this point it also seems likely there are more of these planetside installations, built right under our noses, serving as command centres and bases of operation for the alien threat.\n"
+"\n"
+"Dealing with these bases has to be one of our top priorities. I recommend we send a heavily-armed team to pay them a visit, a bit of reconnaissance-in-force. We need more information about the layout and purpose of the base, and the best way to do that is to capture it. We should eliminate all aliens at the location and, once we've secured the area and salvaged what we need, destroy the entire installation. This should constitute a significant blow to alien operations and restrict -- if not halt -- the spread of XVI in the area.\n"
+"\n"
+"Of course this mission will be highly dangerous. The base is right in the middle of an infection hot-spot, so the entire area is hostile territory. We may encounter anti-air ordnance and UFOs scrambled to the base's defence. A heavy escort will certainly be required. And . . . there's worse.\n"
+"\n"
+"Satellite imagery and recon flyovers have indicated that infected humans appear to be actively cooperating with the aliens. There's a good probability our unit will encounter human hostiles during the assault. This may not sit well with everyone, but if they open fire on our troops, we must be ready to respond in kind.\n"
+"\n"
+"That's all the intel I've got for you on this one, Sir. Good luck and good hunting.\n"
+"\n"
+"With kind regards,Col. Falkland"
 
 #: ../base/ufos/research.ufo:542
 msgid "The Universal Serum"
@@ -3899,10 +4075,34 @@ msgstr ""
 #: ../base/ufos/research.ufo:547
 msgid "universal_serum_txt"
 msgstr ""
+"Commander,\n"
+"\n"
+"Our development cycle on the new truth drug is complete. The new set of chemical mixtures we've tested are effective, and they seem to be the solution we've hoped for.\n"
+"\n"
+"The work we've done on alien biology since the start of the invasion, along with some help from our captives, has put us on the track of certain psychotropic substances -- notably LSD-derivatives -- that have very interesting effects on alien psychology. The divergence of species has been a problem, as some compounds will work on one type of alien but not on another, but with this new data it will be an easy task to whip up drugs specifically tailored to the individual alien species.\n"
+"\n"
+"Subjects under the influence of this drug have proven to be more pliable and loose-lipped, as long as we keep injecting all the specimens in our containment unit. Unfortunately the hive mind's natural resistance to interrogation is still throwing a spanner in the works. Even with all our specimens fully injected, we've not managed to break that resistance, and the accuracy of our test information has still not been 100% reliable. All data we receive still requires some degree of time-consuming verification work.\n"
+"\n"
+"On the positive side, the act of getting the information out of our subjects has become quicker and more painless, which should speed up some of our research. The danger of allergenic reaction is much lower and the number of subjects succumbing during interrogation has dropped significantly. The deeper effect of the new drugs may even give us access to more sensitive information that we would not have been able to extract from the hive mind with our old serum.\n"
+"\n"
+"We should keep up our interrogation efforts to get maximum benefit out of the new drugs.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:550
 msgid "universal_serum_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander,\n"
+"\n"
+"As you may know, our efforts at communication with the live aliens in our Containment unit are progressing only very slowly. We're having a great deal of trouble applying our standard interrogation methods. The truth serum we have available has several distinct limitations; it tends to produce a lethal allergic reaction in most alien bodies unless we restrict it to smaller, insufficient doses, which worsens the serum's already incomplete effect on alien physiology. We've encountered numerous small lies and half-truths in the sessions we've taken so far. Torture has been attempted to influence this behaviour, but to no avail. Pain seems to have no corrective effect on the hive mind.\n"
+"\n"
+"There's also the larger hurdle of having to inject every single specimen of the hive mind in order to properly submerge any subject's sense of judgment. If one member of the hive mind dies, the remaining specimens' adrenaline-equivalent levels rise to the point where we have to start over.\n"
+"\n"
+"To this end, armed with our expanded knowledge of the alien mind and body, I propose a new research program to look into a universal set of sera that we can use to extract more reliable information, faster and more easily. There is obviously a great deal of information inside these specimens waiting to be seized, Commander; we just need the tools to properly crack the shell.\n"
+"\n"
+"Sincerely,Dr. Connor"
 
 #: ../base/ufos/research.ufo:579
 msgid "Alien Origins"
@@ -3911,10 +4111,50 @@ msgstr ""
 #: ../base/ufos/research.ufo:584
 msgid "alien_origins_txt"
 msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"I've got the results of our Alien Origins project here and I believe you'll find them encouraging. Here is my summary of the data.\n"
+"\n"
+"The project overall has been a resounding success in integration and cooperation. For several short periods over the past few days, we had direct control over every civilian and military detection asset in the solar system, including several installations in the asteroid belt so secret that we have been sworn to silence by the UN. Our deep-space probes have scanned every inch of buildable surface to detect any sign of an alien base. With these resources at our disposal, we have achieved continuous detection coverage of approximately 90% of the solar system over the past two weeks. The remaining 10% has been uncovered no longer than forty minutes at a time.\n"
+"\n"
+"Unfortunately -- depending on your understanding of the word 'unfortunately' -- we could find no evidence of alien fleets hiding in our solar system. We have been so thorough that these results are all but conclusive. There is no way to be absolutely sure that our conclusions are correct, but I make the following statement with high confidence:\n"
+"\n"
+"We do not believe there are alien ships or bases in our solar system at this time.\n"
+"\n"
+"This answers one of our questions, but brings us no closer to understanding where the aliens come from or how they get here. In fact, the question of how they get here becomes an even greater conundrum than it was before. If the aliens are not based in our solar system, how can they be delivering UFOs to Earth?\n"
+"\n"
+"I have spoken at length with Cdr. Navarre and members of his team about this issue, trying to figure it out, and most of our theories still seem like crackpot speculations even to ourselves. However, fate gave us the proof we needed.\n"
+"\n"
+"We were having little luck with the issues of 'how' and 'where' until we got our hands on last week's video records from the MIMIR space telescope. Upon watching the footage, we realised that the MIMIR array had accidentally managed to catch a UFO arrival on film. We have full records in the visible and infrared spectra of a large, unfamiliar class of UFO 'popping' into existence approximately 10,000 kilometres from Earth, from where it ignited its engines and set a course for the planet.\n"
+"\n"
+"It is possible the aliens could have some manner of 'cloaking' technology that has prevented us from detecting the UFO beyond that range, but we have strong doubts about this; the appearance was highly sudden, accompanied by a burst of gamma rays and a momentary gravitic anomaly. There was not even the slightest evidence of this UFO's existence prior to its appearance 10,000 klicks from Earth.\n"
+"\n"
+"The most likely conclusion is also the most frightening: the aliens do not need to be located in our solar system, because they have a means of travel that is faster than light. Apparently this FTL (Faster-Than-Light) drive allows them to 'jump' into the Sol system from a distance well beyond our detection range. We don't know how this could be possible, as it clearly violates one or more concepts of general relativity (e.g. causality and/or special relativity), which remains the most accurate model of physics we have. The aliens clearly know something we don't.\n"
+"\n"
+"Our next priority must be the capture of an FTL-equipped UFO so that we may study and adapt this drive for our own spacecraft. Obviously, this will not be an easy task, but developing the ability to strike back is paramount -- just in case we need to end this invasion the hard way.\n"
+"\n"
+"Of course, the final decision on how to balance our short-term defence needs and long-term retaliation rests with you, Commander.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:587
 msgid "alien_origins_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
+"\n"
+"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
+"\n"
+"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
+"\n"
+"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:614
 msgid "UFO Theory"
@@ -3923,10 +4163,34 @@ msgstr ""
 #: ../base/ufos/research.ufo:619
 msgid "alien_theory_txt"
 msgstr ""
+"Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
+"\n"
+"The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look at it up close and personal -- and test the alien hull materials under laboratory conditions -- we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
+"\n"
+"-- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and to reduce the infrared signature. Engine heat is also used to supply the craft's electrical needs.\n"
+"\n"
+"-- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when we found out what was in there. If a containment loss occurred on one of these tanks, even three tenths of a gramme of this antimatter would outstrip the explosive force of the Hiroshima atomic bomb. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that proton-antiproton explosions create little radioactive fallout.\n"
+"\n"
+"-- The craft is extremely difficult to see with human detection equipment, regardless of any electronic warfare capability on the aliens' part. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with passive infrared and gamma radiation detection, as the antimatter-based engines produce quite a lot of both.\n"
+"\n"
+"-- The slim design, generating poor lift and being difficult to handle in air, is partly due to the heavy weight of the hull materials. It would be impossible to create effective wings from the alien hull materials. Instead, every gramme of excess matter has been stripped off, and the craft moves at high speeds so as to need very little lift surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's stronger and tougher than any known material on Earth (barring pure carbon nanotubes) and far more versatile in aircraft design. More research is definitely required.\n"
+"\n"
+"Armed with these facts, we can now begin to analyse the different components and roles of the UFO. I recommend that our engineers begin dismantling this craft for parts right away. Who knows what we'll discover with the individual bits and pieces in front of us?\n"
+"\n"
+"More research on the UFO itself is also warranted. I think we can delve deeper into its intended function and perhaps gain some insight in how to counter its activities. I'll send you another proposal about it as soon as I can.\n"
+"\n"
+"Whatever we end up learning from these craft, Commander, it can only help us in the fight for Earth.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:622
 msgid "alien_theory_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
+"\n"
+"We're ready to start work whenever you say, but we will need some lab time and funding to make a proper assessment of this amazing technology.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:667
 msgid "pistol_txt"
@@ -4097,78 +4361,78 @@ msgstr ""
 #: ../base/ufos/research.ufo:764
 msgid "assault_txt"
 msgstr ""
-"Technical Specifications: AR-80 Assault Rifle\n"
+"Технічна специфікація: Автомат AR-80\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"РІВЕНЬ СЕКРЕТНОСТІ - ЖОВТИЙ\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Підрозділ реагування на позаземні загрози PHALANX\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"Технічний документ, Допуск Дельта\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Дата: 20 Березня 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
-"\n"
-"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
-"\n"
-"The French Leblanc FAA-191 (Fusil Assaut Automatique) provides the most advantageous mix of range, penetration against alien armour, and magazine size in the assault rifle class. It is a bullpup design, meaning the magazine and action of the weapon are located behind the grip to reduce overall weapon length. The 191 fires a 30-round box magazine of 4.7mm caseless ammunition, tungsten-cored steel penetrators with impressive armour-piercing capability over short and medium ranges. The round does not perform well at long range, but then assault rifles aren't meant for long-range firefights.\n"
-"\n"
-"Though the design is far from new, first prototyped in 2057, no other rifle has fully surpassed the 191. It is accurate and quick to reload. Its rugged construction makes it dependable in combat and unlikely to break or jam. It is resistant to heat, cold, dust and humidity all at once. Ammunition and replacement parts are widely available due to the design's maturity and relative popularity among Earth's armed forces. This is a rifle you can entrust your life to.\n"
-"\n"
-"For PHALANX use, we have given this rifle the classification AR-80.\n"
+"Від: Кмд. Пауль Наварре, ДВБ, Інженерно-технічний відділ, PHALANX, Атлантична оперативна група\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"This should be our go-to weapon for medium-range engagements. It can lay down an impressive amount of fire and is deadly out to far longer ranges than any pistol or SMG.\n"
+"Огляд\n"
 "\n"
-"However, no one should entertain the illusion that the assault rifle is the end-all be-all of our arsenal. A balance of weapons is required for us to be able to deal with different situations; while the assault rifle remains a good weapon at close range, it can be slow to manoeuvre in tight spaces and is eclipsed by both submachine guns and shotguns at these ranges, weapons which provide a far greater point-blank punch. Any sweep of an urban building should be led by close-range weapons, while rifle-equipped soldiers either secure the perimeter or form a second assault wave to support the others.\n"
+"Атака прибульців у Бомбеї показала, в якому поганому становищі ми знаходимось. Їхні технології набагато випереджають наші. Сили Співдружності були неспроможні налагодити хоч якусь оборону через численні недоліки в тренуванні та озброєнні. Три батальйони було втрачено тільки для того, щоб зупинити атаку. PHALANX має змінити стан речей. Для цього ми маємо найкращі технічні засоби, які тільки змогло створити людство.\n"
 "\n"
-"If our rifle-equipped troops are caught beyond effective weapon range, they should make an advance from cover to cover in order to effectively bring their weapons to bear. Snipers should provide covering fire for the advancing teams or attempt to take out the enemy at range.\n"
+"Проект \"Ескалібур\" започаткували для того, щоб створити найкращу на Землі зброю, змінити стандарти виготовлення і відмовостійкості, врахувати бойовий досвід і бойові якості, потрібні для боротьби з прибульцями.\n"
+"\n"
+"Автомат French LeBlanc FAA-191 (Fusil Assaut Automatique) має найкращі характеристики дальнобійності, пробивання броні прибульців і розміру магазину. Автомат має булл-пап компоновку, тобто магазин розташовано позаду спускового гачка для того, щоб зменшити довжину зброї. FAA-191 використовує 4.7мм безгільзові набої (магазин вміщує 30 набоїв). Сталеві кулі з вольфрамовим осердям демонструють вражаючу проникну здатність на малих та середніх дистанціях. На великих відстанях черги не такі ефективні, але автомати не призначені для дальних перестрілок.\n"
+"\n"
+"Хоча дизайн не такий вже й новий (перший прототип зроблено у 2057), жоден інший автомат не зміг перевершити FAA-191. Він точний, швидко перезаряджається. Завдяки жорсткому дизайну в бою неможливі збої чи заклинювання. Автомат стійкий до холоду, спеки, пилу та людської необачності. Набої та запчастини широко доступні через те, що конструкція автомату користується успіхом в арміях по всій земній кулі. Цьому автомату можна довірити власне життя.\n"
+"\n"
+"Для використання в PHALANX зброї надано індекс AR-80.\n"
 "\n"
 "\n"
-"Addenda\n"
+"Рекомендована доктрина\n"
 "\n"
-"While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
+"Саме цю зброю слід використовувати на середніх дистанціях. Тут вона демонструє вражаючі бойові якості. В той же час на більших відстанях автомат кращий, ніж пістолет чи пістолет-кулемет.\n"
+"\n"
+"Але не слід думати, що автомат - найкраще, що можна знайти в нашому арсеналі. Для того, щоб справитись з різними ситуаціями, потрібно дотримуватися балансу зброї. Автомат непогано себе проявляє у ближньому контакті, але у тісних просторах кращими є рушниці та пістолети-кулемети, через більшу вогневу силу. При зачистці будівель слід використовувати саме їх, а солдатів з автоматами краще залишити для підтримки або охорони переметру.\n"
+"\n"
+"Якщо бійці з автоматами опинились за межами ефективного ураження, їм слід залягти і скорочувати дистанцію, переміщуючись між природними укриттями. В такій ситуації снайпери прикривають вогнем штурмові підрозділи або придушують активність супротивника.\n"
+"\n"
+"\n"
+"Додаток\n"
+"\n"
+"AR-80 - хороший автомат, але він не призначений для боротьби з прибульцями. Ми змушені розробити власну конструкцію, пристосовану під наші потреби якомога швидше."
 
 #: ../base/ufos/research.ufo:782
 msgid "assault_mag_txt"
 msgstr ""
-"Technical Specifications: Assault Rifle Magazine\n"
+"Технічна специфікація: Магазин автомату\n"
 "\n"
-"CLASSIFIED LEVEL YELLOW\n"
+"РІВЕНЬ СЕКРЕТНОСТІ ЖОВТИЙ\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"Підрозділ реагування на позаземні загрози PHALANX\n"
 "\n"
-"Technical Document, Delta Clearance\n"
+"Технічний документ, Допуск Дельта\n"
 "\n"
-"Filed: 20 March 2084\n"
+"Дата: 20 Березня 2084\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This magazine contains 30 rounds of 4.7x33mm caseless ammunition, armour-piercing mod. It is of a classic curved box design with the rounds stacked in a dual-column arrangement. The rounds themselves are tungsten-cored steel penetrators, encased in their own propellant rather than heavy brass casings. They perform well against a variety of enemies at short and medium ranges.\n"
-"\n"
-"The magazine is meant to be loaded into an AR-80 Assault Rifle.\n"
+"Від: Кмд. Пауль Наварре, ДВБ, Інженерно-технічний відділ, PHALANX, Атлантична оперативна група\n"
 "\n"
 "\n"
-"Recommended Doctrine\n"
 "\n"
-"All soldiers equipped with assault rifles should carry at least one reload whenever they go out in the field. It is not advisable to send our troops into combat without spare magazines.\n"
+"Огляд\n"
+"\n"
+"Магазин містить 30 бронебійних безгільзових набоїв калібру 4.7x33мм. Конструкція класична: скруглена металева коробка, всередині набої, розташовані в дві колонки. Набої складаються зі сталевої кулі з вольфрамовим осердям, утрамбованої в порох. Така технологія дозволяє уникнути використання важких латунних гільз. Кулі досить ефективні на малих та середніх дистанціях для ураження різноманітних цілей.\n"
+"\n"
+"Магазин призначено для автомату AR-80\n"
 "\n"
 "\n"
-"Addenda\n"
+"Рекомендації до застосування\n"
 "\n"
-"None."
+"Вирушаючи у бій, кожен хто озброюється автоматом має мати при собі ще хоча б один запасний магазин. Не рекомендується спорядження на операцію бійців без запасних набоїв.\n"
+"\n"
+"\n"
+"Додаток\n"
+"\n"
+"Немає."
 
 #: ../base/ufos/research.ufo:801
 msgid "machinegun_txt"
@@ -4408,44 +4672,42 @@ msgid "shotgun_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1035
-#: ../base/ufos/weapons_human.ufo:1873
+#: ../base/ufos/weapons_human.ufo:1872
 msgid "Electromagnetic Rifle"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1040
 msgid "bolterrifle_txt"
 msgstr ""
-"The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.\n"
+"Проект ЕМ-гвинтівки успішно завершено! Вперше в історії людства ми створили справжню переносну електромагнітну зброю. Щоб уникнути плутанини з існуючими зразками ЗМР(зброї з магнітним прискорювачем) новинку вирішили назвати \"Голкостріл\". Спробую коротко описати принцип його дії.\n"
 "\n"
-"The Bolter Rifle is equipped with a railgun configuration, as opposed to a coilgun/Gauss gun configuration, due to the high inefficiency and generally poor operation of coilguns. Railguns work by utilising electromagnetic force to propel an electrically conductive projectile along two conducting rails. The electric current flowing through the rails sets up a magnetic field between them and through the projectile. The direction of the magnetic field is perpendicular to the current flowing through the rails and the projectile; this results in the rails and projectile pushing each other, thereby accelerating the projectile along the rails.\n"
+"Голкостріл сконфігуровано на зразок рейлгану. Варіант конфігурації типу койлгану (або Гаусівської зброї) нам видався геть непридатним до застосування. Рейлган використовує електромагнітні сили для пересування снаряду вздовж двох рейок. Струм, що проходить між рейками, створює магнітне поле між ними та снарядом. Напрям цього поля перпендикулярний до струму, що йде крізь рейки, тому рейки відштовхують снаряд від себе. Сила взаємодії розганяє снаряд і виштовхує його назовні.\n"
 "\n"
-"The world's first large-scale railgun, built in the 1970s, used 500 MJ of stored energy from the largest homopolar generator ever built. The electrical equipment needed to power these guns has become much more compact in the past century or so, but it is still not small or light enough to create man-portable weapons capable of replacing chemical-propellant firearms. Another major failing of railguns is their extreme susceptibility to rail erosion. The rails suffer heavy damage from every shot fired along them, and when the contact points are badly damaged, the electric current cannot properly pass from the rails through the projectile. This causes successive shots to lose more and more of their power. Each round needs at least a short length of undamaged rail in order to build up velocity.\n"
+"Перший в світі рейлган було побудовано в 1970ті. Він використовував 500МДж енергії з найбільшого конденсатору, який тільки можна було збудувати. З тих часів необхідне електричне устаткування стало займати значно менше місця, але не настільки, щоб можна було порівнювати з існуючими аналогами хімічної зброї. Іншою причиною провалу рейлганів була надзвичайна чутливість до пошкодження рейок. Вони сильно пошкоджуються при кожному пострілі, при цьому погіршується контакт, струм слабшає і наступний снаряд розвиває меншу швидкість. Відповідно, наступні постріли стають все менш потужними. Для кожного пострілу потрібно мати хоча б якусть частину рейки неушкодженою.\n"
 "\n"
-"Fortunately, we've managed to find a way around this problem -- by loading new rails into the gun after every series of shots.\n"
+"На щастя, ми знайшли спосіб подолання проблеми -- шляхом завантаження нових рейок після кожної серії пострілів. Ідея попереднього завантаження усіх снарядів до стволу не нова. Досі вона зустрічалась лише у звичайній зброї, але ми запропонували нову концепцію: невеликі ізольовані рейки з індивідуальним живленням, що завантажуються під час кожної перезарідки. Таким чином, ми матимемо контактні точки при кожному пострілі. При цьому зброя буде демонструвати одну й ту ж силу прискорення впродовж серії пострілів. Коли всі снаряди зі стволу буде використано (а рейки, відповідно, значно пошкоджено), солдат просто відключить і видалить ствол, а на його місце вставить новий.\n"
 "\n"
-"The concept of pre-loading all of a weapon's ammunition into the barrel has been around for a long time. Until now it has only been applied to conventional firearms, but we have come up with a new concept; a small, individually-powered and insulated length of rail loaded with every round. This gives each round a viable contact point and will allow the weapon to sustain power through all its shots. When all rounds in the current barrel have been depleted -- and therefore the rails thoroughly destroyed -- the soldier can simply unlock the old barrel, let it drop to the ground, and slot in a fresh spare. Then he can replace the battery pack for a new series of shots.\n"
+"В якості набоїв пропонуються спеціально розроблені оребрені стрілоподібні вражаючі елементи розміром 3.2x40мм, відштамповані з великих листів вольфрамового сплаву. Вони гострі, як бритва, мають відмінні бронебійні якості та вражають ціль, наче демони. Дірки від цих голок набагато більші за їх справжні розміри.\n"
 "\n"
-"The projectiles are specially-developed 3.2x40mm finned flechettes, stamped from large sheets of tungsten alloy. They are razor-sharp, with excellent armour-piercing qualities, and they tumble like demons inside the target. The holes that these flechettes cause are many times larger than their actual size.\n"
+"Перезаряджати голкостріли досить довго та складно. Магазини дорогі та надто великі (адже це новий ствол в кожній обоймі). Крім того, маємо лише 4 заряди на обойму. З іншого боку, зупиняюча сила голкострілу набагато вища, ніж у порохової зброї. Його можна використовувати і як снайперську гвинтівку, і як потужну штурмову зброю, залежно від режиму стрільби: або напівавтоматичного, або чергами по 4 постріли. Маємо багато варіантів застосування цієї зброї. Втім, її тактичну цінність зможемо оцінити уже після реального досвіду застосування.\n"
 "\n"
-"This choice of loading system makes the Bolter slow and clumsy to reload, with expensive, oversized magazines (a new barrel and battery pack for each reload) and a small ammo capacity of 4 shots per barrel. On the other hand, the Bolter's stopping power is far greater than any chemical firearm in our arsenal. It can be used both as a sniper rifle and a powerful assault weapon, depending on whether it is fired on semi-automatic or 4-round burst mode. It is a highly versatile weapon with many possible applications; its tactical value will certainly become apparent once we get some real combat experience with it.\n"
-"\n"
-"--Cdr. Navarre"
+"--Кмд. Наварре"
 
 #: ../base/ufos/research.ufo:1043
 msgid "bolterrifle_pre_txt"
 msgstr ""
-"Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
+"Командире, ми отримали ряд пропозицій стосовно розробки переносної електромагнітної зброї від різних націй ООН. Серед них були креслення та навіть прототипи рейлганів, койлганів та квенчганів. Звісно, всі експерименти виявилися провальними, оскільки електромагнітна зброя потребує надзвичайної кількості енергії, а отже, дуже великих батарей. Ці батареї настільки важкі, що жоден солдат не зможе переносити їх. Навіть за допопмогою атомних батарей ми не зможемо отримати потрібної потужності. Це неможливо.\n"
 "\n"
-"At least, that's what we thought, until the aliens showed up.\n"
+"Принаймі, ми так думали, поки не з'явились прибульці.\n"
 "\n"
-"Seeing alien craft hurtling through our skies, advanced robots scuttling through our streets, and high-powered energy weapons tearing up our people has given us a whole host of new ideas. It has also caused us to take a very close look through our collected UN research data. It's nothing short of a gold mine in disguise. By combining the best of these individual cluttered pieces, we believe we may be able to devise a new weapon for our tactical teams that will be both man-portable and combat-effective. This weapon would have extreme range and power and may serve us well in the days ahead.\n"
+"Вчені отримали багато нових ідей, побачивши їх літальні апаратами в небі, роботів на вулицях та енергетичну зброю, що вражала людей насмерть. Тому ми переглянули результати старих досліджень. Дещо все ж видається недооціненим. Можливо, поєднавши кілька ідей, ми зможемо створити нову зброю для наших тактичких підрозділів. Імовірно, вона буде достить портативною та ефективною. Ця зброя матиме надзвичайну далекобійність та потужність, і добре нам послужить.\n"
 "\n"
-"This idea holds a lot of promise, Commander. We would like your authorisation for lab time and funding in order finally make electromagnetic weaponry a reality.\n"
+"Маємо великі сподівання, Командире. Для того, щоб перетворити їх на реальність, потрібна Ваша згода на виділення лабораторного часу і фінансування.\n"
 "\n"
-"--Cdr. Navarre"
+"--Кмд. Наварре"
 
 #: ../base/ufos/research.ufo:1074
-#: ../base/ufos/weapons_human.ufo:1893
+#: ../base/ufos/weapons_human.ufo:1892
 msgid "Electromagnetic Rifle Magazine"
 msgstr ""
 
@@ -6504,27 +6766,97 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4490
 msgid "craft_alien_astrogation_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
+"\n"
+"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4493
 msgid "craft_alien_astrogation_txt"
 msgstr ""
+"Commander, we've finished work on the captured alien astrogation unit. Here is a summary of my report.\n"
+"\n"
+"We concluded early on in our survey that this astrogation unit is, at its core, a purpose-built computer of extraordinary power loaded with specialised software -- all intended solely for the purpose of plotting a course from one point in space to another. It uses a new, alien system of astronomical notation which we've decided to adopt in order to make use of this alien hardware.\n"
+"\n"
+"Now that we've figured out its notation system, we can see that the astrogation unit is very good at what it does. Given correct input, the system can plot a course from anywhere to anywhere in seconds, and it can intelligently recompute that course with filters like 'least travel time', 'shortest distance', 'fewest navigational hazards', and so on. These filters can be layered on endlessly until the system spits out the exact course you want. It is even able to take into account faster-than-light capability when plotting a course, which all but verifies the theory that the aliens do indeed have access to some type of FTL technology.\n"
+"\n"
+"The only problem with the unit's plotting method is that it requires a star chart to give accurate courses beyond the UFO's sensor range. We have never found a star chart loaded onto any UFO we've recovered. Perhaps only UFOs with an FTL drive have a chart loaded; they would surely need it for navigation.\n"
+"\n"
+"Instead of the elusive star chart, the astrogation units we've recovered so far contain enormous detail on Earth and the solar system. Surface maps of the outer planets and all their moons (even a previously-undiscovered moon of Pluto), spectrum analyses of every body in the asteroid belt as well as the distant Kuiper belt, and the orbits of every body in the solar system plotted out hundreds of years in advance. We're not sure if this information will be of any use to us, but it will greatly enhance humanity's body of knowledge about our home system -- whenever we're allowed to release it into the public.\n"
+"\n"
+"It's possible to program our own star charts into the astrogation unit, but I can only imagine how primitive and incomplete our charts might be compared to what the aliens have. I wouldn't condone any interstellar travel with these units until we can capture an alien chart. However, in the meantime we could certainly use these units to navigate around the solar system if we could design a PHALANX craft capable of launching into space. They will greatly simplify the whole process of interplanetary travel to the point where we'd be able to launch missions to Saturn or even Pluto at the click of a button.\n"
+"\n"
+"And that is something we should do as soon as humanly possible.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4528
 msgid "craft_alien_propulsion_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
+"\n"
+"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4531
 msgid "craft_alien_propulsion_txt"
 msgstr ""
+"Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.\n"
+"\n"
+"Quoting from my previous report:\n"
+"\n"
+"(UFO Theory) \"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"\n"
+"\n"
+"With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
+"\n"
+"Some more research may be required to figure out antimatter storage and control, but the engine upgrades are self-contained units -- basically just an alien engine with adapters on it for human tech. We should be able to start retrofitting as soon as we acquire enough fuel to keep our airfleet in the sky.\n"
+"\n"
+"I've mentioned before, the power disparity between our liquid fuel and these matter-antimatter engines is nothing short of astonishing. When we start using these engines on our planes, our pilots are going to need some serious re-education about the capabilities of their craft. Let me explain.\n"
+"\n"
+"In a regular military jet, giving her a little too much throttle around a tight corner can result in impaired judgment and unconsciousness from the force of acceleration. Pilots have died from over-acceleration.\n"
+"\n"
+"In an antimatter jet, however, these problems are amplified hundred-fold. The engines are so powerful that over-acceleration can easily turn a human body to bloody pulp in its flight chair. Even the craft itself may have trouble coping with the acceleration, and our flight engineers will have to be extremely careful in checking for metal fatigue, hairline fractures and other wear and tear on the airframe. A tiny crack in the structure may result in one of our planes breaking up in mid-flight. Mechanical thrust limiters can only do so much -- most of the G-stresses are incurred during turns.\n"
+"\n"
+"Still, it shouldn't become a problem as long as everyone -- pilots and mechanics alike -- is extremely careful in their assigned tasks. We've done some serious tightening-up of our safety and inspection protocol just for antimatter planes. The retraining of our pilots is the only remaining obstacle to our use of these alien engines.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4565
 msgid "craft_alien_detection_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
+"\n"
+"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
+"\n"
+"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4568
 msgid "craft_alien_detection_txt"
 msgstr ""
+"The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
+"\n"
+"Our initial assessment looks to have been correct. The detection suite makes use mostly of standard, reliable detection methods that humanity either uses or knows about. The equipment is more advanced than ours and will be useful, but by and large the aliens apply the same concepts and use the same physics as we do. As I mentioned in my proposal, radar, lidar and other such old reliables are all well-represented in the suite.\n"
+"\n"
+"And then there's the mystery sensor.\n"
+"\n"
+"It had us confounded for a long time, because now that it's here on the Earth's surface, it spits out mostly overpowering background noise. Up in the air, however, the picture is quite different. We think we've now identified the detector and have figured out how it works.\n"
+"\n"
+"In the simplest terms, it's a gravity sensor, scanning for minute changes in a background gravitational field. Everything travelling through a gravity field disturbs the field to some degree based on its size, mass and composition. The sensor can identify these changes as natural or artificial objects based on course, speed and acceleration with 95% accuracy. If there is any doubt about a contact, the system will report it anyway. It seems to be more effective in stronger fields like the one around Earth, but we surmise that it will work to some extent anywhere within the gravity range of a star.\n"
+"\n"
+"All of this detection power is linked into an advanced computer system which automatically puts all results through a series of filters, which can be adjusted at any time to suit the needs of the pilot and crew. This helps alternately sifting out targets from a mess of background noise or increasing sensitivity to search for something stealthy.\n"
+"\n"
+"Interestingly, the detection computer seems to have a direct link to fire control, assisting in anticipating target manoeuvres and point defence control if the craft has that capability.\n"
+"\n"
+"Parts of this technology can be adapted to our existing ground-based installations and aircraft radar. It should extend their detection range and increase resolution across the board, making it a good deal harder for UFOs to hide. However, the biggest practical gains will come from using this tech in creating new aircraft instrumentation to increase the combat survivability of our interceptors.\n"
+"\n"
+"Of course, it's not the immediate uses that are the most important. These detectors are vital for any future PHALANX spacecraft. In space, without the support of ground radar, we're going to need the extra power very badly.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4601
 msgid "craft_weapon_alc_pre_txt"
@@ -6594,10 +6926,28 @@ msgstr ""
 #: ../base/ufos/research.ufo:4917
 msgid "alien_materials_txt"
 msgstr ""
+"Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.\n"
+"\n"
+"As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.\n"
+"\n"
+"When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the alloy will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.\n"
+"\n"
+"This means that the shape of a UFO fuselage (and anything else made with these materials) can be changed at will, either by a command from the operator or by automated electronics.\n"
+"\n"
+"This has given us a lot of amazing new ideas. We'll only be able to develop a few of these ideas in time for use in the war, as some of them would take years of research time, but they should nevertheless allow us to build things we could never have attempted before.\n"
+"\n"
+"Alien Materials should now be available for use in production. Unfortunately, they require a lot of rare and expensive components, some of which can only be found on Earth in trace quantities. There's no way we could obtain the materials needed in quantities that would make non-trivial production possible. We'll have to salvage what we need off the aliens, because we won't be able to produce any of it for the forseeable future.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4884
 msgid "alien_materials_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
+"\n"
+"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilities.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:4937
 msgid "Political Situation Before The Invasion"
@@ -6658,10 +7008,42 @@ msgstr ""
 #: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
 msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"The XVI census program has just gone into effect. Weekly rolling tests have commenced this morning, and I've got a full report on our estimated performance levels and operational details.\n"
+"\n"
+"Our strategy is based around local medical centres, where the XVI tests are performed by existing nursing staff under the supervision of a small police or military guard. If a test turns out positive, this guard will perform the arrest and turn the infected prisoners over to the UN for containment and study. Once the aliens figure out this scheme -- I don't think it'll take them long -- the infected people will start avoiding the census, thereby giving us the data we need simply by their absence.\n"
+"\n"
+"As always there's good news and bad news. I'll start with the bad news.\n"
+"\n"
+"Despite our best efforts, the census data will have some limitations. 99.9% of the planet's population is registered with one national authority or another, but out of ten billion people that still leaves several million unaccounted for. We will be able to extrapolate figures that are accurate to within several thousand heads, but the statistics we generate won't ever be exact. This means the program is less useful for identifying those who have been infected, but still a godsend for keeping track of XVI spread and alien activity on a global basis. After all, we need to know what kind of progress we're making against this new threat.\n"
+"\n"
+"The good news is that the UN and the member nations have agreed to shoulder the entire cost of the census program. They are handling all the equipment and manpower locally, with strenuous checks as to the reliability of personnel and the validity of the results. The information will be piped directly to our command centre at no charge to us.\n"
+"\n"
+"The best thing about this program is that we can now keep track of infection levels and how much threat each region is under from XVI. This will work in conjunction with our normal detection methods to warn us where alien activity is worst and allow us to intervene before the situation becomes critical.\n"
+"\n"
+"Any area where XVI seems to be gaining ground should be posted with additional air patrols, and we should be on the lookout for any attempts by the aliens to solidify their hold on the ground. Alien activity reports in this area should be investigated and responded to with extreme prejudice.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5049
 msgid "xvi_census_pre_txt"
-msgstr "Попередні відомості про дослідження відсутні"
+msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"With these new developments regarding the infection of Earth's civilian population by this alien organism, the need arises for a way to determine the number of infected people in various regions and the rate of spread. Easier said than done, I know, but it may be every bit as important as finding a cure. We can't help anyone if we don't know they're sick.\n"
+"\n"
+"What I propose to do is to create a long-term rolling census that checks all registered individuals on the entire planet for XVI infection by way of a small blood test. Everyone will be required to submit to this test once a week to make sure they're clean -- more frequently if they fall under suspicion of infection. Samples will only need to be as large as a single drop of blood, taken from a random vein to prevent tampering. Fortunately the XVI organism is large and prevalent enough that we can test these samples on the spot with near-100%-confidence results.\n"
+"\n"
+"This is going to be a major undertaking that requires careful liaising with the intelligence services of Earth's eight big nations. I've already prepared plans and simulations to demonstrate the operation and effectiveness of this program. With some time and funding, we can convince them of the project's importance and have everything operational in a matter of weeks.\n"
+"\n"
+"All we need is your signature on the dotted line, Sir.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5082
 msgid "The Enemy On Earth - Revisited"
@@ -6674,6 +7056,86 @@ msgstr ""
 #: ../base/ufos/research.ufo:5090
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Попередні відомості про дослідження відсутні"
+
+#: ../base/ufos/research.ufo:5120
+msgid "The Alien Strategy"
+msgstr ""
+
+#: ../base/ufos/research.ufo:5125
+msgid "alien_strategy_txt"
+msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: The Alien Strategy\n"
+"\n"
+"Good morning, Sir.\n"
+"\n"
+"I'm afraid this isn't a social message; I'm writing you because of our pressing need for more information. We at DivIntel have been doing our part with tracking, logging and double-checking all reported alien activity on Earth, but we're increasingly being faced with our lack of data about the overarching goals of the alien invasion. We have no means of anticipating the aliens' next move because we have no clue as to what game plan they're following. That's why I am submitting a new project for your authorisation.\n"
+"\n"
+"I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.\n"
+"\n"
+"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formatulating new, more effective counterstrategies to the alien invasion.\n"
+"\n"
+"The proposal is in your queue, Sir. Please write back when you'd like us to start work.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
+
+#: ../base/ufos/research.ufo:5149
+msgid "Orbital UFO Activity"
+msgstr ""
+
+#: ../base/ufos/research.ufo:5154
+msgid "orbital_ufo_activity_txt"
+msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Orbital UFO Activity\n"
+"\n"
+"Good morning, Sir.\n"
+"\n"
+"Let me begin by stating a few ugly realities.\n"
+"\n"
+"1) All of humanity's space-based assets have been evacuated after the initial attack on Earth. Only a few stations and outposts are still running, and they have been remanded to military control, with only skeleton crews of volunteer military and civilian personnel.\n"
+"\n"
+"2) We have just a handful of space-based weapons platforms, none of which are equipped to harm alien craft. The aliens have the ability to instantly exterminate any human endeavours in the solar system.\n"
+"\n"
+"3) Our satellite grid is wide open and could be wiped off the map in an instant. Emergency landlines exist, but only for military use. If the grid does come under attack, comms between PHALANX command centres and assets in the field -- aircraft and ground teams -- will be hamstrung.\n"
+"\n"
+"4) There is no doubt that there are alien craft moving in orbit, ferrying items and UFOs between Earth and the alien homeworld, and right now there is nothing we can do to stop them.\n"
+"\n"
+"This leads us to only one conclusion: The space around Earth is no longer under our control. The only reason humanity retains any space capability at all is because the aliens have chosen not to destroy it yet.\n"
+"\n"
+"Our shocking vulnerability from space is demonstrated in the fact that we've fought this war exclusively on the ground and in the air. We have no space-planes that can be adapted for combat, and designs for building them are years from completion. Not even PHALANX could create a workable combat plane in time to affect the outcome of the war with the technologies currently at our disposal.\n"
+"\n"
+"What little orbital weaponry we have is severely inadequate. There are nuclear missiles which the UN won't let us use, and which would be far too destructive to help our research efforts if one of the colossal things ever managed to score a hit. There are experimental laser and maser platforms which are too underpowered to put a dent in heavy UFO armour. If the aliens decide they want to bomb us into extinction, they can just walk right up and knock. This is a situation that has to be remedied.\n"
+"\n"
+"The only question we can ask about this orbital UFO activity is how we're going to counter it. Until now we've not been able to affect the situation, but with budget increases and our growing reputation in the UN, pieces are starting to fall into place for a new step to our strategy.\n"
+"\n"
+"By far the most promising idea for a short-term orbital response weapon is to adapt one of the 'space guns' used by NASA and the European Space Agency to launch satellites and -- before the invasion forced us to evacuate our extraplanetary installations -- fire resupply packages at Tranquility Base colony on the moon. These space guns are essentially giant railguns with enough power to send a satellite-sized payload into orbit. With our library of UN research on electromagnetic weaponry, we can upgrade one of these guns into an anti-orbital weapon capable of knocking alien ships out of the sky. We're confident we can convince at least one of Earth's space agencies to lend us a suitable gun for the job.\n"
+"\n"
+"There are problems, however. Obviously these guns can't move, being built into the side of a mountain, so the target would have to pass directly in front of the gun for us to have a chance to hit it. Since we can't count on the aliens to give us a point-blank shot, this has been a big stumbling block, but we believe there may be a solution: If the gun can't move in order to hit something, the bullets will have to move instead.\n"
+"\n"
+"The plan calls for development of a special shell that is able to adjust its own trajectory with a suite of onboard rockets. We're currently pushing the UN to let us use a miniature nuclear warhead -- no more than 3 kilotons -- to make sure that any hit will kill. This orbital shell will be large, heavy, and a hell of a challenge to load into the gun, but it's absolutely necessary to give the project a realistic chance of success.\n"
+"\n"
+"As you see, Sir, these problems can all be overcome, but we need to do some serious R&D and commit a good deal of funding to get it all working. Please lend your authorisation as soon as is feasible.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/seq_credits.ufo:132
 #: ../base/ufos/seq_credits.ufo:165
@@ -6867,8 +7329,8 @@ msgstr ""
 #: ../base/ufos/seq_ingame.ufo:13
 #: ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80
-#: ../base/ufos/ui/campaign.ufo:598
-#: ../base/ufos/ui/campaign.ufo:671
+#: ../base/ufos/ui/campaign.ufo:593
+#: ../base/ufos/ui/campaign.ufo:666
 msgid "Click to continue"
 msgstr ""
 
@@ -7118,8 +7580,20 @@ msgid "How to play multiplayer"
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:1057
-#: ../base/ufos/ui/multiplayer.ufo:958
+#: ../base/ufos/ui/multiplayer.ufo:985
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
+msgstr ""
+
+#: ../base/ufos/seq_tutorials.ufo:1066
+msgid "You should connect to the lobby and wait for invitations or start your own server"
+msgstr ""
+
+#: ../base/ufos/seq_tutorials.ufo:1075
+msgid "While you are connected to the lobby you can play singleplayer until someone invites you"
+msgstr ""
+
+#: ../base/ufos/seq_tutorials.ufo:1084
+msgid "As a server admin you should consider setting a round time limit."
 msgstr ""
 
 #: ../base/ufos/team_aliens.ufo:25
@@ -7378,22 +7852,23 @@ msgstr ""
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
-#: ../base/ufos/ui/_hud.ufo:156
-#: ../base/ufos/ui/_hud.ufo:185
-#: ../base/ufos/ui/_hud.ufo:214
-#: ../base/ufos/ui/_hud.ufo:243
-#: ../base/ufos/ui/_hud.ufo:272
-#: ../base/ufos/ui/_hud.ufo:301
-#: ../base/ufos/ui/_hud.ufo:330
-#: ../base/ufos/ui/_hud.ufo:359
-#: ../base/ufos/ui/_hud.ufo:445
-#: ../base/ufos/ui/_hud.ufo:474
-#: ../base/ufos/ui/_hud.ufo:503
-#: ../base/ufos/ui/_hud.ufo:532
-#: ../base/ufos/ui/_hud.ufo:561
-#: ../base/ufos/ui/_hud.ufo:590
-#: ../base/ufos/ui/_hud.ufo:619
-#: ../base/ufos/ui/_hud.ufo:648
+#: ../base/ufos/ui/_hud.ufo:27
+#: ../base/ufos/ui/_hud.ufo:289
+#: ../base/ufos/ui/_hud.ufo:318
+#: ../base/ufos/ui/_hud.ufo:347
+#: ../base/ufos/ui/_hud.ufo:376
+#: ../base/ufos/ui/_hud.ufo:405
+#: ../base/ufos/ui/_hud.ufo:434
+#: ../base/ufos/ui/_hud.ufo:463
+#: ../base/ufos/ui/_hud.ufo:492
+#: ../base/ufos/ui/_hud.ufo:578
+#: ../base/ufos/ui/_hud.ufo:607
+#: ../base/ufos/ui/_hud.ufo:636
+#: ../base/ufos/ui/_hud.ufo:665
+#: ../base/ufos/ui/_hud.ufo:694
+#: ../base/ufos/ui/_hud.ufo:723
+#: ../base/ufos/ui/_hud.ufo:752
+#: ../base/ufos/ui/_hud.ufo:781
 msgid "Check to use this firemode for reaction fire"
 msgstr ""
 
@@ -7525,30 +8000,30 @@ msgstr ""
 msgid "Call back"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:123
+#: ../base/ufos/ui/aircraft_pilots.ufo:124
 msgid "Pilot is assigned to another craft"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:141
+#: ../base/ufos/ui/aircraft_pilots.ufo:142
 msgid "A pilot is already assigned to this craft"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:143
+#: ../base/ufos/ui/aircraft_pilots.ufo:144
 msgid "Assign pilot to this craft"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:154
+#: ../base/ufos/ui/aircraft_pilots.ufo:155
 msgid "Remove pilot from this craft"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:197
-#: ../base/ufos/ui/aircraft_pilots.ufo:207
-#: ../base/ufos/ui/aircraft_pilots.ufo:217
-#: ../base/ufos/ui/aircraft_pilots.ufo:227
-#: ../base/ufos/ui/aircraft_pilots.ufo:237
-#: ../base/ufos/ui/aircraft_pilots.ufo:247
-#: ../base/ufos/ui/aircraft_pilots.ufo:257
-#: ../base/ufos/ui/aircraft_pilots.ufo:267
+#: ../base/ufos/ui/aircraft_pilots.ufo:198
+#: ../base/ufos/ui/aircraft_pilots.ufo:208
+#: ../base/ufos/ui/aircraft_pilots.ufo:218
+#: ../base/ufos/ui/aircraft_pilots.ufo:228
+#: ../base/ufos/ui/aircraft_pilots.ufo:238
+#: ../base/ufos/ui/aircraft_pilots.ufo:248
+#: ../base/ufos/ui/aircraft_pilots.ufo:258
+#: ../base/ufos/ui/aircraft_pilots.ufo:268
 msgid "Add/remove this soldier"
 msgstr ""
 
@@ -7832,7 +8307,7 @@ msgstr ""
 
 #: ../base/ufos/ui/althud.ufo:1134
 #: ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:933
+#: client/battlescape/cl_hud.c:810
 msgid "Reserve TUs for shooting."
 msgstr ""
 
@@ -8056,7 +8531,7 @@ msgstr "Кампанія"
 #: ../base/ufos/ui/campaign.ufo:41
 #: ../base/ufos/ui/campaign.ufo:155
 #: ../base/ufos/ui/campaign.ufo:207
-#: ../base/ufos/ui/campaign.ufo:248
+#: ../base/ufos/ui/campaign.ufo:243
 msgid "Load"
 msgstr "Завантажити"
 
@@ -8076,8 +8551,8 @@ msgid "Load last saved game or continue playing"
 msgstr "Завантажити останню збережену чи продовжити"
 
 #: ../base/ufos/ui/campaign.ufo:60
-#: ../base/ufos/ui/campaign.ufo:383
-#: ../base/ufos/ui/campaign.ufo:564
+#: ../base/ufos/ui/campaign.ufo:378
+#: ../base/ufos/ui/campaign.ufo:559
 #: ../base/ufos/ui/multiplayer.ufo:66
 #: ../base/ufos/ui/options.ufo:75
 #: ../base/ufos/ui/singleplayer.ufo:43
@@ -8087,7 +8562,7 @@ msgid "Back"
 msgstr "Назад"
 
 #: ../base/ufos/ui/campaign.ufo:162
-#: ../base/ufos/ui/campaign.ufo:418
+#: ../base/ufos/ui/campaign.ufo:413
 #: ../base/ufos/ui/multiplayer_team.ufo:899
 msgid "Save"
 msgstr "Зберегти"
@@ -8119,11 +8594,11 @@ msgstr ""
 msgid "Reload the last automatically saved campaign state"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:588
+#: ../base/ufos/ui/campaign.ufo:583
 msgid "You've lost the game"
 msgstr ""
 
-#: ../base/ufos/ui/campaign.ufo:661
+#: ../base/ufos/ui/campaign.ufo:656
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr ""
 
@@ -8388,7 +8863,8 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:1850
 #: ../base/ufos/ui/geoscape.ufo:1923
 #: ../base/ufos/ui/geoscape.ufo:1996
-#: ../base/ufos/ui/irc.ufo:211
+#: ../base/ufos/ui/irc.ufo:232
+#: ../base/ufos/ui/irc.ufo:278
 #: ../base/ufos/ui/messageoptions.ufo:66
 #: ../base/ufos/ui/options.ufo:1290
 #: ../base/ufos/ui/transfer.ufo:594
@@ -8406,7 +8882,7 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:1851
 #: ../base/ufos/ui/geoscape.ufo:1924
 #: ../base/ufos/ui/geoscape.ufo:1997
-#: ../base/ufos/ui/irc.ufo:212
+#: ../base/ufos/ui/irc.ufo:279
 #: ../base/ufos/ui/options.ufo:1291
 #: ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
@@ -8478,6 +8954,7 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:1531
 #: ../base/ufos/ui/geoscape.ufo:1808
 #: ../base/ufos/ui/geoscape.ufo:1886
+#: ../base/ufos/ui/irc.ufo:200
 #: ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/multiplayer.ufo:342
 #: ../base/ufos/ui/options.ufo:736
@@ -8700,42 +9177,42 @@ msgid "Implants"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:54
-#: ../base/ufos/ui/multiplayer.ufo:1047
+#: ../base/ufos/ui/multiplayer.ufo:1074
 msgid "Level 1"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:65
-#: ../base/ufos/ui/multiplayer.ufo:1058
+#: ../base/ufos/ui/multiplayer.ufo:1085
 msgid "Level 2"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:76
-#: ../base/ufos/ui/multiplayer.ufo:1069
+#: ../base/ufos/ui/multiplayer.ufo:1096
 msgid "Level 3"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:87
-#: ../base/ufos/ui/multiplayer.ufo:1080
+#: ../base/ufos/ui/multiplayer.ufo:1107
 msgid "Level 4"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:98
-#: ../base/ufos/ui/multiplayer.ufo:1091
+#: ../base/ufos/ui/multiplayer.ufo:1118
 msgid "Level 5"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:109
-#: ../base/ufos/ui/multiplayer.ufo:1102
+#: ../base/ufos/ui/multiplayer.ufo:1129
 msgid "Level 6"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:120
-#: ../base/ufos/ui/multiplayer.ufo:1113
+#: ../base/ufos/ui/multiplayer.ufo:1140
 msgid "Level 7"
 msgstr ""
 
 #: ../base/ufos/ui/hud.ufo:131
-#: ../base/ufos/ui/multiplayer.ufo:1124
+#: ../base/ufos/ui/multiplayer.ufo:1151
 msgid "Level 8"
 msgstr ""
 
@@ -8762,8 +9239,8 @@ msgstr ""
 #: ../base/ufos/ui/irc.ufo:19
 #: ../base/ufos/ui/multiplayer.ufo:58
 #: ../base/ufos/ui/multiplayer.ufo:97
-#: ../base/ufos/ui/multiplayer.ufo:1801
-#: ../base/ufos/ui/multiplayer.ufo:1854
+#: ../base/ufos/ui/multiplayer.ufo:1828
+#: ../base/ufos/ui/multiplayer.ufo:1881
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 msgid "Lobby"
 msgstr ""
@@ -8784,22 +9261,43 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:186
+#: ../base/ufos/ui/irc.ufo:184
+msgid "Name is already in use"
+msgstr ""
+
+#: ../base/ufos/ui/irc.ufo:189
+msgid "Your name is already in use or is invalid."
+msgstr ""
+
+#: ../base/ufos/ui/irc.ufo:220
+#: ../base/ufos/ui/singleplayer.ufo:91
+msgid "Retry"
+msgstr ""
+
+#: ../base/ufos/ui/irc.ufo:221
+msgid "Retry with your changed name"
+msgstr ""
+
+#: ../base/ufos/ui/irc.ufo:233
+msgid "Close the lobby"
+msgstr ""
+
+#: ../base/ufos/ui/irc.ufo:253
 msgid "Not connected"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:191
+#: ../base/ufos/ui/irc.ufo:258
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:199
+#: ../base/ufos/ui/irc.ufo:266
 #: ../base/ufos/ui/multiplayer.ufo:197
 #: ../base/ufos/ui/multiplayer.ufo:385
-#: ../base/ufos/ui/multiplayer.ufo:1763
+#: ../base/ufos/ui/multiplayer.ufo:1790
 msgid "Connect"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:200
+#: ../base/ufos/ui/irc.ufo:267
 msgid "Connect to the lobby"
 msgstr ""
 
@@ -8943,7 +9441,7 @@ msgid "You have to set the playername and hit the 'OK' button:"
 msgstr ""
 
 #: ../base/ufos/ui/main.ufo:232
-#: ../base/ufos/ui/multiplayer.ufo:1762
+#: ../base/ufos/ui/multiplayer.ufo:1789
 #: ../base/ufos/ui/sys_popup.ufo:49
 #: ../base/ufos/ui/sys_popup.ufo:111
 msgid "OK"
@@ -9314,144 +9812,148 @@ msgstr ""
 msgid "Max AI actors for teamplay mode"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:891
+#: ../base/ufos/ui/multiplayer.ufo:885
+msgid "Round time limit in seconds:"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:918
 msgid "Make this server public:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:908
+#: ../base/ufos/ui/multiplayer.ufo:935
 msgid "Server-Password:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:931
+#: ../base/ufos/ui/multiplayer.ufo:958
 msgid "RCON-Password:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:973
+#: ../base/ufos/ui/multiplayer.ufo:1000
 msgid "Start server"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1144
+#: ../base/ufos/ui/multiplayer.ufo:1171
 msgid "Party info"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1154
+#: ../base/ufos/ui/multiplayer.ufo:1181
 msgid "Display/hide the panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1199
+#: ../base/ufos/ui/multiplayer.ufo:1226
 msgid "Max. players per team"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1213
+#: ../base/ufos/ui/multiplayer.ufo:1240
 msgid "Max. teams for this map"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1236
+#: ../base/ufos/ui/multiplayer.ufo:1263
 msgid "Players connected"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1290
+#: ../base/ufos/ui/multiplayer.ufo:1317
 msgid "Team selection"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1311
+#: ../base/ufos/ui/multiplayer.ufo:1338
 msgid "Team preference:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1325
+#: ../base/ufos/ui/multiplayer.ufo:1352
 msgid "Next free team"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1336
+#: ../base/ufos/ui/multiplayer.ufo:1363
 msgid "Previous free team"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1349
+#: ../base/ufos/ui/multiplayer.ufo:1376
 msgid "Force start"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1350
+#: ../base/ufos/ui/multiplayer.ufo:1377
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1361
-#: ../base/ufos/ui/multiplayer.ufo:1370
+#: ../base/ufos/ui/multiplayer.ufo:1388
+#: ../base/ufos/ui/multiplayer.ufo:1397
 msgid "Finish the teamselection and start the game"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1369
+#: ../base/ufos/ui/multiplayer.ufo:1396
 msgid "Are you ready?"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1378
-#: ../base/ufos/ui/multiplayer.ufo:1388
+#: ../base/ufos/ui/multiplayer.ufo:1405
+#: ../base/ufos/ui/multiplayer.ufo:1415
 msgid "Activate IRC"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1394
+#: ../base/ufos/ui/multiplayer.ufo:1421
 msgid "Deactivate IRC"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1402
-#: ../base/ufos/ui/multiplayer.ufo:1412
+#: ../base/ufos/ui/multiplayer.ufo:1429
+#: ../base/ufos/ui/multiplayer.ufo:1439
 msgid "Display IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1415
+#: ../base/ufos/ui/multiplayer.ufo:1442
 msgid "Hide IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1421
+#: ../base/ufos/ui/multiplayer.ufo:1448
 msgid "Invite others"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1423
+#: ../base/ufos/ui/multiplayer.ufo:1450
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1459
+#: ../base/ufos/ui/multiplayer.ufo:1486
 msgid "Party chat"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1463
+#: ../base/ufos/ui/multiplayer.ufo:1490
 msgid "Global lobby (IRC)"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1546
-#: ../base/ufos/ui/multiplayer.ufo:1619
+#: ../base/ufos/ui/multiplayer.ufo:1573
+#: ../base/ufos/ui/multiplayer.ufo:1646
 msgid "Say:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1729
+#: ../base/ufos/ui/multiplayer.ufo:1756
 msgid "Enter server password"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1742
+#: ../base/ufos/ui/multiplayer.ufo:1769
 msgid "Password:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1780
+#: ../base/ufos/ui/multiplayer.ufo:1807
 msgid "Personal message"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1802
-#: ../base/ufos/ui/multiplayer.ufo:1855
+#: ../base/ufos/ui/multiplayer.ufo:1829
+#: ../base/ufos/ui/multiplayer.ufo:1882
 msgid "Go into the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1819
+#: ../base/ufos/ui/multiplayer.ufo:1846
 msgid "Game invitation"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1838
+#: ../base/ufos/ui/multiplayer.ufo:1865
 msgid "Server info"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1839
+#: ../base/ufos/ui/multiplayer.ufo:1866
 msgid "Show server information"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1867
+#: ../base/ufos/ui/multiplayer.ufo:1894
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
@@ -9750,7 +10252,7 @@ msgid "Keys"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1173
-#: client/battlescape/cl_hud.c:96
+#: client/battlescape/cl_hud.c:99
 msgid "Autostand"
 msgstr ""
 
@@ -9871,10 +10373,6 @@ msgstr ""
 
 #: ../base/ufos/ui/singleplayer.ufo:84
 msgid "Abort"
-msgstr ""
-
-#: ../base/ufos/ui/singleplayer.ufo:91
-msgid "Retry"
 msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:28
@@ -10147,7 +10645,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:507
 #: ../base/ufos/weapons_human.ufo:607
 #: ../base/ufos/weapons_human.ufo:708
-#: ../base/ufos/weapons_human.ufo:1910
+#: ../base/ufos/weapons_human.ufo:1909
 #: ../base/ufos/weapons_particle.ufo:41
 #: ../base/ufos/weapons_particle.ufo:122
 #: ../base/ufos/weapons_particle.ufo:224
@@ -10182,8 +10680,8 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:850
 #: ../base/ufos/weapons_human.ufo:934
 #: ../base/ufos/weapons_human.ufo:981
-#: ../base/ufos/weapons_human.ufo:1670
-#: ../base/ufos/weapons_human.ufo:1930
+#: ../base/ufos/weapons_human.ufo:1669
+#: ../base/ufos/weapons_human.ufo:1929
 msgid "3-Round Burst"
 msgstr ""
 
@@ -10237,7 +10735,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:767
 #: ../base/ufos/weapons_human.ufo:1175
 #: ../base/ufos/weapons_human.ufo:1217
-#: ../base/ufos/weapons_human.ufo:1950
+#: ../base/ufos/weapons_human.ufo:1949
 #: ../base/ufos/weapons_particle.ufo:141
 #: ../base/ufos/weapons_plasma.ufo:61
 #: ../base/ufos/weapons_plasma.ufo:163
@@ -10288,7 +10786,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:828
 #: ../base/ufos/weapons_human.ufo:912
 #: ../base/ufos/weapons_human.ufo:959
-#: ../base/ufos/weapons_human.ufo:1649
+#: ../base/ufos/weapons_human.ufo:1648
 #: ../base/ufos/weapons_multiplayer.ufo:150
 msgid "Single Shot"
 msgstr ""
@@ -10344,37 +10842,37 @@ msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1283
 #: ../base/ufos/weapons_human.ufo:1464
-#: ../base/ufos/weapons_human.ufo:1710
+#: ../base/ufos/weapons_human.ufo:1709
 msgid "Snap Shot - Airburst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1309
-#: ../base/ufos/weapons_human.ufo:1491
-#: ../base/ufos/weapons_human.ufo:1736
+#: ../base/ufos/weapons_human.ufo:1490
+#: ../base/ufos/weapons_human.ufo:1735
 msgid "Aimed Shot - Airburst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1335
-#: ../base/ufos/weapons_human.ufo:1517
-#: ../base/ufos/weapons_human.ufo:1761
+#: ../base/ufos/weapons_human.ufo:1516
+#: ../base/ufos/weapons_human.ufo:1760
 msgid "3-Round Burst - Airburst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1361
-#: ../base/ufos/weapons_human.ufo:1543
-#: ../base/ufos/weapons_human.ufo:1786
+#: ../base/ufos/weapons_human.ufo:1542
+#: ../base/ufos/weapons_human.ufo:1785
 msgid "Snap Shot - Timed"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1389
-#: ../base/ufos/weapons_human.ufo:1571
-#: ../base/ufos/weapons_human.ufo:1813
+#: ../base/ufos/weapons_human.ufo:1570
+#: ../base/ufos/weapons_human.ufo:1812
 msgid "Aimed Shot - Timed"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1417
-#: ../base/ufos/weapons_human.ufo:1599
-#: ../base/ufos/weapons_human.ufo:1840
+#: ../base/ufos/weapons_human.ufo:1598
+#: ../base/ufos/weapons_human.ufo:1839
 msgid "3-Round Burst - Timed"
 msgstr ""
 
@@ -10382,11 +10880,11 @@ msgstr ""
 msgid "25mm IC Grenades"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1632
+#: ../base/ufos/weapons_human.ufo:1631
 msgid "25mm Flechette Grenades"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1693
+#: ../base/ufos/weapons_human.ufo:1692
 msgid "25mm PB Grenades"
 msgstr ""
 
@@ -10612,40 +11110,64 @@ msgstr ""
 msgid "Superhuman"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:829
+#: client/battlescape/cl_actor.c:693
 msgid "This isn't your round\n"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:1090
+#: client/battlescape/cl_actor.c:955
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:1949
+#: client/battlescape/cl_actor.c:1792
 msgid "Unknown alien race"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2487
+#: client/battlescape/cl_actor.c:2457
 msgid "Toggle to next actor"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2488
+#: client/battlescape/cl_actor.c:2458
 msgid "Select an actor from list"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2489
+#: client/battlescape/cl_actor.c:2459
 msgid "Update an actor"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:95
+#: client/battlescape/cl_actor.c:2461
+msgid "Toggle stand/crounch"
+msgstr ""
+
+#: client/battlescape/cl_actor.c:2462
+msgid "Toggle the headgear"
+msgstr ""
+
+#: client/battlescape/cl_actor.c:2463
+msgid "Opens or closes a door"
+msgstr ""
+
+#: client/battlescape/cl_actor.c:2464
+msgid "Confirm the current action"
+msgstr ""
+
+#: client/battlescape/cl_actor.c:2465
+msgid "Toggle to next alien visible from selected actor."
+msgstr ""
+
+#: client/battlescape/cl_actor.c:2467
+msgid "Toggle to next alien"
+msgstr ""
+
 #: client/battlescape/cl_hud.c:98
+#: client/battlescape/cl_hud.c:101
 msgid "Crouch walk"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:97
+#: client/battlescape/cl_hud.c:100
 msgid "Walk"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:145
+#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -10653,133 +11175,97 @@ msgid ""
 "%s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:218
-#, c-format
-msgid "Remaining TUs: %i"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:221
-msgid "No remaining TUs left after shot."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:224
-#, c-format
-msgid "TU: %i"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:225
-#, c-format
-msgid "Shots: %i"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:313
+#: client/battlescape/cl_hud.c:287
 msgid "[0 TU] No reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:331
+#: client/battlescape/cl_hud.c:305
 #, c-format
 msgid "[%i TU] %s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:363
+#: client/battlescape/cl_hud.c:337
 msgid "Reserve TUs for firing/using."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:363
+#: client/battlescape/cl_hud.c:337
 msgid "Shot Reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:615
-#: client/battlescape/cl_hud.c:650
-msgid "No item in hand.\n"
+#: client/battlescape/cl_hud.c:426
+#, c-format
+msgid "Remaining TUs: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:621
-msgid ""
-"Can't perform action:\n"
-"out of ammo.\n"
+#: client/battlescape/cl_hud.c:429
+msgid "No remaining TUs left after shot."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:626
-msgid ""
-"This weapon cannot be fired\n"
-"one handed.\n"
+#: client/battlescape/cl_hud.c:432
+#, c-format
+msgid "TU: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:656
-msgid ""
-"Can't perform action:\n"
-"this item is not reloadable.\n"
+#: client/battlescape/cl_hud.c:433
+#, c-format
+msgid "Shots: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:663
-msgid ""
-"Can't perform action:\n"
-"ammo not available.\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:668
-#: client/battlescape/cl_hud.c:722
-msgid ""
-"Can't perform action:\n"
-"not enough TUs.\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:804
+#: client/battlescape/cl_hud.c:654
 msgid "No weapon."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:813
+#: client/battlescape/cl_hud.c:663
 msgid "Weapon cannot be reloaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:819
+#: client/battlescape/cl_hud.c:669
 msgid "No reload possible, already fully loaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:833
+#: client/battlescape/cl_hud.c:679
 msgid "Not enough TUs for reloading weapon."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:836
+#: client/battlescape/cl_hud.c:682
 msgid "No reload possible, you don't have backup ammo."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:897
+#: client/battlescape/cl_hud.c:774
 msgid "Not enough TUs for standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:900
+#: client/battlescape/cl_hud.c:777
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:905
+#: client/battlescape/cl_hud.c:782
 msgid "Not enough TUs for crouching."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:908
+#: client/battlescape/cl_hud.c:785
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:916
+#: client/battlescape/cl_hud.c:793
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:920
+#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:923
+#: client/battlescape/cl_hud.c:800
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:929
+#: client/battlescape/cl_hud.c:806
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -10787,17 +11273,54 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:936
+#: client/battlescape/cl_hud.c:813
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:958
-#: client/battlescape/cl_hud.c:967
+#: client/battlescape/cl_hud.c:834
+#: client/battlescape/cl_hud.c:843
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1365
+#: client/battlescape/cl_hud.c:1090
+msgid ""
+"You cannot use this unknown item.\n"
+"You need to research it first.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1111
+#, c-format
+msgid ""
+"%s\n"
+"(empty)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1133
+#, c-format
+msgid "Morale  %i | Reserved TUs: %i\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1135
+#, c-format
+msgid "Morale  %i"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1140
+#, c-format
+msgid ""
+"Morale  %i | Reserved TUs: %i\n"
+"%s %i (%i|%i TU left)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1144
+#, c-format
+msgid ""
+"Morale  %i\n"
+"%s %i (%i TU left)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1176
 #, c-format
 msgid ""
 "Time Units\n"
@@ -10806,76 +11329,27 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1468
-msgid ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1488
-#, c-format
-msgid ""
-"%s\n"
-"(empty)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1500
-#, c-format
-msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1502
-#, c-format
-msgid "Morale  %i"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1508
-#, c-format
-msgid ""
-"Morale  %i | Reserved TUs: %i\n"
-"%s %i (%i|%i TU left)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1512
-#, c-format
-msgid ""
-"Morale  %i\n"
-"%s %i (%i TU left)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1527
+#: client/battlescape/cl_hud.c:1200
 msgid "Currently panics!\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1679
-msgid "Reload the weapon in the soldiers left hand"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1680
-msgid "Reload the weapon in the soldiers right hand"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1682
-msgid "Toggle reservation for crouching."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1688
-msgid "Toggle reaction fire"
-msgstr ""
-
-#: client/battlescape/cl_view.c:211
-#: client/battlescape/cl_view.c:236
+#: client/battlescape/cl_view.c:58
+#: client/battlescape/cl_view.c:83
 #, c-format
 msgid "loading %s"
 msgstr ""
 
-#: client/battlescape/cl_view.c:219
+#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr ""
 
-#: client/battlescape/cl_view.c:271
-#: client/cl_main.c:1012
+#: client/battlescape/cl_view.c:118
+#: client/cl_main.c:970
 msgid "Awaiting game start"
+msgstr ""
+
+#: client/battlescape/events/e_server.c:51
+msgid "Ends current round"
 msgstr ""
 
 #: client/battlescape/events/event/actor/e_event_actorappear.c:159
@@ -10891,46 +11365,46 @@ msgstr ""
 msgid "Civilian spotted!\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:79
+#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, c-format
 msgid "%s was stunned\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:81
+#: client/battlescape/events/event/actor/e_event_actordie.c:82
 #, c-format
 msgid "%s was killed\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:89
+#: client/battlescape/events/event/actor/e_event_actordie.c:90
 msgid "A civilian was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:91
+#: client/battlescape/events/event/actor/e_event_actordie.c:92
 msgid "A civilian was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:95
+#: client/battlescape/events/event/actor/e_event_actordie.c:96
 msgid "An alien was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:97
+#: client/battlescape/events/event/actor/e_event_actordie.c:98
 msgid "An alien was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:101
+#: client/battlescape/events/event/actor/e_event_actordie.c:102
 msgid "A soldier was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:103
+#: client/battlescape/events/event/actor/e_event_actordie.c:104
 msgid "A soldier was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:107
+#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:109
+#: client/battlescape/events/event/actor/e_event_actordie.c:110
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr ""
@@ -10948,89 +11422,89 @@ msgstr ""
 msgid "%s ended his round (team %i)\n"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:421
+#: client/campaign/cp_aircraft.c:417
 msgid "ON RED ALERT"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:425
+#: client/campaign/cp_aircraft.c:421
 msgid "Nothing - should not be displayed"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:427
+#: client/campaign/cp_aircraft.c:423
 msgid "at home base"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:429
+#: client/campaign/cp_aircraft.c:425
 msgid "refuelling"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:431
+#: client/campaign/cp_aircraft.c:427
 msgid "idle"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:433
+#: client/campaign/cp_aircraft.c:429
 msgid "in transit"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:435
+#: client/campaign/cp_aircraft.c:431
 msgid "enroute to mission"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:437
+#: client/campaign/cp_aircraft.c:433
 msgid "pursuing a UFO"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:439
+#: client/campaign/cp_aircraft.c:435
 msgid "ready to drop soldiers"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:441
+#: client/campaign/cp_aircraft.c:437
 msgid "intercepting a UFO"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:443
+#: client/campaign/cp_aircraft.c:439
 msgid "enroute to new home base"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:445
+#: client/campaign/cp_aircraft.c:441
 msgid "returning to base"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:519
+#: client/campaign/cp_aircraft.c:515
 msgid "Interceptor"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:521
+#: client/campaign/cp_aircraft.c:517
 msgid "Transporter"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:523
+#: client/campaign/cp_aircraft.c:519
 #: client/campaign/cp_ufo.c:120
 #: client/campaign/cp_ufo.c:121
 msgid "UFO"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:785
+#: client/campaign/cp_aircraft.c:781
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:786
-#: client/campaign/cp_aircraft.c:1238
-#: client/campaign/cp_aircraft.c:1254
-#: client/campaign/cp_aircraft.c:1299
-#: client/campaign/cp_aircraft.c:1380
-#: client/campaign/cp_aircraft.c:1404
-#: client/campaign/cp_aircraft.c:2180
+#: client/campaign/cp_aircraft.c:782
+#: client/campaign/cp_aircraft.c:1244
+#: client/campaign/cp_aircraft.c:1260
+#: client/campaign/cp_aircraft.c:1305
+#: client/campaign/cp_aircraft.c:1386
+#: client/campaign/cp_aircraft.c:1410
+#: client/campaign/cp_aircraft.c:2186
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
 #: client/campaign/cp_airfight.c:356
 #: client/campaign/cp_airfight.c:376
-#: client/campaign/cp_aliencont.c:194
-#: client/campaign/cp_aliencont.c:226
-#: client/campaign/cp_aliencont.c:245
-#: client/campaign/cp_aliencont.c:255
+#: client/campaign/cp_aliencont.c:191
+#: client/campaign/cp_aliencont.c:223
+#: client/campaign/cp_aliencont.c:242
+#: client/campaign/cp_aliencont.c:252
 #: client/campaign/cp_base.c:868
 #: client/campaign/cp_base.c:1442
 #: client/campaign/cp_base.c:2583
@@ -11048,20 +11522,20 @@ msgstr ""
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
 #: client/campaign/cp_base_callbacks.c:663
-#: client/campaign/cp_campaign.c:1475
-#: client/campaign/cp_campaign.c:1520
-#: client/campaign/cp_campaign.c:1573
-#: client/campaign/cp_campaign.c:1586
-#: client/campaign/cp_campaign.c:1588
+#: client/campaign/cp_campaign.c:1481
+#: client/campaign/cp_campaign.c:1526
+#: client/campaign/cp_campaign.c:1579
+#: client/campaign/cp_campaign.c:1592
+#: client/campaign/cp_campaign.c:1594
 #: client/campaign/cp_installation_callbacks.c:156
 #: client/campaign/cp_mapfightequip.c:332
 #: client/campaign/cp_mapfightequip.c:353
 #: client/campaign/cp_mapfightequip.c:359
 #: client/campaign/cp_mapfightequip.c:371
-#: client/campaign/cp_market_callbacks.c:615
-#: client/campaign/cp_market_callbacks.c:620
-#: client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1163
+#: client/campaign/cp_market_callbacks.c:614
+#: client/campaign/cp_market_callbacks.c:619
+#: client/campaign/cp_missions.c:750
+#: client/campaign/cp_missions.c:1178
 #: client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100
 #: client/campaign/cp_nations.c:110
@@ -11090,55 +11564,55 @@ msgstr ""
 #: client/campaign/cp_ufo.c:778
 #: client/campaign/cp_ufo.c:783
 #: client/campaign/missions/cp_mission_baseattack.c:127
-#: client/cl_main.c:407
-#: client/multiplayer/mp_serverlist.c:469
+#: client/cl_main.c:404
+#: client/multiplayer/mp_serverlist.c:470
 msgid "Notice"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:851
+#: client/campaign/cp_aircraft.c:852
 msgid "No operational hangars at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:855
+#: client/campaign/cp_aircraft.c:856
 msgid "No free hangars at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:858
+#: client/campaign/cp_aircraft.c:859
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:861
+#: client/campaign/cp_aircraft.c:862
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:865
+#: client/campaign/cp_aircraft.c:866
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1237
+#: client/campaign/cp_aircraft.c:1243
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1253
+#: client/campaign/cp_aircraft.c:1259
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1299
+#: client/campaign/cp_aircraft.c:1305
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1380
+#: client/campaign/cp_aircraft.c:1386
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1404
+#: client/campaign/cp_aircraft.c:1410
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:2180
+#: client/campaign/cp_aircraft.c:2186
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
@@ -11162,15 +11636,15 @@ msgid "Aircraft started"
 msgstr ""
 
 #: client/campaign/cp_aircraft_callbacks.c:257
-#: client/campaign/cp_map.c:1554
-#: client/campaign/cp_map.c:1561
+#: client/campaign/cp_map.c:1633
+#: client/campaign/cp_map.c:1640
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr ""
 
 #: client/campaign/cp_aircraft_callbacks.c:259
-#: client/campaign/cp_map.c:1555
-#: client/campaign/cp_map.c:1562
+#: client/campaign/cp_map.c:1634
+#: client/campaign/cp_map.c:1641
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr ""
@@ -11215,23 +11689,23 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
 #: client/campaign/cp_airfight.c:478
-#: client/campaign/cp_campaign.c:1588
+#: client/campaign/cp_campaign.c:1594
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:194
+#: client/campaign/cp_aliencont.c:191
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:226
+#: client/campaign/cp_aliencont.c:223
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:245
+#: client/campaign/cp_aliencont.c:242
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:255
+#: client/campaign/cp_aliencont.c:252
 msgid "You've captured new aliens."
 msgstr ""
 
@@ -11400,10 +11874,10 @@ msgstr ""
 
 #: client/campaign/cp_base.c:2322
 #: client/campaign/cp_base.c:2324
-#: client/campaign/cp_market_callbacks.c:597
-#: client/campaign/cp_market_callbacks.c:602
-#: client/campaign/cp_market_callbacks.c:708
-#: client/campaign/cp_market_callbacks.c:710
+#: client/campaign/cp_market_callbacks.c:596
+#: client/campaign/cp_market_callbacks.c:601
+#: client/campaign/cp_market_callbacks.c:707
+#: client/campaign/cp_market_callbacks.c:709
 #: client/campaign/cp_save.c:380
 #: client/multiplayer/mp_team.c:181
 #: client/multiplayer/mp_team.c:202
@@ -11689,7 +12163,7 @@ msgid ""
 msgstr ""
 
 #: client/campaign/cp_campaign.c:811
-#: client/cl_inventory_callbacks.c:137
+#: client/cl_inventory_callbacks.c:136
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
@@ -11739,98 +12213,98 @@ msgid ""
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1475
+#: client/campaign/cp_campaign.c:1481
 msgid "Collected dead alien bodies"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1520
+#: client/campaign/cp_campaign.c:1526
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1572
-#: client/campaign/cp_missions.c:1162
+#: client/campaign/cp_campaign.c:1578
+#: client/campaign/cp_missions.c:1177
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1586
+#: client/campaign/cp_campaign.c:1592
 msgid "You've won the battle"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1605
+#: client/campaign/cp_campaign.c:1611
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1606
+#: client/campaign/cp_campaign.c:1612
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1607
+#: client/campaign/cp_campaign.c:1613
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1609
+#: client/campaign/cp_campaign.c:1615
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1610
+#: client/campaign/cp_campaign.c:1616
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1611
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1612
+#: client/campaign/cp_campaign.c:1618
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1614
+#: client/campaign/cp_campaign.c:1620
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1615
+#: client/campaign/cp_campaign.c:1621
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1616
+#: client/campaign/cp_campaign.c:1622
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
 "\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1617
+#: client/campaign/cp_campaign.c:1623
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1694
+#: client/campaign/cp_campaign.c:1700
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1696
+#: client/campaign/cp_campaign.c:1702
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1697
+#: client/campaign/cp_campaign.c:1703
 msgid "Soldier promoted"
 msgstr ""
 
@@ -11873,6 +12347,8 @@ msgid "You've got a new mail: %s"
 msgstr ""
 
 #: client/campaign/cp_fightequip_callbacks.c:173
+#: client/campaign/cp_map.c:1594
+#: client/campaign/cp_map.c:1613
 msgid "Unknown"
 msgstr ""
 
@@ -12024,15 +12500,15 @@ msgstr ""
 msgid "UFO Sighting"
 msgstr ""
 
-#: client/campaign/cp_map.c:1313
+#: client/campaign/cp_map.c:1390
 msgid "Day"
 msgstr ""
 
-#: client/campaign/cp_map.c:1313
+#: client/campaign/cp_map.c:1390
 msgid "Night"
 msgstr ""
 
-#: client/campaign/cp_map.c:1515
+#: client/campaign/cp_map.c:1593
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12040,63 +12516,63 @@ msgid ""
 "Objective: %s"
 msgstr ""
 
-#: client/campaign/cp_map.c:1531
+#: client/campaign/cp_map.c:1610
 #, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr ""
 
-#: client/campaign/cp_map.c:1551
-#: client/campaign/cp_map.c:1559
+#: client/campaign/cp_map.c:1630
+#: client/campaign/cp_map.c:1638
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1552
-#: client/campaign/cp_map.c:1560
+#: client/campaign/cp_map.c:1631
+#: client/campaign/cp_map.c:1639
 #, c-format
 msgid "Status:\t%s\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1553
+#: client/campaign/cp_map.c:1632
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1557
-#: client/campaign/cp_map.c:1567
+#: client/campaign/cp_map.c:1636
+#: client/campaign/cp_map.c:1646
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1585
+#: client/campaign/cp_map.c:1664
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1785
+#: client/campaign/cp_map.c:1864
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1836
+#: client/campaign/cp_map.c:1915
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1839
+#: client/campaign/cp_map.c:1918
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1844
+#: client/campaign/cp_map.c:1923
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1849
+#: client/campaign/cp_map.c:1928
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1854
+#: client/campaign/cp_map.c:1933
 msgid "UFO in radar range\n"
 msgstr ""
 
@@ -12152,45 +12628,45 @@ msgid "Unknown weight"
 msgstr ""
 
 #: client/campaign/cp_market.c:153
-#: client/campaign/cp_market_callbacks.c:767
+#: client/campaign/cp_market_callbacks.c:766
 msgid "Not enough storage space"
 msgstr ""
 
 #: client/campaign/cp_market.c:153
-#: client/campaign/cp_market_callbacks.c:767
+#: client/campaign/cp_market_callbacks.c:766
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
 "Build more storage facilities."
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:597
+#: client/campaign/cp_market_callbacks.c:596
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:602
+#: client/campaign/cp_market_callbacks.c:601
 msgid "Build a hangar first."
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:615
+#: client/campaign/cp_market_callbacks.c:614
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:620
+#: client/campaign/cp_market_callbacks.c:619
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:708
+#: client/campaign/cp_market_callbacks.c:707
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr ""
 
-#: client/campaign/cp_market_callbacks.c:710
+#: client/campaign/cp_market_callbacks.c:709
 msgid "You can't sell an aircraft that is not in base"
 msgstr ""
 
@@ -12318,28 +12794,28 @@ msgid ""
 "   - The UFO:AI development team"
 msgstr ""
 
-#: client/campaign/cp_missions.c:432
+#: client/campaign/cp_missions.c:446
 msgid "Landed UFO"
 msgstr ""
 
-#: client/campaign/cp_missions.c:434
+#: client/campaign/cp_missions.c:448
 msgid "Terror mission"
 msgstr ""
 
-#: client/campaign/cp_missions.c:436
+#: client/campaign/cp_missions.c:450
 msgid "Base attack"
 msgstr ""
 
-#: client/campaign/cp_missions.c:440
+#: client/campaign/cp_missions.c:454
 msgid "Harvesting mission"
 msgstr ""
 
-#: client/campaign/cp_missions.c:734
+#: client/campaign/cp_missions.c:749
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr ""
 
-#: client/campaign/cp_missions.c:1258
+#: client/campaign/cp_missions.c:1273
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
@@ -12913,44 +13389,44 @@ msgstr ""
 
 #: client/campaign/cp_save.c:467
 #: client/campaign/cp_save.c:491
-#: client/campaign/cp_save.c:628
+#: client/campaign/cp_save.c:619
 msgid "Error loading game."
 msgstr ""
 
 #: client/campaign/cp_save.c:468
 #: client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:629
-#: client/cl_irc.c:1020
-#: client/cl_irc.c:1257
-#: client/cl_main.c:508
-#: client/cl_main.c:513
-#: client/cl_main.c:519
-#: client/cl_main.c:527
+#: client/campaign/cp_save.c:620
+#: client/cl_irc.c:1208
+#: client/cl_irc.c:1440
+#: client/cl_main.c:505
+#: client/cl_main.c:510
+#: client/cl_main.c:516
+#: client/cl_main.c:524
 #: client/multiplayer/mp_callbacks.c:49
 msgid "Error"
 msgstr ""
 
-#: client/campaign/cp_save.c:607
+#: client/campaign/cp_save.c:601
 msgid "Campaign was successfully saved."
 msgstr ""
 
-#: client/campaign/cp_save.c:607
+#: client/campaign/cp_save.c:601
 msgid "Quicksave"
 msgstr ""
 
-#: client/campaign/cp_save.c:631
+#: client/campaign/cp_save.c:622
 msgid "Campaign loaded"
 msgstr ""
 
-#: client/campaign/cp_save.c:631
+#: client/campaign/cp_save.c:622
 msgid "Quicksave campaign was successfully loaded."
 msgstr ""
 
-#: client/campaign/cp_save.c:688
+#: client/campaign/cp_save.c:679
 msgid "Saves to the quick save slot"
 msgstr ""
 
-#: client/campaign/cp_team.c:234
+#: client/campaign/cp_team.c:239
 #, c-format
 msgid "%i of %i"
 msgstr ""
@@ -13249,51 +13725,51 @@ msgstr ""
 msgid "Please select the target base from the list"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1321
+#: client/campaign/cp_transfer.c:1325
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1324
+#: client/campaign/cp_transfer.c:1328
 msgid "No Storage in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1328
+#: client/campaign/cp_transfer.c:1332
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1330
+#: client/campaign/cp_transfer.c:1334
 msgid "No Living Quarters in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1334
+#: client/campaign/cp_transfer.c:1338
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1336
+#: client/campaign/cp_transfer.c:1340
 msgid "No Alien Containment in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1340
+#: client/campaign/cp_transfer.c:1344
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1342
+#: client/campaign/cp_transfer.c:1346
 msgid "No Antimatter Storage in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1346
+#: client/campaign/cp_transfer.c:1350
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1348
+#: client/campaign/cp_transfer.c:1352
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1350
+#: client/campaign/cp_transfer.c:1354
 msgid "No Hangar in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1354
+#: client/campaign/cp_transfer.c:1358
 msgid "No power supplies in this base.\n"
 msgstr ""
 
@@ -13709,12 +14185,12 @@ msgstr ""
 msgid "skill_explosive"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:131
+#: client/cl_inventory_callbacks.c:130
 #, c-format
 msgid "Size:\t%i\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:133
+#: client/cl_inventory_callbacks.c:132
 msgid "^BDamage type:\tProtection:\n"
 msgstr ""
 
@@ -13724,14 +14200,14 @@ msgid "%s weapon\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:144
-#: client/cl_inventory_callbacks.c:180
 #: client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:186
 msgid "One-handed"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:144
-#: client/cl_inventory_callbacks.c:180
 #: client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:186
 msgid "Two-handed"
 msgstr ""
 
@@ -13746,13 +14222,13 @@ msgid "Skill:\t%s\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:175
-#: client/cl_inventory_callbacks.c:186
+#: client/cl_inventory_callbacks.c:189
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:176
-#: client/cl_inventory_callbacks.c:187
+#: client/cl_inventory_callbacks.c:190
 #, c-format
 msgid "Range:\t%g\n"
 msgstr ""
@@ -13764,24 +14240,39 @@ msgstr ""
 
 #: client/cl_inventory_callbacks.c:180
 #, c-format
+msgid "%s. No detailed info available.\n"
+msgstr ""
+
+#: client/cl_inventory_callbacks.c:180
+#, fuzzy
+msgid "Ammunition"
+msgstr "Асунсьйон"
+
+#: client/cl_inventory_callbacks.c:180
+#, fuzzy
+msgid "Weapon"
+msgstr "Сапопан"
+
+#: client/cl_inventory_callbacks.c:183
+#, c-format
 msgid "%s ammo-less weapon\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:186
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:185
+#: client/cl_inventory_callbacks.c:188
 #, c-format
 msgid "Action:\t%s\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:194
+#: client/cl_inventory_callbacks.c:197
 msgid "Unknown - not useable"
 msgstr ""
 
-#: client/cl_irc.c:1257
+#: client/cl_irc.c:1440
 msgid "Server closed connection"
 msgstr ""
 
@@ -13789,30 +14280,26 @@ msgstr ""
 msgid "..."
 msgstr ""
 
-#: client/cl_main.c:507
+#: client/cl_main.c:504
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:513
+#: client/cl_main.c:510
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:519
+#: client/cl_main.c:516
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:526
+#: client/cl_main.c:523
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:882
+#: client/cl_main.c:855
 msgid "Target your shot to the ground"
-msgstr ""
-
-#: client/cl_main.c:1054
-msgid "Custom"
 msgstr ""
 
 #: client/cl_screen.c:165
@@ -13826,147 +14313,119 @@ msgid "Loading Map [%s]"
 msgstr ""
 
 #: client/cl_team.c:50
-#: client/cl_team.c:296
-#: client/cl_team.c:307
+#: client/cl_team.c:334
+#: client/cl_team.c:345
 msgid "Urban"
 msgstr ""
 
 #: client/cl_team.c:52
-#: client/cl_team.c:297
-#: client/cl_team.c:308
+#: client/cl_team.c:335
+#: client/cl_team.c:346
 msgid "Jungle"
 msgstr ""
 
 #: client/cl_team.c:54
-#: client/cl_team.c:298
-#: client/cl_team.c:309
+#: client/cl_team.c:336
+#: client/cl_team.c:347
 msgid "Desert"
 msgstr ""
 
 #: client/cl_team.c:56
-#: client/cl_team.c:299
-#: client/cl_team.c:310
+#: client/cl_team.c:337
+#: client/cl_team.c:348
 msgid "Arctic"
 msgstr ""
 
 #: client/cl_team.c:58
-#: client/cl_team.c:311
+#: client/cl_team.c:349
 msgid "Yellow"
 msgstr ""
 
 #: client/cl_team.c:60
-#: client/cl_team.c:312
+#: client/cl_team.c:350
 msgid "CCCP"
 msgstr ""
 
-#: client/cl_team.c:414
+#: client/cl_team.c:453
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/input/cl_input.c:1019
+#: client/input/cl_input.c:895
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr ""
 
-#: client/input/cl_input.c:1021
+#: client/input/cl_input.c:897
 msgid "Rotate battlescape camera clockwise"
 msgstr ""
 
-#: client/input/cl_input.c:1023
+#: client/input/cl_input.c:899
 msgid "Tilt battlescape camera up"
 msgstr ""
 
-#: client/input/cl_input.c:1025
+#: client/input/cl_input.c:901
 msgid "Tilt battlescape camera down"
 msgstr ""
 
-#: client/input/cl_input.c:1027
+#: client/input/cl_input.c:903
 msgid "Move battlescape camera left"
 msgstr ""
 
-#: client/input/cl_input.c:1029
+#: client/input/cl_input.c:905
 msgid "Move battlescape camera right"
 msgstr ""
 
-#: client/input/cl_input.c:1031
+#: client/input/cl_input.c:907
 msgid "Move battlescape camera forward"
 msgstr ""
 
-#: client/input/cl_input.c:1033
+#: client/input/cl_input.c:909
 msgid "Move battlescape camera backward"
 msgstr ""
 
-#: client/input/cl_input.c:1035
-#: client/input/cl_input.c:1064
+#: client/input/cl_input.c:911
+#: client/input/cl_input.c:933
 msgid "Zoom in"
 msgstr ""
 
-#: client/input/cl_input.c:1037
-#: client/input/cl_input.c:1065
+#: client/input/cl_input.c:913
+#: client/input/cl_input.c:934
 msgid "Zoom out"
 msgstr ""
 
-#: client/input/cl_input.c:1040
+#: client/input/cl_input.c:916
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:1042
+#: client/input/cl_input.c:918
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:1044
+#: client/input/cl_input.c:920
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:1046
+#: client/input/cl_input.c:922
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
-#: client/input/cl_input.c:1048
+#: client/input/cl_input.c:924
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr ""
 
-#: client/input/cl_input.c:1050
+#: client/input/cl_input.c:926
 msgid "Turn soldier toward mouse pointer"
 msgstr ""
 
-#: client/input/cl_input.c:1052
+#: client/input/cl_input.c:928
 msgid "Toggles the hud radar mode"
 msgstr ""
 
-#: client/input/cl_input.c:1055
-msgid "Toggle stand/crounch"
-msgstr ""
-
-#: client/input/cl_input.c:1056
-msgid "Toggle the headgear"
-msgstr ""
-
-#: client/input/cl_input.c:1057
-msgid "Toggle to next alien"
-msgstr ""
-
-#: client/input/cl_input.c:1058
-msgid "Toggle to next alien visible from selected actor."
-msgstr ""
-
-#: client/input/cl_input.c:1060
-msgid "Ends current round"
-msgstr ""
-
-#: client/input/cl_input.c:1061
-msgid "Opens or closes a door"
-msgstr ""
-
-#: client/input/cl_input.c:1062
+#: client/input/cl_input.c:931
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/input/cl_input.c:1063
+#: client/input/cl_input.c:932
 msgid "Slice through terrain at a lower level"
-msgstr ""
-
-#: client/input/cl_input.c:1066
-msgid "Confirm the current action"
 msgstr ""
 
 #: client/menu/m_main.c:53
@@ -14067,94 +14526,94 @@ msgstr ""
 msgid "No team"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:299
+#: client/multiplayer/mp_serverlist.c:300
 #, c-format
 msgid ""
 "IP\t%s\n"
 "\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:310
+#: client/multiplayer/mp_serverlist.c:311
 #, c-format
 msgid "Map:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:315
+#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:316
+#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:317
+#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:318
+#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:319
+#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:320
+#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:321
+#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:322
+#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:323
+#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:324
+#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:325
+#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:326
+#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:327
+#: client/multiplayer/mp_serverlist.c:328
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:328
+#: client/multiplayer/mp_serverlist.c:329
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:329
+#: client/multiplayer/mp_serverlist.c:330
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:469
+#: client/multiplayer/mp_serverlist.c:470
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
@@ -14170,11 +14629,11 @@ msgstr ""
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 
-#: game/g_actor.c:302
+#: game/g_actor.c:341
 msgid "Can't perform action - not enough TUs!\n"
 msgstr ""
 
-#: game/g_actor.c:306
+#: game/g_actor.c:345
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
@@ -14206,23 +14665,25 @@ msgstr ""
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 
-#: game/g_client.c:447
+#: game/g_client.c:431
 msgid "Currently shaken, won't let their guard down.\n"
-msgstr ""
-
-#: game/g_client.c:463
-msgid "Can't activate reaction fire.\n"
 msgstr ""
 
 #: game/g_cmds.c:71
 #, c-format
-msgid "You can't talk for %d more seconds\n"
-msgstr ""
+msgid "You can't talk for %d more second\n"
+msgid_plural "You can't talk for %d more seconds\n"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: game/g_cmds.c:80
 #, c-format
-msgid "Flood protection: You can't talk for %d seconds.\n"
-msgstr ""
+msgid "Flood protection: You can't talk for %d more second\n"
+msgid_plural "Flood protection: You can't talk for %d more seconds\n"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: game/g_combat.c:395
 msgid ""
@@ -14258,11 +14719,11 @@ msgstr ""
 msgid "Aliens entered target zone\n"
 msgstr ""
 
-#: game/g_mission.c:75
+#: game/g_mission.c:79
 msgid "Item was placed\n"
 msgstr ""
 
-#: game/g_mission.c:81
+#: game/g_mission.c:86
 msgid "Target zone is occupied\n"
 msgstr ""
 
@@ -14337,4 +14798,7 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#~ msgid "media/FreeSans.ttf"
+#~ msgstr "media/FreeSans.ttf"
 
