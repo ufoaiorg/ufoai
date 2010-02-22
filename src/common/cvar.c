@@ -314,13 +314,13 @@ qboolean Cvar_Delete (const char *var_name)
 				Mem_Free(var->default_string);
 			/* latched cvars should not be removable */
 			assert(var->latchedString == NULL);
-			Mem_Free(var);
 			changeListener = var->changeListener;
 			while (changeListener) {
 				cvarChangeListener_t *changeListener2 = changeListener->next;
 				Mem_Free(changeListener);
 				changeListener = changeListener2;
 			}
+			Mem_Free(var);
 
 			return qtrue;
 		}
