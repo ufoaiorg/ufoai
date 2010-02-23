@@ -237,6 +237,20 @@ void G_EventActorFall (const edict_t* ent)
 }
 
 /**
+ * @brief Informs the client that an interaction with the world is possible
+ * @note It's assumed that the clientAction is already set
+ * @param ent The edict that can execute the action (an actor)
+ */
+void G_EventSetClientAction (const edict_t *ent)
+{
+	/* tell the hud to show the door buttons */
+	gi.AddEvent(G_TeamToPM(ent->team), EV_DOOR_ACTION);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->clientAction->number);
+	gi.EndEvents();
+}
+
+/**
  * @brief Reset the client actions for the given entity
  * @param[in] ent The entity to reset the client action for
  * @note This event is send to the player this edict belongs to

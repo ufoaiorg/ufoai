@@ -439,8 +439,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 		 * action set and there were steps made */
 		if (!triggers && ent->clientAction) {
 			/* no triggers, no client action */
-			ent->clientAction = NULL;
-			G_EventResetClientAction(ent);
+			G_ActorSetClientAction(ent, NULL);
 		}
 
 		/* end the move */

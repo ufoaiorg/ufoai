@@ -35,6 +35,21 @@ qboolean G_IsLivingActor (const edict_t *ent)
 }
 
 /**
+ * @brief Handles the client actions (interaction with the world)
+ * @param actor The actors' edict
+ * @param ent The edict that can be used by the actor
+ */
+void G_ActorSetClientAction (edict_t *actor, edict_t *ent)
+{
+	actor->clientAction = ent;
+	if (ent == NULL) {
+		G_EventResetClientAction(actor);
+	} else {
+		G_EventSetClientAction(actor);
+	}
+}
+
+/**
  * @brief Calculates the amount of all currently reserved TUs
  * @param ent The actor to calculate the reserved TUs for
  * @return The amount of reserved TUs for the given actor edict

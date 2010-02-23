@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa EV_DOOR_ACTION
  * @sa Touch_DoorTrigger
  * @sa CL_ActorUseDoor
+ * @todo Hud should have a button that should be activated now
  */
 void CL_ActorDoorAction (const eventRegister_t *self, struct dbuffer *msg)
 {

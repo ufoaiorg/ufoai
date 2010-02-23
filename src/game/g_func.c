@@ -224,12 +224,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 	} else {
 		if (activator->clientAction != self->owner) {
 			/* prepare for client action */
-			activator->clientAction = self->owner;
-			/* tell the hud to show the door buttons */
-			gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
-			gi.WriteShort(activator->number);
-			gi.WriteShort(activator->clientAction->number);
-			gi.EndEvents();
+			G_ActorSetClientAction(activator, self->owner);
 		}
 		return qtrue;
 	}

@@ -345,6 +345,7 @@ void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, 
 void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
 void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventSetClientAction(const edict_t *ent);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
 void G_EventEndRound(void);
@@ -387,6 +388,7 @@ void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
 
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
+void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
