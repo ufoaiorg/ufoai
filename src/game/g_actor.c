@@ -35,6 +35,28 @@ qboolean G_IsLivingActor (const edict_t *ent)
 }
 
 /**
+ * @brief Make the actor use (as in open/close) a door edict
+ * @note Will also check whether the door is still reachable (this might have
+ * changed due to the rotation) after the usage
+ * @param actor The actor that is using the door
+ * @param door The door that should be opened/closed
+ * @todo Check other actors that might be close to the door, too
+ */
+void G_ActorUseDoor (edict_t *actor, edict_t *door)
+{
+	edict_t *closeActor = NULL;
+
+	G_ClientUseEdict(G_PLAYER_FROM_ENT(actor), actor, door);
+
+	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
+		/* check whether the door is still reachable (this might have
+		 * changed due to the rotation) or whether a actor can reach it now */
+		if (!G_TouchTriggers(closeActor))
+			G_ActorSetClientAction(closeActor, NULL);
+	}
+}
+
+/**
  * @brief Handles the client actions (interaction with the world)
  * @param actor The actors' edict
  * @param ent The edict that can be used by the actor
@@ -61,7 +83,7 @@ int G_ActorGetReservedTUs (const edict_t *ent)
 }
 
 /**
- * @brief Calculates the amount of usable TUs
+ * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
  * @param ent The actor to calculate the amount of usable TUs for
  * @return The amount of usable TUs for the given actor edict
  */

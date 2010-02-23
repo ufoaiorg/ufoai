@@ -656,7 +656,7 @@ int G_ClientAction (player_t * player)
 				if (door->flags & FL_GROUPSLAVE)
 					door = door->groupMaster;
 
-				G_ClientUseEdict(player, ent, door);
+				G_ActorUseDoor(ent, door);
 			}
 		}
 		break;

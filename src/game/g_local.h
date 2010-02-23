@@ -387,6 +387,7 @@ void G_SendState(unsigned int playerMask, const edict_t *ent);
 void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
 
+void G_ActorUseDoor(edict_t *actor, edict_t *door);
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_GetActorByUCN(const int ucn, const int team);

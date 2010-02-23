@@ -743,10 +743,6 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	/* do the move */
 	G_ClientMove(player, 0, ent, bestAia.to);
-	/** @todo not yet working */
-	/* make ai use doors if they touched a door trigger and stopped in mid-move */
-	if (ent->clientAction && bestAia.target == NULL)
-		G_ClientUseEdict(player, ent->clientAction, ent);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))

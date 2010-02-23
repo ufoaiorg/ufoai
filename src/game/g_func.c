@@ -218,7 +218,7 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		if (self->flags & FL_GROUPSLAVE)
 			self = self->groupMaster;
 		if (AI_CheckUsingDoor(activator, self->owner))
-			G_ClientUseEdict(G_PLAYER_FROM_ENT(activator), activator, self->owner);
+			G_ActorUseDoor(activator, self->owner);
 		/* we don't want the client action stuff to be send for ai actors */
 		return qfalse;
 	} else {
