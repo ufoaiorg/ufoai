@@ -215,27 +215,17 @@ window irc_changename
 		size		"185 34"
 	}
 
-	button bt_ok
+	cmpPopupButton bt_ok
 	{
 		string		"_Retry"
 		tooltip		"_Retry with your changed name"
-		font		f_menu
-		color		"0 0.5 0 1"
-		image		ui/button_green_small
 		pos			"110 192"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;irc_disconnect;irc_connect;" }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close the lobby"
-		font		f_menu
-		color		"0 0.5 0 1"
-		image		ui/button_green_small
 		pos			"296 192"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;irc_disconnect;mn_pop;" }
 	}
 }
@@ -261,27 +251,17 @@ window irc_popup
 		longlines	wrap
 	}
 
-	button bt_ok
+	cmpPopupButton bt_ok
 	{
 		string		"_Connect"
 		tooltip		"_Connect to the lobby"
-		font		f_menu
-		color		"0 0.5 0 1"
-		image		ui/button_green_small
 		pos			"110 192"
-		size		"176 32"
 		onClick		{ cmd "irc_connect; mn_pop; mn_push irc;" }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		font		f_menu
-		color		"0 0.5 0 1"
-		image		ui/button_green_small
 		pos			"296 192"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
 }

@@ -227,15 +227,11 @@ window checkcvars
 		color		"1 1 1 0.5"
 	}
 
-	button bt_ok
+	cmpPopupButton bt_ok
 	{
 		string		"_OK"
 		tooltip		"_Save settings"
 		pos			"566 338"
-		size		"176 32"
-		image		ui/button_green_small
-		font		f_menu
-		color		"0 0.5 0 1"
 		onClick		{ cmd "mn_pop; saveconfig config.cfg;" }
 	}
 
