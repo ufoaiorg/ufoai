@@ -394,7 +394,8 @@ void G_CompleteRecalcRouting (void)
 }
 
 /**
- * @brief Check the world against triggers for the current entity (actor)
+ * @brief Check the world against triggers for the current entity
+ * @param[in,out] ent The entity that maybe touches others
  */
 int G_TouchTriggers (edict_t *ent)
 {
