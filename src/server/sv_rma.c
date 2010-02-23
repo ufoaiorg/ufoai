@@ -87,7 +87,7 @@ static void RandomList (const int n, short *list)
  * @note If you marked a tile with + the mTile_t->spec at that position will be SOLID
  * @note valid tile characters are 0-5 and a-z
  */
-static uLong tileMask (const char chr)
+static unsigned long tileMask (const char chr)
 {
 	if (chr == '+')
 		return 1UL;
@@ -352,7 +352,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static void SV_CombineAlternatives (uLong *mapAlts, const uLong tileAlts, char *mapRating)
+static void SV_CombineAlternatives (unsigned long *mapAlts, const unsigned long tileAlts, char *mapRating)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
 	if (IS_SOLID(*mapAlts) || (tileAlts == ALL_TILES))
@@ -377,8 +377,8 @@ static void SV_CombineAlternatives (uLong *mapAlts, const uLong tileAlts, char *
  */
 static void SV_ClearMap (mapInfo_t *map)
 {
-	uLong *mp = &map->curMap[0][0];
-	uLong *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
+	unsigned long *mp = &map->curMap[0][0];
+	unsigned long *end = &map->curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
 
 	memset(map->curRating, 0, sizeof(map->curRating));
 
@@ -400,8 +400,8 @@ static void SV_ClearMap (mapInfo_t *map)
 static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, const int y)
 {
 	int tx, ty;
-	const uLong *spec = NULL;
-	const uLong *m = NULL;
+	const unsigned long *spec = NULL;
+	const unsigned long *m = NULL;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 
 	/* check for valid grid positions */
@@ -421,7 +421,7 @@ static qboolean SV_FitTile (const mapInfo_t *map, mTile_t * tile, const int x, c
 	m = &map->curMap[y][x];
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
-			const uLong combined = (*m) & (*spec);
+			const unsigned long combined = (*m) & (*spec);
 
 			/* quit if both are solid or no equal connection is found */
 			if (IS_SOLID(combined) || !combined)

@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Stores the parsed data for a map tile. (See *.ump files) */
 typedef struct mTile_s {
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
-	uLong spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
+	unsigned long spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
 	int w, h;		/**< The width and height of the tile. */
 	int area;	/**< Number of solid parts */
 	struct mTile_s *duplicate;	/**< Pointer to next duplicate **/
@@ -93,7 +93,7 @@ typedef struct mPlaced_s {
 typedef struct mapInfo_s {
 	char name[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	/** @brief Stores the alternatives information for the assembled map */
-	uLong curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
+	unsigned long curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
 	/** @brief Stores the map rating for the assembled map */
 	char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
