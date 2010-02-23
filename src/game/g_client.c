@@ -661,16 +661,12 @@ int G_ClientAction (player_t * player)
 		door = G_EdictsGetByNum(i);
 
 		/* maybe the door is no longer 'alive' because it was destroyed */
-		if (door) {
-			if (ent->clientAction == door) {
-				/* check whether it's part of an edict group but not the master */
-				if (door->flags & FL_GROUPSLAVE)
-					door = door->groupMaster;
+		if (door && ent->clientAction == door) {
+			/* check whether it's part of an edict group but not the master */
+			if (door->flags & FL_GROUPSLAVE)
+				door = door->groupMaster;
 
-				G_ClientUseEdict(player, ent, door);
-			} else
-				Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", ent->clientAction->number,
-						door->number);
+			G_ClientUseEdict(player, ent, door);
 		}
 	}
 		break;
