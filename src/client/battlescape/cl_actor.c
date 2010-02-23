@@ -383,6 +383,8 @@ void CL_ActorAddToTeamList (le_t * le)
 		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
+		else
+			MN_ExecuteConfunc("huddeselect %i", cl.numTeamList);
 	}
 }
 
