@@ -1024,6 +1024,10 @@ void Cvar_FixCheatVars (void)
 			Com_Printf("Cheat cvars: Cvar %s has no default value\n", var->name);
 			continue;
 		}
+
+		if (!strcmp(var->string, var->default_string))
+			continue;
+
 		/* also remove the oldString value here */
 		if (var->oldString) {
 			Mem_Free(var->oldString);
@@ -1033,6 +1037,8 @@ void Cvar_FixCheatVars (void)
 		var->string = Mem_PoolStrDup(var->default_string, com_cvarSysPool, 0);
 		var->value = atof(var->string);
 		var->integer = atoi(var->string);
+
+		Com_Printf("'%s' is a cheat cvar - activate sv_cheats to use it.\n", var->name);
 	}
 }
 

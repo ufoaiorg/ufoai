@@ -203,7 +203,6 @@ extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
-extern cvar_t *sv_send_edicts;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
 extern cvar_t *sv_maxsoldiersperplayer;
@@ -376,7 +375,7 @@ void G_EventReactionFireChange(const edict_t* ent);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
-qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
+qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);

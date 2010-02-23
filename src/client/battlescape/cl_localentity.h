@@ -84,7 +84,7 @@ typedef struct le_s {
 	 */
 	byte actorMoveLength;
 
-	int clientAction;		/**< entnum from server that is currently triggered */
+	struct le_s *clientAction;		/**< entity from server that is currently triggered and wait for client action */
 
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;

@@ -42,11 +42,13 @@ void CL_ActorDoorAction (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* get actor le */
 	le = LE_Get(number);
-	if (!le) {
-		Com_Printf("CL_ActorDoorAction: Could not get le %i\n", number);
-		return;
-	}
+	if (!le)
+		LE_NotFoundError(number);
+
 	/* set door number */
-	le->clientAction = doornumber;
+	le->clientAction = LE_Get(doornumber);
+	if (!le->clientAction)
+		LE_NotFoundError(doornumber);
+
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction: Set door number: %i (for actor with entnum %i)\n", doornumber, number);
 }

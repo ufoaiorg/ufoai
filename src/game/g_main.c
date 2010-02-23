@@ -60,7 +60,7 @@ cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
 cvar_t *sv_reaction_leftover;
 cvar_t *sv_shot_origin;
-cvar_t *sv_send_edicts;
+static cvar_t *sv_send_edicts;
 
 cvar_t *ai_alien;
 cvar_t *ai_civilian;

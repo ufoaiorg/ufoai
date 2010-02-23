@@ -999,8 +999,8 @@ static void CL_ActorUseDoor (const le_t *le)
 
 	assert(le->clientAction);
 
-	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", le->clientAction, le->entnum);
+	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction->entnum);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", le->clientAction->entnum, le->entnum);
 }
 
 /**
@@ -1012,7 +1012,7 @@ void CL_ActorDoorAction_f (void)
 		return;
 
 	/* no client action */
-	if (selActor->clientAction == 0) {
+	if (selActor->clientAction == NULL) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
 		return;
 	}

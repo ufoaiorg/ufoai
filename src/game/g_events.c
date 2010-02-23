@@ -238,12 +238,12 @@ void G_EventActorFall (const edict_t* ent)
 
 /**
  * @brief Reset the client actions for the given entity
- * @param ent The entity to reset the client action for
- * @note This event is send to all the clients that belong that the edict's team
+ * @param[in] ent The entity to reset the client action for
+ * @note This event is send to the player this edict belongs to
  */
 void G_EventResetClientAction (const edict_t* ent)
 {
-	gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
+	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_RESET_CLIENT_ACTION);
 	gi.WriteShort(ent->number);
 }
 

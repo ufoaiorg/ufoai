@@ -33,10 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_DoorOpen (const eventRegister_t *self, struct dbuffer *msg)
 {
 	/* get local entity */
-	const int entnum = NET_ReadShort(msg);
-	le_t *le = LE_Get(entnum);
+	int number;
+	le_t *le;
+
+	NET_ReadFormat(msg, self->formatString, &number);
+
+	le = LE_Get(number);
 	if (!le)
-		LE_NotFoundError(entnum);
+		LE_NotFoundError(number);
 
 	/** @todo YAW should be the orientation of the door */
 	le->angles[YAW] += DOOR_ROTATION_ANGLE;

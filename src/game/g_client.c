@@ -556,7 +556,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
  * @sa CL_ActorUseDoor
  * @sa G_UseEdict
  */
-qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict)
+qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheck(player, actor, edict->TU))
@@ -654,18 +654,24 @@ int G_ClientAction (player_t * player)
 		/* read the door the client wants to open */
 		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
 
+		if (!ent->clientAction)
+			Com_DPrintf(DEBUG_GAME, "Actor has no action set, entnum %i\n", ent->number);
+
 		/* get the door edict */
 		door = G_EdictsGetByNum(i);
 
-		if (ent->clientAction == door) {
-			/* check whether it's part of an edict group but not the master */
-			if (door->flags & FL_GROUPSLAVE)
-				door = door->groupMaster;
+		/* maybe the door is no longer 'alive' because it was destroyed */
+		if (door) {
+			if (ent->clientAction == door) {
+				/* check whether it's part of an edict group but not the master */
+				if (door->flags & FL_GROUPSLAVE)
+					door = door->groupMaster;
 
-			G_ClientUseEdict(player, ent, door);
-		} else
-			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", ent->clientAction->number,
-					door->number);
+				G_ClientUseEdict(player, ent, door);
+			} else
+				Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", ent->clientAction->number,
+						door->number);
+		}
 	}
 		break;
 

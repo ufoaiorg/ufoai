@@ -44,7 +44,7 @@ void CL_ActorResetClientAction (const eventRegister_t *self, struct dbuffer *msg
 	if (!le)
 		LE_NotFoundError(number);
 
-	/* set door number */
-	le->clientAction = 0;
+	/* reset client action entity */
+	le->clientAction = NULL;
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorResetClientAction: Reset client action for actor with entnum %i\n", number);
 }
