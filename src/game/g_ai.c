@@ -801,7 +801,7 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
  */
 static void AI_TryToReloadWeapon (edict_t *ent, int containerID)
 {
-	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, containerID)) {
+	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
 		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
@@ -831,7 +831,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
 	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent))
-		G_ClientGetWeaponFromInventory(player, ent->number);
+		G_ClientGetWeaponFromInventory(player, ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
 

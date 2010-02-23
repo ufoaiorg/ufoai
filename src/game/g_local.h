@@ -409,8 +409,8 @@ qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize)
 void G_ClientDisconnect(player_t * player);
 
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
-qboolean G_ClientCanReload(player_t *player, int entnum, int containerID);
-void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
+qboolean G_ClientCanReload(player_t *player, edict_t *ent, int containerID);
+void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
 void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to);
 void G_ActorFall(edict_t *ent);
@@ -479,7 +479,7 @@ void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
 int G_EdictsGetNumber(const edict_t* ent);
 qboolean G_EdictsIsValidNum(const int idx);
-edict_t* G_EdictsGetByNum(const int idx);
+edict_t* G_EdictsGetByNum(const int num);
 edict_t* G_EdictsGetFirst(void);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);

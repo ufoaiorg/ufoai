@@ -467,14 +467,11 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, int entnum, int containerID)
+qboolean G_ClientCanReload (player_t *player, edict_t *ent, int containerID)
 {
-	edict_t *ent;
 	invList_t *ic;
 	int container;
 	objDef_t *weapon;
-
-	ent = G_EdictsGetByNum(entnum);
 
 	if (ent->i.c[containerID]) {
 		weapon = ent->i.c[containerID]->item.t;
@@ -501,24 +498,22 @@ qboolean G_ClientCanReload (player_t *player, int entnum, int containerID)
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
+void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 {
-	edict_t *ent;
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t *hand;
+	invDef_t *invDef;
 	int tu;
 	int container;
 	invDef_t *bestContainer;
 
-	ent = G_EdictsGetByNum(entnum);
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
 		return;
 
 	/* search for weapons and select the one that is available easily */
 	tu = 100;
-	hand = INVDEF(gi.csi->idRight);
+	invDef = INVDEF(gi.csi->idRight);
 	bestContainer = NULL;
 	icFinal = NULL;
 
@@ -543,7 +538,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
+		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, qtrue);
 }
 
 /**
@@ -596,12 +591,9 @@ int G_ClientAction (player_t * player)
 	action = gi.ReadByte();
 	num = gi.ReadShort();
 
-	if (num < 0 || num >= MAX_EDICTS) {
-		gi.dprintf("Invalid edict num %i\n", num);
-		return action;
-	}
-
 	ent = G_EdictsGetByNum(num);
+	if (ent == NULL)
+		return action;
 
 	switch (action) {
 	case PA_NULL:
@@ -648,27 +640,25 @@ int G_ClientAction (player_t * player)
 		}
 		break;
 
-	case PA_USE_DOOR: {
-		edict_t *door;
+	case PA_USE_DOOR:
+		if (ent->clientAction) {
+			edict_t *door;
 
-		/* read the door the client wants to open */
-		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+			/* read the door the client wants to open */
+			gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
 
-		if (!ent->clientAction)
-			Com_DPrintf(DEBUG_GAME, "Actor has no action set, entnum %i\n", ent->number);
+			/* get the door edict */
+			door = G_EdictsGetByNum(i);
 
-		/* get the door edict */
-		door = G_EdictsGetByNum(i);
+			/* maybe the door is no longer 'alive' because it was destroyed */
+			if (door && ent->clientAction == door) {
+				/* check whether it's part of an edict group but not the master */
+				if (door->flags & FL_GROUPSLAVE)
+					door = door->groupMaster;
 
-		/* maybe the door is no longer 'alive' because it was destroyed */
-		if (door && ent->clientAction == door) {
-			/* check whether it's part of an edict group but not the master */
-			if (door->flags & FL_GROUPSLAVE)
-				door = door->groupMaster;
-
-			G_ClientUseEdict(player, ent, door);
+				G_ClientUseEdict(player, ent, door);
+			}
 		}
-	}
 		break;
 
 	case PA_REACT_SELECT:

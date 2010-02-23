@@ -78,10 +78,14 @@ qboolean G_EdictsIsValidNum (const int idx)
  * @brief Get an entity by it's number
  * @param idx The entity's index in the array of entities
  */
-edict_t* G_EdictsGetByNum (const int idx)
+edict_t* G_EdictsGetByNum (const int num)
 {
-	assert(idx >= 0 && idx < globals.num_edicts);
-	return g_edicts + idx;
+	if (!G_EdictsIsValidNum(num)) {
+		gi.dprintf("Invalid edict num %i\n", num);
+		return NULL;
+	}
+
+	return g_edicts + num;
 }
 
 /**
