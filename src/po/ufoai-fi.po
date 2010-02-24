@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-02-23 04:03+0200\n"
+"PO-Revision-Date: 2010-02-24 06:08+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -202,7 +202,7 @@ msgstr "Suuri kaupunki"
 
 #: ../base/ufos/aircraftmanagement.ufo:96
 msgid "Firebird-class Dropship"
-msgstr "Firebird-luokan Kuljetusalus"
+msgstr "Firebird-luokan Pudotusalus"
 
 #: ../base/ufos/aircraftmanagement.ufo:97
 msgid "Firebird D"
@@ -210,7 +210,7 @@ msgstr "Firebird D"
 
 #: ../base/ufos/aircraftmanagement.ufo:131
 msgid "Herakles-class Heavy Lifter"
-msgstr "Herakles-luokan raskas Nostin"
+msgstr "Herakles-luokan Raskas Nostaja"
 
 #: ../base/ufos/aircraftmanagement.ufo:132
 msgid "Herakles D"
@@ -250,11 +250,11 @@ msgstr "Dragon"
 
 #: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser-class Interceptor"
-msgstr "Tähdenmetsästäjä-luokan Torjuntahävittäjä"
+msgstr "Starchaser-luokan Torjuntahävittäjä"
 
 #: ../base/ufos/aircraftmanagement.ufo:344
 msgid "Starchaser"
-msgstr "Tähdenmetsästäjä"
+msgstr "Starchaser"
 
 #: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray Interceptor"
@@ -3834,7 +3834,7 @@ msgid ""
 "Select dropship \\n"
 "(if possible for current map)"
 msgstr ""
-"Valitse Kuljetusalus \\n"
+"Valitse Pudostusalus \\n"
 "(jos mahdollista nykyisellä kartalla)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
@@ -6646,11 +6646,11 @@ msgstr "Valitse ufo mitä pitäisi käyttää"
 
 #: ../base/ufos/ui/skirmish.ufo:201
 msgid "Dropship:"
-msgstr "Kuljetusalus:"
+msgstr "Pudostusalus:"
 
 #: ../base/ufos/ui/skirmish.ufo:204
 msgid "Select the dropship that should be used"
-msgstr "Valitse kuljetusalus mitä haluat käyttää"
+msgstr "Valitse pudostusalus mitä haluat käyttää"
 
 #: ../base/ufos/ui/stats.ufo:37
 msgid "Missions"
@@ -8564,7 +8564,7 @@ msgstr "Kerättyjä kuolleiden alieneiden kehoja"
 
 #: client/campaign/cp_campaign.c:1504
 msgid "Your dropship is not near the landing zone"
-msgstr "Sinun kuljetusalus ei ole lähelläkään laskeutumis aluetta"
+msgstr "Sinun pudostusalus ei ole lähelläkään laskeutumis aluetta"
 
 #: client/campaign/cp_campaign.c:1556
 #: client/campaign/cp_missions.c:1161
