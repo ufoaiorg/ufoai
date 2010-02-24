@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-24 13:27+0600\n"
-"PO-Revision-Date: 2010-02-24 14:59+0600\n"
+"POT-Creation-Date: 2010-02-17 20:15+0600\n"
+"PO-Revision-Date: 2010-02-24 15:26+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1361,7 +1361,7 @@ msgstr "Инсбрук"
 
 #: ../base/ufos/cities.ufo:1053
 msgid "Invercargill"
-msgstr "\tИнверкаргилл"
+msgstr "Инверкаргилл"
 
 #: ../base/ufos/cities.ufo:1059
 msgid "Ipoh"
@@ -6335,7 +6335,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2536
 msgid "Man-Portable Particle Beams"
-msgstr "Потративные лучевые излучатели"
+msgstr "Портативные лучевые излучатели"
 
 #: ../base/ufos/research.ufo:2541
 msgid "pbeamammo_txt"
@@ -10762,7 +10762,7 @@ msgstr "Перезапуск компании"
 
 #: ../base/ufos/ui/campaign.ufo:199
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
-msgstr "Вы действительно хотите перезагрузить последнее автоматически сохраненное состояние кампании"
+msgstr "Вы действительно хотите перезагрузить последнее автоматически сохраненное состояние кампании?"
 
 #: ../base/ufos/ui/campaign.ufo:208
 msgid "Reload the last automatically saved campaign state"
@@ -11207,13 +11207,13 @@ msgstr "Авиаперехват"
 
 #: ../base/ufos/ui/geoscape.ufo:1579
 msgid "SAM defence"
-msgstr "Защита ПВО:"
+msgstr "Защита ПВО"
 
 # menu_basesummary.ufo need to be fixed
 # (change first occupience of Aircraft: to Aircraft)
 #: ../base/ufos/ui/geoscape.ufo:1596
 msgid "Aircraft:"
-msgstr "Авиации:"
+msgstr "Авиация:"
 
 #: ../base/ufos/ui/geoscape.ufo:1603
 #: ../base/ufos/ui/geoscape.ufo:1745
@@ -11806,7 +11806,7 @@ msgstr "Интернет/LAN"
 
 #: ../base/ufos/ui/multiplayer.ufo:87
 msgid "Lan"
-msgstr "Lan"
+msgstr "LAN"
 
 #: ../base/ufos/ui/multiplayer.ufo:92
 #: ../base/ufos/ui/multiplayer.ufo:215
@@ -14851,7 +14851,7 @@ msgstr "Вес неизвестен"
 #: client/campaign/cp_market.c:153
 #: client/campaign/cp_market_callbacks.c:766
 msgid "Not enough storage space"
-msgstr "Недостаточно места на складах!"
+msgstr "Недостаточно места на складах"
 
 #: client/campaign/cp_market.c:153
 #: client/campaign/cp_market_callbacks.c:766
@@ -16085,7 +16085,7 @@ msgstr "НЛО направляется к %s"
 #: client/campaign/cp_ufo.c:778
 #, c-format
 msgid "Our radar detected a new UFO near %s"
-msgstr "Наши радары засекли новое НЛО неподалёку от %s"
+msgstr "Наши радары засекли новый НЛО неподалёку от %s"
 
 #: client/campaign/cp_ufo.c:783
 msgid "Our radar has lost the tracking on a UFO"
