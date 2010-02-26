@@ -375,8 +375,8 @@ int RT_CheckCell (routing_t * map, const actorSizeEnum_t actorSize, const int x,
 	assert(actorSize == ACTOR_SIZE_2x2 || actorSize == ACTOR_SIZE_NORMAL);
 	assert(map);
 	/* x and y cannot exceed PATHFINDING_WIDTH - actorSize */
-	assert((x >= 0) && (x <= PATHFINDING_WIDTH - (int)actorSize));
-	assert((y >= 0) && (y <= PATHFINDING_WIDTH - (int)actorSize));
+	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
+	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));
 	assert(z < PATHFINDING_HEIGHT);
 
 	/* calculate tracing coordinates */
