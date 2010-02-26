@@ -1006,7 +1006,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
-			if (mission.stage >= STAGE_MISSION_GOTO) {
+			if (mission.stage >= STAGE_BUILD_BASE) {
 				int baseIDX = mxml_GetInt(act_node, "alienbaseindex", BYTES_NONE);
 				/* don't check baseidx value here: alien bases are not loaded yet */
 				if (baseIDX != BYTES_NONE) {
@@ -1208,7 +1208,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
-			if (mission->stage >= STAGE_MISSION_GOTO) {
+			if (mission->stage >= STAGE_BUILD_BASE) {
 				/* save IDX of alien base if required */
 				const alienBase_t *base = (alienBase_t*)mission->data;
 				/* there may be no base is the mission is a subverting government */
