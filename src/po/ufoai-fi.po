@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-01-18 20:52+0100\n"
-"PO-Revision-Date: 2010-02-24 06:08+0200\n"
+"PO-Revision-Date: 2010-02-26 06:46+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr "Alienit laskeutuvat - Tehdasalueelle"
 
 #: ../base/maps/frozen.ump:362
 msgid "Multiplayer Coop"
-msgstr "Moninpeli Kenttä"
+msgstr "Moninpelikenttä"
 
 #: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
@@ -107,7 +107,7 @@ msgstr "Bensiiniasema"
 #: ../base/maps/industrial.ump:257
 #: ../base/maps/industrial.ump:281
 msgid "UFO Landed"
-msgstr "UFO Laskeutunut"
+msgstr "UFO on Laskeutunut"
 
 #: ../base/maps/italy.ump:61
 msgid "Italy"
@@ -318,7 +318,7 @@ msgstr "Korruptoija U"
 #: ../base/ufos/otheritems.ufo:128
 #: ../base/ufos/research.ufo:3677
 msgid "UFO - Supply Ship"
-msgstr "UFO - Huolto Alus"
+msgstr "UFO - Huoltoalus"
 
 #: ../base/ufos/aircraftmanagement.ufo:605
 msgid "Supply U"
@@ -367,7 +367,7 @@ msgstr "Emäalus U"
 #: ../base/ufos/aircraftmanagement.ufo:729
 #: ../base/ufos/research.ufo:4599
 msgid "Aerial Laser Cannon"
-msgstr "Aerial Laser tykki"
+msgstr "Aerial Laser-tykki"
 
 #: ../base/ufos/aircraftmanagement.ufo:760
 msgid "Shiva Rotary Cannon"
@@ -489,7 +489,7 @@ msgstr "sähkötainnutin"
 
 #: ../base/ufos/armour.ufo:57
 msgid "stun_gas"
-msgstr "kaasu_granaatti"
+msgstr "kaasu_kranaatti"
 
 #: ../base/ufos/armour.ufo:67
 msgid "Combat Armour"
@@ -652,7 +652,7 @@ msgstr "Tukholma"
 
 #: ../base/ufos/cities.ufo:21
 msgid "Amsterdam"
-msgstr "Amsterdam"
+msgstr "Amsterdami"
 
 #: ../base/ufos/cities.ufo:27
 msgid "Athens"
@@ -664,7 +664,7 @@ msgstr "Bangkok"
 
 #: ../base/ufos/cities.ufo:39
 msgid "Beijing"
-msgstr "Beking"
+msgstr "Bekingi"
 
 #: ../base/ufos/cities.ufo:45
 msgid "Berlin"
@@ -676,7 +676,7 @@ msgstr "Mumbai"
 
 #: ../base/ufos/cities.ufo:57
 msgid "Cape Town"
-msgstr "Cape Town"
+msgstr "Kapkaupunki"
 
 #: ../base/ufos/cities.ufo:63
 msgid "Cairo"
@@ -692,7 +692,7 @@ msgstr "Dakar"
 
 #: ../base/ufos/cities.ufo:81
 msgid "Mexico City"
-msgstr "Mexico City"
+msgstr "Mexicon Kaupunki"
 
 #: ../base/ufos/cities.ufo:87
 msgid "Novosibirsk"
@@ -1688,7 +1688,7 @@ msgstr "Tukikohtaan on hyökätty."
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
-msgstr "Lääkintämies"
+msgstr "Risti"
 
 #: ../base/ufos/medals.ufo:9
 msgid "Coin"
@@ -1821,7 +1821,7 @@ msgstr "rakenna_varuste"
 
 #: ../base/ufos/msgcategories.ufo:16
 msgid "installation_construction"
-msgstr "laitoksen_rakentaminen"
+msgstr "rakennuksen_rakentaminen"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
@@ -1841,11 +1841,11 @@ msgstr "siirrä"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
-msgstr ""
+msgstr "ufo_aktiviteetti"
 
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
-msgstr "Kumoukselliset maat"
+msgstr "Kumoukselliset Maat"
 
 #: ../base/ufos/nations.ufo:43
 msgid "United America"
@@ -1861,7 +1861,7 @@ msgstr "Aasian tasavalta"
 
 #: ../base/ufos/nations.ufo:79
 msgid "The Middle-Eastern Alliance"
-msgstr "Keski-idän liitto"
+msgstr "Keski-Idän liitto"
 
 #: ../base/ufos/nations.ufo:91
 msgid "New Africa"
@@ -2523,7 +2523,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1795
 msgid "Alien Artifact - Plasma Grenade"
-msgstr "Alien Artifakti- Plasma Granaatti"
+msgstr "Alien Artifakti- Plasma-Kranaatti"
 
 #: ../base/ufos/research.ufo:1800
 msgid "plasmagren_txt"
@@ -3170,7 +3170,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4309
 #: ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
-msgstr ""
+msgstr "Ares W (UGV)"
 
 #: ../base/ufos/research.ufo:4311
 msgid "ugv_ares_w_txt"
@@ -3892,7 +3892,7 @@ msgstr "Phoenix"
 
 #: ../base/ufos/team_humans.ufo:1669
 msgid "Ares W"
-msgstr "Aareissa W"
+msgstr "Ares W"
 
 #: ../base/ufos/tips.ufo:5
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
@@ -3928,7 +3928,7 @@ msgstr "Älä unohda varustaa sotilaita panssarilla."
 
 #: ../base/ufos/tips.ufo:13
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
-msgstr "Voit käyttää sokaisu granaattia tehdäksesi tehottomaksi vastustajat Reaktio tilassa tai ottaa kaikki hänen jäljellä olevat aikayksikköt (TU) seuraavalta kierrokselta."
+msgstr "Voit käyttää sokaisukranaattia tehdäksesi tehottomaksi vastustajat Reaktiotilassa tai ottaa kaikki hänen jäljellä olevat aikayksikköt (TU) seuraavalta kierrokselta."
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
@@ -3960,7 +3960,7 @@ msgstr "Muista, että sinulla pitää olla aktiivinen komentokeskus, jotta voit 
 
 #: ../base/ufos/tips.ufo:21
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
-msgstr ""
+msgstr "Elä koskaan ohitta mahdollisuutta kaapata elävä alien, vaikka yksi laji sinulla olisi jo tutkittu."
 
 #: ../base/ufos/tips.ufo:22
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
@@ -3968,7 +3968,7 @@ msgstr "Tarkkaile selkääsi! Sotilaasi voivat nähdä vain vihollisia edessää
 
 #: ../base/ufos/tips.ufo:23
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr ""
+msgstr "Rakenna työpaja ja tukikohdan ulkopuolinen laitos ufo telakka, jotta voit purkaa UFOn."
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -3976,7 +3976,7 @@ msgstr "Voit paremmin suojella sotilaita vihollisen tulelta pistämällä heidä
 
 #: ../base/ufos/tips.ufo:25
 msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
-msgstr ""
+msgstr "Tarkkaile Reaktiotilaa! Sotilas voi kuulua Reaktiotilaan, vaikka toinen sotilas liikkuu."
 
 #: ../base/ufos/tips.ufo:26
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -3984,15 +3984,15 @@ msgstr "Käytä [c] näppäintä kyyristyäksesi. Kyyristyminen tekee joistakin 
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
-msgstr "Jos sinulla on vähissä aikayksiköt (TU) ja sinulla on vaarallisia vihollisia, käytä sokaisu granaattia niiden lamauttamiseen seuraavaa kierrokseen asti. Se voi olla paras vaihtoehto. 2 TU (hae pistoolikotelosta) + 12 TU (heitto) = 14TU."
+msgstr "Jos sinulla on vähissä aikayksiköt (TU) ja sinulla on vaarallisia vihollisia, käytä sokaisukranaattia niiden lamauttamiseen seuraavaa kierrokseen asti. Se voi olla paras vaihtoehto. 2 TU (hae pistoolikotelosta) + 12 TU (heitto) = 14TU."
 
 #: ../base/ufos/tips.ufo:28
 msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
-msgstr ""
+msgstr "Käytä ensimmäisen persoonan näytä (vaihda kanssa [v]) tilaa, joka tarkistaa jos liikkuu yhden ruudun vasemmalle ja tekee ampumisen rakennuksen läpi mahdollista."
 
 #: ../base/ufos/tips.ufo:29
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
-msgstr "Käytä nopealla sotilaalla pistoolia, yhdessä kädessä lähitaistelu asetta, kranaatteja, sokaisu granaattia ja ensiapulaukkua lääkintämiehellä."
+msgstr "Käytä nopealla sotilaalla pistoolia, yhdessä kädessä lähitaistelu asetta, kranaatteja, sokaisukranaattia ja ensiapulaukkua lääkintämiehellä."
 
 #: ../base/ufos/tips.ufo:30
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
@@ -4000,7 +4000,7 @@ msgstr "Rakenna sairaaloita, jotta voit parantaa sotilaita nopeammin  ennen seur
 
 #: ../base/ufos/tips.ufo:31
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
-msgstr ""
+msgstr "Plasma-kranaatit tekevät eniten vahinkoa, vaikka fragi-kranaateilla on hieman pidempi heitto pituus."
 
 #: ../base/ufos/tips.ufo:32
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
@@ -4012,27 +4012,27 @@ msgstr "Pidä sotilaat lähellä, niin että he voivat tukea toisiaan (parantaa 
 
 #: ../base/ufos/tips.ufo:34
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
-msgstr ""
+msgstr "Aina kun on käytettävissä sotilas tai kaksi, joten sinun ei tarvitsisi laittaa sinun ensisijaisia yksiköitä erittäin vaarallisiin tilanteisiin."
 
 #: ../base/ufos/tips.ufo:35
 msgid "You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
-msgstr ""
+msgstr "Voit lisätä tutkan kantamaa rakentamalla kehittyneen tutka laitoksen. Muista, että se pitää tutkia ensimmäisenä!"
 
 #: ../base/ufos/tips.ufo:36
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
-msgstr ""
+msgstr "Reaktiotila voi valua Aikayksiköihin (TU) 0. Jos poistat tuli toiminnan, et voi aktivoida sitä uudelleen ilman riittäviä aikayksikköitä (TU). Voit kuitenkin jättää sen. Yritä olla nollamatta yksikköä, kunnes olet varma."
 
 #: ../base/ufos/tips.ufo:37
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
-msgstr ""
+msgstr "Käyttäen Ilma Sarjaa Kranaatinheittimellä voi räjäyttää kranaatit tietyssä paikassa. Erittäin hyödyllinen silloin, kun kohde on lähellä kartan reunaa tai reunalla."
 
 #: ../base/ufos/tips.ufo:38
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
-msgstr ""
+msgstr "Kun heität kranaattia, yrittää välttää suoraan heittämistä ruudukkoa pitkin. Anna kulman olla hieman pienempi, mahdollisuus, että se pomppii takaisin itsellesi tulee paljon vähemmäksi kuin 'ohiheitto'."
 
 #: ../base/ufos/tips.ufo:39
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
-msgstr ""
+msgstr "Ennenkuin heität kranaatin, katso tarkasti maan muodot. Hieman kalteva maa vaikuttaa siihen suuntaan, että kranaatti pomppii."
 
 #: ../base/ufos/tips.ufo:40
 msgid "Grenades don't bounce well on sand or dirt."
@@ -4040,7 +4040,7 @@ msgstr "Granaatit eivät pompi hyvin hiekalla tai liassa."
 
 #: ../base/ufos/tips.ufo:41
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
-msgstr ""
+msgstr "Voit lisätä omia karttoja moninpeleissä tai luoda omia kampanjoita. Lue ja tutustu wikin ohjeisiin sisällön luomisesta."
 
 #: ../base/ufos/tips.ufo:42
 msgid "You can use [space] to cycle between all geoscape items."
@@ -4048,19 +4048,19 @@ msgstr "Voit käyttää [välilyönti] näppäintä keskittääksesi maailmankar
 
 #: ../base/ufos/tips.ufo:43
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr ""
+msgstr "Voit nopeuttaa / hidastaa maailmankartan aikaa käyttämällä hiiren rullaa tai painikkeita tai painamalla [-], [+/=]. Vaihtoehtoisesti voit painaa [n] ja [m]. [Välilyönti] pysäyttää ajan virtauksen."
 
 #: ../base/ufos/tips.ufo:44
 msgid "Be sure to equip your interceptor with weapons before launching it."
-msgstr ""
+msgstr "Varmista että varustat torjuntahävittäjän aseilla ennen kuin laukaitset sen."
 
 #: ../base/ufos/tips.ufo:45
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
-msgstr ""
+msgstr "Muista, että varusteet hidastavat lentokonetta. Siepataksesi ufot nopeasti, saatat haluta lähettää sitä vastaan useita kevyesti varustettuja lentokoneita."
 
 #: ../base/ufos/tips.ufo:46
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
-msgstr ""
+msgstr "Sinun hyökkämäsi lentokone voi paeta tukikohtaasi ja välttää jos UFO aikoo sen tuhota."
 
 #: ../base/ufos/tips.ufo:47
 msgid "Build an alien containment to be able to imprison live aliens."
@@ -4072,59 +4072,59 @@ msgstr "Havaitut viholliset: Kun on olet maan päällisessä tehtävässä voit 
 
 #: ../base/ufos/tips.ufo:49
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
-msgstr ""
+msgstr "Voit käyttää hiiren oikeata painikketta sotilaan varustamiseen tai  aseiden, ammuksien ja panssarin poistoon. Tämä toimii vain tukikohdassa, ei taktisissa tehtävissä, jossa tällainen toiminta maksaa TU:ta."
 
 #: ../base/ufos/tips.ufo:50
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
-msgstr ""
+msgstr "Sinun tulee varmistaa, että liian monet siviilit eivät menettä henkeänsä. Muuten saatat menettää pelin nopeammin kuin oletat."
 
 #: ../base/ufos/tips.ufo:51
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr ""
+msgstr "Hyödynnä tarkka-ampuja tuki. Hanki tarkka-ampujille hyvä paikka ja näkyvyys (esimerkiksi, korkealta maasta ja kulmiin katolla). Jätä ne makaamaan ja aseta Reaktiotila 'useita laukauksia' tilaan,  jotta voit ampua useita alieneita samalla kerralla."
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr ""
+msgstr "Harkitse torjuntahävittäjien laukaiseminen, jotta voit ottaa nopeasti UFO:n kiinni kun se on lähellä tukikohtaa ja välttää takaa-ajon kun torjuntahävittäjien ampuma kantama on sopiva."
 
 #: ../base/ufos/tips.ufo:53
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr ""
+msgstr "Harkitse ympäri juoksevien siviilien tainnuttamista terrori tehtävissä. Alienit näyttävät suosivan tappavat tietoisesti juoksevia siviilejä kuin tajuttomia."
 
 #: ../base/ufos/tips.ufo:54
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
-msgstr ""
+msgstr "Älä unohda asentaa ohjus kantorakettia ja ohjuksia omaan ohjuspatteristoon."
 
 #: ../base/ufos/tips.ufo:55
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
-msgstr ""
+msgstr "Et muista, kenellä on ensiapulaukku repussa? Paina [i] päästäksesi varusteluetteloon ja sitten [1] - [8] selataksesi omia joukkoja."
 
 #: ../base/ufos/tips.ufo:56
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "Napataksesi nopeasti UFO:n lähetä torjuntahävittäjiä monesta suunnasta."
 
 #: ../base/ufos/tips.ufo:57
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
-msgstr ""
+msgstr "Nopeasti ostaaksesi tai myydäksesi tuotteita, vie hiiri nuolien päälle ja pyöritä hiiren rullaa."
 
 #: ../base/ufos/tips.ufo:58
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr ""
+msgstr "Varokaa kaverien tulitusta! Vaikka heittämäsi kranaatti vihollista kohti, joka on hiipimässä joukkojesi luo voi olla helppo tappaa, mahdollisuudet ovat että sinä teet alieneiden työtä. Samaa voidaan sanoa luodeista, varmista, että vihollinen on kuollut ja et ammu omia joukkoja sen takana."
 
 #: ../base/ufos/tips.ufo:59
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr ""
+msgstr "Muista tarkistaa tutkimuksen ja tuotannon jonoja usein! Hyvä varustetaso on aktiivinen arsenaali!"
 
 #: ../base/ufos/tips.ufo:60
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
-msgstr ""
+msgstr "Elävien siviilien läsnäolo luultavasti tarkoittaa sitä, että ei ole eläviä alieneita lähettyvillä. Tämä voi säästää aikaa kartan selvittämiseen."
 
 #: ../base/ufos/tips.ufo:61
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr ""
+msgstr "Seuraa terveyttä sotilailla, älä anna heidän kuolla. Kokeneet sotilaat ovat tehokkaita tehtävissä kuin uusi henkilöstö."
 
 #: ../base/ufos/tips.ufo:62
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
-msgstr ""
+msgstr "Voit valmistella tehtävät seuraavaa kierrosta odottaessasi. Lyömällä [Enter]-painiketta kahdesti se suorittaa kaikki vireillä olevat tehtävät ennen kuin sinun kierros alkaa."
 
 #: ../base/ufos/ui/_hud.ufo:156
 #: ../base/ufos/ui/_hud.ufo:185
@@ -4443,7 +4443,7 @@ msgstr "Ei sotilaita asetettu"
 #: ../base/ufos/ui/aliencont.ufo:18
 #: ../base/ufos/ui/aliencont.ufo:114
 msgid "Kill this alien"
-msgstr "Tapa tämä Alien"
+msgstr "Tapa tämä alien"
 
 #: ../base/ufos/ui/aliencont.ufo:24
 #: ../base/ufos/ui/aliencont.ufo:101
@@ -4548,7 +4548,7 @@ msgstr "Kerros alaspäin"
 #: ../base/ufos/ui/althud.ufo:1082
 #: ../base/ufos/ui/hud.ufo:338
 msgid "Click to cycle through spotted enemies"
-msgstr ""
+msgstr "Klikkaa selataksesi havaittuja vihollisia"
 
 #: ../base/ufos/ui/althud.ufo:1090
 #: ../base/ufos/ui/hud.ufo:326
@@ -4558,7 +4558,7 @@ msgstr "Päätä vuoro"
 #: ../base/ufos/ui/althud.ufo:1172
 #: ../base/ufos/ui/hud.ufo:894
 msgid "Multiple-shot reaction fire"
-msgstr "Useita laukauksia rektio laukaus"
+msgstr "Useiden laukauksien reaktiotila"
 
 #: ../base/ufos/ui/althud.ufo:1177
 msgid "Multiple-shot reaction fire (not possible)"
@@ -5005,7 +5005,7 @@ msgstr "Tiedotus tällä tasolla"
 
 #: ../base/ufos/ui/genradarhud.ufo:104
 msgid "Gen all levels"
-msgstr "Tiedotus kaikkilla tasoilla"
+msgstr "Tiedotus kaikilla tasoilla"
 
 #: ../base/ufos/ui/geoscape.ufo:199
 msgid "Open up messages"
@@ -5174,7 +5174,7 @@ msgstr "Tukikohta on uhattuna"
 
 #: ../base/ufos/ui/geoscape.ufo:762
 msgid "Go to soldier equipment screen before the battle"
-msgstr "Mene sotilaan tarvikenäyttöön ennen taistelua"
+msgstr "Mene sotilaan tarvike näyttöön ennen taistelua"
 
 #: ../base/ufos/ui/geoscape.ufo:776
 msgid "Kill aliens in container"
@@ -5476,7 +5476,7 @@ msgstr "Kerros 8"
 
 #: ../base/ufos/ui/hud.ufo:370
 msgid "Primary fire mode"
-msgstr "Ensisijainen tuli tila"
+msgstr "Ensisijainen tulitila"
 
 #: ../base/ufos/ui/hud.ufo:675
 msgid "Physical stats of this soldier"
@@ -5727,7 +5727,7 @@ msgstr "Muut"
 #: ../base/ufos/ui/market.ufo:103
 #: ../base/ufos/ui/production.ufo:79
 msgid "UGV items"
-msgstr "Miehittämättömän maakulkuneuvon varusteet"
+msgstr "UGV (Miehittämätön maakulkuneuvo) varusteet"
 
 #: ../base/ufos/ui/market.ufo:310
 msgid "Storage (used/all):"
@@ -5864,6 +5864,8 @@ msgid ""
 "Enable or disable messages being displayed for all notification types.\\n"
 "Left click enables all notifications, right click disables."
 msgstr ""
+"Päälle tai pois viestien näyttämiset kaikilla ilmoitus tyypeillä.\\n"
+"Vasen klikkaus ottaa käyttöön kaikki ilmoitukset, oikea klikkaus poistaa."
 
 #: ../base/ufos/ui/messageoptions.ufo:96
 msgid ""
@@ -5871,12 +5873,17 @@ msgid ""
 "Pause can't be enabled without notification\\n"
 "Left click enables pause for all, right click disables."
 msgstr ""
+"Päälle tai pois tauko kaikilla ilmoitustyyppeillä\\n"
+"Taukoa ei voi ottaa käyttöön ilman ilmoitusta\\n"
+"Vasen klikkaus mahdollistaa tauon kaikille, oikea klikkaus poistaa."
 
 #: ../base/ufos/ui/messageoptions.ufo:105
 msgid ""
 "Enable or disable sounds being played for all notification types.\\n"
 "Left click enables all sounds, right click disables."
 msgstr ""
+"Päälle tai pois soivat äänet kaikilla ilmoitustyyppeillä.\\n"
+"Vasen klikkaus mahdollistaa kaikki äänet, oikea klikkaus poistaa."
 
 #: ../base/ufos/ui/multiplayer.ufo:37
 #: ../base/ufos/ui/multiplayer.ufo:155
@@ -5914,7 +5921,7 @@ msgstr "Nimi"
 
 #: ../base/ufos/ui/multiplayer.ufo:204
 msgid "Leave Serverbrowser"
-msgstr "Lähde Palvelinselaimesta"
+msgstr "Poistu Palvelinselaimesta"
 
 #: ../base/ufos/ui/multiplayer.ufo:252
 msgid "Serverfilter:"
@@ -5949,7 +5956,7 @@ msgstr "Kirjanmerkit"
 #: ../base/ufos/ui/multiplayer.ufo:487
 #: ../base/ufos/ui/multiplayer.ufo:490
 msgid "Connect to this server"
-msgstr "Yhdistä palvelimelle"
+msgstr "Yhdistä tälle palvelimelle"
 
 #: ../base/ufos/ui/multiplayer.ufo:446
 #: ../base/ufos/ui/multiplayer.ufo:449
@@ -5977,7 +5984,7 @@ msgstr "Kartta"
 
 #: ../base/ufos/ui/multiplayer.ufo:534
 msgid "Security/registration"
-msgstr "Turvallisuus/Rekisteröinti"
+msgstr "Turvallisuus/rekisteröinti"
 
 #: ../base/ufos/ui/multiplayer.ufo:553
 msgid "Hostname:"
@@ -5989,7 +5996,7 @@ msgstr "Pelityyppi:"
 
 #: ../base/ufos/ui/multiplayer.ufo:617
 msgid "Teamplay:"
-msgstr "Tiimipeli:"
+msgstr "Joukkuepeli:"
 
 #: ../base/ufos/ui/multiplayer.ufo:643
 msgid "Preview:"
@@ -6001,12 +6008,12 @@ msgstr "Kartan nimi:"
 
 #: ../base/ufos/ui/multiplayer.ufo:685
 msgid "Allowed gametype:"
-msgstr "Sallittu pelityyppi:"
+msgstr "Sallitut pelityypit:"
 
 #: ../base/ufos/ui/multiplayer.ufo:708
 #: ../base/ufos/ui/skirmish.ufo:89
 msgid "Day version:"
-msgstr "Päivä versio"
+msgstr "Päivä versio:"
 
 #: ../base/ufos/ui/multiplayer.ufo:732
 msgid "Enable morale states:"
@@ -6018,7 +6025,7 @@ msgstr "Maks. yhteydet:"
 
 #: ../base/ufos/ui/multiplayer.ufo:750
 msgid "Sets the max allowed clients to connect"
-msgstr "Aseta maksimimäärä hyväksytyille asiakkaiden yhteyksille"
+msgstr "Aseta maks. hyväksytyille asiakkaiden yhteyksille"
 
 #: ../base/ufos/ui/multiplayer.ufo:776
 msgid "Max. soldiers per team:"
@@ -6026,7 +6033,7 @@ msgstr "Maks. sotilaita joukkueella:"
 
 #: ../base/ufos/ui/multiplayer.ufo:777
 msgid "Sets the max allowed soldiers per team"
-msgstr "Aseta sallittu enimmäismäärä sotilaita joukkueelle"
+msgstr "Aseta sallittu maks. määrä sotilaita joukkueelle"
 
 #: ../base/ufos/ui/multiplayer.ufo:803
 msgid "Max. soldiers per player:"
@@ -6034,7 +6041,7 @@ msgstr "Maks. sotilaita pelaajalla:"
 
 #: ../base/ufos/ui/multiplayer.ufo:804
 msgid "Sets the max allowed soldiers per player when in teamplay"
-msgstr "Aseta sallittu maksimimäärä sotilaita pelaajalle joukkuepelissä"
+msgstr "Aseta sallittu maks. määrä sotilaita pelaajalle joukkuepelissä"
 
 #: ../base/ufos/ui/multiplayer.ufo:831
 msgid "Max. human players per team:"
@@ -6079,7 +6086,7 @@ msgstr "Maks. määrä pelaajia joukkueessa"
 
 #: ../base/ufos/ui/multiplayer.ufo:1213
 msgid "Max. teams for this map"
-msgstr "Maks. määrä tiimejä kentässä."
+msgstr "Maks. määrä joukkueita kentässä."
 
 #: ../base/ufos/ui/multiplayer.ufo:1236
 msgid "Players connected"
@@ -6142,7 +6149,7 @@ msgstr "Kutsu muita"
 
 #: ../base/ufos/ui/multiplayer.ufo:1423
 msgid "Invite players that are online in the lobby"
-msgstr "Kutsu pelaajia jotka ovat yhteydessä aulaan"
+msgstr "Kutsu pelaajia, jotka ovat yhteydessä aulaan"
 
 #: ../base/ufos/ui/multiplayer.ufo:1459
 msgid "Party chat"
@@ -6220,7 +6227,7 @@ msgstr "Alien"
 
 #: ../base/ufos/ui/multiplayer_team.ufo:948
 msgid "Save your team"
-msgstr "Tallenna tiimisi"
+msgstr "Tallenna joukkueesi"
 
 #: ../base/ufos/ui/multiplayeringame.ufo:52
 msgid "Abort Game"
@@ -6382,7 +6389,7 @@ msgstr "Peliasetukset"
 
 #: ../base/ufos/ui/options.ufo:758
 msgid "HUD Design:"
-msgstr "HUD muotoilu:"
+msgstr "HUD Muotoilu:"
 
 #: ../base/ufos/ui/options.ufo:770
 msgid "Original HUD"
@@ -6515,11 +6522,11 @@ msgstr "Peliohjain:"
 
 #: ../base/ufos/ui/options.ufo:1262
 msgid "Maintain resolution"
-msgstr ""
+msgstr "Säilytä resoluutio"
 
 #: ../base/ufos/ui/options.ufo:1272
 msgid "Want To Maintain resolution"
-msgstr ""
+msgstr "Haluatko säilyttää resoluution"
 
 #: ../base/ufos/ui/options.ufo:1279
 msgid "Accept"
@@ -6822,7 +6829,7 @@ msgstr "Skannaa"
 
 #: ../base/ufos/weapons.ufo:116
 msgid "Frag Grenade"
-msgstr "Frägi Granaatti"
+msgstr "Frägikranaatti"
 
 #: ../base/ufos/weapons.ufo:134
 #: ../base/ufos/weapons.ufo:208
@@ -6846,27 +6853,27 @@ msgstr "Vieritä"
 
 #: ../base/ufos/weapons.ufo:190
 msgid "Flashbang"
-msgstr "Sokaisu granaatti"
+msgstr "Sokaisukranaatti"
 
 #: ../base/ufos/weapons.ufo:265
 msgid "Smoke Grenade"
-msgstr "Savugranaatti"
+msgstr "Savukranaatti"
 
 #: ../base/ufos/weapons.ufo:340
 msgid "Gas Grenade"
-msgstr "Kaasugranaatti"
+msgstr "Kaasukranaatti"
 
 #: ../base/ufos/weapons.ufo:416
 msgid "Alien Gas Grenade"
-msgstr "Alien Kaasugranaatti"
+msgstr "Alien Kaasukranaatti"
 
 #: ../base/ufos/weapons.ufo:492
 msgid "Incendiary grenade"
-msgstr "Palo granaatti"
+msgstr "Palokranaatti"
 
 #: ../base/ufos/weapons.ufo:567
 msgid "Plasma Grenade"
-msgstr "Plasma Granaatti"
+msgstr "Plasma-Kranaatti"
 
 #: ../base/ufos/weapons.ufo:642
 #: ../base/ufos/weapons.ufo:663
@@ -7014,15 +7021,15 @@ msgstr "SMG Lipas"
 #: ../base/ufos/weapons_human.ufo:727
 #: ../base/ufos/weapons_multiplayer.ufo:48
 msgid "5-Round Burst"
-msgstr "5-kierroksen sarja"
+msgstr "5-Kierroksen Sarja"
 
 #: ../base/ufos/weapons_human.ufo:792
 msgid "Riot Shotgun"
-msgstr "Mellakka haulikko"
+msgstr "Mellakkahaulikko"
 
 #: ../base/ufos/weapons_human.ufo:812
 msgid "Saboted Slugs"
-msgstr "Saboted Luodit"
+msgstr "Täytteisluodit"
 
 #: ../base/ufos/weapons_human.ufo:828
 #: ../base/ufos/weapons_human.ufo:912
@@ -7030,16 +7037,16 @@ msgstr "Saboted Luodit"
 #: ../base/ufos/weapons_human.ufo:1649
 #: ../base/ufos/weapons_multiplayer.ufo:150
 msgid "Single Shot"
-msgstr "Kerta Laukaus"
+msgstr "Kertalaukaus"
 
 #: ../base/ufos/weapons_human.ufo:877
 msgid "Micro Shotgun"
-msgstr "Mikro Haulikko"
+msgstr "Mikro-Haulikko"
 
 #: ../base/ufos/weapons_human.ufo:896
 #: ../base/ufos/weapons_multiplayer.ufo:134
 msgid "Flechette Shells"
-msgstr "Flechette Säiliöt"
+msgstr "Nuoliammukset"
 
 #: ../base/ufos/weapons_human.ufo:1030
 msgid "Flamethrower"
@@ -7059,27 +7066,27 @@ msgstr "Liekkimeri"
 
 #: ../base/ufos/weapons_human.ufo:1109
 msgid "Inferno Sweep"
-msgstr "Liekkimeri Pyyhkäisy"
+msgstr "Pyyhkäisty Liekkimeri "
 
 #: ../base/ufos/weapons_human.ufo:1137
 msgid "Rocket Launcher"
-msgstr "Raketinheitin"
+msgstr "Sinko"
 
 #: ../base/ufos/weapons_human.ufo:1158
 msgid "HE Rocket"
-msgstr "HE Raketti"
+msgstr "HE Raketti (sinko)"
 
 #: ../base/ufos/weapons_human.ufo:1200
 msgid "IC Rocket"
-msgstr "IC Raketti"
+msgstr "IC Raketti (sinko)"
 
 #: ../base/ufos/weapons_human.ufo:1245
 msgid "Grenade Launcher"
-msgstr "Granaatin heitin"
+msgstr "Kranaatinheitin"
 
 #: ../base/ufos/weapons_human.ufo:1266
 msgid "25mm HIT Grenades"
-msgstr "25mm HIT Granaatti"
+msgstr "25mm HIT Kranaatti"
 
 #: ../base/ufos/weapons_human.ufo:1283
 #: ../base/ufos/weapons_human.ufo:1464
@@ -7119,35 +7126,35 @@ msgstr "3-Kierroksen Sarja - Ajoitettu"
 
 #: ../base/ufos/weapons_human.ufo:1447
 msgid "25mm IC Grenades"
-msgstr "25mm IC Granaatti"
+msgstr "25mm IC Kranaatti"
 
 #: ../base/ufos/weapons_human.ufo:1632
 msgid "25mm Flechette Grenades"
-msgstr "25mm Flechette Granaatti"
+msgstr "25mm Nuolikranaatit"
 
 #: ../base/ufos/weapons_human.ufo:1693
 msgid "25mm PB Grenades"
-msgstr "25mm PB Granaatti"
+msgstr "25mm PB Kranaatti"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
-msgstr "Laser pistooli"
+msgstr "Laser-Pistooli"
 
 #: ../base/ufos/weapons_laser.ufo:28
 msgid "Laser Rifle"
-msgstr "Laserkivääri"
+msgstr "Laser-Kivääri"
 
 #: ../base/ufos/weapons_laser.ufo:52
 msgid "Heavy Laser"
-msgstr "Raskas laser"
+msgstr "Raskas-Laser"
 
 #: ../base/ufos/weapons_laser.ufo:76
 msgid "Electro Laser"
-msgstr "Elektrofotografinen Laser"
+msgstr "Elektrofotografinen-Laser"
 
 #: ../base/ufos/weapons_laser.ufo:96
 msgid "D-F Cartridge"
-msgstr "D-F Patruuna"
+msgstr "D-F Cartridge"
 
 #: ../base/ufos/weapons_laser.ufo:112
 #: ../base/ufos/weapons_laser.ufo:155
@@ -7183,7 +7190,7 @@ msgstr "Tainnutus Panos"
 
 #: ../base/ufos/weapons_melee.ufo:163
 msgid "Double Charge"
-msgstr "Kaksinkertainen PAnos"
+msgstr "Kaksinkertainen Panos"
 
 #: ../base/ufos/weapons_melee.ufo:181
 msgid "Bludgeon"
@@ -7199,7 +7206,7 @@ msgstr "Viilto"
 
 #: ../base/ufos/weapons_melee.ufo:262
 msgid "Plasma Blade"
-msgstr "Plastma veitsi"
+msgstr "Plastma-Veitsi"
 
 #: ../base/ufos/weapons_melee.ufo:283
 msgid "Lock"
@@ -7219,11 +7226,11 @@ msgstr "Haulikko"
 
 #: ../base/ufos/weapons_multiplayer.ufo:172
 msgid "Double Shot"
-msgstr "Kaksinkertainen laukaus"
+msgstr "Tupla Laukaus"
 
 #: ../base/ufos/weapons_multiplayer.ufo:199
 msgid "VHS Assault Rifle"
-msgstr "VHS Rynnäkkö Kivääri"
+msgstr "VHS Rynnäkkökivääri"
 
 #: ../base/ufos/weapons_multiplayer.ufo:222
 msgid "XAW95"
@@ -7898,8 +7905,9 @@ msgid "No free hangars at that base."
 msgstr "Ei vapaita lentokonehalleja tässä tukikohdassa."
 
 #: client/campaign/cp_aircraft.c:858
+#, fuzzy
 msgid "Insufficient free crew quarter space at that base."
-msgstr ""
+msgstr "Riittämättömästi vapaata miehistön neljännes tilaa tukikohdassa."
 
 #: client/campaign/cp_aircraft.c:861
 msgid "Insufficient storage space at that base."
@@ -8329,7 +8337,11 @@ msgid_plural ""
 "Construction of building will be over in %i days.\n"
 "Please wait to enter."
 msgstr[0] ""
+"Rakennuksen valmistuminen on valmis %i päivässä.\n"
+"Ole hyvä ja odota niin pääset sisään."
 msgstr[1] ""
+"Rakennus valmistuu %i päivässä.\n"
+"Ole hyvä ja odota niin pääset sisään."
 
 #: client/campaign/cp_base_callbacks.c:626
 #, c-format
@@ -8344,7 +8356,7 @@ msgstr "Rakennus %s ei ole vielä valmis ja sitä tarvitaan rakennuksen %s käyt
 #: client/campaign/cp_base_callbacks.c:643
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
-msgstr ""
+msgstr "Varmista, että %s riippuvuudet (%s) ovat toiminnassa, niin että %s voidaan käyttää."
 
 #: client/campaign/cp_base_callbacks.c:651
 #: client/campaign/cp_base_callbacks.c:656
@@ -8463,7 +8475,7 @@ msgstr "Olet epäonnistunut suojelemaan maapalloa. Kotimme ja ihmiset ovat alien
 
 #: client/campaign/cp_campaign.c:349
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
-msgstr ""
+msgstr "Komentosi alla, PHALANX toimintasi on johdonmukaisesti epäonnistunut suojelemaan kansakuntia. YK on erittäin tyytymätön suorituskykyysi ja on päättänyt poistaa sinut komennosta ja sitten lakkauttaa PHALANX projektin työryhmän. Yrityksien maailmanlaajuista yhteistyötä jatketaan. Maan kansoista jokainen yrittää itsenäisinä taistella alieneita vastaan, ja lopulta kaatuvat yksitellen."
 
 #: client/campaign/cp_campaign.c:734
 #, c-format
@@ -8649,11 +8661,13 @@ msgid "%s has been promoted to %s.\n"
 msgstr "%s on ylennetty %s.\n"
 
 #: client/campaign/cp_campaign.c:1680
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
+"%s on palkittu %s jälkeen jääneeltä listalta\n"
+"on inspiroiva urheus edessä ylivoimaisilla todennäköisyydellä.\n"
 
 #: client/campaign/cp_campaign.c:1681
 msgid "Soldier promoted"
@@ -8995,12 +9009,17 @@ msgid ""
 "Not enough space in storage.\n"
 "Build more storage facilities."
 msgstr ""
+"Et voi ostaa tätä tuotetta.\n"
+"Varastossa ei ole tarpeeksi tilaa.\n"
+"Rakenna lisää varasto tilaa."
 
 #: client/campaign/cp_market_callbacks.c:597
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
+"Sähkövirtaa ei ole tässä tukikohdassa.\n"
+"Hallit eivät ole toiminnassa."
 
 #: client/campaign/cp_market_callbacks.c:602
 msgid "Build a hangar first."
@@ -9011,16 +9030,20 @@ msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 msgstr ""
+"Et voi ostaa tätä lentokonetta.\n"
+"Ei ole tarpeeksi tilaa lentokonehalleissa.\n"
 
 #: client/campaign/cp_market_callbacks.c:620
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 msgstr ""
+"Et voi ostaa tätä lentokonetta.\n"
+"Ei tarpeeksi rahaa.\n"
 
 #: client/campaign/cp_market_callbacks.c:708
 msgid "You can't sell an aircraft if it still has a team assigned"
-msgstr ""
+msgstr "Et voi myydä lentokonetta, jos joukkue on vielä sen sisällä."
 
 #: client/campaign/cp_market_callbacks.c:710
 msgid "You can't sell an aircraft that is not in base"
@@ -9464,6 +9487,8 @@ msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr ""
+"Et voi lisätä jonoon kohteita.\n"
+"Rakenna lisää työpajoja.\n"
 
 #: client/campaign/cp_produce_callbacks.c:158
 #: client/campaign/cp_produce_callbacks.c:161
@@ -9481,6 +9506,8 @@ msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
 msgstr ""
+"Et voi lisätä jonoon lentokonetta.\n"
+"Komentokeskusta ei ole tässä tukikohdassa.\n"
 
 #: client/campaign/cp_produce_callbacks.c:161
 msgid ""
@@ -9497,6 +9524,8 @@ msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
 msgstr ""
+"Et voi lisätä jonoon lentokonetta.\n"
+"Ei tyhjää tilaa lentokonehallissa.\n"
 
 #: client/campaign/cp_produce_callbacks.c:348
 #: client/campaign/cp_produce_callbacks.c:458
@@ -9548,7 +9577,7 @@ msgstr "Lista täynnä!"
 
 #: client/campaign/cp_produce_callbacks.c:782
 msgid "You cannot queue any more items!"
-msgstr ""
+msgstr "Jonoon ei mahdu enää kohteita!"
 
 #: client/campaign/cp_produce_callbacks.c:804
 #: client/campaign/cp_produce_callbacks.c:816
@@ -9621,7 +9650,7 @@ msgstr "Laboratorioita ei ole tarpeeksi."
 #: client/campaign/cp_research.c:845
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
-msgstr ""
+msgstr "Tutkimuksen %s esivaatimukset eivät täyttyneet %s Tutkimus keskeytetty!"
 
 #: client/campaign/cp_research.c:846
 msgid "Research halted"
@@ -9694,7 +9723,7 @@ msgstr "Tila: tutkimusta ei voida jatkaa"
 
 #: client/campaign/cp_research_callbacks.c:148
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
-msgstr ""
+msgstr "Tila: Meillä ei tällä hetkellä ole kaikkia materiaaleja tai taustatietoja, joita tarvitaan tämän tutkimukseen."
 
 #: client/campaign/cp_research_callbacks.c:150
 #: client/campaign/cp_research_callbacks.c:151
@@ -9710,12 +9739,13 @@ msgid "Missing an artifact"
 msgstr "Artifact hukassa"
 
 #: client/campaign/cp_research_callbacks.c:308
+#, fuzzy
 msgid "Unresearchable collected items"
-msgstr ""
+msgstr "Ei esitutkittuja kerättyjä tavaroita"
 
 #: client/campaign/cp_research_callbacks.c:566
 msgid "This item is currently under research in another base."
-msgstr ""
+msgstr "Tämä tavara on tutkittavana toisessa tukikohdassa."
 
 #: client/campaign/cp_research_callbacks.c:584
 #: client/campaign/cp_research_callbacks.c:629
@@ -9756,11 +9786,11 @@ msgstr "Mitään ei ole tallennettu vielä."
 
 #: client/campaign/cp_save.c:306
 msgid "Could not allocate enough memory to save this game"
-msgstr ""
+msgstr "Ei riittävästi muistia pelin tallentamiseen."
 
 #: client/campaign/cp_save.c:327
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
-msgstr ""
+msgstr "Muistivirhe tallenna-peli datan kompressoinnissa - set save_compressed cvar 0"
 
 #: client/campaign/cp_save.c:373
 #: client/campaign/cp_save.c:375
@@ -9898,7 +9928,7 @@ msgstr "joulukuu"
 
 #: client/campaign/cp_transfer.c:144
 msgid "Destination base does not have an Antimatter Storage.\n"
-msgstr ""
+msgstr "Kohteesi tukikohdassa ei ole Antimateriaali Varastoa.\n"
 
 #: client/campaign/cp_transfer.c:144
 msgid "Missing storage"
@@ -9909,6 +9939,8 @@ msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
 msgstr ""
+"Kohteesi tukikohdassa ei ole tarpeeksi\n"
+"tilaa Antimateriaali Varastossa varastoidaksesi antimateriaa.\n"
 
 #: client/campaign/cp_transfer.c:151
 #: client/campaign/cp_transfer.c:164
@@ -9923,12 +9955,16 @@ msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
 msgstr ""
+"Kohteesi tukikohdassa ei ole tarpeeksi\n"
+"tilaa Varastossa varastoidaksesi tämän tavaran.\n"
 
 #: client/campaign/cp_transfer.c:195
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
 msgstr ""
+"Kohteesi tukikohdassa ei ole tarpeeksi\n"
+"tilaa Asuinhuoneistoissa.\n"
 
 #: client/campaign/cp_transfer.c:204
 #, c-format
@@ -10425,9 +10461,9 @@ msgid "UFO Recovery"
 msgstr "UFO Talteenotettu"
 
 #: client/campaign/cp_uforecovery_callbacks.c:502
-#, c-format
+#, fuzzy, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
-msgstr ""
+msgstr "Aiemmin myyty %s toipui %s kansakunnassa %s, ansaittu %i krediittiä."
 
 #: client/campaign/cp_uforecovery_callbacks.c:507
 #, c-format
@@ -10509,8 +10545,9 @@ msgid "Rank: %s"
 msgstr "Arvo: %s"
 
 #: client/cl_game_multiplayer.c:64
+#, fuzzy
 msgid "Set soldiers per player lower than soldiers per team"
-msgstr ""
+msgstr "Aseta sotilaat per pelaajaa kohden pienemmäksi kuin sotilasta per joukkue"
 
 #: client/cl_game_multiplayer.c:64
 msgid "Settings doesn't make sense"
@@ -10523,6 +10560,9 @@ msgid ""
 "\n"
 "No survivors left on any side."
 msgstr ""
+"Tasapeli!\n"
+"\n"
+"Ei selviytyjiä millään puolella."
 
 #: client/cl_game_multiplayer.c:191
 #: client/cl_game_skirmish.c:114
@@ -11122,7 +11162,7 @@ msgid ""
 "Enemy used flashbang!\n"
 msgstr ""
 "Sotilas on päästään pyörällä!\n"
-"Vihollinen on käyttänyt sokaisu granaattia!\n"
+"Vihollinen on käyttänyt sokaisukranaattia!\n"
 
 #: game/g_combat.c:633
 msgid "Can't perform action - impossible throw!\n"
