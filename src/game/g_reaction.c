@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
  * @todo why only right hand?
  */
-static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, invList_t *invList)
+static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, const invList_t *invList)
 {
 	if (invList && invList->item.m && invList->item.t->weapon
 	 && (!invList->item.t->reload || invList->item.a > 0)) {
@@ -61,7 +61,7 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, inv
  * @returns The number of TUs required to fire or -1 if firing is not possible
  * @sa G_CheckRFTrigger
  */
-static int G_GetFiringTUs (edict_t *ent, edict_t *target, shoot_types_t *shootType, int *firemode)
+static int G_GetFiringTUs (const edict_t *ent, const edict_t *target, shoot_types_t *shootType, int *firemode)
 {
 	const int TUs = G_GetFiringTUsForItem(ent, target, RIGHT(ent));
 	if (TUs >= 0) {
@@ -193,7 +193,7 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
  * @param[in] target The entity that might be fired at
  * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
-static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
+static qboolean G_CanReactionFire (edict_t *ent, const edict_t *target)
 {
 	float actorVis;
 	qboolean frustum;
@@ -393,28 +393,19 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
  * @sa G_ReactToMove
  * @sa G_ReactToPostFire
  */
-static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
+static qboolean G_CheckRFResolution (const edict_t *target, qboolean mock)
 {
 	edict_t *ent = NULL;
-	qboolean fired = qfalse, shoot = qfalse;
+	qboolean fired = qfalse;
 
 	/* check all possible shooters */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		if (!ent->reactionTarget)
 			continue;
 
-		shoot = qfalse;
-
-		/* check whether target has changed (i.e. the player is making a move with a different entity) */
-		if (ent->reactionTarget != target)
-			shoot = qtrue;
-
-		/* check whether target is out of time */
-		if (!shoot && ent->reactionTarget->TU < ent->reactionTUs)
-			shoot = qtrue;
-
-		/* okay do it */
-		if (shoot)
+		/* check whether target has changed (i.e. the player is making a move with a different entity)
+		 * or whether target is out of time */
+		if (ent->reactionTarget != target || ent->reactionTarget->TU < ent->reactionTUs)
 			fired |= G_ResolveRF(ent, mock);
 	}
 	return fired;
