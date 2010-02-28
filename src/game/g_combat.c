@@ -72,7 +72,7 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
  * @param[in] param Used to modify morale changes, for G_Damage() it is value of damage.
  * @sa G_Damage
  */
-static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
+static void G_Morale (int type, const edict_t * victim, const edict_t * attacker, int param)
 {
 	edict_t *ent = NULL;
 	int newMorale;
@@ -147,7 +147,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
  * @note Called only from G_Damage().
  * @sa G_Damage
  */
-static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
+static void G_UpdateShotMock (shot_mock_t *mock, const edict_t *shooter, const edict_t *struck, int damage)
 {
 	assert(struck->number != shooter->number || mock->allow_self);
 
@@ -172,7 +172,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 /**
  * @brief Update character stats for this mission after successful shoot.
  * @note Mind you that this code is always from the view of PHALANX soldiers right now, not anybody else!
- * @param[in] attacker Pointer to attacker.
+ * @param[in,out] attacker Pointer to attacker.
  * @param[in] fd Pointer to fireDef_t used in shoot.
  * @param[in] target Pointer to target.
  * @sa G_UpdateCharacterSkills
@@ -298,7 +298,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 
 /**
  * @brief Deals damage of a give type and amount to a target.
- * @param[in] target What we want to damage.
+ * @param[in,out] target What we want to damage.
  * @param[in] fd The fire definition that defines what type of damage is dealt.
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
@@ -433,7 +433,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 		/* Update number of killed/stunned actors for this attacker. */
 		G_UpdateCharacterBodycount(attacker, fd, target);
-
 	} else {
 		target->chr.minHP = min(target->chr.minHP, target->HP);
 		if (damage > 0) {
@@ -1137,7 +1136,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 				ent->chr.scoreMission->firedSplashHit[i] = qfalse;
 			}
 		} else {
-			/* Direkt hits */
+			/* Direct hits */
 			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {

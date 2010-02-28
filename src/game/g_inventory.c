@@ -271,7 +271,7 @@ void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
-void G_SendInventory (unsigned int playerMask, edict_t *ent)
+void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;

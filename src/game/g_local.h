@@ -320,7 +320,7 @@ void G_TakeDamage(edict_t *ent, int damage);
 
 /* g_reaction.c */
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
-void G_ReactToPreFire(edict_t *target);
+void G_ReactToPreFire(const edict_t *target);
 void G_ReactToPostFire(edict_t *target);
 void G_ResetReactionFire(int team);
 qboolean G_CanEnableReactionFire(const edict_t *ent);
@@ -425,9 +425,9 @@ int G_ActorDoTurn(edict_t * ent, byte dir);
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
-void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, edict_t *ent);
+void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);
 unsigned int G_VisToPM(unsigned int vis_mask);
-void G_SendInventory(unsigned int player_mask, edict_t * ent);
+void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
 void G_SpawnEntities(const char *mapname, qboolean day, const char *entities);

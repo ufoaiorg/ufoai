@@ -308,7 +308,7 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 		if (minDistance < 0 || minDistance > distance) {
 			minDistance = distance;
 			closestUFO = ufo;
-		}	
+		}
 	}
 	return closestUFO;
 }

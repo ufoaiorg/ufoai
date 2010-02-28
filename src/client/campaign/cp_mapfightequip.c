@@ -579,7 +579,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 		if (AIR_IsUFO(slot->aircraft)) {
 			/* UFO - can always be reloaded */
 			slot->ammoLeft = slot->ammo->ammo;
-			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * UFO_RELOAD_DELAY_MULTIPLIER;		
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * UFO_RELOAD_DELAY_MULTIPLIER;
 		} else {
 			/* PHALANX aircraft */
 			/* not at home */
@@ -591,7 +591,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 
 			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
 			slot->ammoLeft = slot->ammo->ammo;
-			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;		
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;
 		}
 	} else if (slot->base) {
 		/* Base Defence weapons */

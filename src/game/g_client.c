@@ -138,7 +138,7 @@ static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
  * @note Each following event that is relying on the fact that this edict must already
  * be known in the client, must also adopt the client side parsing of the event times.
  */
-static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
+static void G_EdictAppear (unsigned int playerMask, const edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_ENT_APPEAR);
 	gi.WriteShort(ent->number);
@@ -157,7 +157,7 @@ static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
  * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, edict_t *ent)
+void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, const edict_t *ent)
 {
 	/* test for pointless player mask */
 	if (!playerMask)
