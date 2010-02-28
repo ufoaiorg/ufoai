@@ -68,8 +68,7 @@ static qboolean G_CheckFlood (player_t *player)
 
 	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
-			G_ClientPrintf(player, PRINT_CHAT, va(ngettext("You can't talk for %d more second\n", "You can't talk for %d more seconds\n", (int)(player->pers.flood_locktill - level.time)),
-					(int)(player->pers.flood_locktill - level.time)));
+			G_ClientPrintf(player, PRINT_CHAT, _("You can't talk for %d more seconds\n"), (int)(player->pers.flood_locktill - level.time));
 			return qtrue;
 		}
 		i = player->pers.flood_whenhead - flood_msgs->value + 1;
@@ -77,8 +76,7 @@ static qboolean G_CheckFlood (player_t *player)
 			i = (sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0])) + i;
 		if (player->pers.flood_when[i] && level.time - player->pers.flood_when[i] < flood_persecond->value) {
 			player->pers.flood_locktill = level.time + flood_waitdelay->value;
-			G_ClientPrintf(player, PRINT_CHAT, va(ngettext("Flood protection: You can't talk for %d second.\n", "Flood protection: You can't talk for %d seconds.\n", flood_waitdelay->integer),
-					flood_waitdelay->integer));
+			G_ClientPrintf(player, PRINT_CHAT, _("Flood protection: You can't talk for %d seconds.\n"), flood_waitdelay->integer);
 			return qtrue;
 		}
 		player->pers.flood_whenhead = (player->pers.flood_whenhead + 1) %
