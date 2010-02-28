@@ -754,7 +754,7 @@ static inline void R_EnforceVersion (void)
 /**
  * @brief Searches vendor and renderer GL strings for the given vendor id
  */
-static inline qboolean R_SearchForVendor (const char *vendor)
+static qboolean R_SearchForVendor (const char *vendor)
 {
 	return Q_stristr(r_config.vendorString, vendor)
 		|| Q_stristr(r_config.rendererString, vendor);
