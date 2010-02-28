@@ -153,7 +153,6 @@ item pbeamrifle_ammo
 			time		15
 			damage		"90 15"
 			dmgweight	particlebeam_medium
-			reaction	true
 		}
 		firedef
 		{
@@ -173,7 +172,7 @@ item pbeamrifle_ammo
 			time				16
 			damage				"90 15"
 			dmgweight			particlebeam_medium
-			reaction			true
+			reaction	true
 		}
 	}
 }

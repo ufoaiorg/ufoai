@@ -94,7 +94,6 @@ item plaspistol_ammo
 			time				10
 			damage				"50 5"
 			dmgweight			plasma_light
-			reaction			true
 		}
 	}
 }

@@ -81,7 +81,6 @@ item chaingun_ammo
 			time				30
 			damage				"20 3"
 			dmgweight			normal_spray
-			reaction			true
 		}
 		firedef
 		{
@@ -293,7 +292,6 @@ item xaw95_ammo
 			time				30
 			damage				"25 3"
 			dmgweight			normal_spray
-			reaction			true
 		}
 		firedef
 		{
