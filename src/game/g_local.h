@@ -341,10 +341,10 @@ void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* 
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventDestroyEdict(const edict_t* ent);
-void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
-void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
+void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
+void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventSetClientAction(const edict_t *ent);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
@@ -415,7 +415,7 @@ void G_ActorReload(edict_t* ent, const invDef_t *invDef);
 qboolean G_ClientCanReload(player_t *player, edict_t *ent, int containerID);
 void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
-void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to);
+void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, pos3_t to);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance);
 void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction);
@@ -447,7 +447,7 @@ int G_TestVis(const int team, edict_t * check, int flags);
 float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
-qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, shoot_types_t shootType, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 
 /* g_ai.c */
 extern edict_t *ai_waypointList;

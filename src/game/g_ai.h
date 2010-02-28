@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	pos3_t to;			/**< grid pos to walk to */
 	pos3_t stop;		/**< grid pos to stop at (e.g. hiding spots) */
-	byte mode;			/**< shoot_types_t */
+	shoot_types_t shootType;	/**< the shoot type */
 	byte shots;			/**< how many shoots can this actor do - only set this if the target is an actor */
 	edict_t *target;	/**< the target edict */
 	const fireDef_t *fd;/**< the firemode to use for shooting */

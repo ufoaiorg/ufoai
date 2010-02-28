@@ -372,7 +372,7 @@ int RT_CheckCell (routing_t * map, const actorSizeEnum_t actorSize, const int x,
 	int fz, cz; /* Floor and ceiling Z cell coordinates */
 	trace_t tr;
 
-	assert(actorSize == ACTOR_SIZE_2x2 || actorSize == ACTOR_SIZE_NORMAL);
+	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
 	assert(map);
 	/* x and y cannot exceed PATHFINDING_WIDTH - actorSize */
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
@@ -1475,6 +1475,7 @@ void RT_UpdateConnectionColumn (routing_t * map, const actorSizeEnum_t actorSize
 	const int ax = x + dvecs[dir][0];
 	const int ay = y + dvecs[dir][1];
 
+	assert(actorSize > ACTOR_SIZE_INVALID && actorSize <= ACTOR_MAX_SIZE);
 	assert(map);
 	assert((x >= 0) && (x <= PATHFINDING_WIDTH - actorSize));
 	assert((y >= 0) && (y <= PATHFINDING_WIDTH - actorSize));

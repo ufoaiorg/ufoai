@@ -376,12 +376,12 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 /**
  * @sa G_Spawn
  */
-static inline void G_InitEdict (edict_t * e)
+static inline void G_InitEdict (edict_t * ent)
 {
-	e->inuse = qtrue;
-	e->classname = "noclass";
-	e->number = G_EdictsGetNumber(e);
-	e->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->inuse = qtrue;
+	ent->classname = "noclass";
+	ent->number = G_EdictsGetNumber(ent);
+	ent->fieldSize = ACTOR_SIZE_NORMAL;
 }
 
 /**

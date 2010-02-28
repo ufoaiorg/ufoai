@@ -172,7 +172,8 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			int flags, dummy;
 			int objIdx, surfaceFlags;
 			objDef_t *obj;
-			int weap_fds_idx, fd_idx, shootType;
+			int weap_fds_idx, fd_idx;
+			shoot_types_t shootType;
 			vec3_t muzzle, impact;
 
 			/* read data */

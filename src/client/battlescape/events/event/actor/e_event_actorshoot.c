@@ -38,7 +38,8 @@ int CL_ActorDoShootTime (const eventRegister_t *self, struct dbuffer *msg, const
 	int flags, dummy;
 	int objIdx, surfaceFlags;
 	objDef_t *obj;
-	int weap_fds_idx, fd_idx, shootType;
+	int weap_fds_idx, fd_idx;
+	shoot_types_t shootType;
 	vec3_t muzzle, impact;
 
 	if (impactTime < cl.time)
@@ -151,7 +152,8 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	int flags, normal, shooterEntnum, victimEntnum;
 	int objIdx;
 	const objDef_t *obj;
-	int weapFdsIdx, fdIdx, surfaceFlags, shootType;
+	int weapFdsIdx, fdIdx, surfaceFlags;
+	shoot_types_t shootType;
 
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &shooterEntnum, &victimEntnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);

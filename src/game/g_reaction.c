@@ -56,12 +56,12 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, inv
  * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand. Used for reaction fire.
  * @param[in] ent The shooter entity.
  * @param[in] target The target entity.
- * @param[out] fire_hand_type If not NULL then this stores the hand (combined with the 'reaction' info) that the shooter will fire with.
+ * @param[out] shootType If not NULL then this stores the hand (combined with the 'reaction' info) that the shooter will fire with.
  * @param[out] firemode The firemode that will be used for the shot.
  * @returns The number of TUs required to fire or -1 if firing is not possible
  * @sa G_CheckRFTrigger
  */
-static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
+static int G_GetFiringTUs (edict_t *ent, edict_t *target, shoot_types_t *shootType, int *firemode)
 {
 	const int TUs = G_GetFiringTUsForItem(ent, target, RIGHT(ent));
 	if (TUs >= 0) {
@@ -69,8 +69,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 		if (firemode)
 			*firemode = ent->chr.RFmode.fmIdx;
 
-		if (fire_hand_type)
-			*fire_hand_type = ST_RIGHT_REACTION;
+		if (shootType)
+			*shootType = ST_RIGHT_REACTION;
 	}
 
 	return TUs;
@@ -206,6 +206,9 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	if (ent->team == level.activeTeam)
 		return qfalse;
 
+	if (G_IsDead(target))
+		return qfalse;
+
 	/* check ent has reaction fire enabled */
 	if (!G_IsShaken(ent) && !(ent->state & STATE_REACTION))
 		return qfalse;
@@ -285,7 +288,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos3_t at, int type, int firemode)
+static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos3_t at, shoot_types_t type, int firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
@@ -324,7 +327,8 @@ static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos
 static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 {
 	player_t *player;
-	int tus, fire_hand_type, team;
+	int tus, team;
+	shoot_types_t shootType;
 	int firemode = -1;
 	qboolean tookShot;
 
@@ -337,14 +341,14 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		return qfalse;
 
 	/* ent can't take a reaction shot if it's not possible - and check that
-	 * the target is still alive*/
-	if (!G_CanReactionFire(ent, ent->reactionTarget) || G_IsDead(ent->reactionTarget)) {
+	 * the target is still alive */
+	if (!G_CanReactionFire(ent, ent->reactionTarget)) {
 		ent->reactionTarget = NULL;
 		return qfalse;
 	}
 
 	/* check ent can fire (necessary? covered by G_CanReactionFire?) */
-	tus = G_GetFiringTUs(ent, ent->reactionTarget, &fire_hand_type, &firemode);
+	tus = G_GetFiringTUs(ent, ent->reactionTarget, &shootType, &firemode);
 	if (tus < 0)
 		return qfalse;
 
@@ -367,7 +371,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	tookShot = G_FireWithJudgementCall(player, ent, ent->reactionTarget->pos, fire_hand_type, firemode);
+	tookShot = G_FireWithJudgementCall(player, ent, ent->reactionTarget->pos, shootType, firemode);
 
 	/* Revert active team. */
 	level.activeTeam = team;
@@ -460,13 +464,13 @@ void G_ReactToPreFire (edict_t *target)
 
 		/* draw!! */
 		entTUs = G_GetFiringTUs(ent, target, NULL, &firemode);
-		targTUs = G_GetFiringTUs(target, ent, NULL, NULL);
 		if (entTUs < 0 || firemode < 0) {
 			/* can't reaction fire if no TUs to fire */
 			ent->reactionTarget = NULL;
 			continue;
 		}
 
+		targTUs = G_GetFiringTUsForItem(target, ent, RIGHT(ent));
 		/* see who won */
 		if (entTUs >= targTUs) {
 			/* target wins, so delay ent */

@@ -254,7 +254,8 @@ static int actorL_pos (lua_State *L)
  */
 static int actorL_shoot (lua_State *L)
 {
-	int fm, tu, shots;
+	int tu, shots;
+	shoot_types_t shootType;
 	aiActor_t *target;
 	const item_t *item;
 	const fireDef_t *fdArray;
@@ -275,16 +276,16 @@ static int actorL_shoot (lua_State *L)
 	}
 
 	/** @todo figure out this shot mode stuff out. */
-	fm = 0;
+	shootType = ST_RIGHT;
 
 	/* Figure out weapon to use. */
-	if (IS_SHOT_RIGHT(fm) && RIGHT(AIL_ent)
+	if (IS_SHOT_RIGHT(shootType) && RIGHT(AIL_ent)
 			&& RIGHT(AIL_ent)->item.m
 			&& RIGHT(AIL_ent)->item.t->weapon
 			&& (!RIGHT(AIL_ent)->item.t->reload
 				|| RIGHT(AIL_ent)->item.a > 0)) {
 		item = &RIGHT(AIL_ent)->item;
-	} else if (IS_SHOT_LEFT(fm) && LEFT(AIL_ent)
+	} else if (IS_SHOT_LEFT(shootType) && LEFT(AIL_ent)
 			&& LEFT(AIL_ent)->item.m
 			&& LEFT(AIL_ent)->item.t->weapon
 			&& (!LEFT(AIL_ent)->item.t->reload
@@ -315,7 +316,7 @@ static int actorL_shoot (lua_State *L)
 		shots--;
 		/** @todo actually handle fire modes */
 		G_ClientShoot(AIL_player, AIL_ent, target->ent->pos,
-				0, 0, NULL, qtrue, 0);
+				shootType, 0, NULL, qtrue, 0);
 	}
 
 	/* Success. */
@@ -723,16 +724,16 @@ static int AIL_canreload (lua_State *L)
  */
 static int AIL_reload (lua_State *L)
 {
-	shoot_types_t weap;
+	int container;
 
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L, 1)) {
 			const char *s = lua_tostring(L, 1);
 
 			if (!strcmp(s, "right"))
-				weap = gi.csi->idRight;
+				container = gi.csi->idRight;
 			else if (!strcmp(s, "left"))
-				weap = gi.csi->idLeft;
+				container = gi.csi->idLeft;
 			else
 				return 0;
 		} else {
@@ -740,9 +741,9 @@ static int AIL_reload (lua_State *L)
 			return 0;
 		}
 	} else
-		weap = gi.csi->idRight; /* Default to right hand. */
+		container = gi.csi->idRight; /* Default to right hand. */
 
-	G_ActorReload(AIL_ent, INVDEF(weap));
+	G_ActorReload(AIL_ent, INVDEF(container));
 	return 0;
 }
 

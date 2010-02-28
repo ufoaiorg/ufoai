@@ -1154,7 +1154,8 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 
 static void CMod_RerouteMap (void)
 {
-	int size, x, y, z, dir;
+	actorSizeEnum_t size;
+	int x, y, z, dir;
 	int i;
 	pos3_t mins, maxs;
 	double start, end;
@@ -1176,7 +1177,7 @@ static void CMod_RerouteMap (void)
 		(int)maxs[0], (int)maxs[1], (int)maxs[2]);
 
 	/* Floor pass */
-	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
+	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
 				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
@@ -1194,8 +1195,8 @@ static void CMod_RerouteMap (void)
 	/* Wall pass */
 	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
 	 * I'm just commenting out the CORRECT code for now. */
-	/* for (size = 0; size < ACTOR_MAX_SIZE; size++) { */
-	for (size = 0; size < 1; size++) {
+	/* for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) { */
+	for (size = ACTOR_SIZE_INVALID; size < 1; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
 				const byte tile = reroute[size][y][x];
