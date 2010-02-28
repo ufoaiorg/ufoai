@@ -212,7 +212,7 @@ static void B_BuildBase_f (void)
 		B_SetUpBase(base, cp_start_employees->integer, cl_start_buildings->integer, newBasePos);
 
 		ccs.numBases++;
-		ccs.campaignStats.basesBuild++;
+		ccs.campaignStats.basesBuilt++;
 		ccs.mapAction = MA_NONE;
 		CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
 		nation = MAP_GetNation(base->pos);

@@ -1104,7 +1104,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 
 	/* Create random blocked fields in the base.
 	 * The first base never has blocked fields so we skip it. */
-	if (ccs.campaignStats.basesBuild) {
+	if (ccs.campaignStats.basesBuilt) {
 		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
 		for (i = 0; i < j; i++) {
 			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE)];
@@ -1289,7 +1289,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 	if (!buildings)
 		hire = qfalse;
 	/* setup for first base */
-	if (ccs.campaignStats.basesBuild == 0)
+	if (ccs.campaignStats.basesBuilt == 0)
 		B_SetUpFirstBase(base, hire, buildings);
 	else
 		B_BuildFromTemplate(base, NULL, hire);

@@ -252,7 +252,7 @@ typedef struct stats_s {
 	int missions;				/**< all missions (used for unique mission idx generation) */
 	int missionsWon;
 	int missionsLost;
-	int basesBuild;
+	int basesBuilt;
 	int basesAttacked;
 	int installationsBuild;
 	int interceptions;

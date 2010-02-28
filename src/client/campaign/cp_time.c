@@ -109,7 +109,7 @@ static qboolean CL_AllowTimeScale (void)
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the ccs.numBases values is pointless here */
-	if (!ccs.campaignStats.basesBuild)
+	if (!ccs.campaignStats.basesBuilt)
 		return qfalse;
 
 	return !strncmp(menuName, "geoscape", 3) || !strncmp(menuName, "airfight", 8);
@@ -154,7 +154,7 @@ static void CL_SetGameTime (int gameLapseValue)
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the ccs.numBases values is pointless here */
-	if (!ccs.campaignStats.basesBuild)
+	if (!ccs.campaignStats.basesBuilt)
 		return;
 
 	if (gameLapseValue < 0 || gameLapseValue >= NUM_TIMELAPSE)
