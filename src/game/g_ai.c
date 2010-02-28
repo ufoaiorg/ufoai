@@ -241,6 +241,7 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
 /**
  * @sa AI_ActorThink
  * @todo fill z_align values
+ * @todo optimize this
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
@@ -248,7 +249,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	int tu;
 	pos_t move;
 	shoot_types_t shootType;
-	int shots;
 	float dist, minDist;
 	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
 	const objDef_t *ad;
@@ -290,7 +290,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
 			/* how many shoots can this actor do */
-			shots = tu / fd->time;
+			const int shots = tu / fd->time;
 			if (shots) {
 				/* search best target */
 				while ((check = G_EdictsGetNextLivingActor(check))) {

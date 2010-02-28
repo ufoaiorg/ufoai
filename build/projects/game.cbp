@@ -232,9 +232,6 @@
 		<Unit filename="..\..\src\game\lua\ltm.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\lua\lua.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\game\lua\lundump.c">
 			<Option compilerVar="CC" />
 		</Unit>
