@@ -105,7 +105,7 @@ void CP_UpdateNationXVIInfection (void)
 	/* area used to normalized XVI infection level for each nation.
 	 * depend on overlay size so that if we change resolution of
 	 * overlay it doesn't impact nation XIInfection */
-	const float normalizingArea = width * height / AREA_FACTOR;
+	float normalizingArea;
 
 	/* No need to update XVI levels if the overlay didn't change */
 	if (!xviNationInfectionNeedsUpdate)
@@ -118,6 +118,7 @@ void CP_UpdateNationXVIInfection (void)
 	R_GetXVIMapDimensions(&width, &height);
 	heightPerDegree = height / 180.0f;
 	widthPerDegree = width / 360.0f;
+	normalizingArea = width * height / AREA_FACTOR;
 
 	for (y = 0; y < height; y++) {
 		int x;
