@@ -3086,8 +3086,8 @@
 "classname" "misc_model"
 "spawnflags" "248"
 "origin" "369 656 196"
-"model" "models/objects/alien/box/box.md2"
-"skin" "models/objects/alien/box/box"
+"model" "models/objects/alien/box/box"
+"skin" "1"
 }
 // entity 29
 {
