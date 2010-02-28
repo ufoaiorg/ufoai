@@ -992,7 +992,7 @@ static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, pla
 				break;
 			/* Credit to Duke: We skip the minimum opening, as if there is a
 			 * viable opening, even one slice above, that opening would be open. */
-			lo += *hi_val + PATHFINDING_MIN_OPENING;
+			lo = *hi_val + PATHFINDING_MIN_OPENING;
 		}
 	}
 	return temp_z;
