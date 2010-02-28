@@ -295,6 +295,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 	return &globals;
 }
 
+#ifndef HARD_LINKED_GAME
 /* this is only here so the functions in the shared code can link */
 void Sys_Error (const char *error, ...)
 {
@@ -338,7 +339,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 
 	gi.dprintf("%s", text);
 }
-
+#endif
 
 /**
  * @brief If password has changed, update sv_needpass cvar as needed

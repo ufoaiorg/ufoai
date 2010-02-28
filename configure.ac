@@ -95,6 +95,10 @@ AC_ARG_ENABLE(profiling,
 	[AS_HELP_STRING([--enable-profiling], [build with profiling for gprof @<:@default=disabled@:>@])],
 	[], [enable_profiling=no])
 
+AC_ARG_ENABLE(hardlinkedgame,
+	[AS_HELP_STRING([--enable-hardlinkedgame], [build with hard linked game @<:@default=disabled@:>@])],
+	[], [enable_hardlinkedgame=no])
+
 AC_ARG_ENABLE(tests,
 	[AS_HELP_STRING([--enable-tests], [build with tests @<:@default=check@:>@])],
 	[], [enable_tests=check])
@@ -962,6 +966,18 @@ then
 	AC_MSG_NOTICE([Enabling profiling])
 else
 	AC_SUBST([PROFILING],0)
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for HARD_LINKED_GAME
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_hardlinkedgame" = "yes"
+then
+	AC_SUBST([HARD_LINKED_GAME],1)
+	AC_MSG_NOTICE([Enabling hard linked game])
+else
+	AC_SUBST([HARD_LINKED_GAME],0)
 fi
 
 #---------------------------------------------------------------------------------------------

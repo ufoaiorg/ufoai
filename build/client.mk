@@ -249,10 +249,6 @@ CLIENT_SRCS = \
 	server/sv_user.c \
 	server/sv_world.c \
 	\
-	game/q_shared.c \
-	game/inv_shared.c \
-	game/inventory.c \
-	\
 	client/renderer/r_array.c \
 	client/renderer/r_bsp.c \
 	client/renderer/r_draw.c \
@@ -290,7 +286,16 @@ CLIENT_SRCS = \
 	shared/images.c \
 	shared/infostring.c \
 	shared/parse.c \
-	shared/shared.c
+	shared/shared.c \
+	\
+	game/q_shared.c \
+	game/inv_shared.c \
+	game/inventory.c
+
+ifeq ($(HARD_LINKED_GAME),1)
+	CLIENT_SRCS+=$(GAME_SRCS)
+	CLIENT_CFLAGS+=$(GAME_CFLAGS)
+endif
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \

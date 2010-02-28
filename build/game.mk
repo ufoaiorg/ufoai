@@ -6,7 +6,6 @@ ifeq ($(BUILD_DEBUG),1)
 endif
 
 GAME_SRCS=\
-	game/q_shared.c \
 	game/g_actor.c \
 	game/g_ai.c \
 	game/g_ai_lua.c \
@@ -31,12 +30,7 @@ GAME_SRCS=\
 	game/g_trigger.c \
 	game/g_utils.c \
 	game/g_vis.c \
-	game/inv_shared.c \
-	game/inventory.c \
-	shared/mathlib.c \
-	shared/shared.c \
-	shared/parse.c \
-	shared/infostring.c \
+	\
 	game/lua/lapi.c \
 	game/lua/lauxlib.c \
 	game/lua/lbaselib.c \
@@ -63,18 +57,31 @@ GAME_SRCS=\
 	game/lua/ltable.c \
 	game/lua/ltablib.c \
 	game/lua/ltm.c \
-	game/lua/lua.c \
 	game/lua/lundump.c \
 	game/lua/lvm.c \
 	game/lua/lzio.c \
 	game/lua/print.c
 
+ifneq ($(HARD_LINKED_GAME),1)
+	GAME_SRCS+= \
+		shared/mathlib.c \
+		shared/shared.c \
+		shared/parse.c \
+		shared/infostring.c \
+		\
+		game/q_shared.c \
+		game/inv_shared.c \
+		game/inventory.c
+endif
+
 GAME_OBJS=$(GAME_SRCS:%.c=$(_BUILDDIR)/game/%.o)
 GAME_TARGET=base/game.$(SHARED_EXT)
 
-# Add the list of all project object files and dependencies
-ALL_OBJS += $(GAME_OBJS)
-TARGETS +=$(GAME_TARGET)
+ifneq ($(HARD_LINKED_GAME),1)
+	# Add the list of all project object files and dependencies
+	ALL_OBJS += $(GAME_OBJS)
+	TARGETS +=$(GAME_TARGET)
+endif
 
 # Say how about to build the target
 $(GAME_TARGET) : $(GAME_OBJS)
