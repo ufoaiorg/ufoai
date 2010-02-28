@@ -144,3 +144,22 @@ component cmpDefBaseHeader cmpBaseHeader
 		font		f_big
 	}
 }
+
+component button cmpPopupButton
+{
+//		string		"_Build"
+//		tooltip		"_Build the radar tower"
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		font		f_menu
+		image		ui/button_green_small
+//		pos			"109 240"
+		size		"176 32"
+//		onClick		{ cmd "mn_pop; mn_installation_build *cvar:mn_installation_type;" }
+}
+
+component cmpPopupButton cmpCancelButton
+{
+	string		"_Cancel"
+	tooltip		"_Close this dialogue"
+}

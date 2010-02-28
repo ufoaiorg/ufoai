@@ -126,7 +126,7 @@ void G_EventDestroyEdict (const edict_t* ent)
  * @param amount The new amount of the left ammo
  * @param shootType The shooting type to determine which container to use
  */
-void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount, int shootType)
+void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType)
 {
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
 	gi.WriteShort(ent->number);
@@ -149,7 +149,7 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_START_SHOOT);
 	gi.WriteShort(ent->number);
@@ -187,7 +187,7 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -237,13 +237,27 @@ void G_EventActorFall (const edict_t* ent)
 }
 
 /**
+ * @brief Informs the client that an interaction with the world is possible
+ * @note It's assumed that the clientAction is already set
+ * @param ent The edict that can execute the action (an actor)
+ */
+void G_EventSetClientAction (const edict_t *ent)
+{
+	/* tell the hud to show the door buttons */
+	gi.AddEvent(G_TeamToPM(ent->team), EV_DOOR_ACTION);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->clientAction->number);
+	gi.EndEvents();
+}
+
+/**
  * @brief Reset the client actions for the given entity
- * @param ent The entity to reset the client action for
- * @note This event is send to all the clients that belong that the edict's team
+ * @param[in] ent The entity to reset the client action for
+ * @note This event is send to the player this edict belongs to
  */
 void G_EventResetClientAction (const edict_t* ent)
 {
-	gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
+	gi.AddEvent(G_PlayerToPM(G_PLAYER_FROM_ENT(ent)), EV_RESET_CLIENT_ACTION);
 	gi.WriteShort(ent->number);
 }
 

@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
+#include "cl_ugv.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
@@ -976,42 +977,6 @@ static void CL_SendCommand (void)
 	}
 }
 
-static void CL_CvarCheck (void)
-{
-	int v;
-
-	/** @todo move into hud code */
-	/* worldlevel */
-	if (cl_worldlevel->modified) {
-		int i;
-		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
-			int status = 0;
-			if (i == cl_worldlevel->integer)
-				status = 2;
-			else if (i < cl.mapMaxLevel)
-				status = 1;
-			MN_ExecuteConfunc("updateLevelStatus %i %i", i, status);
-		}
-		cl_worldlevel->modified = qfalse;
-	}
-
-	/* language */
-	if (s_language->modified)
-		CL_LanguageTryToSet(s_language->string);
-
-	/* r_mode and fullscreen */
-	v = Cvar_GetInteger("mn_vidmode");
-	if (v < -1 || v >= VID_GetModeNums()) {
-		Com_Printf("Max vid_mode value is %i (%i)\n", VID_GetModeNums(), v);
-		v = Cvar_GetInteger("vid_mode");
-		Cvar_SetValue("mn_vidmode", v);
-	}
-	if (v >= 0)
-		Cvar_Set("mn_vidmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
-	else
-		Cvar_Set("mn_vidmodestr", _("Custom"));
-}
-
 /**
  * @brief Sets the client state
  */
@@ -1080,8 +1045,6 @@ void CL_Frame (int now, void *data)
 
 	CL_SendCommand();
 
-	Irc_Logic_Frame();
-
 	IN_Frame();
 
 	GAME_Frame();
@@ -1114,7 +1077,11 @@ void CL_Frame (int now, void *data)
  */
 void CL_SlowFrame (int now, void *data)
 {
-	CL_CvarCheck();
+	/* language */
+	if (s_language->modified)
+		CL_LanguageTryToSet(s_language->string);
+
+	Irc_Logic_Frame();
 
 	HUD_Update();
 }

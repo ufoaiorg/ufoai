@@ -48,29 +48,18 @@ window messageoptions
 		string		"_Pause/message settings"
 	}
 
-	button button_apply
+	cmpPopupButton button_apply
 	{
 		string		"_Apply"
 		tooltip		"_Apply changes"
 		pos			"109 436"
-		size		"176 32"
-		image		ui/button_green_small
-		font		f_menu
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;msgoptions_backup;" }
 	}
 
-	button button_revert
+	cmpCancelButton button_revert
 	{
-		string		"_Cancel"
 		tooltip		"_Revert changes"
-		pos			"296 437"
-		size		"176 32"
-		image		ui/button_green_small
-		font		f_menu
-		color		"0 0.5 0 1"
-		selectcolor "1 1 1 1"
+		pos			"296 436"
 		onClick		{ cmd "mn_pop;" }
 	}
 

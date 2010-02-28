@@ -388,9 +388,7 @@ COLLISION DETECTION
 #define DIRECTION_CROUCH		11
 
 
-/* Actor size and states defines */
 /* common/cmodel.c */
-#define	ACTOR_MAX_SIZE			2
 #define	ACTOR_MAX_STATES		2
 
 /* common/tracing.c, ufo2map/common/trace.c, ufo2map/csg.c, ufo2map/radiosity.c, ufo2map/routing.c, client/cl_input.c,

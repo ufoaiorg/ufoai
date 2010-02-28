@@ -277,15 +277,11 @@ window uforecovery
 			}
 		}
 
-		button bt_basesel
+		cmpPopupButton bt_basesel
 		{
 			string		"_Recover"
 			tooltip		"_Begin UFO recovery process"
-			image		ui/button_green_small
 			pos			"242 210"
-			size		"176 32"
-			font		f_menu
-			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.ur_ufoyards@lineselected>; mn_pop;" }
 		}
 	}
@@ -386,15 +382,11 @@ window uforecovery
 			size		"360 20"
 		}
 
-		button bt_natsel
+		cmpPopupButton bt_natsel
 		{
 			string		"_Sell"
 			tooltip		"_Begin UFO sell process"
-			image		ui/button_green_small
 			pos			"242 210"
-			size		"176 32"
-			font		f_menu
-			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sell_start; mn_pop;" }
 		}
 	}

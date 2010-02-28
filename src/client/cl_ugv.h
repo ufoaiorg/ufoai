@@ -37,7 +37,6 @@ typedef struct ugv_s {
 } ugv_t;
 
 void CL_ParseUGVs(const char *name, const char **text);
-void CL_UGVCvars(const character_t *chr);
 ugv_t *CL_GetUGVByIDSilent(const char *ugvID);
 ugv_t *CL_GetUGVByID(const char *ugvID);
 

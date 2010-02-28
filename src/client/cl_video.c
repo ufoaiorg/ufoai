@@ -75,7 +75,7 @@ const vidmode_t vid_modes[] =
  */
 int VID_GetModeNums (void)
 {
-	return (sizeof(vid_modes) / sizeof(vidmode_t));
+	return lengthof(vid_modes);
 }
 
 qboolean VID_GetModeInfo (void)
@@ -115,6 +115,11 @@ static qboolean CL_CvarCheckVidGamma (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 0.1, 3.0, qfalse);
 }
 
+static qboolean CL_CvarCheckVidMode (cvar_t *cvar)
+{
+	return Cvar_AssertValue(cvar, -1, VID_GetModeNums(), qtrue);
+}
+
 /**
  * @sa R_Shutdown
  */
@@ -123,6 +128,7 @@ void VID_Init (void)
 	vid_strech = Cvar_Get("vid_strech", "1", CVAR_ARCHIVE, "Stretch the game to force a 4/3 ratio");
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, "Run the game in fullscreen mode");
 	vid_mode = Cvar_Get("vid_mode", "6", CVAR_ARCHIVE, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
+	Cvar_SetCheckFunction("vid_mode", CL_CvarCheckVidMode);
 	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");
 	vid_ignoregamma = Cvar_Get("vid_ignoregamma", "0", CVAR_ARCHIVE, "Don't control the gamma settings if set to 1");

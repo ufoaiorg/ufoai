@@ -172,6 +172,63 @@ window irc
 	}
 }
 
+// when your nick name is already in use you get this popup
+window irc_changename
+{
+	{
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		closebutton	true
+		image		ui/popup_alpha_tile
+		string		"_Name is already in use"
+	}
+
+	string popup_text
+	{
+		string		"_Your name is already in use or is invalid."
+		pos			"26 58"
+		size		"446 64"
+		longlines	wrap
+	}
+
+	// ===================
+	// NAME
+	// ===================
+	string current_name
+	{
+		string		"_Name:"
+		pos			"26 128"
+		size		"300 20"
+		color		"1 1 1 1"
+	}
+	textentry slot_name
+	{
+		string		*cvar:cl_name
+		image		ui/button_green_verysmall
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"170 122"
+		size		"185 34"
+	}
+
+	cmpPopupButton bt_ok
+	{
+		string		"_Retry"
+		tooltip		"_Retry with your changed name"
+		pos			"110 192"
+		onClick		{ cmd "mn_pop;irc_disconnect;irc_connect;" }
+	}
+
+	cmpCancelButton bt_cancel
+	{
+		pos			"296 192"
+		onClick		{ cmd "mn_pop;irc_disconnect;mn_pop;" }
+	}
+}
 
 // when you aren't connected you get this popup
 // don't change this name or change it in the code, too
@@ -194,27 +251,17 @@ window irc_popup
 		longlines	wrap
 	}
 
-	button bt_ok
+	cmpPopupButton bt_ok
 	{
 		string		"_Connect"
 		tooltip		"_Connect to the lobby"
-		font		f_menu
-		color		"0 0.5 0 1"
-		image		ui/button_green_small
 		pos			"110 192"
-		size		"176 32"
 		onClick		{ cmd "irc_connect; mn_pop; mn_push irc;" }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		font		f_menu
-		color		"0 0.5 0 1"
-		image		ui/button_green_small
 		pos			"296 192"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
 }

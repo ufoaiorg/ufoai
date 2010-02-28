@@ -106,16 +106,11 @@ window popup_list
 		onChange	{ *popup_list@viewpos = <current> }
 	}
 
-	button bt_ok
+	cmpPopupButton bt_ok
 	{
 		string		"_OK"
 		tooltip		"_Close this dialogue"
-		image		ui/button_green_small
 		pos			"296 192"
-		size		"176 32"
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		font		f_menu
 		onClick		{ cmd "mn_pop;" }
 	}
 }
@@ -161,39 +156,27 @@ window popup_button
 		onChange	{ *popup_text@viewpos = <current> }
 	}
 
-	button popup_button_1
+	cmpPopupButton popup_button_1
 	{
 		string		*cvar:mn_sys_popup_button_text1
 		tooltip		*cvar:mn_sys_popup_button_tooltip1
-		image		ui/button_green_small
 		pos			"26 192"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
 		invis		true
 	}
 
-	button popup_button_2
+	cmpPopupButton popup_button_2
 	{
 		string		*cvar:mn_sys_popup_button_text2
 		tooltip		*cvar:mn_sys_popup_button_tooltip2
-		image		ui/button_green_small
-		size		"176 32"
 		pos			"296 192"
-		font		f_menu
-		color		"0 0.5 0 1"
 		invis		true
 	}
 
-	button popup_button_3
+	cmpPopupButton popup_button_3
 	{
 		string		*cvar:mn_sys_popup_button_text3
 		tooltip		*cvar:mn_sys_popup_button_tooltip3
-		image		ui/button_green_small
 		pos			"296 156"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
 		invis		true
 	}
 

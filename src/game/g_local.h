@@ -203,7 +203,6 @@ extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
-extern cvar_t *sv_send_edicts;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
 extern cvar_t *sv_maxsoldiersperplayer;
@@ -342,10 +341,11 @@ void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* 
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventDestroyEdict(const edict_t* ent);
-void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, int shootType);
-void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, const pos3_t at);
+void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
+void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, int shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventSetClientAction(const edict_t *ent);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
 void G_EventEndRound(void);
@@ -376,7 +376,7 @@ void G_EventReactionFireChange(const edict_t* ent);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
-qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
+qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
@@ -387,7 +387,9 @@ void G_SendState(unsigned int playerMask, const edict_t *ent);
 void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
 
+void G_ActorUseDoor(edict_t *actor, edict_t *door);
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
+void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
@@ -410,10 +412,10 @@ qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize)
 void G_ClientDisconnect(player_t * player);
 
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
-qboolean G_ClientCanReload(player_t *player, int entnum, int containerID);
-void G_ClientGetWeaponFromInventory(player_t *player, int entnum);
+qboolean G_ClientCanReload(player_t *player, edict_t *ent, int containerID);
+void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
-void G_ClientMove(player_t * player, int visTeam, edict_t* ent, pos3_t to);
+void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, pos3_t to);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance);
 void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction);
@@ -445,7 +447,7 @@ int G_TestVis(const int team, edict_t * check, int flags);
 float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
-qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, shoot_types_t shootType, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 
 /* g_ai.c */
 extern edict_t *ai_waypointList;
@@ -480,7 +482,7 @@ void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
 int G_EdictsGetNumber(const edict_t* ent);
 qboolean G_EdictsIsValidNum(const int idx);
-edict_t* G_EdictsGetByNum(const int idx);
+edict_t* G_EdictsGetByNum(const int num);
 edict_t* G_EdictsGetFirst(void);
 edict_t* G_EdictsGetNext(edict_t* lastEnt);
 edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
@@ -676,7 +678,7 @@ struct edict_s {
 	int sounds;		/**< type of sounds to play - e.g. doors */
 	int dmg;		/**< damage done by entity */
 	/** @sa memcpy in Grid_CheckForbidden */
-	int fieldSize;	/* ACTOR_SIZE_* */
+	actorSizeEnum_t fieldSize;	/* ACTOR_SIZE_* */
 	qboolean hiding;		/**< for ai actors - when they try to hide after the performed their action */
 
 	/** function to call when triggered - this function should only return true when there is

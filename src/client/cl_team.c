@@ -45,7 +45,7 @@ chrList_t chrDisplayList;
  * @param[in] id The id of the skin
  * @return Translated skin name
  */
-const char* CL_GetTeamSkinName (int id)
+static const char* CL_GetTeamSkinName (int id)
 {
 	switch(id) {
 	case 0:
@@ -62,6 +62,38 @@ const char* CL_GetTeamSkinName (int id)
 		return _("CCCP");
 	}
 	Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
+}
+
+void CL_CharacterSkillAndScoreCvars (const character_t *chr)
+{
+	Cvar_ForceSet("mn_name", chr->name);
+	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
+	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
+	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
+	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
+
+	Cvar_Set("mn_vpwr", va("%i", chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_vspd", va("%i", chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_vacc", va("%i", chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_vmnd", va("%i", chr->score.skills[ABILITY_MIND]));
+	Cvar_Set("mn_vcls", va("%i", chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_vhvy", va("%i", chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_vass", va("%i", chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_vsnp", va("%i", chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_vexp", va("%i", chr->score.skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_vhp", va("%i", chr->HP));
+	Cvar_Set("mn_vhpmax", va("%i", chr->maxHP));
+
+	Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
+	Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
+	Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_tmnd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND]), chr->score.skills[ABILITY_MIND]));
+	Cvar_Set("mn_tcls", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
+	Cvar_Set("mn_thvy", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
+	Cvar_Set("mn_tass", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
+	Cvar_Set("mn_tsnp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
+	Cvar_Set("mn_texp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
 }
 
 /**
@@ -353,11 +385,10 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
  * @brief Generates the skills and inventory for a character and for a 2x2 unit
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
- * @param[in] ugvType Currently unused.
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_t *ugvType)
+void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {
 	memset(chr, 0, sizeof(*chr));
 

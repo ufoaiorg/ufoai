@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa EV_DOOR_ACTION
  * @sa Touch_DoorTrigger
  * @sa CL_ActorUseDoor
+ * @todo Hud should have a button that should be activated now
  */
 void CL_ActorDoorAction (const eventRegister_t *self, struct dbuffer *msg)
 {
@@ -42,11 +43,13 @@ void CL_ActorDoorAction (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* get actor le */
 	le = LE_Get(number);
-	if (!le) {
-		Com_Printf("CL_ActorDoorAction: Could not get le %i\n", number);
-		return;
-	}
+	if (!le)
+		LE_NotFoundError(number);
+
 	/* set door number */
-	le->clientAction = doornumber;
+	le->clientAction = LE_Get(doornumber);
+	if (!le->clientAction)
+		LE_NotFoundError(doornumber);
+
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction: Set door number: %i (for actor with entnum %i)\n", doornumber, number);
 }

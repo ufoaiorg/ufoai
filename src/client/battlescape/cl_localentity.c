@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sound/s_mix.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
+#include "cl_ugv.h"
 #include "cl_parse.h"
 #include "cl_hud.h"
 #include "../renderer/r_mesh_anim.h"
@@ -123,12 +124,17 @@ void LM_AddToScene (void)
 			lm->lighting.dirty = qtrue;
 		}
 
+		if (lm->parent) {
+			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
+			ent.tagname = lm->tag;
+		}
+
 		/* renderflags like RF_PULSE */
 		ent.flags = lm->renderFlags;
 		ent.lighting = &lm->lighting;
 
 		/* add it to the scene */
-		R_AddEntity(&ent);
+		lm->renderEntityNum = R_AddEntity(&ent);
 	}
 }
 
@@ -213,6 +219,17 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
 	Com_DPrintf(DEBUG_EVENTSYS, "LE_SetThink: Set think function for le %i to %p\n",
 			le->entnum, think);
 	le->think = think;
+}
+
+localModel_t *LM_GetByID (const char *id)
+{
+	int i;
+
+	for (i = 0; i < cl.numLMs; i++) {
+		if (!strcmp(cl.LMs[i].id, id))
+			return &cl.LMs[i];
+	}
+	return NULL;
 }
 
 /**

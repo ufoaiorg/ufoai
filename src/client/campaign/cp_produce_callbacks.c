@@ -410,16 +410,23 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
  * @param[in] aircraftTemplate The aircraft to print the information for
  * @sa PR_ProductionInfo
  */
-static void PR_AircraftInfo (const aircraft_t *aircraftTemplate)
+static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTemplate, float percentDone)
 {
 	static char productionInfo[512];
+	int time;
+	float prodPerHour;
 	assert(aircraftTemplate);
+
+	prodPerHour = PR_CalculateProductionPercentDone(base, aircraftTemplate->tech, NULL);
+	/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
+	assert(prodPerHour > 0);
+	time = ceil((1.0f - percentDone) / prodPerHour);
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
 	Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftTemplate->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 		sizeof(productionInfo));
 	assert(aircraftTemplate->tech);
-	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftTemplate->tech->produceTime), sizeof(productionInfo));
+	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
@@ -437,7 +444,7 @@ static void PR_ProductionInfo (const base_t *base)
 		production_t *prod = selectedProduction;
 		MN_ExecuteConfunc("prod_taskselected");
 		if (prod->aircraft) {
-			PR_AircraftInfo(prod->aircraft);
+			PR_AircraftInfo(base, prod->aircraft, prod->percentDone);
 			MN_ExecuteConfunc("amountsetter enable");
 		} else if (prod->item) {
 			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
@@ -460,7 +467,7 @@ static void PR_ProductionInfo (const base_t *base)
 		} else {
 			MN_ExecuteConfunc("prod_availableselected");
 			if (selectedAircraft) {
-				PR_AircraftInfo(selectedAircraft);
+				PR_AircraftInfo(base, selectedAircraft, 0.0);
 			} else if (selectedItem) {
 				PR_ItemProductionInfo(base, selectedItem, 0.0);
 			} else if (selectedDisassembly) {

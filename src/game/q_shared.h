@@ -181,6 +181,7 @@ void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 
 #define TEAM_CIVILIAN   0
 #define TEAM_PHALANX    1
 #define TEAM_ALIEN      7
+#define TEAM_MAX_HUMAN	TEAM_ALIEN - 1
 
 /*
 ==========================================================
@@ -292,18 +293,16 @@ typedef enum {
 extern const char *pa_format[PA_NUM_EVENTS];
 
 /** @brief Available shoot types */
-typedef enum {
-	ST_RIGHT,
-	ST_RIGHT_REACTION,
-	ST_LEFT,
-	ST_LEFT_REACTION,
-	ST_HEADGEAR,
-	ST_NUM_SHOOT_TYPES,
-
-	/* 20060905 LordHavoc: added reload types */
-	ST_RIGHT_RELOAD,
-	ST_LEFT_RELOAD
-} shoot_types_t;
+typedef int32_t shoot_types_t;
+#define ST_RIGHT 0
+#define ST_RIGHT_REACTION 1
+#define ST_LEFT 2
+#define ST_LEFT_REACTION 3
+#define ST_HEADGEAR 4
+#define ST_NUM_SHOOT_TYPES 5
+/* 20060905 LordHavoc: added reload types */
+#define ST_RIGHT_RELOAD 6
+#define ST_LEFT_RELOAD 7
 
 #define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_LEFT_REACTION)
 #define IS_SHOT(x)          (IS_SHOT_RIGHT(x) || IS_SHOT_LEFT(x) || IS_SHOT_HEADGEAR(x) || IS_SHOT_REACTION(x))
@@ -409,11 +408,12 @@ typedef enum {
 
 /* g_spawn.c */
 
+typedef int32_t actorSizeEnum_t;
 /* NOTE: this only allows quadratic units */
-typedef enum {
-	ACTOR_SIZE_NORMAL = 1,
-	ACTOR_SIZE_2x2 = 2
-} actorSizeEnum_t;
+#define ACTOR_SIZE_INVALID 0
+#define ACTOR_SIZE_NORMAL 1
+#define ACTOR_SIZE_2x2 2
+#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
 
 /** @brief Types of actor sounds being issued by CL_PlayActorSound(). */
 typedef enum {
@@ -480,7 +480,7 @@ typedef struct teamDef_s {
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefitions */
 
-	int size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit.
 								* @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
 								* @todo "hitbody" will not spawn blood in the future. */

@@ -170,7 +170,7 @@ qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvt
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
+void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, pos3_t to)
 {
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
@@ -439,8 +439,7 @@ void G_ClientMove (player_t * player, int visTeam, edict_t* ent, pos3_t to)
 		 * action set and there were steps made */
 		if (!triggers && ent->clientAction) {
 			/* no triggers, no client action */
-			ent->clientAction = NULL;
-			G_EventResetClientAction(ent);
+			G_ActorSetClientAction(ent, NULL);
 		}
 
 		/* end the move */

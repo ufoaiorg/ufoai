@@ -262,6 +262,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/cl_actor.h" />
+		<Unit filename="../../src/client/battlescape/cl_ugv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/cl_ugv.h" />
 		<Unit filename="../../src/client/battlescape/cl_hud.c">
 			<Option compilerVar="CC" />
 		</Unit>

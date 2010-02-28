@@ -10960,17 +10960,20 @@
 {
 "classname" "misc_model"
 "origin" "1742 242 35"
-"model" "models/objects/vegi/palm_a/palm2.md2"
+"model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
+"targetname" "misc_model3"
 }
 // entity 177
 {
 "classname" "misc_model"
 "origin" "1742 242 35"
-"model" "models/objects/vegi/palm_a/palm1.md2"
+"model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "255"
 "anim" "moving4"
+"target" "misc_model3"
+"tag" "top"
 }
 // entity 178
 {
@@ -10979,6 +10982,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
+"targetname" "misc_model1"
 }
 // entity 179
 {
@@ -10987,6 +10991,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
+"targetname" "misc_model2"
 }
 // entity 180
 {
@@ -10995,6 +11000,8 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "255"
 "anim" "moving4"
+"target" "misc_model1"
+"tag" "top"
 }
 // entity 181
 {
@@ -11003,6 +11010,8 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "255"
 "anim" "moving3"
+"target" "misc_model2"
+"tag" "top"
 }
 // entity 182
 {

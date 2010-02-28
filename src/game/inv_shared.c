@@ -753,7 +753,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 
 /**
  * @brief Returns the body model for the soldiers for armoured and non armoured soldiers
- * @param chr Pointer to character struct
+ * @param[in] chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  * @return the character body model (from a static buffer)
  */
@@ -776,7 +776,7 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 
 /**
  * @brief Returns the head model for the soldiers for armoured and non armoured soldiers
- * @param chr Pointer to character struct
+ * @param[in] chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
 const char *CHRSH_CharGetHead (const character_t * const chr)

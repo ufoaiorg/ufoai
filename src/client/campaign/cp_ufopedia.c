@@ -253,6 +253,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	/* Set menu text node content to null. */
 	INV_ItemDescription(NULL);
+	*itemText = '\0';
 
 	/* no valid item id given */
 	if (!item) {
@@ -275,7 +276,6 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	/* set description text */
 	if (RS_IsResearched_ptr(item->tech)) {
-		*itemText = '\0';
 
 		if (item->craftitem.type == AC_ITEM_WEAPON)
 			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
@@ -307,6 +307,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			else if (!equal(item->craftitem.stats[i], 0))
 				Q_strcat(itemText, va(_("%s:\t%i %%\n"), statsName, (int)(item->craftitem.stats[i] * 100) - 100), sizeof(itemText));
 		}
+	} else {
+		Q_strcat(itemText, _("Unknown - need to research this"), sizeof(itemText));
 	}
 
 	Cvar_Set("mn_upmetadata", "1");

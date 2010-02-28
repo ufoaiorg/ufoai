@@ -212,7 +212,7 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 	return qfalse;
 }
 
-static const item_t *AI_GetItemForShootType (int shootType, const edict_t *ent)
+static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
 {
 	/* optimization: reaction fire is automatic */
 	if (IS_SHOT_REACTION(shootType))
@@ -247,7 +247,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	edict_t *check = NULL;
 	int tu;
 	pos_t move;
-	int fm, shots;
+	shoot_types_t shootType;
+	int shots;
 	float dist, minDist;
 	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
 	const objDef_t *ad;
@@ -270,12 +271,12 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	/* shooting */
 	maxDmg = 0.0;
-	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
+	for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 		const item_t *item;
 		int fdIdx;
 		const fireDef_t *fdArray;
 
-		item = AI_GetItemForShootType(fm, ent);
+		item = AI_GetItemForShootType(shootType, ent);
 		if (!item)
 			continue;
 
@@ -343,7 +344,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						if (dmg > maxDmg) {
 							maxDmg = dmg;
 							bestTime = fd->time * shots;
-							aia->mode = fm;
+							aia->shootType = shootType;
 							aia->shots = shots;
 							aia->target = check;
 							aia->fd = fd;
@@ -373,7 +374,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							 * others (human victims) should be prefered, that's why we don't
 							 * want a too high value here */
 							maxDmg = (fd->damage[0] + fd->spldmg[0]);
-							aia->mode = fm;
+							aia->mode = shootType;
 							aia->shots = shots;
 							aia->target = check;
 							aia->fd = fd;
@@ -598,7 +599,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
  * @note The routing table is still valid, so we can still use
  * gi.MoveLength for the given edict here
  */
-static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
+static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
@@ -606,9 +607,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
 
-	switch (ent->team) {
-	case TEAM_CIVILIAN:
-	{
+	if (ent->team == TEAM_CIVILIAN) {
 		edict_t *checkPoint = NULL;
 		int length;
 		int i = 0;
@@ -638,10 +637,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 		/* reset the count value for this civilian to restart the search */
 		if (!i)
 			ent->count = 100;
-		break;
-	}
-	case TEAM_ALIEN:
-	{
+	} else if (ent->team == TEAM_ALIEN) {
 		/* search for a mission edict */
 		edict_t *mission = NULL;
 		while ((mission = G_EdictsGetNextInUse(mission))) {
@@ -651,13 +647,12 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 				if (player->pers.team == mission->team) {
 					bestActionPoints = GUETE_MISSION_TARGET;
 					break;
-				} else
+				} else {
 					/* try to prevent the phalanx from reaching their mission target */
 					bestActionPoints = GUETE_MISSION_OPPONENT_TARGET;
+				}
 			}
 		}
-		break;
-	}
 	}
 
 	return bestActionPoints;
@@ -670,7 +665,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
  * @param[in] player The AI player
  * @param[in] ent The AI actor
  */
-static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
+static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 {
 	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
@@ -743,10 +738,6 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	/* do the move */
 	G_ClientMove(player, 0, ent, bestAia.to);
-	/** @todo not yet working */
-	/* make ai use doors if they touched a door trigger and stopped in mid-move */
-	if (ent->clientAction && bestAia.target == NULL)
-		G_ClientUseEdict(player, ent->clientAction, ent);
 
 	/* test for possible death during move. reset bestAia due to dead status */
 	if (G_IsDead(ent))
@@ -801,7 +792,7 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
  */
 static void AI_TryToReloadWeapon (edict_t *ent, int containerID)
 {
-	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, containerID)) {
+	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
 		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
@@ -831,7 +822,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
 	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent))
-		G_ClientGetWeaponFromInventory(player, ent->number);
+		G_ClientGetWeaponFromInventory(player, ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
 
@@ -840,7 +831,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		const int fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
-			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
+			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, qtrue, bestAia.z_align);
 			bestAia.shots--;
 			/* died by our own shot? */
 			if (G_IsDead(ent))

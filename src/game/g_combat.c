@@ -783,7 +783,7 @@ static void DumpAllEntities (void)
  * @sa CL_TargetingStraight
  */
 static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, pos3_t at,
-	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, int shootType)
+	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType)
 {
 	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;		/** @todo The random dir-modifier? */
@@ -1003,7 +1003,7 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
 /**
  * @brief Prepares weapon, firemode and container used for shoot.
  * @param[in] ent Pointer to attacker.
- * @param[in] type Type of shot.
+ * @param[in] shootType Type of shot.
  * @param[in] firemode An index of used firemode.
  * @param[in,out] weapon Weapon being used. It is NULL when calling this function.
  * @param[in,out] container Container with weapon being used. It is 0 when calling this function.
@@ -1012,21 +1012,21 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
  * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, const fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int firemode, item_t **weapon, int *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	objDef_t *od;
 	item_t *item;
 
-	if (type >= ST_NUM_SHOOT_TYPES)
-		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
+	if (shootType >= ST_NUM_SHOOT_TYPES)
+		gi.error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
 
-	if (IS_SHOT_HEADGEAR(type)) {
+	if (IS_SHOT_HEADGEAR(shootType)) {
 		if (!HEADGEAR(ent))
 			return qfalse;
 		item = &HEADGEAR(ent)->item;
 		*container = gi.csi->idHeadgear;
-	} else if (IS_SHOT_RIGHT(type)) {
+	} else if (IS_SHOT_RIGHT(shootType)) {
 		if (!RIGHT(ent))
 			return qfalse;
 		item = &RIGHT(ent)->item;
@@ -1068,7 +1068,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
-qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, int shootType,
+qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_t shootType,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	const fireDef_t *fd;
@@ -1087,7 +1087,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, int shootTyp
 	container = 0;
 	if (!G_GetShotFromType(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
-			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activateable!\n"));
+			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activatable!\n"));
 		return qfalse;
 	}
 

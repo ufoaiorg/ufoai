@@ -56,9 +56,205 @@ static cvar_t *irc_send_buffer;
 
 static qboolean irc_connected;
 
+#define IRC_SEND_BUF_SIZE 512
+#define IRC_RECV_BUF_SIZE 1024
+
+typedef struct irc_user_s {
+	char key[MAX_VAR];
+	struct irc_user_s *next;
+} irc_user_t;
+
+typedef struct irc_channel_s {
+	char name[MAX_VAR];
+	char topic[256];
+	int users;
+	irc_user_t *user;
+} irc_channel_t;
+
+/* numeric commands as specified by RFC 1459 - Internet Relay Chat Protocol */
+typedef enum irc_numeric_e {
+	/* command replies */
+	RPL_WELCOME = 1,				/* ":Welcome to the Internet Relay Network <nick>!<user>@<host>" */
+	RPL_YOURHOST = 2,				/* ":Your host is <servername>, running version <ver>" */
+	RPL_CREATED = 3,				/* ":This server was created <date>" */
+	RPL_MYINFO = 4,					/* "<servername> <version> <available user modes> <available channel modes>" */
+	RPL_ISUPPORT = 5,				/* "<nick> <parameter> * :are supported by this server" */
+	RPL_HELLO = 20,					/* ":Please wait while we process your connection" */
+	RPL_NONE = 300,
+	RPL_USERHOST = 302,				/* ":[<reply>{<space><reply>}]" */
+	RPL_ISON = 303,					/* ":[<nick> {<space><nick>}]" */
+	RPL_AWAY = 301,					/* "<nick> :<away message>" */
+	RPL_UNAWAY = 305,				/* ":You are no longer marked as being away" */
+	RPL_NOWAWAY = 306,				/* ":You have been marked as being away" */
+	RPL_WHOISUSER = 311,			/* "<nick> <user> <host> * :<real name>" */
+	RPL_WHOISSERVER = 312,			/* "<nick> <server> :<server info>" */
+	RPL_WHOISOPERATOR = 313,		/* "<nick> :is an IRC operator" */
+	RPL_WHOISIDLE = 317,			/* "<nick> <integer> :seconds idle" */
+	RPL_ENDOFWHOIS = 318,			/* "<nick> :End of /WHOIS list" */
+	RPL_WHOISCHANNELS = 319,		/* "<nick> :{[@|+]<channel><space>}" */
+	RPL_WHOWASUSER = 314,			/* "<nick> <user> <host> * :<real name>" */
+	RPL_ENDOFWHOWAS = 369,			/* "<nick> :End of WHOWAS" */
+	RPL_WHOISACCOUNT = 330,			/* "<nick> <account> :is logged in as" */
+
+	RPL_LISTSTART = 321,			/* "Channel :Users  Name" */
+	RPL_LIST = 322,					/* "<channel> <# visible> :<topic>" */
+	RPL_LISTEND = 323,				/* ":End of /LIST" */
+	RPL_CHANNELMODEIS = 324,		/* "<channel> <mode> <mode params>" */
+	RPL_NOTOPIC = 331,				/* "<channel> :No topic is set" */
+	RPL_TOPIC = 332,				/* "<channel> :<topic>" */
+	RPL_TOPICWHOTIME = 333,			/* "<channel> <nick> <time>" */
+	RPL_INVITING = 341,				/* "<channel> <nick>" */
+	RPL_SUMMONING = 342,			/* "<user> :Summoning user to IRC" */
+	RPL_VERSION = 351,				/* "<version>.<debuglevel> <server> :<comments>" */
+	RPL_WHOREPLY = 352,				/* "<channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real name>" */
+	RPL_ENDOFWHO = 315,				/* "<name> :End of /WHO list" */
+	RPL_NAMREPLY = 353,				/* "<channel> :[[@|+]<nick> [[@|+]<nick> [...]]]" */
+	RPL_ENDOFNAMES = 366,			/* "<channel> :End of /NAMES list" */
+	RPL_LINKS = 364,				/* "<mask> <server> :<hopcount> <server info>" */
+	RPL_ENDOFLINKS = 365,			/* "<mask> :End of /LINKS list" */
+	RPL_BANLIST = 367,				/* "<channel> <banid>" */
+	RPL_ENDOFBANLIST = 368,			/* "<channel> :End of channel ban list" */
+	RPL_INFO = 371,					/* ":<string>" */
+	RPL_ENDOFINFO = 374,			/* ":End of /INFO list" */
+	RPL_MOTDSTART = 375,			/* ":- <server> Message of the day - " */
+	RPL_MOTD = 372,					/* ":- <text>" */
+	RPL_ENDOFMOTD = 376,			/* ":End of /MOTD command" */
+	RPL_YOUREOPER = 381,			/* ":You are now an IRC operator" */
+	RPL_REHASHING = 382,			/* "<config file> :Rehashing" */
+	RPL_TIME = 391,					/* "<server> :<string showing server's local time>" */
+	RPL_USERSSTART = 392,			/* ":UserID   Terminal  Host" */
+	RPL_USERS = 393,				/* ":%-8s %-9s %-8s" */
+	RPL_ENDOFUSERS = 394,			/* ":End of users" */
+	RPL_NOUSERS = 395,				/* ":Nobody logged in" */
+	RPL_TRACELINK = 200,			/* "Link <version & debug level> <destination> <next server>" */
+	RPL_TRACECONNECTING = 201,		/* "Try. <class> <server>" */
+	RPL_TRACEHANDSHAKE = 202,		/* "H.S. <class> <server>" */
+	RPL_TRACEUNKNOWN = 203,			/* "???? <class> [<client IP address in dot form>]" */
+	RPL_TRACEOPERATOR = 204,		/* "Oper <class> <nick>" */
+	RPL_TRACEUSER = 205,			/* "User <class> <nick>" */
+	RPL_TRACESERVER = 206,			/* "Serv <class> <int>S <int>C <server> <nick!user|*!*>@<host|server>" */
+	RPL_TRACENEWTYPE = 208,			/* "<newtype> 0 <client name>" */
+	RPL_TRACELOG = 261,				/* "File <logfile> <debug level>" */
+	RPL_STATSLINKINFO = 211,		/* "<linkname> <sendq> <sent messages> <sent bytes> <received messages> <received bytes> <time open>" */
+	RPL_STATSCOMMANDS = 212,		/* "<command> <count>" */
+	RPL_STATSCLINE = 213,			/* "C <host> * <name> <port> <class>" */
+	RPL_STATSNLINE = 214,			/* "N <host> * <name> <port> <class>" */
+	RPL_STATSILINE = 215,			/* "I <host> * <host> <port> <class>" */
+	RPL_STATSKLINE = 216,			/* "K <host> * <username> <port> <class>" */
+	RPL_STATSYLINE = 218,			/* "Y <class> <ping frequency> <connectfrequency> <max sendq>" */
+	RPL_ENDOFSTATS = 219,			/* "<stats letter> :End of /STATS report" */
+	RPL_STATSLLINE = 241,			/* "L <hostmask> * <servername> <maxdepth>" */
+	RPL_STATSUPTIME = 242,			/* ":Server Up %d days %d:%02d:%02d" */
+	RPL_STATSOLINE = 243,			/* "O <hostmask> * <name>" */
+	RPL_STATSHLINE = 244,			/* "H <hostmask> * <servername>" */
+	RPL_UMODEIS = 221,				/* "<user mode string>" */
+	RPL_LUSERCLIENT = 251,			/* ":There are <integer> users and <integer> invisible on <integer> servers" */
+	RPL_LUSEROP = 252,				/* "<integer> :operator(s) online" */
+	RPL_LUSERUNKNOWN = 253,			/* "<integer> :unknown connection(s)" */
+	RPL_LUSERCHANNELS = 254,		/* "<integer> :channels formed" */
+	RPL_LUSERME = 255,				/* ":I have <integer> clients and <integer> servers" */
+	RPL_ADMINME = 256,				/* "<server> :Administrative info" */
+	RPL_ADMINLOC1 = 257,			/* ":<admin info>" */
+	RPL_ADMINLOC2 = 258,			/* ":<admin info>" */
+	RPL_ADMINEMAIL = 259,			/* ":<admin info>" */
+	RPL_LOCALUSERS = 265,
+	RPL_GLOBALUSERS = 266,
+
+	/* error codes */
+	ERR_NOSUCHNICK = 401,			/* "<nickname> :No such nick/channel" */
+	ERR_NOSUCHSERVER = 402,			/* "<server name> :No such server" */
+	ERR_NOSUCHCHANNEL = 403,		/* "<channel name> :No such channel" */
+	ERR_CANNOTSENDTOCHAN = 404,		/* "<channel name> :Cannot send to channel" */
+	ERR_TOOMANYCHANNELS = 405,		/* "<channel name> :You have joined too many channels" */
+	ERR_WASNOSUCHNICK = 406,		/* "<nickname> :There was no such nickname" */
+	ERR_TOOMANYTARGETS = 407,		/* "<target> :Duplicate recipients. No message delivered" */
+	ERR_NOORIGIN = 409,				/* ":No origin specified" */
+	ERR_NORECIPIENT = 411,			/* ":No recipient given (<command>)" */
+	ERR_NOTEXTTOSEND = 412,			/* ":No text to send" */
+	ERR_NOTOPLEVEL = 413,			/* "<mask> :No toplevel domain specified" */
+	ERR_WILDTOPLEVEL = 414,			/* "<mask> :Wildcard in toplevel domain" */
+	ERR_UNKNOWNCOMMAND = 421,		/* "<command> :Unknown command" */
+	ERR_NOMOTD = 422,				/* ":MOTD File is missing" */
+	ERR_NOADMININFO = 423,			/* "<server> :No administrative info available" */
+	ERR_FILEERROR = 424,			/* ":File error doing <file op> on <file>" */
+	ERR_NONICKNAMEGIVEN = 431,		/* ":No nickname given" */
+	ERR_ERRONEUSNICKNAME = 432,		/* "<nick> :Erroneus nickname" */
+	ERR_NICKNAMEINUSE = 433,		/* "<nick> :Nickname is already in use" */
+	ERR_NICKCOLLISION = 436,		/* "<nick> :Nickname collision KILL" */
+	ERR_BANNICKCHANGE = 437,
+	ERR_NCHANGETOOFAST = 438,
+	ERR_USERNOTINCHANNEL = 441,		/* "<nick> <channel> :They aren't on that channel" */
+	ERR_NOTONCHANNEL = 442,			/* "<channel> :You're not on that channel" */
+	ERR_USERONCHANNEL = 443,		/* "<user> <channel> :is already on channel" */
+	ERR_NOLOGIN = 444,				/* "<user> :User not logged in" */
+	ERR_SUMMONDISABLED = 445,		/* ":SUMMON has been disabled" */
+	ERR_USERSDISABLED = 446,		/* ":USERS has been disabled" */
+	ERR_NOTREGISTERED = 451,		/* ":You have not registered" */
+	ERR_NEEDMOREPARAMS = 461,		/* "<command> :Not enough parameters" */
+	ERR_ALREADYREGISTRED = 462,		/* ":You may not reregister" */
+	ERR_NOPERMFORHOST = 463,		/* ":Your host isn't among the privileged" */
+	ERR_PASSWDMISMATCH = 464,		/* ":Password incorrect" */
+	ERR_YOUREBANNEDCREEP = 465,		/* ":You are banned from this server" */
+	ERR_BADNAME = 468,				/* ":Your username is invalid" */
+	ERR_KEYSET = 467,				/* "<channel> :Channel key already set" */
+	ERR_CHANNELISFULL = 471,		/* "<channel> :Cannot join channel (+l)" */
+	ERR_UNKNOWNMODE = 472,			/* "<char> :is unknown mode char to me" */
+	ERR_INVITEONLYCHAN = 473,		/* "<channel> :Cannot join channel (+i)" */
+	ERR_BANNEDFROMCHAN = 474,		/* "<channel> :Cannot join channel (+b)" */
+	ERR_BADCHANNELKEY = 475,		/* "<channel> :Cannot join channel (+k)" */
+	ERR_NOPRIVILEGES = 481,			/* ":Permission Denied- You're not an IRC operator" */
+	ERR_CHANOPRIVSNEEDED = 482,		/* "<channel> :You're not channel operator" */
+	ERR_CANTKILLSERVER = 483,		/* ":You cant kill a server!" */
+	ERR_NOOPERHOST = 491,			/* ":No O-lines for your host" */
+	ERR_UMODEUNKNOWNFLAG = 501,		/* ":Unknown MODE flag" */
+	ERR_USERSDONTMATCH = 502,		/* ":Cant change mode for other users" */
+	ERR_GHOSTEDCLIENT = 503,
+	ERR_LAST_ERR_MSG = 504,
+	ERR_SILELISTFULL = 511,
+	ERR_NOSUCHGLINE = 512,
+/*	ERR_TOOMANYWATCH = 512,*/
+	ERR_BADPING = 513,
+	ERR_TOOMANYDCC = 514,
+	ERR_LISTSYNTAX = 521,
+	ERR_WHOSYNTAX = 522,
+	ERR_WHOLIMEXCEED = 523
+} irc_numeric_t;
+
+typedef enum irc_command_type_e {
+	IRC_COMMAND_NUMERIC,
+	IRC_COMMAND_STRING
+} irc_command_type_t;
+
+typedef enum irc_nick_prefix_e {
+	IRC_NICK_PREFIX_NONE = ' ',
+	IRC_NICK_PREFIX_OP = '@',
+	IRC_NICK_PREFIX_VOICE = '+'
+} irc_nick_prefix_t;
+
+/* commands can be numeric's or string */
+typedef struct irc_command_s {
+	union {
+		/* tagged union */
+		irc_numeric_t	numeric;
+		const char *	string;
+	} id;
+	irc_command_type_t	type;
+} irc_command_t;
+
+/* server <- client messages */
+typedef struct irc_server_msg_s {
+	union {
+		char string[IRC_SEND_BUF_SIZE];
+		irc_numeric_t numeric;
+	} id;
+	irc_command_type_t type;
+	char prefix[IRC_SEND_BUF_SIZE];
+	char params[IRC_SEND_BUF_SIZE];
+	char trailing[IRC_SEND_BUF_SIZE];
+} irc_server_msg_t;
+
 static struct net_stream *irc_stream;
 
-static const qboolean IRC_INVISIBLE = qtrue;
 static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
 static const char IRC_INVITE_FOR_A_GAME[] = "UFOAIINVITE;";
 
@@ -120,7 +316,7 @@ static void Irc_ParseName (const char *mask, char *nick, size_t size, irc_nick_p
 
 /*
 ===============================================================
-Protokoll functions
+Protocol functions
 ===============================================================
 */
 
@@ -153,13 +349,6 @@ static qboolean Irc_Proto_Connect (const char *host, const char *port)
 {
 	const qboolean status = Irc_Net_Connect(host, port);
 	if (!status) {
-		if (!irc_messageBucketSize) {
-			irc_messageBucketSize = Cvar_Get("irc_messageBucketSize", DOUBLEQUOTE(IRC_DEFAULT_MESSAGE_BUCKET_SIZE), CVAR_ARCHIVE, NULL);
-			irc_messageBucketBurst = Cvar_Get("irc_messageBucketBurst", DOUBLEQUOTE(IRC_DEFAULT_MESSAGE_BUCKET_BURST), CVAR_ARCHIVE, NULL);
-			irc_characterBucketSize = Cvar_Get("irc_characterBucketSize", DOUBLEQUOTE(IRC_DEFAULT_CHARACTER_BUCKET_SIZE), CVAR_ARCHIVE, NULL);
-			irc_characterBucketBurst = Cvar_Get("irc_characterBucketBurst", DOUBLEQUOTE(IRC_DEFAULT_CHARACTER_BUCKET_BURST), CVAR_ARCHIVE, NULL);
-			irc_characterBucketRate = Cvar_Get("irc_characterBucketRate", DOUBLEQUOTE(IRC_DEFAULT_CHARACTER_BUCKET_RATE), CVAR_ARCHIVE, NULL);
-		}
 		irc_bucket.first_msg = NULL;
 		irc_bucket.message_size = 0;
 		irc_bucket.character_size = 0;
@@ -326,20 +515,18 @@ static qboolean Irc_Proto_Notice (const char *target, const char *text)
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
 
-#if 0
 /**
  * @sa Irc_Net_Send
  */
-static qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
+static void Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = cookie
 		? snprintf(msg, sizeof(msg) - 1, "PONG %s %s :%s\r\n", nick, server, cookie)
 		: snprintf(msg, sizeof(msg) - 1, "PONG %s %s\r\n", nick, server);
 	msg[sizeof(msg) - 1] = '\0';
-	return Irc_Net_Send(msg, msg_len);	/* send immediately */
+	Irc_Net_Send(msg, msg_len);	/* send immediately */
 }
-#endif
 
 /**
  * @sa Irc_Proto_Enqueue
@@ -741,6 +928,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/*Irc_Proto_Notice(nick, IRC_CTCP_MARKER_STR "VERSION " UFO_VERSION " " CPUSTRING " " __DATE__ " " BUILDSTRING);*/
 			Com_DPrintf(DEBUG_CLIENT, "Irc_Client_CmdPrivmsg: Response to version query\n");
 		} else if (!strncmp(trailing + 1, "PING", 4)) {
+			/* Used to measure the delay of the IRC network between clients. */
 			char response[IRC_SEND_BUF_SIZE];
 			strcpy(response, trailing);
 			response[2] = 'O'; /* PING => PONG */
@@ -925,7 +1113,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		case ERR_ERRONEUSNICKNAME:
 		case ERR_NICKCOLLISION:
 			Irc_AppendToBuffer("%s : %s", msg->params, msg->trailing);
-			/** @todo offer option to change the nickname */
+			MN_PushWindow("irc_changename", NULL);
 			break;
 		/* error codes */
 		case ERR_NOSUCHSERVER:
@@ -1013,7 +1201,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!strncmp(cmd.id.string, "KICK", 4))
 			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
 		else if (!strncmp(cmd.id.string, "PING", 4))
-			Com_DPrintf(DEBUG_CLIENT, "IRC: <PING> %s\n", msg->trailing);
+			Irc_Proto_Pong(irc_nick->string, msg->params, msg->trailing[0] ? msg->trailing : NULL);
 		else if (!strncmp(cmd.id.string, "ERROR", 5)) {
 			Irc_Logic_Disconnect(msg->trailing);
 			Q_strncpyz(popupText, msg->trailing, sizeof(popupText));
@@ -1124,21 +1312,18 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
  */
 static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
-	int messageBucketSize;
-	int characterBucketSize;
-	irc_bucket_message_t *m, *n;
+	irc_bucket_message_t *m;
+	irc_bucket_message_t *n;
+	const int messageBucketSize = irc_messageBucketSize->integer;
+	const int characterBucketSize = irc_characterBucketSize->integer;
 
-	/* connection failed if this is null */
-	if (!irc_messageBucketSize) {
-		Com_DPrintf(DEBUG_CLIENT, "Irc_Proto_Enqueue: irc_messageBucketSize is zero\n");
+	if (!irc_connected) {
+		Com_Printf("Irc_Proto_Enqueue: not connected\n");
 		return qtrue;
 	}
 
-	messageBucketSize = irc_messageBucketSize->integer;
-	characterBucketSize = irc_characterBucketSize->integer;
-
 	/* create message node */
-	m = (irc_bucket_message_t*) Mem_Alloc(sizeof(irc_bucket_message_t));
+	m = (irc_bucket_message_t*) Mem_Alloc(sizeof(*m));
 	n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
 		/** @todo strip high bits - or unprintable chars */
@@ -1192,9 +1377,7 @@ static void Irc_Proto_DrainBucket (void)
 {
 	const double characterBucketBurst = irc_characterBucketBurst->value;
 	irc_bucket_message_t *msg;
-#if 0
-	Com_DPrintf(DEBUG_CLIENT, "Irc_Proto_DrainBucket: Queue send\n");
-#endif
+
 	/* remove messages whose size exceed our burst size (we can not send them) */
 	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
 		irc_bucket_message_t * const next = msg->next;
@@ -1266,11 +1449,11 @@ static void Irc_Logic_Connect (const char *server, const char *port)
 		/* connected to server, send NICK and USER commands */
 		const char * const pass = irc_password->string;
 		const char * const user = irc_user->string;
+		irc_connected = qtrue;
 		if (strlen(pass))
 			Irc_Proto_Password(pass);
 		Irc_Proto_Nick(irc_nick->string);
-		Irc_Proto_User(user, IRC_INVISIBLE, user);
-		irc_connected = qtrue;
+		Irc_Proto_User(user, qtrue, user);
 	} else {
 		Com_Printf("Could not connect to the irc server %s:%s\n", server, port);
 	}
@@ -1816,6 +1999,12 @@ void Irc_Init (void)
 	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
 	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
 	irc_nick = Cvar_Get("cl_name", "", 0, NULL);
+
+	irc_messageBucketSize = Cvar_Get("irc_messageBucketSize", "100", CVAR_ARCHIVE, "max 100 messages in bucket");
+	irc_messageBucketBurst = Cvar_Get("irc_messageBucketBurst", "5", CVAR_ARCHIVE, "max burst size is 5 messages");
+	irc_characterBucketSize = Cvar_Get("irc_characterBucketSize", "2500", CVAR_ARCHIVE, "max 2,500 characters in bucket");
+	irc_characterBucketBurst = Cvar_Get("irc_characterBucketBurst", "250", CVAR_ARCHIVE, "max burst size is 250 characters");
+	irc_characterBucketRate = Cvar_Get("irc_characterBucketRate", "10", CVAR_ARCHIVE, "per second (100 characters in 10 seconds)");
 }
 
 void Irc_Shutdown (void)

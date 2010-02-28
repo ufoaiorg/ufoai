@@ -202,16 +202,11 @@ window quickload
 		longlines	wrap
 	}
 
-	button button_go
+	cmpPopupButton button_go
 	{
 		string		"_Load"
 		tooltip		"_Reload the last automatically saved campaign state"
-		image		ui/button_green_small
 		pos			"266 188"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
 		onClick		{ cmd "mn_pop;game_quickload;" }
 	}
 }

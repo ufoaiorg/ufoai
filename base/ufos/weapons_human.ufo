@@ -94,7 +94,6 @@ item assault_ammo
 			time				18
 			damage				"42 5"
 			dmgweight			normal_medium
-			reaction			true
 		}
 		firedef
 		{
@@ -113,7 +112,6 @@ item assault_ammo
 			time		14
 			damage		"42 5"
 			dmgweight	normal_medium
-			reaction	true
 		}
 	}
 
@@ -176,7 +174,6 @@ item assault_ammo
 			time				16
 			damage				"40 5"
 			dmgweight			normal_medium
-			reaction			true
 		}
 		firedef
 		{
@@ -195,7 +192,6 @@ item assault_ammo
 			time		12
 			damage		"40 5"
 			dmgweight	normal_medium
-			reaction	true
 		}
 	}
 }
@@ -279,7 +275,6 @@ item machinegun_ammo
 			time				25
 			damage				"45 9"
 			dmgweight			normal_medium
-			reaction			true
 		}
 		firedef
 		{
@@ -379,6 +374,7 @@ item sniper_ammo
 			time		18
 			damage		"105 0"
 			dmgweight	normal_heavy
+			reaction	true
 		}
 	}
 }
@@ -459,6 +455,7 @@ item coilgun_ammo
 			time		18
 			damage		"180 36"
 			dmgweight	normal_heavy
+			reaction	true
 		}
 	}
 }

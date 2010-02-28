@@ -118,6 +118,8 @@ void Com_BeginRedirect (struct net_stream *stream, char *buffer, int buffersize)
 
 	rd_stream = stream;
 	rd_buffer = buffer;
+	if (buffersize > MAXPRINTMSG)
+		Com_Error(ERR_DROP, "redirect buffer may not be bigger than MAXPRINTMSG (%i)", MAXPRINTMSG);
 	rd_buffersize = buffersize;
 	rd_buffer[0] = '\0';
 }
@@ -148,7 +150,8 @@ void Com_MakeTimestamp (char* ts, const size_t tslen)
 	time(&aclock);
 	t = localtime(&aclock);
 
-	Com_sprintf(ts, tslen, "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+	Com_sprintf(ts, tslen, "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
+			t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
 }
 
 /**
@@ -158,7 +161,6 @@ void Com_MakeTimestamp (char* ts, const size_t tslen)
 void Com_vPrintf (const char *fmt, va_list ap)
 {
 	char msg[MAXPRINTMSG];
-	char timestamp[40];
 
 	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 
@@ -180,7 +182,6 @@ void Com_vPrintf (const char *fmt, va_list ap)
 	Sys_ConsoleOutput(msg);
 
 	/* logfile */
-	Com_MakeTimestamp(timestamp, sizeof(timestamp));
 	if (logfile_active && logfile_active->integer) {
 		char name[MAX_OSPATH];
 
@@ -194,12 +195,16 @@ void Com_vPrintf (const char *fmt, va_list ap)
 		if (logfile) {
 			/* strip color codes */
 			const char *output = msg;
+			char timestamp[40];
+			Com_MakeTimestamp(timestamp, sizeof(timestamp));
+
 			if (output[0] < 32)
 				output++;
 			fprintf(logfile, "%s %s", timestamp, output);
+
+			if (logfile_active->integer > 1)
+				fflush(logfile);	/* force it to save every time */
 		}
-		if (logfile_active->integer > 1)
-			fflush(logfile);	/* force it to save every time */
 	}
 }
 
@@ -859,7 +864,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Cmd_AddCommand("setdeveloper", Com_DeveloperSet_f, "Set the developer cvar to only get the debug output you want");
 
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
-	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line");
+	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deactivate logfile, 1 = write normal logfile, 2 = flush on every new line, 3 = always append to existing file");
 	sv_gametype = Cvar_Get("sv_gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 	http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
 	http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection timeout");

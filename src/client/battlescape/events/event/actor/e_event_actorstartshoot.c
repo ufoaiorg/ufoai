@@ -55,7 +55,8 @@ void CL_ActorStartShoot (const eventRegister_t *self, struct dbuffer *msg)
 	int entnum;
 	int objIdx;
 	objDef_t *obj;
-	int weapFdsIdx, fdIdx, shootType;
+	int weapFdsIdx, fdIdx;
+	shoot_types_t shootType;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &from, &target);
 

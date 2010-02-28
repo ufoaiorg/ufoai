@@ -692,42 +692,28 @@ window popup_intercept_ready
 		longlines	wrap
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"259 188"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 
 	/**
 	 * @todo move the button on middle if cp_mission_autogo_available==0
 	 */
-	button bt_go
+	cmpPopupButton bt_go
 	{
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"66 125"
-		size		"176 32"
 		onClick		{ cmd "game_go;" }
 	}
 
-	button bt_auto_go
+	cmpPopupButton bt_auto_go
 	{
 		string		"_Auto mission"
 		tooltip		"_Automatically finish mission"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"259 125"
-		size		"176 32"
 		onClick		{ cmd "cp_mission_autogo;" }
 	}
 
@@ -842,15 +828,11 @@ window popup_baseattack
 		cmd "mn_removelistener equipment@onClose <path:this>"
 	}
 
-	button bt_auto_go
+	cmpPopupButton bt_auto_go
 	{
 		string		"_Auto mission"
 		tooltip		"_Automatically finish mission"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"259 241"
-		size		"176 32"
 		onClick		{
 			if ( *node:root.liftcrafts@current > 0 ) {
 				cmd "air_liftall;"
@@ -875,15 +857,11 @@ window popup_baseattack
 		cmd "game_go"
 		cmd "mn_removelistener equipment@onClose <path:this>"
 	}
-	button bt_go
+	cmpPopupButton bt_go
 	{
 		string		"_Enter"
 		tooltip		"_Enter the battlefield"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"74 241"
-		size		"176 32"
 		onClick		{
 			if ( *node:root.liftcrafts@current > 0 ) {
 				cmd "air_liftall;"
@@ -941,15 +919,9 @@ window popup_transferbaselist
 		onRClick	{ cmd "mn_pop; aircraft_return;" }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"266 188"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;aircraft_return;" }
 	}
 }
@@ -1052,28 +1024,18 @@ window popup_newbase
 		onClick		{ call *node:root.start_employees@toggle }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"298 188"
-		size		"176 32"
 		onClick	{
 			cmd "mn_pop;mn_mapaction_reset;"
 		}
 	}
-	button bt_build
+	cmpPopupButton bt_build
 	{
 		string		"_Build"
 		tooltip		"_Build the base"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"111 188"
-		size		"176 32"
 		onClick	{
 			cmd "mn_pop;mn_base_build;"
 		}
@@ -1330,15 +1292,11 @@ window popup_newinstallation_type
 	// Interaction
 	//
 
-	button bt_close
+	cmpPopupButton bt_close
 	{
 		string		"_Close"
 		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"297 188"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
 
@@ -1452,8 +1410,8 @@ window popup_newinstallation
 	text description
 	{
 		dataid		TEXT_BUILDING_INFO
-		pos			"25 140"
-		size		"445 80"
+		pos			"100 140"
+		size		"350 80"
 		lineheight	20
 		onViewChange {
 			*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
@@ -1473,26 +1431,16 @@ window popup_newinstallation
 		onChange	{ *node:parent.description@viewpos = <current> }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"294 240"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
-	button bt_build
+	cmpPopupButton bt_build
 	{
 		string		"_Build"
 		tooltip		"_Build the radar tower"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"109 240"
-		size		"176 32"
 		onClick		{ cmd "mn_pop; mn_installation_build *cvar:mn_installation_type;" }
 	}
 
@@ -1557,39 +1505,27 @@ window popup_installationstatus
 		size		"150 20"
 	}
 
-	button bt_back
+	cmpPopupButton bt_back
 	{
 		string		"_Close"
 		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"295 150"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
-	button bt_enter
+	cmpPopupButton bt_enter
 	{
 		string		"_Manage"
 		tooltip		"_Manage installation"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"295 110"
-		size		"176 32"
 		invis		true
 		onClick		{ cmd "mn_pop; mn_push *cvar:mn_installation_type;" }
 	}
 
-	button bt_destroy
+	cmpPopupButton bt_destroy
 	{
 		string		"_Destroy"
 		tooltip		"_Destroy installation"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"25 150"
-		size		"176 32"
 		onClick		{ cmd "mn_pop; mn_installation_destroy;" }
 	}
 
@@ -1755,15 +1691,9 @@ window popup_intercept
 		}
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"346 402"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 
@@ -1845,15 +1775,9 @@ window popup_mission
 		onRClick	{ cmd "ships_rclick <lineselected>" }
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"566 338"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
@@ -1918,15 +1842,9 @@ window popup_multi_selection
 		}
 	}
 
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"266 188"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
@@ -1991,15 +1909,9 @@ window popup_aircraft
 		}
 	}
 
-	button bt_cancel
+	cmpCancelButton	bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"297 191"
-		size		"176 32"
 		onClick		{ cmd "mn_pop;" }
 	}
 }

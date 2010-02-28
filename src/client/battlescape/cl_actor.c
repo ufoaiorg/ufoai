@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_parse.h"
 #include "cl_particle.h"
 #include "../cl_team.h"
-#include "../cl_ugv.h"
+#include "cl_ugv.h"
 #include "cl_view.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
@@ -172,12 +172,6 @@ void CL_ActorCvars (const character_t * chr)
 	invList_t *weapon;
 	assert(chr);
 
-	Cvar_ForceSet("mn_name", chr->name);
-	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
-	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
-	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
-	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
-
 	/* visible equipment */
 	weapon = chr->inv.c[csi.idRight];
 	if (weapon) {
@@ -192,35 +186,9 @@ void CL_ActorCvars (const character_t * chr)
 	} else
 		Cvar_Set("mn_lweapon", "");
 
-	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
-	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ENEMIES]));
-	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
-	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
-
 	GAME_CharacterCvars(chr);
 
-	Cvar_Set("mn_vpwr", va("%i", chr->score.skills[ABILITY_POWER]));
-	Cvar_Set("mn_vspd", va("%i", chr->score.skills[ABILITY_SPEED]));
-	Cvar_Set("mn_vacc", va("%i", chr->score.skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_vmnd", va("%i", chr->score.skills[ABILITY_MIND]));
-	Cvar_Set("mn_vcls", va("%i", chr->score.skills[SKILL_CLOSE]));
-	Cvar_Set("mn_vhvy", va("%i", chr->score.skills[SKILL_HEAVY]));
-	Cvar_Set("mn_vass", va("%i", chr->score.skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_vsnp", va("%i", chr->score.skills[SKILL_SNIPER]));
-	Cvar_Set("mn_vexp", va("%i", chr->score.skills[SKILL_EXPLOSIVE]));
-	Cvar_Set("mn_vhp", va("%i", chr->HP));
-	Cvar_Set("mn_vhpmax", va("%i", chr->maxHP));
-
-	Cvar_Set("mn_tpwr", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_POWER]), chr->score.skills[ABILITY_POWER]));
-	Cvar_Set("mn_tspd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_SPEED]), chr->score.skills[ABILITY_SPEED]));
-	Cvar_Set("mn_tacc", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_ACCURACY]), chr->score.skills[ABILITY_ACCURACY]));
-	Cvar_Set("mn_tmnd", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND]), chr->score.skills[ABILITY_MIND]));
-	Cvar_Set("mn_tcls", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_CLOSE]), chr->score.skills[SKILL_CLOSE]));
-	Cvar_Set("mn_thvy", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_HEAVY]), chr->score.skills[SKILL_HEAVY]));
-	Cvar_Set("mn_tass", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_ASSAULT]), chr->score.skills[SKILL_ASSAULT]));
-	Cvar_Set("mn_tsnp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
-	Cvar_Set("mn_texp", va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
-	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
+	CL_CharacterSkillAndScoreCvars(chr);
 }
 
 /**
@@ -415,6 +383,8 @@ void CL_ActorAddToTeamList (le_t * le)
 		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
+		else
+			MN_ExecuteConfunc("huddeselect %i", cl.numTeamList);
 	}
 }
 
@@ -1031,8 +1001,8 @@ static void CL_ActorUseDoor (const le_t *le)
 
 	assert(le->clientAction);
 
-	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", le->clientAction, le->entnum);
+	MSG_Write_PA(PA_USE_DOOR, le->entnum, le->clientAction->entnum);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", le->clientAction->entnum, le->entnum);
 }
 
 /**
@@ -1044,7 +1014,7 @@ void CL_ActorDoorAction_f (void)
 		return;
 
 	/* no client action */
-	if (selActor->clientAction == 0) {
+	if (selActor->clientAction == NULL) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
 		return;
 	}
@@ -1297,7 +1267,7 @@ void CL_ActorMouseTrace (void)
 	pos3_t actor2x2[3];
 
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -1590,7 +1560,7 @@ static void CL_TargetingRadius (const vec3_t center, const float radius)
  * @sa CL_Trace
  * @sa G_ShootSingle
  */
-static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const pos3_t toPos)
+static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActorSize, const pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
@@ -1599,7 +1569,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
 	qboolean crossNo;
 	le_t *le = NULL;
 	le_t *target = NULL;
-	int toActorSize;
+	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd)
 		return;
@@ -1673,7 +1643,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, int fromActorSize, const
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
  */
-static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const pos3_t toPos)
+static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActorSize, const pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;
@@ -1683,7 +1653,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, int fromActorSize, const 
 	int i;
 	le_t *le = NULL;
 	le_t *target = NULL;
-	int toActorSize;
+	actorSizeEnum_t toActorSize;
 
 	if (!selActor || !selActor->fd || Vector2Compare(fromPos, toPos))
 		return;
@@ -1783,7 +1753,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	entity_t ent;
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	const actorSizeEnum_t fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -2008,7 +1978,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		int base; /* The floor relative to this cell */
 
 		/* Get size of selected actor */
-		const int fieldSize = selActor->fieldSize;
+		const actorSizeEnum_t fieldSize = selActor->fieldSize;
 		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 		const int TUhave = CL_ActorUsableTUs(selActor);
@@ -2105,7 +2075,7 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
 void CL_DisplayFloorArrows (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
@@ -2123,7 +2093,7 @@ void CL_DisplayFloorArrows (void)
 void CL_DisplayObstructionArrows (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
@@ -2140,7 +2110,7 @@ void CL_DisplayObstructionArrows (void)
 static void CL_DumpMoveMark_f (void)
 {
 	/* Get size of selected actor or fall back to 1x1. */
-	const int fieldSize = selActor
+	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	const byte crouchingState = selActor ? (LE_IsCrouched(selActor) ? 1 : 0) : 0;
@@ -2192,7 +2162,7 @@ static void CL_DumpTUs_f (void)
  * directly use the debugger on some vital pathfinding functions.
  * Will probably be removed for the release.
  */
-static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
+static void CL_DebugPathDisplay (actorSizeEnum_t actorSize, int x, int y, int z)
 {
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_FLOOR(clMap, actorSize, x, y, z),
@@ -2216,7 +2186,7 @@ static void CL_DebugPathDisplay (int actorSize, int x, int y, int z)
 
 static void CL_DebugPath_f (void)
 {
-	const int actorSize = 1;
+	const actorSizeEnum_t actorSize = ACTOR_SIZE_NORMAL;
 	const pos_t x = mousePos[0];
 	const pos_t y = mousePos[1];
 	const pos_t z = mousePos[2];

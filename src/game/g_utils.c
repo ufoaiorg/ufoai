@@ -197,10 +197,11 @@ void G_PrintStats (const char *buffer)
 	time(&aclock);
 	t = localtime(&aclock);
 
-	Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+	Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
+			t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
 	gi.dprintf("[STATS] %s - %s\n", tbuf, buffer);
 	if (logstatsfile)
-		fprintf(logstatsfile, "[STATS] %s - %s\n", tbuf, buffer);
+		fprintf(logstatsfile, "[STATS] %s - %s", tbuf, buffer);
 }
 
 /**
@@ -283,11 +284,10 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
  */
 edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 {
-	const char *s;
 	edict_t *ent = from;
 
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		s = *(const char **) ((byte *) ent + fieldofs);
+		const char *s = *(const char **) ((byte *) ent + fieldofs);
 		if (!s)
 			continue;
 		if (!Q_strcasecmp(s, match))
@@ -394,7 +394,8 @@ void G_CompleteRecalcRouting (void)
 }
 
 /**
- * @brief Check the world against triggers for the current entity (actor)
+ * @brief Check the world against triggers for the current entity
+ * @param[in,out] ent The entity that maybe touches others
  */
 int G_TouchTriggers (edict_t *ent)
 {

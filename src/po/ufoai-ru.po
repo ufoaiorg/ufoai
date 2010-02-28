@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-02-17 20:15+0600\n"
-"PO-Revision-Date: 2010-02-20 13:55+0600\n"
+"PO-Revision-Date: 2010-02-24 15:26+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 
-#: ../base/maps/africa.ump:231
-#: ../base/maps/africa.ump:250
+#: ../base/maps/africa.ump:225
+#: ../base/maps/africa.ump:246
 msgid "Africa"
 msgstr "Новая Африка"
 
@@ -76,27 +76,27 @@ msgstr "Маленький лес"
 msgid "Little bungalo in forest"
 msgstr "Маленькое бунгало в лесу"
 
-#: ../base/maps/frozen.ump:284
+#: ../base/maps/frozen.ump:292
 msgid "Snow"
 msgstr "Снег"
 
-#: ../base/maps/frozen.ump:301
+#: ../base/maps/frozen.ump:309
 msgid "Alien landing - Snow"
 msgstr "Место высадки пришельцев - Снег"
 
-#: ../base/maps/frozen.ump:319
+#: ../base/maps/frozen.ump:327
 msgid "Industrial"
 msgstr "Промышленный район"
 
-#: ../base/maps/frozen.ump:340
+#: ../base/maps/frozen.ump:348
 msgid "Alien landing - Industrial"
 msgstr "Место высадки пришельцев - Промышленный район"
 
-#: ../base/maps/frozen.ump:362
+#: ../base/maps/frozen.ump:370
 msgid "Multiplayer Coop"
 msgstr "Многопользовательская командная"
 
-#: ../base/maps/frozen.ump:383
+#: ../base/maps/frozen.ump:391
 msgid "Multiplayer Deathmatch"
 msgstr "Многопользовательская все-против-всех"
 
@@ -1361,7 +1361,7 @@ msgstr "Инсбрук"
 
 #: ../base/ufos/cities.ufo:1053
 msgid "Invercargill"
-msgstr "\tИнверкаргилл"
+msgstr "Инверкаргилл"
 
 #: ../base/ufos/cities.ufo:1059
 msgid "Ipoh"
@@ -3111,7 +3111,7 @@ msgid "The radar tower is an unmanned, expendable installation that can be place
 msgstr "Радарная вышка — безоператорное, расширяемое строение, которое может быть размещено в любой точке мира, чтобы увеличить наш диапазон обнаружения. Она дешева и очень полезна, но ее маскировка не очень эффективна. Суда пришельцев могут обнаружить активное сканирование и попытаться уничтожить вышку, как только ее найдут. Рекомендуется защищать радарные вышки при помощи зенитных ракетных комплексов."
 
 #: ../base/ufos/installation.ufo:23
-#: ../base/ufos/ui/geoscape.ufo:1234
+#: ../base/ufos/ui/geoscape.ufo:1196
 #: ../base/ufos/ui/lostwon.ufo:212
 msgid "UFO Yard"
 msgstr "НЛО ангар"
@@ -3121,7 +3121,7 @@ msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be 
 msgstr "Складская площадка НЛО — замаскированное место хранения захваченных НЛО. Она может быть размещена в любой точке мира для хранения, разборки и исследований НЛО; вы можете транспортировать НЛО на другие площадки. НЛО, хранящийся на складской площадке может быть исследован или разобран на любой базе ФАЛАНКС с помощью соответствующих производственных объектов, но вся эта деятельность будет длиться тем дольше, чем дальше от базы расположена площадка."
 
 #: ../base/ufos/installation.ufo:38
-#: ../base/ufos/ui/geoscape.ufo:1192
+#: ../base/ufos/ui/geoscape.ufo:1154
 msgid "SAM Site"
 msgstr "Пункт ПВО"
 
@@ -3702,7 +3702,7 @@ msgstr "Предыстория"
 
 #: ../base/ufos/research.ufo:108
 #: ../base/ufos/ui/bases.ufo:129
-#: ../base/ufos/ui/geoscape.ufo:1946
+#: ../base/ufos/ui/geoscape.ufo:1864
 #: ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75
 #: ../base/ufos/ui/transfer.ufo:41
@@ -6335,7 +6335,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2536
 msgid "Man-Portable Particle Beams"
-msgstr "Потративные лучевые излучатели"
+msgstr "Портативные лучевые излучатели"
 
 #: ../base/ufos/research.ufo:2541
 msgid "pbeamammo_txt"
@@ -7510,32 +7510,20 @@ msgstr ""
 "\n"
 "Основным недостатком Дракона является то что он как и НЛО, требует антивещество для взлёта. Ничто иное не укладывается в требуемый вес фюзеляжа. Так как мы не имеем доступных источников антивещества, мы не должны его использовать иначе чем для воздушных схваток. И мы должны быть внимательны в выборе стратегии использования Дракона, принимать во внимание только действительную необходимость в каждой конкретной ситуации.\n"
 "\n"
-"Также, обратите внимание, что хотя технически Дракон способен к выходу на орбиту на собственных мощностях, он не имеет необходимых свойств и не должен использоваться выше верхних слоёв атмосферы ни при каких условиях. Некоторые вещи слишком сложны, для того чтоб просить их прямо сейчас. Мы инженеры, а не волшебники, Командор.\n"
+"Также, обратите внимание, что хотя технически Дракон способен к выходу на орбиту на собственных мощностях, он не имеет необходимых свойств и не должен использоваться выше верхних слоёв атмосферы ни при каких условиях. Некоторые вещи слишком сложны, для того чтоб просить их прямо сейчас. Мы инженеры, а не волшебники, Командующий.\n"
 "\n"
-"--Ком. Наварре.\n"
-"\n"
-"Предполагаемая статистика:\n"
-"\n"
-"Размер 12м x 22м x 7м\n"
-"\n"
-"Крейсерская скорость: 2,500 км/ч\n"
-"\n"
-"Максимальная скорость: 4,290км/ч\n"
-"\n"
-"Команда: 1 пилот\n"
-"\n"
-"Вооружение и снаряжение: 1 Large hardpoint (main fuselage), 1 Medium hardpoint (bottom prong), 2 Small hardpoints (top prongs), 1 Equipment bay, 1 Armour slot"
+"—Ком. Наварре."
 
 #: ../base/ufos/research.ufo:3485
 msgid "inter_dragon_pre_txt"
 msgstr ""
-"Командор, позвольте мне в качестве предисловия сказать следующее. Очевидно, что пришельцы превосходят нас в каждом аспекте, но нигде это не проявляется столь очевидно, как в воздухе. Мы сидим в луже с самого начала войны, и несмотря на все наши усилия, изменения нашего положения весьма незначительны.\n"
+"Командующий, позвольте мне в качестве предисловия сказать следующее. Очевидно, что пришельцы превосходят нас в каждом аспекте, но нигде это не проявляется столь очевидно, как в воздухе. Мы сидим в луже с самого начала войны, и несмотря на все наши усилия, изменения нашего положения весьма незначительны.\n"
 "\n"
 "Однако сейчас, когда мы понимаем инопланетные сплавы, их поведение в воздухе, а также инопланетные двигательную и топливную системы, я думаю что мы готовы к тому, чтоб попытаться найти решение задачи по созданию нового перехватчика для ФАЛАНКС. Мы верим, что комбинирование инопланетных техник и старой доброй человеческой промышленности позволит нам создать что-то, что будет в крайней степени превосходить текущее поколение кораблей, при этом оставаясь экономически оправданным и способным к полёту.\n"
 "\n"
-"Программа включает в себя крупные затраты лабораторного времени, персонала и материалов, однако как обычно, мы сможем получить намного больше чем мы можем в теории потерять. Этот проект даст нам надежду, Командор. Пожалуйста, дайте мне знать сразу, как вы захотите начать работу.\n"
+"Программа включает в себя крупные затраты лабораторного времени, персонала и материалов, однако как обычно, мы сможем получить намного больше чем мы можем в теории потерять. Командующий, этот проект даст нам надежду, пожалуйста, дайте мне знать сразу, как вы захотите начать работу.\n"
 "\n"
-"--Ком. Наварре."
+"—Ком. Наварре."
 
 #: ../base/ufos/research.ufo:3518
 msgid "inter_starchaser_txt"
@@ -9500,8 +9488,8 @@ msgstr "Copyright 2004-2009 by UFO: AI Team"
 #: ../base/ufos/seq_ingame.ufo:13
 #: ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80
-#: ../base/ufos/ui/campaign.ufo:593
-#: ../base/ufos/ui/campaign.ufo:666
+#: ../base/ufos/ui/campaign.ufo:588
+#: ../base/ufos/ui/campaign.ufo:661
 msgid "Click to continue"
 msgstr "Нажмите для продолжения"
 
@@ -9888,142 +9876,138 @@ msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a 
 msgstr "Если у вас мало единиц времени (ЕВ), и поблизости опасные враги, использование ослепляющей гранаты, чтобы обездвижить их до вашего следующего хода, может быть самым лучшим выбором. 2 ЕВ (достать из кобуры) + 12 ЕВ (бросок) = 14 ЕВ."
 
 #: ../base/ufos/tips.ufo:28
-msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
-msgstr "Используйте вид от первого лица (включается кнопкой [v]), чтобы проверить, можно ли, сдвинувшись на одну клетку, произвести выстрел через здание."
-
-#: ../base/ufos/tips.ufo:29
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
 msgstr "Используйте быстрого солдата с пистолетом, одноручным холодным оружием, гранатами и медкомплектом в качестве санитара."
 
-#: ../base/ufos/tips.ufo:30
+#: ../base/ufos/tips.ufo:29
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
 msgstr "Постройте госпиталь чтоб лечить солдат."
 
-#: ../base/ufos/tips.ufo:31
+#: ../base/ufos/tips.ufo:30
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Плазменные гранаты наносят большие повреждения, но осколочные гранаты также могут быть полезны, так как могут быть брошены дальше."
 
-#: ../base/ufos/tips.ufo:32
+#: ../base/ufos/tips.ufo:31
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "Используйте [x] для переключения режимов ответного огня: нет, один выстрел, много выстрелов."
 
-#: ../base/ufos/tips.ufo:33
+#: ../base/ufos/tips.ufo:32
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Держите солдат близко друг к другу, тогда они смогут оказывать поддержку (лечить или стрелять, когда у одного из них кончатся единицы времени (ЕВ)). Старайтесь, чтобы в конце хода их разделяла стена, тогда их не смогут убить одной гранатой."
 
-#: ../base/ufos/tips.ufo:34
+#: ../base/ufos/tips.ufo:33
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
 msgstr "Всегда держите в резерве одного или двух солдат, также ваши основные силы не должны влезать в очень рискованные ситуации."
 
-#: ../base/ufos/tips.ufo:35
+#: ../base/ufos/tips.ufo:34
 msgid "You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
 msgstr "Вы можете увеличить дальность радара, построив модернизированную радарную установку. Помните, что сначала вы должны ее исследовать!"
 
-#: ../base/ufos/tips.ufo:36
+#: ../base/ufos/tips.ufo:35
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr "Ответный огонь может истощить ваши единицы времени (ЕВ) до 0. Если вы выключили ответный огонь, то не сможете вернуть его назад, пока не будет достаточно единиц времени (ЕВ). Однако вы можете оставить его включенным. Старайтесь не подстраивать солдат с 0 ЕВ, до тех пор пока не уверены."
 
-#: ../base/ufos/tips.ufo:37
+#: ../base/ufos/tips.ufo:36
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
 msgstr "Импульс сжатого воздуха из гранатомета позволит вам подрывать гранаты в заданном месте. Очень полезно, когда целитесь куда-то вблизи края карты или выступа."
 
-#: ../base/ufos/tips.ufo:38
+#: ../base/ufos/tips.ufo:37
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
 msgstr "Когда используете гранаты, старайтесь избегать прямых бросков вдоль линий сетки. Даже маленький угол значительно уменьшает вероятность рикошета в вашу сторону в случае промаха."
 
-#: ../base/ufos/tips.ufo:39
+#: ../base/ufos/tips.ufo:38
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
 msgstr "Перед броском гранаты, внимательно осмотрите землю. Даже небольшой наклон повлияет на направление отскока гранаты."
 
-#: ../base/ufos/tips.ufo:40
+#: ../base/ufos/tips.ufo:39
 msgid "Grenades don't bounce well on sand or dirt."
 msgstr "Осколки гранат будут разлетаться хуже при взрыве на песке или в грязи"
 
-#: ../base/ufos/tips.ufo:41
+#: ../base/ufos/tips.ufo:40
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
 msgstr "Вы можете включить свои карты для многопользовательской игры или создать свои кампании. Загляните на нашу вики, чтобы прочесть инструкции по созданию контента."
 
-#: ../base/ufos/tips.ufo:42
+#: ../base/ufos/tips.ufo:41
 msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Вы можете использовать [Пробел] для перехода между пунктами на глобусе."
 
-#: ../base/ufos/tips.ufo:43
+#: ../base/ufos/tips.ufo:42
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
 msgstr "Вы можете ускорить/замедлить время на глобусе, используя колесо мыши, кнопки управления временем или, нажимая [-], [+/=]. Также вы можете нажимать [n] и [m]. Нажатие [backspace] остановит течение времени."
 
-#: ../base/ufos/tips.ufo:44
+#: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "Убедитесь, что вы снарядили перехватчик оружием, прежде чем запускать его в бой."
 
-#: ../base/ufos/tips.ufo:45
+#: ../base/ufos/tips.ufo:44
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr "Запомните, что дополнительное оборудование замедляет самолет. Для перехвата быстрых НЛО вы можете предпочесть послать несколько легко экипированных судов."
 
-#: ../base/ufos/tips.ufo:46
+#: ../base/ufos/tips.ufo:45
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
 msgstr "Ваша атакованные самолеты могут вернуться на одну из баз, чтобы избежать уничтожения вражескими НЛО."
 
-#: ../base/ufos/tips.ufo:47
+#: ../base/ufos/tips.ufo:46
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "Постройте изолятор чтоб сохранить пришельцев живыми."
 
-#: ../base/ufos/tips.ufo:48
+#: ../base/ufos/tips.ufo:47
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
 msgstr "Замеченные противники: Во время наземных миссий вы можете нажать [Пробел] чтоб циклично увидеть всех видимых противников. При нажатии на [t] будут нарисованы линии к каждому противнику, которого может видеть выбранный солдат."
 
-#: ../base/ufos/tips.ufo:49
+#: ../base/ufos/tips.ufo:48
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
 msgstr "Вы можете использовать правую кнопку мыши на экране экипировки солдата, чтобы снарядить его оружием, боеприпасами и броней, или разоружить его. Это работает только на базе, не в тактических миссиях, где такие действия будут занимать ЕВ."
 
-#: ../base/ufos/tips.ufo:50
+#: ../base/ufos/tips.ufo:49
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Убедитесь, что не слишком много гражданских погибает. Иначе вы можете проиграть игру раньше, чем рассчитываете."
 
-#: ../base/ufos/tips.ufo:51
+#: ../base/ufos/tips.ufo:50
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Используйте снайперское прикрытие. Обеспечьте снайперу место с хорошим обзором (возвышенности и углы на крыше, например). Оставьте их в согнутом положении, а режим ответного огня установите в «множественные выстрелы», чтобы стрелять  в появляющихся пришельцев."
 
-#: ../base/ufos/tips.ufo:52
+#: ../base/ufos/tips.ufo:51
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
 msgstr "Рассмотрите вариант запуска перехватчиков для перехвата быстрых НЛО, когда враг будет поблизости от базы, чтобы избежать погони, и ваши истребители могли применять оружие сразу после старта."
 
-#: ../base/ufos/tips.ufo:53
+#: ../base/ufos/tips.ufo:52
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
 msgstr "Рассмотрите вариант оглушения гражданских во время контр-террористических операций, чтобы они не ходили по округе. Судя по всему, пришельцы предпочитают убивать тех, кто находится в сознании."
 
-#: ../base/ufos/tips.ufo:54
+#: ../base/ufos/tips.ufo:53
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
 msgstr "Не забудьте установить ракетные установки и ракеты на ваши батареи ПВО."
 
-#: ../base/ufos/tips.ufo:55
+#: ../base/ufos/tips.ufo:54
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
 msgstr "Не можете вспомнить, у кого в ранце есть аптечка? Нажмите [i] для просмотра инвентаря, а затем от [1] до [8], чтобы переключаться между вашими бойцами."
 
-#: ../base/ufos/tips.ufo:56
+#: ../base/ufos/tips.ufo:55
 msgid "To catch fast UFOs send interceptors in from several directions."
 msgstr "Для захвата быстрых НЛО посылайте перехватчики с нескольких направлений."
 
-#: ../base/ufos/tips.ufo:57
+#: ../base/ufos/tips.ufo:56
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
 msgstr "Чтобы быстро купить или продать предметы, поместите курсор над стрелками и покрутите колесико мышки."
 
-#: ../base/ufos/tips.ufo:58
+#: ../base/ufos/tips.ufo:57
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
 msgstr "Берегите солдат от огня своих войск! Хотя бросок гранаты во внезапно появившегося пришельца может легко убить его, есть шанс, что вы сделаете работу пришельца за него. То же можно сказать о пулях: убедитесь, что если враг упадет мертвым, пули не полетят в своих."
 
-#: ../base/ufos/tips.ufo:59
+#: ../base/ufos/tips.ufo:58
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
 msgstr "Проверяйте ваши очереди исследований и производства почаще! Хороший ВПК — действующий ВПК!"
 
-#: ../base/ufos/tips.ufo:60
+#: ../base/ufos/tips.ufo:59
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
 msgstr "Наличие живых гражданских вероятно означает, что поблизости нет живых пришельцев. Это может сократить время зачистки карты."
 
-#: ../base/ufos/tips.ufo:61
+#: ../base/ufos/tips.ufo:60
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
 msgstr "Следите за здоровьем ваших солдат, не позволяйте им умереть. Опытные солдаты намного эффективнее в бою, чем новые рекруты."
 
-#: ../base/ufos/tips.ufo:62
+#: ../base/ufos/tips.ufo:61
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Вы можете подготовить действия на следующий раунд, пока ожидаете. Нажатие кнопки [Enter] дважды произведет все запланированные действия, как только начнется ваш ход."
 
@@ -10069,6 +10053,20 @@ msgstr "Вернуться к обзору базы"
 #: ../base/ufos/ui/hospital.ufo:59
 msgid "Name of this base"
 msgstr "Название базы"
+
+#: ../base/ufos/ui/_menu.ufo:163
+#: ../base/ufos/ui/transfer.ufo:594
+#: client/campaign/cp_installation_callbacks.c:224
+msgid "Cancel"
+msgstr "Отмена"
+
+#: ../base/ufos/ui/_menu.ufo:164
+#: ../base/ufos/ui/geoscape.ufo:1298
+#: ../base/ufos/ui/geoscape.ufo:1511
+#: ../base/ufos/ui/sys_popup.ufo:50
+#: ../base/ufos/ui/sys_popup.ufo:112
+msgid "Close this dialogue"
+msgstr "Закрыть диалог"
 
 #: ../base/ufos/ui/aircraft.ufo:58
 #: ../base/ufos/ui/ufopedia.ufo:79
@@ -10204,7 +10202,7 @@ msgstr "Добавить/убрать этого солдата"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:87
 #: ../base/ufos/ui/aircraft_soldiers.ufo:616
-#: ../base/ufos/ui/geoscape.ufo:783
+#: ../base/ufos/ui/geoscape.ufo:769
 msgid "Equip soldiers"
 msgstr "Снарядить солдат"
 
@@ -10483,7 +10481,7 @@ msgstr "Без ответного огня"
 
 #: ../base/ufos/ui/althud.ufo:1134
 #: ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:843
+#: client/battlescape/cl_hud.c:810
 msgid "Reserve TUs for shooting."
 msgstr "Отложить ЕВ для выстрела."
 
@@ -10540,8 +10538,8 @@ msgid "Targetted UFO:"
 msgstr "Выбранное НЛО:"
 
 #: ../base/ufos/ui/basedefence.ufo:339
-#: ../base/ufos/ui/geoscape.ufo:1441
-#: ../base/ufos/ui/geoscape.ufo:1549
+#: ../base/ufos/ui/geoscape.ufo:1399
+#: ../base/ufos/ui/geoscape.ufo:1497
 msgid "Time to build:"
 msgstr "Время:"
 
@@ -10550,7 +10548,7 @@ msgid "Autofire"
 msgstr "Автоматический огонь"
 
 #: ../base/ufos/ui/basedefence.ufo:368
-#: ../base/ufos/ui/geoscape.ufo:1586
+#: ../base/ufos/ui/geoscape.ufo:1526
 #: client/campaign/cp_base.c:890
 #: client/campaign/cp_base.c:900
 #: client/campaign/cp_base.c:910
@@ -10560,15 +10558,15 @@ msgid "Destroy"
 msgstr "Демонтировать"
 
 #: ../base/ufos/ui/basedefence.ufo:369
-#: ../base/ufos/ui/geoscape.ufo:1587
+#: ../base/ufos/ui/geoscape.ufo:1527
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy installation"
 msgstr "Уничтожить объект."
 
 #: ../base/ufos/ui/basedefence.ufo:379
-#: ../base/ufos/ui/geoscape.ufo:1335
-#: ../base/ufos/ui/geoscape.ufo:1562
-#: ../base/ufos/ui/main.ufo:309
+#: ../base/ufos/ui/geoscape.ufo:1297
+#: ../base/ufos/ui/geoscape.ufo:1510
+#: ../base/ufos/ui/main.ufo:305
 msgid "Close"
 msgstr "Закрыть"
 
@@ -10577,7 +10575,7 @@ msgid "Back to geoscape"
 msgstr "Назад к виду на планету"
 
 #: ../base/ufos/ui/bases.ufo:40
-#: ../base/ufos/ui/geoscape.ufo:987
+#: ../base/ufos/ui/geoscape.ufo:959
 msgid "Rename your base"
 msgstr "Переименовать базу"
 
@@ -10707,7 +10705,7 @@ msgstr "Кампания"
 #: ../base/ufos/ui/campaign.ufo:41
 #: ../base/ufos/ui/campaign.ufo:155
 #: ../base/ufos/ui/campaign.ufo:207
-#: ../base/ufos/ui/campaign.ufo:243
+#: ../base/ufos/ui/campaign.ufo:238
 msgid "Load"
 msgstr "Загрузить"
 
@@ -10727,8 +10725,8 @@ msgid "Load last saved game or continue playing"
 msgstr "Загрузить последнюю сохраненную игру и продолжить"
 
 #: ../base/ufos/ui/campaign.ufo:60
-#: ../base/ufos/ui/campaign.ufo:378
-#: ../base/ufos/ui/campaign.ufo:559
+#: ../base/ufos/ui/campaign.ufo:373
+#: ../base/ufos/ui/campaign.ufo:554
 #: ../base/ufos/ui/multiplayer.ufo:66
 #: ../base/ufos/ui/options.ufo:75
 #: ../base/ufos/ui/singleplayer.ufo:43
@@ -10738,7 +10736,7 @@ msgid "Back"
 msgstr "Назад"
 
 #: ../base/ufos/ui/campaign.ufo:162
-#: ../base/ufos/ui/campaign.ufo:413
+#: ../base/ufos/ui/campaign.ufo:408
 #: ../base/ufos/ui/multiplayer_team.ufo:899
 msgid "Save"
 msgstr "Сохранить"
@@ -10764,17 +10762,17 @@ msgstr "Перезапуск компании"
 
 #: ../base/ufos/ui/campaign.ufo:199
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
-msgstr "Вы действительно хотите перезагрузить последнее автоматически сохраненное состояние кампании"
+msgstr "Вы действительно хотите перезагрузить последнее автоматически сохраненное состояние кампании?"
 
 #: ../base/ufos/ui/campaign.ufo:208
 msgid "Reload the last automatically saved campaign state"
 msgstr "Загрузить последнее автоматически сохранённое состояние кампании"
 
-#: ../base/ufos/ui/campaign.ufo:583
+#: ../base/ufos/ui/campaign.ufo:578
 msgid "You've lost the game"
 msgstr "Вы потерпели поражение"
 
-#: ../base/ufos/ui/campaign.ufo:656
+#: ../base/ufos/ui/campaign.ufo:651
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Благодарим Вас за игру в UFO:Alien Invasion"
 
@@ -11001,18 +10999,18 @@ msgid "Create installation"
 msgstr "Построить сооружение"
 
 #: ../base/ufos/ui/geoscape.ufo:515
-#: ../base/ufos/ui/geoscape.ufo:2067
+#: ../base/ufos/ui/geoscape.ufo:1979
 msgid "Highlight nation borders"
 msgstr "Показать государственные границы"
 
 #: ../base/ufos/ui/geoscape.ufo:527
-#: ../base/ufos/ui/geoscape.ufo:2092
+#: ../base/ufos/ui/geoscape.ufo:2004
 msgid "Show radar range"
 msgstr "Показать радарное покрытие"
 
 # АБИ==Агент Биологической Инфильтрации
 #: ../base/ufos/ui/geoscape.ufo:540
-#: ../base/ufos/ui/geoscape.ufo:2113
+#: ../base/ufos/ui/geoscape.ufo:2025
 msgid "Show XVI map"
 msgstr "Показать карту распостранения ВВИ"
 
@@ -11032,274 +11030,242 @@ msgstr "Готов"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "Самолет достиг точки назначения - ожидаются указания."
 
-#: ../base/ufos/ui/geoscape.ufo:697
-#: ../base/ufos/ui/geoscape.ufo:946
-#: ../base/ufos/ui/geoscape.ufo:1057
-#: ../base/ufos/ui/geoscape.ufo:1478
-#: ../base/ufos/ui/geoscape.ufo:1760
-#: ../base/ufos/ui/geoscape.ufo:1850
-#: ../base/ufos/ui/geoscape.ufo:1923
-#: ../base/ufos/ui/geoscape.ufo:1996
-#: ../base/ufos/ui/irc.ufo:211
-#: ../base/ufos/ui/messageoptions.ufo:66
-#: ../base/ufos/ui/options.ufo:1290
-#: ../base/ufos/ui/transfer.ufo:594
-#: client/campaign/cp_installation_callbacks.c:224
-msgid "Cancel"
-msgstr "Отмена"
-
-#: ../base/ufos/ui/geoscape.ufo:698
-#: ../base/ufos/ui/geoscape.ufo:947
-#: ../base/ufos/ui/geoscape.ufo:1058
-#: ../base/ufos/ui/geoscape.ufo:1336
-#: ../base/ufos/ui/geoscape.ufo:1479
-#: ../base/ufos/ui/geoscape.ufo:1563
-#: ../base/ufos/ui/geoscape.ufo:1761
-#: ../base/ufos/ui/geoscape.ufo:1851
-#: ../base/ufos/ui/geoscape.ufo:1924
-#: ../base/ufos/ui/geoscape.ufo:1997
-#: ../base/ufos/ui/irc.ufo:212
-#: ../base/ufos/ui/options.ufo:1291
-#: ../base/ufos/ui/sys_popup.ufo:50
-#: ../base/ufos/ui/sys_popup.ufo:112
-msgid "Close this dialogue"
-msgstr "Закрыть диалог"
-
-#: ../base/ufos/ui/geoscape.ufo:712
-#: ../base/ufos/ui/geoscape.ufo:880
+#: ../base/ufos/ui/geoscape.ufo:706
+#: ../base/ufos/ui/geoscape.ufo:862
 msgid "Enter"
 msgstr "Высадиться"
 
-#: ../base/ufos/ui/geoscape.ufo:713
-#: ../base/ufos/ui/geoscape.ufo:881
+#: ../base/ufos/ui/geoscape.ufo:707
+#: ../base/ufos/ui/geoscape.ufo:863
 msgid "Enter the battlefield"
 msgstr "Выйти на поле боя"
 
-#: ../base/ufos/ui/geoscape.ufo:724
-#: ../base/ufos/ui/geoscape.ufo:847
+#: ../base/ufos/ui/geoscape.ufo:714
+#: ../base/ufos/ui/geoscape.ufo:833
 msgid "Auto mission"
 msgstr "Автобой"
 
-#: ../base/ufos/ui/geoscape.ufo:725
-#: ../base/ufos/ui/geoscape.ufo:848
+#: ../base/ufos/ui/geoscape.ufo:715
+#: ../base/ufos/ui/geoscape.ufo:834
 msgid "Automatically finish mission"
 msgstr "Автоматически закончить миссию"
 
-#: ../base/ufos/ui/geoscape.ufo:762
+#: ../base/ufos/ui/geoscape.ufo:748
 msgid "Base is under attack"
 msgstr "База атакована"
 
-#: ../base/ufos/ui/geoscape.ufo:784
+#: ../base/ufos/ui/geoscape.ufo:770
 msgid "Go to soldier equipment screen before the battle"
 msgstr "Вооружить солдат перед битвой"
 
-#: ../base/ufos/ui/geoscape.ufo:798
+#: ../base/ufos/ui/geoscape.ufo:784
 msgid "Kill aliens in container"
 msgstr "Умертвить всех пришельцев на базе"
 
-#: ../base/ufos/ui/geoscape.ufo:807
-#: ../base/ufos/ui/geoscape.ufo:816
-#: ../base/ufos/ui/geoscape.ufo:825
-#: ../base/ufos/ui/geoscape.ufo:834
+#: ../base/ufos/ui/geoscape.ufo:793
+#: ../base/ufos/ui/geoscape.ufo:802
+#: ../base/ufos/ui/geoscape.ufo:811
+#: ../base/ufos/ui/geoscape.ufo:820
 #: ../base/ufos/ui/hospital.ufo:568
 msgid "Not implemented"
 msgstr "Не реализовано"
 
-#: ../base/ufos/ui/geoscape.ufo:814
+#: ../base/ufos/ui/geoscape.ufo:800
 msgid "Lift aircraft"
 msgstr "Поднять самолет в воздух"
 
-#: ../base/ufos/ui/geoscape.ufo:832
+#: ../base/ufos/ui/geoscape.ufo:818
 msgid "Disable Power Plant"
 msgstr "Отключить электростанцию"
 
-#: ../base/ufos/ui/geoscape.ufo:922
+#: ../base/ufos/ui/geoscape.ufo:900
 msgid "Select base to transfer to"
 msgstr "Выберите базу назначения для транспортировки"
 
-#: ../base/ufos/ui/geoscape.ufo:927
+#: ../base/ufos/ui/geoscape.ufo:905
 msgid "Choose a base to host alien bodies:"
 msgstr "Выберите базу для хранения тел пришельцев:"
 
-#: ../base/ufos/ui/geoscape.ufo:968
+#: ../base/ufos/ui/geoscape.ufo:940
 msgid "New base"
 msgstr "Новая база"
 
-#: ../base/ufos/ui/geoscape.ufo:973
-#: ../base/ufos/ui/geoscape.ufo:1412
-#: ../base/ufos/ui/geoscape.ufo:1531
-#: ../base/ufos/ui/geoscape.ufo:1808
-#: ../base/ufos/ui/geoscape.ufo:1886
+#: ../base/ufos/ui/geoscape.ufo:945
+#: ../base/ufos/ui/geoscape.ufo:1370
+#: ../base/ufos/ui/geoscape.ufo:1479
+#: ../base/ufos/ui/geoscape.ufo:1738
+#: ../base/ufos/ui/geoscape.ufo:1810
+#: ../base/ufos/ui/irc.ufo:200
 #: ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/multiplayer.ufo:342
 #: ../base/ufos/ui/options.ufo:736
 msgid "Name:"
 msgstr "Название:"
 
-#: ../base/ufos/ui/geoscape.ufo:997
-#: ../base/ufos/ui/geoscape.ufo:1429
+#: ../base/ufos/ui/geoscape.ufo:969
+#: ../base/ufos/ui/geoscape.ufo:1387
 msgid "Cost:"
 msgstr "Стоимость:"
 
-#: ../base/ufos/ui/geoscape.ufo:1021
+#: ../base/ufos/ui/geoscape.ufo:993
 msgid "Buildings already built in the initial base"
 msgstr "На начальной базе модули уже построены"
 
-#: ../base/ufos/ui/geoscape.ufo:1030
+#: ../base/ufos/ui/geoscape.ufo:1002
 msgid "Start with buildings"
 msgstr "Начинать со строениями"
 
-#: ../base/ufos/ui/geoscape.ufo:1040
+#: ../base/ufos/ui/geoscape.ufo:1012
 msgid "Employees already hired at campaign start"
 msgstr "В начале кампании персонал уже нанят"
 
-#: ../base/ufos/ui/geoscape.ufo:1048
+#: ../base/ufos/ui/geoscape.ufo:1020
 msgid "Start with employees"
 msgstr "Начать с подчиненными"
 
-#: ../base/ufos/ui/geoscape.ufo:1070
-#: ../base/ufos/ui/geoscape.ufo:1489
+#: ../base/ufos/ui/geoscape.ufo:1036
+#: ../base/ufos/ui/geoscape.ufo:1441
 msgid "Build"
 msgstr "Построить"
 
-#: ../base/ufos/ui/geoscape.ufo:1071
+#: ../base/ufos/ui/geoscape.ufo:1037
 msgid "Build the base"
 msgstr "Основать базу"
 
-#: ../base/ufos/ui/geoscape.ufo:1110
+#: ../base/ufos/ui/geoscape.ufo:1072
 msgid "New installation"
 msgstr "Построить объект"
 
-#: ../base/ufos/ui/geoscape.ufo:1115
+#: ../base/ufos/ui/geoscape.ufo:1077
 msgid "Type"
 msgstr "Тип"
 
-#: ../base/ufos/ui/geoscape.ufo:1122
+#: ../base/ufos/ui/geoscape.ufo:1084
 msgid "Build Time"
 msgstr "Время"
 
-#: ../base/ufos/ui/geoscape.ufo:1130
+#: ../base/ufos/ui/geoscape.ufo:1092
 msgid "Cost"
 msgstr "Стоимость"
 
-#: ../base/ufos/ui/geoscape.ufo:1150
+#: ../base/ufos/ui/geoscape.ufo:1112
 msgid "Radar tower"
 msgstr "Радарная башня"
 
-#: ../base/ufos/ui/geoscape.ufo:1281
+#: ../base/ufos/ui/geoscape.ufo:1243
 #: client/campaign/cp_map.c:339
 msgid "Base"
 msgstr "База"
 
-#: ../base/ufos/ui/geoscape.ufo:1289
+#: ../base/ufos/ui/geoscape.ufo:1251
 msgid "0 day"
 msgstr "0 дней"
 
-#: ../base/ufos/ui/geoscape.ufo:1318
+#: ../base/ufos/ui/geoscape.ufo:1280
 msgid "Installation limit reached. Build more bases."
 msgstr "Достигнут лимит сооружений. Постройте больше баз."
 
-#: ../base/ufos/ui/geoscape.ufo:1325
+#: ../base/ufos/ui/geoscape.ufo:1287
 msgid "Base limit reached."
 msgstr "Достигнут лимит баз."
 
-#: ../base/ufos/ui/geoscape.ufo:1490
+#: ../base/ufos/ui/geoscape.ufo:1442
 msgid "Build the radar tower"
 msgstr "Построить радарную башню"
 
-#: ../base/ufos/ui/geoscape.ufo:1507
+#: ../base/ufos/ui/geoscape.ufo:1455
 msgid "New radar tower"
 msgstr "Новая радарная башня"
 
-#: ../base/ufos/ui/geoscape.ufo:1510
+#: ../base/ufos/ui/geoscape.ufo:1458
 msgid "New SAM site"
 msgstr "Новый пункт ПВО"
 
-#: ../base/ufos/ui/geoscape.ufo:1513
+#: ../base/ufos/ui/geoscape.ufo:1461
 msgid "New UFO yard"
 msgstr "Ангар НЛО"
 
-#: ../base/ufos/ui/geoscape.ufo:1526
+#: ../base/ufos/ui/geoscape.ufo:1474
 msgid "Installation Status"
 msgstr "Статус объекта"
 
-#: ../base/ufos/ui/geoscape.ufo:1573
+#: ../base/ufos/ui/geoscape.ufo:1517
 msgid "Manage"
 msgstr "Управление"
 
-#: ../base/ufos/ui/geoscape.ufo:1574
+#: ../base/ufos/ui/geoscape.ufo:1518
 msgid "Manage installation"
 msgstr "Управление объектом"
 
-#: ../base/ufos/ui/geoscape.ufo:1631
+#: ../base/ufos/ui/geoscape.ufo:1567
 msgid "Anti-UFO defence"
 msgstr "Защита против НЛО"
 
-#: ../base/ufos/ui/geoscape.ufo:1639
+#: ../base/ufos/ui/geoscape.ufo:1575
 msgid "Aircraft interception"
 msgstr "Авиаперехват"
 
-#: ../base/ufos/ui/geoscape.ufo:1643
+#: ../base/ufos/ui/geoscape.ufo:1579
 msgid "SAM defence"
-msgstr "Защита ПВО:"
+msgstr "Защита ПВО"
 
 # menu_basesummary.ufo need to be fixed
 # (change first occupience of Aircraft: to Aircraft)
-#: ../base/ufos/ui/geoscape.ufo:1660
+#: ../base/ufos/ui/geoscape.ufo:1596
 msgid "Aircraft:"
-msgstr "Авиации:"
+msgstr "Авиация:"
 
-#: ../base/ufos/ui/geoscape.ufo:1667
-#: ../base/ufos/ui/geoscape.ufo:1815
+#: ../base/ufos/ui/geoscape.ufo:1603
+#: ../base/ufos/ui/geoscape.ufo:1745
 msgid "Status:"
 msgstr "Состояние:"
 
-#: ../base/ufos/ui/geoscape.ufo:1674
-#: ../base/ufos/ui/geoscape.ufo:1822
+#: ../base/ufos/ui/geoscape.ufo:1610
+#: ../base/ufos/ui/geoscape.ufo:1752
 msgid "Base:"
 msgstr "База:"
 
-#: ../base/ufos/ui/geoscape.ufo:1722
+#: ../base/ufos/ui/geoscape.ufo:1658
 msgid "Surface-to-air missile site:"
 msgstr "Ракетная установка земля-воздух"
 
-#: ../base/ufos/ui/geoscape.ufo:1803
+#: ../base/ufos/ui/geoscape.ufo:1733
 msgid "Select aircraft"
 msgstr "Выберите самолёт"
 
-#: ../base/ufos/ui/geoscape.ufo:1829
+#: ../base/ufos/ui/geoscape.ufo:1759
 msgid "ETA:"
 msgstr "РВП:"
 
-#: ../base/ufos/ui/geoscape.ufo:1873
+#: ../base/ufos/ui/geoscape.ufo:1797
 msgid "Select item"
 msgstr "Выбрать объект"
 
-#: ../base/ufos/ui/geoscape.ufo:1878
+#: ../base/ufos/ui/geoscape.ufo:1802
 msgid "Type:"
 msgstr "Тип:"
 
-#: ../base/ufos/ui/geoscape.ufo:1951
+#: ../base/ufos/ui/geoscape.ufo:1869
 msgid "Action:"
 msgstr "Действие:"
 
-#: ../base/ufos/ui/geoscape.ufo:1959
+#: ../base/ufos/ui/geoscape.ufo:1877
 msgid "Description:"
 msgstr "Описание:"
 
-#: ../base/ufos/ui/geoscape.ufo:2020
+#: ../base/ufos/ui/geoscape.ufo:1932
 msgid "Geoscape options"
 msgstr "Настройки глобуса"
 
-#: ../base/ufos/ui/geoscape.ufo:2032
+#: ../base/ufos/ui/geoscape.ufo:1944
 msgid "Geoscape projection mode:"
 msgstr "Режим отображения глобуса:"
 
-#: ../base/ufos/ui/geoscape.ufo:2042
+#: ../base/ufos/ui/geoscape.ufo:1954
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:2046
+#: ../base/ufos/ui/geoscape.ufo:1958
 msgid "3D"
 msgstr "3D"
 
@@ -11438,22 +11404,39 @@ msgstr "Закрыть чат, но остаться в сети"
 msgid "Users"
 msgstr "Пользователи"
 
-#: ../base/ufos/ui/irc.ufo:186
+#: ../base/ufos/ui/irc.ufo:184
+msgid "Name is already in use"
+msgstr "Имя уже используется"
+
+#: ../base/ufos/ui/irc.ufo:189
+msgid "Your name is already in use or is invalid."
+msgstr "Имя уже используется или некорректно."
+
+#: ../base/ufos/ui/irc.ufo:220
+#: ../base/ufos/ui/singleplayer.ufo:91
+msgid "Retry"
+msgstr "Переиграть"
+
+#: ../base/ufos/ui/irc.ufo:221
+msgid "Retry with your changed name"
+msgstr "Попытаться с новым именем"
+
+#: ../base/ufos/ui/irc.ufo:243
 msgid "Not connected"
 msgstr "Не подключено"
 
-#: ../base/ufos/ui/irc.ufo:191
+#: ../base/ufos/ui/irc.ufo:248
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Вы не вошли в холл. Хотите присоединиться?"
 
-#: ../base/ufos/ui/irc.ufo:199
+#: ../base/ufos/ui/irc.ufo:256
 #: ../base/ufos/ui/multiplayer.ufo:197
 #: ../base/ufos/ui/multiplayer.ufo:385
 #: ../base/ufos/ui/multiplayer.ufo:1790
 msgid "Connect"
 msgstr "Соединиться"
 
-#: ../base/ufos/ui/irc.ufo:200
+#: ../base/ufos/ui/irc.ufo:257
 msgid "Connect to the lobby"
 msgstr "Войти в холл"
 
@@ -11491,39 +11474,39 @@ msgstr "Восстановить"
 msgid "Begin UFO recovery process"
 msgstr "Начать процесс восстановления НЛО"
 
-#: ../base/ufos/ui/lostwon.ufo:305
+#: ../base/ufos/ui/lostwon.ufo:301
 msgid "Nation:"
 msgstr "Страна:"
 
-#: ../base/ufos/ui/lostwon.ufo:306
+#: ../base/ufos/ui/lostwon.ufo:302
 msgid "Sort nations by name"
 msgstr "Сортировать государства по именам"
 
-#: ../base/ufos/ui/lostwon.ufo:316
+#: ../base/ufos/ui/lostwon.ufo:312
 msgid "Price:"
 msgstr "Цена:"
 
-#: ../base/ufos/ui/lostwon.ufo:317
+#: ../base/ufos/ui/lostwon.ufo:313
 msgid "Sort nations by price"
 msgstr "Сортировать государства по цене"
 
-#: ../base/ufos/ui/lostwon.ufo:327
+#: ../base/ufos/ui/lostwon.ufo:323
 msgid "Relations:"
 msgstr "Отношения:"
 
-#: ../base/ufos/ui/lostwon.ufo:328
+#: ../base/ufos/ui/lostwon.ufo:324
 msgid "Sort nations by relation"
 msgstr "Сортировать государства по отношению"
 
-#: ../base/ufos/ui/lostwon.ufo:377
+#: ../base/ufos/ui/lostwon.ufo:373
 msgid "Selected nation:"
 msgstr "Выбранная страна:"
 
-#: ../base/ufos/ui/lostwon.ufo:391
+#: ../base/ufos/ui/lostwon.ufo:387
 msgid "Sell"
 msgstr "Продать"
 
-#: ../base/ufos/ui/lostwon.ufo:392
+#: ../base/ufos/ui/lostwon.ufo:388
 msgid "Begin UFO sell process"
 msgstr "Начать процесс продажи НЛО"
 
@@ -11607,25 +11590,25 @@ msgstr "ОК"
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
-#: ../base/ufos/ui/main.ufo:259
+#: ../base/ufos/ui/main.ufo:255
 msgid "Tip of the day"
 msgstr "Совет дня"
 
-#: ../base/ufos/ui/main.ufo:272
+#: ../base/ufos/ui/main.ufo:268
 msgid "Show tip of the day"
 msgstr "Показывать советы дня"
 
-#: ../base/ufos/ui/main.ufo:293
-#: ../base/ufos/ui/main.ufo:306
+#: ../base/ufos/ui/main.ufo:289
+#: ../base/ufos/ui/main.ufo:302
 msgid "Next"
 msgstr "Следующий"
 
-#: ../base/ufos/ui/main.ufo:294
-#: ../base/ufos/ui/main.ufo:307
+#: ../base/ufos/ui/main.ufo:290
+#: ../base/ufos/ui/main.ufo:303
 msgid "Next tip"
 msgstr "Следующая подсказка"
 
-#: ../base/ufos/ui/main.ufo:310
+#: ../base/ufos/ui/main.ufo:306
 msgid "Close window"
 msgstr "Закрыть окно"
 
@@ -11770,15 +11753,15 @@ msgstr "Применить"
 msgid "Apply changes"
 msgstr "Применить сделанные изменения"
 
-#: ../base/ufos/ui/messageoptions.ufo:67
+#: ../base/ufos/ui/messageoptions.ufo:61
 msgid "Revert changes"
 msgstr "Отменить сделанные изменения"
 
-#: ../base/ufos/ui/messageoptions.ufo:79
+#: ../base/ufos/ui/messageoptions.ufo:68
 msgid "Notify types:"
 msgstr "Тип извещения:"
 
-#: ../base/ufos/ui/messageoptions.ufo:87
+#: ../base/ufos/ui/messageoptions.ufo:76
 msgid ""
 "Enable or disable messages being displayed for all notification types.\\n"
 "Left click enables all notifications, right click disables."
@@ -11786,7 +11769,7 @@ msgstr ""
 "включить/отключить отображение уведомлений для всех событий.\\n"
 "Левый клик включает все уведомления, правый -- отключает."
 
-#: ../base/ufos/ui/messageoptions.ufo:96
+#: ../base/ufos/ui/messageoptions.ufo:85
 msgid ""
 "Enable or disable pause for all notification types\\n"
 "Pause can't be enabled without notification\\n"
@@ -11796,7 +11779,7 @@ msgstr ""
 "Пауза не может быть включена без включёных уведомлений\\n"
 "Нажатие левой клавиши включает, правой ­-- отключает паузу для всех событий."
 
-#: ../base/ufos/ui/messageoptions.ufo:105
+#: ../base/ufos/ui/messageoptions.ufo:94
 msgid ""
 "Enable or disable sounds being played for all notification types.\\n"
 "Left click enables all sounds, right click disables."
@@ -11823,7 +11806,7 @@ msgstr "Интернет/LAN"
 
 #: ../base/ufos/ui/multiplayer.ufo:87
 msgid "Lan"
-msgstr "Lan"
+msgstr "LAN"
 
 #: ../base/ufos/ui/multiplayer.ufo:92
 #: ../base/ufos/ui/multiplayer.ufo:215
@@ -12416,7 +12399,7 @@ msgid "Keys"
 msgstr "Клавиши"
 
 #: ../base/ufos/ui/options.ufo:1173
-#: client/battlescape/cl_hud.c:97
+#: client/battlescape/cl_hud.c:99
 msgid "Autostand"
 msgstr "Вставать автоматически:"
 
@@ -12538,10 +12521,6 @@ msgstr "Стычка"
 #: ../base/ufos/ui/singleplayer.ufo:84
 msgid "Abort"
 msgstr "Прервать"
-
-#: ../base/ufos/ui/singleplayer.ufo:91
-msgid "Retry"
-msgstr "Переиграть"
 
 #: ../base/ufos/ui/skirmish.ufo:28
 msgid "Start game"
@@ -13279,64 +13258,64 @@ msgstr "грандиозно"
 msgid "Superhuman"
 msgstr "уникально"
 
-#: client/battlescape/cl_actor.c:725
+#: client/battlescape/cl_actor.c:695
 msgid "This isn't your round\n"
 msgstr "Сейчас не ваш ход!\n"
 
-#: client/battlescape/cl_actor.c:987
+#: client/battlescape/cl_actor.c:957
 msgid "You cannot reload this unknown item.\n"
 msgstr "Вы не можете перезарядить этот предмет неизвестного назначения.\n"
 
-#: client/battlescape/cl_actor.c:1824
+#: client/battlescape/cl_actor.c:1794
 msgid "Unknown alien race"
 msgstr "Пришелец неизвестной расы"
 
-#: client/battlescape/cl_actor.c:2489
+#: client/battlescape/cl_actor.c:2459
 msgid "Toggle to next actor"
 msgstr "Переключиться на следующего солдата"
 
-#: client/battlescape/cl_actor.c:2490
+#: client/battlescape/cl_actor.c:2460
 msgid "Select an actor from list"
 msgstr "Выбрать солдата из списка"
 
-#: client/battlescape/cl_actor.c:2491
+#: client/battlescape/cl_actor.c:2461
 msgid "Update an actor"
 msgstr "Обновить вид солдата"
 
-#: client/battlescape/cl_actor.c:2493
+#: client/battlescape/cl_actor.c:2463
 msgid "Toggle stand/crounch"
 msgstr "Переключение положений присесть/встать"
 
-#: client/battlescape/cl_actor.c:2494
+#: client/battlescape/cl_actor.c:2464
 msgid "Toggle the headgear"
 msgstr "Пристегнуть на голову"
 
-#: client/battlescape/cl_actor.c:2495
+#: client/battlescape/cl_actor.c:2465
 msgid "Opens or closes a door"
 msgstr "Открыть или закрыть дверь"
 
-#: client/battlescape/cl_actor.c:2496
+#: client/battlescape/cl_actor.c:2466
 msgid "Confirm the current action"
 msgstr "Подтвердить текущее действие"
 
-#: client/battlescape/cl_actor.c:2497
+#: client/battlescape/cl_actor.c:2467
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Переключиться на следующего пришельца, видимого выбранным солдатом"
 
-#: client/battlescape/cl_actor.c:2499
+#: client/battlescape/cl_actor.c:2469
 msgid "Toggle to next alien"
 msgstr "Переключение между пришельцами в области видимости"
 
-#: client/battlescape/cl_hud.c:96
-#: client/battlescape/cl_hud.c:99
+#: client/battlescape/cl_hud.c:98
+#: client/battlescape/cl_hud.c:101
 msgid "Crouch walk"
 msgstr "Ходьба в приседе"
 
-#: client/battlescape/cl_hud.c:98
+#: client/battlescape/cl_hud.c:100
 msgid "Walk"
 msgstr "Ходьба"
 
-#: client/battlescape/cl_hud.c:146
+#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -13347,81 +13326,81 @@ msgstr ""
 "HP: %i/%i ЕВ: %i\n"
 "%s"
 
-#: client/battlescape/cl_hud.c:284
+#: client/battlescape/cl_hud.c:287
 msgid "[0 TU] No reservation"
 msgstr "[0 ЕВ] Нет запаса"
 
-#: client/battlescape/cl_hud.c:302
+#: client/battlescape/cl_hud.c:305
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[%i ЕВ] %s"
 
-#: client/battlescape/cl_hud.c:334
+#: client/battlescape/cl_hud.c:337
 msgid "Reserve TUs for firing/using."
 msgstr "Отложить ЕВ для стрельбы/использования."
 
-#: client/battlescape/cl_hud.c:334
+#: client/battlescape/cl_hud.c:337
 msgid "Shot Reservation"
 msgstr "Выстрел зарезервирован"
 
-#: client/battlescape/cl_hud.c:423
+#: client/battlescape/cl_hud.c:426
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Оставшиеся ед.времени: %i"
 
-#: client/battlescape/cl_hud.c:426
+#: client/battlescape/cl_hud.c:429
 msgid "No remaining TUs left after shot."
 msgstr "После выстрела не осталось ед.времени."
 
-#: client/battlescape/cl_hud.c:429
+#: client/battlescape/cl_hud.c:432
 #, c-format
 msgid "TU: %i"
 msgstr "ЕВ: %i"
 
-#: client/battlescape/cl_hud.c:430
+#: client/battlescape/cl_hud.c:433
 #, c-format
 msgid "Shots: %i"
 msgstr "Выстрелов: %i"
 
-#: client/battlescape/cl_hud.c:687
+#: client/battlescape/cl_hud.c:654
 msgid "No weapon."
 msgstr "Нет оружия."
 
-#: client/battlescape/cl_hud.c:696
+#: client/battlescape/cl_hud.c:663
 msgid "Weapon cannot be reloaded."
 msgstr "Оружие не может быть перезаряжено."
 
-#: client/battlescape/cl_hud.c:702
+#: client/battlescape/cl_hud.c:669
 msgid "No reload possible, already fully loaded."
 msgstr "Нельзя перезарядить оружие, полностью заряжено"
 
-#: client/battlescape/cl_hud.c:712
+#: client/battlescape/cl_hud.c:679
 msgid "Not enough TUs for reloading weapon."
 msgstr "Недостаточно ЕВ, чтобы перезарядить оружие."
 
-#: client/battlescape/cl_hud.c:715
+#: client/battlescape/cl_hud.c:682
 msgid "No reload possible, you don't have backup ammo."
 msgstr "Невозможно перезарядить оружие, у вас нет запасных боеприпасов."
 
-#: client/battlescape/cl_hud.c:807
+#: client/battlescape/cl_hud.c:774
 msgid "Not enough TUs for standing up."
 msgstr "Недостаточно ЕВ чтоб встать."
 
-#: client/battlescape/cl_hud.c:810
+#: client/battlescape/cl_hud.c:777
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Встать (%i ЕВ)"
 
-#: client/battlescape/cl_hud.c:815
+#: client/battlescape/cl_hud.c:782
 msgid "Not enough TUs for crouching."
 msgstr "Недостаточно ЕВ чтоб присесть."
 
-#: client/battlescape/cl_hud.c:818
+#: client/battlescape/cl_hud.c:785
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "Присесть (%i ЕВ)"
 
-#: client/battlescape/cl_hud.c:826
+#: client/battlescape/cl_hud.c:793
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -13430,16 +13409,16 @@ msgstr ""
 "%i ЕВ отложено для приседания/вставания.\n"
 "Нажмите для очистки."
 
-#: client/battlescape/cl_hud.c:830
+#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Отложить %i ЕВ для приседания/вставания."
 
-#: client/battlescape/cl_hud.c:833
+#: client/battlescape/cl_hud.c:800
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Осталось слишком мало ЕВ чтоб отложить для приседания."
 
-#: client/battlescape/cl_hud.c:839
+#: client/battlescape/cl_hud.c:806
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -13450,17 +13429,17 @@ msgstr ""
 "Нажмите чтоб изменить.\n"
 "Правой кнопкой чтоб очистить."
 
-#: client/battlescape/cl_hud.c:846
+#: client/battlescape/cl_hud.c:813
 msgid "Reserving TUs for shooting not possible."
 msgstr "Невозможно отложить ЕВ для выстрела."
 
-#: client/battlescape/cl_hud.c:867
-#: client/battlescape/cl_hud.c:876
+#: client/battlescape/cl_hud.c:834
+#: client/battlescape/cl_hud.c:843
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Перезярядить оружие (%i)."
 
-#: client/battlescape/cl_hud.c:1123
+#: client/battlescape/cl_hud.c:1090
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -13468,7 +13447,7 @@ msgstr ""
 "Вы не способны использовать неопознанное устройство.\n"
 "Сначала нужно его исследовать.\n"
 
-#: client/battlescape/cl_hud.c:1144
+#: client/battlescape/cl_hud.c:1111
 #, c-format
 msgid ""
 "%s\n"
@@ -13477,17 +13456,17 @@ msgstr ""
 "%s\n"
 "(пусто)\n"
 
-#: client/battlescape/cl_hud.c:1166
+#: client/battlescape/cl_hud.c:1133
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "Мораль %i | Зарезервированные ЕВ: %i\n"
 
-#: client/battlescape/cl_hud.c:1168
+#: client/battlescape/cl_hud.c:1135
 #, c-format
 msgid "Morale  %i"
 msgstr "Мораль %i"
 
-#: client/battlescape/cl_hud.c:1173
+#: client/battlescape/cl_hud.c:1140
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -13496,7 +13475,7 @@ msgstr ""
 "Мораль  %i | Зарезервированные ЕВ: %i\n"
 "%s %i (%i|%i ЕВ осталось)\n"
 
-#: client/battlescape/cl_hud.c:1177
+#: client/battlescape/cl_hud.c:1144
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -13505,7 +13484,7 @@ msgstr ""
 "Мораль  %i\n"
 "%s %i (%i ЕВ останется)\n"
 
-#: client/battlescape/cl_hud.c:1209
+#: client/battlescape/cl_hud.c:1176
 #, c-format
 msgid ""
 "Time Units\n"
@@ -13518,7 +13497,7 @@ msgstr ""
 "- Зарезервировано: %i\n"
 "- Останется: %i\n"
 
-#: client/battlescape/cl_hud.c:1233
+#: client/battlescape/cl_hud.c:1200
 msgid "Currently panics!\n"
 msgstr "Паникует!\n"
 
@@ -13533,7 +13512,7 @@ msgid "loading models..."
 msgstr "загрузка моделей..."
 
 #: client/battlescape/cl_view.c:118
-#: client/cl_main.c:969
+#: client/cl_main.c:970
 msgid "Awaiting game start"
 msgstr "Ожидание старта игры"
 
@@ -13723,8 +13702,8 @@ msgstr "Новый самолёт класса %s готов (база %s)"
 #: client/campaign/cp_mapfightequip.c:371
 #: client/campaign/cp_market_callbacks.c:614
 #: client/campaign/cp_market_callbacks.c:619
-#: client/campaign/cp_missions.c:750
-#: client/campaign/cp_missions.c:1178
+#: client/campaign/cp_missions.c:749
+#: client/campaign/cp_missions.c:1177
 #: client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100
 #: client/campaign/cp_nations.c:110
@@ -13753,7 +13732,7 @@ msgstr "Новый самолёт класса %s готов (база %s)"
 #: client/campaign/cp_ufo.c:778
 #: client/campaign/cp_ufo.c:783
 #: client/campaign/missions/cp_mission_baseattack.c:127
-#: client/cl_main.c:403
+#: client/cl_main.c:404
 #: client/multiplayer/mp_serverlist.c:470
 msgid "Notice"
 msgstr "Уведомление"
@@ -14448,7 +14427,7 @@ msgid "Your dropship is not near the landing zone"
 msgstr "Ваш десантный транспорт слишком далеко от зоны высадки!"
 
 #: client/campaign/cp_campaign.c:1578
-#: client/campaign/cp_missions.c:1177
+#: client/campaign/cp_missions.c:1176
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Защита базы: %s прошла успешно!"
@@ -14872,7 +14851,7 @@ msgstr "Вес неизвестен"
 #: client/campaign/cp_market.c:153
 #: client/campaign/cp_market_callbacks.c:766
 msgid "Not enough storage space"
-msgstr "Недостаточно места на складах!"
+msgstr "Недостаточно места на складах"
 
 #: client/campaign/cp_market.c:153
 #: client/campaign/cp_market_callbacks.c:766
@@ -15073,12 +15052,12 @@ msgstr "Нападение на базу"
 msgid "Harvesting mission"
 msgstr "Сбор биоматерала"
 
-#: client/campaign/cp_missions.c:749
+#: client/campaign/cp_missions.c:748
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Поступил сигнал об активности пришельцев: %s"
 
-#: client/campaign/cp_missions.c:1273
+#: client/campaign/cp_missions.c:1272
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
@@ -15685,12 +15664,12 @@ msgstr "Ошибка загрузки игры."
 #: client/campaign/cp_save.c:468
 #: client/campaign/cp_save.c:492
 #: client/campaign/cp_save.c:620
-#: client/cl_irc.c:1020
-#: client/cl_irc.c:1257
-#: client/cl_main.c:504
-#: client/cl_main.c:509
-#: client/cl_main.c:515
-#: client/cl_main.c:523
+#: client/cl_irc.c:1208
+#: client/cl_irc.c:1440
+#: client/cl_main.c:505
+#: client/cl_main.c:510
+#: client/cl_main.c:516
+#: client/cl_main.c:524
 #: client/multiplayer/mp_callbacks.c:49
 msgid "Error"
 msgstr "Ошибка"
@@ -16106,7 +16085,7 @@ msgstr "НЛО направляется к %s"
 #: client/campaign/cp_ufo.c:778
 #, c-format
 msgid "Our radar detected a new UFO near %s"
-msgstr "Наши радары засекли новое НЛО неподалёку от %s"
+msgstr "Наши радары засекли новый НЛО неподалёку от %s"
 
 #: client/campaign/cp_ufo.c:783
 msgid "Our radar has lost the tracking on a UFO"
@@ -16609,7 +16588,7 @@ msgstr "Действие:\t      %s\n"
 msgid "Unknown - not useable"
 msgstr "Неизвестная технология - нельзя использовать"
 
-#: client/cl_irc.c:1257
+#: client/cl_irc.c:1440
 msgid "Server closed connection"
 msgstr "Сервер закрыл соединение"
 
@@ -16617,31 +16596,27 @@ msgstr "Сервер закрыл соединение"
 msgid "..."
 msgstr "…"
 
-#: client/cl_main.c:503
+#: client/cl_main.c:504
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Локальная верся игры (%s) отличается от версии на сервере"
 
-#: client/cl_main.c:509
+#: client/cl_main.c:510
 msgid "Local map version differs from server"
 msgstr "Локальная верся карты отличается от версии на сервере"
 
-#: client/cl_main.c:515
+#: client/cl_main.c:516
 msgid "Script files are not the same"
 msgstr "Файлы скриптов различаются"
 
-#: client/cl_main.c:522
+#: client/cl_main.c:523
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Локальная верся игры (%s) отличается от версии на сервере (%s)"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:855
 msgid "Target your shot to the ground"
 msgstr "Прицелиться в поверхность земли"
-
-#: client/cl_main.c:1012
-msgid "Custom"
-msgstr "Пользовательский"
 
 #: client/cl_screen.c:165
 #, c-format
@@ -16654,40 +16629,40 @@ msgid "Loading Map [%s]"
 msgstr "Загрузка карты [%s]"
 
 #: client/cl_team.c:50
-#: client/cl_team.c:303
-#: client/cl_team.c:314
+#: client/cl_team.c:334
+#: client/cl_team.c:345
 msgid "Urban"
 msgstr " город"
 
 #: client/cl_team.c:52
-#: client/cl_team.c:304
-#: client/cl_team.c:315
+#: client/cl_team.c:335
+#: client/cl_team.c:346
 msgid "Jungle"
 msgstr " джунгли"
 
 #: client/cl_team.c:54
-#: client/cl_team.c:305
-#: client/cl_team.c:316
+#: client/cl_team.c:336
+#: client/cl_team.c:347
 msgid "Desert"
 msgstr " пустыня"
 
 #: client/cl_team.c:56
-#: client/cl_team.c:306
-#: client/cl_team.c:317
+#: client/cl_team.c:337
+#: client/cl_team.c:348
 msgid "Arctic"
 msgstr " снег"
 
 #: client/cl_team.c:58
-#: client/cl_team.c:318
+#: client/cl_team.c:349
 msgid "Yellow"
 msgstr "жёлтый"
 
 #: client/cl_team.c:60
-#: client/cl_team.c:319
+#: client/cl_team.c:350
 msgid "CCCP"
 msgstr "СССР"
 
-#: client/cl_team.c:421
+#: client/cl_team.c:453
 msgid "Update the GUI with the selected item"
 msgstr "Обновить графический интерфейс с учетом выбранных предметов"
 
@@ -16974,11 +16949,11 @@ msgstr "Новый отряд"
 msgid "Error saving team. Check free disk space!"
 msgstr "Ошибка сохранения отряда. Проверьте, достаточно ли места на диске!"
 
-#: game/g_actor.c:307
+#: game/g_actor.c:341
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Невозможно выполнить действие - не хватает времени!\n"
 
-#: game/g_actor.c:311
+#: game/g_actor.c:345
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Невозможно выполнить действие - оружие уже заряжено этим типом боеприпасов!\n"
 
@@ -17010,7 +16985,7 @@ msgstr "Невозможно выполнить действие - в друго
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Невозможно выполнить действие - нет контроля над дружественными персонажами!\n"
 
-#: game/g_client.c:447
+#: game/g_client.c:431
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Испуган, отказывается исполнять приказ.\n"
 
@@ -17146,6 +17121,10 @@ msgstr "Свободно"
 msgid "Playing"
 msgstr ""
 
+#~ msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
+#~ msgstr "Используйте вид от первого лица (включается кнопкой [v]), чтобы проверить, можно ли, сдвинувшись на одну клетку, произвести выстрел через здание."
+#~ msgid "Custom"
+#~ msgstr "Пользовательский"
 #~ msgid "media/FreeSans.ttf"
 #~ msgstr "media/FreeSans.ttf"
 #~ msgid "No item in hand.\n"

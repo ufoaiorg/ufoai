@@ -84,6 +84,8 @@ CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
 /**
  * @brief Defines the various states of a button.
  * @note Not all buttons do have all of these states (e.g. "unusable" is not very common).
+ * @todo is BT_STATE_UNUSABLE still needed? (e.g. rpg had this state for the reaction fire buttons if rf was enabled
+ * but imo one should not have reaction fire enabled for a none-reaction fire weapon)
  */
 typedef enum {
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
@@ -149,6 +151,7 @@ static void HUD_UpdateAllActors (void)
 			MN_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
 					i, le->model2->name, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
 		} else {
+			/** @todo only call this once on death */
 			MN_ExecuteConfunc("updateactorvalues %i \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\"", i);
 		}
 	}
@@ -503,6 +506,7 @@ static void HUD_DisplayFiremodes_f (void)
 
 /**
  * @brief Changes the display of the firemode-list to a given hand, but only if the list is visible already.
+ * @todo Should be done from within the scripts
  */
 static void HUD_SwitchFiremodeList_f (void)
 {
@@ -748,7 +752,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	invList_t *weaponr;
 	invList_t *weaponl;
 	invList_t *headgear;
-	int rightCanBeReloaded = -1, leftCanBeReloaded = -1;
+	int rightCanBeReloaded, leftCanBeReloaded;
 	const int time = CL_ActorUsableTUs(le);
 	const char *reason;
 
@@ -879,7 +883,7 @@ static void HUD_RefreshButtons (const le_t *le)
 		const char* menuName = MN_GetActiveWindowName();
 		if (menuName[0] != '\0' && strstr(MN_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
 			/* Update firemode reservation popup. */
-			/** @todo this is called every frames... is it really need? */
+			/** @todo this is called every frames... is this really needed? */
 			HUD_PopupFiremodeReservation(qfalse, qtrue);
 		}
 	}
@@ -1006,7 +1010,7 @@ static void HUD_MapDebugCursor (const le_t *le)
 {
 	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
 		int dv;
-		const int fieldSize = le /**< Get size of selected actor or fall back to 1x1. */
+		const actorSizeEnum_t fieldSize = le /**< Get size of selected actor or fall back to 1x1. */
 			? le->fieldSize
 			: ACTOR_SIZE_NORMAL;
 
@@ -1262,6 +1266,20 @@ void HUD_Update (void)
 {
 	if (cls.state != ca_active)
 		return;
+
+	/* worldlevel */
+	if (cl_worldlevel->modified) {
+		int i;
+		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
+			int status = 0;
+			if (i == cl_worldlevel->integer)
+				status = 2;
+			else if (i < cl.mapMaxLevel)
+				status = 1;
+			MN_ExecuteConfunc("updateLevelStatus %i %i", i, status);
+		}
+		cl_worldlevel->modified = qfalse;
+	}
 
 	/* set Cvars for all actors */
 	HUD_UpdateAllActors();

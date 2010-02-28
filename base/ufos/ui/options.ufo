@@ -1274,26 +1274,16 @@ window popup_maintain_resolution
 		size		"450 60"
 	}
 
-	button bt_change
+	cmpPopupButton bt_change
 	{
 		string		"_Accept"
 		tooltip		"_Change the resolution"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"112 188"
-		size		"176 32"
 		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
 	}
-	button bt_cancel
+	cmpCancelButton bt_cancel
 	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		ui/button_green_small
 		pos			"297 188"
-		size		"176 32"
 		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
 	}
 

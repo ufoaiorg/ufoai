@@ -37,6 +37,7 @@ CLIENT_SRCS = \
 	client/battlescape/cl_localentity.c \
 	client/battlescape/cl_parse.c \
 	client/battlescape/cl_particle.c \
+	client/battlescape/cl_ugv.c \
 	client/battlescape/cl_view.c \
 	client/battlescape/cl_spawn.c \
 	\

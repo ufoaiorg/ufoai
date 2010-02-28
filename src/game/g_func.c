@@ -218,18 +218,13 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		if (self->flags & FL_GROUPSLAVE)
 			self = self->groupMaster;
 		if (AI_CheckUsingDoor(activator, self->owner))
-			G_ClientUseEdict(G_PLAYER_FROM_ENT(activator), activator, self->owner);
+			G_ActorUseDoor(activator, self->owner);
 		/* we don't want the client action stuff to be send for ai actors */
 		return qfalse;
 	} else {
 		if (activator->clientAction != self->owner) {
 			/* prepare for client action */
-			activator->clientAction = self->owner;
-			/* tell the hud to show the door buttons */
-			gi.AddEvent(G_TeamToPM(activator->team), EV_DOOR_ACTION);
-			gi.WriteShort(activator->number);
-			gi.WriteShort(activator->clientAction->number);
-			gi.EndEvents();
+			G_ActorSetClientAction(activator, self->owner);
 		}
 		return qtrue;
 	}

@@ -382,9 +382,9 @@ function start_downloads()
 #	download_archive http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download_archive http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
 
-	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
-	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
-	download_archive http://download.berlios.de/codeblocks/ CB_20100116_rev6088_win32.7z codeblocks.7z
+	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810_gcc441.7z codeblocks_gcc.7z
+	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc441.7z codeblocks_mingw.7z
+	download_archive http://download.berlios.de/codeblocks/ CB_20100227_rev6181_win32.7z codeblocks.7z
 
 #	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.2-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.3-1_win32.zip glib.zip

@@ -467,14 +467,11 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, int entnum, int containerID)
+qboolean G_ClientCanReload (player_t *player, edict_t *ent, int containerID)
 {
-	edict_t *ent;
 	invList_t *ic;
 	int container;
 	objDef_t *weapon;
-
-	ent = G_EdictsGetByNum(entnum);
 
 	if (ent->i.c[containerID]) {
 		weapon = ent->i.c[containerID]->item.t;
@@ -501,24 +498,22 @@ qboolean G_ClientCanReload (player_t *player, int entnum, int containerID)
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
+void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 {
-	edict_t *ent;
 	invList_t *ic;
 	invList_t *icFinal;
-	invDef_t *hand;
+	invDef_t *invDef;
 	int tu;
 	int container;
 	invDef_t *bestContainer;
 
-	ent = G_EdictsGetByNum(entnum);
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
 	if (!ent->chr.teamDef->weapons)
 		return;
 
 	/* search for weapons and select the one that is available easily */
 	tu = 100;
-	hand = INVDEF(gi.csi->idRight);
+	invDef = INVDEF(gi.csi->idRight);
 	bestContainer = NULL;
 	icFinal = NULL;
 
@@ -543,7 +538,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
 
 	/* send request */
 	if (bestContainer)
-		G_ActorInvMove(ent, bestContainer, icFinal, hand, 0, 0, qtrue);
+		G_ActorInvMove(ent, bestContainer, icFinal, invDef, 0, 0, qtrue);
 }
 
 /**
@@ -556,7 +551,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum)
  * @sa CL_ActorUseDoor
  * @sa G_UseEdict
  */
-qboolean G_ClientUseEdict (player_t *player, edict_t *actor, edict_t *edict)
+qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
 	if (!G_ActionCheck(player, actor, edict->TU))
@@ -596,12 +591,9 @@ int G_ClientAction (player_t * player)
 	action = gi.ReadByte();
 	num = gi.ReadShort();
 
-	if (num < 0 || num >= MAX_EDICTS) {
-		gi.dprintf("Invalid edict num %i\n", num);
-		return action;
-	}
-
 	ent = G_EdictsGetByNum(num);
+	if (ent == NULL)
+		return action;
 
 	switch (action) {
 	case PA_NULL:
@@ -648,25 +640,25 @@ int G_ClientAction (player_t * player)
 		}
 		break;
 
-	case PA_USE_DOOR: {
-		edict_t *door;
+	case PA_USE_DOOR:
+		if (ent->clientAction) {
+			edict_t *door;
 
-		/* read the door the client wants to open */
-		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+			/* read the door the client wants to open */
+			gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
 
-		/* get the door edict */
-		door = G_EdictsGetByNum(i);
+			/* get the door edict */
+			door = G_EdictsGetByNum(i);
 
-		if (ent->clientAction == door) {
-			/* check whether it's part of an edict group but not the master */
-			if (door->flags & FL_GROUPSLAVE)
-				door = door->groupMaster;
+			/* maybe the door is no longer 'alive' because it was destroyed */
+			if (door && ent->clientAction == door) {
+				/* check whether it's part of an edict group but not the master */
+				if (door->flags & FL_GROUPSLAVE)
+					door = door->groupMaster;
 
-			G_ClientUseEdict(player, ent, door);
-		} else
-			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", ent->clientAction->number,
-					door->number);
-	}
+				G_ActorUseDoor(ent, door);
+			}
+		}
 		break;
 
 	case PA_REACT_SELECT:
@@ -923,7 +915,7 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
  * @param actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const int actorSize)
+static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
 {
 	if (actorSize == ACTOR_SIZE_NORMAL) {
 		/* Find valid actor spawn fields for this player. */
@@ -980,6 +972,7 @@ static void G_ClientReadInventory (edict_t *ent)
 static void G_ClientReadCharacter (edict_t *ent)
 {
 	int k;
+	int teamDefIdx;
 
 	/* model */
 	ent->chr.ucn = gi.ReadShort();
@@ -992,7 +985,10 @@ static void G_ClientReadCharacter (edict_t *ent)
 	ent->chr.HP = gi.ReadShort();
 	ent->chr.minHP = ent->chr.HP;
 	ent->chr.maxHP = gi.ReadShort();
-	ent->chr.teamDef = &gi.csi->teamDef[gi.ReadByte()];
+	teamDefIdx = gi.ReadByte();
+	if (teamDefIdx < 0 || teamDefIdx >= MAX_TEAMDEFS)
+		gi.error("Invalid team definition index given: %i", teamDefIdx);
+	ent->chr.teamDef = &gi.csi->teamDef[teamDefIdx];
 
 	ent->chr.gender = gi.ReadByte();
 	ent->chr.STUN = gi.ReadByte();
@@ -1090,7 +1086,7 @@ void G_ClientTeamInfo (const player_t * player)
 
 	for (i = 0; i < length; i++) {
 		edict_t *ent;
-		const int actorFieldSize = gi.ReadByte();
+		const actorSizeEnum_t actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
 		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team))
 			ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
