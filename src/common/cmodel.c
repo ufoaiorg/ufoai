@@ -1539,7 +1539,8 @@ void Grid_DumpServerRoutes_f (void)
 static qboolean Grid_CheckForbidden (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
 {
 	pos_t **p;
-	int i, size;
+	int i;
+	actorSizeEnum_t size;
 	int fx, fy, fz; /**< Holding variables for the forbidden x and y */
 	byte *forbiddenSize;
 
