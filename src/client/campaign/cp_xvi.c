@@ -95,8 +95,8 @@ void CP_UpdateNationXVIInfection (void)
 	int width;
 	/* height in pixel of the XVI overlay */
 	int height;
-	const float heightPerDegree = height / 180.0f;
-	const float widthPerDegree = width / 360.0f;
+	float heightPerDegree;
+	float widthPerDegree;
 	/* current position (in latitude / longitude) */
 	vec2_t currentPos;
 	/* parameter used to normalize nation XVI level.
@@ -116,6 +116,8 @@ void CP_UpdateNationXVIInfection (void)
 		xviInfection[nationIdx] = 0;
 
 	R_GetXVIMapDimensions(&width, &height);
+	heightPerDegree = height / 180.0f;
+	widthPerDegree = width / 360.0f;
 
 	for (y = 0; y < height; y++) {
 		int x;
@@ -243,9 +245,9 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 			/* That saves many bytes in the savegame */
 			if (xviLevel > 0) {
 				mxml_node_t *s = mxml_AddNode(n, SAVE_XVI_ENTRY);
-				mxml_AddInt(s, SAVE_XVI_Y, x);
+				mxml_AddInt(s, SAVE_XVI_X, x);
 				mxml_AddInt(s, SAVE_XVI_Y, y);
-				mxml_AddInt(s, SAVE_XVI_XV, xviLevel);
+				mxml_AddInt(s, SAVE_XVI_LEVEL, xviLevel);
 			}
 		}
 	}
@@ -280,8 +282,10 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	for (s = mxml_GetNode(n, SAVE_XVI_ENTRY); s; s = mxml_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
 		const int x = mxml_GetInt(s, SAVE_XVI_X, 0);
 		const int y = mxml_GetInt(s, SAVE_XVI_Y, 0);
+		const int level = mxml_GetInt(s, SAVE_XVI_LEVEL, 0);
+
 		if (x >= 0 && x < width && y >= 0 && y <= height)
-			R_SetXVILevel(x, y,  mxml_GetInt(s, SAVE_XVI_XV, 0));
+			R_SetXVILevel(x, y, level);
 	}
 
 	R_InitializeXVIOverlay(out);
