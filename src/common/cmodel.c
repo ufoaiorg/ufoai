@@ -1981,6 +1981,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
  * @sa Grid_MoveMark
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
+ * @todo Use the distance value to optimize things
  */
 void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
