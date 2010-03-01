@@ -144,7 +144,7 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
 /**
  * @brief Start the shooting event
  * @param ent The entity that starts the shooting
- * @param visMask the vis mask to determine the clients from this event is send to
+ * @param visMask the vis mask of the teams to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param shootType The type of the shoot
  * @param at The grid position to target to
@@ -187,7 +187,7 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 

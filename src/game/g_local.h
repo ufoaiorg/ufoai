@@ -344,7 +344,7 @@ void G_EventDestroyEdict(const edict_t* ent);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
 void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventSetClientAction(const edict_t *ent);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);

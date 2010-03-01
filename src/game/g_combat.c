@@ -987,12 +987,10 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
 	shotOrigin[2] += fd->shotOrg[1];
 	/* adjust horizontal: */
 	if (fd->shotOrg[0] != 0) {
-		float x, y, length;
-
 		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
-		x = dir[1];
-		y = -dir[0];
-		length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
+		const float x = dir[1];
+		const float y = -dir[0];
+		const float length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
 		/* assign adjustments: */
 		shotOrigin[0] += x * fd->shotOrg[0] / length;
 		shotOrigin[1] += y * fd->shotOrg[0] / length;
