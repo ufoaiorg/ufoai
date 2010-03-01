@@ -169,7 +169,7 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
  * @param[in] target The entity that might be fired at
  * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
-static qboolean G_CanReactionFire (edict_t *ent, const edict_t *target)
+static qboolean G_CanReactionFire (const edict_t *ent, const edict_t *target)
 {
 	float actorVis;
 	qboolean frustum;
@@ -256,7 +256,7 @@ static void G_CheckRFTrigger (edict_t *target)
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos3_t at, shoot_types_t type, int firemode)
+static qboolean G_FireWithJudgementCall (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, int firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
