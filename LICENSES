@@ -3060,6 +3060,8 @@ base/textures/tex_buildings/rustpipes.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/rustpipes_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/sfloor1_2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sfloor1_2_nm.tga | GNU General Public License 2.0 | Martin Gerhardy | sfloor1_2.jpg
+base/textures/tex_buildings/sidewalk01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/sidewalk01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sp_stairs_nm.tga |  | GNU General Public License 2.0 or later
 base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
