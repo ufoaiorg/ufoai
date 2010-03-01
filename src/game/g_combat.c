@@ -1191,7 +1191,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	VectorMA(ent->origin, 0.5, dir, center);
 	mask = 0;
 	for (i = 0; i < MAX_TEAMS; i++)
-		if ((ent->visflags & G_TeamToVisMask(i)) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
+		if (G_IsVisibleForTeam(ent, i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
 			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
