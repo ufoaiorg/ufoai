@@ -315,8 +315,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							dmg *= nspread / dist;
 
 						/* take into account armour */
-						if (check->i.c[gi.csi->idArmour]) {
-							ad = check->i.c[gi.csi->idArmour]->item.t;
+						if (CONTAINER(check, gi.csi->idArmour)) {
+							ad = CONTAINER(check, gi.csi->idArmour)->item.t;
 							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
 						}
 

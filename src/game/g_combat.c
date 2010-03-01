@@ -350,8 +350,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	/* Apply armour effects. */
 	if (damage > 0) {
-		if (target->i.c[gi.csi->idArmour]) {
-			const objDef_t *ad = target->i.c[gi.csi->idArmour]->item.t;
+		if (CONTAINER(target, gi.csi->idArmour)) {
+			const objDef_t *ad = CONTAINER(target, gi.csi->idArmour)->item.t;
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
 				target->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);

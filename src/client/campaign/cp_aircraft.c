@@ -289,7 +289,7 @@ static void AII_CarriedItems (const le_t *soldier)
 		/* Items on the ground are collected as ET_ITEM */
 		if (INVDEF(container)->temp)
 			continue;
-		for (invList = soldier->i.c[container]; invList; invList = invList->next) {
+		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
 			assert(item);
 
