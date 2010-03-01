@@ -1142,7 +1142,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 				actor->TU - actor->actorMoveLength, actor->TU - reservedTUs - actor->actorMoveLength);
 		else
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), actor->morale,
-				moveModeDescriptions[moveMode] , actor->actorMoveLength, actor->TU - actor->actorMoveLength);
+				_(moveModeDescriptions[moveMode]), actor->actorMoveLength, actor->TU - actor->actorMoveLength);
 
 		if (actor->actorMoveLength <= CL_ActorUsableTUs(actor))
 			Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actor->actorMoveLength, CL_ActorUsableTUs(actor));
