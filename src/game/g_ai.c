@@ -771,7 +771,7 @@ void G_AddToWayPointList (edict_t *ent)
  * @param[in] aiActor The actor to turn
  * @param[in] pos The position to set the direction for
  */
-void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
+void AI_TurnIntoDirection (edict_t *aiActor, const pos3_t pos)
 {
 	int dv;
 	const byte crouchingState = G_IsCrouched(aiActor) ? 1 : 0;

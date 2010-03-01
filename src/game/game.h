@@ -166,10 +166,10 @@ typedef struct {
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t * path, pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
+	void (IMPORT *MoveCalc) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
 	void (IMPORT *MoveStore) (pathing_t * path);
 	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, qboolean stored);
-	int (IMPORT *MoveNext) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState);
+	int (IMPORT *MoveNext) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState);
 	int (IMPORT *GridFloor) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);
 	int (IMPORT *GetTUsForDirection) (int dir);
 	pos_t (IMPORT *GridFall) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);

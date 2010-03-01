@@ -1633,7 +1633,7 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1983,7 +1983,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
  * @sa CL_ConditionalMoveCalc
  * @todo Use the distance value to optimize things
  */
-void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -2083,7 +2083,7 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState)
+int Grid_MoveNext (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState)
 {
 	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
 
@@ -2190,14 +2190,10 @@ int Grid_GetTUsForDirection (int dir)
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
-int Grid_Filled (const routing_t *map, const actorSizeEnum_t actorSize, pos3_t pos)
+int Grid_Filled (const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		const int maxHeight = PATHFINDING_HEIGHT - 1;
-		Com_Printf("Grid_Filled: Warning: z level is bigger than %i: %i\n", pos[2], maxHeight);
-		pos[2] &= maxHeight;
-	}
+	assert(pos[2] < PATHFINDING_HEIGHT);
 	return RT_FILLED(map, pos[0], pos[1], pos[2], actorSize);
 }
 
@@ -2268,7 +2264,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @param[in] min The lower extents of the box to recalc routing for
  * @param[in] max The upper extents of the box to recalc routing for
  */
-void Grid_RecalcBoxRouting (routing_t *map, pos3_t min, pos3_t max)
+void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 {
 	int x, y, z, actorSize, dir;
 
