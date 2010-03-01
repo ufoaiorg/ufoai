@@ -65,7 +65,7 @@ unsigned int G_VisToPM (unsigned int vis_mask)
 
 	/* don't handle the ai players, here */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
-		if (p->inuse && (vis_mask & (1 << p->pers.team)))
+		if (p->inuse && (vis_mask & G_TeamToVisMask(p->pers.team)))
 			playerMask |= (1 << i);
 
 	return playerMask;

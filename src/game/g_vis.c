@@ -252,7 +252,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
 		const int vis = G_TestVis(player->pers.team, ent, perish);
 
 		if (vis & VIS_CHANGE) {
-			ent->visflags ^= (1 << player->pers.team);
+			ent->visflags ^= G_TeamToVisMask(player->pers.team);
 			G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent, NULL);
 
 			if (vis & VIS_YES) {

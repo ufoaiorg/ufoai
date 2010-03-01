@@ -901,7 +901,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* victims see shots */
 		if (tr.ent && G_IsActor(tr.ent))
-			mask |= 1 << tr.ent->team;
+			mask |= G_TeamToVisMask(tr.ent->team);
 
 		if (!mock) {
 			/* send shot */
@@ -1191,8 +1191,8 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	VectorMA(ent->origin, 0.5, dir, center);
 	mask = 0;
 	for (i = 0; i < MAX_TEAMS; i++)
-		if (ent->visflags & (1 << i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
-			mask |= 1 << i;
+		if ((ent->visflags & G_TeamToVisMask(i)) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
+			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
 		qboolean itemAlreadyRemoved = qfalse;	/**< State info so we can check if an item was already removed. */
