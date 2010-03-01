@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-22 15:10+0600\n"
+"POT-Creation-Date: 2010-02-07 15:45+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"Last-Translator: Balasar <balasar@mail.ru>\n"
 "Language-Team:  <ufoai-developer@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,8 +13,8 @@ msgstr ""
 "X-Poedit-Country: UKRAINE\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../base/maps/africa.ump:231
-#: ../base/maps/africa.ump:250
+#: ../base/maps/africa.ump:225
+#: ../base/maps/africa.ump:246
 msgid "Africa"
 msgstr "Африка"
 
@@ -25,9 +25,8 @@ msgstr "База прибульців"
 # Потрібно уточнити
 #: ../base/maps/baseattack.ump:170
 #: client/campaign/cp_base_callbacks.c:183
-#, fuzzy
 msgid "Home"
-msgstr "Штаб організаціії"
+msgstr "Штаб"
 
 #: ../base/maps/bomber_city.ump:68
 #, fuzzy
@@ -70,12 +69,10 @@ msgstr "Орлине гніздо"
 
 # гай, діброва
 #: ../base/maps/forest.ump:404
-#: ../base/maps/forest.ump:435
 msgid "Little forest"
 msgstr "Невеличкий ліс"
 
-#: ../base/maps/forest.ump:466
-#: ../base/maps/forest.ump:497
+#: ../base/maps/forest.ump:435
 msgid "Little bungalo in forest"
 msgstr "Садиба в лісі"
 
@@ -148,15 +145,14 @@ msgid "Oriental small"
 msgstr "Східний малий"
 
 #: ../base/maps/oriental.ump:291
-#: ../base/maps/oriental.ump:314
 msgid "Oriental medium"
 msgstr "Східний середній"
 
-#: ../base/maps/oriental.ump:337
+#: ../base/maps/oriental.ump:314
 msgid "Oriental big"
 msgstr "Східний великий"
 
-#: ../base/maps/spedition.ump:62
+#: ../base/maps/spedition.ump:63
 msgid "Spedition"
 msgstr "Доставка"
 
@@ -170,25 +166,22 @@ msgid "Transport"
 msgstr "Транспорт"
 
 #: ../base/maps/tropic.ump:359
-#: ../base/maps/tropic.ump:391
 msgid "Tropical river"
 msgstr "Тропічна ріка"
 
-#: ../base/maps/tropic.ump:423
-#: ../base/maps/tropic.ump:448
+#: ../base/maps/tropic.ump:391
 msgid "Tropical drug"
 msgstr "Тропічні наркотики"
 
-#: ../base/maps/tropic.ump:473
+#: ../base/maps/tropic.ump:416
 msgid "Tropical UFO"
 msgstr "Тропічний НЛО"
 
 #: ../base/maps/ufocrash.ump:352
 #: ../base/maps/ufocrash.ump:369
 #: ../base/maps/ufocrash.ump:386
-#: ../base/maps/ufocrash.ump:403
-#: ../base/maps/ufocrash.ump:420
-#: client/campaign/cp_missions.c:456
+#: ../base/maps/ufocrash.ump:404
+#: client/campaign/cp_missions.c:442
 msgid "Crashed UFO"
 msgstr "Розбитий НЛО"
 
@@ -215,7 +208,7 @@ msgstr "Десантний авіатранспорт класу \"Firebird\""
 
 #: ../base/ufos/aircraftmanagement.ufo:97
 msgid "Firebird D"
-msgstr "Firebird D"
+msgstr "Firebird Д"
 
 #: ../base/ufos/aircraftmanagement.ufo:131
 msgid "Herakles-class Heavy Lifter"
@@ -223,7 +216,7 @@ msgstr "Важкий авіатранспорт класу \"Геракл\""
 
 #: ../base/ufos/aircraftmanagement.ufo:132
 msgid "Herakles D"
-msgstr "Геракл D"
+msgstr "Геракл Д"
 
 #: ../base/ufos/aircraftmanagement.ufo:167
 msgid "Raptor-class Combat Transport"
@@ -231,7 +224,7 @@ msgstr "Бойовий авіатранспорт класу \"Раптор\""
 
 #: ../base/ufos/aircraftmanagement.ufo:168
 msgid "Raptor"
-msgstr "Раптор"
+msgstr "Раптор Д"
 
 #: ../base/ufos/aircraftmanagement.ufo:216
 msgid "Stiletto-class Interceptor"
@@ -239,7 +232,7 @@ msgstr "Перехоплювач класу \"Шпилька\""
 
 #: ../base/ufos/aircraftmanagement.ufo:217
 msgid "Stiletto I"
-msgstr "Шпилька I"
+msgstr "Шпилька П"
 
 #: ../base/ufos/aircraftmanagement.ufo:261
 msgid "Saracen-class Interceptor"
@@ -247,7 +240,7 @@ msgstr "Перехоплювач класу \"Сарацин\""
 
 #: ../base/ufos/aircraftmanagement.ufo:262
 msgid "Saracen I"
-msgstr "Сарацин I"
+msgstr "Сарацин П"
 
 #: ../base/ufos/aircraftmanagement.ufo:302
 msgid "Dragon Interceptor"
@@ -255,7 +248,7 @@ msgstr "Перехоплювач класу \"Дракон\""
 
 #: ../base/ufos/aircraftmanagement.ufo:303
 msgid "Dragon"
-msgstr "Дракон"
+msgstr "Дракон П"
 
 #: ../base/ufos/aircraftmanagement.ufo:343
 msgid "Starchaser-class Interceptor"
@@ -263,7 +256,7 @@ msgstr "Перехоплювач класу \"Зоряний пересліду�
 
 #: ../base/ufos/aircraftmanagement.ufo:344
 msgid "Starchaser"
-msgstr "Зоряний переслідувач"
+msgstr "Зоряний переслідувач П"
 
 #: ../base/ufos/aircraftmanagement.ufo:389
 msgid "Stingray Interceptor"
@@ -271,7 +264,7 @@ msgstr "Перехоплювач \"Скат\""
 
 #: ../base/ufos/aircraftmanagement.ufo:390
 msgid "Stingray"
-msgstr "Скат"
+msgstr "Скат П"
 
 #: ../base/ufos/aircraftmanagement.ufo:441
 #: ../base/ufos/otheritems.ufo:39
@@ -281,7 +274,7 @@ msgstr "НЛО-Розвідник "
 
 #: ../base/ufos/aircraftmanagement.ufo:442
 msgid "Scout U"
-msgstr "Розвідник U"
+msgstr "Розвідник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:464
 #: ../base/ufos/otheritems.ufo:49
@@ -291,7 +284,7 @@ msgstr "НЛО - Винищувач"
 
 #: ../base/ufos/aircraftmanagement.ufo:465
 msgid "Fighter U"
-msgstr "Винищувач U"
+msgstr "Винищувач Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:494
 #: ../base/ufos/otheritems.ufo:59
@@ -301,7 +294,7 @@ msgstr "НЛО - Пожинач"
 
 #: ../base/ufos/aircraftmanagement.ufo:495
 msgid "Harvester U"
-msgstr "Пожинач U"
+msgstr "Пожинач Н"
 
 # Канонірка?..
 #: ../base/ufos/aircraftmanagement.ufo:535
@@ -325,7 +318,7 @@ msgstr "НЛО - Руйнівник"
 
 #: ../base/ufos/aircraftmanagement.ufo:576
 msgid "Corrupter U"
-msgstr "Руйнівник U"
+msgstr "Руйнівник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:604
 #: ../base/ufos/otheritems.ufo:128
@@ -335,7 +328,7 @@ msgstr "НЛО - Судно постачання"
 
 #: ../base/ufos/aircraftmanagement.ufo:605
 msgid "Supply U"
-msgstr "Постачальник U"
+msgstr "Постачальник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:626
 #: ../base/ufos/otheritems.ufo:79
@@ -357,7 +350,7 @@ msgstr "НЛО - Бомбардувальник"
 
 #: ../base/ufos/aircraftmanagement.ufo:655
 msgid "Bomber U"
-msgstr "Бомбардувальник U"
+msgstr "Бомбардувальник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:689
 #: ../base/ufos/otheritems.ufo:119
@@ -367,7 +360,7 @@ msgstr "НЛО - Перевізник"
 
 #: ../base/ufos/aircraftmanagement.ufo:690
 msgid "Carrier U"
-msgstr "Перевізник U"
+msgstr "Перевізник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:712
 #: ../base/ufos/otheritems.ufo:89
@@ -476,10 +469,9 @@ msgstr "Ракетний пусковий комплекс AA51"
 msgid "Base-Defence Laser Turret"
 msgstr "Захисна споруда бази - Лазерна башта"
 
-# Звичайне, звикле
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
-msgstr "нормальне"
+msgstr "звичайний"
 
 #: ../base/ufos/armour.ufo:34
 msgid "blast"
@@ -503,7 +495,7 @@ msgstr "плазма"
 
 #: ../base/ufos/armour.ufo:51
 msgid "particlebeam"
-msgstr "випромінююча"
+msgstr "опромінення"
 
 #: ../base/ufos/armour.ufo:56
 msgid "stun_electro"
@@ -548,11 +540,11 @@ msgstr "Ізолятор для прибульців"
 msgid "Entrance"
 msgstr "Вхід"
 
-# Комора, сховище?
+# Комора, сховище, склад?
 #: ../base/ufos/basemanagement.ufo:69
 #: client/campaign/cp_base_callbacks.c:303
 msgid "Storage"
-msgstr "Склад"
+msgstr "Сховище"
 
 #: ../base/ufos/basemanagement.ufo:84
 msgid "Power Plant"
@@ -598,7 +590,7 @@ msgid "Workshop"
 msgstr "Майстерня"
 
 #: ../base/ufos/basemanagement.ufo:251
-#: ../base/ufos/ui/_hud.ufo:226
+#: ../base/ufos/ui/_hud.ufo:93
 msgid "Radar"
 msgstr "Радар"
 
@@ -784,7 +776,7 @@ msgstr "Анкоридж"
 
 #: ../base/ufos/cities.ufo:153
 msgid "Andorra la Vella"
-msgstr "Андорра-ла-Вельа"
+msgstr "Андорра-ла-Велла"
 
 #: ../base/ufos/cities.ufo:159
 msgid "Ankara"
@@ -1280,7 +1272,7 @@ msgstr "Гуанчжоу"
 
 #: ../base/ufos/cities.ufo:897
 msgid "Guatemala City"
-msgstr "Гватемала"
+msgstr "м. Гватемала"
 
 #: ../base/ufos/cities.ufo:903
 msgid "Guwahati"
@@ -1417,7 +1409,7 @@ msgstr "Джаіпур"
 
 #: ../base/ufos/cities.ufo:1107
 msgid "Jersey City"
-msgstr "Джерсі"
+msgstr "м. Джерсі"
 
 #: ../base/ufos/cities.ufo:1113
 msgid "Jerusalem"
@@ -1469,7 +1461,7 @@ msgstr "Канпур"
 
 #: ../base/ufos/cities.ufo:1185
 msgid "Kansas City"
-msgstr "Канзас"
+msgstr "м. Канзас"
 
 #: ../base/ufos/cities.ufo:1191
 msgid "Kaohsiung"
@@ -1541,7 +1533,7 @@ msgstr "Куньмін"
 
 #: ../base/ufos/cities.ufo:1293
 msgid "Kuwait City"
-msgstr "Кювейт"
+msgstr "Кувейт"
 
 #: ../base/ufos/cities.ufo:1299
 msgid "Kyoto"
@@ -1677,7 +1669,7 @@ msgstr "м. Макаті"
 
 #: ../base/ufos/cities.ufo:1497
 msgid "Malacca Town"
-msgstr "Малакка"
+msgstr "Малакка-таун"
 
 #: ../base/ufos/cities.ufo:1503
 msgid "Malaga"
@@ -1905,7 +1897,7 @@ msgstr "Одеса"
 
 #: ../base/ufos/cities.ufo:1839
 msgid "Oklahoma City"
-msgstr "Оклагома"
+msgstr "м. Оклагома"
 
 #: ../base/ufos/cities.ufo:1845
 msgid "Omdurman"
@@ -1937,7 +1929,7 @@ msgstr "Палембанг"
 
 #: ../base/ufos/cities.ufo:1887
 msgid "Panama City"
-msgstr "Панама"
+msgstr "м. Панама"
 
 #: ../base/ufos/cities.ufo:1893
 msgid "Paris"
@@ -2478,7 +2470,7 @@ msgstr "Єкатеринбург"
 
 #: ../base/ufos/cities.ufo:2703
 msgid "Yellowknife"
-msgstr "Йеллоунайф"
+msgstr "Єллоунайф"
 
 #: ../base/ufos/cities.ufo:2709
 msgid "Yerevan"
@@ -3077,11 +3069,14 @@ msgstr ""
 #: ../base/ufos/fonts.ufo:41
 #: ../base/ufos/fonts.ufo:48
 #: ../base/ufos/fonts.ufo:54
+msgid "media/DejaVuSans.ttf"
+msgstr "media/DejaVuSans.ttf"
+
 #: ../base/ufos/fonts.ufo:60
 #: ../base/ufos/fonts.ufo:66
 #: ../base/ufos/fonts.ufo:73
-msgid "media/DejaVuSans.ttf"
-msgstr "media/DejaVuSans.ttf"
+msgid "media/FreeSans.ttf"
+msgstr "media/FreeSans.ttf"
 
 #: ../base/ufos/gametypes.ufo:4
 msgid "1on1"
@@ -3129,21 +3124,21 @@ msgstr "4 гравці разом"
 
 #: ../base/ufos/installation.ufo:7
 msgid "Radar Tower"
-msgstr "Радарна вежа"
+msgstr "Радіолокаційна Вежа"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr ""
+msgstr "Радіолокаційна вежа - це автономна автоматична споруда, що може бути розміщена будь-де у світі для збільшення нашого діапазону виявлення. Це дешева і досить корисна установка, але її можна легко виявити. Оскільки авіація прибульців може виявити активне сканування і спробувати знищити вежу при виявленні її місцезнаходження, рекомендовано ці вежі захищати пунктами ППО."
 
 #: ../base/ufos/installation.ufo:23
 #: ../base/ufos/ui/geoscape.ufo:1234
 #: ../base/ufos/ui/lostwon.ufo:212
 msgid "UFO Yard"
-msgstr "НЛО майданчик"
+msgstr "Майданчик НЛО"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr ""
+msgstr "Майданчик НЛО - це замаскована площа для зберігання захоплених НЛО. Він може бути розташований у будь-якому куточку світу і використовуватись з метою зберігання, демонтажу та дослідження розміщеного в ньому НЛО; також можна здійснювати передачу НЛО до інших майданчиків. Всі операції по розборці або/і дослідженню НЛО, що зберігається на майданчику, можна проводити на будь-якій базі PHALANX обладнаній відповідними модулями, але вся ця діяльність буде продовжуватись тим довше, чим більша відстань від бази до відповідного майданчика."
 
 #: ../base/ufos/installation.ufo:38
 #: ../base/ufos/ui/geoscape.ufo:1192
@@ -3152,7 +3147,7 @@ msgstr "Пункт ППО"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr ""
+msgstr "Пункт ППО - це автономна безоператорна споруда, що може бути розміщена будь-де у світі для автоматичної атаки виявлених НЛО за допомогою ракет \"земля-повітря\". ЇЇ побудова не є дуже затратною і це досить корисна установка, але її можна легко виявити. Авіація прибульців може вистежити запуск ракет і вжити заходів, щоб знищити ці обєкти. Пункт ППО міцна споруда, але може постраждати від тривалого бомбардування. Перезарядка наших комплексів проводиться безкоштовно силами ООН."
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -3254,255 +3249,245 @@ msgstr "Безіменна"
 
 #: ../base/ufos/maps.ufo:46
 #: ../base/ufos/maps.ufo:85
+#, fuzzy
 msgid "Industrial theme."
-msgstr ""
+msgstr "Industrial theme."
 
 #: ../base/ufos/maps.ufo:132
 #: ../base/ufos/maps.ufo:171
-#: ../base/ufos/maps.ufo:250
-msgid "A suburban district of an oriental area."
-msgstr ""
-
 #: ../base/ufos/maps.ufo:211
-msgid "Crashed UFO in oriental suburban district."
-msgstr ""
+msgid "A suburban district of an oriental area."
+msgstr "Приміський район близькосхідного регіону."
 
-#: ../base/ufos/maps.ufo:292
-#: ../base/ufos/maps.ufo:334
-#: ../base/ufos/maps.ufo:373
+#: ../base/ufos/maps.ufo:254
+#: ../base/ufos/maps.ufo:296
+#: ../base/ufos/maps.ufo:335
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
-msgstr ""
+msgstr "Сільськогосподарська ферма. Охоплює значну територію, але декілька перешкод зменшують оглядовість."
 
-#: ../base/ufos/maps.ufo:422
-#: ../base/ufos/maps.ufo:503
-#: ../base/ufos/maps.ufo:544
+#: ../base/ufos/maps.ufo:384
+#: ../base/ufos/maps.ufo:465
+#: ../base/ufos/maps.ufo:506
 msgid "An industrial area in a cold region."
-msgstr ""
+msgstr "Індустріальна область у холодному регіоні."
 
-#: ../base/ufos/maps.ufo:464
+#: ../base/ufos/maps.ufo:426
 msgid "An underpopulated area in a cold region."
-msgstr ""
+msgstr "Малозаселена область у холодному регіоні."
 
-#: ../base/ufos/maps.ufo:583
+#: ../base/ufos/maps.ufo:545
 msgid "An industrial compound."
-msgstr ""
+msgstr "Промислові сполучення."
 
-#: ../base/ufos/maps.ufo:638
+#: ../base/ufos/maps.ufo:600
 msgid "Cemetery terror mission."
-msgstr ""
+msgstr "Терор-місія на кладовищі."
 
-#: ../base/ufos/maps.ufo:689
-#: ../base/ufos/maps.ufo:729
+#: ../base/ufos/maps.ufo:651
 msgid "A river runs through this piece of jungle."
-msgstr ""
+msgstr "Річка протікає через цю частину джунглів."
 
-#: ../base/ufos/maps.ufo:770
-#: ../base/ufos/maps.ufo:811
-#: ../base/ufos/maps.ufo:851
+#: ../base/ufos/maps.ufo:693
+#: ../base/ufos/maps.ufo:736
 msgid "A cleared stretch of land in the middle of the jungle."
-msgstr ""
+msgstr "Поляна посеред джунглів."
 
-#: ../base/ufos/maps.ufo:897
-#: ../base/ufos/maps.ufo:936
-#: ../base/ufos/maps.ufo:977
-#: ../base/ufos/maps.ufo:1017
+#: ../base/ufos/maps.ufo:782
+#: ../base/ufos/maps.ufo:821
+#: ../base/ufos/maps.ufo:862
+#: ../base/ufos/maps.ufo:902
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
-msgstr ""
+msgstr "Затишний район на околиці населеного пункту."
 
-#: ../base/ufos/maps.ufo:1056
-#: ../base/ufos/maps.ufo:1137
-#: ../base/ufos/maps.ufo:1177
+#: ../base/ufos/maps.ufo:941
+#: ../base/ufos/maps.ufo:983
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Поява прибульців у цьому малонаселеному лісовому регіоні не обіцяє нічого доброго."
 
-#: ../base/ufos/maps.ufo:1097
-msgid "UFO crashed in this sparsely populated forest region."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1217
-#: ../base/ufos/maps.ufo:1259
+#: ../base/ufos/maps.ufo:1025
+#: ../base/ufos/maps.ufo:1067
 msgid "Some houses in desert"
-msgstr ""
+msgstr "Кілька будинків у пустелі"
 
-#: ../base/ufos/maps.ufo:1300
+#: ../base/ufos/maps.ufo:1108
 msgid "An excavation site that has fallen under alien attack."
-msgstr ""
+msgstr "Кар'єр, знищений атакою прибульців."
 
-#: ../base/ufos/maps.ufo:1347
+#: ../base/ufos/maps.ufo:1155
 msgid "An estate owned by rich and influential people."
-msgstr ""
+msgstr "Маєток багатих та впливових людей."
+
+#: ../base/ufos/maps.ufo:1199
+msgid "A small village in England."
+msgstr "Невеличке село в Англії."
+
+#: ../base/ufos/maps.ufo:1245
+msgid "A small office in a mountainous region."
+msgstr "Невеличкий офіс у гірській місцевості."
+
+#: ../base/ufos/maps.ufo:1293
+msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
+msgstr "Тип громадського центру із додатковими виробничими потужностями, відомий як супермаркет."
+
+#: ../base/ufos/maps.ufo:1343
+msgid "An old mine."
+msgstr "Закинута копальня."
 
 #: ../base/ufos/maps.ufo:1391
-msgid "A small village in England."
-msgstr ""
+msgid "An industrial area, used for loading and unloading goods."
+msgstr "Промисловий вузол для роботи з вантажами."
 
 #: ../base/ufos/maps.ufo:1437
-msgid "A small office in a mountainous region."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1485
-msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1535
-msgid "An old mine."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1583
-msgid "An industrial area, used for loading and unloading goods."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:1629
 msgid "A bunker used in a previous conflict."
-msgstr ""
+msgstr "Бункер, що використовувався у попередньому конфлікті."
 
-#: ../base/ufos/maps.ufo:1675
+#: ../base/ufos/maps.ufo:1483
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr ""
+msgstr "Гребля гідроелектростації, якій загрожують інопланетні загарбники."
 
-#: ../base/ufos/maps.ufo:1719
-#: ../base/ufos/maps.ufo:1769
-#: ../base/ufos/maps.ufo:1819
+#: ../base/ufos/maps.ufo:1527
+#: ../base/ufos/maps.ufo:1577
+#: ../base/ufos/maps.ufo:1627
 msgid "A classic eastern suburban area."
-msgstr ""
+msgstr "Класичне східне передмістя."
 
-#: ../base/ufos/maps.ufo:1868
+#: ../base/ufos/maps.ufo:1676
 msgid "A small industrial area."
-msgstr ""
+msgstr "Невеличка промислова зона."
 
-#: ../base/ufos/maps.ufo:1914
+#: ../base/ufos/maps.ufo:1722
 msgid "A stadium used for various recreational events."
-msgstr ""
+msgstr "Стадіон, що використовується для різних розважальних заходів."
 
-#: ../base/ufos/maps.ufo:1963
+#: ../base/ufos/maps.ufo:1771
 msgid "A tropical area where several suspected criminals have made their homes."
-msgstr ""
+msgstr "Тропічний регіон з домами кількох підозрюваних у злочинах."
 
-#: ../base/ufos/maps.ufo:2021
+#: ../base/ufos/maps.ufo:1829
 msgid "A small estate in the mountains"
-msgstr ""
+msgstr "Невеликий маєток у горах"
 
-#: ../base/ufos/maps.ufo:2070
+#: ../base/ufos/maps.ufo:1878
 msgid "A crashed Scout UFO"
-msgstr ""
+msgstr "Місце аварії НЛО-розвідника"
 
-#: ../base/ufos/maps.ufo:2105
+#: ../base/ufos/maps.ufo:1913
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
-msgstr ""
+msgstr "Садиба оточена полями та хлівами. НЛО приземлився на одне з таких полів."
+
+#: ../base/ufos/maps.ufo:1960
+msgid "A ferry."
+msgstr "Пором."
+
+#: ../base/ufos/maps.ufo:2008
+msgid "A rather old-fashioned suburban district."
+msgstr "Досить старомодний приміський район."
+
+#: ../base/ufos/maps.ufo:2057
+#: ../base/ufos/maps.ufo:2104
+msgid "A small neighbourhood in a warm urban region."
+msgstr "Невелике передмістя у теплому населенему регіоні."
 
 #: ../base/ufos/maps.ufo:2152
-msgid "A ferry."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2200
-msgid "A rather old-fashioned suburban district."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2249
-#: ../base/ufos/maps.ufo:2296
-msgid "A small neighbourhood in a warm urban region."
-msgstr ""
-
-#: ../base/ufos/maps.ufo:2344
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr ""
+msgstr "Місце заправки транспорту."
 
-#: ../base/ufos/maps.ufo:2393
-#: ../base/ufos/maps.ufo:2437
+#: ../base/ufos/maps.ufo:2201
+#: ../base/ufos/maps.ufo:2245
 msgid "An urban district in an oriental region."
-msgstr ""
+msgstr "Міський район близькосхідного регіону."
 
-#: ../base/ufos/maps.ufo:2481
+#: ../base/ufos/maps.ufo:2289
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "Будмайданчик підземного трубопроводу."
 
-#: ../base/ufos/maps.ufo:2528
+#: ../base/ufos/maps.ufo:2336
 msgid "A subway station in a suburban part of town."
-msgstr ""
+msgstr "Станція метро у передмісті."
 
-#: ../base/ufos/maps.ufo:2574
+#: ../base/ufos/maps.ufo:2382
 msgid "An office complex in the centre of town."
-msgstr ""
+msgstr "Офісний комплекс в центрі містечка."
 
-#: ../base/ufos/maps.ufo:2622
+#: ../base/ufos/maps.ufo:2430
 msgid "A suburban district."
-msgstr ""
+msgstr "Приміський округ."
 
-#: ../base/ufos/maps.ufo:2667
+#: ../base/ufos/maps.ufo:2475
 msgid "A military convoy has caught the eye of the aliens."
-msgstr ""
+msgstr "Військовий супровід попався на очі загарбникам."
 
-#: ../base/ufos/maps.ufo:2714
-#: ../base/ufos/maps.ufo:2760
+#: ../base/ufos/maps.ufo:2522
+#: ../base/ufos/maps.ufo:2568
 msgid "A small UFO has crashed in this mining region."
-msgstr ""
+msgstr "Маленький НЛО розбився у шахтарському регіоні."
 
-#: ../base/ufos/maps.ufo:2810
+#: ../base/ufos/maps.ufo:2617
 msgid "An office complex under construction."
-msgstr ""
+msgstr "Зведення офісного комплексу."
 
-#: ../base/ufos/maps.ufo:2857
+#: ../base/ufos/maps.ufo:2664
 msgid "A local harbour."
-msgstr ""
+msgstr "Місцевий порт."
 
-#: ../base/ufos/maps.ufo:2902
+#: ../base/ufos/maps.ufo:2709
 msgid "An office complex on the outskirts of town."
-msgstr ""
+msgstr "Офісний комплекс на околиці міста."
 
-#: ../base/ufos/maps.ufo:2947
+#: ../base/ufos/maps.ufo:2754
 msgid "A luxurious vacation resort."
-msgstr ""
+msgstr "Розкішний курорт."
 
-#: ../base/ufos/maps.ufo:3004
+#: ../base/ufos/maps.ufo:2811
 msgid "A suburb that has been visited by UFO."
-msgstr ""
+msgstr "Передмістя, яке відвідав НЛО."
 
-#: ../base/ufos/maps.ufo:3056
+#: ../base/ufos/maps.ufo:2863
 msgid "A suburb that has received a visit from a Harvester."
-msgstr ""
+msgstr "Передмістя, яке відвідав Пожинач."
 
-#: ../base/ufos/maps.ufo:3108
+#: ../base/ufos/maps.ufo:2915
 msgid "An alien Harvester has crashed in the wastelands."
-msgstr ""
+msgstr "Ворожий Пожинач, що розбився на пустирі."
 
-#: ../base/ufos/maps.ufo:3154
-#: ../base/ufos/maps.ufo:3188
+#: ../base/ufos/maps.ufo:2961
+#: ../base/ufos/maps.ufo:2995
 msgid "A small settlement in winter."
-msgstr ""
+msgstr "Невелике поселення в зимовий період."
 
-#: ../base/ufos/maps.ufo:3227
+#: ../base/ufos/maps.ufo:3034
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr ""
+msgstr "Сховище, збудоване людьми підчас великої катастрофи. Деякі вибухозахищені двері всередині можуть бути закриті."
 
-#: ../base/ufos/maps.ufo:3275
+#: ../base/ufos/maps.ufo:3082
 msgid "A Bomber has landed in the middle of a city."
-msgstr ""
+msgstr "Бомбардувальник приземлився в центрі міста."
 
-#: ../base/ufos/maps.ufo:3328
+#: ../base/ufos/maps.ufo:3135
 msgid "A place where people come to relax and mingle."
-msgstr ""
+msgstr "Місце для відпочинку та спілкування."
 
-#: ../base/ufos/maps.ufo:3376
+#: ../base/ufos/maps.ufo:3183
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr ""
+msgstr "Лабораторія, що вивчає знайдені обломки НЛО."
 
-#: ../base/ufos/maps.ufo:3424
+#: ../base/ufos/maps.ufo:3231
 msgid "A fuel depot the aliens try to destroy."
-msgstr ""
+msgstr "Прибульці намагаються знищити паливний склад."
 
-#: ../base/ufos/maps.ufo:3463
+#: ../base/ufos/maps.ufo:3270
 msgid "Wilderness terror mission."
-msgstr ""
+msgstr "Контр-терористична місія."
 
-#: ../base/ufos/maps.ufo:3509
+#: ../base/ufos/maps.ufo:3316
 msgid "UFO Crashsite."
-msgstr ""
+msgstr "Місце аварії НЛО."
 
-#: ../base/ufos/maps.ufo:3540
+#: ../base/ufos/maps.ufo:3347
 msgid "An alien base."
 msgstr "База прибульців."
 
-#: ../base/ufos/maps.ufo:3555
+#: ../base/ufos/maps.ufo:3362
 msgid "Base is under attack."
 msgstr "Базу атаковано."
 
@@ -3526,12 +3511,14 @@ msgstr "Вчений"
 msgid "Pilot"
 msgstr "Пілот"
 
+# Безпілотний наземний транспорт
 #: ../base/ufos/medals.ufo:46
 #: ../base/ufos/team_humans.ufo:1641
 #: ../base/ufos/team_humans.ufo:1666
 #: client/campaign/cp_employee.c:172
+#, fuzzy
 msgid "UGV"
-msgstr ""
+msgstr "БНТ"
 
 #: ../base/ufos/medals.ufo:54
 #: ../base/ufos/team_humans.ufo:1281
@@ -3641,7 +3628,7 @@ msgstr "установка обладнання"
 
 #: ../base/ufos/msgcategories.ufo:16
 msgid "installation_construction"
-msgstr ""
+msgstr "зовнішні конструкції"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
@@ -3657,15 +3644,15 @@ msgstr "невдоволення націй"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
-msgstr "Переправка"
+msgstr "переправка вантажів"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
-msgstr ""
+msgstr "активність НЛО"
 
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
-msgstr ""
+msgstr "Революційні країни"
 
 #: ../base/ufos/nations.ufo:43
 msgid "United America"
@@ -3711,19 +3698,18 @@ msgstr "Дихальний апарат прибульців"
 #: ../base/ufos/research.ufo:4876
 #: ../base/ufos/research.ufo:4915
 msgid "Alien Materials"
-msgstr ""
+msgstr "Іншопланетні матеріали."
 
 #: ../base/ufos/otheritems.ufo:156
 #: ../base/ufos/weapons_melee.ufo:24
 #: ../base/ufos/weapons_melee.ufo:83
 #: ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
-msgstr ""
+msgstr "Уколоти"
 
 #: ../base/ufos/research.ufo:107
-#, fuzzy
 msgid "Background"
-msgstr "Фон"
+msgstr "Передісторія"
 
 #: ../base/ufos/research.ufo:108
 #: ../base/ufos/ui/bases.ufo:129
@@ -3738,7 +3724,7 @@ msgstr "Авіація"
 
 #: ../base/ufos/research.ufo:109
 msgid "Base Facilities"
-msgstr ""
+msgstr "Інфраструктура бази"
 
 #: ../base/ufos/research.ufo:110
 msgid "Research Reports"
@@ -3755,19 +3741,19 @@ msgstr "Інвентар"
 
 #: ../base/ufos/research.ufo:112
 msgid "Alien Artifacts"
-msgstr "Артифакти прибульців"
+msgstr "Артефакти прибульців"
 
 #: ../base/ufos/research.ufo:113
 msgid "Autopsies & Observation"
-msgstr ""
+msgstr "Розтини та Спостереження"
 
 #: ../base/ufos/research.ufo:114
 msgid "The Alien Threat"
-msgstr ""
+msgstr "Загроза прибульців"
 
 #: ../base/ufos/research.ufo:123
 msgid "Continuous Wave Laser Operation"
-msgstr ""
+msgstr "Лазер неперервної дії"
 
 #: ../base/ufos/research.ufo:128
 msgid "laser_txt"
@@ -3872,7 +3858,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:266
 msgid "Upgrade - Antimatter engines"
-msgstr ""
+msgstr "Удосконалення - Двигун на антиматеррії "
 
 #: ../base/ufos/research.ufo:268
 msgid "craft_upgrade_am_engines_txt"
@@ -3967,7 +3953,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:403
 msgid "The Alien Mind"
-msgstr ""
+msgstr "Розум Прибульців"
 
 #: ../base/ufos/research.ufo:408
 msgid "alien_mind_txt"
@@ -3979,7 +3965,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:441
 msgid "Odd Behaviour"
-msgstr ""
+msgstr "Дивна поведінка"
 
 #: ../base/ufos/research.ufo:446
 msgid "alien_odd_behaviour_txt"
@@ -3991,7 +3977,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:479
 msgid "Alien Communication"
-msgstr ""
+msgstr "Звя'зок прибульів"
 
 #: ../base/ufos/research.ufo:484
 msgid "alien_communication_txt"
@@ -4033,9 +4019,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:518
 #: client/campaign/cp_alienbase.c:169
-#: client/campaign/cp_missions.c:452
+#: client/campaign/cp_missions.c:438
 msgid "Alien base"
-msgstr ""
+msgstr "База прибульців"
 
 #: ../base/ufos/research.ufo:520
 msgid "alien_base_txt"
@@ -4070,7 +4056,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:542
 msgid "The Universal Serum"
-msgstr ""
+msgstr "Універсальна Сироватка"
 
 #: ../base/ufos/research.ufo:547
 msgid "universal_serum_txt"
@@ -4106,7 +4092,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:579
 msgid "Alien Origins"
-msgstr ""
+msgstr "Походження прибульців"
 
 #: ../base/ufos/research.ufo:584
 msgid "alien_origins_txt"
@@ -4158,7 +4144,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:614
 msgid "UFO Theory"
-msgstr ""
+msgstr "Теорія НЛО"
 
 #: ../base/ufos/research.ufo:619
 msgid "alien_theory_txt"
@@ -4672,9 +4658,9 @@ msgid "shotgun_txt"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1035
-#: ../base/ufos/weapons_human.ufo:1872
+#: ../base/ufos/weapons_human.ufo:1873
 msgid "Electromagnetic Rifle"
-msgstr ""
+msgstr "Електромагнітна гвинтівка"
 
 #: ../base/ufos/research.ufo:1040
 msgid "bolterrifle_txt"
@@ -4707,9 +4693,9 @@ msgstr ""
 "--Кмд. Наварре"
 
 #: ../base/ufos/research.ufo:1074
-#: ../base/ufos/weapons_human.ufo:1892
+#: ../base/ufos/weapons_human.ufo:1893
 msgid "Electromagnetic Rifle Magazine"
-msgstr ""
+msgstr "Магазин для електромагнітної гвинтівки"
 
 #: ../base/ufos/research.ufo:1095
 msgid "combatknife_txt"
@@ -4754,7 +4740,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1111
 msgid "Monomolecular Blades"
-msgstr ""
+msgstr "Мономолекулярні леза"
 
 #: ../base/ufos/research.ufo:1116
 msgid "monoknife_txt"
@@ -5145,7 +5131,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1322
 msgid "Plasma And The Grenade Launcher"
-msgstr ""
+msgstr "Плазма та Гранатомет"
 
 #: ../base/ufos/research.ufo:1327
 msgid "grenl_plasma_ammo_txt"
@@ -5222,7 +5208,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1381
 msgid "Alien Artifact - Kerrblade"
-msgstr ""
+msgstr "Артефакт прибульців - Керр-лезо"
 
 #: ../base/ufos/research.ufo:1386
 msgid "kerrblade_txt"
@@ -5454,7 +5440,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1636
 #: ../base/ufos/research.ufo:1678
 msgid "Alien Artifact - Plasma Pistol"
-msgstr ""
+msgstr "Артефакт прибульців - Плазмовий пістолет"
 
 #: ../base/ufos/research.ufo:1641
 msgid "plasatomizer_txt"
@@ -5489,7 +5475,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1696
 #: ../base/ufos/research.ufo:1737
 msgid "Alien Artifact - Plasma Blaster"
-msgstr ""
+msgstr "Артефакт прибульців - Плазмовий бластер"
 
 #: ../base/ufos/research.ufo:1701
 msgid "plasblaster_txt"
@@ -5517,7 +5503,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1755
 msgid "Alien Artifact - Plasma Blade"
-msgstr ""
+msgstr "Артефакт прибульців - Плазмовий клинок"
 
 #: ../base/ufos/research.ufo:1760
 msgid "plasblade_txt"
@@ -5549,7 +5535,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1795
 msgid "Alien Artifact - Plasma Grenade"
-msgstr ""
+msgstr "Артефакт прибульців - Плазмова граната"
 
 #: ../base/ufos/research.ufo:1800
 msgid "plasmagren_txt"
@@ -5580,7 +5566,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1835
 #: ../base/ufos/research.ufo:1877
 msgid "Alien Artifact - Plasma Rifle"
-msgstr ""
+msgstr "Артефакт прибульців - Плазмова гвинтівка"
 
 #: ../base/ufos/research.ufo:1840
 msgid "plasrifle_txt"
@@ -5609,8 +5595,9 @@ msgstr ""
 #: ../base/ufos/research.ufo:1895
 #: ../base/ufos/research.ufo:1975
 #: ../base/ufos/weapons_aliens.ufo:6
+#, fuzzy
 msgid "Needler Gun"
-msgstr ""
+msgstr "Needler Gun"
 
 #: ../base/ufos/research.ufo:1900
 msgid "needlergun_txt"
@@ -5640,8 +5627,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1935
 #: ../base/ufos/weapons_aliens.ufo:26
+#, fuzzy
 msgid "Heavy Needler Gun"
-msgstr ""
+msgstr "Важкий Needler Gun"
 
 #: ../base/ufos/research.ufo:1940
 msgid "needlerheavy_txt"
@@ -5687,7 +5675,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2015
 #: ../base/ufos/weapons_human.ufo:392
 msgid "Coilgun"
-msgstr ""
+msgstr "Індукційна гвинтівка"
 
 #: ../base/ufos/research.ufo:2053
 msgid "shotgun2_txt"
@@ -6050,7 +6038,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2227
 msgid "Anti-Alien Gas"
-msgstr ""
+msgstr "Газ \"Анти-Чужий\""
 
 #: ../base/ufos/research.ufo:2232
 msgid "stungren_txt"
@@ -6092,7 +6080,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2274
 msgid "Alien Anti-Human Gas"
-msgstr ""
+msgstr "Газ прибульців \"Анти-Людство\""
 
 #: ../base/ufos/research.ufo:2279
 msgid "stungren_alien_txt"
@@ -6147,7 +6135,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2357
 #: ../base/ufos/research.ufo:2397
 msgid "Alien Artifact - Particle Beam Pistol"
-msgstr ""
+msgstr "Артефакт прибульців - Опромінюючий пістолет"
 
 #: ../base/ufos/research.ufo:2362
 msgid "pbeampistol_txt"
@@ -6180,7 +6168,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2416
 #: ../base/ufos/research.ufo:2457
 msgid "Alien Artifact - Particle Beam Cannon"
-msgstr ""
+msgstr "Артефакт прибульців - Опромінююча гармата"
 
 #: ../base/ufos/research.ufo:2421
 msgid "pbeamcannon_txt"
@@ -6213,7 +6201,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2476
 #: ../base/ufos/research.ufo:2516
 msgid "Alien Artifact - Particle Beam Rifle"
-msgstr ""
+msgstr "Alien Artifact - Particle Beam Rifle"
 
 #: ../base/ufos/research.ufo:2481
 msgid "pbeamrifle_txt"
@@ -6247,7 +6235,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2536
 msgid "Man-Portable Particle Beams"
-msgstr ""
+msgstr "Артефакт прибульців - Опромінююча гвинтівка"
 
 #: ../base/ufos/research.ufo:2541
 msgid "pbeamammo_txt"
@@ -6315,7 +6303,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:2765
 msgid "Blast Damage Type"
-msgstr ""
+msgstr "Тип ураження: вибух"
 
 #: ../base/ufos/research.ufo:2768
 #: ../base/ufos/research.ufo:2781
@@ -6335,71 +6323,71 @@ msgstr ""
 #: ../base/ufos/research.ufo:2981
 #: ../base/ufos/research.ufo:2994
 msgid "none"
-msgstr ""
+msgstr "ні"
 
 #: ../base/ufos/research.ufo:2778
 msgid "Fire Damage Type"
-msgstr ""
+msgstr "Тип ураження: вогонь"
 
 #: ../base/ufos/research.ufo:2791
 msgid "Laser Damage Type"
-msgstr ""
+msgstr "Тип ураження: лазер"
 
 #: ../base/ufos/research.ufo:2809
 msgid "Impact Damage Type"
-msgstr ""
+msgstr "Тип ураження: удар"
 
 #: ../base/ufos/research.ufo:2822
 msgid "Shock Damage Type"
-msgstr ""
+msgstr "Тип ураження: шок"
 
 #: ../base/ufos/research.ufo:2835
 msgid "Plasma Damage Type"
-msgstr ""
+msgstr "Тип ураження: плазма"
 
 #: ../base/ufos/research.ufo:2856
 msgid "Stun Damage Type"
-msgstr ""
+msgstr "Тип ураження: параліч"
 
 #: ../base/ufos/research.ufo:2869
 msgid "Particle Beam Damage Type"
-msgstr ""
+msgstr "Тип ураження: опромінення"
 
 #: ../base/ufos/research.ufo:2887
 msgid "Accuracy Attribute"
-msgstr ""
+msgstr "Атрибут: Влучність"
 
 #: ../base/ufos/research.ufo:2900
 msgid "Assault Guns Proficiency"
-msgstr ""
+msgstr "Навик: Штурмова зброя"
 
 #: ../base/ufos/research.ufo:2913
 msgid "Close Combat Proficiency"
-msgstr ""
+msgstr "Навик: Ближній бій"
 
 #: ../base/ufos/research.ufo:2926
 msgid "High-Explosives Proficiency"
-msgstr ""
+msgstr "Навик: Підривник"
 
 #: ../base/ufos/research.ufo:2939
 msgid "Heavy Weapons Proficiency"
-msgstr ""
+msgstr "Навик: Важка зброя"
 
 #: ../base/ufos/research.ufo:2952
 msgid "Mind Attribute"
-msgstr ""
+msgstr "Атрибут: Інтелект"
 
 #: ../base/ufos/research.ufo:2965
 msgid "Power Attribute"
-msgstr ""
+msgstr "Атрибут: Сила"
 
 #: ../base/ufos/research.ufo:2978
 msgid "Sniper Rifles Proficiency"
-msgstr ""
+msgstr "Навик: Снайпер"
 
 #: ../base/ufos/research.ufo:2991
 msgid "Speed Attribute"
-msgstr ""
+msgstr "Атрибут: Швидкість"
 
 #: ../base/ufos/research.ufo:3009
 msgid "b_aliencontainment_txt"
@@ -6612,7 +6600,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4028
 msgid "Live Specimen - Bloodspider"
-msgstr ""
+msgstr "Живий організм - Кровопивець"
 
 #: ../base/ufos/research.ufo:4030
 msgid "bloodspider_notes_txt"
@@ -6624,7 +6612,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4049
 msgid "Alien Autopsy - Bloodspider"
-msgstr ""
+msgstr "Розтин прибульця - Кровопивець"
 
 #: ../base/ufos/research.ufo:4054
 msgid "bloodspider_autopsy_txt"
@@ -6636,7 +6624,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4106
 msgid "Alien Autopsy - Ortnok"
-msgstr ""
+msgstr "Розтин прибульця - Ортнок"
 
 #: ../base/ufos/research.ufo:4111
 msgid "ortnok_autopsy_txt"
@@ -6656,7 +6644,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4148
 msgid "Alien Autopsy - Taman"
-msgstr ""
+msgstr "Розтин прибульця -Таман"
 
 #: ../base/ufos/research.ufo:4153
 msgid "taman_autopsy_txt"
@@ -6676,7 +6664,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4190
 msgid "Alien Autopsy - Shevaar"
-msgstr ""
+msgstr "Розтин прибульця - Шеваар"
 
 #: ../base/ufos/research.ufo:4195
 msgid "shevaar_autopsy_txt"
@@ -6696,8 +6684,9 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4289
 #: ../base/ufos/team_humans.ufo:1637
+#, fuzzy
 msgid "Phoenix UGV"
-msgstr ""
+msgstr "БНТ \"Фенікс\""
 
 #: ../base/ufos/research.ufo:4291
 msgid "ugv_phoenix_txt"
@@ -6709,8 +6698,9 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4309
 #: ../base/ufos/team_humans.ufo:1662
+#, fuzzy
 msgid "Ares W (UGV)"
-msgstr ""
+msgstr "Ares W (UGV)"
 
 #: ../base/ufos/research.ufo:4311
 msgid "ugv_ares_w_txt"
@@ -6746,7 +6736,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:4417
 msgid "'Raven' ECM Unit"
-msgstr ""
+msgstr "Модуль РЕП 'Крук'"
 
 #: ../base/ufos/research.ufo:4420
 msgid "craft_electronics_raven_txt"
@@ -6868,7 +6858,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4649
 msgid "SHIVA Rotary Cannon"
-msgstr ""
+msgstr "Роторна гармата SHIVA"
 
 #: ../base/ufos/research.ufo:4652
 msgid "craft_weapon_shiva_txt"
@@ -6884,7 +6874,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4708
 msgid "'Sparrowhawk' AA Missile Rack"
-msgstr ""
+msgstr "Ракетна установка ПП 'Перепелиця'"
 
 #: ../base/ufos/research.ufo:4711
 msgid "craft_weapon_sparrowhawk_txt"
@@ -6892,7 +6882,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4725
 msgid "'Sparrowhawk' Missile"
-msgstr ""
+msgstr "Ракета класу ПП для РУ 'Перепелиця'"
 
 #: ../base/ufos/research.ufo:4728
 msgid "craft_ammo_sparrowhawk_txt"
@@ -6951,7 +6941,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4937
 msgid "Political Situation Before The Invasion"
-msgstr ""
+msgstr "Політична обстановка перед Вторгненням"
 
 #: ../base/ufos/research.ufo:4939
 msgid "news_initial_political_situation_txt"
@@ -6959,7 +6949,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4950
 msgid "After The War"
-msgstr ""
+msgstr "Після Війни"
 
 #: ../base/ufos/research.ufo:4952
 msgid "news_after_the_war_txt"
@@ -6967,7 +6957,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4963
 msgid "PHALANX And The Mumbai Aftermath"
-msgstr ""
+msgstr "PHALANX і наслідки подій в Мумбаї"
 
 #: ../base/ufos/research.ufo:4965
 msgid "news_phalanx_and_mumbai_aftermath_txt"
@@ -6975,7 +6965,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4975
 msgid "A New Twist"
-msgstr ""
+msgstr "Новий Виток"
 
 #: ../base/ufos/research.ufo:4980
 msgid "news_new_twist_txt"
@@ -6987,7 +6977,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5003
 msgid "The Enemy On Earth"
-msgstr ""
+msgstr "Ворог на Землі"
 
 #: ../base/ufos/research.ufo:5008
 msgid "enemy_on_earth_alt_txt"
@@ -7002,8 +6992,9 @@ msgid "enemy_on_earth_pre_txt"
 msgstr "Попередні відомості про дослідження відсутні"
 
 #: ../base/ufos/research.ufo:5041
+#, fuzzy
 msgid "XVI Census"
-msgstr ""
+msgstr "XVI перепис"
 
 #: ../base/ufos/research.ufo:5046
 msgid "xvi_census_txt"
@@ -7047,7 +7038,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5082
 msgid "The Enemy On Earth - Revisited"
-msgstr ""
+msgstr "Ворог на Землі - Обновлено"
 
 #: ../base/ufos/research.ufo:5087
 msgid "enemy_on_earth_rev_txt"
@@ -7059,7 +7050,7 @@ msgstr "Попередні відомості про дослідження ві
 
 #: ../base/ufos/research.ufo:5120
 msgid "The Alien Strategy"
-msgstr ""
+msgstr "Стратегія прибульців"
 
 #: ../base/ufos/research.ufo:5125
 msgid "alien_strategy_txt"
@@ -7090,7 +7081,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5149
 msgid "Orbital UFO Activity"
-msgstr ""
+msgstr "Орбітальна активність НЛО"
 
 #: ../base/ufos/research.ufo:5154
 msgid "orbital_ufo_activity_txt"
@@ -7140,199 +7131,199 @@ msgstr ""
 #: ../base/ufos/seq_credits.ufo:132
 #: ../base/ufos/seq_credits.ufo:165
 msgid "Project leader"
-msgstr ""
+msgstr "Керівник проекту"
 
 #: ../base/ufos/seq_credits.ufo:143
 msgid "Martin Gerhardy (mattn/tlh2000)"
-msgstr ""
+msgstr "Martin Gerhardy (mattn/tlh2000)"
 
 #: ../base/ufos/seq_credits.ufo:176
 msgid "Werner Hoehrer (hoehrer)"
-msgstr ""
+msgstr "Werner Hoehrer (hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:198
 msgid "Lead Story Developer/Game Design"
-msgstr ""
+msgstr "Провідний розробник сюжетної лінії/Ігровий дизайнер"
 
 #: ../base/ufos/seq_credits.ufo:209
 msgid "Ryan A. Span. (Winter)"
-msgstr ""
+msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:231
 msgid "Story Developer/Game Design"
-msgstr ""
+msgstr "Розробник сюжетної лінії/Ігровий дизайнер"
 
 #: ../base/ufos/seq_credits.ufo:242
 msgid "Bas Fournier (BTAxis)"
-msgstr ""
+msgstr "Bas Fournier (BTAxis)"
 
 #: ../base/ufos/seq_credits.ufo:264
 msgid "Contributing Developer"
-msgstr ""
+msgstr "Допоміжний розробник"
 
 #: ../base/ufos/seq_credits.ufo:275
 msgid "Maciej Wierzbicki (Zenerka/Voovoos)"
-msgstr ""
+msgstr "Maciej Wierzbicki (Zenerka/Voovoos)"
 
 #: ../base/ufos/seq_credits.ufo:297
 msgid "Technology Consultants"
-msgstr ""
+msgstr "Технічні консультанти"
 
 #: ../base/ufos/seq_credits.ufo:308
 msgid "Forest Hale (LordHavoc)"
-msgstr ""
+msgstr "Forest Hale (LordHavoc)"
 
 #: ../base/ufos/seq_credits.ufo:319
 msgid "Tron"
-msgstr ""
+msgstr "Tron"
 
 #: ../base/ufos/seq_credits.ufo:343
 msgid "Contributing Programmers"
-msgstr ""
+msgstr "Допоміжні програмісти"
 
 #: ../base/ufos/seq_credits.ufo:354
 msgid "Ivor Blockley (ubequitz/cassiterite)"
-msgstr ""
+msgstr "Ivor Blockley (ubequitz/cassiterite)"
 
 #: ../base/ufos/seq_credits.ufo:365
 msgid "Kracken"
-msgstr ""
+msgstr "Kracken"
 
 #: ../base/ufos/seq_credits.ufo:376
 msgid "Fehervari Tamas (geever)"
-msgstr ""
+msgstr "Fehervari Tamas (geever)"
 
 #: ../base/ufos/seq_credits.ufo:387
 msgid "Edgar Simo (bobbens)"
-msgstr ""
+msgstr "Edgar Simo (bobbens)"
 
 #: ../base/ufos/seq_credits.ufo:398
 msgid "Andy Buckle (blondandy)"
-msgstr ""
+msgstr "Andy Buckle (blondandy)"
 
 #: ../base/ufos/seq_credits.ufo:409
 msgid "Michael Wilmes (wilminator)"
-msgstr ""
+msgstr "Michael Wilmes (wilminator)"
 
 #: ../base/ufos/seq_credits.ufo:441
 msgid "General Support"
-msgstr ""
+msgstr "Загальна підтримка"
 
 #: ../base/ufos/seq_credits.ufo:452
 msgid "Richlv"
-msgstr ""
+msgstr "Richlv"
 
 #: ../base/ufos/seq_credits.ufo:463
 msgid "Kostia Romanov (Kildor)"
-msgstr ""
+msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:487
 msgid "This game is now community driven"
-msgstr ""
+msgstr "Ця гра тепер керується співдружнісю"
 
 #: ../base/ufos/seq_credits.ufo:494
 msgid "To honor the original development team:"
-msgstr ""
+msgstr "В честь родоначальної команди розробників:"
 
 #: ../base/ufos/seq_credits.ufo:508
 msgid "Code, Visual Effects"
-msgstr ""
+msgstr "Програмування, Візуальні ефекти"
 
 #: ../base/ufos/seq_credits.ufo:514
 msgid "Herby"
-msgstr ""
+msgstr "Herby"
 
 #: ../base/ufos/seq_credits.ufo:527
 msgid "Maps, Textures, Art"
-msgstr ""
+msgstr "Карти, Текстури, Дизайн"
 
 #: ../base/ufos/seq_credits.ufo:533
 msgid "SparX"
-msgstr ""
+msgstr "SparX"
 
 #: ../base/ufos/seq_credits.ufo:546
 msgid "Models, Animations"
-msgstr ""
+msgstr "Моделі, Анімація"
 
 #: ../base/ufos/seq_credits.ufo:552
 msgid "Rastaman"
-msgstr ""
+msgstr "Rastaman"
 
 #: ../base/ufos/seq_credits.ufo:565
 msgid "Music"
-msgstr ""
+msgstr "Музика"
 
 #: ../base/ufos/seq_credits.ufo:571
 msgid "Vanethian"
-msgstr ""
+msgstr "Vanethian"
 
 #: ../base/ufos/seq_credits.ufo:584
 msgid "Webdesign"
-msgstr ""
+msgstr "Вебдизайн"
 
 #: ../base/ufos/seq_credits.ufo:590
 msgid "Ww 3"
-msgstr ""
+msgstr "Ww 3"
 
 #: ../base/ufos/seq_credits.ufo:607
 msgid "Special Thanks To"
-msgstr ""
+msgstr "Особливі подяки для"
 
 #: ../base/ufos/seq_credits.ufo:614
 msgid "id Software"
-msgstr ""
+msgstr "id Software"
 
 #: ../base/ufos/seq_credits.ufo:621
 msgid "Quake 2 Engine"
-msgstr ""
+msgstr "Quake 2 Engine"
 
 #: ../base/ufos/seq_credits.ufo:628
 msgid "NineX"
-msgstr ""
+msgstr "NineX"
 
 #: ../base/ufos/seq_credits.ufo:635
 msgid "Our Host"
-msgstr ""
+msgstr "Our Host"
 
 #: ../base/ufos/seq_credits.ufo:643
 msgid "Additional Thanks To"
-msgstr ""
+msgstr "А також подяки для"
 
 #: ../base/ufos/seq_credits.ufo:650
 msgid "Sacrusha"
-msgstr ""
+msgstr "Sacrusha"
 
 #: ../base/ufos/seq_credits.ufo:657
 msgid "Mattn"
-msgstr ""
+msgstr "Mattn"
 
 #: ../base/ufos/seq_credits.ufo:664
 msgid "Sitters"
-msgstr ""
+msgstr "Sitters"
 
 #: ../base/ufos/seq_credits.ufo:671
 msgid "The Community"
-msgstr ""
+msgstr "Співдружності"
 
 #: ../base/ufos/seq_credits.ufo:678
 msgid "Everyone who supported us"
-msgstr ""
+msgstr "Кожному, хто підтримав нас"
 
 #: ../base/ufos/seq_credits.ufo:727
 msgid "http://ufoai.sf.net"
-msgstr ""
+msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:733
 msgid "Copyright 2004-2009 by UFO: AI Team"
-msgstr ""
+msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_ingame.ufo:13
 #: ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80
-#: ../base/ufos/ui/campaign.ufo:593
-#: ../base/ufos/ui/campaign.ufo:666
+#: ../base/ufos/ui/campaign.ufo:598
+#: ../base/ufos/ui/campaign.ufo:671
 msgid "Click to continue"
-msgstr ""
+msgstr "Клацніть для продовження"
 
 #: ../base/ufos/seq_ingame.ufo:22
 msgid "seq_invasion_sentence1"
@@ -7392,285 +7383,290 @@ msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
-msgstr ""
+msgstr "Геймплей"
 
 #: ../base/ufos/seq_tutorials.ufo:35
 msgid "Some notes about the gameplay"
-msgstr ""
+msgstr "Деякі примітки щодо геймплею"
 
 #: ../base/ufos/seq_tutorials.ufo:44
 msgid "Click to exit"
-msgstr ""
+msgstr "Кляцніть, щоб вийти"
 
 #: ../base/ufos/seq_tutorials.ufo:57
 msgid "Set up a base"
-msgstr ""
+msgstr "Побудувати базу"
 
 #: ../base/ufos/seq_tutorials.ufo:95
 msgid "Hire employees: scientists, soldiers"
-msgstr ""
+msgstr "Найміть персонал: вчених, бійців"
 
 #: ../base/ufos/seq_tutorials.ufo:132
 msgid "Start some research"
-msgstr ""
+msgstr "Розпочати дослідження"
 
 #: ../base/ufos/seq_tutorials.ufo:151
 msgid "Buy weapons and equipment"
-msgstr ""
+msgstr "Купити зброю та екіпіровку"
 
 #: ../base/ufos/seq_tutorials.ufo:188
 msgid "Equip your aircraft with soldiers and weapons"
-msgstr ""
+msgstr "Спорядіть ваш авіатранспорт бійцями та зброєю"
 
 #: ../base/ufos/seq_tutorials.ufo:226
 msgid "Speed up time on geoscape until the first alien mission appears"
-msgstr ""
+msgstr "Можна пришвидшити плин часу поки не з'явиться перша місія зприбульцями"
 
 #: ../base/ufos/seq_tutorials.ufo:254
 msgid "Select the mission (doubleclick) and choose aircraft from list"
-msgstr ""
+msgstr "Виберіть місію(подвійний клік) та виділіть авіатранспорт зі списку"
 
 #: ../base/ufos/seq_tutorials.ufo:273
 msgid "Hit the start or auto-mission button to fight the aliens"
-msgstr ""
+msgstr "Натисність кнопку початку чи автобій, щоб розпочати сутичку"
 
 #: ../base/ufos/seq_tutorials.ufo:298
 msgid "For further instructions watch the tactical mission tutorial"
-msgstr ""
+msgstr "За подальшими вказівками звертайтесь до посібника з тактичних операцій"
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid "Tactical mission"
-msgstr ""
+msgstr "Тактична операція"
 
 #: ../base/ufos/seq_tutorials.ufo:343
 msgid "Tactical mission tutorial"
-msgstr ""
+msgstr "Посібник з тактичних операцій"
 
 #: ../base/ufos/seq_tutorials.ufo:386
 msgid "Switch view level via left mouseclick"
-msgstr ""
+msgstr "Змінити рівень на карті за допомогою лівої клавіші миші"
 
 #: ../base/ufos/seq_tutorials.ufo:398
 msgid "You can also use the cursor keys to switch the levels"
-msgstr ""
+msgstr "Ви також можете використовувати клавіші вверх/вниз для перемикання між рівнями"
 
 #: ../base/ufos/seq_tutorials.ufo:419
 msgid "The selected soldier"
-msgstr ""
+msgstr "Вибраний боєць"
 
 #: ../base/ufos/seq_tutorials.ufo:441
 msgid "Select soldiers via click"
-msgstr ""
+msgstr "Клікніть на бійцю для вибору"
 
 #: ../base/ufos/seq_tutorials.ufo:453
 msgid "Or via the keys 1-8 or Tab"
-msgstr ""
+msgstr "Або клавішами 1-8 чи Tab"
 
 #: ../base/ufos/seq_tutorials.ufo:474
 msgid "Physical stats"
-msgstr ""
+msgstr "Фізичні дані"
 
 #: ../base/ufos/seq_tutorials.ufo:496
 msgid "Stats bars: movement, health and morale"
-msgstr ""
+msgstr "Індикатор характеристик, переміщення, здоров'я, мораль"
 
 #: ../base/ufos/seq_tutorials.ufo:518
 #: ../base/ufos/ui/hud.ufo:686
 msgid "Inventory"
-msgstr ""
+msgstr "Інвентар"
 
 #: ../base/ufos/seq_tutorials.ufo:547
 msgid "Weapon in right hand"
-msgstr ""
+msgstr "Зброя у правій руці"
 
 #: ../base/ufos/seq_tutorials.ufo:570
 msgid "Shots remaining"
-msgstr ""
+msgstr "Залишилось пострілів"
 
 #: ../base/ufos/seq_tutorials.ufo:600
 msgid "Reload weapon"
-msgstr ""
+msgstr "Перезарядити зброю"
 
 #: ../base/ufos/seq_tutorials.ufo:630
 msgid "Primary attack"
-msgstr ""
+msgstr "Основна атака"
 
 #: ../base/ufos/seq_tutorials.ufo:660
 msgid "Secondary attack"
-msgstr ""
+msgstr "Альтернативна атака"
 
 #: ../base/ufos/seq_tutorials.ufo:683
 msgid "Turn reaction-fire on or off"
-msgstr ""
+msgstr "Вкл/викл вогонь увідповідь"
 
 #: ../base/ufos/seq_tutorials.ufo:705
 msgid "Crouch (kneel down) or stand up"
-msgstr ""
+msgstr "Присісти (припасти на коліно) або піднятись"
 
 #: ../base/ufos/seq_tutorials.ufo:727
 msgid "Cycle through visible enemies"
-msgstr ""
+msgstr "Перегляд виявлених ворогів"
 
 #: ../base/ufos/seq_tutorials.ufo:749
 msgid "End round"
-msgstr ""
+msgstr "Кінець ходу"
 
 #: ../base/ufos/seq_tutorials.ufo:771
 msgid "How to play skirmish"
-msgstr ""
+msgstr "Як грати в Сутички"
 
 #: ../base/ufos/seq_tutorials.ufo:785
 msgid "Skirmish tutorial"
-msgstr ""
+msgstr "Навчальна сутичка"
 
 #: ../base/ufos/seq_tutorials.ufo:796
 msgid "Skirmish is type of fast game."
-msgstr ""
+msgstr "Сутичка - це тип швидкої гри."
 
 #: ../base/ufos/seq_tutorials.ufo:835
 msgid "Equipment selection"
-msgstr ""
+msgstr "Вибір спорядження"
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid "Day or night version of map to play"
-msgstr ""
+msgstr "Вибрати денний чи вечірній час для гри"
 
 #: ../base/ufos/seq_tutorials.ufo:877
 msgid "How many aliens will fight versus you"
-msgstr ""
+msgstr "Скільки прибульців воюватимуть проти вас"
 
 #: ../base/ufos/seq_tutorials.ufo:898
 msgid "Select your team"
-msgstr ""
+msgstr "Виберіть свою команду"
 
 #: ../base/ufos/seq_tutorials.ufo:919
 msgid ""
 "Select UFO to secure \\n"
 "(if possible for current map)"
 msgstr ""
+"Вибрати НЛО для захоплення \\n"
+"(якщо це можливо для даної карти)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
 msgid ""
 "Select dropship \\n"
 "(if possible for current map)"
 msgstr ""
+"Вибрати десантний транспорт \\n"
+"(якщо це можливо для даної карти)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
-msgstr ""
+msgstr "Виберати карту для гри"
 
 #: ../base/ufos/seq_tutorials.ufo:974
 msgid "And..."
-msgstr ""
+msgstr "Та..."
 
 #: ../base/ufos/seq_tutorials.ufo:991
 msgid "Start the game!"
-msgstr ""
+msgstr "Розпочніть операцію!"
 
 #: ../base/ufos/seq_tutorials.ufo:1003
 msgid "Or..."
-msgstr ""
+msgstr "Або..."
 
 #: ../base/ufos/seq_tutorials.ufo:1022
 msgid "Exit to main menu"
-msgstr ""
+msgstr "Вихід в головне меню"
 
 #: ../base/ufos/seq_tutorials.ufo:1042
 msgid "How to play multiplayer"
-msgstr ""
+msgstr "Як грати по мережі"
 
 #: ../base/ufos/seq_tutorials.ufo:1057
 #: ../base/ufos/ui/multiplayer.ufo:985
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
-msgstr ""
+msgstr "Впевнітся, що ТСР порт 27910 є відкритий в налаштуваннях вашого файрволу"
 
 #: ../base/ufos/seq_tutorials.ufo:1066
 msgid "You should connect to the lobby and wait for invitations or start your own server"
-msgstr ""
+msgstr "Ви повинні з'єднатися з лобі та очікувати запрошення або запустити свій сервер"
 
 #: ../base/ufos/seq_tutorials.ufo:1075
 msgid "While you are connected to the lobby you can play singleplayer until someone invites you"
-msgstr ""
+msgstr "Поки ви з'єднані з лобі, ви можете грати в одиночному режимі доки вам не надійде запрошення"
 
 #: ../base/ufos/seq_tutorials.ufo:1084
 msgid "As a server admin you should consider setting a round time limit."
-msgstr ""
+msgstr "Як адміністратор серверу, ви повинні встановити ліміт на тривалість раунду."
 
 #: ../base/ufos/team_aliens.ufo:25
 msgid "Taman"
-msgstr ""
+msgstr "Таман"
 
 #: ../base/ufos/team_aliens.ufo:94
 msgid "Ortnok"
-msgstr ""
+msgstr "Ортнок"
 
 #: ../base/ufos/team_aliens.ufo:170
 msgid "Shevaar"
-msgstr ""
+msgstr "Шеваар"
 
 #: ../base/ufos/team_aliens.ufo:207
 msgid "Bloodspider"
-msgstr ""
+msgstr "Кровопивець"
 
 #: ../base/ufos/team_humans.ufo:58
 msgid "Phalanx"
-msgstr ""
+msgstr "Phalanx"
 
 #: ../base/ufos/team_humans.ufo:1669
+#, fuzzy
 msgid "Ares W"
-msgstr ""
+msgstr "Ares W"
 
 #: ../base/ufos/tips.ufo:5
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
-msgstr ""
+msgstr "Використовуйте клавішу [Shift], щоб вибрати висоту прицілювання. Наприклад це може бути корисно при пострілі з ракетниці в групу прибульців."
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr ""
+msgstr "Створіть та збережіть різні команди для мультиплеєрних матчів - 4 гравці в команді, 8 гравців і т.д. Це допоможе вам швидко завантажити потрібну для швидких матчів."
 
 #: ../base/ufos/tips.ufo:7
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
-msgstr ""
+msgstr "При створенні команд слідкуйте, щоб найкращі бійці завжди знаходились на початку списку. Коли ліміт на кількість бійців буде меншим за їх фактичну кількість в команді, то буде відібрано потрібну кількість з верху списку."
 
 #: ../base/ufos/tips.ufo:8
 msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
-msgstr ""
+msgstr "Завжди слідкуйте чи достатньо у вас залишилося одиниць часу (ОЧ), щоб сховатися після пострілу."
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr ""
+msgstr "Коли використовуєте Вогонь увідповідь, пам'ятайте, що можете задати його режим , позначивши галочкою відповідний пункт на панелі режиму вогню."
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
-msgstr ""
+msgstr "Завжди екіпіруйте бійця різними видами зброї, ніколи не знаєте, яка краще підійде."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
-msgstr ""
+msgstr "Не забудьте видати вашим бійцям достатню кількість набоїв."
 
 #: ../base/ufos/tips.ufo:12
 msgid "Don't forget to equip your soldiers with armour."
-msgstr ""
+msgstr "Не забувайте надягати на ваших бійців броню."
 
 #: ../base/ufos/tips.ufo:13
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
-msgstr ""
+msgstr "Ви можете використати засліплюючу гранату, щоб відключити у ворога режим вогню увідповідь або забрати усі його наявні одиниці часу (ОЧ) для наступного ходу."
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr ""
+msgstr "У мультиплеєрі ви можете спілкуватись з іншими гравцями натиснувши [k] (з усіма), [l] (з учасниками команди), або натиснувши кнопку чату на панелі управління."
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr ""
+msgstr "Щоб розвернути бійця на місці у потрібному напрямку, наведіть в потрібне місце курсор та натисніть праву клавішу миші або клавішу [Ctrl]. Ця дія забирає одиниці часу (ОЧ)."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "Використовуйте клавішу  [Backspace] для відкривання дверей."
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
-msgstr ""
+msgstr "Наймайте вчених стільки, скільки зможете. Чим краще ви знаєта свого ворога, тим легше його здолати."
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
@@ -7826,7 +7822,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:56
 msgid "To catch fast UFOs send interceptors in from several directions."
-msgstr ""
+msgstr "Для швидкого захоплення НЛО направте свої перехоплювачі з кількох напрямків."
 
 #: ../base/ufos/tips.ufo:57
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
@@ -7852,101 +7848,100 @@ msgstr ""
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr ""
 
-#: ../base/ufos/ui/_hud.ufo:27
-#: ../base/ufos/ui/_hud.ufo:289
-#: ../base/ufos/ui/_hud.ufo:318
-#: ../base/ufos/ui/_hud.ufo:347
-#: ../base/ufos/ui/_hud.ufo:376
-#: ../base/ufos/ui/_hud.ufo:405
-#: ../base/ufos/ui/_hud.ufo:434
-#: ../base/ufos/ui/_hud.ufo:463
-#: ../base/ufos/ui/_hud.ufo:492
-#: ../base/ufos/ui/_hud.ufo:578
-#: ../base/ufos/ui/_hud.ufo:607
-#: ../base/ufos/ui/_hud.ufo:636
-#: ../base/ufos/ui/_hud.ufo:665
-#: ../base/ufos/ui/_hud.ufo:694
-#: ../base/ufos/ui/_hud.ufo:723
-#: ../base/ufos/ui/_hud.ufo:752
-#: ../base/ufos/ui/_hud.ufo:781
+#: ../base/ufos/ui/_hud.ufo:156
+#: ../base/ufos/ui/_hud.ufo:185
+#: ../base/ufos/ui/_hud.ufo:214
+#: ../base/ufos/ui/_hud.ufo:243
+#: ../base/ufos/ui/_hud.ufo:272
+#: ../base/ufos/ui/_hud.ufo:301
+#: ../base/ufos/ui/_hud.ufo:330
+#: ../base/ufos/ui/_hud.ufo:359
+#: ../base/ufos/ui/_hud.ufo:445
+#: ../base/ufos/ui/_hud.ufo:474
+#: ../base/ufos/ui/_hud.ufo:503
+#: ../base/ufos/ui/_hud.ufo:532
+#: ../base/ufos/ui/_hud.ufo:561
+#: ../base/ufos/ui/_hud.ufo:590
+#: ../base/ufos/ui/_hud.ufo:619
+#: ../base/ufos/ui/_hud.ufo:648
 msgid "Check to use this firemode for reaction fire"
-msgstr ""
+msgstr "Позначте, якщо хочете використати цер режим для вогню увідповідь."
 
 #: ../base/ufos/ui/_menu.ufo:104
 #: ../base/ufos/ui/geoscape.ufo:209
 #: ../base/ufos/ui/hospital.ufo:70
 msgid "CREDITS"
-msgstr ""
+msgstr "БАЛАНС"
 
 #: ../base/ufos/ui/_menu.ufo:112
 #: ../base/ufos/ui/geoscape.ufo:218
 #: ../base/ufos/ui/hospital.ufo:78
 msgid "Organisation capital"
-msgstr ""
+msgstr "Доступні кошти"
 
 #: ../base/ufos/ui/_menu.ufo:121
 #: ../base/ufos/ui/hospital.ufo:88
 msgid "Back to baseview"
-msgstr ""
+msgstr "Повернутися до огляду бази"
 
 #: ../base/ufos/ui/_menu.ufo:139
 #: ../base/ufos/ui/bases.ufo:20
 #: ../base/ufos/ui/hospital.ufo:59
 msgid "Name of this base"
-msgstr ""
+msgstr "Назва бази"
 
 #: ../base/ufos/ui/aircraft.ufo:58
 #: ../base/ufos/ui/ufopedia.ufo:79
 msgid "Description"
-msgstr ""
+msgstr "Опис"
 
 #: ../base/ufos/ui/aircraft.ufo:62
 #: ../base/ufos/ui/hire.ufo:494
 msgid "Pilots"
-msgstr ""
+msgstr "Пілоти"
 
 #: ../base/ufos/ui/aircraft.ufo:71
 msgid "Tanks"
-msgstr ""
+msgstr "Бронетехніка"
 
 #: ../base/ufos/ui/aircraft.ufo:77
 #: ../base/ufos/ui/hire.ufo:489
 msgid "Soldiers"
-msgstr ""
+msgstr "Бійці"
 
 #: ../base/ufos/ui/aircraft.ufo:82
 msgid "Soldier equipment"
-msgstr ""
+msgstr "Екіпіровка бійців"
 
 #: ../base/ufos/ui/aircraft.ufo:136
 msgid "Rename aircraft"
-msgstr ""
+msgstr "Перейменувати літальний апарат"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:86
 msgid "Selected item:"
-msgstr ""
+msgstr "Вибрано предмет:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:151
 msgid "Equip this item"
-msgstr ""
+msgstr "Оснастити цим агрегатом"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:168
 msgid "Remove this item"
-msgstr ""
+msgstr "Видалити цей агрегат"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:192
 msgid "Available equipment:"
-msgstr ""
+msgstr "Доступне обладнання:"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:207
 #: client/campaign/cp_fightequip_callbacks.c:164
 msgid "Weapons"
-msgstr ""
+msgstr "Озброєння"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:211
 #: client/campaign/cp_fightequip_callbacks.c:171
 msgid "Ammo"
-msgstr ""
+msgstr "Набої"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:215
 #: ../base/ufos/ui/equipment.ufo:327
@@ -7956,25 +7951,25 @@ msgstr ""
 #: client/campaign/cp_fightequip_callbacks.c:166
 #: client/campaign/cp_ufopedia.c:148
 msgid "Armour"
-msgstr ""
+msgstr "Броня"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:219
 #: client/campaign/cp_fightequip_callbacks.c:168
 msgid "Items"
-msgstr ""
+msgstr "Обладнання"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:289
 #: ../base/ufos/ui/aircraft_equip.ufo:309
 msgid "Select this zone"
-msgstr ""
+msgstr "Вибрати цю зону"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:329
 msgid "Current item in slot"
-msgstr ""
+msgstr "Предмет поміщено в слот"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:340
 msgid "Ammo fitting this weapon"
-msgstr ""
+msgstr "Набої для цієї зброї"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:355
 #: ../base/ufos/ui/aircraft_equip.ufo:375
@@ -7985,77 +7980,77 @@ msgstr ""
 #: ../base/ufos/ui/aircraft_equip.ufo:475
 #: ../base/ufos/ui/aircraft_equip.ufo:495
 msgid "Select this slot"
-msgstr ""
+msgstr "Виберіть цей слот"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
 #: ../base/ufos/ui/aircraft_soldiers.ufo:65
 msgid "Team Members:"
-msgstr ""
+msgstr "Учасники команди:"
 
 #: ../base/ufos/ui/aircraft_info.ufo:94
 msgid "Start Aircraft"
-msgstr ""
+msgstr "Запустити"
 
 #: ../base/ufos/ui/aircraft_info.ufo:100
 msgid "Call back"
-msgstr ""
+msgstr "Відкликати"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:124
+#: ../base/ufos/ui/aircraft_pilots.ufo:123
 msgid "Pilot is assigned to another craft"
-msgstr ""
+msgstr "Пілот призначений до іншого літального засобу"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:142
+#: ../base/ufos/ui/aircraft_pilots.ufo:141
 msgid "A pilot is already assigned to this craft"
-msgstr ""
+msgstr "Пілот вже призначений до цього літального засобу"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:144
+#: ../base/ufos/ui/aircraft_pilots.ufo:143
 msgid "Assign pilot to this craft"
-msgstr ""
+msgstr "Призначте пілота до цього літального засобу"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:155
+#: ../base/ufos/ui/aircraft_pilots.ufo:154
 msgid "Remove pilot from this craft"
-msgstr ""
+msgstr "Забрати пілота з цього літального засобу"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:198
-#: ../base/ufos/ui/aircraft_pilots.ufo:208
-#: ../base/ufos/ui/aircraft_pilots.ufo:218
-#: ../base/ufos/ui/aircraft_pilots.ufo:228
-#: ../base/ufos/ui/aircraft_pilots.ufo:238
-#: ../base/ufos/ui/aircraft_pilots.ufo:248
-#: ../base/ufos/ui/aircraft_pilots.ufo:258
-#: ../base/ufos/ui/aircraft_pilots.ufo:268
+#: ../base/ufos/ui/aircraft_pilots.ufo:197
+#: ../base/ufos/ui/aircraft_pilots.ufo:207
+#: ../base/ufos/ui/aircraft_pilots.ufo:217
+#: ../base/ufos/ui/aircraft_pilots.ufo:227
+#: ../base/ufos/ui/aircraft_pilots.ufo:237
+#: ../base/ufos/ui/aircraft_pilots.ufo:247
+#: ../base/ufos/ui/aircraft_pilots.ufo:257
+#: ../base/ufos/ui/aircraft_pilots.ufo:267
 msgid "Add/remove this soldier"
-msgstr ""
+msgstr "Додати/забрати бійця"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:87
 #: ../base/ufos/ui/aircraft_soldiers.ufo:616
 #: ../base/ufos/ui/geoscape.ufo:783
 msgid "Equip soldiers"
-msgstr ""
+msgstr "Спорядити бійців"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:115
 msgid "Soldier is assigned to another craft"
-msgstr ""
+msgstr "Боєць приписаний до іншого транспорту"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:134
 msgid "No more soldiers can be assigned to this craft"
-msgstr ""
+msgstr "Більше не можна приписати бійців до цього транспорту"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:136
 msgid "Assign soldier to this craft"
-msgstr ""
+msgstr "Приписати бійця  до цього транспорту"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:147
 msgid "Remove soldier from this craft"
-msgstr ""
+msgstr "Забрати бійця  з цього транспорту"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:157
 msgid "Soldier carries equipment"
-msgstr ""
+msgstr "Бійця екіпіровано"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:166
 msgid "Soldier carries no equipment"
-msgstr ""
+msgstr "Бійця не екіпіровано"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:503
 #: ../base/ufos/ui/equipment.ufo:483
@@ -8064,7 +8059,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:466
 #: ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
-msgstr ""
+msgstr "Сила:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:511
 #: ../base/ufos/ui/equipment.ufo:492
@@ -8074,7 +8069,7 @@ msgstr ""
 #: ../base/ufos/ui/options.ufo:1133
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
-msgstr ""
+msgstr "Швидкість:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:519
 #: ../base/ufos/ui/equipment.ufo:501
@@ -8083,7 +8078,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:484
 #: ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
-msgstr ""
+msgstr "Влучність:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:527
 #: ../base/ufos/ui/equipment.ufo:510
@@ -8092,7 +8087,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:493
 #: ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
-msgstr ""
+msgstr "Інтелект:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:535
 #: ../base/ufos/ui/equipment.ufo:519
@@ -8101,7 +8096,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:502
 #: ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
-msgstr ""
+msgstr "Ближній бій:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:544
 #: ../base/ufos/ui/equipment.ufo:528
@@ -8110,7 +8105,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:511
 #: ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
-msgstr ""
+msgstr "Важка зброя:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:553
 #: ../base/ufos/ui/equipment.ufo:537
@@ -8119,7 +8114,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:520
 #: ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
-msgstr ""
+msgstr "Штурмова зброя:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:562
 #: ../base/ufos/ui/equipment.ufo:546
@@ -8128,7 +8123,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:529
 #: ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
-msgstr ""
+msgstr "Снайперська зброя:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:571
 #: ../base/ufos/ui/equipment.ufo:555
@@ -8137,199 +8132,199 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer_team.ufo:538
 #: ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
-msgstr ""
+msgstr "Вибухова справа:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:584
 #: ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
-msgstr ""
+msgstr "Здоров'я:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:587
 #: ../base/ufos/ui/hire.ufo:387
 msgid "Missions Performed:"
-msgstr ""
+msgstr "Пройдено місій:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:590
 #: ../base/ufos/ui/hire.ufo:390
 msgid "Enemies Killed:"
-msgstr ""
+msgstr "Вбито ворогів:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:601
 msgid "Assign tanks"
-msgstr ""
+msgstr "Призначити бронетехніку"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:605
 msgid "Assign soldiers"
-msgstr ""
+msgstr "Призначчити бійців"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:619
 msgid "No soldiers assigned"
-msgstr ""
+msgstr "Жодног бійця не призначено"
 
 #: ../base/ufos/ui/aliencont.ufo:18
 #: ../base/ufos/ui/aliencont.ufo:114
 msgid "Kill this alien"
-msgstr ""
+msgstr "Вбити цього прибульця"
 
 #: ../base/ufos/ui/aliencont.ufo:24
 #: ../base/ufos/ui/aliencont.ufo:101
 msgid "Start autopsy"
-msgstr ""
+msgstr "Розпочати розтин"
 
 #: ../base/ufos/ui/aliencont.ufo:289
 msgid "Alive:"
-msgstr ""
+msgstr "Живих:"
 
 #: ../base/ufos/ui/aliencont.ufo:310
 msgid "Dead:"
-msgstr ""
+msgstr "Мертвих:"
 
 #: ../base/ufos/ui/aliencont.ufo:343
 msgid "Base info"
-msgstr ""
+msgstr "Інфо бази"
 
 #: ../base/ufos/ui/aliencont.ufo:355
 msgid "Base capacity:"
-msgstr ""
+msgstr "Вмістимість:"
 
 #: ../base/ufos/ui/aliencont.ufo:376
 msgid "Kill all aliens in this base"
-msgstr ""
+msgstr "Убити всіх прибульців на цій базі"
 
 #: ../base/ufos/ui/althud.ufo:508
 #: ../base/ufos/ui/inventory.ufo:192
 #: ../base/ufos/ui/physdat.ufo:233
 msgid "Inventory and physical stats"
-msgstr ""
+msgstr "Інвентар та фізичні дані"
 
 #: ../base/ufos/ui/althud.ufo:544
 #: ../base/ufos/ui/althud.ufo:554
 #: ../base/ufos/ui/hud.ufo:436
 msgid "Use Item"
-msgstr ""
+msgstr "Застосувати"
 
 #: ../base/ufos/ui/althud.ufo:594
 #: ../base/ufos/ui/althud.ufo:654
 msgid "TUs"
-msgstr ""
+msgstr "ОЧ"
 
 #: ../base/ufos/ui/althud.ufo:604
 msgid "TUs remaining"
-msgstr ""
+msgstr "Залишилось ОЧ"
 
 #: ../base/ufos/ui/althud.ufo:615
 msgid "TUs reserved"
-msgstr ""
+msgstr "Зарезервовано ОЧ"
 
 #: ../base/ufos/ui/althud.ufo:626
 #: ../base/ufos/ui/althud.ufo:662
 msgid "Morale"
-msgstr ""
+msgstr "Мораль"
 
 #: ../base/ufos/ui/althud.ufo:646
 msgid "Health"
-msgstr ""
+msgstr "Здоров'я"
 
 #: ../base/ufos/ui/althud.ufo:703
 #: ../base/ufos/ui/hud.ufo:406
 msgid "Use headgear"
-msgstr ""
+msgstr "Одягнути на голову"
 
 #: ../base/ufos/ui/althud.ufo:793
 msgid "Switch to right hand weapon"
-msgstr ""
+msgstr "Перемкнути на зброю у правій руці"
 
 #: ../base/ufos/ui/althud.ufo:805
 msgid "Switch to left hand weapon"
-msgstr ""
+msgstr "Перемкнути на зброю у лівій руці"
 
 #: ../base/ufos/ui/althud.ufo:855
 #: ../base/ufos/ui/hud.ufo:734
 msgid "Chat"
-msgstr ""
+msgstr "Чат"
 
 #: ../base/ufos/ui/althud.ufo:866
 #: ../base/ufos/ui/hud.ufo:745
 msgid "Teamchat"
-msgstr ""
+msgstr "Командний чат"
 
 #: ../base/ufos/ui/althud.ufo:877
 #: ../base/ufos/ui/hud.ufo:756
 msgid "Show chat history"
-msgstr ""
+msgstr "Показати історію пареписки"
 
 #: ../base/ufos/ui/althud.ufo:898
 #: ../base/ufos/ui/hud.ufo:777
 msgid "Chat messages"
-msgstr ""
+msgstr "Чат-повідомлення"
 
 #: ../base/ufos/ui/althud.ufo:950
 msgid "Level up"
-msgstr ""
+msgstr "Рівнем вище"
 
 #: ../base/ufos/ui/althud.ufo:960
 msgid "Level down"
-msgstr ""
+msgstr "Рівнем нижче"
 
 #: ../base/ufos/ui/althud.ufo:1014
 #: ../base/ufos/ui/hud.ufo:338
 msgid "Click to cycle through spotted enemies"
-msgstr ""
+msgstr "Перейти до наступного виявленого ворога"
 
 #: ../base/ufos/ui/althud.ufo:1022
 #: ../base/ufos/ui/hud.ufo:326
 msgid "Finish round"
-msgstr ""
+msgstr "Завершити хід"
 
 #: ../base/ufos/ui/althud.ufo:1104
 #: ../base/ufos/ui/hud.ufo:894
 msgid "Multiple-shot reaction fire"
-msgstr ""
+msgstr "Вогонь увідповідь: чергою"
 
 #: ../base/ufos/ui/althud.ufo:1109
 msgid "Multiple-shot reaction fire (not possible)"
-msgstr ""
+msgstr "Вогонь увідповідь: чергою (неможливо)"
 
 #: ../base/ufos/ui/althud.ufo:1114
 #: ../base/ufos/ui/hud.ufo:906
 msgid "One-shot reaction fire"
-msgstr ""
+msgstr "Вогонь увідповідь: одиночний"
 
 #: ../base/ufos/ui/althud.ufo:1119
 msgid "One-shot reaction fire (not possible)"
-msgstr ""
+msgstr "Вогонь увідповідь: одиночний (неможливо)"
 
 #: ../base/ufos/ui/althud.ufo:1125
 #: ../base/ufos/ui/hud.ufo:918
 msgid "No reaction fire"
-msgstr ""
+msgstr "Без вогню увідповідь"
 
 #: ../base/ufos/ui/althud.ufo:1134
 #: ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:810
+#: client/battlescape/cl_hud.c:1034
 msgid "Reserve TUs for shooting."
-msgstr ""
+msgstr "Зарезервувати ОЧ для пострілу."
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
-msgstr ""
+msgstr "Спорядити захисну зброю"
 
 #: ../base/ufos/ui/basedefence.ufo:55
 msgid "Information"
-msgstr ""
+msgstr "Інформація"
 
 #: ../base/ufos/ui/basedefence.ufo:59
 msgid "Missile Defences"
-msgstr ""
+msgstr "Ракетний захист"
 
 #: ../base/ufos/ui/basedefence.ufo:63
 msgid "Laser Defences"
-msgstr ""
+msgstr "Лазерний захист"
 
 #: ../base/ufos/ui/basedefence.ufo:104
 msgid "Weapon slots"
-msgstr ""
+msgstr "Відсіки озброєння"
 
 #: ../base/ufos/ui/basedefence.ufo:155
 msgid "Add"
@@ -8337,7 +8332,7 @@ msgstr "Додати"
 
 #: ../base/ufos/ui/basedefence.ufo:156
 msgid "Equip the selected slot with this weapon"
-msgstr ""
+msgstr "Обладнайте вибраний відсік цією зброєю"
 
 #: ../base/ufos/ui/basedefence.ufo:167
 msgid "Remove"
@@ -8345,33 +8340,33 @@ msgstr "Видалити"
 
 #: ../base/ufos/ui/basedefence.ufo:168
 msgid "Remove weapon from the selected slot"
-msgstr ""
+msgstr "Видалити зброю із вибраного відсіку"
 
 #: ../base/ufos/ui/basedefence.ufo:185
 msgid "Stores"
-msgstr ""
+msgstr "Сховища"
 
 #: ../base/ufos/ui/basedefence.ufo:238
 msgid "Selected Item"
-msgstr ""
+msgstr "Вибраний предмет"
 
 #: ../base/ufos/ui/basedefence.ufo:296
 msgid "Surface to Air defences"
-msgstr ""
+msgstr "Захисні системи земля-повітря"
 
 #: ../base/ufos/ui/basedefence.ufo:326
 msgid "Targetted UFO:"
-msgstr ""
+msgstr "Вибране НЛО:"
 
 #: ../base/ufos/ui/basedefence.ufo:339
 #: ../base/ufos/ui/geoscape.ufo:1441
 #: ../base/ufos/ui/geoscape.ufo:1549
 msgid "Time to build:"
-msgstr ""
+msgstr "Термін:"
 
 #: ../base/ufos/ui/basedefence.ufo:352
 msgid "Autofire"
-msgstr ""
+msgstr "Автовогонь"
 
 #: ../base/ufos/ui/basedefence.ufo:368
 #: ../base/ufos/ui/geoscape.ufo:1586
@@ -8381,59 +8376,59 @@ msgstr ""
 #: client/campaign/cp_base.c:923
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy"
-msgstr ""
+msgstr "Знищити"
 
 #: ../base/ufos/ui/basedefence.ufo:369
 #: ../base/ufos/ui/geoscape.ufo:1587
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy installation"
-msgstr ""
+msgstr "Знищити споруду"
 
 #: ../base/ufos/ui/basedefence.ufo:379
 #: ../base/ufos/ui/geoscape.ufo:1335
 #: ../base/ufos/ui/geoscape.ufo:1562
 #: ../base/ufos/ui/main.ufo:309
 msgid "Close"
-msgstr ""
+msgstr "Закрити"
 
 #: ../base/ufos/ui/bases.ufo:13
 msgid "Back to geoscape"
-msgstr ""
+msgstr "Назад на глобус"
 
 #: ../base/ufos/ui/bases.ufo:40
 #: ../base/ufos/ui/geoscape.ufo:987
 msgid "Rename your base"
-msgstr ""
+msgstr "Перрейменувати базу"
 
 #: ../base/ufos/ui/bases.ufo:53
 msgid "Switch to the previous base"
-msgstr ""
+msgstr "Перемкнути до попередньої бази"
 
 #: ../base/ufos/ui/bases.ufo:64
 msgid "Switch to the next base"
-msgstr ""
+msgstr "Перемкнути до наступної бази"
 
 #: ../base/ufos/ui/bases.ufo:116
 msgid "Buildings"
-msgstr ""
+msgstr "Споруди"
 
 #: ../base/ufos/ui/bases.ufo:117
 msgid "Build base facilities"
-msgstr ""
+msgstr "Побудова модулів бази"
 
 #: ../base/ufos/ui/bases.ufo:130
 #: client/campaign/cp_base_callbacks.c:293
 msgid "Manage your aircraft"
-msgstr ""
+msgstr "Керуйте своєю авіацією"
 
 #: ../base/ufos/ui/bases.ufo:142
 msgid "Buy/Sell Equipment"
-msgstr ""
+msgstr "Купити/Продати"
 
 #: ../base/ufos/ui/bases.ufo:143
 #: client/campaign/cp_base_callbacks.c:301
 msgid "Buy/Sell equipment"
-msgstr ""
+msgstr "Купити/Продати устаткування"
 
 #: ../base/ufos/ui/bases.ufo:155
 #: ../base/ufos/ui/transfer.ufo:581
@@ -8441,51 +8436,51 @@ msgstr ""
 #: client/campaign/cp_base.c:901
 #: client/campaign/cp_base.c:911
 msgid "Transfer"
-msgstr ""
+msgstr "Переправити"
 
 #: ../base/ufos/ui/bases.ufo:156
 #: client/campaign/cp_base_callbacks.c:306
 msgid "Transfer equipment or personnel"
-msgstr ""
+msgstr "Переправити устаткування або персонал"
 
 #: ../base/ufos/ui/bases.ufo:168
 msgid "Research"
-msgstr ""
+msgstr "Дослідження"
 
 #: ../base/ufos/ui/bases.ufo:169
 #: client/campaign/cp_base_callbacks.c:311
 msgid "Research new technology"
-msgstr ""
+msgstr "Дослідження нових технологій"
 
 #: ../base/ufos/ui/bases.ufo:181
 msgid "Production"
-msgstr ""
+msgstr "Виробництво"
 
 #: ../base/ufos/ui/bases.ufo:182
 #: client/campaign/cp_base_callbacks.c:316
 msgid "Produce new equipment"
-msgstr ""
+msgstr "Виробництво нового спорядження"
 
 #: ../base/ufos/ui/bases.ufo:194
 #: ../base/ufos/ui/bases.ufo:195
 #: client/campaign/cp_base_callbacks.c:321
 msgid "Hire employees"
-msgstr ""
+msgstr "Відділ кадрів"
 
 #: ../base/ufos/ui/bases.ufo:207
 #: client/campaign/cp_base_callbacks.c:328
 msgid "Containment"
-msgstr ""
+msgstr "Ізолятор"
 
 #: ../base/ufos/ui/bases.ufo:208
 #: client/campaign/cp_base_callbacks.c:326
 msgid "Deal with Aliens in Alien Containment"
-msgstr ""
+msgstr "Робота з прибульцями в Ізоляторі"
 
 #: ../base/ufos/ui/bases.ufo:221
 #: client/campaign/cp_base_callbacks.c:331
 msgid "Medical and Surgery operations"
-msgstr ""
+msgstr "Лікування та хірургічні операції"
 
 #: ../base/ufos/ui/bases.ufo:233
 msgid "Base Summary"
@@ -8498,16 +8493,16 @@ msgstr "Інформація про Базу"
 #: ../base/ufos/ui/buildings.ufo:73
 #: ../base/ufos/ui/buildings.ufo:89
 msgid "Open/close Building preview window"
-msgstr ""
+msgstr "Відкрити/закрити вікно попереднього огляду"
 
 #: ../base/ufos/ui/buildings.ufo:88
 #: ../base/ufos/ui/buildings.ufo:130
 msgid "Building preview"
-msgstr ""
+msgstr "Попредній огляд"
 
 #: ../base/ufos/ui/buildings.ufo:98
 msgid "Select building"
-msgstr ""
+msgstr "Вибрати споруду"
 
 #: ../base/ufos/ui/buildings.ufo:175
 #: ../base/ufos/ui/geoscape.ufo:483
@@ -8526,12 +8521,12 @@ msgstr "Кампанії"
 
 #: ../base/ufos/ui/campaign.ufo:36
 msgid "Start campaign"
-msgstr "Кампанія"
+msgstr "Розпочати"
 
 #: ../base/ufos/ui/campaign.ufo:41
 #: ../base/ufos/ui/campaign.ufo:155
 #: ../base/ufos/ui/campaign.ufo:207
-#: ../base/ufos/ui/campaign.ufo:243
+#: ../base/ufos/ui/campaign.ufo:248
 msgid "Load"
 msgstr "Завантажити"
 
@@ -8551,8 +8546,8 @@ msgid "Load last saved game or continue playing"
 msgstr "Завантажити останню збережену чи продовжити"
 
 #: ../base/ufos/ui/campaign.ufo:60
-#: ../base/ufos/ui/campaign.ufo:378
-#: ../base/ufos/ui/campaign.ufo:559
+#: ../base/ufos/ui/campaign.ufo:383
+#: ../base/ufos/ui/campaign.ufo:564
 #: ../base/ufos/ui/multiplayer.ufo:66
 #: ../base/ufos/ui/options.ufo:75
 #: ../base/ufos/ui/singleplayer.ufo:43
@@ -8562,7 +8557,7 @@ msgid "Back"
 msgstr "Назад"
 
 #: ../base/ufos/ui/campaign.ufo:162
-#: ../base/ufos/ui/campaign.ufo:413
+#: ../base/ufos/ui/campaign.ufo:418
 #: ../base/ufos/ui/multiplayer_team.ufo:899
 msgid "Save"
 msgstr "Зберегти"
@@ -8574,7 +8569,7 @@ msgstr "Зберегти"
 #: ../base/ufos/ui/multiplayeringame.ufo:37
 #: ../base/ufos/ui/singleplayer.ufo:98
 msgid "Options"
-msgstr "Настройки"
+msgstr "Нлаштування"
 
 #: ../base/ufos/ui/campaign.ufo:176
 #: ../base/ufos/ui/main.ufo:69
@@ -8588,61 +8583,61 @@ msgstr "Перезапуск кампанії"
 
 #: ../base/ufos/ui/campaign.ufo:199
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
-msgstr ""
+msgstr "Ви впевнені, що хочете перезавантажити останній автоматично збережений стан кампанії?"
 
 #: ../base/ufos/ui/campaign.ufo:208
 msgid "Reload the last automatically saved campaign state"
-msgstr ""
+msgstr "Завантажити останній автоматично збережений стан кампанії"
 
-#: ../base/ufos/ui/campaign.ufo:583
+#: ../base/ufos/ui/campaign.ufo:588
 msgid "You've lost the game"
-msgstr ""
+msgstr "Ви зазнали поразки"
 
-#: ../base/ufos/ui/campaign.ufo:656
+#: ../base/ufos/ui/campaign.ufo:661
 msgid "Thank you for playing UFO:Alien Invasion"
-msgstr ""
+msgstr "Дякуємо, що ви грали в UFO:Alien Invasion"
 
 #: ../base/ufos/ui/equipment.ufo:20
 #: ../base/ufos/ui/inventory.ufo:30
 #: ../base/ufos/ui/multiplayer_team.ufo:20
 msgid "Backpack"
-msgstr ""
+msgstr "Рюкзак"
 
 #: ../base/ufos/ui/equipment.ufo:29
 #: ../base/ufos/ui/inventory.ufo:39
 #: ../base/ufos/ui/multiplayer_team.ufo:29
 msgid "Left Hand"
-msgstr ""
+msgstr "Ліва рука"
 
 #: ../base/ufos/ui/equipment.ufo:38
 #: ../base/ufos/ui/inventory.ufo:48
 #: ../base/ufos/ui/multiplayer_team.ufo:38
 msgid "Right Hand"
-msgstr ""
+msgstr "Права рука"
 
 #: ../base/ufos/ui/equipment.ufo:47
 #: ../base/ufos/ui/inventory.ufo:57
 #: ../base/ufos/ui/multiplayer_team.ufo:47
 msgid "Extension"
-msgstr ""
+msgstr "Насадка"
 
 #: ../base/ufos/ui/equipment.ufo:56
 #: ../base/ufos/ui/inventory.ufo:66
 #: ../base/ufos/ui/multiplayer_team.ufo:56
 msgid "Headgear"
-msgstr ""
+msgstr "Головний убір"
 
 #: ../base/ufos/ui/equipment.ufo:65
 #: ../base/ufos/ui/inventory.ufo:75
 #: ../base/ufos/ui/multiplayer_team.ufo:65
 msgid "Holster"
-msgstr ""
+msgstr "Кобура"
 
 #: ../base/ufos/ui/equipment.ufo:74
 #: ../base/ufos/ui/inventory.ufo:84
 #: ../base/ufos/ui/multiplayer_team.ufo:74
 msgid "Belt"
-msgstr ""
+msgstr "Пояс"
 
 #: ../base/ufos/ui/equipment.ufo:120
 #: ../base/ufos/ui/equipment.ufo:132
@@ -8653,78 +8648,78 @@ msgstr ""
 #: ../base/ufos/ui/equipment.ufo:192
 #: ../base/ufos/ui/equipment.ufo:204
 msgid "Equip this soldier"
-msgstr ""
+msgstr "Екіпірувати цього бійця"
 
 #: ../base/ufos/ui/equipment.ufo:311
 #: ../base/ufos/ui/market.ufo:71
 #: ../base/ufos/ui/multiplayer_team.ufo:291
 #: ../base/ufos/ui/production.ufo:51
 msgid "Primary"
-msgstr ""
+msgstr "Основна"
 
 #: ../base/ufos/ui/equipment.ufo:315
 #: ../base/ufos/ui/market.ufo:75
 #: ../base/ufos/ui/multiplayer_team.ufo:295
 #: ../base/ufos/ui/production.ufo:55
 msgid "Secondary"
-msgstr ""
+msgstr "Особиста"
 
 #: ../base/ufos/ui/equipment.ufo:319
 #: ../base/ufos/ui/market.ufo:79
 #: ../base/ufos/ui/multiplayer_team.ufo:299
 #: ../base/ufos/ui/production.ufo:59
 msgid "Heavy"
-msgstr ""
+msgstr "Важка"
 
 #: ../base/ufos/ui/equipment.ufo:323
 #: ../base/ufos/ui/market.ufo:83
 #: ../base/ufos/ui/multiplayer_team.ufo:303
 #: ../base/ufos/ui/production.ufo:63
 msgid "Misc"
-msgstr ""
+msgstr "Інше"
 
 #: ../base/ufos/ui/equipment.ufo:394
 #: ../base/ufos/ui/market.ufo:416
 #: ../base/ufos/ui/multiplayer_team.ufo:377
 #: ../base/ufos/ui/ufopedia.ufo:241
 msgid "With:"
-msgstr ""
+msgstr "Набої:"
 
 #: ../base/ufos/ui/equipment.ufo:433
 #: ../base/ufos/ui/market.ufo:455
 #: ../base/ufos/ui/multiplayer_team.ufo:416
 #: ../base/ufos/ui/ufopedia.ufo:280
 msgid "Firemode:"
-msgstr ""
+msgstr "Режим вогню:"
 
 #: ../base/ufos/ui/equipment.ufo:441
 #: ../base/ufos/ui/market.ufo:463
 #: ../base/ufos/ui/multiplayer_team.ufo:424
 #: ../base/ufos/ui/ufopedia.ufo:288
 msgid "Previous firemode"
-msgstr ""
+msgstr "Попередній режим вогню"
 
 #: ../base/ufos/ui/equipment.ufo:460
 #: ../base/ufos/ui/market.ufo:482
 #: ../base/ufos/ui/multiplayer_team.ufo:443
 #: ../base/ufos/ui/ufopedia.ufo:307
 msgid "Next firemode"
-msgstr ""
+msgstr "Наступний режим вогню"
 
 #: ../base/ufos/ui/equipment.ufo:588
 #: ../base/ufos/ui/multiplayer_team.ufo:572
 msgid "Actor Abilities"
-msgstr "Характеристики бійця"
+msgstr "Здібності бійця"
 
 #: ../base/ufos/ui/equipment.ufo:592
 #: ../base/ufos/ui/multiplayer_team.ufo:576
 msgid "Object Info"
-msgstr ""
+msgstr "Опис"
 
 #: ../base/ufos/ui/equipment.ufo:611
 #: ../base/ufos/ui/equipment.ufo:621
 msgid "Rename your unit"
-msgstr ""
+msgstr "Перейминувати бійця"
 
 #: ../base/ufos/ui/equipment.ufo:738
 #: ../base/ufos/ui/multiplayer_team.ufo:708
@@ -8733,7 +8728,7 @@ msgstr "Готово"
 
 #: ../base/ufos/ui/genradarhud.ufo:58
 msgid "Reinit"
-msgstr ""
+msgstr "Ініціювати"
 
 #: ../base/ufos/ui/genradarhud.ufo:73
 msgid "Preview"
@@ -8741,15 +8736,15 @@ msgstr "Огляд"
 
 #: ../base/ufos/ui/genradarhud.ufo:89
 msgid "Gen this level"
-msgstr ""
+msgstr "Згенерувати цей рівень"
 
 #: ../base/ufos/ui/genradarhud.ufo:104
 msgid "Gen all levels"
-msgstr ""
+msgstr "Згенерувати всі рівні"
 
 #: ../base/ufos/ui/geoscape.ufo:137
 msgid "Open up messages"
-msgstr ""
+msgstr "Розкрити панель повідомленнь"
 
 #: ../base/ufos/ui/geoscape.ufo:240
 msgid "Pause"
@@ -8757,103 +8752,104 @@ msgstr "Пауза"
 
 #: ../base/ufos/ui/geoscape.ufo:252
 msgid "Time lapse: 5 seconds"
-msgstr ""
+msgstr "Плин часу: 5 секунд"
 
 #: ../base/ufos/ui/geoscape.ufo:264
 msgid "Time lapse: 5 minutes"
-msgstr ""
+msgstr "Плин часу: 5 хвилин"
 
 #: ../base/ufos/ui/geoscape.ufo:277
 msgid "Time lapse: 20 minutes"
-msgstr ""
+msgstr "Плин часу: 20 хвилин"
 
 #: ../base/ufos/ui/geoscape.ufo:289
 msgid "Time lapse: 1 hour"
-msgstr ""
+msgstr "Плин часу: 1 година"
 
 #: ../base/ufos/ui/geoscape.ufo:301
 msgid "Time lapse: 12 hours"
-msgstr ""
+msgstr "Плин часу: 12 годин"
 
 #: ../base/ufos/ui/geoscape.ufo:314
 msgid "Time lapse: 1 day"
-msgstr ""
+msgstr "Плин часу: 1 доба"
 
 #: ../base/ufos/ui/geoscape.ufo:326
 msgid "Time lapse: 5 days"
-msgstr ""
+msgstr "Плин часу: 5 діб"
 
 #: ../base/ufos/ui/geoscape.ufo:423
 msgid "Message settings"
-msgstr ""
+msgstr "Налаштування повідоммлень"
 
 #: ../base/ufos/ui/geoscape.ufo:424
 msgid "Change message and pause settings"
-msgstr ""
+msgstr "Змінити налаштування оповіщень"
 
 #: ../base/ufos/ui/geoscape.ufo:439
 #: ../base/ufos/ui/geoscape.ufo:455
 #: ../base/ufos/ui/mailclient.ufo:122
 msgid "Mailclient"
-msgstr ""
+msgstr "Електронна пошта"
 
 #: ../base/ufos/ui/geoscape.ufo:440
 msgid "INBOX (with unread mails)"
-msgstr ""
+msgstr "ВХІДНІ (включно з непрочитаними)"
 
 #: ../base/ufos/ui/geoscape.ufo:456
 msgid "INBOX"
-msgstr ""
+msgstr "ВХІДНІ"
 
 #: ../base/ufos/ui/geoscape.ufo:469
 #: ../base/ufos/ui/stats.ufo:28
 #: ../base/ufos/ui/ufopedia.ufo:87
 msgid "Statistics"
-msgstr ""
+msgstr "Статистика"
 
 #: ../base/ufos/ui/geoscape.ufo:470
 msgid "Organisation statistics"
-msgstr ""
+msgstr "Відносини з націями"
 
 #: ../base/ufos/ui/geoscape.ufo:484
 msgid "Open UFOpaedia"
-msgstr ""
+msgstr "Відкрити НЛО-довідник"
 
 #: ../base/ufos/ui/geoscape.ufo:497
 #: ../base/ufos/ui/geoscape.ufo:498
 msgid "Create installation"
-msgstr ""
+msgstr "Побудувати споруду"
 
 #: ../base/ufos/ui/geoscape.ufo:515
 #: ../base/ufos/ui/geoscape.ufo:2067
 msgid "Highlight nation borders"
-msgstr ""
+msgstr "Показати кордони держав"
 
 #: ../base/ufos/ui/geoscape.ufo:527
 #: ../base/ufos/ui/geoscape.ufo:2092
 msgid "Show radar range"
-msgstr ""
+msgstr "Показати покриття радарів"
 
 #: ../base/ufos/ui/geoscape.ufo:540
 #: ../base/ufos/ui/geoscape.ufo:2113
+#, fuzzy
 msgid "Show XVI map"
-msgstr ""
+msgstr "Показати карту XVI"
 
 #: ../base/ufos/ui/geoscape.ufo:552
 msgid "Center objects on the map"
-msgstr ""
+msgstr "Навестись на об'єкт на карті"
 
 #: ../base/ufos/ui/geoscape.ufo:563
 msgid "Go to Options"
-msgstr ""
+msgstr "Перейти в Налаштування"
 
 #: ../base/ufos/ui/geoscape.ufo:683
 msgid "Ready"
-msgstr ""
+msgstr "Готово"
 
 #: ../base/ufos/ui/geoscape.ufo:689
 msgid "Aircraft reached desired location - what to do?"
-msgstr ""
+msgstr "Літак дістався пункту призначення - які наступні дії?"
 
 #: ../base/ufos/ui/geoscape.ufo:697
 #: ../base/ufos/ui/geoscape.ufo:946
@@ -8863,14 +8859,13 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:1850
 #: ../base/ufos/ui/geoscape.ufo:1923
 #: ../base/ufos/ui/geoscape.ufo:1996
-#: ../base/ufos/ui/irc.ufo:232
-#: ../base/ufos/ui/irc.ufo:278
+#: ../base/ufos/ui/irc.ufo:211
 #: ../base/ufos/ui/messageoptions.ufo:66
 #: ../base/ufos/ui/options.ufo:1290
 #: ../base/ufos/ui/transfer.ufo:594
 #: client/campaign/cp_installation_callbacks.c:224
 msgid "Cancel"
-msgstr ""
+msgstr "Відміна"
 
 #: ../base/ufos/ui/geoscape.ufo:698
 #: ../base/ufos/ui/geoscape.ufo:947
@@ -8882,44 +8877,44 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:1851
 #: ../base/ufos/ui/geoscape.ufo:1924
 #: ../base/ufos/ui/geoscape.ufo:1997
-#: ../base/ufos/ui/irc.ufo:279
+#: ../base/ufos/ui/irc.ufo:212
 #: ../base/ufos/ui/options.ufo:1291
 #: ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
-msgstr ""
+msgstr "Закрити цей діалог"
 
 #: ../base/ufos/ui/geoscape.ufo:712
 #: ../base/ufos/ui/geoscape.ufo:880
 msgid "Enter"
-msgstr ""
+msgstr "Висадка"
 
 #: ../base/ufos/ui/geoscape.ufo:713
 #: ../base/ufos/ui/geoscape.ufo:881
 msgid "Enter the battlefield"
-msgstr ""
+msgstr "Вступити на поле бою"
 
 #: ../base/ufos/ui/geoscape.ufo:724
 #: ../base/ufos/ui/geoscape.ufo:847
 msgid "Auto mission"
-msgstr ""
+msgstr "Автобій"
 
 #: ../base/ufos/ui/geoscape.ufo:725
 #: ../base/ufos/ui/geoscape.ufo:848
 msgid "Automatically finish mission"
-msgstr ""
+msgstr "Автоматично завершити місію"
 
 #: ../base/ufos/ui/geoscape.ufo:762
 msgid "Base is under attack"
-msgstr ""
+msgstr "Базу атаковано"
 
 #: ../base/ufos/ui/geoscape.ufo:784
 msgid "Go to soldier equipment screen before the battle"
-msgstr ""
+msgstr "Озброїти бійців перед боєм"
 
 #: ../base/ufos/ui/geoscape.ufo:798
 msgid "Kill aliens in container"
-msgstr ""
+msgstr "Убити прибульців у Ізоляторі"
 
 #: ../base/ufos/ui/geoscape.ufo:807
 #: ../base/ufos/ui/geoscape.ufo:816
@@ -8927,204 +8922,204 @@ msgstr ""
 #: ../base/ufos/ui/geoscape.ufo:834
 #: ../base/ufos/ui/hospital.ufo:568
 msgid "Not implemented"
-msgstr ""
+msgstr "Не здійснено"
 
 #: ../base/ufos/ui/geoscape.ufo:814
 msgid "Lift aircraft"
-msgstr ""
+msgstr "Підняти в повітря"
 
 #: ../base/ufos/ui/geoscape.ufo:832
 msgid "Disable Power Plant"
-msgstr ""
+msgstr "Відключити Енергостанцію"
 
 #: ../base/ufos/ui/geoscape.ufo:922
 msgid "Select base to transfer to"
-msgstr ""
+msgstr "Вибрати цільову базу для переправки"
 
 #: ../base/ufos/ui/geoscape.ufo:927
 msgid "Choose a base to host alien bodies:"
-msgstr ""
+msgstr "Виберіть базу для розміщення мертвих прибульців:"
 
 #: ../base/ufos/ui/geoscape.ufo:968
 msgid "New base"
-msgstr ""
+msgstr "Нова база"
 
 #: ../base/ufos/ui/geoscape.ufo:973
 #: ../base/ufos/ui/geoscape.ufo:1412
 #: ../base/ufos/ui/geoscape.ufo:1531
 #: ../base/ufos/ui/geoscape.ufo:1808
 #: ../base/ufos/ui/geoscape.ufo:1886
-#: ../base/ufos/ui/irc.ufo:200
 #: ../base/ufos/ui/main.ufo:107
 #: ../base/ufos/ui/multiplayer.ufo:342
 #: ../base/ufos/ui/options.ufo:736
 msgid "Name:"
-msgstr ""
+msgstr "Назва:"
 
 #: ../base/ufos/ui/geoscape.ufo:997
 #: ../base/ufos/ui/geoscape.ufo:1429
 msgid "Cost:"
-msgstr ""
+msgstr "Вартість:"
 
 #: ../base/ufos/ui/geoscape.ufo:1021
 msgid "Buildings already built in the initial base"
-msgstr ""
+msgstr "На початковій базі споруди вже побудовано"
 
 #: ../base/ufos/ui/geoscape.ufo:1030
 msgid "Start with buildings"
-msgstr ""
+msgstr "Розпочати із спорудами на базі"
 
 #: ../base/ufos/ui/geoscape.ufo:1040
 msgid "Employees already hired at campaign start"
-msgstr ""
+msgstr "На початку кампанії персонал уже найнято"
 
 #: ../base/ufos/ui/geoscape.ufo:1048
 msgid "Start with employees"
-msgstr ""
+msgstr "Розпочати з робітниками"
 
 #: ../base/ufos/ui/geoscape.ufo:1070
 #: ../base/ufos/ui/geoscape.ufo:1489
 msgid "Build"
-msgstr ""
+msgstr "Побудувати"
 
 #: ../base/ufos/ui/geoscape.ufo:1071
 msgid "Build the base"
-msgstr ""
+msgstr "Заснувати базу"
 
 #: ../base/ufos/ui/geoscape.ufo:1110
 msgid "New installation"
-msgstr ""
+msgstr "Спорудити об'єкт"
 
 #: ../base/ufos/ui/geoscape.ufo:1115
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: ../base/ufos/ui/geoscape.ufo:1122
 msgid "Build Time"
-msgstr ""
+msgstr "Тривалість"
 
 #: ../base/ufos/ui/geoscape.ufo:1130
 msgid "Cost"
-msgstr ""
+msgstr "Вартість"
 
 #: ../base/ufos/ui/geoscape.ufo:1150
 msgid "Radar tower"
-msgstr ""
+msgstr "Радіолокаційна вежа"
 
 #: ../base/ufos/ui/geoscape.ufo:1281
 #: client/campaign/cp_map.c:339
 msgid "Base"
-msgstr ""
+msgstr "База"
 
 #: ../base/ufos/ui/geoscape.ufo:1289
 msgid "0 day"
-msgstr ""
+msgstr "0 діб"
 
 #: ../base/ufos/ui/geoscape.ufo:1318
 msgid "Installation limit reached. Build more bases."
-msgstr ""
+msgstr "Досягнуто ліміт модулів. Будуйте більше баз."
 
 #: ../base/ufos/ui/geoscape.ufo:1325
 msgid "Base limit reached."
-msgstr ""
+msgstr "Ліміт баз вичерпано."
 
 #: ../base/ufos/ui/geoscape.ufo:1490
 msgid "Build the radar tower"
-msgstr ""
+msgstr "Будувати радіолокаційну вежу"
 
 #: ../base/ufos/ui/geoscape.ufo:1507
 msgid "New radar tower"
-msgstr ""
+msgstr "Нова радіолокаційна вежа"
 
 #: ../base/ufos/ui/geoscape.ufo:1510
 msgid "New SAM site"
-msgstr ""
+msgstr "Новий пункт ППО"
 
 #: ../base/ufos/ui/geoscape.ufo:1513
 msgid "New UFO yard"
-msgstr ""
+msgstr "Новий майданчик НЛО"
 
 #: ../base/ufos/ui/geoscape.ufo:1526
 msgid "Installation Status"
-msgstr ""
+msgstr "Статус споруди"
 
 #: ../base/ufos/ui/geoscape.ufo:1573
 msgid "Manage"
-msgstr ""
+msgstr "Управління"
 
 #: ../base/ufos/ui/geoscape.ufo:1574
 msgid "Manage installation"
-msgstr ""
+msgstr "Управління спорудою"
 
 #: ../base/ufos/ui/geoscape.ufo:1631
 msgid "Anti-UFO defence"
-msgstr ""
+msgstr "Захист від НЛО"
 
 #: ../base/ufos/ui/geoscape.ufo:1639
 msgid "Aircraft interception"
-msgstr ""
+msgstr "Авіаперехоплення"
 
 #: ../base/ufos/ui/geoscape.ufo:1643
 msgid "SAM defence"
-msgstr ""
+msgstr "Захмст ППО"
 
 #: ../base/ufos/ui/geoscape.ufo:1660
 msgid "Aircraft:"
-msgstr ""
+msgstr "Авіатранспорт:"
 
 #: ../base/ufos/ui/geoscape.ufo:1667
 #: ../base/ufos/ui/geoscape.ufo:1815
 msgid "Status:"
-msgstr ""
+msgstr "Стан:"
 
 #: ../base/ufos/ui/geoscape.ufo:1674
 #: ../base/ufos/ui/geoscape.ufo:1822
 msgid "Base:"
-msgstr ""
+msgstr "База:"
 
 #: ../base/ufos/ui/geoscape.ufo:1722
 msgid "Surface-to-air missile site:"
-msgstr ""
+msgstr "Ракетна установка земля-повітря:"
 
 #: ../base/ufos/ui/geoscape.ufo:1803
 msgid "Select aircraft"
-msgstr ""
+msgstr "Виберіть авіасудно"
 
 #: ../base/ufos/ui/geoscape.ufo:1829
+#, fuzzy
 msgid "ETA:"
-msgstr ""
+msgstr "ETA:"
 
 #: ../base/ufos/ui/geoscape.ufo:1873
 msgid "Select item"
-msgstr ""
+msgstr "Виберіть предмет"
 
 #: ../base/ufos/ui/geoscape.ufo:1878
 msgid "Type:"
-msgstr ""
+msgstr "Тип:"
 
 #: ../base/ufos/ui/geoscape.ufo:1951
 msgid "Action:"
-msgstr ""
+msgstr "Дія:"
 
 #: ../base/ufos/ui/geoscape.ufo:1959
 msgid "Description:"
-msgstr ""
+msgstr "Опис:"
 
 #: ../base/ufos/ui/geoscape.ufo:2020
 msgid "Geoscape options"
-msgstr ""
+msgstr "Налаштування глобусу"
 
 #: ../base/ufos/ui/geoscape.ufo:2032
 msgid "Geoscape projection mode:"
-msgstr ""
+msgstr "Режим відображення глобусу:"
 
 #: ../base/ufos/ui/geoscape.ufo:2042
 msgid "2D"
-msgstr ""
+msgstr "2D"
 
 #: ../base/ufos/ui/geoscape.ufo:2046
 msgid "3D"
-msgstr ""
+msgstr "3D"
 
 #: ../base/ufos/ui/hire.ufo:7
 msgid "Hire/Unhire - Right click to remove"
@@ -9179,42 +9174,42 @@ msgstr ""
 #: ../base/ufos/ui/hud.ufo:54
 #: ../base/ufos/ui/multiplayer.ufo:1074
 msgid "Level 1"
-msgstr ""
+msgstr "Рівень 1"
 
 #: ../base/ufos/ui/hud.ufo:65
 #: ../base/ufos/ui/multiplayer.ufo:1085
 msgid "Level 2"
-msgstr ""
+msgstr "Рівень 2"
 
 #: ../base/ufos/ui/hud.ufo:76
 #: ../base/ufos/ui/multiplayer.ufo:1096
 msgid "Level 3"
-msgstr ""
+msgstr "Рівень 3"
 
 #: ../base/ufos/ui/hud.ufo:87
 #: ../base/ufos/ui/multiplayer.ufo:1107
 msgid "Level 4"
-msgstr ""
+msgstr "Рівень 4"
 
 #: ../base/ufos/ui/hud.ufo:98
 #: ../base/ufos/ui/multiplayer.ufo:1118
 msgid "Level 5"
-msgstr ""
+msgstr "Рівень 5"
 
 #: ../base/ufos/ui/hud.ufo:109
 #: ../base/ufos/ui/multiplayer.ufo:1129
 msgid "Level 6"
-msgstr ""
+msgstr "Рівень 6"
 
 #: ../base/ufos/ui/hud.ufo:120
 #: ../base/ufos/ui/multiplayer.ufo:1140
 msgid "Level 7"
-msgstr ""
+msgstr "Рівень 7"
 
 #: ../base/ufos/ui/hud.ufo:131
 #: ../base/ufos/ui/multiplayer.ufo:1151
 msgid "Level 8"
-msgstr ""
+msgstr "Рівень 8"
 
 #: ../base/ufos/ui/hud.ufo:370
 msgid "Primary fire mode"
@@ -9243,7 +9238,7 @@ msgstr ""
 #: ../base/ufos/ui/multiplayer.ufo:1881
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 msgid "Lobby"
-msgstr ""
+msgstr "Лобі"
 
 #: ../base/ufos/ui/irc.ufo:28
 msgid "Disconnect"
@@ -9261,50 +9256,29 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:184
-msgid "Name is already in use"
-msgstr ""
-
-#: ../base/ufos/ui/irc.ufo:189
-msgid "Your name is already in use or is invalid."
-msgstr ""
-
-#: ../base/ufos/ui/irc.ufo:220
-#: ../base/ufos/ui/singleplayer.ufo:91
-msgid "Retry"
-msgstr ""
-
-#: ../base/ufos/ui/irc.ufo:221
-msgid "Retry with your changed name"
-msgstr ""
-
-#: ../base/ufos/ui/irc.ufo:233
-msgid "Close the lobby"
-msgstr ""
-
-#: ../base/ufos/ui/irc.ufo:253
+#: ../base/ufos/ui/irc.ufo:186
 msgid "Not connected"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:258
+#: ../base/ufos/ui/irc.ufo:191
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:266
+#: ../base/ufos/ui/irc.ufo:199
 #: ../base/ufos/ui/multiplayer.ufo:197
 #: ../base/ufos/ui/multiplayer.ufo:385
 #: ../base/ufos/ui/multiplayer.ufo:1790
 msgid "Connect"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:267
+#: ../base/ufos/ui/irc.ufo:200
 msgid "Connect to the lobby"
 msgstr ""
 
 #: ../base/ufos/ui/lostwon.ufo:36
 #: ../base/ufos/ui/lostwon.ufo:118
 msgid "Try again"
-msgstr ""
+msgstr "Спробуйте ще"
 
 #: ../base/ufos/ui/lostwon.ufo:37
 #: ../base/ufos/ui/lostwon.ufo:119
@@ -9995,311 +9969,311 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:34
 msgid "Game"
-msgstr ""
+msgstr "Ігрові"
 
 #: ../base/ufos/ui/options.ufo:44
 msgid "Video"
-msgstr ""
+msgstr "Відео"
 
 #: ../base/ufos/ui/options.ufo:55
 msgid "Sound"
-msgstr ""
+msgstr "Звук"
 
 #: ../base/ufos/ui/options.ufo:65
 msgid "Input"
-msgstr ""
+msgstr "Управління"
 
 #: ../base/ufos/ui/options.ufo:93
 msgid "Video settings"
-msgstr ""
+msgstr "Налаштування відео"
 
 #: ../base/ufos/ui/options.ufo:102
 msgid "Resolution:"
-msgstr ""
+msgstr "Розрішення:"
 
 #: ../base/ufos/ui/options.ufo:109
 msgid "Texture resolution cap:"
-msgstr ""
+msgstr "Якість текстур:"
 
 #: ../base/ufos/ui/options.ufo:117
 msgid "Lightmap block size:"
-msgstr ""
+msgstr "Розмір блоку відображення:"
 
 #: ../base/ufos/ui/options.ufo:124
 msgid "Texture anisotropy level:"
-msgstr ""
+msgstr "Анізотропна фільтрація текстур:"
 
 #: ../base/ufos/ui/options.ufo:150
 msgid "Fullscreen:"
-msgstr ""
+msgstr "На весь екран:"
 
 #: ../base/ufos/ui/options.ufo:164
 msgid "Texture compression:"
-msgstr ""
+msgstr "Компресія текстур:"
 
 #: ../base/ufos/ui/options.ufo:178
 msgid "Show FPS:"
-msgstr ""
+msgstr "Показувати FPS:"
 
 #: ../base/ufos/ui/options.ufo:192
 msgid "Texture Lod:"
-msgstr ""
+msgstr "Деталізація текстур:"
 
 #: ../base/ufos/ui/options.ufo:206
 msgid "Isometric Mode:"
-msgstr ""
+msgstr "Режим ізометрії:"
 
 #: ../base/ufos/ui/options.ufo:220
 msgid "GLSL shaders:"
-msgstr ""
+msgstr "GLSL шейдери:"
 
 #: ../base/ufos/ui/options.ufo:234
 msgid "Realtime lighting:"
-msgstr ""
+msgstr "Освітлення в реальному часі:"
 
 #: ../base/ufos/ui/options.ufo:248
 msgid "Weather effects:"
-msgstr ""
+msgstr "Погодні явища:"
 
 #: ../base/ufos/ui/options.ufo:262
 msgid "Vertex buffers:"
-msgstr ""
+msgstr "Вершинні буфери:"
 
 #: ../base/ufos/ui/options.ufo:276
 msgid "Multisample buffers:"
-msgstr ""
+msgstr "Мультивибіркові буфери:"
 
 #: ../base/ufos/ui/options.ufo:299
 msgid "Swap interval:"
-msgstr ""
+msgstr "Вертикальна синхронізація:"
 
 #: ../base/ufos/ui/options.ufo:323
 msgid "Gamma:"
-msgstr ""
+msgstr "Гама:"
 
 #: ../base/ufos/ui/options.ufo:344
 msgid "Contrast:"
-msgstr ""
+msgstr "Контраст:"
 
 #: ../base/ufos/ui/options.ufo:365
 msgid "Brightness:"
-msgstr ""
+msgstr "Яскравість:"
 
 #: ../base/ufos/ui/options.ufo:386
 msgid "Lightmap scale:"
-msgstr ""
+msgstr "Рівень карти овітлення:"
 
 #: ../base/ufos/ui/options.ufo:407
 msgid "Strech the screen with a 4:3 ratio:"
-msgstr ""
+msgstr "Розтянути екран в пропорції 4:3"
 
 #: ../base/ufos/ui/options.ufo:427
 #: ../base/ufos/ui/options.ufo:452
 msgid "Low"
-msgstr ""
+msgstr "Низько"
 
 #: ../base/ufos/ui/options.ufo:431
 #: ../base/ufos/ui/options.ufo:456
 msgid "Medium"
-msgstr ""
+msgstr "Посередньо"
 
 #: ../base/ufos/ui/options.ufo:435
 #: ../base/ufos/ui/options.ufo:460
 #: client/cl_game_campaign.c:129
 msgid "Normal"
-msgstr ""
+msgstr "Звичайно"
 
 #: ../base/ufos/ui/options.ufo:439
 #: ../base/ufos/ui/options.ufo:464
 msgid "High"
-msgstr ""
+msgstr "Високо"
 
 #: ../base/ufos/ui/options.ufo:468
 #: client/battlescape/cl_actor.c:118
 msgid "Excellent"
-msgstr ""
+msgstr "Відмінно"
 
 #: ../base/ufos/ui/options.ufo:472
 msgid "Extreme"
-msgstr ""
+msgstr "Винятково"
 
 #: ../base/ufos/ui/options.ufo:551
 msgid "Sound settings"
-msgstr ""
+msgstr "Налаштування звуку"
 
 #: ../base/ufos/ui/options.ufo:608
 msgid "Sound rate:"
-msgstr ""
+msgstr "Частота дискретизації:"
 
 #: ../base/ufos/ui/options.ufo:614
 msgid "Restart sound to change the settings"
-msgstr ""
+msgstr "Рестарт звуку для прийнятя змін"
 
 #: ../base/ufos/ui/options.ufo:650
 msgid "Enable sound:"
-msgstr ""
+msgstr "Увімкнути звук:"
 
 #: ../base/ufos/ui/options.ufo:676
 msgid "Show key bindings"
-msgstr ""
+msgstr "Гарячі клавіші"
 
 #: ../base/ufos/ui/options.ufo:724
 msgid "Game settings"
-msgstr ""
+msgstr "Ігрові налаштування"
 
 #: ../base/ufos/ui/options.ufo:758
 msgid "HUD Design:"
-msgstr ""
+msgstr "Вигляд оболонки інтерфейсу:"
 
 #: ../base/ufos/ui/options.ufo:770
 msgid "Original HUD"
-msgstr ""
+msgstr "Оригінальний"
 
 #: ../base/ufos/ui/options.ufo:774
 msgid "Alternative HUD"
-msgstr ""
+msgstr "Альтернативний"
 
 #: ../base/ufos/ui/options.ufo:822
 msgid "Tooltips:"
-msgstr ""
+msgstr "Підказки:"
 
 #: ../base/ufos/ui/options.ufo:829
 msgid "Activates tooltips"
-msgstr ""
+msgstr "Увімкнути підказки"
 
 #: ../base/ufos/ui/options.ufo:840
 msgid "Centre view:"
-msgstr ""
+msgstr "Сфокусуватись на об'єкті:"
 
 #: ../base/ufos/ui/options.ufo:847
 msgid "Centring at soldier selecting, shooting and appearing"
-msgstr ""
+msgstr "При виборі, пострілі та виявленні ворога центрувати екран на бійця"
 
 #: ../base/ufos/ui/options.ufo:858
 msgid "Cursor tooltips:"
-msgstr ""
+msgstr "Підказки під курсором:"
 
 #: ../base/ufos/ui/options.ufo:865
 msgid "Activates cursor tooltips"
-msgstr ""
+msgstr "Активувати підказки"
 
 #: ../base/ufos/ui/options.ufo:876
 msgid "3D Geoscape:"
-msgstr ""
+msgstr "3D Глобус:"
 
 #: ../base/ufos/ui/options.ufo:883
 msgid "Use 3D geoscape"
-msgstr ""
+msgstr "Використовувати глобус"
 
 #: ../base/ufos/ui/options.ufo:894
 msgid "3D Geoscape ambient lighting:"
-msgstr ""
+msgstr "Фонове освітлення глобусу:"
 
 #: ../base/ufos/ui/options.ufo:919
 msgid "Show tip of the day:"
-msgstr ""
+msgstr "Показувати поради дня:"
 
 #: ../base/ufos/ui/options.ufo:937
 msgid "Precache models:"
-msgstr ""
+msgstr "Попереднє кешування:"
 
 #: ../base/ufos/ui/options.ufo:944
 msgid "Precache models (faster menus)"
-msgstr ""
+msgstr "Попереднє кешування (прискорює меню)"
 
 #: ../base/ufos/ui/options.ufo:955
 msgid "Actor speed:"
-msgstr ""
+msgstr "Швидкість переміщення:"
 
 #: ../base/ufos/ui/options.ufo:989
 msgid "Input settings"
-msgstr ""
+msgstr "Налаштування управління"
 
 #: ../base/ufos/ui/options.ufo:1001
 msgid "Camera"
-msgstr ""
+msgstr "Камера"
 
 #: ../base/ufos/ui/options.ufo:1007
 msgid "Scroll Speed:"
-msgstr ""
+msgstr "Швидкість прокрутки:"
 
 #: ../base/ufos/ui/options.ufo:1032
 msgid "Rotation Speed:"
-msgstr ""
+msgstr "Швидкість повертання:"
 
 #: ../base/ufos/ui/options.ufo:1057
 msgid "Move Acceleration:"
-msgstr ""
+msgstr "Прискорення пересування:"
 
 #: ../base/ufos/ui/options.ufo:1082
 msgid "Joystick settings:"
-msgstr ""
+msgstr "Налаштування джойстика:"
 
 #: ../base/ufos/ui/options.ufo:1089
 msgid "Enable:"
-msgstr ""
+msgstr "Увімкнути:"
 
 #: ../base/ufos/ui/options.ufo:1097
 msgid "Enables/Disables Joysticks"
-msgstr ""
+msgstr "Увімкнути/Вимкнути джойстики"
 
 #: ../base/ufos/ui/options.ufo:1108
 msgid "Threshold:"
-msgstr ""
+msgstr "Чутливість:"
 
 #: ../base/ufos/ui/options.ufo:1158
 msgid "Keys"
-msgstr ""
+msgstr "Кнопки"
 
 #: ../base/ufos/ui/options.ufo:1173
-#: client/battlescape/cl_hud.c:99
+#: client/battlescape/cl_hud.c:96
 msgid "Autostand"
-msgstr ""
+msgstr "Автостоп"
 
 #: ../base/ufos/ui/options.ufo:1185
 #: ../base/ufos/ui/options.ufo:1211
 #: po/OTHER_STRINGS:4
 msgid "Yes"
-msgstr ""
+msgstr "так"
 
 #: ../base/ufos/ui/options.ufo:1189
 #: ../base/ufos/ui/options.ufo:1215
 #: po/OTHER_STRINGS:5
 msgid "No"
-msgstr ""
+msgstr "ні"
 
 #: ../base/ufos/ui/options.ufo:1199
 msgid "Confirm Actions:"
-msgstr ""
+msgstr "Підтвердження дій:"
 
 #: ../base/ufos/ui/options.ufo:1219
 msgid "Only for moving"
-msgstr ""
+msgstr "Тільки для пересування"
 
 #: ../base/ufos/ui/options.ufo:1229
 msgid "Joystick:"
-msgstr ""
+msgstr "Джойстик:"
 
 #: ../base/ufos/ui/options.ufo:1262
 msgid "Maintain resolution"
-msgstr ""
+msgstr "Керування розрішенням"
 
 #: ../base/ufos/ui/options.ufo:1272
 msgid "Want To Maintain resolution"
-msgstr ""
+msgstr "Хочете змінити розрішення екрану?"
 
 #: ../base/ufos/ui/options.ufo:1279
 msgid "Accept"
-msgstr ""
+msgstr "Прийняти"
 
 #: ../base/ufos/ui/options.ufo:1280
 msgid "Change the resolution"
-msgstr ""
+msgstr "Зміна розрішення"
 
 #: ../base/ufos/ui/production.ufo:87
 #: client/campaign/cp_produce_callbacks.c:389
 msgid "Disassembly"
-msgstr ""
+msgstr "Демонтаж"
 
 #: ../base/ufos/ui/production.ufo:139
 msgid "Workers (ready/all):"
@@ -10365,15 +10339,19 @@ msgstr ""
 #: ../base/ufos/ui/singleplayer.ufo:29
 #: ../base/ufos/ui/stats.ufo:156
 msgid "Campaign"
-msgstr ""
+msgstr "Кампанія"
 
 #: ../base/ufos/ui/singleplayer.ufo:36
 msgid "Skirmish"
-msgstr ""
+msgstr "Сутичка"
 
 #: ../base/ufos/ui/singleplayer.ufo:84
 msgid "Abort"
-msgstr ""
+msgstr "Припинити"
+
+#: ../base/ufos/ui/singleplayer.ufo:91
+msgid "Retry"
+msgstr "Повторити"
 
 #: ../base/ufos/ui/skirmish.ufo:28
 msgid "Start game"
@@ -10397,7 +10375,7 @@ msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:213
 msgid "UFO:"
-msgstr ""
+msgstr "НЛО:"
 
 #: ../base/ufos/ui/skirmish.ufo:216
 msgid "Select the ufo that should be used"
@@ -10553,7 +10531,7 @@ msgstr ""
 
 #: ../base/ufos/ui/ufopedia.ufo:194
 msgid "Requirement:"
-msgstr ""
+msgstr "Потребує:"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -10645,7 +10623,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:507
 #: ../base/ufos/weapons_human.ufo:607
 #: ../base/ufos/weapons_human.ufo:708
-#: ../base/ufos/weapons_human.ufo:1909
+#: ../base/ufos/weapons_human.ufo:1910
 #: ../base/ufos/weapons_particle.ufo:41
 #: ../base/ufos/weapons_particle.ufo:122
 #: ../base/ufos/weapons_particle.ufo:224
@@ -10680,8 +10658,8 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:850
 #: ../base/ufos/weapons_human.ufo:934
 #: ../base/ufos/weapons_human.ufo:981
-#: ../base/ufos/weapons_human.ufo:1669
-#: ../base/ufos/weapons_human.ufo:1929
+#: ../base/ufos/weapons_human.ufo:1670
+#: ../base/ufos/weapons_human.ufo:1930
 msgid "3-Round Burst"
 msgstr ""
 
@@ -10735,7 +10713,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:767
 #: ../base/ufos/weapons_human.ufo:1175
 #: ../base/ufos/weapons_human.ufo:1217
-#: ../base/ufos/weapons_human.ufo:1949
+#: ../base/ufos/weapons_human.ufo:1950
 #: ../base/ufos/weapons_particle.ufo:141
 #: ../base/ufos/weapons_plasma.ufo:61
 #: ../base/ufos/weapons_plasma.ufo:163
@@ -10786,7 +10764,7 @@ msgstr ""
 #: ../base/ufos/weapons_human.ufo:828
 #: ../base/ufos/weapons_human.ufo:912
 #: ../base/ufos/weapons_human.ufo:959
-#: ../base/ufos/weapons_human.ufo:1648
+#: ../base/ufos/weapons_human.ufo:1649
 #: ../base/ufos/weapons_multiplayer.ufo:150
 msgid "Single Shot"
 msgstr ""
@@ -10842,37 +10820,37 @@ msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1283
 #: ../base/ufos/weapons_human.ufo:1464
-#: ../base/ufos/weapons_human.ufo:1709
+#: ../base/ufos/weapons_human.ufo:1710
 msgid "Snap Shot - Airburst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1309
-#: ../base/ufos/weapons_human.ufo:1490
-#: ../base/ufos/weapons_human.ufo:1735
+#: ../base/ufos/weapons_human.ufo:1491
+#: ../base/ufos/weapons_human.ufo:1736
 msgid "Aimed Shot - Airburst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1335
-#: ../base/ufos/weapons_human.ufo:1516
-#: ../base/ufos/weapons_human.ufo:1760
+#: ../base/ufos/weapons_human.ufo:1517
+#: ../base/ufos/weapons_human.ufo:1761
 msgid "3-Round Burst - Airburst"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1361
-#: ../base/ufos/weapons_human.ufo:1542
-#: ../base/ufos/weapons_human.ufo:1785
+#: ../base/ufos/weapons_human.ufo:1543
+#: ../base/ufos/weapons_human.ufo:1786
 msgid "Snap Shot - Timed"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1389
-#: ../base/ufos/weapons_human.ufo:1570
-#: ../base/ufos/weapons_human.ufo:1812
+#: ../base/ufos/weapons_human.ufo:1571
+#: ../base/ufos/weapons_human.ufo:1813
 msgid "Aimed Shot - Timed"
 msgstr ""
 
 #: ../base/ufos/weapons_human.ufo:1417
-#: ../base/ufos/weapons_human.ufo:1598
-#: ../base/ufos/weapons_human.ufo:1839
+#: ../base/ufos/weapons_human.ufo:1599
+#: ../base/ufos/weapons_human.ufo:1840
 msgid "3-Round Burst - Timed"
 msgstr ""
 
@@ -10880,11 +10858,11 @@ msgstr ""
 msgid "25mm IC Grenades"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1631
+#: ../base/ufos/weapons_human.ufo:1632
 msgid "25mm Flechette Grenades"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1692
+#: ../base/ufos/weapons_human.ufo:1693
 msgid "25mm PB Grenades"
 msgstr ""
 
@@ -11110,64 +11088,64 @@ msgstr ""
 msgid "Superhuman"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:693
+#: client/battlescape/cl_actor.c:723
 msgid "This isn't your round\n"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:955
+#: client/battlescape/cl_actor.c:985
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:1792
+#: client/battlescape/cl_actor.c:1819
 msgid "Unknown alien race"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2457
+#: client/battlescape/cl_actor.c:2485
 msgid "Toggle to next actor"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2458
+#: client/battlescape/cl_actor.c:2486
 msgid "Select an actor from list"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2459
+#: client/battlescape/cl_actor.c:2487
 msgid "Update an actor"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2461
+#: client/battlescape/cl_actor.c:2489
 msgid "Toggle stand/crounch"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2462
+#: client/battlescape/cl_actor.c:2490
 msgid "Toggle the headgear"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2463
+#: client/battlescape/cl_actor.c:2491
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2464
+#: client/battlescape/cl_actor.c:2492
 msgid "Confirm the current action"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2465
+#: client/battlescape/cl_actor.c:2493
 msgid "Toggle to next alien visible from selected actor."
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2467
+#: client/battlescape/cl_actor.c:2495
 msgid "Toggle to next alien"
 msgstr ""
 
+#: client/battlescape/cl_hud.c:95
 #: client/battlescape/cl_hud.c:98
-#: client/battlescape/cl_hud.c:101
 msgid "Crouch walk"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:100
+#: client/battlescape/cl_hud.c:97
 msgid "Walk"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:148
+#: client/battlescape/cl_hud.c:145
 #, c-format
 msgid ""
 "%s\n"
@@ -11175,97 +11153,133 @@ msgid ""
 "%s"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:287
-msgid "[0 TU] No reservation"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:305
-#, c-format
-msgid "[%i TU] %s"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:337
-msgid "Reserve TUs for firing/using."
-msgstr ""
-
-#: client/battlescape/cl_hud.c:337
-msgid "Shot Reservation"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:426
+#: client/battlescape/cl_hud.c:236
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:429
+#: client/battlescape/cl_hud.c:239
 msgid "No remaining TUs left after shot."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:432
+#: client/battlescape/cl_hud.c:242
 #, c-format
 msgid "TU: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:433
+#: client/battlescape/cl_hud.c:243
 #, c-format
 msgid "Shots: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:654
+#: client/battlescape/cl_hud.c:351
+msgid "[0 TU] No reservation"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:369
+#, c-format
+msgid "[%i TU] %s"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:401
+msgid "Reserve TUs for firing/using."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:401
+msgid "Shot Reservation"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:716
+#: client/battlescape/cl_hud.c:751
+msgid "No item in hand.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:722
+msgid ""
+"Can't perform action:\n"
+"out of ammo.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:727
+msgid ""
+"This weapon cannot be fired\n"
+"one handed.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:757
+msgid ""
+"Can't perform action:\n"
+"this item is not reloadable.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:764
+msgid ""
+"Can't perform action:\n"
+"ammo not available.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:769
+#: client/battlescape/cl_hud.c:823
+msgid ""
+"Can't perform action:\n"
+"not enough TUs.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:905
 msgid "No weapon."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:663
+#: client/battlescape/cl_hud.c:914
 msgid "Weapon cannot be reloaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:669
+#: client/battlescape/cl_hud.c:920
 msgid "No reload possible, already fully loaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:679
+#: client/battlescape/cl_hud.c:934
 msgid "Not enough TUs for reloading weapon."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:682
+#: client/battlescape/cl_hud.c:937
 msgid "No reload possible, you don't have backup ammo."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:774
+#: client/battlescape/cl_hud.c:998
 msgid "Not enough TUs for standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:777
+#: client/battlescape/cl_hud.c:1001
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:782
+#: client/battlescape/cl_hud.c:1006
 msgid "Not enough TUs for crouching."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:785
+#: client/battlescape/cl_hud.c:1009
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:793
+#: client/battlescape/cl_hud.c:1017
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:797
+#: client/battlescape/cl_hud.c:1021
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:800
+#: client/battlescape/cl_hud.c:1024
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:806
+#: client/battlescape/cl_hud.c:1030
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -11273,54 +11287,17 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:813
+#: client/battlescape/cl_hud.c:1037
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:834
-#: client/battlescape/cl_hud.c:843
+#: client/battlescape/cl_hud.c:1059
+#: client/battlescape/cl_hud.c:1068
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1090
-msgid ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1111
-#, c-format
-msgid ""
-"%s\n"
-"(empty)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1133
-#, c-format
-msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1135
-#, c-format
-msgid "Morale  %i"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1140
-#, c-format
-msgid ""
-"Morale  %i | Reserved TUs: %i\n"
-"%s %i (%i|%i TU left)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1144
-#, c-format
-msgid ""
-"Morale  %i\n"
-"%s %i (%i TU left)\n"
-msgstr ""
-
-#: client/battlescape/cl_hud.c:1176
+#: client/battlescape/cl_hud.c:1466
 #, c-format
 msgid ""
 "Time Units\n"
@@ -11329,22 +11306,75 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1200
+#: client/battlescape/cl_hud.c:1569
+msgid ""
+"You cannot use this unknown item.\n"
+"You need to research it first.\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1589
+#, c-format
+msgid ""
+"%s\n"
+"(empty)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1601
+#, c-format
+msgid "Morale  %i | Reserved TUs: %i\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1603
+#, c-format
+msgid "Morale  %i"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1609
+#, c-format
+msgid ""
+"Morale  %i | Reserved TUs: %i\n"
+"%s %i (%i|%i TU left)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1613
+#, c-format
+msgid ""
+"Morale  %i\n"
+"%s %i (%i TU left)\n"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1628
 msgid "Currently panics!\n"
 msgstr ""
 
-#: client/battlescape/cl_view.c:58
-#: client/battlescape/cl_view.c:83
+#: client/battlescape/cl_hud.c:1780
+msgid "Reload the weapon in the soldiers left hand"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1781
+msgid "Reload the weapon in the soldiers right hand"
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1783
+msgid "Toggle reservation for crouching."
+msgstr ""
+
+#: client/battlescape/cl_hud.c:1789
+msgid "Toggle reaction fire"
+msgstr ""
+
+#: client/battlescape/cl_view.c:211
+#: client/battlescape/cl_view.c:236
 #, c-format
 msgid "loading %s"
 msgstr ""
 
-#: client/battlescape/cl_view.c:66
+#: client/battlescape/cl_view.c:219
 msgid "loading models..."
 msgstr ""
 
-#: client/battlescape/cl_view.c:118
-#: client/cl_main.c:970
+#: client/battlescape/cl_view.c:271
+#: client/cl_main.c:1014
 msgid "Awaiting game start"
 msgstr ""
 
@@ -11365,46 +11395,46 @@ msgstr ""
 msgid "Civilian spotted!\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
+#: client/battlescape/events/event/actor/e_event_actordie.c:79
 #, c-format
 msgid "%s was stunned\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:82
+#: client/battlescape/events/event/actor/e_event_actordie.c:81
 #, c-format
 msgid "%s was killed\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
+#: client/battlescape/events/event/actor/e_event_actordie.c:89
 msgid "A civilian was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:92
+#: client/battlescape/events/event/actor/e_event_actordie.c:91
 msgid "A civilian was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
+#: client/battlescape/events/event/actor/e_event_actordie.c:95
 msgid "An alien was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:98
+#: client/battlescape/events/event/actor/e_event_actordie.c:97
 msgid "An alien was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
+#: client/battlescape/events/event/actor/e_event_actordie.c:101
 msgid "A soldier was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:104
+#: client/battlescape/events/event/actor/e_event_actordie.c:103
 msgid "A soldier was killed.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
+#: client/battlescape/events/event/actor/e_event_actordie.c:107
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr ""
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:110
+#: client/battlescape/events/event/actor/e_event_actordie.c:109
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr ""
@@ -11422,89 +11452,89 @@ msgstr ""
 msgid "%s ended his round (team %i)\n"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:417
+#: client/campaign/cp_aircraft.c:419
 msgid "ON RED ALERT"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:421
+#: client/campaign/cp_aircraft.c:423
 msgid "Nothing - should not be displayed"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:423
+#: client/campaign/cp_aircraft.c:425
 msgid "at home base"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:425
+#: client/campaign/cp_aircraft.c:427
 msgid "refuelling"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:427
+#: client/campaign/cp_aircraft.c:429
 msgid "idle"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:429
+#: client/campaign/cp_aircraft.c:431
 msgid "in transit"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:431
+#: client/campaign/cp_aircraft.c:433
 msgid "enroute to mission"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:433
+#: client/campaign/cp_aircraft.c:435
 msgid "pursuing a UFO"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:435
+#: client/campaign/cp_aircraft.c:437
 msgid "ready to drop soldiers"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:437
+#: client/campaign/cp_aircraft.c:439
 msgid "intercepting a UFO"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:439
+#: client/campaign/cp_aircraft.c:441
 msgid "enroute to new home base"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:441
+#: client/campaign/cp_aircraft.c:443
 msgid "returning to base"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:515
+#: client/campaign/cp_aircraft.c:517
 msgid "Interceptor"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:517
+#: client/campaign/cp_aircraft.c:519
 msgid "Transporter"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:519
+#: client/campaign/cp_aircraft.c:521
 #: client/campaign/cp_ufo.c:120
 #: client/campaign/cp_ufo.c:121
 msgid "UFO"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:781
+#: client/campaign/cp_aircraft.c:783
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:782
-#: client/campaign/cp_aircraft.c:1244
-#: client/campaign/cp_aircraft.c:1260
-#: client/campaign/cp_aircraft.c:1305
-#: client/campaign/cp_aircraft.c:1386
-#: client/campaign/cp_aircraft.c:1410
-#: client/campaign/cp_aircraft.c:2186
+#: client/campaign/cp_aircraft.c:784
+#: client/campaign/cp_aircraft.c:1246
+#: client/campaign/cp_aircraft.c:1262
+#: client/campaign/cp_aircraft.c:1307
+#: client/campaign/cp_aircraft.c:1388
+#: client/campaign/cp_aircraft.c:1412
+#: client/campaign/cp_aircraft.c:2188
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
 #: client/campaign/cp_airfight.c:356
 #: client/campaign/cp_airfight.c:376
-#: client/campaign/cp_aliencont.c:191
-#: client/campaign/cp_aliencont.c:223
-#: client/campaign/cp_aliencont.c:242
-#: client/campaign/cp_aliencont.c:252
+#: client/campaign/cp_aliencont.c:194
+#: client/campaign/cp_aliencont.c:226
+#: client/campaign/cp_aliencont.c:245
+#: client/campaign/cp_aliencont.c:255
 #: client/campaign/cp_base.c:868
 #: client/campaign/cp_base.c:1442
 #: client/campaign/cp_base.c:2583
@@ -11522,11 +11552,11 @@ msgstr ""
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
 #: client/campaign/cp_base_callbacks.c:663
-#: client/campaign/cp_campaign.c:1481
-#: client/campaign/cp_campaign.c:1526
-#: client/campaign/cp_campaign.c:1579
-#: client/campaign/cp_campaign.c:1592
-#: client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_campaign.c:1475
+#: client/campaign/cp_campaign.c:1520
+#: client/campaign/cp_campaign.c:1573
+#: client/campaign/cp_campaign.c:1586
+#: client/campaign/cp_campaign.c:1588
 #: client/campaign/cp_installation_callbacks.c:156
 #: client/campaign/cp_mapfightequip.c:332
 #: client/campaign/cp_mapfightequip.c:353
@@ -11534,8 +11564,8 @@ msgstr ""
 #: client/campaign/cp_mapfightequip.c:371
 #: client/campaign/cp_market_callbacks.c:614
 #: client/campaign/cp_market_callbacks.c:619
-#: client/campaign/cp_missions.c:750
-#: client/campaign/cp_missions.c:1178
+#: client/campaign/cp_missions.c:735
+#: client/campaign/cp_missions.c:1163
 #: client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100
 #: client/campaign/cp_nations.c:110
@@ -11564,55 +11594,55 @@ msgstr ""
 #: client/campaign/cp_ufo.c:778
 #: client/campaign/cp_ufo.c:783
 #: client/campaign/missions/cp_mission_baseattack.c:127
-#: client/cl_main.c:404
-#: client/multiplayer/mp_serverlist.c:470
+#: client/cl_main.c:408
+#: client/multiplayer/mp_serverlist.c:469
 msgid "Notice"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:852
+#: client/campaign/cp_aircraft.c:854
 msgid "No operational hangars at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:856
+#: client/campaign/cp_aircraft.c:858
 msgid "No free hangars at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:859
+#: client/campaign/cp_aircraft.c:861
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:862
+#: client/campaign/cp_aircraft.c:864
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:866
+#: client/campaign/cp_aircraft.c:868
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1243
+#: client/campaign/cp_aircraft.c:1245
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1259
+#: client/campaign/cp_aircraft.c:1261
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1305
+#: client/campaign/cp_aircraft.c:1307
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1386
+#: client/campaign/cp_aircraft.c:1388
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1410
+#: client/campaign/cp_aircraft.c:1412
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:2186
+#: client/campaign/cp_aircraft.c:2188
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr ""
@@ -11636,15 +11666,15 @@ msgid "Aircraft started"
 msgstr ""
 
 #: client/campaign/cp_aircraft_callbacks.c:257
-#: client/campaign/cp_map.c:1633
-#: client/campaign/cp_map.c:1640
+#: client/campaign/cp_map.c:1639
+#: client/campaign/cp_map.c:1646
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr ""
 
 #: client/campaign/cp_aircraft_callbacks.c:259
-#: client/campaign/cp_map.c:1634
-#: client/campaign/cp_map.c:1641
+#: client/campaign/cp_map.c:1640
+#: client/campaign/cp_map.c:1647
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr ""
@@ -11689,23 +11719,23 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
 #: client/campaign/cp_airfight.c:478
-#: client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_campaign.c:1588
 msgid "You've lost the battle"
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:191
+#: client/campaign/cp_aliencont.c:194
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:223
+#: client/campaign/cp_aliencont.c:226
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:242
+#: client/campaign/cp_aliencont.c:245
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr ""
 
-#: client/campaign/cp_aliencont.c:252
+#: client/campaign/cp_aliencont.c:255
 msgid "You've captured new aliens."
 msgstr ""
 
@@ -12163,7 +12193,7 @@ msgid ""
 msgstr ""
 
 #: client/campaign/cp_campaign.c:811
-#: client/cl_inventory_callbacks.c:136
+#: client/cl_inventory_callbacks.c:137
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
@@ -12213,98 +12243,98 @@ msgid ""
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1481
+#: client/campaign/cp_campaign.c:1475
 msgid "Collected dead alien bodies"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1526
+#: client/campaign/cp_campaign.c:1520
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1578
-#: client/campaign/cp_missions.c:1177
+#: client/campaign/cp_campaign.c:1572
+#: client/campaign/cp_missions.c:1162
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1592
+#: client/campaign/cp_campaign.c:1586
 msgid "You've won the battle"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1611
+#: client/campaign/cp_campaign.c:1605
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1612
+#: client/campaign/cp_campaign.c:1606
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1613
+#: client/campaign/cp_campaign.c:1607
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1615
+#: client/campaign/cp_campaign.c:1609
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1616
+#: client/campaign/cp_campaign.c:1610
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1617
+#: client/campaign/cp_campaign.c:1611
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1618
+#: client/campaign/cp_campaign.c:1612
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
 "\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1620
+#: client/campaign/cp_campaign.c:1614
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1621
+#: client/campaign/cp_campaign.c:1615
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1622
+#: client/campaign/cp_campaign.c:1616
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
 "\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1623
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1700
+#: client/campaign/cp_campaign.c:1694
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1702
+#: client/campaign/cp_campaign.c:1696
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1703
+#: client/campaign/cp_campaign.c:1697
 msgid "Soldier promoted"
 msgstr ""
 
@@ -12347,8 +12377,6 @@ msgid "You've got a new mail: %s"
 msgstr ""
 
 #: client/campaign/cp_fightequip_callbacks.c:173
-#: client/campaign/cp_map.c:1594
-#: client/campaign/cp_map.c:1613
 msgid "Unknown"
 msgstr ""
 
@@ -12500,15 +12528,15 @@ msgstr ""
 msgid "UFO Sighting"
 msgstr ""
 
-#: client/campaign/cp_map.c:1390
+#: client/campaign/cp_map.c:1398
 msgid "Day"
 msgstr ""
 
-#: client/campaign/cp_map.c:1390
+#: client/campaign/cp_map.c:1398
 msgid "Night"
 msgstr ""
 
-#: client/campaign/cp_map.c:1593
+#: client/campaign/cp_map.c:1600
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -12516,63 +12544,63 @@ msgid ""
 "Objective: %s"
 msgstr ""
 
-#: client/campaign/cp_map.c:1610
+#: client/campaign/cp_map.c:1616
 #, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr ""
 
-#: client/campaign/cp_map.c:1630
-#: client/campaign/cp_map.c:1638
+#: client/campaign/cp_map.c:1636
+#: client/campaign/cp_map.c:1644
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1631
-#: client/campaign/cp_map.c:1639
+#: client/campaign/cp_map.c:1637
+#: client/campaign/cp_map.c:1645
 #, c-format
 msgid "Status:\t%s\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1632
+#: client/campaign/cp_map.c:1638
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1636
-#: client/campaign/cp_map.c:1646
+#: client/campaign/cp_map.c:1642
+#: client/campaign/cp_map.c:1652
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1664
+#: client/campaign/cp_map.c:1670
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1864
+#: client/campaign/cp_map.c:1871
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1915
+#: client/campaign/cp_map.c:1922
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1918
+#: client/campaign/cp_map.c:1925
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1923
+#: client/campaign/cp_map.c:1930
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1928
+#: client/campaign/cp_map.c:1935
 msgid "Select ufo or mission on map\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1933
+#: client/campaign/cp_map.c:1940
 msgid "UFO in radar range\n"
 msgstr ""
 
@@ -12794,28 +12822,28 @@ msgid ""
 "   - The UFO:AI development team"
 msgstr ""
 
-#: client/campaign/cp_missions.c:446
+#: client/campaign/cp_missions.c:432
 msgid "Landed UFO"
 msgstr ""
 
-#: client/campaign/cp_missions.c:448
+#: client/campaign/cp_missions.c:434
 msgid "Terror mission"
 msgstr ""
 
-#: client/campaign/cp_missions.c:450
+#: client/campaign/cp_missions.c:436
 msgid "Base attack"
 msgstr ""
 
-#: client/campaign/cp_missions.c:454
+#: client/campaign/cp_missions.c:440
 msgid "Harvesting mission"
 msgstr ""
 
-#: client/campaign/cp_missions.c:749
+#: client/campaign/cp_missions.c:734
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr ""
 
-#: client/campaign/cp_missions.c:1273
+#: client/campaign/cp_missions.c:1258
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
@@ -13389,132 +13417,132 @@ msgstr ""
 
 #: client/campaign/cp_save.c:467
 #: client/campaign/cp_save.c:491
-#: client/campaign/cp_save.c:619
+#: client/campaign/cp_save.c:628
 msgid "Error loading game."
 msgstr ""
 
 #: client/campaign/cp_save.c:468
 #: client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:620
-#: client/cl_irc.c:1208
-#: client/cl_irc.c:1440
-#: client/cl_main.c:505
-#: client/cl_main.c:510
-#: client/cl_main.c:516
-#: client/cl_main.c:524
+#: client/campaign/cp_save.c:629
+#: client/cl_irc.c:1020
+#: client/cl_irc.c:1257
+#: client/cl_main.c:509
+#: client/cl_main.c:514
+#: client/cl_main.c:520
+#: client/cl_main.c:528
 #: client/multiplayer/mp_callbacks.c:49
 msgid "Error"
-msgstr ""
+msgstr "Помилка"
 
-#: client/campaign/cp_save.c:601
+#: client/campaign/cp_save.c:607
 msgid "Campaign was successfully saved."
 msgstr ""
 
-#: client/campaign/cp_save.c:601
+#: client/campaign/cp_save.c:607
 msgid "Quicksave"
 msgstr ""
 
-#: client/campaign/cp_save.c:622
+#: client/campaign/cp_save.c:631
 msgid "Campaign loaded"
 msgstr ""
 
-#: client/campaign/cp_save.c:622
+#: client/campaign/cp_save.c:631
 msgid "Quicksave campaign was successfully loaded."
 msgstr ""
 
-#: client/campaign/cp_save.c:679
+#: client/campaign/cp_save.c:688
 msgid "Saves to the quick save slot"
 msgstr ""
 
 #: client/campaign/cp_team.c:239
 #, c-format
 msgid "%i of %i"
-msgstr ""
+msgstr "%i з %i"
 
 #: client/campaign/cp_time.c:42
 msgid "stopped"
-msgstr ""
+msgstr "зупинено"
 
 #: client/campaign/cp_time.c:43
 msgid "5 sec"
-msgstr ""
+msgstr "5с"
 
 #: client/campaign/cp_time.c:44
 msgid "5 mins"
-msgstr ""
+msgstr "5 хв"
 
 #: client/campaign/cp_time.c:45
 msgid "20 mins"
-msgstr ""
+msgstr "20 хв"
 
 #: client/campaign/cp_time.c:46
 msgid "1 hour"
-msgstr ""
+msgstr "1 год"
 
 #: client/campaign/cp_time.c:47
 msgid "12 hours"
-msgstr ""
+msgstr "12 год"
 
 #: client/campaign/cp_time.c:48
 msgid "1 day"
-msgstr ""
+msgstr "1 доба"
 
 #: client/campaign/cp_time.c:49
 msgid "5 days"
-msgstr ""
+msgstr "5 діб"
 
 #: client/campaign/cp_time.c:78
 #, c-format
 msgid "%02i:%02i"
-msgstr ""
+msgstr "%02i:%02i"
 
 #: client/campaign/cp_time.c:240
 msgid "Jan"
-msgstr ""
+msgstr "Січ"
 
 #: client/campaign/cp_time.c:242
 msgid "Feb"
-msgstr ""
+msgstr "Лют"
 
 #: client/campaign/cp_time.c:244
 msgid "Mar"
-msgstr ""
+msgstr "Бер"
 
 #: client/campaign/cp_time.c:246
 msgid "Apr"
-msgstr ""
+msgstr "Кві"
 
 #: client/campaign/cp_time.c:248
 msgid "May"
-msgstr ""
+msgstr "Тра"
 
 #: client/campaign/cp_time.c:250
 msgid "Jun"
-msgstr ""
+msgstr "Чер"
 
 #: client/campaign/cp_time.c:252
 msgid "Jul"
-msgstr ""
+msgstr "Лип"
 
 #: client/campaign/cp_time.c:254
 msgid "Aug"
-msgstr ""
+msgstr "Срп"
 
 #: client/campaign/cp_time.c:256
 msgid "Sep"
-msgstr ""
+msgstr "Вер"
 
 #: client/campaign/cp_time.c:258
 msgid "Oct"
-msgstr ""
+msgstr "Жвт"
 
 #: client/campaign/cp_time.c:260
 msgid "Nov"
-msgstr ""
+msgstr "Лис"
 
 #: client/campaign/cp_time.c:262
 msgid "Dec"
-msgstr ""
+msgstr "Грд"
 
 #: client/campaign/cp_transfer.c:144
 msgid "Destination base does not have an Antimatter Storage.\n"
@@ -13536,7 +13564,7 @@ msgstr ""
 #: client/campaign/cp_transfer.c:249
 #: client/campaign/cp_transfer.c:292
 msgid "Not enough space"
-msgstr ""
+msgstr "Недостатньо місця"
 
 #: client/campaign/cp_transfer.c:164
 msgid ""
@@ -13725,51 +13753,51 @@ msgstr ""
 msgid "Please select the target base from the list"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1325
+#: client/campaign/cp_transfer.c:1321
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1328
+#: client/campaign/cp_transfer.c:1324
 msgid "No Storage in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1332
+#: client/campaign/cp_transfer.c:1328
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1334
+#: client/campaign/cp_transfer.c:1330
 msgid "No Living Quarters in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1338
+#: client/campaign/cp_transfer.c:1334
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1340
+#: client/campaign/cp_transfer.c:1336
 msgid "No Alien Containment in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1344
+#: client/campaign/cp_transfer.c:1340
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1346
+#: client/campaign/cp_transfer.c:1342
 msgid "No Antimatter Storage in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1350
+#: client/campaign/cp_transfer.c:1346
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1352
+#: client/campaign/cp_transfer.c:1348
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1354
+#: client/campaign/cp_transfer.c:1350
 msgid "No Hangar in this base.\n"
 msgstr ""
 
-#: client/campaign/cp_transfer.c:1358
+#: client/campaign/cp_transfer.c:1354
 msgid "No power supplies in this base.\n"
 msgstr ""
 
@@ -13849,7 +13877,7 @@ msgstr ""
 
 #: client/campaign/cp_ufopedia.c:196
 msgid "No requirements"
-msgstr ""
+msgstr "Нічого не потребує"
 
 #: client/campaign/cp_ufopedia.c:228
 msgid "Error - could not find building"
@@ -14185,14 +14213,14 @@ msgstr ""
 msgid "skill_explosive"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:130
+#: client/cl_inventory_callbacks.c:131
 #, c-format
 msgid "Size:\t%i\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:132
+#: client/cl_inventory_callbacks.c:133
 msgid "^BDamage type:\tProtection:\n"
-msgstr ""
+msgstr "^BТип ураження:\tЗахист:\n"
 
 #: client/cl_inventory_callbacks.c:144
 #, c-format
@@ -14200,14 +14228,14 @@ msgid "%s weapon\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:144
+#: client/cl_inventory_callbacks.c:180
 #: client/cl_inventory_callbacks.c:183
-#: client/cl_inventory_callbacks.c:186
 msgid "One-handed"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:144
+#: client/cl_inventory_callbacks.c:180
 #: client/cl_inventory_callbacks.c:183
-#: client/cl_inventory_callbacks.c:186
 msgid "Two-handed"
 msgstr ""
 
@@ -14222,13 +14250,13 @@ msgid "Skill:\t%s\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:175
-#: client/cl_inventory_callbacks.c:189
+#: client/cl_inventory_callbacks.c:186
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:176
-#: client/cl_inventory_callbacks.c:190
+#: client/cl_inventory_callbacks.c:187
 #, c-format
 msgid "Range:\t%g\n"
 msgstr ""
@@ -14240,39 +14268,24 @@ msgstr ""
 
 #: client/cl_inventory_callbacks.c:180
 #, c-format
-msgid "%s. No detailed info available.\n"
-msgstr ""
-
-#: client/cl_inventory_callbacks.c:180
-#, fuzzy
-msgid "Ammunition"
-msgstr "Асунсьйон"
-
-#: client/cl_inventory_callbacks.c:180
-#, fuzzy
-msgid "Weapon"
-msgstr "Сапопан"
-
-#: client/cl_inventory_callbacks.c:183
-#, c-format
 msgid "%s ammo-less weapon\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:186
+#: client/cl_inventory_callbacks.c:183
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:188
+#: client/cl_inventory_callbacks.c:185
 #, c-format
 msgid "Action:\t%s\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:197
+#: client/cl_inventory_callbacks.c:194
 msgid "Unknown - not useable"
 msgstr ""
 
-#: client/cl_irc.c:1440
+#: client/cl_irc.c:1257
 msgid "Server closed connection"
 msgstr ""
 
@@ -14280,27 +14293,33 @@ msgstr ""
 msgid "..."
 msgstr ""
 
-#: client/cl_main.c:504
+#: client/cl_main.c:508
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:510
+#: client/cl_main.c:514
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:516
+#: client/cl_main.c:520
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:523
+#: client/cl_main.c:527
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:855
+#: client/cl_main.c:884
 msgid "Target your shot to the ground"
 msgstr ""
+
+# Звичай
+#: client/cl_main.c:1056
+#, fuzzy
+msgid "Custom"
+msgstr "Вибірково"
 
 #: client/cl_screen.c:165
 #, c-format
@@ -14313,128 +14332,128 @@ msgid "Loading Map [%s]"
 msgstr ""
 
 #: client/cl_team.c:50
-#: client/cl_team.c:334
-#: client/cl_team.c:345
+#: client/cl_team.c:303
+#: client/cl_team.c:314
 msgid "Urban"
 msgstr ""
 
 #: client/cl_team.c:52
-#: client/cl_team.c:335
-#: client/cl_team.c:346
+#: client/cl_team.c:304
+#: client/cl_team.c:315
 msgid "Jungle"
 msgstr ""
 
 #: client/cl_team.c:54
-#: client/cl_team.c:336
-#: client/cl_team.c:347
+#: client/cl_team.c:305
+#: client/cl_team.c:316
 msgid "Desert"
 msgstr ""
 
 #: client/cl_team.c:56
-#: client/cl_team.c:337
-#: client/cl_team.c:348
+#: client/cl_team.c:306
+#: client/cl_team.c:317
 msgid "Arctic"
 msgstr ""
 
 #: client/cl_team.c:58
-#: client/cl_team.c:349
+#: client/cl_team.c:318
 msgid "Yellow"
 msgstr ""
 
 #: client/cl_team.c:60
-#: client/cl_team.c:350
+#: client/cl_team.c:319
 msgid "CCCP"
 msgstr ""
 
-#: client/cl_team.c:453
+#: client/cl_team.c:421
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/input/cl_input.c:895
+#: client/input/cl_input.c:894
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr ""
 
-#: client/input/cl_input.c:897
+#: client/input/cl_input.c:896
 msgid "Rotate battlescape camera clockwise"
 msgstr ""
 
-#: client/input/cl_input.c:899
+#: client/input/cl_input.c:898
 msgid "Tilt battlescape camera up"
 msgstr ""
 
-#: client/input/cl_input.c:901
+#: client/input/cl_input.c:900
 msgid "Tilt battlescape camera down"
 msgstr ""
 
-#: client/input/cl_input.c:903
+#: client/input/cl_input.c:902
 msgid "Move battlescape camera left"
 msgstr ""
 
-#: client/input/cl_input.c:905
+#: client/input/cl_input.c:904
 msgid "Move battlescape camera right"
 msgstr ""
 
-#: client/input/cl_input.c:907
+#: client/input/cl_input.c:906
 msgid "Move battlescape camera forward"
 msgstr ""
 
-#: client/input/cl_input.c:909
+#: client/input/cl_input.c:908
 msgid "Move battlescape camera backward"
 msgstr ""
 
-#: client/input/cl_input.c:911
-#: client/input/cl_input.c:933
+#: client/input/cl_input.c:910
+#: client/input/cl_input.c:932
 msgid "Zoom in"
 msgstr ""
 
-#: client/input/cl_input.c:913
-#: client/input/cl_input.c:934
+#: client/input/cl_input.c:912
+#: client/input/cl_input.c:933
 msgid "Zoom out"
 msgstr ""
 
-#: client/input/cl_input.c:916
+#: client/input/cl_input.c:915
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:918
+#: client/input/cl_input.c:917
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:920
+#: client/input/cl_input.c:919
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:922
+#: client/input/cl_input.c:921
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
-#: client/input/cl_input.c:924
+#: client/input/cl_input.c:923
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr ""
 
-#: client/input/cl_input.c:926
+#: client/input/cl_input.c:925
 msgid "Turn soldier toward mouse pointer"
 msgstr ""
 
-#: client/input/cl_input.c:928
+#: client/input/cl_input.c:927
 msgid "Toggles the hud radar mode"
 msgstr ""
 
-#: client/input/cl_input.c:931
+#: client/input/cl_input.c:930
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/input/cl_input.c:932
+#: client/input/cl_input.c:931
 msgid "Slice through terrain at a lower level"
 msgstr ""
 
 #: client/menu/m_main.c:53
 msgid "This change requires a restart"
-msgstr ""
+msgstr "Ця зміна потребує перезапуску гри"
 
 #: client/menu/m_main.c:55
 msgid "This change might require a restart"
-msgstr ""
+msgstr "Для зміни може знадобитися перезапуск гри"
 
 #: client/menu/m_tooltip.c:96
 #: client/menu/m_tooltip.c:101
@@ -14526,94 +14545,94 @@ msgstr ""
 msgid "No team"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:300
+#: client/multiplayer/mp_serverlist.c:299
 #, c-format
 msgid ""
 "IP\t%s\n"
 "\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:311
+#: client/multiplayer/mp_serverlist.c:310
 #, c-format
 msgid "Map:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:316
+#: client/multiplayer/mp_serverlist.c:315
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:317
+#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:318
+#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:319
+#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:320
+#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:321
+#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:322
+#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:323
+#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:324
+#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:325
+#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:326
+#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:327
+#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:328
+#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:329
+#: client/multiplayer/mp_serverlist.c:328
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:330
+#: client/multiplayer/mp_serverlist.c:329
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/multiplayer/mp_serverlist.c:470
+#: client/multiplayer/mp_serverlist.c:469
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
@@ -14629,11 +14648,11 @@ msgstr ""
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 
-#: game/g_actor.c:341
+#: game/g_actor.c:302
 msgid "Can't perform action - not enough TUs!\n"
 msgstr ""
 
-#: game/g_actor.c:345
+#: game/g_actor.c:306
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
@@ -14665,25 +14684,23 @@ msgstr ""
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 
-#: game/g_client.c:431
+#: game/g_client.c:447
 msgid "Currently shaken, won't let their guard down.\n"
+msgstr ""
+
+#: game/g_client.c:463
+msgid "Can't activate reaction fire.\n"
 msgstr ""
 
 #: game/g_cmds.c:71
 #, c-format
-msgid "You can't talk for %d more second\n"
-msgid_plural "You can't talk for %d more seconds\n"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgid "You can't talk for %d more seconds\n"
+msgstr ""
 
 #: game/g_cmds.c:80
 #, c-format
-msgid "Flood protection: You can't talk for %d more second\n"
-msgid_plural "Flood protection: You can't talk for %d more seconds\n"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgid "Flood protection: You can't talk for %d seconds.\n"
+msgstr ""
 
 #: game/g_combat.c:395
 msgid ""
@@ -14799,6 +14816,14 @@ msgstr ""
 msgid "Playing"
 msgstr ""
 
-#~ msgid "media/FreeSans.ttf"
-#~ msgstr "media/FreeSans.ttf"
+#~ msgid "Crashed UFO in oriental suburban district."
+#~ msgstr "Розбитий НЛО у передмісті на Близькому сході."
 
+#~ msgid "UFO crashed in this sparsely populated forest region."
+#~ msgstr "НЛО розбився у цьому малонаселеному лісовому регіоні."
+
+#~ msgid "Ammunition"
+#~ msgstr "Боєзапас"
+
+#~ msgid "Weapon"
+#~ msgstr "Зброя"
