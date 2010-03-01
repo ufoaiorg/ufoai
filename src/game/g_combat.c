@@ -593,8 +593,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
  */
-static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
-	vec3_t from, pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align)
+static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_t *fd,
+	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -781,7 +781,7 @@ static void DumpAllEntities (void)
  * @param[in] shootType The firemode (ST_NUM_SHOOT_TYPES)
  * @sa CL_TargetingStraight
  */
-static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, pos3_t at,
+static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
 	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType)
 {
 	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
@@ -1067,7 +1067,7 @@ static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int fi
  * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
-qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_t shootType,
+qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	const fireDef_t *fd;

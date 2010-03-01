@@ -447,7 +447,7 @@ int G_TestVis(const int team, edict_t * check, int flags);
 float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
-qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, shoot_types_t shootType, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 
 /* g_ai.c */
 extern edict_t *ai_waypointList;
