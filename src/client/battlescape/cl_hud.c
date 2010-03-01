@@ -302,7 +302,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 				const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
 				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= ammoFD->time) {
 					/* Get firemode name and TUs. */
-					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), ammoFD->time, ammoFD->name);
+					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), ammoFD->time, _(ammoFD->name));
 
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
