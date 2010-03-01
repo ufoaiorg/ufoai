@@ -147,7 +147,7 @@ void G_InventoryToFloor (edict_t *ent)
 			continue;
 
 		/* now cycle through all items for the container of the character (or the entity) */
-		for (ic = ent->i.c[container]; ic; ic = next) {
+		for (ic = CONTAINER(ent, container); ic; ic = next) {
 #ifdef ADJACENT
 			vec2_t oldPos; /* if we have to place it to adjacent  */
 #endif
@@ -202,7 +202,7 @@ void G_InventoryToFloor (edict_t *ent)
 #endif
 		}
 		/* destroy link */
-		ent->i.c[container] = NULL;
+		CONTAINER(ent, container) = NULL;
 	}
 
 	FLOOR(ent) = FLOOR(floor);

@@ -510,11 +510,11 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->i.c[containerID]; ic; ic = ic->next)
+			for (ic = CONTAINER(ent, containerID); ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					icFinal = ic;
-					tu = INVDEF(containerID)->out;
 					bestContainer = INVDEF(containerID);
+					tu = bestContainer->out;
 					break;
 				}
 		}

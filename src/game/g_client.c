@@ -486,7 +486,7 @@ qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t con
 
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
-		for (ic = ent->i.c[container]; ic; ic = ic->next)
+		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
 			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
 				return qtrue;
 	return qfalse;
@@ -519,12 +519,12 @@ void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++) {
-		if (gi.csi->ids[container].out < tu) {
+		if (INVDEF(container)->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->i.c[container]; ic; ic = ic->next) {
+			for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 				assert(ic->item.t);
 				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
 					icFinal = ic;
