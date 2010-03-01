@@ -724,7 +724,7 @@ static int AIL_canreload (lua_State *L)
  */
 static int AIL_reload (lua_State *L)
 {
-	int container;
+	containerIndex_t container;
 
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L, 1)) {

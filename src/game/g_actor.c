@@ -480,7 +480,7 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 	invList_t *icFinal;
 	objDef_t *weapon;
 	int tu;
-	int containerID;
+	containerIndex_t containerID;
 	invDef_t *bestContainer;
 
 	/* search for clips and select the one that is available easily */

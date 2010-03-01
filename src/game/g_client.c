@@ -467,18 +467,18 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, edict_t *ent, int containerID)
+qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
-	int container;
+	containerIndex_t container;
 	objDef_t *weapon;
 
-	if (ent->i.c[containerID]) {
-		weapon = ent->i.c[containerID]->item.t;
-	} else if (containerID == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	if (CONTAINER(ent, containerID)) {
+		weapon = CONTAINER(ent, containerID)->item.t;
+	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		containerID = gi.csi->idRight;
-		weapon = ent->i.c[containerID]->item.t;
+		weapon = CONTAINER(ent, containerID)->item.t;
 	} else
 		return qfalse;
 
@@ -504,7 +504,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 	invList_t *icFinal;
 	invDef_t *invDef;
 	int tu;
-	int container;
+	containerIndex_t container;
 	invDef_t *bestContainer;
 
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */

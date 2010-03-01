@@ -59,10 +59,10 @@ qboolean G_MissionTouch (edict_t *self, edict_t *activator)
 				self->owner->count = level.actualRound;
 				if (self->owner->item) {
 					/* search the item in the activator's inventory */
-					int container;
+					containerIndex_t container;
 
 					for (container = 0; container < gi.csi->numIDs; container++) {
-						invDef_t *invDef = INVDEF(container);
+						const invDef_t *invDef = INVDEF(container);
 						invList_t *ic;
 						/* ignore items linked from any temp container the actor
 						 * must have this in his hands */

@@ -1280,7 +1280,7 @@ qboolean E_HireAllowed (const base_t* base)
 void E_RemoveInventoryFromStorage (employee_t *employee)
 {
 	const inventory_t *inv;
-	int container;
+	containerIndex_t container;
 
 	assert(employee);
 	assert(employee->baseHired);

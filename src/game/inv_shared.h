@@ -57,6 +57,8 @@ typedef enum {
 #define INJURY_BALANCE 0.2f
 #define INJURY_THRESHOLD 0.5f /* HP / maxHP > INJURY_THRESHOLD no penalty is incurred */
 
+typedef int32_t containerIndex_t;
+
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
 	IA_NONE,			/**< no move possible */
@@ -429,9 +431,9 @@ typedef struct csi_s {
 	mapDef_t *currentMD;	/**< currently selected mapdef */
 
 	/** Special container ids */
-	int idRight, idLeft, idExtension;
-	int idHeadgear, idBackpack, idBelt, idHolster;
-	int idArmour, idFloor, idEquip;
+	containerIndex_t idRight, idLeft, idExtension;
+	containerIndex_t idHeadgear, idBackpack, idBelt, idHolster;
+	containerIndex_t idArmour, idFloor, idEquip;
 
 	/** Damage type ids */
 	int damNormal, damBlast, damFire;

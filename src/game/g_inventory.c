@@ -61,9 +61,9 @@ edict_t *G_GetFloorItems (edict_t * ent)
  * @param[in] container The container of the entity inventory to check
  * @return @c true if there are items that should be dropped to floor, @c false otherwise
  */
-static qboolean G_InventoryDropToFloorCheck (edict_t* ent, int container)
+static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t container)
 {
-	invList_t* ic = ent->i.c[container];
+	invList_t* ic = CONTAINER(ent, container);
 
 	if (container == gi.csi->idArmour)
 		return qfalse;
@@ -103,7 +103,7 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, int container)
 void G_InventoryToFloor (edict_t *ent)
 {
 	invList_t *ic, *next;
-	int container;
+	containerIndex_t container;
 	edict_t *floor;
 	item_t item;
 #ifdef ADJACENT
@@ -114,7 +114,7 @@ void G_InventoryToFloor (edict_t *ent)
 	/* check for items */
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		/* ignore items linked from any temp container */
-		if (gi.csi->ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 		if (G_InventoryDropToFloorCheck(ent, container))
 			break;
@@ -227,7 +227,7 @@ void G_InventoryToFloor (edict_t *ent)
 void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 {
 	int t, m;
-	int containerID;
+	containerIndex_t containerID;
 
 	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
 
@@ -275,7 +275,7 @@ void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;
-	int container;
+	containerIndex_t container;
 
 	/* test for pointless player mask */
 	if (!playerMask)

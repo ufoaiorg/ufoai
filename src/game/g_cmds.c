@@ -287,7 +287,7 @@ void G_InvList_f (const player_t *player)
 
 	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
-		int container;
+		containerIndex_t container;
 		gi.dprintf("actor: '%s'\n", ent->chr.name);
 
 		for (container = 0; container < gi.csi->numIDs; container++) {

@@ -889,9 +889,9 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
  */
 int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, const objDef_t *weapon)
 {
-	int container;
+	containerIndex_t container;
 	int tu = 100;
-	int bestContainer = NONE;
+	containerIndex_t bestContainer = NONE;
 
 	/* also search the linked ground floor tile (temp container) */
 	for (container = 0; container < csi.numIDs; container++) {
@@ -921,12 +921,12 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
  * @param[in] containerID The container to reload
  * @sa CL_ActorCheckAction
  */
-void CL_ActorReload (le_t *le, int containerID)
+void CL_ActorReload (le_t *le, containerIndex_t containerID)
 {
 	inventory_t *inv;
 	invList_t *ic;
 	objDef_t *weapon;
-	int bestContainer;
+	containerIndex_t bestContainer;
 
 	if (!CL_ActorCheckAction(le))
 		return;
@@ -979,7 +979,7 @@ void CL_ActorReload (le_t *le, int containerID)
  * @param toX The x position in the container to move the item to
  * @param toY The y position in the container to move the item to
  */
-void CL_ActorInvMove (const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY)
+void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY)
 {
 	assert(CL_BattlescapeRunning());
 	assert(le);

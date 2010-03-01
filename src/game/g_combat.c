@@ -1009,7 +1009,7 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
  * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int firemode, item_t **weapon, int *container, const fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	objDef_t *od;
@@ -1072,7 +1072,8 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
 	int i, ammo, prevDir, reactionLeftover, shots;
-	int container, mask;
+	containerIndex_t container;
+	int mask;
 	qboolean quiet;
 
 	/* just in 'test-whether-it's-possible'-mode or the player is an

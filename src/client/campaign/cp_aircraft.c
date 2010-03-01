@@ -281,7 +281,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
  */
 static void AII_CarriedItems (const le_t *soldier)
 {
-	int container;
+	containerIndex_t container;
 	invList_t *invList;
 	technology_t *tech;
 
@@ -877,7 +877,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
 	const invList_t *ic;
-	int container;
+	containerIndex_t container;
 
 	for (container = 0; container < csi.numIDs; container++) {
 #if 0
@@ -3162,7 +3162,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
  */
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_t *ed)
 {
-	int container;
+	containerIndex_t container;
 
 	if (!aircraft) {
 		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aircraft (and thus no carried equipment to add).\n");

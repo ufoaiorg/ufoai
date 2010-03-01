@@ -60,7 +60,7 @@ void CL_ActorCvars(const character_t *chr);
 const char *CL_ActorGetSkillString(const int skill);
 
 int CL_ActorCheckAction(const le_t *le);
-void CL_ActorInvMove(const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY);
+void CL_ActorInvMove(const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY);
 
 character_t *CL_ActorGetChr(const le_t *le);
 int CL_ActorUsableTUs(const le_t *le);
@@ -78,7 +78,7 @@ void CL_ActorAddToTeamList(le_t *le);
 void CL_ActorRemoveFromTeamList(le_t *le);
 void CL_ActorCleanup(le_t *le);
 void CL_ActorSelectMouse(void);
-void CL_ActorReload(le_t *le, int containerID);
+void CL_ActorReload(le_t *le, containerIndex_t containerID);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStartMove(le_t *le, const pos3_t to);

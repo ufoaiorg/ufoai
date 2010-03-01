@@ -641,7 +641,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  * @param[out] reason The reason why the reload didn't work - only set if @c -1 is the return value
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char **reason)
+static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char **reason)
 {
 	const int tu = CL_ActorUsableTUs(le);
 	const invList_t *invList = CONTAINER(le, containerID);
@@ -1204,7 +1204,7 @@ static void HUD_UpdateActor (le_t *actor)
 	} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
 	 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
 		const invList_t *invList;
-		int container;
+		containerIndex_t container;
 
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(actor)) {
 			invList = RIGHT(actor);

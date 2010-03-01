@@ -78,8 +78,8 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		const employee_t *employee = (employee_t*)emplList->data;
 		qboolean alreadyInOtherShip;
 		const aircraft_t *otherShip;
-		int guiId = id - beginIndex;
-		int container;
+		const int guiId = id - beginIndex;
+		containerIndex_t container;
 
 		assert(employee->hired);
 		assert(!employee->transfer);

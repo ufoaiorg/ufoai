@@ -54,7 +54,8 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container
  */
 void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 {
-	int container, x, y;
+	containerIndex_t container;
+	int x, y;
 	item_t item;
 	const int number = NET_ReadShort(msg);
 	le_t *le = LE_Get(number);

@@ -452,7 +452,7 @@ static void MN_DrawDisabled (const menuNode_t* node)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawFree (int container, const menuNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
+static void MN_DrawFree (containerIndex_t container, const menuNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = &csi.ids[container];

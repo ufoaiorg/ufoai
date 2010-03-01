@@ -476,7 +476,7 @@ static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, 
  */
 static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i)
 {
-	int container;
+	containerIndex_t container;
 
 	if (!i)
 		return;

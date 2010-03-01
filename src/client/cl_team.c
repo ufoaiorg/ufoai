@@ -218,7 +218,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 /**
  * @sa CL_LoadItemXML
  */
-static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, int y)
+static void CL_SaveItemXML (mxml_node_t *p, item_t item, containerIndex_t container, int x, int y)
 {
 	assert(item.t);
 	mxml_AddInt(p, "ammo", item.a);
@@ -238,7 +238,7 @@ static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, i
  */
 void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 {
-	int container;
+	containerIndex_t container;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		invList_t *ic = i->c[container];
@@ -290,7 +290,8 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 
 	for (s = mxml_GetNode(p, "item"); s; s = mxml_GetNextNode(s, p, "item")) {
 		item_t item;
-		int container, x, y;
+		containerIndex_t container;
+		int x, y;
 		CL_LoadItemXML(s, &item, &container, &x, &y);
 		if (!cls.i.AddToInventory(&cls.i, i, item, &csi.ids[container], x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
