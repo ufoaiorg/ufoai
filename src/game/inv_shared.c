@@ -853,7 +853,7 @@ objDef_t *INVSH_GetItemByID (const char *id)
  */
 invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 {
-	int i;
+	containerIndex_t i;
 	invDef_t *container;
 
  	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)

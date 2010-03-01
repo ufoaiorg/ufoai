@@ -307,7 +307,7 @@ enum {
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files. */
-	int id;				/**< Special container id. See csi_t for the values to compare it with. */
+	containerIndex_t id;				/**< Special container id. See csi_t for the values to compare it with. */
 	/** Type of this container or inventory. */
 	qboolean single;	/**< Just a single item can be stored in this container. */
 	qboolean armour;	/**< Only armour can be stored in this container. */

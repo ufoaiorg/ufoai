@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * This function only returns @c NULL if no two handed weapon is in the right hand
  * and the left hand is empty.
  */
-invList_t* HUD_GetLeftHandWeapon (le_t *actor, int *container)
+invList_t* HUD_GetLeftHandWeapon (le_t *actor, containerIndex_t *container)
 {
 	invList_t *invList = LEFT(actor);
 

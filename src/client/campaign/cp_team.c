@@ -151,7 +151,8 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  */
 void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
-	int p, container;
+	int p;
+	containerIndex_t container;
 
 	assert(aircraft);
 

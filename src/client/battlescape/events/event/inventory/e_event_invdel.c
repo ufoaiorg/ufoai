@@ -33,7 +33,8 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 {
 	le_t	*le;
 	int		number;
-	int		container, x, y;
+	int		x, y;
+	containerIndex_t container;
 	invList_t	*ic;
 
 	NET_ReadFormat(msg, self->formatString, &number, &container, &x, &y);

@@ -818,14 +818,15 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
  */
 static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 {
-	invList_t *ic;
-	int i, container;
+	int i;
 	int size = 0;
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
+			containerIndex_t container;
 			const employee_t const *employee = aircraft->acTeam[i];
 			for (container = 0; container < csi.numIDs; container++) {
+				invList_t *ic;
 #if 0
 				/* ignore items linked from any temp container */
 				if (csi.ids[container].temp)

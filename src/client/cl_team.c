@@ -259,7 +259,7 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 /**
  * @sa CL_SaveItemXML
  */
-static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x, int *y)
+static void CL_LoadItemXML (mxml_node_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
 {
 	const char *itemID;
 

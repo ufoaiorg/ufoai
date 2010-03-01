@@ -31,7 +31,8 @@ void CL_InvAmmo (const eventRegister_t *self, struct dbuffer *msg)
 	invList_t	*ic;
 	le_t	*le;
 	int		number;
-	int		ammo, type, container, x, y;
+	int		ammo, type, x, y;
+	containerIndex_t container;
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
