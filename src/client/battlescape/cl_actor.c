@@ -895,7 +895,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 
 	/* also search the linked ground floor tile (temp container) */
 	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].out < tu) {
+		if (INVDEF(container)->out < tu) {
 			invList_t *ic;
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
@@ -904,7 +904,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			for (ic = inv->c[container]; ic; ic = ic->next) {
 				objDef_t *od = ic->item.t;
 				if (INVSH_LoadableInWeapon(od, weapon) && GAME_ItemIsUseable(od)) {
-					tu = csi.ids[container].out;
+					tu = INVDEF(container)->out;
 					bestContainer = container;
 					*invList = ic;
 					break;

@@ -287,7 +287,7 @@ static void AII_CarriedItems (const le_t *soldier)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 		for (invList = soldier->i.c[container]; invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
@@ -829,7 +829,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 				invList_t *ic;
 #if 0
 				/* ignore items linked from any temp container */
-				if (csi.ids[container].temp)
+				if (INVDEF(container)->temp)
 					continue;
 #endif
 				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
@@ -883,7 +883,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 	for (container = 0; container < csi.numIDs; container++) {
 #if 0
 		/* ignore items linked from any temp container */
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 #endif
 		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
@@ -3186,7 +3186,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 				character_t *chr = &aircraft->acTeam[p]->chr;
 				invList_t *ic = chr->inv.c[container];
 #if 0
-				if (csi.ids[container].temp)
+				if (INVDEF(container)->temp)
 					continue;
 #endif
 				while (ic) {

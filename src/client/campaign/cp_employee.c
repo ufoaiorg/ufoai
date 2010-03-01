@@ -1293,7 +1293,7 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 	for (container = 0; container < csi.numIDs; container++) {
 		const invList_t *invList = inv->c[container];
 
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 
 		while (invList) {

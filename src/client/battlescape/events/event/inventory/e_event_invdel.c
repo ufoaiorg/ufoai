@@ -56,13 +56,13 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	if (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		LE_SetThink(le, LET_StartIdle);
 
-	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
+	ic = INVSH_SearchInInventory(&le->i, INVDEF(container), x, y);
 	/* ic can be null for other team actors - we don't the full inventory of them, only
 	 * the object index */
 	if (!ic)
 		return;
 
-	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, &csi.ids[container], ic))
+	if (!cls.i.RemoveFromInventory(&cls.i, &le->i, INVDEF(container), ic))
 		Com_Error(ERR_DROP, "CL_InvDel: No item was removed from container %i", container);
 
 	/* update the rendered item after it was removed from the floor container */

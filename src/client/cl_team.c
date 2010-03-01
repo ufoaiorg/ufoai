@@ -245,7 +245,7 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 
 #if 0
 		/* ignore items linked from any temp container */
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 #endif
 
@@ -293,7 +293,7 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 		containerIndex_t container;
 		int x, y;
 		CL_LoadItemXML(s, &item, &container, &x, &y);
-		if (!cls.i.AddToInventory(&cls.i, i, item, &csi.ids[container], x, y, 1))
+		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
 }

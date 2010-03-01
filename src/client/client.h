@@ -47,6 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HEADGEAR(e) ((e)->i.c[csi.idHeadgear])
 #define EXTENSION(e) ((e)->i.c[csi.idExtension])
 
+#define INVDEF(containerID) (&csi.ids[(containerID)])
+
 typedef enum {
 	ca_uninitialized,
 	ca_disconnected,			/**< not talking to a server */

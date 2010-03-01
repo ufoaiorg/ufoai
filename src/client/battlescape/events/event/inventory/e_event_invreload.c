@@ -60,7 +60,7 @@ void CL_InvReload (const eventRegister_t *self, struct dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
+	ic = INVSH_SearchInInventory(&le->i, INVDEF(container), x, y);
 	if (!ic)
 		return;
 

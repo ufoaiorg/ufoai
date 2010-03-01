@@ -114,7 +114,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 		/* Check if the employee has something equipped. */
 		for (container = 0; container < csi.numIDs; container++) {
-			if (!csi.ids[container].temp && employee->chr.inv.c[container])
+			if (!INVDEF(container)->temp && employee->chr.inv.c[container])
 				break;
 		}
 		if (container < csi.numIDs)
