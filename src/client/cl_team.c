@@ -142,7 +142,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 
 	/* Store inventories */
 	s = mxml_AddNode(p, "inventory");
-	CL_SaveInventoryXML(s, &chr->inv);
+	CL_SaveInventoryXML(s, &chr->i);
 
 	return qtrue;
 }
@@ -208,9 +208,9 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->score.rank = mxml_GetInt(p, "score.rank", -1);
 
 	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
-	cls.i.DestroyInventory(&cls.i, &chr->inv);
+	cls.i.DestroyInventory(&cls.i, &chr->i);
 	s = mxml_GetNode(p, "inventory");
-	CL_LoadInventoryXML(s, &chr->inv);
+	CL_LoadInventoryXML(s, &chr->i);
 
 	return qtrue;
 }
@@ -310,7 +310,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 	memset(chr, 0, sizeof(*chr));
 
 	/* link inventory */
-	cls.i.DestroyInventory(&cls.i, &chr->inv);
+	cls.i.DestroyInventory(&cls.i, &chr->i);
 
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;

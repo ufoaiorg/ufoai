@@ -832,7 +832,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 				if (INVDEF(container)->temp)
 					continue;
 #endif
-				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
+				for (ic = CONTAINER(&employee->chr, container); ic; ic = ic->next) {
 					const objDef_t *obj = ic->item.t;
 					size += obj->size;
 
@@ -886,7 +886,7 @@ static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t 
 		if (INVDEF(container)->temp)
 			continue;
 #endif
-		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
+		for (ic = CONTAINER(chr, container); ic; ic = ic->next) {
 			const objDef_t *obj = ic->item.t;
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
@@ -3081,7 +3081,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
-	cls.i.DestroyInventory(&cls.i, &employee->chr.inv);
+	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
 	return AIR_RemoveFromAircraftTeam(aircraft, employee);
 }
 
@@ -3184,7 +3184,7 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
 				character_t *chr = &aircraft->acTeam[p]->chr;
-				invList_t *ic = chr->inv.c[container];
+				invList_t *ic = CONTAINER(chr, container);
 #if 0
 				if (INVDEF(container)->temp)
 					continue;

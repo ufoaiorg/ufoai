@@ -114,7 +114,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 		/* Check if the employee has something equipped. */
 		for (container = 0; container < csi.numIDs; container++) {
-			if (!INVDEF(container)->temp && employee->chr.inv.c[container])
+			if (!INVDEF(container)->temp && CONTAINER(&employee->chr, container))
 				break;
 		}
 		if (container < csi.numIDs)
@@ -218,7 +218,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
 	p = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 	if (p > 0)
-		menuInventory = &chrDisplayList.chr[0]->inv;
+		menuInventory = &chrDisplayList.chr[0]->i;
 	else
 		menuInventory = NULL;
 

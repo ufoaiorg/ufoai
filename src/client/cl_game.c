@@ -89,7 +89,7 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&characters[i], teamDefID);
 		/* pack equipment */
-		cls.i.EquipActor(&cls.i, &characters[i].inv, ed, &characters[i]);
+		cls.i.EquipActor(&cls.i, &characters[i].i, ed, &characters[i]);
 
 		chrDisplayList.chr[i] = &characters[i];
 	}
@@ -439,7 +439,7 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 
 		GAME_NetSendCharacter(buf, chr);
 
-		CL_NetSendInventory(buf, &chr->inv);
+		CL_NetSendInventory(buf, &chr->i);
 	}
 }
 

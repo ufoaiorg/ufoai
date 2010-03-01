@@ -762,8 +762,8 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->inv.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
-		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
+	if (chr->i.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
+		const objDef_t *od = chr->i.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -784,8 +784,8 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
+	if (chr->i.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		const objDef_t *od = chr->i.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");

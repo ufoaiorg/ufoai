@@ -505,7 +505,7 @@ void E_ResetEmployee (employee_t *employee)
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuildingOrAircraft(employee);
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-	cls.i.DestroyInventory(&cls.i, &employee->chr.inv);
+	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
 }
 
 /**
@@ -1279,19 +1279,14 @@ qboolean E_HireAllowed (const base_t* base)
  */
 void E_RemoveInventoryFromStorage (employee_t *employee)
 {
-	const inventory_t *inv;
 	containerIndex_t container;
+	const character_t *chr = &employee->chr;
 
 	assert(employee);
 	assert(employee->baseHired);
 
-	inv = &(employee->chr.inv);
-
-	if (!inv)
-		return;
-
 	for (container = 0; container < csi.numIDs; container++) {
-		const invList_t *invList = inv->c[container];
+		const invList_t *invList = CONTAINER(chr, container);
 
 		if (INVDEF(container)->temp)
 			continue;

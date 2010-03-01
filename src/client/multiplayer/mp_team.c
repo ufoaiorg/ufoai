@@ -347,7 +347,7 @@ static void MP_GetEquipment (void)
 	}
 
 	if (chrDisplayList.num > 0)
-		menuInventory = &chrDisplayList.chr[0]->inv;
+		menuInventory = &chrDisplayList.chr[0]->i;
 	else
 		menuInventory = NULL;
 

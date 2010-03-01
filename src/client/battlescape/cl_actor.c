@@ -173,13 +173,13 @@ void CL_ActorCvars (const character_t * chr)
 	assert(chr);
 
 	/* visible equipment */
-	weapon = chr->inv.c[csi.idRight];
+	weapon = RIGHT(chr);
 	if (weapon) {
 		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
 		Cvar_Set("mn_rweapon", weapon->item.t->model);
 	} else
 		Cvar_Set("mn_rweapon", "");
-	weapon = chr->inv.c[csi.idLeft];
+	weapon = LEFT(chr);
 	if (weapon) {
 		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
 		Cvar_Set("mn_lweapon", weapon->item.t->model);
@@ -2263,14 +2263,14 @@ static void CL_ActorEquipmentSelect_f (void)
 	if (num < 0 || num >= chrDisplayList.num)
 		return;
 
+	chr = chrDisplayList.chr[num];
 	/* update menu inventory */
-	if (menuInventory && menuInventory != &chrDisplayList.chr[num]->inv) {
-		chrDisplayList.chr[num]->inv.c[csi.idEquip] = menuInventory->c[csi.idEquip];
+	if (menuInventory && menuInventory != &chr->i) {
+		CONTAINER(chr, csi.idEquip) = menuInventory->c[csi.idEquip];
 		/* set 'old' idEquip to NULL */
 		menuInventory->c[csi.idEquip] = NULL;
 	}
-	menuInventory = &chrDisplayList.chr[num]->inv;
-	chr = chrDisplayList.chr[num];
+	menuInventory = &chr->i;
 
 	/* deselect current selected soldier and select the new one */
 	MN_ExecuteConfunc("equipdeselect %i", cl_selected->integer);

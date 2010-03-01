@@ -2006,11 +2006,6 @@ void B_SelectBase (const base_t *base)
 
 }
 
-#undef RIGHT
-#undef HOLSTER
-#define RIGHT(e) ((e)->inv.c[csi.idRight])
-#define HOLSTER(e) ((e)->inv.c[csi.idHolster])
-
 /**
  * @brief Swaps one skill from character1 to character 2 and vice versa.
  */
@@ -2151,7 +2146,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 			character_t *chr = &aircraft->acTeam[i]->chr;
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-			cls.i.EquipActor(&cls.i, &chr->inv, ed, chr);
+			cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
 			chrListTemp.chr[chrListTemp.num] = chr;
 			chrListTemp.num++;
 		}

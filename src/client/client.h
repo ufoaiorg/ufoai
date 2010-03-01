@@ -40,12 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Macros for faster access to the inventory-container. */
 #define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
-#define ARMOUR(e) ((e)->i.c[csi.idArmour])
-#define RIGHT(e) ((e)->i.c[csi.idRight])
-#define LEFT(e)  ((e)->i.c[csi.idLeft])
-#define FLOOR(e) ((e)->i.c[csi.idFloor])
-#define HEADGEAR(e) ((e)->i.c[csi.idHeadgear])
-#define EXTENSION(e) ((e)->i.c[csi.idExtension])
+#define ARMOUR(e) (CONTAINER(e, csi.idArmour))
+#define RIGHT(e) (CONTAINER(e, csi.idRight))
+#define LEFT(e)  (CONTAINER(e, csi.idLeft))
+#define FLOOR(e) (CONTAINER(e, csi.idFloor))
+#define HEADGEAR(e) (CONTAINER(e, csi.idHeadgear))
+#define EXTENSION(e) (CONTAINER(e, csi.idExtension))
+#define HOLSTER(e) (CONTAINER(e, csi.idHolster))
 
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 

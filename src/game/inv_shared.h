@@ -638,7 +638,7 @@ typedef struct character_s {
 	/** @sa memcpy in Grid_CheckForbidden */
 	actorSizeEnum_t fieldSize;				/**< @sa ACTOR_SIZE_**** */
 
-	inventory_t inv;			/**< Inventory definition. */
+	inventory_t i;			/**< Inventory definition. */
 
 	teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */

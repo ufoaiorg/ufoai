@@ -962,7 +962,7 @@ static void G_ClientReadInventory (edict_t *ent)
 	}
 
 	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
-	ent->chr.inv = ent->i;
+	ent->chr.i = ent->i;
 }
 
 /**
