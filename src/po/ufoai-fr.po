@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-02-07 15:45+0100\n"
+"POT-Creation-Date: 2010-03-02 21:32+0100\n"
 "PO-Revision-Date: 2010-02-07 10:12+0100\n"
 "Last-Translator: kracken\n"
 "Language-Team: \n"
@@ -61,11 +61,11 @@ msgstr ""
 msgid "Eaglenest"
 msgstr "Pic montagneux"
 
-#: ../base/maps/forest.ump:404
+#: ../base/maps/forest.ump:404 ../base/maps/forest.ump:435
 msgid "Little forest"
 msgstr "Petite forêt"
 
-#: ../base/maps/forest.ump:435
+#: ../base/maps/forest.ump:466 ../base/maps/forest.ump:497
 msgid "Little bungalo in forest"
 msgstr "Petit bungalow forestier"
 
@@ -134,15 +134,15 @@ msgstr "Convoi militaire"
 msgid "Oriental small"
 msgstr "Oriental petit"
 
-#: ../base/maps/oriental.ump:291
+#: ../base/maps/oriental.ump:291 ../base/maps/oriental.ump:314
 msgid "Oriental medium"
 msgstr "Oriental moyen"
 
-#: ../base/maps/oriental.ump:314
+#: ../base/maps/oriental.ump:337
 msgid "Oriental big"
 msgstr "Oriental grand"
 
-#: ../base/maps/spedition.ump:63
+#: ../base/maps/spedition.ump:62
 msgid "Spedition"
 msgstr "Entreprise de transport"
 
@@ -154,21 +154,21 @@ msgstr "Stade"
 msgid "Transport"
 msgstr "Transport"
 
-#: ../base/maps/tropic.ump:359
+#: ../base/maps/tropic.ump:359 ../base/maps/tropic.ump:391
 msgid "Tropical river"
 msgstr "Tropical rivière"
 
-#: ../base/maps/tropic.ump:391
+#: ../base/maps/tropic.ump:423 ../base/maps/tropic.ump:448
 msgid "Tropical drug"
 msgstr "Tropical magasin"
 
-#: ../base/maps/tropic.ump:416
+#: ../base/maps/tropic.ump:473
 msgid "Tropical UFO"
 msgstr "UFO tropical"
 
 #: ../base/maps/ufocrash.ump:352 ../base/maps/ufocrash.ump:369
-#: ../base/maps/ufocrash.ump:386 ../base/maps/ufocrash.ump:404
-#: client/campaign/cp_missions.c:442
+#: ../base/maps/ufocrash.ump:386 ../base/maps/ufocrash.ump:403
+#: ../base/maps/ufocrash.ump:420 client/campaign/cp_missions.c:456
 msgid "Crashed UFO"
 msgstr "OVNI écrasé"
 
@@ -527,7 +527,7 @@ msgstr "Quartiers de repos"
 msgid "Workshop"
 msgstr "Atelier"
 
-#: ../base/ufos/basemanagement.ufo:251 ../base/ufos/ui/_hud.ufo:93
+#: ../base/ufos/basemanagement.ufo:251 ../base/ufos/ui/_hud.ufo:226
 msgid "Radar"
 msgstr "Radar"
 
@@ -2908,7 +2908,7 @@ msgstr "Tour radar"
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
 msgstr "La tour radar est une installation ne nécessitant pas de personnel. Non cruciale, elle peut être placée n'importe où à la surface du globe pour augmenter le rayon de détection. Elle est peu onéreuse à construire et très utile, mais son camouflage n'est pas très efficace. Les vaisseaux aliens peuvent la repérer avec leurs scanners actifs et les détruire une fois détectée. Il est recommandé de protéger les tours radar par des sites de protection sol/air."
 
-#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1234
+#: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1196
 #: ../base/ufos/ui/lostwon.ufo:212
 msgid "UFO Yard"
 msgstr "Entrepôt à OVNI"
@@ -2917,7 +2917,7 @@ msgstr "Entrepôt à OVNI"
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
 msgstr "L'entrepôt à OVNI est une zone de stockage camouflée pour OVNI. Il peut être placée n'importe où à la surface du globe pour le désossement et l'étude des vaisseaux. Le transfert d'OVNI entre entrepôts est possible. Les OVNI entreposés peuvent être démontés ou faire l'objet de recherche dans tout base PHALANX disposant des installations appropriées. Toutefois, ces opérations seront d'autant plus ralenties que la base est éloignée de l'entrepôt."
 
-#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1192
+#: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1154
 msgid "SAM Site"
 msgstr "Site anti-aérien"
 
@@ -3026,227 +3026,239 @@ msgid "Industrial theme."
 msgstr "Thème industriel."
 
 #: ../base/ufos/maps.ufo:132 ../base/ufos/maps.ufo:171
-#: ../base/ufos/maps.ufo:211
+#: ../base/ufos/maps.ufo:250
 msgid "A suburban district of an oriental area."
 msgstr "Un quartier de banlieue d'une région orientale."
 
-#: ../base/ufos/maps.ufo:254 ../base/ufos/maps.ufo:296
-#: ../base/ufos/maps.ufo:335
+#: ../base/ufos/maps.ufo:211
+#, fuzzy
+msgid "Crashed UFO in oriental suburban district."
+msgstr "Une banlieue démodée."
+
+#: ../base/ufos/maps.ufo:292 ../base/ufos/maps.ufo:334
+#: ../base/ufos/maps.ufo:373
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "Une ferme dans une zone rurale. Une grande zone à couvrir, mais peu d'obstacles qui bloquent la ligne de vue."
 
-#: ../base/ufos/maps.ufo:384 ../base/ufos/maps.ufo:465
-#: ../base/ufos/maps.ufo:506
+#: ../base/ufos/maps.ufo:422 ../base/ufos/maps.ufo:503
+#: ../base/ufos/maps.ufo:544
 msgid "An industrial area in a cold region."
 msgstr "Une zone industrielle dans une région froide."
 
-#: ../base/ufos/maps.ufo:426
+#: ../base/ufos/maps.ufo:464
 msgid "An underpopulated area in a cold region."
 msgstr "Une zone dépeuplée dans une région froide."
 
-#: ../base/ufos/maps.ufo:545
+#: ../base/ufos/maps.ufo:583
 msgid "An industrial compound."
 msgstr "Un complexe industriel."
 
-#: ../base/ufos/maps.ufo:600
+#: ../base/ufos/maps.ufo:638
 msgid "Cemetery terror mission."
 msgstr "Mission de terreur dans un cimetière."
 
-#: ../base/ufos/maps.ufo:651
+#: ../base/ufos/maps.ufo:689 ../base/ufos/maps.ufo:729
 msgid "A river runs through this piece of jungle."
 msgstr "Une rivière parcourt cette partie de la jungle."
 
-#: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:736
+#: ../base/ufos/maps.ufo:770 ../base/ufos/maps.ufo:811
+#: ../base/ufos/maps.ufo:851
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Une zone dégagée au milieu de la jungle."
 
-#: ../base/ufos/maps.ufo:782 ../base/ufos/maps.ufo:821
-#: ../base/ufos/maps.ufo:862 ../base/ufos/maps.ufo:902
+#: ../base/ufos/maps.ufo:897 ../base/ufos/maps.ufo:936
+#: ../base/ufos/maps.ufo:977 ../base/ufos/maps.ufo:1017
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "Les abords tranquille d'une zone à forte densité de population."
 
-#: ../base/ufos/maps.ufo:941 ../base/ufos/maps.ufo:983
+#: ../base/ufos/maps.ufo:1056 ../base/ufos/maps.ufo:1137
+#: ../base/ufos/maps.ufo:1177
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Les aliens ne peuvent que préparer le pire dans cette région dépeuplée de la forêt."
 
-#: ../base/ufos/maps.ufo:1025 ../base/ufos/maps.ufo:1067
+#: ../base/ufos/maps.ufo:1097
+#, fuzzy
+msgid "UFO crashed in this sparsely populated forest region."
+msgstr "Les aliens ne peuvent que préparer le pire dans cette région dépeuplée de la forêt."
+
+#: ../base/ufos/maps.ufo:1217 ../base/ufos/maps.ufo:1259
 msgid "Some houses in desert"
 msgstr "Quelques maisons dans le désert"
 
-#: ../base/ufos/maps.ufo:1108
+#: ../base/ufos/maps.ufo:1300
 msgid "An excavation site that has fallen under alien attack."
 msgstr "Une site d'excavation attaqué par les aliens."
 
-#: ../base/ufos/maps.ufo:1155
+#: ../base/ufos/maps.ufo:1347
 msgid "An estate owned by rich and influential people."
 msgstr "Une propriété appartenant à des personnes riches et influentes."
 
-#: ../base/ufos/maps.ufo:1199
+#: ../base/ufos/maps.ufo:1391
 msgid "A small village in England."
 msgstr "Un petit village en Angleterre."
 
-#: ../base/ufos/maps.ufo:1245
+#: ../base/ufos/maps.ufo:1437
 msgid "A small office in a mountainous region."
 msgstr "Un petit bureau dans une région montagneuse."
 
-#: ../base/ufos/maps.ufo:1293
+#: ../base/ufos/maps.ufo:1485
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "Une sorte de centre regroupement de biens communaux, aussi connu sous le nom de supermarché."
 
-#: ../base/ufos/maps.ufo:1343
+#: ../base/ufos/maps.ufo:1535
 msgid "An old mine."
 msgstr "Une vieille mine."
 
-#: ../base/ufos/maps.ufo:1391
+#: ../base/ufos/maps.ufo:1583
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "Une zone industrielle où des marchandises sont chargées et déchargées."
 
-#: ../base/ufos/maps.ufo:1437
+#: ../base/ufos/maps.ufo:1629
 msgid "A bunker used in a previous conflict."
 msgstr "Un bunker datant d'un ancien conflit."
 
-#: ../base/ufos/maps.ufo:1483
+#: ../base/ufos/maps.ufo:1675
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "Un barrage hydroélectrique menacé par une invasion alienne."
 
-#: ../base/ufos/maps.ufo:1527 ../base/ufos/maps.ufo:1577
-#: ../base/ufos/maps.ufo:1627
+#: ../base/ufos/maps.ufo:1719 ../base/ufos/maps.ufo:1769
+#: ../base/ufos/maps.ufo:1819
 msgid "A classic eastern suburban area."
 msgstr "Un quartier urbain oriental classique."
 
-#: ../base/ufos/maps.ufo:1676
+#: ../base/ufos/maps.ufo:1868
 msgid "A small industrial area."
 msgstr "Une petite zone industrielle."
 
-#: ../base/ufos/maps.ufo:1722
+#: ../base/ufos/maps.ufo:1914
 msgid "A stadium used for various recreational events."
 msgstr "Un stade utilisé pour divers évènements divertissant."
 
-#: ../base/ufos/maps.ufo:1771
+#: ../base/ufos/maps.ufo:1963
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "Un zone tropicale où plusieurs criminels se sont installés."
 
-#: ../base/ufos/maps.ufo:1829
+#: ../base/ufos/maps.ufo:2021
 msgid "A small estate in the mountains"
 msgstr "Un petit domaine dans les montagnes."
 
-#: ../base/ufos/maps.ufo:1878
+#: ../base/ufos/maps.ufo:2070
 msgid "A crashed Scout UFO"
 msgstr "Un  OVNI Éclaireur écrasé"
 
-#: ../base/ufos/maps.ufo:1913
+#: ../base/ufos/maps.ufo:2105
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "Une ferme entourée de champs et de granges. Un OVNI a atterri dans un de ces champs."
 
-#: ../base/ufos/maps.ufo:1960
+#: ../base/ufos/maps.ufo:2152
 msgid "A ferry."
 msgstr "Un ferry."
 
-#: ../base/ufos/maps.ufo:2008
+#: ../base/ufos/maps.ufo:2200
 msgid "A rather old-fashioned suburban district."
 msgstr "Une banlieue démodée."
 
-#: ../base/ufos/maps.ufo:2057 ../base/ufos/maps.ufo:2104
+#: ../base/ufos/maps.ufo:2249 ../base/ufos/maps.ufo:2296
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Les environs d'un région urbaine chaude."
 
-#: ../base/ufos/maps.ufo:2152
+#: ../base/ufos/maps.ufo:2344
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Le lieu où les civils viennent faire le plein de leur véhicule."
 
-#: ../base/ufos/maps.ufo:2201 ../base/ufos/maps.ufo:2245
+#: ../base/ufos/maps.ufo:2393 ../base/ufos/maps.ufo:2437
 msgid "An urban district in an oriental region."
 msgstr "Un quartier urbain dans une région orientale."
 
-#: ../base/ufos/maps.ufo:2289
+#: ../base/ufos/maps.ufo:2481
 msgid "Underground pipe construction site."
 msgstr "Site de construction de canalisations souterraines."
 
-#: ../base/ufos/maps.ufo:2336
+#: ../base/ufos/maps.ufo:2528
 msgid "A subway station in a suburban part of town."
 msgstr "Une station de métro dans la banlieue d'une ville."
 
-#: ../base/ufos/maps.ufo:2382
+#: ../base/ufos/maps.ufo:2574
 msgid "An office complex in the centre of town."
 msgstr "Un complexe de bureau dans le centre d'une ville."
 
-#: ../base/ufos/maps.ufo:2430
+#: ../base/ufos/maps.ufo:2622
 msgid "A suburban district."
 msgstr "Un quartier de banlieue."
 
-#: ../base/ufos/maps.ufo:2475
+#: ../base/ufos/maps.ufo:2667
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Un convoi militaire a attiré l'attention des aliens."
 
-#: ../base/ufos/maps.ufo:2522 ../base/ufos/maps.ufo:2568
+#: ../base/ufos/maps.ufo:2714 ../base/ufos/maps.ufo:2760
 msgid "A small UFO has crashed in this mining region."
 msgstr "Un petit OVNI s'est écrasé dans cette région minière."
 
-#: ../base/ufos/maps.ufo:2617
+#: ../base/ufos/maps.ufo:2810
 msgid "An office complex under construction."
 msgstr "Un complexe de bureau en construction."
 
-#: ../base/ufos/maps.ufo:2664
+#: ../base/ufos/maps.ufo:2857
 msgid "A local harbour."
 msgstr "Un port local."
 
-#: ../base/ufos/maps.ufo:2709
+#: ../base/ufos/maps.ufo:2902
 msgid "An office complex on the outskirts of town."
 msgstr "Un complexe de bureau dans la périphérie d'une ville."
 
-#: ../base/ufos/maps.ufo:2754
+#: ../base/ufos/maps.ufo:2947
 msgid "A luxurious vacation resort."
 msgstr "Un lieu de vacances luxueux."
 
-#: ../base/ufos/maps.ufo:2811
+#: ../base/ufos/maps.ufo:3004
 msgid "A suburb that has been visited by UFO."
 msgstr "Une banlieue qui a été visité par un OVNI."
 
-#: ../base/ufos/maps.ufo:2863
+#: ../base/ufos/maps.ufo:3056
 msgid "A suburb that has received a visit from a Harvester."
 msgstr "Une banlieue africaine qui a été visité par une moissonneuse alienne."
 
-#: ../base/ufos/maps.ufo:2915
+#: ../base/ufos/maps.ufo:3108
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "Une moissoneuse alienne s'est écrasé dans une zone désertique."
 
-#: ../base/ufos/maps.ufo:2961 ../base/ufos/maps.ufo:2995
+#: ../base/ufos/maps.ufo:3154 ../base/ufos/maps.ufo:3188
 msgid "A small settlement in winter."
 msgstr "Un petit campement en hiver."
 
-#: ../base/ufos/maps.ufo:3034
+#: ../base/ufos/maps.ufo:3227
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "Un abri destiné à accueillir et protéger les gens en cas de catastrophe. Certaines portes blindées seront peut-être closes."
 
-#: ../base/ufos/maps.ufo:3082
+#: ../base/ufos/maps.ufo:3275
 msgid "A Bomber has landed in the middle of a city."
 msgstr "Un bombardier s'est posé au milieu d'un ville."
 
-#: ../base/ufos/maps.ufo:3135
+#: ../base/ufos/maps.ufo:3328
 msgid "A place where people come to relax and mingle."
 msgstr "Un endroit où les gens peuvent venir se rencontrer et se reposer."
 
-#: ../base/ufos/maps.ufo:3183
+#: ../base/ufos/maps.ufo:3376
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Un laboratoire où des fragments d'OVNI retrouvés étaient étudiés."
 
-#: ../base/ufos/maps.ufo:3231
+#: ../base/ufos/maps.ufo:3424
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Une zone de stockage d'essence que les aliens tentent de détruire."
 
-#: ../base/ufos/maps.ufo:3270
+#: ../base/ufos/maps.ufo:3463
 msgid "Wilderness terror mission."
 msgstr "Mission de terreur en terrain désertique."
 
-#: ../base/ufos/maps.ufo:3316
+#: ../base/ufos/maps.ufo:3509
 msgid "UFO Crashsite."
 msgstr "Site de crash OVNI."
 
-#: ../base/ufos/maps.ufo:3347
+#: ../base/ufos/maps.ufo:3540
 msgid "An alien base."
 msgstr "Une base alienne."
 
-#: ../base/ufos/maps.ufo:3362
+#: ../base/ufos/maps.ufo:3555
 msgid "Base is under attack."
 msgstr "La base est attaquée."
 
@@ -3461,7 +3473,7 @@ msgid "Background"
 msgstr "Contexte"
 
 #: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:129
-#: ../base/ufos/ui/geoscape.ufo:1946 ../base/ufos/ui/market.ufo:95
+#: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
 #: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
 msgid "Aircraft"
@@ -3845,7 +3857,7 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:518 client/campaign/cp_alienbase.c:169
-#: client/campaign/cp_missions.c:438
+#: client/campaign/cp_missions.c:452
 msgid "Alien base"
 msgstr "Base alienne"
 
@@ -4483,7 +4495,7 @@ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 msgid "shotgun_txt"
 msgstr "shotgun_txt"
 
-#: ../base/ufos/research.ufo:1035 ../base/ufos/weapons_human.ufo:1873
+#: ../base/ufos/research.ufo:1035 ../base/ufos/weapons_human.ufo:1869
 msgid "Electromagnetic Rifle"
 msgstr "Fusil électromagnétique"
 
@@ -4519,7 +4531,7 @@ msgstr ""
 "\n"
 "--Cdt Navarre"
 
-#: ../base/ufos/research.ufo:1074 ../base/ufos/weapons_human.ufo:1893
+#: ../base/ufos/research.ufo:1074 ../base/ufos/weapons_human.ufo:1889
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Chargeur de fusil électromagnétique"
 
@@ -5488,7 +5500,7 @@ msgstr ""
 
 # Pour les médailles
 #: ../base/ufos/research.ufo:2007 ../base/ufos/research.ufo:2015
-#: ../base/ufos/weapons_human.ufo:392
+#: ../base/ufos/weapons_human.ufo:388
 msgid "Coilgun"
 msgstr "Pièce"
 
@@ -9178,8 +9190,8 @@ msgid "Copyright 2004-2009 by UFO: AI Team"
 msgstr "Copyright 2004-2009 à l'équipe de UFO: AI "
 
 #: ../base/ufos/seq_ingame.ufo:13 ../base/ufos/seq_ingame.ufo:42
-#: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/ui/campaign.ufo:598
-#: ../base/ufos/ui/campaign.ufo:671
+#: ../base/ufos/seq_ingame.ufo:80 ../base/ufos/ui/campaign.ufo:588
+#: ../base/ufos/ui/campaign.ufo:661
 msgid "Click to continue"
 msgstr "Retour au contenu"
 
@@ -9392,11 +9404,17 @@ msgid "Select your team"
 msgstr "Sélectionnez votre équipe"
 
 #: ../base/ufos/seq_tutorials.ufo:919
-msgid "Select UFO to secure \\n(if possible for current map)"
+#, fuzzy
+msgid ""
+"Select UFO to secure \n"
+"(if possible for current map)"
 msgstr "Sélectionnez l'OVNI à sécuriser \\n(si disponible pour la carte actuelle)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
-msgid "Select dropship \\n(if possible for current map)"
+#, fuzzy
+msgid ""
+"Select dropship\n"
+"(if possible for current map)"
 msgstr "Sélectionnez le transport\\n(si disponible pour la carte actuelle)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
@@ -9447,11 +9465,11 @@ msgstr "Taman"
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:170
+#: ../base/ufos/team_aliens.ufo:171
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:207
+#: ../base/ufos/team_aliens.ufo:208
 msgid "Bloodspider"
 msgstr "Araignée Sanguinaire"
 
@@ -9556,153 +9574,150 @@ msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a 
 msgstr "Si vous n'avez plus beaucoup d'unité de temps (UT) et êtes à proximité d'un ennemi dangereux, vous pouvez utiliser une grenade éblouissante pour l'immobiliser jusqu'au début de votre prochain tour. 2 UT (prendre la grenade de la ceinture) + 12 UT (lancer) = 14 UT."
 
 #: ../base/ufos/tips.ufo:28
-msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
-msgstr "Utilisez la vue à la première personne (changez avec la touche [v]) pour vérifier qu'un mur ne bloque pas la ligne de tir lors d'un déplacement."
-
-#: ../base/ufos/tips.ufo:29
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
 msgstr "Donnez à vos soldats les plus vifs des pistolets, des armes de mêlée à une main, des grenades ou encore un médikit (s'il peut soigner)."
 
-#: ../base/ufos/tips.ufo:30
+#: ../base/ufos/tips.ufo:29
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
 msgstr "Construire un hôpital accélère les soins apportés à vos soldats avant la prochaine mission."
 
-#: ../base/ufos/tips.ufo:31
+#: ../base/ufos/tips.ufo:30
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 msgstr "Les grenades à plasma sont les plus destructrices, mais les grenades à fragmentation peuvent être lancées légèrement plus loin."
 
-#: ../base/ufos/tips.ufo:32
+#: ../base/ufos/tips.ufo:31
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "Utilisez [x] pour changer de mode de tir réflexe : aucun, coup par coup, tir multiple."
 
-#: ../base/ufos/tips.ufo:33
+#: ../base/ufos/tips.ufo:32
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
 msgstr "Gardez vos soldats en formation serrée, afin qu'ils puissent se couvrir mutuellement (se soigner, tirer lorsque l'un d'entre eux est à court d'unités de temps (UT)). Essayer de les séparer par un mur à la fin de votre tour, pour qu'ils ne puissent pas être tués d'un coup par une grenade."
 
-#: ../base/ufos/tips.ufo:34
+#: ../base/ufos/tips.ufo:33
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
 msgstr "Gardez toujours un soldat ou deux à disposition, pour éviter de mettre vos meilleures unités dans des situations inutilement dangereuses."
 
-#: ../base/ufos/tips.ufo:35
+#: ../base/ufos/tips.ufo:34
 msgid "You can increase a base's radar range by building an advanced radar facility. Remember that you have to research it first!"
 msgstr "Vous pouvez augmenter la portée des radar de vos bases en construisant un radar avancé. Vous devez cependant d'abord en connaître la technologie !"
 
-#: ../base/ufos/tips.ufo:36
+#: ../base/ufos/tips.ufo:35
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr "Le tir réflexe peut faire descendre vos unités de temps (UT) à 0. Si vous désactivez le tir réflexe d'un soldat, vous ne pourrez le remettre que si vous conservez suffisamment d'UT. Réfléchissez bien avant de désactiver le tir réflexe pour gagner des UT."
 
-#: ../base/ufos/tips.ufo:37
+#: ../base/ufos/tips.ufo:36
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
 msgstr "Les tirs fusants du Lance-grenade vous permettent de faire exploser les grenades en des endroits spécifiques. Cela peut s'avérer très utile pour viser quelque chose près du bord des cartes, ou sur un rebord."
 
-#: ../base/ufos/tips.ufo:38
+#: ../base/ufos/tips.ufo:37
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
 msgstr "En lançant une grenade, évitez de la lancer parallèlelement à la grille. En y ajoutant un petit angle, les risques de rebond vers le lanceur diminuent."
 
-#: ../base/ufos/tips.ufo:39
+#: ../base/ufos/tips.ufo:38
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
 msgstr "Avant de lancer une grenade, examinez attentivement le terrain. Une pente, même faible, modifiera la direction dans laquelle elle rebondit."
 
-#: ../base/ufos/tips.ufo:40
+#: ../base/ufos/tips.ufo:39
 msgid "Grenades don't bounce well on sand or dirt."
 msgstr "Les grenades rebondissent mal dans le sable ou la poussière."
 
-#: ../base/ufos/tips.ufo:41
+#: ../base/ufos/tips.ufo:40
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
 msgstr "Vous pouvez utiliser vos propres cartes en multi-joueurs ou pour créer une campagne. Pour plus d'informations, visitez la rubrique création de notre wiki."
 
-#: ../base/ufos/tips.ufo:42
+#: ../base/ufos/tips.ufo:41
 msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Vous pouvez utiliser [espace] pour passer d'un élément de la géosphère à un autre."
 
-#: ../base/ufos/tips.ufo:43
+#: ../base/ufos/tips.ufo:42
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
 msgstr "Vous pouvez accélérer ou décélérer le temps de la géosphère en utilisant la molette de la souris, les boutons contrôlant le temps, ou les touches [-], [+/=]. Vous pouvez également utiliser les touches [n] et [m]. [Retour arrière] arrêtera le temps."
 
-#: ../base/ufos/tips.ufo:44
+#: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "Pensez à armer votre intercepteur avant de le faire décoller."
 
-#: ../base/ufos/tips.ufo:45
+#: ../base/ufos/tips.ufo:44
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr "Les objets équipés sur vos appareils peuvent le ralentir. Pour intercepter des OVNI rapides, il peut être préférable d'envoyer plusieurs appareil légèrement équipés."
 
-#: ../base/ufos/tips.ufo:46
+#: ../base/ufos/tips.ufo:45
 msgid "Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
 msgstr "Un appareil attaqué peut se réfugier dans une base pour ne pas être détruit par des OVNI."
 
-#: ../base/ufos/tips.ufo:47
+#: ../base/ufos/tips.ufo:46
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "Construisez une unité de détention pour pouvoir capturer des aliens vivants."
 
-#: ../base/ufos/tips.ufo:48
+#: ../base/ufos/tips.ufo:47
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
 msgstr "Ennemis en vue : Lors d'une mission au sol, vous pouvez utiliser [Espace] pour défiler parmi les ennemis repérés. La touche [t] tracera une ligne jusqu'à chaque ennemi en vue."
 
-#: ../base/ufos/tips.ufo:49
+#: ../base/ufos/tips.ufo:48
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
 msgstr "Vous pouvez utiliser le bouton droit de la souris dans le menu équipement des soldats pour équiper ou enlever des armes, munitions, ou armures. Cette touche ne fonctionne que dans la base, car lors des missions tactiques de telles actions prennent des UT."
 
-#: ../base/ufos/tips.ufo:50
+#: ../base/ufos/tips.ufo:49
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr "Vous devriez vous assurer que le nombre de civils décédés reste faible. Vous pourriez autrement perdre le jeu plus rapidement que prévu."
 
-#: ../base/ufos/tips.ufo:51
+#: ../base/ufos/tips.ufo:50
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
 msgstr "Couvrez vos hommes avec des tireurs d'élite. Placez-les afin qu'ils aient une bonne visibilité (par exemple en hauteur ou au coin d'un toit). Laissez-les accroupis et passez en mode de tir réflexe multiples pour éliminer les aliens."
 
-#: ../base/ufos/tips.ufo:52
+#: ../base/ufos/tips.ufo:51
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
 msgstr "Pour intercepter les OVNI les plus rapides, vous pouvez lancer vos intercepteurs lorsqu'ils sont très proches de votre base. Vous n'aurez pas à le pourchasser, il sera à portée de tir dès le décollage."
 
-#: ../base/ufos/tips.ufo:53
+#: ../base/ufos/tips.ufo:52
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
 msgstr "Penez à étourdir les civils lors des missions sur des sites de terreur pour les empêcher de courir en tout sens. Les aliens semblent préférer tuer les civils conscients."
 
-#: ../base/ufos/tips.ufo:54
+#: ../base/ufos/tips.ufo:53
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
 msgstr "N'oubliez pas d'installer des lanceurs de missiles et des missiles dans vos batteries de missiles."
 
-#: ../base/ufos/tips.ufo:55
+#: ../base/ufos/tips.ufo:54
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
 msgstr "Vous ne vous souvenez plus qui à un MediKit ? Appuyez sur [i] pour voir l'inventaire, puis utilisez les touches [1] à [8] pour navihuer entre vos troupes."
 
-#: ../base/ufos/tips.ufo:56
+#: ../base/ufos/tips.ufo:55
 msgid "To catch fast UFOs send interceptors in from several directions."
 msgstr "Pour rattraper des OVNI rapides, envoyez des intercepteurs depuis plusieurs endroits."
 
-#: ../base/ufos/tips.ufo:57
+#: ../base/ufos/tips.ufo:56
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
 msgstr "Pour acheter ou vendre des objets rapidement, placez le curseur de la souris au dessus des flèches et utilisez la molette."
 
-#: ../base/ufos/tips.ufo:58
+#: ../base/ufos/tips.ufo:57
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
 msgstr "Attention aux tirs alliés ! Lorsque vous envoyez une grenade sur des ennemis qui ont surgis derrière vos soldats, vous pouvez facilement tuer des aliens ... Mais vous pourriez tout aussi bien les aider !  La même idée peut être appliquée sur vos balles, lorsqu'un ennemi meurt : êtes-vous sûr que vos balles ne vont pas toucher autre chose une fois celui-ci à terre ?"
 
-#: ../base/ufos/tips.ufo:59
+#: ../base/ufos/tips.ufo:58
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
 msgstr "Pensez à vérifier votre liste de recherche et de production régulièrement ! Un bon arsenal est un arsenal à jour !"
 
-#: ../base/ufos/tips.ufo:60
+#: ../base/ufos/tips.ufo:59
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
 msgstr "La présence de civils encore en vie signifie probablement que les aliens sont plus éloignés. Servez-vous en pour finir la carte rapidement."
 
-#: ../base/ufos/tips.ufo:61
+#: ../base/ufos/tips.ufo:60
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
 msgstr "Surveillez la santée de vos soldats : ne les laissez pas mourir. Les vétérans sont plus efficaces au combat que les nouvelles recrues."
 
-#: ../base/ufos/tips.ufo:62
+#: ../base/ufos/tips.ufo:61
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 msgstr "Vous pouvez préparer les actions du prochain tour pendant l'attente de début de tour. Appuyez sur la touche [Entrée] deux fois de suite vous permettra de déclencher ces actions dès que votre nouveau tour commence."
 
-#: ../base/ufos/ui/_hud.ufo:156 ../base/ufos/ui/_hud.ufo:185
-#: ../base/ufos/ui/_hud.ufo:214 ../base/ufos/ui/_hud.ufo:243
-#: ../base/ufos/ui/_hud.ufo:272 ../base/ufos/ui/_hud.ufo:301
-#: ../base/ufos/ui/_hud.ufo:330 ../base/ufos/ui/_hud.ufo:359
-#: ../base/ufos/ui/_hud.ufo:445 ../base/ufos/ui/_hud.ufo:474
-#: ../base/ufos/ui/_hud.ufo:503 ../base/ufos/ui/_hud.ufo:532
-#: ../base/ufos/ui/_hud.ufo:561 ../base/ufos/ui/_hud.ufo:590
-#: ../base/ufos/ui/_hud.ufo:619 ../base/ufos/ui/_hud.ufo:648
+#: ../base/ufos/ui/_hud.ufo:27 ../base/ufos/ui/_hud.ufo:289
+#: ../base/ufos/ui/_hud.ufo:318 ../base/ufos/ui/_hud.ufo:347
+#: ../base/ufos/ui/_hud.ufo:376 ../base/ufos/ui/_hud.ufo:405
+#: ../base/ufos/ui/_hud.ufo:434 ../base/ufos/ui/_hud.ufo:463
+#: ../base/ufos/ui/_hud.ufo:492 ../base/ufos/ui/_hud.ufo:578
+#: ../base/ufos/ui/_hud.ufo:607 ../base/ufos/ui/_hud.ufo:636
+#: ../base/ufos/ui/_hud.ufo:665 ../base/ufos/ui/_hud.ufo:694
+#: ../base/ufos/ui/_hud.ufo:723 ../base/ufos/ui/_hud.ufo:752
+#: ../base/ufos/ui/_hud.ufo:781
 msgid "Check to use this firemode for reaction fire"
 msgstr "Cochez pour utiliser ce mode de tir en tir réflexe"
 
@@ -9724,6 +9739,17 @@ msgstr "Retour à la vue de la base"
 #: ../base/ufos/ui/hospital.ufo:59
 msgid "Name of this base"
 msgstr "Nom de cette base"
+
+#: ../base/ufos/ui/_menu.ufo:163 ../base/ufos/ui/transfer.ufo:594
+#: client/campaign/cp_installation_callbacks.c:224
+msgid "Cancel"
+msgstr "Annuler"
+
+#: ../base/ufos/ui/_menu.ufo:164 ../base/ufos/ui/geoscape.ufo:1298
+#: ../base/ufos/ui/geoscape.ufo:1511 ../base/ufos/ui/sys_popup.ufo:50
+#: ../base/ufos/ui/sys_popup.ufo:112
+msgid "Close this dialogue"
+msgstr "Fermer cette boite de dialogue"
 
 #: ../base/ufos/ui/aircraft.ufo:58 ../base/ufos/ui/ufopedia.ufo:79
 msgid "Description"
@@ -9825,35 +9851,35 @@ msgstr "Démarrer appareil"
 msgid "Call back"
 msgstr "Rappeler"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:123
+#: ../base/ufos/ui/aircraft_pilots.ufo:124
 msgid "Pilot is assigned to another craft"
 msgstr "Ce pilote est déjà affecté à un autre appareil"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:141
+#: ../base/ufos/ui/aircraft_pilots.ufo:142
 msgid "A pilot is already assigned to this craft"
 msgstr "Un pilote est déjà affecté à cet appareil"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:143
+#: ../base/ufos/ui/aircraft_pilots.ufo:144
 msgid "Assign pilot to this craft"
 msgstr "Affecter un pilote à cet appareil"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:154
+#: ../base/ufos/ui/aircraft_pilots.ufo:155
 msgid "Remove pilot from this craft"
 msgstr "Enlever le pilote de cet appareil"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:197
-#: ../base/ufos/ui/aircraft_pilots.ufo:207
-#: ../base/ufos/ui/aircraft_pilots.ufo:217
-#: ../base/ufos/ui/aircraft_pilots.ufo:227
-#: ../base/ufos/ui/aircraft_pilots.ufo:237
-#: ../base/ufos/ui/aircraft_pilots.ufo:247
-#: ../base/ufos/ui/aircraft_pilots.ufo:257
-#: ../base/ufos/ui/aircraft_pilots.ufo:267
+#: ../base/ufos/ui/aircraft_pilots.ufo:198
+#: ../base/ufos/ui/aircraft_pilots.ufo:208
+#: ../base/ufos/ui/aircraft_pilots.ufo:218
+#: ../base/ufos/ui/aircraft_pilots.ufo:228
+#: ../base/ufos/ui/aircraft_pilots.ufo:238
+#: ../base/ufos/ui/aircraft_pilots.ufo:248
+#: ../base/ufos/ui/aircraft_pilots.ufo:258
+#: ../base/ufos/ui/aircraft_pilots.ufo:268
 msgid "Add/remove this soldier"
 msgstr "Ajouter/retirer ce soldat"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:87
-#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:783
+#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:769
 msgid "Equip soldiers"
 msgstr "Équiper les soldats"
 
@@ -10084,7 +10110,7 @@ msgid "No reaction fire"
 msgstr "Pas de tir réflexe"
 
 #: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:1034
+#: client/battlescape/cl_hud.c:810
 msgid "Reserve TUs for shooting."
 msgstr "Réserver des UT pour tirer."
 
@@ -10140,8 +10166,8 @@ msgstr "Défenses Sol-Air"
 msgid "Targetted UFO:"
 msgstr "OVNI ciblé :"
 
-#: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1441
-#: ../base/ufos/ui/geoscape.ufo:1549
+#: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1399
+#: ../base/ufos/ui/geoscape.ufo:1497
 msgid "Time to build:"
 msgstr "Temps de construction :"
 
@@ -10149,20 +10175,20 @@ msgstr "Temps de construction :"
 msgid "Autofire"
 msgstr "Tir automatique"
 
-#: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1586
+#: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1526
 #: client/campaign/cp_base.c:890 client/campaign/cp_base.c:900
 #: client/campaign/cp_base.c:910 client/campaign/cp_base.c:923
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy"
 msgstr "Détruire"
 
-#: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1587
+#: ../base/ufos/ui/basedefence.ufo:369 ../base/ufos/ui/geoscape.ufo:1527
 #: client/campaign/cp_installation_callbacks.c:223
 msgid "Destroy installation"
 msgstr "Détruire l'installation"
 
-#: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1335
-#: ../base/ufos/ui/geoscape.ufo:1562 ../base/ufos/ui/main.ufo:309
+#: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1297
+#: ../base/ufos/ui/geoscape.ufo:1510 ../base/ufos/ui/main.ufo:305
 msgid "Close"
 msgstr "Fermer"
 
@@ -10170,7 +10196,7 @@ msgstr "Fermer"
 msgid "Back to geoscape"
 msgstr "Retourne au géosphère"
 
-#: ../base/ufos/ui/bases.ufo:40 ../base/ufos/ui/geoscape.ufo:987
+#: ../base/ufos/ui/bases.ufo:40 ../base/ufos/ui/geoscape.ufo:959
 msgid "Rename your base"
 msgstr "Renommer la base"
 
@@ -10268,8 +10294,8 @@ msgstr "Choisir un bâtiment"
 
 #: ../base/ufos/ui/buildings.ufo:175 ../base/ufos/ui/geoscape.ufo:483
 #: ../base/ufos/ui/market.ufo:362 client/campaign/cp_ufopedia.c:121
-#: client/campaign/cp_ufopedia.c:614 client/campaign/cp_ufopedia.c:666
-#: client/campaign/cp_ufopedia.c:675 client/campaign/cp_ufopedia.c:835
+#: client/campaign/cp_ufopedia.c:616 client/campaign/cp_ufopedia.c:668
+#: client/campaign/cp_ufopedia.c:677 client/campaign/cp_ufopedia.c:837
 msgid "UFOpaedia"
 msgstr "OVNIpédia"
 
@@ -10282,7 +10308,7 @@ msgid "Start campaign"
 msgstr "Démarrer"
 
 #: ../base/ufos/ui/campaign.ufo:41 ../base/ufos/ui/campaign.ufo:155
-#: ../base/ufos/ui/campaign.ufo:207 ../base/ufos/ui/campaign.ufo:248
+#: ../base/ufos/ui/campaign.ufo:207 ../base/ufos/ui/campaign.ufo:238
 msgid "Load"
 msgstr "Charger"
 
@@ -10298,14 +10324,14 @@ msgstr "Continuer"
 msgid "Load last saved game or continue playing"
 msgstr "Charger la dernière partie ou continuer à jouer"
 
-#: ../base/ufos/ui/campaign.ufo:60 ../base/ufos/ui/campaign.ufo:383
-#: ../base/ufos/ui/campaign.ufo:564 ../base/ufos/ui/multiplayer.ufo:66
+#: ../base/ufos/ui/campaign.ufo:60 ../base/ufos/ui/campaign.ufo:373
+#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:66
 #: ../base/ufos/ui/options.ufo:75 ../base/ufos/ui/singleplayer.ufo:43
 #: ../base/ufos/ui/skirmish.ufo:18 ../base/ufos/ui/tutorials.ufo:27
 msgid "Back"
 msgstr "Retour"
 
-#: ../base/ufos/ui/campaign.ufo:162 ../base/ufos/ui/campaign.ufo:418
+#: ../base/ufos/ui/campaign.ufo:162 ../base/ufos/ui/campaign.ufo:408
 #: ../base/ufos/ui/multiplayer_team.ufo:899
 msgid "Save"
 msgstr "Sauver"
@@ -10334,11 +10360,11 @@ msgstr "Êtes-vous sûr de vouloir charger la dernière sauvegarde automatique d
 msgid "Reload the last automatically saved campaign state"
 msgstr "Charger la dernière sauvegarde automatique de la campagne"
 
-#: ../base/ufos/ui/campaign.ufo:588
+#: ../base/ufos/ui/campaign.ufo:578
 msgid "You've lost the game"
 msgstr "Vous avez perdu la partie"
 
-#: ../base/ufos/ui/campaign.ufo:661
+#: ../base/ufos/ui/campaign.ufo:651
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Merci d'avoir joué à UFO : Alien Invasion"
 
@@ -10530,15 +10556,15 @@ msgstr "Ouvrir l'OVNIpédia"
 msgid "Create installation"
 msgstr "Créer installation"
 
-#: ../base/ufos/ui/geoscape.ufo:515 ../base/ufos/ui/geoscape.ufo:2067
+#: ../base/ufos/ui/geoscape.ufo:515 ../base/ufos/ui/geoscape.ufo:1979
 msgid "Highlight nation borders"
 msgstr "Faire apparaître les différentes nations"
 
-#: ../base/ufos/ui/geoscape.ufo:527 ../base/ufos/ui/geoscape.ufo:2092
+#: ../base/ufos/ui/geoscape.ufo:527 ../base/ufos/ui/geoscape.ufo:2004
 msgid "Show radar range"
 msgstr "Montrer la portée des radar"
 
-#: ../base/ufos/ui/geoscape.ufo:540 ../base/ufos/ui/geoscape.ufo:2113
+#: ../base/ufos/ui/geoscape.ufo:540 ../base/ufos/ui/geoscape.ufo:2025
 msgid "Show XVI map"
 msgstr "Montrer la carte IVX"
 
@@ -10558,244 +10584,225 @@ msgstr "Prêt"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "L'appareil a atteint sa destination - Quels sont les ordres ?"
 
-#: ../base/ufos/ui/geoscape.ufo:697 ../base/ufos/ui/geoscape.ufo:946
-#: ../base/ufos/ui/geoscape.ufo:1057 ../base/ufos/ui/geoscape.ufo:1478
-#: ../base/ufos/ui/geoscape.ufo:1760 ../base/ufos/ui/geoscape.ufo:1850
-#: ../base/ufos/ui/geoscape.ufo:1923 ../base/ufos/ui/geoscape.ufo:1996
-#: ../base/ufos/ui/irc.ufo:211 ../base/ufos/ui/messageoptions.ufo:66
-#: ../base/ufos/ui/options.ufo:1290 ../base/ufos/ui/transfer.ufo:594
-#: client/campaign/cp_installation_callbacks.c:224
-msgid "Cancel"
-msgstr "Annuler"
-
-#: ../base/ufos/ui/geoscape.ufo:698 ../base/ufos/ui/geoscape.ufo:947
-#: ../base/ufos/ui/geoscape.ufo:1058 ../base/ufos/ui/geoscape.ufo:1336
-#: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1563
-#: ../base/ufos/ui/geoscape.ufo:1761 ../base/ufos/ui/geoscape.ufo:1851
-#: ../base/ufos/ui/geoscape.ufo:1924 ../base/ufos/ui/geoscape.ufo:1997
-#: ../base/ufos/ui/irc.ufo:212 ../base/ufos/ui/options.ufo:1291
-#: ../base/ufos/ui/sys_popup.ufo:50 ../base/ufos/ui/sys_popup.ufo:112
-msgid "Close this dialogue"
-msgstr "Fermer cette boite de dialogue"
-
-#: ../base/ufos/ui/geoscape.ufo:712 ../base/ufos/ui/geoscape.ufo:880
+#: ../base/ufos/ui/geoscape.ufo:706 ../base/ufos/ui/geoscape.ufo:862
 msgid "Enter"
 msgstr "Entrer"
 
-#: ../base/ufos/ui/geoscape.ufo:713 ../base/ufos/ui/geoscape.ufo:881
+#: ../base/ufos/ui/geoscape.ufo:707 ../base/ufos/ui/geoscape.ufo:863
 msgid "Enter the battlefield"
 msgstr "Entrer sur le champ de bataille"
 
-#: ../base/ufos/ui/geoscape.ufo:724 ../base/ufos/ui/geoscape.ufo:847
+#: ../base/ufos/ui/geoscape.ufo:714 ../base/ufos/ui/geoscape.ufo:833
 msgid "Auto mission"
 msgstr "Mission auto."
 
-#: ../base/ufos/ui/geoscape.ufo:725 ../base/ufos/ui/geoscape.ufo:848
+#: ../base/ufos/ui/geoscape.ufo:715 ../base/ufos/ui/geoscape.ufo:834
 msgid "Automatically finish mission"
 msgstr "Terminer automatiquement la mission"
 
-#: ../base/ufos/ui/geoscape.ufo:762
+#: ../base/ufos/ui/geoscape.ufo:748
 msgid "Base is under attack"
 msgstr "La base est attaquée"
 
-#: ../base/ufos/ui/geoscape.ufo:784
+#: ../base/ufos/ui/geoscape.ufo:770
 msgid "Go to soldier equipment screen before the battle"
 msgstr "Voir l'équipement des soldats avant de commencer la mission"
 
-#: ../base/ufos/ui/geoscape.ufo:798
+#: ../base/ufos/ui/geoscape.ufo:784
 msgid "Kill aliens in container"
 msgstr "Tuer les aliens du conteneur"
 
-#: ../base/ufos/ui/geoscape.ufo:807 ../base/ufos/ui/geoscape.ufo:816
-#: ../base/ufos/ui/geoscape.ufo:825 ../base/ufos/ui/geoscape.ufo:834
+#: ../base/ufos/ui/geoscape.ufo:793 ../base/ufos/ui/geoscape.ufo:802
+#: ../base/ufos/ui/geoscape.ufo:811 ../base/ufos/ui/geoscape.ufo:820
 #: ../base/ufos/ui/hospital.ufo:568
 msgid "Not implemented"
 msgstr "Non implémenté"
 
-#: ../base/ufos/ui/geoscape.ufo:814
+#: ../base/ufos/ui/geoscape.ufo:800
 msgid "Lift aircraft"
 msgstr "Faire décoller l'appareil"
 
-#: ../base/ufos/ui/geoscape.ufo:832
+#: ../base/ufos/ui/geoscape.ufo:818
 msgid "Disable Power Plant"
 msgstr "Désactiver le Générateur de puissance"
 
-#: ../base/ufos/ui/geoscape.ufo:922
+#: ../base/ufos/ui/geoscape.ufo:900
 msgid "Select base to transfer to"
 msgstr "Sélectionnez la base de destination"
 
-#: ../base/ufos/ui/geoscape.ufo:927
+#: ../base/ufos/ui/geoscape.ufo:905
 msgid "Choose a base to host alien bodies:"
 msgstr "Choisissez une base pour rapatrier les corps aliens :"
 
-#: ../base/ufos/ui/geoscape.ufo:968
+#: ../base/ufos/ui/geoscape.ufo:940
 msgid "New base"
 msgstr "Nouvelle base"
 
-#: ../base/ufos/ui/geoscape.ufo:973 ../base/ufos/ui/geoscape.ufo:1412
-#: ../base/ufos/ui/geoscape.ufo:1531 ../base/ufos/ui/geoscape.ufo:1808
-#: ../base/ufos/ui/geoscape.ufo:1886 ../base/ufos/ui/main.ufo:107
-#: ../base/ufos/ui/multiplayer.ufo:342 ../base/ufos/ui/options.ufo:736
+#: ../base/ufos/ui/geoscape.ufo:945 ../base/ufos/ui/geoscape.ufo:1370
+#: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
+#: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
+#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:342
+#: ../base/ufos/ui/options.ufo:736
 msgid "Name:"
 msgstr "Nom :"
 
-#: ../base/ufos/ui/geoscape.ufo:997 ../base/ufos/ui/geoscape.ufo:1429
+#: ../base/ufos/ui/geoscape.ufo:969 ../base/ufos/ui/geoscape.ufo:1387
 msgid "Cost:"
 msgstr "Valeur :"
 
-#: ../base/ufos/ui/geoscape.ufo:1021
+#: ../base/ufos/ui/geoscape.ufo:993
 msgid "Buildings already built in the initial base"
 msgstr "Bâtiments déjà construits dans la base initiale"
 
-#: ../base/ufos/ui/geoscape.ufo:1030
+#: ../base/ufos/ui/geoscape.ufo:1002
 msgid "Start with buildings"
 msgstr "Avec des bâtiments"
 
-#: ../base/ufos/ui/geoscape.ufo:1040
+#: ../base/ufos/ui/geoscape.ufo:1012
 msgid "Employees already hired at campaign start"
 msgstr "Personnel déjà recruté au début de la campagne"
 
-#: ../base/ufos/ui/geoscape.ufo:1048
+#: ../base/ufos/ui/geoscape.ufo:1020
 msgid "Start with employees"
 msgstr "Avec du personnel"
 
-#: ../base/ufos/ui/geoscape.ufo:1070 ../base/ufos/ui/geoscape.ufo:1489
+#: ../base/ufos/ui/geoscape.ufo:1036 ../base/ufos/ui/geoscape.ufo:1441
 msgid "Build"
 msgstr "Construire"
 
-#: ../base/ufos/ui/geoscape.ufo:1071
+#: ../base/ufos/ui/geoscape.ufo:1037
 msgid "Build the base"
 msgstr "Construire la base"
 
-#: ../base/ufos/ui/geoscape.ufo:1110
+#: ../base/ufos/ui/geoscape.ufo:1072
 msgid "New installation"
 msgstr "Nouvelle installation"
 
-#: ../base/ufos/ui/geoscape.ufo:1115
+#: ../base/ufos/ui/geoscape.ufo:1077
 msgid "Type"
 msgstr "Type"
 
-#: ../base/ufos/ui/geoscape.ufo:1122
+#: ../base/ufos/ui/geoscape.ufo:1084
 msgid "Build Time"
 msgstr "Délai"
 
-#: ../base/ufos/ui/geoscape.ufo:1130
+#: ../base/ufos/ui/geoscape.ufo:1092
 msgid "Cost"
 msgstr "Valeur"
 
-#: ../base/ufos/ui/geoscape.ufo:1150
+#: ../base/ufos/ui/geoscape.ufo:1112
 msgid "Radar tower"
 msgstr "Tour radar"
 
-#: ../base/ufos/ui/geoscape.ufo:1281 client/campaign/cp_map.c:339
+#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:339
 msgid "Base"
 msgstr "Base"
 
-#: ../base/ufos/ui/geoscape.ufo:1289
+#: ../base/ufos/ui/geoscape.ufo:1251
 msgid "0 day"
 msgstr "0 jour"
 
-#: ../base/ufos/ui/geoscape.ufo:1318
+#: ../base/ufos/ui/geoscape.ufo:1280
 msgid "Installation limit reached. Build more bases."
 msgstr "Nombre maximum d'installations atteint. Construisez plus de bases."
 
-#: ../base/ufos/ui/geoscape.ufo:1325
+#: ../base/ufos/ui/geoscape.ufo:1287
 msgid "Base limit reached."
 msgstr "Nombre maximum de base atteint."
 
-#: ../base/ufos/ui/geoscape.ufo:1490
+#: ../base/ufos/ui/geoscape.ufo:1442
 msgid "Build the radar tower"
 msgstr "Construire une tour radar"
 
-#: ../base/ufos/ui/geoscape.ufo:1507
+#: ../base/ufos/ui/geoscape.ufo:1455
 msgid "New radar tower"
 msgstr "Nouvelle tour radar"
 
-#: ../base/ufos/ui/geoscape.ufo:1510
+#: ../base/ufos/ui/geoscape.ufo:1458
 msgid "New SAM site"
 msgstr "Nouveau site anti-aérien"
 
-#: ../base/ufos/ui/geoscape.ufo:1513
+#: ../base/ufos/ui/geoscape.ufo:1461
 msgid "New UFO yard"
 msgstr "Nouvel entrepôt à OVNI"
 
-#: ../base/ufos/ui/geoscape.ufo:1526
+#: ../base/ufos/ui/geoscape.ufo:1474
 msgid "Installation Status"
 msgstr "Statut de l'installation"
 
-#: ../base/ufos/ui/geoscape.ufo:1573
+#: ../base/ufos/ui/geoscape.ufo:1517
 msgid "Manage"
 msgstr "Gestion"
 
-#: ../base/ufos/ui/geoscape.ufo:1574
+#: ../base/ufos/ui/geoscape.ufo:1518
 msgid "Manage installation"
 msgstr "Gérer l'installation"
 
-#: ../base/ufos/ui/geoscape.ufo:1631
+#: ../base/ufos/ui/geoscape.ufo:1567
 msgid "Anti-UFO defence"
 msgstr "Défense anti-OVNI"
 
-#: ../base/ufos/ui/geoscape.ufo:1639
+#: ../base/ufos/ui/geoscape.ufo:1575
 msgid "Aircraft interception"
 msgstr "Interception aérienne"
 
-#: ../base/ufos/ui/geoscape.ufo:1643
+#: ../base/ufos/ui/geoscape.ufo:1579
 msgid "SAM defence"
 msgstr "Défense sol-air"
 
-#: ../base/ufos/ui/geoscape.ufo:1660
+#: ../base/ufos/ui/geoscape.ufo:1596
 msgid "Aircraft:"
 msgstr "Appareil :"
 
-#: ../base/ufos/ui/geoscape.ufo:1667 ../base/ufos/ui/geoscape.ufo:1815
+#: ../base/ufos/ui/geoscape.ufo:1603 ../base/ufos/ui/geoscape.ufo:1745
 msgid "Status:"
 msgstr "Statut :"
 
-#: ../base/ufos/ui/geoscape.ufo:1674 ../base/ufos/ui/geoscape.ufo:1822
+#: ../base/ufos/ui/geoscape.ufo:1610 ../base/ufos/ui/geoscape.ufo:1752
 msgid "Base:"
 msgstr "Base :"
 
-#: ../base/ufos/ui/geoscape.ufo:1722
+#: ../base/ufos/ui/geoscape.ufo:1658
 msgid "Surface-to-air missile site:"
 msgstr "Site pour missile sol-air :"
 
-#: ../base/ufos/ui/geoscape.ufo:1803
+#: ../base/ufos/ui/geoscape.ufo:1733
 msgid "Select aircraft"
 msgstr "Sélectionner appareil"
 
-#: ../base/ufos/ui/geoscape.ufo:1829
+#: ../base/ufos/ui/geoscape.ufo:1759
 msgid "ETA:"
 msgstr "HAP:"
 
-#: ../base/ufos/ui/geoscape.ufo:1873
+#: ../base/ufos/ui/geoscape.ufo:1797
 msgid "Select item"
 msgstr "Choisir un élément"
 
-#: ../base/ufos/ui/geoscape.ufo:1878
+#: ../base/ufos/ui/geoscape.ufo:1802
 msgid "Type:"
 msgstr "Type :"
 
-#: ../base/ufos/ui/geoscape.ufo:1951
+#: ../base/ufos/ui/geoscape.ufo:1869
 msgid "Action:"
 msgstr "Action :"
 
-#: ../base/ufos/ui/geoscape.ufo:1959
+#: ../base/ufos/ui/geoscape.ufo:1877
 msgid "Description:"
 msgstr "Description :"
 
-#: ../base/ufos/ui/geoscape.ufo:2020
+#: ../base/ufos/ui/geoscape.ufo:1932
 msgid "Geoscape options"
 msgstr "Options de la géosphère"
 
-#: ../base/ufos/ui/geoscape.ufo:2032
+#: ../base/ufos/ui/geoscape.ufo:1944
 msgid "Geoscape projection mode:"
 msgstr "Mode de projection de la géosphère :"
 
-#: ../base/ufos/ui/geoscape.ufo:2042
+#: ../base/ufos/ui/geoscape.ufo:1954
 msgid "2D"
 msgstr "2D"
 
-#: ../base/ufos/ui/geoscape.ufo:2046
+#: ../base/ufos/ui/geoscape.ufo:1958
 msgid "3D"
 msgstr "3D"
 
@@ -10923,20 +10930,38 @@ msgstr "Fermer le menu et rester connecter"
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ../base/ufos/ui/irc.ufo:186
+#: ../base/ufos/ui/irc.ufo:184
+#, fuzzy
+msgid "Name is already in use"
+msgstr "L'équipe est déjà en service"
+
+#: ../base/ufos/ui/irc.ufo:189
+#, fuzzy
+msgid "Your name is already in use or is invalid."
+msgstr "L'équipe est déjà en service"
+
+#: ../base/ufos/ui/irc.ufo:220 ../base/ufos/ui/singleplayer.ufo:91
+msgid "Retry"
+msgstr "Réessayer"
+
+#: ../base/ufos/ui/irc.ufo:221
+msgid "Retry with your changed name"
+msgstr ""
+
+#: ../base/ufos/ui/irc.ufo:243
 msgid "Not connected"
 msgstr "Non connecté"
 
-#: ../base/ufos/ui/irc.ufo:191
+#: ../base/ufos/ui/irc.ufo:248
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Vous n'êtes pas connecté au salon. Voulez-vous vous connecter ?"
 
-#: ../base/ufos/ui/irc.ufo:199 ../base/ufos/ui/multiplayer.ufo:197
+#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:197
 #: ../base/ufos/ui/multiplayer.ufo:385 ../base/ufos/ui/multiplayer.ufo:1790
 msgid "Connect"
 msgstr "Connexion"
 
-#: ../base/ufos/ui/irc.ufo:200
+#: ../base/ufos/ui/irc.ufo:257
 msgid "Connect to the lobby"
 msgstr "Se connecter au salon"
 
@@ -10972,39 +10997,39 @@ msgstr "Rapatriement"
 msgid "Begin UFO recovery process"
 msgstr "Commencer le rapatriement de l'OVNI"
 
-#: ../base/ufos/ui/lostwon.ufo:305
+#: ../base/ufos/ui/lostwon.ufo:301
 msgid "Nation:"
 msgstr "Nation :"
 
-#: ../base/ufos/ui/lostwon.ufo:306
+#: ../base/ufos/ui/lostwon.ufo:302
 msgid "Sort nations by name"
 msgstr "Trier les nations par nom"
 
-#: ../base/ufos/ui/lostwon.ufo:316
+#: ../base/ufos/ui/lostwon.ufo:312
 msgid "Price:"
 msgstr "Prix :"
 
-#: ../base/ufos/ui/lostwon.ufo:317
+#: ../base/ufos/ui/lostwon.ufo:313
 msgid "Sort nations by price"
 msgstr "Trier les nations par prix"
 
-#: ../base/ufos/ui/lostwon.ufo:327
+#: ../base/ufos/ui/lostwon.ufo:323
 msgid "Relations:"
 msgstr "Relations :"
 
-#: ../base/ufos/ui/lostwon.ufo:328
+#: ../base/ufos/ui/lostwon.ufo:324
 msgid "Sort nations by relation"
 msgstr "Trier les nations par relation"
 
-#: ../base/ufos/ui/lostwon.ufo:377
+#: ../base/ufos/ui/lostwon.ufo:373
 msgid "Selected nation:"
 msgstr "Nation sélectionnée :"
 
-#: ../base/ufos/ui/lostwon.ufo:391
+#: ../base/ufos/ui/lostwon.ufo:387
 msgid "Sell"
 msgstr "Vendre"
 
-#: ../base/ufos/ui/lostwon.ufo:392
+#: ../base/ufos/ui/lostwon.ufo:388
 msgid "Begin UFO sell process"
 msgstr "Commencer la vente de l'OVNI"
 
@@ -11081,23 +11106,23 @@ msgstr "OK"
 msgid "Save settings"
 msgstr "Réglages des sauvegardes"
 
-#: ../base/ufos/ui/main.ufo:259
+#: ../base/ufos/ui/main.ufo:255
 msgid "Tip of the day"
 msgstr "Astuce du jour"
 
-#: ../base/ufos/ui/main.ufo:272
+#: ../base/ufos/ui/main.ufo:268
 msgid "Show tip of the day"
 msgstr "Montrer l'astuce du jour"
 
-#: ../base/ufos/ui/main.ufo:293 ../base/ufos/ui/main.ufo:306
+#: ../base/ufos/ui/main.ufo:289 ../base/ufos/ui/main.ufo:302
 msgid "Next"
 msgstr "Suivant"
 
-#: ../base/ufos/ui/main.ufo:294 ../base/ufos/ui/main.ufo:307
+#: ../base/ufos/ui/main.ufo:290 ../base/ufos/ui/main.ufo:303
 msgid "Next tip"
 msgstr "Astuce suivante"
 
-#: ../base/ufos/ui/main.ufo:310
+#: ../base/ufos/ui/main.ufo:306
 msgid "Close window"
 msgstr "Fermer cette fenêtre"
 
@@ -11240,24 +11265,34 @@ msgstr "Appliquer"
 msgid "Apply changes"
 msgstr "Appliquer les modifications"
 
-#: ../base/ufos/ui/messageoptions.ufo:67
+#: ../base/ufos/ui/messageoptions.ufo:61
 msgid "Revert changes"
 msgstr "Annuler les modifications"
 
-#: ../base/ufos/ui/messageoptions.ufo:79
+#: ../base/ufos/ui/messageoptions.ufo:68
 msgid "Notify types:"
 msgstr "Type de notifications :"
 
-#: ../base/ufos/ui/messageoptions.ufo:87
-msgid "Enable or disable messages being displayed for all notification types.\\nLeft click enables all notifications, right click disables."
+#: ../base/ufos/ui/messageoptions.ufo:76
+#, fuzzy
+msgid ""
+"Enable or disable messages being displayed for all notification types.\n"
+"Left click enables all notifications, right click disables."
 msgstr "Activer ou désactiver les messages affichés lors des notifications.\\nClic gauche pour activer toutes les notifications, clic droit pour les désactiver."
 
-#: ../base/ufos/ui/messageoptions.ufo:96
-msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
+#: ../base/ufos/ui/messageoptions.ufo:85
+#, fuzzy
+msgid ""
+"Enable or disable pause for all notification types\n"
+"Pause can't be enabled without notification\n"
+"Left click enables pause for all, right click disables."
 msgstr "Activer ou désactiver la pause lors des notifications\\nLa pause ne peut être activée sans notification\\nClic gauche pour activer la pause pour tout, clic droit pour désactiver."
 
-#: ../base/ufos/ui/messageoptions.ufo:105
-msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
+#: ../base/ufos/ui/messageoptions.ufo:94
+#, fuzzy
+msgid ""
+"Enable or disable sounds being played for all notification types.\n"
+"Left click enables all sounds, right click disables."
 msgstr "Activer ou désactiver les sons joués lors des notifications.\\nClic gauche pour activer tous les sons, clic droit pour désactiver."
 
 #: ../base/ufos/ui/multiplayer.ufo:37 ../base/ufos/ui/multiplayer.ufo:155
@@ -11836,7 +11871,7 @@ msgstr "Seuil :"
 msgid "Keys"
 msgstr "Touches clavier"
 
-#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:96
+#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:99
 msgid "Autostand"
 msgstr "Se relever automatiquement"
 
@@ -11955,10 +11990,6 @@ msgstr "Escarmouche"
 #: ../base/ufos/ui/singleplayer.ufo:84
 msgid "Abort"
 msgstr "Annuler"
-
-#: ../base/ufos/ui/singleplayer.ufo:91
-msgid "Retry"
-msgstr "Réessayer"
 
 #: ../base/ufos/ui/skirmish.ufo:28
 msgid "Start game"
@@ -12201,13 +12232,13 @@ msgid "Needler Gun Magazine"
 msgstr "Chargeur d'aiguilles"
 
 #: ../base/ufos/weapons_aliens.ufo:62 ../base/ufos/weapons_aliens.ufo:125
-#: ../base/ufos/weapons_human.ufo:42 ../base/ufos/weapons_human.ufo:124
-#: ../base/ufos/weapons_human.ufo:348 ../base/ufos/weapons_human.ufo:428
-#: ../base/ufos/weapons_human.ufo:507 ../base/ufos/weapons_human.ufo:607
-#: ../base/ufos/weapons_human.ufo:708 ../base/ufos/weapons_human.ufo:1910
+#: ../base/ufos/weapons_human.ufo:42 ../base/ufos/weapons_human.ufo:122
+#: ../base/ufos/weapons_human.ufo:343 ../base/ufos/weapons_human.ufo:424
+#: ../base/ufos/weapons_human.ufo:504 ../base/ufos/weapons_human.ufo:604
+#: ../base/ufos/weapons_human.ufo:705 ../base/ufos/weapons_human.ufo:1906
 #: ../base/ufos/weapons_particle.ufo:41 ../base/ufos/weapons_particle.ufo:122
-#: ../base/ufos/weapons_particle.ufo:224 ../base/ufos/weapons_plasma.ufo:41
-#: ../base/ufos/weapons_plasma.ufo:143 ../base/ufos/weapons_plasma.ufo:268
+#: ../base/ufos/weapons_particle.ufo:223 ../base/ufos/weapons_plasma.ufo:41
+#: ../base/ufos/weapons_plasma.ufo:142 ../base/ufos/weapons_plasma.ufo:267
 msgid "Snap Shot"
 msgstr "Tir rapide"
 
@@ -12227,194 +12258,194 @@ msgstr "Fusil d'Assaut"
 msgid "Assault Rifle Magazine"
 msgstr "Chargeur de Fusil d'Assaut"
 
-#: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:143
-#: ../base/ufos/weapons_human.ufo:526 ../base/ufos/weapons_human.ufo:626
-#: ../base/ufos/weapons_human.ufo:850 ../base/ufos/weapons_human.ufo:934
-#: ../base/ufos/weapons_human.ufo:981 ../base/ufos/weapons_human.ufo:1670
-#: ../base/ufos/weapons_human.ufo:1930
+#: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:141
+#: ../base/ufos/weapons_human.ufo:523 ../base/ufos/weapons_human.ufo:623
+#: ../base/ufos/weapons_human.ufo:847 ../base/ufos/weapons_human.ufo:931
+#: ../base/ufos/weapons_human.ufo:978 ../base/ufos/weapons_human.ufo:1666
+#: ../base/ufos/weapons_human.ufo:1926
 msgid "3-Round Burst"
 msgstr "Rafale de 3 coups"
 
-#: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:163
-#: ../base/ufos/weapons_human.ufo:266 ../base/ufos/weapons_human.ufo:646
-#: ../base/ufos/weapons_human.ufo:747 ../base/ufos/weapons_human.ufo:1003
+#: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:161
+#: ../base/ufos/weapons_human.ufo:262 ../base/ufos/weapons_human.ufo:643
+#: ../base/ufos/weapons_human.ufo:744 ../base/ufos/weapons_human.ufo:1000
 #: ../base/ufos/weapons_multiplayer.ufo:68
-#: ../base/ufos/weapons_multiplayer.ufo:280
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_ugv.ufo:101
+#: ../base/ufos/weapons_multiplayer.ufo:279
+#: ../base/ufos/weapons_plasma.ufo:202 ../base/ufos/weapons_ugv.ufo:101
 msgid "Full-Auto"
 msgstr "Rafale libre"
 
-#: ../base/ufos/weapons_human.ufo:101 ../base/ufos/weapons_human.ufo:183
+#: ../base/ufos/weapons_human.ufo:100 ../base/ufos/weapons_human.ufo:180
 msgid "Aimed shot"
 msgstr "Tir visé"
 
-#: ../base/ufos/weapons_human.ufo:208
+#: ../base/ufos/weapons_human.ufo:204
 msgid "Machine Gun"
 msgstr "Mitrailleuse"
 
-#: ../base/ufos/weapons_human.ufo:229
+#: ../base/ufos/weapons_human.ufo:225
 msgid "Machine Gun Magazine"
 msgstr "Chargeur de fusil mitrailleur"
 
-#: ../base/ufos/weapons_human.ufo:246
+#: ../base/ufos/weapons_human.ufo:242
 msgid "5-Shot Burst"
 msgstr "Rafale de 5 balles"
 
-#: ../base/ufos/weapons_human.ufo:286 ../base/ufos/weapons_multiplayer.ufo:88
-#: ../base/ufos/weapons_multiplayer.ufo:300
+#: ../base/ufos/weapons_human.ufo:281 ../base/ufos/weapons_multiplayer.ufo:87
+#: ../base/ufos/weapons_multiplayer.ufo:298
 msgid "Full-Auto Sweep"
 msgstr "Rafale libre"
 
-#: ../base/ufos/weapons_human.ufo:312
+#: ../base/ufos/weapons_human.ufo:307
 msgid "Sniper Rifle"
 msgstr "Fusil de Précision"
 
-#: ../base/ufos/weapons_human.ufo:332
+#: ../base/ufos/weapons_human.ufo:327
 msgid "Sniper Rifle Magazine"
 msgstr "Chargeur de Fusil de Précision"
 
-#: ../base/ufos/weapons_human.ufo:367 ../base/ufos/weapons_human.ufo:447
-#: ../base/ufos/weapons_human.ufo:546 ../base/ufos/weapons_human.ufo:767
-#: ../base/ufos/weapons_human.ufo:1175 ../base/ufos/weapons_human.ufo:1217
-#: ../base/ufos/weapons_human.ufo:1950 ../base/ufos/weapons_particle.ufo:141
-#: ../base/ufos/weapons_plasma.ufo:61 ../base/ufos/weapons_plasma.ufo:163
+#: ../base/ufos/weapons_human.ufo:362 ../base/ufos/weapons_human.ufo:443
+#: ../base/ufos/weapons_human.ufo:543 ../base/ufos/weapons_human.ufo:764
+#: ../base/ufos/weapons_human.ufo:1172 ../base/ufos/weapons_human.ufo:1214
+#: ../base/ufos/weapons_human.ufo:1946 ../base/ufos/weapons_particle.ufo:141
+#: ../base/ufos/weapons_plasma.ufo:61 ../base/ufos/weapons_plasma.ufo:162
 msgid "Aimed Shot"
 msgstr "Tir visé"
 
-#: ../base/ufos/weapons_human.ufo:412
+#: ../base/ufos/weapons_human.ufo:408
 msgid "Coilgun Clip"
 msgstr "Chargeur de canon magnétique"
 
-#: ../base/ufos/weapons_human.ufo:472
+#: ../base/ufos/weapons_human.ufo:469
 msgid "7.62mm Pistol"
 msgstr "Pistolet 7,62mm"
 
-#: ../base/ufos/weapons_human.ufo:491
+#: ../base/ufos/weapons_human.ufo:488
 msgid "7.62mm Pistol Magazine"
 msgstr "Chargeur de Pistolet 7,62mm"
 
-#: ../base/ufos/weapons_human.ufo:571
+#: ../base/ufos/weapons_human.ufo:568
 msgid "Machine Pistol"
 msgstr "Pistolet Automatique"
 
-#: ../base/ufos/weapons_human.ufo:591
+#: ../base/ufos/weapons_human.ufo:588
 msgid "4.2mm MP Magazine"
 msgstr "Chargeur de PA 4,2mm"
 
-#: ../base/ufos/weapons_human.ufo:673
+#: ../base/ufos/weapons_human.ufo:670
 msgid "Submachine Gun"
 msgstr "Pistolet Mitrailleur"
 
-#: ../base/ufos/weapons_human.ufo:692
+#: ../base/ufos/weapons_human.ufo:689
 msgid "SMG Magazine"
 msgstr "Chargeur de Pistolet Mitrailleur"
 
-#: ../base/ufos/weapons_human.ufo:727 ../base/ufos/weapons_multiplayer.ufo:48
+#: ../base/ufos/weapons_human.ufo:724 ../base/ufos/weapons_multiplayer.ufo:48
 msgid "5-Round Burst"
 msgstr "Rafale de 5 coups"
 
-#: ../base/ufos/weapons_human.ufo:792
+#: ../base/ufos/weapons_human.ufo:789
 msgid "Riot Shotgun"
 msgstr "Fusil à Pompe"
 
-#: ../base/ufos/weapons_human.ufo:812
+#: ../base/ufos/weapons_human.ufo:809
 msgid "Saboted Slugs"
 msgstr "Cartouches Perforantes"
 
-#: ../base/ufos/weapons_human.ufo:828 ../base/ufos/weapons_human.ufo:912
-#: ../base/ufos/weapons_human.ufo:959 ../base/ufos/weapons_human.ufo:1649
-#: ../base/ufos/weapons_multiplayer.ufo:150
+#: ../base/ufos/weapons_human.ufo:825 ../base/ufos/weapons_human.ufo:909
+#: ../base/ufos/weapons_human.ufo:956 ../base/ufos/weapons_human.ufo:1645
+#: ../base/ufos/weapons_multiplayer.ufo:149
 msgid "Single Shot"
 msgstr "Coup par coup"
 
-#: ../base/ufos/weapons_human.ufo:877
+#: ../base/ufos/weapons_human.ufo:874
 msgid "Micro Shotgun"
 msgstr "Mini-Fusil à Pompe"
 
-#: ../base/ufos/weapons_human.ufo:896 ../base/ufos/weapons_multiplayer.ufo:134
+#: ../base/ufos/weapons_human.ufo:893 ../base/ufos/weapons_multiplayer.ufo:133
 msgid "Flechette Shells"
 msgstr "Cartouches à Fléchettes"
 
-#: ../base/ufos/weapons_human.ufo:1030
+#: ../base/ufos/weapons_human.ufo:1027
 msgid "Flamethrower"
 msgstr "Lance-Flammes"
 
-#: ../base/ufos/weapons_human.ufo:1050
+#: ../base/ufos/weapons_human.ufo:1047
 msgid "C90 Canister"
 msgstr "Cartouche de C90"
 
-#: ../base/ufos/weapons_human.ufo:1067
+#: ../base/ufos/weapons_human.ufo:1064
 msgid "Candlelight"
 msgstr "Jet de flammes"
 
-#: ../base/ufos/weapons_human.ufo:1088
+#: ../base/ufos/weapons_human.ufo:1085
 msgid "Inferno"
 msgstr "Inferno"
 
-#: ../base/ufos/weapons_human.ufo:1109
+#: ../base/ufos/weapons_human.ufo:1106
 msgid "Inferno Sweep"
 msgstr "Inferno dispersé"
 
-#: ../base/ufos/weapons_human.ufo:1137
+#: ../base/ufos/weapons_human.ufo:1134
 msgid "Rocket Launcher"
 msgstr "Lance-Roquettes"
 
-#: ../base/ufos/weapons_human.ufo:1158
+#: ../base/ufos/weapons_human.ufo:1155
 msgid "HE Rocket"
 msgstr "Roquette HE"
 
-#: ../base/ufos/weapons_human.ufo:1200
+#: ../base/ufos/weapons_human.ufo:1197
 msgid "IC Rocket"
 msgstr "Roquette IC"
 
-#: ../base/ufos/weapons_human.ufo:1245
+#: ../base/ufos/weapons_human.ufo:1242
 msgid "Grenade Launcher"
 msgstr "Lance-Grenades"
 
-#: ../base/ufos/weapons_human.ufo:1266
+#: ../base/ufos/weapons_human.ufo:1263
 msgid "25mm HIT Grenades"
 msgstr "Grenades ST 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1283 ../base/ufos/weapons_human.ufo:1464
-#: ../base/ufos/weapons_human.ufo:1710
+#: ../base/ufos/weapons_human.ufo:1280 ../base/ufos/weapons_human.ufo:1461
+#: ../base/ufos/weapons_human.ufo:1706
 msgid "Snap Shot - Airburst"
 msgstr "Tir rapide fusant"
 
-#: ../base/ufos/weapons_human.ufo:1309 ../base/ufos/weapons_human.ufo:1491
-#: ../base/ufos/weapons_human.ufo:1736
+#: ../base/ufos/weapons_human.ufo:1306 ../base/ufos/weapons_human.ufo:1487
+#: ../base/ufos/weapons_human.ufo:1732
 msgid "Aimed Shot - Airburst"
 msgstr "Tir visé fusant"
 
-#: ../base/ufos/weapons_human.ufo:1335 ../base/ufos/weapons_human.ufo:1517
-#: ../base/ufos/weapons_human.ufo:1761
+#: ../base/ufos/weapons_human.ufo:1332 ../base/ufos/weapons_human.ufo:1513
+#: ../base/ufos/weapons_human.ufo:1757
 msgid "3-Round Burst - Airburst"
 msgstr "Rafale de 3 coups fusants"
 
-#: ../base/ufos/weapons_human.ufo:1361 ../base/ufos/weapons_human.ufo:1543
-#: ../base/ufos/weapons_human.ufo:1786
+#: ../base/ufos/weapons_human.ufo:1358 ../base/ufos/weapons_human.ufo:1539
+#: ../base/ufos/weapons_human.ufo:1782
 msgid "Snap Shot - Timed"
 msgstr "Tir rapide retardé"
 
-#: ../base/ufos/weapons_human.ufo:1389 ../base/ufos/weapons_human.ufo:1571
-#: ../base/ufos/weapons_human.ufo:1813
+#: ../base/ufos/weapons_human.ufo:1386 ../base/ufos/weapons_human.ufo:1567
+#: ../base/ufos/weapons_human.ufo:1809
 msgid "Aimed Shot - Timed"
 msgstr "Tir visé retardé"
 
-#: ../base/ufos/weapons_human.ufo:1417 ../base/ufos/weapons_human.ufo:1599
-#: ../base/ufos/weapons_human.ufo:1840
+#: ../base/ufos/weapons_human.ufo:1414 ../base/ufos/weapons_human.ufo:1595
+#: ../base/ufos/weapons_human.ufo:1836
 msgid "3-Round Burst - Timed"
 msgstr "Rafale de 3 coups retardés"
 
-#: ../base/ufos/weapons_human.ufo:1447
+#: ../base/ufos/weapons_human.ufo:1444
 msgid "25mm IC Grenades"
 msgstr "Grenades IC 25mm"
 
 # Gren. à fléchettes de 25mm
-#: ../base/ufos/weapons_human.ufo:1632
+#: ../base/ufos/weapons_human.ufo:1628
 msgid "25mm Flechette Grenades"
 msgstr "Grenades à Fléchettes 25mm"
 
-#: ../base/ufos/weapons_human.ufo:1693
+#: ../base/ufos/weapons_human.ufo:1689
 msgid "25mm PB Grenades"
 msgstr "Grenades EP 25mm"
 
@@ -12500,27 +12531,27 @@ msgstr "Mitrailleuse"
 msgid "Minigun Magazine"
 msgstr "Bande pour mitrailleuse"
 
-#: ../base/ufos/weapons_multiplayer.ufo:115
+#: ../base/ufos/weapons_multiplayer.ufo:114
 msgid "Shotgun"
 msgstr "Fusil à pompe"
 
-#: ../base/ufos/weapons_multiplayer.ufo:172
+#: ../base/ufos/weapons_multiplayer.ufo:171
 msgid "Double Shot"
 msgstr "Double tir"
 
-#: ../base/ufos/weapons_multiplayer.ufo:199
+#: ../base/ufos/weapons_multiplayer.ufo:198
 msgid "VHS Assault Rifle"
 msgstr "Fusil d'Assaut VHS"
 
-#: ../base/ufos/weapons_multiplayer.ufo:222
+#: ../base/ufos/weapons_multiplayer.ufo:221
 msgid "XAW95"
 msgstr "XAW95"
 
-#: ../base/ufos/weapons_multiplayer.ufo:243
+#: ../base/ufos/weapons_multiplayer.ufo:242
 msgid "XAW95 Magazine"
 msgstr "Chargeur XAW95"
 
-#: ../base/ufos/weapons_multiplayer.ufo:260 ../base/ufos/weapons_ugv.ufo:80
+#: ../base/ufos/weapons_multiplayer.ufo:259 ../base/ufos/weapons_ugv.ufo:80
 msgid "10-Round Burst"
 msgstr "Rafale de 10 balles"
 
@@ -12532,9 +12563,9 @@ msgstr "Pistolet à Faisceau de Particules"
 msgid "Pistol Particle Accelerator"
 msgstr "Accélérateur de part. pour pistolet"
 
-#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:160
-#: ../base/ufos/weapons_particle.ufo:244 ../base/ufos/weapons_plasma.ufo:81
-#: ../base/ufos/weapons_plasma.ufo:183 ../base/ufos/weapons_plasma.ufo:311
+#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:159
+#: ../base/ufos/weapons_particle.ufo:243 ../base/ufos/weapons_plasma.ufo:81
+#: ../base/ufos/weapons_plasma.ufo:182 ../base/ufos/weapons_plasma.ufo:310
 msgid "Burst"
 msgstr "Rafale"
 
@@ -12546,16 +12577,16 @@ msgstr "Fusil à Faisceau de Particules"
 msgid "Rifle Particle Accelerator"
 msgstr "Accélérateur de part. pour fusil"
 
-#: ../base/ufos/weapons_particle.ufo:187
+#: ../base/ufos/weapons_particle.ufo:186
 msgid "Particle Beam Cannon"
 msgstr "Canon à Faisceau de Particules"
 
-#: ../base/ufos/weapons_particle.ufo:207
+#: ../base/ufos/weapons_particle.ufo:206
 msgid "Cannon Particle Accelerator"
 msgstr "Accélérateur de part. pour canon"
 
 # à améliorer
-#: ../base/ufos/weapons_particle.ufo:264
+#: ../base/ufos/weapons_particle.ufo:263
 msgid "Unrestricted Blast"
 msgstr "Tir surpuissant"
 
@@ -12567,23 +12598,23 @@ msgstr "Pistolet à Plasma"
 msgid "Plasma Pistol Charger"
 msgstr "Chargeur de pistolet à plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:108
+#: ../base/ufos/weapons_plasma.ufo:107
 msgid "Plasma Rifle"
 msgstr "Fusil à Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:127
+#: ../base/ufos/weapons_plasma.ufo:126
 msgid "Plasma Rifle Charger"
 msgstr "Chargeur de fusil à plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:230
+#: ../base/ufos/weapons_plasma.ufo:229
 msgid "Plasma Blaster"
 msgstr "Blaster à Plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:251
+#: ../base/ufos/weapons_plasma.ufo:250
 msgid "Plasma Blaster Charge"
 msgstr "Chargeur de blaster à plasma"
 
-#: ../base/ufos/weapons_plasma.ufo:289
+#: ../base/ufos/weapons_plasma.ufo:288
 msgid "Ball"
 msgstr "Sphère"
 
@@ -12635,63 +12666,63 @@ msgstr "Incroyable"
 msgid "Superhuman"
 msgstr "Surhumain"
 
-#: client/battlescape/cl_actor.c:723
+#: client/battlescape/cl_actor.c:693
 msgid "This isn't your round\n"
 msgstr "Ce n'est pas votre tour\n"
 
-#: client/battlescape/cl_actor.c:985
+#: client/battlescape/cl_actor.c:955
 msgid "You cannot reload this unknown item.\n"
 msgstr "Vous ne pouvez pas recharger un objet inconnu.\n"
 
-#: client/battlescape/cl_actor.c:1819
+#: client/battlescape/cl_actor.c:1799
 msgid "Unknown alien race"
 msgstr "Race alienne inconnue"
 
-#: client/battlescape/cl_actor.c:2485
+#: client/battlescape/cl_actor.c:2464
 msgid "Toggle to next actor"
 msgstr "Passer au personnage suivant"
 
-#: client/battlescape/cl_actor.c:2486
+#: client/battlescape/cl_actor.c:2465
 msgid "Select an actor from list"
 msgstr "Sélectionner un personnage de la liste"
 
-#: client/battlescape/cl_actor.c:2487
+#: client/battlescape/cl_actor.c:2466
 msgid "Update an actor"
 msgstr "Actualiser un personnage"
 
-#: client/battlescape/cl_actor.c:2489
+#: client/battlescape/cl_actor.c:2468
 msgid "Toggle stand/crounch"
 msgstr "Se relever/s'accroupir"
 
-#: client/battlescape/cl_actor.c:2490
+#: client/battlescape/cl_actor.c:2469
 msgid "Toggle the headgear"
 msgstr "Activer/désactiver l'équipement porté sur la tête"
 
-#: client/battlescape/cl_actor.c:2491
+#: client/battlescape/cl_actor.c:2470
 msgid "Opens or closes a door"
 msgstr "Ouvrir ou fermer une porte"
 
-#: client/battlescape/cl_actor.c:2492
+#: client/battlescape/cl_actor.c:2471
 msgid "Confirm the current action"
 msgstr "Confirmer l'action"
 
-#: client/battlescape/cl_actor.c:2493
+#: client/battlescape/cl_actor.c:2472
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Passer au prochain alien visible depuis le soldat sélectionné."
 
-#: client/battlescape/cl_actor.c:2495
+#: client/battlescape/cl_actor.c:2474
 msgid "Toggle to next alien"
 msgstr "Passer à l'alien suivant"
 
-#: client/battlescape/cl_hud.c:95 client/battlescape/cl_hud.c:98
+#: client/battlescape/cl_hud.c:98 client/battlescape/cl_hud.c:101
 msgid "Crouch walk"
 msgstr "Marcher accroupi"
 
-#: client/battlescape/cl_hud.c:97
+#: client/battlescape/cl_hud.c:100
 msgid "Walk"
 msgstr "Marcher"
 
-#: client/battlescape/cl_hud.c:145
+#: client/battlescape/cl_hud.c:148
 #, c-format
 msgid ""
 "%s\n"
@@ -12702,125 +12733,81 @@ msgstr ""
 "PdV: %i/%i UT: %i\n"
 "%s"
 
-#: client/battlescape/cl_hud.c:236
-#, c-format
-msgid "Remaining TUs: %i"
-msgstr "UT restantes : %i"
-
-#: client/battlescape/cl_hud.c:239
-msgid "No remaining TUs left after shot."
-msgstr "Plus d'UT restantes après le tir."
-
-#: client/battlescape/cl_hud.c:242
-#, c-format
-msgid "TU: %i"
-msgstr "UT : %i"
-
-#: client/battlescape/cl_hud.c:243
-#, c-format
-msgid "Shots: %i"
-msgstr "Tirs : %i"
-
-#: client/battlescape/cl_hud.c:351
+#: client/battlescape/cl_hud.c:287
 msgid "[0 TU] No reservation"
 msgstr "[0 TU] Pas de réserve"
 
-#: client/battlescape/cl_hud.c:369
+#: client/battlescape/cl_hud.c:305
 #, c-format
 msgid "[%i TU] %s"
 msgstr "[%i UT] %s"
 
-#: client/battlescape/cl_hud.c:401
+#: client/battlescape/cl_hud.c:337
 msgid "Reserve TUs for firing/using."
 msgstr "Conserver des UT pour tirer/utiliser"
 
-#: client/battlescape/cl_hud.c:401
+#: client/battlescape/cl_hud.c:337
 msgid "Shot Reservation"
 msgstr "Réservation pour le tir"
 
-#: client/battlescape/cl_hud.c:716 client/battlescape/cl_hud.c:751
-msgid "No item in hand.\n"
-msgstr "Aucun objet en main.\n"
+#: client/battlescape/cl_hud.c:426
+#, c-format
+msgid "Remaining TUs: %i"
+msgstr "UT restantes : %i"
 
-#: client/battlescape/cl_hud.c:722
-msgid ""
-"Can't perform action:\n"
-"out of ammo.\n"
-msgstr ""
-"Ne peut faire l'action :\n"
-"plus de munitions.\n"
+#: client/battlescape/cl_hud.c:429
+msgid "No remaining TUs left after shot."
+msgstr "Plus d'UT restantes après le tir."
 
-#: client/battlescape/cl_hud.c:727
-msgid ""
-"This weapon cannot be fired\n"
-"one handed.\n"
-msgstr ""
-"Cette arme ne peut être utilisée\n"
-"à une main.\n"
+#: client/battlescape/cl_hud.c:432
+#, c-format
+msgid "TU: %i"
+msgstr "UT : %i"
 
-#: client/battlescape/cl_hud.c:757
-msgid ""
-"Can't perform action:\n"
-"this item is not reloadable.\n"
-msgstr ""
-"Ne peut faire l'action :\n"
-"cet objet n'est pas rechargeable.\n"
+#: client/battlescape/cl_hud.c:433
+#, c-format
+msgid "Shots: %i"
+msgstr "Tirs : %i"
 
-#: client/battlescape/cl_hud.c:764
-msgid ""
-"Can't perform action:\n"
-"ammo not available.\n"
-msgstr ""
-"Ne peut faire l'action :\n"
-"plus de munitions disponibles.\n"
-
-#: client/battlescape/cl_hud.c:769 client/battlescape/cl_hud.c:823
-msgid ""
-"Can't perform action:\n"
-"not enough TUs.\n"
-msgstr ""
-"Ne peut faire l'action :\n"
-"pas assez d'UT.\n"
-
-#: client/battlescape/cl_hud.c:905
+#: client/battlescape/cl_hud.c:654
 msgid "No weapon."
 msgstr "Pas d'arme."
 
-#: client/battlescape/cl_hud.c:914
+#: client/battlescape/cl_hud.c:663
 msgid "Weapon cannot be reloaded."
 msgstr "Cette arme ne peut pas être rechargée."
 
-#: client/battlescape/cl_hud.c:920
+#: client/battlescape/cl_hud.c:669
 msgid "No reload possible, already fully loaded."
 msgstr "Pas de rechargement possible : déjà rechargé."
 
-#: client/battlescape/cl_hud.c:934
+#: client/battlescape/cl_hud.c:679
 msgid "Not enough TUs for reloading weapon."
 msgstr "Plus assez d'UT pour recharger l'arme."
 
-#: client/battlescape/cl_hud.c:937
+#: client/battlescape/cl_hud.c:682
 msgid "No reload possible, you don't have backup ammo."
 msgstr "Pas de rechargement possible : vous n'avez plus de munitions supplémentaires."
 
-#: client/battlescape/cl_hud.c:998
+#: client/battlescape/cl_hud.c:774
 msgid "Not enough TUs for standing up."
 msgstr "Plus assez d'UT pour se lever."
 
-#: client/battlescape/cl_hud.c:1001
+#: client/battlescape/cl_hud.c:777
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Se lever (%i UT)"
 
-#: client/battlescape/cl_hud.c:1006
+#: client/battlescape/cl_hud.c:782
 msgid "Not enough TUs for crouching."
 msgstr "Plus assez d'UT pour s'accroupir."
 
-#: client/battlescape/cl_hud.c:1009
+#: client/battlescape/cl_hud.c:785
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "S'accroupir (%i UT)"
 
-#: client/battlescape/cl_hud.c:1017
+#: client/battlescape/cl_hud.c:793
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -12829,16 +12816,16 @@ msgstr ""
 "%i UT réservées pour s'accroupir / se lever.\n"
 "Cliquez pour effacer."
 
-#: client/battlescape/cl_hud.c:1021
+#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Réserver %i UT pour s'accroupir / se lever"
 
-#: client/battlescape/cl_hud.c:1024
+#: client/battlescape/cl_hud.c:800
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Plus assez de UT en réserve pour s'accroupir / se lever."
 
-#: client/battlescape/cl_hud.c:1030
+#: client/battlescape/cl_hud.c:806
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -12849,16 +12836,61 @@ msgstr ""
 "Cliquez pour changer.\n"
 "Clic droit pour effacer."
 
-#: client/battlescape/cl_hud.c:1037
+#: client/battlescape/cl_hud.c:813
 msgid "Reserving TUs for shooting not possible."
 msgstr "Impossible de conserver des UT pour tirer."
 
-#: client/battlescape/cl_hud.c:1059 client/battlescape/cl_hud.c:1068
+#: client/battlescape/cl_hud.c:834 client/battlescape/cl_hud.c:843
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Recharger l'arme (%i UT)."
 
-#: client/battlescape/cl_hud.c:1466
+#: client/battlescape/cl_hud.c:1090
+msgid ""
+"You cannot use this unknown item.\n"
+"You need to research it first.\n"
+msgstr ""
+"Vous ne pouvez pas utiliser cet objet inconnu.\n"
+"Vous devez d'abord l'étudier.\n"
+
+#: client/battlescape/cl_hud.c:1111
+#, c-format
+msgid ""
+"%s\n"
+"(empty)\n"
+msgstr ""
+"%s\n"
+"(empty)\n"
+
+#: client/battlescape/cl_hud.c:1133
+#, c-format
+msgid "Morale  %i | Reserved TUs: %i\n"
+msgstr "Moral %i | UT réservées: %i\n"
+
+#: client/battlescape/cl_hud.c:1135
+#, c-format
+msgid "Morale  %i"
+msgstr "Moral  %i"
+
+#: client/battlescape/cl_hud.c:1140
+#, c-format
+msgid ""
+"Morale  %i | Reserved TUs: %i\n"
+"%s %i (%i|%i TU left)\n"
+msgstr ""
+"Moral  %i | UT réservées: %i\n"
+"%s %i (%i|%i UT restantes)\n"
+
+#: client/battlescape/cl_hud.c:1144
+#, c-format
+msgid ""
+"Morale  %i\n"
+"%s %i (%i TU left)\n"
+msgstr ""
+"Moral  %i\n"
+"%s %i (%i UT restantes)\n"
+
+#: client/battlescape/cl_hud.c:1176
 #, c-format
 msgid ""
 "Time Units\n"
@@ -12871,81 +12903,82 @@ msgstr ""
 "- Réservé:  %i\n"
 "- Restante: %i\n"
 
-#: client/battlescape/cl_hud.c:1569
-msgid ""
-"You cannot use this unknown item.\n"
-"You need to research it first.\n"
-msgstr ""
-"Vous ne pouvez pas utiliser cet objet inconnu.\n"
-"Vous devez d'abord l'étudier.\n"
-
-#: client/battlescape/cl_hud.c:1589
-#, c-format
-msgid ""
-"%s\n"
-"(empty)\n"
-msgstr ""
-"%s\n"
-"(empty)\n"
-
-#: client/battlescape/cl_hud.c:1601
-#, c-format
-msgid "Morale  %i | Reserved TUs: %i\n"
-msgstr "Moral %i | UT réservées: %i\n"
-
-#: client/battlescape/cl_hud.c:1603
-#, c-format
-msgid "Morale  %i"
-msgstr "Moral  %i"
-
-#: client/battlescape/cl_hud.c:1609
-#, c-format
-msgid ""
-"Morale  %i | Reserved TUs: %i\n"
-"%s %i (%i|%i TU left)\n"
-msgstr ""
-"Moral  %i | UT réservées: %i\n"
-"%s %i (%i|%i UT restantes)\n"
-
-#: client/battlescape/cl_hud.c:1613
-#, c-format
-msgid ""
-"Morale  %i\n"
-"%s %i (%i TU left)\n"
-msgstr ""
-"Moral  %i\n"
-"%s %i (%i UT restantes)\n"
-
-#: client/battlescape/cl_hud.c:1628
+#: client/battlescape/cl_hud.c:1200
 msgid "Currently panics!\n"
 msgstr "Paniqué !\n"
 
-#: client/battlescape/cl_hud.c:1780
+#: client/battlescape/cl_hud_callbacks.c:86
+#: client/battlescape/cl_hud_callbacks.c:237
+msgid "No item in hand.\n"
+msgstr "Aucun objet en main.\n"
+
+#: client/battlescape/cl_hud_callbacks.c:92
+msgid ""
+"Can't perform action:\n"
+"out of ammo.\n"
+msgstr ""
+"Ne peut faire l'action :\n"
+"plus de munitions.\n"
+
+#: client/battlescape/cl_hud_callbacks.c:97
+msgid ""
+"This weapon cannot be fired\n"
+"one handed.\n"
+msgstr ""
+"Cette arme ne peut être utilisée\n"
+"à une main.\n"
+
+#: client/battlescape/cl_hud_callbacks.c:151
+#: client/battlescape/cl_hud_callbacks.c:255
+msgid ""
+"Can't perform action:\n"
+"not enough TUs.\n"
+msgstr ""
+"Ne peut faire l'action :\n"
+"pas assez d'UT.\n"
+
+#: client/battlescape/cl_hud_callbacks.c:243
+msgid ""
+"Can't perform action:\n"
+"this item is not reloadable.\n"
+msgstr ""
+"Ne peut faire l'action :\n"
+"cet objet n'est pas rechargeable.\n"
+
+#: client/battlescape/cl_hud_callbacks.c:250
+msgid ""
+"Can't perform action:\n"
+"ammo not available.\n"
+msgstr ""
+"Ne peut faire l'action :\n"
+"plus de munitions disponibles.\n"
+
+#: client/battlescape/cl_hud_callbacks.c:285
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Recharger l'arme de la main gauche du soldat"
 
-#: client/battlescape/cl_hud.c:1781
+#: client/battlescape/cl_hud_callbacks.c:286
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Recharger l'arme de la main droite du soldat"
 
-#: client/battlescape/cl_hud.c:1783
+#: client/battlescape/cl_hud_callbacks.c:287
 msgid "Toggle reservation for crouching."
 msgstr "Activer/désactiver la réservation pour s'accroupir."
 
-#: client/battlescape/cl_hud.c:1789
+#: client/battlescape/cl_hud_callbacks.c:288
 msgid "Toggle reaction fire"
 msgstr "Activer/désactiver le tir réflexe"
 
-#: client/battlescape/cl_view.c:211 client/battlescape/cl_view.c:236
+#: client/battlescape/cl_view.c:58 client/battlescape/cl_view.c:83
 #, c-format
 msgid "loading %s"
 msgstr "chargement %s"
 
-#: client/battlescape/cl_view.c:219
+#: client/battlescape/cl_view.c:66
 msgid "loading models..."
 msgstr "chargement des modèles..."
 
-#: client/battlescape/cl_view.c:271 client/cl_main.c:1014
+#: client/battlescape/cl_view.c:118 client/cl_main.c:970
 msgid "Awaiting game start"
 msgstr "Attente du début de la partie"
 
@@ -12966,46 +12999,46 @@ msgstr "Ennemi repéré !\n"
 msgid "Civilian spotted!\n"
 msgstr "Civil repéré !\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:79
+#: client/battlescape/events/event/actor/e_event_actordie.c:80
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s a été assommé(e)\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:81
+#: client/battlescape/events/event/actor/e_event_actordie.c:82
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s a été tué\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:89
+#: client/battlescape/events/event/actor/e_event_actordie.c:90
 msgid "A civilian was stunned.\n"
 msgstr "Un civil a été assommé.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:91
+#: client/battlescape/events/event/actor/e_event_actordie.c:92
 msgid "A civilian was killed.\n"
 msgstr "Un civil a été tué.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:95
+#: client/battlescape/events/event/actor/e_event_actordie.c:96
 msgid "An alien was stunned.\n"
 msgstr "Un alien a été assommé.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:97
+#: client/battlescape/events/event/actor/e_event_actordie.c:98
 msgid "An alien was killed.\n"
 msgstr "Un alien a été tué.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:101
+#: client/battlescape/events/event/actor/e_event_actordie.c:102
 msgid "A soldier was stunned.\n"
 msgstr "Un soldat a été assommé.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:103
+#: client/battlescape/events/event/actor/e_event_actordie.c:104
 msgid "A soldier was killed.\n"
 msgstr "Un soldat a été tué.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:107
+#: client/battlescape/events/event/actor/e_event_actordie.c:108
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Un membre de l'équipe %i a été assommé.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:109
+#: client/battlescape/events/event/actor/e_event_actordie.c:110
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Un membre de l'équipe %i a été tué.\n"
@@ -13023,85 +13056,85 @@ msgstr "Votre tour est terminé\n"
 msgid "%s ended his round (team %i)\n"
 msgstr "%s a fini son tour (équipe %i)\n"
 
-#: client/campaign/cp_aircraft.c:419
+#: client/campaign/cp_aircraft.c:417
 msgid "ON RED ALERT"
 msgstr "EN ALERTE ROUGE"
 
-#: client/campaign/cp_aircraft.c:423
+#: client/campaign/cp_aircraft.c:421
 msgid "Nothing - should not be displayed"
 msgstr "Rien - ne devrait pas être affiché"
 
-#: client/campaign/cp_aircraft.c:425
+#: client/campaign/cp_aircraft.c:423
 msgid "at home base"
 msgstr "à la base"
 
-#: client/campaign/cp_aircraft.c:427
+#: client/campaign/cp_aircraft.c:425
 msgid "refuelling"
 msgstr "en ravitaillement"
 
-#: client/campaign/cp_aircraft.c:429
+#: client/campaign/cp_aircraft.c:427
 msgid "idle"
 msgstr "en attente"
 
-#: client/campaign/cp_aircraft.c:431
+#: client/campaign/cp_aircraft.c:429
 msgid "in transit"
 msgstr "en transit"
 
-#: client/campaign/cp_aircraft.c:433
+#: client/campaign/cp_aircraft.c:431
 msgid "enroute to mission"
 msgstr "se dirige vers une mission"
 
-#: client/campaign/cp_aircraft.c:435
+#: client/campaign/cp_aircraft.c:433
 msgid "pursuing a UFO"
 msgstr "à la poursuite d'un OVNI"
 
-#: client/campaign/cp_aircraft.c:437
+#: client/campaign/cp_aircraft.c:435
 msgid "ready to drop soldiers"
 msgstr "prêt à déposer les soldats"
 
-#: client/campaign/cp_aircraft.c:439
+#: client/campaign/cp_aircraft.c:437
 msgid "intercepting a UFO"
 msgstr "en interception d'un OVNI"
 
-#: client/campaign/cp_aircraft.c:441
+#: client/campaign/cp_aircraft.c:439
 msgid "enroute to new home base"
 msgstr "en transit vers la nouvelle base"
 
-#: client/campaign/cp_aircraft.c:443
+#: client/campaign/cp_aircraft.c:441
 msgid "returning to base"
 msgstr "retourne à la base"
 
-#: client/campaign/cp_aircraft.c:517
+#: client/campaign/cp_aircraft.c:515
 msgid "Interceptor"
 msgstr "Intercepteur"
 
-#: client/campaign/cp_aircraft.c:519
+#: client/campaign/cp_aircraft.c:517
 msgid "Transporter"
 msgstr "Transport"
 
-#: client/campaign/cp_aircraft.c:521 client/campaign/cp_ufo.c:120
+#: client/campaign/cp_aircraft.c:519 client/campaign/cp_ufo.c:120
 #: client/campaign/cp_ufo.c:121
 msgid "UFO"
 msgstr "OVNI"
 
-#: client/campaign/cp_aircraft.c:783
+#: client/campaign/cp_aircraft.c:781
 #, c-format
 msgid "A new %s is ready in %s"
 msgstr "Un nouveau %s est opérationnel à %s"
 
-#: client/campaign/cp_aircraft.c:784 client/campaign/cp_aircraft.c:1246
-#: client/campaign/cp_aircraft.c:1262 client/campaign/cp_aircraft.c:1307
-#: client/campaign/cp_aircraft.c:1388 client/campaign/cp_aircraft.c:1412
-#: client/campaign/cp_aircraft.c:2188
+#: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1245
+#: client/campaign/cp_aircraft.c:1261 client/campaign/cp_aircraft.c:1306
+#: client/campaign/cp_aircraft.c:1387 client/campaign/cp_aircraft.c:1411
+#: client/campaign/cp_aircraft.c:2187
 #: client/campaign/cp_aircraft_callbacks.c:138
 #: client/campaign/cp_aircraft_callbacks.c:146
 #: client/campaign/cp_aircraft_callbacks.c:154
 #: client/campaign/cp_airfight.c:356 client/campaign/cp_airfight.c:376
-#: client/campaign/cp_aliencont.c:194 client/campaign/cp_aliencont.c:226
-#: client/campaign/cp_aliencont.c:245 client/campaign/cp_aliencont.c:255
+#: client/campaign/cp_aliencont.c:191 client/campaign/cp_aliencont.c:223
+#: client/campaign/cp_aliencont.c:242 client/campaign/cp_aliencont.c:252
 #: client/campaign/cp_base.c:868 client/campaign/cp_base.c:1442
-#: client/campaign/cp_base.c:2583 client/campaign/cp_base.c:2588
-#: client/campaign/cp_base.c:3272 client/campaign/cp_base_callbacks.c:71
+#: client/campaign/cp_base.c:2578 client/campaign/cp_base.c:2583
+#: client/campaign/cp_base.c:3267 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
 #: client/campaign/cp_base_callbacks.c:588
@@ -13112,17 +13145,17 @@ msgstr "Un nouveau %s est opérationnel à %s"
 #: client/campaign/cp_base_callbacks.c:645
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
-#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1475
-#: client/campaign/cp_campaign.c:1520 client/campaign/cp_campaign.c:1573
-#: client/campaign/cp_campaign.c:1586 client/campaign/cp_campaign.c:1588
+#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1481
+#: client/campaign/cp_campaign.c:1526 client/campaign/cp_campaign.c:1579
+#: client/campaign/cp_campaign.c:1592 client/campaign/cp_campaign.c:1594
 #: client/campaign/cp_installation_callbacks.c:156
 #: client/campaign/cp_mapfightequip.c:332
 #: client/campaign/cp_mapfightequip.c:353
 #: client/campaign/cp_mapfightequip.c:359
 #: client/campaign/cp_mapfightequip.c:371
 #: client/campaign/cp_market_callbacks.c:614
-#: client/campaign/cp_market_callbacks.c:619 client/campaign/cp_missions.c:735
-#: client/campaign/cp_missions.c:1163 client/campaign/cp_nations.c:88
+#: client/campaign/cp_market_callbacks.c:619 client/campaign/cp_missions.c:749
+#: client/campaign/cp_missions.c:1177 client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100 client/campaign/cp_nations.c:110
 #: client/campaign/cp_nations.c:120 client/campaign/cp_nations.c:130
 #: client/campaign/cp_nations.c:141 client/campaign/cp_nations.c:157
@@ -13140,55 +13173,55 @@ msgstr "Un nouveau %s est opérationnel à %s"
 #: client/campaign/cp_research_callbacks.c:829 client/campaign/cp_ufo.c:396
 #: client/campaign/cp_ufo.c:774 client/campaign/cp_ufo.c:778
 #: client/campaign/cp_ufo.c:783
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:408
-#: client/multiplayer/mp_serverlist.c:469
+#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:404
+#: client/multiplayer/mp_serverlist.c:470
 msgid "Notice"
 msgstr "Note"
 
-#: client/campaign/cp_aircraft.c:854
+#: client/campaign/cp_aircraft.c:853
 msgid "No operational hangars at that base."
 msgstr "Pas de hangar opérationnel dans cette base."
 
-#: client/campaign/cp_aircraft.c:858
+#: client/campaign/cp_aircraft.c:857
 msgid "No free hangars at that base."
 msgstr "Pas de hangar libre dans cette base."
 
-#: client/campaign/cp_aircraft.c:861
+#: client/campaign/cp_aircraft.c:860
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Espace disponible insuffisant dans les quartiers pour l'équipage de cette base."
 
-#: client/campaign/cp_aircraft.c:864
+#: client/campaign/cp_aircraft.c:863
 msgid "Insufficient storage space at that base."
 msgstr "Espace disponible insuffisant dans les entrepôts de cette base."
 
-#: client/campaign/cp_aircraft.c:868
+#: client/campaign/cp_aircraft.c:867
 msgid "That base is beyond this aircraft's range."
 msgstr "Cette base est au-delà de la portée de l'appareil."
 
-#: client/campaign/cp_aircraft.c:1245
+#: client/campaign/cp_aircraft.c:1244
 #, c-format
 msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr "L'appareil %s ne peut être totalement ravitaillé à %s. Antimatière insuffisante."
 
-#: client/campaign/cp_aircraft.c:1261
+#: client/campaign/cp_aircraft.c:1260
 #, c-format
 msgid "Craft %s has refueled at %s."
 msgstr "L'appareil %s a fait le plein de carburant à %s."
 
-#: client/campaign/cp_aircraft.c:1307
+#: client/campaign/cp_aircraft.c:1306
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "L'appareil %s n'a presque plus de carburant et retourne à sa base."
 
-#: client/campaign/cp_aircraft.c:1388
+#: client/campaign/cp_aircraft.c:1387
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Il faut d'abord assigner au moins un soldat à cet appareil."
 
-#: client/campaign/cp_aircraft.c:1412
+#: client/campaign/cp_aircraft.c:1411
 msgid "Insufficient fuel."
 msgstr "Carburant insuffisant."
 
-#: client/campaign/cp_aircraft.c:2188
+#: client/campaign/cp_aircraft.c:2187
 #, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
 msgstr "L'appareil %s n'a pas assez de carburant pour intercepter l'OVNI : il retourne à %s."
@@ -13217,20 +13250,20 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Appareil démarré"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1639
-#: client/campaign/cp_map.c:1646
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1633
+#: client/campaign/cp_map.c:1640
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Vitesse :\t%i km/h\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1640
-#: client/campaign/cp_map.c:1647
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1634
+#: client/campaign/cp_map.c:1641
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Carburant :\t%i/%i\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:261
-#: client/campaign/cp_ufopedia.c:348
+#: client/campaign/cp_ufopedia.c:350
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Champ d'action :\t%i km\n"
@@ -13267,23 +13300,23 @@ msgstr "Interception"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Interception OVNI réussie -- l'OVNI s'est écrasé en mer"
 
-#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1588
+#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1594
 msgid "You've lost the battle"
 msgstr "Vous avez perdu la bataille"
 
-#: client/campaign/cp_aliencont.c:194
+#: client/campaign/cp_aliencont.c:191
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "Vous ne pouvez pas encore étudier les aliens. L'unité de détention n'est pas disponible dans cette base."
 
-#: client/campaign/cp_aliencont.c:226
+#: client/campaign/cp_aliencont.c:223
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "Vous ne pouvez pas encore détenir d'aliens vivants. Des aliens sont morts."
 
-#: client/campaign/cp_aliencont.c:245
+#: client/campaign/cp_aliencont.c:242
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "Vous ne disposez pas de suffisamment de place libre dans l'unité de détention. Des aliens sont morts."
 
-#: client/campaign/cp_aliencont.c:255
+#: client/campaign/cp_aliencont.c:252
 msgid "You've captured new aliens."
 msgstr "Vous avez capturé de nouveaux aliens."
 
@@ -13446,11 +13479,11 @@ msgstr "Coûts d'entretien :\t%i c\n"
 msgid "Needs:\t%s\n"
 msgstr "Dépendances :\t%s\n"
 
-#: client/campaign/cp_base.c:2322
+#: client/campaign/cp_base.c:2317
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Aucun appareil dans cette base - Vous devez d'abord acheter ou transférer un appareil\n"
 
-#: client/campaign/cp_base.c:2322 client/campaign/cp_base.c:2324
+#: client/campaign/cp_base.c:2317 client/campaign/cp_base.c:2319
 #: client/campaign/cp_market_callbacks.c:596
 #: client/campaign/cp_market_callbacks.c:601
 #: client/campaign/cp_market_callbacks.c:707
@@ -13459,44 +13492,44 @@ msgstr "Aucun appareil dans cette base - Vous devez d'abord acheter ou transfér
 msgid "Note"
 msgstr "Note"
 
-#: client/campaign/cp_base.c:2324
+#: client/campaign/cp_base.c:2319
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Aucun appareil dans cette base - Vous devez d'abord acheter un appareil\n"
 
-#: client/campaign/cp_base.c:2478
+#: client/campaign/cp_base.c:2473
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Construction du bâtiment %s terminée à %s."
 
-#: client/campaign/cp_base.c:2479
+#: client/campaign/cp_base.c:2474
 msgid "Building finished"
 msgstr "Construction terminée"
 
-#: client/campaign/cp_base.c:2581
+#: client/campaign/cp_base.c:2576
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "En vendant %s, vous avez gagné %i crédits."
 
-#: client/campaign/cp_base.c:2582
+#: client/campaign/cp_base.c:2577
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i objet collecté"
 msgstr[1] "%i objets collectés"
 
-#: client/campaign/cp_base.c:2586
+#: client/campaign/cp_base.c:2581
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Plus assez de place dans les entrepôts de %s. %s"
 
-#: client/campaign/cp_base.c:2587
+#: client/campaign/cp_base.c:2582
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i objet a été vendu pour %i crédits"
 msgstr[1] "%i objets ont été vendu pour %i crédits"
 
-#: client/campaign/cp_base.c:3270
+#: client/campaign/cp_base.c:3265
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "%s ne dispose pas d'unité de stockage d'antimatière. %i unités d'antimatière ont été perdues."
@@ -13733,7 +13766,7 @@ msgstr ""
 "Actives :\t%i\n"
 "Attaquées :\t%i\n"
 
-#: client/campaign/cp_campaign.c:770 client/campaign/cp_ufopedia.c:1168
+#: client/campaign/cp_campaign.c:770 client/campaign/cp_ufopedia.c:1170
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -13747,7 +13780,7 @@ msgstr ""
 "\n"
 "Gains du mois:\t%d"
 
-#: client/campaign/cp_campaign.c:811 client/cl_inventory_callbacks.c:137
+#: client/campaign/cp_campaign.c:811 client/cl_inventory_callbacks.c:136
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
@@ -13802,34 +13835,34 @@ msgstr ""
 "Infection Virale eXtraterrestre max. : %i%%\n"
 "Infection Virale eXtraterrestre actuelle : %i%%"
 
-#: client/campaign/cp_campaign.c:1475
+#: client/campaign/cp_campaign.c:1481
 msgid "Collected dead alien bodies"
 msgstr "Corps aliens décédés collectés"
 
-#: client/campaign/cp_campaign.c:1520
+#: client/campaign/cp_campaign.c:1526
 msgid "Your dropship is not near the landing zone"
 msgstr "Votre transport n'est pas près de la zone d'atterrissage"
 
-#: client/campaign/cp_campaign.c:1572 client/campaign/cp_missions.c:1162
+#: client/campaign/cp_campaign.c:1578 client/campaign/cp_missions.c:1176
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "La défense de la base %s a été une victoire !"
 
-#: client/campaign/cp_campaign.c:1586
+#: client/campaign/cp_campaign.c:1592
 msgid "You've won the battle"
 msgstr "Vous avez gagné la bataille"
 
-#: client/campaign/cp_campaign.c:1605
+#: client/campaign/cp_campaign.c:1611
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/campaign/cp_campaign.c:1606
+#: client/campaign/cp_campaign.c:1612
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens capturés\t%i\n"
 
-#: client/campaign/cp_campaign.c:1607
+#: client/campaign/cp_campaign.c:1613
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13838,22 +13871,22 @@ msgstr ""
 "Aliens survivants\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1609
+#: client/campaign/cp_campaign.c:1615
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Soldats PHALANX tués par les aliens\t%i\n"
 
-#: client/campaign/cp_campaign.c:1610
+#: client/campaign/cp_campaign.c:1616
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Soldats PHALANX disparus en mission\t%i\n"
 
-#: client/campaign/cp_campaign.c:1611
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Pertes des tirs amis PHALANAX\t%i\n"
 
-#: client/campaign/cp_campaign.c:1612
+#: client/campaign/cp_campaign.c:1618
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13862,17 +13895,17 @@ msgstr ""
 "Survivants PHALANX\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1614
+#: client/campaign/cp_campaign.c:1620
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civils tués par les aliens\t%i\n"
 
-#: client/campaign/cp_campaign.c:1615
+#: client/campaign/cp_campaign.c:1621
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civils tués par des tirs amis\t%i\n"
 
-#: client/campaign/cp_campaign.c:1616
+#: client/campaign/cp_campaign.c:1622
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13881,17 +13914,17 @@ msgstr ""
 "Civils sauvés\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1617
+#: client/campaign/cp_campaign.c:1623
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Eléments récupérés (types/tous)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1694
+#: client/campaign/cp_campaign.c:1700
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s a été promu(e) au grade de %s.\n"
 
-#: client/campaign/cp_campaign.c:1696
+#: client/campaign/cp_campaign.c:1702
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -13900,7 +13933,7 @@ msgstr ""
 "%s a été promu(e) à titre posthume au grade de %s  pour\n"
 "son courage exemplaire face à une situation impossible.\n"
 
-#: client/campaign/cp_campaign.c:1697
+#: client/campaign/cp_campaign.c:1703
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
@@ -13931,7 +13964,7 @@ msgstr "Impossible de recruter l'employée"
 
 #: client/campaign/cp_event.c:359 client/campaign/cp_save.c:280
 #: client/campaign/cp_save.c:299 client/campaign/cp_time.c:74
-#: client/campaign/cp_ufopedia.c:503 client/campaign/cp_ufopedia.c:508
+#: client/campaign/cp_ufopedia.c:505 client/campaign/cp_ufopedia.c:510
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -13941,7 +13974,8 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Vous avez un nouveau message: %s."
 
-#: client/campaign/cp_fightequip_callbacks.c:173
+#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1594
+#: client/campaign/cp_map.c:1613
 msgid "Unknown"
 msgstr "Inconnu"
 
@@ -14092,15 +14126,15 @@ msgstr "Oubliez cela"
 msgid "UFO Sighting"
 msgstr "OVNI repéré"
 
-#: client/campaign/cp_map.c:1398
+#: client/campaign/cp_map.c:1390
 msgid "Day"
 msgstr "Jour"
 
-#: client/campaign/cp_map.c:1398
+#: client/campaign/cp_map.c:1390
 msgid "Night"
 msgstr "Nuit"
 
-#: client/campaign/cp_map.c:1600
+#: client/campaign/cp_map.c:1593
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -14111,7 +14145,7 @@ msgstr ""
 "Type : %s\n"
 "Objectif : %s"
 
-#: client/campaign/cp_map.c:1616
+#: client/campaign/cp_map.c:1610
 #, c-format
 msgid ""
 "%s (%s)\n"
@@ -14120,53 +14154,53 @@ msgstr ""
 "%s (%s)\n"
 "%s"
 
-#: client/campaign/cp_map.c:1636 client/campaign/cp_map.c:1644
+#: client/campaign/cp_map.c:1630 client/campaign/cp_map.c:1638
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nom :\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1637 client/campaign/cp_map.c:1645
+#: client/campaign/cp_map.c:1631 client/campaign/cp_map.c:1639
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Statut :\t%s\n"
 
-#: client/campaign/cp_map.c:1638
+#: client/campaign/cp_map.c:1632
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Distance à la cible : \t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1642 client/campaign/cp_map.c:1652
+#: client/campaign/cp_map.c:1636 client/campaign/cp_map.c:1646
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "HPA :\t%sh\n"
 
-#: client/campaign/cp_map.c:1670
+#: client/campaign/cp_map.c:1664
 #, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Vitesse: %i km/h\n"
 
-#: client/campaign/cp_map.c:1871
+#: client/campaign/cp_map.c:1864
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1922
+#: client/campaign/cp_map.c:1915
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Sélectionnez l'emplacement de la nouvelle base sur la carte.\n"
 
-#: client/campaign/cp_map.c:1925
+#: client/campaign/cp_map.c:1918
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Sélectionnez l'emplacement de la nouvelle installation sur la carte.\n"
 
-#: client/campaign/cp_map.c:1930
+#: client/campaign/cp_map.c:1923
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Des aliens attaquent notre base à cet instant même.\n"
 
-#: client/campaign/cp_map.c:1935
+#: client/campaign/cp_map.c:1928
 msgid "Select ufo or mission on map\n"
 msgstr "Choisir l'OVNI ou la mission sur la carte\n"
 
-#: client/campaign/cp_map.c:1940
+#: client/campaign/cp_map.c:1933
 msgid "UFO in radar range\n"
 msgstr "OVNI dans la portée radar\n"
 
@@ -14406,28 +14440,28 @@ msgstr ""
 "\n"
 "  - L'équipe de développement de UFO:AI"
 
-#: client/campaign/cp_missions.c:432
+#: client/campaign/cp_missions.c:446
 msgid "Landed UFO"
 msgstr "OVNI posé"
 
-#: client/campaign/cp_missions.c:434
+#: client/campaign/cp_missions.c:448
 msgid "Terror mission"
 msgstr "Mission de terreur"
 
-#: client/campaign/cp_missions.c:436
+#: client/campaign/cp_missions.c:450
 msgid "Base attack"
 msgstr "Base attaquée"
 
-#: client/campaign/cp_missions.c:440
+#: client/campaign/cp_missions.c:454
 msgid "Harvesting mission"
 msgstr "Mission de moissonnage"
 
-#: client/campaign/cp_missions.c:734
+#: client/campaign/cp_missions.c:748
 #, c-format
 msgid "Alien activity has been detected in %s."
 msgstr "Activité alienne détectée en %s."
 
-#: client/campaign/cp_missions.c:1258
+#: client/campaign/cp_missions.c:1272
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
@@ -14710,8 +14744,8 @@ msgstr ""
 #: client/campaign/cp_produce_callbacks.c:158
 #: client/campaign/cp_produce_callbacks.c:161
 #: client/campaign/cp_produce_callbacks.c:166
-#: client/campaign/cp_produce_callbacks.c:745
-#: client/campaign/cp_produce_callbacks.c:768
+#: client/campaign/cp_produce_callbacks.c:752
+#: client/campaign/cp_produce_callbacks.c:775
 #: client/campaign/cp_transfer.c:280 client/campaign/cp_transfer.c:283
 #: client/campaign/cp_transfer.c:286
 msgid "Hangars not ready"
@@ -14734,8 +14768,8 @@ msgstr ""
 "Il n'y a plus de hangar dans cette base.\n"
 
 #: client/campaign/cp_produce_callbacks.c:166
-#: client/campaign/cp_produce_callbacks.c:745
-#: client/campaign/cp_produce_callbacks.c:768
+#: client/campaign/cp_produce_callbacks.c:752
+#: client/campaign/cp_produce_callbacks.c:775
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -14744,7 +14778,7 @@ msgstr ""
 "Il n'y a plus assez de place dans vos hangars.\n"
 
 #: client/campaign/cp_produce_callbacks.c:348
-#: client/campaign/cp_produce_callbacks.c:458
+#: client/campaign/cp_produce_callbacks.c:465
 msgid "No item selected"
 msgstr "Pas d'objet sélectionné"
 
@@ -14754,7 +14788,7 @@ msgid "Costs per item\t%i c\n"
 msgstr "Coût par objet\t%i c\n"
 
 #: client/campaign/cp_produce_callbacks.c:359
-#: client/campaign/cp_produce_callbacks.c:422
+#: client/campaign/cp_produce_callbacks.c:429
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "Durée de Production\t%ih\n"
@@ -14778,50 +14812,50 @@ msgstr "Durée du démontage: \t%ih\n"
 msgid "Components:\n"
 msgstr "Composants :\n"
 
-#: client/campaign/cp_produce_callbacks.c:419
+#: client/campaign/cp_produce_callbacks.c:426
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Coûts de Production\t%i c\n"
 
-#: client/campaign/cp_produce_callbacks.c:456
+#: client/campaign/cp_produce_callbacks.c:463
 msgid "No aircraft selected."
 msgstr "Aucun appareil n'est sélectionné."
 
-#: client/campaign/cp_produce_callbacks.c:782
+#: client/campaign/cp_produce_callbacks.c:789
 msgid "Queue full!"
 msgstr "Liste pleine !"
 
-#: client/campaign/cp_produce_callbacks.c:782
+#: client/campaign/cp_produce_callbacks.c:789
 msgid "You cannot queue any more items!"
 msgstr "Vous ne pouvez plus ajouter d'objets à la liste !"
 
-#: client/campaign/cp_produce_callbacks.c:804
-#: client/campaign/cp_produce_callbacks.c:816
+#: client/campaign/cp_produce_callbacks.c:811
+#: client/campaign/cp_produce_callbacks.c:823
 msgid "Not enough material!"
 msgstr "Pas assez de matières premières !"
 
-#: client/campaign/cp_produce_callbacks.c:804
+#: client/campaign/cp_produce_callbacks.c:811
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "Vous n'avez pas assez de matière première pour construire tous les équipements (%i). La production continue pour une quantité plus faible (%i)."
 
-#: client/campaign/cp_produce_callbacks.c:808
-#: client/campaign/cp_produce_callbacks.c:828
+#: client/campaign/cp_produce_callbacks.c:815
+#: client/campaign/cp_produce_callbacks.c:835
 #, c-format
 msgid "Production of %s started"
 msgstr "Production de %s commencée"
 
-#: client/campaign/cp_produce_callbacks.c:809
-#: client/campaign/cp_produce_callbacks.c:829
-#: client/campaign/cp_produce_callbacks.c:837
+#: client/campaign/cp_produce_callbacks.c:816
+#: client/campaign/cp_produce_callbacks.c:836
+#: client/campaign/cp_produce_callbacks.c:844
 msgid "Production started"
 msgstr "Production commencée"
 
-#: client/campaign/cp_produce_callbacks.c:816
+#: client/campaign/cp_produce_callbacks.c:823
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "Les matériaux nécessaire à la production de cet objet sont insuffisants."
 
-#: client/campaign/cp_produce_callbacks.c:836
+#: client/campaign/cp_produce_callbacks.c:843
 #, c-format
 msgid "Disassembling of %s started"
 msgstr "Démontage de %s commencé"
@@ -15009,38 +15043,38 @@ msgid "Error saving game."
 msgstr "Erreur lors de la sauvegarde."
 
 #: client/campaign/cp_save.c:467 client/campaign/cp_save.c:491
-#: client/campaign/cp_save.c:628
+#: client/campaign/cp_save.c:619
 msgid "Error loading game."
 msgstr "Erreur lors du chargement."
 
 #: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
-#: client/campaign/cp_save.c:629 client/cl_irc.c:1020 client/cl_irc.c:1257
-#: client/cl_main.c:509 client/cl_main.c:514 client/cl_main.c:520
-#: client/cl_main.c:528 client/multiplayer/mp_callbacks.c:49
+#: client/campaign/cp_save.c:620 client/cl_irc.c:1208 client/cl_irc.c:1440
+#: client/cl_main.c:505 client/cl_main.c:510 client/cl_main.c:516
+#: client/cl_main.c:524 client/multiplayer/mp_callbacks.c:49
 msgid "Error"
 msgstr "Erreur"
 
-#: client/campaign/cp_save.c:607
+#: client/campaign/cp_save.c:601
 msgid "Campaign was successfully saved."
 msgstr "La campagne a été sauvée avec succès."
 
-#: client/campaign/cp_save.c:607
+#: client/campaign/cp_save.c:601
 msgid "Quicksave"
 msgstr "Sauvegarde rapide"
 
-#: client/campaign/cp_save.c:631
+#: client/campaign/cp_save.c:622
 msgid "Campaign loaded"
 msgstr "Campagne chargée"
 
-#: client/campaign/cp_save.c:631
+#: client/campaign/cp_save.c:622
 msgid "Quicksave campaign was successfully loaded."
 msgstr "La sauvegarde rapide a été chargée avec succès."
 
-#: client/campaign/cp_save.c:688
+#: client/campaign/cp_save.c:679
 msgid "Saves to the quick save slot"
 msgstr "Sauvegarder vers l'emplacement de sauvegarde rapide"
 
-#: client/campaign/cp_team.c:239
+#: client/campaign/cp_team.c:240
 #, c-format
 msgid "%i of %i"
 msgstr "%i sur %i"
@@ -15331,51 +15365,51 @@ msgstr "Aucune base cible n'est sélectionnée"
 msgid "Please select the target base from the list"
 msgstr "Veuillez sélectionner la base de destination dans la liste"
 
-#: client/campaign/cp_transfer.c:1321
+#: client/campaign/cp_transfer.c:1325
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Vous pouvez transférer de l'équipement - cette base dispose d'un entrepôt.\n"
 
-#: client/campaign/cp_transfer.c:1324
+#: client/campaign/cp_transfer.c:1328
 msgid "No Storage in this base.\n"
 msgstr "Pas d'entrepôt dans cette base.\n"
 
-#: client/campaign/cp_transfer.c:1328
+#: client/campaign/cp_transfer.c:1332
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Vous pouvez transférer du personnel - cette base dispose de quartiers d'habitation.\n"
 
-#: client/campaign/cp_transfer.c:1330
+#: client/campaign/cp_transfer.c:1334
 msgid "No Living Quarters in this base.\n"
 msgstr "Pas de quartiers d'habitation dans cette base.\n"
 
-#: client/campaign/cp_transfer.c:1334
+#: client/campaign/cp_transfer.c:1338
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Vous pouvez transférer des aliens - cette base dispose d'une unité de détention.\n"
 
-#: client/campaign/cp_transfer.c:1336
+#: client/campaign/cp_transfer.c:1340
 msgid "No Alien Containment in this base.\n"
 msgstr "Pas d'unité de détention dans cette base.\n"
 
-#: client/campaign/cp_transfer.c:1340
+#: client/campaign/cp_transfer.c:1344
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Vous pouvez transférer de l'antimatière - cette base dispose d'un entrepôt d'antimatière.\n"
 
-#: client/campaign/cp_transfer.c:1342
+#: client/campaign/cp_transfer.c:1346
 msgid "No Antimatter Storage in this base.\n"
 msgstr "Pas d'entrepôt d'antimatière dans cette base.\n"
 
-#: client/campaign/cp_transfer.c:1346
+#: client/campaign/cp_transfer.c:1350
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Vous pouvez transférer un appareil - cette base dispose d'un hangar.\n"
 
-#: client/campaign/cp_transfer.c:1348
+#: client/campaign/cp_transfer.c:1352
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Transfert d'appareil impossible - cette base ne dispose pas de centre de commandement.\n"
 
-#: client/campaign/cp_transfer.c:1350
+#: client/campaign/cp_transfer.c:1354
 msgid "No Hangar in this base.\n"
 msgstr "Pas de hangar dans cette base.\n"
 
-#: client/campaign/cp_transfer.c:1354
+#: client/campaign/cp_transfer.c:1358
 msgid "No power supplies in this base.\n"
 msgstr "Pas de générateur dans cette base.\n"
 
@@ -15509,36 +15543,37 @@ msgstr "%s:\t+%i %%\n"
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cp_ufopedia.c:332
+#: client/campaign/cp_ufopedia.c:311 client/campaign/cp_ufopedia.c:368
+#: client/campaign/cp_ufopedia.c:370 client/campaign/cp_ufopedia.c:406
+#: client/campaign/cp_ufopedia.c:408
+msgid "Unknown - need to research this"
+msgstr "Inconnu - Nécessite une recherche"
+
+#: client/campaign/cp_ufopedia.c:334
 msgid "Error - could not find aircraft"
 msgstr "Erreur - impossible de trouver l'appareil"
 
-#: client/campaign/cp_ufopedia.c:339 client/campaign/cp_ufopedia.c:344
+#: client/campaign/cp_ufopedia.c:341 client/campaign/cp_ufopedia.c:346
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/campaign/cp_ufopedia.c:351
+#: client/campaign/cp_ufopedia.c:353
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:358
+#: client/campaign/cp_ufopedia.c:360
 #, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "Taille de l'appareil:\t%s\n"
 
-#: client/campaign/cp_ufopedia.c:362
+#: client/campaign/cp_ufopedia.c:364
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Max. soldats :\t%i\n"
 
-#: client/campaign/cp_ufopedia.c:366 client/campaign/cp_ufopedia.c:368
-#: client/campaign/cp_ufopedia.c:404 client/campaign/cp_ufopedia.c:406
-msgid "Unknown - need to research this"
-msgstr "Inconnu - Nécessite une recherche"
-
-#: client/campaign/cp_ufopedia.c:401
+#: client/campaign/cp_ufopedia.c:403
 #, c-format
 msgid ""
 "%s\n"
@@ -15547,15 +15582,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cp_ufopedia.c:525
+#: client/campaign/cp_ufopedia.c:527
 msgid "Proposal: "
 msgstr "Proposition :"
 
-#: client/campaign/cp_ufopedia.c:528
+#: client/campaign/cp_ufopedia.c:530
 msgid "Re: "
 msgstr "Re :"
 
-#: client/campaign/cp_ufopedia.c:539
+#: client/campaign/cp_ufopedia.c:541
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -15566,45 +15601,45 @@ msgstr ""
 "POUR : %s\n"
 "DATE : %s"
 
-#: client/campaign/cp_ufopedia.c:614
+#: client/campaign/cp_ufopedia.c:616
 msgid "(complete)"
 msgstr "(terminé)"
 
-#: client/campaign/cp_ufopedia.c:672
+#: client/campaign/cp_ufopedia.c:674
 msgid "No pre-research description available."
 msgstr "Pas de description disponible."
 
-#: client/campaign/cp_ufopedia.c:1108
+#: client/campaign/cp_ufopedia.c:1110
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BProposition : %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1112
+#: client/campaign/cp_ufopedia.c:1114
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Proposition : %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1123
+#: client/campaign/cp_ufopedia.c:1125
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe : %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1127
+#: client/campaign/cp_ufopedia.c:1129
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Re: %s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1137 client/campaign/cp_ufopedia.c:1149
+#: client/campaign/cp_ufopedia.c:1139 client/campaign/cp_ufopedia.c:1151
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1141 client/campaign/cp_ufopedia.c:1153
+#: client/campaign/cp_ufopedia.c:1143 client/campaign/cp_ufopedia.c:1155
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cp_ufopedia.c:1165
+#: client/campaign/cp_ufopedia.c:1167
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
@@ -15808,12 +15843,12 @@ msgstr "skill_sniper"
 msgid "skill_explosive"
 msgstr "skill_explosive"
 
-#: client/cl_inventory_callbacks.c:131
+#: client/cl_inventory_callbacks.c:130
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "Taille :\t%i\n"
 
-#: client/cl_inventory_callbacks.c:133
+#: client/cl_inventory_callbacks.c:132
 msgid "^BDamage type:\tProtection:\n"
 msgstr "^BType de damage:\tProtection:\n"
 
@@ -15822,13 +15857,13 @@ msgstr "^BType de damage:\tProtection:\n"
 msgid "%s weapon\n"
 msgstr "Arme à %s\n"
 
-#: client/cl_inventory_callbacks.c:144 client/cl_inventory_callbacks.c:180
-#: client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:144 client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:186
 msgid "One-handed"
 msgstr "une main"
 
-#: client/cl_inventory_callbacks.c:144 client/cl_inventory_callbacks.c:180
-#: client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:144 client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:186
 msgid "Two-handed"
 msgstr "deux mains"
 
@@ -15842,12 +15877,12 @@ msgstr "Munitions max. :\t%i\n"
 msgid "Skill:\t%s\n"
 msgstr "Compétence :\t%s\n"
 
-#: client/cl_inventory_callbacks.c:175 client/cl_inventory_callbacks.c:186
+#: client/cl_inventory_callbacks.c:175 client/cl_inventory_callbacks.c:189
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "UT :\t%i\n"
 
-#: client/cl_inventory_callbacks.c:176 client/cl_inventory_callbacks.c:187
+#: client/cl_inventory_callbacks.c:176 client/cl_inventory_callbacks.c:190
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Portée :\t%g\n"
@@ -15858,25 +15893,40 @@ msgid "Spreads:\t%g\n"
 msgstr "Dispersion :\t%g\n"
 
 #: client/cl_inventory_callbacks.c:180
+#, fuzzy, c-format
+msgid "%s. No detailed info available.\n"
+msgstr "Pas de description disponible."
+
+#: client/cl_inventory_callbacks.c:180
+#, fuzzy
+msgid "Ammunition"
+msgstr "Communication Alienne"
+
+#: client/cl_inventory_callbacks.c:180
+#, fuzzy
+msgid "Weapon"
+msgstr "Armes"
+
+#: client/cl_inventory_callbacks.c:183
 #, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "Arme à %s sans munition\n"
 
-#: client/cl_inventory_callbacks.c:183
+#: client/cl_inventory_callbacks.c:186
 #, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "Équipement auxiliaire à %s\n"
 
-#: client/cl_inventory_callbacks.c:185
+#: client/cl_inventory_callbacks.c:188
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Action :\t%s\n"
 
-#: client/cl_inventory_callbacks.c:194
+#: client/cl_inventory_callbacks.c:197
 msgid "Unknown - not useable"
 msgstr "Inconnu(e) - non utilisable"
 
-#: client/cl_irc.c:1257
+#: client/cl_irc.c:1440
 msgid "Server closed connection"
 msgstr "Le serveur a fermé la connexion"
 
@@ -15884,31 +15934,27 @@ msgstr "Le serveur a fermé la connexion"
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:508
+#: client/cl_main.c:504
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "La version du jeu installé (%s) diffère de celle des serveurs"
 
-#: client/cl_main.c:514
+#: client/cl_main.c:510
 msgid "Local map version differs from server"
 msgstr "Les cartes en local diffèrent de celles du serveur"
 
-#: client/cl_main.c:520
+#: client/cl_main.c:516
 msgid "Script files are not the same"
 msgstr "Les fichiers scripts ne sont pas les mêmes"
 
-#: client/cl_main.c:527
+#: client/cl_main.c:523
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "La version du jeu local (%s) diffère de celle des serveurs (%s)"
 
-#: client/cl_main.c:884
+#: client/cl_main.c:855
 msgid "Target your shot to the ground"
 msgstr "Visez au sol la cible"
-
-#: client/cl_main.c:1056
-msgid "Custom"
-msgstr "Personnalisé"
 
 #: client/cl_screen.c:165
 #, c-format
@@ -15920,107 +15966,107 @@ msgstr "Téléchargement [%s]"
 msgid "Loading Map [%s]"
 msgstr "Chargement de la carte [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:303 client/cl_team.c:314
+#: client/cl_team.c:50 client/cl_team.c:335 client/cl_team.c:346
 msgid "Urban"
 msgstr "Urbain"
 
-#: client/cl_team.c:52 client/cl_team.c:304 client/cl_team.c:315
+#: client/cl_team.c:52 client/cl_team.c:336 client/cl_team.c:347
 msgid "Jungle"
 msgstr "Jungle"
 
-#: client/cl_team.c:54 client/cl_team.c:305 client/cl_team.c:316
+#: client/cl_team.c:54 client/cl_team.c:337 client/cl_team.c:348
 msgid "Desert"
 msgstr "Désertique"
 
-#: client/cl_team.c:56 client/cl_team.c:306 client/cl_team.c:317
+#: client/cl_team.c:56 client/cl_team.c:338 client/cl_team.c:349
 msgid "Arctic"
 msgstr "Arctique"
 
-#: client/cl_team.c:58 client/cl_team.c:318
+#: client/cl_team.c:58 client/cl_team.c:350
 msgid "Yellow"
 msgstr "Jaune"
 
-#: client/cl_team.c:60 client/cl_team.c:319
+#: client/cl_team.c:60 client/cl_team.c:351
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:421
+#: client/cl_team.c:454
 msgid "Update the GUI with the selected item"
 msgstr "Mettre à jour l'interface avec l'objet sélectionné"
 
-#: client/input/cl_input.c:894
+#: client/input/cl_input.c:895
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Tourner la vue dans le sens anti-horaire"
 
-#: client/input/cl_input.c:896
+#: client/input/cl_input.c:897
 msgid "Rotate battlescape camera clockwise"
 msgstr "Tourner la vue dans le sens horaire"
 
-#: client/input/cl_input.c:898
+#: client/input/cl_input.c:899
 msgid "Tilt battlescape camera up"
 msgstr "Tourner la caméra vers le haut"
 
-#: client/input/cl_input.c:900
+#: client/input/cl_input.c:901
 msgid "Tilt battlescape camera down"
 msgstr "Tourner la caméra vers le bas"
 
-#: client/input/cl_input.c:902
+#: client/input/cl_input.c:903
 msgid "Move battlescape camera left"
 msgstr "Déplacer la caméra vers la gauche"
 
-#: client/input/cl_input.c:904
+#: client/input/cl_input.c:905
 msgid "Move battlescape camera right"
 msgstr "Déplacer la caméra vers la droite"
 
-#: client/input/cl_input.c:906
+#: client/input/cl_input.c:907
 msgid "Move battlescape camera forward"
 msgstr "Déplacer la caméra vers l'avant"
 
-#: client/input/cl_input.c:908
+#: client/input/cl_input.c:909
 msgid "Move battlescape camera backward"
 msgstr "Déplacer la caméra en l'arrière"
 
-#: client/input/cl_input.c:910 client/input/cl_input.c:932
+#: client/input/cl_input.c:911 client/input/cl_input.c:933
 msgid "Zoom in"
 msgstr "Zoomer"
 
-#: client/input/cl_input.c:912 client/input/cl_input.c:933
+#: client/input/cl_input.c:913 client/input/cl_input.c:934
 msgid "Zoom out"
 msgstr "Dézoomer"
 
-#: client/input/cl_input.c:915
+#: client/input/cl_input.c:916
 msgid "Left mouse button click (menu)"
 msgstr "Clic sur le bouton gauche de la souris (menu)"
 
-#: client/input/cl_input.c:917
+#: client/input/cl_input.c:918
 msgid "Middle mouse button click (menu)"
 msgstr "Clic sur le bouton du milieu de la souris (menu)"
 
-#: client/input/cl_input.c:919
+#: client/input/cl_input.c:920
 msgid "Right mouse button click (menu)"
 msgstr "Clic sur le bouton droit de la souris (menu)"
 
-#: client/input/cl_input.c:921
+#: client/input/cl_input.c:922
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Sélectionner un objet/Marcher jusqu'à une case/En mode tir : tirer, etc"
 
-#: client/input/cl_input.c:923
+#: client/input/cl_input.c:924
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Marcher jusqu'à un carré/ En mode tir : Annuler le tir"
 
-#: client/input/cl_input.c:925
+#: client/input/cl_input.c:926
 msgid "Turn soldier toward mouse pointer"
 msgstr "Pivoter le soldat vers le curseur de la souris"
 
-#: client/input/cl_input.c:927
+#: client/input/cl_input.c:928
 msgid "Toggles the hud radar mode"
 msgstr "Basculer le mode hud du radar"
 
-#: client/input/cl_input.c:930
+#: client/input/cl_input.c:931
 msgid "Slice through terrain at a higher level"
 msgstr "Voir le terrain à un niveau plus élevé"
 
-#: client/input/cl_input.c:931
+#: client/input/cl_input.c:932
 msgid "Slice through terrain at a lower level"
 msgstr "Voir le terrain à un niveau plus bas"
 
@@ -16119,7 +16165,7 @@ msgstr "Équipe %d"
 msgid "No team"
 msgstr "Pas d'équipe"
 
-#: client/multiplayer/mp_serverlist.c:299
+#: client/multiplayer/mp_serverlist.c:300
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -16128,87 +16174,87 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/multiplayer/mp_serverlist.c:310
+#: client/multiplayer/mp_serverlist.c:311
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Carte :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:315
+#: client/multiplayer/mp_serverlist.c:316
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Nom du serveur :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:316
+#: client/multiplayer/mp_serverlist.c:317
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moral :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:317
+#: client/multiplayer/mp_serverlist.c:318
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Type de jeu :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:318
+#: client/multiplayer/mp_serverlist.c:319
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Version du jeu :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:319
+#: client/multiplayer/mp_serverlist.c:320
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Serveur dédié :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:320
+#: client/multiplayer/mp_serverlist.c:321
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Système d'exploitation :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:321
+#: client/multiplayer/mp_serverlist.c:322
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Protocole réseau :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:322
+#: client/multiplayer/mp_serverlist.c:323
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Durée d'un tour :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:323
+#: client/multiplayer/mp_serverlist.c:324
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Jeu en équipe :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:324
+#: client/multiplayer/mp_serverlist.c:325
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. joueurs par équipe :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:325
+#: client/multiplayer/mp_serverlist.c:326
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Nb. d'équipes max autorisé pour cette carte :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:326
+#: client/multiplayer/mp_serverlist.c:327
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:327
+#: client/multiplayer/mp_serverlist.c:328
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldats par joueur :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:328
+#: client/multiplayer/mp_serverlist.c:329
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldats par équipe :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:329
+#: client/multiplayer/mp_serverlist.c:330
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Protégé par mot de passe :\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:469
+#: client/multiplayer/mp_serverlist.c:470
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "Tous les marque-pages sont occupés - effacez-en et recommencez cette étape"
 
@@ -16224,11 +16270,11 @@ msgstr "Nouvelle équipe"
 msgid "Error saving team. Check free disk space!"
 msgstr "Erreur lors de la sauvegarde de l'équipe. Vérifiez l'espace disque disponible !"
 
-#: game/g_actor.c:302
+#: game/g_actor.c:378
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Ne peut faire l'action - pas assez d'UT !\n"
 
-#: game/g_actor.c:306
+#: game/g_actor.c:382
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Ne peut faire l'action - arme déjà chargée avec les mêmes munitions !\n"
 
@@ -16260,20 +16306,16 @@ msgstr "Ne peut faire l'action - pas dans la même équipe !\n"
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Ne peut faire l'action - pas de contrôle sur les unités alliées !\n"
 
-#: game/g_client.c:447
+#: game/g_client.c:431
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Secoués, mais resteront alertes.\n"
-
-#: game/g_client.c:463
-msgid "Can't activate reaction fire.\n"
-msgstr "Impossible d'activer le tir de réaction.\n"
 
 #: game/g_cmds.c:71
 #, c-format
 msgid "You can't talk for %d more seconds\n"
 msgstr "Vous ne pouvez pas parler pendant encore %d secondes\n"
 
-#: game/g_cmds.c:80
+#: game/g_cmds.c:79
 #, c-format
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr "Protection flood : vous ne pouvez plus parler pendant %d secondes.\n"
@@ -16286,27 +16328,28 @@ msgstr ""
 "Le soldat est étourdi!\n"
 "L'ennemi a utilisé une grenade étourdissante!\n"
 
-#: game/g_combat.c:626
+#: game/g_combat.c:625
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Ne peut faire l'action - lancé impossible!\n"
 
-#: game/g_combat.c:1090
-msgid "Can't perform action - object not activateable!\n"
+#: game/g_combat.c:1088
+#, fuzzy
+msgid "Can't perform action - object not activatable!\n"
 msgstr "Ne peut faire l'action - l'objet ne peut être actionné !\n"
 
-#: game/g_combat.c:1108
+#: game/g_combat.c:1106
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "Ne peut faire l'action - Cette arme ne peut être utilisée à une main !\n"
 
-#: game/g_combat.c:1115
+#: game/g_combat.c:1113
 msgid "Can't perform action - no ammo!\n"
 msgstr "Ne peut faire l'action - plus de munitions!\n"
 
-#: game/g_combat.c:1123
+#: game/g_combat.c:1121
 msgid "Can't perform action - target out of range!\n"
 msgstr "Ne peut faire l'action - la cible est hors de portée !\n"
 
-#: game/g_combat.c:1169
+#: game/g_combat.c:1167
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Ne peut faire l'action - pas assez de munitions!\n"
 
@@ -16341,6 +16384,21 @@ msgstr "%s est fou de rage !\n"
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s est secoué.\n"
+
+#: game/g_reaction.c:149
+#, fuzzy
+msgid "No reaction fire enabled weapon.\n"
+msgstr "Pas de tir réflexe"
+
+#: game/g_reaction.c:154
+#, fuzzy
+msgid "No fire mode selected for reaction fire.\n"
+msgstr "Cochez pour utiliser ce mode de tir en tir réflexe"
+
+#: game/g_reaction.c:159
+#, fuzzy
+msgid "Not enough TUs left for activating reaction fire.\n"
+msgstr "Plus assez d'UT pour recharger l'arme."
 
 #: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
@@ -16393,6 +16451,15 @@ msgstr "Libre"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "En train de jouer"
+
+#~ msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
+#~ msgstr "Utilisez la vue à la première personne (changez avec la touche [v]) pour vérifier qu'un mur ne bloque pas la ligne de tir lors d'un déplacement."
+
+#~ msgid "Custom"
+#~ msgstr "Personnalisé"
+
+#~ msgid "Can't activate reaction fire.\n"
+#~ msgstr "Impossible d'activer le tir de réaction.\n"
 
 #~ msgid "Reselect the current soldier"
 #~ msgstr "Sélectionner le soldat à nouveau"

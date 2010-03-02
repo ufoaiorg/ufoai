@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO:AI\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-01 20:20+0100\n"
+"POT-Creation-Date: 2010-03-02 21:32+0100\n"
 "PO-Revision-Date: 2010-03-01 18:02+0100\n"
 "Last-Translator: Dušan Hokův <dusan@mirc.cz>\n"
 "Language-Team: UFO:AI team <cs@li.org>\n"
@@ -9489,11 +9489,17 @@ msgid "Select your team"
 msgstr "Vyberte váš tým"
 
 #: ../base/ufos/seq_tutorials.ufo:919
-msgid "Select UFO to secure \\n(if possible for current map)"
-msgstr ""
+#, fuzzy
+msgid ""
+"Select UFO to secure \n"
+"(if possible for current map)"
+msgstr "Vyberte transportér \\n(pokud je možné pro zvolenou mapu)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
-msgid "Select dropship \\n(if possible for current map)"
+#, fuzzy
+msgid ""
+"Select dropship\n"
+"(if possible for current map)"
 msgstr "Vyberte transportér \\n(pokud je možné pro zvolenou mapu)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
@@ -9544,11 +9550,11 @@ msgstr "Taman"
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:170
+#: ../base/ufos/team_aliens.ufo:171
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:207
+#: ../base/ufos/team_aliens.ufo:208
 msgid "Bloodspider"
 msgstr "Bloodspider"
 
@@ -11360,15 +11366,25 @@ msgid "Notify types:"
 msgstr "Druhy upozornění:"
 
 #: ../base/ufos/ui/messageoptions.ufo:76
-msgid "Enable or disable messages being displayed for all notification types.\\nLeft click enables all notifications, right click disables."
+#, fuzzy
+msgid ""
+"Enable or disable messages being displayed for all notification types.\n"
+"Left click enables all notifications, right click disables."
 msgstr "Povolí nebo zakáže aby byla zobrazena zpráva pro všechny druhy upozornění.\\nLevé tlačítko povoluje všechny upozornění, pravé zakazuje."
 
 #: ../base/ufos/ui/messageoptions.ufo:85
-msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
+#, fuzzy
+msgid ""
+"Enable or disable pause for all notification types\n"
+"Pause can't be enabled without notification\n"
+"Left click enables pause for all, right click disables."
 msgstr "Povolí nebo zakáže pauzu pro všechny druhy upozornění.\\nPauza nemůže být povolena bez upozornění.\\nLevé tlačítko povoluje pauzu pro všechno, pravé zakazuje."
 
 #: ../base/ufos/ui/messageoptions.ufo:94
-msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
+#, fuzzy
+msgid ""
+"Enable or disable sounds being played for all notification types.\n"
+"Left click enables all sounds, right click disables."
 msgstr "Povolí nebo zakáže aby byl přehrán zvuk pro všechny druhy upozornění.\\nLevé tlačítko povoluje všechny zvuky, pravé zakazuje."
 
 #: ../base/ufos/ui/multiplayer.ufo:37 ../base/ufos/ui/multiplayer.ufo:155
@@ -12764,44 +12780,44 @@ msgstr "Nejste na tahu\n"
 msgid "You cannot reload this unknown item.\n"
 msgstr "Tento neznámý předmět nemůžete nabít.\n"
 
-#: client/battlescape/cl_actor.c:1792
+#: client/battlescape/cl_actor.c:1799
 msgid "Unknown alien race"
 msgstr "Neznámá cizácká rasa"
 
-#: client/battlescape/cl_actor.c:2457
+#: client/battlescape/cl_actor.c:2464
 msgid "Toggle to next actor"
 msgstr "Přepnout na další postavu"
 
-#: client/battlescape/cl_actor.c:2458
+#: client/battlescape/cl_actor.c:2465
 msgid "Select an actor from list"
 msgstr "Vybrat postavu ze seznamu"
 
 # ???
-#: client/battlescape/cl_actor.c:2459
+#: client/battlescape/cl_actor.c:2466
 msgid "Update an actor"
 msgstr "Aktualizovat postavu"
 
-#: client/battlescape/cl_actor.c:2461
+#: client/battlescape/cl_actor.c:2468
 msgid "Toggle stand/crounch"
 msgstr "Přepnout přikrčit/postavit se"
 
-#: client/battlescape/cl_actor.c:2462
+#: client/battlescape/cl_actor.c:2469
 msgid "Toggle the headgear"
 msgstr "Přepnout přilbu"
 
-#: client/battlescape/cl_actor.c:2463
+#: client/battlescape/cl_actor.c:2470
 msgid "Opens or closes a door"
 msgstr "Otevřít nebo zavřít dveře"
 
-#: client/battlescape/cl_actor.c:2464
+#: client/battlescape/cl_actor.c:2471
 msgid "Confirm the current action"
 msgstr "Potvrdit aktuální akci"
 
-#: client/battlescape/cl_actor.c:2465
+#: client/battlescape/cl_actor.c:2472
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Přepnout na dalšího zvolenou postavou viděného cizáka."
 
-#: client/battlescape/cl_actor.c:2467
+#: client/battlescape/cl_actor.c:2474
 msgid "Toggle to next alien"
 msgstr "Přepnout na dalšího cizáka"
 
@@ -13221,8 +13237,8 @@ msgstr "Nový %s je připraven na základně %s."
 #: client/campaign/cp_aliencont.c:191 client/campaign/cp_aliencont.c:223
 #: client/campaign/cp_aliencont.c:242 client/campaign/cp_aliencont.c:252
 #: client/campaign/cp_base.c:868 client/campaign/cp_base.c:1442
-#: client/campaign/cp_base.c:2583 client/campaign/cp_base.c:2588
-#: client/campaign/cp_base.c:3272 client/campaign/cp_base_callbacks.c:71
+#: client/campaign/cp_base.c:2578 client/campaign/cp_base.c:2583
+#: client/campaign/cp_base.c:3267 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
 #: client/campaign/cp_base_callbacks.c:588
@@ -13568,11 +13584,11 @@ msgstr "Provozní náklady:\t%i k\n"
 msgid "Needs:\t%s\n"
 msgstr "Potřebuje:\t%s\n"
 
-#: client/campaign/cp_base.c:2322
+#: client/campaign/cp_base.c:2317
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
-#: client/campaign/cp_base.c:2322 client/campaign/cp_base.c:2324
+#: client/campaign/cp_base.c:2317 client/campaign/cp_base.c:2319
 #: client/campaign/cp_market_callbacks.c:596
 #: client/campaign/cp_market_callbacks.c:601
 #: client/campaign/cp_market_callbacks.c:707
@@ -13581,25 +13597,25 @@ msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit ne
 msgid "Note"
 msgstr "Poznámka"
 
-#: client/campaign/cp_base.c:2324
+#: client/campaign/cp_base.c:2319
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit\n"
 
-#: client/campaign/cp_base.c:2478
+#: client/campaign/cp_base.c:2473
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "Dokončena stavba budovy %s na základně %s."
 
-#: client/campaign/cp_base.c:2479
+#: client/campaign/cp_base.c:2474
 msgid "Building finished"
 msgstr "Stavba dokončena"
 
-#: client/campaign/cp_base.c:2581
+#: client/campaign/cp_base.c:2576
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "Prodáním položky '%s' jste získal %i kreditů."
 
-#: client/campaign/cp_base.c:2582
+#: client/campaign/cp_base.c:2577
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -13607,12 +13623,12 @@ msgstr[0] "%i shromážděného předmětu"
 msgstr[1] "%i shromážděných předmětů"
 msgstr[2] "%i shromážděných předmětů"
 
-#: client/campaign/cp_base.c:2586
+#: client/campaign/cp_base.c:2581
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "Nedostatek skladovacího prostoru na základně %s. %s"
 
-#: client/campaign/cp_base.c:2587
+#: client/campaign/cp_base.c:2582
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
@@ -13620,7 +13636,7 @@ msgstr[0] "%i předmět byl prodán za %i kreditů."
 msgstr[1] "%i předměty byly prodány za %i kreditů."
 msgstr[2] "%i předmětů bylo prodáno za %i kreditů."
 
-#: client/campaign/cp_base.c:3270
+#: client/campaign/cp_base.c:3265
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
