@@ -1,5 +1,6 @@
 ./client/battlescape/cl_actor.c
 ./client/battlescape/cl_hud.c
+./client/battlescape/cl_hud_callbacks.c
 ./client/battlescape/cl_view.c
 ./client/battlescape/events/e_server.c
 ./client/battlescape/events/event/actor/e_event_actorappear.c
@@ -76,5 +77,6 @@
 ./game/g_combat.c
 ./game/g_mission.c
 ./game/g_morale.c
+./game/g_reaction.c
 ./game/g_round.c
 ./po/OTHER_STRINGS
