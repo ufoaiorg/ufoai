@@ -159,7 +159,7 @@ window althud extends ahud
 		
 		confunc numonteam
 		{
-			*cvar:tmp = ( <1> )
+			*cvar:tmp = "<1>"
 			*cvar:i = 1
 			while ( *cvar:i < *cvar:tmp ) {
 				*floor.bar_teambox<cvar:i>@invis = false  *floor.bar_teamsep<cvar:i>@invis = false  *floor.head<cvar:i>@invis = false

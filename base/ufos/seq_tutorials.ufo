@@ -937,7 +937,7 @@ sequence tut_skirmish
  
 	2dobj _text
 	{
-		text	"_Select dropship \n(if possible for current map)"
+		text	"_Select dropship\n(if possible for current map)"
 		pos	"205 380"
 		size	"290 250"
 		align	uc

@@ -407,7 +407,7 @@ window uforecovery
 	}
 
 	confunc btnatsel {
-		*cvar:tmp = <1>
+		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "enable" ) {
 			*sell_panel.bt_natsel@disabled = false
 		} else {
@@ -421,7 +421,7 @@ window uforecovery
 	}
 
 	confunc btbasesel {
-		*cvar:tmp = <1>
+		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "enable" ) {
 			*store_panel.bt_basesel@disabled = false
 		} else {

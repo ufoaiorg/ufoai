@@ -525,7 +525,7 @@ window production
 	// ==================
 
 	confunc amountsetter {
-		*cvar:tmp = <1>
+		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "disable" ) {
 			*prod_change@disabled = true
 			*prod_change_10@disabled = true
