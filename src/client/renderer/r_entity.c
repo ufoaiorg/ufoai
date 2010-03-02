@@ -283,10 +283,12 @@ static void R_DrawEntityEffects (void)
 		glMultMatrixf(e->transform.matrix);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-			if (e->flags & RF_SHADOW)
+			if (e->flags & RF_SHADOW) {
 				R_BindTexture(shadow->texnum);
-			else
-				R_BindTexture(blood[e->state % MAX_DEATH]->texnum);
+			} else {
+				assert(e->deathTexture);
+				R_BindTexture(e->deathTexture->texnum);
+			}
 
 			glBegin(GL_QUADS);
 			glTexCoord2f(0.0, 1.0);

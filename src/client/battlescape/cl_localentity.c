@@ -1280,7 +1280,6 @@ void LE_AddToScene (void)
 			memset(&ent, 0, sizeof(ent));
 
 			ent.alpha = le->alpha;
-			ent.state = le->state;
 
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;

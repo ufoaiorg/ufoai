@@ -481,9 +481,8 @@ typedef struct teamDef_s {
 							 * bloodspider melee attack firedefitions */
 
 	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit.
-								* @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
-								* @todo "hitbody" will not spawn blood in the future. */
+	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
+	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
 } teamDef_t;
 
 /** @brief Reject messages that are send to the client from the game module */

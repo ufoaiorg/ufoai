@@ -2470,6 +2470,7 @@ static const value_t teamDefValues[] = {
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
+	{"death_texture", V_STRING, offsetof(teamDef_t, deathTextureName), 0},
 	{"race", V_RACE, offsetof(teamDef_t, race), MEMBER_SIZEOF(teamDef_t, race)},
 	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
 
@@ -2561,6 +2562,12 @@ static void Com_ParseTeam (const char *name, const char **text)
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
 	} while (*text);
+
+	if (td->deathTextureName[0] == '\0') {
+		const int i = rand() % MAX_DEATH;
+		Q_strncpyz(td->deathTextureName, va("pics/sfx/blood_%i", i), sizeof(td->deathTextureName));
+		Com_DPrintf(DEBUG_CLIENT, "Using random blood for teamdef: '%s' (%i)\n", td->id, i);
+	}
 }
 
 /*

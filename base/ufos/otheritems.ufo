@@ -157,7 +157,7 @@ item bloodspider_weapon
 			skill		close
 			projtl		null
 			impact		null
-			hitbody		blood
+			hitbody		null
 			firesnd		weapons/bloodspider
 			speed		0
 			range		2

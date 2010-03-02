@@ -117,7 +117,6 @@ image_t *R_FindImage(const char *pname, imagetype_t type);
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
 extern image_t *shadow;	/**< draw this when actor is alive */
-extern image_t *blood[MAX_DEATH]; /**< draw this when actor is dead */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;
 extern image_t *r_dayandnightTexture;

@@ -36,7 +36,6 @@ extern const float STANDARD_3D_ZOOM;
 static float lastQ = 0.0f;
 
 image_t *shadow;
-image_t *blood[MAX_DEATH];
 
 /* console font */
 static image_t *draw_chars;
@@ -52,11 +51,6 @@ void R_DrawInitLocal (void)
 	shadow = R_FindImage("pics/sfx/shadow", it_effect);
 	if (shadow == r_noTexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
-	for (i = 0; i < MAX_DEATH; i++) {
-		blood[i] = R_FindImage(va("pics/sfx/blood_%i", i), it_effect);
-		if (blood[i] == r_noTexture)
-			Com_Printf("Could not find blood_%i image in game pics/sfx directory!\n", i);
-	}
 
 	draw_chars = R_FindImage("pics/conchars", it_chars);
 	if (draw_chars == r_noTexture)

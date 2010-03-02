@@ -1528,6 +1528,13 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		}
 	}
 
+	if (ent->flags & RF_BLOOD) {
+		const char *deathTextureName;
+		assert(le->teamDef != NULL);
+		deathTextureName = le->teamDef->deathTextureName;
+		ent->deathTexture = R_FindImage(deathTextureName, it_effect);
+	}
+
 	return qtrue;
 }
 
