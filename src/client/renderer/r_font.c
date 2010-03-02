@@ -394,7 +394,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 		qboolean truncated = qfalse;
 
 		/* find mandatory break */
-		len = strcspn(&buf[pos], "\n\\");
+		len = strcspn(&buf[pos], "\n");
 
 		/* tidy up broken UTF-8 at end of line which may have been
 		 * truncated by caller by use of functions like Q_strncpyz */
@@ -428,7 +428,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 			} else {
 				truncated = (method == LONGLINES_PRETTYCHOP);
 				len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, truncated, &width);
-				skip = strcspn(&buf[pos + len], "\n\\\\");
+				skip = strcspn(&buf[pos + len], "\n");
 			}
 		}
 		if (width > 0) {
