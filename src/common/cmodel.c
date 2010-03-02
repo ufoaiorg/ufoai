@@ -1974,14 +1974,13 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
- * @param[in] distance to calculate move-information for - currently unused
+ * @param[in] distance The maximum TUs away from 'from' to calculate move-information for
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMark
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
- * @todo Use the distance value to optimize things
  */
 void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
@@ -2024,6 +2023,11 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 		if pos = goal
 			return pos
 		*/
+		/**< if reaching that square already took too many TUs,
+		 * don't bother to reach new squares *from* there. */
+		if (RT_AREA(path, pos[0], pos[1], pos[2], crouchingState) >= distance)
+			continue;
+
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
 			Grid_MoveMark(map, actorSize, path, pos, epos[3], dir, &pqueue);
 		}
