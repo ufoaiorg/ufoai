@@ -20,12 +20,12 @@ SDL_MIXER_VERSION=1.2.8
 SDL_TTF_VERSION=2.0.9
 SDL_IMAGE_VERSION=1.2.6
 CURL_VERSION=7.16.4
-#CURL_VERSION=7.17.1
+#//	CURL_VERSION=7.17.1
 CUNIT_VERSION=2.1-0
 
 # Use an absolute path here
 TEMP_DIR=/tmp/tmp_codeblocks
-TARGET_DIR=${TEMP_DIR}/codeblocks
+TARGET_DIR=${TEMP_DIR}/UFOAIwin32BUILDenv
 DOWNLOAD_DIR=${TEMP_DIR}/downloads
 EXTRACT_DIR=${DOWNLOAD_DIR}/extract
 MINGW_DIR=${TARGET_DIR}/MinGW
@@ -39,17 +39,63 @@ WGET=$(which wget)
 UNZIP=$(which unzip)
 TAR=$(which tar)
 sfx7ZIP=$(which 7z.sfx)
+environment_ver=0.2.0
 
 if [ -x "${sfx7ZIP}" ]; then
-	ARCHIVE_NAME=codeblocks.exe
+	ARCHIVE_NAME=UfoAI_win32_build_environment_${environment_ver}.exe
 else
-	ARCHIVE_NAME=codeblocks.7z
+	ARCHIVE_NAME=UfoAI_win32_build_environment_${environment_ver}.7z
 fi
 
+export LC_ALL=C
 
+
+
+# Most packages are somewhat "fragmented" /include folders with subfolders .....
+# to find include folders the "header search and move/copy algo" start a search for it ( some packages store headers inside of libs too )
+# but on one gcc package the include folder inside off libs should'nt be moved
+# this will exclude files or folders from this search
+declare exclude_from_find_result="-not -path \"*/lib/gcc/mingw32/*\""
+
+# just a var to store some stdout output
 declare what_do_we_try
 
-export LC_ALL=C
+# hold the folder structure of mingw/include for the "header search and move/copy algo"
+declare	include_array=(	"AL"\
+			"atk"\
+			"CUnit"\
+			"curl"\
+			"ddk"\
+			"fontconfig"\
+			"freetype2"\
+			"gail"\
+			"gdk"\
+			"gdk-pixbuf"\
+			"gio"\
+			"GL"\
+			"glib"\
+			"gobject"\
+			"gtk"\
+			"gtksourceview"\
+			"libgail-util"\
+			"libpng12"\
+			"libxml"\
+			"ncurses"\
+			"ogg"\
+			"pango"\
+			"SDL"\
+			"sys"\
+			"theora"\
+			"vorbis" )
+
+
+
+
+
+
+
+
+
 
 #######################################################
 # functions
@@ -61,23 +107,19 @@ function infooutput()
 	what_do_we_try="${1}"
 }
 
-function redecho() 
-{
+function redecho() {
 	echo -e "\033[1;31m${1}\033[0m"
 }
 
-function whiteecho() 
-{
+function whiteecho() {
 	echo -e "\033[1;37m${1}\033[0m"
 }
 
-function magentaecho() 
-{
+function magentaecho() {
 	echo -e "\033[1;35m${1}\033[0m"
 }
 
-function greenecho() 
-{
+function greenecho() {
 	echo -e "\033[1;32m${1}\033[0m"
 }
 
@@ -99,7 +141,15 @@ function check_error()
 	fi
 }
 
-function create()
+
+
+
+
+
+
+
+
+create()
 {
 	mkdir -p "${TEMP_DIR}"
 	rm -rf "${TARGET_DIR}"
@@ -114,6 +164,8 @@ function create()
 	start_downloads
 	
 	correctme
+	
+	echo -n $environment_ver>"${MINGW_DIR}/bin/WINenvVER"
 
 	echo -n "Used space in ${CODEBLOCKS_DIR}: "
 	echo $(du -h -c ${CODEBLOCKS_DIR} | tail -1)
@@ -135,7 +187,7 @@ function create()
 	echo "finished creating $(du -h ~/${ARCHIVE_NAME})"
 }
 
-function download() 
+download() 
 {
 	mkdir -p "${TEMP_DIR}"
 	mkdir -p "${TARGET_DIR}"
@@ -174,8 +226,8 @@ function download_archive()
 function extract()
 {
 	infooutput "test for extraction ${1}"
-	
-	rm -rf "${DOWNLOAD_DIR}/extract"
+
+	rm -rf "${EXTRACT_DIR}"
 	${UN7ZIP} l "${DOWNLOAD_DIR}/${1}" || failure "${1} cant be extracted" "$what_do_we_try"
 	greenecho "a 7z extractable archive"
 	
@@ -194,7 +246,7 @@ function extract()
 		greenecho "$isTAR extracted"
 	fi
 	
-	
+
 	if [ $(echo ${1} | grep -i -c -e "^codeblocks" -e "^7zip" -e "^NSIS.zip$" -e "^rxvt.7z$" -e "^make_UfoAI_win32.7z$") -eq 0 ] ;then
 		infooutput "try to find usable directories"
 
@@ -203,15 +255,99 @@ function extract()
 			local find_output=$(find "${EXTRACT_DIR}" -maxdepth ${a} -type d -iname "bin" -o -iname "contrib" -o -iname "doc" -o -iname "etc" -o -iname "home" -o -iname "include" -o -iname "info" -o -iname "lib" -o -iname "libexec" -o -iname "man" -o -iname "manifest" -o -iname "mingw32" -o -iname "share")
 			if [ -n "$find_output" ] ;then
 				greenecho "found usable directories"
-				infooutput "move usable directories"
 
+
+
+
+
+
+
+
+				# header search and move/copy algo
+
+				if [ -d "${EXTRACT_DIR}/include" ] ;then	# if there is a ${EXTRACT_DIR}/include folder
+					local find_include=$(find "${EXTRACT_DIR}" -iname "include" -type d )	# search for include subfolders; /libs/glib-2.0/include
+					if [ -n "$find_include" ] ;then
+						local -a find_include_array
+						find_include_array=(`echo -e "$find_include" | tr '\n' ' '`)
+						for find_include_array_element in ${find_include_array[@]}
+						do
+							infooutput "found include folder $find_include_array_element"
+							
+							local find_include_subdirs=$(eval "find "$find_include_array_element" $exclude_from_find_result -iname "*.h" -type f -exec dirname {} \; | sort | uniq") # look for header files inside the include folder, but exclude things from var exclude_from_find_result
+							if [ -n "$find_include_subdirs" ] ;then				
+								local -a find_include_subdirs_array
+								find_include_subdirs_array=(`echo -e "$find_include_subdirs" | tr '\n' ' '`)
+								
+								for find_include_subdirs_array_element in ${find_include_subdirs_array[@]}
+								do
+									infooutput "found include subdirs $find_include_subdirs_array_element"
+									
+									if [ "$find_include_subdirs_array_element" != "${EXTRACT_DIR}/include" ] ;then	# if the header files are not inside of ..../include ; in that case we dont need to move things
+										if [ -d "$find_include_subdirs_array_element" ] ;then
+											if [ "$find_include_subdirs_array_element" = "$find_include_array_element" ] ;then	# if the headers are inside of /libs/glib-2.0/include ,and not /include/glib-2.0/gtk
+												infooutput "cp -vR \"$find_include_subdirs_array_element/\"* \"${EXTRACT_DIR}/include\""
+											
+												cp -vR "$find_include_subdirs_array_element/"* "${EXTRACT_DIR}/include" || failure "unable to move $find_include_subdirs_array_element" "$what_do_we_try"
+												rm -rf "$find_include_subdirs_array_element"
+												find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
+												
+												greenecho "\"$find_include_subdirs_array_element\" moved"
+											else
+												for (( i=0; i<${#include_array[@]}; i++ )) #include_array_element in ${include_array[@]} # hold dirs that must be at mingw/include
+												do
+										whiteecho "${i} ${include_array[${i}]}$"
+													if [ $( echo $find_include_subdirs_array_element | grep -ice "${include_array[${i}]}$" ) -gt 0 ] ;then # if the subfolder inside of /somwhere/include must stay at mingw/include
+														if [ $(readlink -f "$find_include_subdirs_array_element/..") != "${EXTRACT_DIR}/include" ] ;then # to be shure the directory is'nt copied on itself
+															infooutput "mv -vf \"$find_include_subdirs_array_element\" \"${EXTRACT_DIR}/include\""
+							
+															mv -vf "$find_include_subdirs_array_element" "${EXTRACT_DIR}/include" || failure "unable to move $find_include_subdirs_array_element" "$what_do_we_try"
+															rm -rf "$find_include_subdirs_array_element"
+															find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
+															
+															greenecho "\"$find_include_subdirs_array_element\" moved"
+														fi
+														break
+													fi
+													if [ $(((i+1))) -eq ${#include_array[@]} ] ;then	# if the folder is not part of mingw/include like /include/cairo then move all things from that folder at mingw/include
+														infooutput "mv -vf \"$find_include_subdirs_array_element/\"* \"${EXTRACT_DIR}/include\""
+						
+														mv -vf "$find_include_subdirs_array_element/"* "${EXTRACT_DIR}/include" || failure "unable to move $find_include_subdirs_array_element" "$what_do_we_try"
+														rm -rf "$find_include_subdirs_array_element"
+														find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
+														
+														greenecho "\"$find_include_subdirs_array_element/\"* moved"
+													fi
+												done
+											fi
+										fi
+									else
+										break
+									fi
+								done
+							fi
+						done
+					fi
+					find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
+				fi
+				# END header search and move/copy algo
+				
+				
+				
+				
+				
+				
+				infooutput "copy usable directories"
+								
 				local -a array
 				array=(`echo -e "$find_output" | tr '\n' ' '`) 
 
 				for s in ${array[@]}
-				do 
-					cp -v -R "$s" "${MINGW_DIR}" || failure "unable to move $line" "$what_do_we_try"
-					greenecho "$s moved"
+				do
+					if [ -d "$s" ] ;then
+						cp -v -R "$s" "${MINGW_DIR}" || failure "unable to copy $s" "$what_do_we_try"
+						greenecho "$s copied"
+					fi
 				done
 				break
 			fi
@@ -223,71 +359,72 @@ function extract()
 		infooutput "found codeblocks or 7zip or NSIS or rxvt archive"
 		
 		if [ $(echo ${1} | grep -i -c -e "^codeblocks") -gt 0 ] ;then
-			infooutput "try to move codeblocks files"
+			infooutput "try to copy codeblocks files"
 			
-			cp -v -R "${EXTRACT_DIR}/"* "${CB_DIR}" || failure "unable to move codeblocks files" "$what_do_we_try"
-			greenecho "codeblocks moved"
+			cp -v -R "${EXTRACT_DIR}/"* "${CB_DIR}" || failure "unable to copy codeblocks files" "$what_do_we_try"
+			greenecho "codeblocks copied"
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^7zip") -gt 0 ] ;then
-			infooutput "try to move 7zip files"
+			infooutput "try to copy 7zip files"
 			
 			if [ -e "${EXTRACT_DIR}/7za.exe" ] ;then
-				cp -v -R "${EXTRACT_DIR}/7za.exe" "${MINGW_DIR}/bin" || failure "unable to move 7za.exe" "$what_do_we_try"
-				greenecho "7za.exe moved"
+				cp -v -R "${EXTRACT_DIR}/7za.exe" "${MINGW_DIR}/bin" || failure "unable to copy 7za.exe" "$what_do_we_try"
+				greenecho "7za.exe copied"
 			else
 				failure "unable to find 7za.exe" "$what_do_we_try"
 			fi
 #			if [ -e "${EXTRACT_DIR}/7zS.sfx" ] ;then
-#				cp -v -R "${EXTRACT_DIR}/7zS.sfx" "${MINGW_DIR}/bin" || failure "unable to move 7zS.sfx" "$what_do_we_try"
-#				greenecho "7zS.sfx moved"
+#				cp -v -R "${EXTRACT_DIR}/7zS.sfx" "${MINGW_DIR}/bin" || failure "unable to copy 7zS.sfx" "$what_do_we_try"
+#				greenecho "7zS.sfx copied"
 #			else
 #				failure "unable to find 7zS.sfx" "$what_do_we_try"
 #			fi
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^NSIS.zip$") -gt 0 ] ;then
-			infooutput "try to move NSIS files"
+			infooutput "try to copy NSIS files"
 			
 			local makenspath=$(find "${EXTRACT_DIR}" -iname "makensisw.exe" -type f | sed 's/makensisw.exe//gI')
 			if [ -n "$makenspath" ] ;then
-				cp -v -R "$makenspath"* "${NSIS_DIR}" || failure "unable to move NSIS files" "$what_do_we_try"
-				greenecho "NSIS moved"
+				cp -v -R "$makenspath"* "${NSIS_DIR}" || failure "unable to copy NSIS files" "$what_do_we_try"
+				greenecho "NSIS copied"
 			else
 				failure "unable to find makensisw.exe" "$what_do_we_try"
 			fi
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^rxvt.7z$") -gt 0 ] ;then
-			infooutput "try to move rxvt files"
+			infooutput "try to copy rxvt files"
 			
-			cp -v -R "${EXTRACT_DIR}/"* "${MINGW_DIR}" || failure "unable to move rxvt files" "$what_do_we_try"
-			greenecho "rxvt moved"
+			cp -v -R "${EXTRACT_DIR}/"* "${MINGW_DIR}" || failure "unable to copy rxvt files" "$what_do_we_try"
+			greenecho "rxvt copied"
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^make_UfoAI_win32.7z$") -gt 0 ] ;then
-			infooutput "try to move make_UfoAI_win32 files"
+			infooutput "try to copy make_UfoAI_win32 files"
 			
-			cp -v -R "${EXTRACT_DIR}/"* "${CODEBLOCKS_DIR}" || failure "unable to move rxvt make_UfoAI_win32" "$what_do_we_try"
-			greenecho "make_UfoAI_win32 moved"
+			cp -v -R "${EXTRACT_DIR}/"* "${CODEBLOCKS_DIR}" || failure "unable to copy rxvt make_UfoAI_win32" "$what_do_we_try"
+			greenecho "make_UfoAI_win32 copied"
 		fi
 	fi
 	sleep 1
-#	rm -rf "${DOWNLOAD_DIR}/extract"
+#	rm -rf "${EXTRACT_DIR}"
 }
 
 function correctme()
 {
 	#here we do some correction for all possible things
-	
-	#libxml2
-	if [ -e "${MINGW_DIR}/include/libxml2/libxml" ] ;then
-		infooutput "try to move header for libxml2"
-	
-		mv -f -v "${MINGW_DIR}/include/libxml2/libxml" "${MINGW_DIR}/include" || failure "unable to move headers" "$what_do_we_try"
-		greenecho "headers moved"
-		rm -rf "${MINGW_DIR}/include/libxml2"
-	fi
+	infooutput "doing some corrections if necessary"
+
+	#glib-2.0
+#	if [ -f "${MINGW_DIR}/include/glib-2.0/glib.h" ] ;then
+#		infooutput "try to move header for glib-2.0"
+#	
+#		mv -f -v "${MINGW_DIR}/include/glib-2.0/"* "${MINGW_DIR}/include" || failure "unable to move headers" "$what_do_we_try"
+#		greenecho "headers moved"
+#		rm -rf "${MINGW_DIR}/include/glib-2.0"
+#	fi
 }
 
 function start_downloads()
-{		
+{
 	download_archive http://downloads.sourceforge.net/mingw/ binutils-2.20-1-mingw32-bin.tar.gz binutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ mingwrt-3.17-mingw32-dev.tar.gz mingwrt.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ w32api-3.14-mingw32-dev.tar.gz w32api.tar.gz
@@ -295,31 +432,22 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ gdb-7.0.50.20100202-mingw32-bin.tar.gz gdb.tar.gz
 #	download_archive http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ make-3.81-20090914-mingw32-bin.tar.gz make.tar.gz
-
 #	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 msys-bash.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ bash-3.1.17-2-msys-1.0.11-bin.tar.lzma msys-bash.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 msys-bzip2.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ bzip2-1.0.5-2-mingw32-bin.tar.gz msys-bzip2.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ libbz2-1.0.5-2-mingw32-dll-2.tar.gz libbz2-bzip2.tar.gz
-	
 #	download_archive http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz msys-tar.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ tar-1.22-1-msys-1.0.11-bin.tar.lzma msys-tar.tar.lzma
-	
 #	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-MSYS-1.0.11-snapshot.tar.bz2 msys-coreutils.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-2-msys-1.0.11-bin.tar.lzma msys-coreutils.tar.lzma
 	download_archive http://downloads.sourceforge.net/mingw/ coreutils-5.97-2-msys-1.0.11-ext.tar.lzma msys-coreutils-ext.tar.lzma
-
 #	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.3.0-MSYS-1.0.11-3-bin.tar.gz msys-findutils.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ findutils-4.4.2-1-msys-1.0.11-bin.tar.lzma msys-findutils.tar.lzma
 	download_archive http://downloads.sourceforge.net/mingw/ locate-4.4.2-1-msys-1.0.11-bin.tar.lzma msys-locate.tar.lzma
-
 #	download_archive http://downloads.sourceforge.net/mingw/ MSYS-1.0.11-20090120-dll.tar.gz msys.tar.gz
 #	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.11-20080826.tar.gz msys-core.tar.gz
 	download_archive http://downloads.sourceforge.net/mingw/ msysCORE-1.0.13-2-msys-1.0.13-bin.tar.lzma msys-core.tar.lzma
-
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-core.tar.gz gcc.tar.gz
-	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-g++.tar.gz g++.tar.gz
-	
 	download_archive http://downloads.sourceforge.net/mingw/ m4-1.4.13-1-msys-1.0.11-bin.tar.lzma m4.tar.lzma
 	download_archive http://downloads.sourceforge.net/mingw/ sed-4.2.1-1-msys-1.0.11-bin.tar.lzma sed.tar.lzma
 	download_archive http://downloads.sourceforge.net/mingw/ patch-2.5.9-1-msys-1.0.11-bin.tar.lzma patch.tar.lzma
@@ -335,19 +463,24 @@ function start_downloads()
 	download_archive http://downloads.sourceforge.net/mingw/ gawk-3.1.7-1-msys-1.0.11-bin.tar.lzma gawk.tar.lzma
 	download_archive http://downloads.sourceforge.net/mingw/ libiconv-1.13.1-1-msys-1.0.11-dev.tar.lzma libiconv-dev.tar.lzma
 	download_archive http://downloads.sourceforge.net/mingw/ libiconv-1.13.1-1-msys-1.0.11-bin.tar.lzma libiconv-bin.tar.lzma
-	
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-autoconf-2.59.tar.bz2 msys-autoconf.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ autoconf-2.61-MSYS-1.0.11-1.tar.bz2 msys-autoconf.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-automake-1.8.2.tar.bz2 msys-automake.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ automake-1.10-MSYS-1.0.11-1.tar.bz2 msys-automake.tar.bz2
 #	download_archive http://downloads.sourceforge.net/mingw/ msys-libtool-1.5.tar.bz2 msys-libtool.tar.bz2
 	download_archive http://downloads.sourceforge.net/mingw/ libtool1.5-1.5.25a-20070701-MSYS-1.0.11-1.tar.bz2 msys-libtool.tar.bz2
-#	download_archive http://downloads.sourceforge.net/mingw/ gettext-0.17-1-mingw32-dev.tar.lzma gettext.lzma
+#gnome	download_archive http://downloads.sourceforge.net/mingw/ gettext-0.17-1-mingw32-dev.tar.lzma gettext.lzma
+
+# TODO mingw64 support
+#	download_archive http://downloads.sourceforge.net/mingw-w64 mingw-w64-bin_x86_64-mingw_20100123_sezero.zip
+
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-core.tar.gz gcc.tar.gz
+	download_archive http://downloads.sourceforge.net/tdm-gcc/ gcc-4.4.1-tdm-2-g++.tar.gz g++.tar.gz
 
 	download_archive http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.5-1-lib.zip freetype.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
-#	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
-#	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
+#mingw	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
+#mingw	download_archive http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
 	download_archive http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-bin.zip libintl-bin.zip
 #	download_archive http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
@@ -382,9 +515,9 @@ function start_downloads()
 #	download_archive http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download_archive http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
 
-	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810_gcc441.7z codeblocks_gcc.7z
-	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc441.7z codeblocks_mingw.7z
-	download_archive http://download.berlios.de/codeblocks/ CB_20100227_rev6181_win32.7z codeblocks.7z
+	download_archive http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx2810.7z codeblocks_gcc.7z
+	download_archive http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
+	download_archive http://download.berlios.de/codeblocks/ CB_20100116_rev6088_win32.7z codeblocks.7z
 
 #	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.2-1_win32.zip glib.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.22/ glib_2.22.3-1_win32.zip glib.zip
@@ -396,10 +529,8 @@ function start_downloads()
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/gtksourceview/2.9/ gtksourceview-dev-2.9.3.zip gtksourceview-dev.zip
 #	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.26/ pango-dev_1.26.0-1_win32.zip pango-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.26/ pango-dev_1.26.1-1_win32.zip pango-dev.zip
-#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.28/ atk-dev_1.28.0-1_win32.zip atk-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.28/ atk-dev_1.28.0-1_win32.zip atk-dev.zip
-#	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-3_win32.zip cairo-dev.zip
-	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-2_win32.zip cairo-dev.zip
+	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.8-3_win32.zip cairo-dev.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-0.17-1.zip gettext-runtime.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-tools-0.17.zip gettext-tools.zip
 	download_archive http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ gettext-runtime-dev-0.17-1.zip gettext-runtime-dev.zip
@@ -427,9 +558,17 @@ function exitscript()
 	exit 2
 }
 
+
+
 #######################################################
 # don't change anything below here
 #######################################################
+
+
+
+
+
+
 
 if [ ! -x "${UN7ZIP}" ]; then
 	echo "you need 7zip installed to run this script"
@@ -441,6 +580,11 @@ if [ ! -x "${WGET}" ]; then
 	exit 1
 fi
 
+
+
+
+
+
 ACTION=${1:-help}
 
 if [ "$ACTION" == "create" ]; then
@@ -449,8 +593,8 @@ elif [ "$ACTION" == "download" ]; then
 	download
 elif [ "$ACTION" == "help" ]; then
 	echo "Valid parameters are:"
-	echo " - create   : creates the ${ARCHIVE_NAME} with the latest versions"
-	echo "              of the needed programs and libs"
+	echo " - create   : creates the ${ARCHIVE_NAME} with the"
+	echo "              latest versions of the needed programs and libs"
 	echo " - download : only performs the downloading"
 	echo " - clean    : removes the downloads and the temp dirs - but not"
 	echo "              the created archive file"
@@ -472,3 +616,49 @@ else
 	exit 1
 fi
 
+
+
+
+
+# changelog
+#	0.1.0 UfoAI devs
+#	0.2.0 Muton (based on codeblocks.sh rev. 28557)
+#		The script:
+#		will now use 7za only for extraction
+#		add everything needed to build UfoAI incl. NSIS and keep things separated; codeblock is codeblock, mingw is mingw
+#		added my script make_UfoAI_win32 too
+#		changed the way the script calls functions; I download and extract package by package
+#		made a lot of error checking
+#		header search and move/copy algo to move header files to the correct place (include_array)
+#		The package is now called UfoAI_win32_build_environment and the folder UFOAIwin32BUILDenv
+#		new
+#			added variable environment_ver, exclude_from_find_result, what_do_we_try, EXTRACT_DIR, NSIS_DIR, CB_DIR, sfx7ZIP
+#			added array include_array
+#			added function infooutput(), redecho(), whiteecho(), magentaecho(), greenecho(), extract(), correctme()
+#			added changelog
+#			store a txt file at "${MINGW_DIR}/bin/WINenvVER" containing the version of the last build
+#		changed
+#			changed variable ARCHIVE_NAME, UN7ZIP, TARGET_DIR
+#			changed function failure(), start_downloads(), create(), download(), download_archive(), 
+#			moved global vars topside
+#			removed function extract_ogg(), extract_openal(), extract_gtk(), extract_tools(), extract_sdl(), extract_libcurl(), extract_cunit(), extract_libs(), extract_mingw(), extract_codeblocks(), extract_archive_gz(), extract_archive_bz2(), extract_archive_zip(), extract_archive_7z(), extract_archive_tar7z(), 
+#		update package
+#			svn
+#			pango
+#			gtksourceview
+#			gtk+-dev
+#			glib-dev
+#			glib
+#			libpng
+#			libiconv
+#			gettext
+#			libtool
+#			automake
+#			autoconf
+#			msysCORE
+#			findutils
+#			coreutils
+#			tar
+#			bzip2
+#			bash
+#			make
