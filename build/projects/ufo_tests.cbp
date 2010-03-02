@@ -38,6 +38,9 @@
 					<Add library="gdi32" />
 					<Add library="curl" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
@@ -71,6 +74,9 @@
 					<Add library="wsock32" />
 					<Add library="gdi32" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\cb_check.cmd &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
