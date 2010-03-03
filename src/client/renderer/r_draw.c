@@ -46,8 +46,6 @@ static image_t *draw_chars;
  */
 void R_DrawInitLocal (void)
 {
-	int i;
-
 	shadow = R_FindImage("pics/sfx/shadow", it_effect);
 	if (shadow == r_noTexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
