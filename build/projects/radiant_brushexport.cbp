@@ -55,7 +55,7 @@
 					<Add library="intl" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\cb_check.cmd &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before="..\..\contrib\scripts\cb_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
 				</ExtraCommands>
 			</Target>
 			<Target title="linux">
