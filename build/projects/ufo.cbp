@@ -65,7 +65,7 @@
 					<Add library="ws2_32" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\cb_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
 					<Add after="..\..\contrib\scripts\compile_po.bat /ufoai" />
 				</ExtraCommands>
 			</Target>
