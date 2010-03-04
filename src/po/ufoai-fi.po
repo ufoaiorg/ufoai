@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-02 21:32+0100\n"
-"PO-Revision-Date: 2010-03-03 06:58+0200\n"
+"PO-Revision-Date: 2010-03-04 16:55+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -6464,7 +6464,7 @@ msgstr "Tuhoa rakennus"
 #: ../base/ufos/ui/geoscape.ufo:1510
 #: ../base/ufos/ui/main.ufo:305
 msgid "Close"
-msgstr "Lähi"
+msgstr "Sulje"
 
 #: ../base/ufos/ui/bases.ufo:13
 msgid "Back to geoscape"
@@ -12000,7 +12000,7 @@ msgid ""
 "Secured crashed %s (%.0f%%)\n"
 msgstr ""
 "\n"
-"Turvallinen syöksy %s (%.0f%%)\n"
+"%sn turvallinen syöksy (%.0f%%)\n"
 
 #: client/campaign/cp_ufo.c:133
 #, c-format
@@ -12511,7 +12511,7 @@ msgstr "aseessa on jäljellä ammuksia %s kpl\n"
 #: client/cl_inventory_callbacks.c:186
 #, c-format
 msgid "%s auxiliary equipment\n"
-msgstr "%s ylimääräista tarviketta\n"
+msgstr "%s ylimääräiset tarvikkeet\n"
 
 #: client/cl_inventory_callbacks.c:188
 #, c-format
