@@ -295,6 +295,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				/* search best target */
 				while ((check = G_EdictsGetNextLivingActor(check))) {
 					if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
+						if (!G_IsVisibleForTeam(check, ent->team))
+							continue;
 
 						/* don't shoot civilians in mp */
 						if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
@@ -303,8 +305,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 							continue;
 
-						/** @todo use the team visibility check here - they are using psi ;) */
-						/* check whether target is visible */
+						/* check how good the target is visible */
 						vis = G_ActorVis(ent->origin, check, qtrue);
 						if (vis == ACTOR_VIS_0)
 							continue;
@@ -578,6 +579,10 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 			continue;
 		if (!(G_IsAlien(check) || G_IsInsane(ent)))
 			continue;
+
+		if (!G_IsVisibleForTeam(check, ent->team))
+			continue;
+
 		if (G_ActorVis(check->origin, ent, qtrue) > 0.25)
 			reactionTrap += 25.0;
 	}
