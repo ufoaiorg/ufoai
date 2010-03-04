@@ -240,6 +240,29 @@ static qboolean G_VisShouldStop (const edict_t *ent)
 	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
 }
 
+static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int playerMask, const edict_t *ent)
+{
+	int status = 0;
+	const int visFlags = perish ? VT_PERISH : 0;
+	const int vis = G_TestVis(team, check, visFlags);
+
+	/* visibility has changed ... */
+	if (vis & VIS_CHANGE) {
+		/* swap the vis mask for the given team */
+		check->visflags ^= G_TeamToVisMask(team);
+		G_AppearPerishEvent(playerMask, vis & VIS_YES, check, ent);
+
+		/* ... to visible */
+		if (vis & VIS_YES) {
+			status |= VIS_APPEAR;
+			if (G_VisShouldStop(check))
+				status |= VIS_STOP;
+		} else
+			status |= VIS_PERISH;
+	}
+	return status;
+}
+
 /**
  * @brief Sets visible edict on player spawn
  * @sa G_ClientSpawn
@@ -254,19 +277,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* check if he's visible */
-		const int vis = G_TestVis(player->pers.team, ent, perish);
-
-		if (vis & VIS_CHANGE) {
-			ent->visflags ^= G_TeamToVisMask(player->pers.team);
-			G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent, NULL);
-
-			if (vis & VIS_YES) {
-				status |= VIS_APPEAR;
-				if (G_VisShouldStop(ent))
-					status |= VIS_STOP;
-			} else
-				status |= VIS_PERISH;
-		}
+		status |= G_DoTestVis(player->pers.team, ent, perish, G_PlayerToPM(player), NULL);
 	}
 
 	return status;
@@ -302,23 +313,7 @@ int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *en
 	/* check visibility */
 	if (check->inuse) {
 		/* check if he's visible */
-		const int visFlags = perish ? VT_PERISH : 0;
-		const int vis = G_TestVis(team, check, visFlags);
-
-		/* visibility has changed ... */
-		if (vis & VIS_CHANGE) {
-			/* swap the vis mask for the given team */
-			check->visflags ^= G_TeamToVisMask(team);
-			G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
-
-			/* ... to visible */
-			if (vis & VIS_YES) {
-				status |= VIS_APPEAR;
-				if (G_VisShouldStop(check))
-					status |= VIS_STOP;
-			} else
-				status |= VIS_PERISH;
-		}
+		status |= G_DoTestVis(team, check, perish, G_TeamToPM(team), ent);
 	}
 
 	return status;

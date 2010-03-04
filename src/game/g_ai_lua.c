@@ -865,13 +865,13 @@ static int AIL_positionhide (lua_State *L)
 				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 					continue;
 
-				/* visibility */
-				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
-				if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
-					continue;
-
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
+					/* visibility */
+					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
+						continue;
+
 					VectorCopy(to, bestPos);
 					min_tu = tu;
 				}
