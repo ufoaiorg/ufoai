@@ -58,13 +58,18 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 
 /**
  * @brief calculate how much check is "visible" from @c from
- * @param[in] full Perform a full check in different directions. If this is
- * @c false the actor is fully visible if one vis check returned @c true. With
- * @c true this function can also return a value != 0.0 and != 1.0.
  * @param[in] from The world coordinate to check from
  * @param[in] check The edict to check how good (or if at all) it is visible
+ * @param[in] full Perform a full check in different directions. If this is
+ * @c false the actor is fully visible if one vis check returned @c true. With
+ * @c true this function can also return a value != 0.0 and != 1.0. Try to only
+ * use @c true if you really need the full check. Full checks are of course
+ * more expensive.
  * @return a value between 0.0 and 1.0 which reflects the visibility from 0
  * to 100 percent
+ * @note This call isn't cheap - try to do this only if you really need the
+ * visibility check or the statement whether one particular actor see another
+ * particular actor.
  */
 float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 {

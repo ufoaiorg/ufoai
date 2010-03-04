@@ -799,9 +799,9 @@ static int AIL_positionshoot (lua_State *L)
 				tu = gi.MoveLength(gi.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
 				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 					continue;
-				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
-					/* Better spot (easier to get to). */
-					if (tu < min_tu) {
+				/* Better spot (easier to get to). */
+				if (tu < min_tu) {
+					if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}

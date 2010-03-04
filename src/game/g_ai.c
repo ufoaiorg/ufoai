@@ -134,7 +134,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			/* there is a visible enemy, don't use that door */
 			if (actorVis > ACTOR_VIS_0)
 				return qfalse;
-			}
+		}
 		}
 		break;
 	case TEAM_CIVILIAN:
