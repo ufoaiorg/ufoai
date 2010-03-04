@@ -163,15 +163,15 @@ float G_Vis (const int team, const edict_t *from, const edict_t *check, int flag
 	if (VectorCompare(from->pos, check->pos))
 		return ACTOR_VIS_100;
 
+	if (!G_IsVisibleOnBattlefield(check))
+		return ACTOR_VIS_0;
+
 	/* view distance check */
 	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
 		return ACTOR_VIS_0;
 
 	/* view frustum check */
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
-		return ACTOR_VIS_0;
-
-	if (!G_IsVisibleOnBattlefield(check))
 		return ACTOR_VIS_0;
 
 	/* get viewers eye height */

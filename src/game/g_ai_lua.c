@@ -793,15 +793,13 @@ static int AIL_positionshoot (lua_State *L)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
+				pos_t tu;
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
+				tu = gi.MoveLength(gi.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
+				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
+					continue;
 				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
-					const pos_t tu = gi.MoveLength(gi.pathingMap, to,
-							G_IsCrouched(ent) ? 1 : 0, qtrue);
-
-					if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
-						continue;
-
 					/* Better spot (easier to get to). */
 					if (tu < min_tu) {
 						VectorCopy(to, bestPos);

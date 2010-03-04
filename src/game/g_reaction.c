@@ -189,21 +189,24 @@ static qboolean G_CanReactionFire (const edict_t *ent, const edict_t *target)
 	if (!G_IsShaken(ent) && !(ent->state & STATE_REACTION))
 		return qfalse;
 
-	/* check in range and visible */
-	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
-		return qfalse;
-
-	actorVis = G_ActorVis(ent->origin, target, qtrue);
-	frustum = G_FrustumVis(ent, target->origin);
-	if (actorVis <= 0.2 || !frustum)
-		return qfalse;
-
 	/* If reaction fire is triggered by a friendly unit
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
 	if (G_IsCivilian(target) || target->team == ent->team)
 		if (!G_IsShaken(ent) || (float) ent->morale / mor_shaken->value > frand())
 			return qfalse;
+
+	/* check in range and visible */
+	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
+		return qfalse;
+
+	frustum = G_FrustumVis(ent, target->origin);
+	if (!frustum)
+		return qfalse;
+
+	actorVis = G_ActorVis(ent->origin, target, qtrue);
+	if (actorVis <= 0.2)
+		return qfalse;
 
 	/* okay do it then */
 	return qtrue;
