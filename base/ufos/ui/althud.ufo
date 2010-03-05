@@ -1072,7 +1072,7 @@ window althud extends ahud
 	confunc disable_stand    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = althud/buttons_althud1g }
 	confunc disable_crouch   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = althud/buttons_althud1g }
 
-	confunc deselect_headgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
+	confunc deselect_headgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1a }
 	confunc disable_headgear { *right.althud_bt_use_headgear@image = althud/buttons_althud1g }
 
 	// ==================
