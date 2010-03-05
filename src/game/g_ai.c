@@ -238,6 +238,7 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
 	}
 }
 
+
 /**
  * @sa AI_ActorThink
  * @todo fill z_align values
