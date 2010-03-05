@@ -371,6 +371,8 @@ equipment multiplayer_initial
 	item shotgun_ammo		25
 	item flamer				9
 	item flamer_ammo			13
+	item irgoggles			4
+	item medikit						3
 	item rpg				    9
 	item rpg_ammo			13
 //	rpg_incendiary_ammo	13
