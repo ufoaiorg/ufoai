@@ -868,7 +868,7 @@ static void G_GetStartingTeam (const player_t* player)
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
-static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
+edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
 {
 	edict_t *ent = NULL;
 

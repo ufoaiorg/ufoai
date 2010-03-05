@@ -1016,10 +1016,6 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 	gi.LinkEdict(ent);
 }
 
-#define MAX_SPAWNPOINTS		64
-static edict_t * spawnPoints[MAX_SPAWNPOINTS];
-
-
 /**
  * @brief Spawn civilians and aliens
  * @param[in] player
@@ -1028,23 +1024,12 @@ static edict_t * spawnPoints[MAX_SPAWNPOINTS];
  */
 static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 {
-	edict_t *ent = NULL;
 	equipDef_t *ed = &gi.csi->eds[0];
-	int i, j, numPoints, team;
+	int i, j, team;
 	char name[MAX_VAR];
 
 	/* search spawn points */
 	team = player->pers.team;
-	numPoints = 0;
-	while ((ent = G_EdictsGetNextInUse(ent)))
-		if (ent->type == ET_ACTORSPAWN && ent->team == team)
-			spawnPoints[numPoints++] = ent;
-
-	/* check spawn point number */
-	if (numPoints < numSpawn) {
-		gi.dprintf("Not enough spawn points for team %i\n", team);
-		numSpawn = numPoints;
-	}
 
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
@@ -1056,13 +1041,14 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ed = &gi.csi->eds[0];
 	}
 
+
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
-		assert(numPoints > 0);
-		ent = spawnPoints[rand() % numPoints];
-		/* select spawnpoint */
-		while (ent->type != ET_ACTORSPAWN)
-			ent = spawnPoints[rand() % numPoints];
+		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
+		if (!ent) {
+			gi.dprintf("Not enough spawn points for team %i\n", team);
+			break;
+		}
 
 		/* spawn */
 		level.num_spawned[team]++;

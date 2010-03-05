@@ -377,6 +377,7 @@ void G_EventReactionFireChange(const edict_t* ent);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
+edict_t *G_ClientGetFreeSpawnPoint(const player_t * player, int spawnType);
 qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
