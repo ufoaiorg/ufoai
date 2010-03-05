@@ -245,6 +245,8 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
+	/* We need a local table to calculate the hiding steps */
+	static pathing_t hidePathingTable;
 	edict_t *check = NULL;
 	int tu;
 	pos_t move;
@@ -419,7 +421,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, ent, to, crouchingState, HIDE_DIST);
+			G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
@@ -430,7 +432,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
-					const pos_t delta = gi.MoveLength(gi.pathingMap, ent->pos, crouchingState, qfalse);
+					const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
 					if (delta > tu || delta == ROUTING_NOT_REACHABLE)
 						continue;
 

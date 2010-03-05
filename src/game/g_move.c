@@ -85,13 +85,30 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
- * @param[in] distance The distance to calculate the move for.
+ * @param[in] distance The distance in TUs to calculate the move for.
+ * @param[in] movingActor The actor to calculate the move for
  * @sa G_BuildForbiddenList
  */
 void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
 	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, gi.pathingMap, from, crouchingState, distance,
+			forbiddenList, forbiddenListLength);
+}
+
+/**
+ * @brief Same as @c G_MoveCalc, except that it uses the pathing table passed as the first param
+ * @param[in] team The current team (see G_BuildForbiddenList)
+ * @param[in] from Position in the map to start the move-calculation from.
+ * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
+ * @param[in] distance The distance in TUs to calculate the move for.
+ * @param[in] movingActor The actor to calculate the move for
+ * @sa G_BuildForbiddenList
+ */
+void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
+{
+	G_BuildForbiddenList(team, movingActor);
+	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, pt, from, crouchingState, distance,
 			forbiddenList, forbiddenListLength);
 }
 
