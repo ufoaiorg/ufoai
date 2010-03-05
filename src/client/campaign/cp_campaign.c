@@ -420,10 +420,10 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 		}
 		/* One mission can only change nation happiness so much in either direction */
 		/* the happiness you can gain depends on the difficulty of the campaign */
-		if (delta_happiness < - HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier)
-			delta_happiness = - HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier;
-		else if (delta_happiness > HAPPINESS_MAX_MISSION_IMPACT + difficultyModifier)
-			delta_happiness = HAPPINESS_MAX_MISSION_IMPACT + difficultyModifier;
+		if (delta_happiness < - HAPPINESS_MAX_MISSION_IMPACT + difficultyModifier)
+			delta_happiness = - HAPPINESS_MAX_MISSION_IMPACT + difficultyModifier;
+		else if (delta_happiness > HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier)
+			delta_happiness = HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier;
 
 		/* update happiness */
 		NAT_SetHappiness(nation, nation->stats[0].happiness + delta_happiness);

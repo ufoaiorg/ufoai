@@ -92,7 +92,7 @@ struct storedUFO_s;
 #define HAPPINESS_ALIEN_MISSION_LOSS		-0.01
 #define HAPPINESS_UFO_SALE_GAIN				0.07
 #define HAPPINESS_UFO_SALE_LOSS				0.01
-#define HAPPINESS_MAX_MISSION_IMPACT		0.15
+#define HAPPINESS_MAX_MISSION_IMPACT		0.07
 
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	4
