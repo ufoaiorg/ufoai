@@ -205,6 +205,9 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t
 	containerIndex_t container;
 	invList_t *ic;
 
+	if (toContainer == NONE)
+		return -1;
+
 	assert(le);
 	assert(weapon);
 

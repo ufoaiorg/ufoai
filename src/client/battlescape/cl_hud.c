@@ -1207,13 +1207,14 @@ static void HUD_UpdateActor (le_t *actor)
 		containerIndex_t container;
 
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(actor)) {
-			invList = RIGHT(actor);
 			container = csi.idRight;
+			invList = RIGHT(actor);
 		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(actor)) {
+			container = NONE;
 			invList = HUD_GetLeftHandWeapon(actor, &container);
 		} else {
+			container = NONE;
 			invList = NULL;
-			container = 0;
 		}
 
 		if (invList && invList->item.t && invList->item.m && invList->item.t->reload) {
