@@ -248,6 +248,9 @@ static void G_CheckRFTrigger (edict_t *target)
 
 		/* queue a reaction fire to take place */
 		ent->reactionTarget = target;
+		/* An enemy entering the line of fire of a soldier on reaction
+		 * fire should have the opportunity to spend time equal to the
+		 * sum of these values. */
 		ent->reactionTUs = max(0, target->TU - (tus / 4.0));
 		ent->reactionNoDraw = qfalse;
 	}
@@ -359,13 +362,15 @@ static qboolean G_CheckRFResolution (const edict_t *target, qboolean mock)
 
 	/* check all possible shooters */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		if (!ent->reactionTarget)
-			continue;
-
-		/* check whether target has changed (i.e. the player is making a move with a different entity)
-		 * or whether target is out of time */
-		if (ent->reactionTarget != target || ent->reactionTarget->TU < ent->reactionTUs)
-			fired |= G_ResolveRF(ent, mock);
+		if (ent->reactionTarget) {
+			const int reactionTargetTU = ent->reactionTarget->TU;
+			const int reactionTU = ent->reactionTUs;
+			const qboolean timeout = reactionTargetTU < reactionTU;
+			/* check whether target has changed (i.e. the player is making a move with a
+			 * different entity) or whether target is out of time. */
+			if (ent->reactionTarget != target || timeout)
+				fired |= G_ResolveRF(ent, mock);
+		}
 	}
 	return fired;
 }
@@ -396,35 +401,39 @@ qboolean G_ReactToMove (edict_t *target, qboolean mock)
 void G_ReactToPreFire (const edict_t *target)
 {
 	edict_t *ent = NULL;
-	int entTUs, targTUs;
 
 	/* check all ents to see who wins and who loses a draw */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
+		int entTUs, targTUs;
+
 		if (!ent->reactionTarget)
 			continue;
+
+		/* if the entity has changed then resolve the reaction fire */
 		if (ent->reactionTarget != target) {
-			/* if the entity has changed then resolve the reaction fire */
 			G_ResolveRF(ent, qfalse);
 			continue;
 		}
+
 		/* check this ent hasn't already lost the draw */
 		if (ent->reactionNoDraw)
 			continue;
 
-		/* draw!! */
+		/* can't reaction fire if no TUs to fire */
 		entTUs = G_GetFiringTUsForItem(ent, target, RIGHT(ent));
 		if (entTUs < 0) {
-			/* can't reaction fire if no TUs to fire */
 			ent->reactionTarget = NULL;
 			continue;
 		}
 
-		targTUs = G_GetFiringTUsForItem(target, ent, RIGHT(ent));
 		/* see who won */
+		targTUs = G_GetFiringTUsForItem(target, ent, RIGHT(ent));
 		if (entTUs >= targTUs) {
 			/* target wins, so delay ent */
-			ent->reactionTUs = max(0, target->TU - (entTUs - targTUs)); /* target gets the difference in TUs */
-			ent->reactionNoDraw = qtrue; 								/* so ent can't lose the TU battle again */
+			/* target gets the difference in TUs */
+			ent->reactionTUs = max(0, target->TU - (entTUs - targTUs));
+			/* so ent can't lose the TU battle again */
+			ent->reactionNoDraw = qtrue;
 		} else {
 			/* ent wins so take the shot */
 			G_ResolveRF(ent, qfalse);
