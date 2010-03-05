@@ -882,6 +882,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	mxml_node_t *ccsNode;
 	mxml_node_t *node;
 	mxml_node_t *battleParamNode;
+	mxml_node_t *missions;
 	const char *name;
 	const char *missionId;
 	campaign_t *campaign;
@@ -954,112 +955,13 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	CP_UpdateXVIMapButton();
 
 	/* read missions */
-	for (node = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MISSION), i = 0; node;
-			node = mxml_GetNextNode(node, campaignNode, SAVE_CAMPAIGN_MISSION), i++) {
-		mission_t mission;
-		int ufoIdx;
-		qboolean defaultAssigned = qfalse;
-
-		memset(&mission, 0, sizeof(mission));
-		mission.idx = mxml_GetInt(node, SAVE_CAMPAIGN_MISSION_IDX, 0);
-		if (mission.idx <= 0) {
-			Com_Printf("mission has invalid or no index\n");
-			return qfalse;		
-		}
-		name = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
-		if (name && name[0] != '\0') {
-			mission.mapDef = Com_GetMapDefinitionByID(name);
-			if (!mission.mapDef) {
-				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
-				return qfalse;
-			}
-			mission.mapDef->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEFTIMES, 0);
-		} else
-			mission.mapDef = NULL;
-
-		Q_strncpyz(mission.id, mxml_GetString(node, SAVE_CAMPAIGN_ID), sizeof(mission.id));
-		mission.active = mxml_GetBool(node, SAVE_CAMPAIGN_ACTIVE, qfalse);
-		Q_strncpyz(mission.onwin, mxml_GetString(node, SAVE_CAMPAIGN_ONWIN), sizeof(mission.onwin));
-		Q_strncpyz(mission.onlose, mxml_GetString(node, SAVE_CAMPAIGN_ONLOSE), sizeof(mission.onlose));
-		mission.category = mxml_GetInt(node, SAVE_CAMPAIGN_CATEGORY, 0);
-		mission.stage = mxml_GetShort(node, SAVE_CAMPAIGN_STAGE, 0);
-
-		mission.initialOverallInterest = mxml_GetInt(node, SAVE_CAMPAIGN_INITIALOVERALLINTEREST, 0);
-		mission.initialIndividualInterest = mxml_GetInt(node, SAVE_CAMPAIGN_INITIALINDIVIDUALINTEREST, 0);
-
-		switch (mission.category) {
-		case INTERESTCATEGORY_BASE_ATTACK:
-			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
-				/* Load IDX of base under attack */
-				const int baseidx = mxml_GetInt(node, SAVE_CAMPAIGN_BASEINDEX, BYTES_NONE);
-				if (baseidx != BYTES_NONE) {
-					base_t *base = B_GetBaseByIDX(baseidx);
-					assert(base);
-					if (mission.stage == STAGE_BASE_ATTACK && base->baseStatus != BASE_UNDER_ATTACK)
-						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
-					mission.data = (void *) base;
-				} else
-					Com_Printf("......warning: Missing BaseIndex\n");
-			}
-			break;
-		case INTERESTCATEGORY_INTERCEPT:
-			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
-				const int installationIdx = mxml_GetInt(node, SAVE_CAMPAIGN_INSTALLATIONINDEX, BYTES_NONE);
-				if (installationIdx != BYTES_NONE) {
-					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
-					if (installation)
-						mission.data = (void *) installation;
-					else {
-						Com_Printf("Mission on non-existent installation\n");
-						return qfalse;
-					}
-				}
-			}
-			break;
-		case INTERESTCATEGORY_BUILDING:
-		case INTERESTCATEGORY_SUPPLY:
-			if (mission.stage >= STAGE_BUILD_BASE) {
-				int baseIDX = mxml_GetInt(node, SAVE_CAMPAIGN_ALIENBASEINDEX, BYTES_NONE);
-				/* don't check baseidx value here: alien bases are not loaded yet */
-				if (baseIDX != BYTES_NONE) {
-					alienBase_t *alienBase = AB_GetBase(baseIDX, qfalse);
-					mission.data = (void *) alienBase;
-				}
-				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission)) {
-					Com_Printf("Error while loading Alien Base mission (mission %i, baseidx: %i, category: %i, stage: %i)\n",
-							i, baseIDX, mission.category, mission.stage);
-					return qfalse;
-				}
-			}
-			break;
-		default:
-			break;
-		}
-
-		Q_strncpyz(mission.location, mxml_GetString(node, SAVE_CAMPAIGN_LOCATION), sizeof(mission.location));
-
-		mission.startDate.day = mxml_GetInt(node, SAVE_CAMPAIGN_STARTDATE_DAY, 0);
-		mission.startDate.sec = mxml_GetInt(node, SAVE_CAMPAIGN_STARTDATE_SEC, 0);
-		mission.finalDate.day = mxml_GetInt(node, SAVE_CAMPAIGN_FINALDATE_DAY, 0);
-		mission.finalDate.sec = mxml_GetInt(node, SAVE_CAMPAIGN_FINALDATE_SEC, 0);
-
-		mxml_GetPos2(node, SAVE_CAMPAIGN_POS, mission.pos);
-
-		ufoIdx = mxml_GetInt(node, SAVE_CAMPAIGN_UFO, -1);
-		if (ufoIdx <= -1)
-			mission.ufo = NULL;
-		else
-			mission.ufo = ccs.ufos + ufoIdx;
-
-		mission.crashed = mxml_GetBool(node, SAVE_CAMPAIGN_CRASHED, qfalse);
-		mission.onGeoscape = mxml_GetBool(node, SAVE_CAMPAIGN_ONGEOSCAPE, qfalse);
-
-		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
-			defaultAssigned = qtrue;
-		mission.posAssigned = mxml_GetBool(node, SAVE_CAMPAIGN_POSASSIGNED, defaultAssigned);
-		/* Add mission to global array */
-		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
+	missions = mxml_GetNode(parent, SAVE_CAMPAIGN_MISSIONS);
+	if (!missions) {
+		Com_Printf("Did not find missions entry in xml!\n");
+		return qfalse;
 	}
+	if (!CP_LoadMissionsXML(missions))
+		return qfalse;
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Reading Battle Parameters\n");
 	/* read ccs.battleParameters */
@@ -1145,10 +1047,10 @@ qboolean CP_LoadXML (mxml_node_t *parent)
  */
 qboolean CP_SaveXML (mxml_node_t *parent)
 {
-	mxml_node_t * campaign;
-	mxml_node_t * structure_ccs;
+	mxml_node_t *campaign;
+	mxml_node_t *structure_ccs;
+	mxml_node_t *missions;
 	int i;
-	const linkedList_t *list = ccs.missions;
 
 	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
@@ -1186,66 +1088,8 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddBool(structure_ccs, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
 	/* store missions */
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_MISSIONCOUNT, CP_CountMission());
-	for (; list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
-		mxml_node_t * missions = mxml_AddNode(campaign, SAVE_CAMPAIGN_MISSION);
-
-		mxml_AddInt(missions, SAVE_CAMPAIGN_MISSION_IDX, mission->idx);
-		if (mission->mapDef) {
-			mxml_AddString(missions, SAVE_CAMPAIGN_MAPDEF_ID, mission->mapDef->id);
-			mxml_AddInt(missions, SAVE_CAMPAIGN_MAPDEFTIMES, mission->mapDef->timesAlreadyUsed);
-		}
-		mxml_AddString(missions, SAVE_CAMPAIGN_ID, mission->id);
-		mxml_AddBool(missions, SAVE_CAMPAIGN_ACTIVE, mission->active);
-		mxml_AddBool(missions, SAVE_CAMPAIGN_POSASSIGNED, mission->posAssigned);
-		mxml_AddBool(missions, SAVE_CAMPAIGN_CRASHED, mission->crashed);
-		mxml_AddString(missions, SAVE_CAMPAIGN_ONWIN, mission->onwin);
-		mxml_AddString(missions, SAVE_CAMPAIGN_ONLOSE, mission->onlose);
-		mxml_AddShort(missions, SAVE_CAMPAIGN_CATEGORY, mission->category);
-		mxml_AddShort(missions, SAVE_CAMPAIGN_STAGE, mission->stage);
-		switch (mission->category) {
-		case INTERESTCATEGORY_BASE_ATTACK:
-			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
-				const base_t *base;
-				/* save IDX of base under attack if required */
-				base = (base_t*)mission->data;
-				assert(base);
-				mxml_AddShort(missions, SAVE_CAMPAIGN_BASEINDEX, base->idx);
-			}
-			break;
-		case INTERESTCATEGORY_INTERCEPT:
-			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_INTERCEPT) {
-				const installation_t *installation = (installation_t*)mission->data;
-				if (installation)
-					mxml_AddShort(missions, SAVE_CAMPAIGN_INSTALLATIONINDEX, installation->idx);
-			}
-			break;
-		case INTERESTCATEGORY_BUILDING:
-		case INTERESTCATEGORY_SUPPLY:
-			if (mission->stage >= STAGE_BUILD_BASE) {
-				/* save IDX of alien base if required */
-				const alienBase_t *base = (alienBase_t*)mission->data;
-				/* there may be no base is the mission is a subverting government */
-				if (base)
-					mxml_AddShort(missions, SAVE_CAMPAIGN_ALIENBASEINDEX, base->idx);
-			}
-			break;
-		default:
-			break;
-		}
-		mxml_AddString(missions, SAVE_CAMPAIGN_LOCATION, mission->location);
-		mxml_AddShort(missions, SAVE_CAMPAIGN_INITIALOVERALLINTEREST, mission->initialOverallInterest);
-		mxml_AddShort(missions, SAVE_CAMPAIGN_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
-		mxml_AddLong(missions, SAVE_CAMPAIGN_STARTDATE_DAY, mission->startDate.day);
-		mxml_AddLong(missions, SAVE_CAMPAIGN_STARTDATE_SEC, mission->startDate.sec);
-		mxml_AddLong(missions, SAVE_CAMPAIGN_FINALDATE_DAY, mission->finalDate.day);
-		mxml_AddLong(missions, SAVE_CAMPAIGN_FINALDATE_SEC, mission->finalDate.sec);
-		mxml_AddPos2(missions, SAVE_CAMPAIGN_POS, mission->pos);
-		if (mission->ufo)
-			mxml_AddShort(missions, SAVE_CAMPAIGN_UFO, mission->ufo - ccs.ufos);
-		mxml_AddBool(missions, SAVE_CAMPAIGN_ONGEOSCAPE, mission->onGeoscape);
-	}
+	missions = mxml_AddNode(parent, SAVE_CAMPAIGN_MISSIONS);
+	CP_SaveMissionsXML(missions);
 
 	/* store ccs.battleParameters */
 	if (ccs.battleParameters.mission) {
