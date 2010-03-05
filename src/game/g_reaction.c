@@ -42,9 +42,9 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, con
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			const int fmIdx = ent->chr.RFmode.fmIdx;
 
-			if (fdArray[fmIdx].time + sv_reaction_leftover->integer <= ent->TU
+			if (fdArray[fmIdx].time + g_reaction_leftover->integer <= ent->TU
 			 && fdArray[fmIdx].range > VectorDist(ent->origin, target->origin)) {
-				return fdArray[fmIdx].time + sv_reaction_leftover->integer;
+				return fdArray[fmIdx].time + g_reaction_leftover->integer;
 			}
 		}
 	}
@@ -352,7 +352,7 @@ static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 		if (ent->reactionTarget) {
 			const int reactionTargetTU = ent->reactionTarget->TU;
 			const int reactionTU = ent->reactionTUs;
-			const qboolean timeout = reactionTargetTU < reactionTU;
+			const qboolean timeout = g_reaction_fair->integer == 0 || reactionTargetTU < reactionTU;
 			/* check whether target has changed (i.e. the player is making a move with a
 			 * different entity) or whether target is out of time. */
 			if (ent->reactionTarget != target || timeout)

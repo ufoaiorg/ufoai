@@ -202,7 +202,6 @@ extern cvar_t *sv_maxvelocity;
 
 extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
-extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
@@ -255,6 +254,8 @@ extern cvar_t *m_rage;
 extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
+extern cvar_t *g_reaction_fair;
+extern cvar_t *g_reaction_leftover;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_nodamage;
