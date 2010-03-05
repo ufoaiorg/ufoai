@@ -419,7 +419,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * e.g. they may now choose only the closer doors;
 			 * however it's still better than going three times around soldier
 			 * and only then firing at him */
-			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
+			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
 			/* search hiding spot */
 			G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
