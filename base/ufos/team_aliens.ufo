@@ -96,7 +96,7 @@ team ortnok
 	race			ortnok
 	size			1
 	//hit_particle	none
-	death_texture	blood_green_0
+	death_texture	pics/sfx/blood_green_0
 
 	names {
 		neutral {
