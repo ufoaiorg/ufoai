@@ -304,7 +304,7 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
  */
 static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 {
-	int tus, team;
+	int team;
 	qboolean tookShot;
 
 	/* check whether this ent has a reaction fire queued */
@@ -313,13 +313,6 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 	/* ent can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
 	if (!G_CanReactionFire(ent, ent->reactionTarget)) {
-		ent->reactionTarget = NULL;
-		return qfalse;
-	}
-
-	/* check ent can fire (necessary? covered by G_CanReactionFire?) */
-	tus = G_GetFiringTUsForItem(ent, ent->reactionTarget, RIGHT(ent));
-	if (tus < 0) {
 		ent->reactionTarget = NULL;
 		return qfalse;
 	}
