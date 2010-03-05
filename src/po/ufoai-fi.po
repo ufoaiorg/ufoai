@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-02 21:32+0100\n"
-"PO-Revision-Date: 2010-03-04 16:55+0200\n"
+"PO-Revision-Date: 2010-03-05 00:13+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -9800,7 +9800,7 @@ msgstr "Elektroniikka:\t%i / %i"
 #: client/campaign/cp_airfight.c:356
 #, c-format
 msgid "A UFO is shooting at %s"
-msgstr "UFOA tulitetaan %s"
+msgstr "UFO tulittaa %s"
 
 #: client/campaign/cp_airfight.c:376
 msgid "Our aircraft has no more ammo left - returning to home base now."
