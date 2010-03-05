@@ -880,9 +880,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaignNode;
 	mxml_node_t *ccsNode;
-	mxml_node_t *node;
 	mxml_node_t *battleParamNode;
 	mxml_node_t *missions;
+	mxml_node_t *interests;
 	const char *name;
 	const char *missionId;
 	campaign_t *campaign;
@@ -935,16 +935,14 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* read credits */
 	CL_UpdateCredits(mxml_GetLong(ccsNode, SAVE_CAMPAIGN_CREDITS, 0));
 
-	/* store interest values */
-	ccs.lastInterestIncreaseDelay = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_LASTINTERESTINCREASEDELAY, 0);
-	ccs.lastMissionSpawnedDelay = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_LASTMISSIONSPAWNEDDELAY, 0);
-
-	ccs.overallInterest = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_OVERALL, 0);
-
-	for (i = 0, node = mxml_GetNode(ccsNode, SAVE_CAMPAIGN_INTEREST); i < INTERESTCATEGORY_MAX && node;
-			i++, (node = mxml_GetNextNode(node, ccsNode, SAVE_CAMPAIGN_INTEREST))) {
-		ccs.interest[i]= mxml_GetInt(node, SAVE_CAMPAIGN_VAL, 0);
+	/* read interest values */
+	interests = mxml_GetNode(parent, SAVE_CAMPAIGN_MISSIONS);
+	if (!interests) {
+		Com_Printf("Did not find interests entry in xml!\n");
+		return qfalse;
 	}
+	if (!CP_LoadInterestsXML(interests))
+		return qfalse;
 
 	/* read other campaign data */
 	ccs.civiliansKilled = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
@@ -1050,46 +1048,44 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_node_t *campaign;
 	mxml_node_t *structure_ccs;
 	mxml_node_t *missions;
-	int i;
+	mxml_node_t *interests;
 
 	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
 	mxml_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
 
 	structure_ccs = mxml_AddNode(campaign, SAVE_CAMPAIGN_CCS);
+
+	mxml_AddLong(structure_ccs, SAVE_CAMPAIGN_CREDITS, ccs.credits);
+	mxml_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
 	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_DATEDAY, ccs.date.day);
 	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_DATESEC, ccs.date.sec);
+	mxml_AddShort(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
 
+	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
+	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
+
+	/* Map and user interface */
 	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_CENTER0, ccs.center[0]);
 	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_CENTER1, ccs.center[1]);
 	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
 	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
 	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
-
 	mxml_AddShort(campaign, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, r_geoscape_overlay->integer);
 	mxml_AddBool(campaign, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
-
-	mxml_AddLong(structure_ccs, SAVE_CAMPAIGN_CREDITS, ccs.credits);
-
-	mxml_AddShort(structure_ccs, SAVE_CAMPAIGN_LASTINTERESTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
-	mxml_AddShort(structure_ccs, SAVE_CAMPAIGN_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
-
-	mxml_AddShort(structure_ccs, SAVE_CAMPAIGN_OVERALL, ccs.overallInterest);
-	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
-		mxml_node_t * substructure = mxml_AddNode(structure_ccs, SAVE_CAMPAIGN_INTEREST);
-		mxml_AddShort(substructure, SAVE_CAMPAIGN_VAL, ccs.interest[i]);
-	}
-
-	/* store other campaign data */
-	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
-	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
 	mxml_AddBool(structure_ccs, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
+	/* stores the select mission on geoscape */
+	mxml_AddString(structure_ccs, SAVE_CAMPAIGN_SELECTEDMISSION, ccs.selectedMission ? ccs.selectedMission->id : "");
+
+	/* Interests */
+	interests = mxml_AddNode(parent, SAVE_CAMPAIGN_INTERESTS);
+	if (!CP_SaveInterestsXML(interests))
+		return qfalse;
 
 	/* store missions */
 	missions = mxml_AddNode(parent, SAVE_CAMPAIGN_MISSIONS);
-	CP_SaveMissionsXML(missions);
+	if (!CP_SaveMissionsXML(missions))
+		return qfalse;
 
 	/* store ccs.battleParameters */
 	if (ccs.battleParameters.mission) {
@@ -1105,8 +1101,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 		mxml_AddInt(battleparam, SAVE_CAMPAIGN_ALIENS, ccs.battleParameters.aliens);
 		mxml_AddInt(battleparam, SAVE_CAMPAIGN_CIVILIANS, ccs.battleParameters.civilians);
 	}
-	/* stores the select mission on geoscape */
-	mxml_AddString(structure_ccs, SAVE_CAMPAIGN_SELECTEDMISSION, ccs.selectedMission ? ccs.selectedMission->id : "");
 	return qtrue;
 }
 

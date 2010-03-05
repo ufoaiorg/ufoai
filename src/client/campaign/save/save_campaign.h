@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #define SAVE_CAMPAIGN_CAMPAIGN "campaign"
+
 #define SAVE_CAMPAIGN_ID "id"
 #define SAVE_CAMPAIGN_PAID "paid"
 #define SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER "nextUniqueCharacterNumber"
@@ -37,11 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY "r_geoscape_overlay"
 #define SAVE_CAMPAIGN_RADAROVERLAYWASSET "radarOverlayWasSet"
 #define SAVE_CAMPAIGN_CREDITS "credits"
-#define SAVE_CAMPAIGN_LASTINTERESTINCREASEDELAY "lastInterestIncreaseDelay"
-#define SAVE_CAMPAIGN_LASTMISSIONSPAWNEDDELAY "lastMissionSpawnedDelay"
-#define SAVE_CAMPAIGN_OVERALL "overall"
-#define SAVE_CAMPAIGN_INTEREST "interest"
-#define SAVE_CAMPAIGN_VAL "val"
+
 #define SAVE_CAMPAIGN_CIVILIANSKILLED "civiliansKilled"
 #define SAVE_CAMPAIGN_ALIENSKILLED "aliensKilled"
 #define SAVE_CAMPAIGN_XVISHOWMAP "XVIShowmap"
@@ -56,6 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_UGV "ugv"
 #define SAVE_CAMPAIGN_ALIENS "aliens"
 #define SAVE_CAMPAIGN_CIVILIANS "civilians"
+
 #define SAVE_CAMPAIGN_STATS "stats"
 #define SAVE_CAMPAIGN_MISSIONS "missions"
 #define SAVE_CAMPAIGN_MISSIONSWON "missionsWon"
@@ -77,6 +75,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_SELECTEDMISSION "selectedMission"
 
 #define SAVE_CAMPAIGN_MISSIONS "missions"
+#define SAVE_CAMPAIGN_INTERESTS "interests"
 
 /*
 DTD: (incomplete)

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cp_campaign.h"
 #include "cp_alien_interest.h"
+#include "save/save_interest.h"
 
 /**
  * @brief Typical value of the overall alien interest at the end of the game.
@@ -119,3 +120,41 @@ void CP_IncreaseAlienInterest (void)
 		ccs.lastInterestIncreaseDelay %= delayBetweenIncrease;
 	}
 }
+
+/**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] parent XML Node structure, where we write the information to
+ */
+qboolean CP_SaveInterestsXML (mxml_node_t *parent)
+{
+	int i;
+
+	mxml_AddShortValue(parent, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
+	mxml_AddShortValue(parent, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
+	mxml_AddShortValue(parent, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
+		mxml_node_t * interestNode = mxml_AddNode(parent, SAVE_INTERESTS_INTEREST);
+		mxml_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames in XML Format
+ * @param[in] parent XML Node structure, where we get the information from
+ */
+qboolean CP_LoadInterestsXML (mxml_node_t *parent)
+{
+	int i;
+	mxml_node_t *node;
+
+	ccs.lastInterestIncreaseDelay = mxml_GetInt(parent, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
+	ccs.lastMissionSpawnedDelay = mxml_GetInt(parent, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
+	ccs.overallInterest = mxml_GetInt(parent, SAVE_INTERESTS_OVERALL, 0);
+	for (i = 0, node = mxml_GetNode(parent, SAVE_INTERESTS_INTEREST); i < INTERESTCATEGORY_MAX && node;
+			i++, (node = mxml_GetNextNode(node, parent, SAVE_INTERESTS_INTEREST))) {
+		ccs.interest[i]= mxml_GetInt(node, SAVE_INTERESTS_VAL, 0);
+	}
+	return qtrue;
+}
+
