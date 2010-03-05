@@ -225,7 +225,7 @@ static qboolean G_CanReactionFire (const edict_t *ent, const edict_t *target)
  * @sa G_CanReactionFire
  * @sa G_GetFiringTUs
  */
-static void G_CheckRFTrigger (edict_t *target)
+static void G_ReactionFireSearchTarget (edict_t *target)
 {
 	edict_t *ent = NULL;
 
@@ -381,7 +381,7 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 	const qboolean fired = G_ReactionFireCheckExecution(target);
 
 	/* Check to see whether this triggers any reaction fire */
-	G_CheckRFTrigger(target);
+	G_ReactionFireSearchTarget(target);
 
 	return fired;
 }
