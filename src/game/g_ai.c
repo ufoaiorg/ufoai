@@ -960,18 +960,16 @@ static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
  * @param[in] team Team to which the actor belongs.
  * @param[in] ed Equipment definition for the new actor.
  */
-static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
+static void AI_SetEquipment (edict_t * ent, int team, const equipDef_t * ed)
 {
 	/* Pack equipment. */
-	if (team != TEAM_CIVILIAN) { /** @todo Give civilians gear. */
-		if (ent->chr.teamDef->weapons)
-			game.i.EquipActor(&game.i, &ent->i, ed, &ent->chr);
-		else if (ent->chr.teamDef)
-			/* actor cannot handle equipment but no weapons */
-			game.i.EquipActorMelee(&game.i, &ent->i, &ent->chr);
-		else
-			gi.dprintf("AI_InitPlayer: actor with no equipment\n");
-	}
+	if (ent->chr.teamDef->weapons)
+		game.i.EquipActor(&game.i, &ent->i, ed, &ent->chr);
+	else if (ent->chr.teamDef)
+		/* actor cannot handle equipment but no weapons */
+		game.i.EquipActorMelee(&game.i, &ent->i, &ent->chr);
+	else
+		gi.dprintf("AI_InitPlayer: actor with no equipment\n");
 }
 
 
@@ -979,9 +977,9 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
  * @brief Initializes the actor.
  * @param[in] player Player to which this actor belongs.
  * @param[in,out] ent Pointer to edict_t representing actor.
- * @param[in] ed Equipment definition for the new actor.
+ * @param[in] ed Equipment definition for the new actor. Might be @c NULL.
  */
-static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
+static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDef_t * ed)
 {
 	const int team = player->pers.team;
 
@@ -996,13 +994,11 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 	AI_SetStats(ent, team);
 
 	/* Give equipment. */
-	AI_SetEquipment(ent, team, ed);
+	if (ed != NULL)
+		AI_SetEquipment(ent, team, ed);
 
-	/* More tweaks */
-	if (team != TEAM_CIVILIAN) {
-		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
-		G_ClientStateChange(player, ent, STATE_REACTION_ONCE, qfalse);
-	}
+	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
+	G_ClientStateChange(player, ent, STATE_REACTION_ONCE, qfalse);
 
 	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
@@ -1022,28 +1018,27 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayer (player_t * player, int numSpawn)
+static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 {
-	equipDef_t *ed = &gi.csi->eds[0];
-	int i, j, team;
-	char name[MAX_VAR];
-
-	/* search spawn points */
-	team = player->pers.team;
+	const equipDef_t *ed;
+	int i;
+	const int team = player->pers.team;
 
 	/* prepare equipment */
 	if (team != TEAM_CIVILIAN) {
+		char name[MAX_VAR];
 		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
 		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
 			if (!strcmp(name, ed->name))
 				break;
 		if (i == gi.csi->numEDs)
 			ed = &gi.csi->eds[0];
+	} else {
+		ed = NULL;
 	}
 
-
 	/* spawn players */
-	for (j = 0; j < numSpawn; j++) {
+	for (i = 0; i < numSpawn; i++) {
 		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (!ent) {
 			gi.dprintf("Not enough spawn points for team %i\n", team);
