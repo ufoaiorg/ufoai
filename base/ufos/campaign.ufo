@@ -66,13 +66,13 @@ campaign main
 	maxdebts		200000
 	xvirate			70
 	salary {
-	    soldier_base 2000
+	    soldier_base 1500
 		soldier_rankbonus 0;
-		worker_base 2000;
+		worker_base 500;
 		worker_rankbonus 0;
-		scientist_base 2000;
+		scientist_base 1000;
 		scientist_rankbonus 0;
-		pilot_base 2000;
+		pilot_base 15000;
 		pilot_rankbonus 0;
 		robot_base 7500;
 		robot_rankbonus 0;
@@ -144,13 +144,13 @@ campaign veryeasy
 	maxdebts		500000
 	xvirate			90
 	salary {
-	    soldier_base 2000
+	    soldier_base 1500
 		soldier_rankbonus 0;
-		worker_base 2000;
+		worker_base 500;
 		worker_rankbonus 0;
-		scientist_base 2000;
+		scientist_base 1000;
 		scientist_rankbonus 0;
-		pilot_base 2000;
+		pilot_base 1500;
 		pilot_rankbonus 0;
 		robot_base 7500;
 		robot_rankbonus 0;
