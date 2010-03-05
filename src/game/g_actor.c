@@ -452,7 +452,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		G_WriteItem(item, to, tx, ty);
 	}
 
-	G_UpdateReactionFire(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
+	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);

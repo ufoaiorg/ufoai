@@ -1200,7 +1200,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
-			G_ReactToPreFire(ent);
+			G_ReactionFirePreShot(ent);
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return qfalse;
@@ -1260,7 +1260,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 		/* check for Reaction fire against the shooter */
 		if (allowReaction)
-			G_ReactToPostFire(ent);
+			G_ReactionFirePostShot(ent);
 	} else {
 		ent->dir = prevDir;
 		assert(ent->dir < CORE_DIRECTIONS);

@@ -179,7 +179,7 @@ void G_ClientEndRound (player_t * player)
 	}
 
 	/* clear any remaining reaction fire */
-	G_ReactToEndTurn();
+	G_ReactionFireEndTurn();
 
 	/* let all the invisible players perish now */
 	G_CheckVisTeamAll(level.activeTeam, qtrue, NULL);
@@ -205,7 +205,7 @@ void G_ClientEndRound (player_t * player)
 	G_GiveTimeUnits(level.activeTeam);
 
 	/* apply morale behaviour, reset reaction fire */
-	G_ResetReactionFire(level.activeTeam);
+	G_ReactionFireReset(level.activeTeam);
 	if (mor_panic->integer)
 		G_MoraleBehaviour(level.activeTeam);
 

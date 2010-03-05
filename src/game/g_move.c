@@ -409,7 +409,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* check for reaction fire */
-			if (G_ReactToMove(ent)) {
+			if (G_ReactionFireOnMovement(ent)) {
 				status |= VIS_STOP;
 
 				autoCrouchRequired = qfalse;

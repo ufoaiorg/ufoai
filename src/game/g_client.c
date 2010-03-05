@@ -663,7 +663,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_REACT_SELECT:
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fmIdx, &objIdx);
-		G_UpdateReactionFire(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+		G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:

@@ -321,13 +321,13 @@ void G_TakeDamage(edict_t *ent, int damage);
 
 /* g_reaction.c */
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
-void G_ReactToPreFire(const edict_t *target);
-void G_ReactToPostFire(edict_t *target);
-void G_ResetReactionFire(int team);
+void G_ReactionFirePreShot(const edict_t *target);
+void G_ReactionFirePostShot(edict_t *target);
+void G_ReactionFireReset(int team);
 qboolean G_CanEnableReactionFire(const edict_t *ent);
-void G_UpdateReactionFire(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
-qboolean G_ReactToMove(edict_t *target);
-void G_ReactToEndTurn(void);
+void G_ReactionFireUpdate(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
+qboolean G_ReactionFireOnMovement(edict_t *target);
+void G_ReactionFireEndTurn(void);
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);

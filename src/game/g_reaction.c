@@ -98,7 +98,7 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
  * that would make the current settings invalid
  * @param ent The actor edict to check the settings for
  */
-void G_UpdateReactionFire (edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od)
+void G_ReactionFireUpdate (edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od)
 {
 	chrFiremodeSettings_t *fm = &ent->chr.RFmode;
 	fm->fmIdx = fmIdx;
@@ -266,7 +266,7 @@ static void G_CheckRFTrigger (edict_t *target)
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, int firemode)
+static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, const pos3_t at, shoot_types_t type, int firemode)
 {
 	const int minhit = 30;
 	shot_mock_t mock;
@@ -302,7 +302,7 @@ static qboolean G_FireWithJudgementCall (const player_t *player, edict_t *shoote
  * @param[in] ent The entity to resolve reaction fire for
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-static qboolean G_ResolveRF (edict_t *ent)
+static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 {
 	int tus, team;
 	qboolean tookShot;
@@ -329,7 +329,7 @@ static qboolean G_ResolveRF (edict_t *ent)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	tookShot = G_FireWithJudgementCall(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
+	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
 
 	/* Revert active team. */
 	level.activeTeam = team;
@@ -346,10 +346,10 @@ static qboolean G_ResolveRF (edict_t *ent)
  * @param[in] target The entity that might be resolving reaction fire
  * @param[in] mock If true then don't actually fire
  * @returns whether any entity fired (or would fire) upon target
- * @sa G_ReactToMove
- * @sa G_ReactToPostFire
+ * @sa G_ReactionFireOnMovement
+ * @sa G_ReactionFirePostShot
  */
-static qboolean G_CheckRFResolution (const edict_t *target)
+static qboolean G_ReactionFireCheckExecution (const edict_t *target)
 {
 	edict_t *ent = NULL;
 	qboolean fired = qfalse;
@@ -363,7 +363,7 @@ static qboolean G_CheckRFResolution (const edict_t *target)
 			/* check whether target has changed (i.e. the player is making a move with a
 			 * different entity) or whether target is out of time. */
 			if (ent->reactionTarget != target || timeout)
-				fired |= G_ResolveRF(ent);
+				fired |= G_ReactionFireTryToShoot(ent);
 		}
 	}
 	return fired;
@@ -375,10 +375,10 @@ static qboolean G_CheckRFResolution (const edict_t *target)
  * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-qboolean G_ReactToMove (edict_t *target)
+qboolean G_ReactionFireOnMovement (edict_t *target)
 {
 	/* Check to see whether this resolves any reaction fire */
-	const qboolean fired = G_CheckRFResolution(target);
+	const qboolean fired = G_ReactionFireCheckExecution(target);
 
 	/* Check to see whether this triggers any reaction fire */
 	G_CheckRFTrigger(target);
@@ -387,11 +387,11 @@ qboolean G_ReactToMove (edict_t *target)
 }
 
 /**
- * @brief Called when 'target' is about to fire, this forces a 'draw' to decide who gets to fire first
- * @param[in] target The entity about to fire
+ * @brief Called when 'target' is about to shoot, this forces a 'draw' to decide who gets the first shot
+ * @param[in] target The entity about to shoot
  * @sa G_ClientShoot
  */
-void G_ReactToPreFire (const edict_t *target)
+void G_ReactionFirePreShot (const edict_t *target)
 {
 	edict_t *ent = NULL;
 
@@ -404,7 +404,7 @@ void G_ReactToPreFire (const edict_t *target)
 
 		/* if the entity has changed then resolve the reaction fire */
 		if (ent->reactionTarget != target) {
-			G_ResolveRF(ent);
+			G_ReactionFireTryToShoot(ent);
 			continue;
 		}
 
@@ -429,7 +429,7 @@ void G_ReactToPreFire (const edict_t *target)
 			ent->reactionNoDraw = qtrue;
 		} else {
 			/* ent wins so take the shot */
-			G_ResolveRF(ent);
+			G_ReactionFireTryToShoot(ent);
 		}
 	}
 }
@@ -439,16 +439,16 @@ void G_ReactToPreFire (const edict_t *target)
  * @param[in] target The entity that has just fired
  * @sa G_ClientShoot
  */
-void G_ReactToPostFire (edict_t *target)
+void G_ReactionFirePostShot (edict_t *target)
 {
-	G_ReactToMove(target);
+	G_ReactionFireOnMovement(target);
 }
 
 /**
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-void G_ReactToEndTurn (void)
+void G_ReactionFireEndTurn (void)
 {
 	edict_t *ent = NULL;
 
@@ -457,7 +457,7 @@ void G_ReactToEndTurn (void)
 		if (!ent->reactionTarget)
 			continue;
 
-		G_ResolveRF(ent);
+		G_ReactionFireTryToShoot(ent);
 	}
 }
 
@@ -467,7 +467,7 @@ void G_ReactToEndTurn (void)
  * @sa G_ClientStateChange
  * @param[in] team Index of team to loop through.
  */
-void G_ResetReactionFire (int team)
+void G_ReactionFireReset (int team)
 {
 	edict_t *ent = NULL;
 
