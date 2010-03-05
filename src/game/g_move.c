@@ -91,9 +91,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  */
 void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
-	G_BuildForbiddenList(team, movingActor);
-	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, gi.pathingMap, from, crouchingState, distance,
-			forbiddenList, forbiddenListLength);
+	G_MoveCalcLocal(gi.pathingMap, team, movingActor, from, crouchingState, distance);
 }
 
 /**
