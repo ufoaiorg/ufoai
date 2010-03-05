@@ -424,10 +424,10 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* search hiding spot */
 			G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
 			ent->pos[2] = to[2];
-			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
-			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
-			maxX = to[0] + HIDE_DIST < PATHFINDING_WIDTH - 1 ? to[0] + HIDE_DIST : PATHFINDING_WIDTH - 1;
-			maxY = to[1] + HIDE_DIST < PATHFINDING_WIDTH - 1 ? to[1] + HIDE_DIST : PATHFINDING_WIDTH - 1;
+			minX = max(to[0] - HIDE_DIST, 0);
+			minY = max(to[1] - HIDE_DIST, 0);
+			maxX = min(to[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+			maxY = min(to[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
