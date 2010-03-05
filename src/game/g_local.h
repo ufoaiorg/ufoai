@@ -645,7 +645,7 @@ struct edict_s {
 
 	/** delayed reaction fire */
 	edict_t *reactionTarget;
-	float reactionTUs;
+	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
 
 	/** client actions - interact with the world */
