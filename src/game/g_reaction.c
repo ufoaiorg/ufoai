@@ -300,10 +300,9 @@ static qboolean G_FireWithJudgementCall (const player_t *player, edict_t *shoote
 /**
  * @brief Resolve the reaction fire for an entity, this checks that the entity can fire and then takes the shot
  * @param[in] ent The entity to resolve reaction fire for
- * @param[in] mock If true then don't actually fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
+static qboolean G_ResolveRF (edict_t *ent)
 {
 	int tus, team;
 	qboolean tookShot;
@@ -324,11 +323,6 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		ent->reactionTarget = NULL;
 		return qfalse;
 	}
-
-	/* take the shot */
-	if (mock)
-		/* if just pretending then this is far enough */
-		return qtrue;
 
 	/* Change active team for this shot only. */
 	team = level.activeTeam;
@@ -355,7 +349,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
  * @sa G_ReactToMove
  * @sa G_ReactToPostFire
  */
-static qboolean G_CheckRFResolution (const edict_t *target, qboolean mock)
+static qboolean G_CheckRFResolution (const edict_t *target)
 {
 	edict_t *ent = NULL;
 	qboolean fired = qfalse;
@@ -369,7 +363,7 @@ static qboolean G_CheckRFResolution (const edict_t *target, qboolean mock)
 			/* check whether target has changed (i.e. the player is making a move with a
 			 * different entity) or whether target is out of time. */
 			if (ent->reactionTarget != target || timeout)
-				fired |= G_ResolveRF(ent, mock);
+				fired |= G_ResolveRF(ent);
 		}
 	}
 	return fired;
@@ -378,14 +372,13 @@ static qboolean G_CheckRFResolution (const edict_t *target, qboolean mock)
 /**
  * @brief Called when 'target' moves, possibly triggering or resolving reaction fire
  * @param[in] target The target entity
- * @param[in] mock If true then don't actually fire just say whether someone would
- * @returns true If any shots were (or would be) taken
+ * @return true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-qboolean G_ReactToMove (edict_t *target, qboolean mock)
+qboolean G_ReactToMove (edict_t *target)
 {
 	/* Check to see whether this resolves any reaction fire */
-	const qboolean fired = G_CheckRFResolution(target, mock);
+	const qboolean fired = G_CheckRFResolution(target);
 
 	/* Check to see whether this triggers any reaction fire */
 	G_CheckRFTrigger(target);
@@ -411,7 +404,7 @@ void G_ReactToPreFire (const edict_t *target)
 
 		/* if the entity has changed then resolve the reaction fire */
 		if (ent->reactionTarget != target) {
-			G_ResolveRF(ent, qfalse);
+			G_ResolveRF(ent);
 			continue;
 		}
 
@@ -436,7 +429,7 @@ void G_ReactToPreFire (const edict_t *target)
 			ent->reactionNoDraw = qtrue;
 		} else {
 			/* ent wins so take the shot */
-			G_ResolveRF(ent, qfalse);
+			G_ResolveRF(ent);
 		}
 	}
 }
@@ -448,8 +441,7 @@ void G_ReactToPreFire (const edict_t *target)
  */
 void G_ReactToPostFire (edict_t *target)
 {
-	/* same as movement, but never mocked */
-	G_ReactToMove(target, qfalse);
+	G_ReactToMove(target);
 }
 
 /**
@@ -465,7 +457,7 @@ void G_ReactToEndTurn (void)
 		if (!ent->reactionTarget)
 			continue;
 
-		G_ResolveRF(ent, qfalse);
+		G_ResolveRF(ent);
 	}
 }
 

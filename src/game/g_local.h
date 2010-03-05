@@ -326,7 +326,7 @@ void G_ReactToPostFire(edict_t *target);
 void G_ResetReactionFire(int team);
 qboolean G_CanEnableReactionFire(const edict_t *ent);
 void G_UpdateReactionFire(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
-qboolean G_ReactToMove(edict_t *target, qboolean mock);
+qboolean G_ReactToMove(edict_t *target);
 void G_ReactToEndTurn(void);
 
 void G_CompleteRecalcRouting(void);

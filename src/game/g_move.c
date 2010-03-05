@@ -409,15 +409,10 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* check for reaction fire */
-			if (G_ReactToMove(ent, qtrue)) {
-				if (G_ReactToMove(ent, qfalse))
-					status |= VIS_STOP;
+			if (G_ReactToMove(ent)) {
+				status |= VIS_STOP;
 
 				autoCrouchRequired = qfalse;
-				/* if the attacker is invisible let the target turn in the shooting direction
--				 * of the attacker (@see G_ActorDoTurn) */
-				if (ent->reactionTarget)
-					G_ActorDoTurn(ent->reactionTarget, dir);
 			}
 
 			/* Restore ent->TU because the movement code relies on it not being modified! */
