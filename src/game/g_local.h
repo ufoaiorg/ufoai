@@ -645,7 +645,7 @@ struct edict_s {
 								 * if you open one */
 
 	/** delayed reaction fire */
-	edict_t *reactionTarget;
+	edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
 	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
 
