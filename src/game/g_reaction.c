@@ -248,11 +248,8 @@ static void G_CheckRFTrigger (edict_t *target)
 
 		/* queue a reaction fire to take place */
 		ent->reactionTarget = target;
-		target->reactionAttacker = ent;
 		ent->reactionTUs = max(0, target->TU - (tus / 4.0));
 		ent->reactionNoDraw = qfalse;
-
-		/** @todo generate an 'interrupt'? */
 	}
 }
 
@@ -320,8 +317,10 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 
 	/* check ent can fire (necessary? covered by G_CanReactionFire?) */
 	tus = G_GetFiringTUsForItem(ent, ent->reactionTarget, RIGHT(ent));
-	if (tus < 0)
+	if (tus < 0) {
+		ent->reactionTarget = NULL;
 		return qfalse;
+	}
 
 	/* take the shot */
 	if (mock)
@@ -341,8 +340,6 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	/* clear any shakenness */
 	if (tookShot) {
 		ent->state &= ~STATE_SHAKEN;
-		/* Save the fact that the ent has fired. */
-		ent->reactionFired += 1;
 	}
 	return tookShot;
 }
@@ -478,7 +475,8 @@ void G_ResetReactionFire (int team)
 		 * state? - see G_MoraleBehaviour */
 		ent->state &= ~STATE_SHAKEN;
 		ent->reactionTarget = NULL;
-		ent->reactionFired = 0;
+		ent->reactionTUs = 0;
+		ent->reactionNoDraw = qfalse;
 
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 		gi.WriteShort(ent->number);

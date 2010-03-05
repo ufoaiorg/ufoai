@@ -651,11 +651,6 @@ struct edict_s {
 	/** client actions - interact with the world */
 	edict_t *clientAction;
 
-	/** only set this for the attacked edict - to know who's shooting */
-	edict_t *reactionAttacker;
-
-	int	reactionFired;	/**< A simple counter that tells us how many times an actor has fired as a reaction (in the current turn). */
-
 	/** here are the character values */
 	character_t chr;
 
