@@ -83,6 +83,7 @@
 //	time
 //		Time the research needs to be finished. The values are given in "hours", buuut....
 //		Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
+//		The time given is the time needed for 10 workers, so the actual time needed for x workers is time * 10 / workers.
 //		If time is set to 0 the tech will be marked as researched as soon as all requirements are fulfilled (or there are none to begin with).
 //		If time is set to -1 the tech is not researchable at all. Only use this for multiplayer stuff (research status is forced there).
 //		[Default] 0

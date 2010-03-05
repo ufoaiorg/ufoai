@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief Used in production costs (to allow reducing prices below 1x). */
 const int PRODUCE_FACTOR = 1;
-const int PRODUCE_DIVISOR = 2;
+const int PRODUCE_DIVISOR = 1;
 
 /** @brief Default amount of workers, the produceTime for technologies is defined. */
 /** @note producetime for technology entries is the time for PRODUCE_WORKERS amount of workers. */
@@ -93,10 +93,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 		return fraction;
 	} else {
 		/* Calculate the fraction of item produced for our amount of workers. */
-		/* NOTE: I changed algorithm for a more realistic one, varying like maxworkers^2 -- Kracken 2007/11/18
-		 * now, production time is divided by 4 each time you double the number of worker */
-		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault))
-			* ((float)maxWorkers / PRODUCE_WORKERS));
+		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault)));
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxWorkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
