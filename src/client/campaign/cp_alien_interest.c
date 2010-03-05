@@ -132,10 +132,13 @@ qboolean CP_SaveInterestsXML (mxml_node_t *parent)
 	mxml_AddShortValue(parent, SAVE_INTERESTS_LASTINCREASEDELAY, ccs.lastInterestIncreaseDelay);
 	mxml_AddShortValue(parent, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, ccs.lastMissionSpawnedDelay);
 	mxml_AddShortValue(parent, SAVE_INTERESTS_OVERALL, ccs.overallInterest);
+	Com_RegisterConstList(saveInterestConstants);
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++) {
 		mxml_node_t * interestNode = mxml_AddNode(parent, SAVE_INTERESTS_INTEREST);
+		mxml_AddString(interestNode, SAVE_INTERESTS_ID, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, i));
 		mxml_AddShort(interestNode, SAVE_INTERESTS_VAL, ccs.interest[i]);
 	}
+	Com_UnregisterConstList(saveInterestConstants);
 	return qtrue;
 }
 
@@ -145,16 +148,26 @@ qboolean CP_SaveInterestsXML (mxml_node_t *parent)
  */
 qboolean CP_LoadInterestsXML (mxml_node_t *parent)
 {
-	int i;
 	mxml_node_t *node;
+	qboolean success = qtrue;
 
 	ccs.lastInterestIncreaseDelay = mxml_GetInt(parent, SAVE_INTERESTS_LASTINCREASEDELAY, 0);
 	ccs.lastMissionSpawnedDelay = mxml_GetInt(parent, SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY, 0);
 	ccs.overallInterest = mxml_GetInt(parent, SAVE_INTERESTS_OVERALL, 0);
-	for (i = 0, node = mxml_GetNode(parent, SAVE_INTERESTS_INTEREST); i < INTERESTCATEGORY_MAX && node;
-			i++, (node = mxml_GetNextNode(node, parent, SAVE_INTERESTS_INTEREST))) {
-		ccs.interest[i]= mxml_GetInt(node, SAVE_INTERESTS_VAL, 0);
+	Com_RegisterConstList(saveInterestConstants);
+	for (node = mxml_GetNode(parent, SAVE_INTERESTS_INTEREST); node;
+			node = mxml_GetNextNode(node, parent, SAVE_INTERESTS_INTEREST)) {
+		const char *categoryId = mxml_GetString(node, SAVE_INTERESTS_ID);
+		int cat;
+
+		if (!Com_GetConstInt(categoryId, (int*) &cat)) {
+			Com_Printf("Invaild interest category '%s'\n", categoryId);
+			success = qfalse;
+			break;
+		}
+		ccs.interest[cat]= mxml_GetInt(node, SAVE_INTERESTS_VAL, 0);
 	}
-	return qtrue;
+	Com_UnregisterConstList(saveInterestConstants);
+	return success;
 }
 
