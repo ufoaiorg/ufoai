@@ -345,6 +345,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 				Com_Printf("LoadLibrary (%s)\n", name);
 				break;
 			}
+			Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 		}
 	}
 

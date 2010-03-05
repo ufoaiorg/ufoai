@@ -102,6 +102,7 @@ cvar_t *m_rage;
 cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
+cvar_t *g_reaction_fair;
 cvar_t *g_reaction_leftover;
 cvar_t *g_ailua;
 cvar_t *g_aidebug;
