@@ -182,11 +182,18 @@ static qboolean G_CanReactionFire (const edict_t *ent, const edict_t *target)
 	if (ent->team == level.activeTeam)
 		return qfalse;
 
+	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
+	if (G_IsDazed(ent))
+		return qfalse;
+
 	if (G_IsDead(target))
 		return qfalse;
 
 	/* check ent has reaction fire enabled */
 	if (!G_IsShaken(ent) && !(ent->state & STATE_REACTION))
+		return qfalse;
+
+	if (!G_IsVisibleForTeam(target, ent->team))
 		return qfalse;
 
 	/* If reaction fire is triggered by a friendly unit
@@ -298,16 +305,11 @@ static qboolean G_FireWithJudgementCall (const player_t *player, edict_t *shoote
  */
 static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 {
-	player_t *player;
 	int tus, team;
 	qboolean tookShot;
 
 	/* check whether this ent has a reaction fire queued */
 	if (!ent->reactionTarget)
-		return qfalse;
-
-	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
-	if (G_IsDazed(ent))
 		return qfalse;
 
 	/* ent can't take a reaction shot if it's not possible - and check that
@@ -322,11 +324,6 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	if (tus < 0)
 		return qfalse;
 
-	/* Get player. */
-	player = G_PLAYER_FROM_ENT(ent);
-	if (!player)
-		return qfalse;
-
 	/* take the shot */
 	if (mock)
 		/* if just pretending then this is far enough */
@@ -337,7 +334,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	tookShot = G_FireWithJudgementCall(player, ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
+	tookShot = G_FireWithJudgementCall(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
 
 	/* Revert active team. */
 	level.activeTeam = team;
