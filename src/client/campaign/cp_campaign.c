@@ -702,12 +702,12 @@ void CL_CampaignRun (void)
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
-		if (date.day == 1 && ccs.fund && ccs.numBases) {
+		if (date.day == 1 && ccs.paid && ccs.numBases) {
 			CP_NationBackupMonthlyData();
 			CP_NationHandleBudget();
-			ccs.fund = qfalse;
+			ccs.paid = qfalse;
 		} else if (date.day > 1)
-			ccs.fund = qtrue;
+			ccs.paid = qtrue;
 
 		CP_UpdateXVIMapButton();
 		CL_UpdateTime();
@@ -872,19 +872,27 @@ static void CL_StatsUpdate_f (void)
 	}
 }
 
+/**
+ * @brief Load callback for savegames in XML Format
+ * @param[in] parent XML Node structure, where we get the information from
+ */
 qboolean CP_LoadXML (mxml_node_t *parent)
 {
-	mxml_node_t *campaignNode, *ccsNode, *node, *battleParamNode;
-	int i;
-	const char *name, *missionId;
+	mxml_node_t *campaignNode;
+	mxml_node_t *ccsNode;
+	mxml_node_t *node;
+	mxml_node_t *battleParamNode;
+	const char *name;
+	const char *missionId;
 	campaign_t *campaign;
+	int i;
 
 	campaignNode = mxml_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
 		Com_Printf("Did not find campaign entry in xml!\n");
 		return qfalse;
 	}
-	if (!(name = mxml_GetString(campaignNode, SAVE_CAMPAIGN_NAME))) {
+	if (!(name = mxml_GetString(campaignNode, SAVE_CAMPAIGN_ID))) {
 		Com_Printf("couldn't locate campaign name in savegame\n");
 		return qfalse;
 	}
@@ -899,7 +907,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
-	ccs.fund = mxml_GetBool(campaignNode, SAVE_CAMPAIGN_FUND, qfalse);
+	ccs.paid = mxml_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
 	cls.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
 
 	/* read date */
@@ -1131,6 +1139,10 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	return qtrue;
 }
 
+/**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] parent XML Node structure, where we write the information to
+ */
 qboolean CP_SaveXML (mxml_node_t *parent)
 {
 	mxml_node_t * campaign;
@@ -1140,8 +1152,8 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
-	mxml_AddString(campaign, SAVE_CAMPAIGN_NAME, ccs.curCampaign->id);
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_FUND, ccs.fund);
+	mxml_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
+	mxml_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
 	mxml_AddShort(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
 
 	structure_ccs = mxml_AddNode(campaign, SAVE_CAMPAIGN_CCS);

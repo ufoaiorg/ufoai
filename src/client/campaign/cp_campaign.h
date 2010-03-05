@@ -415,7 +415,7 @@ typedef struct ccs_s {
 	qboolean autosell[MAX_OBJDEFS];
 
 	/* already paid in this month? */
-	qboolean fund;
+	qboolean paid;
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */

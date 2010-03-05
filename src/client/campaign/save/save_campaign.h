@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #define SAVE_CAMPAIGN_CAMPAIGN "campaign"
-#define SAVE_CAMPAIGN_NAME "name"
-#define SAVE_CAMPAIGN_FUND "fund"
+#define SAVE_CAMPAIGN_ID "id"
+#define SAVE_CAMPAIGN_PAID "paid"
 #define SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER "nextUniqueCharacterNumber"
 #define SAVE_CAMPAIGN_CCS "ccs"
 #define SAVE_CAMPAIGN_DATEDAY "dateDay"
