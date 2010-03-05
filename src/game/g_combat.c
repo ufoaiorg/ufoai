@@ -1097,7 +1097,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		return qfalse;
 
 	/* Don't allow to shoot yourself */
-	if (VectorCompare(ent->pos, at))
+	if (!fd->irgoggles && VectorCompare(ent->pos, at))
 		return qfalse;
 
 	/* check that we're not firing a twohanded weapon with one hand! */
@@ -1175,13 +1175,15 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	else
 		prevDir = 0;
 
-	VectorSubtract(at, ent->pos, dir);
-	ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
-	assert(ent->dir < CORE_DIRECTIONS);
+	if (!VectorCompare(ent->pos, at)) {
+		VectorSubtract(at, ent->pos, dir);
+		ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
+		assert(ent->dir < CORE_DIRECTIONS);
 
-	if (!mock) {
-		G_CheckVisTeamAll(ent->team, qfalse, ent);
-		G_EventActorTurn(ent);
+		if (!mock) {
+			G_CheckVisTeamAll(ent->team, qfalse, ent);
+			G_EventActorTurn(ent);
+		}
 	}
 
 	/* calculate visibility */

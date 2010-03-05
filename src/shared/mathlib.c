@@ -235,11 +235,11 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
  * @param[in] vecb Movement direction
  * @param[out] vecc Target vector
  */
-void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc)
+void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t outVector)
 {
-	vecc[0] = veca[0] + scale * vecb[0];
-	vecc[1] = veca[1] + scale * vecb[1];
-	vecc[2] = veca[2] + scale * vecb[2];
+	outVector[0] = veca[0] + scale * vecb[0];
+	outVector[1] = veca[1] + scale * vecb[1];
+	outVector[2] = veca[2] + scale * vecb[2];
 }
 
 void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
