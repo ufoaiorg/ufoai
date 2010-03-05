@@ -309,8 +309,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	qboolean tookShot;
 
 	/* check whether this ent has a reaction fire queued */
-	if (!ent->reactionTarget)
-		return qfalse;
+	assert(ent->reactionTarget);
 
 	/* ent can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
@@ -461,8 +460,6 @@ void G_ReactToEndTurn (void)
 			continue;
 
 		G_ResolveRF(ent, qfalse);
-		ent->reactionTarget = NULL;
-		ent->reactionFired = 0;
 	}
 }
 
@@ -480,6 +477,9 @@ void G_ResetReactionFire (int team)
 		/** @todo why do we send the state here and why do we change the "shaken"
 		 * state? - see G_MoraleBehaviour */
 		ent->state &= ~STATE_SHAKEN;
+		ent->reactionTarget = NULL;
+		ent->reactionFired = 0;
+
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 		gi.WriteShort(ent->number);
 		gi.WriteShort(ent->state);
