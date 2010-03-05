@@ -181,7 +181,7 @@ window althud extends ahud
 		pic bar_selbox
 		{
 			image		althud/bar_selbox
-			pos			"0 26"
+			pos			"25 26"
 			size		"79 90"
 			texh		"79 90"
 		}
