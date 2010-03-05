@@ -426,9 +426,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
-			/** @todo remove this magic number */
-			maxX = to[0] + HIDE_DIST < 254 ? to[0] + HIDE_DIST : 254;
-			maxY = to[1] + HIDE_DIST < 254 ? to[1] + HIDE_DIST : 254;
+			maxX = to[0] + HIDE_DIST < PATHFINDING_WIDTH - 1 ? to[0] + HIDE_DIST : PATHFINDING_WIDTH - 1;
+			maxY = to[1] + HIDE_DIST < PATHFINDING_WIDTH - 1 ? to[1] + HIDE_DIST : PATHFINDING_WIDTH - 1;
 
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
