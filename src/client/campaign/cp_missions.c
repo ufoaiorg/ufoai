@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "save/save_missions.h"
+#include "save/save_interest.h"
 
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
@@ -1717,6 +1718,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 {
 	const linkedList_t *list = ccs.missions;
 
+	Com_RegisterConstList(saveInterestConstants);
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		mxml_node_t *missionNode = mxml_AddNode(parent, SAVE_MISSIONS_MISSION);
@@ -1732,7 +1734,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		mxml_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
 		mxml_AddString(missionNode, SAVE_MISSIONS_ONWIN, mission->onwin);
 		mxml_AddString(missionNode, SAVE_MISSIONS_ONLOSE, mission->onlose);
-		mxml_AddShort(missionNode, SAVE_MISSIONS_CATEGORY, mission->category);
+		mxml_AddString(missionNode, SAVE_MISSIONS_CATEGORY, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
 		mxml_AddShort(missionNode, SAVE_MISSIONS_STAGE, mission->stage);
 		switch (mission->category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
@@ -1776,6 +1778,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 			mxml_AddShort(missionNode, SAVE_MISSIONS_UFO, mission->ufo - ccs.ufos);
 		mxml_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
+	Com_UnregisterConstList(saveInterestConstants);
 
 	return qtrue;
 }
@@ -1787,36 +1790,47 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 {
 	mxml_node_t *node;
+	qboolean success = qtrue;
 
+	Com_RegisterConstList(saveInterestConstants);
 	for (node = mxml_GetNode(parent, SAVE_MISSIONS_MISSION); node;
 			node = mxml_GetNextNode(node, parent, SAVE_MISSIONS_MISSION)) {
 		const char *name;
 		mission_t mission;
 		int ufoIdx;
 		qboolean defaultAssigned = qfalse;
+		const char *categoryId = mxml_GetString(node, SAVE_MISSIONS_CATEGORY);
 
 		memset(&mission, 0, sizeof(mission));
 		Q_strncpyz(mission.id, mxml_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
 		mission.idx = mxml_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
 		if (mission.idx <= 0) {
 			Com_Printf("mission has invalid or no index\n");
-			return qfalse;		
+			success = qfalse;
+			break;
 		}
 		name = mxml_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
 		if (name && name[0] != '\0') {
 			mission.mapDef = Com_GetMapDefinitionByID(name);
 			if (!mission.mapDef) {
 				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
-				return qfalse;
+				success = qfalse;
+				break;
 			}
 			mission.mapDef->timesAlreadyUsed = mxml_GetInt(node, SAVE_MISSIONS_MAPDEFTIMES, 0);
 		} else
 			mission.mapDef = NULL;
 
+		if (!Com_GetConstInt(categoryId, (int*) &mission.category)) {
+			Com_Printf("Invaild mission category '%s'\n", categoryId);
+			success = qfalse;
+			break;
+		}
+
 		mission.active = mxml_GetBool(node, SAVE_MISSIONS_ACTIVE, qfalse);
 		Q_strncpyz(mission.onwin, mxml_GetString(node, SAVE_MISSIONS_ONWIN), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, mxml_GetString(node, SAVE_MISSIONS_ONLOSE), sizeof(mission.onlose));
-		mission.category = mxml_GetInt(node, SAVE_MISSIONS_CATEGORY, 0);
+
 		mission.stage = mxml_GetShort(node, SAVE_MISSIONS_STAGE, 0);
 
 		mission.initialOverallInterest = mxml_GetInt(node, SAVE_MISSIONS_INITIALOVERALLINTEREST, 0);
@@ -1846,7 +1860,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 						mission.data = (void *) installation;
 					else {
 						Com_Printf("Mission on non-existent installation\n");
-						return qfalse;
+						success = qfalse;
 					}
 				}
 			}
@@ -1863,13 +1877,15 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission)) {
 					Com_Printf("Error while loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i)\n",
 							mission.idx, baseIDX, mission.category, mission.stage);
-					return qfalse;
+					success = qfalse;
 				}
 			}
 			break;
 		default:
 			break;
 		}
+		if (!success)
+			break;
 
 		Q_strncpyz(mission.location, mxml_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
 
@@ -1895,10 +1911,10 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 	}
-	return qtrue;
+	Com_UnregisterConstList(saveInterestConstants);
+	return success;
 }
 
-/*****/
 void CP_MissionsInit (void)
 {
 #ifdef DEBUG

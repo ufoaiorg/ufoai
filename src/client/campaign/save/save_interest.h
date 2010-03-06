@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_INTEREST_H
+#define SAVE_INTEREST_H
+
 #define SAVE_INTERESTS_LASTINCREASEDELAY "lastIncreaseDelay"
 #define SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY "lastMissionSpawnedDelay"
 #define SAVE_INTERESTS_OVERALL "overall"
@@ -31,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_INTERESTS_VAL "value"
 
 #define SAVE_INTERESTCAT_NAMESPACE "saveInterestCat"
-const constListEntry_t saveInterestConstants[] = {
+static const constListEntry_t saveInterestConstants[] = {
 	{SAVE_INTERESTCAT_NAMESPACE"::none", INTERESTCATEGORY_NONE},
 	{SAVE_INTERESTCAT_NAMESPACE"::recon", INTERESTCATEGORY_RECON},
 	{SAVE_INTERESTCAT_NAMESPACE"::terror", INTERESTCATEGORY_TERROR_ATTACK},
@@ -44,6 +47,8 @@ const constListEntry_t saveInterestConstants[] = {
 	{SAVE_INTERESTCAT_NAMESPACE"::alienBase", INTERESTCATEGORY_ALIENBASE},
 	{NULL, -1}
 };
+
+#endif
 
 /*
 DTD:
