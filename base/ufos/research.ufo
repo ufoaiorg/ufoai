@@ -3074,9 +3074,9 @@ tech rs_building_laser
 {
 	type	building
 	description {
-		default "_b_laser_txt"
+		default "_b_baselaser_txt"
 	}
-	// pre_description	"_b_laser_pre_txt"
+	// pre_description	"_b_baselaser_pre_txt"
 	up_chapter	buildings
 
 	require_AND
