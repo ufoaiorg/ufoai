@@ -99,6 +99,11 @@ static void testConstInt (void)
 	Com_RegisterConstInt("namespace::variable5", 5);
 	Com_RegisterConstInt("namespace::variable6", 6);
 
+	Com_RegisterConstInt("namespace2::variable2", 10);
+
+	out = 0;
+	CU_ASSERT_TRUE(Com_GetConstInt("namespace2::variable2", &out));
+	CU_ASSERT_EQUAL(out, 10);
 	out = 0;
 	CU_ASSERT_TRUE(Com_GetConstInt("namespace::variable2", &out));
 	CU_ASSERT_EQUAL(out, 2);
@@ -108,6 +113,7 @@ static void testConstInt (void)
 
 	CU_ASSERT_STRING_EQUAL(Com_GetConstVariable("namespace", 2), "variable2");
 
+	CU_ASSERT(Com_UnregisterConstVariable("namespace2::variable2"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable2"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable3"));
 	CU_ASSERT(Com_UnregisterConstVariable("namespace::variable4"));
