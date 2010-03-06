@@ -684,6 +684,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
+	int dist;
 	float bestActionPoints, best;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
@@ -693,18 +694,11 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	gi.MoveStore(gi.pathingMap);
 
 	/* set borders */
-	xl = (int) ent->pos[0] - AI_MAX_DIST;
-	if (xl < 0)
-		xl = 0;
-	yl = (int) ent->pos[1] - AI_MAX_DIST;
-	if (yl < 0)
-		yl = 0;
-	xh = (int) ent->pos[0] + AI_MAX_DIST;
-	if (xh > PATHFINDING_WIDTH)
-		xl = PATHFINDING_WIDTH;
-	yh = (int) ent->pos[1] + AI_MAX_DIST;
-	if (yh > PATHFINDING_WIDTH)
-		yh = PATHFINDING_WIDTH;
+	dist = (ent->TU + 1) / 2;
+	xl = max((int) ent->pos[0] - dist, 0);
+	yl = max((int) ent->pos[1] - dist, 0);
+	xh = min((int) ent->pos[0] + dist, PATHFINDING_WIDTH);
+	yh = min((int) ent->pos[1] + dist, PATHFINDING_WIDTH);
 
 	/* search best action */
 	best = AI_ACTION_NOTHING_FOUND;
