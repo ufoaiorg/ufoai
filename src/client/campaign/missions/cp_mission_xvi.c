@@ -87,7 +87,7 @@ static void CP_XVIMissionStart (mission_t *mission)
  * @note XVI Spreading mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_XVIMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+int CP_XVIMissionAvailableUFOs (const mission_t const *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 

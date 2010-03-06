@@ -444,7 +444,7 @@ qboolean NAT_ScriptSanityCheck (void)
 		const vec2_t pos = {city->pos[0], city->pos[1]};
 		qboolean cityCanBeUsed = qfalse;
 		qboolean parametersFit = qfalse;
-		int ufoTypes[UFO_MAX];
+		ufoType_t ufoTypes[UFO_MAX];
 		int numTypes;
 
 		if (!city->name) {

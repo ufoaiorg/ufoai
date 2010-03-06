@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_MISSION_SUPPLY_H
 #define CP_MISSION_SUPPLY_H
 
-int CP_SupplyMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+int CP_SupplyMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
 void CP_SupplyMissionNextStage(mission_t *mission);
 void CP_SupplyMissionIsFailure(mission_t *mission);
 void CP_SupplyMissionIsSuccess(mission_t *mission);

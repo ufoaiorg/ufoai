@@ -331,7 +331,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
  * @note Base Attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 	ufoTypes[num++] = UFO_FIGHTER;

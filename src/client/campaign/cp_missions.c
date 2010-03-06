@@ -1119,7 +1119,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	}
 
 	/* add the looted goods to base storage and market */
-	base->storage = ccs.eMission; /* copied, including the arrays! */
+	base->storage = ccs.eMission;
 
 	civiliansKilled = ccs.civiliansKilled;
 	aliensKilled = ccs.aliensKilled;
@@ -1156,7 +1156,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			} /* if dead */
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers); /* DEBUG */
+	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
 
 	/* Check for alien containment in aircraft homebase. */
 	if (AL_GetAircraftAlienCargoTypes(aircraft) && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
@@ -1244,15 +1244,14 @@ void CP_UFOProceedMission (aircraft_t *ufo)
 void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
 	const date_t minCrashDelay = {7, 0};
-	const date_t crashDelay = {14, 0};		/* How long the crash mission will stay before aliens leave / die */
+	/* How long the crash mission will stay before aliens leave / die */
+	const date_t crashDelay = {14, 0};
 	const nation_t *nation;
 	mission_t *mission;
 
 	mission = ufo->mission;
 	if (!mission)
 		Com_Error(ERR_DROP, "CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
-
-	assert(mission);
 
 	mission->crashed = qtrue;
 
@@ -1327,9 +1326,9 @@ qboolean CP_MissionCreate (mission_t *mission)
  * @sa CP_SupplyMissionCreate
  * @return ufoType_t of the UFO spawning the mission, UFO_MAX if the mission is spawned from ground
  */
-int CP_MissionChooseUFO (const mission_t *mission)
+ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 {
-	int ufoTypes[UFO_MAX];
+	ufoType_t ufoTypes[UFO_MAX];
 	int numTypes = 0;
 	int idx;
 	qboolean canBeSpawnedFromGround = qfalse;

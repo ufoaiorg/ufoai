@@ -622,7 +622,7 @@ int CP_CountMission(void);
 int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
-int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
