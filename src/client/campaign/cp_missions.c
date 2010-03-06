@@ -1719,6 +1719,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 	const linkedList_t *list = ccs.missions;
 
 	Com_RegisterConstList(saveInterestConstants);
+	Com_RegisterConstList(saveMissionConstants);
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		mxml_node_t *missionNode = mxml_AddNode(parent, SAVE_MISSIONS_MISSION);
@@ -1735,7 +1736,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		mxml_AddString(missionNode, SAVE_MISSIONS_ONWIN, mission->onwin);
 		mxml_AddString(missionNode, SAVE_MISSIONS_ONLOSE, mission->onlose);
 		mxml_AddString(missionNode, SAVE_MISSIONS_CATEGORY, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
-		mxml_AddShort(missionNode, SAVE_MISSIONS_STAGE, mission->stage);
+		mxml_AddString(missionNode, SAVE_MISSIONS_STAGE, Com_GetConstVariable(SAVE_MISSIONSTAGE_NAMESPACE, mission->stage));
 		switch (mission->category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
@@ -1779,6 +1780,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		mxml_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
 	}
 	Com_UnregisterConstList(saveInterestConstants);
+	Com_UnregisterConstList(saveMissionConstants);
 
 	return qtrue;
 }
@@ -1793,6 +1795,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 	qboolean success = qtrue;
 
 	Com_RegisterConstList(saveInterestConstants);
+	Com_RegisterConstList(saveMissionConstants);
 	for (node = mxml_GetNode(parent, SAVE_MISSIONS_MISSION); node;
 			node = mxml_GetNextNode(node, parent, SAVE_MISSIONS_MISSION)) {
 		const char *name;
@@ -1800,6 +1803,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		int ufoIdx;
 		qboolean defaultAssigned = qfalse;
 		const char *categoryId = mxml_GetString(node, SAVE_MISSIONS_CATEGORY);
+		const char *stageId = mxml_GetString(node, SAVE_MISSIONS_STAGE);
 
 		memset(&mission, 0, sizeof(mission));
 		Q_strncpyz(mission.id, mxml_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
@@ -1827,11 +1831,15 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 			break;
 		}
 
+		if (!Com_GetConstInt(stageId, (int*) &mission.stage)) {
+			Com_Printf("Invaild mission stage '%s'\n", stageId);
+			success = qfalse;
+			break;
+		}
+
 		mission.active = mxml_GetBool(node, SAVE_MISSIONS_ACTIVE, qfalse);
 		Q_strncpyz(mission.onwin, mxml_GetString(node, SAVE_MISSIONS_ONWIN), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, mxml_GetString(node, SAVE_MISSIONS_ONLOSE), sizeof(mission.onlose));
-
-		mission.stage = mxml_GetShort(node, SAVE_MISSIONS_STAGE, 0);
 
 		mission.initialOverallInterest = mxml_GetInt(node, SAVE_MISSIONS_INITIALOVERALLINTEREST, 0);
 		mission.initialIndividualInterest = mxml_GetInt(node, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, 0);
@@ -1912,6 +1920,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 	}
 	Com_UnregisterConstList(saveInterestConstants);
+	Com_UnregisterConstList(saveMissionConstants);
 	return success;
 }
 

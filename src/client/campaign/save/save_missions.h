@@ -22,6 +22,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_MISSIONS_H
+#define SAVE_MISSIONS_H
 
 #define SAVE_MISSIONS_MISSION "mission"
 #define SAVE_MISSIONS_MISSION_IDX "IDX"
@@ -49,6 +51,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MISSIONS_UFO "UFO"
 #define SAVE_MISSIONS_ONGEOSCAPE "onGeoscape"
 
+#define SAVE_MISSIONSTAGE_NAMESPACE "saveMissionStage"
+static const constListEntry_t saveMissionConstants[] = {
+	{SAVE_MISSIONSTAGE_NAMESPACE"::notActive", STAGE_NOT_ACTIVE},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::comeFromOrbit", STAGE_COME_FROM_ORBIT},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::reconAir", STAGE_RECON_AIR},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::missionGoTo", STAGE_MISSION_GOTO},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::reconGround", STAGE_RECON_GROUND},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::terrorMission", STAGE_TERROR_MISSION},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::buildBase", STAGE_BUILD_BASE},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::baseAttack", STAGE_BASE_ATTACK},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::subvertGov", STAGE_SUBVERT_GOV},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::supply", STAGE_SUPPLY},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::spreadXVI", STAGE_SPREAD_XVI},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::intercept", STAGE_INTERCEPT},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::baseDiscovered", STAGE_BASE_DISCOVERED},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::harvest", STAGE_HARVEST},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::returnToOrbit", STAGE_RETURN_TO_ORBIT},
+	{SAVE_MISSIONSTAGE_NAMESPACE"::missionOver", STAGE_OVER},
+	{NULL, -1}
+};
+
+#endif
+
 /*
 DTD:
 
@@ -64,8 +89,21 @@ DTD:
 	crashed						CDATA	'false'
 	onWin						CDATA	#IMPLIED
 	onLose						CDATA	#IMPLIED
-	category					CDATA	'0'
-	stage						CDATA	'0'
+	category	(none, recon, terror,
+			 	baseAttack, building,
+			 	supply, XVI, intercept,
+			 	harvest, alienBase)		#REQUIRED
+	stage		(notActive, comeFromOrbit, 
+				reconAir, missionGoTo,
+				reconGround, terrorMission,
+				buildBase, baseAttack,
+				subvertGov, supply,
+				spreadXVI, intercept,
+				baseDiscovered, harvest,
+				returnToOrbit,
+				missionOver)			#REQUIRED
+	
+							CDATA	'0'
 	baseIDX						CDATA	#IMPLIED
 	installationIDX				CDATA	#IMPLIED
 	alienBaseIDX				CDATA	#IMPLIED
