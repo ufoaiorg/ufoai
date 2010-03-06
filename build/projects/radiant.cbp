@@ -618,7 +618,7 @@
 		<Unit filename="../../src/tools/radiant/radiant/namespace/NamespaceAPI.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/mapmodule.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/map/mapmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/material.cpp">

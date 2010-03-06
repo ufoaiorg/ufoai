@@ -34,8 +34,8 @@
 
 #include "modulesystem/singletonmodule.h"
 
-#include "map/parse.h"
-#include "map/write.h"
+#include "parse.h"
+#include "write.h"
 
 class MapDependencies: public GlobalRadiantModuleRef,
 		public GlobalBrushModuleRef,

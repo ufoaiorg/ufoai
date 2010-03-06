@@ -132,6 +132,12 @@ class MaterialSystem
 		const std::string getMaterialFilename () const;
 
 		/**
+		 * Import a material file to the already existing material definition
+		 * @param name The material file to import
+		 */
+		void importMaterialFile (const std::string& name);
+
+		/**
 		 * Generates material for the current selected textures
 		 */
 		void generateMaterialFromTexture ();
