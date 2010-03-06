@@ -682,7 +682,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent, ent->pos, crouchingState, MAX_ROUTE);
+	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(gi.pathingMap);
 
@@ -827,8 +827,9 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 			AI_TryToReloadWeapon(ent, gi.csi->idLeft);
 	}
 
-	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
-	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent))
+	/* if both hands are empty, attempt to get a weapon out of backpack or the
+	 * floor (if TUs permit) */
+	if (!LEFT(ent) && !RIGHT(ent))
 		G_ClientGetWeaponFromInventory(player, ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
