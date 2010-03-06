@@ -179,18 +179,25 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 }
 
 /**
- * @param ent The alien edict that checks whether it should hide
- * @return true if hide is needed or false if the alien thinks that it is not needed
+ * @brief Checks whether the given alien should try to hide because there are enemies close
+ * enough to shoot the alien.
+ * @param ent The alien edict that should (maybe) hide
+ * @return @c true if hide is needed or @c false if the alien thinks that it is not needed
  */
-static qboolean AI_NoHideNeeded (edict_t *ent)
+static qboolean AI_HideNeeded (edict_t *ent)
 {
 	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
 	if (ent->morale > mor_brave->integer) {
 		edict_t *from = NULL;
 		/* test if check is visible */
-		while ((from = G_EdictsGetNextInUse(from))) {
-			/** @todo using the visflags of the ai should be faster here */
-			if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM)) {
+		while ((from = G_EdictsGetNextLivingActor(from))) {
+			if (from->team == ent->team)
+				continue;
+
+			if (G_IsCivilian(from))
+				continue;
+
+			if (G_IsVisibleForTeam(from, ent->team)) {
 				const invList_t *invlist = LEFT(from);
 				const fireDef_t *fd = NULL;
 				if (invlist && invlist->item.t) {
@@ -204,7 +211,9 @@ static qboolean AI_NoHideNeeded (edict_t *ent)
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
 					const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
 					if (damage >= ent->HP / 3)
-						return qtrue;
+						/* now check whether this enemy is visible for this alien */
+						if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM))
+							return qtrue;
 				}
 			}
 		}
@@ -402,10 +411,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 	if (!G_IsRaged(ent)) {
 		/* hide */
-		/** @todo Only hide if the visible actors have long range weapons in their hands
-		 * otherwise make it depended on the mood (or some skill) of the alien whether
-		 * it tries to attack by trying to get as close as possible or to try to hide */
-		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES) || AI_NoHideNeeded(ent)) {
+		if (AI_HideNeeded(ent) || !(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
