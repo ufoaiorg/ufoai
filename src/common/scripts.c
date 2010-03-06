@@ -191,7 +191,10 @@ void Com_RegisterConstInt (const char *name, int value)
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
-		if (!strncmp(variable, a->name, sizeof(a->name))) {
+		if (a->fullname) {
+			if (!strcmp(a->fullname, name))
+				break;
+		} else if (!strncmp(variable, a->name, sizeof(a->name))) {
 			break;
 		}
 	}
