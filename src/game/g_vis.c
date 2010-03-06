@@ -70,6 +70,7 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
  * @note This call isn't cheap - try to do this only if you really need the
  * visibility check or the statement whether one particular actor see another
  * particular actor.
+ * @sa CL_ActorVis
  */
 float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 {

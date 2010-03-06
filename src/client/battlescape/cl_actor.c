@@ -2329,6 +2329,12 @@ static void CL_ActorUpdate_f (void)
 	}
 }
 
+/**
+ * @sa G_ActorVis
+ * @param[in] from The world coordinate to check from
+ * @param[in] check The edict to check the visibility for
+ * @return @c true if the given edict is visible from the given world coordinate, @c false otherwise.
+ */
 static qboolean CL_ActorVis (const vec3_t from, const le_t *check)
 {
 	vec3_t test, dir;
