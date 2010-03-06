@@ -924,8 +924,6 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
 			ent->type = ET_ACTOR;
-			ent->chr.fieldSize = actorSize;
-			ent->fieldSize = ent->chr.fieldSize;
 		}
 	} else if (actorSize == ACTOR_SIZE_2x2) {
 		/* Find valid actor spawn fields for this player. */
@@ -933,8 +931,6 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		if (ent) {
 			ent->type = ET_ACTOR2x2;
 			ent->morale = 100;
-			ent->chr.fieldSize = actorSize;
-			ent->fieldSize = ent->chr.fieldSize;
 		}
 	} else {
 		gi.error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
@@ -947,6 +943,8 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	level.num_alive[ent->team]++;
 	level.num_spawned[ent->team]++;
 	ent->pnum = player->num;
+	ent->chr.fieldSize = actorSize;
+	ent->fieldSize = ent->chr.fieldSize;
 
 	gi.LinkEdict(ent);
 
