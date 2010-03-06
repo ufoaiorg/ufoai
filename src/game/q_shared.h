@@ -415,7 +415,7 @@ typedef int32_t actorSizeEnum_t;
 #define ACTOR_SIZE_2x2 2
 #define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
 
-/** @brief Types of actor sounds being issued by CL_PlayActorSound(). */
+/** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
 typedef enum {
 	SND_DEATH,	/**< Sound being played on actor death. */
 	SND_HURT,	/**< Sound being played when an actor is being hit. */

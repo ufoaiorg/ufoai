@@ -2041,7 +2041,7 @@ void CL_AddPathing (void)
  * @param[in] le The actor
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
-void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
+void CL_ActorPlaySound (const le_t *le, actorSound_t soundType)
 {
 	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
@@ -2331,7 +2331,6 @@ static void CL_ActorUpdate_f (void)
 
 /**
  * @brief Cycles between visible (to selected actor) aliens.
- * @sa CL_DrawSpottedLines_f (Shares quite some code)
  * @sa CL_NextAlien_f
  */
 static void CL_NextAlienVisibleFromActor_f (void)
@@ -2366,7 +2365,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 			if (LE_IsCrouched(le))
 				at[2] += EYE_HT_CROUCH;
 			else
-				at[2] += UNIT_HEIGHT; /* full unit */
+				at[2] += EYE_HT_STAND;
 			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
@@ -2374,6 +2373,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 
 			lastAlien = i;
 			V_CenterView(le->pos);
+			CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
 			return;
 		}
 	} while (i != lastAlien);

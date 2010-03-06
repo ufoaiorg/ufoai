@@ -709,7 +709,7 @@ static void LET_Projectile (le_t * le)
 			 * electrical and gas/chemical stunning)? */
 			if (le->fd->obj->dmgtype != csi.damStunGas)
 				LE_ActorBodyHit(le->ref3, impact, le->dir);
-			CL_PlayActorSound(le->ref3, SND_HURT);
+			CL_ActorPlaySound(le->ref3, SND_HURT);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
@@ -771,7 +771,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 				if (leVictim) {
 					if (fd->obj->dmgtype != csi.damStunGas)
 						LE_ActorBodyHit(leVictim, impact, le->dir);
-					CL_PlayActorSound(leVictim, SND_HURT);
+					CL_ActorPlaySound(leVictim, SND_HURT);
 				}
 			} else {
 				if (fd->impactSound[0]) {

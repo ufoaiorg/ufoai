@@ -112,7 +112,7 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 		}
 	}
 
-	CL_PlayActorSound(le, SND_DEATH);
+	CL_ActorPlaySound(le, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_ActorRemoveFromTeamList(le);
