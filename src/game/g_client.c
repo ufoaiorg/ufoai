@@ -868,7 +868,7 @@ static void G_GetStartingTeam (const player_t* player)
  * @param[in] spawnType The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
  * @return A pointer to a found spawn point or NULL if nothing was found or on error.
  */
-edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
+static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnType)
 {
 	edict_t *ent = NULL;
 
@@ -915,31 +915,42 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
  * @param actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
+edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
 {
+	edict_t *ent;
+
 	if (actorSize == ACTOR_SIZE_NORMAL) {
 		/* Find valid actor spawn fields for this player. */
-		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
+		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
 			ent->type = ET_ACTOR;
 			ent->chr.fieldSize = actorSize;
 			ent->fieldSize = ent->chr.fieldSize;
 		}
-		return ent;
 	} else if (actorSize == ACTOR_SIZE_2x2) {
 		/* Find valid actor spawn fields for this player. */
-		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
+		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 		if (ent) {
 			ent->type = ET_ACTOR2x2;
 			ent->morale = 100;
 			ent->chr.fieldSize = actorSize;
 			ent->fieldSize = ent->chr.fieldSize;
 		}
-		return ent;
+	} else {
+		gi.error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
+				actorSize);
 	}
 
-	gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actorSize: %i)\n",
-			actorSize);
+	if (!ent)
+		return NULL;
+
+	level.num_alive[ent->team]++;
+	level.num_spawned[ent->team]++;
+	ent->pnum = player->num;
+
+	gi.LinkEdict(ent);
+
+	return ent;
 }
 
 /**
@@ -1095,12 +1106,6 @@ void G_ClientTeamInfo (const player_t * player)
 
 		if (ent) {
 			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
-
-			level.num_alive[ent->team]++;
-			level.num_spawned[ent->team]++;
-			ent->pnum = player->num;
-
-			gi.LinkEdict(ent);
 
 			G_ClientReadCharacter(ent);
 

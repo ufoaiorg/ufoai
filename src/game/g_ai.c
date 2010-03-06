@@ -985,10 +985,6 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 {
 	const int team = player->pers.team;
 
-	/* Set Actor state. */
-	ent->type = ET_ACTOR;
-	ent->pnum = player->num;
-
 	/* Set the model and chose alien race. */
 	AI_SetModelAndCharacterValues(ent, team);
 
@@ -999,6 +995,7 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	if (ed != NULL)
 		AI_SetEquipment(ent, team, ed);
 
+	/** @todo set firemode */
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	G_ClientStateChange(player, ent, STATE_REACTION_ONCE, qfalse);
 
@@ -1009,9 +1006,6 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 		AIL_InitActor(ent, "alien", "default");
 	else
 		gi.dprintf("AI_InitPlayer: unknown team AI\n");
-
-	/* link the new actor entity */
-	gi.LinkEdict(ent);
 }
 
 /**
@@ -1041,15 +1035,12 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 
 	/* spawn players */
 	for (i = 0; i < numSpawn; i++) {
-		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
+		edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 		if (!ent) {
 			gi.dprintf("Not enough spawn points for team %i\n", team);
 			break;
 		}
 
-		/* spawn */
-		level.num_spawned[team]++;
-		level.num_alive[team]++;
 		/* initialize the new actor */
 		AI_InitPlayer(player, ent, ed);
 	}

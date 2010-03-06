@@ -242,7 +242,7 @@ void LE_Cleanup(void);
 void LE_AddToScene(void);
 void LE_CenterView(const le_t *le);
 
-trace_t CL_Trace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel);
+trace_t CL_Trace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const le_t * passle, le_t * passle2, int contentmask, int worldLevel);
 
 void LM_Register(void);
 localModel_t *LM_GetByID(const char *id);

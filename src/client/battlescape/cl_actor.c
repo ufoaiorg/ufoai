@@ -2331,15 +2331,18 @@ static void CL_ActorUpdate_f (void)
 
 /**
  * @sa G_ActorVis
- * @param[in] from The world coordinate to check from
- * @param[in] check The edict to check the visibility for
+ * @param[in] from The local entity to do the check for
+ * @param[in] check The local entity to check the visibility for
  * @return @c true if the given edict is visible from the given world coordinate, @c false otherwise.
  */
-static qboolean CL_ActorVis (const vec3_t from, const le_t *check)
+static qboolean CL_ActorVis (const le_t *le, const le_t *check)
 {
 	vec3_t test, dir;
 	float delta;
 	int i;
+	vec3_t from;
+
+	VectorCopy(le->origin, from);
 
 	/* start on eye height */
 	VectorCopy(check->origin, test);
@@ -2363,8 +2366,8 @@ static qboolean CL_ActorVis (const vec3_t from, const le_t *check)
 
 	/* do 3 tests */
 	for (i = 0; i < 3; i++) {
-		trace_t tr = CL_Trace(from, test, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
-		/* trace reached the target - nothing was hit before */
+		const trace_t tr = CL_Trace(from, test, vec3_origin, vec3_origin, le, NULL, MASK_SOLID, cl_worldlevel->integer);
+		/* trace didn't reach the target - something was hit before */
 		if (tr.fraction < 1.0) {
 			/* look further down or stop */
 			if (!delta)
@@ -2403,7 +2406,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
-			if (CL_ActorVis(selActor->origin, le)) {
+			if (CL_ActorVis(selActor, le)) {
 				lastAlien = i;
 				V_CenterView(le->pos);
 				CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
