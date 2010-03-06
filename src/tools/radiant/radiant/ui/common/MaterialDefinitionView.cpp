@@ -76,7 +76,8 @@ namespace ui
 	{
 		if (append.length()) {
 			const std::string& content = _view.getContents();
-			_view.setContents(content + append);
+			if (content.find(append) == std::string::npos)
+				_view.setContents(content + append);
 		}
 	}
 
