@@ -1410,7 +1410,7 @@ void LM_List_f (void)
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
-	float *start, *end;
+	const float *start, *end;
 	trace_t trace;
 	le_t *passle, *passle2;		/**< ignore these for clipping */
 	int contentmask;			/**< search these in your trace - see MASK_* */
@@ -1542,7 +1542,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 

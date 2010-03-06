@@ -2329,6 +2329,51 @@ static void CL_ActorUpdate_f (void)
 	}
 }
 
+static qboolean CL_ActorVis (const vec3_t from, const le_t *check)
+{
+	vec3_t test, dir;
+	float delta;
+	int i;
+
+	/* start on eye height */
+	VectorCopy(check->origin, test);
+	if (LE_IsDead(check)) {
+		test[2] += PLAYER_DEAD;
+		delta = 0;
+	} else if (LE_IsCrouched(check)) {
+		test[2] += PLAYER_CROUCH - 2;
+		delta = (PLAYER_CROUCH - PLAYER_MIN) / 2 - 2;
+	} else {
+		test[2] += PLAYER_STAND;
+		delta = (PLAYER_STAND - PLAYER_MIN) / 2 - 2;
+	}
+
+	/* side shifting -> better checks */
+	dir[0] = from[1] - check->origin[1];
+	dir[1] = check->origin[0] - from[0];
+	dir[2] = 0;
+	VectorNormalize(dir);
+	VectorMA(test, -7, dir, test);
+
+	/* do 3 tests */
+	for (i = 0; i < 3; i++) {
+		trace_t tr = CL_Trace(from, test, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
+		/* trace didn't reach the target - something was hit before */
+		if (tr.fraction < 1.0) {
+			/* look further down or stop */
+			if (!delta)
+				return qfalse;
+			VectorMA(test, 7, dir, test);
+			test[2] -= delta;
+			continue;
+		}
+
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
 /**
  * @brief Cycles between visible (to selected actor) aliens.
  * @sa CL_NextAlien_f
@@ -2352,29 +2397,12 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
-			vec3_t from, at;
-			trace_t tr;
-			VectorCopy(selActor->origin, from);
-			VectorCopy(le->origin, at);
-			/* actor eye height */
-			if (LE_IsCrouched(selActor))
-				from[2] += EYE_HT_CROUCH;
-			else
-				from[2] += EYE_HT_STAND;
-			/* target height */
-			if (LE_IsCrouched(le))
-				at[2] += EYE_HT_CROUCH;
-			else
-				at[2] += EYE_HT_STAND;
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0)
-				continue;
-
-			lastAlien = i;
-			V_CenterView(le->pos);
-			CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
-			return;
+			if (CL_ActorVis(selActor->origin, le)) {
+				lastAlien = i;
+				V_CenterView(le->pos);
+				CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
+				return;
+			}
 		}
 	} while (i != lastAlien);
 }
