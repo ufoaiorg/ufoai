@@ -198,7 +198,7 @@ static qboolean AI_HideNeeded (edict_t *ent)
 				continue;
 
 			if (G_IsVisibleForTeam(from, ent->team)) {
-				const invList_t *invlist = LEFT(from);
+				const invList_t *invlist = RIGHT(from);
 				const fireDef_t *fd = NULL;
 				if (invlist && invlist->item.t) {
 					fd = FIRESH_FiredefForWeapon(&invlist->item);
