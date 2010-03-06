@@ -59,8 +59,8 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, con
  */
 static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
 {
-	const fireDef_t *fd = INVSH_HasReactionFireEnabledWeapon(RIGHT(ent));
-	if (fd)
+	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(ent));
+	if (weapon)
 		return qtrue;
 	return INVSH_HasReactionFireEnabledWeapon(LEFT(ent)) != NULL;
 }
@@ -124,6 +124,39 @@ static qboolean G_ActorHasEnoughTUsReactionFire (const edict_t *ent)
 	const int TUs = G_ActorGetTUForReactionFire(ent);
 	const chrReservations_t *res = &ent->chr.reservedTus;
 	return ent->TU - TUs >= res->shot + res->crouch;
+}
+
+/**
+ * @param ent The actor to set the reaction fire for
+ * @return @c true if the needed settings could have been made or settings are
+ * already valid, @c false otherwise.
+ */
+qboolean G_ReactionFireSetDefault (edict_t *ent)
+{
+	const objDef_t *weapon;
+	const invList_t *invList;
+	actorHands_t hand = ACTOR_HAND_RIGHT;
+
+	if (G_ActorHasWorkingFireModeSet(ent))
+		return qtrue;
+
+	invList = ACTOR_GET_INV(ent, hand);
+	if (!invList) {
+		hand = ACTOR_HAND_LEFT;
+		invList = ACTOR_GET_INV(ent, hand);
+	}
+
+	weapon = INVSH_HasReactionFireEnabledWeapon(invList);
+	if (!weapon)
+		return qfalse;
+
+	ent->chr.RFmode.fmIdx = 0;
+	ent->chr.RFmode.hand = hand;
+	ent->chr.RFmode.weapon = weapon;
+
+	G_EventReactionFireChange(ent);
+
+	return qtrue;
 }
 
 /**

@@ -326,6 +326,7 @@ void G_ReactionFirePreShot(const edict_t *target);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
 qboolean G_CanEnableReactionFire(const edict_t *ent);
+qboolean G_ReactionFireSetDefault(edict_t *ent);
 void G_ReactionFireUpdate(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
 qboolean G_ReactionFireOnMovement(edict_t *target);
 void G_ReactionFireEndTurn(void);

@@ -960,9 +960,9 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 /**
  * @brief Checks whether the given list contains a reaction fire enabled weapon.
  * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
- * fire definition otherwise.
+ * reaction fire enabled object otherwise.
  */
-const fireDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
+const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 {
 	if (!invList)
 		return NULL;
@@ -971,7 +971,7 @@ const fireDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 		if (invList->item.t) {
 			const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 			if (fd && fd->reaction)
-				return fd;
+				return invList->item.t;
 		}
 		invList = invList->next;
 	}

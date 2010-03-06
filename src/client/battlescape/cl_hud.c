@@ -692,8 +692,8 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID
  */
 static qboolean HUD_WeaponWithReaction (const le_t * actor)
 {
-	const fireDef_t *fd = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
-	if (fd)
+	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
+	if (weapon)
 		return qtrue;
 	return INVSH_HasReactionFireEnabledWeapon(LEFT(actor)) != NULL;
 }
