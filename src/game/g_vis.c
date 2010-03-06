@@ -37,7 +37,7 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
  * @brief tests the visibility between two points
  * @param[in] from The point to check visibility from
  * @param[in] to The point to check visibility to
- * @return true if the points are visible from each other, false otherwise.
+ * @return true if the points are invisible from each other (trace hit something), false otherwise.
  */
 static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 {
