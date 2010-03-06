@@ -398,6 +398,7 @@ edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
+void G_ActorGiveTimeUnits(edict_t *ent);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);

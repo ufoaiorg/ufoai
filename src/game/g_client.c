@@ -101,8 +101,7 @@ void G_GiveTimeUnits (int team)
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		ent->state &= ~STATE_DAZED;
-		ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+		G_ActorGiveTimeUnits(ent);
 		G_SendStats(ent);
 	}
 }

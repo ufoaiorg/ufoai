@@ -238,6 +238,16 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 
 /**
+ * @brief Set time units for the given edict. Based on speed skills
+ * @param ent The actor edict
+ */
+void G_ActorGiveTimeUnits (edict_t *ent)
+{
+	ent->state &= ~STATE_DAZED;
+	ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+}
+
+/**
  * @brief Reports and handles death or stun of an actor.
  * @param[in] ent Pointer to an entity being killed or stunned actor.
  * @param[in] state Dead or stunned?

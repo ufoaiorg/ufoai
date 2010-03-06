@@ -154,7 +154,8 @@ qboolean G_ReactionFireSetDefault (edict_t *ent)
 	ent->chr.RFmode.hand = hand;
 	ent->chr.RFmode.weapon = weapon;
 
-	G_EventReactionFireChange(ent);
+	if (!G_IsAI(ent))
+		G_EventReactionFireChange(ent);
 
 	return qtrue;
 }

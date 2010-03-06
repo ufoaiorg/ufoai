@@ -926,6 +926,8 @@ static void AI_SetStats (edict_t * ent, int team)
 	ent->HP = ent->chr.HP;
 	ent->morale = ent->chr.morale;
 	ent->STUN = 0;
+
+	G_ActorGiveTimeUnits(ent);
 }
 
 
@@ -1048,9 +1050,6 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 	/* show visible actors */
 	G_ClearVisFlags(team);
 	G_CheckVis(NULL, qfalse);
-
-	/* give time */
-	G_GiveTimeUnits(team);
 }
 
 
