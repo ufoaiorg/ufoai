@@ -1910,7 +1910,7 @@ void CL_ActorTargetAlign_f (void)
  * @sa CL_TargetingGrenade
  * @sa CL_AddTargetingBox
  * @sa CL_TraceMove
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * Draws the tracer (red, yellow, green box) on the grid
  */
 void CL_AddTargeting (void)
@@ -2023,7 +2023,7 @@ static void CL_AddPathingBox (pos3_t pos)
 
 /**
  * @brief Adds a pathing marker to the current floor when we render the world.
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * Draws the tracer (red, yellow, green box) on the grid
  */
 void CL_AddPathing (void)
@@ -2408,7 +2408,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		 && !LE_IsCivilian(le)) {
 			if (CL_ActorVis(selActor, le)) {
 				lastAlien = i;
-				V_CenterView(le->pos);
+				CL_ViewCenterAtGridPosition(le->pos);
 				CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
 				return;
 			}
@@ -2437,7 +2437,7 @@ static void CL_NextAlien_f (void)
 		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
-			V_CenterView(le->pos);
+			CL_ViewCenterAtGridPosition(le->pos);
 			return;
 		}
 	} while (i != lastAlien);

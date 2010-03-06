@@ -199,7 +199,7 @@ static void CL_SequenceCamera (void)
 	/* fudge to get isometric and perspective modes looking similar */
 	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 }
 
 
@@ -243,7 +243,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
 
 /**
  * @sa CL_Sequence2D
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * @sa CL_SequenceEnd_f
  * @sa MN_PopWindow
  * @sa CL_SequenceFindEnt

@@ -106,7 +106,7 @@ static const spawn_t spawns[] = {
 /**
  * @brief Finds the spawn function for the entity and calls it
  */
-static void CL_CallSpawn (const localEntityParse_t *entData)
+static void CL_SpawnCall (const localEntityParse_t *entData)
 {
 	const spawn_t *s;
 
@@ -128,7 +128,7 @@ static void CL_CallSpawn (const localEntityParse_t *entData)
  * @sa G_SendEdictsAndBrushModels
  * @sa CL_AddBrushModel
  */
-void V_ParseEntitystring (void)
+void CL_SpawnParseEntitystring (void)
 {
 	const char *es = CM_EntityString();
 	int entnum = 0, maxLevel;
@@ -183,7 +183,7 @@ void V_ParseEntitystring (void)
 					break;
 				}
 		}
-		CL_CallSpawn(&entData);
+		CL_SpawnCall(&entData);
 
 		entnum++;
 	}

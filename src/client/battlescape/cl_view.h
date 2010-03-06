@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_VIEW_H
 #define CLIENT_CL_VIEW_H
 
-void V_RenderView(void);
-void V_UpdateRefDef(void);
-void V_CenterView(const pos3_t pos);
-void V_CalcFovX(void);
-void V_LoadMedia(void);
+void CL_ViewRender(void);
+void CL_ViewUpdateRenderData(void);
+void CL_ViewCenterAtGridPosition(const pos3_t pos);
+void CL_ViewCalcFieldOfViewX(void);
+void CL_ViewLoadMedia(void);
 
 extern cvar_t *cl_isometric;
 

@@ -47,7 +47,7 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 	VectorSet(cl.cam.angles, 60.0, 60.0, 0.0);
 	VectorSet(cl.cam.omega, 0.0, 0.0, 0.0);
 	cl.cam.zoom = 1.25;
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 
 	Com_Printf("Starting the game...\n");
 
@@ -58,7 +58,7 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 	cl_worldlevel->modified = qtrue;
 	if (cl.numTeamList) {
 		const le_t *le = cl.teamList[0];
-		V_CenterView(le->pos);
+		CL_ViewCenterAtGridPosition(le->pos);
 	}
 
 	/* activate the renderer */

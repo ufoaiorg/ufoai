@@ -44,13 +44,13 @@ cvar_t* cl_map_debug;
 /**
  * @brief Call before entering a new level, or after vid_restart
  */
-void V_LoadMedia (void)
+void CL_ViewLoadMedia (void)
 {
 	le_t *le;
 	int i, max;
 	char name[32];
 
-	V_UpdateRefDef();
+	CL_ViewUpdateRenderData();
 
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
@@ -61,7 +61,7 @@ void V_LoadMedia (void)
 	/* register models, pics, and skins */
 	SCR_UpdateScreen();
 	R_ModBeginLoading(cl.configstrings[CS_TILES], atoi(cl.configstrings[CS_LIGHTMAP]), cl.configstrings[CS_POSITIONS], cl.configstrings[CS_NAME]);
-	V_ParseEntitystring();
+	CL_SpawnParseEntitystring();
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
 	cls.loadingPercent += 10.0f;
@@ -129,7 +129,7 @@ void V_LoadMedia (void)
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
  * @sa V_CalcFovY
  */
-void V_CalcFovX (void)
+void CL_ViewCalcFieldOfViewX (void)
 {
 	if (cl_isometric->integer) {
 		const float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
@@ -140,9 +140,9 @@ void V_CalcFovX (void)
 }
 
 /**
- * @sa V_CalcFovX
+ * @sa CL_ViewCalcFieldOfViewX
  */
-static inline void V_CalcFovY (const float width, const float height)
+static inline void CL_ViewCalcFieldOfViewY (const float width, const float height)
 {
 	const float x = width / tan(refdef.fieldOfViewX / 360.0 * M_PI);
 	refdef.fieldOfViewY = atan(height / x) * 360.0 / M_PI;
@@ -151,12 +151,12 @@ static inline void V_CalcFovY (const float width, const float height)
 /**
  * @brief Updates the refdef
  */
-void V_UpdateRefDef (void)
+void CL_ViewUpdateRenderData (void)
 {
 	VectorCopy(cl.cam.camorg, refdef.viewOrigin);
 	VectorCopy(cl.cam.angles, refdef.viewAngles);
 
-	V_CalcFovY(viddef.viewWidth, viddef.viewHeight);
+	CL_ViewCalcFieldOfViewY(viddef.viewWidth, viddef.viewHeight);
 
 	/* setup refdef */
 	refdef.time = cl.time * 0.001;
@@ -167,7 +167,7 @@ void V_UpdateRefDef (void)
 /**
  * @sa SCR_UpdateScreen
  */
-void V_RenderView (void)
+void CL_ViewRender (void)
 {
 	refdef.brushCount = 0;
 	refdef.aliasCount = 0;
@@ -215,7 +215,7 @@ void V_RenderView (void)
 	}
 
 	/* update ref def */
-	V_UpdateRefDef();
+	CL_ViewUpdateRenderData();
 
 	/* render the world */
 	R_RenderFrame();
@@ -230,7 +230,7 @@ void V_RenderView (void)
  * @sa LE_CenterView
  * @sa CL_CameraRoute
  */
-void V_CenterView (const pos3_t pos)
+void CL_ViewCenterAtGridPosition (const pos3_t pos)
 {
 	vec3_t vec;
 

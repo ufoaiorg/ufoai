@@ -230,7 +230,7 @@ static void CL_ClearState (void)
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	cl.cam.zoom = 1.0;
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 
 	/* wipe the particles with every new map */
 	r_numParticles = 0;
@@ -527,7 +527,7 @@ void CL_RequestNextDownload (void)
 		}
 	}
 
-	V_LoadMedia();
+	CL_ViewLoadMedia();
 
 	{
 		struct dbuffer *msg = new_dbuffer();

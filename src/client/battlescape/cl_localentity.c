@@ -89,7 +89,7 @@ void CL_RecalcRouting (const le_t* le)
 
 /**
  * @brief Add the local models to the scene
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * @sa LE_AddToScene
  * @sa LM_AddModel
  */
@@ -194,7 +194,7 @@ qboolean LE_IsLivingAndVisibleActor (const le_t *le)
 
 /**
  * @brief Register misc_models
- * @sa V_LoadMedia
+ * @sa CL_ViewLoadMedia
  */
 void LM_Register (void)
 {
@@ -243,7 +243,7 @@ localModel_t *LM_GetByID (const char *id)
  * @param[in] levelflags The levels in which the entity resides/is visible.
  * @param[in] renderFlags The flags for the renderer, eg. 'translucent'.
  * @note misc_model
- * @sa V_ParseEntitystring
+ * @sa CL_SpawnParseEntitystring
  * @sa LM_AddToScene
  */
 localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
@@ -965,7 +965,7 @@ void LET_BrushModel (le_t *le)
 
 /**
  * @brief Adds ambient sounds from misc_sound entities
- * @sa V_ParseEntitystring
+ * @sa CL_SpawnParseEntitystring
  */
 void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
 {
@@ -1049,7 +1049,7 @@ void _LE_NotFoundError (const int entnum, const char *file, const int line)
  * @brief Center the camera on the local entity's origin
  * @param le The local entity which origin is used to center the camera
  * @sa CL_CenterView
- * @sa V_CenterView
+ * @sa CL_ViewCenterAtGridPosition
  * @sa CL_CameraRoute
  */
 void LE_CenterView (const le_t *le)
@@ -1252,7 +1252,7 @@ static inline qboolean LE_IsOriginBrush (const le_t *const le)
 }
 
 /**
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * @sa CL_AddUGV
  * @sa CL_AddActor
  */
