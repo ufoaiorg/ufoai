@@ -2364,7 +2364,7 @@ static qboolean CL_ActorVis (const vec3_t from, const le_t *check)
 	/* do 3 tests */
 	for (i = 0; i < 3; i++) {
 		trace_t tr = CL_Trace(from, test, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
-		/* trace didn't reach the target - something was hit before */
+		/* trace reached the target - nothing was hit before */
 		if (tr.fraction < 1.0) {
 			/* look further down or stop */
 			if (!delta)
