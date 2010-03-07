@@ -244,7 +244,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	tu = 0;
 	initTU = ent->TU;
 
-	while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouchingState))
+	while ((dv = gi.MoveNext(gi.pathingMap, pos, crouchingState))
 			!= ROUTING_UNREACHABLE) {
 		const int oldZ = pos[2];
 		/* dv indicates the direction traveled to get to the new cell and the original cell height. */

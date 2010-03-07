@@ -72,7 +72,7 @@ void Grid_MoveMark(const routing_t *map, const actorSizeEnum_t actorSize, pathin
 void Grid_MoveCalc(const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(pathing_t *path);
 pos_t Grid_MoveLength(const pathing_t *path, const pos3_t to, byte crouchingState, qboolean stored);
-int Grid_MoveNext(const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState);
+int Grid_MoveNext(const pathing_t *path, const pos3_t toPos, byte crouchingState);
 int Grid_Height(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
 unsigned int Grid_Ceiling(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
 int Grid_Floor(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);

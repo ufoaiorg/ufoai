@@ -785,7 +785,7 @@ void AI_TurnIntoDirection (edict_t *aiActor, const pos3_t pos)
 
 	G_MoveCalc(aiActor->team, aiActor, pos, crouchingState, MAX_ROUTE);
 
-	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouchingState);
+	dv = gi.MoveNext(gi.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */

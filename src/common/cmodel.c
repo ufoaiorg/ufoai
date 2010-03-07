@@ -2078,18 +2078,16 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
 
 
 /**
- * @brief The next stored move direction
- * @param[in] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] from
+ * @brief Get the direction to use to move to a position (used to reconstruct the path)
+ * @param[in] path Pointer to client or server side pathing table (le->PathMap, svPathMap)
+ * @param[in] toPos The desired location
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @return (Guess: a direction index (see dvecs and DIRECTIONS))
+ * @return a direction index (see dvecs and DIRECTIONS)
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState)
+int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingState)
 {
-	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
+	const pos_t l = RT_AREA(path, toPos[0], toPos[1], toPos[2], crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
 	if (!l || l == ROUTING_NOT_REACHABLE) {
@@ -2098,7 +2096,7 @@ int Grid_MoveNext (const routing_t *map, const actorSizeEnum_t actorSize, pathin
 	}
 
 	/* Return the information indicating how the actor got to this cell */
-	return RT_AREA_FROM(path, from[0], from[1], from[2], crouchingState);
+	return RT_AREA_FROM(path, toPos[0], toPos[1], toPos[2], crouchingState);
 }
 
 

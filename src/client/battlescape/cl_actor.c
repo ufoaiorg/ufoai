@@ -753,7 +753,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
 		if (++counter > 100) {
 			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], LE_IsCrouched(selActor) ? 1 : 0);
@@ -795,7 +795,7 @@ static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(clMap, le->fieldSize, le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		const byte length2 = CL_ActorMoveLength(le, pos);
 		if (length2 <= tus)
 			return;
