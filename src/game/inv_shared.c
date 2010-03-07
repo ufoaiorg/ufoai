@@ -784,7 +784,7 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->i.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+	if (chr->i.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
 		const objDef_t *od = chr->i.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))

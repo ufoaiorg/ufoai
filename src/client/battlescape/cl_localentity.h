@@ -124,7 +124,8 @@ typedef struct le_s {
 	const struct le_s *ref3;
 	inventory_t i;
 	int left, right, extension, headgear; /**< item indices that the actor holds in his hands */
-	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_* */
+	actorSizeEnum_t fieldSize;				/**< ACTOR_SIZE_*
+											 * @todo future thoughts: maybe define this in team_*.ufo files instead and use le->teamdef->fieldsize */
 	teamDef_t* teamDef;
 	int gender;	/**< @sa @c nametypes_t */
 	const fireDef_t *fd;	/**< in case this is a projectile or an actor */

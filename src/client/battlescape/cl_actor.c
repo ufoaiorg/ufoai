@@ -1073,10 +1073,6 @@ static void CL_ActorStandCrouch_f (void)
 	if (!CL_ActorCheckAction(selActor))
 		return;
 
-	if (selActor->fieldSize == ACTOR_SIZE_2x2)
-		/** @todo future thoughts: maybe define this in team_*.ufo files instead? */
-		return;
-
 	/* Check if we should even try to send this command (no TUs left or). */
 	if (CL_ActorUsableTUs(selActor) >= TU_CROUCH || CL_ActorReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
 		/* send a request to toggle crouch to the server */
