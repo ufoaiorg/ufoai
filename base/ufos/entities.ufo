@@ -31,6 +31,7 @@ entity info_player_start {
 	description	"Starting point for a player. Only for multiplayer teams."
 	color		"1 0 0"
 	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
 
 	mandatory {
 		team	"The number of the team for this player starting point. 0 is reserved for civilians and critters (use info_civilian_start instead)"
@@ -56,6 +57,7 @@ entity info_human_start {
 	description	"Starting point for a single player human."
 	color		"0 1 0"
 	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
 
 	mandatory {
 		origin	"position"
@@ -80,6 +82,7 @@ entity info_alien_start {
 	description	"Starting point for a single player alien."
 	color		"0 0 1"
 	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
 
 	mandatory {
 		origin	"position"
@@ -104,6 +107,7 @@ entity info_2x2_start {
 	description	"Starting point for a ugv 2x2 unit."
 	color		"0 0 1"
 	size		"-32 -32 -24 32 32 32"
+	spawnflags	"dead dead2"
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
@@ -129,6 +133,7 @@ entity info_civilian_start {
 	description	"Starting point for a civilian."
 	color		"0 1 1"
 	size		"-16 -16 -24 16 16 32"
+	spawnflags	"dead dead2 crouched"
 
 	mandatory {
 		origin	"position"

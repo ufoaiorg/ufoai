@@ -622,10 +622,6 @@ int G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
-		 * the item up hasn't moved at all */
-		G_GetFloorItems(ent);
-
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
@@ -909,6 +905,23 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
 	return (num < sv_maxsoldiersperplayer->integer && level.num_spawned[team] < sv_maxsoldiersperteam->integer);
 }
 
+
+/**
+ * @brief Think function for actors that spawn dead
+ * @param ent The actor
+ */
+static void G_ThinkActorDieAfterSpawn (edict_t *ent)
+{
+	G_ActorDie(ent, STATE_DEAD, NULL);
+	ent->think = NULL;
+}
+
+static void G_ThinkActorGoCrouch (edict_t *ent)
+{
+	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, qtrue);
+	ent->think = NULL;
+}
+
 /**
  * @brief Searches a free spawning point for a given actor size
  * @param actorSize The actor size to get a spawning point for
@@ -944,8 +957,15 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	ent->pnum = player->num;
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
+	if (ent->spawnflags & STATE_CROUCHED) {
+		ent->think = G_ThinkActorGoCrouch;
+		ent->nextthink = 1;
+	}
 
-	gi.LinkEdict(ent);
+	if (ent->spawnflags & STATE_DEAD) {
+		ent->think = G_ThinkActorDieAfterSpawn;
+		ent->nextthink = 1;
+	}
 
 	return ent;
 }
