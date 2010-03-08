@@ -180,6 +180,7 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
  * @param[in,out] map All we know about the map to assemble
  * @param[in] filename The name of the .UMP file, used in error messages
  * @param[out] a Pointer to the assembly to be initialized, must be allocated.
+ * @param[in] text The text of the ump file to parse
  * @sa SV_AssembleMap
  * @sa SV_ParseMapTile
  * @note: format of size: "size x y"

@@ -233,7 +233,7 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
  * @param[in] veca Position to start from
  * @param[in] scale Speed of the movement
  * @param[in] vecb Movement direction
- * @param[out] vecc Target vector
+ * @param[out] outVector Target vector
  */
 void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t outVector)
 {
