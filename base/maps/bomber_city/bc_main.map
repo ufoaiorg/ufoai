@@ -21816,18 +21816,18 @@
 // entity 250
 {
 "classname" "misc_model"
-"origin" "975 178 -3"
+"origin" "977 180 -3"
 "model" "models/objects/cars/hummer/hummer.md2"
-"angle" "2.50448e-006"
 "spawnflags" "255"
+"angles" "0 2.50448e-06 0"
 }
 // entity 251
 {
 "classname" "misc_model"
-"origin" "977 1550 -3"
+"origin" "975 1548 -3"
 "model" "models/objects/cars/hummer/hummer.md2"
-"angle" "-180"
 "spawnflags" "255"
+"angles" "0 -180 0"
 }
 // entity 252
 {
@@ -21842,8 +21842,8 @@
 "classname" "misc_model"
 "origin" "832 1767 4"
 "model" "models/objects/cars/policecar/policecar.md2"
-"angle" "-180"
 "spawnflags" "255"
+"angles" "0 -180 0"
 }
 // entity 254
 {
