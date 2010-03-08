@@ -106,7 +106,7 @@ Section: games
 Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}, ufoai-tools
-Suggests: ufoai-map-sources
+Suggests: ufoai-map-sources, g3dviewer
 Description: UFO: Alien Invasion - map-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
