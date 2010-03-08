@@ -2518,7 +2518,7 @@ void AIR_SaveAircraftXML (mxml_node_t *node, const aircraft_t* const aircraft, q
 	mxml_AddInt(node, "hangar", aircraft->hangar);
 
 	subnode = mxml_AddNode(node, "aircraftteam");
-	for (l = 0; l < aircraft->teamSize; l++) {
+	for (l = 0; l < MAX_ACTIVETEAM; l++) {
 		if (aircraft->acTeam[l]) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, "member");
 			mxml_AddInt(ssnode, "idx", aircraft->acTeam[l]->idx);
