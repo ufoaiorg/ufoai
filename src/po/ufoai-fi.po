@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-02 21:32+0100\n"
-"PO-Revision-Date: 2010-03-05 00:13+0200\n"
+"PO-Revision-Date: 2010-03-08 18:05+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -13070,49 +13070,37 @@ msgstr "Pelaamassa"
 #~ msgid "Weapon in right hand cannot be reloaded."
 #~ msgstr "Asetta oikeassa kädessä ei voi ladata."
 #~ msgid "No reload possible for right hand, already fully loaded."
-#~ msgstr "Lataaminen ei onnistu oikeassa kädessä, on jo ladattu täyteen."
+#~ msgstr "Lataaminen ei onnistu oikeassa kädessä. Ase on jo ladattu täyteen."
 #~ msgid "No reload possible for right hand, you don't have backup ammo."
-#~ msgstr "Lataaminen ei onnistu oikeassa kädessä, sinulla ei ole vara ammuksia."
+#~ msgstr "Lataaminen ei onnistu oikeassa kädessä. Sinulla ei ole vara ammuksia."
 #~ msgid "Not enough TUs for reloading weapon in right hand."
-#~ msgstr "Ei tarpeeksi TU:ta lataaksesi aseen oikeaan käteen."
-
-#, fuzzy
+#~ msgstr "Ei tarpeeksi TU:ta oikeassa kädessä olevan aseen lataamiseksi."
 #~ msgid "Base-Defense Laser Turret"
-#~ msgstr "Valitse tukikohta"
+#~ msgstr "Tukikohdan puolustus Laser-torni"
 #~ msgid "Enemy spotted"
 #~ msgstr "Vihollinen huomattu"
-
-#, fuzzy
 #~ msgid "Rename installation"
-#~ msgstr "Kansakunnat"
+#~ msgstr "Uudelleennimeä rakennus"
 #~ msgid "Build a %s or %s first."
-#~ msgstr "Rakenna %s tai %s ensin."
-
-#, fuzzy
+#~ msgstr "Rakenna %s tai %s ensimmäisenä."
 #~ msgid "Slot %i:\t%s (%s)"
-#~ msgstr "Panssari:\t%s\n"
+#~ msgstr "Paikka %i:\t%s (%s)"
 #~ msgid "  * %i x\t%s\n"
 #~ msgstr "  * %i x\t%s\n"
 #~ msgid "  * %s\n"
 #~ msgstr "  * %s\n"
-
-#, fuzzy
 #~ msgid "Add selected item"
-#~ msgstr "Lisää tutkija"
-
-#, fuzzy
+#~ msgstr "Lisää valittu tavara"
 #~ msgid "D-F Tank"
-#~ msgstr "Siirrä"
+#~ msgstr "D-F Tankki"
 #~ msgid "%d day\n"
 #~ msgid_plural "%d days\n"
 #~ msgstr[0] "%d päivä\n"
 #~ msgstr[1] "%d päivää\n"
-
-#, fuzzy
 #~ msgid "%s"
 #~ msgstr ""
 #~ "%s\n"
-#~ "%s"
+#~ "%s\n"
 #~ msgid "Previous category"
 #~ msgstr "Edellinen kategoria"
 #~ msgid "Next category"
@@ -13129,124 +13117,78 @@ msgstr "Pelaamassa"
 #~ msgstr "Tutkimustulokset"
 #~ msgid "Leave UFOpaedia"
 #~ msgstr "Sulje UFOpedia"
-
-#, fuzzy
 #~ msgid "Base facility destroyed"
-#~ msgstr "Rakennukset"
+#~ msgstr "Tukikohdan rakennukset tuhottu"
 #~ msgid "%i c\n"
 #~ msgstr "%i k\n"
 #~ msgid "Missing Large UFO Hangar"
 #~ msgstr "Iso UFO-halli Puuttuu"
 #~ msgid "Missing Small UFO Hangar"
 #~ msgstr "Pieni UFO-halli Puuttuu"
-
-#, fuzzy
 #~ msgid "UFOpaedia Content"
 #~ msgstr "UFOpedia"
-
-#, fuzzy
 #~ msgid "UFOpaedia Index: %s"
-#~ msgstr "UFOpedia"
-
-#, fuzzy
+#~ msgstr "UFOpedia: %s"
 #~ msgid "Selected defence:"
-#~ msgstr "Valitse tukikohta"
+#~ msgstr "Valitse puolustus:"
 #~ msgid "Install selected defence system"
-#~ msgstr "Asenna valittu puolustusjätjestelmä"
-
-#, fuzzy
+#~ msgstr "Asenna valittu puolustusjärjestelmä"
 #~ msgid "Installation #%i"
-#~ msgstr "Kansakunnat"
+#~ msgstr "Asennukset #%i"
 #~ msgid "Slow down time"
 #~ msgstr "Hidasta ajankulua"
 #~ msgid "Speed up time"
 #~ msgstr "Nopeuta ajankulua"
-
-#, fuzzy
 #~ msgid "Could not set up your installation at this location"
-#~ msgstr "Tukikohdan perustaminen tähän kohtaan ei onnistunut"
+#~ msgstr "Rakennuksen perustaminen tähän kohtaan ei onnistunut"
 #~ msgid "Could not set up your base at this location"
 #~ msgstr "Tukikohdan perustaminen tähän kohtaan ei onnistunut"
-
-#, fuzzy
 #~ msgid "10 sec"
 #~ msgstr "5 s"
-
-#, fuzzy
 #~ msgid "1 min"
 #~ msgstr "5 min"
-
-#, fuzzy
 #~ msgid "10 mins"
 #~ msgstr "5 min"
-
-#, fuzzy
 #~ msgid "Sell ufo"
-#~ msgstr "Myy lentokone"
-
-#, fuzzy
+#~ msgstr "Myy ufo"
 #~ msgid "Previous alien containment"
-#~ msgstr "Edellinen"
-
-#, fuzzy
+#~ msgstr "Edellinen alien säilytystila"
 #~ msgid "Amounts"
-#~ msgstr "Panssari"
+#~ msgstr "Summa"
 #~ msgid "Create base"
 #~ msgstr "Perusta tukikohta"
-
-#, fuzzy
 #~ msgid "Store the UFO in base"
-#~ msgstr "Vaihda seuraavaan tukikohtaan"
-
-#, fuzzy
+#~ msgstr "Varastoi ufo tukikohtaan tukikohtaan"
 #~ msgid "Destroy UFO"
-#~ msgstr "Tuhoa"
+#~ msgstr "Tuhoa ufo"
 #~ msgid "Couldn't open file"
 #~ msgstr "Tiedoston avaaminen ei onnistunut"
-
-#, fuzzy
 #~ msgid "Error saving xml game."
 #~ msgstr "Pelin tallentaminen ei onnistunut."
-
-#, fuzzy
 #~ msgid "Alien spotted: %s!"
-#~ msgstr "Muukalainen!\n"
+#~ msgstr "Alien havaittu\n"
 #~ msgid "Alien spotted!\n"
-#~ msgstr "Muukalainen!\n"
+#~ msgstr "Alien havaittu!\n"
 #~ msgid "CREDIT"
 #~ msgstr "VARAT:"
 #~ msgid "Serverbrowser"
 #~ msgstr "Palvelinselain"
 #~ msgid "New game"
 #~ msgstr "Uusi peli"
-
-#, fuzzy
 #~ msgid "No game to save"
-#~ msgstr "Tukikohdan nimi"
-
-#, fuzzy
+#~ msgstr "Peliä ei ole tallennettu"
 #~ msgid "Reload"
-#~ msgstr "Perillä kohteessa"
-
-#, fuzzy
+#~ msgstr "Uudelleenlataus"
 #~ msgid "Primary weapons"
 #~ msgstr "Pääaseet"
-
-#, fuzzy
 #~ msgid "Secondary weapons"
-#~ msgstr "Näytä vain vara-aseet"
-
-#, fuzzy
+#~ msgstr "Vara-aseet"
 #~ msgid "Heavy weapons"
-#~ msgstr "Raskaat aseet:"
-
-#, fuzzy
+#~ msgstr "Raskaat aseet"
 #~ msgid "Personal Armour"
-#~ msgstr "Näytä panssarit"
-
-#, fuzzy
+#~ msgstr "Henkilökohtaiset panssarit"
 #~ msgid "An alien was killed: %s\n"
-#~ msgstr "Muukalaisia tapettu\t%i\n"
+#~ msgstr "Alieneita tapettu: %s\n"
 #~ msgid "Base #3"
 #~ msgstr "3. tukikohta"
 #~ msgid "Base #4"
@@ -13259,62 +13201,42 @@ msgstr "Pelaamassa"
 #~ msgstr "7. tukikohta"
 #~ msgid "Base #8"
 #~ msgstr "8. tukikohta"
-
-#, fuzzy
 #~ msgid "Buy/Sell Aircraft..."
-#~ msgstr "Myy lentokone"
-
-#, fuzzy
+#~ msgstr "Osta/Myy lentokone"
 #~ msgid "Produce..."
 #~ msgstr "Tuotanto"
-
-#, fuzzy
 #~ msgid "Enter base"
 #~ msgstr "Sisäänkäynti"
 #~ msgid "Edit"
 #~ msgstr "Muokkaa"
 #~ msgid "Race:"
 #~ msgstr "Rotu:"
-
-#, fuzzy
 #~ msgid "Previous aircraft"
-#~ msgstr "Edellinen"
-
-#, fuzzy
+#~ msgstr "Edellinen lentokone"
 #~ msgid "Show available primary weapons"
-#~ msgstr "Näytä pääaseet"
-
-#, fuzzy
+#~ msgstr "Näytä vain pääaseet"
 #~ msgid "Show available secondary weapons"
 #~ msgstr "Näytä vain vara-aseet"
-
-#, fuzzy
 #~ msgid "Show available heavy weapons"
-#~ msgstr "Näytä pääaseet"
-
-#, fuzzy
+#~ msgstr "Näytä vain raskaat aseet"
 #~ msgid "Show available miscellaneous equipment and weapons"
-#~ msgstr "Näytä muut tarvikkeet"
-
-#, fuzzy
+#~ msgstr "Näytä vain muut tarvikkeetja aseet"
 #~ msgid "Show available armour"
 #~ msgstr "Näytä panssarit"
 #~ msgid "Buy aircraft"
 #~ msgstr "Osta lentokone"
-
-#, fuzzy
 #~ msgid "Produce aircraft"
-#~ msgstr "Edellinen"
+#~ msgstr "Lentokone tuotanto"
 #~ msgid ""
 #~ "Aliens captured\t%i\n"
 #~ "\n"
 #~ msgstr ""
-#~ "Muukalaisia kaapattu\t%i\n"
+#~ "Alieneita kaapattu\t%i\n"
 #~ "\n"
 #~ msgid "Enemies killed\t%i\n"
 #~ msgstr "Vihollisia tapettu\t%i\n"
 #~ msgid "Civilians killed by the Aliens\t%i\n"
-#~ msgstr "Muukalaisten tappamia siviilejä\t%i\n"
+#~ msgstr "Alieneiden tappamia siviilejä\t%i\n"
 #~ msgid "Civilians killed by the Enemies\t%i\n"
 #~ msgstr "Vihollisten tappamia siviilejä\t%i\n"
 #~ msgid "Civilians killed by your Team\t%i\n"
@@ -13327,88 +13249,58 @@ msgstr "Pelaamassa"
 #~ "Pelastettuja siviilejä\t%i\n"
 #~ "\n"
 #~ "\n"
-
-#, fuzzy
 #~ msgid "Crashed UFO - Scout"
-#~ msgstr "Varasto"
-
-#, fuzzy
+#~ msgstr "Tuhoutunut UFO - Tiedustelija"
 #~ msgid "Stop time"
-#~ msgstr "Nopeuta ajankulua"
+#~ msgstr "Pysäytä ajankulku"
 #~ msgid "Hire soldiers"
 #~ msgstr "Palkkaa sotilaita"
 #~ msgid "Hire scientists"
 #~ msgstr "Palkkaa tutkijoita"
 #~ msgid "Hire workers"
 #~ msgstr "Palkkaa työläisiä"
-
-#, fuzzy
 #~ msgid "Hire pilots"
-#~ msgstr "Palkkaa työntekijöitä"
-
-#, fuzzy
+#~ msgstr "Palkkaa lentäjiä"
 #~ msgid "Visit http://ufoai.sf.net"
 #~ msgstr "http://ufoai.sf.net"
 #~ msgid "and join irc.freenode.org #ufo:ai"
 #~ msgstr "ja liity irc.freenode.org #ufo:ai"
-
-#, fuzzy
 #~ msgid "Pilot %s %s\n"
-#~ msgstr "Panssari:\t%s\n"
-
-#, fuzzy
+#~ msgstr "Lentäjä %s %s\n"
 #~ msgid "Soldier %s %s\n"
-#~ msgstr "Sotilaat"
-
-#, fuzzy
+#~ msgstr "Sotilas %s %s\n"
 #~ msgid "Aircraft %s\n"
-#~ msgstr "Lentokoneet"
-
-#, fuzzy
+#~ msgstr "Lentokone %s\n"
 #~ msgid "Close down messages"
-#~ msgstr "Näytä viestit"
+#~ msgstr "Sulje viestit"
 #~ msgid "Increase production by 1"
-#~ msgstr "Lisää yksi tuote"
+#~ msgstr "Lisää yksi tuote tuotantoon"
 #~ msgid "Decrease production by 1"
-#~ msgstr "Vähennä yksi tuote"
+#~ msgstr "Vähennä yksi tuote tuotannosta"
 #~ msgid "Increase production by 10"
-#~ msgstr "Lisää 10 yksikköä"
+#~ msgstr "Lisää 10 yksikköä tuotantoon"
 #~ msgid "Decrease production by 10"
-#~ msgstr "Vähennä 10 yksikköä"
+#~ msgstr "Vähennä 10 yksikköä tuotannosta"
 #~ msgid "Buy item"
-#~ msgstr "Osta"
+#~ msgstr "Osta tavaroita"
 #~ msgid "Sell item"
-#~ msgstr "Myy"
+#~ msgstr "Myy tavaroita"
 #~ msgid "Add scientist"
 #~ msgstr "Lisää tutkija"
-
-#, fuzzy
 #~ msgid "Build at least one workshop"
-#~ msgstr "Laboratorio pitää rakentaa ensin"
-
-#, fuzzy
+#~ msgstr "Rakenna vähintään yksi Laboratorio"
 #~ msgid "Can't transfer (click for more info)"
-#~ msgstr "Vain tukikohtien välillä voi siirtää"
-
-#, fuzzy
+#~ msgstr "Ei voi siirtää (klikkaa lisätietoja)"
 #~ msgid "Build at least one functional Laboratory (click for more info)"
-#~ msgstr "Laboratorio pitää rakentaa ensin"
+#~ msgstr "Rakenna vähintään yksi Laboratorio (klikkaa lisätietoja)"
 #~ msgid "What to do?"
-#~ msgstr "Toiminta"
-
-#, fuzzy
+#~ msgstr "Mitä tehdään?"
 #~ msgid "Enable all pause settings"
-#~ msgstr "Peliasetukset"
-
-#, fuzzy
+#~ msgstr "Salli kaikki tauko asetukset"
 #~ msgid "Change all sound settings"
-#~ msgstr "Ääniasetukset"
-
-#, fuzzy
+#~ msgstr "Muuta kaikki Ääniasetukset"
 #~ msgid "Automatically resolve mission"
-#~ msgstr "Taktiset tehtävät"
-
-#, fuzzy
+#~ msgstr "Ratkaise tehtävä automaattisesti"
 #~ msgid "xaw95_ammo_txt"
 #~ msgstr "<TODO>"
 #~ msgid "xaw95_ammo_pre_txt"
@@ -13416,51 +13308,33 @@ msgstr "Pelaamassa"
 #~ msgid "chaingun_ammo_pre_txt"
 #~ msgstr "<TODO>"
 #~ msgid "You've got a new aircraft (a %s) in base %s"
-#~ msgstr "Tukikohtaan %2$s saatiin uusi lentokone %1$s"
-
-#, fuzzy
+#~ msgstr "Tukikohtaan %s saatiin uusi lentokone %s"
 #~ msgid "not a working hangar"
-#~ msgstr "Takaisin halliin"
-
-#, fuzzy
+#~ msgstr "Ei toimivaa hallia"
 #~ msgid "no more quarter for employees aboard"
 #~ msgstr "Tukikohdassa ei ole tarpeeksi asuinhuoneistoja työntekijöille."
 #~ msgid "Show only employees"
 #~ msgstr "Näytä vain työntekijät"
 #~ msgid "Show only aliens"
-#~ msgstr "Näytä vain muukalaiset"
+#~ msgstr "Näytä vain alienit"
 #~ msgid "Show only aircraft"
-#~ msgstr "Näytä vain lentokone"
-
-#, fuzzy
+#~ msgstr "Näytä vain lentokoneet"
 #~ msgid "Buy craftitem"
 #~ msgstr "Osta"
-
-#, fuzzy
 #~ msgid "Sell craftitem"
 #~ msgstr "Myy"
-
-#, fuzzy
 #~ msgid "No power supplies in this base"
-#~ msgstr "Tukikohdan nimi"
-
-#, fuzzy
+#~ msgstr "Ei voimalaitosta tässä tukikohdassa"
 #~ msgid "No storage in this base"
-#~ msgstr "Tukikohdan nimi"
-
-#, fuzzy
+#~ msgstr "Ei varastoa tässä tukikohdassa"
 #~ msgid "Show aircraft"
 #~ msgstr "Näytä vain lentokone"
-
-#, fuzzy
 #~ msgid "Show craftitems"
-#~ msgstr "Näytä vain lentokone"
+#~ msgstr "Näytä tuotteet"
 #~ msgid "Back to hangar"
 #~ msgstr "Takaisin halliin"
-
-#, fuzzy
 #~ msgid "Hangar capacity:"
-#~ msgstr "Työpaja"
+#~ msgstr "Hallin koko:"
 #~ msgid "Very slow"
 #~ msgstr "Erittäin hidas"
 #~ msgid "Slow"
@@ -13472,242 +13346,148 @@ msgstr "Pelaamassa"
 #~ msgid "medic"
 #~ msgid_plural "medics"
 #~ msgstr[0] "lääkintämies"
-#~ msgstr[1] "lääkintämiestä"
-
-#, fuzzy
+#~ msgstr[1] "lääkintämiehet"
 #~ msgid ""
 #~ "\n"
 #~ "\n"
 #~ "Selected base:\t\t\t"
-#~ msgstr "Valitse tukikohta"
-
-#, fuzzy
+#~ msgstr "Valitse tukikohta:\t\t\t"
 #~ msgid "Not enough hospital space"
-#~ msgstr "Ei tarpeeksi työpajoja"
+#~ msgstr "Ei tarpeeksi tilaa sairaalassa"
 #~ msgid "100000 c"
 #~ msgstr "100000 ör"
-
-#, fuzzy
 #~ msgid "Test"
-#~ msgstr "Aavikko"
-
-#, fuzzy
+#~ msgstr "Testi"
 #~ msgid "Buy factor:"
-#~ msgstr "Osta lentokone"
+#~ msgstr "Osta"
 #~ msgid "alien_xvi_pre_txt"
 #~ msgstr "<TODO>"
-
-#, fuzzy
 #~ msgid "Alien Medium Armour"
 #~ msgstr "<TODO>"
-
-#, fuzzy
 #~ msgid "%s\t%0.2f%%\n"
-#~ msgstr "%i / %i"
-
-#, fuzzy
+#~ msgstr "%s\t%0.2f%%\n"
 #~ msgid "Check UFOpaedia entry"
-#~ msgstr "Sulje UFOpedia"
-
-#, fuzzy
+#~ msgstr "Tarkista UFOpedia"
 #~ msgid "Alive aliens in this base:"
-#~ msgstr "Muukalaissäilytystila"
-
-#, fuzzy
+#~ msgstr "Eläviä alieneita tässä tukikohdassa."
 #~ msgid "Buy or sell aircrafts"
-#~ msgstr "Osta lentokone"
-
-#, fuzzy
+#~ msgstr "Myy tai Osta lentokoneita"
 #~ msgid "Show aircrafts"
-#~ msgstr "Näytä vain lentokone"
-
-#, fuzzy
+#~ msgstr "Näytä lentokoneet"
 #~ msgid "Alien Base"
-#~ msgstr "muukalaiset"
-
-#, fuzzy
+#~ msgstr "Alien tukikohta"
 #~ msgid "%i hour"
 #~ msgid_plural "%i hours"
-#~ msgstr[0] "1 tunti"
-#~ msgstr[1] "1 tunti"
-
-#, fuzzy
+#~ msgstr[0] "%i tunti"
+#~ msgstr[1] "%i tuntia"
 #~ msgid "%i min"
 #~ msgid_plural "%i mins"
-#~ msgstr[0] "5 min"
-#~ msgstr[1] "5 min"
-
-#, fuzzy
+#~ msgstr[0] "%i min"
+#~ msgstr[1] "%i min"
 #~ msgid "%i sec"
 #~ msgid_plural "%i sec"
-#~ msgstr[0] "%i ör"
-#~ msgstr[1] "%i ör"
+#~ msgstr[0] "%i sek"
+#~ msgstr[1] "%i sek"
 #~ msgid "Crouch/Stand up"
 #~ msgstr "Kyyristy tai nouse ylös"
-
-#, fuzzy
 #~ msgid "Previous Base"
-#~ msgstr "Edellinen"
-
-#, fuzzy
+#~ msgstr "Edellinen tukikohta"
 #~ msgid "Next Base"
-#~ msgstr "Uusi tukikohta"
-
-#, fuzzy
+#~ msgstr "Seuraava tukikohta"
 #~ msgid "Soldiers:"
-#~ msgstr "Sotilaat"
-
-#, fuzzy
+#~ msgstr "Sotilaat:"
 #~ msgid "Scientists:"
-#~ msgstr "Tutkijat"
-
-#, fuzzy
+#~ msgstr "Tutkijat:"
 #~ msgid "Workers:"
-#~ msgstr "Työläiset"
-
-#, fuzzy
+#~ msgstr "Työläiset:"
 #~ msgid "Medics:"
-#~ msgstr "Lääkintämiehet"
-
-#, fuzzy
+#~ msgstr "Lääkintämiehet:"
 #~ msgid "Robots:"
-#~ msgstr "Kontekstivihjeet:"
-
-#, fuzzy
+#~ msgstr "Robotit:"
 #~ msgid "Hangars:"
-#~ msgstr "Tutka"
-
-#, fuzzy
+#~ msgstr "Hallit:"
 #~ msgid "Totals"
-#~ msgstr "Tutoriaalit"
-
-#, fuzzy
+#~ msgstr "summa"
 #~ msgid "Bases:"
-#~ msgstr "Tukikohta:"
+#~ msgstr "Tukikohdat:"
 #~ msgid "Hire/Unhire"
 #~ msgstr "Palkkaa tai erota"
-
-#, fuzzy
 #~ msgid "Terror attack"
-#~ msgstr "Tukikohtahyökkäys"
-
-#, fuzzy
+#~ msgstr "Terrori hyökkäys"
 #~ msgid "Alien hideout"
 #~ msgstr "Vihollisuhka"
-
-#, fuzzy
 #~ msgid "Landed alien ship"
-#~ msgstr "Laskeutunut muukalaisalus"
-
-#, fuzzy
+#~ msgstr "Laskeutunut alienalus"
 #~ msgid "Secure alien ship before liftoff."
-#~ msgstr "Varmistaa muukalaisalus ennen sen ilmaannousua"
-
-#, fuzzy
+#~ msgstr "Varmista alien alus ennen sen nostamista"
 #~ msgid "Secure alien ship."
-#~ msgstr "Varmistaa muukalaisalus ennen sen ilmaannousua"
+#~ msgstr "Varmista alien alus"
 #~ msgid "Landed Alien Ship"
-#~ msgstr "Laskeutunut muukalaisalus"
+#~ msgstr "Laskeutunut alien alus"
 #~ msgid "Secure Alien Ship before Liftoff"
-#~ msgstr "Varmistaa muukalaisalus ennen sen ilmaannousua"
+#~ msgstr "Varmista alien alus ennen sen nostamista"
 #~ msgid "ufo_condor_pre_txt"
 #~ msgstr "<TODO>"
-
-#, fuzzy
 #~ msgid "%s - %i %s\n"
-#~ msgstr "%i / %i"
-
-#, fuzzy
+#~ msgstr "%s - %i %s\n"
 #~ msgid "Speed:\t\t%i\n"
-#~ msgstr "Nopeus:\t%.0f\n"
-
-#, fuzzy
+#~ msgstr "Nopeus:\t\t%i\n"
 #~ msgid "Fuel:\t\t%i/%i\n"
-#~ msgstr "Polttoaine:\t%i/%i\n"
-
-#, fuzzy
+#~ msgstr "Polttoaine:\t\t%i/%i\n"
 #~ msgid "%s: %i/%i"
-#~ msgstr "TY: %i"
-
-#, fuzzy
+#~ msgstr "%s: %i/%i"
 #~ msgid "Running Costs:\t%i c\n"
-#~ msgstr "Käyttökulut:\t%i ör\n"
+#~ msgstr "Käyttökulut::\t%i c\n"
 #~ msgid "Depends:\t%s\n"
 #~ msgstr "Esivaatimus:\t%s\n"
 #~ msgid "Fixcosts:\t%i c\n"
-#~ msgstr "Korjauskulut:\t%i ör\n"
-
-#, fuzzy
+#~ msgstr "Korjauskulut:\t%i c\n"
 #~ msgid "%s (%i): %i/%i"
-#~ msgstr "%i / %i"
-
-#, fuzzy
+#~ msgstr "%s (%i): %i/%i"
 #~ msgid "Alien Containment"
-#~ msgstr "Muukalaissäilytystila"
-
-#, fuzzy
+#~ msgstr "Alien säilytystila"
 #~ msgid "Command Center"
 #~ msgstr "Komentokeskus"
-
-#, fuzzy
 #~ msgid "Light"
-#~ msgstr "Yö"
-
-#, fuzzy
+#~ msgstr "Kevyt"
 #~ msgid "base_weapon_tr20_txt"
 #~ msgstr "<TODO>"
-
-#, fuzzy
 #~ msgid "base_ammo_tr20_txt"
 #~ msgstr "<TODO>"
 #~ msgid "Mixing Rate:"
 #~ msgstr "Sekoitustaajuus:"
-
-#, fuzzy
 #~ msgid "%s\t%i / %i\n"
-#~ msgstr "%i / %i"
+#~ msgstr "%s\t%i / %i\n"
 #~ msgid "Weapon:\t%s\n"
 #~ msgstr "Ase:\t%s\n"
-
-#, fuzzy
 #~ msgid "Aircrafts"
 #~ msgstr "Lentokoneet"
 #~ msgid " [not yet researchable]"
 #~ msgstr "[ei vielä tutkittavissa]"
-
-#, fuzzy
 #~ msgid "Loading game"
-#~ msgstr "Pelin lataaminen ei onnistunut."
+#~ msgstr "Ladataan peliä"
 #~ msgid "Visit http://www.ufoai.net"
 #~ msgstr "Vieraile osoitteessa http://www.ufoai.net"
 #~ msgid "Selected aircraft"
 #~ msgstr "Valitse lentokone"
 #~ msgid "Equipment:\t%s"
 #~ msgstr "Varustus:\t%s"
-
-#, fuzzy
 #~ msgid "Shield"
 #~ msgstr "Panssari:\t%s\n"
-
-#, fuzzy
 #~ msgid "Light\n"
-#~ msgstr "Yö"
-
-#, fuzzy
+#~ msgstr "Kevyt\n"
 #~ msgid "Medium\n"
-#~ msgstr "Lääkintämies"
+#~ msgstr "Keskikokoinen\n"
 #~ msgid "No employees hired at campaign start"
 #~ msgstr "Kampanjan alussa ei ole valmiiksi palkattuja työntekijöitä"
 #~ msgid "No buildings in the initial base"
 #~ msgstr "Ensimmäisessä tukikohdassa ei ole rakennuksia"
-
-#, fuzzy
 #~ msgid "Scout"
-#~ msgstr "Ääni"
+#~ msgstr "Tiedustelija"
 #~ msgid "Scroll up (right click to scroll multiple lines)"
 #~ msgstr "Vieritä ylöspäin (oikealla napilla monta riviä)"
 #~ msgid "Scroll down (right click to scroll multiple lines)"
 #~ msgstr "Vieritä alaspäin (oikealla napilla monta riviä)"
 #~ msgid "Available scientists in this base: %i"
-#~ msgstr "Tutkijoita käytettävissä: %i"
+#~ msgstr "Tutkijoita käytettävissä tässä tukikohdassa: %i"
 
