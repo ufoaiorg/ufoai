@@ -23560,6 +23560,7 @@
 "origin" "1284 1832 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 281
 {
@@ -23567,6 +23568,7 @@
 "origin" "1732 1936 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 282
 {
@@ -23574,6 +23576,7 @@
 "origin" "1712 1724 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 283
 {
@@ -23581,6 +23584,7 @@
 "origin" "1612 1964 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 284
 {
@@ -23588,6 +23592,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "1584 1756 120"
+"spawnflags" "1"
 }
 // entity 285
 {
@@ -23595,6 +23600,7 @@
 "origin" "1436 1788 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 286
 {
@@ -23602,6 +23608,7 @@
 "origin" "1368 1860 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 287
 {
@@ -23609,6 +23616,7 @@
 "origin" "1484 1908 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 288
 {
@@ -24924,6 +24932,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "1838 1718 184"
+"spawnflags" "1"
 }
 // entity 305
 {
@@ -26502,6 +26511,7 @@
 "origin" "1708 1722 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 331
 {
@@ -26509,6 +26519,7 @@
 "origin" "1620 1748 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 332
 {
@@ -26516,6 +26527,7 @@
 "origin" "1704 1840 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 333
 {
@@ -26523,6 +26535,7 @@
 "origin" "1746 1976 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 334
 {
@@ -26530,6 +26543,7 @@
 "origin" "1850 2000 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 335
 {
@@ -26537,6 +26551,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "1584 1948 184"
+"spawnflags" "1"
 }
 // entity 336
 {
@@ -26544,6 +26559,7 @@
 "origin" "1506 1704 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 337
 {
@@ -26775,6 +26791,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "1450 1702 120"
+"spawnflags" "1"
 }
 // entity 340
 {
@@ -28419,6 +28436,7 @@
 "origin" "216 740 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 379
 {
@@ -28426,6 +28444,7 @@
 "origin" "112 708 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 380
 {
@@ -28433,6 +28452,7 @@
 "origin" "324 688 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 381
 {
@@ -28440,6 +28460,7 @@
 "origin" "84 588 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 382
 {
@@ -28447,6 +28468,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "292 560 120"
+"spawnflags" "1"
 }
 // entity 383
 {
@@ -28454,6 +28476,7 @@
 "origin" "260 412 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 384
 {
@@ -28461,6 +28484,7 @@
 "origin" "188 344 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 385
 {
@@ -28468,6 +28492,7 @@
 "origin" "140 460 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 386
 {
@@ -28475,6 +28500,7 @@
 "_color" "1 1 1"
 "light" "150"
 "origin" "296 454 178"
+"spawnflags" "1"
 }
 // entity 387
 {
@@ -28482,6 +28508,7 @@
 "origin" "332 304 178"
 "light" "150"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 388
 {
@@ -28489,6 +28516,7 @@
 "_color" "1 1 1"
 "light" "75"
 "origin" "314 358 178"
+"spawnflags" "1"
 }
 // entity 389
 {
@@ -28496,6 +28524,7 @@
 "origin" "276 354 178"
 "light" "75"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 390
 {
@@ -28503,6 +28532,7 @@
 "origin" "320 406 178"
 "light" "75"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 391
 {
@@ -28510,6 +28540,7 @@
 "origin" "366 408 178"
 "light" "75"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 392
 {
@@ -28517,6 +28548,7 @@
 "origin" "358 354 178"
 "light" "75"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 393
 {
@@ -28524,6 +28556,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "330 814 184"
+"spawnflags" "1"
 }
 // entity 394
 {
@@ -28531,6 +28564,7 @@
 "origin" "326 684 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 395
 {
@@ -28538,6 +28572,7 @@
 "origin" "300 596 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 396
 {
@@ -28545,6 +28580,7 @@
 "origin" "208 680 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 397
 {
@@ -28552,6 +28588,7 @@
 "origin" "72 722 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 398
 {
@@ -28559,6 +28596,7 @@
 "origin" "48 826 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 399
 {
@@ -28566,6 +28604,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "100 560 184"
+"spawnflags" "1"
 }
 // entity 400
 {
@@ -28573,6 +28612,7 @@
 "origin" "184 402 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 401
 {
@@ -28580,6 +28620,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "346 426 120"
+"spawnflags" "1"
 }
 // entity 402
 {
@@ -28587,6 +28628,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "308 444 244"
+"spawnflags" "1"
 }
 // entity 403
 {
@@ -28594,6 +28636,7 @@
 "origin" "300 340 244"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 404
 {
@@ -28601,6 +28644,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "116 312 244"
+"spawnflags" "1"
 }
 // entity 405
 {
@@ -28608,6 +28652,7 @@
 "_color" "1 0.95 0.8"
 "light" "150"
 "origin" "124 436 244"
+"spawnflags" "1"
 }
 // entity 406
 {
@@ -28615,6 +28660,7 @@
 "origin" "190 714 244"
 "light" "220"
 "_color" "1 1 1"
+"spawnflags" "1"
 }
 // entity 407
 {
@@ -29256,6 +29302,7 @@
 "origin" "1506 1952 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 475
 {
@@ -29263,6 +29310,7 @@
 "origin" "1506 1824 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 476
 {
@@ -29270,6 +29318,7 @@
 "origin" "1314 1952 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 477
 {
@@ -29277,6 +29326,7 @@
 "origin" "1314 1704 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 478
 {
@@ -29284,6 +29334,7 @@
 "origin" "1314 1824 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 479
 {
@@ -29291,6 +29342,7 @@
 "origin" "1410 1952 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 480
 {
@@ -29298,6 +29350,7 @@
 "origin" "1410 1704 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 481
 {
@@ -29305,6 +29358,7 @@
 "origin" "1410 1824 184"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 482
 {
@@ -29312,6 +29366,7 @@
 "origin" "1764 1832 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
 // entity 483
 {
@@ -29319,4 +29374,5 @@
 "origin" "1604 1832 120"
 "light" "150"
 "_color" "1 0.95 0.8"
+"spawnflags" "1"
 }
