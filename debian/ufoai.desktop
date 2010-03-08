@@ -2,8 +2,9 @@
 Version=1.0
 Encoding=UTF-8
 Name=UFO: Alien Invasion
-GenericName=Strategy Game
+GenericName=UFO: Alien Invasion
 Comment=Turn-based tactical combat against hostile alien forces
+Comment[de_DE]=Rundenbasiertes Taktikspiel
 Exec=/usr/games/ufo
 Icon=ufoai.xpm
 Terminal=false

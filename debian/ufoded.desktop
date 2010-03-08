@@ -2,8 +2,9 @@
 Version=1.0
 Encoding=UTF-8
 Name=UFO: AI Dedicated Server
-GenericName=Strategy Game
+GenericName=UFO: AI Dedicated Server
 Comment=Turn-based tactical combat against hostile alien forces (server)
+Comment[de_DE]=Rundenbasiertes Taktikspiel (Server)
 Exec=/usr/games/ufoded
 Icon=ufoded.xpm
 Terminal=true
