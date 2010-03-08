@@ -189,10 +189,12 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 }
 
 /**
+ * @brief Parses the server sent data from the given buffer.
  * @sa CL_ReadPackets
- * @param[in] msg The client stream message buffer to read from
+ * @param[in] cmd The action that should be parsed from the data
+ * @param[in,out] msg The client stream message buffer to read from
  */
-void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
+void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 {
 	const char *s;
 	int i;
