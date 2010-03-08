@@ -636,7 +636,6 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 /**
  * @brief Checks every case for reload buttons on the HUD.
  * @param[in] le Pointer of local entity being an actor.
- * @param[in] tu Remaining TU units of selected actor.
  * @param[in] containerID of the container to reload the weapon in. Used to get the movement TUs for moving something into the container.
  * @param[out] reason The reason why the reload didn't work - only set if @c -1 is the return value
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.

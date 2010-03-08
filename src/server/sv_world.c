@@ -736,6 +736,7 @@ static void SV_ModLoadObjModel (sv_model_t* mod, const byte *buffer, int bufferL
 /**
  * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
  * @param[in] model The relative model path to load the mins, maxs for
+ * @param[in] frame The frame to load the mins and maxs vectors for
  * @param[out] mins The mins vector of the model - this is absolute to the worldorigin (0,0,0)
  * @param[out] maxs The maxs vector of the model - this is absolute to the worldorigin (0,0,0)
  */

@@ -905,7 +905,6 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
 	return (num < sv_maxsoldiersperplayer->integer && level.num_spawned[team] < sv_maxsoldiersperteam->integer);
 }
 
-
 /**
  * @brief Think function for actors that spawn dead
  * @param ent The actor
@@ -916,6 +915,10 @@ static void G_ThinkActorDieAfterSpawn (edict_t *ent)
 	ent->think = NULL;
 }
 
+/**
+ * @brief Think function for actors that spawn crouched
+ * @param ent The actor
+ */
 static void G_ThinkActorGoCrouch (edict_t *ent)
 {
 	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, qtrue);
@@ -924,7 +927,8 @@ static void G_ThinkActorGoCrouch (edict_t *ent)
 
 /**
  * @brief Searches a free spawning point for a given actor size
- * @param actorSize The actor size to get a spawning point for
+ * @param[in] player The player to get the free spawn points for
+ * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
 edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
@@ -1300,6 +1304,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
  * user info keys.
  * @param[in,out] player The player that is trying to connect to the game
  * @param[in,out] userinfo The userinfo data that is checked and changed
+ * @param[in] userinfoSize The size of the userinfo buffer
  * @sa G_ClientDisconnect
  * @sa CL_ConnectionlessPacket
  * @todo Check if the teamnum preference has already reached maxsoldiers

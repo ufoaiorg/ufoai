@@ -2327,7 +2327,7 @@ static void CL_ActorUpdate_f (void)
 
 /**
  * @sa G_ActorVis
- * @param[in] from The local entity to do the check for
+ * @param[in] le The local entity to do the check for
  * @param[in] check The local entity to check the visibility for
  * @return @c true if the given edict is visible from the given world coordinate, @c false otherwise.
  */

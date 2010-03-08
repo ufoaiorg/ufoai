@@ -54,7 +54,7 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, con
 
 /**
  * @brief Checks whether the actor has a reaction fire enabled weapon in on of his hands.
- * @param[in] actor The actor to check the weapons for
+ * @param[in] ent The actor to check the weapons for
  * @return @c NULL if no actor has not reaction fire enabled weapons, the fire definition otherwise.
  */
 static qboolean G_ActorHasReactionFireEnabledWeapon (const edict_t *ent)
@@ -371,7 +371,6 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 /**
  * @brief Check all entities to see whether target has caused reaction fire to resolve.
  * @param[in] target The entity that might be resolving reaction fire
- * @param[in] mock If true then don't actually fire
  * @returns whether any entity fired (or would fire) upon target
  * @sa G_ReactionFireOnMovement
  * @sa G_ReactionFirePostShot
