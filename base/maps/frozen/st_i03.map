@@ -1274,15 +1274,15 @@
 // entity 12
 {
 "classname" "misc_particle"
-"particle" "smoking"
-"origin" "416 400 192"
+"particle" "smoke3"
+"origin" "416 404 196"
 "spawnflags" "252"
 }
 // entity 13
 {
 "classname" "misc_particle"
-"particle" "smoking"
-"origin" "352 400 192"
+"particle" "smoke3"
+"origin" "352 404 196"
 "spawnflags" "252"
 }
 // entity 14
