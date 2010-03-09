@@ -463,3 +463,10 @@
 "angle" "135"
 "origin" "80 144 28"
 }
+// entity 4
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

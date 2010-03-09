@@ -223,3 +223,17 @@
 "skin" "1"
 "angles" "0 70 0"
 }
+// entity 5
+{
+"classname" "misc_particle"
+"origin" "480 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 6
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

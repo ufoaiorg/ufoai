@@ -1274,3 +1274,87 @@
 "origin" "400 720 36"
 "angle" "90"
 }
+// entity 52
+{
+"classname" "misc_particle"
+"origin" "480 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 53
+{
+"classname" "misc_particle"
+"origin" "480 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 54
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 55
+{
+"classname" "misc_particle"
+"origin" "160 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 56
+{
+"classname" "misc_particle"
+"origin" "800 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 57
+{
+"classname" "misc_particle"
+"origin" "800 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 58
+{
+"classname" "misc_particle"
+"origin" "368 144 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 59
+{
+"classname" "misc_particle"
+"origin" "368 528 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 60
+{
+"classname" "misc_particle"
+"origin" "48 144 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 61
+{
+"classname" "misc_particle"
+"origin" "48 528 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 62
+{
+"classname" "misc_particle"
+"origin" "688 144 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 63
+{
+"classname" "misc_particle"
+"origin" "688 528 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

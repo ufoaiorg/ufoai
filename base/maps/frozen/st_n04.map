@@ -60,3 +60,10 @@
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 }
+// entity 3
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

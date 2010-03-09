@@ -1285,3 +1285,24 @@
 "origin" "352 400 192"
 "spawnflags" "252"
 }
+// entity 14
+{
+"classname" "misc_particle"
+"origin" "480 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 15
+{
+"classname" "misc_particle"
+"origin" "480 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 16
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

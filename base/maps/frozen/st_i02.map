@@ -1880,3 +1880,17 @@
 "origin" "102 304 46"
 "spawnflags" "1"
 }
+// entity 11
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 12
+{
+"classname" "misc_particle"
+"origin" "160 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
