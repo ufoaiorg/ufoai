@@ -356,7 +356,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 
 		/* if this entity is an bbox (e.g. actor), then center its origin based on its position */
 		if (ent->solid == SOLID_BBOX)
-			gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+			G_EdictCalcOrigin(ent);
 	}
 
 	/* spawn ai players, if needed */
@@ -419,7 +419,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
 	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
-	gi.GridPosToVec(gi.routingMap, floor->fieldSize, floor->pos, floor->origin);
+	G_EdictCalcOrigin(floor);
 	return floor;
 }
 
@@ -464,7 +464,7 @@ static void G_ActorSpawn (edict_t *ent)
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.dprintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	G_EdictCalcOrigin(ent);
 
 	/* link it for collision detection */
 	ent->dir = AngleToDir(ent->angle);
@@ -495,7 +495,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		gi.dprintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	G_EdictCalcOrigin(ent);
 
 	/* link it for collision detection */
 	ent->dir = AngleToDir(ent->angle);
@@ -658,7 +658,7 @@ static void SP_civilian_target (edict_t *ent)
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	G_EdictCalcOrigin(ent);
 }
 
 /**

@@ -131,7 +131,7 @@ void G_ActorFall (edict_t *ent)
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 	}
 
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	G_EdictCalcOrigin(ent);
 	gi.LinkEdict(ent);
 
 	G_CheckVis(ent, qtrue);
@@ -320,7 +320,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			if (crouchFlag == 0) { /* No change in crouch */
 				edict_t* clientAction;
 
-				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+				G_EdictCalcOrigin(ent);
 				VectorCopy(ent->origin, pointTrace);
 				pointTrace[2] += PLAYER_MIN;
 

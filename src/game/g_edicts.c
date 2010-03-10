@@ -211,3 +211,22 @@ edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
 	return ent;
 }
 
+/**
+ * @brief Calculate the edict's origin vector from it's grid position
+ * @param ent The entity
+ */
+void G_EdictCalcOrigin(edict_t* ent)
+{
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+}
+
+/**
+ * @brief Set the edict's pos and origin vector to the given grid position
+ * @param ent The entity
+ * @param newPos The new grid position
+ */
+void G_EdictSetOrigin(edict_t* ent, const pos3_t newPos)
+{
+	VectorCopy(newPos, ent->pos);
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+}

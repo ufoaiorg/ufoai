@@ -443,7 +443,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						continue;
 
 					/* visibility */
-					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+					G_EdictCalcOrigin(ent);
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 

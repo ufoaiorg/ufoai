@@ -868,7 +868,7 @@ static int AIL_positionhide (lua_State *L)
 				/* Better spot (easier to get to). */
 				if (tu < min_tu) {
 					/* visibility */
-					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+					G_EdictCalcOrigin(ent);
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 

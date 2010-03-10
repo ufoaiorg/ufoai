@@ -496,6 +496,8 @@ edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
 
+void G_EdictCalcOrigin(edict_t* ent);
+void G_EdictSetOrigin(edict_t* ent, const pos3_t newPos);
 /*============================================================================ */
 
 /** @brief e.g. used for breakable objects */
