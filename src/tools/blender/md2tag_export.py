@@ -363,7 +363,7 @@ class md2_tags_obj:
 	num_frames = 0		#int 3	The number of animation frames
 
 	offset_names = 0	#int 4	The offset in the file for the name data
-	offset_tags = 0		#int 5	The offset in the file for the tags data
+	offset_tags = 0 	#int 5	The offset in the file for the tags data
 	offset_end = 0		#int 6	The end of the file offset
 	offset_extract_end = 0	#int 7	???
 	binary_format = "<8i" 	#little-endian (<), 8 integers (8i)
@@ -504,7 +504,7 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames.append(md2_tag())
 
 		#set blender to the correct frame (so the objects have their new positions)
-		Blender.Set("curframe", current_frame)
+		Blender.Set("curframe", current_frame - 1)
 
 		# Set first coordiantes to the location of the empty.
 		tag_frames[frame_counter].origin = object.getLocation('worldspace')
