@@ -558,7 +558,7 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 
 		/* link the floor container to the actor standing on the given position */
 		while ((actor = G_EdictsGetNextActor(actor)))
-			if (VectorCompare(pos, actor->pos)) {
+			if (G_EdictPosIsSameAs(actor, pos)) {
 				FLOOR(actor) = FLOOR(floor);
 				break;
 			}
@@ -967,7 +967,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		if (fd->ammo && !fd->splrad && weapon->t->thrown && !weapon->t->deplete) {
 			pos3_t drop;
 
-			if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
+			if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
 				VectorCopy(at, drop);
 			} else {
 				impact[2] -= 20; /* a hack: no-gravity items are flying high */
@@ -1097,7 +1097,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		return qfalse;
 
 	/* Don't allow to shoot yourself */
-	if (!fd->irgoggles && VectorCompare(ent->pos, at))
+	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return qfalse;
 
 	/* check that we're not firing a twohanded weapon with one hand! */
@@ -1175,7 +1175,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	else
 		prevDir = 0;
 
-	if (!VectorCompare(ent->pos, at)) {
+	if (!G_EdictPosIsSameAs(ent, at)) {
 		VectorSubtract(at, ent->pos, dir);
 		ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
 		assert(ent->dir < CORE_DIRECTIONS);

@@ -483,6 +483,7 @@ void SP_func_rotating(edict_t *ent);
 void SP_func_door(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
 
+/** Functions handling the storage and lifecycle of all edicts */
 edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
@@ -496,8 +497,11 @@ edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
 
+/** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
 void G_EdictCalcOrigin(edict_t* ent);
 void G_EdictSetOrigin(edict_t* ent, const pos3_t newPos);
+qboolean G_EdictPosIsSameAs(edict_t* ent, const pos3_t cmpPos);
+
 /*============================================================================ */
 
 /** @brief e.g. used for breakable objects */
