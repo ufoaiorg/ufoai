@@ -869,6 +869,7 @@ static int AIL_positionhide (lua_State *L)
 				if (tu < min_tu) {
 					/* visibility */
 					G_EdictCalcOrigin(ent);
+					/** @todo Looks like we're iterating hard, but always testing visibility of the original position of the entity ?? (Can't test. Duke, 10.2.2010) */
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 
