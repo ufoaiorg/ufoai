@@ -276,10 +276,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		return AI_ACTION_NOTHING_FOUND;
 
 	/* set basic parameters */
-	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
+	G_EdictSetOrigin(ent, to);
 
 	/* shooting */
 	maxDmg = 0.0;
@@ -457,8 +456,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 
 			if (stillSearching) {
 				/* nothing found */
-				VectorCopy(to, ent->pos);
-				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
+				G_EdictSetOrigin(ent, to);
 				/** @todo Try to crouch if no hiding spot was found - randomized */
 			} else {
 				/* found a hiding spot */
@@ -507,10 +505,9 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	/* set basic parameters */
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
-	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
+	G_EdictSetOrigin(ent, to);
 
 	move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
 	tu = ent->TU - move;
