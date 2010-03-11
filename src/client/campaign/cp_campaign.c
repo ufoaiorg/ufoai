@@ -390,16 +390,18 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 	float performance;
 	float delta_happiness = 0.0f;
 	float happiness_divisor = 5.0f;
+	float civilianWeight = 1.5f;
+	float alienWeight = 1.0f;
 
-	/* Calculate how well the mission went. The value is between -1 and 1. Currently, the calculation biases towards negative. */
-	performance = (2 * civilianRatio + alienRatio)) - 2;
+	/* Calculate how well the mission went. The value is between -1 and 1. */
+	performance = ((civilianWeight * civilianRatio + alienWeight * alienRatio) - 0.5 * (civilianRatio + alienRatio)) / 0.5 * (civilianRatio + alienRatio));
 
 	/* Book-keeping. */
 	lost ? ccs.campaignStats.missionsLost++ : ccs.campaignStats.missionsWon++;
 	ccs.civiliansKilled += civiliansKilled;
 
 	/* Calculate the actual change in happiness. The bigger the mission, the more potential influence. */
-	delta_happiness = performance * (0.06 * civilianSum + 0.06 * alienSum);
+	delta_happiness = performance * (0.006 * civilianSum + 0.006 * alienSum);
 
 	/* One mission can only change nation happiness so much in either direction */
 	/* the happiness you can gain depends on the difficulty of the campaign. */
