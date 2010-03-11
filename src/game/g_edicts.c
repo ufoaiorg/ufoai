@@ -215,7 +215,7 @@ edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
  * @brief Calculate the edict's origin vector from it's grid position
  * @param ent The entity
  */
-void G_EdictCalcOrigin(edict_t* ent)
+void G_EdictCalcOrigin (edict_t* ent)
 {
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 }
@@ -225,7 +225,7 @@ void G_EdictCalcOrigin(edict_t* ent)
  * @param ent The entity
  * @param newPos The new grid position
  */
-void G_EdictSetOrigin(edict_t* ent, const pos3_t newPos)
+void G_EdictSetOrigin (edict_t* ent, const pos3_t newPos)
 {
 	VectorCopy(newPos, ent->pos);
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
@@ -237,7 +237,7 @@ void G_EdictSetOrigin(edict_t* ent, const pos3_t newPos)
  * @param newPos The grid position to compare to
  * @return qtrue if positions are equal
  */
-qboolean G_EdictPosIsSameAs(edict_t* ent, const pos3_t cmpPos)
+qboolean G_EdictPosIsSameAs (edict_t* ent, const pos3_t cmpPos)
 {
 	return VectorCompare(cmpPos, ent->pos);
 }
