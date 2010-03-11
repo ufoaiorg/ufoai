@@ -394,7 +394,7 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 	float alienWeight = 1.0f;
 
 	/* Calculate how well the mission went. The value is between -1 and 1. */
-	performance = ((civilianWeight * civilianRatio + alienWeight * alienRatio) - 0.5 * (civilianRatio + alienRatio)) / 0.5 * (civilianRatio + alienRatio));
+	performance = ((civilianWeight * civilianRatio + alienWeight * alienRatio) - 0.5 * (civilianRatio + alienRatio)) / 0.5 * (civilianRatio + alienRatio);
 
 	/* Book-keeping. */
 	lost ? ccs.campaignStats.missionsLost++ : ccs.campaignStats.missionsWon++;
