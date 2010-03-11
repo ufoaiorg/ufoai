@@ -392,7 +392,7 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 	float happiness_divisor = 5.0f;
 
 	/* Calculate how well the mission went. The value is between -1 and 1. Currently, the calculation biases towards negative. */
-	performance = (pow(civilianRatio, 2) + pow(alienRatio, 2)) - 1;
+	performance = (2 * civilianRatio + alienRatio)) - 2;
 
 	/* Book-keeping. */
 	lost ? ccs.campaignStats.missionsLost++ : ccs.campaignStats.missionsWon++;
