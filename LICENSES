@@ -3083,6 +3083,8 @@ base/textures/tex_buildings/tin_floor04ach.jpg | GNU General Public License 2.0 
 base/textures/tex_buildings/tin_floor04ach_nm.tga | GNU General Public License 2.0
 base/textures/tex_buildings/toilet.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/toilet_nm.tga | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/track01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/track01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall011.tga | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
 base/textures/tex_buildings/wall011_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall012.tga | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
@@ -3113,6 +3115,8 @@ base/textures/tex_buildings/wall_ind01_pil.png | GNU General Public License 2.0 
 base/textures/tex_buildings/wall_ind01_pil_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind02_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind03.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind03_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/window001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window012_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
