@@ -1080,7 +1080,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		Q_strncpyz(ccs.battleParameters.civTeam, mxml_GetString(bparam, "civteam"), sizeof(ccs.battleParameters.civTeam));
 
 		ccs.battleParameters.day = mxml_GetBool(bparam, "day", qfalse);
-		ccs.battleParameters.ugv = mxml_GetInt(bparam, "ugv", 0);
 		ccs.battleParameters.aliens = mxml_GetInt(bparam, "aliens", 0);
 		ccs.battleParameters.civilians = mxml_GetInt(bparam, "civilians", 0);
 	}
@@ -1238,7 +1237,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 		mxml_AddString(battleparam, "alienequipment", ccs.battleParameters.alienEquipment);
 		mxml_AddString(battleparam, "civteam", ccs.battleParameters.civTeam);
 		mxml_AddBool(battleparam, "day", ccs.battleParameters.day);
-		mxml_AddInt(battleparam, "ugv", ccs.battleParameters.ugv);
 		mxml_AddInt(battleparam, "aliens", ccs.battleParameters.aliens);
 		mxml_AddInt(battleparam, "civilians", ccs.battleParameters.civilians);
 	}

@@ -231,7 +231,6 @@ typedef struct battleParam_s {
 	char civTeam[MAX_VAR];							/**< Type of civilian (European, ...) */
 	qboolean day;									/**< Mission is played during day */
 	const char *zoneType;							/**< Terrain type (used for texture replacement in base missions) */
-	int ugv;						/**< uncontrolled ground units (entity: info_2x2_start) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
 } battleParam_t;
