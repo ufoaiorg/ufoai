@@ -17,6 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# --------------------------------------------------------------------------
+# Changelog
+# 	0.2.1	mattn fixed missing texture and removed stepon
+# 	0.2	WRWRWR Initial version
+# --------------------------------------------------------------------------
+
+
 """
 Name: 'UFO:AI (.map)'
 Blender: 245
@@ -25,7 +32,7 @@ Tooltip: 'Export to UFO:AI map format.'
 """
 
 __author__ = 'Wrwrwr'
-__version__ = '0.2'
+__version__ = '0.2.1'
 __email__ = 'ufoai@wrwrwr.org'
 __bpydoc__ = '''\
 Exports current scene as an UFO:AI map.
@@ -373,9 +380,6 @@ def writeMesh(file, mesh, scale, quadToleration, splitMethod, splitHeight, minFa
 	if 'actorclip' in ps:
 		flags = [65536, 0, 0] # ignore the rest of the flags intentionally
 		del ps['actorclip']
-	if 'stepon' in ps:
-		flags = [1073741824, 0, 0] # same
-		del ps['stepon']
 	if 'trans33' in ps:
 		flags[1] ^= 16
 		del ps['trans33']
@@ -609,7 +613,7 @@ def export(fileName):
 	if not exists(modelsFolder):
 		error('The models base folder (%s) does not exist. Incomplete ufo or a bad path.' % modelsFolder)
 		return
-	missingImage = normpath('tex_material/c_red.tga')
+	missingImage = normpath('tex_common/nodraw.tga')
 	if not exists(realpath(join(texturesFolder, missingImage))):
 		error('The missing texture (%s) is missing.' % missingImage)
 		return
