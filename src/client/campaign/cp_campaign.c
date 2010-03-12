@@ -1552,7 +1552,15 @@ void CL_GameAutoGo (mission_t *mis)
 	if (won && ccs.missionResults.recovery) {
 		/** @todo set other counts, use the counts above */
 		ccs.missionResults.aliensKilled = ccs.battleParameters.aliens;
+		ccs.missionResults.aliensStunned = 0;
+		ccs.missionResults.aliensSurvived = 0;
+		ccs.missionResults.civiliansKilled = 0;
+		ccs.missionResults.civiliansKilledFriendlyFire = 0;
 		ccs.missionResults.civiliansSurvived = ccs.battleParameters.civilians;
+		ccs.missionResults.ownKilled = 0;
+		ccs.missionResults.ownKilledFriendlyFire = 0;
+		ccs.missionResults.ownStunned = 0;
+		ccs.missionResults.ownSurvived = aircraft->teamSize;
 		CP_InitMissionResults(won);
 		Cvar_SetValue("mn_autogo", 1);
 		MN_PushWindow("won", NULL);
