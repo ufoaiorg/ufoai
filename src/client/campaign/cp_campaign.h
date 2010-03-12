@@ -266,8 +266,6 @@ typedef struct stats_s {
 	int ufosDetected;
 } stats_t;
 
-extern stats_t campaignStats;
-
 /** campaign definition */
 typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */
