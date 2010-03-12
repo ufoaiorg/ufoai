@@ -1,11 +1,4 @@
 {
-	material tex_nature/water_dark
-	{
-		envmap 0
-	}
-}
-
-{
 	material tex_ufo/ufo2_06
 	{
 		texture tex_ufo/ufo2_06a0

@@ -23,3 +23,13 @@
 		envmap 0
 	}
 }
+
+{
+	material tex_ufo/ufo2_06
+	{
+		texture tex_ufo/ufo2_06a0
+		anim 4 1.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
