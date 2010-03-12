@@ -961,6 +961,9 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	ent->pnum = player->num;
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
+
+	gi.LinkEdict(ent);
+
 	if (ent->spawnflags & STATE_CROUCHED) {
 		ent->think = G_ThinkActorGoCrouch;
 		ent->nextthink = 1;
