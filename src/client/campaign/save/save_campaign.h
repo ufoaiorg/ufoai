@@ -42,17 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_CIVILIANSKILLED "civiliansKilled"
 #define SAVE_CAMPAIGN_ALIENSKILLED "aliensKilled"
 #define SAVE_CAMPAIGN_XVISHOWMAP "XVIShowmap"
-#define SAVE_CAMPAIGN_BATTLEPARAMETER "battleParameter"
-#define SAVE_CAMPAIGN_MISSION_ID "missionID"
-#define SAVE_CAMPAIGN_ALIENCATEGORIES_ID "alienCategoriesID"
-#define SAVE_CAMPAIGN_ALIENTEAMGROUPIDX "alienTeamGroupIDX"
-#define SAVE_CAMPAIGN_PARAM "param"
-#define SAVE_CAMPAIGN_ALIENEQUIPMENT "alienEquipment"
-#define SAVE_CAMPAIGN_CIVTEAM "civTeam"
-#define SAVE_CAMPAIGN_DAY "day"
-#define SAVE_CAMPAIGN_UGV "ugv"
-#define SAVE_CAMPAIGN_ALIENS "aliens"
-#define SAVE_CAMPAIGN_CIVILIANS "civilians"
 
 #define SAVE_CAMPAIGN_STATS "stats"
 #define SAVE_CAMPAIGN_MISSIONS "missions"
@@ -71,8 +60,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_MONEYRESEARCH "moneyResearch"
 #define SAVE_CAMPAIGN_MONEYWEAPONS "moneyWeapons"
 #define SAVE_CAMPAIGN_UFOSDETECTED "UFOsDetected"
-
-#define SAVE_CAMPAIGN_SELECTEDMISSION "selectedMission"
 
 #define SAVE_CAMPAIGN_MISSIONS "missions"
 #define SAVE_CAMPAIGN_INTERESTS "interests"

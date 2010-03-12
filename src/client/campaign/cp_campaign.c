@@ -880,11 +880,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaignNode;
 	mxml_node_t *ccsNode;
-	mxml_node_t *battleParamNode;
 	mxml_node_t *missions;
 	mxml_node_t *interests;
 	const char *name;
-	const char *missionId;
 	campaign_t *campaign;
 	int i;
 
@@ -965,48 +963,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* read ccs.battleParameters */
 	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 
-	if ((battleParamNode = mxml_GetNode(ccsNode, SAVE_CAMPAIGN_BATTLEPARAMETER))) {
-		int j;
-		ccs.battleParameters.mission = CP_GetMissionByID(mxml_GetString(battleParamNode, SAVE_CAMPAIGN_MISSION_ID));
-		name = mxml_GetString(battleParamNode, SAVE_CAMPAIGN_ALIENCATEGORIES_ID);
-
-		/* get corresponding category */
-		for (i = 0; i < ccs.numAlienCategories; i++)
-			if (!strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id)))
-				break;
-
-		if (i >= ccs.numAlienCategories) {
-			Com_Printf("CP_LoadXML: alien category def \"%s\" doesn't exist\n", name);
-			return qfalse;
-		}
-
-		j = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_ALIENTEAMGROUPIDX, 0);
-		if (j >= INTERESTCATEGORY_MAX) {
-			Com_Printf("CP_LoadXML: Undefined alien team (category '%s', group '%i')\n", name, j);
-			return qfalse;
-		}
-		ccs.battleParameters.alienTeamGroup = &ccs.alienCategories[i].alienTeamGroups[j];
-		name = mxml_GetString(battleParamNode, SAVE_CAMPAIGN_PARAM);
-		if (name && name[0] != '\0')
-			ccs.battleParameters.param = Mem_PoolStrDup(name, cp_campaignPool, 0);
-		else
-			ccs.battleParameters.param = NULL;
-
-		Q_strncpyz(ccs.battleParameters.alienEquipment, mxml_GetString(battleParamNode, SAVE_CAMPAIGN_ALIENEQUIPMENT), sizeof(ccs.battleParameters.alienEquipment));
-		Q_strncpyz(ccs.battleParameters.civTeam, mxml_GetString(battleParamNode, SAVE_CAMPAIGN_CIVTEAM), sizeof(ccs.battleParameters.civTeam));
-
-		ccs.battleParameters.day = mxml_GetBool(battleParamNode, SAVE_CAMPAIGN_DAY, qfalse);
-		ccs.battleParameters.ugv = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_UGV, 0);
-		ccs.battleParameters.aliens = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_ALIENS, 0);
-		ccs.battleParameters.civilians = mxml_GetInt(battleParamNode, SAVE_CAMPAIGN_CIVILIANS, 0);
-	}
-
-	missionId = mxml_GetString(ccsNode, SAVE_CAMPAIGN_SELECTEDMISSION);
-	if (missionId && missionId[0] != '\0')
-		ccs.selectedMission = CP_GetMissionByID(missionId);
-	else
-		ccs.selectedMission = NULL;
-
 	/* and now fix the mission pointers for e.g. ufocrash sites
 	* this is needed because the base load function which loads the aircraft
 	* doesn't know anything (at that stage) about the new missions that were
@@ -1074,8 +1030,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddShort(campaign, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, r_geoscape_overlay->integer);
 	mxml_AddBool(campaign, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	mxml_AddBool(structure_ccs, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
-	/* stores the select mission on geoscape */
-	mxml_AddString(structure_ccs, SAVE_CAMPAIGN_SELECTEDMISSION, ccs.selectedMission ? ccs.selectedMission->id : "");
 
 	/* Interests */
 	interests = mxml_AddNode(parent, SAVE_CAMPAIGN_INTERESTS);
@@ -1087,20 +1041,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	if (!CP_SaveMissionsXML(missions))
 		return qfalse;
 
-	/* store ccs.battleParameters */
-	if (ccs.battleParameters.mission) {
-		mxml_node_t *battleparam = mxml_AddNode(structure_ccs, SAVE_CAMPAIGN_BATTLEPARAMETER);
-		mxml_AddString(battleparam, SAVE_CAMPAIGN_MISSION_ID, ccs.battleParameters.mission->id);
-		mxml_AddString(battleparam, SAVE_CAMPAIGN_ALIENCATEGORIES_ID, ccs.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
-		mxml_AddShort(battleparam, SAVE_CAMPAIGN_ALIENTEAMGROUPIDX, ccs.battleParameters.alienTeamGroup->idx);
-		mxml_AddString(battleparam, SAVE_CAMPAIGN_PARAM, (ccs.battleParameters.param ? ccs.battleParameters.param : ""));
-		mxml_AddString(battleparam, SAVE_CAMPAIGN_ALIENEQUIPMENT, ccs.battleParameters.alienEquipment);
-		mxml_AddString(battleparam, SAVE_CAMPAIGN_CIVTEAM, ccs.battleParameters.civTeam);
-		mxml_AddBool(battleparam, SAVE_CAMPAIGN_DAY, ccs.battleParameters.day);
-		mxml_AddInt(battleparam, SAVE_CAMPAIGN_UGV, ccs.battleParameters.ugv);
-		mxml_AddInt(battleparam, SAVE_CAMPAIGN_ALIENS, ccs.battleParameters.aliens);
-		mxml_AddInt(battleparam, SAVE_CAMPAIGN_CIVILIANS, ccs.battleParameters.civilians);
-	}
 	return qtrue;
 }
 
