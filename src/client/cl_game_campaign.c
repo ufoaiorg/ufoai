@@ -252,7 +252,6 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int our_survivors, our_killed, our_stunned;
 	int their_survivors, their_killed, their_stunned;
 	int civilian_survivors, civilian_killed, civilian_stunned;
-	int counts[MAX_MISSIONRESULTCOUNT];
 
 	CP_ParseCharacterData(msg);
 
@@ -301,19 +300,18 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	ccs.aliensKilled += their_killed;
 
-	counts[MRC_ALIENS_KILLED] = their_killed;
-	counts[MRC_ALIENS_STUNNED] = their_stunned;
-	counts[MRC_ALIENS_SURVIVOR] = their_survivors;
-	counts[MRC_PHALANX_KILLED] = our_killed - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
-	counts[MRC_PHALANX_MIA] = our_stunned;
-	counts[MRC_PHALANX_FF_KILLED] = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
-	counts[MRC_PHALANX_SURVIVOR] = our_survivors;
-	counts[MRC_CIVILIAN_KILLED] = civilian_killed;
-	counts[MRC_CIVILIAN_FF_KILLED] = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
-	counts[MRC_CIVILIAN_SURVIVOR] = civilian_survivors;
-	counts[MRC_ITEM_GATHEREDTYPES] = ccs.missionResults.itemtypes;
-	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionResults.itemamount;
-	CP_InitMissionResults(counts, winner == cls.team);
+	ccs.missionResults.aliensKilled = their_killed;
+	ccs.missionResults.aliensStunned = their_stunned;
+	ccs.missionResults.aliensSurvived = their_survivors;
+	ccs.missionResults.ownKilled = our_killed - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+	ccs.missionResults.ownStunned = our_stunned;
+	ccs.missionResults.ownKilledFriendlyFire = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+	ccs.missionResults.ownSurvived = our_survivors;
+	ccs.missionResults.civiliansKilled = civilian_killed;
+	ccs.missionResults.civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+	ccs.missionResults.civiliansSurvived = civilian_survivors;
+
+	CP_InitMissionResults(winner == cls.team);
 
 	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 

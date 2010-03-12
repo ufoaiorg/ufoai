@@ -1552,12 +1552,10 @@ void CL_GameAutoGo (mission_t *mis)
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && ccs.missionResults.recovery) {
-		int counts[MAX_MISSIONRESULTCOUNT];
-		memset(counts, 0, sizeof(counts));
 		/** @todo set other counts, use the counts above */
-		counts[MRC_ALIENS_KILLED] = ccs.battleParameters.aliens;
-		counts[MRC_CIVILIAN_SURVIVOR] = ccs.battleParameters.civilians;
-		CP_InitMissionResults(counts, won);
+		ccs.missionResults.aliensKilled = ccs.battleParameters.aliens;
+		ccs.missionResults.civiliansSurvived = ccs.battleParameters.civilians;
+		CP_InitMissionResults(won);
 		Cvar_SetValue("mn_autogo", 1);
 		MN_PushWindow("won", NULL);
 	}
@@ -1597,27 +1595,27 @@ void CL_GameAutoGo (mission_t *mis)
  * @param resultCounts result counts
  * @param won Whether we won the battle
  */
-void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean won)
+void CP_InitMissionResults (qboolean won)
 {
 	static char resultText[MAX_SMALLMENUTEXTLEN];
 	/* init result text */
 	MN_RegisterText(TEXT_STANDARD, resultText);
 
 	/* needs to be cleared and then append to it */
-	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), resultCounts[MRC_ALIENS_KILLED]);
-	Q_strcat(resultText, va(_("Aliens captured\t%i\n"), resultCounts[MRC_ALIENS_STUNNED]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), resultCounts[MRC_ALIENS_SURVIVOR]), sizeof(resultText));
+	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), ccs.missionResults.aliensKilled);
+	Q_strcat(resultText, va(_("Aliens captured\t%i\n"), ccs.missionResults.aliensStunned), sizeof(resultText));
+	Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), ccs.missionResults.aliensSurvived), sizeof(resultText));
 	/* team stats */
-	Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), resultCounts[MRC_PHALANX_KILLED]), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), resultCounts[MRC_PHALANX_MIA]), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), resultCounts[MRC_PHALANX_FF_KILLED]), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), resultCounts[MRC_PHALANX_SURVIVOR]), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), ccs.missionResults.ownKilled), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), ccs.missionResults.ownStunned), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), ccs.missionResults.ownKilledFriendlyFire), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), ccs.missionResults.ownSurvived), sizeof(resultText));
 
-	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), resultCounts[MRC_CIVILIAN_KILLED]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), resultCounts[MRC_CIVILIAN_FF_KILLED]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), resultCounts[MRC_CIVILIAN_SURVIVOR]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), resultCounts[MRC_ITEM_GATHEREDTYPES],
-			resultCounts[MRC_ITEM_GATHEREDAMOUNT]), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), ccs.missionResults.civiliansKilled), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), ccs.missionResults.civiliansKilledFriendlyFire), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), ccs.missionResults.civiliansSurvived), sizeof(resultText));
+	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), ccs.missionResults.itemtypes,
+			ccs.missionResults.itemamount), sizeof(resultText));
 
 	if (won && ccs.missionResults.recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));

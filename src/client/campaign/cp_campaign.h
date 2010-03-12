@@ -244,6 +244,16 @@ typedef struct missionResults_s {
 	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
 	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
 	float ufoCondition;	/**< How much the UFO is damaged */
+	int aliensKilled;
+	int aliensStunned;
+	int aliensSurvived;
+	int ownKilled;
+	int ownStunned;
+	int ownKilledFriendlyFire;
+	int ownSurvived;
+	int civiliansKilled;
+	int civiliansKilledFriendlyFire;
+	int civiliansSurvived;
 } missionResults_t;
 
 typedef struct stats_s {
@@ -592,24 +602,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t 
 campaign_t* CL_GetCampaign(const char *name);
 void CL_GameAutoGo(mission_t *mission);
 
-typedef enum missionResultCount_s {
-	MRC_ALIENS_KILLED,
-	MRC_ALIENS_STUNNED,
-	MRC_ALIENS_SURVIVOR,
-	MRC_PHALANX_KILLED,
-	MRC_PHALANX_MIA,
-	MRC_PHALANX_FF_KILLED,
-	MRC_PHALANX_SURVIVOR,
-	MRC_CIVILIAN_KILLED,
-	MRC_CIVILIAN_FF_KILLED,
-	MRC_CIVILIAN_SURVIVOR,
-	MRC_ITEM_GATHEREDTYPES,
-	MRC_ITEM_GATHEREDAMOUNT,
-
-	MAX_MISSIONRESULTCOUNT
-} missionResultCount_t;
-
-void CP_InitMissionResults(int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean won);
+void CP_InitMissionResults(qboolean won);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CP_CampaignExit(void);
 
