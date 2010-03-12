@@ -1149,11 +1149,10 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - ucn %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
 			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
-				/* Delete the employee. */
 				/* sideeffect: ccs.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd: Delete this dead employee: %i (%s)\n", i, chr->name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
-			} /* if dead */
+			}
 		}
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);

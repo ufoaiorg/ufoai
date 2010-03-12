@@ -381,14 +381,14 @@ void CP_CheckLostCondition (void)
  */
 void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
 {
-	int i, is_on_Earth = 0;
+	int i, isOnEarth = 0;
 	const int civilianSum = civiliansKilled + civiliansSurvived;
 	const float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
 	const int alienSum = aliensKilled + aliensSurvived;
 	const float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
 	const float difficultyModifier = (float)ccs.curCampaign->difficulty * 0.01f;
 	float performance;
-	float delta_happiness = 0.0f;
+	float deltaHappiness = 0.0f;
 	float happiness_divisor = 5.0f;
 	float civilianWeight = 1.5f;
 	float alienWeight = 1.0f;
@@ -401,32 +401,32 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 	ccs.civiliansKilled += civiliansKilled;
 
 	/* Calculate the actual change in happiness. The bigger the mission, the more potential influence. */
-	delta_happiness = performance * (0.006 * civilianSum + 0.006 * alienSum);
+	deltaHappiness = performance * (0.006 * civilianSum + 0.006 * alienSum);
 
 	/* One mission can only change nation happiness so much in either direction */
 	/* the happiness you can gain depends on the difficulty of the campaign. */
 	/* the happiness you can LOSE is always the same. Life is unfair like that. */
-	if (delta_happiness < - HAPPINESS_MAX_MISSION_IMPACT)
-		delta_happiness = - HAPPINESS_MAX_MISSION_IMPACT;
-	else if (delta_happiness > HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier)
-		delta_happiness = HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier;
+	if (deltaHappiness < - HAPPINESS_MAX_MISSION_IMPACT)
+		deltaHappiness = - HAPPINESS_MAX_MISSION_IMPACT;
+	else if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier)
+		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier;
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
 
 		/* update happiness. */
 		if (nation == ccs.battleParameters.nation) {
-			NAT_SetHappiness(nation, nation->stats[0].happiness + delta_happiness);
-			is_on_Earth++;
+			NAT_SetHappiness(nation, nation->stats[0].happiness + deltaHappiness);
+			isOnEarth++;
 		}
 		else {
-			NAT_SetHappiness(nation, nation->stats[0].happiness + delta_happiness / happiness_divisor);
+			NAT_SetHappiness(nation, nation->stats[0].happiness + deltaHappiness / happiness_divisor);
 		}
 	}
 
-	if (!is_on_Earth)
+	if (!isOnEarth)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
-	else if (is_on_Earth > 1)
+	else if (isOnEarth > 1)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->id, ccs.battleParameters.nation->id);
 }
 
