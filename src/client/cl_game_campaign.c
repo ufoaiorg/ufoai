@@ -249,48 +249,48 @@ static void GAME_CP_Start_f (void)
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	int i, j;
-	int our_survivors, our_killed, our_stunned;
-	int their_survivors, their_killed, their_stunned;
-	int civilian_survivors, civilian_killed, civilian_stunned;
+	int ownSurvived, ownKilled, ownStunned;
+	int aliensSurvived, aliensKilled, aliensStunned;
+	int civiliansSurvived, civiliansKilled, civiliansStunned;
 
 	CP_ParseCharacterData(msg);
 
-	our_survivors = our_killed = our_stunned = 0;
-	their_survivors = their_killed = their_stunned = 0;
-	civilian_survivors = civilian_killed = civilian_stunned = 0;
+	ownSurvived = ownKilled = ownStunned = 0;
+	aliensSurvived = aliensKilled = aliensStunned = 0;
+	civiliansSurvived = civiliansKilled = civiliansStunned = 0;
 
 	for (i = 0; i < MAX_TEAMS; i++) {
 		if (i == cls.team)
-			our_survivors = numAlive[i];
+			ownSurvived = numAlive[i];
 		else if (i == TEAM_CIVILIAN)
-			civilian_survivors = numAlive[i];
+			civiliansSurvived = numAlive[i];
 		else
-			their_survivors += numAlive[i];
+			aliensSurvived += numAlive[i];
 		for (j = 0; j < MAX_TEAMS; j++)
 			if (j == cls.team) {
-				our_killed += numKilled[i][j];
-				our_stunned += numStunned[i][j]++;
+				ownKilled += numKilled[i][j];
+				ownStunned += numStunned[i][j]++;
 			} else if (j == TEAM_CIVILIAN) {
-				civilian_killed += numKilled[i][j];
-				civilian_stunned += numStunned[i][j]++;
+				civiliansKilled += numKilled[i][j];
+				civiliansStunned += numStunned[i][j]++;
 			} else {
-				their_killed += numKilled[i][j];
-				their_stunned += numStunned[i][j]++;
+				aliensKilled += numKilled[i][j];
+				aliensStunned += numStunned[i][j]++;
 			}
 	}
 	/* if we won, our stunned are alive */
 	if (winner == cls.team) {
-		our_survivors += our_stunned;
-		our_stunned = 0;
+		ownSurvived += ownStunned;
+		ownStunned = 0;
 	} else
 		/* if we lost, they revive stunned */
-		their_stunned = 0;
+		aliensStunned = 0;
 
 	/* we won, and we're not the dirty aliens */
 	if (winner == cls.team)
-		civilian_survivors += civilian_stunned;
+		civiliansSurvived += civiliansStunned;
 	else
-		civilian_killed += civilian_stunned;
+		civiliansKilled += civiliansStunned;
 
 	/* Collect items from the battlefield. */
 	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);
@@ -298,18 +298,18 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		/* Collect aliens from the battlefield. */
 		AL_CollectingAliens(ccs.missionAircraft);
 
-	ccs.aliensKilled += their_killed;
+	ccs.aliensKilled += aliensKilled;
 
-	ccs.missionResults.aliensKilled = their_killed;
-	ccs.missionResults.aliensStunned = their_stunned;
-	ccs.missionResults.aliensSurvived = their_survivors;
-	ccs.missionResults.ownKilled = our_killed - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
-	ccs.missionResults.ownStunned = our_stunned;
+	ccs.missionResults.aliensKilled = aliensKilled;
+	ccs.missionResults.aliensStunned = aliensStunned;
+	ccs.missionResults.aliensSurvived = aliensSurvived;
+	ccs.missionResults.ownKilled = ownKilled - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+	ccs.missionResults.ownStunned = ownStunned;
 	ccs.missionResults.ownKilledFriendlyFire = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
-	ccs.missionResults.ownSurvived = our_survivors;
-	ccs.missionResults.civiliansKilled = civilian_killed;
+	ccs.missionResults.ownSurvived = ownSurvived;
+	ccs.missionResults.civiliansKilled = civiliansKilled;
 	ccs.missionResults.civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
-	ccs.missionResults.civiliansSurvived = civilian_survivors;
+	ccs.missionResults.civiliansSurvived = civiliansSurvived;
 
 	CP_InitMissionResults(winner == cls.team);
 
