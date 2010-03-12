@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-03-02 21:32+0100\n"
-"PO-Revision-Date: 2010-03-04 13:33+0600\n"
+"PO-Revision-Date: 2010-03-12 17:31+0600\n"
 "Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -675,7 +675,7 @@ msgstr "Амстердам"
 
 #: ../base/ufos/cities.ufo:21
 msgid "Mumbai"
-msgstr "Бомбей"
+msgstr "Мумбаи"
 
 #: ../base/ufos/cities.ufo:27
 msgid "Cape Town"
@@ -687,7 +687,7 @@ msgstr "Кайенна"
 
 #: ../base/ufos/cities.ufo:39
 msgid "Dakar"
-msgstr "Даккар"
+msgstr "Дакар"
 
 #: ../base/ufos/cities.ufo:45
 msgid "Teheran"
@@ -700,7 +700,7 @@ msgstr "Веллингтон"
 #: ../base/ufos/cities.ufo:57
 #: ../base/ufos/cities.ufo:2631
 msgid "Wichita"
-msgstr "Вичита"
+msgstr "Уичита"
 
 #: ../base/ufos/cities.ufo:63
 msgid "Aarhus"
@@ -1240,7 +1240,7 @@ msgstr "Золотой Берег"
 
 #: ../base/ufos/cities.ufo:867
 msgid "Gothenburg"
-msgstr "Гетеборг"
+msgstr "Гётеборг"
 
 #: ../base/ufos/cities.ufo:873
 msgid "Graz"
