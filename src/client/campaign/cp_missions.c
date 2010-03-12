@@ -269,7 +269,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 
 	assert(mission->posAssigned);
 
-	numAliens = max(4, 4 + (int) ccs.overallInterest / 50 + round((rand() * 3)) - 2);
+	numAliens = max(4, 4 + (int) ccs.overallInterest / 50 + (rand() % 3) - 1);
 	if (mission->ufo && mission->ufo->maxTeamSize && numAliens > mission->ufo->maxTeamSize)
 		numAliens = mission->ufo->maxTeamSize;
 	if (numAliens > mission->mapDef->maxAliens)
