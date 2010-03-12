@@ -261,7 +261,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	int i;
 	itemsTmp_t *cargo = aircraft->itemcargo;
 
-	for (i = 0; i < aircraft->itemtypes; i++) {
+	for (i = 0; i < aircraft->itemTypes; i++) {
 		if (cargo[i].item == item) {
 			Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
 			cargo[i].amount += amount;
@@ -271,7 +271,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
 	cargo[i].item = item;
 	cargo[i].amount = amount;
-	aircraft->itemtypes++;
+	aircraft->itemTypes++;
 }
 
 /**
@@ -334,7 +334,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 
 	/* Save previous cargo */
 	memcpy(prevItemCargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
-	prevItemTypes = aircraft->itemtypes;
+	prevItemTypes = aircraft->itemTypes;
 	/* Make sure itemcargo is empty. */
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 
@@ -342,7 +342,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	memset(&eTempEq, 0, sizeof(eTempEq));
 
 	cargo = aircraft->itemcargo;
-	aircraft->itemtypes = 0;
+	aircraft->itemTypes = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
 		/* Winner collects everything on the floor, and everything carried
@@ -372,13 +372,13 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 		}
 	}
 	/* Fill the missionResults array. */
-	ccs.missionResults.itemtypes = aircraft->itemtypes;
-	for (i = 0; i < aircraft->itemtypes; i++)
-		ccs.missionResults.itemamount += cargo[i].amount;
+	ccs.missionResults.itemTypes = aircraft->itemTypes;
+	for (i = 0; i < aircraft->itemTypes; i++)
+		ccs.missionResults.itemAmount += cargo[i].amount;
 
 #ifdef DEBUG
 	/* Print all of collected items. */
-	for (i = 0; i < aircraft->itemtypes; i++) {
+	for (i = 0; i < aircraft->itemTypes; i++) {
 		if (cargo[i].amount > 0)
 			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
 	}
@@ -386,15 +386,15 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 
 	/* Put previous cargo back */
 	for (i = 0; i < prevItemTypes; i++) {
-		for (j = 0; j < aircraft->itemtypes; j++) {
+		for (j = 0; j < aircraft->itemTypes; j++) {
 			if (cargo[j].item == prevItemCargo[i].item) {
 				cargo[j].amount += prevItemCargo[i].amount;
 				break;
 			}
 		}
-		if (j == aircraft->itemtypes) {
+		if (j == aircraft->itemTypes) {
 			cargo[j] = prevItemCargo[i];
-			aircraft->itemtypes++;
+			aircraft->itemTypes++;
 		}
 	}
 }
@@ -2530,9 +2530,9 @@ void AIR_SaveAircraftXML (mxml_node_t *node, const aircraft_t* const aircraft, q
 		mxml_AddInt(node, "pilotidx", aircraft->pilot->idx);
 
 	subnode = mxml_AddNode(node, "cargo");
-	mxml_AddInt(subnode, "types", aircraft->itemtypes);
+	mxml_AddInt(subnode, "types", aircraft->itemTypes);
 	/* itemcargo */
-	for (l = 0; l < aircraft->itemtypes; l++) {
+	for (l = 0; l < aircraft->itemTypes; l++) {
 		mxml_node_t *ssnode = mxml_AddNode(subnode, "item");
 		assert(aircraft->itemcargo[l].item);
 		mxml_AddString(ssnode, "itemid", aircraft->itemcargo[l].item->id);
@@ -2848,14 +2848,14 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 	}
 
 	snode = mxml_GetNode(p, "cargo");
-	craft->itemtypes = mxml_GetInt(snode, "types", 0);
-	if (craft->itemtypes > MAX_CARGO) {
-		Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", craft->itemtypes, MAX_CARGO);
+	craft->itemTypes = mxml_GetInt(snode, "types", 0);
+	if (craft->itemTypes > MAX_CARGO) {
+		Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", craft->itemTypes, MAX_CARGO);
 		return qfalse;
 	}
 
 	/* itemcargo */
-	for (l = 0, ssnode = mxml_GetNode(snode, "item"); l < craft->itemtypes && snode;
+	for (l = 0, ssnode = mxml_GetNode(snode, "item"); l < craft->itemTypes && snode;
 			l++, ssnode = mxml_GetNextNode(ssnode, snode, "item")) {
 		const char *const str = mxml_GetString(ssnode, "itemid");
 		const objDef_t *od = INVSH_GetItemByID(str);

@@ -238,8 +238,8 @@ typedef struct battleParam_s {
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
-	int itemtypes;		/**< Types of items gathered from a mission. */
-	int itemamount;		/**< Amount of items (all) gathered from a mission. */
+	int itemTypes;		/**< Types of items gathered from a mission. */
+	int itemAmount;		/**< Amount of items (all) gathered from a mission. */
 	qboolean recovery;	/**< Qtrue if player secured a UFO (landed or crashed). */
 	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
 	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */

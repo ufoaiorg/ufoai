@@ -209,7 +209,7 @@ typedef struct aircraft_s {
 	mapline_t route;
 	struct base_s *homebase;			/**< Pointer to homebase for faster access. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
-	int itemtypes;						/**< How many types of items we collected. */
+	int itemTypes;						/**< How many types of items we collected. */
 
 	char *building;		/**< id of the building needed as hangar */
 

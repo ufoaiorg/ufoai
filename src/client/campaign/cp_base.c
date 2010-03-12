@@ -2538,7 +2538,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 
 	cargo = aircraft->itemcargo;
 
-	for (i = 0; i < aircraft->itemtypes; i++) {
+	for (i = 0; i < aircraft->itemTypes; i++) {
 		technology_t *tech = cargo[i].item->tech;
 		if (!tech)
 			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
@@ -2585,7 +2585,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	CL_UpdateCredits(ccs.credits + gained + forcedgained);
 
 	/* ship no longer has cargo aboard */
-	aircraft->itemtypes = 0;
+	aircraft->itemTypes = 0;
 }
 
 /**

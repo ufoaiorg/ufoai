@@ -1614,8 +1614,8 @@ void CP_InitMissionResults (qboolean won)
 	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), ccs.missionResults.civiliansKilled), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), ccs.missionResults.civiliansKilledFriendlyFire), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), ccs.missionResults.civiliansSurvived), sizeof(resultText));
-	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), ccs.missionResults.itemtypes,
-			ccs.missionResults.itemamount), sizeof(resultText));
+	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), ccs.missionResults.itemTypes,
+			ccs.missionResults.itemAmount), sizeof(resultText));
 
 	if (won && ccs.missionResults.recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
