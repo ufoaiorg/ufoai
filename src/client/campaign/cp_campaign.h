@@ -246,8 +246,6 @@ typedef struct missionResults_s {
 	float ufoCondition;	/**< How much the UFO is damaged */
 } missionResults_t;
 
-extern missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
-
 typedef struct stats_s {
 	int missions;				/**< all missions (used for unique mission idx generation) */
 	int missionsWon;
