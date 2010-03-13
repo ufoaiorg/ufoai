@@ -376,6 +376,9 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 		/* create lightmaps */
 		R_CreateSurfaceLightmap(out);
 
+		/* and flare */
+		R_CreateSurfaceFlare(out);
+
 		out->tile = r_numMapTiles - 1;
 	}
 }
@@ -914,6 +917,9 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 
 		if (surf->texinfo->image->material.flags & STAGE_RENDER)
 			mod->bsp.material_surfaces->count++;
+
+		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+			mod->bsp.flare_surfaces->count++;
 	}
 
 	/* allocate the surfaces pointers based on the counts */
@@ -945,6 +951,9 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 
 		if (surf->texinfo->image->material.flags & STAGE_RENDER)
 			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
+
+		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+			R_SurfaceToSurfaces(mod->bsp.flare_surfaces, surf);
 	}
 
 	/* now sort them by texture */

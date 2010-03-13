@@ -182,7 +182,7 @@ void CL_ViewRender (void)
 	if (!refdef.ready)
 		return;
 
-	r_numEntities = 0;
+	refdef.numEntities = 0;
 
 	switch (cls.state) {
 	case ca_sequence:

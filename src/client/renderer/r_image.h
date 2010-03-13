@@ -116,6 +116,9 @@ image_t *R_FindImage(const char *pname, imagetype_t type);
 #define MAX_ENVMAPTEXTURES 2
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
+#define NUM_FLARETEXTURES 3
+extern image_t *r_flaretextures[NUM_FLARETEXTURES];
+
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;

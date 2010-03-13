@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_ENTITIES	2048
 
-int r_numEntities;
 static entity_t r_entities[MAX_ENTITIES];
 
 /**
@@ -273,7 +272,7 @@ static void R_DrawEntityEffects (void)
 
 	R_EnableBlend(qtrue);
 
-	for (i = 0; i < r_numEntities; i++) {
+	for (i = 0; i < refdef.numEntities; i++) {
 		const entity_t *e = &r_entities[i];
 
 		if (e->flags <= RF_BOX)
@@ -591,7 +590,7 @@ void R_DrawEntities (void)
 	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
 
-	for (i = 0; i < r_numEntities; i++) {
+	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
 
 		/* frustum cull check - but not while we are in e.g. sequence mode */
@@ -649,9 +648,9 @@ void R_DrawEntities (void)
  */
 entity_t *R_GetFreeEntity (void)
 {
-	if (r_numEntities >= MAX_ENTITIES)
+	if (refdef.numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_GetFreeEntity: MAX_ENTITIES exceeded");
-	return &r_entities[r_numEntities];
+	return &r_entities[refdef.numEntities];
 }
 
 /**
@@ -659,7 +658,7 @@ entity_t *R_GetFreeEntity (void)
  */
 entity_t *R_GetEntity (int id)
 {
-	if (id < 0 || id >= r_numEntities)
+	if (id < 0 || id >= refdef.numEntities)
 		return NULL;
 	return &r_entities[id];
 }
@@ -671,13 +670,13 @@ entity_t *R_GetEntity (int id)
  */
 int R_AddEntity (const entity_t *ent)
 {
-	if (r_numEntities >= MAX_ENTITIES)
+	if (refdef.numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_AddEntity: MAX_ENTITIES exceeded");
 
 	/* don't add the bsp tiles from random map assemblies */
 	if (ent->model && ent->model->type == mod_bsp)
 		return -1;
 
-	r_entities[r_numEntities++] = *ent;
-	return r_numEntities - 1;
+	r_entities[refdef.numEntities++] = *ent;
+	return refdef.numEntities - 1;
 }

@@ -72,6 +72,15 @@ typedef struct mBspTexInfo_s {
 	image_t *image;
 } mBspTexInfo_t;
 
+typedef struct mBspFlare_s {
+	vec3_t origin;
+	float radius;
+	const image_t *image;
+	vec3_t color;
+	float time;
+	float alpha;
+} mBspFlare_t;
+
 typedef struct mBspSurface_s {
 	cBspPlane_t *plane;
 	int flags;
@@ -104,6 +113,8 @@ typedef struct mBspSurface_s {
 
 	mBspTexInfo_t *texinfo;
 
+	mBspFlare_t *flare;
+
 	int lightmap_texnum;
 	int deluxemap_texnum;
 
@@ -134,8 +145,9 @@ typedef struct mBspSurfaces_s {
 #define blend_surfaces			sorted_surfaces[3]
 #define blend_warp_surfaces		sorted_surfaces[4]
 #define material_surfaces		sorted_surfaces[5]
+#define flare_surfaces			sorted_surfaces[6]
 
-#define NUM_SURFACES_ARRAYS		6
+#define NUM_SURFACES_ARRAYS		7
 
 #define R_SurfaceToSurfaces(surfs, surf)\
 	(surfs)->surfaces[(surfs)->count++] = surf

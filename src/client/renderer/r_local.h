@@ -37,6 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_model.h"
 #include "r_thread.h"
 #include "r_framebuffer.h"
+#include "r_lightmap.h"
+#include "r_corona.h"
+#include "r_flare.h"
 
 void R_DrawBlendSurfaces(const mBspSurfaces_t *list);
 void R_DrawOpaqueSurfaces(const mBspSurfaces_t *surfs);
@@ -90,6 +93,8 @@ extern cvar_t *r_specular;
 extern cvar_t *r_hardness;
 extern cvar_t *r_parallax;
 extern cvar_t *r_fog;
+extern cvar_t *r_flares;
+extern cvar_t *r_coronas;
 
 /* private renderer variables */
 typedef struct rlocals_s {

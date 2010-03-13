@@ -64,6 +64,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_PTL_ART		512
 #define MAX_PTLS		2048
 
+/** @brief coronas are soft, alpha-blended, rounded polys */
+typedef struct corona_s {
+	vec3_t org;
+	float radius;
+	vec3_t color;
+} corona_t;
+
+#define MAX_CORONAS 		128
+
 #define MAX_GL_LIGHTS 8
 
 typedef struct {
@@ -189,6 +198,11 @@ typedef struct {
 	vec4_t fogColor;
 
 	vec3_t ambientLightColor;		/**< from static lighting */
+
+	int numEntities;
+	int numLights;
+	int numCoronas;
+	corona_t coronas[MAX_CORONAS];
 
 	trace_t trace;				/**< occlusion testing */
 	struct entity_s *traceEntity;

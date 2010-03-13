@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define LIGHT_RADIUS_FACTOR 80.0
 
-int r_numLights;
 static light_t r_lightsArray[MAX_GL_LIGHTS];
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
@@ -39,10 +38,10 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 	if (!r_lights->integer)
 		return;
 
-	if (r_numLights == MAX_GL_LIGHTS)
+	if (refdef.numLights == MAX_GL_LIGHTS)
 		return;
 
-	i = r_numLights++;
+	i = refdef.numLights++;
 
 	VectorCopy(origin, r_lightsArray[i].origin);
 	r_lightsArray[i].radius = radius;
@@ -124,7 +123,7 @@ void R_EnableLights (void)
 
 	position[3] = diffuse[3] = 1.0;
 
-	for (i = 0, l = r_lightsArray; i < r_numLights; i++, l++) {
+	for (i = 0, l = r_lightsArray; i < refdef.numLights; i++, l++) {
 		VectorSubtract(l->origin, lights_offset, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);

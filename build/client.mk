@@ -253,8 +253,10 @@ CLIENT_SRCS = \
 	client/renderer/r_array.c \
 	client/renderer/r_bsp.c \
 	client/renderer/r_draw.c \
+	client/renderer/r_corona.c \
 	client/renderer/r_entity.c \
 	client/renderer/r_font.c \
+	client/renderer/r_flare.c \
 	client/renderer/r_framebuffer.c \
 	client/renderer/r_image.c \
 	client/renderer/r_light.c \

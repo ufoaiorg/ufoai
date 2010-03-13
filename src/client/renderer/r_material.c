@@ -731,6 +731,24 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			continue;
 		}
 
+		if (!strcmp(c, "flare")) {
+			c = Com_Parse(buffer);
+			i = atoi(c);
+
+			if (i > -1 && i < NUM_FLARETEXTURES)
+				s->image = r_flaretextures[i];
+			else
+				s->image = R_FindImage(va("flares/%s", c), it_material);
+
+			if (s->image == r_noTexture) {
+				Com_Printf("R_ParseStage: Failed to resolve flare: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_FLARE;
+			continue;
+		}
+
 		if (*c == '}') {
 			Com_DPrintf(DEBUG_RENDERER, "Parsed stage\n"
 					"  flags: %d\n"

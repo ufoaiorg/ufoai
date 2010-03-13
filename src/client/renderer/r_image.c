@@ -36,6 +36,9 @@ int r_numImages;
 /* generic environment map */
 image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
+/* lense flares */
+image_t *r_flaretextures[NUM_FLARETEXTURES];
+
 #define MAX_TEXTURE_SIZE 8192
 
 /**
@@ -706,6 +709,12 @@ void R_InitImages (void)
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i", i), it_effect);
 		if (r_envmaptextures[i] == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load environment map %i", i);
+	}
+
+	for (i = 0; i < NUM_FLARETEXTURES; i++) {
+		r_flaretextures[i] = R_FindImage(va("pics/flares/flare_%i.tga", i), it_effect);
+		if (r_envmaptextures[i] == r_noTexture)
+			Com_Error(ERR_FATAL, "Could not load lens flare %i", i);
 	}
 
 	R_InitOverlay();

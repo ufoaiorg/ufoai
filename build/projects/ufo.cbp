@@ -1125,6 +1125,12 @@
 		<Unit filename="../../src/client/renderer/r_material.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/client/renderer/r_corona.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_flare.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/client/renderer/r_material.h" />
 		<Unit filename="../../src/client/renderer/r_mesh.c">
 			<Option compilerVar="CC" />

@@ -97,6 +97,4 @@ entity_t *R_GetEntity(int id);
 void R_EntityDrawBBox(const vec3_t mins, const vec3_t maxs);
 void R_TransformForEntity(const entity_t *e, const vec3_t in, vec3_t out);
 
-extern int r_numEntities;
-
 #endif
