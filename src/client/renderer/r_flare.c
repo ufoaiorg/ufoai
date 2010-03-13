@@ -180,5 +180,5 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableColorArray(qfalse);
 
-	glColor4fv(color_white);
+	R_Color(NULL);
 }

@@ -96,5 +96,5 @@ void R_DrawCoronas (void)
 
 	R_EnableTexture(&texunit_diffuse, qtrue);
 
-	glColor4fv(color_white);
+	R_Color(NULL);
 }
