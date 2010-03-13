@@ -41,7 +41,7 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
  */
 static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 {
-	G_TestLineWithEnts(from, to);
+	return G_TestLineWithEnts(from, to);
 }
 
 /**
