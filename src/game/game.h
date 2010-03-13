@@ -138,15 +138,9 @@ typedef struct {
 	void (IMPORT *SetModel) (edict_t * ent, const char *name);
 
 	/** @brief collision detection
-	 * @note traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
+	 * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
-	 * returns value of type trace_t with attributes:
-	 * allsolid - if true, entire trace was in a wall
-	 * startsolid - if true, trace started in a wall
-	 * fraction - fraction of trace completed (1.0 if totally completed)
-	 * endpos - point where trace ended
-	 * plane - surface normal at hitpoisee
-	 * ent - entity hit by trace
+	 * @return the trace data
 	 */
 	trace_t (IMPORT *trace) (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 

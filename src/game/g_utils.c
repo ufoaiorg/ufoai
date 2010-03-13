@@ -173,6 +173,12 @@ void G_TakeDamage (edict_t *ent, int damage)
 		ent->HP = max(ent->HP - damage, 0);
 }
 
+/**
+ * @brief collision detection
+ * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
+ * via contentmask (MASK_*).
+ * @return The trace result
+ */
 trace_t G_Trace (vec3_t start, vec3_t end, edict_t * passent, int contentmask)
 {
 	return gi.trace(start, NULL, NULL, end, passent, contentmask);
