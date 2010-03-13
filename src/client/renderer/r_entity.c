@@ -27,26 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
+#include "r_draw.h"
 
 #define	MAX_ENTITIES	2048
 
 static entity_t r_entities[MAX_ENTITIES];
-
-/**
- * @brief Compute the bounding box for an entity out of the mins, maxs
- * @sa R_EntityDrawBBox
- */
-static void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
-{
-	int i;
-
-	/* compute a full bounding box */
-	for (i = 0; i < 8; i++) {
-		bbox[i][0] = (i & 1) ? mins[0] : maxs[0];
-		bbox[i][1] = (i & 2) ? mins[1] : maxs[1];
-		bbox[i][2] = (i & 4) ? mins[2] : maxs[2];
-	}
-}
 
 /**
  * @brief Transforms a point by the inverse of the world-model matrix for the
@@ -67,47 +52,6 @@ void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
 }
 
 /**
- * @brief Draws the model bounding box
- * @sa R_EntityComputeBoundingBox
- */
-void R_EntityDrawBBox (const vec3_t mins, const vec3_t maxs)
-{
-	vec3_t bbox[8];
-
-	R_EntityComputeBoundingBox(mins, maxs, bbox);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	/* Draw top and sides */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[0]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[5]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[3]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[0]);
-	glEnd();
-
-	/* Draw bottom */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[7]);
-	glEnd();
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
-
-/**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
  * @sa RF_BOX
@@ -121,7 +65,7 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(color);
 
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
-		R_EntityDrawBBox(e->mins, e->maxs);
+		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
 		vec3_t upper, lower;
 		const float dx = e->oldorigin[0] - e->origin[0];

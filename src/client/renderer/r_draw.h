@@ -47,6 +47,7 @@ void R_DrawPolygon(int points, int *verts);
 void R_PushClipRect(int x, int y, int width, int height);
 void R_PopClipRect(void);
 void R_CleanupDepthBuffer(int x, int y, int width, int height);
+void R_DrawBoundingBox(const vec3_t mins, const vec3_t maxs);
 
 extern cvar_t *r_geoscape_overlay;
 

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
 #include "r_error.h"
+#include "r_draw.h"
 
 static void R_TransformModelDirect (modelInfo_t * mi)
 {
@@ -309,7 +310,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_EntityDrawBBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
+		R_DrawBoundingBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
 
 	glDisable(GL_DEPTH_TEST);
 
@@ -359,7 +360,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_EntityDrawBBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
+		R_DrawBoundingBox(mi->model->alias.frames[mi->frame].mins, mi->model->alias.frames[mi->frame].maxs);
 
 	glPopMatrix();
 
@@ -552,7 +553,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_EntityDrawBBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
+		R_DrawBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
 
 	glPopMatrix();
 

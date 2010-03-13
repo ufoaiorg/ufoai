@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_light.h"
 #include "r_error.h"
+#include "r_draw.h"
 
 /**
  * @brief Set the surface state according to surface flags and bind the texture
@@ -83,7 +84,7 @@ static inline void R_DrawSurface (const mBspSurface_t *surf)
 	glDrawArrays(GL_POLYGON, surf->index, surf->numedges);
 
 	if (r_showbox->integer == 2)
-		R_EntityDrawBBox(surf->mins, surf->maxs);
+		R_DrawBoundingBox(surf->mins, surf->maxs);
 
 	refdef.brushCount++;
 }
