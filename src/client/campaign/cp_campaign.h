@@ -621,7 +621,7 @@ base_t *CP_GetMissionBase(void);
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
 void CP_StartSelectedMission(void);
-void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis);
+void CL_HandleNationData(qboolean won, mission_t * mis);
 void CP_CheckLostCondition(void);
 void CL_UpdateCharacterStats(const base_t *base, int won, const aircraft_t *aircraft);
 

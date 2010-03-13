@@ -373,54 +373,48 @@ void CP_CheckLostCondition (void)
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
- * @todo This function needs to be updated/simplified once mission scoring is implemented.
- * The mission score will directly affect the nation happiness as per
- * happiness += missionScore * missionWeight
- * where missionScore is the relative score for the mission (a value between -1 and 1) and
- * missionWeight is the absolute effect this mission has (a function of the maximum absolute score possible for the mission)
+ * @todo Scoring should eventually be expanded to include such elements as
+ * infected humans and mission objectives other than xenocide.
  */
-void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
+void CL_HandleNationData (qboolean won, mission_t * mis)
 {
 	int i, isOnEarth = 0;
-	const int civilianSum = civiliansKilled + civiliansSurvived;
-	const float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
-	const int alienSum = aliensKilled + aliensSurvived;
-	const float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
-	const float difficultyModifier = (float)ccs.curCampaign->difficulty * 0.01f;
-	float performance;
+	const float civilianSum = (float) (ccs.missionResults.civiliansSurvived + ccs.missionResults.civiliansKilled + ccs.missionResults.civiliansKilledFriendlyFire);
+	const float alienSum = (float) (ccs.missionResults.aliensSurvived + ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned);
+	float performance, performanceAlien, performanceCivilian;
 	float deltaHappiness = 0.0f;
 	float happiness_divisor = 5.0f;
-	float civilianWeight = 1.5f;
-	float alienWeight = 1.0f;
 
-	/* Calculate how well the mission went. The value is between -1 and 1. */
-	performance = ((civilianWeight * civilianRatio + alienWeight * alienRatio) - 0.5 * (civilianRatio + alienRatio)) / 0.5 * (civilianRatio + alienRatio);
+	assert(civilianSum > 0);
+	assert(alienSum > 0);
+
+	/* Calculate how well the mission went. */
+	performanceCivilian = (2 * civilianSum - ccs.missionResults.civiliansKilled - 2 * ccs.missionResults.civiliansKilledFriendlyFire) * 3 / 2 * civilianSum - 2;
+	/** @todo The score for aliens is always negative or zero currently, but this should be dependent on the mission objective.
+	* In a mission that has a special objective, the amount of killed aliens should only serve to increase the score, not reduce the penalty. */
+	performanceAlien = ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned - alienSum;
+	performance = performanceCivilian + performanceAlien;
 
 	/* Book-keeping. */
-	lost ? ccs.campaignStats.missionsLost++ : ccs.campaignStats.missionsWon++;
-	ccs.civiliansKilled += civiliansKilled;
+	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
 
-	/* Calculate the actual change in happiness. The bigger the mission, the more potential influence. */
-	deltaHappiness = performance * (0.006 * civilianSum + 0.006 * alienSum);
+	/* Calculate the actual happiness delta. The bigger the mission, the more potential influence. */
+	deltaHappiness = 0.004 * civilianSum + 0.004 * alienSum;
 
-	/* One mission can only change nation happiness so much in either direction */
-	/* the happiness you can gain depends on the difficulty of the campaign. */
-	/* the happiness you can LOSE is always the same. Life is unfair like that. */
-	if (deltaHappiness < - HAPPINESS_MAX_MISSION_IMPACT)
-		deltaHappiness = - HAPPINESS_MAX_MISSION_IMPACT;
-	else if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier)
-		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT - difficultyModifier;
+	/* There is a maximum base happiness delta. */
+	if (deltaHappiness > HAPPINESS_MAX_MISSION_IMPACT)
+		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
 
 		/* update happiness. */
 		if (nation == ccs.battleParameters.nation) {
-			NAT_SetHappiness(nation, nation->stats[0].happiness + deltaHappiness);
+			NAT_SetHappiness(nation, nation->stats[0].happiness + performance * deltaHappiness);
 			isOnEarth++;
 		}
 		else {
-			NAT_SetHappiness(nation, nation->stats[0].happiness + deltaHappiness / happiness_divisor);
+			NAT_SetHappiness(nation, nation->stats[0].happiness + performance * deltaHappiness / happiness_divisor);
 		}
 	}
 
@@ -1417,7 +1411,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					/* if the soldier was ever on a mission */
 					if (score->assignedMissions) {
 						const rank_t *rank = CL_GetRankByIdx(score->rank);
-						/* @sa CHRSH_CharGetMaxExperiencePerMission */
+						/* @sa G_CharacterGetMaxExperiencePerMission */
 						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 							increaseWinProbability *= rank->factor;
 						}
@@ -1434,7 +1428,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					const rank_t *rank = CL_GetRankByIdx(score->rank);
-					/* @sa CHRSH_CharGetMaxExperiencePerMission */
+					/* @sa G_CharacterGetMaxExperiencePerMission */
 					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 						increaseWinProbability *= rank->factor;
 					}
@@ -1536,10 +1530,7 @@ void CL_GameAutoGo (mission_t *mis)
 	won = frand() < winProbability;
 
 	/* update nation opinions */
-	if (won)
-		CL_HandleNationData(qfalse, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
-	else
-		CL_HandleNationData(qtrue, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
+	CL_HandleNationData(won, ccs.selectedMission);
 
 	CP_CheckLostCondition();
 
