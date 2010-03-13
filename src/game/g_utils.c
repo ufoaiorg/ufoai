@@ -173,6 +173,11 @@ void G_TakeDamage (edict_t *ent, int damage)
 		ent->HP = max(ent->HP - damage, 0);
 }
 
+trace_t G_Trace (vec3_t start, vec3_t end, edict_t * passent, int contentmask)
+{
+	return gi.trace(start, NULL, NULL, end, passent, contentmask);
+}
+
 /**
  * @brief Returns the player name for a give player number
  */

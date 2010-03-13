@@ -43,7 +43,7 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 {
 #if 0 /* this version is more accurate and includes entity tests */
 	trace_t tr;
-	tr = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
+	tr = G_Trace(from, to, NULL, MASK_SOLID);
 	return (tr.fraction < 1.0);
 #elif 0 /* this version is much faster but has no entity test*/
 	return gi.TestLine(from, to, TL_FLAG_NONE);

@@ -655,7 +655,7 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 		curV[2] -= GRAVITY * GRENADE_DT;
 
 		/* trace */
-		tr = gi.trace(oldPos, NULL, NULL, newPos, ent, MASK_SHOT);
+		tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			int i;
@@ -860,7 +860,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
-	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
+	tr = G_Trace(cur_loc, impact, ent, MASK_SHOT);
 	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
@@ -876,7 +876,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
-		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
+		tr = G_Trace(tracefrom, impact, ent, MASK_SHOT);
 
 		DumpTrace(tracefrom, tr);
 
