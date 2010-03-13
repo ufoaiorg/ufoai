@@ -19,3 +19,24 @@
 		lightmap
 	}
 }
+
+{
+	material tex_ufo/ufo2_04
+	{
+		texture tex_ufo/ufo2_04a0
+		anim 10 1.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_05
+	{
+		texture tex_ufo/ufo2_05a0
+		anim 10 1.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
