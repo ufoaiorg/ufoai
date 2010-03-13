@@ -1383,12 +1383,13 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 {
 	int x, y;
 
+	if (ms == ccs.selectedMission)
+		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
+
 	if (!MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL))
 		return;
 
 	if (ms == ccs.selectedMission) {
-		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
-
 		/* Draw circle around the mission */
 		if (cl_3dmap->integer) {
 			if (!ccs.selectedMission->active)
