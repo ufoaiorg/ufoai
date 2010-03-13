@@ -156,7 +156,9 @@ typedef struct {
 	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, int areatype);
 	int (IMPORT *TouchEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
 
+	/** @brief fast version of a line trace but without including entities */
 	qboolean (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
+	/** @brief fast version of a line trace that also includes entities */
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 

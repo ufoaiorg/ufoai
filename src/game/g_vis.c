@@ -41,19 +41,7 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
  */
 static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 {
-#if 0 /* this version is more accurate and includes entity tests */
-	trace_t tr;
-	tr = G_Trace(from, to, NULL, MASK_SOLID);
-	return (tr.fraction < 1.0);
-#elif 0 /* this version is much faster but has no entity test*/
-	return gi.TestLine(from, to, TL_FLAG_NONE);
-#else /* a compromise- but still checks for entities that may obstruct view */
-	const char *entList[MAX_EDICTS];
-	/* generate entity list */
-	G_GenerateEntList(entList);
-	/* test for visibility */
-	return gi.TestLineWithEnt(from, to, TL_FLAG_NONE, entList);
-#endif
+	G_TestLineWithEnts(from, to);
 }
 
 /**

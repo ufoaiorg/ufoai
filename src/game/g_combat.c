@@ -54,7 +54,7 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 				eye[2] += EYE_STAND;
 
 			/* line of sight */
-			if (!gi.TestLine(eye, point, TL_FLAG_NONE))
+			if (!G_TestLine(eye, point))
 				return qtrue;
 		}
 	}

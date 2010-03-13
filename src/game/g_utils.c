@@ -173,17 +173,37 @@ void G_TakeDamage (edict_t *ent, int damage)
 		ent->HP = max(ent->HP - damage, 0);
 }
 
+static void G_TraceDraw (const vec3_t start, const vec3_t end)
+{
+	if (g_drawtraces->integer)
+		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", -1, start, end, vec3_origin);
+}
+
+qboolean G_TestLineWithEnts (const vec3_t start, const vec3_t end)
+{
+	const char *entList[MAX_EDICTS];
+	/* generate entity list */
+	G_GenerateEntList(entList);
+	G_TraceDraw(start, end);
+	/* test for visibility */
+	return gi.TestLineWithEnt(start, end, TL_FLAG_NONE, entList);
+}
+
+qboolean G_TestLine (const vec3_t start, const vec3_t end)
+{
+	G_TraceDraw(start, end);
+	return gi.TestLine(start, end, TL_FLAG_NONE);
+}
+
 /**
- * @brief collision detection
+ * @brief collision detection - this version is more accurate and includes entity tests
  * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
  * via contentmask (MASK_*).
  * @return The trace result
  */
 trace_t G_Trace (vec3_t start, vec3_t end, edict_t * passent, int contentmask)
 {
-	if (g_drawtraces->integer) {
-		G_EventParticleSpawn(PM_ALL, "fadeTracer", -1, start, end, vec3_origin);
-	}
+	G_TraceDraw(start, end);
 	return gi.trace(start, NULL, NULL, end, passent, contentmask);
 }
 
