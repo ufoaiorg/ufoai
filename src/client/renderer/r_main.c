@@ -412,7 +412,7 @@ static void R_RegisterSystemVars (void)
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
-	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
+	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
 	r_lightmap->modified = qfalse;
 	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");

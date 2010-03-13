@@ -274,16 +274,20 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
 		const mBspVertex_t *v;
+		vec3_t position;
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
 			v = &mod->bsp.vertexes[mod->bsp.edges[-e].v[1]];
 
+		VectorCopy(v->position, position);
+
 		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
-			if (v->position[j] > maxs[j])
-				maxs[j] = v->position[j];
-			if (v->position[j] < mins[j])
-				mins[j] = v->position[j];
+			position[j] += (float)shift[j];
+			if (position[j] > maxs[j])
+				maxs[j] = position[j];
+			if (position[j] < mins[j])
+				mins[j] = position[j];
 		}
 
 		{  /* calculate stmins, stmaxs */
