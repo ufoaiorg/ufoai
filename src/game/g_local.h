@@ -320,7 +320,7 @@ void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
 void G_TakeDamage(edict_t *ent, int damage);
-trace_t G_Trace(vec3_t start, vec3_t end, edict_t * passent, int contentmask);
+trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask);
 qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 qboolean G_TestLine(const vec3_t start, const vec3_t end);
 

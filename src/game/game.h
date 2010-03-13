@@ -142,7 +142,7 @@ typedef struct {
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
 	 * @return the trace data
 	 */
-	trace_t (IMPORT *trace) (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+	trace_t (IMPORT *trace) (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passent, int contentmask);
 
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);

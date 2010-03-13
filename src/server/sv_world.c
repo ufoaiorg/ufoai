@@ -396,9 +396,9 @@ int SV_TouchEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int ma
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
-	float *start, *end;
+	const float *start, *end;
 	trace_t trace;
-	edict_t *passedict;
+	const edict_t *passedict;
 	int contentmask;
 } moveclip_t;
 
@@ -578,7 +578,7 @@ static void SV_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t 
  * @param[in] mins The mins of the bounding box that is moved through the world
  * @param[in] maxs The maxs of the bounding box that is moved through the world
  */
-trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
+trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passedict, int contentmask)
 {
 	moveclip_t clip;
 

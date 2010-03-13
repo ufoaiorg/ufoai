@@ -201,7 +201,7 @@ qboolean G_TestLine (const vec3_t start, const vec3_t end)
  * via contentmask (MASK_*).
  * @return The trace result
  */
-trace_t G_Trace (vec3_t start, vec3_t end, edict_t * passent, int contentmask)
+trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
 {
 	G_TraceDraw(start, end);
 	return gi.trace(start, NULL, NULL, end, passent, contentmask);
