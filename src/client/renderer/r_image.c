@@ -712,8 +712,8 @@ void R_InitImages (void)
 	}
 
 	for (i = 0; i < NUM_FLARETEXTURES; i++) {
-		r_flaretextures[i] = R_FindImage(va("pics/flares/flare_%i.tga", i), it_effect);
-		if (r_envmaptextures[i] == r_noTexture)
+		r_flaretextures[i] = R_FindImage(va("pics/flares/flare_%i", i), it_effect);
+		if (r_flaretextures[i] == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load lens flare %i", i);
 	}
 
