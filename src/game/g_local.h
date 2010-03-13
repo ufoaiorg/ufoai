@@ -258,6 +258,7 @@ extern cvar_t *g_reaction_fair;
 extern cvar_t *g_reaction_leftover;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
+extern cvar_t *g_drawtraces;
 extern cvar_t *g_nodamage;
 extern cvar_t *g_notu;
 extern cvar_t *g_actorspeed;
@@ -356,6 +357,7 @@ void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 void G_EventReactionFireChange(const edict_t* ent);
+void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 
 /* g_vis.c */
 #define VIS_APPEAR	1

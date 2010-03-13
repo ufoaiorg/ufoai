@@ -181,6 +181,9 @@ void G_TakeDamage (edict_t *ent, int damage)
  */
 trace_t G_Trace (vec3_t start, vec3_t end, edict_t * passent, int contentmask)
 {
+	if (g_drawtraces->integer) {
+		G_EventParticleSpawn(PM_ALL, "fadeTracer", -1, start, end, vec3_origin);
+	}
 	return gi.trace(start, NULL, NULL, end, passent, contentmask);
 }
 

@@ -222,6 +222,23 @@ void G_EventReactionFireChange (const edict_t* ent)
 	gi.EndEvents();
 }
 
+/**
+ * @brief Spawn a new particle for the client
+ * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] levelFlags Show at which levels
+ * @param[in] s starting/location vector
+ * @param[in] v velocity vector
+ * @param[in] a acceleration vector
+ */
+void G_EventParticleSpawn (int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
+{
+	gi.AddEvent(playerMask, EV_PARTICLE_SPAWN);
+	gi.WriteByte(levelFlags);
+	gi.WritePos(s);
+	gi.WritePos(v);
+	gi.WritePos(a);
+	gi.WriteString(name);
+}
 
 void G_EventActorFall (const edict_t* ent)
 {

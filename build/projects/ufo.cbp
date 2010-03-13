@@ -456,6 +456,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particleappear.h" />
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particlespawn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particlespawn.h" />
 		<Unit filename="../../src/client/campaign/cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>

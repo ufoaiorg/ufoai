@@ -240,7 +240,8 @@ typedef enum {
 	EV_MODEL_EXPLODE,		/**< delay the event execution by the impact time */
 	EV_MODEL_EXPLODE_TRIGGERED,	/**< don't delay the model explode event */
 
-	EV_SPAWN_PARTICLE,
+	EV_PARTICLE_APPEAR,
+	EV_PARTICLE_SPAWN,
 
 	EV_DOOR_OPEN,
 	EV_DOOR_CLOSE,

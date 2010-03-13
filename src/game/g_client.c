@@ -124,7 +124,7 @@ void G_SendState (unsigned int playerMask, const edict_t *ent)
  */
 static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
 {
-	gi.AddEvent(playerMask, EV_SPAWN_PARTICLE);
+	gi.AddEvent(playerMask, EV_PARTICLE_APPEAR);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->spawnflags);
 	gi.WriteString(ent->particle);

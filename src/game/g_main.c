@@ -106,6 +106,7 @@ cvar_t *g_reaction_fair;
 cvar_t *g_reaction_leftover;
 cvar_t *g_ailua;
 cvar_t *g_aidebug;
+cvar_t *g_drawtraces;
 cvar_t *g_nodamage;
 cvar_t *g_notu;
 cvar_t *g_actorspeed;
@@ -206,6 +207,7 @@ static void G_Init (void)
 	g_reaction_leftover = gi.Cvar_Get("g_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
+	g_drawtraces = gi.Cvar_Get("g_drawtraces", "0", CVAR_DEVELOPER, "All traces will be rendered");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No TU costs while moving around (e.g. for map testing)");
 	g_actorspeed = gi.Cvar_Get("g_actorspeed", "1.0", CVAR_ARCHIVE|CVAR_SERVERINFO, "Moving speed of the actor");

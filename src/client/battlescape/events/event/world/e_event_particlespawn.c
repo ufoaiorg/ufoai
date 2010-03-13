@@ -1,5 +1,5 @@
 /**
- * @file e_event_particleappear.c
+ * @file e_event_particlespawn.c
  */
 
 /*
@@ -25,34 +25,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_particle.h"
-#include "e_event_particleappear.h"
+#include "e_event_particlespawn.h"
 
 /**
- * @brief Let a particle appear for the client
+ * @brief Let a particle spawn for the client
  * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg holds the network data
  * @sa CL_ParticleSpawn
- * @sa EV_PARTICLE_APPEAR
+ * @sa EV_PARTICLE_SPAWN
  */
-void CL_ParticleAppear (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ParticleSpawnEvent (const eventRegister_t *self, struct dbuffer *msg)
 {
 	char *particle;
-	int entnum, levelflags;
-	le_t* le;
+	int levelflags;
+	vec3_t s, v, a;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &entnum, &levelflags, &particle);
+	NET_ReadFormat(msg, self->formatString, &levelflags, &s, &v, &a, &particle);
 
-	le = LE_Get(entnum);
-	if (!le)
-		LE_NotFoundError(entnum);
-
-	/* particles don't have a model to add to the scene - we mark them as invisible and
-	 * only render the particle */
-	le->invis = !cl_leshowinvis->integer;
-	le->levelflags = levelflags;
-	le->particleID = Mem_PoolStrDup(particle, cl_genericPool, 0);
-	le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
-	if (!le->ptl)
-		Com_Printf("Could not spawn particle: '%s'\n", le->particleID);
+	CL_ParticleSpawn(particle, levelflags, s, v, a);
 }
