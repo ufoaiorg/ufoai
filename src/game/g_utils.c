@@ -181,7 +181,7 @@ void G_TakeDamage (edict_t *ent, int damage)
 static void G_TraceDraw (const vec3_t start, const vec3_t end)
 {
 	if (g_drawtraces->integer)
-		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", -1, start, end, vec3_origin);
+		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACING_ALL_VISIBLE_LEVELS, start, end, vec3_origin);
 }
 
 /**
