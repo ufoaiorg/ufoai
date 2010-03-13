@@ -173,12 +173,23 @@ void G_TakeDamage (edict_t *ent, int damage)
 		ent->HP = max(ent->HP - damage, 0);
 }
 
+/**
+ * @brief Renders all the traces on the client side if the cvar @c g_drawtraces is activated
+ * @param start The start vector of the trace
+ * @param end The end vector of the trace
+ */
 static void G_TraceDraw (const vec3_t start, const vec3_t end)
 {
 	if (g_drawtraces->integer)
 		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", -1, start, end, vec3_origin);
 }
 
+/**
+ * @brief fast version of a line trace including entities
+ * @param start The start vector of the trace
+ * @param end The end vector of the trace
+ * @return @c false if not blocked
+ */
 qboolean G_TestLineWithEnts (const vec3_t start, const vec3_t end)
 {
 	const char *entList[MAX_EDICTS];
@@ -189,6 +200,12 @@ qboolean G_TestLineWithEnts (const vec3_t start, const vec3_t end)
 	return gi.TestLineWithEnt(start, end, TL_FLAG_NONE, entList);
 }
 
+/**
+ * @brief fast version of a line trace but without including entities
+ * @param start The start vector of the trace
+ * @param end The end vector of the trace
+ * @return @c false if not blocked
+ */
 qboolean G_TestLine (const vec3_t start, const vec3_t end)
 {
 	G_TraceDraw(start, end);
