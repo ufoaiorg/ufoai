@@ -33,3 +33,13 @@
 	}
 }
 
+{
+	material tex_ufo/ufo1_02
+	{
+		texture tex_ufo/ufo1_02a0
+		anim 12 1.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
