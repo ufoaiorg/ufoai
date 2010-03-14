@@ -247,6 +247,40 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
 	}
 }
 
+static qboolean G_FindHidingLocation (edict_t *ent, pos3_t to, int tu)
+{
+	/* We need a local table to calculate the hiding steps */
+	static pathing_t hidePathingTable;
+	byte minX, maxX, minY, maxY;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+
+	/* search hiding spot */
+	G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
+	ent->pos[2] = to[2];
+	minX = max(to[0] - HIDE_DIST, 0);
+	minY = max(to[1] - HIDE_DIST, 0);
+	maxX = min(to[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	maxY = min(to[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+
+	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
+		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
+			/* time */
+			const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
+			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
+				continue;
+
+			/* visibility */
+			G_EdictCalcOrigin(ent);
+			if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
+				continue;
+
+			tu -= delta;
+			return qtrue;
+		}
+	}
+
+	return qfalse;
+}
 
 /**
  * @sa AI_ActorThink
@@ -412,39 +446,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
-			/* We need a local table to calculate the hiding steps */
-			static pathing_t hidePathingTable;
-			byte minX, maxX, minY, maxY;
-			const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
-			qboolean stillSearching = qtrue;
-
-			/* search hiding spot */
-			G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
-			ent->pos[2] = to[2];
-			minX = max(to[0] - HIDE_DIST, 0);
-			minY = max(to[1] - HIDE_DIST, 0);
-			maxX = min(to[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
-			maxY = min(to[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
-
-			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
-				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
-					/* time */
-					const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
-					if (delta > tu || delta == ROUTING_NOT_REACHABLE)
-						continue;
-
-					/* visibility */
-					G_EdictCalcOrigin(ent);
-					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
-						continue;
-
-					stillSearching = qfalse;
-					tu -= delta;
-					break;
-				}
-				if (!stillSearching)
-					break;
-			}
 
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
@@ -455,7 +456,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * and only then firing at him */
 			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
-			if (stillSearching) {
+			if (!G_FindHidingLocation(ent, to, tu)) {
 				/* nothing found */
 				G_EdictSetOrigin(ent, to);
 				/** @todo Try to crouch if no hiding spot was found - randomized */
