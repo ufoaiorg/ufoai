@@ -580,7 +580,7 @@ int G_ClientAction (player_t * player)
 	int num;
 	pos3_t pos;
 	int i;
-	int firemode;
+	fireDefIndex_t firemode;
 	int from, fx, fy, to, tx, ty;
 	actorHands_t hand, fmIdx, objIdx;
 	int resCrouch, resShot;

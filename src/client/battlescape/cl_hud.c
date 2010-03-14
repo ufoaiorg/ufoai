@@ -526,7 +526,7 @@ static void HUD_SwitchFiremodeList_f (void)
  * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t hand, int firemodeActive)
+static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
 {
 	const fireDef_t *fd;
 	const objDef_t *ammo, *od;
@@ -552,7 +552,7 @@ static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t 
 static void HUD_SelectReactionFiremode_f (void)
 {
 	actorHands_t hand;
-	int firemode;
+	fireDefIndex_t firemode;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
