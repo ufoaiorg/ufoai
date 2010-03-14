@@ -1070,15 +1070,17 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				if (selWeapon->item.t->numWeapons > 0) {
 					if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
 						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-						/* Get firedef from the weapon (or other usable item) entry instead. */
-						if (fdArray != NULL)
-							CL_ActorSetFireDef(actor, FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, actor->currentSelectedFiremode));
+						if (fdArray != NULL) {
+							/* Get firedef from the weapon (or other usable item) entry instead. */
+							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.t, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+							CL_ActorSetFireDef(actor, old);
+						}
 					}
 				}
 			} else {
 				const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 				if (fdArray != NULL) {
-					const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, actor->currentSelectedFiremode);
+					const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 					/* reset the align if we switched the firemode */
 					CL_ActorSetFireDef(actor, old);
 				}
