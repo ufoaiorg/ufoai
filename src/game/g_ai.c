@@ -254,7 +254,7 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
  * @param[in] tuLeft The amount of left TUs to find a hiding spot
  * @return @c true if hiding is possible, @c false otherwise
  */
-qboolean G_FindHidingLocation (edict_t *ent, const pos3_t from, int tuLeft)
+qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int tuLeft)
 {
 	/* We need a local table to calculate the hiding steps */
 	static pathing_t hidePathingTable;
@@ -462,7 +462,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * and only then firing at him */
 			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
-			if (!G_FindHidingLocation(ent, to, tu)) {
+			if (!AI_FindHidingLocation(ent, to, tu)) {
 				/* nothing found */
 				G_EdictSetOrigin(ent, to);
 				/** @todo Try to crouch if no hiding spot was found - randomized */
