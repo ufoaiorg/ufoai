@@ -62,6 +62,7 @@ namespace ui
 			void initialisePreview ();
 
 			void setParticle (scripts::IParticlePtr& particle);
+
 			scripts::IParticlePtr getParticle ();
 
 			/** Operator cast to GtkWidget*, for packing into the parent window.

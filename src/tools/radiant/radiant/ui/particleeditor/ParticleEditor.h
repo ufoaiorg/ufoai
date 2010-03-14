@@ -9,40 +9,40 @@
 
 namespace ui
 {
-class ParticleEditor
-{
-private:
+	class ParticleEditor
+	{
+		private:
 
-	// Main dialog widget
-	GtkWidget* _widget;
+			// Main dialog widget
+			GtkWidget* _widget;
 
-	// Model preview widget
-	ParticlePreview _particlePreview;
+			// Model preview widget
+			ParticlePreview _particlePreview;
 
-	// Show the dialog and block
-	void showAndBlock ();
+			// Show the dialog and block
+			void showAndBlock ();
 
-	GtkWidget* createButtons ();
-	GtkWidget* createPreviewPanel ();
+			GtkWidget* createButtons ();
+			GtkWidget* createPreviewPanel ();
 
-	// Initialise the GL widget, to avoid doing this every frame
-	void initialisePreview ();
+			// Initialise the GL widget, to avoid doing this every frame
+			void initialisePreview ();
 
-	/* GTK CALLBACKS */
+			/* GTK CALLBACKS */
 
-	static void callbackOK (GtkWidget*, ParticleEditor*);
-	static void callbackCancel (GtkWidget*, ParticleEditor*);
+			static void callbackOK (GtkWidget*, ParticleEditor*);
+			static void callbackCancel (GtkWidget*, ParticleEditor*);
 
-public:
+		public:
 
-	ParticleEditor ();
+			ParticleEditor ();
 
-	virtual ~ParticleEditor ();
+			virtual ~ParticleEditor ();
 
-	std::string save ();
+			std::string save ();
 
-	void showAndBlock (const std::string& particleID);
-};
+			void showAndBlock (const std::string& particleID);
+	};
 }
 
 #endif /* PARTICLEEDITOR_H_ */
