@@ -25,11 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_CAMPAIGN "campaign"
 
 #define SAVE_CAMPAIGN_ID "id"
+#define SAVE_CAMPAIGN_CREDITS "credits"
 #define SAVE_CAMPAIGN_PAID "paid"
 #define SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER "nextUniqueCharacterNumber"
-#define SAVE_CAMPAIGN_CCS "ccs"
-#define SAVE_CAMPAIGN_DATEDAY "dateDay"
-#define SAVE_CAMPAIGN_DATESEC "dateSec"
+#define SAVE_CAMPAIGN_DATE "date"
+#define SAVE_CAMPAIGN_CIVILIANSKILLED "civiliansKilled"
+#define SAVE_CAMPAIGN_ALIENSKILLED "aliensKilled"
+
+#define SAVE_CAMPAIGN_MAP "map"
 #define SAVE_CAMPAIGN_CENTER0 "center0"
 #define SAVE_CAMPAIGN_CENTER1 "center1"
 #define SAVE_CAMPAIGN_ANGLES0 "angles0"
@@ -37,10 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_ZOOM "zoom"
 #define SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY "r_geoscape_overlay"
 #define SAVE_CAMPAIGN_RADAROVERLAYWASSET "radarOverlayWasSet"
-#define SAVE_CAMPAIGN_CREDITS "credits"
-
-#define SAVE_CAMPAIGN_CIVILIANSKILLED "civiliansKilled"
-#define SAVE_CAMPAIGN_ALIENSKILLED "aliensKilled"
 #define SAVE_CAMPAIGN_XVISHOWMAP "XVIShowmap"
 
 #define SAVE_CAMPAIGN_STATS "stats"
@@ -65,25 +64,53 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_INTERESTS "interests"
 
 /*
-DTD: (incomplete)
+DTD:
+
+<!ELEMENT campaign (map interests missions date)>
+<!ATTLIST campaign
+	id							CDATA	#REQUIRED
+	credits						CDATA	'0'
+	paid						CDATA	'false'
+	nextUniqueCharacterNumber	CDATA	'0'
+	civiliansKilled				CDATA	'0'
+	aliensKilled				CDATA	'0'
+>
+
+<!ELEMENT map EMPTY>
+<!ATTLIST map
+	center0						CDATA	'0'
+	center1						CDATA	'0'
+	angles0						CDATA	'0'
+	angles1						CDATA	'0'
+	zoom						CDATA	'0'
+	r_geoscape_overlay			CDATA	'0'
+	radarOverlayWasSet			CDATA	'false'
+	XVIShowmap					CDATA	'false'
+>
+
+<!ELEMENT date EMPTY>
+<!ATTLIST date
+	day							CDATA	'0'
+	sec							CDATA	'0'
+>
 
 <!ELEMENT stats EMPTY>
 <!ATTLIST stats
-	missions					CDATA	0
-	missionsWon					CDATA	0
-	missionsLost				CDATA	0
-	basesBuilt					CDATA	0
-	basesAttacked				CDATA	0
-	interceptions				CDATA	0
-	soldiersLost				CDATA	0
-	soldiersNew					CDATA	0
-	killedAliens				CDATA	0
-	rescuedCivilians			CDATA	0
-	researchedTechnologies		CDATA	0
-	moneyInterceptions			CDATA	0
-	monexBases					CDATA	0
-	moneyWeapons				CDATA	0
-	UFOsDetected				CDATA	0
+	missions					CDATA	'0'
+	missionsWon					CDATA	'0'
+	missionsLost				CDATA	'0'
+	basesBuilt					CDATA	'0'
+	basesAttacked				CDATA	'0'
+	interceptions				CDATA	'0'
+	soldiersLost				CDATA	'0'
+	soldiersNew					CDATA	'0'
+	killedAliens				CDATA	'0'
+	rescuedCivilians			CDATA	'0'
+	researchedTechnologies		CDATA	'0'
+	moneyInterceptions			CDATA	'0'
+	monexBases					CDATA	'0'
+	moneyWeapons				CDATA	'0'
+	UFOsDetected				CDATA	'0'
 >
 
 */

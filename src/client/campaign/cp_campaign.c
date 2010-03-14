@@ -879,7 +879,7 @@ static void CL_StatsUpdate_f (void)
 qboolean CP_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaignNode;
-	mxml_node_t *ccsNode;
+	mxml_node_t *mapNode;
 	mxml_node_t *missions;
 	mxml_node_t *interests;
 	const char *name;
@@ -906,32 +906,34 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
+	/* read credits */
+	CL_UpdateCredits(mxml_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
 	ccs.paid = mxml_GetBool(campaignNode, SAVE_CAMPAIGN_PAID, qfalse);
+
 	cls.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, 0);
 
-	/* read date */
-	ccsNode = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_CCS);
-	ccs.date.day = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_DATEDAY, 0);
-	ccs.date.sec = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_DATESEC, 0);
+	mxml_GetDate(campaignNode, SAVE_CAMPAIGN_DATE, &ccs.date.day, &ccs.date.sec);
+
+	/* read other campaign data */
+	ccs.civiliansKilled = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
+	ccs.aliensKilled = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
-	/* read map view */
-	ccs.center[0] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_CENTER0, 0.0);
-	ccs.center[1] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_CENTER1, 0.0);
-	ccs.angles[0] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_ANGLES0, 0.0);
-	ccs.angles[1] = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_ANGLES1, 0.0);
-	ccs.zoom = mxml_GetFloat(ccsNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 
+	/* read map view */
+	mapNode = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MAP);
+	ccs.center[0] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER0, 0.0);
+	ccs.center[1] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_CENTER1, 0.0);
+	ccs.angles[0] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES0, 0.0);
+	ccs.angles[1] = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ANGLES1, 0.0);
+	ccs.zoom = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 	/* restore the overlay.
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
 	* and we never set r_geoscape_overlay->string in game: r_geoscape_overlay won't be updated if the loaded
 	* value is 0 (and that's a problem if you're loading a game when r_geoscape_overlay is set to another value */
-	r_geoscape_overlay->integer = mxml_GetInt(campaignNode, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, 0);
-
-	radarOverlayWasSet = mxml_GetBool(campaignNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
-
-	/* read credits */
-	CL_UpdateCredits(mxml_GetLong(ccsNode, SAVE_CAMPAIGN_CREDITS, 0));
+	r_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, 0);
+	radarOverlayWasSet = mxml_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
+ 	ccs.XVIShowMap = mxml_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
 
 	/* read interest values */
 	interests = mxml_GetNode(parent, SAVE_CAMPAIGN_MISSIONS);
@@ -941,12 +943,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	}
 	if (!CP_LoadInterestsXML(interests))
 		return qfalse;
-
-	/* read other campaign data */
-	ccs.civiliansKilled = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_CIVILIANSKILLED, 0);
-	ccs.aliensKilled = mxml_GetInt(ccsNode, SAVE_CAMPAIGN_ALIENSKILLED, 0);
-
- 	ccs.XVIShowMap = mxml_GetBool(ccsNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
 
 	CP_UpdateXVIMapButton();
 
@@ -958,10 +954,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	}
 	if (!CP_LoadMissionsXML(missions))
 		return qfalse;
-
-	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Reading Battle Parameters\n");
-	/* read ccs.battleParameters */
-	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 
 	/* and now fix the mission pointers for e.g. ufocrash sites
 	* this is needed because the base load function which loads the aircraft
@@ -1002,34 +994,31 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 qboolean CP_SaveXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaign;
-	mxml_node_t *structure_ccs;
 	mxml_node_t *missions;
 	mxml_node_t *interests;
+	mxml_node_t *map;
 
 	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
 	mxml_AddString(campaign, SAVE_CAMPAIGN_ID, ccs.curCampaign->id);
-
-	structure_ccs = mxml_AddNode(campaign, SAVE_CAMPAIGN_CCS);
-
-	mxml_AddLong(structure_ccs, SAVE_CAMPAIGN_CREDITS, ccs.credits);
+	mxml_AddDate(campaign, SAVE_CAMPAIGN_DATE, ccs.date.day, ccs.date.sec);
+	mxml_AddLong(campaign, SAVE_CAMPAIGN_CREDITS, ccs.credits);
 	mxml_AddShort(campaign, SAVE_CAMPAIGN_PAID, ccs.paid);
-	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_DATEDAY, ccs.date.day);
-	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_DATESEC, ccs.date.sec);
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
+	mxml_AddShortValue(campaign, SAVE_CAMPAIGN_NEXTUNIQUECHARACTERNUMBER, cls.nextUniqueCharacterNumber);
 
-	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
-	mxml_AddInt(structure_ccs, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
+	mxml_AddIntValue(campaign, SAVE_CAMPAIGN_CIVILIANSKILLED, ccs.civiliansKilled);
+	mxml_AddIntValue(campaign, SAVE_CAMPAIGN_ALIENSKILLED, ccs.aliensKilled);
 
 	/* Map and user interface */
-	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_CENTER0, ccs.center[0]);
-	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_CENTER1, ccs.center[1]);
-	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
-	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
-	mxml_AddFloat(structure_ccs, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
-	mxml_AddShort(campaign, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, r_geoscape_overlay->integer);
-	mxml_AddBool(campaign, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
-	mxml_AddBool(structure_ccs, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
+	map = mxml_AddNode(campaign, SAVE_CAMPAIGN_MAP);
+	mxml_AddFloat(map, SAVE_CAMPAIGN_CENTER0, ccs.center[0]);
+	mxml_AddFloat(map, SAVE_CAMPAIGN_CENTER1, ccs.center[1]);
+	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
+	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
+	mxml_AddFloat(map, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
+	mxml_AddShort(map, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, r_geoscape_overlay->integer);
+	mxml_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
+	mxml_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
 	/* Interests */
 	interests = mxml_AddNode(parent, SAVE_CAMPAIGN_INTERESTS);

@@ -1,5 +1,6 @@
 /**
  * @file mxml_ufoai.c
+ * @brief UFO:AI interface functions to mxml
  */
 
 /*
@@ -229,10 +230,9 @@ void mxml_AddLongValue (mxml_node_t *parent, const char *name, long value)
  * @param[out] parent XML Node structure to add to
  * @param[in] name Name of the node to add
  * @param[in] pos Pos3 structure with position data
- * @note it creates a new node and adds only non-zero coordinate(s)
- *		 to the node, getter functions handle it with default values
+ * @note it creates a new node and adds coordinate(s) to the node as attributes
  */
-void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos)
+void mxml_AddPos3 (mxml_node_t *parent, const char *name, const vec3_t pos)
 {
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
@@ -246,15 +246,30 @@ void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos)
  * @param[out] parent XML Node structure to add to
  * @param[in] name Name of the node to add
  * @param[in] pos Pos2 structure with position data
- * @note it creates a new node and adds only non-zero coordinate(s)
- *		 to the node, getter functions handle it with default values
+ * @note it creates a new node and adds coordinate(s) to the node as attributes
  */
-void mxml_AddPos2(mxml_node_t *parent, const char *name, const vec2_t pos)
+void mxml_AddPos2 (mxml_node_t *parent, const char *name, const vec2_t pos)
 {
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
 	mxml_AddFloat(t, "x", pos[0]);
 	mxml_AddFloat(t, "y", pos[1]);
+}
+
+/*
+ * @brief add a date data to the XML Tree
+ * @param[out] parent XML Node structure to add to
+ * @param[in] name Name of the node to add
+ * @param[in] day Day part of the date
+ * @param[in] sec Second part of the date
+ * @note it creates a new node and adds day/sec attributes to the node
+ */
+void mxml_AddDate (mxml_node_t *parent, const char *name, const int day, const int sec)
+{
+	mxml_node_t *t;
+	t = mxmlNewElement(parent, name);
+	mxml_AddInt(t, "day", day);
+	mxml_AddInt(t, "sec", sec);
 }
 
 /**
@@ -263,7 +278,7 @@ void mxml_AddPos2(mxml_node_t *parent, const char *name, const vec2_t pos)
  * @param[in] name Name of the new node
  * return pointer to the new XML Node structure
  */
-mxml_node_t * mxml_AddNode(mxml_node_t *parent, const char *name)
+mxml_node_t * mxml_AddNode (mxml_node_t *parent, const char *name)
 {
 	return mxmlNewElement(parent,name);
 }
@@ -386,7 +401,7 @@ double mxml_GetDouble (mxml_node_t *parent, const char *name, const double defau
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos)
+mxml_node_t * mxml_GetPos2 (mxml_node_t *parent, const char *name, vec2_t pos)
 {
 	mxml_node_t *p = mxml_GetNode(parent, name);
 	if (!p)
@@ -405,7 +420,7 @@ mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos)
  * @return pointer to the node the data was retrieved from
  * @return NULL if no Node with name found
  */
-mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual, mxml_node_t *parent, const char *name, vec2_t pos)
+mxml_node_t * mxml_GetNextPos2 (mxml_node_t *actual, mxml_node_t *parent, const char *name, vec2_t pos)
 {
 	mxml_node_t *p = mxml_GetNextNode(actual, parent, name);
 	if (!p)
@@ -423,7 +438,7 @@ mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual, mxml_node_t *parent, const c
  * @return pointer to the node the data was retrieved from
  * @return NULL if no node with name found
  */
-mxml_node_t * mxml_GetPos3(mxml_node_t *parent, const char *name, vec3_t pos)
+mxml_node_t * mxml_GetPos3 (mxml_node_t *parent, const char *name, vec3_t pos)
 {
 	mxml_node_t *p = mxml_GetNode(parent, name);
 	if (!p)
@@ -443,7 +458,7 @@ mxml_node_t * mxml_GetPos3(mxml_node_t *parent, const char *name, vec3_t pos)
  * @return pointer to the node the data was retrieved from
  * @return NULL if no Node with name found
  */
-mxml_node_t * mxml_GetNextPos3(mxml_node_t *actual, mxml_node_t *parent, const char *name, vec3_t pos)
+mxml_node_t * mxml_GetNextPos3 (mxml_node_t *actual, mxml_node_t *parent, const char *name, vec3_t pos)
 {
 	mxml_node_t *p = mxml_GetNextNode(actual, parent, name);
 	if (!p)
@@ -451,6 +466,25 @@ mxml_node_t * mxml_GetNextPos3(mxml_node_t *actual, mxml_node_t *parent, const c
 	pos[0] = mxml_GetFloat(p, "x", 0);
 	pos[1] = mxml_GetFloat(p, "y", 0);
 	pos[2] = mxml_GetFloat(p, "z", 0);
+	return p;
+}
+
+/**
+ * @brief retrieve the date data from an XML Node
+ * @param[in] parent XML Node structure to get child from
+ * @param[in] name Name of the pos node
+ * @param[out] day Day part of the date to fill
+ * @param[out] sec Second part of the date to fill
+ * @return pointer to the node the data was retrieved from
+ * @return NULL if no node with name found
+ */
+mxml_node_t * mxml_GetDate (mxml_node_t *parent, const char *name, int *day, int *sec)
+{
+	mxml_node_t *p = mxml_GetNode(parent, name);
+	if (!p)
+		return NULL;
+	*day = mxml_GetInt(p, "day", 0);
+	*sec = mxml_GetInt(p, "sec", 0);
 	return p;
 }
 
