@@ -995,10 +995,6 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name);
-		if (numPtlCmds >= MAX_PTLCMDS)
-			Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
-		pc = &ptlCmd[numPtlCmds++];
-		memset(pc, 0, sizeof(*pc));
 		return;
 	}
 
