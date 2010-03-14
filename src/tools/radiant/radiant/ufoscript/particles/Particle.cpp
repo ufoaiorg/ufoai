@@ -1,11 +1,12 @@
 #include "Particle.h"
+#include "../common/Parser.h"
+#include "stream/memstream.h"
+#include "script/scripttokeniser.h"
 
 namespace scripts
 {
-	Particle::Particle () :
-		parser("particle")
+	Particle::Particle ()
 	{
-		_blocks = parser.getEntries();
 	}
 
 	Particle::~Particle ()
@@ -23,9 +24,22 @@ namespace scripts
 
 	scripts::IParticlePtr Particle::load (const std::string& particleID)
 	{
-		Particle *particle = new Particle();
+		Parser parser("particle");
+		DataBlock *data = parser.getEntryForID(particleID);
+		if (data == (DataBlock*)0)
+			return IParticlePtr();
 
-		// TODO:
+		Particle *particle = new Particle();
+		BufferInputStream stream(data->getData());
+		ScriptTokeniser tokenizer(stream, false);
+
+		for (;;) {
+			std::string token = tokeniser.getToken();
+			if (token.empty())
+				break;
+
+			// TODO:
+		}
 
 		scripts::IParticlePtr obj(particle);
 		return obj;

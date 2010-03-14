@@ -1,7 +1,6 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
-#include "../common/Parser.h"
 #include <memory>
 #include <string>
 #include "imodel.h"
@@ -72,12 +71,6 @@ namespace scripts
 
 			time_t msec;
 			time_t frametime;
-
-			// the parser object that holds all the block data
-			Parser parser;
-
-			// the blocks with the data - destroyed with the parser
-			std::vector<DataBlock*> _blocks;
 
 			model::IModelPtr model;
 			qtexture_t *image;

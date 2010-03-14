@@ -63,13 +63,7 @@ namespace scripts
 	DataBlock* MapDef::getMapDefForCurrentMap ()
 	{
 		const std::string mapDefID = getMapDefID();
-		for (Parser::EntriesIterator i = _blocks.begin(); i != _blocks.end(); i++) {
-			DataBlock* blockData = (*i);
-			if (mapDefID == blockData->getID()) {
-				return blockData;
-			}
-		}
-		return (DataBlock*) 0;
+		return parser.getEntryForID(mapDefID);
 	}
 
 	void MapDef::showMapDefinition ()

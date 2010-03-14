@@ -107,5 +107,16 @@ namespace scripts
 	{
 		return _entries;
 	}
+
+	DataBlock* Parser::getEntryForID (const std::string& id)
+	{
+		for (Parser::EntriesIterator i = _entries.begin(); i != _entries.end(); i++) {
+			DataBlock* blockData = (*i);
+			if (id == blockData->getID()) {
+				return blockData;
+			}
+		}
+		return (DataBlock*) 0;
+	}
 }
 
