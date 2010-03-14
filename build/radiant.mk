@@ -67,6 +67,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ufoscript/common/DataBlock.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/particles/Particle.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
@@ -146,6 +147,9 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/scripteditor/UFOScriptEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/umpeditor/UMPEditor.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/particleeditor/ParticleEditor.cpp \
+	$(RADIANT_BASE)/radiant/ui/particleeditor/ParticlePreview.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \

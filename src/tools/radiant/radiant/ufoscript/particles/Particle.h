@@ -2,9 +2,15 @@
 #define PARTICLE_H_
 
 #include "../common/Parser.h"
+#include <memory>
+#include <string>
 
 namespace scripts
 {
+	class Particle;
+	// Smart pointer typedef
+	typedef std::auto_ptr<scripts::Particle> IParticlePtr;
+
 	class Particle
 	{
 		private:
@@ -19,6 +25,12 @@ namespace scripts
 			Particle ();
 
 			virtual ~Particle ();
+
+			void render ();
+
+			std::string toString ();
+
+			static scripts::IParticlePtr load (const std::string& particleID);
 	};
 }
 

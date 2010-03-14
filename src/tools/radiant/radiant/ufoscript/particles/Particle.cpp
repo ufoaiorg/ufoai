@@ -11,4 +11,23 @@ namespace scripts
 	Particle::~Particle ()
 	{
 	}
+
+	void Particle::render ()
+	{
+	}
+
+	std::string Particle::toString ()
+	{
+		return "";
+	}
+
+	scripts::IParticlePtr Particle::load (const std::string& particleID)
+	{
+		Particle *particle = new Particle();
+
+		// TODO:
+
+		scripts::IParticlePtr obj(particle);
+		return obj;
+	}
 }

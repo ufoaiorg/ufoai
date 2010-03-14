@@ -781,6 +781,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/ufoscript/mapdef/MapDef.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/particles/Particle.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ump/UMPFile.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -824,6 +827,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/lightdialog/LightDialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/particleeditor/ParticleEditor.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/particleeditor/ParticlePreview.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/modelselector/ModelSelector.cpp">
