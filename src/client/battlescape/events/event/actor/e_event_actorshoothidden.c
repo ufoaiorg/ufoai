@@ -63,7 +63,8 @@ void CL_ActorShootHidden (const eventRegister_t *self, struct dbuffer *msg)
 	int first;
 	int objIdx;
 	objDef_t *obj;
-	int weapFdsIdx, fdIdx;
+	weaponFireDefIndex_t weapFdsIdx;
+	fireDefIndex_t fdIdx;
 
 	NET_ReadFormat(msg, self->formatString, &first, &objIdx, &weapFdsIdx, &fdIdx);
 

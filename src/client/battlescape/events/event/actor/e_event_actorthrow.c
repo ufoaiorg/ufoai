@@ -47,7 +47,8 @@ void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 	int dtime;
 	int objIdx;
 	const objDef_t *obj;
-	int weapFdsIdx, fdIdx;
+	weaponFireDefIndex_t weapFdsIdx;
+	fireDefIndex_t fdIdx;
 
 	/* read data */
 	NET_ReadFormat(msg, self->formatString, &dtime, &objIdx, &weapFdsIdx, &fdIdx, &flags, &muzzle, &v0);

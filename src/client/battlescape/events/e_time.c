@@ -110,7 +110,8 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			int first;
 			int objIdx;
 			const objDef_t *obj;
-			int weapFdsIdx, fireDefIndex;
+			weaponFireDefIndex_t weapFdsIdx;
+			fireDefIndex_t fireDefIndex;
 
 			NET_ReadFormat(msg, eventData->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 

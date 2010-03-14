@@ -325,7 +325,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	maxDmg = 0.0;
 	for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 		const item_t *item;
-		int fdIdx;
+		fireDefIndex_t fdIdx;
 		const fireDef_t *fdArray;
 
 		item = AI_GetItemForShootType(shootType, ent);
@@ -843,7 +843,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* shoot and hide */
 	if (bestAia.target) {
-		const int fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
+		const fireDefIndex_t fdIdx = bestAia.fd ? bestAia.fd->fdIdx : 0;
 		/* shoot until no shots are left or target died */
 		while (bestAia.shots) {
 			G_ClientShoot(player, ent, bestAia.target->pos, bestAia.shootType, fdIdx, NULL, qtrue, bestAia.z_align);

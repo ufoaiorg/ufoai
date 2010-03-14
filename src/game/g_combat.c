@@ -1009,7 +1009,7 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
  * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	objDef_t *od;
@@ -1066,7 +1066,7 @@ static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int fi
  * @param[in] z_align This value may change the target z height
  */
 qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
-	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
+		fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	const fireDef_t *fd;
 	item_t *weapon;

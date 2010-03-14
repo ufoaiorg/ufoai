@@ -152,7 +152,9 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	int flags, normal, shooterEntnum, victimEntnum;
 	int objIdx;
 	const objDef_t *obj;
-	int weapFdsIdx, fdIdx, surfaceFlags;
+	weaponFireDefIndex_t weapFdsIdx;
+	fireDefIndex_t fdIdx;
+	int surfaceFlags;
 	shoot_types_t shootType;
 
 	/* read data */

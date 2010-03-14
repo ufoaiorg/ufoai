@@ -920,7 +920,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * @return Will never return NULL
  * @sa FIRESH_FiredefForWeapon
  */
-const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
+const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx)
 {
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'", weapFdsIdx, obj->id);

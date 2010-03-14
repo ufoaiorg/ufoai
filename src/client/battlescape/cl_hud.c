@@ -396,7 +396,7 @@ static void HUD_ShotReserve_f (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] hand What list to display
  */
-static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
+static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
