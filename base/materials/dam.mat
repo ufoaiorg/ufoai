@@ -27,3 +27,19 @@
 		envmap 0
 	}
 }
+
+{
+	material tex_lights/land_li_yellow
+	{
+		flare 2
+		color 0.7 0.7 0.5
+	}
+}
+
+{
+	material tex_material/c_red
+	{
+		flare 0
+		color 1 0.5 0.5
+	}
+}
