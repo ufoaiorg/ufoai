@@ -251,10 +251,11 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
  * @brief Tries to search a hiding spot
  * @param[out] ent The actor edict. The position of the actor is updated here to perform visibility checks
  * @param[in] from The grid position the actor is (theoretically) standing at and searching a hiding location from
- * @param[in] tuLeft The amount of left TUs to find a hiding spot
+ * @param[in,out] tuLeft The amount of left TUs to find a hiding spot. The TUs needed to walk to the grid position
+ * is subtracted. May not be @c NULL.
  * @return @c true if hiding is possible, @c false otherwise
  */
-qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int tuLeft)
+qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int *tuLeft)
 {
 	/* We need a local table to calculate the hiding steps */
 	static pathing_t hidePathingTable;
@@ -273,7 +274,7 @@ qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int tuLeft)
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
 			const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
-			if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
+			if (delta > *tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
 			/* visibility */
@@ -281,7 +282,7 @@ qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int tuLeft)
 			if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 				continue;
 
-			tuLeft -= delta;
+			*tuLeft -= delta;
 			return qtrue;
 		}
 	}
@@ -462,7 +463,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * and only then firing at him */
 			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
-			if (!AI_FindHidingLocation(ent, to, tu)) {
+			if (!AI_FindHidingLocation(ent, to, &tu)) {
 				/* nothing found */
 				G_EdictSetOrigin(ent, to);
 				/** @todo Try to crouch if no hiding spot was found - randomized */

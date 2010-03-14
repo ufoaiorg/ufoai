@@ -825,10 +825,11 @@ static int AIL_positionshoot (lua_State *L)
 static int AIL_positionhide (lua_State *L)
 {
 	pos3_t save;
+	int tus = AIL_ent->TU;
 
 	VectorCopy(AIL_ent->pos, save);
 
-	if (AI_FindHidingLocation(AIL_ent, AIL_ent->pos, AIL_ent->TU)) {
+	if (AI_FindHidingLocation(AIL_ent, AIL_ent->pos, &tus)) {
 		/* Return the spot. */
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
