@@ -255,8 +255,6 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
  */
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
-	/* We need a local table to calculate the hiding steps */
-	static pathing_t hidePathingTable;
 	edict_t *check = NULL;
 	int tu;
 	pos_t move;
@@ -414,17 +412,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
+			/* We need a local table to calculate the hiding steps */
+			static pathing_t hidePathingTable;
 			byte minX, maxX, minY, maxY;
 			const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			qboolean stillSearching = qtrue;
-			/* reward short walking to shooting spot, when seen by enemies; */
-			/** @todo do this decently, only penalizing the visible part of walk
-			 * and penalizing much more for reaction shooters around;
-			 * now it may remove some tactical options from aliens,
-			 * e.g. they may now choose only the closer doors;
-			 * however it's still better than going three times around soldier
-			 * and only then firing at him */
-			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
 			/* search hiding spot */
 			G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
@@ -453,6 +445,15 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (!stillSearching)
 					break;
 			}
+
+			/* reward short walking to shooting spot, when seen by enemies; */
+			/** @todo do this decently, only penalizing the visible part of walk
+			 * and penalizing much more for reaction shooters around;
+			 * now it may remove some tactical options from aliens,
+			 * e.g. they may now choose only the closer doors;
+			 * however it's still better than going three times around soldier
+			 * and only then firing at him */
+			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
 			if (stillSearching) {
 				/* nothing found */
