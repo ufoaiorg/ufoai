@@ -261,9 +261,10 @@ qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int *tuLeft)
 	static pathing_t hidePathingTable;
 	byte minX, maxX, minY, maxY;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	const int distance = min(*tuLeft, HIDE_DIST * 2);
 
 	/* search hiding spot */
-	G_MoveCalcLocal(&hidePathingTable, 0, ent, from, crouchingState, HIDE_DIST * 2);
+	G_MoveCalcLocal(&hidePathingTable, 0, ent, from, crouchingState, distance);
 	ent->pos[2] = from[2];
 	minX = max(from[0] - HIDE_DIST, 0);
 	minY = max(from[1] - HIDE_DIST, 0);

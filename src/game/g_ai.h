@@ -58,7 +58,7 @@ typedef struct {
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
-/** @brief TUs for (ai) hiding */
+/** @brief distance for (ai) hiding in grid tiles */
 #define HIDE_DIST			7
 
 /*
