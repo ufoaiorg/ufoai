@@ -72,7 +72,7 @@ typedef struct le_s {
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
 
-	int currentSelectedFiremode;
+	fireDefIndex_t currentSelectedFiremode;
 
 	actorModes_t actorMode;		/**< current selected action for the selected actor */
 	/** for double-click movement and confirmations ... */

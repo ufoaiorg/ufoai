@@ -109,7 +109,7 @@ static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 static void HUD_FireWeapon_f (void)
 {
 	actorHands_t hand;
-	int firemode;
+	fireDefIndex_t firemode;
 	const objDef_t *ammo;
 	const fireDef_t *fd;
 
