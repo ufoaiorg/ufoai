@@ -18,7 +18,6 @@ namespace scripts
 	MapDef::MapDef () :
 		parser("mapdef")
 	{
-		_blocks = parser.getEntries();
 	}
 
 	// TODO: A lot of these values can be taken from the map data

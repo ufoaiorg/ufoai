@@ -31,7 +31,7 @@ namespace scripts
 
 		Particle *particle = new Particle();
 		BufferInputStream stream(data->getData());
-		ScriptTokeniser tokenizer(stream, false);
+		ScriptTokeniser tokeniser(stream, false);
 
 		for (;;) {
 			std::string token = tokeniser.getToken();
