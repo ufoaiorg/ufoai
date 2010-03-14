@@ -16,6 +16,13 @@
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
 
+#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*) pcmdData + x)
+#define RSTACK		-0xFFF0
+#define F(x)		(1<<x)
+#define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
+#define PTL_ONLY_ONE_TYPE		(1<<31)
+#define V_UNTYPED   0x7FFF
+
 namespace scripts
 {
 	class Particle;
@@ -52,16 +59,72 @@ namespace scripts
 		static IParticleDefinitionPtr ptlDef[MAX_PTLDEFS];
 		static IParticleCommandPtr ptlCmd[MAX_PTLCMDS];
 
+		enum
+		{
+			V_FLOAT, V_POS, V_VECTOR, V_COLOR, V_STRING, V_INT, V_BOOL
+		};
+
+		typedef enum pc_s
+		{
+			PC_END,
+
+			PC_PUSH,
+			PC_POP,
+			PC_KPOP,
+			PC_ADD,
+			PC_SUB,
+			PC_MUL,
+			PC_DIV,
+			PC_SIN,
+			PC_COS,
+			PC_TAN,
+			PC_RAND,
+			PC_CRAND,
+			PC_V2,
+			PC_V3,
+			PC_V4,
+
+			PC_KILL,
+			PC_SPAWN,
+			PC_NSPAWN,
+			PC_CHILD,
+
+			PC_NUM_PTLCMDS
+		} pc_t;
+
+		/** @brief particle commands - see pc_t */
+		static const char *pc_strings[PC_NUM_PTLCMDS] = { "end",
+
+		"push", "pop", "kpop", "add", "sub", "mul", "div", "sin", "cos", "tan", "rand", "crand", "v2", "v3", "v4",
+
+		"kill", "spawn", "nspawn", "child" };
+
+		/** @brief particle commands parameter and types */
+		static const int pc_types[PC_NUM_PTLCMDS] = { 0,
+
+		V_UNTYPED, V_UNTYPED, V_UNTYPED, V_VECS, V_VECS, V_VECS, V_VECS, PTL_ONLY_ONE_TYPE | V_FLOAT, PTL_ONLY_ONE_TYPE
+				| V_FLOAT, PTL_ONLY_ONE_TYPE | V_FLOAT, V_VECS, V_VECS, 0, 0, 0,
+
+		0, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING };
+
+
+		/** used e.g. in our parsers */
+		typedef struct value_s {
+			const char *string;
+			const int type;
+			const size_t ofs;
+		} value_t;
+
 #if 0
-		static int numPtlDefs;
-		static int numPtlCmds;
+	static int numPtlDefs;
+	static int numPtlCmds;
 
-		static unsigned char pcmdData[MAX_PCMD_DATA];
-		static unsigned char *pcmdPos;
+	static unsigned char pcmdData[MAX_PCMD_DATA];
+	static unsigned char *pcmdPos;
 
-		static unsigned char cmdStack[MAX_STACK_DATA];
-		static void *stackPtr[MAX_STACK_DEPTH];
-		static unsigned char stackType[MAX_STACK_DEPTH];
+	static unsigned char cmdStack[MAX_STACK_DATA];
+	static void *stackPtr[MAX_STACK_DEPTH];
+	static unsigned char stackType[MAX_STACK_DEPTH];
 #endif
 	}
 
@@ -72,8 +135,11 @@ namespace scripts
 			time_t msec;
 			time_t frametime;
 
-			model::IModelPtr model;
-			qtexture_t *image;
+			model::IModelPtr modelPtr;
+			qtexture_t *imagePtr;
+
+			std::string model;
+			std::string image;
 
 			int blend;
 			int style;
