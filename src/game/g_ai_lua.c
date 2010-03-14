@@ -824,68 +824,17 @@ static int AIL_positionshoot (lua_State *L)
  */
 static int AIL_positionhide (lua_State *L)
 {
-	pos3_t to, bestPos;
-	edict_t *ent;
-	int dist;
-	int xl, yl, xh, yh;
-	int min_tu;
-	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
+	pos3_t save;
 
-	/* Make things more simple. */
-	ent = AIL_ent;
-	dist = ent->TU;
+	VectorCopy(AIL_ent->pos, save);
 
-	/* Calculate move table. */
-	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
-	gi.MoveStore(gi.pathingMap);
-
-	/* set borders */
-	xl = (int) ent->pos[0] - dist;
-	if (xl < 0)
-		xl = 0;
-	yl = (int) ent->pos[1] - dist;
-	if (yl < 0)
-		yl = 0;
-	xh = (int) ent->pos[0] + dist;
-	if (xh > PATHFINDING_WIDTH)
-		xl = PATHFINDING_WIDTH;
-	yh = (int) ent->pos[1] + dist;
-	if (yh > PATHFINDING_WIDTH)
-		yh = PATHFINDING_WIDTH;
-
-	/* evaluate moving to every possible location in the search area,
-	 * including combat considerations */
-	min_tu = INT_MAX;
-	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
-		for (to[1] = yl; to[1] < yh; to[1]++)
-			for (to[0] = xl; to[0] < xh; to[0]++) {
-				const pos_t tu = gi.MoveLength(gi.pathingMap, to,
-						G_IsCrouched(ent) ? 1 : 0, qtrue);
-
-				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
-					continue;
-
-				/* Better spot (easier to get to). */
-				if (tu < min_tu) {
-					/* visibility */
-					G_EdictCalcOrigin(ent);
-					/** @todo Looks like we're iterating hard, but always testing visibility of the original position of the entity ?? (Can't test. Duke, 10.2.2010) */
-					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
-						continue;
-
-					VectorCopy(to, bestPos);
-					min_tu = tu;
-				}
-			}
-
-	/* No position found in range. */
-	if (min_tu > ent->TU) {
+	if (G_FindHidingLocation(AIL_ent, AIL_ent->pos, AIL_ent->TU)) {
+		/* Return the spot. */
+		lua_pushpos3(L, &AIL_ent->pos);
+	} else {
 		lua_pushboolean(L, 0);
-		return 1;
 	}
-
-	/* Return the spot. */
-	lua_pushpos3(L, &bestPos);
+	G_EdictSetOrigin(AIL_ent, save);
 	return 1;
 }
 

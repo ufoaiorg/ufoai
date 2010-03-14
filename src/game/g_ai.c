@@ -247,7 +247,14 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
 	}
 }
 
-static qboolean G_FindHidingLocation (edict_t *ent, pos3_t to, int tu)
+/**
+ * @brief Tries to search a hiding spot
+ * @param[out] ent The actor edict. The position of the actor is updated here to perform visibility checks
+ * @param[in] from The grid position the actor is (theoretically) standing at and searching a hiding location from
+ * @param[in] tuLeft The amount of left TUs to find a hiding spot
+ * @return @c true if hiding is possible, @c false otherwise
+ */
+qboolean G_FindHidingLocation (edict_t *ent, const pos3_t from, int tuLeft)
 {
 	/* We need a local table to calculate the hiding steps */
 	static pathing_t hidePathingTable;
@@ -255,18 +262,18 @@ static qboolean G_FindHidingLocation (edict_t *ent, pos3_t to, int tu)
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
 	/* search hiding spot */
-	G_MoveCalcLocal(&hidePathingTable, 0, ent, to, crouchingState, HIDE_DIST * 2);
-	ent->pos[2] = to[2];
-	minX = max(to[0] - HIDE_DIST, 0);
-	minY = max(to[1] - HIDE_DIST, 0);
-	maxX = min(to[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
-	maxY = min(to[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	G_MoveCalcLocal(&hidePathingTable, 0, ent, from, crouchingState, HIDE_DIST * 2);
+	ent->pos[2] = from[2];
+	minX = max(from[0] - HIDE_DIST, 0);
+	minY = max(from[1] - HIDE_DIST, 0);
+	maxX = min(from[0] + HIDE_DIST, PATHFINDING_WIDTH - 1);
+	maxY = min(from[1] + HIDE_DIST, PATHFINDING_WIDTH - 1);
 
 	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 			/* time */
 			const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
-			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
+			if (delta > tuLeft || delta == ROUTING_NOT_REACHABLE)
 				continue;
 
 			/* visibility */
@@ -274,7 +281,7 @@ static qboolean G_FindHidingLocation (edict_t *ent, pos3_t to, int tu)
 			if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 				continue;
 
-			tu -= delta;
+			tuLeft -= delta;
 			return qtrue;
 		}
 	}
@@ -446,7 +453,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
-
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
@@ -777,19 +783,19 @@ void G_AddToWayPointList (edict_t *ent)
  * @param[in] aiActor The actor to turn
  * @param[in] pos The position to set the direction for
  */
-void AI_TurnIntoDirection (edict_t *aiActor, const pos3_t pos)
+void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 {
 	int dv;
-	const byte crouchingState = G_IsCrouched(aiActor) ? 1 : 0;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
-	G_MoveCalc(aiActor->team, aiActor, pos, crouchingState, MAX_ROUTE);
+	G_MoveCalc(ent->team, ent, pos, crouchingState, MAX_ROUTE);
 
 	dv = gi.MoveNext(gi.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
 		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
-			G_ActorDoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
+			G_ActorDoTurn(ent, dir & (CORE_DIRECTIONS - 1));
 	}
 }
 
