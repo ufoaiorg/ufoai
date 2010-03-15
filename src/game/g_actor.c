@@ -454,8 +454,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
+			/* use the backup item to use the old amount values, because the clients have to use the same actions
+			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(item, to, tx, ty);
+			G_WriteItem(fItemBackup.item, to, tx, ty);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
