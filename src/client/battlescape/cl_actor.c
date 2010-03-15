@@ -664,13 +664,15 @@ static void CL_DisplayBlockedPaths_f (void)
 /**
  * @brief Recalculate forbidden list, available moves and actor's move length
  * for the current selected actor.
+ * @note An attempt to do this with le->TU to save time ended up with the first actor not being able to move at gamestart.
+ * @todo seems like this function is called *before* the TUs are set
  */
 void CL_ActorConditionalMoveCalc (le_t *le)
 {
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, le->TU, fb_list, fb_length);
+		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 		CL_ActorResetMoveLength(le);
 	}
 }
