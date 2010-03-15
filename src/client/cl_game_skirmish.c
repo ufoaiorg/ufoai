@@ -175,6 +175,11 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	}
 }
 
+/**
+ * @brief Hide the dropship selection or show it with the dropship given in the parameter
+ * @param dropships if @c NULL, the dropship selection panel will be hidden, otherwise it
+ * will be shown with the given list entries as content.
+ */
 static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 {
 	const qboolean hide = (dropships == NULL);
@@ -190,6 +195,11 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 	}
 }
 
+/**
+ * @brief Hide the ufo selection or show it with the ufos given in the parameter
+ * @param ufos if @c NULL, the ufo selection panel will be hidden, otherwise it
+ * will be shown with the given list entries as content.
+ */
 static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 {
 	const qboolean hide = (ufos == NULL);
