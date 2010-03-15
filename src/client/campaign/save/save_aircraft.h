@@ -22,7 +22,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-
 #define SAVE_AIRCRAFT_IDX "idx"
 #define SAVE_AIRCRAFT_UFOS "UFOs"
 #define SAVE_AIRCRAFT_AIRCRAFT "aircraft"
@@ -81,56 +80,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_AIRCRAFT_PROJECTILES "projectiles"
 
-#define SAVE_AIRCRAFT_PROJECTILE "projectile"
-#define SAVE_AIRCRAFT_ITEMID "itemid"
-#define SAVE_AIRCRAFT_POS "pos"
-#define SAVE_AIRCRAFT_IDLETARGET "idleTarget"
-#define SAVE_AIRCRAFT_TIME "time"
-#define SAVE_AIRCRAFT_ANGLE "angle"
-#define SAVE_AIRCRAFT_BULLET "bullet"
-#define SAVE_AIRCRAFT_BEAM "beam"
-
-#define SAVE_AIRCRAFT_ATTACKINGAIRCRAFT "attackingAircraft"
-#define SAVE_AIRCRAFT_ISUFO "isUFO"
-
-#define SAVE_AIRCRAFT_AIMEDAIRCRAFT "aimedAircraft"
-
 
 /*
 DTD: (incomplete)
 
 <!ELEMENT projectiles projectile*>
-<!ELEMENT projectile (pos* attackingAircraft? idleTarget)>
-<!ATTLIST projectile
-	itemid			CDATA	#REQUIRED		
-	time			CDATA	'0'
-	angle			CDATA	'0.0'
-	bullet			CDATA	false
-	beam			CDATA	false
->
-
-<!ELEMENT attackingAircraft EMPTY>
-<!ATTLIST attackingAircraft
-	idx				CDATA	
-	isUFO			CDATA	'false'
->
-<!ELEMENT aimedAircraft EMPTY>
-<!ATTLIST aimedAircraft
-	idx				CDATA	
-	isUFO			CDATA	'false'
->
-
-<!ELEMENT pos EMPTY>
-<!ATTLIST pos
-	x				CDATA	'0'
-	y				CDATA	'0'
->
-
-<!ELEMENT idleTarget EMPTY>
-<!ATTLIST idleTarget
-	x				CDATA	'0'
-	y				CDATA	'0'
-	z				CDATA	'0'
->
 
 */

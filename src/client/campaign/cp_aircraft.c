@@ -2584,40 +2584,8 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 
 	/* Save projectiles. */
 	node = mxml_AddNode(parent, SAVE_AIRCRAFT_PROJECTILES);
-	for (i = 0; i < ccs.numProjectiles; i++) {
-		int j;
-		snode = mxml_AddNode(node, SAVE_AIRCRAFT_PROJECTILE);
-
-		mxml_AddString(snode, SAVE_AIRCRAFT_ITEMID, ccs.projectiles[i].aircraftItem->id);
-		for (j = 0; j < ccs.projectiles[i].numProjectiles; j++)
-			mxml_AddPos2(snode, SAVE_AIRCRAFT_POS, ccs.projectiles[i].pos[j]);
-		mxml_AddPos3(snode, SAVE_AIRCRAFT_IDLETARGET, ccs.projectiles[i].idleTarget);
-
-		mxml_AddInt(snode, SAVE_AIRCRAFT_TIME, ccs.projectiles[i].time);
-		mxml_AddFloat(snode, SAVE_AIRCRAFT_ANGLE, ccs.projectiles[i].angle);
-		mxml_AddBoolValue(snode, SAVE_AIRCRAFT_BULLET, ccs.projectiles[i].bullets);
-		mxml_AddBoolValue(snode, SAVE_AIRCRAFT_BEAM, ccs.projectiles[i].beam);
-
-		if (ccs.projectiles[i].attackingAircraft) {
-			mxml_node_t *attacking =  mxml_AddNode(snode, SAVE_AIRCRAFT_ATTACKINGAIRCRAFT);
-
-			mxml_AddBoolValue(attacking, SAVE_AIRCRAFT_ISUFO, ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
-			if (ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(attacking, SAVE_AIRCRAFT_IDX, ccs.projectiles[i].attackingAircraft - ccs.ufos);
-			else
-				mxml_AddInt(attacking, SAVE_AIRCRAFT_IDX, ccs.projectiles[i].attackingAircraft->idx);
-		}
-
-		if (ccs.projectiles[i].aimedAircraft) {
-			mxml_node_t *aimed =  mxml_AddNode(snode, SAVE_AIRCRAFT_AIMEDAIRCRAFT);
-
-			mxml_AddBoolValue(aimed, SAVE_AIRCRAFT_ISUFO, ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
-			if (ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(aimed, SAVE_AIRCRAFT_IDX, ccs.projectiles[i].aimedAircraft - ccs.ufos);
-			else
-				mxml_AddInt(aimed, SAVE_AIRCRAFT_IDX, ccs.projectiles[i].aimedAircraft->idx);
-		}
-	}
+	if (!AIRFIGHT_SaveXML(node))
+		return qfalse;
 
 	return qtrue;
 }
@@ -2883,7 +2851,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 	mxml_node_t *projectiles;
 	int i;
 
-	/* save the ufos on geoscape */
+	/* load the ufos on geoscape */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_UFOS);
 
 	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_UFOONGEOSCAPE && ssnode;
@@ -2891,8 +2859,8 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		const char *s = mxml_GetString(ssnode, SAVE_AIRCRAFT_ID);
 		aircraft_t *craft;
 		craft = AIR_GetAircraft(s);
-		ccs.ufos[i] = *craft;
-		craft = &ccs.ufos[i];	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+		ccs.ufos[i] = *craft;	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+		craft = &ccs.ufos[i];
 		craft->idx = i;
 		if (!AIR_LoadAircraftXML(craft, qtrue, ssnode))
 			return qfalse;
@@ -2901,51 +2869,10 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	/* Load projectiles. */
 	projectiles = mxml_GetNode(parent, SAVE_AIRCRAFT_PROJECTILES);
-	for (i = 0, snode = mxml_GetNode(projectiles, SAVE_AIRCRAFT_PROJECTILE); i < MAX_PROJECTILESONGEOSCAPE && snode;
-			snode = mxml_GetNextNode(snode, projectiles, SAVE_AIRCRAFT_PROJECTILE), i++) {
-		technology_t *tech = RS_GetTechByProvided(mxml_GetString(snode, SAVE_AIRCRAFT_ITEMID));
-		int j;
-		mxml_node_t *attackingAircraft;
-		mxml_node_t *aimedAircraft;
-		
+	if (!AIRFIGHT_LoadXML(projectiles))
+		return qfalse;
 
-		if (!tech) {
-			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
-			return qfalse;
-		}
-
-		ccs.projectiles[i].aircraftItem = INVSH_GetItemByID(tech->provides);
-
-		for (j = 0, ssnode = mxml_GetPos2(snode, SAVE_AIRCRAFT_POS, ccs.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
-		     j++, ssnode = mxml_GetNextPos2(ssnode, snode, SAVE_AIRCRAFT_POS, ccs.projectiles[i].pos[j]))
-			;
-		ccs.projectiles[i].numProjectiles = j;
-		mxml_GetPos3(snode, SAVE_AIRCRAFT_IDLETARGET, ccs.projectiles[i].idleTarget);
-
-		ccs.projectiles[i].time = mxml_GetInt(snode, SAVE_AIRCRAFT_TIME, 0);
-		ccs.projectiles[i].angle = mxml_GetFloat(snode, SAVE_AIRCRAFT_ANGLE, 0.0);
-		ccs.projectiles[i].bullets = mxml_GetBool(snode, SAVE_AIRCRAFT_BULLET, qfalse);
-		ccs.projectiles[i].beam = mxml_GetBool(snode, SAVE_AIRCRAFT_BEAM, qfalse);
-
-		if ((attackingAircraft = mxml_GetNode(snode, SAVE_AIRCRAFT_ATTACKINGAIRCRAFT))) {
-			if (mxml_GetBool(attackingAircraft, SAVE_AIRCRAFT_ISUFO, qfalse))
-				ccs.projectiles[i].attackingAircraft = ccs.ufos + mxml_GetInt(attackingAircraft, SAVE_AIRCRAFT_IDX, 0);
-			else
-				ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(attackingAircraft, SAVE_AIRCRAFT_IDX, AIRCRAFT_INVALID));
-		} else {
-			ccs.projectiles[i].attackingAircraft = NULL;
-		}
-		if ((aimedAircraft = mxml_GetNode(snode, SAVE_AIRCRAFT_AIMEDAIRCRAFT))) {
-			if (mxml_GetBool(aimedAircraft, SAVE_AIRCRAFT_ISUFO, qfalse))
-				ccs.projectiles[i].aimedAircraft = ccs.ufos + mxml_GetInt(aimedAircraft, SAVE_AIRCRAFT_IDX, 0);
-			else
-				ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(aimedAircraft, SAVE_AIRCRAFT_IDX, AIRCRAFT_INVALID));
-		} else {
-			ccs.projectiles[i].aimedAircraft = NULL;
-		}
-	}
-	ccs.numProjectiles = i;
-
+	/* check UFOs */
 	for (i = ccs.numUFOs - 1; i >= 0; i--) {
 		aircraft_t *ufo = UFO_GetByIDX(i);
 		if (ufo->time < 0 || ufo->stats[AIR_STATS_SPEED] <= 0) {
@@ -2954,6 +2881,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 			UFO_RemoveFromGeoscape(ufo);
 		}
 	}
+
 	return qtrue;
 }
 
