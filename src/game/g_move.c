@@ -437,9 +437,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 		}
 
-		/* ensure that the grid position matches the real origin of the actor */
-		VecToPos(ent->origin, ent->pos);
-
 		/* submit the TUs / round down */
 		if (g_notu != NULL && g_notu->integer)
 			ent->TU = initTU;
