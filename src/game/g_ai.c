@@ -940,11 +940,11 @@ static void AI_SetStats (edict_t * ent, int team)
 
 
 /**
- * @brief Sets an actor's ingame model and character values.
+ * @brief Sets an actor's character values.
  * @param ent Actor to set the model for.
  * @param[in] team Team to which actor belongs.
  */
-static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
+static void AI_SetCharacterValues (edict_t * ent, int team)
 {
 	/* Set model. */
 	const char *teamDefintion;
@@ -959,8 +959,6 @@ static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
 		teamDefintion = gi.Cvar_String("ai_civilian");
 	}
 	gi.GetCharacterValues(teamDefintion, &ent->chr);
-	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
-	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 	if (!ent->chr.teamDef)
 		gi.error("Could not set teamDef for character: '%s'", teamDefintion);
 }
@@ -982,6 +980,9 @@ static void AI_SetEquipment (edict_t * ent, int team, const equipDef_t * ed)
 		game.i.EquipActorMelee(&game.i, &ent->i, &ent->chr);
 	else
 		gi.dprintf("AI_InitPlayer: actor with no equipment\n");
+
+	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
+	ent->chr.i = ent->i;
 }
 
 
@@ -996,7 +997,7 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	const int team = player->pers.team;
 
 	/* Set the model and chose alien race. */
-	AI_SetModelAndCharacterValues(ent, team);
+	AI_SetCharacterValues(ent, team);
 
 	/* Calculate stats. */
 	AI_SetStats(ent, team);
@@ -1004,6 +1005,10 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	/* Give equipment. */
 	if (ed != NULL)
 		AI_SetEquipment(ent, team, ed);
+
+	/* after equipping the actor we can also get the model indices */
+	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
+	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 
 	/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 	if (frand() < 0.75f)

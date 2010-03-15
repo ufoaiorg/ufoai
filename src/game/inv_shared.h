@@ -576,7 +576,7 @@ typedef struct chrScoreGlobal_s {
 
 typedef struct chrFiremodeSettings_s {
 	actorHands_t hand;	/**< Stores the used hand */
-	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
+	fireDefIndex_t fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
 } chrFiremodeSettings_t;
 

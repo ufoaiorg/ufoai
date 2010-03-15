@@ -40,7 +40,7 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, con
 
 		if (ent->chr.RFmode.hand == ACTOR_HAND_RIGHT && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			const int fmIdx = ent->chr.RFmode.fmIdx;
+			const fireDefIndex_t fmIdx = ent->chr.RFmode.fmIdx;
 
 			if (fdArray[fmIdx].time + g_reaction_leftover->integer <= ent->TU
 			 && fdArray[fmIdx].range > VectorDist(ent->origin, target->origin)) {
@@ -98,7 +98,7 @@ static qboolean G_ActorHasWorkingFireModeSet (const edict_t *actor)
  * that would make the current settings invalid
  * @param ent The actor edict to check the settings for
  */
-void G_ReactionFireUpdate (edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od)
+void G_ReactionFireUpdate (edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od)
 {
 	chrFiremodeSettings_t *fm = &ent->chr.RFmode;
 	fm->fmIdx = fmIdx;
