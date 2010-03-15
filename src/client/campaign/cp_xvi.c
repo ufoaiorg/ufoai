@@ -263,7 +263,6 @@ qboolean XVI_SaveXML (mxml_node_t *p)
  */
 qboolean XVI_LoadXML (mxml_node_t *p)
 {
-	byte *out;
 	int width, height;
 	mxml_node_t *s;
 	mxml_node_t *n = mxml_GetNode(p, SAVE_XVI_XVI);
@@ -276,10 +275,6 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	width = mxml_GetInt(n, SAVE_XVI_WIDTH, 0);
 	height = mxml_GetInt(n, SAVE_XVI_HEIGHT, 0);
 
-	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
-	if (!out)
-		Com_Error(ERR_DROP, "TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
-
 	for (s = mxml_GetNode(n, SAVE_XVI_ENTRY); s; s = mxml_GetNextNode(s, n, SAVE_XVI_ENTRY)) {
 		const int x = mxml_GetInt(s, SAVE_XVI_X, 0);
 		const int y = mxml_GetInt(s, SAVE_XVI_Y, 0);
@@ -288,9 +283,6 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 		if (x >= 0 && x < width && y >= 0 && y <= height)
 			R_SetXVILevel(x, y, level);
 	}
-
-	R_InitializeXVIOverlay(out);
-	Mem_Free(out);
 	return qtrue;
 }
 
