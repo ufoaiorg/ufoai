@@ -562,13 +562,13 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 				FLOOR(actor) = FLOOR(floor);
 				break;
 			}
-		if (!game.i.TryAddToInventory(&game.i, &floor->i, *item, INVDEF(gi.csi->idFloor)))
+		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor)))
 			G_FreeEdict(floor);
 		else
 			/* send the inventory */
 			G_CheckVis(floor, qtrue);
 	} else {
-		if (game.i.TryAddToInventory(&game.i, &floor->i, *item, INVDEF(gi.csi->idFloor))) {
+		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
 			floor->visflags = 0;
@@ -1221,7 +1221,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 				const invDef_t *invDef = INVDEF(container);
 				assert(invDef->single);
 				itemAlreadyRemoved = qtrue;	/* for assert only */
-				game.i.EmptyContainer(&game.i, &ent->i, invDef);
+				game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
 				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 			}
 		}
@@ -1231,7 +1231,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 			const invDef_t *invDef = INVDEF(container);
 			assert(!itemAlreadyRemoved);
 			assert(invDef->single);
-			game.i.EmptyContainer(&game.i, &ent->i, invDef);
+			game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 		}
 	}

@@ -361,9 +361,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = INVSH_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
+		ic = INVSH_SearchInInventory(&ent->chr.i, from, fItem->x, fItem->y);
 		if (ic)
-			INVSH_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(&ent->chr.i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
 			return;
 	}
@@ -376,7 +376,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.MoveInInventory(&game.i, &ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.MoveInInventory(&game.i, &ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
 

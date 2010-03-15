@@ -974,15 +974,12 @@ static void AI_SetEquipment (edict_t * ent, int team, const equipDef_t * ed)
 {
 	/* Pack equipment. */
 	if (ent->chr.teamDef->weapons)
-		game.i.EquipActor(&game.i, &ent->i, ed, &ent->chr);
+		game.i.EquipActor(&game.i, &ent->chr.i, ed, &ent->chr);
 	else if (ent->chr.teamDef)
 		/* actor cannot handle equipment but no weapons */
-		game.i.EquipActorMelee(&game.i, &ent->i, &ent->chr);
+		game.i.EquipActorMelee(&game.i, &ent->chr.i, &ent->chr);
 	else
 		gi.dprintf("AI_InitPlayer: actor with no equipment\n");
-
-	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
-	ent->chr.i = ent->i;
 }
 
 

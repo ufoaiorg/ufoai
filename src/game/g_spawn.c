@@ -830,7 +830,7 @@ static void SP_misc_item (edict_t *ent)
 		floor = G_SpawnFloor(ent->pos);
 
 	item.t = od;
-	game.i.TryAddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor));
+	game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
 
 	/* now we can free the original edict */
 	G_FreeEdict(ent);

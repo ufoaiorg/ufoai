@@ -75,7 +75,7 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 			if (ic->item.t->virtual) {
 				invList_t *next = ic->next;
 				/* remove the virtual item to update the inventory lists */
-				if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(container), ic))
+				if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 					gi.error("Could not remove virtual item '%s' from inventory %i",
 							ic->item.t->id, container);
 				ic = next;
@@ -159,10 +159,10 @@ void G_InventoryToFloor (edict_t *ent)
 
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
-			if (!game.i.RemoveFromInventory(&game.i, &ent->i, INVDEF(container), ic))
+			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
 				gi.error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->item.t->id, container, ent->number);
-			if (game.i.AddToInventory(&game.i, &floor->i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
+			if (game.i.AddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
 				gi.error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->item.t->id, container, ent->number);
 #ifdef ADJACENT

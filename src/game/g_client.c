@@ -627,7 +627,7 @@ int G_ClientAction (player_t * player)
 		} else {
 			invDef_t *fromPtr = INVDEF(from);
 			invDef_t *toPtr = INVDEF(to);
-			invList_t *fromItem = INVSH_SearchInInventory(&ent->i, fromPtr, fx, fy);
+			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
 			if (!fromItem)
 				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);
@@ -991,13 +991,10 @@ static void G_ClientReadInventory (edict_t *ent)
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
-		if (game.i.AddToInventory(&game.i, &ent->i, item, container, x, y, 1) == NULL)
+		if (game.i.AddToInventory(&game.i, &ent->chr.i, item, container, x, y, 1) == NULL)
 			gi.error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.t->id, container->id, x, y);
 	}
-
-	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
-	ent->chr.i = ent->i;
 }
 
 /**
