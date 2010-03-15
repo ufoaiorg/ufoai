@@ -39,10 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRFIGHT_ISUFO "isUFO"
 
 /*
-DTD: (incomplete)
+DTD:
 
-<!ELEMENT projectiles projectile*>
-<!ELEMENT projectile (pos* attackingAircraft? idleTarget)>
+<!ELEMENT projectile (pos* idleTarget attackingAircraft? aimedAircraft?)>
 <!ATTLIST projectile
 	itemid			CDATA	#REQUIRED		
 	time			CDATA	'0'
@@ -53,12 +52,12 @@ DTD: (incomplete)
 
 <!ELEMENT attackingAircraft EMPTY>
 <!ATTLIST attackingAircraft
-	idx				CDATA	
+	idx				CDATA	#REQUIRED
 	isUFO			CDATA	'false'
 >
 <!ELEMENT aimedAircraft EMPTY>
 <!ATTLIST aimedAircraft
-	idx				CDATA	
+	idx				CDATA	#REQUIRED	
 	isUFO			CDATA	'false'
 >
 
