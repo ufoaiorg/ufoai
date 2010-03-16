@@ -77,7 +77,6 @@ void NAT_UpdateHappinessForAllNations (void)
 		const mission_t *mission = (mission_t *)list->data;
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
-		const float difficultyModifier = (4.0f + ccs.curCampaign->difficulty) / 400;
 
 		/* Some non-water location have no nation */
 		if (nation) {
@@ -88,7 +87,7 @@ void NAT_UpdateHappinessForAllNations (void)
 			case STAGE_RECON_GROUND:
 			case STAGE_SPREAD_XVI:
 			case STAGE_HARVEST:
-				happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS - difficultyModifier;
+				happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS;
 				break;
 			default:
 				/* mission is not active on earth, skip this mission */

@@ -385,15 +385,19 @@ void CL_HandleNationData (qboolean won, mission_t * mis)
 	float deltaHappiness = 0.0f;
 	float happiness_divisor = 5.0f;
 
-	assert(civilianSum > 0);
-	assert(alienSum > 0);
-
-	/* Calculate how well the mission went. */
-	performanceCivilian = (2 * civilianSum - ccs.missionResults.civiliansKilled - 2 * ccs.missionResults.civiliansKilledFriendlyFire) * 3 / 2 * civilianSum - 2;
-	/** @todo The score for aliens is always negative or zero currently, but this should be dependent on the mission objective.
-	* In a mission that has a special objective, the amount of killed aliens should only serve to increase the score, not reduce the penalty. */
-	performanceAlien = ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned - alienSum;
-	performance = performanceCivilian + performanceAlien;
+	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring if the mission objective is actually to save civilians. */
+	if (civilianSum == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
+		performance = 0.0f;
+	}
+	else {
+		/* Calculate how well the mission went. */
+		performanceCivilian = (2 * civilianSum - ccs.missionResults.civiliansKilled - 2 * ccs.missionResults.civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
+		/** @todo The score for aliens is always negative or zero currently, but this should be dependent on the mission objective.
+		* In a mission that has a special objective, the amount of killed aliens should only serve to increase the score, not reduce the penalty. */
+		performanceAlien = ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned - alienSum;
+		performance = performanceCivilian + performanceAlien;
+	}
 
 	/* Book-keeping. */
 	won ? ccs.campaignStats.missionsWon++ : ccs.campaignStats.missionsLost++;
