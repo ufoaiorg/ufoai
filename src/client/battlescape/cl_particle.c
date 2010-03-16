@@ -39,10 +39,7 @@ static cvar_t *cl_particleweather;
 
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
 
-#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*) pcmdData + x)
-#define RSTACK		-0xFFF0
-#define F(x)		(1<<x)
-#define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
+#define	V_VECS		((1 << V_FLOAT) | (1 << V_POS) | (1 << V_VECTOR) | (1 << V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
 #define V_UNTYPED   0x7FFF
 
@@ -196,6 +193,8 @@ static int numPtlCmds;
 static byte pcmdData[MAX_PCMD_DATA];
 static byte *pcmdPos;
 
+static const int RSTACK = -(MAX_PCMD_DATA);
+
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
 
@@ -325,13 +324,29 @@ void PTL_InitStartup (void)
 	pcmdPos = pcmdData;
 }
 
+/**
+ * @brief Determine the memory location where the command accesses and stores its data.
+ * @param p The particle that is used to get local command data locations.
+ * @param cmd The command to get the data location for.
+ * @return The position where the command stores the data.
+ */
+static inline void *CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t *cmd)
+{
+	if (cmd->ref < 0)
+		/* a negative ref value is relative to the particle */
+		return (byte*)p - cmd->ref;
+	else
+		/* data is stored on the global command data hunk */
+		return (byte*)pcmdData + cmd->ref;
+}
 
 static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 {
-	int s, e;
+	int s;
+	ptrdiff_t e;
 	int type;
 	int i, j, n;
-	void *radr;
+	void *cmdData;
 	float arg;
 	ptl_t *pnew;
 
@@ -342,7 +357,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 	/* run until finding PC_END */
 	for (s = 0, e = 0; cmd->cmd != PC_END; cmd++) {
 		if (cmd->ref > RSTACK)
-			radr = RADR(cmd->ref);
+			cmdData = CL_ParticleCommandGetDataLocation(p, cmd);
 		else {
 			if (!s)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
@@ -353,13 +368,13 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			i = RSTACK - cmd->ref;
 			if (!i) {
 				/* normal stack reference */
-				radr = stackPtr[s];
+				cmdData = stackPtr[s];
 				cmd->type = stackType[s];
 			} else {
 				/* stack reference to element of vector */
 				if ((1 << stackType[s]) & V_VECS) {
 					cmd->type = V_FLOAT;
-					radr = (float *) stackPtr[s] + (i - 1);
+					cmdData = (float *) stackPtr[s] + (i - 1);
 				} else {
 					Com_Error(ERR_DROP, "CL_ParticleFunction: can't get components of a non-vector type (particle %s)", p->ctrl->name);
 				}
@@ -375,7 +390,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			/* store the value in the stack */
 			stackPtr[s] = &cmdStack[e];
 			stackType[s] = cmd->type;
-			e += Com_SetValue(stackPtr[s++], radr, cmd->type, 0, 0);
+			e += Com_SetValue(stackPtr[s++], cmdData, cmd->type, 0, 0);
 			break;
 
 		case PC_POP:
@@ -402,9 +417,9 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			/* get different data */
 			if (cmd->cmd == PC_POP)
-				e -= Com_SetValue(radr, stackPtr[--s], cmd->type, 0, 0);
+				e -= Com_SetValue(cmdData, stackPtr[--s], cmd->type, 0, 0);
 			else
-				Com_SetValue(radr, stackPtr[s - 1], cmd->type, 0, 0);
+				Com_SetValue(cmdData, stackPtr[s - 1], cmd->type, 0, 0);
 			break;
 
 		case PC_ADD:
@@ -425,9 +440,9 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			for (i = 0; i < n; i++) {
 				if (cmd->cmd == PC_SUB)
-					arg = -(*((float *) radr + i));
+					arg = -(*((float *) cmdData + i));
 				else
-					arg = *((float *) radr + i);
+					arg = *((float *) cmdData + i);
 				*((float *) stackPtr[s - 1] + i) += arg;
 			}
 			break;
@@ -451,9 +466,9 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 				for (i = 0; i < n; i++) {
 					if (cmd->cmd == PC_DIV)
-						arg = 1.0 / (*((float *) radr + i));
+						arg = 1.0 / (*((float *) cmdData + i));
 					else
-						arg = *((float *) radr + i);
+						arg = *((float *) cmdData + i);
 					*((float *) stackPtr[s - 1] + i) *= arg;
 				}
 				break;
@@ -464,9 +479,9 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			/* scalar multiplication with scalar in second argument */
 			if (cmd->cmd == PC_DIV)
-				arg = 1.0 / (*(float *) radr);
+				arg = 1.0 / (*(float *) cmdData);
 			else
-				arg = *(float *) radr;
+				arg = *(float *) cmdData;
 			for (i = 0; i < n; i++)
 				*((float *) stackPtr[s - 1] + i) *= arg;
 
@@ -477,7 +492,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for sin (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
 			stackPtr[s] = &cmdStack[e];
 			stackType[s] = cmd->type;
-			*(float *) stackPtr[s++] = sin(*(float *) radr * 2 * M_PI);
+			*(float *) stackPtr[s++] = sin(*(float *) cmdData * 2 * M_PI);
 			e += sizeof(float);
 			break;
 
@@ -486,7 +501,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for cos (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
 			stackPtr[s] = &cmdStack[e];
 			stackType[s] = cmd->type;
-			*(float *) stackPtr[s++] = sin(*(float *) radr * 2 * M_PI);
+			*(float *) stackPtr[s++] = sin(*(float *) cmdData * 2 * M_PI);
 			e += sizeof(float);
 			break;
 
@@ -495,7 +510,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for tan (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
 			stackPtr[s] = &cmdStack[e];
 			stackType[s] = cmd->type;
-			*(float *) stackPtr[s++] = sin(*(float *) radr * 2 * M_PI);
+			*(float *) stackPtr[s++] = sin(*(float *) cmdData * 2 * M_PI);
 			e += sizeof(float);
 			break;
 
@@ -508,10 +523,10 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			if (cmd->cmd == PC_RAND)
 				for (i = 0; i < n; i++)
-					*((float *) stackPtr[s] + i) = *((float *) radr + i) * frand();
+					*((float *) stackPtr[s] + i) = *((float *) cmdData + i) * frand();
 			else
 				for (i = 0; i < n; i++)
-					*((float *) stackPtr[s] + i) = *((float *) radr + i) * crand();
+					*((float *) stackPtr[s] + i) = *((float *) cmdData + i) * crand();
 
 			e += n * sizeof(float);
 			s++;
@@ -543,7 +558,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			return;
 
 		case PC_SPAWN:
-			pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+			pnew = CL_ParticleSpawn((char *) cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (!pnew)
 				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			break;
@@ -561,14 +576,14 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {
-				pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+				pnew = CL_ParticleSpawn((char *) cmdData, p->levelFlags, p->s, p->v, p->a);
 				if (!pnew)
 					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			}
 			break;
 
 		case PC_CHILD:
-			pnew = CL_ParticleSpawn((char *)radr, p->levelFlags, p->s, p->v, p->a);
+			pnew = CL_ParticleSpawn((char *)cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (pnew) {
 				pnew->next = p->children;
 				pnew->parent = p;
