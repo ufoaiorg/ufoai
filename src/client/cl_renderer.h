@@ -109,7 +109,7 @@ typedef struct {
 typedef struct ptlCmd_s {
 	byte cmd;
 	byte type;
-	int ref;
+	int ref;	/**< if negative this is relative to the particle, otherwise relative to particle command hunk */
 } ptlCmd_t;
 
 typedef struct ptlDef_s {
