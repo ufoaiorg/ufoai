@@ -3354,13 +3354,15 @@ base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later 
 base/textures/tex_material/conc02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metal012.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal012_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal013.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal013_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.tga | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
-base/textures/tex_material/metall012.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_material/metall012_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/wood004_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
