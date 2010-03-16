@@ -286,7 +286,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 
 	/* search for the pic in the list */
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
-		if (a->type == type && a->frame == frame && !strcmp(name, a->name))
+		if (a->type == type && (type == ART_PIC && a->frame == frame) && !strcmp(name, a->name))
 			break;
 
 	if (i < r_numParticlesArt)
@@ -297,7 +297,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 
 	a->skin = 0;
 	a->type = type;
-	a->frame = (type == ART_PIC) ? frame : 0;
+	a->frame = frame;
 	Q_strncpyz(a->name, name, sizeof(a->name));
 
 	CL_ParticleLoadArt(a, type);
@@ -410,7 +410,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			if (offsetof(ptl_t, model) == -cmd->ref) {
 				if (stackType[--s] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
-				p->model = CL_ParticleGetArt((char *) stackPtr[s], 0, ART_MODEL);
+				p->model = CL_ParticleGetArt((char *) stackPtr[s], p->frame, ART_MODEL);
 				e = (byte *) stackPtr[s] - cmdStack;
 				break;
 			}
