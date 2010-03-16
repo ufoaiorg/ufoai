@@ -2140,7 +2140,7 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 	if (!td)
 		return NULL;
 
-	if (gender < 0 || gender >= 3) {
+	if (gender < 0 || gender >= NAME_LAST) {
 		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
 		return NULL;
 	}
