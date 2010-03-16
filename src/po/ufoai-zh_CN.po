@@ -29,7 +29,7 @@ msgstr "PHALANX本部"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
-msgstr "轰炸机（城市）"
+msgstr "被外星人侵占的市区"
 
 #: ../base/maps/bridge.ump:67
 msgid "Bridge"
@@ -49,12 +49,11 @@ msgstr "社区中心"
 
 #: ../base/maps/construction.ump:64
 msgid "Construction"
-msgstr "建设"
+msgstr "工业区"
 
 #: ../base/maps/desert.ump:53
-#, fuzzy
 msgid "Crashed Harvester"
-msgstr "Harvester"
+msgstr "坠毁现场"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
@@ -102,7 +101,7 @@ msgstr "燃气站"
 
 #: ../base/maps/industrial.ump:257 ../base/maps/industrial.ump:281
 msgid "UFO Landed"
-msgstr "UFO 着陆"
+msgstr "UFO 着陆点"
 
 #: ../base/maps/italy.ump:61
 msgid "Italy"
@@ -113,14 +112,12 @@ msgid "Japan"
 msgstr "日本"
 
 #: ../base/maps/japan.ump:293
-#, fuzzy
 msgid "Small eastern park."
-msgstr "小型机用平台"
+msgstr "小型公园"
 
 #: ../base/maps/japan.ump:321
-#, fuzzy
 msgid "Harvester"
-msgstr "掠夺型UFO"
+msgstr "洗劫区"
 
 #: ../base/maps/laboratory.ump:63 ../base/ufos/basemanagement.ufo:283
 #: client/campaign/cp_base_callbacks.c:313
@@ -149,7 +146,7 @@ msgstr "东方风格大型"
 
 #: ../base/maps/spedition.ump:62
 msgid "Spedition"
-msgstr ""
+msgstr "中转站"
 
 #: ../base/maps/stadium.ump:65
 msgid "Stadium"
@@ -157,7 +154,7 @@ msgstr "体育馆"
 
 #: ../base/maps/transport.ump:66
 msgid "Transport"
-msgstr "运输"
+msgstr "运输站"
 
 #: ../base/maps/tropic.ump:359 ../base/maps/tropic.ump:391
 msgid "Tropical river"
@@ -203,20 +200,19 @@ msgstr "火鸟级"
 
 #: ../base/ufos/aircraftmanagement.ufo:131
 msgid "Herakles-class Heavy Lifter"
-msgstr "海格力斯级重型运输机"
+msgstr "海格力斯级（登陆机）"
 
 #: ../base/ufos/aircraftmanagement.ufo:132
 msgid "Herakles D"
-msgstr "海格力斯 D"
+msgstr "海格力斯级"
 
 #: ../base/ufos/aircraftmanagement.ufo:167
 msgid "Raptor-class Combat Transport"
-msgstr ""
+msgstr "飞鹰级（战斗登陆机）"
 
 #: ../base/ufos/aircraftmanagement.ufo:168
-#, fuzzy
 msgid "Raptor"
-msgstr "大尉"
+msgstr "飞鹰级"
 
 #: ../base/ufos/aircraftmanagement.ufo:216
 msgid "Stiletto-class Interceptor"
@@ -261,7 +257,7 @@ msgstr "魟级"
 #: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/otheritems.ufo:39
 #: ../base/ufos/research.ufo:3592
 msgid "UFO - Scout"
-msgstr "UFO - 侦查型"
+msgstr "UFO－侦查型"
 
 #: ../base/ufos/aircraftmanagement.ufo:442
 msgid "Scout U"
@@ -270,7 +266,7 @@ msgstr "UFO侦查机"
 #: ../base/ufos/aircraftmanagement.ufo:464 ../base/ufos/otheritems.ufo:49
 #: ../base/ufos/research.ufo:3634
 msgid "UFO - Fighter"
-msgstr "UFO - 战斗型"
+msgstr "UFO－战斗型"
 
 #: ../base/ufos/aircraftmanagement.ufo:465
 msgid "Fighter U"
@@ -279,7 +275,7 @@ msgstr "战斗型UFO"
 #: ../base/ufos/aircraftmanagement.ufo:494 ../base/ufos/otheritems.ufo:59
 #: ../base/ufos/research.ufo:3935
 msgid "UFO - Harvester"
-msgstr "UFO - 掠夺型"
+msgstr "UFO－掠夺型"
 
 #: ../base/ufos/aircraftmanagement.ufo:495
 msgid "Harvester U"
@@ -287,69 +283,66 @@ msgstr "掠夺型UFO"
 
 #: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/otheritems.ufo:99
 #: ../base/ufos/research.ufo:3849
-#, fuzzy
 msgid "UFO - Gunboat"
-msgstr "UFO - 侦查型"
+msgstr "UFO－巡逻型"
 
 #: ../base/ufos/aircraftmanagement.ufo:536
 msgid "Gunboat U"
-msgstr ""
+msgstr "巡逻型UFO"
 
 #: ../base/ufos/aircraftmanagement.ufo:575 ../base/ufos/otheritems.ufo:109
 #: ../base/ufos/research.ufo:3806
 msgid "UFO - Corrupter"
-msgstr "UFO - 破坏者"
+msgstr "UFO－渗透者"
 
 #: ../base/ufos/aircraftmanagement.ufo:576
 msgid "Corrupter U"
-msgstr "破坏型UFO"
+msgstr "渗透者UFO"
 
 #: ../base/ufos/aircraftmanagement.ufo:604 ../base/ufos/otheritems.ufo:128
 #: ../base/ufos/research.ufo:3677
 msgid "UFO - Supply Ship"
-msgstr "UFO - 运输机"
+msgstr "UFO－运输机"
 
 #: ../base/ufos/aircraftmanagement.ufo:605
 msgid "Supply U"
-msgstr "支援型UFO"
+msgstr "UFO运输机"
 
 #: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/otheritems.ufo:79
 #: ../base/ufos/research.ufo:3892
-#, fuzzy
 msgid "UFO - Ripper"
-msgstr "UFO - 战斗型"
+msgstr "UFO－飞鹰级"
 
 #: ../base/ufos/aircraftmanagement.ufo:627
 msgid "Ripper U"
-msgstr ""
+msgstr "飞鹰级UFO"
 
 #: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/otheritems.ufo:69
 #: ../base/ufos/research.ufo:3763
 msgid "UFO - Bomber"
-msgstr "UFO - 轰炸机"
+msgstr "UFO－轰炸机"
 
 #: ../base/ufos/aircraftmanagement.ufo:655
 msgid "Bomber U"
-msgstr "轰炸型UFO"
+msgstr "UFO轰炸机"
 
 #: ../base/ufos/aircraftmanagement.ufo:689 ../base/ufos/otheritems.ufo:119
 #: ../base/ufos/research.ufo:3720
 msgid "UFO - Carrier"
-msgstr "UFO - 母舰"
+msgstr "UFO－小母舰"
 
 #: ../base/ufos/aircraftmanagement.ufo:690
 msgid "Carrier U"
-msgstr "UFO母舰"
+msgstr "UFO小母舰"
 
 #: ../base/ufos/aircraftmanagement.ufo:712 ../base/ufos/otheritems.ufo:89
 #: ../base/ufos/research.ufo:3978
-#, fuzzy
 msgid "UFO - Mothership"
-msgstr "UFO - 破坏者"
+msgstr "UFO－空母舰"
 
 #: ../base/ufos/aircraftmanagement.ufo:713
 msgid "Mothership U"
-msgstr ""
+msgstr "UFO空母舰"
 
 #: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4599
 msgid "Aerial Laser Cannon"
@@ -424,9 +417,8 @@ msgid "AA51 missile launcher"
 msgstr "AA51 飞弹发射器"
 
 #: ../base/ufos/aircraftmanagement.ufo:1019 ../base/ufos/research.ufo:156
-#, fuzzy
 msgid "Base-Defence Laser Turret"
-msgstr "激光步枪"
+msgstr "激光防御塔"
 
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
@@ -555,9 +547,8 @@ msgid "Antimatter Storage"
 msgstr "反物质仓库"
 
 #: ../base/ufos/basemanagement.ufo:329
-#, fuzzy
 msgid "Laser Battery"
-msgstr "飞弹发射仓"
+msgstr "激光防御塔"
 
 #: ../base/ufos/basemanagement.ufo:346
 msgid "Missile Battery"
@@ -644,11 +635,11 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:15
 msgid "Amsterdam"
-msgstr ""
+msgstr "阿姆斯特丹"
 
 #: ../base/ufos/cities.ufo:21
 msgid "Mumbai"
-msgstr ""
+msgstr "孟买"
 
 #: ../base/ufos/cities.ufo:27
 msgid "Cape Town"
@@ -659,14 +650,12 @@ msgid "Cayenne"
 msgstr "卡宴"
 
 #: ../base/ufos/cities.ufo:39
-#, fuzzy
 msgid "Dakar"
-msgstr "雷达室"
+msgstr "达喀尔"
 
 #: ../base/ufos/cities.ufo:45
-#, fuzzy
 msgid "Teheran"
-msgstr "不耐烦"
+msgstr "德黑兰"
 
 #: ../base/ufos/cities.ufo:51
 msgid "Wellington"
@@ -674,115 +663,107 @@ msgstr "威灵顿"
 
 #: ../base/ufos/cities.ufo:57 ../base/ufos/cities.ufo:2631
 msgid "Wichita"
-msgstr ""
+msgstr "威其托"
 
 #: ../base/ufos/cities.ufo:63
 msgid "Aarhus"
-msgstr ""
+msgstr "奥尔胡斯"
 
 #: ../base/ufos/cities.ufo:69
 msgid "Aberdeen"
-msgstr ""
+msgstr "香港仔"
 
 #: ../base/ufos/cities.ufo:75
 msgid "Abidjan"
-msgstr ""
+msgstr "阿比让"
 
 #: ../base/ufos/cities.ufo:81
 msgid "Abuja"
-msgstr ""
+msgstr "阿布贾"
 
 #: ../base/ufos/cities.ufo:87
-#, fuzzy
 msgid "Accra"
-msgstr "精确度"
+msgstr "阿克拉"
 
 #: ../base/ufos/cities.ufo:93
 msgid "Adana"
-msgstr ""
+msgstr "阿达纳"
 
 #: ../base/ufos/cities.ufo:99
 msgid "Addis Ababa"
-msgstr ""
+msgstr "亚的斯亚贝巴"
 
 #: ../base/ufos/cities.ufo:105
 msgid "Agartala"
-msgstr ""
+msgstr "阿加尔塔拉"
 
 #: ../base/ufos/cities.ufo:111
 msgid "Ahmedabad"
-msgstr ""
+msgstr "艾哈迈达巴德"
 
 #: ../base/ufos/cities.ufo:117
 msgid "Albuquerque"
-msgstr ""
+msgstr "阿尔伯克基"
 
 #: ../base/ufos/cities.ufo:123
 msgid "Almaty"
-msgstr ""
+msgstr "阿拉木图"
 
 #: ../base/ufos/cities.ufo:129
-#, fuzzy
 msgid "Amman"
-msgstr "弹药"
+msgstr "安曼"
 
 #: ../base/ufos/cities.ufo:135
 msgid "Amritsar"
-msgstr ""
+msgstr "阿姆利则"
 
 #: ../base/ufos/cities.ufo:141
 msgid "Anadyr"
-msgstr ""
+msgstr "阿纳德尔"
 
 #: ../base/ufos/cities.ufo:147
-#, fuzzy
 msgid "Anchorage"
-msgstr "仓库"
+msgstr "安克雷奇"
 
 #: ../base/ufos/cities.ufo:153
 msgid "Andorra la Vella"
-msgstr ""
+msgstr "安道尔城"
 
 #: ../base/ufos/cities.ufo:159
 msgid "Ankara"
-msgstr ""
+msgstr "安卡拉"
 
 #: ../base/ufos/cities.ufo:165
 msgid "Antananarivo"
-msgstr ""
+msgstr "塔那那利佛"
 
 #: ../base/ufos/cities.ufo:171
-#, fuzzy
 msgid "Antwerp"
-msgstr "进入"
+msgstr "安特卫普"
 
 #: ../base/ufos/cities.ufo:177
 msgid "Arbil"
-msgstr ""
+msgstr "埃尔比勒"
 
 #: ../base/ufos/cities.ufo:183
-#, fuzzy
 msgid "Arequipa"
-msgstr "改装"
+msgstr "阿雷基帕"
 
 #: ../base/ufos/cities.ufo:189
 msgid "Asmara"
-msgstr ""
+msgstr "阿斯马拉"
 
 #: ../base/ufos/cities.ufo:195
-#, fuzzy
 msgid "Assis"
-msgstr "任务"
+msgstr "阿西斯"
 
 #: ../base/ufos/cities.ufo:201
-#, fuzzy
 msgid "Astana"
-msgstr "自动站立"
+msgstr "阿斯塔纳"
 
 #: ../base/ufos/cities.ufo:207
-#, fuzzy
 msgid "Asuncion"
-msgstr "起飞"
+msgstr "亚松森"
 
 #: ../base/ufos/cities.ufo:213
 msgid "Athens"
@@ -790,263 +771,235 @@ msgstr "雅典"
 
 #: ../base/ufos/cities.ufo:219
 msgid "Atlanta"
-msgstr ""
+msgstr "亚特兰大"
 
 #: ../base/ufos/cities.ufo:225
-#, fuzzy
 msgid "Austin"
-msgstr "自动站立"
+msgstr "奥斯汀"
 
 #: ../base/ufos/cities.ufo:231
 msgid "Baghdad"
-msgstr ""
+msgstr "巴格达"
 
 #: ../base/ufos/cities.ufo:237
 msgid "Balikpapan"
-msgstr ""
+msgstr "巴厘巴板"
 
 #: ../base/ufos/cities.ufo:243
 msgid "Baltimore"
-msgstr ""
+msgstr "巴尔的摩"
 
 #: ../base/ufos/cities.ufo:249
-#, fuzzy
 msgid "Bamako"
-msgstr "曼谷"
+msgstr "巴马科"
 
 #: ../base/ufos/cities.ufo:255
 msgid "Bandung"
-msgstr ""
+msgstr "万隆"
 
 #: ../base/ufos/cities.ufo:261
-#, fuzzy
 msgid "Bangalore"
-msgstr "曼谷"
+msgstr "班加罗尔"
 
 #: ../base/ufos/cities.ufo:267
 msgid "Bangkok"
 msgstr "曼谷"
 
 #: ../base/ufos/cities.ufo:273
-#, fuzzy
 msgid "Bangui"
-msgstr "曼谷"
+msgstr "班吉"
 
 #: ../base/ufos/cities.ufo:279
 msgid "Barcelona"
-msgstr ""
+msgstr "巴塞罗那"
 
 #: ../base/ufos/cities.ufo:285
-#, fuzzy
 msgid "Basra"
-msgstr "基地"
+msgstr "巴士拉"
 
 #: ../base/ufos/cities.ufo:291
 msgid "Batticaloa"
-msgstr ""
+msgstr "拜蒂克洛"
 
 #: ../base/ufos/cities.ufo:297
-#, fuzzy
 msgid "Beijing"
-msgstr "建设"
+msgstr "北京"
 
 #: ../base/ufos/cities.ufo:303
-#, fuzzy
 msgid "Belfast"
-msgstr "腰带"
+msgstr "贝尔法斯特"
 
 #: ../base/ufos/cities.ufo:309
 msgid "Belgrade"
-msgstr ""
+msgstr "贝尔格莱德"
 
 #: ../base/ufos/cities.ufo:315
 msgid "Belmopan"
-msgstr ""
+msgstr "贝尔莫潘"
 
 #: ../base/ufos/cities.ufo:321
 msgid "Berlin"
 msgstr "柏林"
 
 #: ../base/ufos/cities.ufo:327
-#, fuzzy
 msgid "Berne"
-msgstr "柏林"
+msgstr "伯尔尼"
 
 #: ../base/ufos/cities.ufo:333
 msgid "Birmingham"
-msgstr ""
+msgstr "伯明罕"
 
 #: ../base/ufos/cities.ufo:339
-#, fuzzy
 msgid "Bissau"
-msgstr "射击"
+msgstr "几内亚比绍"
 
 #: ../base/ufos/cities.ufo:345
 msgid "Blantyre"
-msgstr ""
+msgstr "布兰太尔"
 
 #: ../base/ufos/cities.ufo:351
 msgid "Bloemfontein"
-msgstr ""
+msgstr "布隆方丹"
 
 #: ../base/ufos/cities.ufo:357
-#, fuzzy
 msgid "Bogor"
-msgstr "无能"
+msgstr "茂物"
 
 #: ../base/ufos/cities.ufo:363
 msgid "Bogota"
-msgstr ""
+msgstr "波哥大"
 
 #: ../base/ufos/cities.ufo:369
-#, fuzzy
 msgid "Boston"
-msgstr "布里斯托尔"
+msgstr "波士顿"
 
 #: ../base/ufos/cities.ufo:375
 msgid "Brasilia"
-msgstr ""
+msgstr "巴西利亚"
 
 #: ../base/ufos/cities.ufo:381
 msgid "Bratislava"
-msgstr ""
+msgstr "布拉迪斯拉发"
 
 #: ../base/ufos/cities.ufo:387
-#, fuzzy
 msgid "Bratsk"
-msgstr "返    回"
+msgstr "布拉茨克"
 
 #: ../base/ufos/cities.ufo:393
 msgid "Brazzaville"
-msgstr ""
+msgstr "布拉柴维尔"
 
 #: ../base/ufos/cities.ufo:399
-#, fuzzy
 msgid "Brisbane"
-msgstr "都市"
+msgstr "布里斯本"
 
 #: ../base/ufos/cities.ufo:405
-#, fuzzy
 msgid "Brussels"
-msgstr "基地"
+msgstr "布鲁塞尔"
 
 #: ../base/ufos/cities.ufo:411
-#, fuzzy
 msgid "Bucharest"
-msgstr "爆炸"
+msgstr "布加勒斯特"
 
 #: ../base/ufos/cities.ufo:417
-#, fuzzy
 msgid "Budapest"
-msgstr "基地"
+msgstr "布达佩斯"
 
 #: ../base/ufos/cities.ufo:423
 msgid "Buenos Aires"
-msgstr ""
+msgstr "布宜诺斯艾利斯"
 
 #: ../base/ufos/cities.ufo:429
 msgid "Bujumbura"
-msgstr ""
+msgstr "布琼布拉"
 
 #: ../base/ufos/cities.ufo:435
 msgid "Busan"
 msgstr "釜山"
 
 #: ../base/ufos/cities.ufo:441
-#, fuzzy
 msgid "Cairns"
-msgstr "交叉路口"
+msgstr "凯恩斯"
 
 #: ../base/ufos/cities.ufo:447
-#, fuzzy
 msgid "Cairo"
-msgstr "交叉路口"
+msgstr "开罗省"
 
 #: ../base/ufos/cities.ufo:453
-#, fuzzy
 msgid "Calama"
-msgstr "等离子"
+msgstr "卡拉马"
 
 #: ../base/ufos/cities.ufo:459
 msgid "Calgary"
-msgstr ""
+msgstr "卡尔加里"
 
 #: ../base/ufos/cities.ufo:465
-#, fuzzy
 msgid "Campinas"
-msgstr "战       役"
+msgstr "坎皮纳斯"
 
 #: ../base/ufos/cities.ufo:471
-#, fuzzy
 msgid "Canberra"
-msgstr "视角"
+msgstr "坎培拉"
 
 #: ../base/ufos/cities.ufo:477
-#, fuzzy
 msgid "Cannes"
-msgstr "卡宴"
+msgstr "戛纳电影节"
 
 #: ../base/ufos/cities.ufo:483
 msgid "Cardiff"
-msgstr ""
+msgstr "加地夫"
 
 #: ../base/ufos/cities.ufo:489
-#, fuzzy
 msgid "Changchun"
-msgstr "机枪"
+msgstr "长春市区"
 
 #: ../base/ufos/cities.ufo:495
 msgid "Charlotte Amalie"
-msgstr ""
+msgstr "夏洛特阿马利亚"
 
 #: ../base/ufos/cities.ufo:501
-#, fuzzy
 msgid "Charlotte"
-msgstr "对话"
+msgstr "夏洛特"
 
 #: ../base/ufos/cities.ufo:507
-#, fuzzy
 msgid "Chengdu"
-msgstr "机枪"
+msgstr "成都市区"
 
 #: ../base/ufos/cities.ufo:513
 msgid "Chennai"
-msgstr ""
+msgstr "钦奈"
 
 #: ../base/ufos/cities.ufo:519
 msgid "Chiang Mai"
-msgstr ""
+msgstr "清迈"
 
 #: ../base/ufos/cities.ufo:525
 msgid "Chicago"
-msgstr ""
+msgstr "芝加哥"
 
 #: ../base/ufos/cities.ufo:531
 msgid "Chihuahua"
-msgstr ""
+msgstr "奇瓦瓦"
 
 #: ../base/ufos/cities.ufo:537
-#, fuzzy
 msgid "Chisinau"
-msgstr "机枪"
+msgstr "基希讷乌"
 
 #: ../base/ufos/cities.ufo:543
 msgid "Chittagong"
-msgstr ""
+msgstr "吉大港"
 
 #: ../base/ufos/cities.ufo:549
-#, fuzzy
 msgid "Chongjin"
-msgstr "硬币"
+msgstr "清津"
 
 #: ../base/ufos/cities.ufo:555
-#, fuzzy
 msgid "Chongqing"
-msgstr "硬币"
+msgstr "重庆直辖市区"
 
 #: ../base/ufos/cities.ufo:561
 msgid "Christchurch"
-msgstr ""
+msgstr "基督城"
 
 #: ../base/ufos/cities.ufo:567
 msgid "Chui"
@@ -1054,115 +1007,99 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:573
 msgid "Cincinnati"
-msgstr ""
+msgstr "辛辛那提"
 
 #: ../base/ufos/cities.ufo:579
 msgid "Ciudad del Este"
-msgstr ""
+msgstr "埃斯特城"
 
 #: ../base/ufos/cities.ufo:585
-#, fuzzy
 msgid "Cologne"
-msgstr "上校"
+msgstr "科隆"
 
 #: ../base/ufos/cities.ufo:591
 msgid "Columbus"
-msgstr ""
+msgstr "哥伦布"
 
 #: ../base/ufos/cities.ufo:597
-#, fuzzy
 msgid "Conakry"
-msgstr "副武器"
+msgstr "科纳克里"
 
 #: ../base/ufos/cities.ufo:603
-#, fuzzy
 msgid "Copenhagen"
-msgstr "稍好"
+msgstr "哥本哈根"
 
 #: ../base/ufos/cities.ufo:609
-#, fuzzy
 msgid "Cordoba"
-msgstr "中士"
+msgstr "科尔多瓦"
 
 #: ../base/ufos/cities.ufo:615
-#, fuzzy
 msgid "Cork"
-msgstr "工人"
+msgstr "科克"
 
 #: ../base/ufos/cities.ufo:621
-#, fuzzy
 msgid "Cotonou"
-msgstr "继    续"
+msgstr "科托努"
 
 #: ../base/ufos/cities.ufo:627
-#, fuzzy
 msgid "Cusco"
-msgstr "手动"
+msgstr "库斯科"
 
 #: ../base/ufos/cities.ufo:633
-#, fuzzy
 msgid "Daegu"
-msgstr "死的："
+msgstr "大邱"
 
 #: ../base/ufos/cities.ufo:639
-#, fuzzy
 msgid "Dalian"
-msgstr "外星人"
+msgstr "大连"
 
 #: ../base/ufos/cities.ufo:645
-#, fuzzy
 msgid "Dallas"
-msgstr "全部"
+msgstr "达拉斯"
 
 #: ../base/ufos/cities.ufo:651
 msgid "Damascus"
-msgstr ""
+msgstr "大马士革"
 
 #: ../base/ufos/cities.ufo:657
-#, fuzzy
 msgid "Dammam"
-msgstr "灰度系数："
+msgstr "达曼"
 
 #: ../base/ufos/cities.ufo:663
 msgid "Da Nang"
-msgstr ""
+msgstr "岘港"
 
 #: ../base/ufos/cities.ufo:669
 msgid "Dar es Salaam"
-msgstr ""
+msgstr "达累斯萨拉姆"
 
 #: ../base/ufos/cities.ufo:675
 msgid "Davao City"
-msgstr ""
+msgstr "达沃市"
 
 #: ../base/ufos/cities.ufo:681
-#, fuzzy
 msgid "Denpasar"
-msgstr "雷达室"
+msgstr "登巴萨"
 
 #: ../base/ufos/cities.ufo:687
-#, fuzzy
 msgid "Denver"
-msgstr "沙漠"
+msgstr "丹佛"
 
 #: ../base/ufos/cities.ufo:693
-#, fuzzy
 msgid "Detroit"
-msgstr "摧毁"
+msgstr "底特律"
 
 #: ../base/ufos/cities.ufo:699
-#, fuzzy
 msgid "Dhaka"
-msgstr "雷达室"
+msgstr "达卡"
 
 #: ../base/ufos/cities.ufo:705
 msgid "Dibrugarh"
-msgstr ""
+msgstr "迪布鲁格尔"
 
 #: ../base/ufos/cities.ufo:711
-#, fuzzy
 msgid "Dodoma"
-msgstr "多哈"
+msgstr "多多马"
 
 #: ../base/ufos/cities.ufo:717
 msgid "Doha"
@@ -1170,206 +1107,191 @@ msgstr "多哈"
 
 #: ../base/ufos/cities.ufo:723
 msgid "Dongguan"
-msgstr ""
+msgstr "东莞"
 
 #: ../base/ufos/cities.ufo:729
-#, fuzzy
 msgid "Douala"
-msgstr "多哈"
+msgstr "杜阿拉"
 
 #: ../base/ufos/cities.ufo:735
 msgid "Douglas"
-msgstr ""
+msgstr "道格拉斯"
 
 #: ../base/ufos/cities.ufo:741
 msgid "Dublin"
-msgstr ""
+msgstr "都柏林"
 
 #: ../base/ufos/cities.ufo:747
-#, fuzzy
 msgid "Durango"
-msgstr "龙级"
+msgstr "杜兰戈"
 
 #: ../base/ufos/cities.ufo:753
-#, fuzzy
 msgid "Durban"
-msgstr "都市"
+msgstr "德班"
 
 #: ../base/ufos/cities.ufo:759
-#, fuzzy
 msgid "Dushanbe"
-msgstr "釜山"
+msgstr "杜尚别"
 
 #: ../base/ufos/cities.ufo:765
 msgid "Dusseldorf"
-msgstr ""
+msgstr "杜塞尔多夫"
 
 #: ../base/ufos/cities.ufo:771
 msgid "Edinburgh"
-msgstr ""
+msgstr "爱丁堡"
 
 #: ../base/ufos/cities.ufo:777
 msgid "Edmonton"
-msgstr ""
+msgstr "埃德蒙顿"
 
 #: ../base/ufos/cities.ufo:783
 msgid "El Paso"
-msgstr ""
+msgstr "埃尔帕索"
 
 #: ../base/ufos/cities.ufo:789
 msgid "Enugu"
-msgstr ""
+msgstr "埃努古"
 
 #: ../base/ufos/cities.ufo:795
 msgid "Espoo"
-msgstr ""
+msgstr "埃斯波"
 
 #: ../base/ufos/cities.ufo:801
 msgid "Fairbanks"
-msgstr ""
+msgstr "费尔班克斯"
 
 #: ../base/ufos/cities.ufo:807
 msgid "Faisalabad"
-msgstr ""
+msgstr "费萨拉巴德"
 
 #: ../base/ufos/cities.ufo:813
 msgid "Frankfurt am Main"
-msgstr ""
+msgstr "美因河畔法兰克福"
 
 #: ../base/ufos/cities.ufo:819
 msgid "Fredericton"
-msgstr ""
+msgstr "弗雷德瑞克登"
 
 #: ../base/ufos/cities.ufo:825
-#, fuzzy
 msgid "Gangtok"
-msgstr "曼谷"
+msgstr "甘托克"
 
 #: ../base/ufos/cities.ufo:831
 msgid "Gaziantep"
-msgstr ""
+msgstr "加济安泰普"
 
 #: ../base/ufos/cities.ufo:837
 msgid "Geneva"
-msgstr ""
+msgstr "日内瓦"
 
 #: ../base/ufos/cities.ufo:843
 msgid "Georgetown"
-msgstr ""
+msgstr "乔治敦"
 
 #: ../base/ufos/cities.ufo:849
 msgid "Gibraltar"
-msgstr ""
+msgstr "直布罗陀"
 
 #: ../base/ufos/cities.ufo:855
 msgid "Glasgow"
-msgstr ""
+msgstr "格拉斯哥"
 
 #: ../base/ufos/cities.ufo:861
 msgid "Gold Coast"
-msgstr ""
+msgstr "黄金海岸"
 
 #: ../base/ufos/cities.ufo:867
 msgid "Gothenburg"
-msgstr ""
+msgstr "哥德堡"
 
 #: ../base/ufos/cities.ufo:873
-#, fuzzy
 msgid "Graz"
-msgstr "德语"
+msgstr "格拉茨"
 
 #: ../base/ufos/cities.ufo:879
-#, fuzzy
 msgid "Greenwich"
-msgstr "法语"
+msgstr "格林尼治"
 
 #: ../base/ufos/cities.ufo:885
 msgid "Guadalajara"
-msgstr ""
+msgstr "瓜达拉哈拉"
 
 #: ../base/ufos/cities.ufo:891
 msgid "Guangzhou"
-msgstr ""
+msgstr "广州"
 
 #: ../base/ufos/cities.ufo:897
 msgid "Guatemala City"
-msgstr ""
+msgstr "危地马拉城"
 
 #: ../base/ufos/cities.ufo:903
 msgid "Guwahati"
-msgstr ""
+msgstr "高哈蒂"
 
 #: ../base/ufos/cities.ufo:909
 msgid "Hai Phong"
-msgstr ""
+msgstr "海防市"
 
 #: ../base/ufos/cities.ufo:915
 msgid "Halifax"
-msgstr ""
+msgstr "哈利法克斯"
 
 #: ../base/ufos/cities.ufo:921
 msgid "Hamburg"
-msgstr ""
+msgstr "汉堡"
 
 #: ../base/ufos/cities.ufo:927
-#, fuzzy
 msgid "Handan"
-msgstr "困难"
+msgstr "邯郸市区"
 
 #: ../base/ufos/cities.ufo:933
-#, fuzzy
 msgid "Hanga Roa"
-msgstr "机用平台还未准备好"
+msgstr "安加罗阿"
 
 #: ../base/ufos/cities.ufo:939
 msgid "Hangzhou"
-msgstr ""
+msgstr "杭州"
 
 #: ../base/ufos/cities.ufo:945
-#, fuzzy
 msgid "Hanoi"
-msgstr "人类"
+msgstr "河内"
 
 #: ../base/ufos/cities.ufo:951
-#, fuzzy
 msgid "Hanover"
-msgstr "掠夺型UFO"
+msgstr "汉诺威"
 
 #: ../base/ufos/cities.ufo:957
-#, fuzzy
 msgid "Harare"
-msgstr "困难"
+msgstr "哈拉雷"
 
 #: ../base/ufos/cities.ufo:963
-#, fuzzy
 msgid "Harbin"
-msgstr "匈牙利语"
+msgstr "哈尔滨"
 
 #: ../base/ufos/cities.ufo:969
 msgid "Hat Yai"
-msgstr ""
+msgstr "合艾"
 
 #: ../base/ufos/cities.ufo:975
 msgid "Helsinki"
-msgstr ""
+msgstr "赫尔辛基"
 
 #: ../base/ufos/cities.ufo:981
-#, fuzzy
 msgid "Hobart"
-msgstr "市场"
+msgstr "荷伯特"
 
 #: ../base/ufos/cities.ufo:987
 msgid "Ho Chi Minh City"
-msgstr ""
+msgstr "胡志明市"
 
 #: ../base/ufos/cities.ufo:993
 msgid "Hong Kong"
-msgstr ""
+msgstr "香港"
 
 #: ../base/ufos/cities.ufo:999
-#, fuzzy
 msgid "Houston"
-msgstr "主机名："
+msgstr "休斯顿"
 
 #: ../base/ufos/cities.ufo:1005 ../base/ufos/cities.ufo:1011
 msgid "Hyderabad"
@@ -1377,631 +1299,567 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:1017
 msgid "Ibadan"
-msgstr ""
+msgstr "伊巴丹"
 
 #: ../base/ufos/cities.ufo:1023
 msgid "Ilheus"
-msgstr ""
+msgstr "伊列乌斯"
 
 #: ../base/ufos/cities.ufo:1029
 msgid "Iloilo City"
-msgstr ""
+msgstr "怡朗市"
 
 #: ../base/ufos/cities.ufo:1035
-#, fuzzy
 msgid "Incheon"
-msgstr "拦截"
+msgstr "仁川"
 
 #: ../base/ufos/cities.ufo:1041
 msgid "Indianapolis"
-msgstr ""
+msgstr "印第安纳波利斯"
 
 #: ../base/ufos/cities.ufo:1047
 msgid "Innsbruck"
-msgstr ""
+msgstr "因斯布鲁克"
 
 #: ../base/ufos/cities.ufo:1053
 msgid "Invercargill"
-msgstr ""
+msgstr "因弗卡吉尔"
 
 #: ../base/ufos/cities.ufo:1059
 msgid "Ipoh"
-msgstr ""
+msgstr "怡保"
 
 #: ../base/ufos/cities.ufo:1065
 msgid "Iqaluit"
-msgstr ""
+msgstr "伊魁特"
 
 #: ../base/ufos/cities.ufo:1071
 msgid "Iquitos"
-msgstr ""
+msgstr "伊基托斯"
 
 #: ../base/ufos/cities.ufo:1077
 msgid "Islamabad"
-msgstr ""
+msgstr "伊斯兰堡"
 
 #: ../base/ufos/cities.ufo:1083
-#, fuzzy
 msgid "Istanbul"
-msgstr "意大利"
+msgstr "伊斯坦布尔"
 
 #: ../base/ufos/cities.ufo:1089
 msgid "Izmir"
-msgstr ""
+msgstr "伊兹密尔"
 
 #: ../base/ufos/cities.ufo:1095
 msgid "Jacksonville"
-msgstr ""
+msgstr "杰克逊维尔"
 
 #: ../base/ufos/cities.ufo:1101
 msgid "Jaipur"
-msgstr ""
+msgstr "斋浦尔"
 
 #: ../base/ufos/cities.ufo:1107
 msgid "Jersey City"
-msgstr ""
+msgstr "新泽西州泽西城"
 
 #: ../base/ufos/cities.ufo:1113
 msgid "Jerusalem"
-msgstr ""
+msgstr "耶路撒冷"
 
 #: ../base/ufos/cities.ufo:1119
-#, fuzzy
 msgid "Jinan"
-msgstr "一月"
+msgstr "济南市区"
 
 #: ../base/ufos/cities.ufo:1125
 msgid "Johannesburg"
-msgstr ""
+msgstr "约翰内斯堡"
 
 #: ../base/ufos/cities.ufo:1131
 msgid "Johor Bahru"
-msgstr ""
+msgstr "柔佛巴鲁"
 
 #: ../base/ufos/cities.ufo:1137
-#, fuzzy
 msgid "Juneau"
-msgstr "六月"
+msgstr "朱诺"
 
 #: ../base/ufos/cities.ufo:1143
 msgid "Kabul"
-msgstr ""
+msgstr "喀布尔"
 
 #: ../base/ufos/cities.ufo:1149
 msgid "Kaesong"
-msgstr ""
+msgstr "开城"
 
 #: ../base/ufos/cities.ufo:1155
 msgid "Kaliningrad"
-msgstr ""
+msgstr "加里宁格勒"
 
 #: ../base/ufos/cities.ufo:1161
-#, fuzzy
 msgid "Kandahar"
-msgstr "雷达室"
+msgstr "坎大哈"
 
 #: ../base/ufos/cities.ufo:1167
-#, fuzzy
 msgid "Kandy"
-msgstr "准备"
+msgstr "康提"
 
 #: ../base/ufos/cities.ufo:1173
-#, fuzzy
 msgid "Kano"
-msgstr "韩语"
+msgstr "卡诺"
 
 #: ../base/ufos/cities.ufo:1179
 msgid "Kanpur"
-msgstr ""
+msgstr "坎普尔"
 
 #: ../base/ufos/cities.ufo:1185
 msgid "Kansas City"
-msgstr ""
+msgstr "堪萨斯城"
 
 #: ../base/ufos/cities.ufo:1191
 msgid "Kaohsiung"
-msgstr ""
+msgstr "高雄"
 
 #: ../base/ufos/cities.ufo:1197
 msgid "Karachi"
-msgstr ""
+msgstr "卡拉奇"
 
 #: ../base/ufos/cities.ufo:1203
 msgid "Kathmandu"
-msgstr ""
+msgstr "加德满都"
 
 #: ../base/ufos/cities.ufo:1209
 msgid "Kawasaki"
-msgstr ""
+msgstr "川崎"
 
 #: ../base/ufos/cities.ufo:1215
 msgid "Kharkiv"
-msgstr ""
+msgstr "哈尔科夫"
 
 #: ../base/ufos/cities.ufo:1221
 msgid "Khartoum"
-msgstr ""
+msgstr "喀士穆"
 
 #: ../base/ufos/cities.ufo:1227
 msgid "Kiev"
-msgstr ""
+msgstr "基辅"
 
 #: ../base/ufos/cities.ufo:1233
 msgid "Kigali"
-msgstr ""
+msgstr "基加利"
 
 #: ../base/ufos/cities.ufo:1239
-#, fuzzy
 msgid "Kingston"
-msgstr "威灵顿"
+msgstr "京斯敦"
 
 #: ../base/ufos/cities.ufo:1245
 msgid "Kinshasa"
-msgstr ""
+msgstr "金沙萨"
 
 #: ../base/ufos/cities.ufo:1251
-#, fuzzy
 msgid "Kobe"
-msgstr "韩语"
+msgstr "神户"
 
 #: ../base/ufos/cities.ufo:1257
 msgid "Kolkata"
-msgstr ""
+msgstr "加尔各答"
 
 #: ../base/ufos/cities.ufo:1263
 msgid "Konya"
-msgstr ""
+msgstr "科尼亚"
 
 #: ../base/ufos/cities.ufo:1269
 msgid "Koulikoro"
-msgstr ""
+msgstr "库利科罗"
 
 #: ../base/ufos/cities.ufo:1275
-#, fuzzy
 msgid "Krakow"
-msgstr "Kracken"
+msgstr "克拉科夫"
 
 #: ../base/ufos/cities.ufo:1281
 msgid "Kuala Lumpur"
-msgstr ""
+msgstr "吉隆坡"
 
 #: ../base/ufos/cities.ufo:1287
-#, fuzzy
 msgid "Kunming"
-msgstr "资金"
+msgstr "昆明市"
 
 #: ../base/ufos/cities.ufo:1293
 msgid "Kuwait City"
-msgstr ""
+msgstr "科威特省"
 
 #: ../base/ufos/cities.ufo:1299
 msgid "Kyoto"
-msgstr ""
+msgstr "京都"
 
 #: ../base/ufos/cities.ufo:1305
-#, fuzzy
 msgid "Lagos"
-msgstr "大型"
+msgstr "拉各斯"
 
 #: ../base/ufos/cities.ufo:1311
-#, fuzzy
 msgid "Lahore"
-msgstr "大型"
+msgstr "拉合尔"
 
 #: ../base/ufos/cities.ufo:1317
-#, fuzzy
 msgid "Lanzhou"
-msgstr "LAN 局域网络"
+msgstr "兰州"
 
 #: ../base/ufos/cities.ufo:1323
 msgid "La Paz"
-msgstr ""
+msgstr "拉巴斯"
 
 #: ../base/ufos/cities.ufo:1329
 msgid "Las Vegas"
-msgstr ""
+msgstr "拉斯维加斯"
 
 #: ../base/ufos/cities.ufo:1335
-#, fuzzy
 msgid "Leeds"
-msgstr "Legend"
+msgstr "利兹"
 
 #: ../base/ufos/cities.ufo:1341
 msgid "Leipzig"
-msgstr ""
+msgstr "莱比锡"
 
 #: ../base/ufos/cities.ufo:1347
-#, fuzzy
 msgid "Lhasa"
-msgstr "激光"
+msgstr "拉萨市"
 
 #: ../base/ufos/cities.ufo:1353
-#, fuzzy
 msgid "Lilongwe"
-msgstr "里尔"
+msgstr "利隆圭"
 
 #: ../base/ufos/cities.ufo:1359
 msgid "Linz"
-msgstr ""
+msgstr "林茨"
 
 #: ../base/ufos/cities.ufo:1365
-#, fuzzy
 msgid "Livingstone"
-msgstr "居住区"
+msgstr "利文斯敦"
 
 #: ../base/ufos/cities.ufo:1371
 msgid "Ljubljana"
-msgstr ""
+msgstr "卢布尔雅那"
 
 #: ../base/ufos/cities.ufo:1377
-#, fuzzy
 msgid "Lobamba"
-msgstr "大厅"
+msgstr "洛班巴"
 
 #: ../base/ufos/cities.ufo:1383
-#, fuzzy
 msgid "Lome"
-msgstr "PHALANX本部"
+msgstr "洛美"
 
 #: ../base/ufos/cities.ufo:1389
-#, fuzzy
 msgid "London"
-msgstr "1 vs 1 vs 1"
+msgstr "伦敦"
 
 #: ../base/ufos/cities.ufo:1395
 msgid "Longyearbyen"
-msgstr ""
+msgstr "朗伊尔城"
 
 #: ../base/ufos/cities.ufo:1401
 msgid "Los Angeles"
-msgstr ""
+msgstr "洛杉矶"
 
 #: ../base/ufos/cities.ufo:1407
-#, fuzzy
 msgid "Louisville"
-msgstr "里尔"
+msgstr "路易斯维尔"
 
 #: ../base/ufos/cities.ufo:1413
 msgid "Lubumbashi"
-msgstr ""
+msgstr "卢本巴希"
 
 #: ../base/ufos/cities.ufo:1419
-#, fuzzy
 msgid "Lucknow"
-msgstr "低"
+msgstr "勒克瑙"
 
 #: ../base/ufos/cities.ufo:1425
 msgid "Ludhiana"
-msgstr ""
+msgstr "鲁得希阿那"
 
 #: ../base/ufos/cities.ufo:1431
 msgid "Lusaka"
-msgstr ""
+msgstr "卢萨卡"
 
 #: ../base/ufos/cities.ufo:1437
 msgid "Luxembourg"
-msgstr ""
+msgstr "卢森堡"
 
 #: ../base/ufos/cities.ufo:1443
 msgid "Luxor"
-msgstr ""
+msgstr "卢克索"
 
 #: ../base/ufos/cities.ufo:1449
 msgid "Lviv"
-msgstr ""
+msgstr "利沃夫"
 
 #: ../base/ufos/cities.ufo:1455
 msgid "Lyon"
-msgstr ""
+msgstr "里昂"
 
 #: ../base/ufos/cities.ufo:1461
-#, fuzzy
 msgid "Macapa"
-msgstr "地图"
+msgstr "马卡帕"
 
 #: ../base/ufos/cities.ufo:1467
 msgid "Macau"
-msgstr ""
+msgstr "澳门"
 
 #: ../base/ufos/cities.ufo:1473
-#, fuzzy
 msgid "Maceio"
-msgstr "冲锋手枪"
+msgstr "马塞约"
 
 #: ../base/ufos/cities.ufo:1479
-#, fuzzy
 msgid "Madrid"
-msgstr "生气"
+msgstr "马德里"
 
 #: ../base/ufos/cities.ufo:1485
-#, fuzzy
 msgid "Magadan"
-msgstr "生气"
+msgstr "马加丹"
 
 #: ../base/ufos/cities.ufo:1491
 msgid "Makati City"
-msgstr ""
+msgstr "马卡蒂市"
 
 #: ../base/ufos/cities.ufo:1497
 msgid "Malacca Town"
-msgstr ""
+msgstr "马六甲市"
 
 #: ../base/ufos/cities.ufo:1503
-#, fuzzy
 msgid "Malaga"
-msgstr "管理"
+msgstr "马拉加市"
 
 #: ../base/ufos/cities.ufo:1509
-#, fuzzy
 msgid "Malang"
-msgstr "管理"
+msgstr "玛琅"
 
 #: ../base/ufos/cities.ufo:1515
-#, fuzzy
 msgid "Malmo"
-msgstr "少校"
+msgstr "玛尔摩"
 
 #: ../base/ufos/cities.ufo:1521
-#, fuzzy
 msgid "Managua"
-msgstr "管理"
+msgstr "马那瓜"
 
 #: ../base/ufos/cities.ufo:1527
-#, fuzzy
 msgid "Manaus"
-msgstr "管理"
+msgstr "马瑙斯"
 
 #: ../base/ufos/cities.ufo:1533
-#, fuzzy
 msgid "Manchester"
-msgstr "掠夺型UFO"
+msgstr "曼彻斯特"
 
 #: ../base/ufos/cities.ufo:1539
-#, fuzzy
 msgid "Manila"
-msgstr "管理"
+msgstr "马尼拉"
 
 #: ../base/ufos/cities.ufo:1545
 msgid "Manzini"
-msgstr ""
+msgstr "曼齐尼"
 
 #: ../base/ufos/cities.ufo:1551
-#, fuzzy
 msgid "Maputo"
-msgstr "大尉"
+msgstr "马普托"
 
 #: ../base/ufos/cities.ufo:1557
 msgid "Maracaibo"
-msgstr ""
+msgstr "马拉开波"
 
 #: ../base/ufos/cities.ufo:1563
 msgid "Marrakech"
-msgstr ""
+msgstr "马拉喀什"
 
 #: ../base/ufos/cities.ufo:1569
-#, fuzzy
 msgid "Marseille"
-msgstr "信    箱"
+msgstr "马赛"
 
 #: ../base/ufos/cities.ufo:1575
-#, fuzzy
 msgid "Maseru"
-msgstr "激光"
+msgstr "马塞卢"
 
 #: ../base/ufos/cities.ufo:1581
-#, fuzzy
 msgid "Mashhad"
-msgstr "生气"
+msgstr "马什哈德"
 
 #: ../base/ufos/cities.ufo:1587
-#, fuzzy
 msgid "Mbabane"
-msgstr "管理"
+msgstr "姆巴巴内"
 
 #: ../base/ufos/cities.ufo:1593
-#, fuzzy
 msgid "Medan"
-msgstr "Mattn"
+msgstr "棉兰"
 
 #: ../base/ufos/cities.ufo:1599
-#, fuzzy
 msgid "Medina"
-msgstr "医师"
+msgstr "麦地那"
 
 #: ../base/ufos/cities.ufo:1605
-#, fuzzy
 msgid "Memphis"
-msgstr "医师"
+msgstr "孟菲斯"
 
 #: ../base/ufos/cities.ufo:1611
 msgid "Mendoza"
-msgstr ""
+msgstr "门多萨"
 
 #: ../base/ufos/cities.ufo:1617
-#, fuzzy
 msgid "Merida"
-msgstr "格鲁吉亚"
+msgstr "梅里达"
 
 #: ../base/ufos/cities.ufo:1623
-#, fuzzy
 msgid "Mexicali"
-msgstr "医师"
+msgstr "墨西卡利"
 
 #: ../base/ufos/cities.ufo:1629
 msgid "Mexico City"
-msgstr ""
+msgstr "墨西哥城"
 
 #: ../base/ufos/cities.ufo:1635
 msgid "Miami"
-msgstr ""
+msgstr "迈阿密"
 
 #: ../base/ufos/cities.ufo:1641
-#, fuzzy
 msgid "Milan"
-msgstr "步兵"
+msgstr "米兰"
 
 #: ../base/ufos/cities.ufo:1647
 msgid "Minneapolis"
-msgstr ""
+msgstr "明尼阿波利斯"
 
 #: ../base/ufos/cities.ufo:1653
-#, fuzzy
 msgid "Minsk"
-msgstr "特殊"
+msgstr "明斯克"
 
 #: ../base/ufos/cities.ufo:1659
 msgid "Monaco"
-msgstr ""
+msgstr "摩纳哥"
 
 #: ../base/ufos/cities.ufo:1665
 msgid "Monterrey"
-msgstr ""
+msgstr "蒙特雷"
 
 #: ../base/ufos/cities.ufo:1671
 msgid "Montevideo"
-msgstr ""
+msgstr "蒙得维的亚"
 
 #: ../base/ufos/cities.ufo:1677
-#, fuzzy
 msgid "Montreal"
-msgstr "士气  %i"
+msgstr "蒙特利尔"
 
 #: ../base/ufos/cities.ufo:1683
-#, fuzzy
 msgid "Moscow"
-msgstr "特殊"
+msgstr "莫斯科"
 
 #: ../base/ufos/cities.ufo:1689
 msgid "Multan"
-msgstr ""
+msgstr "木尔坦"
 
 #: ../base/ufos/cities.ufo:1695
-#, fuzzy
 msgid "Munich"
-msgstr "音乐"
+msgstr "慕尼黑"
 
 #: ../base/ufos/cities.ufo:1701
-#, fuzzy
 msgid "Murmansk"
-msgstr "人类"
+msgstr "摩尔曼斯克"
 
 #: ../base/ufos/cities.ufo:1707
 msgid "Nagoya"
-msgstr ""
+msgstr "名古屋"
 
 #: ../base/ufos/cities.ufo:1713
 msgid "Nagpur"
-msgstr ""
+msgstr "那格浦尔"
 
 #: ../base/ufos/cities.ufo:1719
-#, fuzzy
 msgid "Nairobi"
-msgstr "交叉路口"
+msgstr "内罗毕"
 
 #: ../base/ufos/cities.ufo:1725
 msgid "Nakhon Ratchasima"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1731
-#, fuzzy
 msgid "Namangan"
-msgstr "战役"
+msgstr "纳曼干"
 
 #: ../base/ufos/cities.ufo:1737
-#, fuzzy
 msgid "Nanjing"
-msgstr "国际组织"
+msgstr "南京市"
 
 #: ../base/ufos/cities.ufo:1743
-#, fuzzy
 msgid "Nanning"
-msgstr "国际组织"
+msgstr "南宁市"
 
 #: ../base/ufos/cities.ufo:1749
-#, fuzzy
 msgid "Nantes"
-msgstr "国际组织"
+msgstr "南特"
 
 #: ../base/ufos/cities.ufo:1755
-#, fuzzy
 msgid "Naples"
-msgstr "名字"
+msgstr "那不勒斯"
 
 #: ../base/ufos/cities.ufo:1761
 msgid "Nashville"
-msgstr ""
+msgstr "纳什维尔"
 
 #: ../base/ufos/cities.ufo:1767
 msgid "Naypyidaw"
-msgstr ""
+msgstr "内比都"
 
 #: ../base/ufos/cities.ufo:1773
-#, fuzzy
 msgid "N'Djamena"
-msgstr "名字"
+msgstr "恩贾梅纳"
 
 #: ../base/ufos/cities.ufo:1779
 msgid "Ndola"
-msgstr ""
+msgstr "恩多拉"
 
 #: ../base/ufos/cities.ufo:1785
-#, fuzzy
 msgid "Newcastle"
-msgstr "新基地"
+msgstr "纽卡斯尔"
 
 #: ../base/ufos/cities.ufo:1791
 msgid "New Delhi"
-msgstr ""
+msgstr "新德里"
 
 #: ../base/ufos/cities.ufo:1797
-#, fuzzy
 msgid "Niamey"
-msgstr "名字"
+msgstr "尼亚美"
 
 #: ../base/ufos/cities.ufo:1803
-#, fuzzy
 msgid "Nice"
-msgstr "注    释"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1809
 msgid "Nizhny Novgorod"
-msgstr ""
+msgstr "下诺夫哥罗德"
 
 #: ../base/ufos/cities.ufo:1815
-#, fuzzy
 msgid "Norilsk"
-msgstr "教学指导"
+msgstr "诺里尔斯克"
 
 #: ../base/ufos/cities.ufo:1821
-#, fuzzy
 msgid "Noumea"
-msgstr "一般"
+msgstr "努美阿"
 
 #: ../base/ufos/cities.ufo:1827
 msgid "Novosibirsk"
-msgstr ""
+msgstr "新西伯利亚"
 
 #: ../base/ufos/cities.ufo:1833
 msgid "Odessa"
-msgstr ""
+msgstr "敖德萨"
 
 #: ../base/ufos/cities.ufo:1839
 msgid "Oklahoma City"
-msgstr ""
+msgstr "俄克拉荷马城"
 
 #: ../base/ufos/cities.ufo:1845
-#, fuzzy
 msgid "Omdurman"
-msgstr "人类"
+msgstr "恩图曼"
 
 #: ../base/ufos/cities.ufo:1851
 msgid "Omsk"
-msgstr ""
+msgstr "鄂木斯克"
 
 #: ../base/ufos/cities.ufo:1857
-#, fuzzy
 msgid "Osaka"
-msgstr "雷达室"
+msgstr "大阪"
 
 #: ../base/ufos/cities.ufo:1863
 msgid "Oslo"
@@ -2009,60 +1867,55 @@ msgstr "奥斯陆"
 
 #: ../base/ufos/cities.ufo:1869
 msgid "Ottawa"
-msgstr ""
+msgstr "渥太华"
 
 #: ../base/ufos/cities.ufo:1875
 msgid "Ouagadougou"
-msgstr ""
+msgstr "瓦加杜古"
 
 #: ../base/ufos/cities.ufo:1881
-#, fuzzy
 msgid "Palembang"
-msgstr "游戏进行中"
+msgstr "巨港"
 
 #: ../base/ufos/cities.ufo:1887
 msgid "Panama City"
-msgstr ""
+msgstr "巴拿马市"
 
 #: ../base/ufos/cities.ufo:1893
-#, fuzzy
 msgid "Paris"
-msgstr "暂停"
+msgstr "巴黎"
 
 #: ../base/ufos/cities.ufo:1899
-#, fuzzy
 msgid "Patna"
-msgstr "Mattn"
+msgstr "巴特那"
 
 #: ../base/ufos/cities.ufo:1905
 msgid "Pekanbaru"
-msgstr ""
+msgstr "北干巴鲁"
 
 #: ../base/ufos/cities.ufo:1911
-#, fuzzy
 msgid "Pelotas"
-msgstr "飞行员"
+msgstr "佩洛塔斯"
 
 #: ../base/ufos/cities.ufo:1917
-#, fuzzy
 msgid "Perm"
-msgstr "德语"
+msgstr "彼尔姆"
 
 #: ../base/ufos/cities.ufo:1923
 msgid "Peshawar"
-msgstr ""
+msgstr "白沙瓦"
 
 #: ../base/ufos/cities.ufo:1929
 msgid "Petropavlovsk-Kamchatsky"
-msgstr ""
+msgstr "堪察加彼得罗巴甫洛夫斯克"
 
 #: ../base/ufos/cities.ufo:1935
 msgid "Philadelphia"
-msgstr ""
+msgstr "费城"
 
 #: ../base/ufos/cities.ufo:1941
 msgid "Phnom Penh"
-msgstr ""
+msgstr "金边"
 
 #: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1644
 msgid "Phoenix"
@@ -2070,164 +1923,147 @@ msgstr "凤凰"
 
 #: ../base/ufos/cities.ufo:1953
 msgid "Pittsburgh"
-msgstr ""
+msgstr "匹兹堡"
 
 #: ../base/ufos/cities.ufo:1959
-#, fuzzy
 msgid "Podgorica"
-msgstr "无能"
+msgstr "波德戈里察"
 
 #: ../base/ufos/cities.ufo:1965
-#, fuzzy
 msgid "Portland"
-msgstr "动力室"
+msgstr "波特兰"
 
 #: ../base/ufos/cities.ufo:1971
 msgid "Port Moresby"
-msgstr ""
+msgstr "莫尔兹比港"
 
 #: ../base/ufos/cities.ufo:1977
-#, fuzzy
 msgid "Prague"
-msgstr "暂停"
+msgstr "布拉格"
 
 #: ../base/ufos/cities.ufo:1983
-#, fuzzy
 msgid "Pretoria"
-msgstr "格鲁吉亚"
+msgstr "比勒陀利亚"
 
 #: ../base/ufos/cities.ufo:1989
-#, fuzzy
 msgid "Pristina"
-msgstr "暂停"
+msgstr "普里什蒂纳"
 
 #: ../base/ufos/cities.ufo:1995
-#, fuzzy
 msgid "Providence"
-msgstr "价格："
+msgstr "普罗维登斯"
 
 #: ../base/ufos/cities.ufo:2001
 msgid "Puebla"
-msgstr ""
+msgstr "普埃布拉"
 
 #: ../base/ufos/cities.ufo:2007
 msgid "Puerto Williams"
-msgstr ""
+msgstr "威廉斯港"
 
 #: ../base/ufos/cities.ufo:2013
-#, fuzzy
 msgid "Pune"
-msgstr "暂停"
+msgstr "浦那"
 
 #: ../base/ufos/cities.ufo:2019
 msgid "Punta Arenas"
-msgstr ""
+msgstr "蓬塔阿雷纳斯"
 
 #: ../base/ufos/cities.ufo:2025
 msgid "Pyongyang"
-msgstr ""
+msgstr "平壤"
 
 #: ../base/ufos/cities.ufo:2031
 msgid "Qingdao"
-msgstr ""
+msgstr "青岛市"
 
 #: ../base/ufos/cities.ufo:2037
 msgid "Quebec City"
-msgstr ""
+msgstr "魁北克市"
 
 #: ../base/ufos/cities.ufo:2043
 msgid "Quetzaltenango"
-msgstr ""
+msgstr "南戈"
 
 #: ../base/ufos/cities.ufo:2049
 msgid "Quezon City"
-msgstr ""
+msgstr "奎松市"
 
 #: ../base/ufos/cities.ufo:2055
-#, fuzzy
 msgid "Quito"
-msgstr "自动"
+msgstr "基多"
 
 #: ../base/ufos/cities.ufo:2061
-#, fuzzy
 msgid "Raleigh"
-msgstr "快速喷射"
+msgstr "罗利"
 
 #: ../base/ufos/cities.ufo:2067
 msgid "Rawalpindi"
-msgstr ""
+msgstr "拉瓦尔品第"
 
 #: ../base/ufos/cities.ufo:2073
-#, fuzzy
 msgid "Recife"
-msgstr "接收"
+msgstr "累西腓"
 
 #: ../base/ufos/cities.ufo:2079
-#, fuzzy
 msgid "Regina"
-msgstr "急救包"
+msgstr "瑞吉那"
 
 #: ../base/ufos/cities.ufo:2085
 msgid "Rio de Janeiro"
-msgstr ""
+msgstr "里约热内卢"
 
 #: ../base/ufos/cities.ufo:2091
 msgid "Riverside"
-msgstr ""
+msgstr "河滨"
 
 #: ../base/ufos/cities.ufo:2097
 msgid "Rockhampton"
-msgstr ""
+msgstr "罗克汉普顿"
 
 #: ../base/ufos/cities.ufo:2103
-#, fuzzy
 msgid "Rome"
-msgstr "PHALANX本部"
+msgstr "罗马"
 
 #: ../base/ufos/cities.ufo:2109
 msgid "Rosario"
-msgstr ""
+msgstr "罗萨里奥"
 
 #: ../base/ufos/cities.ufo:2115
-#, fuzzy
 msgid "Sabha"
-msgstr "刺杀"
+msgstr "塞卜哈"
 
 #: ../base/ufos/cities.ufo:2121
-#, fuzzy
 msgid "Sacramento"
-msgstr "伊斯兰级"
+msgstr "萨克拉门托"
 
 #: ../base/ufos/cities.ufo:2127
 msgid "Saint John"
-msgstr ""
+msgstr "圣约翰"
 
 #: ../base/ufos/cities.ufo:2133
-#, fuzzy
 msgid "Saint Petersburg"
-msgstr "Sitters"
+msgstr "圣彼得堡"
 
 #: ../base/ufos/cities.ufo:2139
 msgid "Salzburg"
-msgstr ""
+msgstr "萨尔茨堡"
 
 #: ../base/ufos/cities.ufo:2145
-#, fuzzy
 msgid "Samara"
-msgstr "视角"
+msgstr "萨马拉"
 
 #: ../base/ufos/cities.ufo:2151
-#, fuzzy
 msgid "Sana'a"
-msgstr "探索"
+msgstr "萨那"
 
 #: ../base/ufos/cities.ufo:2157
 msgid "San Antonio"
-msgstr ""
+msgstr "圣安东尼奥"
 
 #: ../base/ufos/cities.ufo:2163
 msgid "San Carlos de Bariloche"
-msgstr ""
+msgstr "圣卡洛斯德巴里洛切"
 
 #: ../base/ufos/cities.ufo:2169
 msgid "San Francisco"
@@ -2235,167 +2071,155 @@ msgstr "旧金山"
 
 #: ../base/ufos/cities.ufo:2175
 msgid "San Jose"
-msgstr ""
+msgstr "圣何塞"
 
 #: ../base/ufos/cities.ufo:2181
-#, fuzzy
 msgid "San Marino"
-msgstr "旧金山"
+msgstr "圣马力诺"
 
 #: ../base/ufos/cities.ufo:2187
 msgid "San Salvador"
-msgstr ""
+msgstr "圣萨尔瓦多"
 
 #: ../base/ufos/cities.ufo:2193
 msgid "Santa Cruz de la Sierra"
-msgstr ""
+msgstr "圣克鲁斯塞拉利昂"
 
 #: ../base/ufos/cities.ufo:2199
 msgid "Santiago"
-msgstr ""
+msgstr "圣地亚哥"
 
 #: ../base/ufos/cities.ufo:2205
 msgid "Santiago de Cuba"
-msgstr ""
+msgstr "古巴圣地亚哥"
 
 #: ../base/ufos/cities.ufo:2211
 msgid "Santo Domingo"
-msgstr ""
+msgstr "圣多明各"
 
 #: ../base/ufos/cities.ufo:2217
 msgid "Sao Jose dos Campos"
-msgstr ""
+msgstr "圣若泽多斯坎波斯"
 
 #: ../base/ufos/cities.ufo:2223
 msgid "Sao Paulo"
-msgstr ""
+msgstr "圣保罗"
 
 #: ../base/ufos/cities.ufo:2229
-#, fuzzy
 msgid "Sarajevo"
-msgstr "伊斯兰级"
+msgstr "萨拉热窝"
 
 #: ../base/ufos/cities.ufo:2235
-#, fuzzy
 msgid "Saskatoon"
-msgstr "燃气站"
+msgstr "沙士卡通市"
 
 #: ../base/ufos/cities.ufo:2241
-#, fuzzy
 msgid "Seattle"
-msgstr "存    档"
+msgstr "西雅图"
 
 #: ../base/ufos/cities.ufo:2247
-#, fuzzy
 msgid "Seoul"
-msgstr "出售"
+msgstr "汉城"
 
 #: ../base/ufos/cities.ufo:2253
-#, fuzzy
 msgid "Seville"
-msgstr "出售"
+msgstr "塞维利亚"
 
 #: ../base/ufos/cities.ufo:2259
 msgid "Shanghai"
-msgstr ""
+msgstr "上海"
 
 #: ../base/ufos/cities.ufo:2265
 msgid "Shenzhen"
-msgstr ""
+msgstr "深圳"
 
 #: ../base/ufos/cities.ufo:2271
 msgid "Shenyang"
-msgstr ""
+msgstr "沈阳"
 
 #: ../base/ufos/cities.ufo:2277
 msgid "Shijiazhuang"
-msgstr ""
+msgstr "石家庄"
 
 #: ../base/ufos/cities.ufo:2283
 msgid "Shillong"
-msgstr ""
+msgstr "西隆"
 
 #: ../base/ufos/cities.ufo:2289
 msgid "Siem Reap"
-msgstr ""
+msgstr "暹粒"
 
 #: ../base/ufos/cities.ufo:2295
 msgid "Simferopol"
-msgstr ""
+msgstr "辛菲罗波尔"
 
 #: ../base/ufos/cities.ufo:2301
 msgid "Singapore"
-msgstr ""
+msgstr "新加坡"
 
 #: ../base/ufos/cities.ufo:2307
-#, fuzzy
 msgid "Sitka"
-msgstr "刺杀"
+msgstr "锡特卡"
 
 #: ../base/ufos/cities.ufo:2313
 msgid "Skopje"
-msgstr ""
+msgstr "斯科普里"
 
 #: ../base/ufos/cities.ufo:2319
 msgid "Sofia"
-msgstr ""
+msgstr "索菲亚"
 
 #: ../base/ufos/cities.ufo:2325
 msgid "Split"
-msgstr ""
+msgstr "裂开"
 
 #: ../base/ufos/cities.ufo:2331
-#, fuzzy
 msgid "Srinagar"
-msgstr "魟级"
+msgstr "斯利那加"
 
 #: ../base/ufos/cities.ufo:2337
-#, fuzzy
 msgid "Stanley"
-msgstr "意大利"
+msgstr "赤柱"
 
 #: ../base/ufos/cities.ufo:2343
 msgid "Stepanakert"
-msgstr ""
+msgstr "斯捷潘"
 
 #: ../base/ufos/cities.ufo:2349
 msgid "St. Louis"
-msgstr ""
+msgstr "圣路易斯"
 
 #: ../base/ufos/cities.ufo:2355
 msgid "Stockholm"
-msgstr ""
+msgstr "斯德哥尔摩"
 
 #: ../base/ufos/cities.ufo:2361
-#, fuzzy
 msgid "Strasbourg"
-msgstr "追星者"
+msgstr "斯特拉斯堡"
 
 #: ../base/ufos/cities.ufo:2367
 msgid "Stuttgart"
-msgstr ""
+msgstr "斯图加特"
 
 #: ../base/ufos/cities.ufo:2373
-#, fuzzy
 msgid "Sucre"
-msgstr "存    档"
+msgstr "苏克雷"
 
 #: ../base/ufos/cities.ufo:2379
 msgid "Suez"
-msgstr ""
+msgstr "苏伊士"
 
 #: ../base/ufos/cities.ufo:2385
 msgid "Sukhumi"
-msgstr ""
+msgstr "苏呼米"
 
 #: ../base/ufos/cities.ufo:2391
 msgid "Surabaya"
-msgstr ""
+msgstr "苏腊巴亚"
 
 #: ../base/ufos/cities.ufo:2397
-#, fuzzy
 msgid "Surat"
-msgstr "声效频率："
+msgstr "苏拉特"
 
 #: ../base/ufos/cities.ufo:2403
 msgid "Surat Thani"
@@ -2403,259 +2227,231 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2409
 msgid "Suva"
-msgstr ""
+msgstr "苏瓦"
 
 #: ../base/ufos/cities.ufo:2415
 msgid "Sydney"
 msgstr "悉尼"
 
 #: ../base/ufos/cities.ufo:2421
-#, fuzzy
 msgid "Tabriz"
-msgstr "泰国语"
+msgstr "大不里士"
 
 #: ../base/ufos/cities.ufo:2427
-#, fuzzy
 msgid "Taiyuan"
-msgstr "Taman"
+msgstr "太原市"
 
 #: ../base/ufos/cities.ufo:2433
-#, fuzzy
 msgid "Tamale"
-msgstr "Taman"
+msgstr "塔马利"
 
 #: ../base/ufos/cities.ufo:2439
-#, fuzzy
 msgid "Tampa"
-msgstr "Taman"
+msgstr "坦帕"
 
 #: ../base/ufos/cities.ufo:2445
-#, fuzzy
 msgid "Tampere"
-msgstr "视角"
+msgstr "坦佩雷"
 
 #: ../base/ufos/cities.ufo:2451
-#, fuzzy
 msgid "Tartu"
-msgstr "市场"
+msgstr "塔尔图"
 
 #: ../base/ufos/cities.ufo:2457
 msgid "Tashkent"
-msgstr ""
+msgstr "塔什干"
 
 #: ../base/ufos/cities.ufo:2463
 msgid "Tbilisi"
-msgstr ""
+msgstr "第比利斯"
 
 #: ../base/ufos/cities.ufo:2469
 msgid "Tegucigalpa"
-msgstr ""
+msgstr "特古西加尔巴"
 
 #: ../base/ufos/cities.ufo:2475
-#, fuzzy
 msgid "Tehran"
-msgstr "不耐烦"
+msgstr "德黑兰"
 
 #: ../base/ufos/cities.ufo:2481
 msgid "Thessaloniki"
-msgstr ""
+msgstr "塞萨洛尼基"
 
 #: ../base/ufos/cities.ufo:2487
 msgid "Thimphu"
-msgstr ""
+msgstr "廷布"
 
 #: ../base/ufos/cities.ufo:2493
 msgid "Tianjin"
-msgstr ""
+msgstr "天津"
 
 #: ../base/ufos/cities.ufo:2499
 msgid "Tijuana"
-msgstr ""
+msgstr "蒂华纳"
 
 #: ../base/ufos/cities.ufo:2505
-#, fuzzy
 msgid "Tirana"
-msgstr "不耐烦"
+msgstr "地拉那"
 
 #: ../base/ufos/cities.ufo:2511
-#, fuzzy
 msgid "Tiraspol"
-msgstr "运输"
+msgstr "蒂拉斯波尔"
 
 #: ../base/ufos/cities.ufo:2517
 msgid "Tokyo"
-msgstr ""
+msgstr "东京"
 
 #: ../base/ufos/cities.ufo:2523
-#, fuzzy
 msgid "Toronto"
-msgstr "Tron"
+msgstr "多伦多"
 
 #: ../base/ufos/cities.ufo:2529
-#, fuzzy
 msgid "Toulouse"
-msgstr "近距离"
+msgstr "图卢兹"
 
 #: ../base/ufos/cities.ufo:2535
 msgid "Tskhinvali"
-msgstr ""
+msgstr "茨欣瓦利"
 
 #: ../base/ufos/cities.ufo:2541
-#, fuzzy
 msgid "Tucson"
-msgstr "Tron"
+msgstr "图森"
 
 #: ../base/ufos/cities.ufo:2547
-#, fuzzy
 msgid "Tunis"
-msgstr "坦克"
+msgstr "突尼斯"
 
 #: ../base/ufos/cities.ufo:2553
-#, fuzzy
 msgid "Turin"
-msgstr "Tron"
+msgstr "杜林市"
 
 #: ../base/ufos/cities.ufo:2559
 msgid "Udon Thani"
-msgstr ""
+msgstr "乌隆他尼"
 
 #: ../base/ufos/cities.ufo:2565
 msgid "Ushuaia"
-msgstr ""
+msgstr "乌斯怀亚"
 
 #: ../base/ufos/cities.ufo:2571
 msgid "Vaduz"
-msgstr ""
+msgstr "瓦杜兹"
 
 #: ../base/ufos/cities.ufo:2577
-#, fuzzy
 msgid "Valencia"
-msgstr "外星人"
+msgstr "巴伦西亚"
 
 #: ../base/ufos/cities.ufo:2583
-#, fuzzy
 msgid "Vancouver"
-msgstr "接收"
+msgstr "温哥华"
 
 #: ../base/ufos/cities.ufo:2589
 msgid "Vienna"
-msgstr ""
+msgstr "维也纳"
 
 #: ../base/ufos/cities.ufo:2595
-#, fuzzy
 msgid "Vientiane"
-msgstr "Vanethian"
+msgstr "永珍"
 
 #: ../base/ufos/cities.ufo:2601
 msgid "Vilnius"
-msgstr ""
+msgstr "维尔纽斯"
 
 #: ../base/ufos/cities.ufo:2607
-#, fuzzy
 msgid "Vitoria"
-msgstr "教学指导"
+msgstr "维多利亚"
 
 #: ../base/ufos/cities.ufo:2613
 msgid "Warsaw"
-msgstr ""
+msgstr "华沙"
 
 #: ../base/ufos/cities.ufo:2619
-#, fuzzy
 msgid "Washington"
-msgstr "威灵顿"
+msgstr "华盛顿"
 
 #: ../base/ufos/cities.ufo:2625
 msgid "Whitehorse"
-msgstr ""
+msgstr "怀特霍斯"
 
 #: ../base/ufos/cities.ufo:2637
 msgid "Winnipeg"
-msgstr ""
+msgstr "温尼伯湖市"
 
 #: ../base/ufos/cities.ufo:2643
-#, fuzzy
 msgid "Wollongong"
-msgstr "威灵顿"
+msgstr "伍伦贡"
 
 #: ../base/ufos/cities.ufo:2649
-#, fuzzy
 msgid "Wonsan"
-msgstr "极难"
+msgstr "元山"
 
 #: ../base/ufos/cities.ufo:2655
-#, fuzzy
 msgid "Wuhan"
-msgstr "人类"
+msgstr "武汉"
 
 #: ../base/ufos/cities.ufo:2661
 msgid "Xi'an"
-msgstr ""
+msgstr "西安"
 
 #: ../base/ufos/cities.ufo:2667
-#, fuzzy
 msgid "Xining"
-msgstr "建设"
+msgstr "西宁"
 
 #: ../base/ufos/cities.ufo:2673
 msgid "Yakutsk"
-msgstr ""
+msgstr "雅库茨克"
 
 #: ../base/ufos/cities.ufo:2679
 msgid "Yamoussoukro"
-msgstr ""
+msgstr "亚穆苏克罗"
 
 #: ../base/ufos/cities.ufo:2685
-#, fuzzy
 msgid "Yangon"
-msgstr "龙级"
+msgstr "仰光"
 
 #: ../base/ufos/cities.ufo:2691
-#, fuzzy
 msgid "Yaounde"
-msgstr "声  音"
+msgstr "雅温得"
 
 #: ../base/ufos/cities.ufo:2697
 msgid "Yekaterinburg"
-msgstr ""
+msgstr "叶卡捷琳堡"
 
 #: ../base/ufos/cities.ufo:2703
-#, fuzzy
 msgid "Yellowknife"
-msgstr "黄"
+msgstr "耶洛奈夫"
 
 #: ../base/ufos/cities.ufo:2709
-#, fuzzy
 msgid "Yerevan"
-msgstr "上士"
+msgstr "埃里温"
 
 #: ../base/ufos/cities.ufo:2715
 msgid "Yogyakarta"
-msgstr ""
+msgstr "日惹"
 
 #: ../base/ufos/cities.ufo:2721
 msgid "Yokohama"
-msgstr ""
+msgstr "横滨"
 
 #: ../base/ufos/cities.ufo:2727
 msgid "Zagreb"
-msgstr ""
+msgstr "萨格勒布"
 
 #: ../base/ufos/cities.ufo:2733
 msgid "Zamboanga City"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2739
-#, fuzzy
 msgid "Zapopan"
-msgstr "日本"
+msgstr "萨波潘"
 
 #: ../base/ufos/cities.ufo:2745
 msgid "Zhengzhou"
-msgstr ""
+msgstr "郑州市"
 
 #: ../base/ufos/cities.ufo:2751
 msgid "Zurich"
-msgstr ""
+msgstr "苏黎世"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
@@ -3210,9 +3006,9 @@ msgstr "航空机登陆 -- %s"
 #: ../base/ufos/events.ufo:311
 msgid "mail_aircraft_landed"
 msgstr ""
-"Commander, %s has landed at %s. It is now being %s. Estimated work time on this craft before she can be launched again is %s hours.\n"
+"指挥官，%s已经在%s着落，正在%s，预计需要%s小时。\n"
 "\n"
-"-- COMAIR"
+"-- 航管塔"
 
 #: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:22
 #: ../base/ufos/fonts.ufo:28 ../base/ufos/fonts.ufo:35
@@ -3276,7 +3072,7 @@ msgstr "雷达站"
 
 #: ../base/ufos/installation.ufo:18
 msgid "The radar tower is an unmanned, expendable installation that can be placed anywhere in the world to boost our detection range. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the active scanning and attempt to destroy the tower once they find it. It is recommended that radar towers be protected with SAM sites."
-msgstr ""
+msgstr "无人职守雷达站可以安置在世界上的任何一个角落里来充当我们的眼睛。建设费用很低，不过伪装效果很差。外星人的主动扫描技术很容易就能发现并摧毁它，建议在附近提供火力掩护。"
 
 #: ../base/ufos/installation.ufo:23 ../base/ufos/ui/geoscape.ufo:1196
 #: ../base/ufos/ui/lostwon.ufo:212
@@ -3285,7 +3081,7 @@ msgstr "UFO停机场"
 
 #: ../base/ufos/installation.ufo:33
 msgid "The UFO Yard is a camouflaged storage field for captured UFOs. It can be placed anywhere in the world to store captured UFOs for dismantling and research, and can transfer UFOs to other Yards. UFOs stored in a Yard can be researched and/or dismantled from any PHALANX base with appropriate facilities, but these activities proceed more slowly the further away the UFO Yard is from the base."
-msgstr ""
+msgstr "UFO停机场是一个存放俘获到的UFO仓库。UFO存放在这里可以用以研究和拆解，不过这些活动的效率和与基地的距离有关。"
 
 #: ../base/ufos/installation.ufo:38 ../base/ufos/ui/geoscape.ufo:1154
 msgid "SAM Site"
@@ -3293,7 +3089,7 @@ msgstr "地对空飞弹基地"
 
 #: ../base/ufos/installation.ufo:48
 msgid "The SAM site is an unmanned, expendable installation that can be placed anywhere in the world to automatically engage detected UFOs with surface-to-air missiles. It is cheap to build and highly useful, but its camouflage is not very effective. Alien craft may detect the missile launches and attempt to destroy the site once they find it. The SAM site is sturdy but will succumb to repeated bombing. Missile reloads are delivered free to our sites by UN forces."
-msgstr ""
+msgstr "地对空飞弹基地是自动防御火力设施，可以安放在世界上任何一个角落。和雷达站一样，它的伪装效果并不好。但是它比雷达站更为坚固，其需要的飞弹联合国可以免费提供。"
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
@@ -3372,9 +3168,8 @@ msgid "Thai"
 msgstr "泰国语"
 
 #: ../base/ufos/language.ufo:286
-#, fuzzy
 msgid "Ukrainian"
-msgstr "弹药数量"
+msgstr "乌克兰"
 
 #: ../base/ufos/language.ufo:296
 msgid "Japanese"
@@ -3402,9 +3197,8 @@ msgid "A suburban district of an oriental area."
 msgstr "城市郊区。"
 
 #: ../base/ufos/maps.ufo:211
-#, fuzzy
 msgid "Crashed UFO in oriental suburban district."
-msgstr "比较老式的近郊区。"
+msgstr "UFO坠落老式郊区。"
 
 #: ../base/ufos/maps.ufo:292 ../base/ufos/maps.ufo:334
 #: ../base/ufos/maps.ufo:373
@@ -3425,9 +3219,8 @@ msgid "An industrial compound."
 msgstr "工业区。"
 
 #: ../base/ufos/maps.ufo:638
-#, fuzzy
 msgid "Cemetery terror mission."
-msgstr "荒野。"
+msgstr "公墓。"
 
 #: ../base/ufos/maps.ufo:689 ../base/ufos/maps.ufo:729
 msgid "A river runs through this piece of jungle."
@@ -3449,9 +3242,8 @@ msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "无人林区。"
 
 #: ../base/ufos/maps.ufo:1097
-#, fuzzy
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr "无人林区。"
+msgstr "UFO坠落无人林区。"
 
 #: ../base/ufos/maps.ufo:1217 ../base/ufos/maps.ufo:1259
 msgid "Some houses in desert"
@@ -3467,7 +3259,7 @@ msgstr "贵族庄园。"
 
 #: ../base/ufos/maps.ufo:1391
 msgid "A small village in England."
-msgstr ""
+msgstr "英格兰小镇"
 
 #: ../base/ufos/maps.ufo:1437
 msgid "A small office in a mountainous region."
@@ -3524,7 +3316,7 @@ msgstr "有架UFO降落这里"
 
 #: ../base/ufos/maps.ufo:2152
 msgid "A ferry."
-msgstr ""
+msgstr "渡轮"
 
 #: ../base/ufos/maps.ufo:2200
 msgid "A rather old-fashioned suburban district."
@@ -3544,7 +3336,7 @@ msgstr "老城区。"
 
 #: ../base/ufos/maps.ufo:2481
 msgid "Underground pipe construction site."
-msgstr ""
+msgstr "地下管道施工现场"
 
 #: ../base/ufos/maps.ufo:2528
 msgid "A subway station in a suburban part of town."
@@ -3583,14 +3375,12 @@ msgid "A luxurious vacation resort."
 msgstr "豪华度假区。"
 
 #: ../base/ufos/maps.ufo:3004
-#, fuzzy
 msgid "A suburb that has been visited by UFO."
 msgstr "土著据点。"
 
 #: ../base/ufos/maps.ufo:3056
-#, fuzzy
 msgid "A suburb that has received a visit from a Harvester."
-msgstr "土著据点。"
+msgstr "大型UFO坠落土著据点。"
 
 #: ../base/ufos/maps.ufo:3108
 msgid "An alien Harvester has crashed in the wastelands."
@@ -9726,9 +9516,8 @@ msgid "enemy_on_earth_rev_pre_txt"
 msgstr "没有可用的资料。"
 
 #: ../base/ufos/research.ufo:5120
-#, fuzzy
 msgid "The Alien Strategy"
-msgstr "外空威胁"
+msgstr "异形战略"
 
 #: ../base/ufos/research.ufo:5125
 #, fuzzy
@@ -9755,14 +9544,13 @@ msgstr ""
 "---司令官纳瓦拉"
 
 #: ../base/ufos/research.ufo:5149
-#, fuzzy
 msgid "Orbital UFO Activity"
-msgstr "Oriental UFO"
+msgstr "外空轨道"
 
 #: ../base/ufos/research.ufo:5154
 #, fuzzy
 msgid "orbital_ufo_activity_txt"
-msgstr "UFO"
+msgstr ""
 
 #: ../base/ufos/seq_credits.ufo:132 ../base/ufos/seq_credits.ufo:165
 msgid "Project leader"
@@ -10087,18 +9875,16 @@ msgid "Select soldiers via click"
 msgstr "通过点击选取士兵"
 
 #: ../base/ufos/seq_tutorials.ufo:453
-#, fuzzy
 msgid "Or via the keys 1-8 or Tab"
-msgstr "或者用键盘1-8键"
+msgstr "用键盘1-8键或者TAB切换"
 
 #: ../base/ufos/seq_tutorials.ufo:474
 msgid "Physical stats"
 msgstr "生命状态"
 
 #: ../base/ufos/seq_tutorials.ufo:496
-#, fuzzy
 msgid "Stats bars: movement, health and morale"
-msgstr "状态栏：活动时间和生命力"
+msgstr "状态栏：活动时间，生命力和士气"
 
 #: ../base/ufos/seq_tutorials.ufo:518 ../base/ufos/ui/hud.ufo:686
 msgid "Inventory"
@@ -10141,71 +9927,68 @@ msgid "End round"
 msgstr "回合结束"
 
 #: ../base/ufos/seq_tutorials.ufo:771
-#, fuzzy
 msgid "How to play skirmish"
-msgstr "如何进行多人游戏"
+msgstr "如何进行快速战斗"
 
 #: ../base/ufos/seq_tutorials.ufo:785
-#, fuzzy
 msgid "Skirmish tutorial"
-msgstr "快速战斗"
+msgstr "快速战斗教学"
 
 #: ../base/ufos/seq_tutorials.ufo:796
 msgid "Skirmish is type of fast game."
-msgstr ""
+msgstr "快速战斗直接进入战斗模式"
 
 #: ../base/ufos/seq_tutorials.ufo:835
-#, fuzzy
 msgid "Equipment selection"
-msgstr "队伍选择"
+msgstr "装备选择"
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid "Day or night version of map to play"
-msgstr ""
+msgstr "选择白天还是黑夜"
 
 #: ../base/ufos/seq_tutorials.ufo:877
 msgid "How many aliens will fight versus you"
-msgstr ""
+msgstr "设定敌人的数量"
 
 #: ../base/ufos/seq_tutorials.ufo:898
-#, fuzzy
 msgid "Select your team"
-msgstr "保存你的团队"
+msgstr "选择你的队伍"
 
 #: ../base/ufos/seq_tutorials.ufo:919
 msgid ""
 "Select UFO to secure \n"
 "(if possible for current map)"
 msgstr ""
+"选择出现的UFO型号\n"
+"（如果该地图支持的话）"
 
 #: ../base/ufos/seq_tutorials.ufo:940
 msgid ""
 "Select dropship\n"
 "(if possible for current map)"
 msgstr ""
+"选择登陆机型号\n"
+"（如果该地图支持的话）"
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
-msgstr ""
+msgstr "挑选地图"
 
 #: ../base/ufos/seq_tutorials.ufo:974
-#, fuzzy
 msgid "And..."
-msgstr "..."
+msgstr "还有就是..."
 
 #: ../base/ufos/seq_tutorials.ufo:991
-#, fuzzy
 msgid "Start the game!"
-msgstr "开    始"
+msgstr "开始游戏"
 
 #: ../base/ufos/seq_tutorials.ufo:1003
-#, fuzzy
 msgid "Or..."
-msgstr "..."
+msgstr "和..."
 
 #: ../base/ufos/seq_tutorials.ufo:1022
 msgid "Exit to main menu"
-msgstr ""
+msgstr "返回主菜单"
 
 #: ../base/ufos/seq_tutorials.ufo:1042
 msgid "How to play multiplayer"
@@ -10283,7 +10066,6 @@ msgstr ""
 "请别忘了在攻击方式面板选择适合的攻击方式"
 
 #: ../base/ufos/tips.ufo:10
-#, fuzzy
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
 msgstr "请记住让你的士兵配备多种武器，你永远不知道哪些武器才能派上用场。"
 
@@ -10296,9 +10078,8 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "不要忘记给你的士兵穿上衣服。"
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid "You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
-msgstr "你可以消除你的自动反应攻击状态或为下个回合保留活动时间。"
+msgstr "你可以将你的自动反应保留活动时间用于投掷闪光棒。"
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
@@ -10307,37 +10088,30 @@ msgstr ""
 "或在战斗界面点击聊天按钮。"
 
 #: ../base/ufos/tips.ufo:15
-#, fuzzy
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr ""
-"使用鼠标右键或[Ctrl]键，可以改变士兵的面对方向。\n"
-"这样做也是会消耗活动时间的。"
+msgstr "要改变士兵面对的方向，将鼠标移至其需要面对的方向点击右键或按[Ctrl]，这会消耗一点点活动时间。"
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "按[Backspace]可以开门。"
 
 #: ../base/ufos/tips.ufo:17
-#, fuzzy
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
 msgstr "尽量雇用更多的研究员。知己知彼，百战不殆。"
 
 #: ../base/ufos/tips.ufo:18
-#, fuzzy
 msgid "Be sure to hire as many workers as you can. The faster your production lines, the sooner you can access better equipment and resupplies."
 msgstr "工人也是不可缺少的。人多力量大产量足，武器装备用不完。"
 
 #: ../base/ufos/tips.ufo:19
-#, fuzzy
 msgid "Be sure to visit our website, http://ufoai.sourceforge.net/, and drop by our community channel, #ufoai on irc.freenode.net."
-msgstr "请访问http://ufoai.sf.net以及在irc.freenode.net的聊天频道#ufoai并协助翻译。"
+msgstr "请访问http://ufoai.sourceforge.net以及在irc.freenode.net的聊天频道#ufoai并协助翻译。"
 
 #: ../base/ufos/tips.ufo:20
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
 msgstr "请记住，你需要一个可用的指挥中心司令部，以便发射迎击机。"
 
 #: ../base/ufos/tips.ufo:21
-#, fuzzy
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
 msgstr "永远不要放弃活捉外星人的机会，即使你已经掌握相关科技了。"
 
@@ -10346,9 +10120,8 @@ msgid "Watch your back! Your soldiers can only see enemies in an arc in front of
 msgstr "留神背后！你的士兵只能看到前面的敌人。"
 
 #: ../base/ufos/tips.ufo:23
-#, fuzzy
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
-msgstr "建立一个工场和UFO平台，才能够拆卸UFO。"
+msgstr "建立一个工场和UFO停机场才能够拆卸UFO。"
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -10376,33 +10149,24 @@ msgstr ""
 "从腰带里掏出手雷并投掷，只需2+12=14的活动时间。"
 
 #: ../base/ufos/tips.ufo:28
-#, fuzzy
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
 msgstr "让一个敏捷的士兵携带单手武器、烟雾弹、炸药包和急救包。"
 
 #: ../base/ufos/tips.ufo:29
-#, fuzzy
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
 msgstr "建造医务所可以让你的士兵能够快速恢复。"
 
 #: ../base/ufos/tips.ufo:30
-#, fuzzy
 msgid "Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
-msgstr ""
-"等离子手雷威力很大，不过碎片手雷也很有用，\n"
-"因为碎片手雷可以扔得更远。"
+msgstr "等离子手雷威力很大，不过碎片手雷也很有用，因为碎片手雷可以扔得更远。"
 
 #: ../base/ufos/tips.ufo:31
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr "使用[X]来切换自动反应攻击方式：无、一次攻击、多次攻击。"
 
 #: ../base/ufos/tips.ufo:32
-#, fuzzy
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with a single grenade."
-msgstr ""
-"尽量让你的士兵比较集中，这样他们可以互相支持\n"
-"（比如治疗、掩护一个没有活动时间的人）。\n"
-"在回合结束前，最好让他们之间有堵墙，这样敌人的一个手雷也不能同时打死他们。"
+msgstr "尽量让你的士兵比较集中，这样他们可以互相支持（比如治疗、掩护一个没有活动时间的人）。在回合结束前，最好让他们之间有堵墙，这样敌人的一个手雷也不能同时打死他们。"
 
 #: ../base/ufos/tips.ufo:33
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
@@ -10448,9 +10212,8 @@ msgid "You can use [space] to cycle between all geoscape items."
 msgstr "你可以在地球模式下用[space]来切换各种目标。"
 
 #: ../base/ufos/tips.ufo:42
-#, fuzzy
 msgid "You can accelerate/decelerate time on the geoscape by using the mouse wheel, the time buttons, or by pressing [-], [+/=]. Alternatively you can press [n] and [m]. [backspace] will stop the flow of time."
-msgstr "在地球模式下可以用鼠标滚轮来加速或减速，或者使用[-][+]。"
+msgstr "在地球模式下可以用鼠标滚轮来加速或减速，或者使用[-][+/=]，以及[n][m]。[backspace]則会暂停"
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
@@ -10467,23 +10230,16 @@ msgid "Your attacked aircraft may flee to one of your bases to avoid being destr
 msgstr "你的航空机可以躲到基地来避免被UFO击毁。"
 
 #: ../base/ufos/tips.ufo:46
-#, fuzzy
 msgid "Build an alien containment to be able to imprison live aliens."
 msgstr "建造外星人收容所才能监禁俘虏的外星人。"
 
 #: ../base/ufos/tips.ufo:47
-#, fuzzy
 msgid "Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] will draw a line to each enemy the selected soldier can see."
-msgstr ""
-"侦查敌人：你可以用[Space]来循环切换所有发现的敌人。\n"
-"按[t]可以在每个敌人和你控制的士兵之间画一条线。"
+msgstr "侦查敌人：你可以用[Space]来循环切换所有发现的敌人。按[t]可以在每个敌人和你控制的士兵之间画一条线。"
 
 #: ../base/ufos/tips.ufo:48
-#, fuzzy
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
-msgstr ""
-"在装备窗口，你可以用鼠标右键来改变士兵的武器或弹药。\n"
-"不过这个最好在基地的时候就做好，在战场这样是会消耗活动时间的。"
+msgstr "在装备窗口，你可以用鼠标右键来改变士兵的武器或弹药。不过这个最好在基地的时候就做好，在战场这样是会消耗活动时间的。"
 
 #: ../base/ufos/tips.ufo:49
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -10491,23 +10247,23 @@ msgstr "您应该确保没有太多的平民失去生命。否则，你可能会
 
 #: ../base/ufos/tips.ufo:50
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr ""
+msgstr "㓎有效的使用阻击手，高处和平台拐角可以获得优良的视角，更多的反应时间可以更有效的打击敌人"
 
 #: ../base/ufos/tips.ufo:51
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
-msgstr ""
+msgstr "如果要歼击快速UFO最好等它靠近你的基地再出动你的迎击机，以免目标逃走。"
 
 #: ../base/ufos/tips.ufo:52
 msgid "Consider stunning the civilians during Terror Site missions to keep them from running around. Aliens also seem to prefer killing conscious civilians rather than unconscious ones."
-msgstr ""
+msgstr "救援行动要注意在平民周围作好保护。外星人似乎有时会故意杀害平民。"
 
 #: ../base/ufos/tips.ufo:53
 msgid "Don't forget to install missiles launchers and missiles in your missile batteries."
-msgstr ""
+msgstr "不要忘了给你的防御设施配备武器和弹药。"
 
 #: ../base/ufos/tips.ufo:54
 msgid "Can't remember who has the medikit in their backpack? Press [i] for inventory and then [1] to [8] to cycle through your troops."
-msgstr ""
+msgstr "如果忘了是哪个士兵带着急救箱，请按[i]打开装备窗口再按[1]到[8]来检索。"
 
 #: ../base/ufos/tips.ufo:55
 msgid "To catch fast UFOs send interceptors in from several directions."
@@ -10515,27 +10271,27 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:56
 msgid "To quickly buy or sell items, hover over the arrows and roll your mousewheel."
-msgstr ""
+msgstr "买卖的时候可以用鼠标滚轮来控制数量。"
 
 #: ../base/ufos/tips.ufo:57
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr ""
+msgstr "注意不要误伤！虽然敌人的手雷可以杀伤你的对友，但自己人的手雷更为危险。"
 
 #: ../base/ufos/tips.ufo:58
 msgid "Remember to check your research and production queues often! A good arsenal is an active arsenal!"
-msgstr ""
+msgstr "注意检查你的研究及生产顺序！及时有效的管理才能做到更好！"
 
 #: ../base/ufos/tips.ufo:59
 msgid "The presence of live civilians probably means that there are no live aliens nearby. This can save time clearing a map."
-msgstr ""
+msgstr "活着的平民往往意味着附近没有敌人。这可以节省搜查的时间。"
 
 #: ../base/ufos/tips.ufo:60
 msgid "Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
-msgstr ""
+msgstr "请注意小队的安全，不要让他们轻易死亡。有经验的士兵比新兵更有价值。"
 
 #: ../base/ufos/tips.ufo:61
 msgid "You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
-msgstr ""
+msgstr "你可以按[Enter]来结束你的回合。"
 
 #: ../base/ufos/ui/_hud.ufo:27 ../base/ufos/ui/_hud.ufo:289
 #: ../base/ufos/ui/_hud.ufo:318 ../base/ufos/ui/_hud.ufo:347
@@ -10600,23 +10356,20 @@ msgid "Soldier equipment"
 msgstr "士兵装备"
 
 #: ../base/ufos/ui/aircraft.ufo:136
-#, fuzzy
 msgid "Rename aircraft"
-msgstr "选择航空机"
+msgstr "重新命名航空机"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:86
 msgid "Selected item:"
 msgstr "选择："
 
 #: ../base/ufos/ui/aircraft_equip.ufo:151
-#, fuzzy
 msgid "Equip this item"
-msgstr "装备此士兵"
+msgstr "装备此设备"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:168
-#, fuzzy
 msgid "Remove this item"
-msgstr "移除防御系统"
+msgstr "移除此设备"
 
 #: ../base/ufos/ui/aircraft_equip.ufo:192
 msgid "Available equipment:"
@@ -10683,24 +10436,20 @@ msgid "Call back"
 msgstr "航空机返回"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:124
-#, fuzzy
 msgid "Pilot is assigned to another craft"
-msgstr "航空机飞行员"
+msgstr "飞行员已指派给另一架航空机"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:142
-#, fuzzy
 msgid "A pilot is already assigned to this craft"
-msgstr "未指定弹药。"
+msgstr "此航空机已有飞行员。"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:144
-#, fuzzy
 msgid "Assign pilot to this craft"
-msgstr "为航空机指派一支队伍"
+msgstr "指派此飞行员操控这架航空机"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:155
-#, fuzzy
 msgid "Remove pilot from this craft"
-msgstr "移除"
+msgstr "飞行员下岗待业"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:198
 #: ../base/ufos/ui/aircraft_pilots.ufo:208
@@ -10719,24 +10468,20 @@ msgid "Equip soldiers"
 msgstr "装备士兵"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:115
-#, fuzzy
 msgid "Soldier is assigned to another craft"
-msgstr "士兵在航空机里"
+msgstr "士兵已搭载另一架航空机"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:134
-#, fuzzy
 msgid "No more soldiers can be assigned to this craft"
-msgstr "未指定弹药。"
+msgstr "航空机已满员无法搭载更多的人了。"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:136
-#, fuzzy
 msgid "Assign soldier to this craft"
-msgstr "先给这个航空机分配士兵。"
+msgstr "指派该士兵搭载此航空机。"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:147
-#, fuzzy
 msgid "Remove soldier from this craft"
-msgstr "从列表里选择一个士兵"
+msgstr "不搭载此航空机"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:157
 msgid "Soldier carries equipment"
@@ -10823,9 +10568,8 @@ msgid "Assign soldiers"
 msgstr "分配士兵"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:619
-#, fuzzy
 msgid "No soldiers assigned"
-msgstr "No shield assigned"
+msgstr "没有士兵可以分配"
 
 #: ../base/ufos/ui/aliencont.ufo:18 ../base/ufos/ui/aliencont.ufo:114
 msgid "Kill this alien"
@@ -10867,26 +10611,23 @@ msgstr "使用"
 
 #: ../base/ufos/ui/althud.ufo:594 ../base/ufos/ui/althud.ufo:654
 msgid "TUs"
-msgstr ""
+msgstr "活动时间"
 
 #: ../base/ufos/ui/althud.ufo:604
-#, fuzzy
 msgid "TUs remaining"
-msgstr "弹药数量"
+msgstr "剩余活动时间"
 
 #: ../base/ufos/ui/althud.ufo:615
 msgid "TUs reserved"
-msgstr ""
+msgstr "预留活动时间"
 
 #: ../base/ufos/ui/althud.ufo:626 ../base/ufos/ui/althud.ufo:662
-#, fuzzy
 msgid "Morale"
-msgstr "士气  %i"
+msgstr "士气"
 
 #: ../base/ufos/ui/althud.ufo:646
-#, fuzzy
 msgid "Health"
-msgstr "生命力："
+msgstr "生命力"
 
 #: ../base/ufos/ui/althud.ufo:703 ../base/ufos/ui/hud.ufo:406
 msgid "Use headgear"
@@ -10959,64 +10700,55 @@ msgstr "为射击保留活动时间。"
 
 #: ../base/ufos/ui/basedefence.ufo:10
 msgid "Equip Defence Weapons"
-msgstr ""
+msgstr "装备防御武器"
 
 #: ../base/ufos/ui/basedefence.ufo:55
-#, fuzzy
 msgid "Information"
-msgstr "基地信息"
+msgstr "基站信息"
 
 #: ../base/ufos/ui/basedefence.ufo:59
-#, fuzzy
 msgid "Missile Defences"
-msgstr "飞弹"
+msgstr "飞弹防御"
 
 #: ../base/ufos/ui/basedefence.ufo:63
-#, fuzzy
 msgid "Laser Defences"
-msgstr "激光步枪"
+msgstr "激光防御"
 
 #: ../base/ufos/ui/basedefence.ufo:104
-#, fuzzy
 msgid "Weapon slots"
-msgstr "武器"
+msgstr "武器发射槽"
 
 #: ../base/ufos/ui/basedefence.ufo:155
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: ../base/ufos/ui/basedefence.ufo:156
-#, fuzzy
 msgid "Equip the selected slot with this weapon"
-msgstr "给防御系统装备选择的弹药"
+msgstr "在此槽位加装选择的武器系统"
 
 #: ../base/ufos/ui/basedefence.ufo:167
-#, fuzzy
 msgid "Remove"
-msgstr "接收"
+msgstr "移除"
 
 #: ../base/ufos/ui/basedefence.ufo:168
-#, fuzzy
 msgid "Remove weapon from the selected slot"
-msgstr "取档"
+msgstr "清空此槽位"
 
 #: ../base/ufos/ui/basedefence.ufo:185
-#, fuzzy
 msgid "Stores"
-msgstr "仓库"
+msgstr "库存"
 
 #: ../base/ufos/ui/basedefence.ufo:238
-#, fuzzy
 msgid "Selected Item"
 msgstr "选择："
 
 #: ../base/ufos/ui/basedefence.ufo:296
 msgid "Surface to Air defences"
-msgstr ""
+msgstr "对空防御基站"
 
 #: ../base/ufos/ui/basedefence.ufo:326
 msgid "Targetted UFO:"
-msgstr ""
+msgstr "目标UFO:"
 
 #: ../base/ufos/ui/basedefence.ufo:339 ../base/ufos/ui/geoscape.ufo:1399
 #: ../base/ufos/ui/geoscape.ufo:1497
@@ -11024,9 +10756,8 @@ msgid "Time to build:"
 msgstr "离完工还有："
 
 #: ../base/ufos/ui/basedefence.ufo:352
-#, fuzzy
 msgid "Autofire"
-msgstr "火焰"
+msgstr "自动开火"
 
 #: ../base/ufos/ui/basedefence.ufo:368 ../base/ufos/ui/geoscape.ufo:1526
 #: client/campaign/cp_base.c:890 client/campaign/cp_base.c:900
@@ -11043,7 +10774,7 @@ msgstr "拆除基站"
 #: ../base/ufos/ui/basedefence.ufo:379 ../base/ufos/ui/geoscape.ufo:1297
 #: ../base/ufos/ui/geoscape.ufo:1510 ../base/ufos/ui/main.ufo:305
 msgid "Close"
-msgstr "近距离"
+msgstr "关闭"
 
 #: ../base/ufos/ui/bases.ufo:13
 msgid "Back to geoscape"
@@ -11133,9 +10864,8 @@ msgid "Base Information"
 msgstr "基地信息"
 
 #: ../base/ufos/ui/buildings.ufo:73 ../base/ufos/ui/buildings.ufo:89
-#, fuzzy
 msgid "Open/close Building preview window"
-msgstr "建筑预览"
+msgstr "开/关建筑预览窗口"
 
 #: ../base/ufos/ui/buildings.ufo:88 ../base/ufos/ui/buildings.ufo:130
 msgid "Building preview"
@@ -11285,9 +11015,8 @@ msgstr "特殊"
 
 #: ../base/ufos/ui/equipment.ufo:394 ../base/ufos/ui/market.ufo:416
 #: ../base/ufos/ui/multiplayer_team.ufo:377 ../base/ufos/ui/ufopedia.ufo:241
-#, fuzzy
 msgid "With:"
-msgstr "使用弹药："
+msgstr "适用："
 
 #: ../base/ufos/ui/equipment.ufo:433 ../base/ufos/ui/market.ufo:455
 #: ../base/ufos/ui/multiplayer_team.ufo:416 ../base/ufos/ui/ufopedia.ufo:280
@@ -11313,21 +11042,18 @@ msgid "Object Info"
 msgstr "物品资料"
 
 #: ../base/ufos/ui/equipment.ufo:611 ../base/ufos/ui/equipment.ufo:621
-#, fuzzy
 msgid "Rename your unit"
-msgstr "基地名称更改"
+msgstr "名称更改"
 
 #: ../base/ufos/ui/equipment.ufo:738 ../base/ufos/ui/multiplayer_team.ufo:708
 msgid "Done"
 msgstr "完成"
 
 #: ../base/ufos/ui/genradarhud.ufo:58
-#, fuzzy
 msgid "Reinit"
-msgstr "急救包"
+msgstr ""
 
 #: ../base/ufos/ui/genradarhud.ufo:73
-#, fuzzy
 msgid "Preview"
 msgstr "预览"
 
@@ -11376,9 +11102,8 @@ msgid "Time lapse: 5 days"
 msgstr "时间流逝：5天"
 
 #: ../base/ufos/ui/geoscape.ufo:423
-#, fuzzy
 msgid "Message settings"
-msgstr "暂停设定"
+msgstr "消息设定"
 
 #: ../base/ufos/ui/geoscape.ufo:424
 msgid "Change message and pause settings"
@@ -11650,11 +11375,11 @@ msgstr "目的地："
 
 #: ../base/ufos/ui/geoscape.ufo:1932
 msgid "Geoscape options"
-msgstr ""
+msgstr "选项"
 
 #: ../base/ufos/ui/geoscape.ufo:1944
 msgid "Geoscape projection mode:"
-msgstr ""
+msgstr "投影模式："
 
 #: ../base/ufos/ui/geoscape.ufo:1954
 msgid "2D"
@@ -11789,14 +11514,12 @@ msgid "Users"
 msgstr "用户"
 
 #: ../base/ufos/ui/irc.ufo:184
-#, fuzzy
 msgid "Name is already in use"
-msgstr "队伍已经启用"
+msgstr "名称已被用"
 
 #: ../base/ufos/ui/irc.ufo:189
-#, fuzzy
 msgid "Your name is already in use or is invalid."
-msgstr "队伍已经启用"
+msgstr "名称已被用或是无效名称"
 
 #: ../base/ufos/ui/irc.ufo:220 ../base/ufos/ui/singleplayer.ufo:91
 msgid "Retry"
@@ -11804,7 +11527,7 @@ msgstr "重    开"
 
 #: ../base/ufos/ui/irc.ufo:221
 msgid "Retry with your changed name"
-msgstr ""
+msgstr "改变你的名称"
 
 #: ../base/ufos/ui/irc.ufo:243
 msgid "Not connected"
@@ -11845,7 +11568,7 @@ msgstr "卖UFO"
 
 #: ../base/ufos/ui/lostwon.ufo:219
 msgid "Capacity (free/all)"
-msgstr ""
+msgstr "容量 (free/all)"
 
 #: ../base/ufos/ui/lostwon.ufo:282
 msgid "Recover"
@@ -11860,9 +11583,8 @@ msgid "Nation:"
 msgstr "国际组织："
 
 #: ../base/ufos/ui/lostwon.ufo:302
-#, fuzzy
 msgid "Sort nations by name"
-msgstr "正在返回基地"
+msgstr "按名称排序"
 
 #: ../base/ufos/ui/lostwon.ufo:312
 msgid "Price:"
@@ -11870,7 +11592,7 @@ msgstr "价格："
 
 #: ../base/ufos/ui/lostwon.ufo:313
 msgid "Sort nations by price"
-msgstr ""
+msgstr "按价格排序"
 
 #: ../base/ufos/ui/lostwon.ufo:323
 msgid "Relations:"
@@ -11878,15 +11600,11 @@ msgstr "关系："
 
 #: ../base/ufos/ui/lostwon.ufo:324
 msgid "Sort nations by relation"
-msgstr ""
+msgstr "按友好度排序"
 
 #: ../base/ufos/ui/lostwon.ufo:373
-#, fuzzy
 msgid "Selected nation:"
-msgstr ""
-"\n"
-"\n"
-"选择组织：\t\t\t"
+msgstr "选择组织："
 
 #: ../base/ufos/ui/lostwon.ufo:387
 msgid "Sell"
@@ -12043,9 +11761,8 @@ msgid "+"
 msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:252
-#, fuzzy
 msgid "-"
-msgstr "-1"
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:277
 #: ../base/ufos/ui/material_editor.ufo:380
@@ -12054,9 +11771,8 @@ msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:301
 #: ../base/ufos/ui/material_editor.ufo:404
-#, fuzzy
 msgid "T:"
-msgstr "估计到达时间："
+msgstr ""
 
 #: ../base/ufos/ui/material_editor.ufo:332
 msgid "Ds:"
@@ -12146,17 +11862,14 @@ msgid "Notify types:"
 msgstr "通告类型："
 
 #: ../base/ufos/ui/messageoptions.ufo:76
-#, fuzzy
 msgid ""
 "Enable or disable messages being displayed for all notification types.\n"
 "Left click enables all notifications, right click disables."
 msgstr ""
-"切换消息显示\n"
-"左键设定全部都显示\n"
-"右键取消显示"
+"切换全部的消息显示设定.\n"
+"左键点击设定全部都显示,右键取消显示"
 
 #: ../base/ufos/ui/messageoptions.ufo:85
-#, fuzzy
 msgid ""
 "Enable or disable pause for all notification types\n"
 "Pause can't be enabled without notification\n"
@@ -12167,14 +11880,12 @@ msgstr ""
 "右键点击设定为取消暂停"
 
 #: ../base/ufos/ui/messageoptions.ufo:94
-#, fuzzy
 msgid ""
 "Enable or disable sounds being played for all notification types.\n"
 "Left click enables all sounds, right click disables."
 msgstr ""
-"切换声音提示\n"
-"左键设定全部都有声音提示\n"
-"右键取消声音提示。"
+"切换全部的声音提示.\n"
+"左键设定全部都有声音提示,右键取消声音提示。"
 
 #: ../base/ufos/ui/multiplayer.ufo:37 ../base/ufos/ui/multiplayer.ufo:155
 msgid "Team"
@@ -12236,9 +11947,8 @@ msgstr "收藏"
 #: ../base/ufos/ui/multiplayer.ufo:475 ../base/ufos/ui/multiplayer.ufo:478
 #: ../base/ufos/ui/multiplayer.ufo:481 ../base/ufos/ui/multiplayer.ufo:484
 #: ../base/ufos/ui/multiplayer.ufo:487 ../base/ufos/ui/multiplayer.ufo:490
-#, fuzzy
 msgid "Connect to this server"
-msgstr "连接到大厅"
+msgstr "连接到这个服务器"
 
 #: ../base/ufos/ui/multiplayer.ufo:446 ../base/ufos/ui/multiplayer.ufo:449
 #: ../base/ufos/ui/multiplayer.ufo:452 ../base/ufos/ui/multiplayer.ufo:455
@@ -12329,7 +12039,7 @@ msgstr "团队模式下AI角色最多多少"
 
 #: ../base/ufos/ui/multiplayer.ufo:885
 msgid "Round time limit in seconds:"
-msgstr ""
+msgstr "回合限制时间："
 
 #: ../base/ufos/ui/multiplayer.ufo:918
 msgid "Make this server public:"
@@ -12365,9 +12075,8 @@ msgid "Max. teams for this map"
 msgstr "这个地图最多几个队伍"
 
 #: ../base/ufos/ui/multiplayer.ufo:1263
-#, fuzzy
 msgid "Players connected"
-msgstr "没有玩家接入\n"
+msgstr "玩家接入"
 
 #: ../base/ufos/ui/multiplayer.ufo:1317
 msgid "Team selection"
@@ -12390,7 +12099,6 @@ msgid "Force start"
 msgstr "强制开始"
 
 #: ../base/ufos/ui/multiplayer.ufo:1377
-#, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr "不管团队人员是否满员都开始游戏"
 
@@ -12400,48 +12108,43 @@ msgstr "结束队伍选择开始游戏"
 
 #: ../base/ufos/ui/multiplayer.ufo:1396
 msgid "Are you ready?"
-msgstr ""
+msgstr "准备好了吗？"
 
 #: ../base/ufos/ui/multiplayer.ufo:1405 ../base/ufos/ui/multiplayer.ufo:1415
-#, fuzzy
 msgid "Activate IRC"
-msgstr "激活聊天"
+msgstr "激活IRC"
 
 #: ../base/ufos/ui/multiplayer.ufo:1421
-#, fuzzy
 msgid "Deactivate IRC"
-msgstr "Deactivates tooltips"
+msgstr "关闭IRC"
 
 #: ../base/ufos/ui/multiplayer.ufo:1429 ../base/ufos/ui/multiplayer.ufo:1439
 msgid "Display IRC users"
-msgstr ""
+msgstr "显示IRC用户"
 
 #: ../base/ufos/ui/multiplayer.ufo:1442
 msgid "Hide IRC users"
-msgstr ""
+msgstr "隐藏IRC用户"
 
 #: ../base/ufos/ui/multiplayer.ufo:1448
-#, fuzzy
 msgid "Invite others"
-msgstr "Sitters"
+msgstr "邀请"
 
 #: ../base/ufos/ui/multiplayer.ufo:1450
 msgid "Invite players that are online in the lobby"
-msgstr ""
+msgstr "邀请大厅在线的玩家"
 
 #: ../base/ufos/ui/multiplayer.ufo:1486
-#, fuzzy
 msgid "Party chat"
-msgstr "激活聊天"
+msgstr "队伍频道"
 
 #: ../base/ufos/ui/multiplayer.ufo:1490
 msgid "Global lobby (IRC)"
-msgstr ""
+msgstr "IRC频道"
 
 #: ../base/ufos/ui/multiplayer.ufo:1573 ../base/ufos/ui/multiplayer.ufo:1646
-#, fuzzy
 msgid "Say:"
-msgstr "Spray"
+msgstr "说："
 
 #: ../base/ufos/ui/multiplayer.ufo:1756
 msgid "Enter server password"
@@ -12460,19 +12163,16 @@ msgid "Go into the lobby"
 msgstr "进入大厅"
 
 #: ../base/ufos/ui/multiplayer.ufo:1846
-#, fuzzy
 msgid "Game invitation"
-msgstr "基站重新命名"
+msgstr "邀请游戏"
 
 #: ../base/ufos/ui/multiplayer.ufo:1865
-#, fuzzy
 msgid "Server info"
-msgstr "基地信息"
+msgstr "服务器信息"
 
 #: ../base/ufos/ui/multiplayer.ufo:1866
-#, fuzzy
 msgid "Show server information"
-msgstr "玩家信息"
+msgstr "显示服务器信息"
 
 #: ../base/ufos/ui/multiplayer.ufo:1894
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
@@ -12649,9 +12349,8 @@ msgid "Restart sound to change the settings"
 msgstr "应用声音设定"
 
 #: ../base/ufos/ui/options.ufo:650
-#, fuzzy
 msgid "Enable sound:"
-msgstr "回合结束"
+msgstr "开启音效："
 
 #: ../base/ufos/ui/options.ufo:676
 msgid "Show key bindings"
@@ -12750,13 +12449,12 @@ msgid "Joystick settings:"
 msgstr "游戏杆设定："
 
 #: ../base/ufos/ui/options.ufo:1089
-#, fuzzy
 msgid "Enable:"
-msgstr "回合结束"
+msgstr "启用："
 
 #: ../base/ufos/ui/options.ufo:1097
 msgid "Enables/Disables Joysticks"
-msgstr ""
+msgstr "切换游戏柄"
 
 #: ../base/ufos/ui/options.ufo:1108
 msgid "Threshold:"
@@ -12894,9 +12592,8 @@ msgid "Skirmish game settings"
 msgstr "战斗模式设定"
 
 #: ../base/ufos/ui/skirmish.ufo:46
-#, fuzzy
 msgid "Equipment AI"
-msgstr "装备"
+msgstr "设定AI"
 
 #: ../base/ufos/ui/skirmish.ufo:151
 msgid "Max AI actors for this game"
@@ -12907,79 +12604,20 @@ msgid "Select which side you want to play with"
 msgstr "选择你要扮演的阵营"
 
 #: ../base/ufos/ui/skirmish.ufo:213
-#, fuzzy
 msgid "UFO:"
-msgstr "UFO"
+msgstr "UFO:"
 
 #: ../base/ufos/ui/skirmish.ufo:216
 msgid "Select the ufo that should be used"
-msgstr ""
+msgstr "选择UFO型号"
 
 #: ../base/ufos/ui/skirmish.ufo:243
-#, fuzzy
 msgid "Dropship:"
-msgstr ""
-"Aircraft Evaluation -- Firebird-class Dropship\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 17 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
-"\n"
-"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
-"\n"
-"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
-"\n"
-"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
-"\n"
-"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
-"\n"
-"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
-"\n"
-"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
-"\n"
-"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None.\n"
-"\n"
-"\n"
-"Aircraft statistics:\n"
-"\n"
-"\n"
-"Size: 8m x 30m x 5m\n"
-"\n"
-"Cruising speed: 785 km/h\n"
-"\n"
-"Top speed: 1,083km/h\n"
-"\n"
-"Operational range: 18,000km\n"
-"\n"
-"Crew capacity: 3 crew, 8 soldiers max.\n"
-"\n"
-"Weapon capacity: 1 Medium hardpoint (nose)"
+msgstr "登陆机："
 
 #: ../base/ufos/ui/skirmish.ufo:246
 msgid "Select the dropship that should be used"
-msgstr ""
+msgstr "选择使用的登陆机"
 
 #: ../base/ufos/ui/stats.ufo:37
 msgid "Missions"
@@ -13120,9 +12758,8 @@ msgid "Pre research text"
 msgstr "草案文件"
 
 #: ../base/ufos/ui/ufopedia.ufo:194
-#, fuzzy
 msgid "Requirement:"
-msgstr "无"
+msgstr "需要:"
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -13644,17 +13281,14 @@ msgid "Unknown alien race"
 msgstr "未知外星人种类"
 
 #: client/battlescape/cl_actor.c:2464
-#, fuzzy
 msgid "Toggle to next actor"
 msgstr "切换下一个士兵"
 
 #: client/battlescape/cl_actor.c:2465
-#, fuzzy
 msgid "Select an actor from list"
 msgstr "从列表里选择一个士兵"
 
 #: client/battlescape/cl_actor.c:2466
-#, fuzzy
 msgid "Update an actor"
 msgstr "更新一个士兵"
 
@@ -13697,6 +13331,9 @@ msgid ""
 "HP: %i/%i TU: %i\n"
 "%s"
 msgstr ""
+"%s\n"
+"HP: %i/%i TU: %i\n"
+"%s"
 
 #: client/battlescape/cl_hud.c:287
 msgid "[0 TU] No reservation"
@@ -13735,29 +13372,24 @@ msgid "Shots: %i"
 msgstr "消耗弹药：%i"
 
 #: client/battlescape/cl_hud.c:654
-#, fuzzy
 msgid "No weapon."
-msgstr "%s 使用\n"
+msgstr "没有武器。"
 
 #: client/battlescape/cl_hud.c:663
-#, fuzzy
 msgid "Weapon cannot be reloaded."
-msgstr "武器不能单手使用\n"
+msgstr "武器无法装弹."
 
 #: client/battlescape/cl_hud.c:669
-#, fuzzy
 msgid "No reload possible, already fully loaded."
-msgstr "左手武器无需装弹。"
+msgstr "无需装弹，弹仓满。"
 
 #: client/battlescape/cl_hud.c:679
-#, fuzzy
 msgid "Not enough TUs for reloading weapon."
-msgstr "没有足够时间站立。"
+msgstr "没有足够时间装弹。"
 
 #: client/battlescape/cl_hud.c:682
-#, fuzzy
 msgid "No reload possible, you don't have backup ammo."
-msgstr "左手武器无需装弹。"
+msgstr "无法装弹，没有弹药。"
 
 #: client/battlescape/cl_hud.c:774
 msgid "Not enough TUs for standing up."
@@ -13875,7 +13507,7 @@ msgstr ""
 
 #: client/battlescape/cl_hud.c:1200
 msgid "Currently panics!\n"
-msgstr "Currently panics!恐慌\n"
+msgstr "处于惊恐状态!\n"
 
 #: client/battlescape/cl_hud_callbacks.c:86
 #: client/battlescape/cl_hud_callbacks.c:237
@@ -14086,9 +13718,9 @@ msgid "UFO"
 msgstr "UFO"
 
 #: client/campaign/cp_aircraft.c:781
-#, fuzzy, c-format
+#, c-format
 msgid "A new %s is ready in %s"
-msgstr "一个新的%s在%s待命"
+msgstr "一个新的%s已经开始在%s待命"
 
 #: client/campaign/cp_aircraft.c:782 client/campaign/cp_aircraft.c:1245
 #: client/campaign/cp_aircraft.c:1261 client/campaign/cp_aircraft.c:1306
@@ -14172,9 +13804,9 @@ msgid "Craft %s couldn't be completely refueled at %s. Not enough antimatter."
 msgstr ""
 
 #: client/campaign/cp_aircraft.c:1260
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has refueled at %s."
-msgstr "%s 在基地%s补充燃料。"
+msgstr "%s航空机在基地%s补充燃料。"
 
 #: client/campaign/cp_aircraft.c:1306
 #, c-format
@@ -14190,9 +13822,9 @@ msgid "Insufficient fuel."
 msgstr "燃料不足。"
 
 #: client/campaign/cp_aircraft.c:2187
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to %s."
-msgstr "%s 在基地%s补充燃料。"
+msgstr "%s没有足够的燃料截击UFO：现在返回%s。"
 
 #: client/campaign/cp_aircraft_callbacks.c:138
 msgid ""
@@ -14469,7 +14101,7 @@ msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "基地里没有航空机--你需要购买一架航空机\n"
 
 #: client/campaign/cp_base.c:2473
-#, fuzzy, c-format
+#, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "%s 建设完工在基地 %s。"
 
@@ -14490,7 +14122,7 @@ msgstr[0] "%i 装备"
 msgstr[1] "%i 装备"
 
 #: client/campaign/cp_base.c:2581
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "仓库剩余空间不足在基地 %s. %s"
 
@@ -14502,9 +14134,9 @@ msgstr[0] "%i个卖了 %ic 。"
 msgstr[1] "%i个卖了 %ic 。"
 
 #: client/campaign/cp_base.c:3265
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
-msgstr "基地 %s 没有反物质仓库，%i 反物质丢弃。"
+msgstr "基地 %s 没有反物质仓库，%i单元的反物质丢弃。"
 
 #: client/campaign/cp_base_callbacks.c:71
 #, c-format
@@ -14512,9 +14144,9 @@ msgid "%s has been destroyed by an antimatter storage breach."
 msgstr ""
 
 #: client/campaign/cp_base_callbacks.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Base #%i"
-msgstr "2号基地"
+msgstr "基地 #%i"
 
 #: client/campaign/cp_base_callbacks.c:187
 msgid "You've reached the base limit."
@@ -14539,14 +14171,12 @@ msgid "Not enough credits to set up a new base."
 msgstr "资金不足以建新基地"
 
 #: client/campaign/cp_base_callbacks.c:295
-#, fuzzy
 msgid "Buy or produce at least one aircraft first."
-msgstr "购买或制造一架新的航空机"
+msgstr "购买或制造至少一架航空机"
 
 #: client/campaign/cp_base_callbacks.c:297
-#, fuzzy
 msgid "No Hangar functional in base."
-msgstr "这个基地没有机用平台。\n"
+msgstr "这个基地没有机用平台。"
 
 #: client/campaign/cp_base_callbacks.c:303
 #: client/campaign/cp_base_callbacks.c:313
@@ -14559,9 +14189,8 @@ msgid "No %s functional in base."
 msgstr "此基地无仓库"
 
 #: client/campaign/cp_base_callbacks.c:308
-#, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
-msgstr "传送物资或员工"
+msgstr "建造第二个基地才能传送物资或员工"
 
 #: client/campaign/cp_base_callbacks.c:587
 msgid "Base is under attack, you can't access this building !"
@@ -14621,9 +14250,8 @@ msgid "^BEmployees\n"
 msgstr "^B员工\n"
 
 #: client/campaign/cp_base_callbacks.c:706
-#, fuzzy
 msgid "^BAliens\n"
-msgstr "外星人"
+msgstr "^B外星人\n"
 
 #: client/campaign/cp_base_callbacks.c:718
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
@@ -14665,16 +14293,15 @@ msgid "%i c"
 msgstr "%i c"
 
 #: client/campaign/cp_basedefence_callbacks.c:245
-#, fuzzy
 msgid "No defence of this type in this installation"
-msgstr "此军事基地无此类防御设施\n"
+msgstr "此军事基地无此类防御设施"
 
 #: client/campaign/cp_basedefence_callbacks.c:251
 #: client/campaign/cp_basedefence_callbacks.c:279
 #: client/campaign/cp_basedefence_callbacks.c:307
-#, fuzzy, c-format
+#, c-format
 msgid "%i: empty"
-msgstr "防御井 %i:\t空\n"
+msgstr "%i: 空"
 
 #: client/campaign/cp_basedefence_callbacks.c:257
 #: client/campaign/cp_basedefence_callbacks.c:285
@@ -14759,6 +14386,8 @@ msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
+"\n"
+"当月收入:\t%d"
 
 #: client/campaign/cp_campaign.c:811 client/cl_inventory_callbacks.c:136
 #, c-format
@@ -15130,11 +14759,11 @@ msgstr ""
 "环境： %s"
 
 #: client/campaign/cp_map.c:1610
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
-msgstr "^B%s (%s)\n"
+msgstr "%s (%s)\n%s"
 
 #: client/campaign/cp_map.c:1630 client/campaign/cp_map.c:1638
 #, c-format
@@ -15157,9 +14786,9 @@ msgid "ETA:\t%sh\n"
 msgstr "估计用时：\t%s小时\n"
 
 #: client/campaign/cp_map.c:1664
-#, fuzzy, c-format
+#, c-format
 msgid "Speed: %i km/h\n"
-msgstr "速度：\t%i 公里/小时\n"
+msgstr "速度： %i 公里/小时\n"
 
 #: client/campaign/cp_map.c:1864
 #, c-format
@@ -15187,7 +14816,7 @@ msgid "UFO in radar range\n"
 msgstr "UFO在雷达范围\n"
 
 #: client/campaign/cp_mapfightequip.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "%s已经安装到航空机%s（%s）。"
 
@@ -15197,17 +14826,17 @@ msgid "%s was successfully installed at installation %s."
 msgstr "%s已经安装到%s。"
 
 #: client/campaign/cp_mapfightequip.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully installed at %s."
 msgstr "%s已经安装到%s。"
 
 #: client/campaign/cp_mapfightequip.c:351
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s已经从%s移除（%s）。"
 
 #: client/campaign/cp_mapfightequip.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s已经移除，开始安装%s到%s（%s）"
 
@@ -15217,7 +14846,7 @@ msgid "%s was successfully removed from installation %s."
 msgstr "%s已经从%s移除。"
 
 #: client/campaign/cp_mapfightequip.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s已经从%s移除。"
 
@@ -15300,20 +14929,12 @@ msgid "installation_replaced"
 msgstr "更新完成"
 
 #: client/campaign/cp_messageoptions.c:39
-#, fuzzy
 msgid "aircraft_refueled"
-msgstr ""
-"指挥官，%s已经%s，随时待命。\n"
-"\n"
-"-- 航管塔"
+msgstr "航空机燃料补充完毕"
 
 #: client/campaign/cp_messageoptions.c:40
-#, fuzzy
 msgid "aircraft_cannotrefuel"
-msgstr ""
-"指挥官，%s 没燃料了。他只好返回%s。任务放弃。\n"
-"\n"
-"-- 航管塔"
+msgstr "航空机无法补充燃料"
 
 #: client/campaign/cp_messageoptions.c:41
 msgid "installation_build_started"
@@ -15332,9 +14953,8 @@ msgid "research_new_proposed"
 msgstr "新的草案"
 
 #: client/campaign/cp_messageoptions.c:45
-#, fuzzy
 msgid "research_halted"
-msgstr "研发完工"
+msgstr "研发中断"
 
 #: client/campaign/cp_messageoptions.c:46
 msgid "research_completed"
@@ -15385,9 +15005,8 @@ msgid "transfer_aliens_defered"
 msgstr "传输被延迟"
 
 #: client/campaign/cp_messageoptions.c:58
-#, fuzzy
 msgid "transfer_uforecovery_finished"
-msgstr "The transfers you ordered for %s have arrived and are ready to go."
+msgstr "战场资源传输完毕"
 
 #: client/campaign/cp_messageoptions.c:59
 msgid "ufo_spotted"
@@ -15582,9 +15201,9 @@ msgid "Paid %i credits for aircraft"
 msgstr "花费 %i 维护航空机"
 
 #: client/campaign/cp_nations.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Paid %i credits for upkeep of %s"
-msgstr "花费 %i 维护基地 %s"
+msgstr "花费 %i 用于维护基地 %s"
 
 #: client/campaign/cp_nations.c:177
 #, c-format
@@ -15640,9 +15259,9 @@ msgid "No craft available, no pilot assigned, or no tactical teams assigned to a
 msgstr "没有可用的航空机，没有飞行员或没有作战小队。"
 
 #: client/campaign/cp_popup.c:423
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s (%i/%i)\t%s\t%s"
-msgstr "%s\t%s\t(%i/%i)\n"
+msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/campaign/cp_popup.c:441
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
@@ -15664,7 +15283,7 @@ msgstr ""
 "航空机无法起飞。\n"
 
 #: client/campaign/cp_produce.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "Production queue for %s is empty"
 msgstr "基地 %s 的生产线空闲"
 
@@ -15673,38 +15292,38 @@ msgid "Production queue empty"
 msgstr "生产线空闲"
 
 #: client/campaign/cp_produce.c:340 client/campaign/cp_produce.c:362
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough credits to finish production in %s.\n"
 msgstr "%s 基地的生产线资金不足。\n"
 
 #: client/campaign/cp_produce.c:350
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Production postponed.\n"
 msgstr "%s 基地的仓库空间不足。生产延期。\n"
 
 #: client/campaign/cp_produce.c:372
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in %s. Production postponed.\n"
 msgstr "%s 基地的机用平台空间不足。生产延期。\n"
 
 #: client/campaign/cp_produce.c:405
-#, fuzzy, c-format
+#, c-format
 msgid "The production of %s at %s has finished."
-msgstr " %s 的生产制造完毕。"
+msgstr " %s已在%s生产制造完毕。"
 
 #: client/campaign/cp_produce.c:406 client/campaign/cp_produce.c:446
 msgid "Production finished"
 msgstr "生产完成"
 
 #: client/campaign/cp_produce.c:433
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed.\n"
 msgstr "基地%s的仓库空间不足。分解延期。\n"
 
 #: client/campaign/cp_produce.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "The disassembling of %s at %s has finished."
-msgstr "%s的分解结束。"
+msgstr "%s的%s分解结束。"
 
 #: client/campaign/cp_produce_callbacks.c:130
 msgid "Not enough workers"
@@ -15795,14 +15414,13 @@ msgid "Stored at: %s\n"
 msgstr "状态：\t%s\n"
 
 #: client/campaign/cp_produce_callbacks.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembly time: %ih\n"
-msgstr "分解时间 \t%ih\n"
+msgstr "分解时间: %ih\n"
 
 #: client/campaign/cp_produce_callbacks.c:392
-#, fuzzy
 msgid "Components:\n"
-msgstr "材料零件: "
+msgstr "材料零件:\n"
 
 #: client/campaign/cp_produce_callbacks.c:426
 #, c-format
@@ -15892,9 +15510,8 @@ msgid "Research prerequisites of %s do not met at %s. Research halted!"
 msgstr ""
 
 #: client/campaign/cp_research.c:846
-#, fuzzy
 msgid "Research halted"
-msgstr "研发完成"
+msgstr "研发中断"
 
 #: client/campaign/cp_research.c:1215
 msgid "No description available."
@@ -15933,40 +15550,33 @@ msgid "Progress: %.1f%%"
 msgstr "进度： %.1f%%"
 
 #: client/campaign/cp_research_callbacks.c:128
-#, fuzzy
 msgid "Progress: not available."
 msgstr "进度：没有进展"
 
 #: client/campaign/cp_research_callbacks.c:133
-#, fuzzy
 msgid "Status: under research"
 msgstr "状态：正在研究"
 
 #: client/campaign/cp_research_callbacks.c:134
-#, fuzzy
 msgid "Status: this research topic is currently being processed in laboratories"
-msgstr "状态：研究停止"
+msgstr "状态：该项目正处于研究阶段"
 
 #: client/campaign/cp_research_callbacks.c:137
-#, fuzzy
 msgid "Status: research paused"
-msgstr "状态：研究停止"
+msgstr "状态：研发停止"
 
 #: client/campaign/cp_research_callbacks.c:138
-#, fuzzy
 msgid "Status: research topic currently paused."
-msgstr "状态：研究停止"
+msgstr "状态：该项目研发中断"
 
 #: client/campaign/cp_research_callbacks.c:141
 #: client/campaign/cp_research_callbacks.c:142
-#, fuzzy
 msgid "Status: research finished"
 msgstr "状态：研发完成"
 
 #: client/campaign/cp_research_callbacks.c:147
-#, fuzzy
 msgid "Status: not possible to research"
-msgstr "状态：正在研究"
+msgstr "状态：不能研究"
 
 #: client/campaign/cp_research_callbacks.c:148
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
@@ -15974,7 +15584,6 @@ msgstr "状态：还未获得研究这项科技的所有的材料或背景知识
 
 #: client/campaign/cp_research_callbacks.c:150
 #: client/campaign/cp_research_callbacks.c:151
-#, fuzzy
 msgid "Status: unknown technology"
 msgstr "状态：未知科技"
 
@@ -16273,9 +15882,9 @@ msgid "Pilot %s"
 msgstr "飞行员 %s"
 
 #: client/campaign/cp_transfer.c:375 client/campaign/cp_transfer.c:557
-#, fuzzy, c-format
+#, c-format
 msgid "Corpse of %s"
-msgstr "尸体 %s （%i 可用）"
+msgstr "尸体 %s"
 
 #: client/campaign/cp_transfer.c:407 client/campaign/cp_transfer.c:601
 #, c-format
@@ -16303,9 +15912,9 @@ msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "不能运输 - 这个基地没有居住区。"
 
 #: client/campaign/cp_transfer.c:568
-#, fuzzy, c-format
+#, c-format
 msgid "Alive %s"
-msgstr "活的："
+msgstr "活的 %s"
 
 #: client/campaign/cp_transfer.c:580
 msgid "Alien Containment is empty."
@@ -16324,7 +15933,7 @@ msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "不能运输 - 这个基地没有可用的平台。"
 
 #: client/campaign/cp_transfer.c:714
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Storage, items are removed!"
 msgstr "%s 基地没有仓库，设备被移除！"
 
@@ -16336,39 +15945,38 @@ msgid "Transport mission"
 msgstr "运输任务"
 
 #: client/campaign/cp_transfer.c:732
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
 msgstr "%s 基地没有居住区，员工不得雇用！"
 
 #: client/campaign/cp_transfer.c:768
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
-msgstr "%s 基地没有外星人收容所，外星人被转移！"
+msgstr "%s 基地没有外星人收容所，外星人被处理掉了！"
 
 #: client/campaign/cp_transfer.c:796
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have enough free space in hangars. Aircraft is lost!"
 msgstr " %s 基地没有空闲的机用平台。航空机丢失！"
 
 #: client/campaign/cp_transfer.c:884 client/campaign/cp_transfer.c:1096
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission started, cargo is being transported to %s"
 msgstr "运输开始， 货物将送到 %s 基地"
 
 #: client/campaign/cp_transfer.c:951
-#, fuzzy, c-format
+#, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
-msgstr[0] "（可以接受%i个活外星人）\n"
-msgstr[1] "（可以接受%i个活外星人）\n"
+msgstr[0] "（可以接受%i个活外星人）"
+msgstr[1] "（可以接受%i个活外星人）"
 
 #: client/campaign/cp_transfer.c:970
-#, fuzzy
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
 msgstr "目的基地不再存在！运输的货物丢失，人员未雇用。"
 
 #: client/campaign/cp_transfer.c:975
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission ended, unloading cargo in %s"
 msgstr "运输结束，在基地 %s 卸载货物"
 
@@ -16429,13 +16037,13 @@ msgid "No power supplies in this base.\n"
 msgstr "这个基地没有电力。\n"
 
 #: client/campaign/cp_ufo.c:131
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Secured crashed %s (%.0f%%)\n"
 msgstr ""
 "\n"
-"清理坠落 %s\n"
+"清理坠落 %s (%.0f%%)\n"
 
 #: client/campaign/cp_ufo.c:133
 #, c-format
@@ -16452,9 +16060,9 @@ msgid "A UFO is flying toward %s"
 msgstr "一架UFO接近 %s"
 
 #: client/campaign/cp_ufo.c:778
-#, fuzzy, c-format
+#, c-format
 msgid "Our radar detected a new UFO near %s"
-msgstr "我们的雷达侦测到一个新的UFO"
+msgstr "雷达侦测到一个新出现的UFO正在靠近%s"
 
 #: client/campaign/cp_ufo.c:783
 msgid "Our radar has lost the tracking on a UFO"
@@ -16606,7 +16214,7 @@ msgid "Re: "
 msgstr "回复："
 
 #: client/campaign/cp_ufopedia.c:541
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
@@ -16614,13 +16222,11 @@ msgid ""
 msgstr ""
 "FROM： %s\n"
 "TO： %s\n"
-"日期： %s\n"
-"标题： %s%s\n"
+"日期： %s"
 
 #: client/campaign/cp_ufopedia.c:616
-#, fuzzy
 msgid "(complete)"
-msgstr "稍好"
+msgstr "（已研发）"
 
 #: client/campaign/cp_ufopedia.c:674
 msgid "No pre-research description available."
@@ -16662,24 +16268,22 @@ msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
 
 #: client/campaign/cp_uforecovery.c:75
-#, fuzzy, c-format
+#, c-format
 msgid "%s was transfered to %s."
-msgstr "%s 已经升级到 %s。\n"
+msgstr "%s 已经运输到 %s。"
 
 #: client/campaign/cp_uforecovery.c:76
-#, fuzzy
 msgid "UFO Recovered"
 msgstr "接收UFO"
 
 #: client/campaign/cp_uforecovery_callbacks.c:170
-#, fuzzy
 msgid "No free UFO yard available."
-msgstr "没有UFO挂架或场地空闲"
+msgstr "没有空余的UFO停机场可用"
 
 #: client/campaign/cp_uforecovery_callbacks.c:220
-#, fuzzy, c-format
+#, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to %s."
-msgstr "从战场收缴 %s 。UFO运送到基地（%s）。"
+msgstr "从战场收缴 %s 。UFO已运送到%s。"
 
 #: client/campaign/cp_uforecovery_callbacks.c:222
 #: client/campaign/cp_uforecovery_callbacks.c:510
@@ -16835,6 +16439,12 @@ msgid ""
 "Civilians killed:\t\t%i\n"
 "Civilians killed by enemy:\t\t%i\n"
 msgstr ""
+"杀敌数：\t\t%i\n"
+"队伍幸存：\t\t%i\n"
+"敌人幸存：\t\t%i\n"
+"走火误伤：\t\t%i\n"
+"平民死亡：\t\t%i\n"
+"被敌人杀害的平民：\t\t%i\n"
 
 #: client/cl_inventory_callbacks.c:43
 msgid "skill_close"
@@ -16862,14 +16472,13 @@ msgid "Size:\t%i\n"
 msgstr "大小：\t%i\n"
 
 #: client/cl_inventory_callbacks.c:132
-#, fuzzy
 msgid "^BDamage type:\tProtection:\n"
-msgstr "种类：\t防护:\n"
+msgstr "伤害种类：\t防护:\n"
 
 #: client/cl_inventory_callbacks.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "%s weapon\n"
-msgstr "%s 使用\n"
+msgstr "%s武器\n"
 
 #: client/cl_inventory_callbacks.c:144 client/cl_inventory_callbacks.c:183
 #: client/cl_inventory_callbacks.c:186
@@ -16907,27 +16516,25 @@ msgid "Spreads:\t%g\n"
 msgstr "范围：\t%g\n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%s. No detailed info available.\n"
-msgstr "没有说明可用。"
+msgstr "%s.没有详细资料。\n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy
 msgid "Ammunition"
-msgstr "外星人沟通"
+msgstr "弹药"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy
 msgid "Weapon"
 msgstr "武器"
 
 #: client/cl_inventory_callbacks.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "%s ammo-less weapon\n"
 msgstr "%s弹药快用光了\n"
 
 #: client/cl_inventory_callbacks.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "%s auxiliary equipment\n"
 msgstr "%s 辅助设备\n"
 
@@ -17172,14 +16779,13 @@ msgid "Invalid or full team"
 msgstr "队伍无法使用或者满员"
 
 #: client/multiplayer/mp_serverlist.c:234
-#, fuzzy, c-format
+#, c-format
 msgid "Team %d"
-msgstr "队伍"
+msgstr "队伍 %d"
 
 #: client/multiplayer/mp_serverlist.c:236
-#, fuzzy
 msgid "No team"
-msgstr "注意"
+msgstr "没有队伍"
 
 #: client/multiplayer/mp_serverlist.c:300
 #, c-format
