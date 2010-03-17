@@ -115,6 +115,9 @@ void LM_AddToScene (void)
 
 		if (lm->parent) {
 			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
+			if (ent.tagent == NULL)
+				Com_Error(ERR_DROP, "Invalid entity num for local model: %i",
+						lm->parent->renderEntityNum);
 			ent.tagname = lm->tagname;
 			ent.lighting = &lm->parent->lighting;
 		} else {

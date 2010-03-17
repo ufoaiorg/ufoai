@@ -226,7 +226,7 @@ static void SP_misc_model (const localEntityParse_t *entData)
 	lm = LM_AddModel(entData->model, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
 	if (lm) {
 		if (LM_GetByID(entData->targetname) != NULL)
-			Com_Error(ERR_DROP, "Ambigious targetname '%s'", entData->targetname);
+			Com_Error(ERR_DROP, "Ambiguous targetname '%s'", entData->targetname);
 		Q_strncpyz(lm->id, entData->targetname, sizeof(lm->id));
 		Q_strncpyz(lm->target, entData->target, sizeof(lm->target));
 		Q_strncpyz(lm->tagname, entData->tagname, sizeof(lm->tagname));
