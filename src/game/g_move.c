@@ -195,7 +195,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	int dv, dir;
 	byte numdv, length;
 	pos3_t pos;
-	float div, truediv, tu;
+	float div, truediv;
 	int contentFlags;
 	vec3_t pointTrace;
 	byte* stepAmount = NULL;
@@ -244,7 +244,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	/* assemble dv-encoded move data */
 	VectorCopy(to, pos);
 	numdv = 0;
-	tu = 0;
 	initTU = ent->TU;
 
 	while ((dv = gi.MoveNext(gi.pathingMap, pos, crouchingState))
@@ -261,6 +260,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
+		int usedTUs = 0;
 		/* no floor inventory at this point */
 		FLOOR(ent) = NULL;
 
@@ -280,7 +280,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			if (status & VIS_STOP) {
 				autoCrouchRequired = qfalse;
 				if (ent->moveinfo.steps == 0)
-					tu += TU_TURN;
+					usedTUs += TU_TURN;
 				break;
 			}
 
@@ -291,7 +291,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				 * send the turn event if this is our first step */
 				if (oldDir != ent->dir && ent->moveinfo.steps == 0) {
 					G_EventActorTurn(ent);
-					tu += TU_TURN;
+					usedTUs += TU_TURN;
 				}
 				break;
 			}
@@ -306,9 +306,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			truediv = div;
 			if (G_IsCrouched(ent) && dir < CORE_DIRECTIONS)
 				div *= TU_CROUCH_MOVING_FACTOR;
-			if ((int) (tu + div) > ent->TU)
+			if ((int) (usedTUs + div) > ent->TU)
 				break;
-			tu += div;
+			usedTUs += div;
 
 			/* slower if crouched */
 			if (G_IsCrouched(ent))
@@ -390,7 +390,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				status = G_CheckVisTeamAll(ent->team, qfalse, ent);
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
-				ent->TU = max(0, initTU - (int) tu);
+				ent->TU = max(0, initTU - usedTUs);
 
 				clientAction = ent->clientAction;
 				oldState = ent->state;
@@ -441,7 +441,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		if (g_notu != NULL && g_notu->integer)
 			ent->TU = initTU;
 		else
-			ent->TU = max(0, initTU - (int) tu);
+			ent->TU = max(0, initTU - usedTUs);
 
 		G_SendStats(ent);
 
