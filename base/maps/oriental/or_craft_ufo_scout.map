@@ -384,7 +384,6 @@
 }
 // brush 40
 {
-( 289 416 56 ) ( 289 416 78 ) ( 289 256 78 ) tex_common/weaponclip 0 8 90 0.5 -0.5 33554432 0 0
 ( 319 256 64 ) ( 319 256 86 ) ( 319 416 86 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
 ( 256 256 86 ) ( 334 256 86 ) ( 334 256 64 ) tex_common/weaponclip 16 10 90 0.5 0.5 33554432 0 0
 ( 326 352 86 ) ( 248 352 86 ) ( 248 352 64 ) tex_common/weaponclip 16 10 90 0.5 0.5 33554432 0 0
@@ -406,7 +405,6 @@
 // brush 42
 {
 ( 256 416 86 ) ( 256 256 86 ) ( 256 256 64 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
-( 286 256 78 ) ( 286 416 78 ) ( 286 416 56 ) tex_common/weaponclip 0 8 90 0.5 -0.5 33554432 0 0
 ( 256 256 86 ) ( 334 256 86 ) ( 334 256 64 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
 ( 326 352 86 ) ( 248 352 86 ) ( 248 352 64 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
 ( 254 254 84 ) ( 332 254 84 ) ( 332 414 84 ) tex_common/weaponclip 4 4 -90 0.5 0.5 33554432 0 0
@@ -733,9 +731,9 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"origin" "82.4538 632.289 36"
+"origin" "79.4538 619.289 115"
 "anim" "moving3"
-"angle" "-75.8078"
+"angles" "0 -75.8078 0"
 }
 // entity 4
 {
@@ -772,7 +770,7 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"origin" "50 178 36"
+"origin" "61 173 115"
 "anim" "moving3"
 }
 // entity 9
@@ -788,7 +786,7 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"origin" "18 370 36"
+"origin" "30 366 115"
 "anim" "moving3"
 }
 // entity 11
