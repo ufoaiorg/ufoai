@@ -114,6 +114,7 @@ void LM_AddToScene (void)
 		ent.skinnum = lm->skin;
 
 		if (lm->parent) {
+			/** @todo what if the tagent is not rendered due to different level flags? */
 			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
 			if (ent.tagent == NULL)
 				Com_Error(ERR_DROP, "Invalid entity num for local model: %i",
