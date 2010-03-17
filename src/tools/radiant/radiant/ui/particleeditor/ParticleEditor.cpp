@@ -54,7 +54,7 @@ namespace ui
 	// Show the dialog and enter recursive main loop
 	void ParticleEditor::showAndBlock (const std::string& particleID)
 	{
-		scripts::IParticlePtr particle = scripts::Particle::load(particleID);
+		scripts::IParticlePtr particle = scripts::loadParticle(particleID);
 
 		// Show the dialog
 		gtk_widget_show_all(_widget);
