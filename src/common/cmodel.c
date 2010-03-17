@@ -958,9 +958,11 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
  * @note Transforms coordinates and stuff for assembled maps
  * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
+ * @param[in] tileIndex Used to make targetname and target unique over all
+ * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
+static void CMod_LoadEntityString (lump_t * l, vec3_t shift, int tileIndex)
 {
 	const char *token;
 	const char *es;
@@ -1029,6 +1031,8 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				/* Now update the model number to reflect prior tiles loaded. */
 				num += numInline;
 				Q_strcat(mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
+			} else if (!strcmp(keyname, "targetname") || !strcmp(keyname, "target")) {
+				Q_strcat(mapEntityString, va("%s \"%s-%i\" ", keyname, token, tileIndex), MAX_MAP_ENTSTRING);
 			} else {
 				/* just store key and value */
 				Q_strcat(mapEntityString, va("%s \"%s\" ", keyname, token), MAX_MAP_ENTSTRING);
@@ -1122,7 +1126,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	CMod_LoadBrushSides(&header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(&header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(&header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift);
+	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift, numTiles);
 	if (day)
 		CMod_LoadLighting(&header.lumps[LUMP_LIGHTING_DAY]);
 	else

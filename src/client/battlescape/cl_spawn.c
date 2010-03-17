@@ -225,6 +225,8 @@ static void SP_misc_model (const localEntityParse_t *entData)
 	/* add it */
 	lm = LM_AddModel(entData->model, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
 	if (lm) {
+		if (LM_GetByID(entData->targetname) != NULL)
+			Com_Error(ERR_DROP, "Ambigious targetname '%s'", entData->targetname);
 		Q_strncpyz(lm->id, entData->targetname, sizeof(lm->id));
 		Q_strncpyz(lm->target, entData->target, sizeof(lm->target));
 		Q_strncpyz(lm->tagname, entData->tagname, sizeof(lm->tagname));
@@ -232,6 +234,10 @@ static void SP_misc_model (const localEntityParse_t *entData)
 		if (lm->animname[0] != '\0' && lm->tagname[0] != '\0') {
 			Com_Printf("Warning: Model has animation set, but also a tag - use the tag and skip the animation\n");
 			lm->animname[0] = '\0';
+		}
+
+		if (lm->tagname[0] != '\0' && lm->target[0] == '\0') {
+			Com_Error(ERR_DROP, "Warning: Model has tag set, but no target given");
 		}
 
 		lm->think = LMT_Init;

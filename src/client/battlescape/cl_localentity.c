@@ -124,13 +124,13 @@ void LM_AddToScene (void)
 			VectorCopy(lm->angles, ent.angles);
 			VectorCopy(lm->scale, ent.scale);
 			ent.lighting = &lm->lighting;
-		}
 
-		if (lm->animname[0] != '\0') {
-			ent.as = lm->as;
-			/* do animation */
-			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
-			lm->lighting.dirty = qtrue;
+			if (lm->animname[0] != '\0') {
+				ent.as = lm->as;
+				/* do animation */
+				R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
+				lm->lighting.dirty = qtrue;
+			}
 		}
 
 		/* renderflags like RF_PULSE */
@@ -227,6 +227,9 @@ void LE_SetThink (le_t *le, void (*think) (le_t *le))
 localModel_t *LM_GetByID (const char *id)
 {
 	int i;
+
+	if (id == NULL || id[0] == '\0')
+		return NULL;
 
 	for (i = 0; i < cl.numLMs; i++) {
 		if (!strcmp(cl.LMs[i].id, id))
@@ -980,8 +983,7 @@ void LMT_Init (localModel_t* localModel)
 	if (localModel->target[0] != '\0') {
 		localModel->parent = LM_GetByID(localModel->target);
 		if (!localModel->parent)
-			Com_Error(ERR_DROP, "Could not find local model entity with the id: '%s'. Make sure the order of the entities is correct",
-					localModel->target);
+			Com_Error(ERR_DROP, "Could not find local model entity with the id: '%s'.", localModel->target);
 	}
 }
 
