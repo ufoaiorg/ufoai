@@ -231,3 +231,32 @@ int CL_GetHitProbability (const le_t* actor)
 
 	return 100 * (hitchance * (0.125) * n);
 }
+
+static const float mapZBorder = -(UNIT_HEIGHT * 5);
+/**
+ * @brief Checks whether give position is still inside the map borders
+ * @param[in] position The position to check (world coordinate)
+ * @param[in] delta The delta from the map boundaries. Positive values to make
+ * the position being earlier out of the map, negative values to let the position
+ * be later out of the map
+ * @return @c true if the given position is out of the map boundaries, @c false
+ * otherwise.
+ */
+qboolean CL_OutsideMap (const vec3_t position, const float delta)
+{
+	if (position[0] < mapMin[0] - delta || position[0] > mapMax[0] + delta)
+		return qtrue;
+
+	if (position[1] < mapMin[1] - delta || position[1] > mapMax[1] + delta)
+		return qtrue;
+
+	/* if a le is deeper than 5 levels below the latest walkable level (0) then
+	 * we can assume that it is outside the world
+	 * This is needed because some maps (e.g. the dam map) has unwalkable levels
+	 * that just exists for detail reasons */
+	if (position[2] < mapZBorder)
+		return qtrue;
+
+	/* still inside the map borders */
+	return qfalse;
+}

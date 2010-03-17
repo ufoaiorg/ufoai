@@ -172,7 +172,7 @@ typedef struct localModel_s {
 	void (*think) (struct localModel_s * localModel);
 
 	struct model_s *model;
-} localModel_t;							/* local models */
+} localModel_t;
 
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
@@ -181,7 +181,6 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 extern cvar_t* cl_le_debug;
 extern cvar_t *cl_leshowinvis;
 
-qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
