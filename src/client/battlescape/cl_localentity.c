@@ -112,6 +112,7 @@ void LM_AddToScene (void)
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
+		VectorCopy(lm->scale, ent.scale);
 
 		if (lm->parent) {
 			/** @todo what if the tagent is not rendered due to different level flags? */
@@ -126,7 +127,6 @@ void LM_AddToScene (void)
 			VectorCopy(lm->origin, ent.origin);
 			VectorCopy(lm->origin, ent.oldorigin);
 			VectorCopy(lm->angles, ent.angles);
-			VectorCopy(lm->scale, ent.scale);
 			ent.lighting = &lm->lighting;
 
 			if (lm->animname[0] != '\0') {
