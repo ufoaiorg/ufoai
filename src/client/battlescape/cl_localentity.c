@@ -967,6 +967,9 @@ void LMT_Init (localModel_t* localModel)
 		if (!localModel->parent)
 			Com_Error(ERR_DROP, "Could not find local model entity with the id: '%s'.", localModel->target);
 	}
+
+	/* no longer needed */
+	localModel->think = NULL;
 }
 
 /**
