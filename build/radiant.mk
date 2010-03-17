@@ -64,6 +64,7 @@ RADIANT_SRCS_CPP = \
 	\
 	$(RADIANT_BASE)/radiant/ufoscript/UFOScript.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/common/Parser.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/common/ScriptValues.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/common/DataBlock.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
