@@ -123,7 +123,6 @@ void LM_AddToScene (void)
 			ent.tagname = lm->tagname;
 			ent.lighting = &lm->parent->lighting;
 		} else {
-			ent.as.frame = lm->frame;
 			VectorCopy(lm->origin, ent.origin);
 			VectorCopy(lm->origin, ent.oldorigin);
 			VectorCopy(lm->angles, ent.angles);
@@ -134,6 +133,8 @@ void LM_AddToScene (void)
 				/* do animation */
 				R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 				lm->lighting.dirty = qtrue;
+			} else {
+				ent.as.frame = lm->frame;
 			}
 		}
 

@@ -161,7 +161,7 @@ typedef struct localModel_s {
 	int renderEntityNum;	/**< entity number in the renderer entity array */
 	int skin;
 	int renderFlags;	/**< effect flags */
-	int frame;	/**< which frame to show */
+	int frame;	/**< which static frame to show (this can't be used if animname is set) */
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
