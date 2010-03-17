@@ -109,29 +109,32 @@ void LM_AddToScene (void)
 
 		/* set entity values */
 		memset(&ent, 0, sizeof(ent));
-		VectorCopy(lm->origin, ent.origin);
-		VectorCopy(lm->origin, ent.oldorigin);
-		VectorCopy(lm->angles, ent.angles);
-		VectorCopy(lm->scale, ent.scale);
 		assert(lm->model);
 		ent.model = lm->model;
 		ent.skinnum = lm->skin;
-		ent.as.frame = lm->frame;
-		if (lm->animname[0]) {
+
+		if (lm->parent) {
+			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
+			ent.tagname = lm->tagname;
+			ent.lighting = &lm->parent->lighting;
+		} else {
+			ent.as.frame = lm->frame;
+			VectorCopy(lm->origin, ent.origin);
+			VectorCopy(lm->origin, ent.oldorigin);
+			VectorCopy(lm->angles, ent.angles);
+			VectorCopy(lm->scale, ent.scale);
+			ent.lighting = &lm->lighting;
+		}
+
+		if (lm->animname[0] != '\0') {
 			ent.as = lm->as;
 			/* do animation */
 			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 			lm->lighting.dirty = qtrue;
 		}
 
-		if (lm->parent) {
-			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
-			ent.tagname = lm->tag;
-		}
-
 		/* renderflags like RF_PULSE */
 		ent.flags = lm->renderFlags;
-		ent.lighting = &lm->lighting;
 
 		/* add it to the scene */
 		lm->renderEntityNum = R_AddEntity(&ent);
@@ -235,7 +238,6 @@ localModel_t *LM_GetByID (const char *id)
 /**
  * @brief Prepares local (not known or handled by the server) models to the map, which will be added later in LM_AddToScene().
  * @param[in] model The model name.
- * @param[in] particle Particle to be used with model (if there is any).
  * @param[in] origin Origin of the model (position on map).
  * @param[in] angles Angles of the model (how it should be rotated after adding to map).
  * @param[in] scale Scaling of the model (how it should be scaled after adding to map).
@@ -246,7 +248,7 @@ localModel_t *LM_GetByID (const char *id)
  * @sa CL_SpawnParseEntitystring
  * @sa LM_AddToScene
  */
-localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
+localModel_t *LM_AddModel (const char *model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
 {
 	localModel_t *lm;
 
@@ -257,7 +259,6 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 
 	memset(lm, 0, sizeof(*lm));
 	Q_strncpyz(lm->name, model, sizeof(lm->name));
-	Q_strncpyz(lm->particle, particle, sizeof(lm->particle));
 	VectorCopy(origin, lm->origin);
 	VectorCopy(angles, lm->angles);
 	/* check whether there is already a model with that number */
@@ -332,6 +333,17 @@ void LE_Think (void)
 		LE_ExecuteThink(le);
 		/* do animation - even for invisible entities */
 		R_AnimRun(&le->as, le->model1, cls.frametime * 1000);
+	}
+}
+
+void LM_Think (void)
+{
+	int i;
+	localModel_t *lm;
+
+	for (i = 0, lm = cl.LMs; i < cl.numLMs; i++, lm++) {
+		if (lm->think)
+			lm->think(lm);
 	}
 }
 
@@ -960,6 +972,16 @@ void LET_BrushModel (le_t *le)
 	if (le->type == ET_ROTATING) {
 		const float angle = le->angles[le->dir] + (1.0 / le->rotationSpeed);
 		le->angles[le->dir] = (angle >= 360.0 ? angle - 360.0 : angle);
+	}
+}
+
+void LMT_Init (localModel_t* localModel)
+{
+	if (localModel->target[0] != '\0') {
+		localModel->parent = LM_GetByID(localModel->target);
+		if (!localModel->parent)
+			Com_Error(ERR_DROP, "Could not find local model entity with the id: '%s'. Make sure the order of the entities is correct",
+					localModel->target);
 	}
 }
 

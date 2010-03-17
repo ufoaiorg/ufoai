@@ -144,13 +144,13 @@ typedef struct le_s {
 #define MAX_LOCALMODELS		512
 
 /** @brief local models */
-typedef struct lm_s {
+typedef struct localModel_s {
 	char id[MAX_VAR];	/**< in case this local model is referenced by some other local
 						 * model (e.g. for tags) - this id is set in the mapeditor */
 	char name[MAX_QPATH];	/**< the name of the model file */
-	char particle[MAX_VAR];
-	char tag[MAX_VAR];		/**< in case a tag should be used to place the model */
-	struct lm_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
+	char target[MAX_VAR];
+	char tagname[MAX_VAR];		/**< in case a tag should be used to place the model */
+	struct localModel_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	qboolean inuse;
 
 	vec3_t origin;
@@ -167,6 +167,9 @@ typedef struct lm_s {
 	animState_t as;
 
 	static_lighting_t lighting;
+
+	/** is called every frame */
+	void (*think) (struct localModel_s * localModel);
 
 	struct model_s *model;
 } localModel_t;							/* local models */
@@ -215,7 +218,9 @@ void LET_BrushModel(le_t *le);
 void LE_DoEndPathMove(le_t *le);
 
 /* local model functions */
-localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
+void LM_Think(void);
+void LMT_Init(localModel_t *localModel);
+localModel_t *LM_AddModel(const char *model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 
