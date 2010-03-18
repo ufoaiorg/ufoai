@@ -1052,6 +1052,16 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
+	r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_citylights", map), it_wrappic);
+	if (r_globeEarth.overlay != r_noTexture) {
+		const vec3_t whiteEmissiveMaterial = {1.0, 1.0, 1.0};
+		const vec3_t blankMaterial = {0.0, 0.0, 0.0};
+		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteEmissiveMaterial);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, blankMaterial);
+		r_globeEarth.overlay = NULL;
+	}
+
 	glDisable(GL_DEPTH_TEST);
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
