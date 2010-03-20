@@ -159,7 +159,11 @@ static qboolean CL_LanguageTest (const char *localeID)
 	if (fs_i18ndir->string[0] != '\0')
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
+#ifdef LOCALEDIR
+		Com_sprintf(languagePath, sizeof(languagePath), LOCALEDIR);
+#else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());
+#endif
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest: using mo files from '%s'\n", languagePath);
 	Q_strcat(languagePath, localeID, sizeof(languagePath));
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));

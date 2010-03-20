@@ -47,6 +47,8 @@ exec_prefix=@exec_prefix@
 BINDIR=@bindir@
 datarootdir=@datarootdir@
 DATADIR=@datadir@/ufoai
+LIBDIR=@libdir@/ufoai
+LOCALEDIR=@localedir@
 INSTALL=./install-sh
 
 VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
@@ -113,14 +115,20 @@ echo_info:
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) pk3' to assemble the pk3 files"
 	@echo
+	@echo "Installation"
+	@echo "-----------------------"
+	@echo "Install data into $(DATADIR)"
+	@echo "Install libs into $(LIBDIR)"
+	@echo "Install translations into $(LOCALEDIR)"
+	@echo "Install binaries into $(BINDIR)"
+	@echo
+	@echo "Built for $(BUILDDIR)"
 ifeq ($(BUILD_UFORADIANT),1)
 	@echo "UFORadiant"
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) uforadiant' to compile radiant mapeditor"
 	@echo
 endif
-	@echo "Built for $(BUILDDIR)"
-	@echo
 
 include build/lang.mk
 include build/install.mk

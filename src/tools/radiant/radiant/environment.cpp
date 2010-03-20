@@ -60,9 +60,9 @@ void environment_init (void)
 	home_path = path.c_str();
 
 	path.clear();
-#ifdef PKGDATADIR
-	if (g_file_test(PKGDATADIR"/"RADIANT_DIRECTORY, (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())
-		app_path << PKGDATADIR"/"RADIANT_DIRECTORY;
+#ifdef DATADIR
+	if (g_file_test(DATADIR"/"RADIANT_DIRECTORY, (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())
+		app_path << DATADIR"/"RADIANT_DIRECTORY;
 	else
 #endif
 	{
