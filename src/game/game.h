@@ -138,17 +138,11 @@ typedef struct {
 	void (IMPORT *SetModel) (edict_t * ent, const char *name);
 
 	/** @brief collision detection
-	 * @note traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
+	 * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
-	 * returns value of type trace_t with attributes:
-	 * allsolid - if true, entire trace was in a wall
-	 * startsolid - if true, trace started in a wall
-	 * fraction - fraction of trace completed (1.0 if totally completed)
-	 * endpos - point where trace ended
-	 * plane - surface normal at hitpoisee
-	 * ent - entity hit by trace
+	 * @return the trace data
 	 */
-	trace_t (IMPORT *trace) (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+	trace_t (IMPORT *trace) (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passent, int contentmask);
 
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
@@ -162,14 +156,16 @@ typedef struct {
 	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, int areatype);
 	int (IMPORT *TouchEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
 
+	/** @brief fast version of a line trace but without including entities */
 	qboolean (IMPORT *TestLine) (const vec3_t start, const vec3_t stop, const int levelmask);
+	/** @brief fast version of a line trace that also includes entities */
 	qboolean (IMPORT *TestLineWithEnt) (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 	float (IMPORT *GrenadeTarget) (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t * path, pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
+	void (IMPORT *MoveCalc) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t * path, const pos3_t from, byte crouchingState, int distance, pos_t ** forbiddenList, int forbiddenListLength);
 	void (IMPORT *MoveStore) (pathing_t * path);
 	pos_t (IMPORT *MoveLength) (const pathing_t * path, const pos3_t to, byte crouchingState, qboolean stored);
-	int (IMPORT *MoveNext) (const routing_t * map, actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState);
+	int (IMPORT *MoveNext) (const pathing_t *path, const pos3_t from, byte crouchingState);
 	int (IMPORT *GridFloor) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);
 	int (IMPORT *GetTUsForDirection) (int dir);
 	pos_t (IMPORT *GridFall) (const routing_t * map, actorSizeEnum_t actorSize, const pos3_t pos);

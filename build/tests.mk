@@ -36,14 +36,19 @@ TESTS_SRCS = \
 	server/sv_world.c \
 	server/sv_clientstub.c \
 	\
-	game/q_shared.c \
-	game/inv_shared.c \
-	game/inventory.c \
 	shared/byte.c \
 	shared/infostring.c \
 	shared/mathlib.c \
 	shared/parse.c \
-	shared/shared.c
+	shared/shared.c \
+	\
+	game/q_shared.c \
+	game/inv_shared.c \
+	game/inventory.c
+
+ifeq ($(HARD_LINKED_GAME),1)
+	TESTS_SRCS+=$(GAME_SRCS)
+endif
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	TESTS_SRCS += \

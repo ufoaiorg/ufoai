@@ -80,7 +80,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 	else
 		eventTime = nextTime;
 
-	if (eType == EV_ENT_APPEAR || eType == EV_INV_ADD || eType == EV_SPAWN_PARTICLE) {
+	if (eType == EV_ENT_APPEAR || eType == EV_INV_ADD || eType == EV_PARTICLE_APPEAR || eType == EV_PARTICLE_SPAWN) {
 		if (parsedDeath) { /* drop items after death (caused by impact) */
 			eventTime = impactTime + 400;
 			/* EV_INV_ADD messages are the last events sent after a death */
@@ -110,7 +110,8 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			int first;
 			int objIdx;
 			const objDef_t *obj;
-			int weapFdsIdx, fireDefIndex;
+			weaponFireDefIndex_t weapFdsIdx;
+			fireDefIndex_t fireDefIndex;
 
 			NET_ReadFormat(msg, eventData->formatString, &first, &objIdx, &weapFdsIdx, &fireDefIndex);
 

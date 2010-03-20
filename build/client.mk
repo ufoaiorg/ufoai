@@ -79,6 +79,7 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/world/e_event_entperish.c \
 	client/battlescape/events/event/world/e_event_explode.c \
 	client/battlescape/events/event/world/e_event_particleappear.c \
+	client/battlescape/events/event/world/e_event_particlespawn.c \
 	\
 	client/sound/s_music.c \
 	client/sound/s_main.c \
@@ -249,15 +250,13 @@ CLIENT_SRCS = \
 	server/sv_user.c \
 	server/sv_world.c \
 	\
-	game/q_shared.c \
-	game/inv_shared.c \
-	game/inventory.c \
-	\
 	client/renderer/r_array.c \
 	client/renderer/r_bsp.c \
 	client/renderer/r_draw.c \
+	client/renderer/r_corona.c \
 	client/renderer/r_entity.c \
 	client/renderer/r_font.c \
+	client/renderer/r_flare.c \
 	client/renderer/r_framebuffer.c \
 	client/renderer/r_image.c \
 	client/renderer/r_light.c \
@@ -290,7 +289,16 @@ CLIENT_SRCS = \
 	shared/images.c \
 	shared/infostring.c \
 	shared/parse.c \
-	shared/shared.c
+	shared/shared.c \
+	\
+	game/q_shared.c \
+	game/inv_shared.c \
+	game/inventory.c
+
+ifeq ($(HARD_LINKED_GAME),1)
+	CLIENT_SRCS+=$(GAME_SRCS)
+	CLIENT_CFLAGS+=$(GAME_CFLAGS)
+endif
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \

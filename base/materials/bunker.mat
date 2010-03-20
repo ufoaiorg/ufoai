@@ -64,3 +64,12 @@
 	specular 2.0
 	bump 2.0
 }
+
+{
+	material tex_lights/land_li_yellow
+	{
+		flare 2
+		color 0.7 0.7 0.5
+	}
+}
+

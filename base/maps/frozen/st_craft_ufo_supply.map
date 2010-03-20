@@ -1477,3 +1477,45 @@
 "origin" "224 544 8"
 "spawnflags" "255"
 }
+// entity 38
+{
+"classname" "misc_particle"
+"origin" "488 168 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 39
+{
+"classname" "misc_particle"
+"origin" "488 552 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 40
+{
+"classname" "misc_particle"
+"origin" "168 168 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 41
+{
+"classname" "misc_particle"
+"origin" "168 552 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 42
+{
+"classname" "misc_particle"
+"origin" "808 168 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 43
+{
+"classname" "misc_particle"
+"origin" "808 552 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

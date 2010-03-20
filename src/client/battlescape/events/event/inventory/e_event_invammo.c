@@ -31,7 +31,8 @@ void CL_InvAmmo (const eventRegister_t *self, struct dbuffer *msg)
 	invList_t	*ic;
 	le_t	*le;
 	int		number;
-	int		ammo, type, container, x, y;
+	int		ammo, type, x, y;
+	containerIndex_t container;
 
 	NET_ReadFormat(msg, self->formatString, &number, &ammo, &type, &container, &x, &y);
 
@@ -46,7 +47,7 @@ void CL_InvAmmo (const eventRegister_t *self, struct dbuffer *msg)
 
 	assert(container >= 0);
 	assert(container < MAX_INVDEFS);
-	ic = INVSH_SearchInInventory(&le->i, &csi.ids[container], x, y);
+	ic = INVSH_SearchInInventory(&le->i, INVDEF(container), x, y);
 	if (!ic)
 		return;
 

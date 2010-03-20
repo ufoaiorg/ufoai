@@ -308,3 +308,17 @@
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "angle" "-90"
 }
+// entity 17
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 18
+{
+"classname" "misc_particle"
+"origin" "160 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

@@ -89,7 +89,7 @@ void CL_RecalcRouting (const le_t* le)
 
 /**
  * @brief Add the local models to the scene
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * @sa LE_AddToScene
  * @sa LM_AddModel
  */
@@ -194,7 +194,7 @@ qboolean LE_IsLivingAndVisibleActor (const le_t *le)
 
 /**
  * @brief Register misc_models
- * @sa V_LoadMedia
+ * @sa CL_ViewLoadMedia
  */
 void LM_Register (void)
 {
@@ -243,7 +243,7 @@ localModel_t *LM_GetByID (const char *id)
  * @param[in] levelflags The levels in which the entity resides/is visible.
  * @param[in] renderFlags The flags for the renderer, eg. 'translucent'.
  * @note misc_model
- * @sa V_ParseEntitystring
+ * @sa CL_SpawnParseEntitystring
  * @sa LM_AddToScene
  */
 localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int renderFlags, const vec3_t scale)
@@ -709,7 +709,7 @@ static void LET_Projectile (le_t * le)
 			 * electrical and gas/chemical stunning)? */
 			if (le->fd->obj->dmgtype != csi.damStunGas)
 				LE_ActorBodyHit(le->ref3, impact, le->dir);
-			CL_PlayActorSound(le->ref3, SND_HURT);
+			CL_ActorPlaySound(le->ref3, SND_HURT);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
@@ -771,7 +771,7 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 				if (leVictim) {
 					if (fd->obj->dmgtype != csi.damStunGas)
 						LE_ActorBodyHit(leVictim, impact, le->dir);
-					CL_PlayActorSound(leVictim, SND_HURT);
+					CL_ActorPlaySound(leVictim, SND_HURT);
 				}
 			} else {
 				if (fd->impactSound[0]) {
@@ -965,7 +965,7 @@ void LET_BrushModel (le_t *le)
 
 /**
  * @brief Adds ambient sounds from misc_sound entities
- * @sa V_ParseEntitystring
+ * @sa CL_SpawnParseEntitystring
  */
 void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
 {
@@ -1049,7 +1049,7 @@ void _LE_NotFoundError (const int entnum, const char *file, const int line)
  * @brief Center the camera on the local entity's origin
  * @param le The local entity which origin is used to center the camera
  * @sa CL_CenterView
- * @sa V_CenterView
+ * @sa CL_ViewCenterAtGridPosition
  * @sa CL_CameraRoute
  */
 void LE_CenterView (const le_t *le)
@@ -1252,7 +1252,7 @@ static inline qboolean LE_IsOriginBrush (const le_t *const le)
 }
 
 /**
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * @sa CL_AddUGV
  * @sa CL_AddActor
  */
@@ -1280,7 +1280,6 @@ void LE_AddToScene (void)
 			memset(&ent, 0, sizeof(ent));
 
 			ent.alpha = le->alpha;
-			ent.state = le->state;
 
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;
@@ -1353,7 +1352,7 @@ void LE_Cleanup (void)
 		if (LE_IsActor(le))
 			CL_ActorCleanup(le);
 		else if (LE_IsItem(le))
-			cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
+			cls.i.EmptyContainer(&cls.i, &le->i, INVDEF(csi.idFloor));
 
 		le->inuse = qfalse;
 	}
@@ -1411,9 +1410,9 @@ void LM_List_f (void)
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
 	const float *mins, *maxs;	/**< size of the moving object */
-	float *start, *end;
+	const float *start, *end;
 	trace_t trace;
-	le_t *passle, *passle2;		/**< ignore these for clipping */
+	const le_t *passle, *passle2;		/**< ignore these for clipping */
 	int contentmask;			/**< search these in your trace - see MASK_* */
 } moveclip_t;
 
@@ -1543,7 +1542,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] contentmask Searched content the trace should watch for
  * @param[in] worldLevel The worldlevel (0-7) to calculate the levelmask for the trace from
  */
-trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask, int worldLevel)
+trace_t CL_Trace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const le_t * passle, le_t * passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
 

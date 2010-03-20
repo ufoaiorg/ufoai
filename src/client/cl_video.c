@@ -106,7 +106,7 @@ void VID_Restart_f (void)
 	R_Init();
 	MN_InitFonts();
 
-	V_LoadMedia();
+	CL_ViewLoadMedia();
 	GAME_ReloadMode();
 }
 

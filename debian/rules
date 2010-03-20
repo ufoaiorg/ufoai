@@ -60,7 +60,7 @@ stamps/build-indep: config.status
 	dh_testdir
 
 	./contrib/scripts/map-get.py upgrade
-	$(MAKE) lang maps pk3
+	$(MAKE) lang pk3
 	$(MAKE) -C src/docs/tex
 
 	mkdir -p stamps

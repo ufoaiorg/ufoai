@@ -1999,11 +1999,6 @@ void B_SelectBase (const base_t *base)
 
 }
 
-#undef RIGHT
-#undef HOLSTER
-#define RIGHT(e) ((e)->inv.c[csi.idRight])
-#define HOLSTER(e) ((e)->inv.c[csi.idHolster])
-
 /**
  * @brief Swaps one skill from character1 to character 2 and vice versa.
  */
@@ -2144,7 +2139,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 			character_t *chr = &aircraft->acTeam[i]->chr;
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-			cls.i.EquipActor(&cls.i, &chr->inv, ed, chr);
+			cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
 			chrListTemp.chr[chrListTemp.num] = chr;
 			chrListTemp.num++;
 		}
@@ -2536,7 +2531,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 
 	cargo = aircraft->itemcargo;
 
-	for (i = 0; i < aircraft->itemtypes; i++) {
+	for (i = 0; i < aircraft->itemTypes; i++) {
 		technology_t *tech = cargo[i].item->tech;
 		if (!tech)
 			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
@@ -2583,7 +2578,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	CL_UpdateCredits(ccs.credits + gained + forcedgained);
 
 	/* ship no longer has cargo aboard */
-	aircraft->itemtypes = 0;
+	aircraft->itemTypes = 0;
 }
 
 /**

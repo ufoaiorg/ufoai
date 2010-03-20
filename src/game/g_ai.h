@@ -58,12 +58,14 @@ typedef struct {
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
+/** @brief distance for (ai) hiding in grid tiles */
 #define HIDE_DIST			7
 
 /*
  * Shared functions (between C AI and LUA AI)
  */
-void AI_TurnIntoDirection(edict_t *aiActor, pos3_t pos);
+void AI_TurnIntoDirection(edict_t *ent, const pos3_t pos);
+qboolean AI_FindHidingLocation(edict_t *ent, const pos3_t from, int *tuLeft);
 
 /*
  * LUA functions

@@ -1633,7 +1633,7 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1974,7 +1974,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
- * @param[in] distance to calculate move-information for - currently unused
+ * @param[in] distance The maximum TUs away from 'from' to calculate move-information for
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
@@ -1982,7 +1982,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
  * @sa G_MoveCalc
  * @sa CL_ConditionalMoveCalc
  */
-void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingState, int distance, byte ** fb_list, int fb_length)
 {
 	int dir;
 	int count;
@@ -2023,6 +2023,11 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 		if pos = goal
 			return pos
 		*/
+		/**< if reaching that square already took too many TUs,
+		 * don't bother to reach new squares *from* there. */
+		if (RT_AREA(path, pos[0], pos[1], pos[2], crouchingState) >= distance)
+			continue;
+
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
 			Grid_MoveMark(map, actorSize, path, pos, epos[3], dir, &pqueue);
 		}
@@ -2073,18 +2078,16 @@ pos_t Grid_MoveLength (const pathing_t *path, const pos3_t to, byte crouchingSta
 
 
 /**
- * @brief The next stored move direction
- * @param[in] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] actorSize width of the actor in cells
- * @param[in] path Pointer to client or server side pathing table (clPathMap, svPathMap)
- * @param[in] from
+ * @brief Get the direction to use to move to a position (used to reconstruct the path)
+ * @param[in] path Pointer to client or server side pathing table (le->PathMap, svPathMap)
+ * @param[in] toPos The desired location
  * @param[in] crouchingState Whether the actor is currently crouching, 1 is yes, 0 is no.
- * @return (Guess: a direction index (see dvecs and DIRECTIONS))
+ * @return a direction index (see dvecs and DIRECTIONS)
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, pos3_t from, byte crouchingState)
+int Grid_MoveNext (const pathing_t *path, const pos3_t toPos, byte crouchingState)
 {
-	const pos_t l = RT_AREA(path, from[0], from[1], from[2], crouchingState); /**< Get TUs for this square */
+	const pos_t l = RT_AREA(path, toPos[0], toPos[1], toPos[2], crouchingState); /**< Get TUs for this square */
 
 	/* Check to see if the TUs needed to move here are greater than 0 and less then ROUTING_NOT_REACHABLE */
 	if (!l || l == ROUTING_NOT_REACHABLE) {
@@ -2093,7 +2096,7 @@ int Grid_MoveNext (const routing_t *map, const actorSizeEnum_t actorSize, pathin
 	}
 
 	/* Return the information indicating how the actor got to this cell */
-	return RT_AREA_FROM(path, from[0], from[1], from[2], crouchingState);
+	return RT_AREA_FROM(path, toPos[0], toPos[1], toPos[2], crouchingState);
 }
 
 
@@ -2189,14 +2192,10 @@ int Grid_GetTUsForDirection (int dir)
  * @param[in] pos Position in the map to check for filling
  * @return 0 if the cell is vacant (of the world model), non-zero otherwise.
  */
-int Grid_Filled (const routing_t *map, const actorSizeEnum_t actorSize, pos3_t pos)
+int Grid_Filled (const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
 	/* max 8 levels */
-	if (pos[2] >= PATHFINDING_HEIGHT) {
-		const int maxHeight = PATHFINDING_HEIGHT - 1;
-		Com_Printf("Grid_Filled: Warning: z level is bigger than %i: %i\n", pos[2], maxHeight);
-		pos[2] &= maxHeight;
-	}
+	assert(pos[2] < PATHFINDING_HEIGHT);
 	return RT_FILLED(map, pos[0], pos[1], pos[2], actorSize);
 }
 
@@ -2267,7 +2266,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @param[in] min The lower extents of the box to recalc routing for
  * @param[in] max The upper extents of the box to recalc routing for
  */
-void Grid_RecalcBoxRouting (routing_t *map, pos3_t min, pos3_t max)
+void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 {
 	int x, y, z, actorSize, dir;
 

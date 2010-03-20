@@ -388,7 +388,7 @@ window basedefence extends objectinfo
 	}
 
 	confunc setautofire	{
-		*cvar:tmp = <1>
+		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "disable" ) {
 			*node:root.infopanel.autofire@current = 0
 			*node:root.infopanel.autofire@disabled = true

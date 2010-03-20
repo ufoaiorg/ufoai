@@ -173,13 +173,13 @@ void CL_ActorCvars (const character_t * chr)
 	assert(chr);
 
 	/* visible equipment */
-	weapon = chr->inv.c[csi.idRight];
+	weapon = RIGHT(chr);
 	if (weapon) {
 		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
 		Cvar_Set("mn_rweapon", weapon->item.t->model);
 	} else
 		Cvar_Set("mn_rweapon", "");
-	weapon = chr->inv.c[csi.idLeft];
+	weapon = LEFT(chr);
 	if (weapon) {
 		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
 		Cvar_Set("mn_lweapon", weapon->item.t->model);
@@ -383,8 +383,6 @@ void CL_ActorAddToTeamList (le_t * le)
 		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
-		else
-			MN_ExecuteConfunc("huddeselect %i", cl.numTeamList);
 	}
 }
 
@@ -672,7 +670,7 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, le->TU, fb_list, fb_length);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -755,7 +753,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
 		if (++counter > 100) {
 			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], LE_IsCrouched(selActor) ? 1 : 0);
@@ -797,7 +795,7 @@ static void CL_ActorMaximumMove (const pos3_t to, const le_t *le, pos3_t pos)
 
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(clMap, le->fieldSize, le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		const byte length2 = CL_ActorMoveLength(le, pos);
 		if (length2 <= tus)
 			return;
@@ -891,13 +889,13 @@ void CL_ActorShoot (const le_t * le, const pos3_t at)
  */
 int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, const objDef_t *weapon)
 {
-	int container;
+	containerIndex_t container;
 	int tu = 100;
-	int bestContainer = NONE;
+	containerIndex_t bestContainer = NONE;
 
 	/* also search the linked ground floor tile (temp container) */
 	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].out < tu) {
+		if (INVDEF(container)->out < tu) {
 			invList_t *ic;
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
@@ -906,7 +904,7 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
 			for (ic = inv->c[container]; ic; ic = ic->next) {
 				objDef_t *od = ic->item.t;
 				if (INVSH_LoadableInWeapon(od, weapon) && GAME_ItemIsUseable(od)) {
-					tu = csi.ids[container].out;
+					tu = INVDEF(container)->out;
 					bestContainer = container;
 					*invList = ic;
 					break;
@@ -923,12 +921,12 @@ int CL_ActorGetContainerForReload (invList_t **invList, const inventory_t *inv, 
  * @param[in] containerID The container to reload
  * @sa CL_ActorCheckAction
  */
-void CL_ActorReload (le_t *le, int containerID)
+void CL_ActorReload (le_t *le, containerIndex_t containerID)
 {
 	inventory_t *inv;
 	invList_t *ic;
 	objDef_t *weapon;
-	int bestContainer;
+	containerIndex_t bestContainer;
 
 	if (!CL_ActorCheckAction(le))
 		return;
@@ -981,7 +979,7 @@ void CL_ActorReload (le_t *le, int containerID)
  * @param toX The x position in the container to move the item to
  * @param toY The y position in the container to move the item to
  */
-void CL_ActorInvMove (const le_t *le, int fromContainer, int fromX, int fromY, int toContainer, int toX, int toY)
+void CL_ActorInvMove (const le_t *le, containerIndex_t fromContainer, int fromX, int fromY, containerIndex_t toContainer, int toX, int toY)
 {
 	assert(CL_BattlescapeRunning());
 	assert(le);
@@ -1073,10 +1071,6 @@ void CL_ActorTurnMouse (void)
 static void CL_ActorStandCrouch_f (void)
 {
 	if (!CL_ActorCheckAction(selActor))
-		return;
-
-	if (selActor->fieldSize == ACTOR_SIZE_2x2)
-		/** @todo future thoughts: maybe define this in team_*.ufo files instead? */
 		return;
 
 	/* Check if we should even try to send this command (no TUs left or). */
@@ -1530,6 +1524,13 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		}
 	}
 
+	if (ent->flags & RF_BLOOD) {
+		const char *deathTextureName;
+		assert(le->teamDef != NULL);
+		deathTextureName = le->teamDef->deathTextureName;
+		ent->deathTexture = R_FindImage(deathTextureName, it_effect);
+	}
+
 	return qtrue;
 }
 
@@ -1905,7 +1906,7 @@ void CL_ActorTargetAlign_f (void)
  * @sa CL_TargetingGrenade
  * @sa CL_AddTargetingBox
  * @sa CL_TraceMove
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * Draws the tracer (red, yellow, green box) on the grid
  */
 void CL_AddTargeting (void)
@@ -2018,7 +2019,7 @@ static void CL_AddPathingBox (pos3_t pos)
 
 /**
  * @brief Adds a pathing marker to the current floor when we render the world.
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * Draws the tracer (red, yellow, green box) on the grid
  */
 void CL_AddPathing (void)
@@ -2036,7 +2037,7 @@ void CL_AddPathing (void)
  * @param[in] le The actor
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
-void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
+void CL_ActorPlaySound (const le_t *le, actorSound_t soundType)
 {
 	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
@@ -2265,14 +2266,14 @@ static void CL_ActorEquipmentSelect_f (void)
 	if (num < 0 || num >= chrDisplayList.num)
 		return;
 
+	chr = chrDisplayList.chr[num];
 	/* update menu inventory */
-	if (menuInventory && menuInventory != &chrDisplayList.chr[num]->inv) {
-		chrDisplayList.chr[num]->inv.c[csi.idEquip] = menuInventory->c[csi.idEquip];
+	if (menuInventory && menuInventory != &chr->i) {
+		CONTAINER(chr, csi.idEquip) = menuInventory->c[csi.idEquip];
 		/* set 'old' idEquip to NULL */
 		menuInventory->c[csi.idEquip] = NULL;
 	}
-	menuInventory = &chrDisplayList.chr[num]->inv;
-	chr = chrDisplayList.chr[num];
+	menuInventory = &chr->i;
 
 	/* deselect current selected soldier and select the new one */
 	MN_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
@@ -2325,8 +2326,61 @@ static void CL_ActorUpdate_f (void)
 }
 
 /**
+ * @sa G_ActorVis
+ * @param[in] le The local entity to do the check for
+ * @param[in] check The local entity to check the visibility for
+ * @return @c true if the given edict is visible from the given world coordinate, @c false otherwise.
+ */
+static qboolean CL_ActorVis (const le_t *le, const le_t *check)
+{
+	vec3_t test, dir;
+	float delta;
+	int i;
+	vec3_t from;
+
+	VectorCopy(le->origin, from);
+
+	/* start on eye height */
+	VectorCopy(check->origin, test);
+	if (LE_IsDead(check)) {
+		test[2] += PLAYER_DEAD;
+		delta = 0;
+	} else if (LE_IsCrouched(check)) {
+		test[2] += PLAYER_CROUCH - 2;
+		delta = (PLAYER_CROUCH - PLAYER_MIN) / 2 - 2;
+	} else {
+		test[2] += PLAYER_STAND;
+		delta = (PLAYER_STAND - PLAYER_MIN) / 2 - 2;
+	}
+
+	/* side shifting -> better checks */
+	dir[0] = from[1] - check->origin[1];
+	dir[1] = check->origin[0] - from[0];
+	dir[2] = 0;
+	VectorNormalize(dir);
+	VectorMA(test, -7, dir, test);
+
+	/* do 3 tests */
+	for (i = 0; i < 3; i++) {
+		const trace_t tr = CL_Trace(from, test, vec3_origin, vec3_origin, le, NULL, MASK_SOLID, cl_worldlevel->integer);
+		/* trace didn't reach the target - something was hit before */
+		if (tr.fraction < 1.0) {
+			/* look further down or stop */
+			if (!delta)
+				return qfalse;
+			VectorMA(test, 7, dir, test);
+			test[2] -= delta;
+			continue;
+		}
+
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Cycles between visible (to selected actor) aliens.
- * @sa CL_DrawSpottedLines_f (Shares quite some code)
  * @sa CL_NextAlien_f
  */
 static void CL_NextAlienVisibleFromActor_f (void)
@@ -2348,28 +2402,12 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		le = &cl.LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && !LE_IsCivilian(le)) {
-			vec3_t from, at;
-			trace_t tr;
-			VectorCopy(selActor->origin, from);
-			VectorCopy(le->origin, at);
-			/* actor eye height */
-			if (LE_IsCrouched(selActor))
-				from[2] += EYE_HT_CROUCH;
-			else
-				from[2] += EYE_HT_STAND;
-			/* target height */
-			if (LE_IsCrouched(le))
-				at[2] += EYE_HT_CROUCH;
-			else
-				at[2] += UNIT_HEIGHT; /* full unit */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID, cl_worldlevel->integer);
-			/* trace didn't reach the target - something was hit before */
-			if (tr.fraction < 1.0)
-				continue;
-
-			lastAlien = i;
-			V_CenterView(le->pos);
-			return;
+			if (CL_ActorVis(selActor, le)) {
+				lastAlien = i;
+				CL_ViewCenterAtGridPosition(le->pos);
+				CL_ParticleSpawn("fadeTracer", 0, selActor->origin, le->origin, NULL);
+				return;
+			}
 		}
 	} while (i != lastAlien);
 }
@@ -2395,7 +2433,7 @@ static void CL_NextAlien_f (void)
 		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
-			V_CenterView(le->pos);
+			CL_ViewCenterAtGridPosition(le->pos);
 			return;
 		}
 	} while (i != lastAlien);

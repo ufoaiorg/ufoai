@@ -57,6 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/world/e_event_addedict.h"
 #include "event/world/e_event_explode.h"
 #include "event/world/e_event_particleappear.h"
+#include "event/world/e_event_particlespawn.h"
 #include "event/world/e_event_dooropen.h"
 #include "event/world/e_event_doorclose.h"
 
@@ -121,7 +122,8 @@ const eventRegister_t events[] = {
 	{E(EV_MODEL_EXPLODE), "s", CL_Explode, NULL, NULL},
 	{E(EV_MODEL_EXPLODE_TRIGGERED), "s", CL_Explode, NULL, NULL},
 
-	{E(EV_SPAWN_PARTICLE), "ss&", CL_ParticleAppear, NULL, NULL},
+	{E(EV_PARTICLE_APPEAR), "ss&", CL_ParticleAppear, NULL, NULL},
+	{E(EV_PARTICLE_SPAWN), "bppp&", CL_ParticleSpawnEvent, NULL, NULL},
 
 	{E(EV_DOOR_OPEN), "s", CL_DoorOpen, NULL, NULL},
 	{E(EV_DOOR_CLOSE), "s", CL_DoorClose, NULL, NULL},

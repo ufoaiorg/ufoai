@@ -30,6 +30,4 @@ void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, flo
 void R_EnableLights(void);
 void R_ShiftLights(const vec3_t offset);
 
-extern int r_numLights;
-
 #endif

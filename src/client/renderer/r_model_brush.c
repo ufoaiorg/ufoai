@@ -274,16 +274,20 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	for (i = 0; i < surf->numedges; i++) {
 		const int e = mod->bsp.surfedges[surf->firstedge + i];
 		const mBspVertex_t *v;
+		vec3_t position;
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
 			v = &mod->bsp.vertexes[mod->bsp.edges[-e].v[1]];
 
+		VectorCopy(v->position, position);
+
 		for (j = 0; j < 3; j++) {  /* calculate mins, maxs */
-			if (v->position[j] > maxs[j])
-				maxs[j] = v->position[j];
-			if (v->position[j] < mins[j])
-				mins[j] = v->position[j];
+			position[j] += (float)shift[j];
+			if (position[j] > maxs[j])
+				maxs[j] = position[j];
+			if (position[j] < mins[j])
+				mins[j] = position[j];
 		}
 
 		{  /* calculate stmins, stmaxs */
@@ -298,9 +302,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 
 	VectorCopy(mins, surf->mins);
 	VectorCopy(maxs, surf->maxs);
-
-	for (i = 0; i < 3; i++)
-		surf->center[i] = (mins[i] + maxs[i]) / 2.0;
+	VectorCenterFromMinsMaxs(surf->mins, surf->maxs, surf->center);
 
 	for (i = 0; i < 2; i++) {
 		const int bmins = floor(stmins[i] / surf->lightmap_scale);
@@ -375,6 +377,9 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 
 		/* create lightmaps */
 		R_CreateSurfaceLightmap(out);
+
+		/* and flare */
+		R_CreateSurfaceFlare(out);
 
 		out->tile = r_numMapTiles - 1;
 	}
@@ -914,6 +919,9 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 
 		if (surf->texinfo->image->material.flags & STAGE_RENDER)
 			mod->bsp.material_surfaces->count++;
+
+		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+			mod->bsp.flare_surfaces->count++;
 	}
 
 	/* allocate the surfaces pointers based on the counts */
@@ -945,6 +953,9 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 
 		if (surf->texinfo->image->material.flags & STAGE_RENDER)
 			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
+
+		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+			R_SurfaceToSurfaces(mod->bsp.flare_surfaces, surf);
 	}
 
 	/* now sort them by texture */

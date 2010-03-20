@@ -904,3 +904,17 @@
 "model" "models/objects/vegi/pino/pino1.md2"
 "skin" "0"
 }
+// entity 22
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 23
+{
+"classname" "misc_particle"
+"origin" "160 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

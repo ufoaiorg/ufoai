@@ -724,7 +724,7 @@ static int AIL_canreload (lua_State *L)
  */
 static int AIL_reload (lua_State *L)
 {
-	int container;
+	containerIndex_t container;
 
 	if (lua_gettop(L) > 0) {
 		if (lua_isstring(L, 1)) {
@@ -793,17 +793,15 @@ static int AIL_positionshoot (lua_State *L)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
+				pos_t tu;
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
-				if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
-					const pos_t tu = gi.MoveLength(gi.pathingMap, to,
-							G_IsCrouched(ent) ? 1 : 0, qtrue);
-
-					if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
-						continue;
-
-					/* Better spot (easier to get to). */
-					if (tu < min_tu) {
+				tu = gi.MoveLength(gi.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
+				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
+					continue;
+				/* Better spot (easier to get to). */
+				if (tu < min_tu) {
+					if (G_ActorVis(check, target->ent, qtrue) > 0.3) {
 						VectorCopy(to, bestPos);
 						min_tu = tu;
 					}
@@ -826,67 +824,18 @@ static int AIL_positionshoot (lua_State *L)
  */
 static int AIL_positionhide (lua_State *L)
 {
-	pos3_t to, bestPos;
-	edict_t *ent;
-	int dist;
-	int xl, yl, xh, yh;
-	int min_tu;
-	const byte crouchingState = G_IsCrouched(AIL_ent) ? 1 : 0;
+	pos3_t save;
+	int tus = AIL_ent->TU;
 
-	/* Make things more simple. */
-	ent = AIL_ent;
-	dist = ent->TU;
+	VectorCopy(AIL_ent->pos, save);
 
-	/* Calculate move table. */
-	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
-	gi.MoveStore(gi.pathingMap);
-
-	/* set borders */
-	xl = (int) ent->pos[0] - dist;
-	if (xl < 0)
-		xl = 0;
-	yl = (int) ent->pos[1] - dist;
-	if (yl < 0)
-		yl = 0;
-	xh = (int) ent->pos[0] + dist;
-	if (xh > PATHFINDING_WIDTH)
-		xl = PATHFINDING_WIDTH;
-	yh = (int) ent->pos[1] + dist;
-	if (yh > PATHFINDING_WIDTH)
-		yh = PATHFINDING_WIDTH;
-
-	/* evaluate moving to every possible location in the search area,
-	 * including combat considerations */
-	min_tu = INT_MAX;
-	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
-		for (to[1] = yl; to[1] < yh; to[1]++)
-			for (to[0] = xl; to[0] < xh; to[0]++) {
-				const pos_t tu = gi.MoveLength(gi.pathingMap, to,
-						G_IsCrouched(ent) ? 1 : 0, qtrue);
-
-				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
-					continue;
-
-				/* visibility */
-				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
-				if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
-					continue;
-
-				/* Better spot (easier to get to). */
-				if (tu < min_tu) {
-					VectorCopy(to, bestPos);
-					min_tu = tu;
-				}
-			}
-
-	/* No position found in range. */
-	if (min_tu > ent->TU) {
+	if (AI_FindHidingLocation(AIL_ent, AIL_ent->pos, &tus)) {
+		/* Return the spot. */
+		lua_pushpos3(L, &AIL_ent->pos);
+	} else {
 		lua_pushboolean(L, 0);
-		return 1;
 	}
-
-	/* Return the spot. */
-	lua_pushpos3(L, &bestPos);
+	G_EdictSetOrigin(AIL_ent, save);
 	return 1;
 }
 

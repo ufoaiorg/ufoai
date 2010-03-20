@@ -304,7 +304,7 @@ void R_EndBuildingLightmaps (void)
  * @param[in] size Bounding box size used for tracing
  * @param[in] contentmask Searched content the trace should watch for
  */
-static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
+void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 {
 	vec3_t mins, maxs;
 	float frac;
@@ -325,7 +325,7 @@ static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 	frac = refdef.trace.fraction;
 
 	/* check bsp models */
-	for (i = 0; i < r_numEntities; i++) {
+	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *ent = R_GetEntity(i);
 		const model_t *m = ent->model;
 

@@ -167,6 +167,8 @@ enum svc_ops_e {
 	svc_oob = 0xff
 };
 
+typedef int32_t svc_ops_t;
+
 /*============================================== */
 
 /**

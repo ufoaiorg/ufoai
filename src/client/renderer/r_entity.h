@@ -60,7 +60,7 @@ typedef struct {
 } transform_t;
 
 typedef struct entity_s {
-	struct model_s *model;		/**< opaque type outside refresh */
+	struct model_s *model;
 	vec3_t angles;
 	vec3_t scale;
 	vec3_t color;
@@ -76,7 +76,6 @@ typedef struct entity_s {
 	/* misc */
 	int skinnum;
 	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
-	int state;					/**< same state as the le->state */
 	int flags;
 
 	qboolean isOriginBrushModel;	/**< true for bmodels that have an origin set */
@@ -87,15 +86,14 @@ typedef struct entity_s {
 
 	static_lighting_t *lighting;	/**< cached static lighting info */
 
+	image_t *deathTexture;
+
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
 int R_AddEntity(const entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
-void R_EntityDrawBBox(const vec3_t mins, const vec3_t maxs);
 void R_TransformForEntity(const entity_t *e, const vec3_t in, vec3_t out);
-
-extern int r_numEntities;
 
 #endif

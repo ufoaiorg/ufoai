@@ -942,3 +942,31 @@
 "light" "200"
 "spawnflags" "1"
 }
+// entity 21
+{
+"classname" "misc_particle"
+"origin" "432 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 22
+{
+"classname" "misc_particle"
+"origin" "432 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 23
+{
+"classname" "misc_particle"
+"origin" "112 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 24
+{
+"classname" "misc_particle"
+"origin" "112 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

@@ -1281,11 +1281,7 @@ static void MAP3D_SmoothRotate (void)
 	} else {
 		/* when we zoom only */
 		if (fabs(diff_zoom) > epsilonZoom) {
-			/* rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) * diff_zoom / smoothDeltaZoom; */
-			/* VectorScale(diff, smoothAcceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff); */
 			const float speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
-			VectorScale(diff, speed * diff_angle / diff_zoom, diff);
-			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + diff_zoom * speed;
 			return;
 		}
@@ -1383,12 +1379,13 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 {
 	int x, y;
 
+	if (ms == ccs.selectedMission)
+		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
+
 	if (!MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL))
 		return;
 
 	if (ms == ccs.selectedMission) {
-		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
-
 		/* Draw circle around the mission */
 		if (cl_3dmap->integer) {
 			if (!ccs.selectedMission->active)

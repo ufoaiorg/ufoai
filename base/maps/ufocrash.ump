@@ -401,7 +401,7 @@ size "7 5"
 assembly craft_crash_corrupter
 {
 title "_Crashed UFO"
-size "7 5"
+size "8 8"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
@@ -432,3 +432,4 @@ size "7 7"
 *rm_ufo +craft_crash_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
+

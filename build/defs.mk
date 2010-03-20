@@ -40,6 +40,10 @@ ifeq ($(PROFILING),1)
 	LNKFLAGS+=-pg
 endif
 
+ifeq ($(HARD_LINKED_GAME),1)
+	CFLAGS+=-DHARD_LINKED_GAME
+endif
+
 LNKFLAGS+=-rdynamic
 
 ifeq ($(PARANOID),1)

@@ -769,6 +769,18 @@ particle longRangeTracer
 	}
 }
 
+particle fadeTracerDebug
+{
+	init
+	{
+		blend  blend
+		style  line
+		color  "1 0 0 1"
+		life   10.0
+		thinkfade  out
+	}
+}
+
 particle fadeTracer
 {
 	init

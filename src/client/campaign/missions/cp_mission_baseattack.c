@@ -160,8 +160,8 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	}
 
 	/* we always need at least one command centre in the base - because the
-	 * phalanx soldiers have their starting positions here
-	 * @note There should also always be an entrance - the aliens start there
+	 * phalanx soldiers have their starting positions here.
+	 * There should also always be an entrance - the aliens start there
 	 * but we don't need to check that as entrance can't be destroyed */
 	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
 		/** @todo handle command centre properly */
@@ -331,7 +331,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
  * @note Base Attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 	ufoTypes[num++] = UFO_FIGHTER;

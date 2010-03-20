@@ -36,7 +36,6 @@ extern const float STANDARD_3D_ZOOM;
 static float lastQ = 0.0f;
 
 image_t *shadow;
-image_t *blood[MAX_DEATH];
 
 /* console font */
 static image_t *draw_chars;
@@ -47,16 +46,9 @@ static image_t *draw_chars;
  */
 void R_DrawInitLocal (void)
 {
-	int i;
-
 	shadow = R_FindImage("pics/sfx/shadow", it_effect);
 	if (shadow == r_noTexture)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
-	for (i = 0; i < MAX_DEATH; i++) {
-		blood[i] = R_FindImage(va("pics/sfx/blood_%i", i), it_effect);
-		if (blood[i] == r_noTexture)
-			Com_Printf("Could not find blood_%i image in game pics/sfx directory!\n", i);
-	}
 
 	draw_chars = R_FindImage("pics/conchars", it_chars);
 	if (draw_chars == r_noTexture)
@@ -223,7 +215,6 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
 	glVertex2f(x, y + h);
 	glEnd();
 }
-
 
 /**
  * @brief Draws an image or parts of it
@@ -1180,4 +1171,61 @@ void R_CleanupDepthBuffer (int x, int y, int width, int height)
 	if (!hasDepthTest)
 		glDisable(GL_DEPTH_TEST);
 	glDepthFunc(depthFunc);
+}
+
+/**
+ * @brief Compute the bounding box for an entity out of the mins, maxs
+ * @sa R_DrawBoundingBox
+ */
+static void R_ComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
+{
+	int i;
+
+	/* compute a full bounding box */
+	for (i = 0; i < 8; i++) {
+		bbox[i][0] = (i & 1) ? mins[0] : maxs[0];
+		bbox[i][1] = (i & 2) ? mins[1] : maxs[1];
+		bbox[i][2] = (i & 4) ? mins[2] : maxs[2];
+	}
+}
+
+/**
+ * @brief Draws the model bounding box
+ * @sa R_EntityComputeBoundingBox
+ */
+void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
+{
+	vec3_t bbox[8];
+
+	R_ComputeBoundingBox(mins, maxs, bbox);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	/* Draw top and sides */
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex3fv(bbox[2]);
+	glVertex3fv(bbox[1]);
+	glVertex3fv(bbox[0]);
+	glVertex3fv(bbox[1]);
+	glVertex3fv(bbox[4]);
+	glVertex3fv(bbox[5]);
+	glVertex3fv(bbox[1]);
+	glVertex3fv(bbox[7]);
+	glVertex3fv(bbox[3]);
+	glVertex3fv(bbox[2]);
+	glVertex3fv(bbox[7]);
+	glVertex3fv(bbox[6]);
+	glVertex3fv(bbox[2]);
+	glVertex3fv(bbox[4]);
+	glVertex3fv(bbox[0]);
+	glEnd();
+
+	/* Draw bottom */
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex3fv(bbox[4]);
+	glVertex3fv(bbox[6]);
+	glVertex3fv(bbox[7]);
+	glEnd();
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

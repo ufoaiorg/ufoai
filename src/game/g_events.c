@@ -144,7 +144,7 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
 /**
  * @brief Start the shooting event
  * @param ent The entity that starts the shooting
- * @param visMask the vis mask to determine the clients from this event is send to
+ * @param visMask the vis mask of the teams to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
  * @param shootType The type of the shoot
  * @param at The grid position to target to
@@ -187,7 +187,7 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -222,6 +222,23 @@ void G_EventReactionFireChange (const edict_t* ent)
 	gi.EndEvents();
 }
 
+/**
+ * @brief Spawn a new particle for the client
+ * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] levelFlags Show at which levels
+ * @param[in] s starting/location vector
+ * @param[in] v velocity vector
+ * @param[in] a acceleration vector
+ */
+void G_EventParticleSpawn (int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
+{
+	gi.AddEvent(playerMask, EV_PARTICLE_SPAWN);
+	gi.WriteByte(levelFlags);
+	gi.WritePos(s);
+	gi.WritePos(v);
+	gi.WritePos(a);
+	gi.WriteString(name);
+}
 
 void G_EventActorFall (const edict_t* ent)
 {

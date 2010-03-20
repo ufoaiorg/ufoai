@@ -230,7 +230,7 @@ static void CL_ClearState (void)
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	cl.cam.zoom = 1.0;
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 
 	/* wipe the particles with every new map */
 	r_numParticles = 0;
@@ -327,6 +327,7 @@ static void CL_Packet_f (void)
  * @sa CL_ReadPackets
  * @sa CL_Frame
  * @sa SVC_DirectConnect
+ * @param[in,out] msg The client stream message buffer to read from
  */
 static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
@@ -419,7 +420,7 @@ static void CL_ReadPackets (void)
 {
 	struct dbuffer *msg;
 	while ((msg = NET_ReadMsg(cls.netStream))) {
-		const int cmd = NET_ReadByte(msg);
+		const svc_ops_t cmd = NET_ReadByte(msg);
 		if (cmd == clc_oob)
 			CL_ConnectionlessPacket(msg);
 		else
@@ -527,7 +528,7 @@ void CL_RequestNextDownload (void)
 		}
 	}
 
-	V_LoadMedia();
+	CL_ViewLoadMedia();
 
 	{
 		struct dbuffer *msg = new_dbuffer();
@@ -834,7 +835,7 @@ static void CL_InitLocal (void)
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
-	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "15000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
+	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "25000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 	/* userinfo */
 	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");

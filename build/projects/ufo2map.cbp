@@ -24,6 +24,9 @@
 					<Add option="-s" />
 					<Add library="winmm" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
@@ -47,6 +50,9 @@
 					<Add option="-pg -lgmon" />
 					<Add library="winmm" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />

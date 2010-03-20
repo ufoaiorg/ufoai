@@ -240,7 +240,8 @@ typedef enum {
 	EV_MODEL_EXPLODE,		/**< delay the event execution by the impact time */
 	EV_MODEL_EXPLODE_TRIGGERED,	/**< don't delay the model explode event */
 
-	EV_SPAWN_PARTICLE,
+	EV_PARTICLE_APPEAR,
+	EV_PARTICLE_SPAWN,
 
 	EV_DOOR_OPEN,
 	EV_DOOR_CLOSE,
@@ -415,7 +416,7 @@ typedef int32_t actorSizeEnum_t;
 #define ACTOR_SIZE_2x2 2
 #define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
 
-/** @brief Types of actor sounds being issued by CL_PlayActorSound(). */
+/** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
 typedef enum {
 	SND_DEATH,	/**< Sound being played on actor death. */
 	SND_HURT,	/**< Sound being played when an actor is being hit. */
@@ -481,9 +482,8 @@ typedef struct teamDef_s {
 							 * bloodspider melee attack firedefitions */
 
 	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit.
-								* @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
-								* @todo "hitbody" will not spawn blood in the future. */
+	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
+	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
 } teamDef_t;
 
 /** @brief Reject messages that are send to the client from the game module */

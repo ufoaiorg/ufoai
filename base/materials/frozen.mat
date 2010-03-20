@@ -1,0 +1,52 @@
+
+{
+	material tex_ufo/ufo2_04
+	{
+		texture tex_ufo/ufo2_04a0
+		anim 16 10.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_06
+	{
+		texture tex_ufo/ufo2_06a0
+		anim 10 3.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_07
+	{
+		texture tex_ufo/ufo2_07a0
+		anim 16 5.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_09
+	{
+		texture tex_ufo/ufo2_09a0
+		anim 14 15.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+{
+	material tex_ufo/ufo2_10
+	{
+		texture tex_ufo/ufo2_10a0
+		anim 14 15.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+

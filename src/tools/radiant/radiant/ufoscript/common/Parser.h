@@ -35,6 +35,11 @@ namespace scripts
 			 * @return The list of blocks for the entries the parser has found
 			 */
 			const std::vector<DataBlock*>& getEntries ();
+
+			/**
+			 * @return The data block for the given id or null if not found
+			 */
+			DataBlock* getEntryForID (const std::string& id);
 	};
 }
 

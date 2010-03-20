@@ -91,18 +91,6 @@ static void CL_ParseServerData (struct dbuffer *msg)
 }
 
 /**
- * @brief Stores the client name
- * @sa CL_ParseClientinfo
- */
-static void CL_LoadClientinfo (clientinfo_t *ci, const char *s)
-{
-	Q_strncpyz(ci->cinfo, s, sizeof(ci->cinfo));
-
-	/* isolate the player's name */
-	Q_strncpyz(ci->name, s, sizeof(ci->name));
-}
-
-/**
  * @brief Parses client names that are displayed on the targeting box for
  * multiplayer games
  * @sa CL_AddTargetingBoX
@@ -112,7 +100,10 @@ static void CL_ParseClientinfo (int player)
 	clientinfo_t *ci = &cl.clientinfo[player];
 	const char *s = CL_PlayerGetName(player);
 
-	CL_LoadClientinfo(ci, s);
+	Q_strncpyz(ci->cinfo, s, sizeof(ci->cinfo));
+
+	/* isolate the player's name */
+	Q_strncpyz(ci->name, s, sizeof(ci->name));
 }
 
 /**
@@ -198,10 +189,12 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 }
 
 /**
+ * @brief Parses the server sent data from the given buffer.
  * @sa CL_ReadPackets
- * @param[in] msg The client stream message buffer to read from
+ * @param[in] cmd The action that should be parsed from the data
+ * @param[in,out] msg The client stream message buffer to read from
  */
-void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
+void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 {
 	const char *s;
 	int i;

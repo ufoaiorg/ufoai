@@ -191,7 +191,10 @@ void Com_RegisterConstInt (const char *name, int value)
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey(variable, CONSTNAMEINT_HASH_SIZE);
 	for (a = com_constNameInt_hash[hash]; a; a = a->hash_next) {
-		if (!strncmp(variable, a->name, sizeof(a->name))) {
+		if (a->fullname) {
+			if (!strcmp(a->fullname, name))
+				break;
+		} else if (!strncmp(variable, a->name, sizeof(a->name))) {
 			break;
 		}
 	}
@@ -1619,7 +1622,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	objDef_t *od;
 	const char *token;
 	int i;
-	int weapFdsIdx;
+	weaponFireDefIndex_t weapFdsIdx;
 
 	/* search for items with same name */
 	for (i = 0; i < csi.numODs; i++)
@@ -1704,7 +1707,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 								if (!strcmp(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
-										const int fdIdx = od->numFiredefs[weapFdsIdx];
+										const fireDefIndex_t fdIdx = od->numFiredefs[weapFdsIdx];
 										od->fd[weapFdsIdx][fdIdx].fireAttenuation = SOUND_ATTN_NORM;
 										od->fd[weapFdsIdx][fdIdx].impactAttenuation = SOUND_ATTN_NORM;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
@@ -2470,6 +2473,7 @@ static const value_t teamDefValues[] = {
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
+	{"death_texture", V_STRING, offsetof(teamDef_t, deathTextureName), 0},
 	{"race", V_RACE, offsetof(teamDef_t, race), MEMBER_SIZEOF(teamDef_t, race)},
 	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
 
@@ -2561,6 +2565,12 @@ static void Com_ParseTeam (const char *name, const char **text)
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
 	} while (*text);
+
+	if (td->deathTextureName[0] == '\0') {
+		const int i = rand() % MAX_DEATH;
+		Q_strncpyz(td->deathTextureName, va("pics/sfx/blood_%i", i), sizeof(td->deathTextureName));
+		Com_DPrintf(DEBUG_CLIENT, "Using random blood for teamdef: '%s' (%i)\n", td->id, i);
+	}
 }
 
 /*

@@ -405,7 +405,7 @@ static void SCR_TimeRefresh_f (void)
 /**
  * @brief This is called every frame, and can also be called explicitly to flush text to the screen
  * @sa MN_Draw
- * @sa V_RenderView
+ * @sa CL_ViewRender
  * @sa SCR_DrawConsole
  * @sa SCR_DrawCursor
  */
@@ -439,7 +439,7 @@ void SCR_UpdateScreen (void)
 			CIN_RunCinematic();
 		} else {
 			/* draw scene */
-			V_RenderView();
+			CL_ViewRender();
 
 			/* draw the menus on top of the render view (for hud and so on) */
 			MN_Draw();

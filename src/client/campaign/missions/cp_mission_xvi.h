@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_MISSION_XVI_H
 #define CP_MISSION_XVI_H
 
-int CP_XVIMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+int CP_XVIMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
 void CP_XVIMissionNextStage(mission_t *mission);
 void CP_XVIMissionIsFailure(mission_t *mission);
 void CP_XVIMissionIsSuccess(mission_t *mission);

@@ -266,7 +266,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	int i;
 	itemsTmp_t *cargo = aircraft->itemcargo;
 
-	for (i = 0; i < aircraft->itemtypes; i++) {
+	for (i = 0; i < aircraft->itemTypes; i++) {
 		if (cargo[i].item == item) {
 			Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
 			cargo[i].amount += amount;
@@ -276,7 +276,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
 	cargo[i].item = item;
 	cargo[i].amount = amount;
-	aircraft->itemtypes++;
+	aircraft->itemTypes++;
 }
 
 /**
@@ -286,15 +286,15 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
  */
 static void AII_CarriedItems (const le_t *soldier)
 {
-	int container;
+	containerIndex_t container;
 	invList_t *invList;
 	technology_t *tech;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
-		for (invList = soldier->i.c[container]; invList; invList = invList->next) {
+		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
 			assert(item);
 
@@ -339,7 +339,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 
 	/* Save previous cargo */
 	memcpy(prevItemCargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
-	prevItemTypes = aircraft->itemtypes;
+	prevItemTypes = aircraft->itemTypes;
 	/* Make sure itemcargo is empty. */
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 
@@ -347,7 +347,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 	memset(&eTempEq, 0, sizeof(eTempEq));
 
 	cargo = aircraft->itemcargo;
-	aircraft->itemtypes = 0;
+	aircraft->itemTypes = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
 		/* Winner collects everything on the floor, and everything carried
@@ -377,13 +377,13 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 		}
 	}
 	/* Fill the missionResults array. */
-	ccs.missionResults.itemtypes = aircraft->itemtypes;
-	for (i = 0; i < aircraft->itemtypes; i++)
-		ccs.missionResults.itemamount += cargo[i].amount;
+	ccs.missionResults.itemTypes = aircraft->itemTypes;
+	for (i = 0; i < aircraft->itemTypes; i++)
+		ccs.missionResults.itemAmount += cargo[i].amount;
 
 #ifdef DEBUG
 	/* Print all of collected items. */
-	for (i = 0; i < aircraft->itemtypes; i++) {
+	for (i = 0; i < aircraft->itemTypes; i++) {
 		if (cargo[i].amount > 0)
 			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
 	}
@@ -391,15 +391,15 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 
 	/* Put previous cargo back */
 	for (i = 0; i < prevItemTypes; i++) {
-		for (j = 0; j < aircraft->itemtypes; j++) {
+		for (j = 0; j < aircraft->itemTypes; j++) {
 			if (cargo[j].item == prevItemCargo[i].item) {
 				cargo[j].amount += prevItemCargo[i].amount;
 				break;
 			}
 		}
-		if (j == aircraft->itemtypes) {
+		if (j == aircraft->itemTypes) {
 			cargo[j] = prevItemCargo[i];
-			aircraft->itemtypes++;
+			aircraft->itemTypes++;
 		}
 	}
 }
@@ -823,20 +823,21 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
  */
 static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 {
-	invList_t *ic;
-	int i, container;
+	int i;
 	int size = 0;
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
+			containerIndex_t container;
 			const employee_t const *employee = aircraft->acTeam[i];
 			for (container = 0; container < csi.numIDs; container++) {
+				invList_t *ic;
 #if 0
 				/* ignore items linked from any temp container */
-				if (csi.ids[container].temp)
+				if (INVDEF(container)->temp)
 					continue;
 #endif
-				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
+				for (ic = CONTAINER(&employee->chr, container); ic; ic = ic->next) {
 					const objDef_t *obj = ic->item.t;
 					size += obj->size;
 
@@ -882,15 +883,15 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
 	const invList_t *ic;
-	int container;
+	containerIndex_t container;
 
 	for (container = 0; container < csi.numIDs; container++) {
 #if 0
 		/* ignore items linked from any temp container */
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 #endif
-		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
+		for (ic = CONTAINER(chr, container); ic; ic = ic->next) {
 			const objDef_t *obj = ic->item.t;
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
@@ -2520,7 +2521,7 @@ void AIR_SaveAircraftXML (mxml_node_t *node, const aircraft_t* const aircraft, q
 	mxml_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	for (l = 0; l < aircraft->teamSize; l++) {
+	for (l = 0; l < MAX_ACTIVETEAM; l++) {
 		if (aircraft->acTeam[l]) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
 			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_IDX, aircraft->acTeam[l]->idx);
@@ -2532,9 +2533,9 @@ void AIR_SaveAircraftXML (mxml_node_t *node, const aircraft_t* const aircraft, q
 		mxml_AddInt(node, SAVE_AIRCRAFT_PILOTIDX, aircraft->pilot->idx);
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_CARGO);
-	mxml_AddInt(subnode, SAVE_AIRCRAFT_TYPES, aircraft->itemtypes);
+	mxml_AddInt(subnode, SAVE_AIRCRAFT_TYPES, aircraft->itemTypes);
 	/* itemcargo */
-	for (l = 0; l < aircraft->itemtypes; l++) {
+	for (l = 0; l < aircraft->itemTypes; l++) {
 		mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_ITEM);
 		assert(aircraft->itemcargo[l].item);
 		mxml_AddString(ssnode, SAVE_AIRCRAFT_ITEMID, aircraft->itemcargo[l].item->id);
@@ -2824,14 +2825,14 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 	}
 
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_CARGO);
-	craft->itemtypes = mxml_GetInt(snode, SAVE_AIRCRAFT_TYPES, 0);
-	if (craft->itemtypes > MAX_CARGO) {
-		Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", craft->itemtypes, MAX_CARGO);
+	craft->itemTypes = mxml_GetInt(snode, SAVE_AIRCRAFT_TYPES, 0);
+	if (craft->itemTypes > MAX_CARGO) {
+		Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", craft->itemTypes, MAX_CARGO);
 		return qfalse;
 	}
 
 	/* itemcargo */
-	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < craft->itemtypes && snode;
+	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < craft->itemTypes && snode;
 			l++, ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
 		const char *const str = mxml_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
 		const objDef_t *od = INVSH_GetItemByID(str);
@@ -3020,7 +3021,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
 		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
-	cls.i.DestroyInventory(&cls.i, &employee->chr.inv);
+	cls.i.DestroyInventory(&cls.i, &employee->chr.i);
 	return AIR_RemoveFromAircraftTeam(aircraft, employee);
 }
 
@@ -3102,7 +3103,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
  */
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_t *ed)
 {
-	int container;
+	containerIndex_t container;
 
 	if (!aircraft) {
 		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aircraft (and thus no carried equipment to add).\n");
@@ -3123,9 +3124,9 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
 				character_t *chr = &aircraft->acTeam[p]->chr;
-				invList_t *ic = chr->inv.c[container];
+				invList_t *ic = CONTAINER(chr, container);
 #if 0
-				if (csi.ids[container].temp)
+				if (INVDEF(container)->temp)
 					continue;
 #endif
 				while (ic) {

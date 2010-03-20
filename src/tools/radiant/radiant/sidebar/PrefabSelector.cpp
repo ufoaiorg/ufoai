@@ -39,6 +39,7 @@
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
 #include "../camera/camwindow.h"
+#include "../material.h"
 
 namespace sidebar
 {
@@ -423,7 +424,9 @@ namespace sidebar
 					break;
 				}
 
-				Map_ImportFile(PrefabSelector::GetFullPath(text));
+				const std::string fileName = PrefabSelector::GetFullPath(text);
+				Map_ImportFile(fileName);
+				GlobalMaterialSystem()->importMaterialFile(os::stripExtension(fileName) + ".mat");
 				g_free(text);
 				gtk_widget_grab_focus(CamWnd_getWidget(*g_pParentWnd->GetCamWnd()));
 				return TRUE;

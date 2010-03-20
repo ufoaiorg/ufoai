@@ -706,8 +706,8 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			s->anim.num_frames = atoi(c);
 
 			if (s->anim.num_frames < 1 || s->anim.num_frames > MAX_ANIM_FRAMES) {
-				Com_Printf("R_ParseStage: Invalid number of anim frames for %s\n",
-						(s->image ? s->image->name : "NULL"));
+				Com_Printf("R_ParseStage: Invalid number of anim frames for %s (max is %i)\n",
+						(s->image ? s->image->name : "NULL"), MAX_ANIM_FRAMES);
 				return -1;
 			}
 
@@ -728,6 +728,24 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 		if (!strcmp(c, "lightmap")) {
 			s->flags |= STAGE_LIGHTMAP;
+			continue;
+		}
+
+		if (!strcmp(c, "flare")) {
+			c = Com_Parse(buffer);
+			i = atoi(c);
+
+			if (i > -1 && i < NUM_FLARETEXTURES)
+				s->image = r_flaretextures[i];
+			else
+				s->image = R_FindImage(va("flares/%s", c), it_material);
+
+			if (s->image == r_noTexture) {
+				Com_Printf("R_ParseStage: Failed to resolve flare: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_FLARE;
 			continue;
 		}
 

@@ -29,6 +29,8 @@
 #include "generic/callback.h"
 #include "gtkutil/image.h"
 
+#include "../ui/particleeditor/ParticleEditor.h"
+
 #include <gtk/gtkvbox.h>
 #include <gtk/gtktreeview.h>
 #include <gtk/gtkframe.h>
@@ -137,6 +139,11 @@ namespace ui
 	{
 		// Popup on right-click events only
 		if (ev->button == 3) {
+			ParticleDefinition* definition = self->getSelectedParticle();
+			if (definition != (ParticleDefinition*)0) {
+				ui::ParticleEditor editor;
+				editor.showAndBlock(definition->getID());
+			}
 		}
 		return FALSE;
 	}

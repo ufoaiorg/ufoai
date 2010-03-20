@@ -601,6 +601,7 @@ CLIENT_LIBS
 EXE_EXT
 BINDIR
 PKGDATADIR
+HARD_LINKED_GAME
 PROFILING
 PARANOID
 USE_SIGNALS
@@ -715,6 +716,7 @@ enable_release
 enable_signals
 enable_paranoid
 enable_profiling
+enable_hardlinkedgame
 enable_tests
 enable_universal
 '
@@ -1363,6 +1365,7 @@ Optional Features:
   --disable-signals       build with signal handling [default=enabled]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
+  --enable-hardlinkedgame build with hard linked game [default=disabled]
   --enable-tests          build with tests [default=check]
   --enable-universal      build universal binaries on Mac OS X
                           [default=disabled]
@@ -2743,6 +2746,14 @@ if test "${enable_profiling+set}" = set; then :
   enableval=$enable_profiling;
 else
   enable_profiling=no
+fi
+
+
+# Check whether --enable-hardlinkedgame was given.
+if test "${enable_hardlinkedgame+set}" = set; then :
+  enableval=$enable_hardlinkedgame;
+else
+  enable_hardlinkedgame=no
 fi
 
 
@@ -7290,6 +7301,21 @@ then
 $as_echo "$as_me: Enabling profiling" >&6;}
 else
 	PROFILING=0
+
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for HARD_LINKED_GAME
+#---------------------------------------------------------------------------------------------
+
+if test "$enable_hardlinkedgame" = "yes"
+then
+	HARD_LINKED_GAME=1
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: Enabling hard linked game" >&5
+$as_echo "$as_me: Enabling hard linked game" >&6;}
+else
+	HARD_LINKED_GAME=0
 
 fi
 

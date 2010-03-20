@@ -4040,3 +4040,45 @@
 ( 556 354 56 ) ( 556 64 56 ) ( 556 64 12 ) tex_material/metall008 0 -8 0 0.5 0.5 1024 0 0
 }
 }
+// entity 42
+{
+"classname" "misc_particle"
+"origin" "480 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 43
+{
+"classname" "misc_particle"
+"origin" "480 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 44
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 45
+{
+"classname" "misc_particle"
+"origin" "160 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 46
+{
+"classname" "misc_particle"
+"origin" "800 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 47
+{
+"classname" "misc_particle"
+"origin" "800 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

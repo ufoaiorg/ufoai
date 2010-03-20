@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * This function only returns @c NULL if no two handed weapon is in the right hand
  * and the left hand is empty.
  */
-invList_t* HUD_GetLeftHandWeapon (le_t *actor, int *container)
+invList_t* HUD_GetLeftHandWeapon (le_t *actor, containerIndex_t *container)
 {
 	invList_t *invList = LEFT(actor);
 
@@ -109,7 +109,7 @@ static qboolean HUD_CheckShooting (const le_t* le, invList_t *weapon)
 static void HUD_FireWeapon_f (void)
 {
 	actorHands_t hand;
-	int firemode;
+	fireDefIndex_t firemode;
 	const objDef_t *ammo;
 	const fireDef_t *fd;
 
@@ -200,10 +200,13 @@ static void HUD_ToggleReaction_f (void)
  * @sa HUD_RefreshButtons
  * @sa HUD_CheckReload
  */
-int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toContainer)
+int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, containerIndex_t toContainer)
 {
-	int container;
+	containerIndex_t container;
 	invList_t *ic;
+
+	if (toContainer == NONE)
+		return -1;
 
 	assert(le);
 	assert(weapon);
@@ -225,7 +228,7 @@ int HUD_CalcReloadTime (const le_t *le, const objDef_t *weapon, int toContainer)
  * @sa HUD_ReloadLeft_f
  * @sa HUD_ReloadRight_f
  */
-static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, int container)
+static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, containerIndex_t container)
 {
 	int tus;
 
@@ -264,7 +267,7 @@ static qboolean HUD_CheckReload (const le_t* le, const invList_t *weapon, int co
  */
 static void HUD_ReloadLeft_f (void)
 {
-	int container = csi.idLeft;
+	containerIndex_t container = csi.idLeft;
 	if (!HUD_CheckReload(selActor, HUD_GetLeftHandWeapon(selActor, &container), container))
 		return;
 	CL_ActorReload(selActor, container);

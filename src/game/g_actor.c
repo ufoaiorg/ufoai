@@ -238,6 +238,16 @@ void G_ActorSetMaxs (edict_t* ent)
 }
 
 /**
+ * @brief Set time units for the given edict. Based on speed skills
+ * @param ent The actor edict
+ */
+void G_ActorGiveTimeUnits (edict_t *ent)
+{
+	ent->state &= ~STATE_DAZED;
+	ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+}
+
+/**
  * @brief Reports and handles death or stun of an actor.
  * @param[in] ent Pointer to an entity being killed or stunned actor.
  * @param[in] state Dead or stunned?
@@ -351,9 +361,9 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* search for space */
 	if (tx == NONE) {
-		ic = INVSH_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
+		ic = INVSH_SearchInInventory(&ent->chr.i, from, fItem->x, fItem->y);
 		if (ic)
-			INVSH_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
+			INVSH_FindSpace(&ent->chr.i, &ic->item, to, &tx, &ty, fItem);
 		if (tx == NONE)
 			return;
 	}
@@ -366,7 +376,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
 	ent->TU -= reservedTU;
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
-	ia = game.i.MoveInInventory(&game.i, &ent->i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
+	ia = game.i.MoveInInventory(&game.i, &ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
 	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
 
@@ -444,15 +454,17 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
+			/* use the backup item to use the old amount values, because the clients have to use the same actions
+			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(item, to, tx, ty);
+			G_WriteItem(fItemBackup.item, to, tx, ty);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
 		G_WriteItem(item, to, tx, ty);
 	}
 
-	G_UpdateReactionFire(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
+	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
 
 	/* Other players receive weapon info only. */
 	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
@@ -480,7 +492,7 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 	invList_t *icFinal;
 	objDef_t *weapon;
 	int tu;
-	int containerID;
+	containerIndex_t containerID;
 	invDef_t *bestContainer;
 
 	/* search for clips and select the one that is available easily */
@@ -510,11 +522,11 @@ void G_ActorReload (edict_t* ent, const invDef_t *invDef)
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->i.c[containerID]; ic; ic = ic->next)
+			for (ic = CONTAINER(ent, containerID); ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
 					icFinal = ic;
-					tu = INVDEF(containerID)->out;
 					bestContainer = INVDEF(containerID);
+					tu = bestContainer->out;
 					break;
 				}
 		}

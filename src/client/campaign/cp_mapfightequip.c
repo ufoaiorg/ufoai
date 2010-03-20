@@ -227,11 +227,14 @@ void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
  * @brief Remove a base defence sytem from base.
  * @param[in] base The base that is affected
  * @param[in] basedefType (see basedefenceType_t)
- * @param[in] idx idx of the battery to destroy (-1 if this is random)
+ * @param[in] idx index of the battery to destroy
+ * @note if idx is negative the function looks for an empty battery to remove,
+ *       it removes the last one if every one equipped
  * @sa BDEF_AddBattery
  */
 void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 {
+	int i;
 	assert(base);
 
 	/* Select the type of base defence system to destroy */
@@ -239,8 +242,18 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 	case BASEDEF_MISSILE: /* this is a missile battery */
 		/* we must have at least one missile battery to remove it */
 		assert(base->numBatteries > 0);
+		/* look for an unequipped battery */
+		if (idx < 0) {
+			for (i = 0; i < base->numBatteries; i++) {
+				if (!base->batteries[i].slot.item) {
+					idx = i;
+					break;
+				}
+			}
+		}
+		/* if none found remove the last one */
 		if (idx < 0)
-			idx = rand() % base->numBatteries;
+			idx = base->numBatteries - 1;
 		REMOVE_ELEM(base->batteries, idx, base->numBatteries);
 		/* just for security */
 		AII_InitialiseSlot(&base->batteries[base->numBatteries].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
@@ -248,8 +261,18 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 	case BASEDEF_LASER: /* this is a laser battery */
 		/* we must have at least one laser battery to remove it */
 		assert(base->numLasers > 0);
+		/* look for an unequipped battery */
+		if (idx < 0) {
+			for (i = 0; i < base->numLasers; i++) {
+				if (!base->lasers[i].slot.item) {
+					idx = i;
+					break;
+				}
+			}
+		}
+		/* if none found remove the last one */
 		if (idx < 0)
-			idx = rand() % base->numLasers;
+			idx = base->numLasers - 1;
 		REMOVE_ELEM(base->lasers, idx, base->numLasers);
 		/* just for security */
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
@@ -579,7 +602,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 		if (AIR_IsUFO(slot->aircraft)) {
 			/* UFO - can always be reloaded */
 			slot->ammoLeft = slot->ammo->ammo;
-			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * UFO_RELOAD_DELAY_MULTIPLIER;		
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * UFO_RELOAD_DELAY_MULTIPLIER;
 		} else {
 			/* PHALANX aircraft */
 			/* not at home */
@@ -591,7 +614,7 @@ qboolean AII_ReloadWeapon (aircraftSlot_t *slot)
 
 			B_UpdateStorageAndCapacity(slot->aircraft->homebase, slot->ammo, -1, qfalse, qfalse);
 			slot->ammoLeft = slot->ammo->ammo;
-			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;		
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay * AIRCRAFT_RELOAD_DELAY_MULTIPLIER;
 		}
 	} else if (slot->base) {
 		/* Base Defence weapons */

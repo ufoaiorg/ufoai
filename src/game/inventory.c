@@ -476,7 +476,7 @@ static void I_EmptyContainer (inventoryInterface_t* self, inventory_t* const i, 
  */
 static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i)
 {
-	int container;
+	containerIndex_t container;
 
 	if (!i)
 		return;
@@ -673,7 +673,7 @@ typedef enum {
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, const equipDef_t *ed, character_t* chr)
+static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, const equipDef_t *ed, const character_t* chr)
 {
 	int i, sum;
 	const int numEquip = lengthof(ed->numItems);
@@ -775,7 +775,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 					objDef_t *obj = INVSH_GetItemByIDX(i);
 					if (ed->numItems[i] && ((obj->weapon && obj->isSecondary
 					 && (!obj->reload || obj->deplete)) || obj->isMisc)) {
-						randNumber -= ed->numItems[i] ? max(ed->numItems[i] % 100,1) : 0;
+						randNumber -= ed->numItems[i] ? max(ed->numItems[i] % 100, 1) : 0;
 						if (randNumber < 0) {
 							secondaryWeapon = obj;
 							break;
@@ -819,25 +819,49 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		Sys_Error("INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 	}
 
-	if (!chr->teamDef->armour) {
+	if (chr->teamDef->armour) {
+		do {
+			int randNumber = rand() % 100;
+			for (i = 0; i < self->csi->numODs; i++) {
+				objDef_t *armour = INVSH_GetItemByIDX(i);
+				if (ed->numItems[i] && INV_IsArmour(armour)) {
+					randNumber -= ed->numItems[i];
+					if (randNumber < 0) {
+						const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
+						if (self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idArmour])) {
+							repeat = 0;
+							break;
+						}
+					}
+				}
+			}
+		} while (repeat-- > 0);
+	} else {
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armour\n", chr->name);
-		return;
 	}
 
-	do {
-		int randNumber = rand() % 100;
+	{
+		int randNumber = rand() % 10;
 		for (i = 0; i < self->csi->numODs; i++) {
-			objDef_t *armour = INVSH_GetItemByIDX(i);
-			if (ed->numItems[i] && INV_IsArmour(armour)) {
-				randNumber -= ed->numItems[i];
-				if (randNumber < 0) {
-					const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
-					if (self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idArmour]))
-						return;
+			if (ed->numItems[i]) {
+				objDef_t *miscItem = INVSH_GetItemByIDX(i);
+				if (miscItem->isMisc && !miscItem->weapon) {
+					randNumber -= ed->numItems[i];
+					if (randNumber < 0) {
+						const item_t item = {NONE_AMMO, NULL, miscItem, 0, 0};
+						containerIndex_t container;
+						if (miscItem->headgear)
+							container = self->csi->idHeadgear;
+						else if (miscItem->extension)
+							container = self->csi->idExtension;
+						else
+							container = self->csi->idBackpack;
+						self->TryAddToInventory(self, inv, item, &self->csi->ids[container]);
+					}
 				}
 			}
 		}
-	} while (repeat--);
+	}
 }
 
 /**

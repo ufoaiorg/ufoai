@@ -57,6 +57,8 @@ typedef enum {
 #define INJURY_BALANCE 0.2f
 #define INJURY_THRESHOLD 0.5f /* HP / maxHP > INJURY_THRESHOLD no penalty is incurred */
 
+typedef int32_t containerIndex_t;
+
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
 	IA_NONE,			/**< no move possible */
@@ -69,6 +71,9 @@ typedef enum {
 	IA_NOTIME,			/**< not enough TUs to make this inv move */
 	IA_NORELOAD			/**< not loadable or already fully loaded */
 } inventory_action_t;
+
+typedef int32_t weaponFireDefIndex_t;
+typedef int32_t fireDefIndex_t;
 
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
@@ -86,11 +91,11 @@ typedef struct fireDef_s {
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
 	struct objDef_s *obj;		/**< The weapon/ammo item this fd is located in. */
-	int weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
+	weaponFireDefIndex_t weapFdsIdx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weapFdsIdx]) this fd is located in.
 						 ** Depending on this value you can find out via objDef_t->weapIdx[weapFdsIdx] what weapon this firemode is used for.
 						 ** This does _NOT_ equal the index of the weapon object in ods.
 						 */
-	int fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
+	fireDefIndex_t fdIdx;		/**< Self link of the fd in the objDef_t->fd[][fdIdx] array. */
 
 	qboolean soundOnce;		/**< when set, firing sound is played only once, see CL_ActorDoThrow() and CL_ActorShootHidden() */
 	qboolean gravity;		/**< Does gravity has any influence on this item? */
@@ -273,7 +278,7 @@ typedef struct objDef_s {
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
 															 * FIRESH_FiredefForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
-	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
+	fireDefIndex_t numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
 												 * Maximum value for fireDef_t.fdIdx <= MAX_FIREDEFS_PER_WEAPON. */
 	int numWeapons;		/**< Number of weapons this ammo can be used in.
 						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
@@ -305,7 +310,7 @@ enum {
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files. */
-	int id;				/**< Special container id. See csi_t for the values to compare it with. */
+	containerIndex_t id;				/**< Special container id. See csi_t for the values to compare it with. */
 	/** Type of this container or inventory. */
 	qboolean single;	/**< Just a single item can be stored in this container. */
 	qboolean armour;	/**< Only armour can be stored in this container. */
@@ -429,9 +434,9 @@ typedef struct csi_s {
 	mapDef_t *currentMD;	/**< currently selected mapdef */
 
 	/** Special container ids */
-	int idRight, idLeft, idExtension;
-	int idHeadgear, idBackpack, idBelt, idHolster;
-	int idArmour, idFloor, idEquip;
+	containerIndex_t idRight, idLeft, idExtension;
+	containerIndex_t idHeadgear, idBackpack, idBelt, idHolster;
+	containerIndex_t idArmour, idFloor, idEquip;
 
 	/** Damage type ids */
 	int damNormal, damBlast, damFire;
@@ -571,7 +576,7 @@ typedef struct chrScoreGlobal_s {
 
 typedef struct chrFiremodeSettings_s {
 	actorHands_t hand;	/**< Stores the used hand */
-	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
+	fireDefIndex_t fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
 	const objDef_t *weapon;
 } chrFiremodeSettings_t;
 
@@ -636,7 +641,7 @@ typedef struct character_s {
 	/** @sa memcpy in Grid_CheckForbidden */
 	actorSizeEnum_t fieldSize;				/**< @sa ACTOR_SIZE_**** */
 
-	inventory_t inv;			/**< Inventory definition. */
+	inventory_t i;			/**< Inventory definition. */
 
 	teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */
@@ -687,7 +692,7 @@ invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
 /* =============================== */
 
-const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
+const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx);
 const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 #define FIRESH_IsMedikit(firedef) ((firedef)->damage[0] < 0)
 void INVSH_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
@@ -695,7 +700,7 @@ qboolean INVSH_CheckShape(const uint32_t *shape, const int x, const int y);
 int INVSH_ShapeSize(const uint32_t shape);
 uint32_t INVSH_ShapeRotate(const uint32_t shape);
 
-const fireDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
+const objDef_t* INVSH_HasReactionFireEnabledWeapon(const invList_t *invList);
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
 #define INV_INVENTORY_BYTES 11

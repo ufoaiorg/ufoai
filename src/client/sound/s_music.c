@@ -377,6 +377,8 @@ static void M_MusicStreamCallback (musicStream_t *userdata, byte *stream, int le
  * is usually 1/4 of the size of the data buffer, one sample should have 4 bytes, 2 for
  * each channel)
  * @param[in] data The stereo sample buffer
+ * @param[in,out] userdata The music stream
+ * @param[in] rate The sample rate
  */
 void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const byte *data)
 {

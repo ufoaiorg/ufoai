@@ -297,7 +297,7 @@ void MN_Init (void)
 	/* add cvars */
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
 	/** @todo should be a client Cvar, not a menu */
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "This is the current selected hud");
+	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected hud");
 
 	/* add menu commands */
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_PARTICLE_H
 
 /** @brief map particles */
-typedef struct mp_s {
+typedef struct mapParticle_s {
 	char ptl[MAX_VAR];
 	const char *info;
 	vec3_t origin;

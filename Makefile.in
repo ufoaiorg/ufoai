@@ -31,6 +31,7 @@ RADIANT_CFLAGS=@RADIANT_CFLAGS@
 
 MSYS=@MSYS@
 PROFILING=@PROFILING@
+HARD_LINKED_GAME=@HARD_LINKED_GAME@
 PARANOID=@PARANOID@
 USE_SIGNALS=@USE_SIGNALS@
 BUILD_CLIENT=@BUILD_CLIENT@
@@ -58,7 +59,7 @@ include build/defs.mk
 #######################################################################################################
 
 # define all the modules that need to be compiled
-MODULES = radiant client server tools game sound masterserver tests
+MODULES = radiant game client server tools sound masterserver tests
 
 all: all2
 

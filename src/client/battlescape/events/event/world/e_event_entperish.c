@@ -49,7 +49,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ITEM:
-		cls.i.EmptyContainer(&cls.i, &le->i, &csi.ids[csi.idFloor]);
+		cls.i.EmptyContainer(&cls.i, &le->i, INVDEF(csi.idFloor));
 
 		/* search owners (there can be many, some of them dead) */
 		actor = NULL;

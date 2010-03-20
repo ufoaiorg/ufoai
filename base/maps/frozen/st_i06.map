@@ -481,3 +481,17 @@
 ( 192 128 64 ) ( 128 128 64 ) ( 128 128 4 ) tex_misc/container002 0 35 0 0.5 0.325001 134283008 0 0
 }
 }
+// entity 3
+{
+"classname" "misc_particle"
+"origin" "480 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 4
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

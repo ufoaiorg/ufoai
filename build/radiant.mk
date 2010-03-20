@@ -30,7 +30,6 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/particles.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
-	$(RADIANT_BASE)/radiant/mapmodule.cpp \
 	$(RADIANT_BASE)/radiant/parse.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding.cpp \
 	$(RADIANT_BASE)/radiant/plugin.cpp \
@@ -68,6 +67,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ufoscript/common/DataBlock.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/terrain/Terrain.cpp \
 	$(RADIANT_BASE)/radiant/ufoscript/mapdef/MapDef.cpp \
+	$(RADIANT_BASE)/radiant/ufoscript/particles/Particle.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ump/UMPFile.cpp \
 	$(RADIANT_BASE)/radiant/ump/UMPTile.cpp \
@@ -78,6 +78,7 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/map/autosave.cpp \
 	$(RADIANT_BASE)/radiant/map/map.cpp \
 	$(RADIANT_BASE)/radiant/map/MapFileChooserPreview.cpp \
+	$(RADIANT_BASE)/radiant/map/mapmodule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/namespace/NameObserver.cpp \
 	$(RADIANT_BASE)/radiant/namespace/BasicNamespace.cpp \
@@ -146,6 +147,9 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/ui/scripteditor/UFOScriptEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/umpeditor/UMPEditor.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/particleeditor/ParticleEditor.cpp \
+	$(RADIANT_BASE)/radiant/ui/particleeditor/ParticlePreview.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/ortho/EntityClassChooser.cpp \
 	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \

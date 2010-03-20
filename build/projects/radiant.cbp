@@ -49,6 +49,7 @@
 					<Add library="z" />
 				</Linker>
 				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
 					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
 				</ExtraCommands>
 			</Target>
@@ -98,6 +99,7 @@
 					<Add library="z" />
 				</Linker>
 				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
 					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
 				</ExtraCommands>
 			</Target>
@@ -616,7 +618,7 @@
 		<Unit filename="../../src/tools/radiant/radiant/namespace/NamespaceAPI.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/mapmodule.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/map/mapmodule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/material.cpp">
@@ -779,6 +781,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/ufoscript/mapdef/MapDef.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/particles/Particle.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ump/UMPFile.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -822,6 +827,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/lightdialog/LightDialog.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/particleeditor/ParticleEditor.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ui/particleeditor/ParticlePreview.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ui/modelselector/ModelSelector.cpp">

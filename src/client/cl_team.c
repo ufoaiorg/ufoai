@@ -156,7 +156,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 
 	/* Store inventories */
 	sInventory = mxml_AddNode(p, SAVE_INVENTORY_INVENTORY);
-	CL_SaveInventoryXML(sInventory, &chr->inv);
+	CL_SaveInventoryXML(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
@@ -254,9 +254,9 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->score.assignedMissions = mxml_GetInt(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
 	chr->score.rank = mxml_GetInt(sScore, SAVE_CHARACTER_SCORE_RANK, -1);
 
-	cls.i.DestroyInventory(&cls.i, &chr->inv);
+	cls.i.DestroyInventory(&cls.i, &chr->i);
 	sInventory = mxml_GetNode(p, SAVE_INVENTORY_INVENTORY);
-	CL_LoadInventoryXML(sInventory, &chr->inv);
+	CL_LoadInventoryXML(sInventory, &chr->i);
 
 	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
@@ -271,7 +271,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
  * @param[in] y Vertical coordinate of the item in the container
  * @sa CL_LoadItemXML
  */
-static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, int y)
+static void CL_SaveItemXML (mxml_node_t *p, item_t item, containerIndex_t container, int x, int y)
 {
 	assert(item.t);
 
@@ -297,13 +297,13 @@ static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, i
  */
 void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 {
-	int container;
+	containerIndex_t container;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		invList_t *ic = i->c[container];
 
 		/* ignore items linked from any temp container */
-		if (csi.ids[container].temp)
+		if (INVDEF(container)->temp)
 			continue;
 
 		for (; ic; ic = ic->next) {
@@ -322,7 +322,7 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
  * @param[out] y Vertical coordinate of the item in the container
  * @sa CL_SaveItemXML
  */
-static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x, int *y)
+static void CL_LoadItemXML (mxml_node_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
 {
 	const char *itemID = mxml_GetString(n, SAVE_INVENTORY_WEAPONID);
 	const char *contID = mxml_GetString(n, SAVE_INVENTORY_CONTAINER);
@@ -370,13 +370,11 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 
 	for (s = mxml_GetNode(p, SAVE_INVENTORY_ITEM); s; s = mxml_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		item_t item;
-		int container, x, y;
+		containerIndex_t container;
+		int x, y;
 
 		CL_LoadItemXML(s, &item, &container, &x, &y);
-		if ((container < 0) || (container >= csi.numIDs))
-			continue;
-
-		if (!cls.i.AddToInventory(&cls.i, i, item, &csi.ids[container], x, y, 1))
+		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");
 	}
 }
@@ -393,7 +391,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 	memset(chr, 0, sizeof(*chr));
 
 	/* link inventory */
-	cls.i.DestroyInventory(&cls.i, &chr->inv);
+	cls.i.DestroyInventory(&cls.i, &chr->i);
 
 	/* get ucn */
 	chr->ucn = cls.nextUniqueCharacterNumber++;

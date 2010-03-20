@@ -151,7 +151,8 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  */
 void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
-	int p, container;
+	int p;
+	containerIndex_t container;
 
 	assert(aircraft);
 
@@ -167,8 +168,8 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 			/* This is an UGV */
 			if (aircraft->acTeam[p]->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
-				if (!chr->inv.c[csi.idRight] || !chr->inv.c[csi.idRight]->item.t)
-					cls.i.EquipActorRobot(&cls.i, &chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
+				if (!RIGHT(chr) || !RIGHT(chr)->item.t)
+					cls.i.EquipActorRobot(&cls.i, &chr->i, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
 			}
 		}
 	}
@@ -181,16 +182,16 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 				assert(chr);
 #if 0
 				/* ignore items linked from any temp container */
-				if (csi.ids[container].temp)
+				if (INVDEF(container)->temp)
 					continue;
 #endif
-				for (ic = chr->inv.c[container]; ic; ic = next) {
+				for (ic = CONTAINER(chr, container); ic; ic = next) {
 					next = ic->next;
 					if (ed->numItems[ic->item.t->idx] > 0) {
 						ic->item = CP_AddWeaponAmmo(ed, ic->item);
 					} else {
 						/* Drop ammo used for reloading and sold carried weapons. */
-						if (!cls.i.RemoveFromInventory(&cls.i, &chr->inv, &csi.ids[container], ic))
+						if (!cls.i.RemoveFromInventory(&cls.i, &chr->i, INVDEF(container), ic))
 							Com_Error(ERR_DROP, "Could not remove item from inventory");
 					}
 				}
@@ -211,10 +212,10 @@ void CL_CleanTempInventory (base_t* base)
 
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
-			if (csi.ids[k].temp) {
+			if (INVDEF(k)->temp) {
 				/* idFloor and idEquip are temp */
-				ccs.employees[EMPL_SOLDIER][i].chr.inv.c[k] = NULL;
-				ccs.employees[EMPL_ROBOT][i].chr.inv.c[k] = NULL;
+				ccs.employees[EMPL_SOLDIER][i].chr.i.c[k] = NULL;
+				ccs.employees[EMPL_ROBOT][i].chr.i.c[k] = NULL;
 			}
 
 	if (!base)

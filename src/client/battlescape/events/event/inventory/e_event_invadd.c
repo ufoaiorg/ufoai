@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y)
+static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex_t *container, int *x, int *y)
 {
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
 
@@ -54,8 +54,6 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container
  */
 void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 {
-	int container, x, y;
-	item_t item;
 	const int number = NET_ReadShort(msg);
 	le_t *le = LE_Get(number);
 	int nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
@@ -66,12 +64,15 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 	le->removeNextFrame = qfalse;
 
 	for (; nr-- > 0;) {
+		item_t item;
+		containerIndex_t container;
+		int x, y;
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
 
 		if (LE_IsItem(le) && container != csi.idFloor)
 			Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
 
-		if (cls.i.AddToInventory(&cls.i, &le->i, item, &csi.ids[container], x, y, item.amount) == NULL)
+		if (cls.i.AddToInventory(&cls.i, &le->i, item, INVDEF(container), x, y, item.amount) == NULL)
 			Com_Error(ERR_DROP, "InvAdd failed - could not add item to container %i", container);
 
 		if (container == csi.idRight)

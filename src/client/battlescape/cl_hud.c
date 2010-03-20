@@ -302,7 +302,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 				const fireDef_t* ammoFD = &ammo->fd[fd->weapFdsIdx][i];
 				if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= ammoFD->time) {
 					/* Get firemode name and TUs. */
-					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), ammoFD->time, ammoFD->name);
+					Com_sprintf(text, lengthof(text), _("[%i TU] %s"), ammoFD->time, _(ammoFD->name));
 
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
@@ -396,7 +396,7 @@ static void HUD_ShotReserve_f (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @param[in] hand What list to display
  */
-static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const int weapFdsIdx, const actorHands_t hand, int index)
+static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, const weaponFireDefIndex_t weapFdsIdx, const actorHands_t hand, int index)
 {
 	int usableTusForRF;
 	char tuString[MAX_VAR];
@@ -526,7 +526,7 @@ static void HUD_SwitchFiremodeList_f (void)
  * @param[in] hand Which weapon(-hand) to use.
  * @param[in] firemodeActive Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
-static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t hand, int firemodeActive)
+static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t hand, fireDefIndex_t firemodeActive)
 {
 	const fireDef_t *fd;
 	const objDef_t *ammo, *od;
@@ -552,7 +552,7 @@ static void HUD_UpdateReactionFiremodes (const le_t * actor, const actorHands_t 
 static void HUD_SelectReactionFiremode_f (void)
 {
 	actorHands_t hand;
-	int firemode;
+	fireDefIndex_t firemode;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
@@ -636,12 +636,11 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 /**
  * @brief Checks every case for reload buttons on the HUD.
  * @param[in] le Pointer of local entity being an actor.
- * @param[in] tu Remaining TU units of selected actor.
  * @param[in] containerID of the container to reload the weapon in. Used to get the movement TUs for moving something into the container.
  * @param[out] reason The reason why the reload didn't work - only set if @c -1 is the return value
  * @return TU units needed for reloading or -1 if weapon cannot be reloaded.
  */
-static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char **reason)
+static int HUD_WeaponCanBeReloaded (const le_t *le, containerIndex_t containerID, const char **reason)
 {
 	const int tu = CL_ActorUsableTUs(le);
 	const invList_t *invList = CONTAINER(le, containerID);
@@ -692,8 +691,8 @@ static int HUD_WeaponCanBeReloaded (const le_t *le, int containerID, const char 
  */
 static qboolean HUD_WeaponWithReaction (const le_t * actor)
 {
-	const fireDef_t *fd = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
-	if (fd)
+	const objDef_t *weapon = INVSH_HasReactionFireEnabledWeapon(RIGHT(actor));
+	if (weapon)
 		return qtrue;
 	return INVSH_HasReactionFireEnabledWeapon(LEFT(actor)) != NULL;
 }
@@ -1029,7 +1028,7 @@ static void HUD_MapDebugCursor (const le_t *le)
 		MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 
 		/* Display the floor and ceiling values for the current cell. */
-		dv = Grid_MoveNext(clMap, fieldSize, le->pathMap, mousePos, 0);
+		dv = Grid_MoveNext(le->pathMap, mousePos, 0);
 		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
 		/* Save the text for later display next to the cursor. */
 		MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
@@ -1071,15 +1070,17 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 				if (selWeapon->item.t->numWeapons > 0) {
 					if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
 						const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
-						/* Get firedef from the weapon (or other usable item) entry instead. */
-						if (fdArray != NULL)
-							CL_ActorSetFireDef(actor, FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, actor->currentSelectedFiremode));
+						if (fdArray != NULL) {
+							/* Get firedef from the weapon (or other usable item) entry instead. */
+							const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.t, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
+							CL_ActorSetFireDef(actor, old);
+						}
 					}
 				}
 			} else {
 				const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 				if (fdArray != NULL) {
-					const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, actor->currentSelectedFiremode);
+					const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->weapFdsIdx, actor->currentSelectedFiremode);
 					/* reset the align if we switched the firemode */
 					CL_ActorSetFireDef(actor, old);
 				}
@@ -1142,7 +1143,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 				actor->TU - actor->actorMoveLength, actor->TU - reservedTUs - actor->actorMoveLength);
 		else
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), actor->morale,
-				moveModeDescriptions[moveMode] , actor->actorMoveLength, actor->TU - actor->actorMoveLength);
+				_(moveModeDescriptions[moveMode]), actor->actorMoveLength, actor->TU - actor->actorMoveLength);
 
 		if (actor->actorMoveLength <= CL_ActorUsableTUs(actor))
 			Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actor->actorMoveLength, CL_ActorUsableTUs(actor));
@@ -1204,16 +1205,17 @@ static void HUD_UpdateActor (le_t *actor)
 	} else if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT]
 	 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]) {
 		const invList_t *invList;
-		int container;
+		containerIndex_t container;
 
 		if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(actor)) {
-			invList = RIGHT(actor);
 			container = csi.idRight;
+			invList = RIGHT(actor);
 		} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(actor)) {
+			container = NONE;
 			invList = HUD_GetLeftHandWeapon(actor, &container);
 		} else {
+			container = NONE;
 			invList = NULL;
-			container = 0;
 		}
 
 		if (invList && invList->item.t && invList->item.m && invList->item.t->reload) {

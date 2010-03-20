@@ -174,6 +174,57 @@ void G_TakeDamage (edict_t *ent, int damage)
 }
 
 /**
+ * @brief Renders all the traces on the client side if the cvar @c g_drawtraces is activated
+ * @param start The start vector of the trace
+ * @param end The end vector of the trace
+ */
+static void G_TraceDraw (const vec3_t start, const vec3_t end)
+{
+	if (g_drawtraces->integer)
+		G_EventParticleSpawn(PM_ALL, "fadeTracerDebug", TRACING_ALL_VISIBLE_LEVELS, start, end, vec3_origin);
+}
+
+/**
+ * @brief fast version of a line trace including entities
+ * @param start The start vector of the trace
+ * @param end The end vector of the trace
+ * @return @c false if not blocked
+ */
+qboolean G_TestLineWithEnts (const vec3_t start, const vec3_t end)
+{
+	const char *entList[MAX_EDICTS];
+	/* generate entity list */
+	G_GenerateEntList(entList);
+	G_TraceDraw(start, end);
+	/* test for visibility */
+	return gi.TestLineWithEnt(start, end, TL_FLAG_NONE, entList);
+}
+
+/**
+ * @brief fast version of a line trace but without including entities
+ * @param start The start vector of the trace
+ * @param end The end vector of the trace
+ * @return @c false if not blocked
+ */
+qboolean G_TestLine (const vec3_t start, const vec3_t end)
+{
+	G_TraceDraw(start, end);
+	return gi.TestLine(start, end, TL_FLAG_NONE);
+}
+
+/**
+ * @brief collision detection - this version is more accurate and includes entity tests
+ * @note traces a box from start to end, ignoring entities passent, stopping if it hits an object of type specified
+ * via contentmask (MASK_*).
+ * @return The trace result
+ */
+trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
+{
+	G_TraceDraw(start, end);
+	return gi.trace(start, NULL, NULL, end, passent, contentmask);
+}
+
+/**
  * @brief Returns the player name for a give player number
  */
 const char* G_GetPlayerName (int pnum)

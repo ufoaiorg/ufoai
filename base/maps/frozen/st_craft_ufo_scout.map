@@ -275,7 +275,6 @@
 }
 // brush 30
 {
-( 257 512 52 ) ( 257 512 74 ) ( 257 352 74 ) tex_common/weaponclip 64 8 90 0.5 -0.5 33554432 0 0
 ( 287 352 60 ) ( 287 352 82 ) ( 287 512 82 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
 ( 224 352 82 ) ( 302 352 82 ) ( 302 352 60 ) tex_common/weaponclip 16 10 90 0.5 0.5 33554432 0 0
 ( 294 448 82 ) ( 216 448 82 ) ( 216 448 60 ) tex_common/weaponclip 16 10 90 0.5 0.5 33554432 0 0
@@ -297,7 +296,6 @@
 // brush 32
 {
 ( 224 512 82 ) ( 224 352 82 ) ( 224 352 60 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
-( 254 352 74 ) ( 254 512 74 ) ( 254 512 52 ) tex_common/weaponclip 64 8 90 0.5 -0.5 33554432 0 0
 ( 224 352 82 ) ( 302 352 82 ) ( 302 352 60 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
 ( 294 448 82 ) ( 216 448 82 ) ( 216 448 60 ) tex_common/weaponclip 16 8 90 0.5 -0.5 33554432 0 0
 ( 222 350 80 ) ( 300 350 80 ) ( 300 510 80 ) tex_common/weaponclip 4 4 -90 0.5 0.5 33554432 0 0
@@ -456,4 +454,46 @@
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
 "origin" "80 656 8"
+}
+// entity 14
+{
+"classname" "misc_particle"
+"origin" "56 368 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 15
+{
+"classname" "misc_particle"
+"origin" "440 368 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 16
+{
+"classname" "misc_particle"
+"origin" "56 688 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 17
+{
+"classname" "misc_particle"
+"origin" "440 688 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 18
+{
+"classname" "misc_particle"
+"origin" "56 48 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 19
+{
+"classname" "misc_particle"
+"origin" "440 48 368"
+"spawnflags" "255"
+"particle" "weather_snow"
 }

@@ -302,8 +302,7 @@ particle rocket_inc
 	init
 	{
 		model  weapons/rpg/rocket
-		// FIXME: Export this model
-//		model  weapons/rpg/rocket_inc
+		model  weapons/rpg/rocket_inc
 		color  ".5 .5 .5 1"
 		tps    40.0
 	}

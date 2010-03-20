@@ -295,20 +295,25 @@ static void *game_library;
 
 void Sys_UnloadGame (void)
 {
+#ifndef GAME_HARD_LINKED
 	if (game_library)
 		Sys_FreeLibrary(game_library);
+#endif
 	game_library = NULL;
 }
+
 
 /**
  * @brief Loads the game dll
  */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
+#ifndef HARD_LINKED_GAME
 	void *(*GetGameAPI) (void *);
 
 	char name[MAX_OSPATH];
 	const char *path;
+#endif
 
 	setreuid(getuid(), getuid());
 	setegid(getgid());
@@ -316,6 +321,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
+#ifndef HARD_LINKED_GAME
 	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
 
 	/* now run through the search paths */
@@ -339,6 +345,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 				Com_Printf("LoadLibrary (%s)\n", name);
 				break;
 			}
+			Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 		}
 	}
 
@@ -347,6 +354,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		Sys_UnloadGame();
 		return NULL;
 	}
+#endif
 
 	return GetGameAPI(parms);
 }

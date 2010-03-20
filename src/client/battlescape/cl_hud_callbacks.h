@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void HUD_InitCallbacks(void);
 
 /** @todo remove me */
-invList_t* HUD_GetLeftHandWeapon(le_t *actor, int *container);
+invList_t* HUD_GetLeftHandWeapon(le_t *actor, containerIndex_t *container);
 const fireDef_t *HUD_GetFireDefinitionForHand(const le_t * actor, const actorHands_t hand);
 int HUD_CalcReloadTime(const le_t *le, const objDef_t *weapon, int toContainer);
 

@@ -177,7 +177,7 @@ static void CP_SupplyMissionCreate (mission_t *mission)
  * @note Supply mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_SupplyMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+int CP_SupplyMissionAvailableUFOs (const mission_t const *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 

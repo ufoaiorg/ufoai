@@ -594,7 +594,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
  * @param[in] v velocity vector
  * @param[in] a acceleration vector
  * @sa CL_ParticleFree
- * @sa V_UpdateRefDef
+ * @sa CL_ViewUpdateRenderData
  * @sa R_DrawParticles
  */
 ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
@@ -995,10 +995,6 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name);
-		if (numPtlCmds >= MAX_PTLCMDS)
-			Com_Error(ERR_DROP, "CL_ParsePtlCmds: MAX_PTLCMDS exceeded");
-		pc = &ptlCmd[numPtlCmds++];
-		memset(pc, 0, sizeof(*pc));
 		return;
 	}
 

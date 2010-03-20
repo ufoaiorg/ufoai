@@ -65,7 +65,7 @@ unsigned int G_VisToPM (unsigned int vis_mask)
 
 	/* don't handle the ai players, here */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
-		if (p->inuse && (vis_mask & (1 << p->pers.team)))
+		if (p->inuse && (vis_mask & G_TeamToVisMask(p->pers.team)))
 			playerMask |= (1 << i);
 
 	return playerMask;
@@ -101,8 +101,7 @@ void G_GiveTimeUnits (int team)
 	edict_t *ent = NULL;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		ent->state &= ~STATE_DAZED;
-		ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+		G_ActorGiveTimeUnits(ent);
 		G_SendStats(ent);
 	}
 }
@@ -125,7 +124,7 @@ void G_SendState (unsigned int playerMask, const edict_t *ent)
  */
 static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
 {
-	gi.AddEvent(playerMask, EV_SPAWN_PARTICLE);
+	gi.AddEvent(playerMask, EV_PARTICLE_APPEAR);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->spawnflags);
 	gi.WriteString(ent->particle);
@@ -138,7 +137,7 @@ static void G_SendParticle (unsigned int playerMask, const edict_t *ent)
  * @note Each following event that is relying on the fact that this edict must already
  * be known in the client, must also adopt the client side parsing of the event times.
  */
-static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
+static void G_EdictAppear (unsigned int playerMask, const edict_t *ent)
 {
 	gi.AddEvent(playerMask, EV_ENT_APPEAR);
 	gi.WriteShort(ent->number);
@@ -157,7 +156,7 @@ static void G_EdictAppear (unsigned int playerMask, edict_t *ent)
  * or perish. Might be @c NULL.
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, edict_t *ent)
+void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *check, const edict_t *ent)
 {
 	/* test for pointless player mask */
 	if (!playerMask)
@@ -442,7 +441,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
-		if (G_CanEnableReactionFire(ent)) {
+		if (G_ReactionFireSetDefault(ent) && G_CanEnableReactionFire(ent)) {
 			const int TUs = G_ActorGetTUForReactionFire(ent);
 			/* Enable requested reaction fire. */
 			ent->state |= reqState;
@@ -467,18 +466,18 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, edict_t *ent, int containerID)
+qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
-	int container;
+	containerIndex_t container;
 	objDef_t *weapon;
 
-	if (ent->i.c[containerID]) {
-		weapon = ent->i.c[containerID]->item.t;
-	} else if (containerID == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	if (CONTAINER(ent, containerID)) {
+		weapon = CONTAINER(ent, containerID)->item.t;
+	} else if (containerID == gi.csi->idLeft && RIGHT(ent)->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		containerID = gi.csi->idRight;
-		weapon = ent->i.c[containerID]->item.t;
+		weapon = CONTAINER(ent, containerID)->item.t;
 	} else
 		return qfalse;
 
@@ -486,7 +485,7 @@ qboolean G_ClientCanReload (player_t *player, edict_t *ent, int containerID)
 
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++)
-		for (ic = ent->i.c[container]; ic; ic = ic->next)
+		for (ic = CONTAINER(ent, container); ic; ic = ic->next)
 			if (INVSH_LoadableInWeapon(ic->item.t, weapon))
 				return qtrue;
 	return qfalse;
@@ -504,7 +503,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 	invList_t *icFinal;
 	invDef_t *invDef;
 	int tu;
-	int container;
+	containerIndex_t container;
 	invDef_t *bestContainer;
 
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
@@ -519,12 +518,12 @@ void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 
 	/* also try the temp containers */
 	for (container = 0; container < gi.csi->numIDs; container++) {
-		if (gi.csi->ids[container].out < tu) {
+		if (INVDEF(container)->out < tu) {
 			/* Once we've found at least one clip, there's no point
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->i.c[container]; ic; ic = ic->next) {
+			for (ic = CONTAINER(ent, container); ic; ic = ic->next) {
 				assert(ic->item.t);
 				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
 					icFinal = ic;
@@ -581,7 +580,7 @@ int G_ClientAction (player_t * player)
 	int num;
 	pos3_t pos;
 	int i;
-	int firemode;
+	fireDefIndex_t firemode;
 	int from, fx, fy, to, tx, ty;
 	actorHands_t hand, fmIdx, objIdx;
 	int resCrouch, resShot;
@@ -623,16 +622,12 @@ int G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-		/* if something was thrown, the floor must be updated even if the actor that is trying to pick
-		 * the item up hasn't moved at all */
-		G_GetFloorItems(ent);
-
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
 			invDef_t *fromPtr = INVDEF(from);
 			invDef_t *toPtr = INVDEF(to);
-			invList_t *fromItem = INVSH_SearchInInventory(&ent->i, fromPtr, fx, fy);
+			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
 			if (!fromItem)
 				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);
@@ -663,7 +658,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_REACT_SELECT:
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fmIdx, &objIdx);
-		G_UpdateReactionFire(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
+		G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
@@ -911,35 +906,75 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
 }
 
 /**
+ * @brief Think function for actors that spawn dead
+ * @param ent The actor
+ */
+static void G_ThinkActorDieAfterSpawn (edict_t *ent)
+{
+	G_ActorDie(ent, STATE_DEAD, NULL);
+	ent->think = NULL;
+}
+
+/**
+ * @brief Think function for actors that spawn crouched
+ * @param ent The actor
+ */
+static void G_ThinkActorGoCrouch (edict_t *ent)
+{
+	G_ClientStateChange(G_PLAYER_FROM_ENT(ent), ent, STATE_CROUCHED, qtrue);
+	ent->think = NULL;
+}
+
+/**
  * @brief Searches a free spawning point for a given actor size
- * @param actorSize The actor size to get a spawning point for
+ * @param[in] player The player to get the free spawn points for
+ * @param[in] actorSize The actor size to get a spawning point for
  * @return An actor edict or @c NULL if no free spawning point was found
  */
-static edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
+edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const actorSizeEnum_t actorSize)
 {
+	edict_t *ent;
+
 	if (actorSize == ACTOR_SIZE_NORMAL) {
 		/* Find valid actor spawn fields for this player. */
-		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
+		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 		if (ent) {
 			ent->type = ET_ACTOR;
-			ent->chr.fieldSize = actorSize;
-			ent->fieldSize = ent->chr.fieldSize;
 		}
-		return ent;
 	} else if (actorSize == ACTOR_SIZE_2x2) {
 		/* Find valid actor spawn fields for this player. */
-		edict_t *ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
+		ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 		if (ent) {
 			ent->type = ET_ACTOR2x2;
 			ent->morale = 100;
-			ent->chr.fieldSize = actorSize;
-			ent->fieldSize = ent->chr.fieldSize;
 		}
-		return ent;
+	} else {
+		gi.error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
+				actorSize);
 	}
 
-	gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actorSize: %i)\n",
-			actorSize);
+	if (!ent)
+		return NULL;
+
+	level.num_alive[ent->team]++;
+	level.num_spawned[ent->team]++;
+	ent->pnum = player->num;
+	ent->chr.fieldSize = actorSize;
+	ent->fieldSize = ent->chr.fieldSize;
+
+	gi.LinkEdict(ent);
+
+	if (ent->spawnflags & STATE_CROUCHED) {
+		ent->think = G_ThinkActorGoCrouch;
+		ent->nextthink = 1;
+	}
+
+	if (ent->spawnflags & STATE_DEAD) {
+		ent->think = G_ThinkActorDieAfterSpawn;
+		ent->nextthink = 1;
+	}
+
+	return ent;
 }
 
 /**
@@ -956,13 +991,10 @@ static void G_ClientReadInventory (edict_t *ent)
 		item_t item;
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
-		if (game.i.AddToInventory(&game.i, &ent->i, item, container, x, y, 1) == NULL)
+		if (game.i.AddToInventory(&game.i, &ent->chr.i, item, container, x, y, 1) == NULL)
 			gi.error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.t->id, container->id, x, y);
 	}
-
-	/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
-	ent->chr.inv = ent->i;
 }
 
 /**
@@ -1095,12 +1127,6 @@ void G_ClientTeamInfo (const player_t * player)
 
 		if (ent) {
 			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
-
-			level.num_alive[ent->team]++;
-			level.num_spawned[ent->team]++;
-			ent->pnum = player->num;
-
-			gi.LinkEdict(ent);
 
 			G_ClientReadCharacter(ent);
 
@@ -1278,6 +1304,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
  * user info keys.
  * @param[in,out] player The player that is trying to connect to the game
  * @param[in,out] userinfo The userinfo data that is checked and changed
+ * @param[in] userinfoSize The size of the userinfo buffer
  * @sa G_ClientDisconnect
  * @sa CL_ConnectionlessPacket
  * @todo Check if the teamnum preference has already reached maxsoldiers

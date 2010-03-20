@@ -1147,7 +1147,12 @@ bool Map_ImportFile (const std::string& filename)
 bool Map_SaveFile (const std::string& filename)
 {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
-	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename);
+	if (!MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename))
+		return false;
+
+	// TODO: Resave the material file with the (maybe) new name of the map file
+	// TODO: Update ump file with the maybe new name of the map file
+	return true;
 }
 
 /**

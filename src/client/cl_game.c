@@ -89,7 +89,7 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&characters[i], teamDefID);
 		/* pack equipment */
-		cls.i.EquipActor(&cls.i, &characters[i].inv, ed, &characters[i]);
+		cls.i.EquipActor(&cls.i, &characters[i].i, ed, &characters[i]);
 
 		chrDisplayList.chr[i] = &characters[i];
 	}
@@ -341,7 +341,7 @@ void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *
  * @note The amount of the item_t struct should not be needed here - because
  * the amount is only valid for idFloor and idEquip
  */
-static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
+static void CL_NetSendItem (struct dbuffer *buf, item_t item, containerIndex_t container, int x, int y)
 {
 	const int ammoIdx = item.m ? item.m->idx : NONE;
 	const eventRegister_t *eventData = CL_GetEvent(EV_INV_TRANSFER);
@@ -356,7 +356,8 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
  */
 static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 {
-	int container, nr = 0;
+	containerIndex_t container;
+	int nr = 0;
 	const invList_t *ic;
 
 	for (container = 0; container < csi.numIDs; container++) {
@@ -438,7 +439,7 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 
 		GAME_NetSendCharacter(buf, chr);
 
-		CL_NetSendInventory(buf, &chr->inv);
+		CL_NetSendInventory(buf, &chr->i);
 	}
 }
 

@@ -1725,3 +1725,31 @@
 ( 192 160 21 ) ( 168 160 21 ) ( 168 160 20 ) tex_misc/box009 21 8 0 0.75 0.5 134218496 0 0
 }
 }
+// entity 24
+{
+"classname" "misc_particle"
+"origin" "480 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 25
+{
+"classname" "misc_particle"
+"origin" "480 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 26
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 27
+{
+"classname" "misc_particle"
+"origin" "160 448 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

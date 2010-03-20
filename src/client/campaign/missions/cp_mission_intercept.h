@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_MISSION_INTECEPT_H
 
 void CP_InterceptMissionLeave(mission_t *mission, qboolean destroyed);
-int CP_InterceptMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+int CP_InterceptMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
 void CP_InterceptNextStage(mission_t *mission);
 void CP_InterceptMissionIsFailure(mission_t *mission);
 void CP_InterceptMissionIsSuccess(mission_t *mission);

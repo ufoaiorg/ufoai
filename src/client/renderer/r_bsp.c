@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_material.h"
 #include "r_light.h"
+#include "r_draw.h"
 
 /*
 =============================================================
@@ -155,6 +156,8 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 
 	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
 
+	R_DrawFlareSurfaces(e->model->bsp.flare_surfaces);
+
 	R_EnableFog(qfalse);
 
 	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
@@ -200,7 +203,7 @@ void R_DrawBrushModel (const entity_t * e)
 
 	/* show model bounding box */
 	if (r_showbox->integer)
-		R_EntityDrawBBox(e->model->mins, e->model->maxs);
+		R_DrawBoundingBox(e->model->mins, e->model->maxs);
 
 	glPopMatrix();
 

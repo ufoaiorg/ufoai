@@ -213,7 +213,7 @@ void CL_CameraMove (void)
 		/* ensure zoom isn't less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	}
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 
 	/* calc new camera reference and new camera real origin */
 	VectorMA(cl.cam.origin, cls.frametime, cl.cam.speed, cl.cam.origin);
@@ -232,7 +232,7 @@ void CL_CameraMove (void)
 /**
  * @brief Interpolates the camera movement from the given start point to the given end point
  * @sa CL_CameraMove
- * @sa V_CenterView
+ * @sa CL_ViewCenterAtGridPosition
  * @param[in] from The grid position to start the camera movement from
  * @param[in] target The grid position to move the camera to
  */
@@ -282,7 +282,7 @@ void CL_CameraZoomIn (void)
 
 	/* ensure zoom doesn't exceed either MAX_ZOOM or cl_camzoommax */
 	cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 }
 
 /**
@@ -305,7 +305,7 @@ void CL_CameraZoomOut (void)
 
 	/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 	cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-	V_CalcFovX();
+	CL_ViewCalcFieldOfViewX();
 }
 
 #ifdef DEBUG

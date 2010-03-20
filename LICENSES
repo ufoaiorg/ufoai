@@ -2203,6 +2203,7 @@ base/pics/maps/shots/harbour_2.jpg | GNU General Public License 2.0 or later | M
 base/pics/maps/shots/harbour_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/industrial.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/industrial_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/industrial_3.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/italy.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/italy_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/italy_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2236,6 +2237,9 @@ base/pics/maps/shots/oriental_3.jpg | GNU General Public License 2.0 or later | 
 base/pics/maps/shots/oriental_mosque.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_mosque_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/oriental_mosque_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/pipes.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/pics/maps/shots/pipes_2.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/pics/maps/shots/pipes_3.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/resort.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/resort_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/resort_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2266,6 +2270,9 @@ base/pics/maps/shots/transport_3.jpg | GNU General Public License 2.0 or later |
 base/pics/maps/shots/tropic.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/tropic_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/tropic_3.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/ufocrash.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/pics/maps/shots/ufocrash_2.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/pics/maps/shots/ufocrash_3.jpg | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/pics/maps/shots/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/village_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3008,6 +3015,8 @@ base/textures/tex_buildings/floor015.tga | GNU General Public License 2.0 or lat
 base/textures/tex_buildings/floor015_nm.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor020.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_buildings/floor024.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
+base/textures/tex_buildings/floor025.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/floor025_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/floor_gray_nm.tga | GNU General Public License 2.0
 base/textures/tex_buildings/japwall001.jpg | GNU General Public License 2.0 or later | Willem Sitters
@@ -3057,6 +3066,8 @@ base/textures/tex_buildings/rustpipes.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/rustpipes_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/sfloor1_2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sfloor1_2_nm.tga | GNU General Public License 2.0 | Martin Gerhardy | sfloor1_2.jpg
+base/textures/tex_buildings/sidewalk01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/sidewalk01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sp_stairs_nm.tga |  | GNU General Public License 2.0 or later
 base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -3078,6 +3089,8 @@ base/textures/tex_buildings/tin_floor04ach.jpg | GNU General Public License 2.0 
 base/textures/tex_buildings/tin_floor04ach_nm.tga | GNU General Public License 2.0
 base/textures/tex_buildings/toilet.tga | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/toilet_nm.tga | GNU General Public License 2.0 or later | shedeki
+base/textures/tex_buildings/track01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/track01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall011.tga | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
 base/textures/tex_buildings/wall011_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall012.tga | GNU General Public License 2.0 or later | Matthias "Voller" Volmer
@@ -3100,6 +3113,20 @@ base/textures/tex_buildings/wall038.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_buildings/wall039.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/wall_ind01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind01_cons.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind01_cons_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind01_pil.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind01_pil_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind02.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind02_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind03.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind03_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind04.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind04_cons.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind04_cons_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind04_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/window001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window012_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3283,7 +3310,11 @@ base/textures/tex_furniture/table007_nm.tga | GNU General Public License 2.0 or 
 base/textures/tex_lights/light001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003_shell.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light_grill01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light004.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light004off.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light005.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light005off.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_lights/light_grill01.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx0.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3292,6 +3323,7 @@ base/textures/tex_lights/mtl_l2_fx0.tga | GNU General Public License 2.0 | Nexui
 base/textures/tex_lights/proto_lightblue.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_lights/stoplights01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/wsupprt1_12.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_material/blend_grunge01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/c_black.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_blue.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_brown.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -3309,12 +3341,19 @@ base/textures/tex_material/c_yellow.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_material/c_yellow2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_yellow3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/circle_gray.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_material/conc01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/conc01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/conc02_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.tga | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
+base/textures/tex_material/metall012.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metall012_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/wood004_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3984,6 +4023,14 @@ base/textures/tex_streets/2ln_crn_se.png | GNU General Public License 2.0 or lat
 base/textures/tex_streets/2ln_crn_se_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crn_sw.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crn_sw_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_ne.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_ne_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_nw.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_nw_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_se.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_se_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_sw.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/2ln_crnw_sw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_cw.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_cw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_cwbtm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4014,6 +4061,10 @@ base/textures/tex_streets/2lnh_trnrgt.png | GNU General Public License 2.0 or la
 base/textures/tex_streets/2lnh_trnrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/base.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/base_blend.jpg | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/park1h.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/park1h_g.tga | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/park1v.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_streets/park1v_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -4113,8 +4164,20 @@ base/textures/tex_trak/wall7a.tga | MIT/X11 license (GPL compatible) | Georges "
 base/textures/tex_trak/wall7a_nm.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_01_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_02.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_02_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ufo/ufo1_02a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo1_02a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_03_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_04.jpg | GNU General Public License 2.0 | "SparX" Beyeler
@@ -4129,20 +4192,90 @@ base/textures/tex_ufo/ufo2_02.jpg | GNU General Public License 2.0 | "SparX" Bey
 base/textures/tex_ufo/ufo2_02_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_03_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_04.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_04_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ufo/ufo2_04a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a14.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a15.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_04a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_05_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_06.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_06_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_07.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ufo/ufo2_07a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a14.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a15.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_07a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_08.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_08_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_09.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_09_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_10.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_09a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ufo/ufo2_10a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
+base/textures/tex_ufo/ufo2_10a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_12.jpg | GNU General Public License 2.0 | "SparX" Beyeler

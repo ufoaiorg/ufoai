@@ -27,6 +27,9 @@
 					<Add library="gobject-2.0" />
 					<Add library="intl" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
@@ -51,6 +54,9 @@
 					<Add library="libgtk-win32-2.0" />
 					<Add library="intl" />
 				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />

@@ -259,6 +259,16 @@ void MaterialSystem::generateMaterialFromTexture ()
 	showMaterialDefinition(append);
 }
 
+void MaterialSystem::importMaterialFile (const std::string& name)
+{
+	// Find the material
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(name));
+	if (!file)
+		return;
+
+	showMaterialDefinition(file->getString());
+}
+
 const std::string MaterialSystem::getMaterialFilename () const
 {
 	const std::string& mapname = GlobalRadiant().getMapName();

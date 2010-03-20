@@ -222,7 +222,7 @@ window messageoptions
 	 * @param[in] <4> state for sound notification button
 	 */
 	confunc ms_btnstate {
-		*cvar:tmp = <3>
+		*cvar:tmp = "<3>"
 		if ( *cvar:tmp == 0 ) {
 			*node:(checkbox)parent.option<1>.pause@disabled = true
 			*node:(checkbox)parent.option<1>.sound@disabled = true

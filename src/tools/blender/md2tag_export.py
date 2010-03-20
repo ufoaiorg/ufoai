@@ -8,9 +8,9 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.12'
+__version__ = '0.0.13'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
-     "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
+     "Support forum, http://ufoai.ninex.info/forum/", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
 __bpydoc__ = """\
 This script exports a Quake 2 tag file as used in UFO:AI (MD2 TAG).
@@ -41,8 +41,9 @@ Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 # ***** END GPL LICENCE BLOCK *****
 # --------------------------------------------------------------------------
 # Changelog
-# 	0.0.12	Hoehrer	matrix transfomration for rotation matrix seems to be ok now. Importing still needs to be fixed/synced though!
-# 	0.0.11	Hoehrer	Some cleanup, updated status messages + palyed around a bit to get tag-rotation to work (with no success yet)
+# 	0.0.13	Destructavator fixed off-by-one frame bug
+# 	0.0.12	Hoehrer	matrix transformation for rotation matrix seems to be ok now. Importing still needs to be fixed/synced though!
+# 	0.0.11	Hoehrer	Some cleanup, updated status messages + played around a bit to get tag-rotation to work (with no success yet)
 # 	0.0.10	Hoehrer	changed getLocation() to getLocation('worldspace').
 # --------------------------------------------------------------------------
 
@@ -363,7 +364,7 @@ class md2_tags_obj:
 	num_frames = 0		#int 3	The number of animation frames
 
 	offset_names = 0	#int 4	The offset in the file for the name data
-	offset_tags = 0		#int 5	The offset in the file for the tags data
+	offset_tags = 0 	#int 5	The offset in the file for the tags data
 	offset_end = 0		#int 6	The end of the file offset
 	offset_extract_end = 0	#int 7	???
 	binary_format = "<8i" 	#little-endian (<), 8 integers (8i)
@@ -504,7 +505,7 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames.append(md2_tag())
 
 		#set blender to the correct frame (so the objects have their new positions)
-		Blender.Set("curframe", current_frame)
+		Blender.Set("curframe", current_frame - 1)
 
 		# Set first coordiantes to the location of the empty.
 		tag_frames[frame_counter].origin = object.getLocation('worldspace')

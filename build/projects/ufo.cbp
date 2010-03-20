@@ -33,6 +33,7 @@
 					<Add library="ws2_32" />
 				</Linker>
 				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
 					<Add after="..\..\contrib\scripts\compile_po.bat /ufoai" />
 				</ExtraCommands>
 			</Target>
@@ -64,6 +65,7 @@
 					<Add library="ws2_32" />
 				</Linker>
 				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
 					<Add after="..\..\contrib\scripts\compile_po.bat /ufoai" />
 				</ExtraCommands>
 			</Target>
@@ -454,6 +456,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particleappear.h" />
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particlespawn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/world/e_event_particlespawn.h" />
 		<Unit filename="../../src/client/campaign/cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1117,6 +1123,12 @@
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_main.h" />
 		<Unit filename="../../src/client/renderer/r_material.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_corona.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_flare.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_material.h" />

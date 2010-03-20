@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] self Pointer to the event structure that is currently executed
  * @param[in] msg holds the network data
  * @sa CL_ParticleSpawn
- * @sa EV_SPAWN_PARTICLE
+ * @sa EV_PARTICLE_APPEAR
  */
 void CL_ParticleAppear (const eventRegister_t *self, struct dbuffer *msg)
 {

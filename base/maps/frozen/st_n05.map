@@ -36,3 +36,10 @@
 ( 128 256 4 ) ( 128 128 7 ) ( 0 256 4 ) tex_nature/snow002 0 8 0 1 1 65281 0 0
 }
 }
+// entity 1
+{
+"classname" "misc_particle"
+"origin" "160 64 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}

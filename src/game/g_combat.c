@@ -54,7 +54,7 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
 				eye[2] += EYE_STAND;
 
 			/* line of sight */
-			if (!gi.TestLine(eye, point, TL_FLAG_NONE))
+			if (!G_TestLine(eye, point))
 				return qtrue;
 		}
 	}
@@ -72,7 +72,7 @@ static qboolean G_TeamPointVis (int team, const vec3_t point)
  * @param[in] param Used to modify morale changes, for G_Damage() it is value of damage.
  * @sa G_Damage
  */
-static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
+static void G_Morale (int type, const edict_t * victim, const edict_t * attacker, int param)
 {
 	edict_t *ent = NULL;
 	int newMorale;
@@ -90,7 +90,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 				if (type == ML_DEATH)
 					mod += mob_death->value;
 				/* seeing how someone gets shot increases the morale change */
-				if (ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustumVis(ent, victim->origin)))
+				if (ent == victim || (G_FrustumVis(ent, victim->origin) && G_ActorVis(ent->origin, victim, qfalse)))
 					mod *= mof_watching->value;
 				if (ent->team == attacker->team) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
@@ -147,7 +147,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
  * @note Called only from G_Damage().
  * @sa G_Damage
  */
-static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
+static void G_UpdateShotMock (shot_mock_t *mock, const edict_t *shooter, const edict_t *struck, int damage)
 {
 	assert(struck->number != shooter->number || mock->allow_self);
 
@@ -172,7 +172,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 /**
  * @brief Update character stats for this mission after successful shoot.
  * @note Mind you that this code is always from the view of PHALANX soldiers right now, not anybody else!
- * @param[in] attacker Pointer to attacker.
+ * @param[in,out] attacker Pointer to attacker.
  * @param[in] fd Pointer to fireDef_t used in shoot.
  * @param[in] target Pointer to target.
  * @sa G_UpdateCharacterSkills
@@ -298,7 +298,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 
 /**
  * @brief Deals damage of a give type and amount to a target.
- * @param[in] target What we want to damage.
+ * @param[in,out] target What we want to damage.
  * @param[in] fd The fire definition that defines what type of damage is dealt.
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
@@ -350,8 +350,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	/* Apply armour effects. */
 	if (damage > 0) {
-		if (target->i.c[gi.csi->idArmour]) {
-			const objDef_t *ad = target->i.c[gi.csi->idArmour]->item.t;
+		if (CONTAINER(target, gi.csi->idArmour)) {
+			const objDef_t *ad = CONTAINER(target, gi.csi->idArmour)->item.t;
 			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
 				target->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);
@@ -433,7 +433,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 		/* Update number of killed/stunned actors for this attacker. */
 		G_UpdateCharacterBodycount(attacker, fd, target);
-
 	} else {
 		target->chr.minHP = min(target->chr.minHP, target->HP);
 		if (damage > 0) {
@@ -559,17 +558,17 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 
 		/* link the floor container to the actor standing on the given position */
 		while ((actor = G_EdictsGetNextActor(actor)))
-			if (VectorCompare(pos, actor->pos)) {
+			if (G_EdictPosIsSameAs(actor, pos)) {
 				FLOOR(actor) = FLOOR(floor);
 				break;
 			}
-		if (!game.i.TryAddToInventory(&game.i, &floor->i, *item, INVDEF(gi.csi->idFloor)))
+		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor)))
 			G_FreeEdict(floor);
 		else
 			/* send the inventory */
 			G_CheckVis(floor, qtrue);
 	} else {
-		if (game.i.TryAddToInventory(&game.i, &floor->i, *item, INVDEF(gi.csi->idFloor))) {
+		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);
 			floor->visflags = 0;
@@ -594,8 +593,8 @@ static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
  */
-static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
-	vec3_t from, pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align)
+static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_t *fd,
+	const vec3_t from, const pos3_t at, int mask, const item_t *weapon, shot_mock_t *mock, int z_align)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -656,7 +655,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 		curV[2] -= GRAVITY * GRENADE_DT;
 
 		/* trace */
-		tr = gi.trace(oldPos, NULL, NULL, newPos, ent, MASK_SHOT);
+		tr = G_Trace(oldPos, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			int i;
@@ -782,7 +781,7 @@ static void DumpAllEntities (void)
  * @param[in] shootType The firemode (ST_NUM_SHOOT_TYPES)
  * @sa CL_TargetingStraight
  */
-static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, pos3_t at,
+static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, const pos3_t at,
 	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, shoot_types_t shootType)
 {
 	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
@@ -861,7 +860,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
 
 	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
-	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
+	tr = G_Trace(cur_loc, impact, ent, MASK_SHOT);
 	if (tr.ent && (tr.ent->team == ent->team || G_IsCivilian(tr.ent)) && G_IsCrouched(tr.ent) && !FIRESH_IsMedikit(fd))
 		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
 
@@ -877,7 +876,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
-		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
+		tr = G_Trace(tracefrom, impact, ent, MASK_SHOT);
 
 		DumpTrace(tracefrom, tr);
 
@@ -902,7 +901,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* victims see shots */
 		if (tr.ent && G_IsActor(tr.ent))
-			mask |= 1 << tr.ent->team;
+			mask |= G_TeamToVisMask(tr.ent->team);
 
 		if (!mock) {
 			/* send shot */
@@ -968,7 +967,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		if (fd->ammo && !fd->splrad && weapon->t->thrown && !weapon->t->deplete) {
 			pos3_t drop;
 
-			if (VectorCompare(ent->pos, at)) { /* throw under his own feet */
+			if (G_EdictPosIsSameAs(ent, at)) { /* throw under his own feet */
 				VectorCopy(at, drop);
 			} else {
 				impact[2] -= 20; /* a hack: no-gravity items are flying high */
@@ -988,12 +987,10 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
 	shotOrigin[2] += fd->shotOrg[1];
 	/* adjust horizontal: */
 	if (fd->shotOrg[0] != 0) {
-		float x, y, length;
-
 		/* get "right" and "left" of a unit(rotate dir 90 on the x-y plane): */
-		x = dir[1];
-		y = -dir[0];
-		length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
+		const float x = dir[1];
+		const float y = -dir[0];
+		const float length = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
 		/* assign adjustments: */
 		shotOrigin[0] += x * fd->shotOrg[0] / length;
 		shotOrigin[1] += y * fd->shotOrg[0] / length;
@@ -1012,7 +1009,7 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
  * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int firemode, item_t **weapon, int *container, const fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	objDef_t *od;
@@ -1068,14 +1065,15 @@ static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, int fi
  * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
-qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_t shootType,
-	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
+qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
+		fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	const fireDef_t *fd;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
 	int i, ammo, prevDir, reactionLeftover, shots;
-	int container, mask;
+	containerIndex_t container;
+	int mask;
 	qboolean quiet;
 
 	/* just in 'test-whether-it's-possible'-mode or the player is an
@@ -1092,14 +1090,14 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 	}
 
 	ammo = weapon->a;
-	reactionLeftover = IS_SHOT_REACTION(shootType) ? sv_reaction_leftover->integer : 0;
+	reactionLeftover = IS_SHOT_REACTION(shootType) ? g_reaction_leftover->integer : 0;
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, fd->time + reactionLeftover))
 		return qfalse;
 
 	/* Don't allow to shoot yourself */
-	if (VectorCompare(ent->pos, at))
+	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
 		return qfalse;
 
 	/* check that we're not firing a twohanded weapon with one hand! */
@@ -1137,7 +1135,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 				ent->chr.scoreMission->firedSplashHit[i] = qfalse;
 			}
 		} else {
-			/* Direkt hits */
+			/* Direct hits */
 			ent->chr.scoreMission->firedTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->fired[fd->weaponSkill]++;
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
@@ -1177,13 +1175,15 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 	else
 		prevDir = 0;
 
-	VectorSubtract(at, ent->pos, dir);
-	ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
-	assert(ent->dir < CORE_DIRECTIONS);
+	if (!G_EdictPosIsSameAs(ent, at)) {
+		VectorSubtract(at, ent->pos, dir);
+		ent->dir = AngleToDir((int) (atan2(dir[1], dir[0]) * todeg));
+		assert(ent->dir < CORE_DIRECTIONS);
 
-	if (!mock) {
-		G_CheckVisTeamAll(ent->team, qfalse, ent);
-		G_EventActorTurn(ent);
+		if (!mock) {
+			G_CheckVisTeamAll(ent->team, qfalse, ent);
+			G_EventActorTurn(ent);
+		}
 	}
 
 	/* calculate visibility */
@@ -1192,15 +1192,15 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 	VectorMA(ent->origin, 0.5, dir, center);
 	mask = 0;
 	for (i = 0; i < MAX_TEAMS; i++)
-		if (ent->visflags & (1 << i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
-			mask |= 1 << i;
+		if (G_IsVisibleForTeam(ent, i) || G_TeamPointVis(i, target) || G_TeamPointVis(i, center))
+			mask |= G_TeamToVisMask(i);
 
 	if (!mock) {
 		qboolean itemAlreadyRemoved = qfalse;	/**< State info so we can check if an item was already removed. */
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
-			G_ReactToPreFire(ent);
+			G_ReactionFirePreShot(ent);
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return qfalse;
@@ -1221,7 +1221,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 				const invDef_t *invDef = INVDEF(container);
 				assert(invDef->single);
 				itemAlreadyRemoved = qtrue;	/* for assert only */
-				game.i.EmptyContainer(&game.i, &ent->i, invDef);
+				game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
 				G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 			}
 		}
@@ -1231,7 +1231,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 			const invDef_t *invDef = INVDEF(container);
 			assert(!itemAlreadyRemoved);
 			assert(invDef->single);
-			game.i.EmptyContainer(&game.i, &ent->i, invDef);
+			game.i.EmptyContainer(&game.i, &ent->chr.i, invDef);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), invDef, 0, 0);
 		}
 	}
@@ -1260,7 +1260,7 @@ qboolean G_ClientShoot (player_t * player, edict_t* ent, pos3_t at, shoot_types_
 
 		/* check for Reaction fire against the shooter */
 		if (allowReaction)
-			G_ReactToPostFire(ent);
+			G_ReactionFirePostShot(ent);
 	} else {
 		ent->dir = prevDir;
 		assert(ent->dir < CORE_DIRECTIONS);

@@ -85,13 +85,31 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
- * @param[in] distance The distance to calculate the move for.
+ * @param[in] distance The distance in TUs to calculate the move for.
+ * @param[in] movingActor The actor to calculate the move for
+ * @sa G_BuildForbiddenList
+ * @sa G_MoveCalcLocal
+ */
+void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
+{
+	G_MoveCalcLocal(gi.pathingMap, team, movingActor, from, crouchingState, distance);
+}
+
+/**
+ * @brief Same as @c G_MoveCalc, except that it uses the pathing table passed as the first param
+ * @param[in] pt the pathfinding table
+ * @param[in] team The current team (see G_BuildForbiddenList)
+ * @param[in] from Position in the map to start the move-calculation from.
+ * @param[in] crouchingState The crouching state of the actor. 0=stand, 1=crouch
+ * @param[in] distance The distance in TUs to calculate the move for.
+ * @param[in] movingActor The actor to calculate the move for
+ * @sa G_MoveCalc
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalc (int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance)
+void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
 	G_BuildForbiddenList(team, movingActor);
-	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, gi.pathingMap, from, crouchingState, distance,
+	gi.MoveCalc(gi.routingMap, movingActor->fieldSize, pt, from, crouchingState, distance,
 			forbiddenList, forbiddenListLength);
 }
 
@@ -113,7 +131,7 @@ void G_ActorFall (edict_t *ent)
 		G_TakeDamage(entAtPos, (int)(FALLING_DAMAGE_FACTOR * (float)diff));
 	}
 
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+	G_EdictCalcOrigin(ent);
 	gi.LinkEdict(ent);
 
 	G_CheckVis(ent, qtrue);
@@ -170,7 +188,7 @@ qboolean G_ActorShouldStopInMidMove (const edict_t *ent, int visState, byte* dvt
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, pos3_t to)
+void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos3_t to)
 {
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
@@ -229,7 +247,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, pos3_t to
 	tu = 0;
 	initTU = ent->TU;
 
-	while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouchingState))
+	while ((dv = gi.MoveNext(gi.pathingMap, pos, crouchingState))
 			!= ROUTING_UNREACHABLE) {
 		const int oldZ = pos[2];
 		/* dv indicates the direction traveled to get to the new cell and the original cell height. */
@@ -302,7 +320,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, pos3_t to
 			if (crouchFlag == 0) { /* No change in crouch */
 				edict_t* clientAction;
 
-				gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
+				G_EdictCalcOrigin(ent);
 				VectorCopy(ent->origin, pointTrace);
 				pointTrace[2] += PLAYER_MIN;
 
@@ -394,15 +412,10 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, pos3_t to
 			}
 
 			/* check for reaction fire */
-			if (G_ReactToMove(ent, qtrue)) {
-				if (G_ReactToMove(ent, qfalse))
-					status |= VIS_STOP;
+			if (G_ReactionFireOnMovement(ent)) {
+				status |= VIS_STOP;
 
 				autoCrouchRequired = qfalse;
-				/* if the attacker is invisible let the target turn in the shooting direction
--				 * of the attacker (@see G_ActorDoTurn) */
-				if (ent->reactionTarget)
-					G_ActorDoTurn(ent->reactionTarget, dir);
 			}
 
 			/* Restore ent->TU because the movement code relies on it not being modified! */
@@ -423,9 +436,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, pos3_t to
 				break;
 			}
 		}
-
-		/* ensure that the grid position matches the real origin of the actor */
-		VecToPos(ent->origin, ent->pos);
 
 		/* submit the TUs / round down */
 		if (g_notu != NULL && g_notu->integer)

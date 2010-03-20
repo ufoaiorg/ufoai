@@ -273,7 +273,7 @@ static void INS_FinishInstallation (installation_t *installation)
 static void INS_InstallationList_f (void)
 {
 	int i;
-	
+
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *installation = INS_GetInstallationByIDX(i);
 
@@ -297,7 +297,7 @@ static void INS_InstallationList_f (void)
 
 		Com_Printf("\nInstallation stored UFOs %i/%i\n", installation->ufoCapacity.cur, installation->ufoCapacity.max);
 		/** @todo list stored Ufos*/
-		
+
 		Com_Printf("\n\n");
 	}
 }
@@ -402,7 +402,7 @@ void INS_UpdateInstallationData (void)
 		if ((installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION)
 		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
-		
+
 		 	INS_FinishInstallation(installation);
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
@@ -623,7 +623,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
 		if (inst->installationStatus == INSTALLATION_WORKING) {
 			RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
-			/* UFO Yard */	
+			/* UFO Yard */
 			inst->ufoCapacity.max = inst->installationTemplate->maxUFOsStored;
 		} else {
 			inst->ufoCapacity.max = 0;

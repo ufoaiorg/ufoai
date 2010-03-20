@@ -67,12 +67,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	TAG_LEVEL	766			/* clear when loading a new level */
 
 /** Macros for faster access to the inventory-container. */
-#define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
-#define RIGHT(e) (e->i.c[gi.csi->idRight])
-#define LEFT(e)  (e->i.c[gi.csi->idLeft])
-#define EXTENSION(e)  (e->i.c[gi.csi->idExtension])
-#define HEADGEAR(e)  (e->i.c[gi.csi->idHeadgear])
-#define FLOOR(e) (e->i.c[gi.csi->idFloor])
+#define CONTAINER(e, containerID) ((e)->chr.i.c[(containerID)])
+#define ARMOUR(e) (CONTAINER(e, gi.csi->idArmour))
+#define RIGHT(e) (CONTAINER(e, gi.csi->idRight))
+#define LEFT(e)  (CONTAINER(e, gi.csi->idLeft))
+#define EXTENSION(e)  (CONTAINER(e, gi.csi->idExtension))
+#define HEADGEAR(e)  (CONTAINER(e, gi.csi->idHeadgear))
+#define FLOOR(e) (CONTAINER(e, gi.csi->idFloor))
 
 #define INVDEF(containerID) (&gi.csi->ids[(containerID)])
 
@@ -201,7 +202,6 @@ extern cvar_t *sv_maxvelocity;
 
 extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
-extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
@@ -254,8 +254,11 @@ extern cvar_t *m_rage;
 extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
+extern cvar_t *g_reaction_fair;
+extern cvar_t *g_reaction_leftover;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
+extern cvar_t *g_drawtraces;
 extern cvar_t *g_nodamage;
 extern cvar_t *g_notu;
 extern cvar_t *g_actorspeed;
@@ -317,16 +320,20 @@ void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
 void G_TakeDamage(edict_t *ent, int damage);
+trace_t G_Trace(const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask);
+qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
+qboolean G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_reaction.c */
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
-void G_ReactToPreFire(edict_t *target);
-void G_ReactToPostFire(edict_t *target);
-void G_ResetReactionFire(int team);
+void G_ReactionFirePreShot(const edict_t *target);
+void G_ReactionFirePostShot(edict_t *target);
+void G_ReactionFireReset(int team);
 qboolean G_CanEnableReactionFire(const edict_t *ent);
-void G_UpdateReactionFire(edict_t *ent, int fmIdx, actorHands_t hand, const objDef_t *od);
-qboolean G_ReactToMove(edict_t *target, qboolean mock);
-void G_ReactToEndTurn(void);
+qboolean G_ReactionFireSetDefault(edict_t *ent);
+void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
+qboolean G_ReactionFireOnMovement(edict_t *target);
+void G_ReactionFireEndTurn(void);
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);
@@ -344,7 +351,7 @@ void G_EventDestroyEdict(const edict_t* ent);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
 void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventSetClientAction(const edict_t *ent);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
@@ -352,6 +359,7 @@ void G_EventEndRound(void);
 void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* item, const invDef_t* invDef, const invList_t* ic);
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 void G_EventReactionFireChange(const edict_t* ent);
+void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 
 /* g_vis.c */
 #define VIS_APPEAR	1
@@ -376,6 +384,7 @@ void G_EventReactionFireChange(const edict_t* ent);
 #define MAX_DVTAB 32
 
 void G_FlushSteps(void);
+edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
 qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
@@ -394,6 +403,7 @@ edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
+void G_ActorGiveTimeUnits(edict_t *ent);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);
@@ -412,12 +422,13 @@ qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize)
 void G_ClientDisconnect(player_t * player);
 
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
-qboolean G_ClientCanReload(player_t *player, edict_t *ent, int containerID);
+qboolean G_ClientCanReload(player_t *player, edict_t *ent, containerIndex_t containerID);
 void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
 qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
-void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, pos3_t to);
+void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, const pos3_t to);
 void G_ActorFall(edict_t *ent);
-void G_MoveCalc(int team, const edict_t *movingActor, pos3_t from, byte crouchingState, int distance);
+void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
+void G_MoveCalcLocal(pathing_t *pt, int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
 void G_ActorInvMove(edict_t *ent, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction);
 void G_ClientStateChange(const player_t* player, edict_t* ent, int reqState, qboolean checkaction);
 int G_ActorDoTurn(edict_t * ent, byte dir);
@@ -425,9 +436,9 @@ int G_ActorDoTurn(edict_t * ent, byte dir);
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
-void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, edict_t *ent);
+void G_AppearPerishEvent(unsigned int player_mask, qboolean appear, edict_t * check, const edict_t *ent);
 unsigned int G_VisToPM(unsigned int vis_mask);
-void G_SendInventory(unsigned int player_mask, edict_t * ent);
+void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
 void G_SpawnEntities(const char *mapname, qboolean day, const char *entities);
@@ -447,7 +458,7 @@ int G_TestVis(const int team, edict_t * check, int flags);
 float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
-qboolean G_ClientShoot(player_t *player, edict_t* ent, pos3_t at, shoot_types_t shootType, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
+qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 
 /* g_ai.c */
 extern edict_t *ai_waypointList;
@@ -477,6 +488,7 @@ void SP_func_rotating(edict_t *ent);
 void SP_func_door(edict_t *ent);
 void SP_func_breakable(edict_t *ent);
 
+/** Functions handling the storage and lifecycle of all edicts */
 edict_t* G_EdictsInit(void);
 void G_EdictsReset(void);
 edict_t* G_EdictsGetNewEdict(void);
@@ -489,6 +501,11 @@ edict_t* G_EdictsGetNextInUse(edict_t* lastEnt);
 edict_t* G_EdictsGetNextActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActor(edict_t* lastEnt);
 edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team);
+
+/** Functions to handle single edicts, trying to encapsulate edict->pos in the first place. */
+void G_EdictCalcOrigin(edict_t* ent);
+void G_EdictSetOrigin(edict_t* ent, const pos3_t newPos);
+qboolean G_EdictPosIsSameAs(edict_t* ent, const pos3_t cmpPos);
 
 /*============================================================================ */
 
@@ -641,23 +658,15 @@ struct edict_s {
 								 * if you open one */
 
 	/** delayed reaction fire */
-	edict_t *reactionTarget;
-	float reactionTUs;
+	edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
+	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
 
 	/** client actions - interact with the world */
 	edict_t *clientAction;
 
-	/** only set this for the attacked edict - to know who's shooting */
-	edict_t *reactionAttacker;
-
-	int	reactionFired;	/**< A simple counter that tells us how many times an actor has fired as a reaction (in the current turn). */
-
 	/** here are the character values */
 	character_t chr;
-
-	/** this is the inventory */
-	inventory_t i;
 
 	int spawnflags;	/**< set via mapeditor */
 	const char *classname;

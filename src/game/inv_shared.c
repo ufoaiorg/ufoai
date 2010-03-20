@@ -762,8 +762,8 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->inv.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
-		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
+	if (chr->i.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
+		const objDef_t *od = chr->i.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -784,8 +784,8 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
+	if (chr->i.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
+		const objDef_t *od = chr->i.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
@@ -853,7 +853,7 @@ objDef_t *INVSH_GetItemByID (const char *id)
  */
 invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 {
-	int i;
+	containerIndex_t i;
 	invDef_t *container;
 
  	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
@@ -920,7 +920,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * @return Will never return NULL
  * @sa FIRESH_FiredefForWeapon
  */
-const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
+const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const weaponFireDefIndex_t weapFdsIdx, const fireDefIndex_t fdIdx)
 {
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'", weapFdsIdx, obj->id);
@@ -960,9 +960,9 @@ const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 /**
  * @brief Checks whether the given list contains a reaction fire enabled weapon.
  * @return @c NULL if no reaction fire enabled weapon was found in the given list, the
- * fire definition otherwise.
+ * reaction fire enabled object otherwise.
  */
-const fireDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
+const objDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 {
 	if (!invList)
 		return NULL;
@@ -971,7 +971,7 @@ const fireDef_t* INVSH_HasReactionFireEnabledWeapon (const invList_t *invList)
 		if (invList->item.t) {
 			const fireDef_t *fd = FIRESH_FiredefForWeapon(&invList->item);
 			if (fd && fd->reaction)
-				return fd;
+				return invList->item.t;
 		}
 		invList = invList->next;
 	}

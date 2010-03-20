@@ -213,7 +213,7 @@ static void CP_InterceptMissionSet (mission_t *mission)
  * @note Intercept mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+int CP_InterceptMissionAvailableUFOs (const mission_t const *mission, ufoType_t *ufoTypes)
 {
 	int num = 0;
 	/* Probability to get a harvester. Note that the probability

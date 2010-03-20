@@ -28,7 +28,7 @@ component panel cmpFiremodeEntry {
 		pos		"0 32"
 		texl	"0 0"
 		texh	"31 31"
-		onClick	{ cmd "hud_selectreactionfiremode r 0;" }
+		onClick	{ cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.id@string>;" }
 	}
 	
 	/** store the hand */

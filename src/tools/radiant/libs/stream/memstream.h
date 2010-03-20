@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "itextstream.h"
 #include <algorithm>
 #include <vector>
+#include <string>
 
 class BufferOutputStream : public TextOutputStream {
 	std::vector<char> m_buffer;
@@ -57,6 +58,10 @@ class BufferInputStream : public TextInputStream {
 public:
 	BufferInputStream(const char* buffer, std::size_t length)
 			: m_read(buffer), m_end(buffer + length) {
+	}
+
+	BufferInputStream(const std::string& buffer)
+			: m_read(buffer.c_str()), m_end(buffer.c_str() + buffer.size()) {
 	}
 	std::size_t read(char* buffer, std::size_t length) {
 		std::size_t count = std::min(std::size_t(m_end - m_read), length);

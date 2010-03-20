@@ -27,27 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_entity.h"
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
+#include "r_draw.h"
 
 #define	MAX_ENTITIES	2048
 
-int r_numEntities;
 static entity_t r_entities[MAX_ENTITIES];
-
-/**
- * @brief Compute the bounding box for an entity out of the mins, maxs
- * @sa R_EntityDrawBBox
- */
-static void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bbox[8])
-{
-	int i;
-
-	/* compute a full bounding box */
-	for (i = 0; i < 8; i++) {
-		bbox[i][0] = (i & 1) ? mins[0] : maxs[0];
-		bbox[i][1] = (i & 2) ? mins[1] : maxs[1];
-		bbox[i][2] = (i & 4) ? mins[2] : maxs[2];
-	}
-}
 
 /**
  * @brief Transforms a point by the inverse of the world-model matrix for the
@@ -68,47 +52,6 @@ void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
 }
 
 /**
- * @brief Draws the model bounding box
- * @sa R_EntityComputeBoundingBox
- */
-void R_EntityDrawBBox (const vec3_t mins, const vec3_t maxs)
-{
-	vec3_t bbox[8];
-
-	R_EntityComputeBoundingBox(mins, maxs, bbox);
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	/* Draw top and sides */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[0]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[5]);
-	glVertex3fv(bbox[1]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[3]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[7]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[2]);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[0]);
-	glEnd();
-
-	/* Draw bottom */
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3fv(bbox[4]);
-	glVertex3fv(bbox[6]);
-	glVertex3fv(bbox[7]);
-	glEnd();
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
-
-/**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
  * @sa RF_BOX
@@ -122,7 +65,7 @@ static void R_DrawBox (const entity_t * e)
 	R_Color(color);
 
 	if (VectorNotEmpty(e->mins) && VectorNotEmpty(e->maxs)) {
-		R_EntityDrawBBox(e->mins, e->maxs);
+		R_DrawBoundingBox(e->mins, e->maxs);
 	} else {
 		vec3_t upper, lower;
 		const float dx = e->oldorigin[0] - e->origin[0];
@@ -273,7 +216,7 @@ static void R_DrawEntityEffects (void)
 
 	R_EnableBlend(qtrue);
 
-	for (i = 0; i < r_numEntities; i++) {
+	for (i = 0; i < refdef.numEntities; i++) {
 		const entity_t *e = &r_entities[i];
 
 		if (e->flags <= RF_BOX)
@@ -283,10 +226,12 @@ static void R_DrawEntityEffects (void)
 		glMultMatrixf(e->transform.matrix);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-			if (e->flags & RF_SHADOW)
+			if (e->flags & RF_SHADOW) {
 				R_BindTexture(shadow->texnum);
-			else
-				R_BindTexture(blood[e->state % MAX_DEATH]->texnum);
+			} else {
+				assert(e->deathTexture);
+				R_BindTexture(e->deathTexture->texnum);
+			}
 
 			glBegin(GL_QUADS);
 			glTexCoord2f(0.0, 1.0);
@@ -589,7 +534,7 @@ void R_DrawEntities (void)
 	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
 
-	for (i = 0; i < r_numEntities; i++) {
+	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
 
 		/* frustum cull check - but not while we are in e.g. sequence mode */
@@ -647,9 +592,9 @@ void R_DrawEntities (void)
  */
 entity_t *R_GetFreeEntity (void)
 {
-	if (r_numEntities >= MAX_ENTITIES)
+	if (refdef.numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_GetFreeEntity: MAX_ENTITIES exceeded");
-	return &r_entities[r_numEntities];
+	return &r_entities[refdef.numEntities];
 }
 
 /**
@@ -657,7 +602,7 @@ entity_t *R_GetFreeEntity (void)
  */
 entity_t *R_GetEntity (int id)
 {
-	if (id < 0 || id >= r_numEntities)
+	if (id < 0 || id >= refdef.numEntities)
 		return NULL;
 	return &r_entities[id];
 }
@@ -669,13 +614,13 @@ entity_t *R_GetEntity (int id)
  */
 int R_AddEntity (const entity_t *ent)
 {
-	if (r_numEntities >= MAX_ENTITIES)
+	if (refdef.numEntities >= MAX_ENTITIES)
 		Com_Error(ERR_DROP, "R_AddEntity: MAX_ENTITIES exceeded");
 
 	/* don't add the bsp tiles from random map assemblies */
 	if (ent->model && ent->model->type == mod_bsp)
 		return -1;
 
-	r_entities[r_numEntities++] = *ent;
-	return r_numEntities - 1;
+	r_entities[refdef.numEntities++] = *ent;
+	return refdef.numEntities - 1;
 }

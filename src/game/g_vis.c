@@ -37,34 +37,28 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
  * @brief tests the visibility between two points
  * @param[in] from The point to check visibility from
  * @param[in] to The point to check visibility to
- * @return true if the points are visible from each other, false otherwise.
+ * @return true if the points are invisible from each other (trace hit something), false otherwise.
  */
 static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 {
-#if 0 /* this version is more accurate and includes entity tests */
-	trace_t tr;
-	tr = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
-	return (tr.fraction < 1.0);
-#elif 0 /* this version is much faster but has no entity test*/
-	return gi.TestLine(from, to, TL_FLAG_NONE);
-#else /* a compromise- but still checks for entities that may obstruct view */
-	const char *entList[MAX_EDICTS];
-	/* generate entity list */
-	G_GenerateEntList(entList);
-	/* test for visibility */
-	return gi.TestLineWithEnt(from, to, TL_FLAG_NONE, entList);
-#endif
+	return G_TestLineWithEnts(from, to);
 }
 
 /**
  * @brief calculate how much check is "visible" from @c from
- * @param[in] full Perform a full check in different directions. If this is
- * @c false the actor is fully visible if one vis check returned @c true. With
- * @c true this function can also return a value != 0.0 and != 1.0.
  * @param[in] from The world coordinate to check from
  * @param[in] check The edict to check how good (or if at all) it is visible
+ * @param[in] full Perform a full check in different directions. If this is
+ * @c false the actor is fully visible if one vis check returned @c true. With
+ * @c true this function can also return a value != 0.0 and != 1.0. Try to only
+ * use @c true if you really need the full check. Full checks are of course
+ * more expensive.
  * @return a value between 0.0 and 1.0 which reflects the visibility from 0
  * to 100 percent
+ * @note This call isn't cheap - try to do this only if you really need the
+ * visibility check or the statement whether one particular actor see another
+ * particular actor.
+ * @sa CL_ActorVis
  */
 float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 {
@@ -163,15 +157,15 @@ float G_Vis (const int team, const edict_t *from, const edict_t *check, int flag
 	if (VectorCompare(from->pos, check->pos))
 		return ACTOR_VIS_100;
 
+	if (!G_IsVisibleOnBattlefield(check))
+		return ACTOR_VIS_0;
+
 	/* view distance check */
 	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
 		return ACTOR_VIS_0;
 
 	/* view frustum check */
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
-		return ACTOR_VIS_0;
-
-	if (!G_IsVisibleOnBattlefield(check))
 		return ACTOR_VIS_0;
 
 	/* get viewers eye height */
@@ -235,6 +229,29 @@ static qboolean G_VisShouldStop (const edict_t *ent)
 	return G_IsLivingActor(ent) && !G_IsCivilian(ent);
 }
 
+static int G_DoTestVis (const int team, edict_t * check, qboolean perish, int playerMask, const edict_t *ent)
+{
+	int status = 0;
+	const int visFlags = perish ? VT_PERISH : 0;
+	const int vis = G_TestVis(team, check, visFlags);
+
+	/* visibility has changed ... */
+	if (vis & VIS_CHANGE) {
+		/* swap the vis mask for the given team */
+		check->visflags ^= G_TeamToVisMask(team);
+		G_AppearPerishEvent(playerMask, vis & VIS_YES, check, ent);
+
+		/* ... to visible */
+		if (vis & VIS_YES) {
+			status |= VIS_APPEAR;
+			if (G_VisShouldStop(check))
+				status |= VIS_STOP;
+		} else
+			status |= VIS_PERISH;
+	}
+	return status;
+}
+
 /**
  * @brief Sets visible edict on player spawn
  * @sa G_ClientSpawn
@@ -249,19 +266,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
 	/* check visibility */
 	while ((ent = G_EdictsGetNextInUse(ent))) {
 		/* check if he's visible */
-		const int vis = G_TestVis(player->pers.team, ent, perish);
-
-		if (vis & VIS_CHANGE) {
-			ent->visflags ^= (1 << player->pers.team);
-			G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent, NULL);
-
-			if (vis & VIS_YES) {
-				status |= VIS_APPEAR;
-				if (G_VisShouldStop(ent))
-					status |= VIS_STOP;
-			} else
-				status |= VIS_PERISH;
-		}
+		status |= G_DoTestVis(player->pers.team, ent, perish, G_PlayerToPM(player), NULL);
 	}
 
 	return status;
@@ -297,23 +302,7 @@ int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *en
 	/* check visibility */
 	if (check->inuse) {
 		/* check if he's visible */
-		const int visFlags = perish ? VT_PERISH : 0;
-		const int vis = G_TestVis(team, check, visFlags);
-
-		/* visibility has changed ... */
-		if (vis & VIS_CHANGE) {
-			/* swap the vis mask for the given team */
-			check->visflags ^= G_TeamToVisMask(team);
-			G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
-
-			/* ... to visible */
-			if (vis & VIS_YES) {
-				status |= VIS_APPEAR;
-				if (G_VisShouldStop(check))
-					status |= VIS_STOP;
-			} else
-				status |= VIS_PERISH;
-		}
+		status |= G_DoTestVis(team, check, perish, G_TeamToPM(team), ent);
 	}
 
 	return status;

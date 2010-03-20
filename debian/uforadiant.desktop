@@ -2,12 +2,14 @@
 Version=1.0
 Encoding=UTF-8
 Name=UFORadiant
-GenericName=Strategy Game
+GenericName=UFORadiant
 Comment=Map Editor for UFO: Alien Invasion
+Comment[de_DE]=Map Editor für UFO: Alien Invasion
 Exec=/usr/games/uforadiant
 Icon=uforadiant.xpm
 Terminal=false
+StartupNotify=false
 Type=Application
-Categories=Application;Game;StrategyGame;
+Categories=Application;Game;StrategyGame;GTK;3DGraphics
 MimeType=application/x-ufomap
 StartupNotify=true

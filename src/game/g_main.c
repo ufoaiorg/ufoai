@@ -58,7 +58,6 @@ cvar_t *sv_maxteams;
 cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
-cvar_t *sv_reaction_leftover;
 cvar_t *sv_shot_origin;
 static cvar_t *sv_send_edicts;
 
@@ -103,8 +102,11 @@ cvar_t *m_rage;
 cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
+cvar_t *g_reaction_fair;
+cvar_t *g_reaction_leftover;
 cvar_t *g_ailua;
 cvar_t *g_aidebug;
+cvar_t *g_drawtraces;
 cvar_t *g_nodamage;
 cvar_t *g_notu;
 cvar_t *g_actorspeed;
@@ -158,7 +160,6 @@ static void G_Init (void)
 	/* how many connected clients */
 	sv_maxclients = gi.Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
-	sv_reaction_leftover = gi.Cvar_Get("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
 	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
@@ -202,8 +203,11 @@ static void G_Init (void)
 	m_rage_stop = gi.Cvar_Get("m_rage_stop", "2.0", CVAR_LATCH|CVAR_NOSET, NULL);
 	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 
+	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH | CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
+	g_reaction_leftover = gi.Cvar_Get("g_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
+	g_drawtraces = gi.Cvar_Get("g_drawtraces", "0", CVAR_DEVELOPER, "All traces will be rendered");
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No TU costs while moving around (e.g. for map testing)");
 	g_actorspeed = gi.Cvar_Get("g_actorspeed", "1.0", CVAR_ARCHIVE|CVAR_SERVERINFO, "Moving speed of the actor");
@@ -295,6 +299,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 	return &globals;
 }
 
+#ifndef HARD_LINKED_GAME
 /* this is only here so the functions in the shared code can link */
 void Sys_Error (const char *error, ...)
 {
@@ -338,7 +343,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 
 	gi.dprintf("%s", text);
 }
-
+#endif
 
 /**
  * @brief If password has changed, update sv_needpass cvar as needed

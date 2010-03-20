@@ -59,7 +59,7 @@ void G_PhysicsStep (edict_t *ent)
 				/* we should really hit the ground with this */
 				to[2] -= UNIT_HEIGHT;
 
-				trace = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
+				trace = G_Trace(from, to, NULL, MASK_SOLID);
 				if (trace.surface) {
 					const char *snd = gi.GetFootstepSound(trace.surface->name);
 					if (snd)

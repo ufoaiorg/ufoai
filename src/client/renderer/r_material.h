@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define STAGE_LIGHTMAP			(1 << 13)
 #define STAGE_ANIM				(1 << 14)
 #define STAGE_DIRTMAP			(1 << 15)
+#define STAGE_FLARE				(1 << 16)
 
 /* set on stages eligible for static, dynamic, and per-pixel lighting */
 #define STAGE_LIGHTING		(1 << 30)
@@ -60,7 +61,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 )
 
 /* frame based animation, lerp between consecutive images */
-#define MAX_ANIM_FRAMES 8
+#define MAX_ANIM_FRAMES 16
 
 #define UPDATE_THRESHOLD 0.02
 

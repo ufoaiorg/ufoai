@@ -92,7 +92,7 @@ struct storedUFO_s;
 #define HAPPINESS_ALIEN_MISSION_LOSS		-0.01
 #define HAPPINESS_UFO_SALE_GAIN				0.07
 #define HAPPINESS_UFO_SALE_LOSS				0.01
-#define HAPPINESS_MAX_MISSION_IMPACT		0.15
+#define HAPPINESS_MAX_MISSION_IMPACT		0.07
 
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	4
@@ -231,22 +231,29 @@ typedef struct battleParam_s {
 	char civTeam[MAX_VAR];							/**< Type of civilian (European, ...) */
 	qboolean day;									/**< Mission is played during day */
 	const char *zoneType;							/**< Terrain type (used for texture replacement in base missions) */
-	int ugv;						/**< uncontrolled ground units (entity: info_2x2_start) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
 } battleParam_t;
 
 /** @brief Structure with mission info needed to create results summary at menu won. */
 typedef struct missionResults_s {
-	int itemtypes;		/**< Types of items gathered from a mission. */
-	int itemamount;		/**< Amount of items (all) gathered from a mission. */
+	int itemTypes;		/**< Types of items gathered from a mission. */
+	int itemAmount;		/**< Amount of items (all) gathered from a mission. */
 	qboolean recovery;	/**< Qtrue if player secured a UFO (landed or crashed). */
 	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
 	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
 	float ufoCondition;	/**< How much the UFO is damaged */
+	int aliensKilled;
+	int aliensStunned;
+	int aliensSurvived;
+	int ownKilled;
+	int ownStunned;
+	int ownKilledFriendlyFire;
+	int ownSurvived;
+	int civiliansKilled;
+	int civiliansKilledFriendlyFire;
+	int civiliansSurvived;
 } missionResults_t;
-
-extern missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
 
 typedef struct stats_s {
 	int missions;				/**< all missions (used for unique mission idx generation) */
@@ -267,8 +274,6 @@ typedef struct stats_s {
 	int moneyWeapons;
 	int ufosDetected;
 } stats_t;
-
-extern stats_t campaignStats;
 
 /** campaign definition */
 typedef struct campaign_s {
@@ -594,24 +599,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t 
 campaign_t* CL_GetCampaign(const char *name);
 void CL_GameAutoGo(mission_t *mission);
 
-typedef enum missionResultCount_s {
-	MRC_ALIENS_KILLED,
-	MRC_ALIENS_STUNNED,
-	MRC_ALIENS_SURVIVOR,
-	MRC_PHALANX_KILLED,
-	MRC_PHALANX_MIA,
-	MRC_PHALANX_FF_KILLED,
-	MRC_PHALANX_SURVIVOR,
-	MRC_CIVILIAN_KILLED,
-	MRC_CIVILIAN_FF_KILLED,
-	MRC_CIVILIAN_SURVIVOR,
-	MRC_ITEM_GATHEREDTYPES,
-	MRC_ITEM_GATHEREDAMOUNT,
-
-	MAX_MISSIONRESULTCOUNT
-} missionResultCount_t;
-
-void CP_InitMissionResults(int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean won);
+void CP_InitMissionResults(qboolean won);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CP_CampaignExit(void);
 
@@ -620,7 +608,7 @@ int CP_CountMission(void);
 int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
-int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
@@ -631,7 +619,7 @@ base_t *CP_GetMissionBase(void);
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
 void CP_StartSelectedMission(void);
-void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis);
+void CL_HandleNationData(qboolean won, mission_t * mis);
 void CP_CheckLostCondition(void);
 void CL_UpdateCharacterStats(const base_t *base, int won, const aircraft_t *aircraft);
 

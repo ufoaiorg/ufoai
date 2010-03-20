@@ -92,6 +92,8 @@ cvar_t *r_specular;
 cvar_t *r_hardness;
 cvar_t *r_parallax;
 cvar_t *r_fog;
+cvar_t *r_flares;
+cvar_t *r_coronas;
 
 /**
  * @brief Prints some OpenGL strings
@@ -173,7 +175,8 @@ static inline void R_Clear (void)
  */
 static inline void R_ClearScene (void)
 {
-	r_numEntities = r_numLights = 0;
+	/* lights and coronas are populated as ents are added */
+	refdef.numEntities = refdef.numLights = refdef.numCoronas = 0;
 }
 
 /**
@@ -303,7 +306,11 @@ void R_RenderFrame (void)
 
 			R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
 
+			R_DrawFlareSurfaces(r_mapTiles[tile]->bsp.flare_surfaces);
+
 			R_EnableFog(qfalse);
+
+			R_DrawCoronas();
 
 			R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
 			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
@@ -405,7 +412,7 @@ static void R_RegisterSystemVars (void)
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
-	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
+	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
 	r_lightmap->modified = qfalse;
 	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");
@@ -431,6 +438,8 @@ static void R_RegisterSystemVars (void)
 	r_hardness = Cvar_Get("r_hardness", "1.0", CVAR_ARCHIVE, "Hardness controll for GLSL shaders (specular, bump, ...)");
 	r_parallax = Cvar_Get("r_parallax", "1.0", CVAR_ARCHIVE, "Controls parallax parameters");
 	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate or deactivate fog");
+	r_flares = Cvar_Get("r_flares", "1", CVAR_ARCHIVE, "Activate or deactivate flares");
+	r_coronas = Cvar_Get("r_coronas", "1", CVAR_ARCHIVE, "Activate or deactivate coronas");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -754,7 +763,7 @@ static inline void R_EnforceVersion (void)
 /**
  * @brief Searches vendor and renderer GL strings for the given vendor id
  */
-static inline qboolean R_SearchForVendor (const char *vendor)
+static qboolean R_SearchForVendor (const char *vendor)
 {
 	return Q_stristr(r_config.vendorString, vendor)
 		|| Q_stristr(r_config.rendererString, vendor);

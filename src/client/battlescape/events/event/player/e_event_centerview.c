@@ -31,5 +31,5 @@ void CL_CenterView (const eventRegister_t *self, struct dbuffer *msg)
 	pos3_t pos;
 
 	NET_ReadFormat(msg, self->formatString, &pos);
-	V_CenterView(pos);
+	CL_ViewCenterAtGridPosition(pos);
 }
