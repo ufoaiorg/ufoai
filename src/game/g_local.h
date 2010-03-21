@@ -325,7 +325,6 @@ qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 qboolean G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_reaction.c */
-qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
 void G_ReactionFirePreShot(const edict_t *target);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
