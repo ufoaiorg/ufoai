@@ -103,10 +103,12 @@ qboolean Com_GetConstInt (const char *name, int *value)
  */
 qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
 {
-	assert(space != NULL);
-	assert(space[0] != '\0');
-	assert(variable != NULL);
-	assert(variable[0] != '\0');
+	if (!variable || variable[0] == '\0')
+		return qfalse;
+
+	if (!space || space[0] == '\0')
+		return Com_GetConstInt(variable, value);
+
 	return Com_GetConstInt(va("%s::%s", space, variable), value);
 }
 
