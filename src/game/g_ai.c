@@ -254,6 +254,8 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
  * is the inverse team - see the vis check code for the inverse team rules to see how this works.
  * For civilians we have to specify the alien team and can't use the inverse team rules. This is
  * needed because the inverse team rules aren't working for the civilian team - see @c TEAM_CIVILIAN
+ * @return A negative team number means "every other team" as the one from the given ent. See the vis
+ * check functions for the inverse team rules for more information.
  */
 int AI_GetHidingTeam (const edict_t *ent)
 {
