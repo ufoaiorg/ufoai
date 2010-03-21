@@ -829,7 +829,7 @@ static int AIL_positionhide (lua_State *L)
 
 	VectorCopy(AIL_ent->pos, save);
 
-	if (AI_FindHidingLocation(AIL_ent, AIL_ent->pos, &tus)) {
+	if (AI_FindHidingLocation(-AIL_ent->team, AIL_ent, AIL_ent->pos, &tus)) {
 		/* Return the spot. */
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
