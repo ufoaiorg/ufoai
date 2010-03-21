@@ -370,7 +370,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 			continue;
 		}
 
-		if (!Com_GetConstInt(statusId, (int*) &status)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, statusId, (int*) &status)) {
 			Com_Printf("Invalid storedUFOStatus '%s'\n", statusId);
 			continue;
 		}

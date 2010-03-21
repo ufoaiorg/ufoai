@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_H
+#define SAVE_H
+
 #define SAVE_ROOTNODE "savegame"
 
 /** @note this data is loaded from/saved to binary header, we save it into the XML for readability only */
@@ -30,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_COMMENT "comment"
 #define SAVE_REALDATE "realDate"
 #define SAVE_GAMEDATE "gameDate"
+
+#endif
 
 /*
 DTD:

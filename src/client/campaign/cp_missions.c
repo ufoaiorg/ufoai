@@ -1823,13 +1823,13 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		} else
 			mission.mapDef = NULL;
 
-		if (!Com_GetConstInt(categoryId, (int*) &mission.category)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
 			Com_Printf("Invaild mission category '%s'\n", categoryId);
 			success = qfalse;
 			break;
 		}
 
-		if (!Com_GetConstInt(stageId, (int*) &mission.stage)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
 			Com_Printf("Invaild mission stage '%s'\n", stageId);
 			success = qfalse;
 			break;

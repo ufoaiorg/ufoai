@@ -236,7 +236,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 		char title[MAX_VAR];
 		char text[MAX_MESSAGE_TEXT];
 
-		if (!Com_GetConstInt(type, (int*) &mtype)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
 			Com_Printf("Invaild message type '%s'\n", type);
 			continue;
 		}

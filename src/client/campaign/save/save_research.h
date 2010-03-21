@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_RESEARCH_H
+#define SAVE_RESEARCH_H
+
 #define SAVE_RESEARCH_RESEARCH "research"
 #define SAVE_RESEARCH_TECH "tech"
 #define SAVE_RESEARCH_ID "id"
@@ -40,13 +43,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_RESEARCH_MAIL_ID "id"
 
 #define SAVE_RESEARCHSTATUS_NAMESPACE "saveResearchStatus"
-const constListEntry_t saveResearchConstants[] = {
+static const constListEntry_t saveResearchConstants[] = {
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::none", RS_NONE},
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::running", RS_RUNNING},
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::paused", RS_PAUSED},
 	{SAVE_RESEARCHSTATUS_NAMESPACE"::finished", RS_FINISH},
 	{NULL, -1}
 };
+
+#endif
 
 /*
 DTD:

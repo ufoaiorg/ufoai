@@ -605,7 +605,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 			break;
 		}
 
-		if (!Com_GetConstInt(instStat, (int*) &inst->installationStatus)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst->installationStatus)) {
 			Com_Printf("Invaild installation status '%s'\n", instStat);
 			success = qfalse;
 			break;

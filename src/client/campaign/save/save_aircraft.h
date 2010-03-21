@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_AIRCRAFT_H
+#define SAVE_AIRCRAFT_H
+
 #define SAVE_AIRCRAFT_IDX "idx"
 #define SAVE_AIRCRAFT_UFOS "UFOs"
 #define SAVE_AIRCRAFT_AIRCRAFT "aircraft"
@@ -80,6 +83,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_AIRCRAFT_PROJECTILES "projectiles"
 
+#endif
 
 /*
 DTD: (incomplete)

@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_CHARACTER_H
+#define SAVE_CHARACTER_H
+
 #define SAVE_CHARACTER_NAME "name"
 #define SAVE_CHARACTER_BODY "body"
 #define SAVE_CHARACTER_PATH "path"
@@ -55,7 +58,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_CHARACTER_SKILLTYPE_NAMESPACE "saveCharacterSkillType"
 #define SAVE_CHARACTER_KILLTYPE_NAMESPACE "saveCharacterKillType"
-const constListEntry_t saveCharacterConstants[] = {
+static const constListEntry_t saveCharacterConstants[] = {
 	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::power", ABILITY_POWER},
 	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::speed", ABILITY_SPEED},
 	{SAVE_CHARACTER_SKILLTYPE_NAMESPACE"::accuracy", ABILITY_ACCURACY},
@@ -74,8 +77,10 @@ const constListEntry_t saveCharacterConstants[] = {
 	{NULL, -1}
 };
 
+#endif
+
 /*
-DTD: (incomplete)
+DTD:
 
 <!ELEMENT character (scores, inventory)>
 <!ATTLIST character

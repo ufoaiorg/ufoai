@@ -22,11 +22,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_ALIENBASE_H
+#define SAVE_ALIENBASE_H
+
 #define SAVE_ALIENBASE_ALIENBASES "alienBases"
 #define SAVE_ALIENBASE_BASE "base"
 #define SAVE_ALIENBASE_POS "pos"
 #define SAVE_ALIENBASE_SUPPLY "supply"
 #define SAVE_ALIENBASE_STEALTH "stealth"
+
+#endif
 
 /*
 DTD:
@@ -35,14 +40,14 @@ DTD:
 
 <!ELEMENT base pos>
 <!ATTLIST base
-	supply		CDATA		0
-	stealth		CDATA		0.0
+	supply		CDATA		'0'
+	stealth		CDATA		'0.0'
 >
 
 <!ELEMENT pos EMPTY>
 <!ATTLIST pos
-	x			CDATA		0.0
-	y			CDATA		0.0
+	x			CDATA		'0.0'
+	y			CDATA		'0.0'
 >
 */
 

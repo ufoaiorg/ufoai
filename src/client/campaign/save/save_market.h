@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_MARKET_H
+#define SAVE_MARKET_H
+
 #define SAVE_MARKET_MARKET "market"
 #define SAVE_MARKET_ITEM "item"
 #define SAVE_MARKET_AIRCRAFT "aircraft"
@@ -31,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MARKET_ASK "ask"
 #define SAVE_MARKET_EVO "evo"
 #define SAVE_MARKET_AUTOSELL "autoSell"
+
+#endif
 
 /*
 DTD:

@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_BASES_H
+#define SAVE_BASES_H
+
 #define SAVE_BASES_BASES "bases"
 #define SAVE_BASES_NUMAIRCRAFT "numAircraft"
 #define SAVE_BASES_BASE "base"
@@ -72,6 +75,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_AMMOLEFT "ammoLeft"
 #define SAVE_BASES_DELAYNEXTSHOT "delayNextShot"
 
+#endif
+
 /*
 DTD: (incomplete)
 
@@ -80,8 +85,8 @@ DTD: (incomplete)
 <!ELEMENT item EMPTY>
 <!ATTLIST item
 	id			CDATA		#REQUIRED
-	num			CDATA		0
-	numLoose	CDATA		0
+	num			CDATA		'0'
+	numLoose	CDATA		'0'
 >
 */
 

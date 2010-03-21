@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_INSTALLATION_H
+#define SAVE_INSTALLATION_H
+
 #define SAVE_INSTALLATION_INSTALLATIONS "installations"
 #define SAVE_INSTALLATION_INSTALLATION "installation"
 #define SAVE_INSTALLATION_TEMPLATEID "templateid"
@@ -36,11 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_INSTALLATION_NUM "num"
 
 #define SAVE_INSTALLATIONSTATUS_NAMESPACE "saveInstallationStatus"
-const constListEntry_t saveInstallationConstants[] = {
+static const constListEntry_t saveInstallationConstants[] = {
 	{SAVE_INSTALLATIONSTATUS_NAMESPACE"::construction", INSTALLATION_UNDER_CONSTRUCTION},
 	{SAVE_INSTALLATIONSTATUS_NAMESPACE"::working", INSTALLATION_WORKING},
 	{NULL, -1}
 };
+
+#endif
 
 /*
 DTD:

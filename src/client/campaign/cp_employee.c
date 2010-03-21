@@ -1233,7 +1233,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 		employeeType_t emplType;
 		const char *type = mxml_GetString(snode, SAVE_EMPLOYEE_TYPE);
 		
-		if (!Com_GetConstInt(type, (int*) &emplType)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
 			Com_Printf("Invaild employee type '%s'\n", type);
 			success = qfalse;
 			break;

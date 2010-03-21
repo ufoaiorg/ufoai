@@ -213,7 +213,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 		int idx;
 		const char *type = mxml_GetString(sSkill, SAVE_CHARACTER_SKILLTYPE);
 
-		if (!Com_GetConstInt(type, &idx)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, type, &idx)) {
 			Com_Printf("Invalid skill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
 			success = qfalse;
 			break;
@@ -237,7 +237,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 		int idx;
 		const char *type = mxml_GetString(sKill, SAVE_CHARACTER_KILLTYPE);
 
-		if (!Com_GetConstInt(type, &idx)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_KILLTYPE_NAMESPACE, type, &idx)) {
 			Com_Printf("Invalid kill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
 			success = qfalse;
 			break;

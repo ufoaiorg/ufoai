@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_NATION_H
+#define SAVE_NATION_H
+
 #define SAVE_NATION_NATIONS "nations"
 #define SAVE_NATION_NATION "nation"
 #define SAVE_NATION_ID "id"
@@ -29,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_NATION_MONTH_IDX "IDX"
 #define SAVE_NATION_HAPPINESS "happiness"
 #define SAVE_NATION_XVI "XVI"
+
+#endif
 
 /*
 DTD:

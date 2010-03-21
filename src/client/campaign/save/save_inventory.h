@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_INVENTORY_H
+#define SAVE_INVENTORY_H
+
 #define SAVE_INVENTORY_INVENTORY "inventory"
 
 #define SAVE_INVENTORY_ITEM "item"
@@ -33,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_INVENTORY_CONTAINER "container"
 #define SAVE_INVENTORY_WEAPONID "weaponid"
 #define SAVE_INVENTORY_MUNITIONID "munitionid"
+
+#endif
 
 /*
 DTD:

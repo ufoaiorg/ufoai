@@ -1834,7 +1834,7 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			continue;
 		}
 	
-		if (!Com_GetConstInt(type, (int*) &t->statusResearch)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
 			Com_Printf("Invaild research status '%s'\n", type);
 			success = qfalse;
 			break;

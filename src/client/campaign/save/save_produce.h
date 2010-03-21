@@ -22,6 +22,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+#ifndef SAVE_PRODUCE_H
+#define SAVE_PRODUCE_H
+
 #define SAVE_PRODUCE_PRODUCTION "production"
 
 #define SAVE_PRODUCE_QUEUE "queue"
@@ -34,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_PRODUCE_AMOUNT "amount"
 #define SAVE_PRODUCE_PERCENTDONE "percentDone"
 #define SAVE_PRODUCE_ITEMS_CACHED "itemsCached"
+
+#endif
 
 /*
 DTD:
