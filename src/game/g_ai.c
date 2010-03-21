@@ -210,10 +210,12 @@ static qboolean AI_HideNeeded (edict_t *ent)
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
 					const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
-					if (damage >= ent->HP / 3)
+					if (damage >= ent->HP / 3) {
+						const int hidingTeam = AI_GetHidingTeam(ent);
 						/* now check whether this enemy is visible for this alien */
-						if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM))
+						if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
 							return qtrue;
+					}
 				}
 			}
 		}
