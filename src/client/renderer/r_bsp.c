@@ -305,7 +305,7 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 	/* pathfinding nodes are invalid here */
 	assert(node->plane);
 
-	/* node is just a decision point, so go down the apropriate sides
+	/* node is just a decision point, so go down the appropriate sides
 	 * find which side of the node we are on */
 	if (r_isometric->integer) {
 		dot = -DotProduct(r_locals.forward, node->plane->normal);

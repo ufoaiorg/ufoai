@@ -200,6 +200,7 @@ int Q_log2(int val);
 float GetDistanceOnGlobe(const vec2_t pos1, const vec2_t pos2);
 
 void VectorCenterFromMinsMaxs(const vec3_t mins, const vec3_t maxs, vec3_t center);
+float VectorAngleBetween(const vec3_t vec1, const vec3_t vec2);
 
 void VecToAngles(const vec3_t vec, vec3_t angles);
 
