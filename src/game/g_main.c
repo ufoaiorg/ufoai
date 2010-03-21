@@ -241,6 +241,8 @@ static void G_Init (void)
 	logstatsfile = NULL;
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
+
+	AIL_Init();
 }
 
 /**
@@ -250,6 +252,8 @@ static void G_Init (void)
 static void G_Shutdown (void)
 {
 	gi.dprintf("==== ShutdownGame ====\n");
+
+	AIL_Shutdown();
 
 	if (logstatsfile)
 		fclose(logstatsfile);

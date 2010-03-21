@@ -53,9 +53,9 @@ static com_constNameInt_t *com_constNameInt_hash[CONSTNAMEINT_HASH_SIZE];
  */
 static const char *Com_ConstIntGetVariable (const char *name)
 {
-	const char *namespace = strstr(name, "::");
-	if (namespace)
-		return namespace + 2;
+	const char *space = strstr(name, "::");
+	if (space)
+		return space + 2;
 	return name;
 }
 
@@ -120,15 +120,15 @@ qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, 
  * @sa Com_RegisterConstInt
  * @sa Com_ParseValue
  */
-const char* Com_GetConstVariable (const char *namespace, int value)
+const char* Com_GetConstVariable (const char *space, int value)
 {
 	com_constNameInt_t *a;
-	const size_t namespaceLength = strlen(namespace);
+	const size_t namespaceLength = strlen(space);
 
 	a = com_constNameInt;
 	while (a) {
 		if (a->value == value && a->fullname) {
-			if (!strncmp(a->fullname, namespace, namespaceLength))
+			if (!strncmp(a->fullname, space, namespaceLength))
 				return a->name;
 		}
 		a = a->next;

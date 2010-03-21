@@ -253,7 +253,7 @@ void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 qboolean Com_GetConstInt(const char *name, int *value);
 qboolean Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
-const char* Com_GetConstVariable(const char *namespace, int value);
+const char* Com_GetConstVariable(const char *space, int value);
 qboolean Com_UnregisterConstVariable(const char *name);
 void Com_RegisterConstInt(const char *name, int value);
 void Com_RegisterConstList(const constListEntry_t constList[]);

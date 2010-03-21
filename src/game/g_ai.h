@@ -74,5 +74,7 @@ int AI_GetHidingTeam(const edict_t *ent);
 void AIL_ActorThink(player_t * player, edict_t * ent);
 int AIL_InitActor(edict_t * ent, char *type, char *subtype);
 void AIL_Cleanup(void);
+void AIL_Init(void);
+void AIL_Shutdown(void);
 
 #endif

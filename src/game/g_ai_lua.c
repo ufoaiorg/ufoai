@@ -48,6 +48,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define AIL_invalidparameter(n)	\
 	gi.dprintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
 
+/*
+ * Helper functions
+ */
+
+/**
+ * @brief Converts integer team representation into string
+ * @param team The team to convert to the string representation
+ * @return The team string
+ * @sa AIL_Init
+ */
+static const char *AIL_toTeamString (const int team)
+{
+	const char *teamStr = gi.GetConstVariable("luaaiteam", team);
+	if (teamStr == NULL)
+		AIL_invalidparameter(1);
+	return teamStr;
+}
+
+/**
+ * @brief Converts team string into int representation
+ * @param team The team to convert (alien, phalanx, civilian, ...)
+ * @return The integer representation of the given team string
+ * @sa AIL_Init
+ */
+static int AIL_toTeamInt (const char *team)
+{
+	int teamInt = TEAM_DEFAULT;
+	if (!gi.GetConstIntFromNamespace("luaaiteam", team, &teamInt))
+		AIL_invalidparameter(1);
+	return teamInt;
+}
+
 /**
  * @brief Wrapper around edict.
  */
@@ -355,24 +387,14 @@ static int actorL_face (lua_State *L)
 static int actorL_team (lua_State *L)
 {
 	const aiActor_t *target;
+	const char *team;
 
 	assert(lua_isactor(L, 1));
 
 	target = lua_toactor(L, 1);
-	switch (target->ent->team) {
-	case TEAM_PHALANX:
-		lua_pushstring(L, "phalanx");
-		break;
-	case TEAM_CIVILIAN:
-		lua_pushstring(L, "civilian");
-		break;
-	case TEAM_ALIEN:
-		lua_pushstring(L, "alien");
-		break;
-	default:
-		lua_pushstring(L, "unknown");
-		break;
-	}
+	assert(target != NULL);
+	team = AIL_toTeamString(target->ent->team);
+	lua_pushstring(L, team);
 	return 1;
 }
 
@@ -593,16 +615,7 @@ static int AIL_see (lua_State *L)
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				const char *s = lua_tostring(L, 2);
-				if (strcmp(s, "all") == 0)
-					team = TEAM_ALL;
-				else if (strcmp(s, "alien") == 0)
-					team = TEAM_ALIEN;
-				else if (strcmp(s, "civilian") == 0)
-					team = TEAM_CIVILIAN;
-				else if (strcmp(s, "phalanx") == 0)
-					team = TEAM_PHALANX;
-				else
-					AIL_invalidparameter(2);
+				team = AIL_toTeamInt(s);
 			} else
 				AIL_invalidparameter(2);
 		}
@@ -872,13 +885,8 @@ static int AIL_positionhide (lua_State *L)
 	if (lua_gettop(L)) {
 		if (lua_isstring(L, 1)) {
 			const char* s = lua_tostring(L, 1);
-			if (!strcmp(s, "alien"))
-				hidingTeam = TEAM_ALIEN;
-			else if (!strcmp(s, "phalanx"))
-				hidingTeam = TEAM_PHALANX;
-			else if (!strcmp(s, "civilian"))
-				hidingTeam = TEAM_CIVILIAN;
-			else
+			hidingTeam = AIL_toTeamInt(s);
+			if (hidingTeam == TEAM_ALL)
 				AIL_invalidparameter(1);
 		} else {
 			AIL_invalidparameter(1);
@@ -994,6 +1002,21 @@ static void AIL_CleanupActor (edict_t * ent)
 	}
 }
 
+void AIL_Init (void)
+{
+	gi.RegisterConstInt("luaaiteam::phalanx", TEAM_PHALANX);
+	gi.RegisterConstInt("luaaiteam::civilian", TEAM_CIVILIAN);
+	gi.RegisterConstInt("luaaiteam::alien", TEAM_ALIEN);
+	gi.RegisterConstInt("luaaiteam::all", TEAM_ALL);
+}
+
+void AIL_Shutdown (void)
+{
+	gi.UnregisterConstVariable("luaaiteam::phalanx");
+	gi.UnregisterConstVariable("luaaiteam::civilian");
+	gi.UnregisterConstVariable("luaaiteam::alien");
+	gi.UnregisterConstVariable("luaaiteam::all");
+}
 
 /**
  * @brief Purges all the AI from the entities.
