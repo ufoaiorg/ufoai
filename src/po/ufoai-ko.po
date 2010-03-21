@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-02 21:32+0100\n"
+"POT-Creation-Date: 2010-03-17 21:25+0100\n"
 "PO-Revision-Date: 2009-12-24 09:07+0900\n"
 "Last-Translator: 신재종 <morpheuz@hanmail.net>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
@@ -261,8 +261,8 @@ msgstr "스팅레이 요격기"
 msgid "Stingray"
 msgstr "스팅레이"
 
-#: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/otheritems.ufo:39
-#: ../base/ufos/research.ufo:3592
+#: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/otheritems.ufo:40
+#: ../base/ufos/research.ufo:3591
 msgid "UFO - Scout"
 msgstr "정찰용 UFO"
 
@@ -270,8 +270,8 @@ msgstr "정찰용 UFO"
 msgid "Scout U"
 msgstr "Scout U"
 
-#: ../base/ufos/aircraftmanagement.ufo:464 ../base/ufos/otheritems.ufo:49
-#: ../base/ufos/research.ufo:3634
+#: ../base/ufos/aircraftmanagement.ufo:464 ../base/ufos/otheritems.ufo:50
+#: ../base/ufos/research.ufo:3633
 msgid "UFO - Fighter"
 msgstr "전투용 UFO"
 
@@ -279,8 +279,8 @@ msgstr "전투용 UFO"
 msgid "Fighter U"
 msgstr "Fighter U"
 
-#: ../base/ufos/aircraftmanagement.ufo:494 ../base/ufos/otheritems.ufo:59
-#: ../base/ufos/research.ufo:3935
+#: ../base/ufos/aircraftmanagement.ufo:494 ../base/ufos/otheritems.ufo:60
+#: ../base/ufos/research.ufo:3934
 #, fuzzy
 msgid "UFO - Harvester"
 msgstr "UFO - 수확선"
@@ -289,8 +289,8 @@ msgstr "UFO - 수확선"
 msgid "Harvester U"
 msgstr "Harvester U"
 
-#: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/otheritems.ufo:99
-#: ../base/ufos/research.ufo:3849
+#: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/otheritems.ufo:100
+#: ../base/ufos/research.ufo:3848
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "UFO - Gunboat"
@@ -299,8 +299,8 @@ msgstr "UFO - Gunboat"
 msgid "Gunboat U"
 msgstr "Gunboat U"
 
-#: ../base/ufos/aircraftmanagement.ufo:575 ../base/ufos/otheritems.ufo:109
-#: ../base/ufos/research.ufo:3806
+#: ../base/ufos/aircraftmanagement.ufo:575 ../base/ufos/otheritems.ufo:110
+#: ../base/ufos/research.ufo:3805
 #, fuzzy
 msgid "UFO - Corrupter"
 msgstr "UFO - Corrupter"
@@ -309,8 +309,8 @@ msgstr "UFO - Corrupter"
 msgid "Corrupter U"
 msgstr "Corrupter U"
 
-#: ../base/ufos/aircraftmanagement.ufo:604 ../base/ufos/otheritems.ufo:128
-#: ../base/ufos/research.ufo:3677
+#: ../base/ufos/aircraftmanagement.ufo:604 ../base/ufos/otheritems.ufo:129
+#: ../base/ufos/research.ufo:3676
 #, fuzzy
 msgid "UFO - Supply Ship"
 msgstr "UFO - 보급선"
@@ -319,8 +319,8 @@ msgstr "UFO - 보급선"
 msgid "Supply U"
 msgstr "Supply U"
 
-#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/otheritems.ufo:79
-#: ../base/ufos/research.ufo:3892
+#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/otheritems.ufo:80
+#: ../base/ufos/research.ufo:3891
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "UFO - Ripper"
@@ -329,8 +329,8 @@ msgstr "UFO - Ripper"
 msgid "Ripper U"
 msgstr "Ripper U"
 
-#: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/otheritems.ufo:69
-#: ../base/ufos/research.ufo:3763
+#: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/otheritems.ufo:70
+#: ../base/ufos/research.ufo:3762
 msgid "UFO - Bomber"
 msgstr "UFO - 폭격기"
 
@@ -338,8 +338,8 @@ msgstr "UFO - 폭격기"
 msgid "Bomber U"
 msgstr "Bomber U"
 
-#: ../base/ufos/aircraftmanagement.ufo:689 ../base/ufos/otheritems.ufo:119
-#: ../base/ufos/research.ufo:3720
+#: ../base/ufos/aircraftmanagement.ufo:689 ../base/ufos/otheritems.ufo:120
+#: ../base/ufos/research.ufo:3719
 msgid "UFO - Carrier"
 msgstr "UFO - 공격항모"
 
@@ -347,8 +347,8 @@ msgstr "UFO - 공격항모"
 msgid "Carrier U"
 msgstr "Carrier U"
 
-#: ../base/ufos/aircraftmanagement.ufo:712 ../base/ufos/otheritems.ufo:89
-#: ../base/ufos/research.ufo:3978
+#: ../base/ufos/aircraftmanagement.ufo:712 ../base/ufos/otheritems.ufo:90
+#: ../base/ufos/research.ufo:3977
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "UFO - 모함"
@@ -357,7 +357,7 @@ msgstr "UFO - 모함"
 msgid "Mothership U"
 msgstr "Mothership U"
 
-#: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4599
+#: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4598
 msgid "Aerial Laser Cannon"
 msgstr "항공기용 레이저포"
 
@@ -365,11 +365,11 @@ msgstr "항공기용 레이저포"
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva 회전식 기관포"
 
-#: ../base/ufos/aircraftmanagement.ufo:771 ../base/ufos/research.ufo:4666
+#: ../base/ufos/aircraftmanagement.ufo:771 ../base/ufos/research.ufo:4665
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm 장갑관통 소이탄"
 
-#: ../base/ufos/aircraftmanagement.ufo:787 ../base/ufos/research.ufo:4687
+#: ../base/ufos/aircraftmanagement.ufo:787 ../base/ufos/research.ufo:4686
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm 고폭 소이탄"
 
@@ -385,51 +385,51 @@ msgstr "스패로우호크 공대공 미사일 발사대"
 msgid "Sparrowhawk Missile"
 msgstr "스패로우호크 공대공 미사일"
 
-#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4746
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4745
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 로켓 발사대"
 
-#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4763
+#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4762
 msgid "TR-20 Rocket"
 msgstr "TR-20 로켓"
 
-#: ../base/ufos/aircraftmanagement.ufo:874 ../base/ufos/research.ufo:4782
+#: ../base/ufos/aircraftmanagement.ufo:874 ../base/ufos/research.ufo:4781
 msgid "Particle Beam Weapon"
 msgstr "입자 빔 무기"
 
-#: ../base/ufos/aircraftmanagement.ufo:904 ../base/ufos/research.ufo:4839
+#: ../base/ufos/aircraftmanagement.ufo:904 ../base/ufos/research.ufo:4838
 msgid "Targeting Computer"
 msgstr "조준 지원 컴퓨터"
 
-#: ../base/ufos/aircraftmanagement.ufo:916 ../base/ufos/research.ufo:4856
+#: ../base/ufos/aircraftmanagement.ufo:916 ../base/ufos/research.ufo:4855
 msgid "Fuel Pod"
 msgstr "보조연료탱크"
 
-#: ../base/ufos/aircraftmanagement.ufo:930 ../base/ufos/research.ufo:4434
+#: ../base/ufos/aircraftmanagement.ufo:930 ../base/ufos/research.ufo:4433
 msgid "Polymer Aircraft Armour"
 msgstr "폴리머 비행선 장갑"
 
-#: ../base/ufos/aircraftmanagement.ufo:944 ../base/ufos/research.ufo:4451
+#: ../base/ufos/aircraftmanagement.ufo:944 ../base/ufos/research.ufo:4450
 msgid "Alien Aircraft Plating"
 msgstr "외계 우주선 강판"
 
-#: ../base/ufos/aircraftmanagement.ufo:958 ../base/ufos/research.ufo:4485
+#: ../base/ufos/aircraftmanagement.ufo:958 ../base/ufos/research.ufo:4484
 msgid "Alien Astrogation"
 msgstr "외계 우주선 항법체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:4523
+#: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:4522
 msgid "Alien Propulsion"
 msgstr "외계 우주선 추진체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4560
+#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4559
 msgid "Alien Detection"
 msgstr "외계 우주선 탐지체계"
 
-#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4386
+#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4385
 msgid "AA51 missile launcher"
 msgstr "AA51 SAM 발사대"
 
-#: ../base/ufos/aircraftmanagement.ufo:1019 ../base/ufos/research.ufo:156
+#: ../base/ufos/aircraftmanagement.ufo:1019 ../base/ufos/research.ufo:157
 #, fuzzy
 msgid "Base-Defence Laser Turret"
 msgstr "레이저 포탑"
@@ -557,7 +557,7 @@ msgstr "개량된 레이더"
 msgid "Hospital"
 msgstr "의무실"
 
-#: ../base/ufos/basemanagement.ufo:314 ../base/ufos/research.ufo:3328
+#: ../base/ufos/basemanagement.ufo:314 ../base/ufos/research.ufo:3327
 msgid "Antimatter Storage"
 msgstr "반물질 저장시설"
 
@@ -2673,77 +2673,77 @@ msgstr "SecGen. Mahouf Serra, UN, 뉴욕"
 #: ../base/ufos/events.ufo:252 ../base/ufos/events.ufo:263
 #: ../base/ufos/events.ufo:274 ../base/ufos/events.ufo:285
 #: ../base/ufos/events.ufo:296 ../base/ufos/events.ufo:307
-#: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
-#: ../base/ufos/research.ufo:170 ../base/ufos/research.ufo:178
-#: ../base/ufos/research.ufo:221 ../base/ufos/research.ufo:229
-#: ../base/ufos/research.ufo:283 ../base/ufos/research.ufo:291
-#: ../base/ufos/research.ufo:316 ../base/ufos/research.ufo:324
-#: ../base/ufos/research.ufo:354 ../base/ufos/research.ufo:362
-#: ../base/ufos/research.ufo:417 ../base/ufos/research.ufo:425
-#: ../base/ufos/research.ufo:455 ../base/ufos/research.ufo:463
-#: ../base/ufos/research.ufo:493 ../base/ufos/research.ufo:501
-#: ../base/ufos/research.ufo:531 ../base/ufos/research.ufo:556
-#: ../base/ufos/research.ufo:564 ../base/ufos/research.ufo:593
-#: ../base/ufos/research.ufo:602 ../base/ufos/research.ufo:628
-#: ../base/ufos/research.ufo:636 ../base/ufos/research.ufo:1049
-#: ../base/ufos/research.ufo:1057 ../base/ufos/research.ufo:1125
-#: ../base/ufos/research.ufo:1133 ../base/ufos/research.ufo:1336
-#: ../base/ufos/research.ufo:1344 ../base/ufos/research.ufo:1395
-#: ../base/ufos/research.ufo:1403 ../base/ufos/research.ufo:1434
-#: ../base/ufos/research.ufo:1442 ../base/ufos/research.ufo:1472
-#: ../base/ufos/research.ufo:1480 ../base/ufos/research.ufo:1511
-#: ../base/ufos/research.ufo:1519 ../base/ufos/research.ufo:1550
-#: ../base/ufos/research.ufo:1558 ../base/ufos/research.ufo:1594
-#: ../base/ufos/research.ufo:1602 ../base/ufos/research.ufo:1650
-#: ../base/ufos/research.ufo:1658 ../base/ufos/research.ufo:1710
-#: ../base/ufos/research.ufo:1718 ../base/ufos/research.ufo:1769
+#: ../base/ufos/research.ufo:138 ../base/ufos/research.ufo:146
+#: ../base/ufos/research.ufo:171 ../base/ufos/research.ufo:179
+#: ../base/ufos/research.ufo:222 ../base/ufos/research.ufo:230
+#: ../base/ufos/research.ufo:284 ../base/ufos/research.ufo:292
+#: ../base/ufos/research.ufo:317 ../base/ufos/research.ufo:325
+#: ../base/ufos/research.ufo:355 ../base/ufos/research.ufo:363
+#: ../base/ufos/research.ufo:418 ../base/ufos/research.ufo:426
+#: ../base/ufos/research.ufo:456 ../base/ufos/research.ufo:464
+#: ../base/ufos/research.ufo:494 ../base/ufos/research.ufo:502
+#: ../base/ufos/research.ufo:532 ../base/ufos/research.ufo:557
+#: ../base/ufos/research.ufo:565 ../base/ufos/research.ufo:594
+#: ../base/ufos/research.ufo:603 ../base/ufos/research.ufo:629
+#: ../base/ufos/research.ufo:637 ../base/ufos/research.ufo:1050
+#: ../base/ufos/research.ufo:1058 ../base/ufos/research.ufo:1126
+#: ../base/ufos/research.ufo:1134 ../base/ufos/research.ufo:1337
+#: ../base/ufos/research.ufo:1345 ../base/ufos/research.ufo:1396
+#: ../base/ufos/research.ufo:1404 ../base/ufos/research.ufo:1435
+#: ../base/ufos/research.ufo:1443 ../base/ufos/research.ufo:1473
+#: ../base/ufos/research.ufo:1481 ../base/ufos/research.ufo:1512
+#: ../base/ufos/research.ufo:1520 ../base/ufos/research.ufo:1551
+#: ../base/ufos/research.ufo:1559 ../base/ufos/research.ufo:1595
+#: ../base/ufos/research.ufo:1603 ../base/ufos/research.ufo:1651
+#: ../base/ufos/research.ufo:1659 ../base/ufos/research.ufo:1711
+#: ../base/ufos/research.ufo:1719 ../base/ufos/research.ufo:1769
 #: ../base/ufos/research.ufo:1777 ../base/ufos/research.ufo:1809
 #: ../base/ufos/research.ufo:1817 ../base/ufos/research.ufo:1849
-#: ../base/ufos/research.ufo:1857 ../base/ufos/research.ufo:1909
-#: ../base/ufos/research.ufo:1917 ../base/ufos/research.ufo:1949
-#: ../base/ufos/research.ufo:1957 ../base/ufos/research.ufo:2006
-#: ../base/ufos/research.ufo:2014 ../base/ufos/research.ufo:2241
-#: ../base/ufos/research.ufo:2249 ../base/ufos/research.ufo:2288
-#: ../base/ufos/research.ufo:2296 ../base/ufos/research.ufo:2330
-#: ../base/ufos/research.ufo:2338 ../base/ufos/research.ufo:2371
-#: ../base/ufos/research.ufo:2379 ../base/ufos/research.ufo:2430
-#: ../base/ufos/research.ufo:2438 ../base/ufos/research.ufo:2490
-#: ../base/ufos/research.ufo:2498 ../base/ufos/research.ufo:2550
-#: ../base/ufos/research.ufo:2558 ../base/ufos/research.ufo:2621
-#: ../base/ufos/research.ufo:2629 ../base/ufos/research.ufo:2699
-#: ../base/ufos/research.ufo:2707 ../base/ufos/research.ufo:2736
-#: ../base/ufos/research.ufo:2744 ../base/ufos/research.ufo:3344
-#: ../base/ufos/research.ufo:3385 ../base/ufos/research.ufo:3392
-#: ../base/ufos/research.ufo:3422 ../base/ufos/research.ufo:3429
-#: ../base/ufos/research.ufo:3492 ../base/ufos/research.ufo:3499
-#: ../base/ufos/research.ufo:3528 ../base/ufos/research.ufo:3535
-#: ../base/ufos/research.ufo:3564 ../base/ufos/research.ufo:3571
-#: ../base/ufos/research.ufo:3606 ../base/ufos/research.ufo:3614
-#: ../base/ufos/research.ufo:3648 ../base/ufos/research.ufo:3656
-#: ../base/ufos/research.ufo:3691 ../base/ufos/research.ufo:3699
-#: ../base/ufos/research.ufo:3734 ../base/ufos/research.ufo:3742
-#: ../base/ufos/research.ufo:3777 ../base/ufos/research.ufo:3785
-#: ../base/ufos/research.ufo:3820 ../base/ufos/research.ufo:3828
-#: ../base/ufos/research.ufo:3863 ../base/ufos/research.ufo:3871
-#: ../base/ufos/research.ufo:3906 ../base/ufos/research.ufo:3914
-#: ../base/ufos/research.ufo:3949 ../base/ufos/research.ufo:3957
-#: ../base/ufos/research.ufo:3992 ../base/ufos/research.ufo:4000
-#: ../base/ufos/research.ufo:4063 ../base/ufos/research.ufo:4071
-#: ../base/ufos/research.ufo:4122 ../base/ufos/research.ufo:4130
-#: ../base/ufos/research.ufo:4164 ../base/ufos/research.ufo:4172
-#: ../base/ufos/research.ufo:4206 ../base/ufos/research.ufo:4214
-#: ../base/ufos/research.ufo:4461 ../base/ufos/research.ufo:4468
-#: ../base/ufos/research.ufo:4498 ../base/ufos/research.ufo:4505
-#: ../base/ufos/research.ufo:4536 ../base/ufos/research.ufo:4543
-#: ../base/ufos/research.ufo:4573 ../base/ufos/research.ufo:4580
-#: ../base/ufos/research.ufo:4615 ../base/ufos/research.ufo:4623
-#: ../base/ufos/research.ufo:4798 ../base/ufos/research.ufo:4806
-#: ../base/ufos/research.ufo:4890 ../base/ufos/research.ufo:4898
-#: ../base/ufos/research.ufo:4987 ../base/ufos/research.ufo:5018
-#: ../base/ufos/research.ufo:5025 ../base/ufos/research.ufo:5055
-#: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
-#: ../base/ufos/research.ufo:5103 ../base/ufos/research.ufo:5131
-#: ../base/ufos/research.ufo:5160
+#: ../base/ufos/research.ufo:1857 ../base/ufos/research.ufo:1908
+#: ../base/ufos/research.ufo:1916 ../base/ufos/research.ufo:1948
+#: ../base/ufos/research.ufo:1956 ../base/ufos/research.ufo:2005
+#: ../base/ufos/research.ufo:2013 ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2248 ../base/ufos/research.ufo:2287
+#: ../base/ufos/research.ufo:2295 ../base/ufos/research.ufo:2329
+#: ../base/ufos/research.ufo:2337 ../base/ufos/research.ufo:2370
+#: ../base/ufos/research.ufo:2378 ../base/ufos/research.ufo:2429
+#: ../base/ufos/research.ufo:2437 ../base/ufos/research.ufo:2489
+#: ../base/ufos/research.ufo:2497 ../base/ufos/research.ufo:2549
+#: ../base/ufos/research.ufo:2557 ../base/ufos/research.ufo:2620
+#: ../base/ufos/research.ufo:2628 ../base/ufos/research.ufo:2698
+#: ../base/ufos/research.ufo:2706 ../base/ufos/research.ufo:2735
+#: ../base/ufos/research.ufo:2743 ../base/ufos/research.ufo:3343
+#: ../base/ufos/research.ufo:3384 ../base/ufos/research.ufo:3391
+#: ../base/ufos/research.ufo:3421 ../base/ufos/research.ufo:3428
+#: ../base/ufos/research.ufo:3491 ../base/ufos/research.ufo:3498
+#: ../base/ufos/research.ufo:3527 ../base/ufos/research.ufo:3534
+#: ../base/ufos/research.ufo:3563 ../base/ufos/research.ufo:3570
+#: ../base/ufos/research.ufo:3605 ../base/ufos/research.ufo:3613
+#: ../base/ufos/research.ufo:3647 ../base/ufos/research.ufo:3655
+#: ../base/ufos/research.ufo:3690 ../base/ufos/research.ufo:3698
+#: ../base/ufos/research.ufo:3733 ../base/ufos/research.ufo:3741
+#: ../base/ufos/research.ufo:3776 ../base/ufos/research.ufo:3784
+#: ../base/ufos/research.ufo:3819 ../base/ufos/research.ufo:3827
+#: ../base/ufos/research.ufo:3862 ../base/ufos/research.ufo:3870
+#: ../base/ufos/research.ufo:3905 ../base/ufos/research.ufo:3913
+#: ../base/ufos/research.ufo:3948 ../base/ufos/research.ufo:3956
+#: ../base/ufos/research.ufo:3991 ../base/ufos/research.ufo:3999
+#: ../base/ufos/research.ufo:4062 ../base/ufos/research.ufo:4070
+#: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4129
+#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4171
+#: ../base/ufos/research.ufo:4205 ../base/ufos/research.ufo:4213
+#: ../base/ufos/research.ufo:4460 ../base/ufos/research.ufo:4467
+#: ../base/ufos/research.ufo:4497 ../base/ufos/research.ufo:4504
+#: ../base/ufos/research.ufo:4535 ../base/ufos/research.ufo:4542
+#: ../base/ufos/research.ufo:4572 ../base/ufos/research.ufo:4579
+#: ../base/ufos/research.ufo:4614 ../base/ufos/research.ufo:4622
+#: ../base/ufos/research.ufo:4797 ../base/ufos/research.ufo:4805
+#: ../base/ufos/research.ufo:4889 ../base/ufos/research.ufo:4897
+#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
+#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5054
+#: ../base/ufos/research.ufo:5063 ../base/ufos/research.ufo:5095
+#: ../base/ufos/research.ufo:5102 ../base/ufos/research.ufo:5130
+#: ../base/ufos/research.ufo:5159
 msgid "mail_to_base_commander"
 msgstr "기지 사령관, PHALANX, 대서양 작전본부"
 
@@ -2773,61 +2773,61 @@ msgstr ""
 #: ../base/ufos/events.ufo:43 ../base/ufos/events.ufo:55
 #: ../base/ufos/events.ufo:66 ../base/ufos/events.ufo:77
 #: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:99
-#: ../base/ufos/events.ufo:121 ../base/ufos/research.ufo:136
-#: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:169
-#: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:220
-#: ../base/ufos/research.ufo:228 ../base/ufos/research.ufo:282
-#: ../base/ufos/research.ufo:290 ../base/ufos/research.ufo:530
-#: ../base/ufos/research.ufo:627 ../base/ufos/research.ufo:635
-#: ../base/ufos/research.ufo:1048 ../base/ufos/research.ufo:1056
-#: ../base/ufos/research.ufo:1124 ../base/ufos/research.ufo:1132
-#: ../base/ufos/research.ufo:1335 ../base/ufos/research.ufo:1343
-#: ../base/ufos/research.ufo:1394 ../base/ufos/research.ufo:1402
-#: ../base/ufos/research.ufo:1433 ../base/ufos/research.ufo:1441
-#: ../base/ufos/research.ufo:1471 ../base/ufos/research.ufo:1479
-#: ../base/ufos/research.ufo:1510 ../base/ufos/research.ufo:1518
-#: ../base/ufos/research.ufo:1549 ../base/ufos/research.ufo:1557
-#: ../base/ufos/research.ufo:1593 ../base/ufos/research.ufo:1601
-#: ../base/ufos/research.ufo:1649 ../base/ufos/research.ufo:1657
-#: ../base/ufos/research.ufo:1709 ../base/ufos/research.ufo:1717
+#: ../base/ufos/events.ufo:121 ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:145 ../base/ufos/research.ufo:170
+#: ../base/ufos/research.ufo:178 ../base/ufos/research.ufo:221
+#: ../base/ufos/research.ufo:229 ../base/ufos/research.ufo:283
+#: ../base/ufos/research.ufo:291 ../base/ufos/research.ufo:531
+#: ../base/ufos/research.ufo:628 ../base/ufos/research.ufo:636
+#: ../base/ufos/research.ufo:1049 ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1125 ../base/ufos/research.ufo:1133
+#: ../base/ufos/research.ufo:1336 ../base/ufos/research.ufo:1344
+#: ../base/ufos/research.ufo:1395 ../base/ufos/research.ufo:1403
+#: ../base/ufos/research.ufo:1434 ../base/ufos/research.ufo:1442
+#: ../base/ufos/research.ufo:1472 ../base/ufos/research.ufo:1480
+#: ../base/ufos/research.ufo:1511 ../base/ufos/research.ufo:1519
+#: ../base/ufos/research.ufo:1550 ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1594 ../base/ufos/research.ufo:1602
+#: ../base/ufos/research.ufo:1650 ../base/ufos/research.ufo:1658
+#: ../base/ufos/research.ufo:1710 ../base/ufos/research.ufo:1718
 #: ../base/ufos/research.ufo:1768 ../base/ufos/research.ufo:1776
 #: ../base/ufos/research.ufo:1808 ../base/ufos/research.ufo:1816
 #: ../base/ufos/research.ufo:1848 ../base/ufos/research.ufo:1856
-#: ../base/ufos/research.ufo:1908 ../base/ufos/research.ufo:1916
-#: ../base/ufos/research.ufo:1948 ../base/ufos/research.ufo:1956
-#: ../base/ufos/research.ufo:2005 ../base/ufos/research.ufo:2013
-#: ../base/ufos/research.ufo:2240 ../base/ufos/research.ufo:2248
-#: ../base/ufos/research.ufo:2287 ../base/ufos/research.ufo:2295
-#: ../base/ufos/research.ufo:2370 ../base/ufos/research.ufo:2378
-#: ../base/ufos/research.ufo:2429 ../base/ufos/research.ufo:2437
-#: ../base/ufos/research.ufo:2489 ../base/ufos/research.ufo:2497
-#: ../base/ufos/research.ufo:2549 ../base/ufos/research.ufo:2557
-#: ../base/ufos/research.ufo:2620 ../base/ufos/research.ufo:2628
-#: ../base/ufos/research.ufo:2698 ../base/ufos/research.ufo:2706
-#: ../base/ufos/research.ufo:2735 ../base/ufos/research.ufo:2743
-#: ../base/ufos/research.ufo:3343 ../base/ufos/research.ufo:3384
-#: ../base/ufos/research.ufo:3391 ../base/ufos/research.ufo:3421
-#: ../base/ufos/research.ufo:3428 ../base/ufos/research.ufo:3491
-#: ../base/ufos/research.ufo:3498 ../base/ufos/research.ufo:3527
-#: ../base/ufos/research.ufo:3534 ../base/ufos/research.ufo:3563
-#: ../base/ufos/research.ufo:3570 ../base/ufos/research.ufo:3605
-#: ../base/ufos/research.ufo:3613 ../base/ufos/research.ufo:3647
-#: ../base/ufos/research.ufo:3655 ../base/ufos/research.ufo:3690
-#: ../base/ufos/research.ufo:3698 ../base/ufos/research.ufo:3733
-#: ../base/ufos/research.ufo:3741 ../base/ufos/research.ufo:3776
-#: ../base/ufos/research.ufo:3784 ../base/ufos/research.ufo:3819
-#: ../base/ufos/research.ufo:3827 ../base/ufos/research.ufo:3862
-#: ../base/ufos/research.ufo:3870 ../base/ufos/research.ufo:3905
-#: ../base/ufos/research.ufo:3913 ../base/ufos/research.ufo:3948
-#: ../base/ufos/research.ufo:3956 ../base/ufos/research.ufo:3991
-#: ../base/ufos/research.ufo:3999 ../base/ufos/research.ufo:4460
-#: ../base/ufos/research.ufo:4467 ../base/ufos/research.ufo:4497
-#: ../base/ufos/research.ufo:4504 ../base/ufos/research.ufo:4535
-#: ../base/ufos/research.ufo:4542 ../base/ufos/research.ufo:4572
-#: ../base/ufos/research.ufo:4579 ../base/ufos/research.ufo:4614
-#: ../base/ufos/research.ufo:4622 ../base/ufos/research.ufo:4797
-#: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
-#: ../base/ufos/research.ufo:4897
+#: ../base/ufos/research.ufo:1907 ../base/ufos/research.ufo:1915
+#: ../base/ufos/research.ufo:1947 ../base/ufos/research.ufo:1955
+#: ../base/ufos/research.ufo:2004 ../base/ufos/research.ufo:2012
+#: ../base/ufos/research.ufo:2239 ../base/ufos/research.ufo:2247
+#: ../base/ufos/research.ufo:2286 ../base/ufos/research.ufo:2294
+#: ../base/ufos/research.ufo:2369 ../base/ufos/research.ufo:2377
+#: ../base/ufos/research.ufo:2428 ../base/ufos/research.ufo:2436
+#: ../base/ufos/research.ufo:2488 ../base/ufos/research.ufo:2496
+#: ../base/ufos/research.ufo:2548 ../base/ufos/research.ufo:2556
+#: ../base/ufos/research.ufo:2619 ../base/ufos/research.ufo:2627
+#: ../base/ufos/research.ufo:2697 ../base/ufos/research.ufo:2705
+#: ../base/ufos/research.ufo:2734 ../base/ufos/research.ufo:2742
+#: ../base/ufos/research.ufo:3342 ../base/ufos/research.ufo:3383
+#: ../base/ufos/research.ufo:3390 ../base/ufos/research.ufo:3420
+#: ../base/ufos/research.ufo:3427 ../base/ufos/research.ufo:3490
+#: ../base/ufos/research.ufo:3497 ../base/ufos/research.ufo:3526
+#: ../base/ufos/research.ufo:3533 ../base/ufos/research.ufo:3562
+#: ../base/ufos/research.ufo:3569 ../base/ufos/research.ufo:3604
+#: ../base/ufos/research.ufo:3612 ../base/ufos/research.ufo:3646
+#: ../base/ufos/research.ufo:3654 ../base/ufos/research.ufo:3689
+#: ../base/ufos/research.ufo:3697 ../base/ufos/research.ufo:3732
+#: ../base/ufos/research.ufo:3740 ../base/ufos/research.ufo:3775
+#: ../base/ufos/research.ufo:3783 ../base/ufos/research.ufo:3818
+#: ../base/ufos/research.ufo:3826 ../base/ufos/research.ufo:3861
+#: ../base/ufos/research.ufo:3869 ../base/ufos/research.ufo:3904
+#: ../base/ufos/research.ufo:3912 ../base/ufos/research.ufo:3947
+#: ../base/ufos/research.ufo:3955 ../base/ufos/research.ufo:3990
+#: ../base/ufos/research.ufo:3998 ../base/ufos/research.ufo:4459
+#: ../base/ufos/research.ufo:4466 ../base/ufos/research.ufo:4496
+#: ../base/ufos/research.ufo:4503 ../base/ufos/research.ufo:4534
+#: ../base/ufos/research.ufo:4541 ../base/ufos/research.ufo:4571
+#: ../base/ufos/research.ufo:4578 ../base/ufos/research.ufo:4613
+#: ../base/ufos/research.ufo:4621 ../base/ufos/research.ufo:4796
+#: ../base/ufos/research.ufo:4804 ../base/ufos/research.ufo:4888
+#: ../base/ufos/research.ufo:4896
 msgid "mail_from_paul_navarre"
 msgstr "Cdr. Paul Navarre, R&D: 생산부서, PHALANX, 대서양 작전본부"
 
@@ -3004,10 +3004,10 @@ msgid "mail_new_radar_contact"
 msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
-#: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:592
-#: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
-#: ../base/ufos/research.ufo:5063 ../base/ufos/research.ufo:5130
-#: ../base/ufos/research.ufo:5159
+#: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:593
+#: ../base/ufos/research.ufo:602 ../base/ufos/research.ufo:5053
+#: ../base/ufos/research.ufo:5062 ../base/ufos/research.ufo:5129
+#: ../base/ufos/research.ufo:5158
 msgid "mail_from_col_falkland"
 msgstr "Col. Ingrid Falkland, 정보부서, PHALANX, 대서양 작전본부"
 
@@ -3297,226 +3297,226 @@ msgstr "다소 고풍적인 교외지역"
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "시골의 농장. 광활한 대지에 시야를 가릴만한 장애물이 거의 없습니다."
 
-#: ../base/ufos/maps.ufo:422 ../base/ufos/maps.ufo:503
-#: ../base/ufos/maps.ufo:544
+#: ../base/ufos/maps.ufo:422 ../base/ufos/maps.ufo:504
+#: ../base/ufos/maps.ufo:546
 msgid "An industrial area in a cold region."
 msgstr "냉대지역의 산업지구."
 
-#: ../base/ufos/maps.ufo:464
+#: ../base/ufos/maps.ufo:465
 msgid "An underpopulated area in a cold region."
 msgstr "냉대지역의 한적한 마을"
 
-#: ../base/ufos/maps.ufo:583
+#: ../base/ufos/maps.ufo:585
 msgid "An industrial compound."
 msgstr "복합 산업지구."
 
-#: ../base/ufos/maps.ufo:638
+#: ../base/ufos/maps.ufo:640
 msgid "Cemetery terror mission."
 msgstr "공동묘지 테러 임무"
 
-#: ../base/ufos/maps.ufo:689 ../base/ufos/maps.ufo:729
+#: ../base/ufos/maps.ufo:691 ../base/ufos/maps.ufo:731
 msgid "A river runs through this piece of jungle."
 msgstr "정글을 가로질러 강이 흐릅니다."
 
-#: ../base/ufos/maps.ufo:770 ../base/ufos/maps.ufo:811
-#: ../base/ufos/maps.ufo:851
+#: ../base/ufos/maps.ufo:772 ../base/ufos/maps.ufo:813
+#: ../base/ufos/maps.ufo:853
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "정글중앙의 개활지."
 
-#: ../base/ufos/maps.ufo:897 ../base/ufos/maps.ufo:936
-#: ../base/ufos/maps.ufo:977 ../base/ufos/maps.ufo:1017
+#: ../base/ufos/maps.ufo:899 ../base/ufos/maps.ufo:938
+#: ../base/ufos/maps.ufo:979 ../base/ufos/maps.ufo:1019
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "한적한 교외지역."
 
-#: ../base/ufos/maps.ufo:1056 ../base/ufos/maps.ufo:1137
-#: ../base/ufos/maps.ufo:1177
+#: ../base/ufos/maps.ufo:1058 ../base/ufos/maps.ufo:1139
+#: ../base/ufos/maps.ufo:1179
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "외계인들이 인적이 드문 산림에서 어떤 일을 꾸미고 있습니다."
 
-#: ../base/ufos/maps.ufo:1097
+#: ../base/ufos/maps.ufo:1099
 #, fuzzy
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "외계인들이 인적이 드문 산림에서 어떤 일을 꾸미고 있습니다."
 
-#: ../base/ufos/maps.ufo:1217 ../base/ufos/maps.ufo:1259
+#: ../base/ufos/maps.ufo:1219 ../base/ufos/maps.ufo:1261
 msgid "Some houses in desert"
 msgstr "사막의 집"
 
-#: ../base/ufos/maps.ufo:1300
+#: ../base/ufos/maps.ufo:1302
 msgid "An excavation site that has fallen under alien attack."
 msgstr "외계인의 공격을 당한 유적지."
 
-#: ../base/ufos/maps.ufo:1347
+#: ../base/ufos/maps.ufo:1349
 msgid "An estate owned by rich and influential people."
 msgstr "부유하고 영향력있는 사람의 개인 별장."
 
-#: ../base/ufos/maps.ufo:1391
+#: ../base/ufos/maps.ufo:1393
 msgid "A small village in England."
 msgstr "영국의 작은 마을."
 
-#: ../base/ufos/maps.ufo:1437
+#: ../base/ufos/maps.ufo:1439
 msgid "A small office in a mountainous region."
 msgstr "산악지대의 작은 사무실."
 
-#: ../base/ufos/maps.ufo:1485
+#: ../base/ufos/maps.ufo:1487
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "슈퍼마켓이라 불리우는, 사회통합 식량시설."
 
-#: ../base/ufos/maps.ufo:1535
+#: ../base/ufos/maps.ufo:1537
 msgid "An old mine."
 msgstr "오래된 광산."
 
-#: ../base/ufos/maps.ufo:1583
+#: ../base/ufos/maps.ufo:1585
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "물류를 하적 하는데 사용되는 산업지구."
 
-#: ../base/ufos/maps.ufo:1629
+#: ../base/ufos/maps.ufo:1631
 msgid "A bunker used in a previous conflict."
 msgstr "이전의 전쟁에 사용되었던 은신처."
 
-#: ../base/ufos/maps.ufo:1675
+#: ../base/ufos/maps.ufo:1677
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "외계인 침략자들에 의해 수력발전용 댐이 위협받고 있습니다."
 
-#: ../base/ufos/maps.ufo:1719 ../base/ufos/maps.ufo:1769
-#: ../base/ufos/maps.ufo:1819
+#: ../base/ufos/maps.ufo:1721 ../base/ufos/maps.ufo:1771
+#: ../base/ufos/maps.ufo:1821
 msgid "A classic eastern suburban area."
 msgstr "동양의 전통적인 교외지역"
 
-#: ../base/ufos/maps.ufo:1868
+#: ../base/ufos/maps.ufo:1870
 msgid "A small industrial area."
 msgstr "소규모 산업지구."
 
-#: ../base/ufos/maps.ufo:1914
+#: ../base/ufos/maps.ufo:1916
 msgid "A stadium used for various recreational events."
 msgstr "여러가지 오락행사에 사용되는 경기장."
 
-#: ../base/ufos/maps.ufo:1963
+#: ../base/ufos/maps.ufo:1965
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "몇몇 의심스러운 범죄가 집에서 발생한 열대지역."
 
-#: ../base/ufos/maps.ufo:2021
+#: ../base/ufos/maps.ufo:2023
 msgid "A small estate in the mountains"
 msgstr "산의 작은 별장"
 
-#: ../base/ufos/maps.ufo:2070
+#: ../base/ufos/maps.ufo:2072
 msgid "A crashed Scout UFO"
 msgstr "추락한 정찰용 UFO"
 
-#: ../base/ufos/maps.ufo:2105
+#: ../base/ufos/maps.ufo:2107
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "수풀이 우거진 농장입니다. UFO는 벌판 한 곳에 착륙했습니다."
 
-#: ../base/ufos/maps.ufo:2152
+#: ../base/ufos/maps.ufo:2154
 msgid "A ferry."
 msgstr "여객선."
 
-#: ../base/ufos/maps.ufo:2200
+#: ../base/ufos/maps.ufo:2202
 msgid "A rather old-fashioned suburban district."
 msgstr "다소 고풍적인 교외지역"
 
-#: ../base/ufos/maps.ufo:2249 ../base/ufos/maps.ufo:2296
+#: ../base/ufos/maps.ufo:2251 ../base/ufos/maps.ufo:2298
 msgid "A small neighbourhood in a warm urban region."
 msgstr "온대지역의 소규모 도시."
 
-#: ../base/ufos/maps.ufo:2344
+#: ../base/ufos/maps.ufo:2346
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "시민들이 차량에 연료를 공급하기 위해 들리는 장소."
 
-#: ../base/ufos/maps.ufo:2393 ../base/ufos/maps.ufo:2437
+#: ../base/ufos/maps.ufo:2395 ../base/ufos/maps.ufo:2439
 msgid "An urban district in an oriental region."
 msgstr "동양의 도시지역."
 
-#: ../base/ufos/maps.ufo:2481
+#: ../base/ufos/maps.ufo:2483
 msgid "Underground pipe construction site."
 msgstr "지하 하수관 건설현장."
 
-#: ../base/ufos/maps.ufo:2528
+#: ../base/ufos/maps.ufo:2530
 msgid "A subway station in a suburban part of town."
 msgstr "근교의 지하철역."
 
-#: ../base/ufos/maps.ufo:2574
+#: ../base/ufos/maps.ufo:2576
 msgid "An office complex in the centre of town."
 msgstr "도심의 사무실 복합지구."
 
-#: ../base/ufos/maps.ufo:2622
+#: ../base/ufos/maps.ufo:2624
 msgid "A suburban district."
 msgstr "교외지역."
 
-#: ../base/ufos/maps.ufo:2667
+#: ../base/ufos/maps.ufo:2669
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "군용품 수송중 외계인의 눈에 발견되었습니다."
 
-#: ../base/ufos/maps.ufo:2714 ../base/ufos/maps.ufo:2760
+#: ../base/ufos/maps.ufo:2716 ../base/ufos/maps.ufo:2762
 msgid "A small UFO has crashed in this mining region."
 msgstr "광산지역에 추락한 작은 UFO."
 
-#: ../base/ufos/maps.ufo:2810
+#: ../base/ufos/maps.ufo:2812
 msgid "An office complex under construction."
 msgstr "건설중인 사무실 복합지구."
 
-#: ../base/ufos/maps.ufo:2857
+#: ../base/ufos/maps.ufo:2859
 msgid "A local harbour."
 msgstr "지역항구."
 
-#: ../base/ufos/maps.ufo:2902
+#: ../base/ufos/maps.ufo:2904
 msgid "An office complex on the outskirts of town."
 msgstr "교외의 사무실 복합지구."
 
-#: ../base/ufos/maps.ufo:2947
+#: ../base/ufos/maps.ufo:2949
 msgid "A luxurious vacation resort."
 msgstr "호화 휴양지."
 
-#: ../base/ufos/maps.ufo:3004
+#: ../base/ufos/maps.ufo:3006
 msgid "A suburb that has been visited by UFO."
 msgstr "UFO가 출현한 교외지역."
 
-#: ../base/ufos/maps.ufo:3056
+#: ../base/ufos/maps.ufo:3058
 msgid "A suburb that has received a visit from a Harvester."
 msgstr "하베스터의 습격을 받은 근교지역."
 
-#: ../base/ufos/maps.ufo:3108
+#: ../base/ufos/maps.ufo:3110
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "황무지에 추락한 하베스터."
 
-#: ../base/ufos/maps.ufo:3154 ../base/ufos/maps.ufo:3188
+#: ../base/ufos/maps.ufo:3156 ../base/ufos/maps.ufo:3190
 #, fuzzy
 msgid "A small settlement in winter."
 msgstr "A small settlement in winter."
 
-#: ../base/ufos/maps.ufo:3227
+#: ../base/ufos/maps.ufo:3229
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "거대한 재앙이 닥쳐올때, 사람들은 피난처를 만들었습니다. 몇몇 내부 방폭벽들은 닫혀있습니다."
 
-#: ../base/ufos/maps.ufo:3275
+#: ../base/ufos/maps.ufo:3277
 msgid "A Bomber has landed in the middle of a city."
 msgstr "폭격형 UFO가 도심에 착륙했습니다."
 
-#: ../base/ufos/maps.ufo:3328
+#: ../base/ufos/maps.ufo:3330
 msgid "A place where people come to relax and mingle."
 msgstr "사람들이 교제하고 쉴 수 있는 곳."
 
-#: ../base/ufos/maps.ufo:3376
+#: ../base/ufos/maps.ufo:3378
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "발견된 UFO 잔해를 실험하는 연구실."
 
-#: ../base/ufos/maps.ufo:3424
+#: ../base/ufos/maps.ufo:3426
 msgid "A fuel depot the aliens try to destroy."
 msgstr "연료기지를 외계인들이 파괴하려 합니다."
 
-#: ../base/ufos/maps.ufo:3463
+#: ../base/ufos/maps.ufo:3465
 msgid "Wilderness terror mission."
 msgstr "황무지 테러 임무."
 
-#: ../base/ufos/maps.ufo:3509
+#: ../base/ufos/maps.ufo:3511
 msgid "UFO Crashsite."
 msgstr "UFO 추락 지점"
 
-#: ../base/ufos/maps.ufo:3540
+#: ../base/ufos/maps.ufo:3542
 msgid "An alien base."
 msgstr "외계인 기지."
 
-#: ../base/ufos/maps.ufo:3555
+#: ../base/ufos/maps.ufo:3557
 msgid "Base is under attack."
 msgstr "기지가 공격당했습니다."
 
@@ -3705,69 +3705,69 @@ msgstr "러시아"
 msgid "The Commonwealth of Oceania"
 msgstr "오세아니아 공동국"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:205
-#: ../base/ufos/research.ufo:246
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:206
+#: ../base/ufos/research.ufo:247
 msgid "Antimatter"
 msgstr "반물질"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:340
-#: ../base/ufos/research.ufo:384
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:341
+#: ../base/ufos/research.ufo:385
 msgid "Alien Breathing Apparatus"
 msgstr "외계인 호흡장치"
 
-#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:4876
-#: ../base/ufos/research.ufo:4915
+#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:4875
+#: ../base/ufos/research.ufo:4914
 msgid "Alien Materials"
 msgstr "외계물질"
 
-#: ../base/ufos/otheritems.ufo:156 ../base/ufos/weapons_melee.ufo:24
+#: ../base/ufos/otheritems.ufo:157 ../base/ufos/weapons_melee.ufo:24
 #: ../base/ufos/weapons_melee.ufo:83 ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
 msgstr "찌르기"
 
-#: ../base/ufos/research.ufo:107
+#: ../base/ufos/research.ufo:108
 msgid "Background"
 msgstr "역사적배경"
 
-#: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:129
+#: ../base/ufos/research.ufo:109 ../base/ufos/ui/bases.ufo:129
 #: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
 #: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
 msgid "Aircraft"
 msgstr "항공기"
 
-#: ../base/ufos/research.ufo:109
+#: ../base/ufos/research.ufo:110
 msgid "Base Facilities"
 msgstr "기지시설"
 
-#: ../base/ufos/research.ufo:110
+#: ../base/ufos/research.ufo:111
 msgid "Research Reports"
 msgstr "연구 보고서"
 
-#: ../base/ufos/research.ufo:111 ../base/ufos/ui/aircraft.ufo:67
+#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:67
 #: ../base/ufos/ui/skirmish.ufo:87 ../base/ufos/ui/transfer.ufo:35
 #: ../base/ufos/ui/transfer.ufo:45 ../base/ufos/ui/transfer.ufo:612
 msgid "Equipment"
 msgstr "장비"
 
-#: ../base/ufos/research.ufo:112
+#: ../base/ufos/research.ufo:113
 msgid "Alien Artifacts"
 msgstr "외계인 물품"
 
-#: ../base/ufos/research.ufo:113
+#: ../base/ufos/research.ufo:114
 msgid "Autopsies & Observation"
 msgstr "해부 및 관찰"
 
-#: ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:115
 msgid "The Alien Threat"
 msgstr "외계인의 위협"
 
-#: ../base/ufos/research.ufo:123
+#: ../base/ufos/research.ufo:124
 #, fuzzy
 msgid "Continuous Wave Laser Operation"
 msgstr "Continuous Wave Laser Operation"
 
-#: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:129
 #, fuzzy
 msgid "laser_txt"
 msgstr ""
@@ -3789,11 +3789,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:131
+#: ../base/ufos/research.ufo:132
 msgid "laser_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:161
+#: ../base/ufos/research.ufo:162 ../base/ufos/research.ufo:3075
 msgid "b_baselaser_txt"
 msgstr ""
 "Commander, my team and I are happy to report our test weapons are living up to all our expectations, and I'm submitting a new set of blueprints to your system for a laser-based defensive facility. You will now be able greenlight them for construction.\n"
@@ -3810,7 +3810,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:164
+#: ../base/ufos/research.ufo:165
 msgid "b_baselaser_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -3823,7 +3823,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:210 ../base/ufos/research.ufo:248
+#: ../base/ufos/research.ufo:211 ../base/ufos/research.ufo:249
 msgid "antimatter_txt"
 msgstr ""
 "사령관님, 반물질에 대한 연구가 완료되었고, 발표할 준비가 되었습니다. 저는 이 소식이 현재까지 가장 최악의 결과가 아닐까 걱정됩니다.\n"
@@ -3844,7 +3844,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:211
+#: ../base/ufos/research.ufo:212
 msgid "antimatter_extra_txt"
 msgstr ""
 "사령관님, 반물질에 대한 연구가 완료되었고, 발표할 준비가 되었습니다. 저는 이 소식이 현재까지 가장 최악의 결과가 아닐까 걱정됩니다.\n"
@@ -3865,31 +3865,31 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:214
+#: ../base/ufos/research.ufo:215
 msgid "antimatter_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:215
+#: ../base/ufos/research.ufo:216
 msgid "antimatter_extra_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:266
+#: ../base/ufos/research.ufo:267
 msgid "Upgrade - Antimatter engines"
 msgstr "개조 - 반물질 저장소"
 
-#: ../base/ufos/research.ufo:268
+#: ../base/ufos/research.ufo:269
 msgid "craft_upgrade_am_engines_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:271
+#: ../base/ufos/research.ufo:272
 msgid "craft_upgrade_am_engines_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:302
+#: ../base/ufos/research.ufo:303
 msgid "Live Alien"
 msgstr "살아있는 외계인"
 
-#: ../base/ufos/research.ufo:307
+#: ../base/ufos/research.ufo:308
 msgid "alien_live_txt"
 msgstr ""
 "사령관님,\n"
@@ -3904,28 +3904,28 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:310
+#: ../base/ufos/research.ufo:311
 msgid "alien_live_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:315 ../base/ufos/research.ufo:323
-#: ../base/ufos/research.ufo:353 ../base/ufos/research.ufo:361
-#: ../base/ufos/research.ufo:416 ../base/ufos/research.ufo:424
-#: ../base/ufos/research.ufo:454 ../base/ufos/research.ufo:462
-#: ../base/ufos/research.ufo:492 ../base/ufos/research.ufo:500
-#: ../base/ufos/research.ufo:555 ../base/ufos/research.ufo:563
-#: ../base/ufos/research.ufo:2329 ../base/ufos/research.ufo:2337
-#: ../base/ufos/research.ufo:4062 ../base/ufos/research.ufo:4070
-#: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4129
-#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4171
-#: ../base/ufos/research.ufo:4205 ../base/ufos/research.ufo:4213
-#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
-#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
-#: ../base/ufos/research.ufo:5102
+#: ../base/ufos/research.ufo:316 ../base/ufos/research.ufo:324
+#: ../base/ufos/research.ufo:354 ../base/ufos/research.ufo:362
+#: ../base/ufos/research.ufo:417 ../base/ufos/research.ufo:425
+#: ../base/ufos/research.ufo:455 ../base/ufos/research.ufo:463
+#: ../base/ufos/research.ufo:493 ../base/ufos/research.ufo:501
+#: ../base/ufos/research.ufo:556 ../base/ufos/research.ufo:564
+#: ../base/ufos/research.ufo:2328 ../base/ufos/research.ufo:2336
+#: ../base/ufos/research.ufo:4061 ../base/ufos/research.ufo:4069
+#: ../base/ufos/research.ufo:4120 ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4170
+#: ../base/ufos/research.ufo:4204 ../base/ufos/research.ufo:4212
+#: ../base/ufos/research.ufo:4985 ../base/ufos/research.ufo:5016
+#: ../base/ufos/research.ufo:5023 ../base/ufos/research.ufo:5094
+#: ../base/ufos/research.ufo:5101
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, R&D: 생체공학 및 수용부서, PHALANX, 대서양 작전본부"
 
-#: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
+#: ../base/ufos/research.ufo:346 ../base/ufos/research.ufo:387
 msgid "alien_breathing_txt"
 msgstr ""
 "사령관님,\n"
@@ -3950,15 +3950,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:348
+#: ../base/ufos/research.ufo:349
 msgid "alien_breathing_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:403
+#: ../base/ufos/research.ufo:404
 msgid "The Alien Mind"
 msgstr "외계인 심리"
 
-#: ../base/ufos/research.ufo:408
+#: ../base/ufos/research.ufo:409
 msgid "alien_mind_txt"
 msgstr ""
 "사령관님,\n"
@@ -3977,15 +3977,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:411
+#: ../base/ufos/research.ufo:412
 msgid "alien_mind_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:441
+#: ../base/ufos/research.ufo:442
 msgid "Odd Behaviour"
 msgstr "기묘한 외계인 행동"
 
-#: ../base/ufos/research.ufo:446
+#: ../base/ufos/research.ufo:447
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "사령관님,\n"
@@ -4010,15 +4010,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:449
+#: ../base/ufos/research.ufo:450
 msgid "alien_odd_behaviour_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:479
+#: ../base/ufos/research.ufo:480
 msgid "Alien Communication"
 msgstr "외계인 의사소통"
 
-#: ../base/ufos/research.ufo:484
+#: ../base/ufos/research.ufo:485
 msgid "alien_communication_txt"
 msgstr ""
 "사령관님,\n"
@@ -4037,16 +4037,16 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:487
+#: ../base/ufos/research.ufo:488
 msgid "alien_communication_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:518 client/campaign/cp_alienbase.c:169
+#: ../base/ufos/research.ufo:519 client/campaign/cp_alienbase.c:169
 #: client/campaign/cp_missions.c:452
 msgid "Alien base"
 msgstr "외계인 기지"
 
-#: ../base/ufos/research.ufo:520
+#: ../base/ufos/research.ufo:521
 #, fuzzy
 msgid "alien_base_txt"
 msgstr ""
@@ -4078,11 +4078,11 @@ msgstr ""
 "\n"
 "With kind regards,Col. Falkland"
 
-#: ../base/ufos/research.ufo:542
+#: ../base/ufos/research.ufo:543
 msgid "The Universal Serum"
 msgstr "범용 혈청"
 
-#: ../base/ufos/research.ufo:547
+#: ../base/ufos/research.ufo:548
 #, fuzzy
 msgid "universal_serum_txt"
 msgstr ""
@@ -4102,15 +4102,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:550
+#: ../base/ufos/research.ufo:551
 msgid "universal_serum_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:579
+#: ../base/ufos/research.ufo:580
 msgid "Alien Origins"
 msgstr "외계인의 기원"
 
-#: ../base/ufos/research.ufo:584
+#: ../base/ufos/research.ufo:585
 #, fuzzy
 msgid "alien_origins_txt"
 msgstr ""
@@ -4142,15 +4142,15 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:587
+#: ../base/ufos/research.ufo:588
 msgid "alien_origins_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:614
+#: ../base/ufos/research.ufo:615
 msgid "UFO Theory"
 msgstr "UFO 이론"
 
-#: ../base/ufos/research.ufo:619
+#: ../base/ufos/research.ufo:620
 msgid "alien_theory_txt"
 msgstr ""
 "사령관님, 우리가 회수한 UFO에 대한 분석이 완료되었습니다. 그곳은 기적의 공학이며, 이 사랑스런 기술을 우리의 손에 넣도록 전력을 다해 연구중입니다.\n"
@@ -4173,11 +4173,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:622
+#: ../base/ufos/research.ufo:623
 msgid "alien_theory_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:667
+#: ../base/ufos/research.ufo:668
 msgid "pistol_txt"
 msgstr ""
 "기술적 명세: P-12 권총\n"
@@ -4226,7 +4226,7 @@ msgstr ""
 "\n"
 "유기체에 대한 관통력은 좋음에도 불구하고, 로봇에 대한 성능은 매우 좋지 않습니다."
 
-#: ../base/ufos/research.ufo:686
+#: ../base/ufos/research.ufo:687
 msgid "pistol_mag_txt"
 msgstr ""
 "기술적 명세: 7.62mm 권총 탄창\n"
@@ -4259,7 +4259,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:708
+#: ../base/ufos/research.ufo:709
 #, fuzzy
 msgid "pistol2_txt"
 msgstr ""
@@ -4307,7 +4307,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:727
+#: ../base/ufos/research.ufo:728
 msgid "pistol2_mag_txt"
 msgstr ""
 "기술적 명세: 4.2mm MP Magazine\n"
@@ -4340,7 +4340,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:747
+#: ../base/ufos/research.ufo:748
 #, fuzzy
 msgid "vhs_assault_txt"
 msgstr ""
@@ -4384,7 +4384,7 @@ msgstr ""
 "\n"
 "While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
-#: ../base/ufos/research.ufo:764
+#: ../base/ufos/research.ufo:765
 #, fuzzy
 msgid "assault_txt"
 msgstr ""
@@ -4428,7 +4428,7 @@ msgstr ""
 "\n"
 "AR-80이 모든면에서 뛰어난 소총일지라도, 외계인과의 교전에 적합한진 않습니다. 최대한 빨리 우리의 목적에 부합되는 전용무기를 개발해야 합니다."
 
-#: ../base/ufos/research.ufo:782
+#: ../base/ufos/research.ufo:783
 msgid "assault_mag_txt"
 msgstr ""
 "기술적 명세: 돌격소총용 탄창\n"
@@ -4461,7 +4461,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:801
+#: ../base/ufos/research.ufo:802
 #, fuzzy
 msgid "machinegun_txt"
 msgstr ""
@@ -4509,7 +4509,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:819
+#: ../base/ufos/research.ufo:820
 msgid "machinegun_mag_txt"
 msgstr ""
 "기술적 명세: Assault Rifle Magazine\n"
@@ -4544,7 +4544,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:838
+#: ../base/ufos/research.ufo:839
 #, fuzzy
 msgid "rpg_txt"
 msgstr ""
@@ -4592,7 +4592,7 @@ msgstr ""
 "\n"
 "저격소총과 수류탄은 로봇형 외계인에 효과적으로 대응할 수 있는 표준무장입니다."
 
-#: ../base/ufos/research.ufo:857
+#: ../base/ufos/research.ufo:858
 msgid "rpg_ammo_txt"
 msgstr ""
 "기술적 명세: 고폭탄 로켓\n"
@@ -4627,7 +4627,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:877
+#: ../base/ufos/research.ufo:878
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "기술적 명세: 소이탄 로켓\n"
@@ -4664,15 +4664,15 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:898
+#: ../base/ufos/research.ufo:899
 msgid "xaw95_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:901
+#: ../base/ufos/research.ufo:902
 msgid "xaw95_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:928
+#: ../base/ufos/research.ufo:929
 #, fuzzy
 msgid "bombkit1_txt"
 msgstr ""
@@ -4716,11 +4716,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:931
+#: ../base/ufos/research.ufo:932
 msgid "bombkit1_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:947
 #, fuzzy
 msgid "bombkit2_txt"
 msgstr ""
@@ -4764,19 +4764,19 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:949
+#: ../base/ufos/research.ufo:950
 msgid "bombkit2_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:964
+#: ../base/ufos/research.ufo:965
 msgid "chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:967
+#: ../base/ufos/research.ufo:968
 msgid "chaingun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:999
+#: ../base/ufos/research.ufo:1000
 #, fuzzy
 msgid "shotgun_txt"
 msgstr ""
@@ -4822,11 +4822,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1035 ../base/ufos/weapons_human.ufo:1869
+#: ../base/ufos/research.ufo:1036 ../base/ufos/weapons_human.ufo:1869
 msgid "Electromagnetic Rifle"
 msgstr "전자기 소총"
 
-#: ../base/ufos/research.ufo:1040
+#: ../base/ufos/research.ufo:1041
 msgid "bolterrifle_txt"
 msgstr ""
 "전자기 소총개발 프로젝트는 성공리에 종료되었습니다. 우리는 인류 역사상 최초로, 사람이 들고 다닐 수 있는 전자기 무기를 만들어 냈습니다. 현존하는 MAG(자기장에 의한 가속 총)와의 혼동을 피하기위해, 우리가 개발한 무기를 볼터 소총이라고 명명했습니다. 이 짧은 내용에 작동원리를 설명하기위해 최선을 다하겠습니다.\n"
@@ -4845,15 +4845,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1043
+#: ../base/ufos/research.ufo:1044
 msgid "bolterrifle_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1074 ../base/ufos/weapons_human.ufo:1889
+#: ../base/ufos/research.ufo:1075 ../base/ufos/weapons_human.ufo:1889
 msgid "Electromagnetic Rifle Magazine"
 msgstr "전자기 소총탄창"
 
-#: ../base/ufos/research.ufo:1095
+#: ../base/ufos/research.ufo:1096
 #, fuzzy
 msgid "combatknife_txt"
 msgstr ""
@@ -4895,11 +4895,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1111
+#: ../base/ufos/research.ufo:1112
 msgid "Monomolecular Blades"
 msgstr "단분자칼"
 
-#: ../base/ufos/research.ufo:1116
+#: ../base/ufos/research.ufo:1117
 #, fuzzy
 msgid "monoknife_txt"
 msgstr ""
@@ -4915,11 +4915,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1119
+#: ../base/ufos/research.ufo:1120
 msgid "monoknife_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1155
+#: ../base/ufos/research.ufo:1156
 msgid "flamer_txt"
 msgstr ""
 "기술적 명세: CRC-FL 화염방사기\n"
@@ -4966,7 +4966,7 @@ msgstr ""
 "\n"
 "민간인이 목표지점 내에 있을경우 사용하지 않아야 한다."
 
-#: ../base/ufos/research.ufo:1174
+#: ../base/ufos/research.ufo:1175
 msgid "flamer_mag_txt"
 msgstr ""
 "기술적 명세: C90 Canisterr\n"
@@ -4999,7 +4999,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1193
+#: ../base/ufos/research.ufo:1194
 msgid "flashbang_txt"
 msgstr ""
 "기술적 명세: 섬광탄\n"
@@ -5042,7 +5042,7 @@ msgstr ""
 "\n"
 "본질적으로 섬광탄은 유기생명체의 눈과 귀에만 영향을 미친다.(로봇류는 영향을 받지 않는다)"
 
-#: ../base/ufos/research.ufo:1212
+#: ../base/ufos/research.ufo:1213
 msgid "fraggren_txt"
 msgstr ""
 "기술적 명세: 세열 수류탄\n"
@@ -5083,7 +5083,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1231
+#: ../base/ufos/research.ufo:1232
 msgid "incgren_txt"
 msgstr ""
 "기술적 명세: 소이 수류탄\n"
@@ -5126,7 +5126,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1250
+#: ../base/ufos/research.ufo:1251
 msgid "grenl_txt"
 msgstr ""
 "기술적 명세: HPGL 유탄 발사기\n"
@@ -5177,7 +5177,7 @@ msgstr ""
 "\n"
 "오랫동안 저격총 그리고 로켓런처와 함께, 외계인에 맞서 모범적-출시 된 아주 유용한 몇몇 인류무기들 중 하나이다."
 
-#: ../base/ufos/research.ufo:1268
+#: ../base/ufos/research.ufo:1269
 msgid "grenl_ammo_txt"
 msgstr ""
 "기술적 명세: 25mm HIT 유탄\n"
@@ -5210,7 +5210,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1287
+#: ../base/ufos/research.ufo:1288
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "기술적 명세: 25mm Flechette Grenades\n"
@@ -5243,7 +5243,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1306
+#: ../base/ufos/research.ufo:1307
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "기술적 명세: 25mm IC 유탄\n"
@@ -5276,11 +5276,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1322
+#: ../base/ufos/research.ufo:1323
 msgid "Plasma And The Grenade Launcher"
 msgstr "플라즈마와 유탄 발사기"
 
-#: ../base/ufos/research.ufo:1327
+#: ../base/ufos/research.ufo:1328
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "사령관님. 우리는 새로운 모델형 25mm 플라스마 유탄의 시험을 마쳤습니다. 우리는 대부분 생산하여 모든지역에 배치할 준비가 되어있습니다.\n"
@@ -5293,11 +5293,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1330
+#: ../base/ufos/research.ufo:1331
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1366
+#: ../base/ufos/research.ufo:1367
 msgid "irgoggles_txt"
 msgstr ""
 "기술적 명세: 적외선 고글\n"
@@ -5344,11 +5344,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1381
+#: ../base/ufos/research.ufo:1382
 msgid "Alien Artifact - Kerrblade"
 msgstr "외계인 물품 - Kerrblade"
 
-#: ../base/ufos/research.ufo:1386
+#: ../base/ufos/research.ufo:1387
 msgid "kerrblade_txt"
 msgstr ""
 "사령관님, Kerrblade에 대한 분석이 완료되었습니다. 보고서에 대한 요약입니다.\n"
@@ -5367,11 +5367,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1389
+#: ../base/ufos/research.ufo:1390
 msgid "kerrblade_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1425
+#: ../base/ufos/research.ufo:1426
 #, fuzzy
 msgid "laserpistol_txt"
 msgstr ""
@@ -5391,11 +5391,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1428
+#: ../base/ufos/research.ufo:1429
 msgid "laserpistol_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1463
+#: ../base/ufos/research.ufo:1464
 #, fuzzy
 msgid "laserrifle_txt"
 msgstr ""
@@ -5413,11 +5413,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1466
+#: ../base/ufos/research.ufo:1467
 msgid "laserrifle_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1502
+#: ../base/ufos/research.ufo:1503
 msgid "heavylaser_txt"
 msgstr ""
 "사령관님, 우리의 헤비레이저 프로그램은 성공하였습니다. 지시에 의해 우리는 원형을 만들었고 생산을 위한 준비가 되었습니다.\n"
@@ -5436,11 +5436,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1505
+#: ../base/ufos/research.ufo:1506
 msgid "heavylaser_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1541
+#: ../base/ufos/research.ufo:1542
 #, fuzzy
 msgid "electrolaser_txt"
 msgstr ""
@@ -5462,11 +5462,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1544
+#: ../base/ufos/research.ufo:1545
 msgid "electrolaser_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1585
+#: ../base/ufos/research.ufo:1586
 msgid "laser_ammo_txt"
 msgstr ""
 "사령관님. 우리는 중수소-불화물 탄약과 그것을 생산하기 위한 설계를 마쳤습니다. 그것을 만들고 사용하기 위해 비용이 많이들겠지만, 원가를 줄이기 위한 노력을 계속할 것 입니다.\n"
@@ -5479,11 +5479,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1588
+#: ../base/ufos/research.ufo:1589
 msgid "laser_ammo_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1621
+#: ../base/ufos/research.ufo:1622
 msgid "medikit_txt"
 msgstr ""
 "기술적 명세: 구급상자\n"
@@ -5526,11 +5526,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:1636 ../base/ufos/research.ufo:1678
+#: ../base/ufos/research.ufo:1637 ../base/ufos/research.ufo:1679
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "외계인 물품 - 플라즈마 권총"
 
-#: ../base/ufos/research.ufo:1641
+#: ../base/ufos/research.ufo:1642
 #, fuzzy
 msgid "plasatomizer_txt"
 msgstr ""
@@ -5550,15 +5550,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1644
+#: ../base/ufos/research.ufo:1645
 msgid "plasatomizer_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1696 ../base/ufos/research.ufo:1737
+#: ../base/ufos/research.ufo:1697 ../base/ufos/research.ufo:1737
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "외계인 물품 - 플라즈마 블래스터"
 
-#: ../base/ufos/research.ufo:1701
+#: ../base/ufos/research.ufo:1702
 #, fuzzy
 msgid "plasblaster_txt"
 msgstr ""
@@ -5574,7 +5574,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1704
+#: ../base/ufos/research.ufo:1705
 msgid "plasblaster_pre_txt"
 msgstr "<TODO>"
 
@@ -5630,7 +5630,7 @@ msgstr ""
 msgid "plasmagren_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1835 ../base/ufos/research.ufo:1877
+#: ../base/ufos/research.ufo:1835 ../base/ufos/research.ufo:1876
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "외계인 물품 - 플라즈마 소총"
 
@@ -5656,12 +5656,12 @@ msgstr ""
 msgid "plasrifle_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1895 ../base/ufos/research.ufo:1975
+#: ../base/ufos/research.ufo:1894 ../base/ufos/research.ufo:1974
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr "니들건"
 
-#: ../base/ufos/research.ufo:1900
+#: ../base/ufos/research.ufo:1899
 #, fuzzy
 msgid "needlergun_txt"
 msgstr ""
@@ -5679,15 +5679,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1903
+#: ../base/ufos/research.ufo:1902
 msgid "needlergun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1935 ../base/ufos/weapons_aliens.ufo:26
+#: ../base/ufos/research.ufo:1934 ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
 msgstr "중형 니들건"
 
-#: ../base/ufos/research.ufo:1940
+#: ../base/ufos/research.ufo:1939
 #, fuzzy
 msgid "needlerheavy_txt"
 msgstr ""
@@ -5705,11 +5705,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1943
+#: ../base/ufos/research.ufo:1942
 msgid "needlerheavy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1997
+#: ../base/ufos/research.ufo:1996
 #, fuzzy
 msgid "coilgun_txt"
 msgstr ""
@@ -5729,16 +5729,16 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2000
+#: ../base/ufos/research.ufo:1999
 msgid "coilgun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2007 ../base/ufos/research.ufo:2015
+#: ../base/ufos/research.ufo:2006 ../base/ufos/research.ufo:2014
 #: ../base/ufos/weapons_human.ufo:388
 msgid "Coilgun"
 msgstr "코일건"
 
-#: ../base/ufos/research.ufo:2053
+#: ../base/ufos/research.ufo:2052
 #, fuzzy
 msgid "shotgun2_txt"
 msgstr ""
@@ -5784,7 +5784,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2071
 #, fuzzy
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
@@ -5818,7 +5818,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2093
+#: ../base/ufos/research.ufo:2092
 #, fuzzy
 msgid "shotgun_micro_txt"
 msgstr ""
@@ -5868,7 +5868,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2112
+#: ../base/ufos/research.ufo:2111
 #, fuzzy
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
@@ -5904,7 +5904,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2132
+#: ../base/ufos/research.ufo:2131
 #, fuzzy
 msgid "smg_txt"
 msgstr ""
@@ -5950,7 +5950,7 @@ msgstr ""
 "\n"
 "유기체에 대한 관통력은 우수하지만, 로봇에 대한 관통력은 매우 약합니다."
 
-#: ../base/ufos/research.ufo:2151
+#: ../base/ufos/research.ufo:2150
 msgid "smg_mag_txt"
 msgstr ""
 "기술적 명세: 기관단총\n"
@@ -5983,7 +5983,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2170
 #, fuzzy
 msgid "smokegren_txt"
 msgstr ""
@@ -6025,7 +6025,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2190
+#: ../base/ufos/research.ufo:2189
 #, fuzzy
 msgid "sniper_txt"
 msgstr ""
@@ -6071,7 +6071,7 @@ msgstr ""
 "\n"
 "고폭로켓과 수류탄은 로봇형 외계인들에게 효과적으로 대응하기 위한 몇가지 되지 않는 표준무장입니다."
 
-#: ../base/ufos/research.ufo:2209
+#: ../base/ufos/research.ufo:2208
 msgid "sniper_mag_txt"
 msgstr ""
 "기술적 명세: 저격소총 탄창\n"
@@ -6104,11 +6104,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2226
 msgid "Anti-Alien Gas"
 msgstr "대외계인 독가스"
 
-#: ../base/ufos/research.ufo:2232
+#: ../base/ufos/research.ufo:2231
 #, fuzzy
 msgid "stungren_txt"
 msgstr ""
@@ -6130,25 +6130,25 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:2235
+#: ../base/ufos/research.ufo:2234
 msgid "stungren_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2274
+#: ../base/ufos/research.ufo:2273
 #, fuzzy
 msgid "Alien Anti-Human Gas"
 msgstr "Alien Anti-Human Gas"
 
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2278
 #, fuzzy
 msgid "stungren_alien_txt"
 msgstr "stungren_alien_txt"
 
-#: ../base/ufos/research.ufo:2282
+#: ../base/ufos/research.ufo:2281
 msgid "stungren_alien_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2321
+#: ../base/ufos/research.ufo:2320
 #, fuzzy
 msgid "stunrod_txt"
 msgstr ""
@@ -6172,15 +6172,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:2324
+#: ../base/ufos/research.ufo:2323
 msgid "stunrod_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2357 ../base/ufos/research.ufo:2397
+#: ../base/ufos/research.ufo:2356 ../base/ufos/research.ufo:2396
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "외계인 물품 - 고출력 입자권총"
 
-#: ../base/ufos/research.ufo:2362
+#: ../base/ufos/research.ufo:2361
 msgid "pbeampistol_txt"
 msgstr ""
 "사령관님, 새로운 외계인 권총에 대한 성능을 확인하였고 그리 좋진 않습니다.\n"
@@ -6199,15 +6199,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2365
+#: ../base/ufos/research.ufo:2364
 msgid "pbeampistol_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2416 ../base/ufos/research.ufo:2457
+#: ../base/ufos/research.ufo:2415 ../base/ufos/research.ufo:2456
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "외계인 물품 - 대구경 고출력 입자포"
 
-#: ../base/ufos/research.ufo:2421
+#: ../base/ufos/research.ufo:2420
 #, fuzzy
 msgid "pbeamcannon_txt"
 msgstr ""
@@ -6227,15 +6227,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2424
+#: ../base/ufos/research.ufo:2423
 msgid "pbeamcannon_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2476 ../base/ufos/research.ufo:2516
+#: ../base/ufos/research.ufo:2475 ../base/ufos/research.ufo:2515
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "외계인 물품 - 고출력 입자소총"
 
-#: ../base/ufos/research.ufo:2481
+#: ../base/ufos/research.ufo:2480
 #, fuzzy
 msgid "pbeamrifle_txt"
 msgstr ""
@@ -6257,15 +6257,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2484
+#: ../base/ufos/research.ufo:2483
 msgid "pbeamrifle_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2536
+#: ../base/ufos/research.ufo:2535
 msgid "Man-Portable Particle Beams"
 msgstr "휴대용 고출력입자"
 
-#: ../base/ufos/research.ufo:2541
+#: ../base/ufos/research.ufo:2540
 #, fuzzy
 msgid "pbeamammo_txt"
 msgstr ""
@@ -6285,11 +6285,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2544
+#: ../base/ufos/research.ufo:2543
 msgid "pbeamammo_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2583
+#: ../base/ufos/research.ufo:2582
 msgid "combat_armour_txt"
 msgstr ""
 "기술적 명세: 보급형 방탄조끼\n"
@@ -6330,11 +6330,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:2597
+#: ../base/ufos/research.ufo:2596
 msgid "advanced_combat_armour_txt"
 msgstr "advanced_combat_armour_txt"
 
-#: ../base/ufos/research.ufo:2612
+#: ../base/ufos/research.ufo:2611
 #, fuzzy
 msgid "nano_armour_txt"
 msgstr ""
@@ -6354,11 +6354,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2615
+#: ../base/ufos/research.ufo:2614
 msgid "nano_armour_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2690
+#: ../base/ufos/research.ufo:2689
 #, fuzzy
 msgid "alien_body_armour_txt"
 msgstr ""
@@ -6376,11 +6376,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2693
+#: ../base/ufos/research.ufo:2692
 msgid "alien_body_armour_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2727
+#: ../base/ufos/research.ufo:2726
 #, fuzzy
 msgid "alien_medium_armour_txt"
 msgstr ""
@@ -6398,91 +6398,91 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2730
+#: ../base/ufos/research.ufo:2729
 msgid "alien_medium_armour_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2765
+#: ../base/ufos/research.ufo:2764
 msgid "Blast Damage Type"
 msgstr "폭발 공격형"
 
-#: ../base/ufos/research.ufo:2768 ../base/ufos/research.ufo:2781
-#: ../base/ufos/research.ufo:2794 ../base/ufos/research.ufo:2812
-#: ../base/ufos/research.ufo:2825 ../base/ufos/research.ufo:2838
-#: ../base/ufos/research.ufo:2859 ../base/ufos/research.ufo:2872
-#: ../base/ufos/research.ufo:2890 ../base/ufos/research.ufo:2903
-#: ../base/ufos/research.ufo:2916 ../base/ufos/research.ufo:2929
-#: ../base/ufos/research.ufo:2942 ../base/ufos/research.ufo:2955
-#: ../base/ufos/research.ufo:2968 ../base/ufos/research.ufo:2981
-#: ../base/ufos/research.ufo:2994
+#: ../base/ufos/research.ufo:2767 ../base/ufos/research.ufo:2780
+#: ../base/ufos/research.ufo:2793 ../base/ufos/research.ufo:2811
+#: ../base/ufos/research.ufo:2824 ../base/ufos/research.ufo:2837
+#: ../base/ufos/research.ufo:2858 ../base/ufos/research.ufo:2871
+#: ../base/ufos/research.ufo:2889 ../base/ufos/research.ufo:2902
+#: ../base/ufos/research.ufo:2915 ../base/ufos/research.ufo:2928
+#: ../base/ufos/research.ufo:2941 ../base/ufos/research.ufo:2954
+#: ../base/ufos/research.ufo:2967 ../base/ufos/research.ufo:2980
+#: ../base/ufos/research.ufo:2993
 msgid "none"
 msgstr "없음"
 
-#: ../base/ufos/research.ufo:2778
+#: ../base/ufos/research.ufo:2777
 msgid "Fire Damage Type"
 msgstr "화염 공격형"
 
-#: ../base/ufos/research.ufo:2791
+#: ../base/ufos/research.ufo:2790
 msgid "Laser Damage Type"
 msgstr "레이저 공격형"
 
-#: ../base/ufos/research.ufo:2809
+#: ../base/ufos/research.ufo:2808
 msgid "Impact Damage Type"
 msgstr "물리충격 공격형"
 
-#: ../base/ufos/research.ufo:2822
+#: ../base/ufos/research.ufo:2821
 msgid "Shock Damage Type"
 msgstr "충격 공격형"
 
-#: ../base/ufos/research.ufo:2835
+#: ../base/ufos/research.ufo:2834
 msgid "Plasma Damage Type"
 msgstr "플라스마 공격형"
 
-#: ../base/ufos/research.ufo:2856
+#: ../base/ufos/research.ufo:2855
 msgid "Stun Damage Type"
 msgstr "기절 공격형"
 
-#: ../base/ufos/research.ufo:2869
+#: ../base/ufos/research.ufo:2868
 msgid "Particle Beam Damage Type"
 msgstr "고출력입자 공격형"
 
-#: ../base/ufos/research.ufo:2887
+#: ../base/ufos/research.ufo:2886
 msgid "Accuracy Attribute"
 msgstr "정확도"
 
-#: ../base/ufos/research.ufo:2900
+#: ../base/ufos/research.ufo:2899
 msgid "Assault Guns Proficiency"
 msgstr "근거리전 특기"
 
-#: ../base/ufos/research.ufo:2913
+#: ../base/ufos/research.ufo:2912
 msgid "Close Combat Proficiency"
 msgstr "백병전 특기"
 
-#: ../base/ufos/research.ufo:2926
+#: ../base/ufos/research.ufo:2925
 msgid "High-Explosives Proficiency"
 msgstr "폭발물 특기"
 
-#: ../base/ufos/research.ufo:2939
+#: ../base/ufos/research.ufo:2938
 msgid "Heavy Weapons Proficiency"
 msgstr "중화기 특기"
 
-#: ../base/ufos/research.ufo:2952
+#: ../base/ufos/research.ufo:2951
 msgid "Mind Attribute"
 msgstr "정신력"
 
-#: ../base/ufos/research.ufo:2965
+#: ../base/ufos/research.ufo:2964
 msgid "Power Attribute"
 msgstr "체력"
 
-#: ../base/ufos/research.ufo:2978
+#: ../base/ufos/research.ufo:2977
 msgid "Sniper Rifles Proficiency"
 msgstr "저격수 특기"
 
-#: ../base/ufos/research.ufo:2991
+#: ../base/ufos/research.ufo:2990
 msgid "Speed Attribute"
 msgstr "속도"
 
-#: ../base/ufos/research.ufo:3009
+#: ../base/ufos/research.ufo:3008
 msgid "b_aliencontainment_txt"
 msgstr ""
 "청사진 -- 외계인 수용시설\n"
@@ -6521,7 +6521,7 @@ msgstr ""
 "\n"
 "차기 사령관이 이 문서를 어떻게 재고하든간에: PHALANX 시설의 합리적인 부분들과 마찬가지로, 수용시설의 설비들은 외계인 부대에 대한 신뢰할만한 날카로운 시험을 겪어보지 않았습니다. 설계된 성능을 끌어내기 위해 개조나 조정이 필요할것입니다."
 
-#: ../base/ufos/research.ufo:3027
+#: ../base/ufos/research.ufo:3026
 msgid "b_command_txt"
 msgstr ""
 "Blueprints -- Command Centre\n"
@@ -6562,7 +6562,7 @@ msgstr ""
 "\n"
 "The old CC blueprints have been updated by our engineers to replace the ancient H-9000 mainframe and terminals with up-to-date holo-workstations and a fresh supercomputer installation. All other components are still viable and effective."
 
-#: ../base/ufos/research.ufo:3045
+#: ../base/ufos/research.ufo:3044
 msgid "b_entrance_txt"
 msgstr ""
 "청사진 -- 기지 출입구\n"
@@ -6595,7 +6595,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:3058 ../base/ufos/research.ufo:4389
+#: ../base/ufos/research.ufo:3057 ../base/ufos/research.ufo:4388
 msgid "b_missile_txt"
 msgstr ""
 "Blueprints -- Missile Battery\n"
@@ -6640,29 +6640,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3076
-#, fuzzy
-msgid "b_laser_txt"
-msgstr ""
-"사령관님, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
-"\n"
-"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
-"\n"
-"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
-"\n"
-"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
-"\n"
-"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
-"\n"
-"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
-"\n"
-"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
-"\n"
-"Let me know when you want us to start working on them, Commander.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:3097
+#: ../base/ufos/research.ufo:3096
 msgid "b_large_hangar_txt"
 msgstr ""
 "Blueprints -- Large Hangar\n"
@@ -6707,7 +6685,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3115
+#: ../base/ufos/research.ufo:3114
 msgid "b_hospital_txt"
 msgstr ""
 "Blueprints -- Hospital\n"
@@ -6750,7 +6728,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3133
+#: ../base/ufos/research.ufo:3132
 msgid "b_small_hangar_txt"
 msgstr ""
 "Blueprints -- Small Hangar\n"
@@ -6795,7 +6773,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3151
+#: ../base/ufos/research.ufo:3150
 msgid "b_lab_txt"
 msgstr ""
 "Blueprints -- Laboratory\n"
@@ -6840,7 +6818,7 @@ msgstr ""
 "\n"
 "Reviewing the files on PHALANX laboratory facilities, I have concluded that these blueprints were well ahead of their time. The design is still viable and can be adapted to our use with only minor equipment upgrades."
 
-#: ../base/ufos/research.ufo:3169
+#: ../base/ufos/research.ufo:3168
 msgid "b_powerplant_txt"
 msgstr ""
 "Blueprints -- Power Plant\n"
@@ -6881,7 +6859,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3187
+#: ../base/ufos/research.ufo:3186
 msgid "b_quarters_txt"
 msgstr ""
 "Blueprints -- Living Quarters\n"
@@ -6922,7 +6900,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3200
+#: ../base/ufos/research.ufo:3199
 msgid "b_radar_txt"
 msgstr ""
 "Blueprints -- Radar\n"
@@ -6969,11 +6947,11 @@ msgstr ""
 "\n"
 "We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
 
-#: ../base/ufos/research.ufo:3218
+#: ../base/ufos/research.ufo:3217
 msgid "b_radar_adv_txt"
 msgstr "TO DO"
 
-#: ../base/ufos/research.ufo:3237
+#: ../base/ufos/research.ufo:3236
 msgid "b_storage_txt"
 msgstr ""
 "Blueprints -- Storage\n"
@@ -7016,7 +6994,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3256
+#: ../base/ufos/research.ufo:3255
 msgid "b_teamroom_txt"
 msgstr ""
 "Blueprints -- Team Room\n"
@@ -7057,7 +7035,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3275
+#: ../base/ufos/research.ufo:3274
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Blueprints -- Small UFO Hangar\n"
@@ -7098,7 +7076,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3293
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Blueprints -- Large UFO Hangar\n"
@@ -7139,7 +7117,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3312
+#: ../base/ufos/research.ufo:3311
 msgid "b_workshop_txt"
 msgstr ""
 "Blueprints -- Workshop\n"
@@ -7178,7 +7156,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3333
+#: ../base/ufos/research.ufo:3332
 msgid "b_antimatter_txt"
 msgstr ""
 "Result\n"
@@ -7221,7 +7199,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3360
+#: ../base/ufos/research.ufo:3359
 #, fuzzy
 msgid "drop_firebird_txt"
 msgstr ""
@@ -7267,16 +7245,16 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:3376
+#: ../base/ufos/research.ufo:3375
 #, fuzzy
 msgid "drop_herakles_txt"
 msgstr "drop_herakles_txt"
 
-#: ../base/ufos/research.ufo:3379
+#: ../base/ufos/research.ufo:3378
 msgid "drop_herakles_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3413
+#: ../base/ufos/research.ufo:3412
 #, fuzzy
 msgid "drop_raptor_txt"
 msgstr ""
@@ -7322,11 +7300,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:3416
+#: ../base/ufos/research.ufo:3415
 msgid "drop_raptor_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3450
+#: ../base/ufos/research.ufo:3449
 #, fuzzy
 msgid "inter_stiletto_txt"
 msgstr ""
@@ -7380,7 +7358,7 @@ msgstr ""
 "\n"
 "This is simply the best knife-fighting aircraft I have ever laid eyes on. We're going to need it."
 
-#: ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3465
 msgid "inter_saracen_txt"
 msgstr ""
 "항공기 평가 -- 사라센급 요격기\n"
@@ -7423,7 +7401,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:3482
+#: ../base/ufos/research.ufo:3481
 #, fuzzy
 msgid "inter_dragon_txt"
 msgstr ""
@@ -7439,11 +7417,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3485
+#: ../base/ufos/research.ufo:3484
 msgid "inter_dragon_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3518
+#: ../base/ufos/research.ufo:3517
 #, fuzzy
 msgid "inter_starchaser_txt"
 msgstr ""
@@ -7503,19 +7481,19 @@ msgstr ""
 "\n"
 "Hardpoints: 2 Medium hardpoints (belly), 2 Equipment bays, 1 Armour slot"
 
-#: ../base/ufos/research.ufo:3521
+#: ../base/ufos/research.ufo:3520
 msgid "inter_starchaser_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3554
+#: ../base/ufos/research.ufo:3553
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3557
+#: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3597
+#: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
 msgstr ""
 "소형 UFO는 레이더와 육안으로 관측된 최초의 종류입니다. 비록 공습시 발견되지 않지만, 그렇다고 위협적이지 않은것은 아닙니다; 그것들은 모든 지구상의 외계인 활동장소에 나타납니다.\n"
@@ -7536,11 +7514,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3600
+#: ../base/ufos/research.ufo:3599
 msgid "ufo_scout_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3639
+#: ../base/ufos/research.ufo:3638
 #, fuzzy
 msgid "ufo_fighter_txt"
 msgstr ""
@@ -7560,11 +7538,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3642
+#: ../base/ufos/research.ufo:3641
 msgid "ufo_fighter_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3682
+#: ../base/ufos/research.ufo:3681
 #, fuzzy
 msgid "ufo_supply_txt"
 msgstr ""
@@ -7584,27 +7562,27 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3685
+#: ../base/ufos/research.ufo:3684
 msgid "ufo_supply_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3725
+#: ../base/ufos/research.ufo:3724
 msgid "ufo_carrier_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3728
+#: ../base/ufos/research.ufo:3727
 msgid "ufo_carrier_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3768
+#: ../base/ufos/research.ufo:3767
 msgid "ufo_bomber_txt"
 msgstr "ufo_bomber_txt"
 
-#: ../base/ufos/research.ufo:3771
+#: ../base/ufos/research.ufo:3770
 msgid "ufo_bomber_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3811
+#: ../base/ufos/research.ufo:3810
 #, fuzzy
 msgid "ufo_corrupter_txt"
 msgstr ""
@@ -7624,11 +7602,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3814
+#: ../base/ufos/research.ufo:3813
 msgid "ufo_corrupter_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3854
+#: ../base/ufos/research.ufo:3853
 #, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr ""
@@ -7650,20 +7628,20 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3857
+#: ../base/ufos/research.ufo:3856
 msgid "ufo_gunboat_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3897
+#: ../base/ufos/research.ufo:3896
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3900
+#: ../base/ufos/research.ufo:3899
 msgid "ufo_ripper_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3940
+#: ../base/ufos/research.ufo:3939
 msgid "ufo_harvester_txt"
 msgstr ""
 "사령관님, UFO 조사가 완료 되었습니다. 요약된 보고서의 내용을 말씀 드리겠습니다.\n"
@@ -7686,24 +7664,24 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3943
+#: ../base/ufos/research.ufo:3942
 msgid "ufo_harvester_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3983
+#: ../base/ufos/research.ufo:3982
 #, fuzzy
 msgid "ufo_mothership_txt"
 msgstr "ufo_bomber_txt"
 
-#: ../base/ufos/research.ufo:3986
+#: ../base/ufos/research.ufo:3985
 msgid "ufo_mothership_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4028
+#: ../base/ufos/research.ufo:4027
 msgid "Live Specimen - Bloodspider"
 msgstr "생존 표본 - 로봇거미"
 
-#: ../base/ufos/research.ufo:4030
+#: ../base/ufos/research.ufo:4029
 msgid "bloodspider_notes_txt"
 msgstr ""
 "수신: PHALANX 기지 사령관, 대서양 작전본부\n"
@@ -7723,15 +7701,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4033
+#: ../base/ufos/research.ufo:4032
 msgid "bloodspider_notes_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4049
+#: ../base/ufos/research.ufo:4048
 msgid "Alien Autopsy - Bloodspider"
 msgstr "외계인 부검 - 로봇거미"
 
-#: ../base/ufos/research.ufo:4054
+#: ../base/ufos/research.ufo:4053
 #, fuzzy
 msgid "bloodspider_autopsy_txt"
 msgstr ""
@@ -7755,15 +7733,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4057
+#: ../base/ufos/research.ufo:4056
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4106
+#: ../base/ufos/research.ufo:4105
 msgid "Alien Autopsy - Ortnok"
 msgstr "외계인 부검 - 오트녹"
 
-#: ../base/ufos/research.ufo:4111
+#: ../base/ufos/research.ufo:4110
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "사령관님,\n"
@@ -7800,7 +7778,7 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4112
+#: ../base/ufos/research.ufo:4111
 #, fuzzy
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
@@ -7836,19 +7814,19 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4115
+#: ../base/ufos/research.ufo:4114
 msgid "ortnok_autopsy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4116
+#: ../base/ufos/research.ufo:4115
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4148
+#: ../base/ufos/research.ufo:4147
 msgid "Alien Autopsy - Taman"
 msgstr "외계인 부검 - 타만"
 
-#: ../base/ufos/research.ufo:4153
+#: ../base/ufos/research.ufo:4152
 msgid "taman_autopsy_txt"
 msgstr ""
 "사령관님,\n"
@@ -7887,7 +7865,7 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4154
+#: ../base/ufos/research.ufo:4153
 #, fuzzy
 msgid "taman_autopsy_extra_txt"
 msgstr ""
@@ -7925,19 +7903,19 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4157
+#: ../base/ufos/research.ufo:4156
 msgid "taman_autopsy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4158
+#: ../base/ufos/research.ufo:4157
 msgid "taman_autopsy_extra_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4190
+#: ../base/ufos/research.ufo:4189
 msgid "Alien Autopsy - Shevaar"
 msgstr "외계인 부검 - 쉐바"
 
-#: ../base/ufos/research.ufo:4195
+#: ../base/ufos/research.ufo:4194
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "사령관님,\n"
@@ -7974,7 +7952,7 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4196
+#: ../base/ufos/research.ufo:4195
 #, fuzzy
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
@@ -8010,57 +7988,57 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4199
+#: ../base/ufos/research.ufo:4198
 msgid "shevaar_autopsy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4199
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1637
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:4291
+#: ../base/ufos/research.ufo:4290
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4294
+#: ../base/ufos/research.ufo:4293
 msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4309 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1662
 #, fuzzy
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:4311
+#: ../base/ufos/research.ufo:4310
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4314
+#: ../base/ufos/research.ufo:4313
 msgid "ugv_ares_w_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4330
+#: ../base/ufos/research.ufo:4329
 msgid "ugv_chaingun_txt"
 msgstr "ufo_bomber_txt"
 
-#: ../base/ufos/research.ufo:4333
+#: ../base/ufos/research.ufo:4332
 msgid "ugv_chaingun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4349
+#: ../base/ufos/research.ufo:4348
 msgid "ugv_chaingun_belt_txt"
 msgstr "ufo_bomber_txt"
 
-#: ../base/ufos/research.ufo:4352
+#: ../base/ufos/research.ufo:4351
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4367
+#: ../base/ufos/research.ufo:4366
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -8080,15 +8058,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4370
+#: ../base/ufos/research.ufo:4369
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4417
+#: ../base/ufos/research.ufo:4416
 msgid "'Raven' ECM Unit"
 msgstr "'레이븐' 전파방해장치"
 
-#: ../base/ufos/research.ufo:4420
+#: ../base/ufos/research.ufo:4419
 #, fuzzy
 msgid "craft_electronics_raven_txt"
 msgstr ""
@@ -8128,7 +8106,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4437
+#: ../base/ufos/research.ufo:4436
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr ""
@@ -8172,11 +8150,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4453
+#: ../base/ufos/research.ufo:4452
 msgid "craft_shield_plating_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4456
+#: ../base/ufos/research.ufo:4455
 msgid "craft_shield_plating_txt"
 msgstr ""
 "사령관님, 좋은 소식이 있습니다. 저와 저희팀은 외계 항공기 철판 프로젝트의 시험을 끝마쳤습니다. 우리의 새로운 장갑은 PHALANX 의 전제품에 적용할 준비가 되었습니다.\n"
@@ -8193,11 +8171,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4490
+#: ../base/ufos/research.ufo:4489
 msgid "craft_alien_astrogation_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4493
+#: ../base/ufos/research.ufo:4492
 #, fuzzy
 msgid "craft_alien_astrogation_txt"
 msgstr ""
@@ -8217,11 +8195,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4528
+#: ../base/ufos/research.ufo:4527
 msgid "craft_alien_propulsion_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4531
+#: ../base/ufos/research.ufo:4530
 #, fuzzy
 msgid "craft_alien_propulsion_txt"
 msgstr ""
@@ -8245,11 +8223,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4565
+#: ../base/ufos/research.ufo:4564
 msgid "craft_alien_detection_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4568
+#: ../base/ufos/research.ufo:4567
 #, fuzzy
 msgid "craft_alien_detection_txt"
 msgstr ""
@@ -8273,11 +8251,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4601
+#: ../base/ufos/research.ufo:4600
 msgid "craft_weapon_alc_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4604
+#: ../base/ufos/research.ufo:4603
 #, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
@@ -8293,11 +8271,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4649
+#: ../base/ufos/research.ufo:4648
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA 회전식 기관포"
 
-#: ../base/ufos/research.ufo:4652
+#: ../base/ufos/research.ufo:4651
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "기술적 명세: SHIVA 회전식 기관포\n"
@@ -8340,7 +8318,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4669
+#: ../base/ufos/research.ufo:4668
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "기술적 명세: SHIVA 20mm API Rounds\n"
@@ -8379,7 +8357,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4690
+#: ../base/ufos/research.ufo:4689
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "기술적 명세: SHIVA 20mm HEI Rounds\n"
@@ -8418,11 +8396,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4708
+#: ../base/ufos/research.ufo:4707
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "스패로우호크 공대공 미사일 발사대"
 
-#: ../base/ufos/research.ufo:4711
+#: ../base/ufos/research.ufo:4710
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "기술적 명세: \"스패로우 호크\" 공대공 미사일 발사대\n"
@@ -8471,11 +8449,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4725
+#: ../base/ufos/research.ufo:4724
 msgid "'Sparrowhawk' Missile"
 msgstr "스패로우호크 공대공 미사일"
 
-#: ../base/ufos/research.ufo:4728
+#: ../base/ufos/research.ufo:4727
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "기술적 명세: \"스패로우 호크\" 미사일\n"
@@ -8518,7 +8496,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4749
+#: ../base/ufos/research.ufo:4748
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "기술적 명세: TR-20 로켓 발사대\n"
@@ -8561,7 +8539,7 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4766
+#: ../base/ufos/research.ufo:4765
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "기술적 명세: TR-20 로켓\n"
@@ -8604,11 +8582,11 @@ msgstr ""
 "\n"
 "없음."
 
-#: ../base/ufos/research.ufo:4787
+#: ../base/ufos/research.ufo:4786
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4790
+#: ../base/ufos/research.ufo:4789
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
@@ -8628,7 +8606,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4842
+#: ../base/ufos/research.ufo:4841
 #, fuzzy
 msgid "craft_electronics_targeting_txt"
 msgstr ""
@@ -8668,7 +8646,7 @@ msgstr ""
 "\n"
 "우리의 미래에서 모든 가능한 여러가지 예측에서, 조준지원 컴퓨터를 전략적으로 배치하려는 결정에 도움이 될만한 황금률은 존재하지 않습니다. 사령관님의 결정에 내려지면 즉시 배치할 준비는 되어 있습니다."
 
-#: ../base/ufos/research.ufo:4859
+#: ../base/ufos/research.ufo:4858
 #, fuzzy
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
@@ -8706,7 +8684,7 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:4881 ../base/ufos/research.ufo:4917
+#: ../base/ufos/research.ufo:4880 ../base/ufos/research.ufo:4916
 msgid "alien_materials_txt"
 msgstr ""
 "사령관님, 외계물질의 비밀을 밝혀냈습니다. 작업실 장비들을 개조 후, 새로운 형태로 조작이 가능해졌습니다..\n"
@@ -8723,15 +8701,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4884
+#: ../base/ufos/research.ufo:4883
 msgid "alien_materials_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4937
+#: ../base/ufos/research.ufo:4936
 msgid "Political Situation Before The Invasion"
 msgstr "침략전 정치적 상황"
 
-#: ../base/ufos/research.ufo:4939
+#: ../base/ufos/research.ufo:4938
 #, fuzzy
 msgid "news_initial_political_situation_txt"
 msgstr ""
@@ -8751,11 +8729,11 @@ msgstr ""
 "\n"
 "The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War."
 
-#: ../base/ufos/research.ufo:4950
+#: ../base/ufos/research.ufo:4949
 msgid "After The War"
 msgstr "전쟁이후"
 
-#: ../base/ufos/research.ufo:4952
+#: ../base/ufos/research.ufo:4951
 #, fuzzy
 msgid "news_after_the_war_txt"
 msgstr ""
@@ -8869,11 +8847,11 @@ msgstr ""
 "\n"
 "Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:4963
+#: ../base/ufos/research.ufo:4962
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX와 뭄바이 사태의 여파"
 
-#: ../base/ufos/research.ufo:4965
+#: ../base/ufos/research.ufo:4964
 #, fuzzy
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
@@ -8905,12 +8883,12 @@ msgstr ""
 "\n"
 "All it lacked was a leader."
 
-#: ../base/ufos/research.ufo:4975
+#: ../base/ufos/research.ufo:4974
 #, fuzzy
 msgid "A New Twist"
 msgstr "A New Twist"
 
-#: ../base/ufos/research.ufo:4980
+#: ../base/ufos/research.ufo:4979
 #, fuzzy
 msgid "news_new_twist_txt"
 msgstr ""
@@ -8936,7 +8914,7 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:4981
+#: ../base/ufos/research.ufo:4980
 #, fuzzy
 msgid "news_new_twist_alt_txt"
 msgstr ""
@@ -8962,11 +8940,11 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:5003
+#: ../base/ufos/research.ufo:5002
 msgid "The Enemy On Earth"
 msgstr "지구상의 적"
 
-#: ../base/ufos/research.ufo:5008
+#: ../base/ufos/research.ufo:5007
 #, fuzzy
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
@@ -9000,7 +8978,7 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:5009
+#: ../base/ufos/research.ufo:5008
 #, fuzzy
 msgid "enemy_on_earth_txt"
 msgstr ""
@@ -9032,15 +9010,15 @@ msgstr ""
 "\n"
 "Connor 박사로부터"
 
-#: ../base/ufos/research.ufo:5012
+#: ../base/ufos/research.ufo:5011
 msgid "enemy_on_earth_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:5041
+#: ../base/ufos/research.ufo:5040
 msgid "XVI Census"
 msgstr "외계 바이러스 감염통계"
 
-#: ../base/ufos/research.ufo:5046
+#: ../base/ufos/research.ufo:5045
 #, fuzzy
 msgid "xvi_census_txt"
 msgstr ""
@@ -9064,15 +9042,15 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:5049
+#: ../base/ufos/research.ufo:5048
 msgid "xvi_census_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:5082
+#: ../base/ufos/research.ufo:5081
 msgid "The Enemy On Earth - Revisited"
 msgstr "지구상의 적에 대한 재고"
 
-#: ../base/ufos/research.ufo:5087
+#: ../base/ufos/research.ufo:5086
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
@@ -9094,16 +9072,16 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:5090
+#: ../base/ufos/research.ufo:5089
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:5120
+#: ../base/ufos/research.ufo:5119
 #, fuzzy
 msgid "The Alien Strategy"
 msgstr "외계인의 위협"
 
-#: ../base/ufos/research.ufo:5125
+#: ../base/ufos/research.ufo:5124
 #, fuzzy
 msgid "alien_strategy_txt"
 msgstr ""
@@ -9127,11 +9105,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:5149
+#: ../base/ufos/research.ufo:5148
 msgid "Orbital UFO Activity"
 msgstr ""
 
-#: ../base/ufos/research.ufo:5154
+#: ../base/ufos/research.ufo:5153
 #, fuzzy
 msgid "orbital_ufo_activity_txt"
 msgstr "외계인 활동"
@@ -10274,7 +10252,7 @@ msgid "No reaction fire"
 msgstr "대응사격 없음"
 
 #: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:810
+#: client/battlescape/cl_hud.c:809
 msgid "Reserve TUs for shooting."
 msgstr "사격을 위해 TU를 예약함."
 
@@ -12908,54 +12886,54 @@ msgstr "걸출함"
 msgid "Superhuman"
 msgstr "초인적"
 
-#: client/battlescape/cl_actor.c:693
+#: client/battlescape/cl_actor.c:695
 msgid "This isn't your round\n"
 msgstr "지금은 당신의 차례가 아닙니다\n"
 
-#: client/battlescape/cl_actor.c:955
+#: client/battlescape/cl_actor.c:957
 msgid "You cannot reload this unknown item.\n"
 msgstr "알 수 없는 물품을 재장전 할 수 없습니다.\n"
 
-#: client/battlescape/cl_actor.c:1799
+#: client/battlescape/cl_actor.c:1797
 msgid "Unknown alien race"
 msgstr "알 수 없는 외계인 종족"
 
-#: client/battlescape/cl_actor.c:2464
+#: client/battlescape/cl_actor.c:2499
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "다음의 병사를 선택"
 
-#: client/battlescape/cl_actor.c:2465
+#: client/battlescape/cl_actor.c:2500
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "리스트에서 병사를 선택"
 
-#: client/battlescape/cl_actor.c:2466
+#: client/battlescape/cl_actor.c:2501
 #, fuzzy
 msgid "Update an actor"
 msgstr "병사의 이름을 변경합니다"
 
-#: client/battlescape/cl_actor.c:2468
+#: client/battlescape/cl_actor.c:2503
 msgid "Toggle stand/crounch"
 msgstr "일어서기/앉기 교체"
 
-#: client/battlescape/cl_actor.c:2469
+#: client/battlescape/cl_actor.c:2504
 msgid "Toggle the headgear"
 msgstr "헤드기어 사용 토글"
 
-#: client/battlescape/cl_actor.c:2470
+#: client/battlescape/cl_actor.c:2505
 msgid "Opens or closes a door"
 msgstr "문을 열거나 닫습니다"
 
-#: client/battlescape/cl_actor.c:2471
+#: client/battlescape/cl_actor.c:2506
 msgid "Confirm the current action"
 msgstr "현재 행동을 실행"
 
-#: client/battlescape/cl_actor.c:2472
+#: client/battlescape/cl_actor.c:2507
 msgid "Toggle to next alien visible from selected actor."
 msgstr "현재 대원에서 부터 다음 보이는 외계인으로 토글"
 
-#: client/battlescape/cl_actor.c:2474
+#: client/battlescape/cl_actor.c:2509
 msgid "Toggle to next alien"
 msgstr "다음 외계인을 선택합니다"
 
@@ -13011,52 +12989,52 @@ msgstr "행동력: %i"
 msgid "Shots: %i"
 msgstr "사용탄수: %i"
 
-#: client/battlescape/cl_hud.c:654
+#: client/battlescape/cl_hud.c:653
 #, fuzzy
 msgid "No weapon."
 msgstr "%s 무기\n"
 
-#: client/battlescape/cl_hud.c:663
+#: client/battlescape/cl_hud.c:662
 #, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr ""
 "이 무기는\n"
 "한손으로 사용할 수 없습니다.\n"
 
-#: client/battlescape/cl_hud.c:669
+#: client/battlescape/cl_hud.c:668
 #, fuzzy
 msgid "No reload possible, already fully loaded."
 msgstr "왼쪽 무기의 탄약을 장전할수 없습니다.(탄약이 가득 장전되었음)"
 
-#: client/battlescape/cl_hud.c:679
+#: client/battlescape/cl_hud.c:678
 #, fuzzy
 msgid "Not enough TUs for reloading weapon."
 msgstr "일어서기에는 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:682
+#: client/battlescape/cl_hud.c:681
 #, fuzzy
 msgid "No reload possible, you don't have backup ammo."
 msgstr "왼쪽 무기의 탄약을 장전할수 없습니다.(탄약이 가득 장전되었음)"
 
-#: client/battlescape/cl_hud.c:774
+#: client/battlescape/cl_hud.c:773
 msgid "Not enough TUs for standing up."
 msgstr "일어서기에는 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:777
+#: client/battlescape/cl_hud.c:776
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "일어서기 (%i 행동력)"
 
-#: client/battlescape/cl_hud.c:782
+#: client/battlescape/cl_hud.c:781
 msgid "Not enough TUs for crouching."
 msgstr "쭈그려앉기에는 행동력이 부족합니다.."
 
-#: client/battlescape/cl_hud.c:785
+#: client/battlescape/cl_hud.c:784
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "웅크리기 (%i 행동력)"
 
-#: client/battlescape/cl_hud.c:793
+#: client/battlescape/cl_hud.c:792
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -13065,16 +13043,16 @@ msgstr ""
 "%i 의 TU가 앉거나 일어서는데 예약되었습니다.\n"
 "클릭하면 사라집니다."
 
-#: client/battlescape/cl_hud.c:797
+#: client/battlescape/cl_hud.c:796
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "%i 의 TU를 앉거나 일어서는데 예약합니다."
 
-#: client/battlescape/cl_hud.c:800
+#: client/battlescape/cl_hud.c:799
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "앉거나 일어서는 행동을 예약하기 위한 TU가 부족합니다."
 
-#: client/battlescape/cl_hud.c:806
+#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -13085,16 +13063,16 @@ msgstr ""
 "바꾸려면 클릭하십시오.\n"
 "오른쪽 클릭하면 사라집니다."
 
-#: client/battlescape/cl_hud.c:813
+#: client/battlescape/cl_hud.c:812
 msgid "Reserving TUs for shooting not possible."
 msgstr "사격을 위해 TU를 예약할수 없습니다."
 
-#: client/battlescape/cl_hud.c:834 client/battlescape/cl_hud.c:843
+#: client/battlescape/cl_hud.c:833 client/battlescape/cl_hud.c:842
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "탄약 재장전 (%i TU)."
 
-#: client/battlescape/cl_hud.c:1090
+#: client/battlescape/cl_hud.c:1091
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -13102,7 +13080,7 @@ msgstr ""
 "미지의 아이템을 사용할 수 없습니다.\n"
 "이 아이템을 사용하기 위해서는 연구가 필요합니다.\n"
 
-#: client/battlescape/cl_hud.c:1111
+#: client/battlescape/cl_hud.c:1112
 #, c-format
 msgid ""
 "%s\n"
@@ -13111,17 +13089,17 @@ msgstr ""
 "%s\n"
 "(비었음)\n"
 
-#: client/battlescape/cl_hud.c:1133
+#: client/battlescape/cl_hud.c:1134
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "심리 %i | 예약된 TU: %i\n"
 
-#: client/battlescape/cl_hud.c:1135
+#: client/battlescape/cl_hud.c:1136
 #, c-format
 msgid "Morale  %i"
 msgstr "사기  %i"
 
-#: client/battlescape/cl_hud.c:1140
+#: client/battlescape/cl_hud.c:1141
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -13130,7 +13108,7 @@ msgstr ""
 "심리 %i | 예약된 TU: %i\n"
 "%s %i (%i|%i TU 남음)\n"
 
-#: client/battlescape/cl_hud.c:1144
+#: client/battlescape/cl_hud.c:1145
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -13139,7 +13117,7 @@ msgstr ""
 "사기  %i\n"
 "%s %i (행동력 %i 남음)\n"
 
-#: client/battlescape/cl_hud.c:1176
+#: client/battlescape/cl_hud.c:1177
 #, c-format
 msgid ""
 "Time Units\n"
@@ -13152,12 +13130,12 @@ msgstr ""
 "- 예약: %i\n"
 "- 남음: %i\n"
 
-#: client/battlescape/cl_hud.c:1200
+#: client/battlescape/cl_hud.c:1201
 msgid "Currently panics!\n"
 msgstr "겁에 질려있습니다!\n"
 
 #: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:237
+#: client/battlescape/cl_hud_callbacks.c:240
 msgid "No item in hand.\n"
 msgstr "손에 아무것도 없습니다.\n"
 
@@ -13178,7 +13156,7 @@ msgstr ""
 "한손으로 사용할 수 없습니다.\n"
 
 #: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:255
+#: client/battlescape/cl_hud_callbacks.c:258
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -13186,7 +13164,7 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "행동력이 부족합니다\n"
 
-#: client/battlescape/cl_hud_callbacks.c:243
+#: client/battlescape/cl_hud_callbacks.c:246
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -13194,7 +13172,7 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "탄창교환이 불가능한 무기입니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:250
+#: client/battlescape/cl_hud_callbacks.c:253
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -13202,19 +13180,19 @@ msgstr ""
 "행동을 취할 수 없습니다:\n"
 "탄약이 맞지 않습니다.\n"
 
-#: client/battlescape/cl_hud_callbacks.c:285
+#: client/battlescape/cl_hud_callbacks.c:288
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "왼손 무기의 탄약 재장전"
 
-#: client/battlescape/cl_hud_callbacks.c:286
+#: client/battlescape/cl_hud_callbacks.c:289
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "오른손 무기의 탄약 재장전"
 
-#: client/battlescape/cl_hud_callbacks.c:287
+#: client/battlescape/cl_hud_callbacks.c:290
 msgid "Toggle reservation for crouching."
 msgstr "대응사격모드의 토글"
 
-#: client/battlescape/cl_hud_callbacks.c:288
+#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Toggle reaction fire"
 msgstr "대응사격모드의 토글"
 
@@ -13227,7 +13205,7 @@ msgstr "불러오는 중 %s"
 msgid "loading models..."
 msgstr "모델 불러오는 중..."
 
-#: client/battlescape/cl_view.c:118 client/cl_main.c:970
+#: client/battlescape/cl_view.c:118 client/cl_main.c:971
 msgid "Awaiting game start"
 msgstr "게임 시작을 기다리고 있습니다"
 
@@ -13395,25 +13373,25 @@ msgstr "새로운 %s 가 %s 에서 준비되었습니다."
 #: client/campaign/cp_base_callbacks.c:645
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
-#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1481
-#: client/campaign/cp_campaign.c:1526 client/campaign/cp_campaign.c:1579
-#: client/campaign/cp_campaign.c:1592 client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1473
+#: client/campaign/cp_campaign.c:1518 client/campaign/cp_campaign.c:1574
+#: client/campaign/cp_campaign.c:1587 client/campaign/cp_campaign.c:1589
 #: client/campaign/cp_installation_callbacks.c:156
-#: client/campaign/cp_mapfightequip.c:332
-#: client/campaign/cp_mapfightequip.c:353
-#: client/campaign/cp_mapfightequip.c:359
-#: client/campaign/cp_mapfightequip.c:371
+#: client/campaign/cp_mapfightequip.c:355
+#: client/campaign/cp_mapfightequip.c:376
+#: client/campaign/cp_mapfightequip.c:382
+#: client/campaign/cp_mapfightequip.c:394
 #: client/campaign/cp_market_callbacks.c:614
 #: client/campaign/cp_market_callbacks.c:619 client/campaign/cp_missions.c:749
-#: client/campaign/cp_missions.c:1177 client/campaign/cp_nations.c:88
+#: client/campaign/cp_missions.c:1176 client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100 client/campaign/cp_nations.c:110
 #: client/campaign/cp_nations.c:120 client/campaign/cp_nations.c:130
 #: client/campaign/cp_nations.c:141 client/campaign/cp_nations.c:157
 #: client/campaign/cp_nations.c:173 client/campaign/cp_nations.c:179
 #: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:506
-#: client/campaign/cp_produce.c:341 client/campaign/cp_produce.c:351
-#: client/campaign/cp_produce.c:363 client/campaign/cp_produce.c:373
-#: client/campaign/cp_produce.c:434
+#: client/campaign/cp_produce.c:338 client/campaign/cp_produce.c:348
+#: client/campaign/cp_produce.c:360 client/campaign/cp_produce.c:370
+#: client/campaign/cp_produce.c:431
 #: client/campaign/cp_research_callbacks.c:566
 #: client/campaign/cp_research_callbacks.c:584
 #: client/campaign/cp_research_callbacks.c:590
@@ -13423,7 +13401,7 @@ msgstr "새로운 %s 가 %s 에서 준비되었습니다."
 #: client/campaign/cp_research_callbacks.c:829 client/campaign/cp_ufo.c:396
 #: client/campaign/cp_ufo.c:774 client/campaign/cp_ufo.c:778
 #: client/campaign/cp_ufo.c:783
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:404
+#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:405
 #: client/multiplayer/mp_serverlist.c:470
 msgid "Notice"
 msgstr "통지"
@@ -13500,14 +13478,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "항공기를 발진시킵니다"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1633
-#: client/campaign/cp_map.c:1640
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1630
+#: client/campaign/cp_map.c:1637
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "속도:\t%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1634
-#: client/campaign/cp_map.c:1641
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1631
+#: client/campaign/cp_map.c:1638
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "연료:\t%i/%i\n"
@@ -13550,7 +13528,7 @@ msgstr "요격"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO의 요격에 성공했습니다 -- UFO는 바다로 사라졌습니다."
 
-#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1589
 msgid "You've lost the battle"
 msgstr "전투에 패배했습니다"
 
@@ -13945,7 +13923,7 @@ msgstr "^B연구\t\t\t\t\t\t과학자\t\t\t\t진행율\n"
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:852 client/campaign/cp_campaign.c:728
+#: client/campaign/cp_base_callbacks.c:852 client/campaign/cp_campaign.c:722
 #: client/campaign/cp_market_callbacks.c:307
 #, c-format
 msgid "%i c"
@@ -14010,7 +13988,7 @@ msgstr "당신이 지구를 지키겠다는 선서는 무효로 돌아갔습니�
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "당신의 지휘하의 PHALANX 국가 보호 작전들은 줄곧 실패했습니다. UN은 당신의 수행 결과에 불만을 품고 당신을 사령관에서 파면하고 PHALANX 프로젝트를 해산하기로 결정했습니다. 더 이상의 초국가적인 협동은 이루어지지 않습니다. 지구의 국가들은 독립적으로 외계인에 저항을 시도 하였으나, 결국 하나둘씩 몰락해 갔습니다."
 
-#: client/campaign/cp_campaign.c:750
+#: client/campaign/cp_campaign.c:744
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -14021,7 +13999,7 @@ msgstr ""
 "패배횟수:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:755
+#: client/campaign/cp_campaign.c:749
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -14032,12 +14010,12 @@ msgstr ""
 "가동중:\t%i\n"
 "공격을 받은 횟수:\t%i\n"
 
-#: client/campaign/cp_campaign.c:770 client/campaign/cp_ufopedia.c:1170
+#: client/campaign/cp_campaign.c:764 client/campaign/cp_ufopedia.c:1170
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:773
+#: client/campaign/cp_campaign.c:767
 #, c-format
 msgid ""
 "\n"
@@ -14046,37 +14024,37 @@ msgstr ""
 "\n"
 "이번달 자금:\t%d"
 
-#: client/campaign/cp_campaign.c:811 client/cl_inventory_callbacks.c:136
+#: client/campaign/cp_campaign.c:805 client/cl_inventory_callbacks.c:136
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:817
+#: client/campaign/cp_campaign.c:811
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "피고용인:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:830
+#: client/campaign/cp_campaign.c:824
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "항공기:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:841
+#: client/campaign/cp_campaign.c:835
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "기지 (%s):\t%i c\n"
 
-#: client/campaign/cp_campaign.c:846
+#: client/campaign/cp_campaign.c:840
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "관리비:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:853
+#: client/campaign/cp_campaign.c:847
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "부채:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:856
+#: client/campaign/cp_campaign.c:850
 #, c-format
 msgid ""
 "\n"
@@ -14087,12 +14065,12 @@ msgstr ""
 "\t-------\n"
 "합계:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:861
+#: client/campaign/cp_campaign.c:855
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "부채 한도: %i c\n"
 
-#: client/campaign/cp_campaign.c:866
+#: client/campaign/cp_campaign.c:860
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -14101,34 +14079,34 @@ msgstr ""
 "허용 외계 바이러스 감염 수치: %i \n"
 "현재 외계 바이러스 감염 수치: %i"
 
-#: client/campaign/cp_campaign.c:1481
+#: client/campaign/cp_campaign.c:1473
 msgid "Collected dead alien bodies"
 msgstr "%i구의 외계인 사체를 모았습니다"
 
-#: client/campaign/cp_campaign.c:1526
+#: client/campaign/cp_campaign.c:1518
 msgid "Your dropship is not near the landing zone"
 msgstr "수송선이 착륙지점 근처에 있지 않습니다"
 
-#: client/campaign/cp_campaign.c:1578 client/campaign/cp_missions.c:1176
+#: client/campaign/cp_campaign.c:1573 client/campaign/cp_missions.c:1175
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "기지 방어: %s 성공!"
 
-#: client/campaign/cp_campaign.c:1592
+#: client/campaign/cp_campaign.c:1587
 msgid "You've won the battle"
 msgstr "전투에 승리했습니다"
 
-#: client/campaign/cp_campaign.c:1611
+#: client/campaign/cp_campaign.c:1606
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "사살된 외계인\t%i\n"
 
-#: client/campaign/cp_campaign.c:1612
+#: client/campaign/cp_campaign.c:1607
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "포획된 외계인\t%i\n"
 
-#: client/campaign/cp_campaign.c:1613
+#: client/campaign/cp_campaign.c:1608
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -14137,22 +14115,22 @@ msgstr ""
 "외계인 생존자\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1615
+#: client/campaign/cp_campaign.c:1610
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "외계인에게 살해된 PHALANX 병사수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1616
+#: client/campaign/cp_campaign.c:1611
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "행방불명의 PHALANX 병사수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1617
+#: client/campaign/cp_campaign.c:1612
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "오발에 의한 PHALANX 사상자수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1618
+#: client/campaign/cp_campaign.c:1613
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -14161,17 +14139,17 @@ msgstr ""
 "PHALANX의 생존자수\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1620
+#: client/campaign/cp_campaign.c:1615
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "외계인에게 살해된 시민의 수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1621
+#: client/campaign/cp_campaign.c:1616
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "오발에 의한 시민 사상자수\t%i\n"
 
-#: client/campaign/cp_campaign.c:1622
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -14180,17 +14158,17 @@ msgstr ""
 "구출한 시민의 수\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1623
+#: client/campaign/cp_campaign.c:1618
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "입수한 아이템 (종류수/총량)\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1700
+#: client/campaign/cp_campaign.c:1695
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s는 %s로 승진했습니다\n"
 
-#: client/campaign/cp_campaign.c:1702
+#: client/campaign/cp_campaign.c:1697
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -14199,7 +14177,7 @@ msgstr ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 
-#: client/campaign/cp_campaign.c:1703
+#: client/campaign/cp_campaign.c:1698
 msgid "Soldier promoted"
 msgstr "병사가 진급했습니다"
 
@@ -14240,8 +14218,8 @@ msgstr "%i년 %s %02i일"
 msgid "You've got a new mail: %s"
 msgstr "새로운 메일이 도착했습니다: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1594
-#: client/campaign/cp_map.c:1613
+#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1591
+#: client/campaign/cp_map.c:1610
 msgid "Unknown"
 msgstr "알수없는 장비"
 
@@ -14395,15 +14373,15 @@ msgstr "Forget it"
 msgid "UFO Sighting"
 msgstr "UFO Sighting"
 
-#: client/campaign/cp_map.c:1390
+#: client/campaign/cp_map.c:1383
 msgid "Day"
 msgstr "주간"
 
-#: client/campaign/cp_map.c:1390
+#: client/campaign/cp_map.c:1383
 msgid "Night"
 msgstr "야간"
 
-#: client/campaign/cp_map.c:1593
+#: client/campaign/cp_map.c:1590
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -14414,112 +14392,112 @@ msgstr ""
 "상황: %s\n"
 "목적: %s"
 
-#: client/campaign/cp_map.c:1610
+#: client/campaign/cp_map.c:1607
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s (%s 에서)"
 
-#: client/campaign/cp_map.c:1630 client/campaign/cp_map.c:1638
+#: client/campaign/cp_map.c:1627 client/campaign/cp_map.c:1635
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "이름:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1631 client/campaign/cp_map.c:1639
+#: client/campaign/cp_map.c:1628 client/campaign/cp_map.c:1636
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "상태:\t%s\n"
 
-#: client/campaign/cp_map.c:1632
+#: client/campaign/cp_map.c:1629
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "목표물까지 거리:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1636 client/campaign/cp_map.c:1646
+#: client/campaign/cp_map.c:1633 client/campaign/cp_map.c:1643
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sh\n"
 
-#: client/campaign/cp_map.c:1664
+#: client/campaign/cp_map.c:1661
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "속도:\t%i\n"
 
-#: client/campaign/cp_map.c:1864
+#: client/campaign/cp_map.c:1861
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1915
+#: client/campaign/cp_map.c:1912
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/campaign/cp_map.c:1918
+#: client/campaign/cp_map.c:1915
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/campaign/cp_map.c:1923
+#: client/campaign/cp_map.c:1920
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Aliens are attacking our base at this very moment.\n"
 
-#: client/campaign/cp_map.c:1928
+#: client/campaign/cp_map.c:1925
 msgid "Select ufo or mission on map\n"
 msgstr "지도에서 UFO 혹은 임무를 선택하십시오\n"
 
-#: client/campaign/cp_map.c:1933
+#: client/campaign/cp_map.c:1930
 msgid "UFO in radar range\n"
 msgstr "레이더에 UFO 출현\n"
 
-#: client/campaign/cp_mapfightequip.c:323
+#: client/campaign/cp_mapfightequip.c:346
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr "%s가 %s 항공기에 %s 기지에서 성공적으로 설치되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:326
+#: client/campaign/cp_mapfightequip.c:349
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr "%s가 %s에 성공적으로 설치되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:329
+#: client/campaign/cp_mapfightequip.c:352
 #, c-format
 msgid "%s was successfully installed at %s."
 msgstr "%s가 %s에 설치되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:351
+#: client/campaign/cp_mapfightequip.c:374
 #, fuzzy, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr "%s was successfully removed from aircraft %s at %s."
 
-#: client/campaign/cp_mapfightequip.c:357
+#: client/campaign/cp_mapfightequip.c:380
 #, fuzzy, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 
-#: client/campaign/cp_mapfightequip.c:365
+#: client/campaign/cp_mapfightequip.c:388
 #, fuzzy, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr "%s was successfully removed from installation %s."
 
-#: client/campaign/cp_mapfightequip.c:368
+#: client/campaign/cp_mapfightequip.c:391
 #, c-format
 msgid "%s was successfully removed from %s."
 msgstr "%s가 %s에서 성공적으로 제거되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:1325
+#: client/campaign/cp_mapfightequip.c:1348
 msgid "Light weight"
 msgstr "경량"
 
-#: client/campaign/cp_mapfightequip.c:1328
+#: client/campaign/cp_mapfightequip.c:1351
 msgid "Medium weight"
 msgstr "중경량"
 
-#: client/campaign/cp_mapfightequip.c:1331
+#: client/campaign/cp_mapfightequip.c:1354
 msgid "Heavy weight"
 msgstr "중량"
 
-#: client/campaign/cp_mapfightequip.c:1334
+#: client/campaign/cp_mapfightequip.c:1357
 msgid "Unknown weight"
 msgstr "무게를 알 수 없음"
 
@@ -14739,72 +14717,72 @@ msgstr "인간사냥 임무"
 msgid "Alien activity has been detected in %s."
 msgstr "%s 에서 외계인의 활동이 보고되었습니다"
 
-#: client/campaign/cp_missions.c:1272
+#: client/campaign/cp_missions.c:1270
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "No nation"
 
-#: client/campaign/cp_nation.c:125
+#: client/campaign/cp_nation.c:124
 msgid "Giving up"
 msgstr "포기"
 
-#: client/campaign/cp_nation.c:127
+#: client/campaign/cp_nation.c:126
 msgid "Furious"
 msgstr "격노"
 
-#: client/campaign/cp_nation.c:129
+#: client/campaign/cp_nation.c:128
 msgid "Angry"
 msgstr "분노"
 
-#: client/campaign/cp_nation.c:131
+#: client/campaign/cp_nation.c:130
 msgid "Mad"
 msgstr "매우 불만"
 
-#: client/campaign/cp_nation.c:133
+#: client/campaign/cp_nation.c:132
 msgid "Upset"
 msgstr "불만"
 
-#: client/campaign/cp_nation.c:135
+#: client/campaign/cp_nation.c:134
 msgid "Tolerant"
 msgstr "대체로 불만"
 
-#: client/campaign/cp_nation.c:137
+#: client/campaign/cp_nation.c:136
 msgid "Neutral"
 msgstr "중립"
 
-#: client/campaign/cp_nation.c:139
+#: client/campaign/cp_nation.c:138
 msgid "Content"
 msgstr "대체로 만족"
 
-#: client/campaign/cp_nation.c:141
+#: client/campaign/cp_nation.c:140
 msgid "Pleased"
 msgstr "만족"
 
-#: client/campaign/cp_nation.c:143
+#: client/campaign/cp_nation.c:142
 msgid "Happy"
 msgstr "매우 만족"
 
-#: client/campaign/cp_nation.c:145
+#: client/campaign/cp_nation.c:144
 msgid "Exuberant"
 msgstr "열광"
 
-#: client/campaign/cp_nation.c:171
+#: client/campaign/cp_nation.c:170
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "%s 국가의 행복도가 %s 에서 %s로 변경되었습니다"
 
-#: client/campaign/cp_nation.c:175
+#: client/campaign/cp_nation.c:174
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "%s 국가의 행복도가 %s로 변경되었습니다"
 
-#: client/campaign/cp_nation.c:179
+#: client/campaign/cp_nation.c:178
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "%s 국가의 행복도가 %s 이며, 이는 캠페인에서 허용할 수 있는 최소 행복도 보다 낮습니다"
 
-#: client/campaign/cp_nation.c:185
+#: client/campaign/cp_nation.c:184
 msgid "Nation changed happiness"
 msgstr "국가 행복도가 변경되었습니다"
 
@@ -14955,45 +14933,45 @@ msgstr ""
 "\n"
 "Aircraft cannot start.\n"
 
-#: client/campaign/cp_produce.c:233
+#: client/campaign/cp_produce.c:230
 #, c-format
 msgid "Production queue for %s is empty"
 msgstr "%s 기지의 생산예정이 없습니다"
 
-#: client/campaign/cp_produce.c:234
+#: client/campaign/cp_produce.c:231
 msgid "Production queue empty"
 msgstr "예정된 생산 목록이 없습니다"
 
-#: client/campaign/cp_produce.c:340 client/campaign/cp_produce.c:362
+#: client/campaign/cp_produce.c:337 client/campaign/cp_produce.c:359
 #, c-format
 msgid "Not enough credits to finish production in %s.\n"
 msgstr "%s기지에 생산 자금이 부족합니다.\n"
 
-#: client/campaign/cp_produce.c:350
+#: client/campaign/cp_produce.c:347
 #, c-format
 msgid "Not enough free storage space in %s. Production postponed.\n"
 msgstr "%s 기지에 창고 공간이 부족합니다. 생산은 연기되었습니다.\n"
 
-#: client/campaign/cp_produce.c:372
+#: client/campaign/cp_produce.c:369
 #, c-format
 msgid "Not enough free hangar space in %s. Production postponed.\n"
 msgstr "%s 기지에 남은 격납고 공간이 없습니다. 생산은 연기되었습니다.\n"
 
-#: client/campaign/cp_produce.c:405
+#: client/campaign/cp_produce.c:402
 #, c-format
 msgid "The production of %s at %s has finished."
 msgstr "%s의 생산이 %s에서 완료되었습니다"
 
-#: client/campaign/cp_produce.c:406 client/campaign/cp_produce.c:446
+#: client/campaign/cp_produce.c:403 client/campaign/cp_produce.c:443
 msgid "Production finished"
 msgstr "생산완료"
 
-#: client/campaign/cp_produce.c:433
+#: client/campaign/cp_produce.c:430
 #, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed.\n"
 msgstr "%s 기지에 창고 공간이 부족합니다. 해체 작업은 연기되었습니다.\n"
 
-#: client/campaign/cp_produce.c:445
+#: client/campaign/cp_produce.c:442
 #, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "%s의 해체작업이 %s에서완료 되었습니다."
@@ -15343,8 +15321,8 @@ msgstr "게임을 불러들이는데 문제가 발생했습니다."
 
 #: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
 #: client/campaign/cp_save.c:620 client/cl_irc.c:1208 client/cl_irc.c:1440
-#: client/cl_main.c:505 client/cl_main.c:510 client/cl_main.c:516
-#: client/cl_main.c:524 client/multiplayer/mp_callbacks.c:49
+#: client/cl_main.c:506 client/cl_main.c:511 client/cl_main.c:517
+#: client/cl_main.c:525 client/multiplayer/mp_callbacks.c:49
 msgid "Error"
 msgstr "문제발생"
 
@@ -16052,7 +16030,7 @@ msgstr ""
 "부채 한도: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:461
+#: client/cl_game_campaign.c:459
 #, c-format
 msgid "Rank: %s"
 msgstr "계급: %s"
@@ -16237,25 +16215,25 @@ msgstr "서버가 접속을 끊었습니다"
 msgid "..."
 msgstr "?"
 
-#: client/cl_main.c:504
+#: client/cl_main.c:505
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "사용중인 버전 (%s)과 서버의 버전이 다릅니다 "
 
-#: client/cl_main.c:510
+#: client/cl_main.c:511
 msgid "Local map version differs from server"
 msgstr "사용중인 지도의 버전이 서버와 다릅니다"
 
-#: client/cl_main.c:516
+#: client/cl_main.c:517
 msgid "Script files are not the same"
 msgstr "S스크립트 파일이 동일하지 않습니다"
 
-#: client/cl_main.c:523
+#: client/cl_main.c:524
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "사용중인 버전 (%s)과 서버의 버전(%s)이 다릅니다 "
 
-#: client/cl_main.c:855
+#: client/cl_main.c:856
 msgid "Target your shot to the ground"
 msgstr "공격목표를 지면으로 설정합니다"
 
@@ -16580,43 +16558,43 @@ msgstr "새로운 팀"
 msgid "Error saving team. Check free disk space!"
 msgstr "팀을 저장할 수 없습니다. 하드가 남아있는지 확인하십시오!"
 
-#: game/g_actor.c:378
+#: game/g_actor.c:388
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "행동을 취할 수 없습니다 - 행동력이 부족합니다!\n"
 
-#: game/g_actor.c:382
+#: game/g_actor.c:392
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "행동을 취할 수 없습니다 - 이미 동일한 탄알의 최대 장탄수로 장전되어 있습니다!\n"
 
-#: game/g_client.c:306
+#: game/g_client.c:305
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "행동을 취할 수 없습니다 - 당신의 차례가 아닙니다!\n"
 
-#: game/g_client.c:311
+#: game/g_client.c:310
 msgid "Can't perform action - object not present!\n"
 msgstr "행동을 취할 수 없습니다 - 대상이 없습니다!\n"
 
-#: game/g_client.c:316
+#: game/g_client.c:315
 msgid "Can't perform action - not an actor!\n"
 msgstr "행동을 취할 수 없습니다 - 대원이 아닙니다!\n"
 
-#: game/g_client.c:321
+#: game/g_client.c:320
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "행동을 취할 수 없습니다 - 대상이 기절했습니다!\n"
 
-#: game/g_client.c:326
+#: game/g_client.c:325
 msgid "Can't perform action - actor is dead!\n"
 msgstr "행동을 취할 수 없습니다 - 대상이 사망하였습니다!\n"
 
-#: game/g_client.c:331
+#: game/g_client.c:330
 msgid "Can't perform action - not on same team!\n"
 msgstr "행동을 취할 수 없습니다 - 같은 팀이 아닙니다!\n"
 
-#: game/g_client.c:336
+#: game/g_client.c:335
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "행동을 취할 수 없습니다 - 동맹중인 다른팀원은 조작할수 없습니다!\n"
 
-#: game/g_client.c:431
+#: game/g_client.c:430
 #, fuzzy
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Currently shaken, won't let their guard down.\n"
@@ -16696,17 +16674,17 @@ msgstr "%s is consumed by mad rage!\n"
 msgid "%s is currently shaken.\n"
 msgstr "%s 대원이 심리적으로 불안합니다.\n"
 
-#: game/g_reaction.c:149
+#: game/g_reaction.c:183
 #, fuzzy
 msgid "No reaction fire enabled weapon.\n"
 msgstr "대응사격 없음"
 
-#: game/g_reaction.c:154
+#: game/g_reaction.c:188
 #, fuzzy
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "대응사격으로 사용할 공격법을 선택해 주세요"
 
-#: game/g_reaction.c:159
+#: game/g_reaction.c:193
 #, fuzzy
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "일어서기에는 행동력이 부족합니다."
@@ -16766,6 +16744,27 @@ msgstr "Free"
 #, fuzzy
 msgid "Playing"
 msgstr "Playing"
+
+#, fuzzy
+#~ msgid "b_laser_txt"
+#~ msgstr ""
+#~ "사령관님, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+#~ "\n"
+#~ "The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+#~ "\n"
+#~ "Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+#~ "\n"
+#~ "Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+#~ "\n"
+#~ "The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+#~ "\n"
+#~ "The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
+#~ "\n"
+#~ "The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
+#~ "\n"
+#~ "Let me know when you want us to start working on them, Commander.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
 
 #~ msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 #~ msgstr "왼쪽으로 한발 이동하여 창문을 통해 발사가 가능한지 확인하기 위해 1인칭 시점으로 사용하십시오 ([v]로 택일가능합니다) "

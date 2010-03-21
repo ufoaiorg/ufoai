@@ -772,6 +772,9 @@
 		<Unit filename="../../src/tools/radiant/radiant/ufoscript/common/Parser.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/ufoscript/common/ScriptValues.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/ufoscript/common/DataBlock.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

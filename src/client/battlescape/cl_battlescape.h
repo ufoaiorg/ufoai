@@ -94,5 +94,6 @@ extern client_state_t cl;
 qboolean CL_OnBattlescape(void);
 qboolean CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
+qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 
 #endif /* CL_BATTLESCAPE_H_ */

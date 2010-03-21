@@ -9,6 +9,7 @@
 #include "math/Vector3.h"
 #include "math/Vector4.h"
 #include <time.h>
+#include "../common/ScriptValues.h"
 
 #define		MAX_PTLDEFS		256
 #define		MAX_PTLCMDS		(MAX_PTLDEFS * 32)
@@ -61,8 +62,10 @@ namespace scripts
 
 		enum
 		{
-			V_FLOAT, V_POS, V_VECTOR, V_COLOR, V_STRING, V_INT, V_BOOL
+			V_FLOAT, V_POS, V_COLOR, V_STRING, V_INT, V_BOOL, V_NUM_TYPES, V_VECTOR
 		};
+
+		static const char * vt_names[V_NUM_TYPES] = {"float", "pos", "color", "string", "int", "bool"};
 
 		typedef enum pc_s
 		{
@@ -107,12 +110,12 @@ namespace scripts
 
 		0, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING };
 
-
 		/** used e.g. in our parsers */
-		typedef struct value_s {
-			const char *string;
-			const int type;
-			const size_t ofs;
+		typedef struct value_s
+		{
+				const char *string;
+				const int type;
+				const size_t ofs;
 		} value_t;
 
 #if 0
@@ -128,10 +131,8 @@ namespace scripts
 #endif
 	}
 
-	class Particle
+	struct ParticleData
 	{
-		private:
-
 			time_t msec;
 			time_t frametime;
 
@@ -186,6 +187,13 @@ namespace scripts
 			bool stayalive; /**< used for physics particles that hit the ground */
 			bool weather; /**< used to identify weather particles (can be switched
 			 * off via cvar cl_particleweather) */
+	};
+
+	class Particle
+	{
+		private:
+
+			ParticleData _data;
 
 		public:
 			Particle ();
@@ -196,8 +204,8 @@ namespace scripts
 
 			std::string toString ();
 
-			static scripts::IParticlePtr load (const std::string& particleID);
 	};
+	scripts::IParticlePtr loadParticle (const std::string& particleID);
 }
 
 #endif /* PARTICLE_H_ */

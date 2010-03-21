@@ -144,13 +144,13 @@ typedef struct le_s {
 #define MAX_LOCALMODELS		512
 
 /** @brief local models */
-typedef struct lm_s {
+typedef struct localModel_s {
 	char id[MAX_VAR];	/**< in case this local model is referenced by some other local
 						 * model (e.g. for tags) - this id is set in the mapeditor */
 	char name[MAX_QPATH];	/**< the name of the model file */
-	char particle[MAX_VAR];
-	char tag[MAX_VAR];		/**< in case a tag should be used to place the model */
-	struct lm_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
+	char target[MAX_VAR];
+	char tagname[MAX_VAR];		/**< in case a tag should be used to place the model */
+	struct localModel_s *parent;	/**< in case a tag should be used to place the model a parent local model id must be given */
 	qboolean inuse;
 
 	vec3_t origin;
@@ -161,15 +161,18 @@ typedef struct lm_s {
 	int renderEntityNum;	/**< entity number in the renderer entity array */
 	int skin;
 	int renderFlags;	/**< effect flags */
-	int frame;	/**< which frame to show */
+	int frame;	/**< which static frame to show (this can't be used if animname is set) */
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
 
 	static_lighting_t lighting;
 
+	/** is called every frame */
+	void (*think) (struct localModel_s * localModel);
+
 	struct model_s *model;
-} localModel_t;							/* local models */
+} localModel_t;
 
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
@@ -178,7 +181,6 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 extern cvar_t* cl_le_debug;
 extern cvar_t *cl_leshowinvis;
 
-qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
@@ -215,7 +217,9 @@ void LET_BrushModel(le_t *le);
 void LE_DoEndPathMove(le_t *le);
 
 /* local model functions */
-localModel_t *LM_AddModel(const char *model, const char *particle, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
+void LM_Think(void);
+void LMT_Init(localModel_t *localModel);
+localModel_t *LM_AddModel(const char *model, const vec3_t origin, const vec3_t angles, int entnum, int levelflags, int flags, const vec3_t scale);
 void LM_Perish(struct dbuffer *msg);
 void LM_AddToScene(void);
 

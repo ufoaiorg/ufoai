@@ -599,8 +599,6 @@ SERVER_LIBS
 CLIENT_CFLAGS
 CLIENT_LIBS
 EXE_EXT
-BINDIR
-PKGDATADIR
 HARD_LINKED_GAME
 PROFILING
 PARANOID
@@ -7318,39 +7316,6 @@ else
 	HARD_LINKED_GAME=0
 
 fi
-
-#---------------------------------------------------------------------------------------------
-# Fill in path variables
-#---------------------------------------------------------------------------------------------
-
-test "$prefix" = "NONE" && prefix=/usr/local
-test "$exec_prefix" = "NONE" && exec_prefix=$prefix
-
-eval PKGLIBDIR="$libdir/ufoai"
-
-cat >>confdefs.h <<_ACEOF
-#define PKGLIBDIR "$PKGLIBDIR"
-_ACEOF
-
-
-datarootdir=$prefix/share
-test "$datadir" = "NONE" && datadir=$datarootdir
-
-eval PKGDATADIR="$datadir/ufoai"
-
-cat >>confdefs.h <<_ACEOF
-#define PKGDATADIR "$PKGDATADIR"
-_ACEOF
-
-
-
-eval BINDIR="$bindir"
-
-cat >>confdefs.h <<_ACEOF
-#define BINDIR "$BINDIR"
-_ACEOF
-
-
 
 #---------------------------------------------------------------------------------------------
 

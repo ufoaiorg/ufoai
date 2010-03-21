@@ -65,7 +65,8 @@ typedef struct {
  * Shared functions (between C AI and LUA AI)
  */
 void AI_TurnIntoDirection(edict_t *ent, const pos3_t pos);
-qboolean AI_FindHidingLocation(edict_t *ent, const pos3_t from, int *tuLeft);
+qboolean AI_FindHidingLocation(int team, edict_t *ent, const pos3_t from, int *tuLeft);
+int AI_GetHidingTeam(const edict_t *ent);
 
 /*
  * LUA functions

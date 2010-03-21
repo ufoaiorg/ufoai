@@ -36,7 +36,7 @@ typedef struct {
 	char classname[MAX_VAR];
 	char target[MAX_VAR];
 	char targetname[MAX_VAR];
-	char tag[MAX_VAR];
+	char tagname[MAX_VAR];
 	char anim[MAX_VAR];
 	char model[MAX_QPATH];
 	char particle[MAX_VAR];
@@ -77,7 +77,7 @@ static const value_t localEntityValues[] = {
 	{"anim", V_STRING, offsetof(localEntityParse_t, anim), 0},
 	{"particle", V_STRING, offsetof(localEntityParse_t, particle), 0},
 	{"noise", V_STRING, offsetof(localEntityParse_t, noise), 0},
-	{"tag", V_STRING, offsetof(localEntityParse_t, tag), 0},
+	{"tag", V_STRING, offsetof(localEntityParse_t, tagname), 0},
 	{"target", V_STRING, offsetof(localEntityParse_t, target), 0},
 	{"targetname", V_STRING, offsetof(localEntityParse_t, targetname), 0},
 
@@ -187,6 +187,10 @@ void CL_SpawnParseEntitystring (void)
 
 		entnum++;
 	}
+
+	/* after we have parsed all the entities we can resolve the target, targetname
+	 * connections for the misc_model entities */
+	LM_Think();
 }
 
 static void SP_worldspawn (const localEntityParse_t *entData)
@@ -219,15 +223,24 @@ static void SP_misc_model (const localEntityParse_t *entData)
 		renderFlags |= RF_PULSE;
 
 	/* add it */
-	lm = LM_AddModel(entData->model, entData->particle, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
+	lm = LM_AddModel(entData->model, entData->origin, entData->angles, entData->entnum, (entData->spawnflags & 0xFF), renderFlags, entData->scale);
 	if (lm) {
+		if (LM_GetByID(entData->targetname) != NULL)
+			Com_Error(ERR_DROP, "Ambiguous targetname '%s'", entData->targetname);
 		Q_strncpyz(lm->id, entData->targetname, sizeof(lm->id));
-		Q_strncpyz(lm->tag, entData->tag, sizeof(lm->tag));
-		if (entData->target[0] != '\0') {
-			lm->parent = LM_GetByID(entData->target);
-			if (!lm->parent)
-				Com_Error(ERR_DROP, "Could not find local model entity with the id: '%s'. Make sure the order of the entities is correct", entData->target);
+		Q_strncpyz(lm->target, entData->target, sizeof(lm->target));
+		Q_strncpyz(lm->tagname, entData->tagname, sizeof(lm->tagname));
+
+		if (lm->animname[0] != '\0' && lm->tagname[0] != '\0') {
+			Com_Printf("Warning: Model has animation set, but also a tag - use the tag and skip the animation\n");
+			lm->animname[0] = '\0';
 		}
+
+		if (lm->tagname[0] != '\0' && lm->target[0] == '\0') {
+			Com_Error(ERR_DROP, "Warning: Model has tag set, but no target given");
+		}
+
+		lm->think = LMT_Init;
 		lm->skin = entData->skin;
 		lm->frame = entData->frame;
 		if (!lm->frame)

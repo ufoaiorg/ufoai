@@ -1,8 +1,5 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define this to the path containing the game binary. */
-#undef BINDIR
-
 /* Have cunit library */
 #undef BUILD_TESTS
 
@@ -143,12 +140,6 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
-
-/* Define this to the path containing the game data. */
-#undef PKGDATADIR
-
-/* Define this to the path containing the shared modules. */
-#undef PKGLIBDIR
 
 /* The size of `int', as computed by sizeof. */
 #undef SIZEOF_INT

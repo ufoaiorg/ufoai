@@ -1765,8 +1765,9 @@
 "classname" "misc_model"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"origin" "84 304 32"
-"anim" "moving3"
+"origin" "98 298 117"
+"target" "misc_model1"
+"tag" "tag_top"
 }
 // entity 23
 {
@@ -1775,15 +1776,17 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "origin" "84 304 32"
 "anim" "moving3"
+"targetname" "misc_model1"
 }
 // entity 24
 {
 "classname" "misc_model"
-"origin" "76 176 32"
+"origin" "86 186 117"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "254"
 "angles" "0 70 0"
-"anim" "moving3"
+"target" "misc_model2"
+"tag" "tag_top"
 }
 // entity 25
 {
@@ -1793,15 +1796,17 @@
 "spawnflags" "255"
 "angles" "0 70 0"
 "anim" "moving3"
+"targetname" "misc_model2"
 }
 // entity 26
 {
 "classname" "misc_model"
-"angles" "0 210 0"
+"angles" "0 -150 0"
 "spawnflags" "254"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"origin" "400 120 32"
-"anim" "moving3"
+"origin" "387 118 117"
+"target" "misc_model3"
+"tag" "tag_top"
 }
 // entity 27
 {
@@ -1811,4 +1816,5 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "origin" "400 120 32"
 "anim" "moving3"
+"targetname" "misc_model3"
 }

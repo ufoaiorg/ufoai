@@ -39,10 +39,7 @@ static cvar_t *cl_particleweather;
 
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
 
-#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*) pcmdData + x)
-#define RSTACK		-0xFFF0
-#define F(x)		(1<<x)
-#define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
+#define	V_VECS		((1 << V_FLOAT) | (1 << V_POS) | (1 << V_VECTOR) | (1 << V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
 #define V_UNTYPED   0x7FFF
 
@@ -196,6 +193,8 @@ static int numPtlCmds;
 static byte pcmdData[MAX_PCMD_DATA];
 static byte *pcmdPos;
 
+static const int RSTACK = -(MAX_PCMD_DATA);
+
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
 
@@ -287,7 +286,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 
 	/* search for the pic in the list */
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
-		if (a->type == type && a->frame == frame && !strcmp(name, a->name))
+		if (a->type == type && (type == ART_PIC && a->frame == frame) && !strcmp(name, a->name))
 			break;
 
 	if (i < r_numParticlesArt)
@@ -298,7 +297,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 
 	a->skin = 0;
 	a->type = type;
-	a->frame = (type == ART_PIC) ? frame : 0;
+	a->frame = frame;
 	Q_strncpyz(a->name, name, sizeof(a->name));
 
 	CL_ParticleLoadArt(a, type);
@@ -325,13 +324,29 @@ void PTL_InitStartup (void)
 	pcmdPos = pcmdData;
 }
 
+/**
+ * @brief Determine the memory location where the command accesses and stores its data.
+ * @param p The particle that is used to get local command data locations.
+ * @param cmd The command to get the data location for.
+ * @return The position where the command stores the data.
+ */
+static inline void *CL_ParticleCommandGetDataLocation (ptl_t *p, const ptlCmd_t *cmd)
+{
+	if (cmd->ref < 0)
+		/* a negative ref value is relative to the particle */
+		return (byte*)p - cmd->ref;
+	else
+		/* data is stored on the global command data hunk */
+		return (byte*)pcmdData + cmd->ref;
+}
 
 static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 {
-	int s, e;
+	int stackIdx;
+	ptrdiff_t e;
 	int type;
 	int i, j, n;
-	void *radr;
+	void *cmdData;
 	float arg;
 	ptl_t *pnew;
 
@@ -340,26 +355,26 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 		return;
 
 	/* run until finding PC_END */
-	for (s = 0, e = 0; cmd->cmd != PC_END; cmd++) {
+	for (stackIdx = 0, e = 0; cmd->cmd != PC_END; cmd++) {
 		if (cmd->ref > RSTACK)
-			radr = RADR(cmd->ref);
+			cmdData = CL_ParticleCommandGetDataLocation(p, cmd);
 		else {
-			if (!s)
+			if (!stackIdx)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
 			/* pop an element off the stack */
-			e = (byte *) stackPtr[--s] - cmdStack;
+			e = (byte *) stackPtr[--stackIdx] - cmdStack;
 
 			i = RSTACK - cmd->ref;
 			if (!i) {
 				/* normal stack reference */
-				radr = stackPtr[s];
-				cmd->type = stackType[s];
+				cmdData = stackPtr[stackIdx];
+				cmd->type = stackType[stackIdx];
 			} else {
 				/* stack reference to element of vector */
-				if ((1 << stackType[s]) & V_VECS) {
+				if ((1 << stackType[stackIdx]) & V_VECS) {
 					cmd->type = V_FLOAT;
-					radr = (float *) stackPtr[s] + (i - 1);
+					cmdData = (float *) stackPtr[stackIdx] + (i - 1);
 				} else {
 					Com_Error(ERR_DROP, "CL_ParticleFunction: can't get components of a non-vector type (particle %s)", p->ctrl->name);
 				}
@@ -369,53 +384,53 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 		switch (cmd->cmd) {
 		case PC_PUSH:
 			/* check for stack overflow */
-			if (s >= MAX_STACK_DEPTH)
+			if (stackIdx >= MAX_STACK_DEPTH)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack overflow");
 
 			/* store the value in the stack */
-			stackPtr[s] = &cmdStack[e];
-			stackType[s] = cmd->type;
-			e += Com_SetValue(stackPtr[s++], radr, cmd->type, 0, 0);
+			stackPtr[stackIdx] = &cmdStack[e];
+			stackType[stackIdx] = cmd->type;
+			e += Com_SetValue(stackPtr[stackIdx++], cmdData, cmd->type, 0, 0);
 			break;
 
 		case PC_POP:
 		case PC_KPOP:
 			/* check for stack underflow */
-			if (s == 0)
+			if (stackIdx == 0)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
 			/* get pics and models */
 			if (offsetof(ptl_t, pic) == -cmd->ref) {
-				if (stackType[--s] != V_STRING)
-					Com_Error(ERR_DROP, "Bad type '%s' for pic (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
-				p->pic = CL_ParticleGetArt((char *) stackPtr[s], p->frame, ART_PIC);
-				e = (byte *) stackPtr[s] - cmdStack;
+				if (stackType[--stackIdx] != V_STRING)
+					Com_Error(ERR_DROP, "Bad type '%s' for pic (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
+				p->pic = CL_ParticleGetArt((char *) stackPtr[stackIdx], p->frame, ART_PIC);
+				e = (byte *) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 			if (offsetof(ptl_t, model) == -cmd->ref) {
-				if (stackType[--s] != V_STRING)
-					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
-				p->model = CL_ParticleGetArt((char *) stackPtr[s], 0, ART_MODEL);
-				e = (byte *) stackPtr[s] - cmdStack;
+				if (stackType[--stackIdx] != V_STRING)
+					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
+				p->model = CL_ParticleGetArt((char *) stackPtr[stackIdx], p->frame, ART_MODEL);
+				e = (byte *) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
 
 			/* get different data */
 			if (cmd->cmd == PC_POP)
-				e -= Com_SetValue(radr, stackPtr[--s], cmd->type, 0, 0);
+				e -= Com_SetValue(cmdData, stackPtr[--stackIdx], cmd->type, 0, 0);
 			else
-				Com_SetValue(radr, stackPtr[s - 1], cmd->type, 0, 0);
+				Com_SetValue(cmdData, stackPtr[stackIdx - 1], cmd->type, 0, 0);
 			break;
 
 		case PC_ADD:
 		case PC_SUB:
 			/* check for stack underflow */
-			if (s == 0)
+			if (stackIdx == 0)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
-			type = stackType[s - 1];
+			type = stackType[stackIdx - 1];
 			if (!((1 << type) & V_VECS))
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for add (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for add (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 
 			/* float based vector addition */
 			if (type != cmd->type)
@@ -425,22 +440,22 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			for (i = 0; i < n; i++) {
 				if (cmd->cmd == PC_SUB)
-					arg = -(*((float *) radr + i));
+					arg = -(*((float *) cmdData + i));
 				else
-					arg = *((float *) radr + i);
-				*((float *) stackPtr[s - 1] + i) += arg;
+					arg = *((float *) cmdData + i);
+				*((float *) stackPtr[stackIdx - 1] + i) += arg;
 			}
 			break;
 
 		case PC_MUL:
 		case PC_DIV:
 			/* check for stack underflow */
-			if (s == 0)
+			if (stackIdx == 0)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
-			type = stackType[s - 1];
+			type = stackType[stackIdx - 1];
 			if (!((1 << type) & V_VECS))
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for add (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for add (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 
 			n = type - V_FLOAT + 1;
 
@@ -451,10 +466,10 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 				for (i = 0; i < n; i++) {
 					if (cmd->cmd == PC_DIV)
-						arg = 1.0 / (*((float *) radr + i));
+						arg = 1.0 / (*((float *) cmdData + i));
 					else
-						arg = *((float *) radr + i);
-					*((float *) stackPtr[s - 1] + i) *= arg;
+						arg = *((float *) cmdData + i);
+					*((float *) stackPtr[stackIdx - 1] + i) *= arg;
 				}
 				break;
 			}
@@ -464,57 +479,57 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			/* scalar multiplication with scalar in second argument */
 			if (cmd->cmd == PC_DIV)
-				arg = 1.0 / (*(float *) radr);
+				arg = 1.0 / (*(float *) cmdData);
 			else
-				arg = *(float *) radr;
+				arg = *(float *) cmdData;
 			for (i = 0; i < n; i++)
-				*((float *) stackPtr[s - 1] + i) *= arg;
+				*((float *) stackPtr[stackIdx - 1] + i) *= arg;
 
 			break;
 
 		case PC_SIN:
 			if (cmd->type != V_FLOAT)
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for sin (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
-			stackPtr[s] = &cmdStack[e];
-			stackType[s] = cmd->type;
-			*(float *) stackPtr[s++] = sin(*(float *) radr * 2 * M_PI);
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for sin (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
+			stackPtr[stackIdx] = &cmdStack[e];
+			stackType[stackIdx] = cmd->type;
+			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * 2 * M_PI);
 			e += sizeof(float);
 			break;
 
 		case PC_COS:
 			if (cmd->type != V_FLOAT)
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for cos (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
-			stackPtr[s] = &cmdStack[e];
-			stackType[s] = cmd->type;
-			*(float *) stackPtr[s++] = sin(*(float *) radr * 2 * M_PI);
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for cos (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
+			stackPtr[stackIdx] = &cmdStack[e];
+			stackType[stackIdx] = cmd->type;
+			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * 2 * M_PI);
 			e += sizeof(float);
 			break;
 
 		case PC_TAN:
 			if (cmd->type != V_FLOAT)
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for tan (particle %s)", vt_names[stackType[s - 1]], p->ctrl->name);
-			stackPtr[s] = &cmdStack[e];
-			stackType[s] = cmd->type;
-			*(float *) stackPtr[s++] = sin(*(float *) radr * 2 * M_PI);
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for tan (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
+			stackPtr[stackIdx] = &cmdStack[e];
+			stackType[stackIdx] = cmd->type;
+			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * 2 * M_PI);
 			e += sizeof(float);
 			break;
 
 		case PC_RAND:
 		case PC_CRAND:
-			stackPtr[s] = &cmdStack[e];
-			stackType[s] = cmd->type;
+			stackPtr[stackIdx] = &cmdStack[e];
+			stackType[stackIdx] = cmd->type;
 
 			n = cmd->type - V_FLOAT + 1;
 
 			if (cmd->cmd == PC_RAND)
 				for (i = 0; i < n; i++)
-					*((float *) stackPtr[s] + i) = *((float *) radr + i) * frand();
+					*((float *) stackPtr[stackIdx] + i) = *((float *) cmdData + i) * frand();
 			else
 				for (i = 0; i < n; i++)
-					*((float *) stackPtr[s] + i) = *((float *) radr + i) * crand();
+					*((float *) stackPtr[stackIdx] + i) = *((float *) cmdData + i) * crand();
 
 			e += n * sizeof(float);
-			s++;
+			stackIdx++;
 			break;
 
 		case PC_V2:
@@ -523,19 +538,19 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			n = cmd->cmd - PC_V2 + 2;
 			j = 0;
 
-			if (s < n)
+			if (stackIdx < n)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
 			for (i = 0; i < n; i++) {
-				if (!((1 << stackType[--s]) & V_VECS))
-					Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for vector creation (particle %s)", vt_names[stackType[s]], p->ctrl->name);
-				j += stackType[s] - V_FLOAT + 1;
+				if (!((1 << stackType[--stackIdx]) & V_VECS))
+					Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for vector creation (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
+				j += stackType[stackIdx] - V_FLOAT + 1;
 			}
 
 			if (j > 4)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: created vector with dim > 4 (particle %s)", p->ctrl->name);
 
-			stackType[s++] = V_FLOAT + j - 1;
+			stackType[stackIdx++] = V_FLOAT + j - 1;
 			break;
 
 		case PC_KILL:
@@ -543,32 +558,32 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			return;
 
 		case PC_SPAWN:
-			pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+			pnew = CL_ParticleSpawn((const char *) cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (!pnew)
 				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			break;
 
 		case PC_NSPAWN:
 			/* check for stack underflow */
-			if (s == 0)
+			if (stackIdx == 0)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
-			type = stackType[--s];
+			type = stackType[--stackIdx];
 			if (type != V_INT)
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)", vt_names[stackType[s]], p->ctrl->name);
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for nspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
 
-			n = *(int *) stackPtr[s];
+			n = *(int *) stackPtr[stackIdx];
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {
-				pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+				pnew = CL_ParticleSpawn((const char *) cmdData, p->levelFlags, p->s, p->v, p->a);
 				if (!pnew)
 					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			}
 			break;
 
 		case PC_CHILD:
-			pnew = CL_ParticleSpawn((char *)radr, p->levelFlags, p->s, p->v, p->a);
+			pnew = CL_ParticleSpawn((const char *)cmdData, p->levelFlags, p->s, p->v, p->a);
 			if (pnew) {
 				pnew->next = p->children;
 				pnew->parent = p;

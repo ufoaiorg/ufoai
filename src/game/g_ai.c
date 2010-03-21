@@ -210,10 +210,12 @@ static qboolean AI_HideNeeded (edict_t *ent)
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
 				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
 					const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
-					if (damage >= ent->HP / 3)
+					if (damage >= ent->HP / 3) {
+						const int hidingTeam = AI_GetHidingTeam(ent);
 						/* now check whether this enemy is visible for this alien */
-						if (G_Vis(-ent->team, ent, from, VT_NOFRUSTUM))
+						if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
 							return qtrue;
+					}
 				}
 			}
 		}
@@ -248,14 +250,30 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
 }
 
 /**
+ * @brief Returns the value for the vis check whenever an ai actor tries to hide. For aliens this
+ * is the inverse team - see the vis check code for the inverse team rules to see how this works.
+ * For civilians we have to specify the alien team and can't use the inverse team rules. This is
+ * needed because the inverse team rules aren't working for the civilian team - see @c TEAM_CIVILIAN
+ * @return A negative team number means "every other team" as the one from the given ent. See the vis
+ * check functions for the inverse team rules for more information.
+ */
+int AI_GetHidingTeam (const edict_t *ent)
+{
+	if (G_IsCivilian(ent))
+		return TEAM_ALIEN;
+	return -ent->team;
+}
+
+/**
  * @brief Tries to search a hiding spot
  * @param[out] ent The actor edict. The position of the actor is updated here to perform visibility checks
  * @param[in] from The grid position the actor is (theoretically) standing at and searching a hiding location from
  * @param[in,out] tuLeft The amount of left TUs to find a hiding spot. The TUs needed to walk to the grid position
  * is subtracted. May not be @c NULL.
+ * @param[in] team The team from which actor tries to hide
  * @return @c true if hiding is possible, @c false otherwise
  */
-qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int *tuLeft)
+qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *tuLeft)
 {
 	/* We need a local table to calculate the hiding steps */
 	static pathing_t hidePathingTable;
@@ -280,7 +298,7 @@ qboolean AI_FindHidingLocation (edict_t *ent, const pos3_t from, int *tuLeft)
 
 			/* visibility */
 			G_EdictCalcOrigin(ent);
-			if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
+			if (G_TestVis(team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 				continue;
 
 			*tuLeft -= delta;
@@ -450,8 +468,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	}
 
 	if (!G_IsRaged(ent)) {
+		const int hidingTeam = AI_GetHidingTeam(ent);
 		/* hide */
-		if (AI_HideNeeded(ent) || !(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
+		if (AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
@@ -464,7 +483,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * and only then firing at him */
 			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
-			if (!AI_FindHidingLocation(ent, to, &tu)) {
+			if (!AI_FindHidingLocation(hidingTeam, ent, to, &tu)) {
 				/* nothing found */
 				G_EdictSetOrigin(ent, to);
 				/** @todo Try to crouch if no hiding spot was found - randomized */

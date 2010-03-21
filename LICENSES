@@ -1939,6 +1939,7 @@ base/music/PsymongR2.ogg | GNU General Public License 2.0 | Simon Green (Psymong
 base/music/PsymongR3.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongR4.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongR5.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
+base/music/TheThings-Slippycurb.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Slippycurb
 base/music/alBasrahM.ogg | Public Domain | Golgotha
 base/music/dawn.ogg | GNU General Public License 2.0 | Draikon
 base/music/dbsea.ogg | GNU General Public License 2.0 | Draikon
@@ -3019,9 +3020,23 @@ base/textures/tex_buildings/floor025.png | GNU General Public License 2.0 or lat
 base/textures/tex_buildings/floor025_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/floor_gray_nm.tga | GNU General Public License 2.0
+base/textures/tex_buildings/ind05_pipe.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05_pipe_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05a.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05a_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05b.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05b_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05c.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05c_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05d.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/ind05d_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/japwall001.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/japwall001_nm.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_buildings/marble02b_floor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/met_panel01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/met_panel01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/met_panel02.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/met_panel02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/metal_duct_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3122,6 +3137,8 @@ base/textures/tex_buildings/wall_ind01_pil_nm.png | GNU General Public License 2
 base/textures/tex_buildings/wall_ind02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind03.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind03_flat.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_ind03_flat_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind03_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind04.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind04_cons.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3347,13 +3364,15 @@ base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later 
 base/textures/tex_material/conc02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metal012.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal012_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal013.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal013_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.tga | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
-base/textures/tex_material/metall012.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_material/metall012_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/wood004_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4278,17 +4297,12 @@ base/textures/tex_ufo/ufo2_10a8.tga | GNU General Public License 2.0 or later | 
 base/textures/tex_ufo/ufo2_10a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_12.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_12_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_13.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_13_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_14.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_14_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_15.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_15_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_16.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_16_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_17_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_medic01.jpg |  | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.jpg |  | "SparX" Beyeler

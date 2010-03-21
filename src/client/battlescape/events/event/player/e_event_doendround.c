@@ -45,9 +45,9 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 	refdef.rendererFlags &= ~RDF_IRGOGGLES;
 
 	/* change active player */
-	Com_Printf("Team %i ended round", cl.actTeam);
+	Com_Printf("Team %i ended round\n", cl.actTeam);
 	cl.actTeam = NET_ReadByte(msg);
-	Com_Printf(", team %i's round started!\n", cl.actTeam);
+	Com_Printf("Team %i's round started!\n", cl.actTeam);
 
 	/* hud changes */
 	if (cls.team == cl.actTeam) {

@@ -89,9 +89,9 @@ struct storedUFO_s;
 
 /* nation happiness constants */
 #define HAPPINESS_SUBVERSION_LOSS			-0.15
-#define HAPPINESS_ALIEN_MISSION_LOSS		-0.01
-#define HAPPINESS_UFO_SALE_GAIN				0.07
-#define HAPPINESS_UFO_SALE_LOSS				0.01
+#define HAPPINESS_ALIEN_MISSION_LOSS		-0.02
+#define HAPPINESS_UFO_SALE_GAIN				0.02
+#define HAPPINESS_UFO_SALE_LOSS				0.005
 #define HAPPINESS_MAX_MISSION_IMPACT		0.07
 
 /* Maximum alien groups per alien team category */

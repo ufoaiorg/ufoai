@@ -91,6 +91,28 @@ qboolean Com_GetConstInt (const char *name, int *value)
 }
 
 /**
+ * @brief Searches whether a given value was registered as a string to int mapping
+ * @param[in] space The namespace of the mapping variable
+ * @param[in] variable The name of the string mapping
+ * @param[out] value The mapped integer if found, not touched if the given string
+ * was found in the registered values.
+ * @return True if the value is found.
+ * @sa Com_RegisterConstInt
+ * @sa Com_ParseValue
+ * @sa Com_GetConstInt
+ */
+qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
+{
+	if (!variable || variable[0] == '\0')
+		return qfalse;
+
+	if (!space || space[0] == '\0')
+		return Com_GetConstInt(variable, value);
+
+	return Com_GetConstInt(va("%s::%s", space, variable), value);
+}
+
+/**
  * @brief Searches the mapping variable for a given integer value and a namespace
  * @param[in] value The mapped integer
  * @param[in] namespace The namespace to search in - might not be @c NULL or empty.
@@ -2140,7 +2162,7 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 	if (!td)
 		return NULL;
 
-	if (gender < 0 || gender >= 3) {
+	if (gender < 0 || gender >= NAME_LAST) {
 		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
 		return NULL;
 	}

@@ -186,10 +186,10 @@ enum clc_ops_e {
 	clc_oob = 0xff				/**< out of band - connectionless */
 };
 
-#define SOUND_ATTN_NONE 0 /**< full volume the entire level */
-#define SOUND_ATTN_NORM	1
-#define SOUND_ATTN_IDLE 2
-#define SOUND_ATTN_STATIC 3 /**< dimish very rapidly with distance */
+#define SOUND_ATTN_NONE 0.0f /**< full volume the entire level */
+#define SOUND_ATTN_NORM	1.0f
+#define SOUND_ATTN_IDLE 2.0f
+#define SOUND_ATTN_STATIC 3.0f /**< dimish very rapidly with distance */
 #define SOUND_ATTN_MAX SOUND_ATTN_STATIC
 
 #include "cmd.h"

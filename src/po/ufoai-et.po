@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-02 21:32+0100\n"
+"POT-Creation-Date: 2010-03-17 21:25+0100\n"
 "PO-Revision-Date: 2009-07-12 18:41+0300\n"
 "Last-Translator: Madis Veskimeister <madis@sisust.pri.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -257,8 +257,8 @@ msgstr "Stingray püüdurhävitaja"
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/otheritems.ufo:39
-#: ../base/ufos/research.ufo:3592
+#: ../base/ufos/aircraftmanagement.ufo:441 ../base/ufos/otheritems.ufo:40
+#: ../base/ufos/research.ufo:3591
 msgid "UFO - Scout"
 msgstr "Ufo - Luuraja"
 
@@ -266,8 +266,8 @@ msgstr "Ufo - Luuraja"
 msgid "Scout U"
 msgstr "Luure U"
 
-#: ../base/ufos/aircraftmanagement.ufo:464 ../base/ufos/otheritems.ufo:49
-#: ../base/ufos/research.ufo:3634
+#: ../base/ufos/aircraftmanagement.ufo:464 ../base/ufos/otheritems.ufo:50
+#: ../base/ufos/research.ufo:3633
 msgid "UFO - Fighter"
 msgstr "Ufo - Hävitus"
 
@@ -276,8 +276,8 @@ msgstr "Ufo - Hävitus"
 msgid "Fighter U"
 msgstr "Ufo - Hävitus"
 
-#: ../base/ufos/aircraftmanagement.ufo:494 ../base/ufos/otheritems.ufo:59
-#: ../base/ufos/research.ufo:3935
+#: ../base/ufos/aircraftmanagement.ufo:494 ../base/ufos/otheritems.ufo:60
+#: ../base/ufos/research.ufo:3934
 msgid "UFO - Harvester"
 msgstr "Ufo - Koguja"
 
@@ -285,8 +285,8 @@ msgstr "Ufo - Koguja"
 msgid "Harvester U"
 msgstr "Ufo - Koguja"
 
-#: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/otheritems.ufo:99
-#: ../base/ufos/research.ufo:3849
+#: ../base/ufos/aircraftmanagement.ufo:535 ../base/ufos/otheritems.ufo:100
+#: ../base/ufos/research.ufo:3848
 #, fuzzy
 msgid "UFO - Gunboat"
 msgstr "Ufo - Luuraja"
@@ -295,8 +295,8 @@ msgstr "Ufo - Luuraja"
 msgid "Gunboat U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:575 ../base/ufos/otheritems.ufo:109
-#: ../base/ufos/research.ufo:3806
+#: ../base/ufos/aircraftmanagement.ufo:575 ../base/ufos/otheritems.ufo:110
+#: ../base/ufos/research.ufo:3805
 msgid "UFO - Corrupter"
 msgstr "Ufo - Rikkuja"
 
@@ -304,8 +304,8 @@ msgstr "Ufo - Rikkuja"
 msgid "Corrupter U"
 msgstr "Rikkuja U"
 
-#: ../base/ufos/aircraftmanagement.ufo:604 ../base/ufos/otheritems.ufo:128
-#: ../base/ufos/research.ufo:3677
+#: ../base/ufos/aircraftmanagement.ufo:604 ../base/ufos/otheritems.ufo:129
+#: ../base/ufos/research.ufo:3676
 msgid "UFO - Supply Ship"
 msgstr "Ufo - Varustuslaev"
 
@@ -313,8 +313,8 @@ msgstr "Ufo - Varustuslaev"
 msgid "Supply U"
 msgstr "Varustus U"
 
-#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/otheritems.ufo:79
-#: ../base/ufos/research.ufo:3892
+#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/otheritems.ufo:80
+#: ../base/ufos/research.ufo:3891
 #, fuzzy
 msgid "UFO - Ripper"
 msgstr "Ufo - Hävitus"
@@ -323,8 +323,8 @@ msgstr "Ufo - Hävitus"
 msgid "Ripper U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/otheritems.ufo:69
-#: ../base/ufos/research.ufo:3763
+#: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/otheritems.ufo:70
+#: ../base/ufos/research.ufo:3762
 msgid "UFO - Bomber"
 msgstr "Ufo - Pommitaja"
 
@@ -332,8 +332,8 @@ msgstr "Ufo - Pommitaja"
 msgid "Bomber U"
 msgstr "Pommitaja U"
 
-#: ../base/ufos/aircraftmanagement.ufo:689 ../base/ufos/otheritems.ufo:119
-#: ../base/ufos/research.ufo:3720
+#: ../base/ufos/aircraftmanagement.ufo:689 ../base/ufos/otheritems.ufo:120
+#: ../base/ufos/research.ufo:3719
 msgid "UFO - Carrier"
 msgstr "Ufo - Kandja"
 
@@ -341,8 +341,8 @@ msgstr "Ufo - Kandja"
 msgid "Carrier U"
 msgstr "Ufo - Kandja"
 
-#: ../base/ufos/aircraftmanagement.ufo:712 ../base/ufos/otheritems.ufo:89
-#: ../base/ufos/research.ufo:3978
+#: ../base/ufos/aircraftmanagement.ufo:712 ../base/ufos/otheritems.ufo:90
+#: ../base/ufos/research.ufo:3977
 #, fuzzy
 msgid "UFO - Mothership"
 msgstr "Ufo - Rikkuja"
@@ -351,7 +351,7 @@ msgstr "Ufo - Rikkuja"
 msgid "Mothership U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4599
+#: ../base/ufos/aircraftmanagement.ufo:729 ../base/ufos/research.ufo:4598
 msgid "Aerial Laser Cannon"
 msgstr "Laeva laserkahur"
 
@@ -359,11 +359,11 @@ msgstr "Laeva laserkahur"
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva kiirlaskekahur"
 
-#: ../base/ufos/aircraftmanagement.ufo:771 ../base/ufos/research.ufo:4666
+#: ../base/ufos/aircraftmanagement.ufo:771 ../base/ufos/research.ufo:4665
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API moon"
 
-#: ../base/ufos/aircraftmanagement.ufo:787 ../base/ufos/research.ufo:4687
+#: ../base/ufos/aircraftmanagement.ufo:787 ../base/ufos/research.ufo:4686
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI moon"
 
@@ -379,56 +379,56 @@ msgstr "Sparrowhawk AA raketiraam"
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk rakett"
 
-#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4746
+#: ../base/ufos/aircraftmanagement.ufo:842 ../base/ufos/research.ufo:4745
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 raketiseade"
 
-#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4763
+#: ../base/ufos/aircraftmanagement.ufo:855 ../base/ufos/research.ufo:4762
 #, fuzzy
 msgid "TR-20 Rocket"
 msgstr "Suurejõulise lõhkeainega raketid"
 
-#: ../base/ufos/aircraftmanagement.ufo:874 ../base/ufos/research.ufo:4782
+#: ../base/ufos/aircraftmanagement.ufo:874 ../base/ufos/research.ufo:4781
 msgid "Particle Beam Weapon"
 msgstr "Osakestevoo relv"
 
-#: ../base/ufos/aircraftmanagement.ufo:904 ../base/ufos/research.ufo:4839
+#: ../base/ufos/aircraftmanagement.ufo:904 ../base/ufos/research.ufo:4838
 msgid "Targeting Computer"
 msgstr "Sihtimisarvuti"
 
-#: ../base/ufos/aircraftmanagement.ufo:916 ../base/ufos/research.ufo:4856
+#: ../base/ufos/aircraftmanagement.ufo:916 ../base/ufos/research.ufo:4855
 msgid "Fuel Pod"
 msgstr "Lisakütuse paak"
 
-#: ../base/ufos/aircraftmanagement.ufo:930 ../base/ufos/research.ufo:4434
+#: ../base/ufos/aircraftmanagement.ufo:930 ../base/ufos/research.ufo:4433
 msgid "Polymer Aircraft Armour"
 msgstr "Polümeersoomus"
 
-#: ../base/ufos/aircraftmanagement.ufo:944 ../base/ufos/research.ufo:4451
+#: ../base/ufos/aircraftmanagement.ufo:944 ../base/ufos/research.ufo:4450
 #, fuzzy
 msgid "Alien Aircraft Plating"
 msgstr "Lennumasin alustatud"
 
-#: ../base/ufos/aircraftmanagement.ufo:958 ../base/ufos/research.ufo:4485
+#: ../base/ufos/aircraftmanagement.ufo:958 ../base/ufos/research.ufo:4484
 #, fuzzy
 msgid "Alien Astrogation"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:4523
+#: ../base/ufos/aircraftmanagement.ufo:967 ../base/ufos/research.ufo:4522
 #, fuzzy
 msgid "Alien Propulsion"
 msgstr "Tulnukate liigid"
 
-#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4560
+#: ../base/ufos/aircraftmanagement.ufo:976 ../base/ufos/research.ufo:4559
 #, fuzzy
 msgid "Alien Detection"
 msgstr "Tulnukate liigid"
 
-#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4386
+#: ../base/ufos/aircraftmanagement.ufo:989 ../base/ufos/research.ufo:4385
 msgid "AA51 missile launcher"
 msgstr "AA51 raketilaskja"
 
-#: ../base/ufos/aircraftmanagement.ufo:1019 ../base/ufos/research.ufo:156
+#: ../base/ufos/aircraftmanagement.ufo:1019 ../base/ufos/research.ufo:157
 #, fuzzy
 msgid "Base-Defence Laser Turret"
 msgstr "Laserautomaat LAS-24"
@@ -557,7 +557,7 @@ msgstr "Arenenud radar"
 msgid "Hospital"
 msgstr "Haigla"
 
-#: ../base/ufos/basemanagement.ufo:314 ../base/ufos/research.ufo:3328
+#: ../base/ufos/basemanagement.ufo:314 ../base/ufos/research.ufo:3327
 msgid "Antimatter Storage"
 msgstr "Antimateeria ladu"
 
@@ -2671,77 +2671,77 @@ msgstr ""
 #: ../base/ufos/events.ufo:252 ../base/ufos/events.ufo:263
 #: ../base/ufos/events.ufo:274 ../base/ufos/events.ufo:285
 #: ../base/ufos/events.ufo:296 ../base/ufos/events.ufo:307
-#: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
-#: ../base/ufos/research.ufo:170 ../base/ufos/research.ufo:178
-#: ../base/ufos/research.ufo:221 ../base/ufos/research.ufo:229
-#: ../base/ufos/research.ufo:283 ../base/ufos/research.ufo:291
-#: ../base/ufos/research.ufo:316 ../base/ufos/research.ufo:324
-#: ../base/ufos/research.ufo:354 ../base/ufos/research.ufo:362
-#: ../base/ufos/research.ufo:417 ../base/ufos/research.ufo:425
-#: ../base/ufos/research.ufo:455 ../base/ufos/research.ufo:463
-#: ../base/ufos/research.ufo:493 ../base/ufos/research.ufo:501
-#: ../base/ufos/research.ufo:531 ../base/ufos/research.ufo:556
-#: ../base/ufos/research.ufo:564 ../base/ufos/research.ufo:593
-#: ../base/ufos/research.ufo:602 ../base/ufos/research.ufo:628
-#: ../base/ufos/research.ufo:636 ../base/ufos/research.ufo:1049
-#: ../base/ufos/research.ufo:1057 ../base/ufos/research.ufo:1125
-#: ../base/ufos/research.ufo:1133 ../base/ufos/research.ufo:1336
-#: ../base/ufos/research.ufo:1344 ../base/ufos/research.ufo:1395
-#: ../base/ufos/research.ufo:1403 ../base/ufos/research.ufo:1434
-#: ../base/ufos/research.ufo:1442 ../base/ufos/research.ufo:1472
-#: ../base/ufos/research.ufo:1480 ../base/ufos/research.ufo:1511
-#: ../base/ufos/research.ufo:1519 ../base/ufos/research.ufo:1550
-#: ../base/ufos/research.ufo:1558 ../base/ufos/research.ufo:1594
-#: ../base/ufos/research.ufo:1602 ../base/ufos/research.ufo:1650
-#: ../base/ufos/research.ufo:1658 ../base/ufos/research.ufo:1710
-#: ../base/ufos/research.ufo:1718 ../base/ufos/research.ufo:1769
+#: ../base/ufos/research.ufo:138 ../base/ufos/research.ufo:146
+#: ../base/ufos/research.ufo:171 ../base/ufos/research.ufo:179
+#: ../base/ufos/research.ufo:222 ../base/ufos/research.ufo:230
+#: ../base/ufos/research.ufo:284 ../base/ufos/research.ufo:292
+#: ../base/ufos/research.ufo:317 ../base/ufos/research.ufo:325
+#: ../base/ufos/research.ufo:355 ../base/ufos/research.ufo:363
+#: ../base/ufos/research.ufo:418 ../base/ufos/research.ufo:426
+#: ../base/ufos/research.ufo:456 ../base/ufos/research.ufo:464
+#: ../base/ufos/research.ufo:494 ../base/ufos/research.ufo:502
+#: ../base/ufos/research.ufo:532 ../base/ufos/research.ufo:557
+#: ../base/ufos/research.ufo:565 ../base/ufos/research.ufo:594
+#: ../base/ufos/research.ufo:603 ../base/ufos/research.ufo:629
+#: ../base/ufos/research.ufo:637 ../base/ufos/research.ufo:1050
+#: ../base/ufos/research.ufo:1058 ../base/ufos/research.ufo:1126
+#: ../base/ufos/research.ufo:1134 ../base/ufos/research.ufo:1337
+#: ../base/ufos/research.ufo:1345 ../base/ufos/research.ufo:1396
+#: ../base/ufos/research.ufo:1404 ../base/ufos/research.ufo:1435
+#: ../base/ufos/research.ufo:1443 ../base/ufos/research.ufo:1473
+#: ../base/ufos/research.ufo:1481 ../base/ufos/research.ufo:1512
+#: ../base/ufos/research.ufo:1520 ../base/ufos/research.ufo:1551
+#: ../base/ufos/research.ufo:1559 ../base/ufos/research.ufo:1595
+#: ../base/ufos/research.ufo:1603 ../base/ufos/research.ufo:1651
+#: ../base/ufos/research.ufo:1659 ../base/ufos/research.ufo:1711
+#: ../base/ufos/research.ufo:1719 ../base/ufos/research.ufo:1769
 #: ../base/ufos/research.ufo:1777 ../base/ufos/research.ufo:1809
 #: ../base/ufos/research.ufo:1817 ../base/ufos/research.ufo:1849
-#: ../base/ufos/research.ufo:1857 ../base/ufos/research.ufo:1909
-#: ../base/ufos/research.ufo:1917 ../base/ufos/research.ufo:1949
-#: ../base/ufos/research.ufo:1957 ../base/ufos/research.ufo:2006
-#: ../base/ufos/research.ufo:2014 ../base/ufos/research.ufo:2241
-#: ../base/ufos/research.ufo:2249 ../base/ufos/research.ufo:2288
-#: ../base/ufos/research.ufo:2296 ../base/ufos/research.ufo:2330
-#: ../base/ufos/research.ufo:2338 ../base/ufos/research.ufo:2371
-#: ../base/ufos/research.ufo:2379 ../base/ufos/research.ufo:2430
-#: ../base/ufos/research.ufo:2438 ../base/ufos/research.ufo:2490
-#: ../base/ufos/research.ufo:2498 ../base/ufos/research.ufo:2550
-#: ../base/ufos/research.ufo:2558 ../base/ufos/research.ufo:2621
-#: ../base/ufos/research.ufo:2629 ../base/ufos/research.ufo:2699
-#: ../base/ufos/research.ufo:2707 ../base/ufos/research.ufo:2736
-#: ../base/ufos/research.ufo:2744 ../base/ufos/research.ufo:3344
-#: ../base/ufos/research.ufo:3385 ../base/ufos/research.ufo:3392
-#: ../base/ufos/research.ufo:3422 ../base/ufos/research.ufo:3429
-#: ../base/ufos/research.ufo:3492 ../base/ufos/research.ufo:3499
-#: ../base/ufos/research.ufo:3528 ../base/ufos/research.ufo:3535
-#: ../base/ufos/research.ufo:3564 ../base/ufos/research.ufo:3571
-#: ../base/ufos/research.ufo:3606 ../base/ufos/research.ufo:3614
-#: ../base/ufos/research.ufo:3648 ../base/ufos/research.ufo:3656
-#: ../base/ufos/research.ufo:3691 ../base/ufos/research.ufo:3699
-#: ../base/ufos/research.ufo:3734 ../base/ufos/research.ufo:3742
-#: ../base/ufos/research.ufo:3777 ../base/ufos/research.ufo:3785
-#: ../base/ufos/research.ufo:3820 ../base/ufos/research.ufo:3828
-#: ../base/ufos/research.ufo:3863 ../base/ufos/research.ufo:3871
-#: ../base/ufos/research.ufo:3906 ../base/ufos/research.ufo:3914
-#: ../base/ufos/research.ufo:3949 ../base/ufos/research.ufo:3957
-#: ../base/ufos/research.ufo:3992 ../base/ufos/research.ufo:4000
-#: ../base/ufos/research.ufo:4063 ../base/ufos/research.ufo:4071
-#: ../base/ufos/research.ufo:4122 ../base/ufos/research.ufo:4130
-#: ../base/ufos/research.ufo:4164 ../base/ufos/research.ufo:4172
-#: ../base/ufos/research.ufo:4206 ../base/ufos/research.ufo:4214
-#: ../base/ufos/research.ufo:4461 ../base/ufos/research.ufo:4468
-#: ../base/ufos/research.ufo:4498 ../base/ufos/research.ufo:4505
-#: ../base/ufos/research.ufo:4536 ../base/ufos/research.ufo:4543
-#: ../base/ufos/research.ufo:4573 ../base/ufos/research.ufo:4580
-#: ../base/ufos/research.ufo:4615 ../base/ufos/research.ufo:4623
-#: ../base/ufos/research.ufo:4798 ../base/ufos/research.ufo:4806
-#: ../base/ufos/research.ufo:4890 ../base/ufos/research.ufo:4898
-#: ../base/ufos/research.ufo:4987 ../base/ufos/research.ufo:5018
-#: ../base/ufos/research.ufo:5025 ../base/ufos/research.ufo:5055
-#: ../base/ufos/research.ufo:5064 ../base/ufos/research.ufo:5096
-#: ../base/ufos/research.ufo:5103 ../base/ufos/research.ufo:5131
-#: ../base/ufos/research.ufo:5160
+#: ../base/ufos/research.ufo:1857 ../base/ufos/research.ufo:1908
+#: ../base/ufos/research.ufo:1916 ../base/ufos/research.ufo:1948
+#: ../base/ufos/research.ufo:1956 ../base/ufos/research.ufo:2005
+#: ../base/ufos/research.ufo:2013 ../base/ufos/research.ufo:2240
+#: ../base/ufos/research.ufo:2248 ../base/ufos/research.ufo:2287
+#: ../base/ufos/research.ufo:2295 ../base/ufos/research.ufo:2329
+#: ../base/ufos/research.ufo:2337 ../base/ufos/research.ufo:2370
+#: ../base/ufos/research.ufo:2378 ../base/ufos/research.ufo:2429
+#: ../base/ufos/research.ufo:2437 ../base/ufos/research.ufo:2489
+#: ../base/ufos/research.ufo:2497 ../base/ufos/research.ufo:2549
+#: ../base/ufos/research.ufo:2557 ../base/ufos/research.ufo:2620
+#: ../base/ufos/research.ufo:2628 ../base/ufos/research.ufo:2698
+#: ../base/ufos/research.ufo:2706 ../base/ufos/research.ufo:2735
+#: ../base/ufos/research.ufo:2743 ../base/ufos/research.ufo:3343
+#: ../base/ufos/research.ufo:3384 ../base/ufos/research.ufo:3391
+#: ../base/ufos/research.ufo:3421 ../base/ufos/research.ufo:3428
+#: ../base/ufos/research.ufo:3491 ../base/ufos/research.ufo:3498
+#: ../base/ufos/research.ufo:3527 ../base/ufos/research.ufo:3534
+#: ../base/ufos/research.ufo:3563 ../base/ufos/research.ufo:3570
+#: ../base/ufos/research.ufo:3605 ../base/ufos/research.ufo:3613
+#: ../base/ufos/research.ufo:3647 ../base/ufos/research.ufo:3655
+#: ../base/ufos/research.ufo:3690 ../base/ufos/research.ufo:3698
+#: ../base/ufos/research.ufo:3733 ../base/ufos/research.ufo:3741
+#: ../base/ufos/research.ufo:3776 ../base/ufos/research.ufo:3784
+#: ../base/ufos/research.ufo:3819 ../base/ufos/research.ufo:3827
+#: ../base/ufos/research.ufo:3862 ../base/ufos/research.ufo:3870
+#: ../base/ufos/research.ufo:3905 ../base/ufos/research.ufo:3913
+#: ../base/ufos/research.ufo:3948 ../base/ufos/research.ufo:3956
+#: ../base/ufos/research.ufo:3991 ../base/ufos/research.ufo:3999
+#: ../base/ufos/research.ufo:4062 ../base/ufos/research.ufo:4070
+#: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4129
+#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4171
+#: ../base/ufos/research.ufo:4205 ../base/ufos/research.ufo:4213
+#: ../base/ufos/research.ufo:4460 ../base/ufos/research.ufo:4467
+#: ../base/ufos/research.ufo:4497 ../base/ufos/research.ufo:4504
+#: ../base/ufos/research.ufo:4535 ../base/ufos/research.ufo:4542
+#: ../base/ufos/research.ufo:4572 ../base/ufos/research.ufo:4579
+#: ../base/ufos/research.ufo:4614 ../base/ufos/research.ufo:4622
+#: ../base/ufos/research.ufo:4797 ../base/ufos/research.ufo:4805
+#: ../base/ufos/research.ufo:4889 ../base/ufos/research.ufo:4897
+#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
+#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5054
+#: ../base/ufos/research.ufo:5063 ../base/ufos/research.ufo:5095
+#: ../base/ufos/research.ufo:5102 ../base/ufos/research.ufo:5130
+#: ../base/ufos/research.ufo:5159
 msgid "mail_to_base_commander"
 msgstr ""
 
@@ -2761,61 +2761,61 @@ msgstr ""
 #: ../base/ufos/events.ufo:43 ../base/ufos/events.ufo:55
 #: ../base/ufos/events.ufo:66 ../base/ufos/events.ufo:77
 #: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:99
-#: ../base/ufos/events.ufo:121 ../base/ufos/research.ufo:136
-#: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:169
-#: ../base/ufos/research.ufo:177 ../base/ufos/research.ufo:220
-#: ../base/ufos/research.ufo:228 ../base/ufos/research.ufo:282
-#: ../base/ufos/research.ufo:290 ../base/ufos/research.ufo:530
-#: ../base/ufos/research.ufo:627 ../base/ufos/research.ufo:635
-#: ../base/ufos/research.ufo:1048 ../base/ufos/research.ufo:1056
-#: ../base/ufos/research.ufo:1124 ../base/ufos/research.ufo:1132
-#: ../base/ufos/research.ufo:1335 ../base/ufos/research.ufo:1343
-#: ../base/ufos/research.ufo:1394 ../base/ufos/research.ufo:1402
-#: ../base/ufos/research.ufo:1433 ../base/ufos/research.ufo:1441
-#: ../base/ufos/research.ufo:1471 ../base/ufos/research.ufo:1479
-#: ../base/ufos/research.ufo:1510 ../base/ufos/research.ufo:1518
-#: ../base/ufos/research.ufo:1549 ../base/ufos/research.ufo:1557
-#: ../base/ufos/research.ufo:1593 ../base/ufos/research.ufo:1601
-#: ../base/ufos/research.ufo:1649 ../base/ufos/research.ufo:1657
-#: ../base/ufos/research.ufo:1709 ../base/ufos/research.ufo:1717
+#: ../base/ufos/events.ufo:121 ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:145 ../base/ufos/research.ufo:170
+#: ../base/ufos/research.ufo:178 ../base/ufos/research.ufo:221
+#: ../base/ufos/research.ufo:229 ../base/ufos/research.ufo:283
+#: ../base/ufos/research.ufo:291 ../base/ufos/research.ufo:531
+#: ../base/ufos/research.ufo:628 ../base/ufos/research.ufo:636
+#: ../base/ufos/research.ufo:1049 ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1125 ../base/ufos/research.ufo:1133
+#: ../base/ufos/research.ufo:1336 ../base/ufos/research.ufo:1344
+#: ../base/ufos/research.ufo:1395 ../base/ufos/research.ufo:1403
+#: ../base/ufos/research.ufo:1434 ../base/ufos/research.ufo:1442
+#: ../base/ufos/research.ufo:1472 ../base/ufos/research.ufo:1480
+#: ../base/ufos/research.ufo:1511 ../base/ufos/research.ufo:1519
+#: ../base/ufos/research.ufo:1550 ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1594 ../base/ufos/research.ufo:1602
+#: ../base/ufos/research.ufo:1650 ../base/ufos/research.ufo:1658
+#: ../base/ufos/research.ufo:1710 ../base/ufos/research.ufo:1718
 #: ../base/ufos/research.ufo:1768 ../base/ufos/research.ufo:1776
 #: ../base/ufos/research.ufo:1808 ../base/ufos/research.ufo:1816
 #: ../base/ufos/research.ufo:1848 ../base/ufos/research.ufo:1856
-#: ../base/ufos/research.ufo:1908 ../base/ufos/research.ufo:1916
-#: ../base/ufos/research.ufo:1948 ../base/ufos/research.ufo:1956
-#: ../base/ufos/research.ufo:2005 ../base/ufos/research.ufo:2013
-#: ../base/ufos/research.ufo:2240 ../base/ufos/research.ufo:2248
-#: ../base/ufos/research.ufo:2287 ../base/ufos/research.ufo:2295
-#: ../base/ufos/research.ufo:2370 ../base/ufos/research.ufo:2378
-#: ../base/ufos/research.ufo:2429 ../base/ufos/research.ufo:2437
-#: ../base/ufos/research.ufo:2489 ../base/ufos/research.ufo:2497
-#: ../base/ufos/research.ufo:2549 ../base/ufos/research.ufo:2557
-#: ../base/ufos/research.ufo:2620 ../base/ufos/research.ufo:2628
-#: ../base/ufos/research.ufo:2698 ../base/ufos/research.ufo:2706
-#: ../base/ufos/research.ufo:2735 ../base/ufos/research.ufo:2743
-#: ../base/ufos/research.ufo:3343 ../base/ufos/research.ufo:3384
-#: ../base/ufos/research.ufo:3391 ../base/ufos/research.ufo:3421
-#: ../base/ufos/research.ufo:3428 ../base/ufos/research.ufo:3491
-#: ../base/ufos/research.ufo:3498 ../base/ufos/research.ufo:3527
-#: ../base/ufos/research.ufo:3534 ../base/ufos/research.ufo:3563
-#: ../base/ufos/research.ufo:3570 ../base/ufos/research.ufo:3605
-#: ../base/ufos/research.ufo:3613 ../base/ufos/research.ufo:3647
-#: ../base/ufos/research.ufo:3655 ../base/ufos/research.ufo:3690
-#: ../base/ufos/research.ufo:3698 ../base/ufos/research.ufo:3733
-#: ../base/ufos/research.ufo:3741 ../base/ufos/research.ufo:3776
-#: ../base/ufos/research.ufo:3784 ../base/ufos/research.ufo:3819
-#: ../base/ufos/research.ufo:3827 ../base/ufos/research.ufo:3862
-#: ../base/ufos/research.ufo:3870 ../base/ufos/research.ufo:3905
-#: ../base/ufos/research.ufo:3913 ../base/ufos/research.ufo:3948
-#: ../base/ufos/research.ufo:3956 ../base/ufos/research.ufo:3991
-#: ../base/ufos/research.ufo:3999 ../base/ufos/research.ufo:4460
-#: ../base/ufos/research.ufo:4467 ../base/ufos/research.ufo:4497
-#: ../base/ufos/research.ufo:4504 ../base/ufos/research.ufo:4535
-#: ../base/ufos/research.ufo:4542 ../base/ufos/research.ufo:4572
-#: ../base/ufos/research.ufo:4579 ../base/ufos/research.ufo:4614
-#: ../base/ufos/research.ufo:4622 ../base/ufos/research.ufo:4797
-#: ../base/ufos/research.ufo:4805 ../base/ufos/research.ufo:4889
-#: ../base/ufos/research.ufo:4897
+#: ../base/ufos/research.ufo:1907 ../base/ufos/research.ufo:1915
+#: ../base/ufos/research.ufo:1947 ../base/ufos/research.ufo:1955
+#: ../base/ufos/research.ufo:2004 ../base/ufos/research.ufo:2012
+#: ../base/ufos/research.ufo:2239 ../base/ufos/research.ufo:2247
+#: ../base/ufos/research.ufo:2286 ../base/ufos/research.ufo:2294
+#: ../base/ufos/research.ufo:2369 ../base/ufos/research.ufo:2377
+#: ../base/ufos/research.ufo:2428 ../base/ufos/research.ufo:2436
+#: ../base/ufos/research.ufo:2488 ../base/ufos/research.ufo:2496
+#: ../base/ufos/research.ufo:2548 ../base/ufos/research.ufo:2556
+#: ../base/ufos/research.ufo:2619 ../base/ufos/research.ufo:2627
+#: ../base/ufos/research.ufo:2697 ../base/ufos/research.ufo:2705
+#: ../base/ufos/research.ufo:2734 ../base/ufos/research.ufo:2742
+#: ../base/ufos/research.ufo:3342 ../base/ufos/research.ufo:3383
+#: ../base/ufos/research.ufo:3390 ../base/ufos/research.ufo:3420
+#: ../base/ufos/research.ufo:3427 ../base/ufos/research.ufo:3490
+#: ../base/ufos/research.ufo:3497 ../base/ufos/research.ufo:3526
+#: ../base/ufos/research.ufo:3533 ../base/ufos/research.ufo:3562
+#: ../base/ufos/research.ufo:3569 ../base/ufos/research.ufo:3604
+#: ../base/ufos/research.ufo:3612 ../base/ufos/research.ufo:3646
+#: ../base/ufos/research.ufo:3654 ../base/ufos/research.ufo:3689
+#: ../base/ufos/research.ufo:3697 ../base/ufos/research.ufo:3732
+#: ../base/ufos/research.ufo:3740 ../base/ufos/research.ufo:3775
+#: ../base/ufos/research.ufo:3783 ../base/ufos/research.ufo:3818
+#: ../base/ufos/research.ufo:3826 ../base/ufos/research.ufo:3861
+#: ../base/ufos/research.ufo:3869 ../base/ufos/research.ufo:3904
+#: ../base/ufos/research.ufo:3912 ../base/ufos/research.ufo:3947
+#: ../base/ufos/research.ufo:3955 ../base/ufos/research.ufo:3990
+#: ../base/ufos/research.ufo:3998 ../base/ufos/research.ufo:4459
+#: ../base/ufos/research.ufo:4466 ../base/ufos/research.ufo:4496
+#: ../base/ufos/research.ufo:4503 ../base/ufos/research.ufo:4534
+#: ../base/ufos/research.ufo:4541 ../base/ufos/research.ufo:4571
+#: ../base/ufos/research.ufo:4578 ../base/ufos/research.ufo:4613
+#: ../base/ufos/research.ufo:4621 ../base/ufos/research.ufo:4796
+#: ../base/ufos/research.ufo:4804 ../base/ufos/research.ufo:4888
+#: ../base/ufos/research.ufo:4896
 msgid "mail_from_paul_navarre"
 msgstr ""
 
@@ -2988,10 +2988,10 @@ msgid "mail_new_radar_contact"
 msgstr ""
 
 #: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
-#: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:592
-#: ../base/ufos/research.ufo:601 ../base/ufos/research.ufo:5054
-#: ../base/ufos/research.ufo:5063 ../base/ufos/research.ufo:5130
-#: ../base/ufos/research.ufo:5159
+#: ../base/ufos/events.ufo:253 ../base/ufos/research.ufo:593
+#: ../base/ufos/research.ufo:602 ../base/ufos/research.ufo:5053
+#: ../base/ufos/research.ufo:5062 ../base/ufos/research.ufo:5129
+#: ../base/ufos/research.ufo:5158
 msgid "mail_from_col_falkland"
 msgstr ""
 
@@ -3263,226 +3263,226 @@ msgstr ""
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:422 ../base/ufos/maps.ufo:503
-#: ../base/ufos/maps.ufo:544
+#: ../base/ufos/maps.ufo:422 ../base/ufos/maps.ufo:504
+#: ../base/ufos/maps.ufo:546
 msgid "An industrial area in a cold region."
 msgstr "Tööstusala külmas kohas."
 
-#: ../base/ufos/maps.ufo:464
+#: ../base/ufos/maps.ufo:465
 msgid "An underpopulated area in a cold region."
 msgstr "Vähese asustusega ala külmas kohas."
 
-#: ../base/ufos/maps.ufo:583
+#: ../base/ufos/maps.ufo:585
 msgid "An industrial compound."
 msgstr "Tööstuskeskus."
 
-#: ../base/ufos/maps.ufo:638
+#: ../base/ufos/maps.ufo:640
 #, fuzzy
 msgid "Cemetery terror mission."
 msgstr "Terror looduses."
 
-#: ../base/ufos/maps.ufo:689 ../base/ufos/maps.ufo:729
+#: ../base/ufos/maps.ufo:691 ../base/ufos/maps.ufo:731
 msgid "A river runs through this piece of jungle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:770 ../base/ufos/maps.ufo:811
-#: ../base/ufos/maps.ufo:851
+#: ../base/ufos/maps.ufo:772 ../base/ufos/maps.ufo:813
+#: ../base/ufos/maps.ufo:853
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:897 ../base/ufos/maps.ufo:936
-#: ../base/ufos/maps.ufo:977 ../base/ufos/maps.ufo:1017
+#: ../base/ufos/maps.ufo:899 ../base/ufos/maps.ufo:938
+#: ../base/ufos/maps.ufo:979 ../base/ufos/maps.ufo:1019
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1056 ../base/ufos/maps.ufo:1137
-#: ../base/ufos/maps.ufo:1177
+#: ../base/ufos/maps.ufo:1058 ../base/ufos/maps.ufo:1139
+#: ../base/ufos/maps.ufo:1179
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1097
+#: ../base/ufos/maps.ufo:1099
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1217 ../base/ufos/maps.ufo:1259
+#: ../base/ufos/maps.ufo:1219 ../base/ufos/maps.ufo:1261
 msgid "Some houses in desert"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1300
+#: ../base/ufos/maps.ufo:1302
 msgid "An excavation site that has fallen under alien attack."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1347
+#: ../base/ufos/maps.ufo:1349
 msgid "An estate owned by rich and influential people."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1391
+#: ../base/ufos/maps.ufo:1393
 msgid "A small village in England."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1437
+#: ../base/ufos/maps.ufo:1439
 msgid "A small office in a mountainous region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1485
+#: ../base/ufos/maps.ufo:1487
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1535
+#: ../base/ufos/maps.ufo:1537
 msgid "An old mine."
 msgstr "Vana kaevandus."
 
-#: ../base/ufos/maps.ufo:1583
+#: ../base/ufos/maps.ufo:1585
 msgid "An industrial area, used for loading and unloading goods."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1629
+#: ../base/ufos/maps.ufo:1631
 msgid "A bunker used in a previous conflict."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1675
+#: ../base/ufos/maps.ufo:1677
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1719 ../base/ufos/maps.ufo:1769
-#: ../base/ufos/maps.ufo:1819
+#: ../base/ufos/maps.ufo:1721 ../base/ufos/maps.ufo:1771
+#: ../base/ufos/maps.ufo:1821
 msgid "A classic eastern suburban area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1868
+#: ../base/ufos/maps.ufo:1870
 msgid "A small industrial area."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1914
+#: ../base/ufos/maps.ufo:1916
 msgid "A stadium used for various recreational events."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:1963
+#: ../base/ufos/maps.ufo:1965
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2021
+#: ../base/ufos/maps.ufo:2023
 msgid "A small estate in the mountains"
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2070
+#: ../base/ufos/maps.ufo:2072
 #, fuzzy
 msgid "A crashed Scout UFO"
 msgstr "Allakukkunud UFO"
 
-#: ../base/ufos/maps.ufo:2105
+#: ../base/ufos/maps.ufo:2107
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2152
+#: ../base/ufos/maps.ufo:2154
 msgid "A ferry."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2200
+#: ../base/ufos/maps.ufo:2202
 msgid "A rather old-fashioned suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2249 ../base/ufos/maps.ufo:2296
+#: ../base/ufos/maps.ufo:2251 ../base/ufos/maps.ufo:2298
 msgid "A small neighbourhood in a warm urban region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2344
+#: ../base/ufos/maps.ufo:2346
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2393 ../base/ufos/maps.ufo:2437
+#: ../base/ufos/maps.ufo:2395 ../base/ufos/maps.ufo:2439
 msgid "An urban district in an oriental region."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2481
+#: ../base/ufos/maps.ufo:2483
 msgid "Underground pipe construction site."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2528
+#: ../base/ufos/maps.ufo:2530
 msgid "A subway station in a suburban part of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2574
+#: ../base/ufos/maps.ufo:2576
 msgid "An office complex in the centre of town."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2622
+#: ../base/ufos/maps.ufo:2624
 msgid "A suburban district."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2667
+#: ../base/ufos/maps.ufo:2669
 msgid "A military convoy has caught the eye of the aliens."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2714 ../base/ufos/maps.ufo:2760
+#: ../base/ufos/maps.ufo:2716 ../base/ufos/maps.ufo:2762
 msgid "A small UFO has crashed in this mining region."
 msgstr "Väike ufo on alla kukkunud kaevandusregioonis."
 
-#: ../base/ufos/maps.ufo:2810
+#: ../base/ufos/maps.ufo:2812
 msgid "An office complex under construction."
 msgstr "Ehitatav kontorikompleks."
 
-#: ../base/ufos/maps.ufo:2857
+#: ../base/ufos/maps.ufo:2859
 msgid "A local harbour."
 msgstr "Kohalik sadam."
 
-#: ../base/ufos/maps.ufo:2902
+#: ../base/ufos/maps.ufo:2904
 msgid "An office complex on the outskirts of town."
 msgstr "Kontorikompleks äärelinnas."
 
-#: ../base/ufos/maps.ufo:2947
+#: ../base/ufos/maps.ufo:2949
 msgid "A luxurious vacation resort."
 msgstr "Lukuslik puhkekeskus."
 
-#: ../base/ufos/maps.ufo:3004
+#: ../base/ufos/maps.ufo:3006
 msgid "A suburb that has been visited by UFO."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3056
+#: ../base/ufos/maps.ufo:3058
 msgid "A suburb that has received a visit from a Harvester."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3108
+#: ../base/ufos/maps.ufo:3110
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3154 ../base/ufos/maps.ufo:3188
+#: ../base/ufos/maps.ufo:3156 ../base/ufos/maps.ufo:3190
 msgid "A small settlement in winter."
 msgstr "Väike talvine asula."
 
-#: ../base/ufos/maps.ufo:3227
+#: ../base/ufos/maps.ufo:3229
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3275
+#: ../base/ufos/maps.ufo:3277
 msgid "A Bomber has landed in the middle of a city."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3328
+#: ../base/ufos/maps.ufo:3330
 msgid "A place where people come to relax and mingle."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3376
+#: ../base/ufos/maps.ufo:3378
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3424
+#: ../base/ufos/maps.ufo:3426
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3463
+#: ../base/ufos/maps.ufo:3465
 msgid "Wilderness terror mission."
 msgstr "Terror looduses."
 
-#: ../base/ufos/maps.ufo:3509
+#: ../base/ufos/maps.ufo:3511
 msgid "UFO Crashsite."
 msgstr "UFO allakukkumise koht."
 
-#: ../base/ufos/maps.ufo:3540
+#: ../base/ufos/maps.ufo:3542
 msgid "An alien base."
 msgstr "Tulnukabaas."
 
-#: ../base/ufos/maps.ufo:3555
+#: ../base/ufos/maps.ufo:3557
 msgid "Base is under attack."
 msgstr "Sinu baasi on rünnaku all."
 
@@ -3676,71 +3676,71 @@ msgstr "Venemaa"
 msgid "The Commonwealth of Oceania"
 msgstr "Okeaania Ühendus"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:205
-#: ../base/ufos/research.ufo:246
+#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:206
+#: ../base/ufos/research.ufo:247
 msgid "Antimatter"
 msgstr "Antimateeria"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:340
-#: ../base/ufos/research.ufo:384
+#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:341
+#: ../base/ufos/research.ufo:385
 msgid "Alien Breathing Apparatus"
 msgstr "Tulnukate hingamisaparaat"
 
-#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:4876
-#: ../base/ufos/research.ufo:4915
+#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:4875
+#: ../base/ufos/research.ufo:4914
 msgid "Alien Materials"
 msgstr "Tulnukate materjalid"
 
-#: ../base/ufos/otheritems.ufo:156 ../base/ufos/weapons_melee.ufo:24
+#: ../base/ufos/otheritems.ufo:157 ../base/ufos/weapons_melee.ufo:24
 #: ../base/ufos/weapons_melee.ufo:83 ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
 msgstr "Torka"
 
-#: ../base/ufos/research.ufo:107
+#: ../base/ufos/research.ufo:108
 msgid "Background"
 msgstr ""
 
-#: ../base/ufos/research.ufo:108 ../base/ufos/ui/bases.ufo:129
+#: ../base/ufos/research.ufo:109 ../base/ufos/ui/bases.ufo:129
 #: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
 #: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
 msgid "Aircraft"
 msgstr "Lennumasin"
 
-#: ../base/ufos/research.ufo:109
+#: ../base/ufos/research.ufo:110
 msgid "Base Facilities"
 msgstr "Baasi ehitised"
 
-#: ../base/ufos/research.ufo:110
+#: ../base/ufos/research.ufo:111
 #, fuzzy
 msgid "Research Reports"
 msgstr "Uurimine"
 
-#: ../base/ufos/research.ufo:111 ../base/ufos/ui/aircraft.ufo:67
+#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:67
 #: ../base/ufos/ui/skirmish.ufo:87 ../base/ufos/ui/transfer.ufo:35
 #: ../base/ufos/ui/transfer.ufo:45 ../base/ufos/ui/transfer.ufo:612
 #, fuzzy
 msgid "Equipment"
 msgstr "Relvasta"
 
-#: ../base/ufos/research.ufo:112
+#: ../base/ufos/research.ufo:113
 #, fuzzy
 msgid "Alien Artifacts"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:113
+#: ../base/ufos/research.ufo:114
 msgid "Autopsies & Observation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:115
 msgid "The Alien Threat"
 msgstr ""
 
-#: ../base/ufos/research.ufo:123
+#: ../base/ufos/research.ufo:124
 msgid "Continuous Wave Laser Operation"
 msgstr ""
 
-#: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:129
 msgid "laser_txt"
 msgstr ""
 "Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
@@ -3761,7 +3761,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:131
+#: ../base/ufos/research.ufo:132
 msgid "laser_pre_txt"
 msgstr ""
 "Our collected UN research files have yielded a lot of valuable information about weapon development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfer energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
@@ -3774,7 +3774,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:161
+#: ../base/ufos/research.ufo:162 ../base/ufos/research.ufo:3075
 #, fuzzy
 msgid "b_baselaser_txt"
 msgstr ""
@@ -3796,11 +3796,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:164
+#: ../base/ufos/research.ufo:165
 msgid "b_baselaser_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:210 ../base/ufos/research.ufo:248
+#: ../base/ufos/research.ufo:211 ../base/ufos/research.ufo:249
 msgid "antimatter_txt"
 msgstr ""
 "Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
@@ -3819,7 +3819,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:211
+#: ../base/ufos/research.ufo:212
 msgid "antimatter_extra_txt"
 msgstr ""
 "Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
@@ -3840,7 +3840,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:214
+#: ../base/ufos/research.ufo:215
 msgid "antimatter_pre_txt"
 msgstr ""
 "Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
@@ -3849,7 +3849,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:215
+#: ../base/ufos/research.ufo:216
 msgid "antimatter_extra_pre_txt"
 msgstr ""
 "Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
@@ -3858,11 +3858,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:266
+#: ../base/ufos/research.ufo:267
 msgid "Upgrade - Antimatter engines"
 msgstr "Uuendamine - antimateeria mootorid"
 
-#: ../base/ufos/research.ufo:268
+#: ../base/ufos/research.ufo:269
 #, fuzzy
 msgid "craft_upgrade_am_engines_txt"
 msgstr ""
@@ -3882,15 +3882,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:271
+#: ../base/ufos/research.ufo:272
 msgid "craft_upgrade_am_engines_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:302
+#: ../base/ufos/research.ufo:303
 msgid "Live Alien"
 msgstr "Elus tulnukas"
 
-#: ../base/ufos/research.ufo:307
+#: ../base/ufos/research.ufo:308
 msgid "alien_live_txt"
 msgstr ""
 "Commander,\n"
@@ -3905,7 +3905,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:310
+#: ../base/ufos/research.ufo:311
 msgid "alien_live_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -3920,24 +3920,24 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:315 ../base/ufos/research.ufo:323
-#: ../base/ufos/research.ufo:353 ../base/ufos/research.ufo:361
-#: ../base/ufos/research.ufo:416 ../base/ufos/research.ufo:424
-#: ../base/ufos/research.ufo:454 ../base/ufos/research.ufo:462
-#: ../base/ufos/research.ufo:492 ../base/ufos/research.ufo:500
-#: ../base/ufos/research.ufo:555 ../base/ufos/research.ufo:563
-#: ../base/ufos/research.ufo:2329 ../base/ufos/research.ufo:2337
-#: ../base/ufos/research.ufo:4062 ../base/ufos/research.ufo:4070
-#: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4129
-#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4171
-#: ../base/ufos/research.ufo:4205 ../base/ufos/research.ufo:4213
-#: ../base/ufos/research.ufo:4986 ../base/ufos/research.ufo:5017
-#: ../base/ufos/research.ufo:5024 ../base/ufos/research.ufo:5095
-#: ../base/ufos/research.ufo:5102
+#: ../base/ufos/research.ufo:316 ../base/ufos/research.ufo:324
+#: ../base/ufos/research.ufo:354 ../base/ufos/research.ufo:362
+#: ../base/ufos/research.ufo:417 ../base/ufos/research.ufo:425
+#: ../base/ufos/research.ufo:455 ../base/ufos/research.ufo:463
+#: ../base/ufos/research.ufo:493 ../base/ufos/research.ufo:501
+#: ../base/ufos/research.ufo:556 ../base/ufos/research.ufo:564
+#: ../base/ufos/research.ufo:2328 ../base/ufos/research.ufo:2336
+#: ../base/ufos/research.ufo:4061 ../base/ufos/research.ufo:4069
+#: ../base/ufos/research.ufo:4120 ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4170
+#: ../base/ufos/research.ufo:4204 ../base/ufos/research.ufo:4212
+#: ../base/ufos/research.ufo:4985 ../base/ufos/research.ufo:5016
+#: ../base/ufos/research.ufo:5023 ../base/ufos/research.ufo:5094
+#: ../base/ufos/research.ufo:5101
 msgid "mail_from_dr_connor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:345 ../base/ufos/research.ufo:386
+#: ../base/ufos/research.ufo:346 ../base/ufos/research.ufo:387
 msgid "alien_breathing_txt"
 msgstr ""
 "Commander,\n"
@@ -3962,7 +3962,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:348
+#: ../base/ufos/research.ufo:349
 msgid "alien_breathing_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -3987,12 +3987,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:403
+#: ../base/ufos/research.ufo:404
 #, fuzzy
 msgid "The Alien Mind"
 msgstr "Alla tulistatud Tulnukate laev"
 
-#: ../base/ufos/research.ufo:408
+#: ../base/ufos/research.ufo:409
 msgid "alien_mind_txt"
 msgstr ""
 "Commander,\n"
@@ -4011,7 +4011,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:411
+#: ../base/ufos/research.ufo:412
 msgid "alien_mind_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -4026,11 +4026,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:441
+#: ../base/ufos/research.ufo:442
 msgid "Odd Behaviour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:446
+#: ../base/ufos/research.ufo:447
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "Commander,\n"
@@ -4055,7 +4055,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:449
+#: ../base/ufos/research.ufo:450
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -4070,12 +4070,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:479
+#: ../base/ufos/research.ufo:480
 #, fuzzy
 msgid "Alien Communication"
 msgstr "Tulnukate hoidla"
 
-#: ../base/ufos/research.ufo:484
+#: ../base/ufos/research.ufo:485
 msgid "alien_communication_txt"
 msgstr ""
 "Commander,\n"
@@ -4092,7 +4092,7 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:487
+#: ../base/ufos/research.ufo:488
 msgid "alien_communication_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -4111,13 +4111,13 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:518 client/campaign/cp_alienbase.c:169
+#: ../base/ufos/research.ufo:519 client/campaign/cp_alienbase.c:169
 #: client/campaign/cp_missions.c:452
 #, fuzzy
 msgid "Alien base"
 msgstr "Tulnukas"
 
-#: ../base/ufos/research.ufo:520
+#: ../base/ufos/research.ufo:521
 msgid "alien_base_txt"
 msgstr ""
 "Proposal\n"
@@ -4148,11 +4148,11 @@ msgstr ""
 "\n"
 "With kind regards,Col. Falkland"
 
-#: ../base/ufos/research.ufo:542
+#: ../base/ufos/research.ufo:543
 msgid "The Universal Serum"
 msgstr ""
 
-#: ../base/ufos/research.ufo:547
+#: ../base/ufos/research.ufo:548
 msgid "universal_serum_txt"
 msgstr ""
 "Commander,\n"
@@ -4171,7 +4171,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:550
+#: ../base/ufos/research.ufo:551
 msgid "universal_serum_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -4184,12 +4184,12 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:579
+#: ../base/ufos/research.ufo:580
 #, fuzzy
 msgid "Alien Origins"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:584
+#: ../base/ufos/research.ufo:585
 msgid "alien_origins_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -4220,7 +4220,7 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:587
+#: ../base/ufos/research.ufo:588
 msgid "alien_origins_pre_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -4237,12 +4237,12 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:614
+#: ../base/ufos/research.ufo:615
 #, fuzzy
 msgid "UFO Theory"
 msgstr "Ufo - Hävitus"
 
-#: ../base/ufos/research.ufo:619
+#: ../base/ufos/research.ufo:620
 msgid "alien_theory_txt"
 msgstr ""
 "Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
@@ -4265,7 +4265,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:622
+#: ../base/ufos/research.ufo:623
 msgid "alien_theory_pre_txt"
 msgstr ""
 "Commander, we've captured our first UFO of the war. I don't have to tell you that this is a unique research opportunity. However, before we can begin to think about studying it in-depth and dismantling it for parts, we need to do a broader overview of UFO construction as a whole. Are any of its systems still active or boobytrapped? What kind of materials is it made of? What dangers might it pose during storage or disassembly? All these questions and more need to be answered before we do anything further.\n"
@@ -4274,7 +4274,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:667
+#: ../base/ufos/research.ufo:668
 msgid "pistol_txt"
 msgstr ""
 "Technical Specifications: P-12 Pistol\n"
@@ -4323,7 +4323,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:686
+#: ../base/ufos/research.ufo:687
 msgid "pistol_mag_txt"
 msgstr ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
@@ -4356,7 +4356,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:708
+#: ../base/ufos/research.ufo:709
 msgid "pistol2_txt"
 msgstr ""
 "Technical Specifications: MP-699 Machine Pistol\n"
@@ -4403,7 +4403,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:727
+#: ../base/ufos/research.ufo:728
 msgid "pistol2_mag_txt"
 msgstr ""
 "Technical Specifications: 4.2mm MP Magazine\n"
@@ -4436,7 +4436,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:747
+#: ../base/ufos/research.ufo:748
 #, fuzzy
 msgid "vhs_assault_txt"
 msgstr ""
@@ -4480,7 +4480,7 @@ msgstr ""
 "\n"
 "While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
-#: ../base/ufos/research.ufo:764
+#: ../base/ufos/research.ufo:765
 msgid "assault_txt"
 msgstr ""
 "Tehnilised näitajad: AR-80 Ründeautomaat\n"
@@ -4523,7 +4523,7 @@ msgstr ""
 "\n"
 "Kuigi AR-80 on hea relv igast küljest polnud see mõeldud tulnukate vastu võitlemiseks. Me peaksime arendama selleks eesmärgiks mõeldud relvi esimesel võimalusel."
 
-#: ../base/ufos/research.ufo:782
+#: ../base/ufos/research.ufo:783
 msgid "assault_mag_txt"
 msgstr ""
 "Tehnilised näitajad: Ründeautomaadi salv\n"
@@ -4556,7 +4556,7 @@ msgstr ""
 "\n"
 "Mitte midagi."
 
-#: ../base/ufos/research.ufo:801
+#: ../base/ufos/research.ufo:802
 msgid "machinegun_txt"
 msgstr ""
 "Technical Specifications: MG12 Machine Gun\n"
@@ -4603,7 +4603,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:819
+#: ../base/ufos/research.ufo:820
 msgid "machinegun_mag_txt"
 msgstr ""
 "Technical Specifications: Machine Gun Drum\n"
@@ -4638,7 +4638,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:838
+#: ../base/ufos/research.ufo:839
 msgid "rpg_txt"
 msgstr ""
 "Technical Specifications: HPML Rocket Launcher\n"
@@ -4685,7 +4685,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:857
+#: ../base/ufos/research.ufo:858
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technical Specifications: HE Rocket\n"
@@ -4720,7 +4720,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:877
+#: ../base/ufos/research.ufo:878
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: IC Rocket\n"
@@ -4757,15 +4757,15 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:898
+#: ../base/ufos/research.ufo:899
 msgid "xaw95_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:901
+#: ../base/ufos/research.ufo:902
 msgid "xaw95_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:928
+#: ../base/ufos/research.ufo:929
 #, fuzzy
 msgid "bombkit1_txt"
 msgstr ""
@@ -4809,11 +4809,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:931
+#: ../base/ufos/research.ufo:932
 msgid "bombkit1_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:947
 #, fuzzy
 msgid "bombkit2_txt"
 msgstr ""
@@ -4857,28 +4857,28 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:949
+#: ../base/ufos/research.ufo:950
 msgid "bombkit2_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:964
+#: ../base/ufos/research.ufo:965
 #, fuzzy
 msgid "chaingun_txt"
 msgstr "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste pumppüssidega SWAT tiimides, suudab SG-260 paremini juhtida haavleid torus, millest tuleneb palju suurem laskeulatus. See omakorda tähendab, et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:967
+#: ../base/ufos/research.ufo:968
 msgid "chaingun_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:999
+#: ../base/ufos/research.ufo:1000
 msgid "shotgun_txt"
 msgstr "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste pumppüssidega SWAT tiimides, suudab SG-260 paremini juhtida haavleid torus, millest tuleneb palju suurem laskeulatus. See omakorda tähendab, et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1035 ../base/ufos/weapons_human.ufo:1869
+#: ../base/ufos/research.ufo:1036 ../base/ufos/weapons_human.ufo:1869
 msgid "Electromagnetic Rifle"
 msgstr "EM automaat"
 
-#: ../base/ufos/research.ufo:1040
+#: ../base/ufos/research.ufo:1041
 msgid "bolterrifle_txt"
 msgstr ""
 "EM relva projekt on vilja kandnud! Esimest korda inimajaloos oleme me loonud rakendatava elektromagnetilise relva. Me oleme nimetanud relva Bolter relvaks, et mitte segi ajada seda teiste olemasolevate magnetiliste kiirendusrelvadega. Ma annan endast parima, et seletada relva tööpõhimõtet selles kokkuvõttes.\n"
@@ -4897,7 +4897,7 @@ msgstr ""
 "\n"
 "--Komandör Navarre"
 
-#: ../base/ufos/research.ufo:1043
+#: ../base/ufos/research.ufo:1044
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "Komandör, meile on saadetud uuringufaile mitmetelt ÜRO liikmesriikidelt seoses kaasaskantava elektromagnetiliste relvade uurimise ja arendamisega; mitmeid jooniseid on välja pakutud ja isegi valmis ehitatud rööbasrelvadena, gauss-relvadena ja quench-tüüpi relvadena. Loomulikult on kõik katsetused läbi kukkunud, kuna elektromagnetilised relvad nõuavad suurtes kogustes energiat -- ja järelikult ka nii raskeid kondensaatoritepanku, et ükski inimene ei jaksaks neid kaasas kanda. Isegi aatompatareid ei ole andnud piisavat voolu meil on vaja, et teha elektromagnetilised relvad reaalsuseks. See on võimatu.\n"
@@ -4910,11 +4910,11 @@ msgstr ""
 "\n"
 "--Komandör. Navarre"
 
-#: ../base/ufos/research.ufo:1074 ../base/ufos/weapons_human.ufo:1889
+#: ../base/ufos/research.ufo:1075 ../base/ufos/weapons_human.ufo:1889
 msgid "Electromagnetic Rifle Magazine"
 msgstr "EM aut. salv"
 
-#: ../base/ufos/research.ufo:1095
+#: ../base/ufos/research.ufo:1096
 msgid "combatknife_txt"
 msgstr ""
 "Tehnilised näitajad: Lahingunuga\n"
@@ -4955,12 +4955,12 @@ msgstr ""
 "\n"
 "Mitte midagi."
 
-#: ../base/ufos/research.ufo:1111
+#: ../base/ufos/research.ufo:1112
 #, fuzzy
 msgid "Monomolecular Blades"
 msgstr "See lähivõitluse relv on kujunenud väga kasulikuks lähivõitluses, kuna iga üks kes selle Plasmalmõõga tera puutudab saab tohutuid põletushaavu. Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. Miinuseks on selle relva väike ulatus."
 
-#: ../base/ufos/research.ufo:1116
+#: ../base/ufos/research.ufo:1117
 msgid "monoknife_txt"
 msgstr ""
 "Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
@@ -4975,7 +4975,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1119
+#: ../base/ufos/research.ufo:1120
 msgid "monoknife_pre_txt"
 msgstr ""
 "Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
@@ -4990,7 +4990,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1155
+#: ../base/ufos/research.ufo:1156
 msgid "flamer_txt"
 msgstr ""
 "Technical Specifications: CRC-FL Flamethrower\n"
@@ -5037,7 +5037,7 @@ msgstr ""
 "\n"
 "This weapon should not be fired if there are civilians in or near the target zone."
 
-#: ../base/ufos/research.ufo:1174
+#: ../base/ufos/research.ufo:1175
 msgid "flamer_mag_txt"
 msgstr ""
 "Technical Specifications: C90 Canister\n"
@@ -5070,7 +5070,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1193
+#: ../base/ufos/research.ufo:1194
 msgid "flashbang_txt"
 msgstr ""
 "Technical Specifications: Flashbang\n"
@@ -5113,7 +5113,7 @@ msgstr ""
 "\n"
 "Naturally the flashbang is only effective against organic aliens with eyes and ears."
 
-#: ../base/ufos/research.ufo:1212
+#: ../base/ufos/research.ufo:1213
 msgid "fraggren_txt"
 msgstr ""
 "Technical Specifications: Fragmentation Grenade\n"
@@ -5154,7 +5154,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1231
+#: ../base/ufos/research.ufo:1232
 msgid "incgren_txt"
 msgstr ""
 "Technical Specifications: Incendiary Grenade\n"
@@ -5197,7 +5197,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1250
+#: ../base/ufos/research.ufo:1251
 msgid "grenl_txt"
 msgstr ""
 "Technical Specifications: HPGL Grenade Launcher\n"
@@ -5248,7 +5248,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and rocket launchers, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:1268
+#: ../base/ufos/research.ufo:1269
 msgid "grenl_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm HIT Grenades\n"
@@ -5281,7 +5281,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1287
+#: ../base/ufos/research.ufo:1288
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm Flechette Grenades\n"
@@ -5314,7 +5314,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1306
+#: ../base/ufos/research.ufo:1307
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm IC Grenades\n"
@@ -5347,12 +5347,12 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1322
+#: ../base/ufos/research.ufo:1323
 #, fuzzy
 msgid "Plasma And The Grenade Launcher"
 msgstr "Bazooka"
 
-#: ../base/ufos/research.ufo:1327
+#: ../base/ufos/research.ufo:1328
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "Commander, we've finished the testing and prototype phase of our new 25mm plasma grenades. We're ready to move it to mass-production and full field deployment.\n"
@@ -5365,7 +5365,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1330
+#: ../base/ufos/research.ufo:1331
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
 "Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
@@ -5378,7 +5378,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1366
+#: ../base/ufos/research.ufo:1367
 msgid "irgoggles_txt"
 msgstr ""
 "Technical Specifications: IR Goggles\n"
@@ -5425,12 +5425,12 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1381
+#: ../base/ufos/research.ufo:1382
 #, fuzzy
 msgid "Alien Artifact - Kerrblade"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:1386
+#: ../base/ufos/research.ufo:1387
 msgid "kerrblade_txt"
 msgstr ""
 "Our analysis of the Kerrblade is complete, Commander. Here is my summary for your review.\n"
@@ -5449,7 +5449,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1389
+#: ../base/ufos/research.ufo:1390
 msgid "kerrblade_pre_txt"
 msgstr ""
 "Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
@@ -5460,7 +5460,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1425
+#: ../base/ufos/research.ufo:1426
 msgid "laserpistol_txt"
 msgstr ""
 "Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
@@ -5479,7 +5479,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1428
+#: ../base/ufos/research.ufo:1429
 msgid "laserpistol_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5494,7 +5494,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1463
+#: ../base/ufos/research.ufo:1464
 msgid "laserrifle_txt"
 msgstr ""
 "It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.\n"
@@ -5511,7 +5511,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1466
+#: ../base/ufos/research.ufo:1467
 msgid "laserrifle_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5524,7 +5524,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1502
+#: ../base/ufos/research.ufo:1503
 msgid "heavylaser_txt"
 msgstr ""
 "Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so.\n"
@@ -5543,7 +5543,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1505
+#: ../base/ufos/research.ufo:1506
 msgid "heavylaser_pre_txt"
 msgstr ""
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
@@ -5556,7 +5556,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1541
+#: ../base/ufos/research.ufo:1542
 msgid "electrolaser_txt"
 msgstr ""
 "Commander, I'd like to report that we've successfully prototyped the new electrolaser design and have approved final plans for a production model. We can now begin to utilise it in combat. As per usual, I've written up the specs and deployment advice here for you.\n"
@@ -5575,7 +5575,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1544
+#: ../base/ufos/research.ufo:1545
 msgid "electrolaser_pre_txt"
 msgstr ""
 "Commander, I have a new research proposal for you, something you might find interesting. Please hear me out.\n"
@@ -5588,7 +5588,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1585
+#: ../base/ufos/research.ufo:1586
 msgid "laser_ammo_txt"
 msgstr ""
 "Komandör, me oleme lõpetanud deuteeriumfluoriidi salvede viimistluse ning need on nüüd valmis masstootmiseks. Nende kasutamine on väga kulukas, kuid me oleme teinud kõik, et kulusid vähendada.\n"
@@ -5599,7 +5599,7 @@ msgstr ""
 "\n"
 "Kõik ained kasutatud salves tuleb tagastada põhilattu ning kasutatud salved tuleb eemaldada keemiliselt ohtlike ainete eemaldamise meeskonna poolt. Neid ei saa saastuse tõttu uuesti kasutada.--Komandör Navarre"
 
-#: ../base/ufos/research.ufo:1588
+#: ../base/ufos/research.ufo:1589
 msgid "laser_ammo_pre_txt"
 msgstr ""
 "See üks üks mitmetest ettepanekutest mille ma teen uue laserrelvastuse uurimiseks ja arenduseks. Igat ettepanekut tuleb eraldi arendada erineva suuruse, võimsuse ja keerulisuse tõttu.\n"
@@ -5612,7 +5612,7 @@ msgstr ""
 "\n"
 "--Komandör Navarre"
 
-#: ../base/ufos/research.ufo:1621
+#: ../base/ufos/research.ufo:1622
 msgid "medikit_txt"
 msgstr ""
 "Technical Specifications: Medikit\n"
@@ -5655,12 +5655,12 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1636 ../base/ufos/research.ufo:1678
+#: ../base/ufos/research.ufo:1637 ../base/ufos/research.ufo:1679
 #, fuzzy
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:1641
+#: ../base/ufos/research.ufo:1642
 msgid "plasatomizer_txt"
 msgstr ""
 "When the aliens need a sidearm, they don't screw around.\n"
@@ -5679,7 +5679,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1644
+#: ../base/ufos/research.ufo:1645
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
@@ -5690,12 +5690,12 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1696 ../base/ufos/research.ufo:1737
+#: ../base/ufos/research.ufo:1697 ../base/ufos/research.ufo:1737
 #, fuzzy
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:1701
+#: ../base/ufos/research.ufo:1702
 msgid "plasblaster_txt"
 msgstr ""
 "Commander, here's my report on our alien plasma blaster research.\n"
@@ -5710,7 +5710,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1704
+#: ../base/ufos/research.ufo:1705
 msgid "plasblaster_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
@@ -5783,7 +5783,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1835 ../base/ufos/research.ufo:1877
+#: ../base/ufos/research.ufo:1835 ../base/ufos/research.ufo:1876
 #, fuzzy
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Tulnukate tegevus"
@@ -5812,12 +5812,12 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1895 ../base/ufos/research.ufo:1975
+#: ../base/ufos/research.ufo:1894 ../base/ufos/research.ufo:1974
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1900
+#: ../base/ufos/research.ufo:1899
 msgid "needlergun_txt"
 msgstr ""
 "Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
@@ -5834,7 +5834,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1903
+#: ../base/ufos/research.ufo:1902
 msgid "needlergun_pre_txt"
 msgstr ""
 "Commander, it seems we've recovered a new alien weapon, some kind of fully-automatic sniper rifle that fires masses of paper-thin needles made from silicon steel. Preliminary testing shows that the needles are virtually unaffected by ordinary body armour and will pass through most surfaces without even slowing down. It's a very interesting design and we'd like to figure out exactly how it's meant to work.\n"
@@ -5843,11 +5843,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1935 ../base/ufos/weapons_aliens.ufo:26
+#: ../base/ufos/research.ufo:1934 ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1940
+#: ../base/ufos/research.ufo:1939
 #, fuzzy
 msgid "needlerheavy_txt"
 msgstr ""
@@ -5865,11 +5865,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1943
+#: ../base/ufos/research.ufo:1942
 msgid "needlerheavy_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:1997
+#: ../base/ufos/research.ufo:1996
 msgid "coilgun_txt"
 msgstr ""
 "Commander, I'd like to present you with the finished plans and prototype for our Coilgun.\n"
@@ -5888,7 +5888,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2000
+#: ../base/ufos/research.ufo:1999
 msgid "coilgun_pre_txt"
 msgstr ""
 "Commander, our brainstorms down at DivEngine have come up with an interesting idea based on the alien Needler technology. When combining the alien fast-changing magnetic generators -- and, even more importantly, their power source -- with human-engineered EM rifle technology, some amazing man-portable weaponry becomes possible. I'd hereby like to propose a new design for a coilgun in the role of a sniper rifle.\n"
@@ -5901,12 +5901,12 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2007 ../base/ufos/research.ufo:2015
+#: ../base/ufos/research.ufo:2006 ../base/ufos/research.ufo:2014
 #: ../base/ufos/weapons_human.ufo:388
 msgid "Coilgun"
 msgstr "Coilgun"
 
-#: ../base/ufos/research.ufo:2053
+#: ../base/ufos/research.ufo:2052
 msgid "shotgun2_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -5951,7 +5951,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2072
+#: ../base/ufos/research.ufo:2071
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Technical Specifications: Saboted Slugs\n"
@@ -5984,7 +5984,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2093
+#: ../base/ufos/research.ufo:2092
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -6033,7 +6033,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2112
+#: ../base/ufos/research.ufo:2111
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -6068,7 +6068,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2132
+#: ../base/ufos/research.ufo:2131
 msgid "smg_txt"
 msgstr ""
 "Technical Specifications: CRC-8 SMG\n"
@@ -6113,7 +6113,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:2151
+#: ../base/ufos/research.ufo:2150
 msgid "smg_mag_txt"
 msgstr ""
 "Technical Specifications: SMG Magazine\n"
@@ -6146,7 +6146,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2170
 msgid "smokegren_txt"
 msgstr ""
 "Technical Specifications: Smoke Grenade\n"
@@ -6187,7 +6187,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2190
+#: ../base/ufos/research.ufo:2189
 msgid "sniper_txt"
 msgstr ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -6232,7 +6232,7 @@ msgstr ""
 "\n"
 "Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:2209
+#: ../base/ufos/research.ufo:2208
 msgid "sniper_mag_txt"
 msgstr ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -6265,11 +6265,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2226
 msgid "Anti-Alien Gas"
 msgstr "Tulnukatevastane gaas"
 
-#: ../base/ufos/research.ufo:2232
+#: ../base/ufos/research.ufo:2231
 msgid "stungren_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -6290,7 +6290,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2235
+#: ../base/ufos/research.ufo:2234
 msgid "stungren_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -6307,11 +6307,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2274
+#: ../base/ufos/research.ufo:2273
 msgid "Alien Anti-Human Gas"
 msgstr "Tulnukate inimestevastane gaas"
 
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2278
 #, fuzzy
 msgid "stungren_alien_txt"
 msgstr ""
@@ -6329,11 +6329,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2282
+#: ../base/ufos/research.ufo:2281
 msgid "stungren_alien_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:2321
+#: ../base/ufos/research.ufo:2320
 msgid "stunrod_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -6356,7 +6356,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2324
+#: ../base/ufos/research.ufo:2323
 msgid "stunrod_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -6375,11 +6375,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2357 ../base/ufos/research.ufo:2397
+#: ../base/ufos/research.ufo:2356 ../base/ufos/research.ufo:2396
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Tulnukate ese - plasmapüstol"
 
-#: ../base/ufos/research.ufo:2362
+#: ../base/ufos/research.ufo:2361
 msgid "pbeampistol_txt"
 msgstr ""
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
@@ -6398,7 +6398,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2365
+#: ../base/ufos/research.ufo:2364
 msgid "pbeampistol_pre_txt"
 msgstr ""
 "Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
@@ -6407,11 +6407,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2416 ../base/ufos/research.ufo:2457
+#: ../base/ufos/research.ufo:2415 ../base/ufos/research.ufo:2456
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Tulnukate ese - plasmakahur"
 
-#: ../base/ufos/research.ufo:2421
+#: ../base/ufos/research.ufo:2420
 msgid "pbeamcannon_txt"
 msgstr ""
 "Commander, we've finished work on this big damned cannon we brought back.\n"
@@ -6430,7 +6430,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2424
+#: ../base/ufos/research.ufo:2423
 msgid "pbeamcannon_pre_txt"
 msgstr ""
 "Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
@@ -6439,11 +6439,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2476 ../base/ufos/research.ufo:2516
+#: ../base/ufos/research.ufo:2475 ../base/ufos/research.ufo:2515
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Tulnukate ese - plasmaautomaat"
 
-#: ../base/ufos/research.ufo:2481
+#: ../base/ufos/research.ufo:2480
 msgid "pbeamrifle_txt"
 msgstr ""
 "Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.\n"
@@ -6464,7 +6464,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2484
+#: ../base/ufos/research.ufo:2483
 msgid "pbeamrifle_pre_txt"
 msgstr ""
 "Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
@@ -6473,12 +6473,12 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2536
+#: ../base/ufos/research.ufo:2535
 #, fuzzy
 msgid "Man-Portable Particle Beams"
 msgstr "Plasma Automaat"
 
-#: ../base/ufos/research.ufo:2541
+#: ../base/ufos/research.ufo:2540
 msgid "pbeamammo_txt"
 msgstr ""
 "Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.\n"
@@ -6497,7 +6497,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2544
+#: ../base/ufos/research.ufo:2543
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
@@ -6510,7 +6510,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2583
+#: ../base/ufos/research.ufo:2582
 msgid "combat_armour_txt"
 msgstr ""
 "Technical Specifications: Combat Armour\n"
@@ -6551,7 +6551,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2597
+#: ../base/ufos/research.ufo:2596
 #, fuzzy
 msgid "advanced_combat_armour_txt"
 msgstr ""
@@ -6593,7 +6593,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2612
+#: ../base/ufos/research.ufo:2611
 msgid "nano_armour_txt"
 msgstr ""
 "Commander, I would like to report the success of our nanocomposite production research!\n"
@@ -6612,11 +6612,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2615
+#: ../base/ufos/research.ufo:2614
 msgid "nano_armour_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:2690
+#: ../base/ufos/research.ufo:2689
 msgid "alien_body_armour_txt"
 msgstr ""
 "Commander, we've got a full report on the alien armour for you.\n"
@@ -6633,11 +6633,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2693
+#: ../base/ufos/research.ufo:2692
 msgid "alien_body_armour_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:2727
+#: ../base/ufos/research.ufo:2726
 msgid "alien_medium_armour_txt"
 msgstr ""
 "Where armour is concerned, the aliens' design philosophy seems to be, \"If it works, let's use more of it.\" This new armour is similar in design to the alien body armour, but it does away with the compromises and delicate balances of light armour. Instead of just protecting the torso and head, the medium armour attempts to cover all vital areas with much more dense nanopolymer plates, including major arteries and sensitive nerve clusters. In comparison with the alien body armour, the medium suit has double the number of nanotube strands per square centimetre. As a result these plates are nearly impenetrable to standard human firearms and even the softer mesh covering the joints can stop bullets with disturbing ease.\n"
@@ -6654,107 +6654,107 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2730
+#: ../base/ufos/research.ufo:2729
 msgid "alien_medium_armour_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:2765
+#: ../base/ufos/research.ufo:2764
 msgid "Blast Damage Type"
 msgstr "Blast Damage Type"
 
-#: ../base/ufos/research.ufo:2768 ../base/ufos/research.ufo:2781
-#: ../base/ufos/research.ufo:2794 ../base/ufos/research.ufo:2812
-#: ../base/ufos/research.ufo:2825 ../base/ufos/research.ufo:2838
-#: ../base/ufos/research.ufo:2859 ../base/ufos/research.ufo:2872
-#: ../base/ufos/research.ufo:2890 ../base/ufos/research.ufo:2903
-#: ../base/ufos/research.ufo:2916 ../base/ufos/research.ufo:2929
-#: ../base/ufos/research.ufo:2942 ../base/ufos/research.ufo:2955
-#: ../base/ufos/research.ufo:2968 ../base/ufos/research.ufo:2981
-#: ../base/ufos/research.ufo:2994
+#: ../base/ufos/research.ufo:2767 ../base/ufos/research.ufo:2780
+#: ../base/ufos/research.ufo:2793 ../base/ufos/research.ufo:2811
+#: ../base/ufos/research.ufo:2824 ../base/ufos/research.ufo:2837
+#: ../base/ufos/research.ufo:2858 ../base/ufos/research.ufo:2871
+#: ../base/ufos/research.ufo:2889 ../base/ufos/research.ufo:2902
+#: ../base/ufos/research.ufo:2915 ../base/ufos/research.ufo:2928
+#: ../base/ufos/research.ufo:2941 ../base/ufos/research.ufo:2954
+#: ../base/ufos/research.ufo:2967 ../base/ufos/research.ufo:2980
+#: ../base/ufos/research.ufo:2993
 #, fuzzy
 msgid "none"
 msgstr "Valmis"
 
-#: ../base/ufos/research.ufo:2778
+#: ../base/ufos/research.ufo:2777
 msgid "Fire Damage Type"
 msgstr "Tule tüüpi kahju"
 
-#: ../base/ufos/research.ufo:2791
+#: ../base/ufos/research.ufo:2790
 msgid "Laser Damage Type"
 msgstr "Laser tüüpi kahju"
 
-#: ../base/ufos/research.ufo:2809
+#: ../base/ufos/research.ufo:2808
 msgid "Impact Damage Type"
 msgstr "Kokkupõrke kahju tüüp"
 
-#: ../base/ufos/research.ufo:2822
+#: ../base/ufos/research.ufo:2821
 msgid "Shock Damage Type"
 msgstr "Shock Damage Type"
 
-#: ../base/ufos/research.ufo:2835
+#: ../base/ufos/research.ufo:2834
 msgid "Plasma Damage Type"
 msgstr "Plasma kahju"
 
-#: ../base/ufos/research.ufo:2856
+#: ../base/ufos/research.ufo:2855
 msgid "Stun Damage Type"
 msgstr "Paralüseerimis tüüpi kahju"
 
-#: ../base/ufos/research.ufo:2869
+#: ../base/ufos/research.ufo:2868
 #, fuzzy
 msgid "Particle Beam Damage Type"
 msgstr "Plasma kahju"
 
-#: ../base/ufos/research.ufo:2887
+#: ../base/ufos/research.ufo:2886
 msgid "Accuracy Attribute"
 msgstr "Täpsus"
 
-#: ../base/ufos/research.ufo:2900
+#: ../base/ufos/research.ufo:2899
 msgid "Assault Guns Proficiency"
 msgstr "Ründe relvade oskus"
 
-#: ../base/ufos/research.ufo:2913
+#: ../base/ufos/research.ufo:2912
 msgid "Close Combat Proficiency"
 msgstr "Lähivõitlususe oskus"
 
-#: ../base/ufos/research.ufo:2926
+#: ../base/ufos/research.ufo:2925
 msgid "High-Explosives Proficiency"
 msgstr "Raske lõhkeaine oskus"
 
-#: ../base/ufos/research.ufo:2939
+#: ../base/ufos/research.ufo:2938
 msgid "Heavy Weapons Proficiency"
 msgstr "Raske relvade oskus"
 
-#: ../base/ufos/research.ufo:2952
+#: ../base/ufos/research.ufo:2951
 msgid "Mind Attribute"
 msgstr "Mõttejõud"
 
-#: ../base/ufos/research.ufo:2965
+#: ../base/ufos/research.ufo:2964
 msgid "Power Attribute"
 msgstr "Jõud"
 
-#: ../base/ufos/research.ufo:2978
+#: ../base/ufos/research.ufo:2977
 msgid "Sniper Rifles Proficiency"
 msgstr "Snaiper püsside oskus"
 
-#: ../base/ufos/research.ufo:2991
+#: ../base/ufos/research.ufo:2990
 msgid "Speed Attribute"
 msgstr "Kiirus"
 
-#: ../base/ufos/research.ufo:3009
+#: ../base/ufos/research.ufo:3008
 #, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr "See on personali sissekäik Phalanxi baasi. See on põhiliselt lift mis sõidab pinnalt maa alla.  Maa-alune koridoor viib liftist edasi baasi. Lifti sisse käik on varjatud ja maapinnalt/õhust raskesti märgatav, et välistada baasi avastamist tulnukate poolt. Lift suudab korraga tuua kaasa ainult 4 inimest - see on turvameede, hoidmaks vastseid baasi tungimiast suurtes numbrites. Aga kuna see on üks väheseid kohti mis ühendab baasi maapinnaga jääb see ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama sisenevad nad kindlasti siit."
 
-#: ../base/ufos/research.ufo:3027
+#: ../base/ufos/research.ufo:3026
 #, fuzzy
 msgid "b_command_txt"
 msgstr "Juhtimis keskus on iga Phalanxi baasi süda. Kõik missioonid planeeritakse seal, radari ja muu info kogumine ja uurimine toimub ka seal. Ilma juhtimis keskuseta ei saa ükski baas töötada, kui sa ehitad uue baasi siis ehita kindlasti juhtimis keskus muidu baas ei saa töötada."
 
-#: ../base/ufos/research.ufo:3045
+#: ../base/ufos/research.ufo:3044
 msgid "b_entrance_txt"
 msgstr "See on personali sissekäik Phalanxi baasi. See on põhiliselt lift mis sõidab pinnalt maa alla.  Maa-alune koridoor viib liftist edasi baasi. Lifti sisse käik on varjatud ja maapinnalt/õhust raskesti märgatav, et välistada baasi avastamist tulnukate poolt. Lift suudab korraga tuua kaasa ainult 4 inimest - see on turvameede, hoidmaks vastseid baasi tungimiast suurtes numbrites. Aga kuna see on üks väheseid kohti mis ühendab baasi maapinnaga jääb see ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama sisenevad nad kindlasti siit."
 
-#: ../base/ufos/research.ufo:3058 ../base/ufos/research.ufo:4389
+#: ../base/ufos/research.ufo:3057 ../base/ufos/research.ufo:4388
 #, fuzzy
 msgid "b_missile_txt"
 msgstr ""
@@ -6776,122 +6776,100 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3076
-#, fuzzy
-msgid "b_laser_txt"
-msgstr ""
-"Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
-"\n"
-"The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
-"\n"
-"Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
-"\n"
-"Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
-"\n"
-"The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
-"\n"
-"The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
-"\n"
-"The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
-"\n"
-"Let me know when you want us to start working on them, Commander.\n"
-"\n"
-"--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:3097
+#: ../base/ufos/research.ufo:3096
 msgid "b_large_hangar_txt"
 msgstr "Angaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, et hoida masinad korras. Enamus angaarist on tohutu lift. Kui Lennumasin peab väljuma baasist, viib lift ta maapinnale. Angaari ukseava on peidetud ja raskesti märgatav õhust/maapinnalt. Kuigi see on üks väheseid ehitisi mis ühendavad baasi maapinnaga. Seega on see nõrk koht baasi kaitses ja kõige tõenäolisemalt rünnatakse baasi baasi rünnaku ajal just sealt.  "
 
-#: ../base/ufos/research.ufo:3115
+#: ../base/ufos/research.ufo:3114
 #, fuzzy
 msgid "b_hospital_txt"
 msgstr "P-95 on enim levinud Phalanxi abi relv. Selle relva lihtne disain teeb selle relva väga usaltusväärseks lisaks iga sõduri varustusele. Tänu relva kergele kaalule, suudab proffesionaalne tulistaja kanda kahte P-95te korraga., selle tulistamise viisi miinus on täpsuse langus. P-95 hinnatakse eriliselt snaiprite poolt kuna seda on lihtne käsitseda lähivõitluses. P-95 on väge täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:3133
+#: ../base/ufos/research.ufo:3132
 msgid "b_small_hangar_txt"
 msgstr "Angaaris hoitakse Phalanxi lennumasinaid ja nende jaoks vajalike tööriistu, et hoida masinad korras. Enamus angaarist on tohutu lift. Kui Lennumasin peab väljuma baasist, viib lift ta maapinnale. Angaari ukseava on peidetud ja raskesti märgatav õhust/maapinnalt. Kuigi see on üks väheseid ehitisi mis ühendavad baasi maapinnaga. Seega on see nõrk koht baasi kaitses ja kõige tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
 
-#: ../base/ufos/research.ufo:3151
+#: ../base/ufos/research.ufo:3150
 msgid "b_lab_txt"
 msgstr "Labor on koht kus katsetatakse, uuritakse nii relvi, tulnukaid ja nende tehnoloogjat. Lisaks arutatakse teooriaid, tehakse eksperimente, kasutatakse arvuti simulatsioone ja testitakse uut varustust. Kuigi teadlased ei vaja laborit, et baasis elada, ei saa nad ilma laborita töötada. Iga labor annab töökoha 10 le teadlasele"
 
-#: ../base/ufos/research.ufo:3169
+#: ../base/ufos/research.ufo:3168
 msgid "b_powerplant_txt"
 msgstr "Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse kindlasti hävitada kui vastased peaksid baasi ründama"
 
-#: ../base/ufos/research.ufo:3187
+#: ../base/ufos/research.ufo:3186
 msgid "b_quarters_txt"
 msgstr "Eluruumid on mõeldud Phalanxi töötajatele elamiseks. Nii sõdurid, teadlased kui tavatöötajad kutsuvad seda kohta koduks. Igal töötjal on oma kuubiku kujuline tuba, milles on voodi, väike laud ja tool ning pesemise koht.  Lisaks on eluruumid koht kus töötajad saavad suhelda ja puhata. Iga eluruum pakub elukohta 20le inimesele."
 
-#: ../base/ufos/research.ufo:3200
+#: ../base/ufos/research.ufo:3199
 msgid "b_radar_txt"
 msgstr "Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. Kasutades radari ruumis saadud infot on võimalik kindlaks teha kus asuvad ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe missioone või evakueerida baas Baasi rünnaku ohu korral."
 
-#: ../base/ufos/research.ufo:3218
+#: ../base/ufos/research.ufo:3217
 #, fuzzy
 msgid "b_radar_adv_txt"
 msgstr "Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. Kasutades radari ruumis saadud infot on võimalik kindlaks teha kus asuvad ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe missioone või evakueerida baas Baasi rünnaku ohu korral."
 
-#: ../base/ufos/research.ufo:3237
+#: ../base/ufos/research.ufo:3236
 msgid "b_storage_txt"
 msgstr "See ehitis on varustuse ja varuosade hoidmiseks. Iga hoidla suudab hoida 50 objekti. "
 
-#: ../base/ufos/research.ufo:3256
+#: ../base/ufos/research.ufo:3255
 msgid "b_teamroom_txt"
 msgstr "<unknow> scrapped or renamed"
 
-#: ../base/ufos/research.ufo:3275
+#: ../base/ufos/research.ufo:3274
 msgid "b_small_ufo_hangar_txt"
 msgstr "Ufoangaaris hoitakse vallutatud UFOsid. Kuna on ohtlik uurida vallutatud ufot kohapeal kuna see kutsuks tulnukaid seda tagasi vallutama. Seega pärast UFO vallutamist tuuakse see lähimasse ufoangaari. Seda tehakse tavaliste sõdurite abiga seega pole see Phalanxi mure. Ufoangaar pakub kohta igale ufole kuni transport UFO klassini."
 
-#: ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3293
 msgid "b_large_ufo_hangar_txt"
 msgstr "Ufoangaaris hoitakse vallutatud UFOsid. Kuna on ohtlik uurida vallutatud ufot kohapeal kuna see kutsuks tulnukaid seda tagasi vallutama. Seega pärast UFO vallutamist tuuakse see lähimasse ufoangaari. Seda tehakse tavaliste sõdurite abiga seega pole see Phalanxi mure. Ufoangaar pakub kohta igale ufole kuni transport UFO klassini."
 
-#: ../base/ufos/research.ufo:3312
+#: ../base/ufos/research.ufo:3311
 #, fuzzy
 msgid "b_workshop_txt"
 msgstr ""
 "Transpordi laeva tüüp koodnimega H-92 on üks põhilisi transpordi vahendeid Phalanxi järiest kasvavale armeele. Saades energiat nejast HM-5600 turbo mootorist, suudab H-92 arendad kiiruse mach 1.0. Mootorid asetsevad nii, et oleks võimalik ülestõusta ja maanduda nii vertikaalselt kui horisontaalselt. See tehnikaline omadus on vajalik sõdurite transpordiks pea igasse maailma nurka.\n"
 "H-92 suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja töötatud hävitajad(F-48), mis katavad H-92 kui ta maandub, et rünnata UFOt."
 
-#: ../base/ufos/research.ufo:3333
+#: ../base/ufos/research.ufo:3332
 msgid "b_antimatter_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3360
+#: ../base/ufos/research.ufo:3359
 msgid "drop_firebird_txt"
 msgstr ""
 "Transpordi laeva tüüp Firebird on üks põhilisi transpordi vahendeid Phalanxi järiest kasvavale armeele. Saades energiat nejast HM-5600 turbo mootorist, suudab Firebird arendad kiiruse mach 1.0. Mootorid asetsevad nii, et oleks võimalik ülestõusta ja maanduda nii vertikaalselt kui horisontaalselt. See tehnikaline omadus on vajalik sõdurite transpordiks pea igasse maailma nurka.\n"
 "Firebirdi suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja töötatud hävitajad, millega saab katta Firebirdi."
 
-#: ../base/ufos/research.ufo:3376
+#: ../base/ufos/research.ufo:3375
 msgid "drop_herakles_txt"
 msgstr "Transpordi laev Herakles on palju suurem ja võimsam kui Firebird."
 
-#: ../base/ufos/research.ufo:3379
+#: ../base/ufos/research.ufo:3378
 msgid "drop_herakles_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3413
+#: ../base/ufos/research.ufo:3412
 #, fuzzy
 msgid "drop_raptor_txt"
 msgstr "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid suutsid toota paremad raketid, mis ei sihi ainult õhus olevaid sihtmärke vaid ka maapinnal olevaid.  RL-1056 raketid  kasutavad lasersihtimist ja kiirsalvestuskaameraid, et kindlaks teha sihtmärgi asukoht. Hoolimata heast täpsusest kui jägimise süsteemil oli piisavalt aega, et sihtmärk lukustada, on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:3416
+#: ../base/ufos/research.ufo:3415
 msgid "drop_raptor_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3450
+#: ../base/ufos/research.ufo:3449
 #, fuzzy
 msgid "inter_stiletto_txt"
 msgstr "F-48 hävitaja on Phalanxi õhuväe au ja uhkus. Saades energiat kahest Volkot VO-36 turbo mootorist, suudab hävitaja jõuda isegi kiiruseni mach 1.4. Kuigi see kiirus on tunduvalt aeglasem paljude UFOde kiirusest, suudab F-48 võistelda manööverdamises ka parimate UFOdega. Nagu  ka H-92 suudab ka F-48 startidad ja maanduda nii vertikaalselt kui horisontaalselt. Sellest tulenevalt on kõikide Phalanxi baasides vertikaalsed sahtid, mis viivad maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas varjata lennuvälja maapinnalt avastamise vastu. "
 
-#: ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3465
 msgid "inter_saracen_txt"
 msgstr "Püüdurraketid on baasi kaitse, mis kaitseb baasi UFOde maandumiste eest. Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi iterceptorid suudavad hakkama saad nõrgemate kallaletungidega, ei saa nad suurtemate UFOde vastu."
 
-#: ../base/ufos/research.ufo:3482
+#: ../base/ufos/research.ufo:3481
 #, fuzzy
 msgid "inter_dragon_txt"
 msgstr ""
@@ -6925,131 +6903,131 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3485
+#: ../base/ufos/research.ufo:3484
 msgid "inter_dragon_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3518
+#: ../base/ufos/research.ufo:3517
 #, fuzzy
 msgid "inter_starchaser_txt"
 msgstr "Iterceptor raketid on baasi kaitse mis kaitseb baasi UFOde maandumiste eets. Iga UFO mis üritab maanduda baasi lähedal tulistatakse all. Kuigi iterceptorid suudavad hakkama saad nõrgemate kallaletungidega, ei saa nad suurtemate UFOde vastu."
 
-#: ../base/ufos/research.ufo:3521
+#: ../base/ufos/research.ufo:3520
 msgid "inter_starchaser_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3554
+#: ../base/ufos/research.ufo:3553
 #, fuzzy
 msgid "inter_stingray_txt"
 msgstr "F-48 hävitaja on Phalanxi õhuväe au ja uhkus. Saades energiat kahest Volkot VO-36 turbo mootorist, suudab hävitaja jõuda isegi kiiruseni mach 1.4. Kuigi see kiirus on tunduvalt aeglasem paljude UFOde kiirusest, suudab F-48 võistelda manööverdamises ka parimate UFOdega. Nagu  ka H-92 suudab ka F-48 startidad ja maanduda nii vertikaalselt kui horisontaalselt. Sellest tulenevalt on kõikide Phalanxi baasides vertikaalsed sahtid, mis viivad maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas varjata lennuvälja maapinnalt avastamise vastu. "
 
-#: ../base/ufos/research.ufo:3557
+#: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3597
+#: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
 msgstr "Ufo skaut on kõige väiksem ja nõrgem vaenlase masin, selle meeskond on väike ja ka masina relvastus ei ole suureks ohuks Phalanxi hävitajatele."
 
-#: ../base/ufos/research.ufo:3600
+#: ../base/ufos/research.ufo:3599
 msgid "ufo_scout_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3639
+#: ../base/ufos/research.ufo:3638
 msgid "ufo_fighter_txt"
 msgstr "Ufo hävitaja on ohtlik laev, kuid suhteliselt väike."
 
-#: ../base/ufos/research.ufo:3642
+#: ../base/ufos/research.ufo:3641
 msgid "ufo_fighter_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3682
+#: ../base/ufos/research.ufo:3681
 msgid "ufo_supply_txt"
 msgstr "Ufo varustuslaev on suur, kuid kehvasti relvastatud. Sellisega veavad vaenlased oma varustust, seega on nende jahtimine väga kasulik Phalanxile, et vaenlase varustust enda kätte saada, härida terrori läbiviimist ja otsida üles vaenlase baase."
 
-#: ../base/ufos/research.ufo:3685
+#: ../base/ufos/research.ufo:3684
 msgid "ufo_supply_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3725
+#: ../base/ufos/research.ufo:3724
 msgid "ufo_carrier_txt"
 msgstr "Ufo kandja on vaenlase suur emalaev."
 
-#: ../base/ufos/research.ufo:3728
+#: ../base/ufos/research.ufo:3727
 msgid "ufo_carrier_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3768
+#: ../base/ufos/research.ufo:3767
 msgid "ufo_bomber_txt"
 msgstr "Ufo pommitaja on ohtlik vaenlase laev."
 
-#: ../base/ufos/research.ufo:3771
+#: ../base/ufos/research.ufo:3770
 msgid "ufo_bomber_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3811
+#: ../base/ufos/research.ufo:3810
 #, fuzzy
 msgid "ufo_corrupter_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3814
+#: ../base/ufos/research.ufo:3813
 msgid "ufo_corrupter_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3854
+#: ../base/ufos/research.ufo:3853
 #, fuzzy
 msgid "ufo_gunboat_txt"
 msgstr "Ufo skaut on kõige väiksem ja nõrgem vaenlase masin, selle meeskond on väike ja ka masina relvastus ei ole suureks ohuks Phalanxi hävitajatele."
 
-#: ../base/ufos/research.ufo:3857
+#: ../base/ufos/research.ufo:3856
 msgid "ufo_gunboat_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3897
+#: ../base/ufos/research.ufo:3896
 #, fuzzy
 msgid "ufo_ripper_txt"
 msgstr "Ufo kandja on vaenlase suur emalaev."
 
-#: ../base/ufos/research.ufo:3900
+#: ../base/ufos/research.ufo:3899
 msgid "ufo_ripper_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3940
+#: ../base/ufos/research.ufo:3939
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3943
+#: ../base/ufos/research.ufo:3942
 msgid "ufo_harvester_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:3983
+#: ../base/ufos/research.ufo:3982
 #, fuzzy
 msgid "ufo_mothership_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3986
+#: ../base/ufos/research.ufo:3985
 msgid "ufo_mothership_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4028
+#: ../base/ufos/research.ufo:4027
 msgid "Live Specimen - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4030
+#: ../base/ufos/research.ufo:4029
 #, fuzzy
 msgid "bloodspider_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4033
+#: ../base/ufos/research.ufo:4032
 msgid "bloodspider_notes_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4049
+#: ../base/ufos/research.ufo:4048
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Tulnuka lahang - Vereämblik"
 
-#: ../base/ufos/research.ufo:4054
+#: ../base/ufos/research.ufo:4053
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -7072,7 +7050,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4057
+#: ../base/ufos/research.ufo:4056
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7083,15 +7061,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4106
+#: ../base/ufos/research.ufo:4105
 msgid "Alien Autopsy - Ortnok"
 msgstr "Tulnukalahang - Ortnok"
 
-#: ../base/ufos/research.ufo:4111
+#: ../base/ufos/research.ufo:4110
 msgid "ortnok_autopsy_txt"
 msgstr "Rohelin nahk on soomuseline ja tugev, rakuanalüüsid näitavad, et kehas on palju klorofülli - aine mis teeb lehed roheliseks. Seedimis elundkond on normaal suurusega seega elavad ortniokid keskkonnas kus võivad toidallikad ajutiselt otsa lõppeda. Sest klorofülli süsteem oleks ainuke variant sellistes olukordades.Paljunemis organid on sellel liigil väga aktiivsed, töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
-#: ../base/ufos/research.ufo:4112
+#: ../base/ufos/research.ufo:4111
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -7126,7 +7104,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4115
+#: ../base/ufos/research.ufo:4114
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -7163,7 +7141,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4116
+#: ../base/ufos/research.ufo:4115
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -7198,20 +7176,20 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4148
+#: ../base/ufos/research.ufo:4147
 msgid "Alien Autopsy - Taman"
 msgstr "Tulnukalahang - Taman"
 
-#: ../base/ufos/research.ufo:4153
+#: ../base/ufos/research.ufo:4152
 msgid "taman_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4154
+#: ../base/ufos/research.ufo:4153
 #, fuzzy
 msgid "taman_autopsy_extra_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4157
+#: ../base/ufos/research.ufo:4156
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -7250,7 +7228,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4158
+#: ../base/ufos/research.ufo:4157
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -7287,11 +7265,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4190
+#: ../base/ufos/research.ufo:4189
 msgid "Alien Autopsy - Shevaar"
 msgstr "Tulnukalahang - Shevaar"
 
-#: ../base/ufos/research.ufo:4195
+#: ../base/ufos/research.ufo:4194
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -7328,7 +7306,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4196
+#: ../base/ufos/research.ufo:4195
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -7363,7 +7341,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4199
+#: ../base/ufos/research.ufo:4198
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Ülemjuhataja,\n"
@@ -7404,7 +7382,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4199
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7415,51 +7393,51 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4289 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1637
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "Phoenix"
 
-#: ../base/ufos/research.ufo:4291
+#: ../base/ufos/research.ufo:4290
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4294
+#: ../base/ufos/research.ufo:4293
 msgid "ugv_phoenix_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4309 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1662
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:4311
+#: ../base/ufos/research.ufo:4310
 #, fuzzy
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4314
+#: ../base/ufos/research.ufo:4313
 msgid "ugv_ares_w_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4330
+#: ../base/ufos/research.ufo:4329
 #, fuzzy
 msgid "ugv_chaingun_txt"
 msgstr "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste pumppüssidega SWAT tiimides, suudab SG-260 paremini juhtida haavleid torus, millest tuleneb palju suurem laskeulatus. See omakorda tähendab, et pumpüss on kasulik ka keskmiste vahemaade tagant. SG-260 eelis SMG-68 ees on see, et see teeb rohkem kahju ühe lasuga, tehes selle paremaks relvaks kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:4333
+#: ../base/ufos/research.ufo:4332
 msgid "ugv_chaingun_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4349
+#: ../base/ufos/research.ufo:4348
 #, fuzzy
 msgid "ugv_chaingun_belt_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4352
+#: ../base/ufos/research.ufo:4351
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4367
+#: ../base/ufos/research.ufo:4366
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -7479,34 +7457,34 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4370
+#: ../base/ufos/research.ufo:4369
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4417
+#: ../base/ufos/research.ufo:4416
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM"
 
-#: ../base/ufos/research.ufo:4420
+#: ../base/ufos/research.ufo:4419
 #, fuzzy
 msgid "craft_electronics_raven_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4437
+#: ../base/ufos/research.ufo:4436
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4453
+#: ../base/ufos/research.ufo:4452
 msgid "craft_shield_plating_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4456
+#: ../base/ufos/research.ufo:4455
 #, fuzzy
 msgid "craft_shield_plating_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4490
+#: ../base/ufos/research.ufo:4489
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
@@ -7515,7 +7493,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4493
+#: ../base/ufos/research.ufo:4492
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Commander, we've finished work on the captured alien astrogation unit. Here is a summary of my report.\n"
@@ -7534,7 +7512,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4528
+#: ../base/ufos/research.ufo:4527
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
@@ -7543,7 +7521,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4531
+#: ../base/ufos/research.ufo:4530
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.\n"
@@ -7566,7 +7544,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4565
+#: ../base/ufos/research.ufo:4564
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
@@ -7577,7 +7555,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4568
+#: ../base/ufos/research.ufo:4567
 msgid "craft_alien_detection_txt"
 msgstr ""
 "The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
@@ -7600,82 +7578,82 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4601
+#: ../base/ufos/research.ufo:4600
 msgid "craft_weapon_alc_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4604
+#: ../base/ufos/research.ufo:4603
 #, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4649
+#: ../base/ufos/research.ufo:4648
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA kiirlaskekahur"
 
-#: ../base/ufos/research.ufo:4652
+#: ../base/ufos/research.ufo:4651
 #, fuzzy
 msgid "craft_weapon_shiva_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4669
+#: ../base/ufos/research.ufo:4668
 #, fuzzy
 msgid "craft_ammo_shiva_1_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4690
+#: ../base/ufos/research.ufo:4689
 #, fuzzy
 msgid "craft_ammo_shiva_2_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4708
+#: ../base/ufos/research.ufo:4707
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' õhutõrjeraketiseade"
 
-#: ../base/ufos/research.ufo:4711
+#: ../base/ufos/research.ufo:4710
 #, fuzzy
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4725
+#: ../base/ufos/research.ufo:4724
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' rakett"
 
-#: ../base/ufos/research.ufo:4728
+#: ../base/ufos/research.ufo:4727
 #, fuzzy
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4749
+#: ../base/ufos/research.ufo:4748
 #, fuzzy
 msgid "craft_weapon_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4766
+#: ../base/ufos/research.ufo:4765
 #, fuzzy
 msgid "craft_ammo_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4787
+#: ../base/ufos/research.ufo:4786
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:4790
+#: ../base/ufos/research.ufo:4789
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4842
+#: ../base/ufos/research.ufo:4841
 #, fuzzy
 msgid "craft_electronics_targeting_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4859
+#: ../base/ufos/research.ufo:4858
 #, fuzzy
 msgid "craft_electronics_fuelpod_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:4881 ../base/ufos/research.ufo:4917
+#: ../base/ufos/research.ufo:4880 ../base/ufos/research.ufo:4916
 msgid "alien_materials_txt"
 msgstr ""
 "Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.\n"
@@ -7692,7 +7670,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4884
+#: ../base/ufos/research.ufo:4883
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
@@ -7701,51 +7679,51 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4937
+#: ../base/ufos/research.ufo:4936
 #, fuzzy
 msgid "Political Situation Before The Invasion"
 msgstr "Poolitiline olukord enne kallaletungi"
 
-#: ../base/ufos/research.ufo:4939
+#: ../base/ufos/research.ufo:4938
 msgid "news_initial_political_situation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4950
+#: ../base/ufos/research.ufo:4949
 #, fuzzy
 msgid "After The War"
 msgstr "Pärast sõda"
 
-#: ../base/ufos/research.ufo:4952
+#: ../base/ufos/research.ufo:4951
 msgid "news_after_the_war_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4963
+#: ../base/ufos/research.ufo:4962
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "Phalanx ja Mumbai järelmid"
 
-#: ../base/ufos/research.ufo:4965
+#: ../base/ufos/research.ufo:4964
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4975
+#: ../base/ufos/research.ufo:4974
 msgid "A New Twist"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4980
+#: ../base/ufos/research.ufo:4979
 #, fuzzy
 msgid "news_new_twist_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4981
+#: ../base/ufos/research.ufo:4980
 #, fuzzy
 msgid "news_new_twist_alt_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:5003
+#: ../base/ufos/research.ufo:5002
 msgid "The Enemy On Earth"
 msgstr ""
 
-#: ../base/ufos/research.ufo:5008
+#: ../base/ufos/research.ufo:5007
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Proposal\n"
@@ -7778,7 +7756,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5009
+#: ../base/ufos/research.ufo:5008
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
@@ -7809,7 +7787,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5012
+#: ../base/ufos/research.ufo:5011
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -7832,11 +7810,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:5041
+#: ../base/ufos/research.ufo:5040
 msgid "XVI Census"
 msgstr ""
 
-#: ../base/ufos/research.ufo:5046
+#: ../base/ufos/research.ufo:5045
 msgid "xvi_census_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -7859,7 +7837,7 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:5049
+#: ../base/ufos/research.ufo:5048
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Good morning, Sir.\n"
@@ -7876,25 +7854,25 @@ msgstr ""
 "\n"
 "Col. Falkland"
 
-#: ../base/ufos/research.ufo:5082
+#: ../base/ufos/research.ufo:5081
 msgid "The Enemy On Earth - Revisited"
 msgstr ""
 
-#: ../base/ufos/research.ufo:5087
+#: ../base/ufos/research.ufo:5086
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:5090
+#: ../base/ufos/research.ufo:5089
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Eelnev informatsioon uuringu kohta puudub."
 
-#: ../base/ufos/research.ufo:5120
+#: ../base/ufos/research.ufo:5119
 #, fuzzy
 msgid "The Alien Strategy"
 msgstr "Alla tulistatud Tulnukate laev"
 
-#: ../base/ufos/research.ufo:5125
+#: ../base/ufos/research.ufo:5124
 #, fuzzy
 msgid "alien_strategy_txt"
 msgstr ""
@@ -7918,12 +7896,12 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:5149
+#: ../base/ufos/research.ufo:5148
 #, fuzzy
 msgid "Orbital UFO Activity"
 msgstr "Jälitamas UFOt"
 
-#: ../base/ufos/research.ufo:5154
+#: ../base/ufos/research.ufo:5153
 #, fuzzy
 msgid "orbital_ufo_activity_txt"
 msgstr "Tulnukate tegevus"
@@ -9101,7 +9079,7 @@ msgid "No reaction fire"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
 #: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:810
+#: client/battlescape/cl_hud.c:809
 msgid "Reserve TUs for shooting."
 msgstr ""
 
@@ -11835,57 +11813,57 @@ msgstr ""
 msgid "Superhuman"
 msgstr "Super osav"
 
-#: client/battlescape/cl_actor.c:693
+#: client/battlescape/cl_actor.c:695
 msgid "This isn't your round\n"
 msgstr "See ei ole sinu käik\n"
 
-#: client/battlescape/cl_actor.c:955
+#: client/battlescape/cl_actor.c:957
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "Sa ei saa seda tundmatud eset kasutada.\n"
 "Et seda eset kasutada pead enne seda uurima.\n"
 
-#: client/battlescape/cl_actor.c:1799
+#: client/battlescape/cl_actor.c:1797
 msgid "Unknown alien race"
 msgstr "tundmatu tulnukatõug"
 
-#: client/battlescape/cl_actor.c:2464
+#: client/battlescape/cl_actor.c:2499
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "Järgmine sõdur"
 
-#: client/battlescape/cl_actor.c:2465
+#: client/battlescape/cl_actor.c:2500
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "Vali sõdurenimekirjast"
 
-#: client/battlescape/cl_actor.c:2466
+#: client/battlescape/cl_actor.c:2501
 #, fuzzy
 msgid "Update an actor"
 msgstr "Nimeta oma baas ümber"
 
-#: client/battlescape/cl_actor.c:2468
+#: client/battlescape/cl_actor.c:2503
 msgid "Toggle stand/crounch"
 msgstr "Seisa/kükita"
 
-#: client/battlescape/cl_actor.c:2469
+#: client/battlescape/cl_actor.c:2504
 msgid "Toggle the headgear"
 msgstr "Vaheta prille"
 
-#: client/battlescape/cl_actor.c:2470
+#: client/battlescape/cl_actor.c:2505
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2471
+#: client/battlescape/cl_actor.c:2506
 msgid "Confirm the current action"
 msgstr "Kinnita tegevust"
 
-#: client/battlescape/cl_actor.c:2472
+#: client/battlescape/cl_actor.c:2507
 msgid "Toggle to next alien visible from selected actor."
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2474
+#: client/battlescape/cl_actor.c:2509
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "Järgmine tulnukas"
@@ -11942,67 +11920,67 @@ msgstr ""
 msgid "Shots: %i"
 msgstr "%s\t%s\n"
 
-#: client/battlescape/cl_hud.c:654
+#: client/battlescape/cl_hud.c:653
 #, fuzzy
 msgid "No weapon."
 msgstr "%s relvi\n"
 
-#: client/battlescape/cl_hud.c:663
+#: client/battlescape/cl_hud.c:662
 #, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr "Sa ei saa seda teha - relva ei saa lasta ühe käega!\n"
 
-#: client/battlescape/cl_hud.c:669
+#: client/battlescape/cl_hud.c:668
 msgid "No reload possible, already fully loaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:679
+#: client/battlescape/cl_hud.c:678
 #, fuzzy
 msgid "Not enough TUs for reloading weapon."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:682
+#: client/battlescape/cl_hud.c:681
 msgid "No reload possible, you don't have backup ammo."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:774
+#: client/battlescape/cl_hud.c:773
 #, fuzzy
 msgid "Not enough TUs for standing up."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:777
+#: client/battlescape/cl_hud.c:776
 #, fuzzy, c-format
 msgid "Stand up (%i TU)"
 msgstr "Lae relv"
 
-#: client/battlescape/cl_hud.c:782
+#: client/battlescape/cl_hud.c:781
 #, fuzzy
 msgid "Not enough TUs for crouching."
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: client/battlescape/cl_hud.c:785
+#: client/battlescape/cl_hud.c:784
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:793
+#: client/battlescape/cl_hud.c:792
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:797
+#: client/battlescape/cl_hud.c:796
 #, fuzzy, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:800
+#: client/battlescape/cl_hud.c:799
 #, fuzzy
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:806
+#: client/battlescape/cl_hud.c:805
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -12010,16 +11988,16 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:813
+#: client/battlescape/cl_hud.c:812
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:834 client/battlescape/cl_hud.c:843
+#: client/battlescape/cl_hud.c:833 client/battlescape/cl_hud.c:842
 #, fuzzy, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Lae relv"
 
-#: client/battlescape/cl_hud.c:1090
+#: client/battlescape/cl_hud.c:1091
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -12028,7 +12006,7 @@ msgstr ""
 "Sa ei saa seda tundmatut eset laadida.\n"
 "Sa pead selle enne uurima. et seda relvastada\n"
 
-#: client/battlescape/cl_hud.c:1111
+#: client/battlescape/cl_hud.c:1112
 #, c-format
 msgid ""
 "%s\n"
@@ -12037,19 +12015,19 @@ msgstr ""
 "%s\n"
 "(tühi)\n"
 
-#: client/battlescape/cl_hud.c:1133
+#: client/battlescape/cl_hud.c:1134
 #, fuzzy, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 "Moraal %i | Reserveeritud TU: %i\n"
 "%s %i (%i|%i TU alles)\n"
 
-#: client/battlescape/cl_hud.c:1135
+#: client/battlescape/cl_hud.c:1136
 #, c-format
 msgid "Morale  %i"
 msgstr "Moraal  %i"
 
-#: client/battlescape/cl_hud.c:1140
+#: client/battlescape/cl_hud.c:1141
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -12058,7 +12036,7 @@ msgstr ""
 "Moraal %i | Reserveeritud TU: %i\n"
 "%s %i (%i|%i TU alles)\n"
 
-#: client/battlescape/cl_hud.c:1144
+#: client/battlescape/cl_hud.c:1145
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -12067,7 +12045,7 @@ msgstr ""
 "Moraal  %i\n"
 "%s %i (%i TU alles)\n"
 
-#: client/battlescape/cl_hud.c:1176
+#: client/battlescape/cl_hud.c:1177
 #, c-format
 msgid ""
 "Time Units\n"
@@ -12076,12 +12054,12 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1200
+#: client/battlescape/cl_hud.c:1201
 msgid "Currently panics!\n"
 msgstr "Praegu paanitseb!\n"
 
 #: client/battlescape/cl_hud_callbacks.c:86
-#: client/battlescape/cl_hud_callbacks.c:237
+#: client/battlescape/cl_hud_callbacks.c:240
 #, fuzzy
 msgid "No item in hand.\n"
 msgstr "Pole ühtegi kilpi"
@@ -12101,41 +12079,41 @@ msgid ""
 msgstr "Sa ei saa seda teha - relva ei saa lasta ühe käega!\n"
 
 #: client/battlescape/cl_hud_callbacks.c:151
-#: client/battlescape/cl_hud_callbacks.c:255
+#: client/battlescape/cl_hud_callbacks.c:258
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
 msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 
-#: client/battlescape/cl_hud_callbacks.c:243
+#: client/battlescape/cl_hud_callbacks.c:246
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 msgstr "Sa ei saa seda teha - see ei ole sinu käik\n"
 
-#: client/battlescape/cl_hud_callbacks.c:250
+#: client/battlescape/cl_hud_callbacks.c:253
 #, fuzzy
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
 msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
-#: client/battlescape/cl_hud_callbacks.c:285
+#: client/battlescape/cl_hud_callbacks.c:288
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-#: client/battlescape/cl_hud_callbacks.c:286
+#: client/battlescape/cl_hud_callbacks.c:289
 msgid "Reload the weapon in the soldiers right hand"
 msgstr ""
 
-#: client/battlescape/cl_hud_callbacks.c:287
+#: client/battlescape/cl_hud_callbacks.c:290
 #, fuzzy
 msgid "Toggle reservation for crouching."
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: client/battlescape/cl_hud_callbacks.c:288
+#: client/battlescape/cl_hud_callbacks.c:291
 msgid "Toggle reaction fire"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
@@ -12148,7 +12126,7 @@ msgstr "laeb %s"
 msgid "loading models..."
 msgstr "laeb mudeleid..."
 
-#: client/battlescape/cl_view.c:118 client/cl_main.c:970
+#: client/battlescape/cl_view.c:118 client/cl_main.c:971
 msgid "Awaiting game start"
 msgstr ""
 
@@ -12318,25 +12296,25 @@ msgstr "Juba %i baasis"
 #: client/campaign/cp_base_callbacks.c:645
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
-#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1481
-#: client/campaign/cp_campaign.c:1526 client/campaign/cp_campaign.c:1579
-#: client/campaign/cp_campaign.c:1592 client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1473
+#: client/campaign/cp_campaign.c:1518 client/campaign/cp_campaign.c:1574
+#: client/campaign/cp_campaign.c:1587 client/campaign/cp_campaign.c:1589
 #: client/campaign/cp_installation_callbacks.c:156
-#: client/campaign/cp_mapfightequip.c:332
-#: client/campaign/cp_mapfightequip.c:353
-#: client/campaign/cp_mapfightequip.c:359
-#: client/campaign/cp_mapfightequip.c:371
+#: client/campaign/cp_mapfightequip.c:355
+#: client/campaign/cp_mapfightequip.c:376
+#: client/campaign/cp_mapfightequip.c:382
+#: client/campaign/cp_mapfightequip.c:394
 #: client/campaign/cp_market_callbacks.c:614
 #: client/campaign/cp_market_callbacks.c:619 client/campaign/cp_missions.c:749
-#: client/campaign/cp_missions.c:1177 client/campaign/cp_nations.c:88
+#: client/campaign/cp_missions.c:1176 client/campaign/cp_nations.c:88
 #: client/campaign/cp_nations.c:100 client/campaign/cp_nations.c:110
 #: client/campaign/cp_nations.c:120 client/campaign/cp_nations.c:130
 #: client/campaign/cp_nations.c:141 client/campaign/cp_nations.c:157
 #: client/campaign/cp_nations.c:173 client/campaign/cp_nations.c:179
 #: client/campaign/cp_nations.c:187 client/campaign/cp_popup.c:506
-#: client/campaign/cp_produce.c:341 client/campaign/cp_produce.c:351
-#: client/campaign/cp_produce.c:363 client/campaign/cp_produce.c:373
-#: client/campaign/cp_produce.c:434
+#: client/campaign/cp_produce.c:338 client/campaign/cp_produce.c:348
+#: client/campaign/cp_produce.c:360 client/campaign/cp_produce.c:370
+#: client/campaign/cp_produce.c:431
 #: client/campaign/cp_research_callbacks.c:566
 #: client/campaign/cp_research_callbacks.c:584
 #: client/campaign/cp_research_callbacks.c:590
@@ -12346,7 +12324,7 @@ msgstr "Juba %i baasis"
 #: client/campaign/cp_research_callbacks.c:829 client/campaign/cp_ufo.c:396
 #: client/campaign/cp_ufo.c:774 client/campaign/cp_ufo.c:778
 #: client/campaign/cp_ufo.c:783
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:404
+#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:405
 #: client/multiplayer/mp_serverlist.c:470
 msgid "Notice"
 msgstr "Teade"
@@ -12422,14 +12400,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Lennumasin alustatud"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1633
-#: client/campaign/cp_map.c:1640
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1630
+#: client/campaign/cp_map.c:1637
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Kiirus:\t%0f\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1634
-#: client/campaign/cp_map.c:1641
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1631
+#: client/campaign/cp_map.c:1638
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Kütus:\t%i/%i\n"
@@ -12472,7 +12450,7 @@ msgstr "Püüdmine"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1594
+#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1589
 msgid "You've lost the battle"
 msgstr "Sa KAOTASID lahingu"
 
@@ -12854,7 +12832,7 @@ msgstr ""
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:852 client/campaign/cp_campaign.c:728
+#: client/campaign/cp_base_callbacks.c:852 client/campaign/cp_campaign.c:722
 #: client/campaign/cp_market_callbacks.c:307
 #, c-format
 msgid "%i c"
@@ -12922,7 +12900,7 @@ msgstr ""
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/campaign/cp_campaign.c:750
+#: client/campaign/cp_campaign.c:744
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -12933,7 +12911,7 @@ msgstr ""
 "Kaotasid:\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:755
+#: client/campaign/cp_campaign.c:749
 #, fuzzy, c-format
 msgid ""
 "Built:\t%i\n"
@@ -12944,49 +12922,49 @@ msgstr ""
 "Aktiivne::\t%i\n"
 "Rünnati::\t%i\n"
 
-#: client/campaign/cp_campaign.c:770 client/campaign/cp_ufopedia.c:1170
+#: client/campaign/cp_campaign.c:764 client/campaign/cp_ufopedia.c:1170
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_campaign.c:773
+#: client/campaign/cp_campaign.c:767
 #, c-format
 msgid ""
 "\n"
 "Funding this month:\t%d"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:811 client/cl_inventory_callbacks.c:136
+#: client/campaign/cp_campaign.c:805 client/cl_inventory_callbacks.c:136
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cp_campaign.c:817
+#: client/campaign/cp_campaign.c:811
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Töölisi:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:830
+#: client/campaign/cp_campaign.c:824
 #, fuzzy, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Lennumasinad:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:841
+#: client/campaign/cp_campaign.c:835
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Baas (%s):\t%i c\n"
 
-#: client/campaign/cp_campaign.c:846
+#: client/campaign/cp_campaign.c:840
 #, fuzzy, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Jooksvad kulud:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:853
+#: client/campaign/cp_campaign.c:847
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Võlg:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:856
+#: client/campaign/cp_campaign.c:850
 #, c-format
 msgid ""
 "\n"
@@ -12997,47 +12975,47 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i c\n"
 
-#: client/campaign/cp_campaign.c:861
+#: client/campaign/cp_campaign.c:855
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:866
+#: client/campaign/cp_campaign.c:860
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1481
+#: client/campaign/cp_campaign.c:1473
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "Kogutud tulnukate tehnoloogjat\t%i c\n"
 
-#: client/campaign/cp_campaign.c:1526
+#: client/campaign/cp_campaign.c:1518
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinu transpordilaev ei ole maadumispaiga lähedal "
 
-#: client/campaign/cp_campaign.c:1578 client/campaign/cp_missions.c:1176
+#: client/campaign/cp_campaign.c:1573 client/campaign/cp_missions.c:1175
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Baasi kaitse: %s edukas"
 
-#: client/campaign/cp_campaign.c:1592
+#: client/campaign/cp_campaign.c:1587
 msgid "You've won the battle"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/campaign/cp_campaign.c:1611
+#: client/campaign/cp_campaign.c:1606
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/campaign/cp_campaign.c:1612
+#: client/campaign/cp_campaign.c:1607
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Tulnukaid kinnipüütud\t%i\n"
 
-#: client/campaign/cp_campaign.c:1613
+#: client/campaign/cp_campaign.c:1608
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13046,22 +13024,22 @@ msgstr ""
 "Tulnukate ellujäänuid\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1615
+#: client/campaign/cp_campaign.c:1610
 #, fuzzy, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Phalanxi sõdureid tapetud tulnukate poolt\t%i\n"
 
-#: client/campaign/cp_campaign.c:1616
+#: client/campaign/cp_campaign.c:1611
 #, fuzzy, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Phalanxi sõdureid kadunud lahingus\t%i\n"
 
-#: client/campaign/cp_campaign.c:1617
+#: client/campaign/cp_campaign.c:1612
 #, fuzzy, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/campaign/cp_campaign.c:1618
+#: client/campaign/cp_campaign.c:1613
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13070,17 +13048,17 @@ msgstr ""
 "Phalanxi ellujäänuid\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1620
+#: client/campaign/cp_campaign.c:1615
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Tulnukate tapetud inimesi\t%i\n"
 
-#: client/campaign/cp_campaign.c:1621
+#: client/campaign/cp_campaign.c:1616
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Phalanxi poolt tapetud inimesi\t%i\n"
 
-#: client/campaign/cp_campaign.c:1622
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13089,24 +13067,24 @@ msgstr ""
 "Inimesi päästetud\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1623
+#: client/campaign/cp_campaign.c:1618
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1700
+#: client/campaign/cp_campaign.c:1695
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s on ülendatud %s.\n"
 
-#: client/campaign/cp_campaign.c:1702
+#: client/campaign/cp_campaign.c:1697
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1703
+#: client/campaign/cp_campaign.c:1698
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
@@ -13147,8 +13125,8 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Sul on valmis uus lennuk (a %s) baasis %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1594
-#: client/campaign/cp_map.c:1613
+#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1591
+#: client/campaign/cp_map.c:1610
 #, fuzzy
 msgid "Unknown"
 msgstr "Tundmatu relva oskus"
@@ -13309,15 +13287,15 @@ msgstr ""
 msgid "UFO Sighting"
 msgstr "Ufo - Hävitus"
 
-#: client/campaign/cp_map.c:1390
+#: client/campaign/cp_map.c:1383
 msgid "Day"
 msgstr "Päev"
 
-#: client/campaign/cp_map.c:1390
+#: client/campaign/cp_map.c:1383
 msgid "Night"
 msgstr "Öö"
 
-#: client/campaign/cp_map.c:1593
+#: client/campaign/cp_map.c:1590
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -13328,122 +13306,122 @@ msgstr ""
 "Tüüp: %s\n"
 "Ülesanne: %s\n"
 
-#: client/campaign/cp_map.c:1610
+#: client/campaign/cp_map.c:1607
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_map.c:1630 client/campaign/cp_map.c:1638
+#: client/campaign/cp_map.c:1627 client/campaign/cp_map.c:1635
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nimi:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1631 client/campaign/cp_map.c:1639
+#: client/campaign/cp_map.c:1628 client/campaign/cp_map.c:1636
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Seisund:\t%s\n"
 
-#: client/campaign/cp_map.c:1632
+#: client/campaign/cp_map.c:1629
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1636 client/campaign/cp_map.c:1646
+#: client/campaign/cp_map.c:1633 client/campaign/cp_map.c:1643
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Tegevus:\t%s\n"
 
-#: client/campaign/cp_map.c:1664
+#: client/campaign/cp_map.c:1661
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Kiirus:\t%0f\n"
 
-#: client/campaign/cp_map.c:1864
+#: client/campaign/cp_map.c:1861
 #, fuzzy, c-format
 msgid "%s\t%i%%\n"
 msgstr "Nimii:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1915
+#: client/campaign/cp_map.c:1912
 #, fuzzy
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 "Vali Soovitud asukoht uue\n"
 "baasi jaoks sellel kaartil.\n"
 
-#: client/campaign/cp_map.c:1918
+#: client/campaign/cp_map.c:1915
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr ""
 "Vali Soovitud asukoht uue\n"
 "baasi jaoks sellel kaartil.\n"
 
-#: client/campaign/cp_map.c:1923
+#: client/campaign/cp_map.c:1920
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 "Tulnukad ründavad meie\n"
 "baasi !!!!\n"
 
-#: client/campaign/cp_map.c:1928
+#: client/campaign/cp_map.c:1925
 msgid "Select ufo or mission on map\n"
 msgstr "Vali UFO või mission kaartil\n"
 
-#: client/campaign/cp_map.c:1933
+#: client/campaign/cp_map.c:1930
 msgid "UFO in radar range\n"
 msgstr "Ufo on radari ulatuseses\n"
 
-#: client/campaign/cp_mapfightequip.c:323
+#: client/campaign/cp_mapfightequip.c:346
 #, c-format
 msgid "%s was successfully installed into aircraft %s at %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:326
+#: client/campaign/cp_mapfightequip.c:349
 #, c-format
 msgid "%s was successfully installed at installation %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:329
+#: client/campaign/cp_mapfightequip.c:352
 #, fuzzy, c-format
 msgid "%s was successfully installed at %s."
 msgstr "Kampaania salvestati edukalt."
 
-#: client/campaign/cp_mapfightequip.c:351
+#: client/campaign/cp_mapfightequip.c:374
 #, c-format
 msgid "%s was successfully removed from aircraft %s at %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:357
+#: client/campaign/cp_mapfightequip.c:380
 #, c-format
 msgid "%s was successfully removed, starting installation of %s into aircraft %s at %s"
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:365
+#: client/campaign/cp_mapfightequip.c:388
 #, c-format
 msgid "%s was successfully removed from installation %s."
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:368
+#: client/campaign/cp_mapfightequip.c:391
 #, fuzzy, c-format
 msgid "%s was successfully removed from %s."
 msgstr "Kampaania salvestati edukalt."
 
-#: client/campaign/cp_mapfightequip.c:1325
+#: client/campaign/cp_mapfightequip.c:1348
 msgid "Light weight"
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:1328
+#: client/campaign/cp_mapfightequip.c:1351
 #, fuzzy
 msgid "Medium weight"
 msgstr "Meedik"
 
-#: client/campaign/cp_mapfightequip.c:1331
+#: client/campaign/cp_mapfightequip.c:1354
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Kahur-Laser"
 
-#: client/campaign/cp_mapfightequip.c:1334
+#: client/campaign/cp_mapfightequip.c:1357
 #, fuzzy
 msgid "Unknown weight"
 msgstr "Tundmatu relva oskus"
@@ -13644,72 +13622,72 @@ msgstr "Kogumismissioon"
 msgid "Alien activity has been detected in %s."
 msgstr "Tulnukate tegevusest %s on teatatud."
 
-#: client/campaign/cp_missions.c:1272
+#: client/campaign/cp_missions.c:1270
 #: client/campaign/missions/cp_mission_harvest.c:165
 #: client/campaign/missions/cp_mission_recon.c:161
 msgid "No nation"
 msgstr "Pole riiki"
 
-#: client/campaign/cp_nation.c:125
+#: client/campaign/cp_nation.c:124
 msgid "Giving up"
 msgstr "Alla andmas"
 
-#: client/campaign/cp_nation.c:127
+#: client/campaign/cp_nation.c:126
 msgid "Furious"
 msgstr "Marus"
 
-#: client/campaign/cp_nation.c:129
+#: client/campaign/cp_nation.c:128
 msgid "Angry"
 msgstr "Väga vihane"
 
-#: client/campaign/cp_nation.c:131
+#: client/campaign/cp_nation.c:130
 msgid "Mad"
 msgstr "Vihane"
 
-#: client/campaign/cp_nation.c:133
+#: client/campaign/cp_nation.c:132
 msgid "Upset"
 msgstr "Ärritunud"
 
-#: client/campaign/cp_nation.c:135
+#: client/campaign/cp_nation.c:134
 msgid "Tolerant"
 msgstr "Tolereeriv"
 
-#: client/campaign/cp_nation.c:137
+#: client/campaign/cp_nation.c:136
 msgid "Neutral"
 msgstr "Neutraalne"
 
-#: client/campaign/cp_nation.c:139
+#: client/campaign/cp_nation.c:138
 msgid "Content"
 msgstr "Enam-vähem rahul"
 
-#: client/campaign/cp_nation.c:141
+#: client/campaign/cp_nation.c:140
 msgid "Pleased"
 msgstr "Rahul"
 
-#: client/campaign/cp_nation.c:143
+#: client/campaign/cp_nation.c:142
 msgid "Happy"
 msgstr "Rõõmus"
 
-#: client/campaign/cp_nation.c:145
+#: client/campaign/cp_nation.c:144
 msgid "Exuberant"
 msgstr "Ülirõõmus"
 
-#: client/campaign/cp_nation.c:171
+#: client/campaign/cp_nation.c:170
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr ""
 
-#: client/campaign/cp_nation.c:175
+#: client/campaign/cp_nation.c:174
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr ""
 
-#: client/campaign/cp_nation.c:179
+#: client/campaign/cp_nation.c:178
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr ""
 
-#: client/campaign/cp_nation.c:185
+#: client/campaign/cp_nation.c:184
 msgid "Nation changed happiness"
 msgstr ""
 
@@ -13861,46 +13839,46 @@ msgid ""
 "Aircraft cannot start.\n"
 msgstr ""
 
-#: client/campaign/cp_produce.c:233
+#: client/campaign/cp_produce.c:230
 #, fuzzy, c-format
 msgid "Production queue for %s is empty"
 msgstr "Valmistamise järjekord %s baasis on tühi"
 
-#: client/campaign/cp_produce.c:234
+#: client/campaign/cp_produce.c:231
 msgid "Production queue empty"
 msgstr "Tootmise järjekord on tühi"
 
-#: client/campaign/cp_produce.c:340 client/campaign/cp_produce.c:362
+#: client/campaign/cp_produce.c:337 client/campaign/cp_produce.c:359
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in %s.\n"
 msgstr "Pole piisavalt raha uue baasi ehitamiseks."
 
-#: client/campaign/cp_produce.c:350
+#: client/campaign/cp_produce.c:347
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Production postponed.\n"
 msgstr "Pole piisavalt raha uue baasi ehitamiseks."
 
-#: client/campaign/cp_produce.c:372
+#: client/campaign/cp_produce.c:369
 #, fuzzy, c-format
 msgid "Not enough free hangar space in %s. Production postponed.\n"
 msgstr "Pole piisavalt raha uue baasi ehitamiseks."
 
-#: client/campaign/cp_produce.c:405
+#: client/campaign/cp_produce.c:402
 #, fuzzy, c-format
 msgid "The production of %s at %s has finished."
 msgstr "Tootmist alustatud"
 
-#: client/campaign/cp_produce.c:406 client/campaign/cp_produce.c:446
+#: client/campaign/cp_produce.c:403 client/campaign/cp_produce.c:443
 #, fuzzy
 msgid "Production finished"
 msgstr "Ehitamine lõpetatud"
 
-#: client/campaign/cp_produce.c:433
+#: client/campaign/cp_produce.c:430
 #, fuzzy, c-format
 msgid "Not enough free storage space in %s. Disassembling postponed.\n"
 msgstr "Pole piisavalt raha uue baasi ehitamiseks."
 
-#: client/campaign/cp_produce.c:445
+#: client/campaign/cp_produce.c:442
 #, fuzzy, c-format
 msgid "The disassembling of %s at %s has finished."
 msgstr "Tootmist alustatud"
@@ -14253,8 +14231,8 @@ msgstr "Laen...."
 
 #: client/campaign/cp_save.c:468 client/campaign/cp_save.c:492
 #: client/campaign/cp_save.c:620 client/cl_irc.c:1208 client/cl_irc.c:1440
-#: client/cl_main.c:505 client/cl_main.c:510 client/cl_main.c:516
-#: client/cl_main.c:524 client/multiplayer/mp_callbacks.c:49
+#: client/cl_main.c:506 client/cl_main.c:511 client/cl_main.c:517
+#: client/cl_main.c:525 client/multiplayer/mp_callbacks.c:49
 msgid "Error"
 msgstr "VIGA"
 
@@ -14955,7 +14933,7 @@ msgstr ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:461
+#: client/cl_game_campaign.c:459
 #, c-format
 msgid "Rank: %s"
 msgstr "Auaste: %s"
@@ -15174,25 +15152,25 @@ msgstr ""
 msgid "..."
 msgstr ""
 
-#: client/cl_main.c:504
+#: client/cl_main.c:505
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:510
+#: client/cl_main.c:511
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:516
+#: client/cl_main.c:517
 msgid "Script files are not the same"
 msgstr ""
 
-#: client/cl_main.c:523
+#: client/cl_main.c:524
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:855
+#: client/cl_main.c:856
 msgid "Target your shot to the ground"
 msgstr ""
 
@@ -15515,43 +15493,43 @@ msgstr "Uus tiim"
 msgid "Error saving team. Check free disk space!"
 msgstr "Ei õnnestu salvestad tiimi. Kontrolli ketta vaba ruumi!"
 
-#: game/g_actor.c:378
+#: game/g_actor.c:388
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Sa ei saa seda teha - pole piisavalt TUse\n"
 
-#: game/g_actor.c:382
+#: game/g_actor.c:392
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Sa ei saa relva laadida - Relv on juba laetud\n"
 
-#: game/g_client.c:306
+#: game/g_client.c:305
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Sa ei saa seda teha - see ei ole sinu käik\n"
 
-#: game/g_client.c:311
+#: game/g_client.c:310
 msgid "Can't perform action - object not present!\n"
 msgstr "Sa ei saa seda teha - objekt ei ole omal kohal\n"
 
-#: game/g_client.c:316
+#: game/g_client.c:315
 msgid "Can't perform action - not an actor!\n"
 msgstr "Sa ei saa seda teha - object ei ole tegelane\n"
 
-#: game/g_client.c:321
+#: game/g_client.c:320
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Saa ei saa seda teha - tegelane on meelemärkuseta\n"
 
-#: game/g_client.c:326
+#: game/g_client.c:325
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Sa ei saa seda teha - tegelane on surnud\n"
 
-#: game/g_client.c:331
+#: game/g_client.c:330
 msgid "Can't perform action - not on same team!\n"
 msgstr "Sa ei saa seda teha - te pole samas tiimis\n"
 
-#: game/g_client.c:336
+#: game/g_client.c:335
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Sa ei saa seda teha - Sul ei ole kontrolli liitlase üle\n"
 
-#: game/g_client.c:431
+#: game/g_client.c:430
 #, fuzzy
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "On halvas vaimses seisundis aga saab hakkama\n"
@@ -15629,16 +15607,16 @@ msgstr "%s on hullumeelsuse piiri ületanud!\n"
 msgid "%s is currently shaken.\n"
 msgstr "%s on vaimselt raputatud.\n"
 
-#: game/g_reaction.c:149
+#: game/g_reaction.c:183
 #, fuzzy
 msgid "No reaction fire enabled weapon.\n"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: game/g_reaction.c:154
+#: game/g_reaction.c:188
 msgid "No fire mode selected for reaction fire.\n"
 msgstr ""
 
-#: game/g_reaction.c:159
+#: game/g_reaction.c:193
 #, fuzzy
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "Peata uurimine"
@@ -15695,6 +15673,27 @@ msgstr "Vaba"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "Mängib"
+
+#, fuzzy
+#~ msgid "b_laser_txt"
+#~ msgstr ""
+#~ "Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
+#~ "\n"
+#~ "The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
+#~ "\n"
+#~ "Now, however, we at PHALANX have built a conventional laser cannon in miniature. Despite its small size it is fully capable of handling the deuterium-fluoride reaction and containing the toxic waste products without danger of contamination. Let me give you a brief description of the inner workings.\n"
+#~ "\n"
+#~ "Inside the combustion chamber, ethylene is burned in nitrogen trifluoride. This reaction produces excited fluorine radicals, which are then brought into contact with a mixture of helium and deuterium gas. The deuterium reacts with the fluorine, producing excited molecules of deuterium fluoride. These undergo stimulated emission in the weapon's optical resonator, generating the beam. A series of intelligent lenses then focuses and directs the beam to the shooter's aiming point and even corrects for minor movement by the shooter or the target. The deuterium waste gas is rammed through our custom-designed high-pressure filtering system, which catches all toxic or radioactive molecules before expelling the remaining harmless vapour back into the atmosphere.\n"
+#~ "\n"
+#~ "The filter needs to be replaced after every mission, but we've designed the system to make this easy and painless. If the filter system is somehow damaged during the course of an operation, the weapon will immediately stop functioning in order to prevent contamination.\n"
+#~ "\n"
+#~ "The laser operates on mid-infrared wavelengths, so it produces no visible beam except to those wearing IR goggles.\n"
+#~ "\n"
+#~ "The prototype we built is unfortunately not yet ready for full-scale production as an infantry weapon, since more refining and balancing is required for human use, but the innovations we've made can also be applied to vehicle weapons -- perhaps even aircraft guns. I've submitted several new proposals to your inbox for the principal ideas we've drawn up.\n"
+#~ "\n"
+#~ "Let me know when you want us to start working on them, Commander.\n"
+#~ "\n"
+#~ "--Cdr. Navarre"
 
 #, fuzzy
 #~ msgid "Can't activate reaction fire.\n"

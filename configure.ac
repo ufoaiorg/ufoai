@@ -981,33 +981,6 @@ else
 fi
 
 #---------------------------------------------------------------------------------------------
-# Fill in path variables
-#---------------------------------------------------------------------------------------------
-
-test "$prefix" = "NONE" && prefix=/usr/local
-test "$exec_prefix" = "NONE" && exec_prefix=$prefix
-
-eval PKGLIBDIR="$libdir/ufoai"
-AC_DEFINE_UNQUOTED(PKGLIBDIR, "$PKGLIBDIR",
-	[Define this to the path containing the shared modules.]
-)
-
-datarootdir=$prefix/share
-test "$datadir" = "NONE" && datadir=$datarootdir
-
-eval PKGDATADIR="$datadir/ufoai"
-AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR",
-	[Define this to the path containing the game data.]
-)
-AC_SUBST(PKGDATADIR)
-
-eval BINDIR="$bindir"
-AC_DEFINE_UNQUOTED(BINDIR, "$BINDIR",
-	[Define this to the path containing the game binary.]
-)
-AC_SUBST(BINDIR)
-
-#---------------------------------------------------------------------------------------------
 
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
 
