@@ -122,6 +122,7 @@ static int AIL_crouch(lua_State *L);
 static int AIL_isinjured(lua_State *L);
 static int AIL_TU(lua_State *L);
 static int AIL_HP(lua_State *L);
+static int AIL_morale(lua_State *L);
 static int AIL_reactionfire(lua_State *L);
 static int AIL_roundsleft(lua_State *L);
 static int AIL_canreload(lua_State *L);
@@ -138,6 +139,7 @@ static const luaL_reg AIL_methods[] = {
 	{"isinjured", AIL_isinjured},
 	{"TU", AIL_TU},
 	{"HP", AIL_HP},
+	{"morale", AIL_morale},
 	{"reactionfire", AIL_reactionfire},
 	{"roundsleft", AIL_roundsleft},
 	{"canreload", AIL_canreload},
@@ -695,6 +697,15 @@ static int AIL_HP (lua_State *L)
 }
 
 /**
+ * @brief Gets the current morale of the actor onto the stack.
+ */
+static int AIL_morale (lua_State *L)
+{
+	lua_pushnumber(L, AIL_ent->morale);
+	return 1;
+}
+
+/**
  * @brief Sets the actor's reaction fire.
  */
 static int AIL_reactionfire (lua_State *L)
@@ -843,6 +854,8 @@ static int AIL_positionshoot (lua_State *L)
 
 /**
  * @brief Moves the actor into a position in which he can hide.
+ * @note @c team (parameter is passed through the lua stack) means that the AI tries to find
+ * a hide position from the @c team members, if parameter is empty - from any enemy
  */
 static int AIL_positionhide (lua_State *L)
 {
@@ -853,6 +866,25 @@ static int AIL_positionhide (lua_State *L)
 	VectorCopy(AIL_ent->pos, save);
 
 	hidingTeam = AI_GetHidingTeam(AIL_ent);
+
+	/** @todo this parse code looks like the parse team parameter code in AIL_see func */
+	/* parse parameter */
+	if (lua_gettop(L)) {
+		if (lua_isstring(L, 1)) {
+			const char* s = lua_tostring(L, 1);
+			if (!strcmp(s, "alien"))
+				hidingTeam = TEAM_ALIEN;
+			else if (!strcmp(s, "phalanx"))
+				hidingTeam = TEAM_PHALANX;
+			else if (!strcmp(s, "civilian"))
+				hidingTeam = TEAM_CIVILIAN;
+			else
+				AIL_invalidparameter(1);
+		} else {
+			AIL_invalidparameter(1);
+		}
+	}
+
 	if (AI_FindHidingLocation(hidingTeam, AIL_ent, AIL_ent->pos, &tus)) {
 		/* Return the spot. */
 		lua_pushpos3(L, &AIL_ent->pos);
