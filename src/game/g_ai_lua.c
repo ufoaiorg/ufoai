@@ -880,7 +880,6 @@ static int AIL_positionhide (lua_State *L)
 
 	hidingTeam = AI_GetHidingTeam(AIL_ent);
 
-	/** @todo this parse code looks like the parse team parameter code in AIL_see func */
 	/* parse parameter */
 	if (lua_gettop(L)) {
 		if (lua_isstring(L, 1)) {
