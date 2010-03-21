@@ -464,12 +464,12 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	}
 
 	if (!G_IsRaged(ent)) {
+		const int hidingTeam = AI_GetHidingTeam(ent);
 		/* hide */
-		if (AI_HideNeeded(ent) || !(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
+		if (AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
-			const int hidingTeam = AI_GetHidingTeam(ent);
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
