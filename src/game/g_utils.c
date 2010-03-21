@@ -250,7 +250,7 @@ void G_PrintStats (const char *buffer)
 		time(&aclock);
 		t = localtime(&aclock);
 
-		fprintf(logstatsfile, "[STATS] %s - %s", tbuf, buffer);
+		fprintf(logstatsfile, "[STATS] %s - %s\n", tbuf, buffer);
 	}
 }
 
