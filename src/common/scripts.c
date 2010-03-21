@@ -91,6 +91,26 @@ qboolean Com_GetConstInt (const char *name, int *value)
 }
 
 /**
+ * @brief Searches whether a given value was registered as a string to int mapping
+ * @param[in] space The namespace of the mapping variable
+ * @param[in] variable The name of the string mapping
+ * @param[out] value The mapped integer if found, not touched if the given string
+ * was found in the registered values.
+ * @return True if the value is found.
+ * @sa Com_RegisterConstInt
+ * @sa Com_ParseValue
+ * @sa Com_GetConstInt
+ */
+qboolean Com_GetConstIntFromNamespace (const char *space, const char *variable, int *value)
+{
+	assert(space != NULL);
+	assert(space[0] != '\0');
+	assert(variable != NULL);
+	assert(variable[0] != '\0');
+	return Com_GetConstInt(va("%s::%s", space, variable), value);
+}
+
+/**
  * @brief Searches the mapping variable for a given integer value and a namespace
  * @param[in] value The mapped integer
  * @param[in] namespace The namespace to search in - might not be @c NULL or empty.
