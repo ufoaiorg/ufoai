@@ -267,51 +267,57 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 {
 	char buffer[512];
 
-	if (victim->pnum != attacker->pnum) {
-		const char *victimName = G_GetPlayerName(victim->pnum);
-		const char *attackerName = G_GetPlayerName(attacker->pnum);
-		if (victimName[0] == '\0') { /* empty string */
-			switch (victim->team) {
-			case TEAM_CIVILIAN:
-				victimName = "civilian";
-				break;
-			case TEAM_ALIEN:
-				victimName = "alien";
-				break;
-			default:
-				victimName = "unknown";
-				break;
+	if (attacker != NULL) {
+		if (victim->pnum != attacker->pnum) {
+			const char *victimName = G_GetPlayerName(victim->pnum);
+			const char *attackerName = G_GetPlayerName(attacker->pnum);
+			if (victimName[0] == '\0') { /* empty string */
+				switch (victim->team) {
+				case TEAM_CIVILIAN:
+					victimName = "civilian";
+					break;
+				case TEAM_ALIEN:
+					victimName = "alien";
+					break;
+				default:
+					victimName = "unknown";
+					break;
+				}
 			}
-		}
-		if (attackerName[0] == '\0') { /* empty string */
-			switch (attacker->team) {
-			case TEAM_CIVILIAN:
-				attackerName = "civilian";
-				break;
-			case TEAM_ALIEN:
-				attackerName = "alien";
-				break;
-			default:
-				attackerName = "unknown";
-				break;
+			if (attackerName[0] == '\0') { /* empty string */
+				switch (attacker->team) {
+				case TEAM_CIVILIAN:
+					attackerName = "civilian";
+					break;
+				case TEAM_ALIEN:
+					attackerName = "alien";
+					break;
+				default:
+					attackerName = "unknown";
+					break;
+				}
 			}
-		}
-		if (victim->team != attacker->team) {
-			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s",
-				attackerName, attacker->chr.name,
-				(victim->HP == 0 ? "kills" : "stuns"),
-				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+			if (victim->team != attacker->team) {
+				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s",
+					attackerName, attacker->chr.name,
+					(victim->HP == 0 ? "kills" : "stuns"),
+					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+			} else {
+				Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s",
+					attackerName, attacker->chr.name,
+					(victim->HP == 0 ? "kills" : "stuns"),
+					victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+			}
 		} else {
-			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s",
-				attackerName, attacker->chr.name,
-				(victim->HP == 0 ? "kills" : "stuns"),
-				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+			const char *attackerName = G_GetPlayerName(attacker->pnum);
+			Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s",
+				attackerName, (victim->HP == 0 ? "kills" : "stuns"),
+				victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 		}
 	} else {
-		const char *attackerName = G_GetPlayerName(attacker->pnum);
-		Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s",
-			attackerName, (victim->HP == 0 ? "kills" : "stuns"),
-			victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
+		const char *victimName = G_GetPlayerName(victim->pnum);
+		Com_sprintf(buffer, sizeof(buffer), "%s (%s) was %s",
+			victimName, victim->chr.name, (victim->HP == 0 ? "killed" : "stunned"));
 	}
 	G_PrintStats(buffer);
 }

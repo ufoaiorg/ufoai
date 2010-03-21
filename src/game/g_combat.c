@@ -421,9 +421,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	/* Check death/knockout. */
 	if (target->HP == 0 || target->HP <= target->STUN) {
 		G_SendStats(target);
-		/* prints stats for multiplayer to game console */
-		if (sv_maxclients->integer > 1)
-			G_PrintActorStats(target, attacker, fd);
+
+		G_PrintActorStats(target, attacker, fd);
 
 		G_ActorDie(target, target->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
 
