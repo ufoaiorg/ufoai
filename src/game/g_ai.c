@@ -248,6 +248,19 @@ static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edic
 }
 
 /**
+ * @brief Returns the value for the vis check whenever an ai actor tries to hide. For aliens this
+ * is the inverse team - see the vis check code for the inverse team rules to see how this works.
+ * For civilians we have to specify the alien team and can't use the inverse team rules. This is
+ * needed because the inverse team rules aren't working for the civilian team - see @c TEAM_CIVILIAN
+ */
+int AI_GetHidingTeam (const edict_t *ent)
+{
+	if (G_IsCivilian(ent))
+		return TEAM_ALIEN;
+	return -ent->team;
+}
+
+/**
  * @brief Tries to search a hiding spot
  * @param[out] ent The actor edict. The position of the actor is updated here to perform visibility checks
  * @param[in] from The grid position the actor is (theoretically) standing at and searching a hiding location from
@@ -456,6 +469,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
+			const int hidingTeam = AI_GetHidingTeam(ent);
 			/* reward short walking to shooting spot, when seen by enemies; */
 			/** @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
@@ -465,7 +479,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			 * and only then firing at him */
 			bestActionPoints += max(GUETE_CLOSE_IN - move, 0);
 
-			if (!AI_FindHidingLocation(-ent->team, ent, to, &tu)) {
+			if (!AI_FindHidingLocation(hidingTeam, ent, to, &tu)) {
 				/* nothing found */
 				G_EdictSetOrigin(ent, to);
 				/** @todo Try to crouch if no hiding spot was found - randomized */
