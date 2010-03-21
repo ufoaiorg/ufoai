@@ -425,8 +425,11 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			if (oldState != ent->state && !G_IsDazed(ent)) {
 				/** @todo Handle dazed via trigger_hurt */
 				/* maybe this was due to rf - then the G_ActorDie was already called */
-				if (!G_IsDead(ent))
+				if (!G_IsDead(ent)) {
+					G_PrintActorStats(ent, NULL, NULL);
+
 					G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, NULL);
+				}
 				return;
 			}
 
