@@ -223,7 +223,7 @@ static qboolean AI_HideNeeded (edict_t *ent)
 	return qfalse;
 }
 
-static const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
+const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
 {
 	/* optimization: reaction fire is automatic */
 	if (IS_SHOT_REACTION(shootType))

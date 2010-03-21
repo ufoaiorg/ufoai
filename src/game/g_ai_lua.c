@@ -313,24 +313,15 @@ static int actorL_shoot (lua_State *L)
 		tu = AIL_ent->TU;
 	}
 
-	/** @todo figure out this shot mode stuff out. */
 	shootType = ST_RIGHT;
+	item = AI_GetItemForShootType(shootType, AIL_ent);
+	if (item == NULL) {
+		shootType = ST_LEFT;
+		item = AI_GetItemForShootType(shootType, AIL_ent);
+	}
 
-	/* Figure out weapon to use. */
-	if (IS_SHOT_RIGHT(shootType) && RIGHT(AIL_ent)
-			&& RIGHT(AIL_ent)->item.m
-			&& RIGHT(AIL_ent)->item.t->weapon
-			&& (!RIGHT(AIL_ent)->item.t->reload
-				|| RIGHT(AIL_ent)->item.a > 0)) {
-		item = &RIGHT(AIL_ent)->item;
-	} else if (IS_SHOT_LEFT(shootType) && LEFT(AIL_ent)
-			&& LEFT(AIL_ent)->item.m
-			&& LEFT(AIL_ent)->item.t->weapon
-			&& (!LEFT(AIL_ent)->item.t->reload
-				|| LEFT(AIL_ent)->item.a > 0)) {
-		item = &LEFT(AIL_ent)->item;
-	} else {
-		/* Failure - no weapon. */
+	/* Failure - no weapon. */
+	if (item == NULL) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
