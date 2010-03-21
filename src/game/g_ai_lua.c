@@ -119,7 +119,9 @@ static const luaL_reg pos3L_methods[] = {
 static int AIL_print(lua_State *L);
 static int AIL_see(lua_State *L);
 static int AIL_crouch(lua_State *L);
+static int AIL_isinjured(lua_State *L);
 static int AIL_TU(lua_State *L);
+static int AIL_HP(lua_State *L);
 static int AIL_reactionfire(lua_State *L);
 static int AIL_roundsleft(lua_State *L);
 static int AIL_canreload(lua_State *L);
@@ -133,7 +135,9 @@ static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
 	{"crouch", AIL_crouch},
+	{"isinjured", AIL_isinjured},
 	{"TU", AIL_TU},
+	{"HP", AIL_HP},
 	{"reactionfire", AIL_reactionfire},
 	{"roundsleft", AIL_roundsleft},
 	{"canreload", AIL_canreload},
@@ -664,11 +668,29 @@ static int AIL_crouch (lua_State *L)
 }
 
 /**
+* @brief Checks to see if the actor is injured
+*/
+static int AIL_isinjured (lua_State *L)
+{
+	lua_pushboolean(L, AIL_ent->HP != AIL_ent->chr.maxHP);
+	return 1;
+}
+
+/**
  * @brief Gets the number of TU the actor has left.
  */
 static int AIL_TU (lua_State *L)
 {
 	lua_pushnumber(L, AIL_ent->TU);
+	return 1;
+}
+
+/**
+ * @brief Gets the number of HP the actor has left.
+ */
+static int AIL_HP (lua_State *L)
+{
+	lua_pushnumber(L, AIL_ent->HP);
 	return 1;
 }
 
