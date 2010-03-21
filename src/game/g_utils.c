@@ -241,18 +241,17 @@ const char* G_GetPlayerName (int pnum)
  */
 void G_PrintStats (const char *buffer)
 {
-	struct tm *t;
-	char tbuf[32];
-	time_t aclock;
+	gi.dprintf("[STATS] %s\n", buffer);
+	if (logstatsfile) {
+		struct tm *t;
+		char tbuf[32];
+		time_t aclock;
 
-	time(&aclock);
-	t = localtime(&aclock);
+		time(&aclock);
+		t = localtime(&aclock);
 
-	Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
-			t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
-	gi.dprintf("[STATS] %s - %s\n", tbuf, buffer);
-	if (logstatsfile)
 		fprintf(logstatsfile, "[STATS] %s - %s", tbuf, buffer);
+	}
 }
 
 /**
