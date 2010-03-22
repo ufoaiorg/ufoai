@@ -62,6 +62,7 @@ item chaingun_ammo
 			damage				"20 3"
 			dmgweight			normal_spray
 			reaction			true
+			throughwall 5
 		}
 		firedef
 		{
@@ -81,7 +82,8 @@ item chaingun_ammo
 			time				30
 			damage				"20 3"
 			dmgweight			normal_spray
-		}
+			throughwall 5
+			}
 		firedef
 		{
 			name				"_Full-Auto Sweep"
@@ -101,6 +103,7 @@ item chaingun_ammo
 			damage				"20 3"
 			dmgweight			normal_spray
 			reaction			true
+			throughwall 5
 		}
 	}
 }
@@ -273,6 +276,7 @@ item xaw95_ammo
 			damage				"25 3"
 			dmgweight			normal_spray
 			reaction			true
+			throughwall 5
 		}
 		firedef
 		{
@@ -292,6 +296,7 @@ item xaw95_ammo
 			time				30
 			damage				"25 3"
 			dmgweight			normal_spray
+			throughwall 5
 		}
 		firedef
 		{
@@ -312,6 +317,7 @@ item xaw95_ammo
 			damage				"25 3"
 			dmgweight			normal_spray
 			reaction			true
+			throughwall 5
 		}
 	}
 }

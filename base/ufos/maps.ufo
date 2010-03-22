@@ -814,6 +814,7 @@ mapdef tropic_drug_crash
 	param		drug_crash
 	multiplayer	false
 	maxaliens	14
+	hurtaliens true
 
 	aircraft 
 	{
@@ -1179,6 +1180,7 @@ mapdef forest_large_crash
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
 	maxaliens	15
+	hurtaliens true
 
 	aircraft 
 	{
@@ -2058,6 +2060,7 @@ mapdef scout_crash
 {
 	map				scout_crash
 	multiplayer		true
+	hurtaliens	true
 	teams			2
 	gametypes {
 		1on1
@@ -2716,6 +2719,9 @@ mapdef fighter_crash
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		true
 	teams			2
+	maxaliens		6
+	hurtaliens	true
+
 	gametypes {
 		1on1
 		1on1on1
@@ -2725,7 +2731,6 @@ mapdef fighter_crash
 		coop3
 		coop4
 	}
-	maxaliens		6
 
 	aircraft 
 	{
