@@ -457,11 +457,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(fItemBackup.item, to, tx, ty);
+			G_WriteItem(&fItemBackup.item, to, tx, ty);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
-		G_WriteItem(item, to, tx, ty);
+		G_WriteItem(&item, to, tx, ty);
 	}
 
 	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
@@ -474,7 +474,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		}
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);
-			G_WriteItem(item, to, tx, ty);
+			G_WriteItem(&item, to, tx, ty);
 		}
 	}
 	gi.EndEvents();

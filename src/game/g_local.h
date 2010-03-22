@@ -277,7 +277,7 @@ extern cvar_t *difficulty;
 void G_SendPlayerStats(const player_t *player);
 
 /* g_inventory.c */
-void G_WriteItem(item_t item, const invDef_t *container, int x, int y);
+void G_WriteItem(const item_t *item, const invDef_t *container, int x, int y);
 void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
 edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
