@@ -159,9 +159,7 @@ static void G_Init (void)
 	sv_teamplay = gi.Cvar_Get("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see sv_maxclients, sv_maxplayersperteam, sv_maxsoldiersperteam and sv_maxsoldiersperplayer");
 	/* how many connected clients */
 	sv_maxclients = gi.Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
-	/* reaction leftover is 0 for acceptance testing; should default to 13 */
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
-
 	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
@@ -204,6 +202,7 @@ static void G_Init (void)
 	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 
 	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH | CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
+	/** @todo reaction leftover is 0 for acceptance testing; should default to 13 */
 	g_reaction_leftover = gi.Cvar_Get("g_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
