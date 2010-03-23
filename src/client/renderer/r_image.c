@@ -680,7 +680,7 @@ static void R_FreeImage (image_t *image)
 {
 	/* free image slot */
 	if (!image->texnum)
-		continue;
+		return;
 
 	/* also free a normalmap if there is one */
 	if (image->normalmap)
