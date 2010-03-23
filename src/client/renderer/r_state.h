@@ -71,6 +71,7 @@ typedef struct {
 	r_program_t *world_program;
 	r_program_t *mesh_program;
 	r_program_t *warp_program;
+	r_program_t *geoscape_program;
 	r_program_t *active_program;
 
 	/* blend function */
