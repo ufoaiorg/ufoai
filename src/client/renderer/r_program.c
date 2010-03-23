@@ -481,6 +481,15 @@ static void R_UseWarpProgram (void)
 	R_ProgramParameter4fv("OFFSET", offset);
 }
 
+static void R_InitGeoscapeProgram (void)
+{
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 1);
+	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER3", 3);
+	R_ProgramParameter1i("SAMPLER4", 4);
+}
+
 void R_InitPrograms (void)
 {
 	if (!qglCreateProgram)
@@ -497,7 +506,7 @@ void R_InitPrograms (void)
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
 	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
-	r_state.geoscape_program = R_LoadProgram("geoscape", NULL, NULL);
+	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 }
 
 /**
