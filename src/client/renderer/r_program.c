@@ -110,6 +110,16 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
+void R_ProgramParameter2fv (const char *name, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform2fv(v->location, 1, value);
+}
+
 void R_ProgramParameter3fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;

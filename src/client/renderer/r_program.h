@@ -63,6 +63,7 @@ void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
 void R_ProgramParameter1f(const char *name, GLfloat value);
 void R_ProgramParameter1i(const char *name, GLint value);
+void R_ProgramParameter2fv(const char *name, GLfloat *value);
 void R_ProgramParameter3fv(const char *name, GLfloat *value);
 void R_ProgramParameter4fv(const char *name, GLfloat *value);
 
