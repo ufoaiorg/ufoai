@@ -390,7 +390,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				status = G_CheckVisTeamAll(ent->team, qfalse, ent);
 
 				/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
-				ent->TU = max(0, initTU - usedTUs);
+				G_ActorSetTU(ent, max(0, initTU - usedTUs));
 
 				clientAction = ent->clientAction;
 				oldState = ent->state;
@@ -419,7 +419,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			}
 
 			/* Restore ent->TU because the movement code relies on it not being modified! */
-			ent->TU = initTU;
+			G_ActorSetTU(ent, initTU);
 
 			/* check for death */
 			if (oldState != ent->state && !G_IsDazed(ent)) {
@@ -442,9 +442,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 		/* submit the TUs / round down */
 		if (g_notu != NULL && g_notu->integer)
-			ent->TU = initTU;
+			G_ActorSetTU(ent, initTU);
 		else
-			ent->TU = max(0, initTU - usedTUs);
+			G_ActorSetTU(ent, max(0, initTU - usedTUs));
 
 		G_SendStats(ent);
 

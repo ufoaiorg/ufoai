@@ -390,7 +390,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (!isRobot && target->team != attacker->team) {
 				/** @todo there should be a possible protection, too */
-				target->TU = 0; /* flashbangs kill TUs */
+				G_ActorSetTU(target, 0); /* flashbangs kill TUs */
 				target->state |= STATE_DAZED; /* entity is dazed */
 				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
 				return;
@@ -1247,7 +1247,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	if (!mock) {
 		/* send TUs if ent still alive */
 		if (ent->inuse && !G_IsDead(ent)) {
-			ent->TU = max(ent->TU - fd->time, 0);
+			G_ActorSetTU(ent, max(ent->TU - fd->time, 0));
 			G_SendStats(ent);
 		}
 

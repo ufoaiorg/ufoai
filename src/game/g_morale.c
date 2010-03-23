@@ -60,7 +60,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity)
 	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);
 
 	/* kill TUs */
-	ent->TU = 0;
+	G_ActorSetTU(ent, 0);
 }
 
 /**

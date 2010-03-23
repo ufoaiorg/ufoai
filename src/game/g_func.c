@@ -260,7 +260,7 @@ void SP_func_door (edict_t *ent)
 	other = G_TriggerSpawn(ent);
 	other->touch = Touch_DoorTrigger;
 
-	ent->TU = TU_DOOR_ACTION;
+	G_ActorSetTU(ent, TU_DOOR_ACTION);
 	ent->use = Door_Use;
 	ent->child = other;
 

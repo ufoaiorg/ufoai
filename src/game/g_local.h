@@ -403,6 +403,8 @@ void G_CheckForceEndRound(void);
 void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 void G_ActorGiveTimeUnits(edict_t *ent);
+void G_ActorSetTU(edict_t *ent, int tus);
+void G_ActorUseTU(edict_t *ent, int tus);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);

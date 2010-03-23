@@ -244,7 +244,17 @@ void G_ActorSetMaxs (edict_t* ent)
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
 	ent->state &= ~STATE_DAZED;
-	ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+	G_ActorSetTU(ent, GET_TU(ent->chr.score.skills[ABILITY_SPEED]));
+}
+
+void G_ActorSetTU (edict_t *ent, int tus)
+{
+	ent->TU = max(tus, 0);
+}
+
+void G_ActorUseTU (edict_t *ent, int tus)
+{
+	G_ActorSetTU(ent, ent->TU - tus);
 }
 
 /**
@@ -374,11 +384,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	originalTU = ent->TU;
 	reservedTU = G_ActorGetReservedTUs(ent);
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
-	ent->TU -= reservedTU;
+	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
 	ia = game.i.MoveInInventory(&game.i, &ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
-	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
+	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 
 	switch (ia) {
 	case IA_NONE:

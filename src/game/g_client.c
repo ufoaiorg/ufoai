@@ -361,7 +361,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 
 	/* do the turn */
 	G_ActorDoTurn(ent, dir);
-	ent->TU -= TU_TURN;
+	G_ActorUseTU(ent, TU_TURN);
 
 	/* send the turn */
 	G_EventActorTurn(ent);
@@ -420,7 +420,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
 		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH)) {
 			ent->state ^= STATE_CROUCHED;
-			ent->TU -= TU_CROUCH;
+			G_ActorUseTU(ent, TU_CROUCH);
 			G_ActorSetMaxs(ent);
 		}
 		break;
@@ -560,7 +560,7 @@ qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edic
 		return qfalse;
 
 	/* using a group of edicts only costs TUs once (for the master) */
-	actor->TU -= edict->TU;
+	G_ActorUseTU(actor, edict->TU);
 	/* send the new TUs */
 	G_SendStats(actor);
 
@@ -1100,7 +1100,7 @@ void G_ClientInitActorStates (const player_t * player)
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
 		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
-		ent->TU = saveTU;
+		G_ActorSetTU(ent, saveTU);
 		G_ClientStateChangeUpdate(ent);
 	}
 }

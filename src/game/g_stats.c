@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_SendStats (edict_t * ent)
 {
 	/* extra sanity checks */
-	ent->TU = max(ent->TU, 0);
+	assert(ent->TU >= 0);
 	ent->HP = max(ent->HP, 0);
 	ent->STUN = min(ent->STUN, 255);
 	ent->morale = max(ent->morale, 0);
