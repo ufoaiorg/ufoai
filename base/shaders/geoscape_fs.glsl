@@ -59,4 +59,3 @@ void main()
 	/* calculate final color */
 	gl_FragColor = defaultColor + (ambientLight * diffuseColor) + color + nightColor; 
 }
-
