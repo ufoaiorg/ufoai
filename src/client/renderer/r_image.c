@@ -673,6 +673,22 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 }
 
 /**
+ * @brief Free the image and its normalmap (if there is one)
+ * @param image The image that should be freed
+ */
+static void R_FreeImage (image_t *image)
+{
+	/* free image slot */
+	if (!image->texnum)
+		continue;
+
+	/* also free a normalmap if there is one */
+	if (image->normalmap)
+		R_DeleteImage(image->normalmap);
+	R_DeleteImage(image);
+}
+
+/**
  * @brief Any image that is a mesh or world texture will be removed here
  * @sa R_ShutdownImages
  */
@@ -683,15 +699,11 @@ void R_FreeWorldImages (void)
 
 	R_CheckError();
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
-		if (!image->texnum)
-			continue;			/* free image slot */
 		if (image->type < it_world)
 			continue;			/* keep them */
 
 		/* free it */
-		if (image->normalmap)
-			R_DeleteImage(image->normalmap);
-		R_DeleteImage(image);
+		R_FreeImage(image);
 	}
 }
 
