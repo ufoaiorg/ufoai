@@ -118,7 +118,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 )
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
- * back the the vector coordinates - now go into the middle of the grid field
+ * back the vector coordinates - now go into the middle of the grid field
  * by adding the half of the grid unit size to this value
  * @sa PATHFINDING_WIDTH */
 #define PosToVec(p, v) ( \

@@ -354,7 +354,7 @@ ACTOR SELECTION AND TEAM LIST
 */
 
 /**
- * @brief Adds the actor the the team list.
+ * @brief Adds the actor to the team list.
  * @sa CL_ActorAppear
  * @sa CL_ActorRemoveFromTeamList
  * @param le Pointer to local entity struct

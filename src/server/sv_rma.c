@@ -679,8 +679,7 @@ static qboolean SV_AddRandomTile (mapInfo_t *map, int* idx, int* pos)
 
 /**
  * @brief Tries to fill the missing tiles of the current map.
- * @return qtrue if the map could be filled.
- * @return qfalse if the the tiles does not fit.
+ * @return @c false if the tiles does not fit, @c true if the map could be filled.
  * @sa SV_FitTile
  * @sa SV_AddTile
  */

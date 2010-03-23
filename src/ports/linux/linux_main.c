@@ -40,7 +40,7 @@ void Sys_Init (void)
 
 /**
  * @brief The entry point for linux server and client.
- * Inits the the program and calls @c Qcommon_Frame in an infinite loop.
+ * Initializes the program and calls @c Qcommon_Frame in an infinite loop.
  */
 int main (int argc, const char **argv)
 {

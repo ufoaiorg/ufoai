@@ -146,7 +146,7 @@ static void G_EdictAppear (unsigned int playerMask, const edict_t *ent)
 }
 
 /**
- * @brief Send the appear or perish event the the affected clients
+ * @brief Send the appear or perish event to the affected clients
  * @param[in] playerMask These are the affected players or clients
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
@@ -288,7 +288,7 @@ int G_GetActiveTeam (void)
 }
 
 /**
- * @brief Checks whether the the requested action is possible
+ * @brief Checks whether the requested action is possible
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  * @param[in] TU The time units to check against the ones ent has.

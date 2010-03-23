@@ -597,7 +597,7 @@ void SV_MapcycleAdd (const char* mapName, qboolean day, const char* gameType)
 		mapcycleList = Mem_PoolAlloc(sizeof(*mapcycle), sv_genericPool, 0);
 		mapcycle = mapcycleList; /* first one */
 	} else {
-		/* go the the last entry */
+		/* go to the last entry */
 		mapcycle = mapcycleList;
 		while (mapcycle->next)
 			mapcycle = mapcycle->next;

@@ -1831,7 +1831,7 @@ static void Irc_Client_Invite_f (void)
 		return;
 	}
 
-	/** @todo get own external ip and the the 127.0.0.1 nonsense (maybe ask the masterserver for this info?) */
+	/** @todo get own external ip and remove the 127.0.0.1 nonsense (maybe ask the masterserver for this info?) */
 	node = "127.0.0.1";
 	Com_sprintf(buf, sizeof(buf), "%s%s;%s", IRC_INVITE_FOR_A_GAME, node, port->string);
 	user = chan->user;
