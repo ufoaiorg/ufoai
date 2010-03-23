@@ -676,10 +676,10 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
  * @brief Free the image and its normalmap (if there is one)
  * @param image The image that should be freed
  */
-static void R_FreeImage (image_t *image)
+void R_FreeImage (image_t *image)
 {
 	/* free image slot */
-	if (!image->texnum)
+	if (!image || !image->texnum)
 		return;
 
 	/* also free a normalmap if there is one */
