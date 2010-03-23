@@ -87,13 +87,7 @@ void CL_RecalcRouting (const le_t* le)
 	CL_ActorConditionalMoveCalc(selActor);
 }
 
-/**
- * @brief Add the local models to the scene
- * @sa CL_ViewRender
- * @sa LE_AddToScene
- * @sa LM_AddModel
- */
-void LM_AddToScene (void)
+static void LM_AddToSceneOrder (qboolean parents)
 {
 	localModel_t *lm;
 	entity_t ent;
@@ -107,6 +101,16 @@ void LM_AddToScene (void)
 		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
 			continue;
 
+		/* if we want to render the parents an this is a child (has a parent assigned)
+		 * then skip it */
+		if (parents && lm->parent)
+			continue;
+
+		/* if we want to render the children and this is a parent (no further parent
+		 * assigned, then skip it. */
+		if (!parents && lm->parent == NULL)
+			continue;
+
 		/* set entity values */
 		memset(&ent, 0, sizeof(ent));
 		assert(lm->model);
@@ -118,8 +122,8 @@ void LM_AddToScene (void)
 			/** @todo what if the tagent is not rendered due to different level flags? */
 			ent.tagent = R_GetEntity(lm->parent->renderEntityNum);
 			if (ent.tagent == NULL)
-				Com_Error(ERR_DROP, "Invalid entity num for local model: %i",
-						lm->parent->renderEntityNum);
+				Com_Error(ERR_DROP, "Invalid entity num for local model (%s/%s): %i",
+						lm->model->name, lm->id, lm->parent->renderEntityNum);
 			ent.tagname = lm->tagname;
 			ent.lighting = &lm->parent->lighting;
 		} else {
@@ -144,6 +148,18 @@ void LM_AddToScene (void)
 		/* add it to the scene */
 		lm->renderEntityNum = R_AddEntity(&ent);
 	}
+}
+
+/**
+ * @brief Add the local models to the scene
+ * @sa CL_ViewRender
+ * @sa LE_AddToScene
+ * @sa LM_AddModel
+ */
+void LM_AddToScene (void)
+{
+	LM_AddToSceneOrder(qtrue);
+	LM_AddToSceneOrder(qfalse);
 }
 
 /**

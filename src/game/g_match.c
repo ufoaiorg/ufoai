@@ -226,6 +226,10 @@ static void G_MatchSendResults (int team)
 			attacker = ent;
 	}
 
+	/**
+	 * @todo remove this - we can still start a rescue mission if
+	 * there were stunned actors left.
+	 */
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
 		ent = NULL;

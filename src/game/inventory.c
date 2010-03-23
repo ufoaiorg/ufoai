@@ -876,7 +876,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 void INV_InitInventory (inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length)
 {
 	int i;
-	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
+	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 
 	assert(invList);
 

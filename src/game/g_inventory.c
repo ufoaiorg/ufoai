@@ -275,7 +275,7 @@ void G_WriteItem (const item_t *item, const invDef_t *container, int x, int y)
 void G_SendInventory (unsigned int playerMask, const edict_t *ent)
 {
 	invList_t *ic;
-	unsigned short nr = 0;
+	int nr = 0;
 	containerIndex_t container;
 
 	/* test for pointless player mask */
