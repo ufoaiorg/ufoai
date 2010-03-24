@@ -107,11 +107,18 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	sphere->num_tris = (tris + 1) * (tris + 2) * 2;
 }
 
+static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void *texCoordBuffer)
+{
+	R_SelectTexture(texunit);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texCoordBuffer);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 /**
  * @param sphere The sphere to check
  * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
  */
-static qboolean R_SphereGLSL (const sphere_t *sphere)
+static inline qboolean R_SphereGLSL (const sphere_t *sphere)
 {
 	return sphere->blendTexture && sphere->bumpMap && sphere->glossMap && sphere->nightOverlay;
 }
@@ -154,16 +161,11 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		/* configure openGL to use our shader program */
 		R_EnableLighting(r_state.geoscape_program, qtrue);
 
-		R_SelectTexture(&texunit_diffuse);
 		R_BindTexture(sphere->texture->texnum);
-		R_SelectTexture(&texunit_deluxemap);
-		R_BindTexture(sphere->glossMap->texnum);
-		R_SelectTexture(&texunit_normalmap);
-		R_BindTexture(sphere->bumpMap->texnum);
-		R_SelectTexture(&texunit_lightmap);
-		R_BindTexture(sphere->nightOverlay->texnum);
-		R_SelectTexture(&texunit_4);
-		R_BindTexture(sphere->blendTexture->texnum);
+		R_BindDeluxemapTexture(sphere->glossMap->texnum);
+		R_BindNormalmapTexture(sphere->bumpMap->texnum);
+		R_BindLightmapTexture(sphere->nightOverlay->texnum);
+		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_4);
 
 		R_ProgramParameter1f("specularExp", sphere->specularExponent);
 		R_ProgramParameter1f("blendScale", sphere->blendScale);
@@ -178,18 +180,12 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		R_ProgramParameter2fv("uvScale", v);
 
 		/* set up pointers */
-		R_SelectTexture(&texunit_4);
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-		R_SelectTexture(&texunit_normalmap);
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		R_SphereActivateTextureUnit(&texunit_4, sphere->texes);
+		R_SphereActivateTextureUnit(&texunit_normalmap, sphere->texes);
 
 		R_SelectTexture(&texunit_diffuse);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
+
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
 
@@ -205,6 +201,8 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		R_SelectTexture(&texunit_4);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		R_SelectTexture(&texunit_normalmap);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		R_SelectTexture(&texunit_deluxemap);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		/* deactivate the shader program */
