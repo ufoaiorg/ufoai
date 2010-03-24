@@ -1012,12 +1012,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		if (r_globeEarth.glossMap == r_noTexture)
 			r_globeEarth.glossMap = NULL;
 
-		/* set "shininess" factor */
-		r_globeEarth.specularExponent = 32.0;
 		/* weight the blending based on how much of the month has elapsed */
 		r_globeEarth.blendScale = seasonProgress;
-		/* textures are twice as wide as they are high */
-		Vector2Set(r_globeEarth.uvScale, 2, 1);
 		/* set up lights for nighttime city illumination*/
 		VectorCopy(antiSunPos, r_globeEarth.nightLightPos);
 		glLightfv(GL_LIGHT1, GL_AMBIENT, darknessLightColor);

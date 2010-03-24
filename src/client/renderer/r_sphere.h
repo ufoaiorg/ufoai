@@ -37,11 +37,9 @@ typedef struct sphere_s {
 	int num_tris;		/**< number of tris */
 
 	/** @note  extra stuff for new GLSL renderer*/
-	float specularExponent;
 	float blendScale;
 	vec4_t nightLightPos;
 	int season;
-	vec2_t uvScale;
 } sphere_t;
 
 extern sphere_t r_globeEarth;

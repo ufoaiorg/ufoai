@@ -154,7 +154,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 	/* render base globe texture with bump mapping */
 	if (!sphere->overlay && r_programs->integer && R_SphereGLSL(sphere)) {
-		vec4_t v;
+		vec3_t v;
 
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
 
@@ -167,17 +167,9 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		R_BindLightmapTexture(sphere->nightOverlay->texnum);
 		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_4);
 
-		R_ProgramParameter1f("specularExp", sphere->specularExponent);
 		R_ProgramParameter1f("blendScale", sphere->blendScale);
-
-		Vector4Set(v, 0.0, 0.0, 0.0, 1.0); /* make "dark" areas opaque */
-		R_ProgramParameter4fv("defaultColor", v);
-
 		VectorCopy(pos, v);
 		R_ProgramParameter3fv("viewVec", v);
-
-		Vector2Copy(sphere->uvScale, v);
-		R_ProgramParameter2fv("uvScale", v);
 
 		/* set up pointers */
 		R_SphereActivateTextureUnit(&texunit_4, sphere->texes);
