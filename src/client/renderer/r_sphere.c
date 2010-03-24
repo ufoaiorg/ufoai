@@ -108,6 +108,15 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 }
 
 /**
+ * @param sphere The sphere to check
+ * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
+ */
+static qboolean R_SphereGLSL (const sphere_t *sphere)
+{
+	return sphere->blendTexture && sphere->bumpMap && sphere->glossMap && sphere->nightOverlay;
+}
+
+/**
  * @brief Draw the sphere
  * @param[in] sphere The sphere that should be rendered
  * @param[in] pos The position (translation) of the matrix
@@ -115,7 +124,7 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
  * @param[in] scale The scale of the matrix
  * @param[in] lightPos Set this to NULL if you don't want to change the light position
  */
-void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos)
+void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
 {
 	/* go to a new matrix */
 	glPushMatrix();
@@ -136,32 +145,104 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 	R_CheckError();
 
-	/* solid globe texture */
-	if (sphere->overlay)
-		R_BindTexture(sphere->overlay->texnum);
-	else
+	/* render base globe texture with bump mapping */
+	if (!sphere->overlay && r_programs->integer && R_SphereGLSL(sphere)) {
+		vec4_t v;
+
+		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
+
+		/* configure openGL to use our shader program */
+		/** @todo Use R_EnableLighting */
+		R_UseProgram(r_state.geoscape_program);
+
+		R_SelectTexture(&texunit_diffuse);
 		R_BindTexture(sphere->texture->texnum);
-
-	if (sphere->overlayAlphaMask) {
-		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_SelectTexture(&texunit_deluxemap);
+		R_BindTexture(sphere->glossMap->texnum);
+		R_SelectTexture(&texunit_normalmap);
+		R_BindTexture(sphere->bumpMap->texnum);
 		R_SelectTexture(&texunit_lightmap);
+		R_BindTexture(sphere->nightOverlay->texnum);
+		R_SelectTexture(&texunit_4);
+		R_BindTexture(sphere->blendTexture->texnum);
+
+		R_ProgramParameter1f("specularExp", sphere->specularExponent);
+		R_ProgramParameter1f("blendScale", sphere->blendScale);
+
+		Vector4Set(v, 0.0, 0.0, 0.0, 1.0); /* make "dark" areas opaque */
+		R_ProgramParameter4fv("defaultColor", v);
+
+		VectorCopy(pos, v);
+		R_ProgramParameter3fv("viewVec", v);
+
+		Vector2Copy(sphere->uvScale, v);
+		R_ProgramParameter2fv("uvScale", v);
+
+		/* set up pointers */
+		R_SelectTexture(&texunit_4);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-		R_BindLightmapTexture(sphere->overlayAlphaMask->texnum);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		R_SelectTexture(&texunit_normalmap);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		R_SelectTexture(&texunit_diffuse);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
+		glEnableClientState(GL_NORMAL_ARRAY);
+
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_NORMALIZE);
+		glEnable(GL_LIGHT1);
+
+		/* render the object */
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
+
+		glDisable(GL_LIGHT1);
+		glDisable(GL_NORMALIZE);
+		glDisable(GL_CULL_FACE);
+
+		R_SelectTexture(&texunit_4);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		R_SelectTexture(&texunit_normalmap);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		/* deactivate the shader program */
+		/** @todo Use R_EnableLighting */
+		R_UseProgram(NULL);
+		R_SelectTexture(&texunit_diffuse);
+	} else {
+		/* solid globe texture */
+		if (sphere->overlay)
+			R_BindTexture(sphere->overlay->texnum);
+		else
+			R_BindTexture(sphere->texture->texnum);
+
+		if (sphere->overlayAlphaMask) {
+			R_EnableTexture(&texunit_lightmap, qtrue);
+			R_SelectTexture(&texunit_lightmap);
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+			R_BindLightmapTexture(sphere->overlayAlphaMask->texnum);
+		}
+
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
+
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_NORMALIZE);
+		glEnableClientState(GL_NORMAL_ARRAY);
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
+
+		glDisableClientState(GL_NORMAL_ARRAY);
+		glDisable(GL_NORMALIZE);
+		glDisable(GL_CULL_FACE);
 	}
-
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
-	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
-
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_NORMALIZE);
-	glEnableClientState(GL_NORMAL_ARRAY);
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
-
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisable(GL_NORMALIZE);
-	glDisable(GL_CULL_FACE);
 
 	R_CheckError();
 
