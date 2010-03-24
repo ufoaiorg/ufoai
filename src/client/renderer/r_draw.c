@@ -1003,9 +1003,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 			r_globeEarth.nightOverlay = NULL;
 
 		/* load normal map */
-		r_globeEarth.bumpMap = R_FindImage(va("pics/geoscape/%s_bump", map), it_wrappic);
-		if (r_globeEarth.bumpMap == r_noTexture)
-			r_globeEarth.bumpMap = NULL;
+		r_globeEarth.normalMap = R_FindImage(va("pics/geoscape/%s_bump", map), it_wrappic);
+		if (r_globeEarth.normalMap == r_noTexture)
+			r_globeEarth.normalMap = NULL;
 
 		/* load specularity map */
 		r_globeEarth.glossMap = R_FindImage(va("pics/geoscape/%s_gloss", map), it_wrappic);

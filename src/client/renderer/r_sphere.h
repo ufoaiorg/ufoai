@@ -32,7 +32,7 @@ typedef struct sphere_s {
 	image_t* nightOverlay;	/**< the texture for night illumination*/
 	image_t* overlay;	/**< the overlay for the world (e.g. nation borders) */
 	image_t* overlayAlphaMask;	/**< in case of multitexture this is the alpha mask */
-	image_t* bumpMap;	/**< bump map */
+	image_t* normalMap;	/**< bump map */
 	image_t* glossMap;	/**< gloss map */
 	int num_tris;		/**< number of tris */
 

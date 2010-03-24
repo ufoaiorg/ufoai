@@ -120,7 +120,7 @@ static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void *texC
  */
 static inline qboolean R_SphereGLSL (const sphere_t *sphere)
 {
-	return sphere->blendTexture && sphere->bumpMap && sphere->glossMap && sphere->nightOverlay;
+	return sphere->blendTexture && sphere->normalMap && sphere->glossMap && sphere->nightOverlay;
 }
 
 /**
@@ -163,7 +163,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 		R_BindTexture(sphere->texture->texnum);
 		R_BindDeluxemapTexture(sphere->glossMap->texnum);
-		R_BindNormalmapTexture(sphere->bumpMap->texnum);
+		R_BindNormalmapTexture(sphere->normalMap->texnum);
 		R_BindLightmapTexture(sphere->nightOverlay->texnum);
 		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_4);
 
