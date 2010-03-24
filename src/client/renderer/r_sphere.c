@@ -152,8 +152,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
 
 		/* configure openGL to use our shader program */
-		/** @todo Use R_EnableLighting */
-		R_UseProgram(r_state.geoscape_program);
+		R_EnableLighting(r_state.geoscape_program, qtrue);
 
 		R_SelectTexture(&texunit_diffuse);
 		R_BindTexture(sphere->texture->texnum);
@@ -193,16 +192,13 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
-		glEnableClientState(GL_NORMAL_ARRAY);
 
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_NORMALIZE);
-		glEnable(GL_LIGHT1);
 
 		/* render the object */
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
 
-		glDisable(GL_LIGHT1);
 		glDisable(GL_NORMALIZE);
 		glDisable(GL_CULL_FACE);
 
@@ -212,8 +208,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		/* deactivate the shader program */
-		/** @todo Use R_EnableLighting */
-		R_UseProgram(NULL);
+		R_EnableLighting(NULL, qfalse);
 		R_SelectTexture(&texunit_diffuse);
 	} else {
 		/* solid globe texture */
