@@ -42,13 +42,19 @@ typedef struct gltexunit_s {
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 } gltexunit_t;
 
-#define MAX_GL_TEXUNITS		4
+#define MAX_GL_TEXUNITS		5
 
 /* these are defined for convenience */
-#define texunit_diffuse		r_state.texunits[0]
-#define texunit_lightmap	r_state.texunits[1]
-#define texunit_deluxemap	r_state.texunits[2]
-#define texunit_normalmap	r_state.texunits[3]
+#define texunit_0	        r_state.texunits[0]
+#define texunit_1	        r_state.texunits[1]
+#define texunit_2	        r_state.texunits[2]
+#define texunit_3	        r_state.texunits[3]
+#define texunit_4	        r_state.texunits[4]
+
+#define texunit_diffuse		texunit_0
+#define texunit_lightmap	texunit_1
+#define texunit_deluxemap	texunit_2
+#define texunit_normalmap	texunit_3
 
 typedef struct {
 	qboolean fullscreen;
@@ -102,6 +108,7 @@ qboolean R_SelectTexture(gltexunit_t *texunit);
 
 void R_BindTextureDebug(int texnum, const char *file, int line, const char *function);
 #define R_BindTexture(tn) R_BindTextureDebug(tn, __FILE__, __LINE__, __PRETTY_FUNCTION__)
+void R_BindTextureForTexUnit(GLuint texnum, gltexunit_t *texunit);
 void R_BindLightmapTexture(GLuint texnum);
 void R_BindDeluxemapTexture(GLuint texnum);
 void R_BindNormalmapTexture(GLuint texnum);
