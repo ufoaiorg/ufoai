@@ -14,15 +14,15 @@ varying vec4 ambientLight2;
 varying vec4 diffuseLight2;
 varying vec4 specularLight2;
 
-/* normal map */
+/* diffuse */
 uniform sampler2D SAMPLER0;
-/* diffuse map (texture) */
+/* lightmap */
 uniform sampler2D SAMPLER1;
-/* bump map */
+/* glossmap */
 uniform sampler2D SAMPLER2;
-/* gloss map */
+/* normalmap */
 uniform sampler2D SAMPLER3;
-/* night map */
+/* blend */
 uniform sampler2D SAMPLER4;
 
 uniform float specularExp;
@@ -33,12 +33,12 @@ uniform vec3 viewVec;
 void main()
 {
 	/* blend textures smoothly */
-	vec4 diffuseColorA = texture2D(SAMPLER1, tex);
-	vec4 diffuseColorB = texture2D(SAMPLER2, tex);
+	vec4 diffuseColorA = texture2D(SAMPLER0, tex);
+	vec4 diffuseColorB = texture2D(SAMPLER4, tex);
 	vec4 diffuseColor = ((1.0 - blendScale) * diffuseColorA) + (blendScale * diffuseColorB);
 
 	/* calculate diffuse reflections */
-	vec3 N = texture2D(SAMPLER0, tex).rgb * 2.0 - 1.0;
+	vec3 N = texture2D(SAMPLER3, tex).rgb * 2.0 - 1.0;
 	N = normalize(N.x * tangent + N.y * binormal + N.z * normal);
 	float NdotL = clamp(dot(N, normalize(lightPos)), 0.0, 1.0);
 	vec4 color = diffuseColor * diffuseLight * NdotL;
@@ -48,11 +48,11 @@ void main()
 	vec3 L = normalize(vec3(lightPos.rgb));
 	vec3 R = reflect(N, V);
 	float RdotL = clamp(dot(-R, L), 0.0, 1.0);
-	vec4 gloss = texture2D(SAMPLER3, tex);
+	vec4 gloss = texture2D(SAMPLER2, tex);
 	color += gloss * specularLight * pow(RdotL, specularExp);
 
 	/* calculate night illumination */
-	vec4 diffuseNightColor = texture2D(SAMPLER4, tex);
+	vec4 diffuseNightColor = texture2D(SAMPLER1, tex);
 	float NdotL2 = clamp(dot(N, normalize(lightPos2)), 0.0, 1.0);
 	vec4 nightColor = diffuseNightColor * diffuseLight2 * NdotL2;
 
