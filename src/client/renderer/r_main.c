@@ -702,6 +702,9 @@ static qboolean R_InitExtensions (void)
 	if (r_config.maxTextureUnits < 2)
 		Com_Error(ERR_FATAL, "You need at least 2 texture units to run "GAME_TITLE);
 
+	glGetIntegerv(GL_MAX_TEXTURE_COORDS, &r_config.maxTextureCoords);
+	Com_Printf("max texture coords: %i\n", r_config.maxTextureCoords);
+
 	/* reset gl error state */
 	R_CheckError();
 
