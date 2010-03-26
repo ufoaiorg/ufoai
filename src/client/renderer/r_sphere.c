@@ -114,6 +114,13 @@ static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void *texC
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
+static inline void R_SphereDeactivateTextureUnit (gltexunit_t *texunit)
+{
+	R_SelectTexture(texunit);
+	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 /**
  * @param sphere The sphere to check
  * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
@@ -190,12 +197,8 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		glDisable(GL_NORMALIZE);
 		glDisable(GL_CULL_FACE);
 
-		R_SelectTexture(&texunit_4);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		R_SelectTexture(&texunit_normalmap);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		R_SelectTexture(&texunit_deluxemap);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		R_SphereDeactivateTextureUnit(&texunit_4);
+		R_SphereDeactivateTextureUnit(&texunit_normalmap);
 
 		/* deactivate the shader program */
 		R_EnableLighting(NULL, qfalse);
