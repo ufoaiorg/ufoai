@@ -121,6 +121,17 @@ static inline void R_SphereDeactivateTextureUnit (gltexunit_t *texunit)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
+static void R_SphereRenderTris (const sphere_t *sphere)
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_NORMALIZE);
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
+
+	glDisable(GL_NORMALIZE);
+	glDisable(GL_CULL_FACE);
+}
+
 /**
  * @param sphere The sphere to check
  * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
@@ -154,7 +165,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	glRotatef(rotate[ROLL], 0, 1, 0);
 	glRotatef(rotate[PITCH], 0, 0, 1);
 
-	if (lightPos)
+	if (lightPos && !VectorNotEmpty(lightPos))
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	R_CheckError();
@@ -163,7 +174,8 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	if (!sphere->overlay && r_programs->integer && R_SphereGLSL(sphere)) {
 		vec3_t v;
 
-		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
+		if (!Vector4NotEmpty(sphere->nightLightPos))
+			glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
 
 		/* configure openGL to use our shader program */
 		R_EnableLighting(r_state.geoscape_program, qtrue);
@@ -188,17 +200,11 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
 
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_NORMALIZE);
-
-		/* render the object */
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
-
-		glDisable(GL_NORMALIZE);
-		glDisable(GL_CULL_FACE);
+		R_SphereRenderTris(sphere);
 
 		R_SphereDeactivateTextureUnit(&texunit_4);
 		R_SphereDeactivateTextureUnit(&texunit_normalmap);
+		R_SphereDeactivateTextureUnit(&texunit_ligthmap);
 
 		/* deactivate the shader program */
 		R_EnableLighting(NULL, qfalse);
@@ -221,24 +227,20 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
 		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
 
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_NORMALIZE);
 		glEnableClientState(GL_NORMAL_ARRAY);
 
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, sphere->num_tris);
+		R_SphereRenderTris(sphere);
 
 		glDisableClientState(GL_NORMAL_ARRAY);
-		glDisable(GL_NORMALIZE);
-		glDisable(GL_CULL_FACE);
+
+		if (sphere->overlayAlphaMask)
+			R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 
 	R_CheckError();
 
 	/* restore the previous matrix */
 	glPopMatrix();
-
-	if (sphere->overlayAlphaMask)
-		R_EnableTexture(&texunit_lightmap, qfalse);
 
 	refdef.aliasCount += sphere->num_tris * sphere->num_tris;
 
