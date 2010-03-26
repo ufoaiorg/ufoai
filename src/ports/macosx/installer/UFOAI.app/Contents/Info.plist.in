@@ -4,10 +4,12 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDisplayName</key>
+ 	<string>UFO: Alien Invasion @UFOAI_VERSION@</string>
 	<key>CFBundleExecutable</key>
 	<string>ufo</string>
 	<key>CFBundleGetInfoString</key>
-	<string>@UFOAI_VERSION@</string>
+	<string>@UFOAI_VERSION@, Copyright 2002-2010 The UFO: Alien Invasion team</string>
 	<key>CFBundleIconFile</key>
 	<string>ufo.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -15,14 +17,14 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>UFO Alien Invasion</string>
+	<string>UFO: Alien Invasion</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>@UFOAI_VERSION@</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>@UFOAI_VERSION@</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2002-2010 The UFO: Alien Invasion team</string>
 </dict>
 </plist>
