@@ -204,7 +204,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 		R_SphereDeactivateTextureUnit(&texunit_4);
 		R_SphereDeactivateTextureUnit(&texunit_normalmap);
-		R_SphereDeactivateTextureUnit(&texunit_ligthmap);
+		R_SphereDeactivateTextureUnit(&texunit_lightmap);
 
 		/* deactivate the shader program */
 		R_EnableLighting(NULL, qfalse);
