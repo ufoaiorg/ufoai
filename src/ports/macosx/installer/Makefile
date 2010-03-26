@@ -131,11 +131,11 @@ bundle-nodata-ufoai: copybinaries-ufoai copylibs-ufoai copynotes-ufoai
 
 create-dmg-ufoai: bundle-ufoai updateversion-ufoai copy-package-bundle-ufoai strip-dev-files-ufoai
 	@rm -f $(UFOAI_PACKAGE_NAME).dmg
-	@hdiutil create -srcfolder $(UFOAI_PACKAGE_NAME) $(UFOAI_PACKAGE_NAME).dmg
+	@hdiutil create -volname "UFO: Alien Invasion $(UFOAI_VERSION)" -srcfolder $(UFOAI_PACKAGE_NAME) $(UFOAI_PACKAGE_NAME).dmg
 
 create-dmg-uforadiant: bundle-uforadiant updateversion-uforadiant copy-package-bundle-uforadiant strip-dev-files-uforadiant
 	@rm -f $(UFORADIANT_PACKAGE_NAME).dmg
-	@hdiutil create -srcfolder $(UFORADIANT_PACKAGE_NAME) $(UFORADIANT_PACKAGE_NAME).dmg
+	@hdiutil create -volname "UFORadiant $(UFORADIANT_VERSION)" -srcfolder $(UFORADIANT_PACKAGE_NAME) $(UFORADIANT_PACKAGE_NAME).dmg
 
 create-dmg: create-dmg-ufoai create-dmg-uforadiant
 
