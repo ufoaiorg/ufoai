@@ -107,9 +107,10 @@ typedef struct {
 } modelInfo_t;
 
 typedef struct ptlCmd_s {
-	byte cmd;
-	byte type;
-	int ref;	/**< if negative this is relative to the particle, otherwise relative to particle command hunk */
+	byte cmd;	/**< the type of the command - @sa pc_t */
+	byte type;	/**< the type of the data refereced by this particle command */
+	int ref;	/**< This is the location of the data for this particle command. If negative this is relative
+				 * to the particle, otherwise relative to particle command hunk */
 } ptlCmd_t;
 
 typedef struct ptlDef_s {
