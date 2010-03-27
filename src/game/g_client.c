@@ -419,18 +419,18 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
 		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH)) {
-			ent->state ^= STATE_CROUCHED;
+			G_ToggleCrouched(ent);
 			G_ActorUseTU(ent, TU_CROUCH);
 			G_ActorSetMaxs(ent);
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
-		if (ent->state & STATE_REACTION) {
+		if (G_IsReaction(ent)) {
 			if (G_IsShaken(ent)) {
 				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
-				ent->state &= ~STATE_REACTION;
+				G_RemoveReaction(ent);
 				G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 			}
 		}
@@ -439,12 +439,12 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
 		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
+		G_RemoveReaction(ent);
 
 		if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 			const int TUs = G_ActorGetTUForReactionFire(ent);
 			/* Enable requested reaction fire. */
-			ent->state |= reqState;
+			G_SetState(ent, reqState);
 			G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		} else {
 			G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);

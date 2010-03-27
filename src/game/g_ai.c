@@ -391,7 +391,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
 						}
 
-						if (dmg > check->HP && (check->state & STATE_REACTION))
+						if (dmg > check->HP && G_IsReaction(check))
 							/* reaction shooters eradication bonus */
 							dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
 						else if (dmg > check->HP)

@@ -723,7 +723,7 @@ static int AIL_reactionfire (lua_State *L)
 			AIL_invalidparameter(1);
 	}
 
-	lua_pushboolean(L, AIL_ent->state & STATE_REACTION_ONCE);
+	lua_pushboolean(L, G_IsReaction(AIL_ent));
 	return 1;
 }
 

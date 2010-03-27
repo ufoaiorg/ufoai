@@ -46,11 +46,11 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity)
 	}
 
 	/* get up */
-	ent->state &= ~STATE_CROUCHED;
+	G_RemoveCrouched(ent);
 	G_ActorSetMaxs(ent);
 
 	/* send panic */
-	ent->state |= STATE_PANIC;
+	G_SetPanic(ent);
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
 	/* center view */
@@ -74,7 +74,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity)
 static void G_MoraleStopPanic (edict_t * ent)
 {
 	if (ent->morale / mor_panic->value > m_panic_stop->value * frand())
-		ent->state &= ~STATE_PANIC;
+		G_RemovePanic(ent);
 	else
 		G_MoralePanic(ent, qtrue);
 }
@@ -88,9 +88,9 @@ static void G_MoraleStopPanic (edict_t * ent)
 static void G_MoraleRage (edict_t * ent, qboolean sanity)
 {
 	if (sanity)
-		ent->state |= STATE_RAGE;
+		G_SetRage(ent);
 	else
-		ent->state |= STATE_INSANE;
+		G_SetInsane(ent);
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
 	if (sanity)
@@ -111,7 +111,7 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 static void G_MoraleStopRage (edict_t * ent)
 {
 	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
-		ent->state &= ~STATE_INSANE;
+		G_RemoveInsane(ent);
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
 		G_MoralePanic(ent, qtrue); /* regains sanity */
@@ -170,7 +170,8 @@ void G_MoraleBehaviour (int team)
 				} else if (ent->morale <= mor_shaken->value && !G_IsPaniced(ent)
 						&& !G_IsRaged(ent)) {
 					/* shaken is later reset along with reaction fire */
-					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
+					G_SetShaken(ent);
+					G_SetState(ent, STATE_REACTION_MANY);
 					G_SendState(G_VisToPM(ent->visflags), ent);
 					G_ClientPrintf(G_PLAYER_FROM_ENT(ent), PRINT_HUD, _("%s is currently shaken.\n"),
 							ent->chr.name);

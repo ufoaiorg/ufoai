@@ -243,7 +243,7 @@ void G_ActorSetMaxs (edict_t* ent)
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
-	ent->state &= ~STATE_DAZED;
+	G_RemoveDazed(ent);
 	G_ActorSetTU(ent, GET_TU(ent->chr.score.skills[ABILITY_SPEED]));
 }
 
@@ -273,7 +273,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	Com_DPrintf(DEBUG_GAME, "G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {
 	case STATE_DEAD:
-		ent->state |= (1 + rand() % MAX_DEATH);
+		G_SetState(ent, 1 + rand() % MAX_DEATH);
 		if (attacker != NULL)
 			level.num_kills[attacker->team][ent->team]++;
 		break;

@@ -363,9 +363,9 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 	level.activeTeam = team;
 
 	/* clear any shakenness */
-	if (tookShot) {
-		ent->state &= ~STATE_SHAKEN;
-	}
+	if (tookShot)
+		G_RemoveShaken(ent);
+
 	return tookShot;
 }
 
@@ -501,7 +501,7 @@ void G_ReactionFireReset (int team)
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		/** @todo why do we send the state here and why do we change the "shaken"
 		 * state? - see G_MoraleBehaviour */
-		ent->state &= ~STATE_SHAKEN;
+		G_RemoveShaken(ent);
 		ent->reactionTarget = NULL;
 		ent->reactionTUs = 0;
 		ent->reactionNoDraw = qfalse;
