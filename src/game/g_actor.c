@@ -50,7 +50,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
 		/* check whether the door is still reachable (this might have
-		 * changed due to the rotation) or whether a actor can reach it now */
+		 * changed due to the rotation) or whether an actor can reach it now */
 		if (!G_TouchTriggers(closeActor))
 			G_ActorSetClientAction(closeActor, NULL);
 	}
@@ -84,7 +84,8 @@ int G_ActorGetReservedTUs (const edict_t *ent)
 
 /**
  * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
- * @param ent The actor to calculate the amount of usable TUs for
+ * @param[in] ent The actor to calculate the amount of usable TUs for. If @c ent is @c NULL, we
+ * return zero here
  * @return The amount of usable TUs for the given actor edict
  */
 int G_ActorUsableTUs (const edict_t *ent)
@@ -98,7 +99,7 @@ int G_ActorUsableTUs (const edict_t *ent)
 /**
  * @brief Calculates the amount of TUs that are needed for the current selected reaction fire mode.
  * @note It's assumed that there is a sane fire mode selected for reaction fire
- * @param ent The actors edict
+ * @param[in] ent The actors edict
  * @return The amount of TUs that are needed for the current selected reaction fire mode.
  */
 int G_ActorGetTUForReactionFire (const edict_t *ent)
@@ -116,6 +117,13 @@ int G_ActorGetTUForReactionFire (const edict_t *ent)
 	return fd[fm->fmIdx].time;
 }
 
+/**
+ * @brief Reserves TUs for different actor actions
+ * @param[in,out] ent The actor to reserve TUs for. Might not be @c NULL.
+ * @param[in] resReaction TUs for reaction fire
+ * @param[in] resShot TUs for shooting
+ * @param[in] resCrouch TUs for going into crouch mode
+ */
 void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouch)
 {
 	if (ent->TU >= resReaction + resShot + resCrouch) {
