@@ -40,7 +40,7 @@ void main()
 	/* calculate diffuse reflections */
 	vec3 N = texture2D(SAMPLER3, tex).rgb * 2.0 - 1.0;
 	N = normalize(N.x * tangent + N.y * binormal + N.z * normal);
-	float NdotL = clamp(dot(N, normalize(lightPos)), 0.0, 1.0);
+	float NdotL = clamp(dot(N, vec3(normalize(lightPos))), 0.0, 1.0);
 	vec4 color = diffuseColor * diffuseLight * NdotL;
 
 	/* calculate specular reflections */
@@ -53,7 +53,7 @@ void main()
 
 	/* calculate night illumination */
 	vec4 diffuseNightColor = texture2D(SAMPLER1, tex);
-	float NdotL2 = clamp(dot(N, normalize(lightPos2)), 0.0, 1.0);
+	float NdotL2 = clamp(dot(N, vec3(normalize(lightPos2))), 0.0, 1.0);
 	vec4 nightColor = diffuseNightColor * diffuseLight2 * NdotL2;
 
 	/* calculate final color */
