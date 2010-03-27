@@ -123,11 +123,14 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 };
 CASSERT(lengthof(pc_types) == PC_NUM_PTLCMDS);
 
-/** @brief particle script values */
+/**
+ * @brief particle script values
+ * @note image, model and program are special values - see @c CL_ParticleFunction
+ */
 static const value_t pps[] = {
-	{"image", V_STRING, 0, 0},
-	{"model", V_STRING, 0, 0},
-	{"program", V_STRING, 0, 0},
+	{"image", V_STRING, offsetof(ptl_t, pic), 0},
+	{"model", V_STRING, offsetof(ptl_t, model), 0},
+	{"program", V_STRING, offsetof(ptl_t, program), 0},
 	{"skin", V_INT, offsetof(ptl_t, skin), MEMBER_SIZEOF(ptl_t, skin)},
 	{"blend", V_BLEND, offsetof(ptl_t, blend), MEMBER_SIZEOF(ptl_t, blend)},
 	{"style", V_STYLE, offsetof(ptl_t, style), MEMBER_SIZEOF(ptl_t, style)},
@@ -412,6 +415,15 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				if (stackType[--stackIdx] != V_STRING)
 					Com_Error(ERR_DROP, "Bad type '%s' for model (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 				p->model = CL_ParticleGetArt((char *) stackPtr[stackIdx], p->frame, ART_MODEL);
+				e = (byte *) stackPtr[stackIdx] - cmdStack;
+				break;
+			}
+			if (offsetof(ptl_t, program) == -cmd->ref) {
+				if (stackType[--stackIdx] != V_STRING)
+					Com_Error(ERR_DROP, "Bad type '%s' for program (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
+				p->program = R_LoadProgram((char *) stackPtr[stackIdx], R_InitParticleProgram, R_UseParticleProgram);
+				if (p->program)
+					p->program->userdata = p;
 				e = (byte *) stackPtr[stackIdx] - cmdStack;
 				break;
 			}
@@ -960,9 +972,10 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 				ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
 			else if (!strcmp(key, "model"))
 				ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
-			else if (!strcmp(key, "shader")) {
+			else if (!strcmp(key, "program")) {
 				ptl->program = R_LoadProgram(token, R_InitParticleProgram, R_UseParticleProgram);
-				ptl->program->userdata = ptl;
+				if (ptl->program)
+					ptl->program->userdata = ptl;
 			}
 		}
 	} while (token);
