@@ -109,7 +109,7 @@ static void G_UpdateStunState (int team)
 	const int regen = 1;
 
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
-		if (ent->STUN > 0 && (ent->state & ~STATE_STUN)) {
+		if (ent->STUN > 0 && !G_IsStunned(ent)) {
 			if (regen > ent->STUN)
 				ent->STUN = 0;
 			else
