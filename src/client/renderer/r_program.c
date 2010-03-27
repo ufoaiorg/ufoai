@@ -499,8 +499,11 @@ static void R_InitGeoscapeProgram (void)
 
 void R_InitPrograms (void)
 {
-	if (!qglCreateProgram)
+	if (!qglCreateProgram) {
+		Cvar_Set("r_programs", "0");
+		r_programs->modified = qfalse;
 		return;
+	}
 
 	memset(r_state.shaders, 0, sizeof(r_state.shaders));
 	memset(r_state.programs, 0, sizeof(r_state.programs));
