@@ -424,7 +424,6 @@ void G_ClientDisconnect(player_t * player);
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
 qboolean G_ClientCanReload(player_t *player, edict_t *ent, containerIndex_t containerID);
 void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
-qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
 void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, const pos3_t to);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
