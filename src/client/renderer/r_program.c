@@ -39,7 +39,7 @@ void R_UseProgram  (r_program_t *prog)
 		qglUseProgram(prog->id);
 
 		if (prog->use)  /* invoke use function */
-			prog->use();
+			prog->use(prog);
 	} else {
 		qglUseProgram(0);
 	}
@@ -434,7 +434,7 @@ r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	if (prog->init) {  /* invoke initialization function */
 		R_UseProgram(prog);
 
-		prog->init();
+		prog->init(prog);
 
 		R_UseProgram(NULL);
 	}
@@ -446,7 +446,7 @@ r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	return prog;
 }
 
-static void R_InitWorldProgram (void)
+static void R_InitWorldProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
@@ -461,7 +461,7 @@ static void R_InitWorldProgram (void)
 	R_ProgramParameter1f("SPECULAR", 1.0);
 }
 
-static void R_InitMeshProgram (void)
+static void R_InitMeshProgram (r_program_t *prog)
 {
 	static vec3_t lightPos;
 
@@ -472,7 +472,7 @@ static void R_InitMeshProgram (void)
 	R_ProgramParameter1f("OFFSET", 0.0);
 }
 
-static void R_InitWarpProgram (void)
+static void R_InitWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
 
@@ -482,7 +482,7 @@ static void R_InitWarpProgram (void)
 	R_ProgramParameter4fv("OFFSET", offset);
 }
 
-static void R_UseWarpProgram (void)
+static void R_UseWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
 
@@ -490,7 +490,7 @@ static void R_UseWarpProgram (void)
 	R_ProgramParameter4fv("OFFSET", offset);
 }
 
-static void R_InitGeoscapeProgram (void)
+static void R_InitGeoscapeProgram (r_program_t *prog)
 {
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
@@ -504,6 +504,16 @@ static void R_InitGeoscapeProgram (void)
 	R_ProgramParameter4fv("defaultColor", defaultColor);
 	R_ProgramParameter2fv("uvScale", uvScale);
 	R_ProgramParameter1f("specularExp", 32.0);
+}
+
+void R_InitParticleProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER0", 0);
+}
+
+void R_UseParticleProgram (r_program_t *prog)
+{
+/*	ptl_t *ptl = (ptl_t *)prog->userdata;*/
 }
 
 void R_InitPrograms (void)

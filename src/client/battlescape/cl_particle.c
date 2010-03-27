@@ -960,8 +960,10 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 				ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
 			else if (!strcmp(key, "model"))
 				ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
-			else if (!strcmp(key, "shader"))
-				ptl->program = R_LoadProgram(token, NULL, NULL);
+			else if (!strcmp(key, "shader")) {
+				ptl->program = R_LoadProgram(token, R_InitParticleProgram, R_UseParticleProgram);
+				ptl->program->userdata = ptl;
+			}
 		}
 	} while (token);
 }
