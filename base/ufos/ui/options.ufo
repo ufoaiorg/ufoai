@@ -492,7 +492,7 @@ window options
 			image		"ui/selectbox_green"
 			color		"0.6 0.6 0.6 0.3"
 			option all {
-				label	"All ratios"
+				label	"_All ratios"
 				value	"all"
 			}
 			option 5_4 {
@@ -516,7 +516,7 @@ window options
 				value	"1.7777777"
 			}
 			option custom {
-				label	"Others"
+				label	"_Others"
 				value	"custom"
 			}
 			onChange {
@@ -791,7 +791,7 @@ window options
 			pos			"343 255"
 			cvar		*cvar:s_language
 			image		"ui/panel_green_slim"
-			size		"155 220"
+			size		"155 180"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			padding		6
@@ -805,7 +805,7 @@ window options
 		vscrollbar select_language_scroll {
 			image		ui/scrollbar_v_green
 			pos			"500 255"
-			height		"220"
+			height		"180"
 			current		0
 			viewsize	8
 			fullsize	22
@@ -820,14 +820,14 @@ window options
 		string tooltip_str
 		{
 			string		"_Tooltips:"
-			pos			"85 480"
+			pos			"85 455"
 			size		"250 20"
 		}
 		checkbox tooltip
 		{
 			current		*cvar:mn_show_tooltips
 			tooltip		"_Activates tooltips"
-			pos			"425 480"
+			pos			"425 455"
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
@@ -838,14 +838,14 @@ window options
 		string centerview_str
 		{
 			string		"_Centre view:"
-			pos			"85 505"
+			pos			"85 480"
 			size		"250 20"
 		}
 		checkbox centerview_value
 		{
 			current		*cvar:cl_centerview
 			tooltip		"_Centring at soldier selecting, shooting and appearing"
-			pos			"425 505"
+			pos			"425 480"
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
@@ -856,14 +856,14 @@ window options
 		string c_tooltip_str
 		{
 			string		"_Cursor tooltips:"
-			pos			"85 530"
+			pos			"85 505"
 			size		"250 20"
 		}
 		checkbox c_tooltip
 		{
 			current		*cvar:cl_show_cursor_tooltips
 			tooltip		"_Activates cursor tooltips"
-			pos			"425 530"
+			pos			"425 505"
 			size		"20 18"
 			image		"ui/checkbox_blue"
 		}
@@ -874,13 +874,28 @@ window options
 		string 3dmap_str
 		{
 			string		"_3D Geoscape:"
-			pos			"85 555"
+			pos			"85 530"
 			size		"250 20"
 		}
 		checkbox 3dmap
 		{
 			current		*cvar:cl_3dmap
 			tooltip		"_Use 3D geoscape"
+			pos			"425 530"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+		}
+
+    string 3dmap2_str
+		{
+			string		"_Topographic Rendering (restart required)"
+			pos			"85 555"
+			size		"250 20"
+		}
+		checkbox 3dmap2
+		{
+			current		*cvar:cl_3dmap2
+			tooltip		"_Use 3D next generation geoscape with topographic bump-mapping, specular reflection, and smoothly changing seasons.  This option will take effect when you next start the program."
 			pos			"425 555"
 			size		"20 18"
 			image		"ui/checkbox_blue"
