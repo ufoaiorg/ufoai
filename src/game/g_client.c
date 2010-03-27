@@ -441,7 +441,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
-		if (G_ReactionFireSetDefault(ent) && G_CanEnableReactionFire(ent)) {
+		if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 			const int TUs = G_ActorGetTUForReactionFire(ent);
 			/* Enable requested reaction fire. */
 			ent->state |= reqState;
@@ -1279,6 +1279,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 
 	s = Info_ValueForKey(userinfo, "cl_autostand");
 	player->autostand = atoi(s);
+
+	s = Info_ValueForKey(userinfo, "cl_reactionleftover");
+	player->reactionLeftover = atoi(s);
 
 	s = Info_ValueForKey(userinfo, "cl_ready");
 	player->isReady = atoi(s);

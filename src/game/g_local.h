@@ -255,7 +255,6 @@ extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_reaction_fair;
-extern cvar_t *g_reaction_leftover;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_drawtraces;
@@ -328,7 +327,7 @@ qboolean G_TestLine(const vec3_t start, const vec3_t end);
 void G_ReactionFirePreShot(const edict_t *target);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
-qboolean G_CanEnableReactionFire(const edict_t *ent);
+qboolean G_ReactionFireCanBeEnabled(const edict_t *ent);
 qboolean G_ReactionFireSetDefault(edict_t *ent);
 void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
 qboolean G_ReactionFireOnMovement(edict_t *target);
@@ -561,7 +560,7 @@ struct player_s {
 	qboolean began;				/**< the player sent his 'begin' already */
 	qboolean roundDone;			/**< ready to end his round */
 
-
+	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
 	qboolean autostand;			/**< autostand for long walks */
 
 	client_persistant_t pers;

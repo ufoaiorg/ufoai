@@ -103,7 +103,6 @@ cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
 cvar_t *g_reaction_fair;
-cvar_t *g_reaction_leftover;
 cvar_t *g_ailua;
 cvar_t *g_aidebug;
 cvar_t *g_drawtraces;
@@ -202,8 +201,6 @@ static void G_Init (void)
 	m_panic_stop = gi.Cvar_Get("m_panic_stop", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 
 	g_reaction_fair = gi.Cvar_Get("g_reaction_fair", "1", CVAR_LATCH | CVAR_SERVERINFO, "Enable or disable fair reaction fire mode");
-	/** @todo reaction leftover is 0 for acceptance testing; should default to 13 */
-	g_reaction_leftover = gi.Cvar_Get("g_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	g_ailua = gi.Cvar_Get("g_ailua", "0", 0, "Activate or deactivate the LUA AI");
 	g_aidebug = gi.Cvar_Get("g_aidebug", "0", CVAR_DEVELOPER, "All AI actors are visible");
 	g_drawtraces = gi.Cvar_Get("g_drawtraces", "0", CVAR_DEVELOPER, "All traces will be rendered");
