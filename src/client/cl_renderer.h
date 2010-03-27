@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_material.h"
 #include "renderer/r_image.h"
 #include "renderer/r_model.h"
+#include "renderer/r_program.h"
 
 #include <SDL.h>
 
@@ -132,6 +133,8 @@ typedef struct ptlArt_s {
 typedef struct ptl_s {
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
+
+	r_program_t *program;
 
 	ptlArt_t *pic;			/**< Picture link. */
 	ptlArt_t *model;		/**< Model link. */

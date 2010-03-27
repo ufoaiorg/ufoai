@@ -138,7 +138,7 @@ static void R_SphereRenderTris (const sphere_t *sphere)
  */
 static inline qboolean R_SphereGLSL (const sphere_t *sphere)
 {
-	return sphere->blendTexture && sphere->normalMap && sphere->glossMap && sphere->nightOverlay;
+	return qglUseProgram && sphere->blendTexture && sphere->normalMap && sphere->glossMap && sphere->nightOverlay;
 }
 
 /**

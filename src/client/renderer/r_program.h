@@ -22,14 +22,14 @@
 #ifndef __R_PROGRAM_H__
 #define __R_PROGRAM_H__
 
+#include "r_gl.h"
+
 /* glsl vertex and fragment shaders */
 typedef struct r_shader_s {
 	GLenum type;
 	GLuint id;
 	char name[MAX_QPATH];
 } r_shader_t;
-
-#define MAX_SHADERS 16
 
 #define GL_UNIFORM 1
 #define GL_ATTRIBUTE 2
@@ -53,7 +53,8 @@ typedef struct r_program_s {
 	void (*use)(void);
 } r_program_t;
 
-#define MAX_PROGRAMS 8
+#define MAX_PROGRAMS 16
+#define MAX_SHADERS MAX_PROGRAMS * 2
 
 void R_UseProgram(r_program_t *prog);
 void R_AttributePointer(const char *name, GLuint size, const GLvoid *array);
@@ -67,6 +68,7 @@ void R_ProgramParameter2fv(const char *name, GLfloat *value);
 void R_ProgramParameter3fv(const char *name, GLfloat *value);
 void R_ProgramParameter4fv(const char *name, GLfloat *value);
 
+r_program_t *R_LoadProgram(const char *name, void *init, void *use);
 void R_RestartPrograms_f(void);
 
 #endif

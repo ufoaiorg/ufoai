@@ -300,6 +300,9 @@ void R_DrawParticles (void)
 			if (p->levelFlags && !((1 << refdef.worldlevel) & p->levelFlags))
 				continue;
 
+			if (p->program != NULL)
+				R_UseProgram(p->program);
+
 			/* set blend mode and draw gfx */
 			R_SetBlendMode(p->blend);
 			switch (p->style) {
@@ -315,6 +318,8 @@ void R_DrawParticles (void)
 			if (p->model)
 				R_DrawParticleModel(p);
 			R_TexEnv(GL_MODULATE);
+
+			R_UseProgram(NULL);
 		}
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

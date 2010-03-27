@@ -125,8 +125,9 @@ CASSERT(lengthof(pc_types) == PC_NUM_PTLCMDS);
 
 /** @brief particle script values */
 static const value_t pps[] = {
-	{"image", V_STRING, offsetof(ptl_t, pic), 0},
-	{"model", V_STRING, offsetof(ptl_t, model), 0},
+	{"image", V_STRING, 0, 0},
+	{"model", V_STRING, 0, 0},
+	{"program", V_STRING, 0, 0},
 	{"skin", V_INT, offsetof(ptl_t, skin), MEMBER_SIZEOF(ptl_t, skin)},
 	{"blend", V_BLEND, offsetof(ptl_t, blend), MEMBER_SIZEOF(ptl_t, blend)},
 	{"style", V_STYLE, offsetof(ptl_t, style), MEMBER_SIZEOF(ptl_t, style)},
@@ -945,22 +946,23 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 		if (afterwards && keyname[0] != '+')
 			continue;
 
-		for (pp = pps; pp->string; pp++)
+		for (pp = pps; pp->string; pp++) {
 			if (!strcmp(key, pp->string)) {
-				/* register art */
-				if (!strcmp(pp->string, "image")) {
-					ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
-					break;
-				}
-				if (!strcmp(pp->string, "model")) {
-					ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
-					break;
-				}
-
 				/* found a normal particle value */
 				Com_EParseValue(ptl, token, pp->type, pp->ofs, pp->size);
 				break;
 			}
+		}
+
+		if (!pp->string) {
+			/* register art */
+			if (!strcmp(key, "image"))
+				ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
+			else if (!strcmp(key, "model"))
+				ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
+			else if (!strcmp(key, "shader"))
+				ptl->program = R_LoadProgram(token, NULL, NULL);
+		}
 	} while (token);
 }
 

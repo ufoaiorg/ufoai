@@ -191,7 +191,7 @@ static void R_ShutdownProgram (r_program_t *prog)
 
 	qglDeleteProgram(prog->id);
 
-	memset(prog, 0, sizeof(r_program_t));
+	memset(prog, 0, sizeof(*prog));
 }
 
 void R_ShutdownPrograms (void)
@@ -378,12 +378,21 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	return sh;
 }
 
-static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
+r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 {
 	r_program_t *prog;
 	unsigned e;
 	int i;
 
+	/* search existing one */
+	for (i = 0; i < MAX_PROGRAMS; i++) {
+		prog = &r_state.programs[i];
+
+		if (!strcmp(prog->name, name))
+			return prog;
+	}
+
+	/* search free slot */
 	for (i = 0; i < MAX_PROGRAMS; i++) {
 		prog = &r_state.programs[i];
 
