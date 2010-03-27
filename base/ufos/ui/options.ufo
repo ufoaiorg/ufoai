@@ -886,21 +886,6 @@ window options
 			image		"ui/checkbox_blue"
 		}
 
-    string 3dmap2_str
-		{
-			string		"_Topographic Rendering (restart required)"
-			pos			"85 555"
-			size		"250 20"
-		}
-		checkbox 3dmap2
-		{
-			current		*cvar:cl_3dmap2
-			tooltip		"_Use 3D next generation geoscape with topographic bump-mapping, specular reflection, and smoothly changing seasons.  This option will take effect when you next start the program."
-			pos			"425 555"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-
 		// ==================
 		// 3DMap lighting
 		// ==================
