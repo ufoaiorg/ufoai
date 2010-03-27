@@ -425,7 +425,7 @@ qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
-void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
+void G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 void G_ActorGiveTimeUnits(edict_t *ent);
 void G_ActorSetTU(edict_t *ent, int tus);

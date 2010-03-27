@@ -148,7 +148,8 @@ static void G_KillTeam_f (void)
 	if (teamToKill >= 0)
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
 			/* die */
-			G_ActorDie(ent, STATE_DEAD, NULL);
+			ent->HP = 0;
+			G_ActorDieOrStun(ent, NULL);
 		}
 
 	/* check for win conditions */
@@ -170,8 +171,8 @@ static void G_StunTeam_f (void)
 
 	if (teamToKill >= 0) {
 		while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, teamToKill))) {
-			/* die */
-			G_ActorDie(ent, STATE_STUN, NULL);
+			/* stun */
+			G_ActorDieOrStun(ent, NULL);
 
 			if (teamToKill == TEAM_ALIEN)
 				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;

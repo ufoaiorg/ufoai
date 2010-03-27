@@ -257,40 +257,42 @@ void G_ActorUseTU (edict_t *ent, int tus)
 	G_ActorSetTU(ent, ent->TU - tus);
 }
 
-/**
- * @brief Reports and handles death or stun of an actor.
- * @param[in] ent Pointer to an entity being killed or stunned actor.
- * @param[in] state Dead or stunned?
- * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
- * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
- * it should drop only what he has in hands? Stunned actor can wake later during mission.
- * @todo Renameme - stunned actor is not dead actor.
- */
-void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
+static void G_ActorStun (edict_t * ent, const edict_t *attacker)
+{
+	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
+	 * @sa CL_ActorDie */
+	ent->STUN = 0;
+	ent->state = STATE_STUN;
+	if (attacker != NULL)
+		level.num_stuns[attacker->team][ent->team]++;
+}
+
+static void G_ActorDie (edict_t * ent, const edict_t *attacker)
 {
 	assert(ent);
 
 	Com_DPrintf(DEBUG_GAME, "G_ActorDie: kill actor on team %i\n", ent->team);
-	switch (state) {
-	case STATE_DEAD:
-		G_SetState(ent, 1 + rand() % MAX_DEATH);
-		if (attacker != NULL)
-			level.num_kills[attacker->team][ent->team]++;
-		break;
-	case STATE_STUN:
-		/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
-		 * @sa CL_ActorDie */
-		ent->STUN = 0;
-		ent->state = state;
-		if (attacker != NULL)
-			level.num_stuns[attacker->team][ent->team]++;
-		break;
-	default:
-		Com_DPrintf(DEBUG_GAME, "G_ActorDie: unknown state %i\n", state);
-		break;
-	}
+	G_SetState(ent, 1 + rand() % MAX_DEATH);
+	if (attacker != NULL)
+		level.num_kills[attacker->team][ent->team]++;
 	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
 	gi.LinkEdict(ent);
+}
+
+/**
+ * @brief Reports and handles death or stun of an actor. If the HP of an actor is zero the actor
+ * will die, otherwise the actor will get stunned.
+ * @param[in] ent Pointer to an entity being killed or stunned actor.
+ * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
+ * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
+ * it should drop only what he has in hands? Stunned actor can wake later during mission.
+ */
+void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
+{
+	if (ent->HP == 0)
+		G_ActorDie(ent, attacker);
+	else
+		G_ActorStun(ent, attacker);
 
 	level.num_alive[ent->team]--;
 	/* send death */

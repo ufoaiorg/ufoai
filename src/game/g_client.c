@@ -911,7 +911,7 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
  */
 static void G_ThinkActorDieAfterSpawn (edict_t *ent)
 {
-	G_ActorDie(ent, STATE_DEAD, NULL);
+	G_ActorDieOrStun(ent, NULL);
 	ent->think = NULL;
 }
 
@@ -970,6 +970,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	}
 
 	if (ent->spawnflags & STATE_DEAD) {
+		ent->HP = 0;
 		ent->think = G_ThinkActorDieAfterSpawn;
 		ent->nextthink = 1;
 	}

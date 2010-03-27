@@ -426,7 +426,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 		G_PrintActorStats(target, attacker, fd);
 
-		G_ActorDie(target, target->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
+		G_ActorDieOrStun(target, attacker);
 
 		/* apply morale changes */
 		if (mor_panic->integer)

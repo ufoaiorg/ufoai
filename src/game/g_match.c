@@ -234,8 +234,10 @@ static void G_MatchSendResults (int team)
 	if (team == TEAM_ALIEN) {
 		ent = NULL;
 		while ((ent = G_EdictsGetNextLivingActor(ent)))
-			if (ent->team != team)
-				G_ActorDie(ent, STATE_DEAD, attacker);
+			if (ent->team != team) {
+				ent->HP = 0;
+				G_ActorDieOrStun(ent, attacker);
+			}
 	}
 
 	/* Make everything visible to anyone who can't already see it */
