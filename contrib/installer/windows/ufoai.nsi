@@ -117,7 +117,7 @@ SectionGroupEnd
 SectionGroup /e "Mapping" SECGROUP02
 	Section "Mapping Tools" SEC02
 		SetOutPath "$INSTDIR\base\maps"
-			File "..\..\base\maps\compile.p*"
+			File "..\..\..\base\maps\compile.p*"
 			File /r /x *.svn /x CVS "..\..\..\base\maps\*.map"
 			File /r /x *.svn /x CVS "..\..\..\base\maps\*.ump"
 		SetOutPath "$INSTDIR\tools"
