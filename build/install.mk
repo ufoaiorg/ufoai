@@ -5,6 +5,8 @@ include build/install_linux.mk
 include build/install_mac.mk
 include build/install_windows.mk
 
+installer-pre: lang maps-sync pk3
+
 installer: wininstaller linuxinstaller sourcearchive mappack
 
 mappack: maps-sync

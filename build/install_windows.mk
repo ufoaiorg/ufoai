@@ -1,5 +1,7 @@
-wininstaller: lang maps-sync pk3
-	makensis contrib/installer/windows/ufoai.nsi
-	makensis contrib/installer/windows/uforadiant.nsi
-	md5sum contrib/installer/windows/ufoai-$(UFOAI_VERSION)-win32.exe > contrib/installer/windows/ufoai-$(UFOAI_VERSION)-win32.md5
-	md5sum contrib/installer/windows/uforadiant-$(UFORADIANT_VERSION)-win32.exe > contrib/installer/windows/uforadiant-$(UFORADIANT_VERSION)-win32.md5
+WINDOWS_INST_DIR=contrib/installer/windows
+
+wininstaller: installer-pre
+	makensis $(WINDOWS_INST_DIR)/ufoai.nsi
+	makensis $(WINDOWS_INST_DIR)/uforadiant.nsi
+	md5sum $(WINDOWS_INST_DIR)/ufoai-$(UFOAI_VERSION)-win32.exe > $(WINDOWS_INST_DIR)/ufoai-$(UFOAI_VERSION)-win32.md5
+	md5sum $(WINDOWS_INST_DIR)/uforadiant-$(UFORADIANT_VERSION)-win32.exe > $(WINDOWS_INST_DIR)/uforadiant-$(UFORADIANT_VERSION)-win32.md5
