@@ -16,7 +16,7 @@ ShowInstDetails "nevershow"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\..\build\projects\radiant.ico"
+!define MUI_ICON "..\..\..\build\projects\radiant.ico"
 !define MUI_WELCOMEFINISHPAGE_BITMAP "uforadiant.bmp"
 
 !insertmacro MUI_PAGE_WELCOME
@@ -41,8 +41,8 @@ FunctionEnd
 Section "UFORadiant"
 	SetOverwrite ifnewer
 	SetOutPath "$INSTDIR"
-		File /r /x *.svn /x CVS "..\..\radiant\*"
-		File /r /x *.svn /x CVS "..\dlls\radiant\*"
+		File /r /x *.svn /x CVS "..\..\..\radiant\*"
+		File /r /x *.svn /x CVS "..\..\dlls\radiant\*"
 
 		SetOutPath "$INSTDIR"
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
