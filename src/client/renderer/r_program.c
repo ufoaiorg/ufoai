@@ -212,12 +212,23 @@ void R_ShutdownPrograms (void)
 	}
 }
 
+static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
+{
+	size_t inLength = strlen(in);
+	strcpy(*out, in);
+	*out += inLength;
+	*len -= inLength;
+	if (*len < 0)
+		Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
+	return inLength;
+}
+
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
 {
 	char path[MAX_QPATH];
 	byte *buf;
 	int i;
-	const char *hwHack;
+	const char *hwHack, *defines;
 
 	switch (r_config.hardwareType) {
 	case GLHW_ATI:
@@ -238,15 +249,13 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 	i = 0;
 
-	if (hwHack) {
-		size_t hwHackLength = strlen(hwHack);
-		strcpy(out, hwHack);
-		out += hwHackLength;
-		len -= hwHackLength;
-		if (len < 0)
-			Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
-		i += hwHackLength;
-	}
+	if (hwHack)
+		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
+
+	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.width);
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
@@ -259,7 +268,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				continue;
 			}
 
-			inc_len = R_PreprocessShader(name,  (const char *)buf, out, len);
+			inc_len = R_PreprocessShader(name, (const char *)buf, out, len);
 			len -= inc_len;
 			out += inc_len;
 			FS_FreeFile(buf);
