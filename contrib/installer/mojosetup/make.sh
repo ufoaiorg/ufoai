@@ -2,7 +2,7 @@
 
 set -x
 
-ROOTDIR=../../../../
+ROOTDIR=../../../
 
 VERSION_UC=`grep UFO_VERSION ${ROOTDIR}src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g'`
 VERSION_LC=`echo ${VERSION_UC} | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;'`

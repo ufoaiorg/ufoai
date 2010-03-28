@@ -1,9 +1,9 @@
 all: update_installer_data makeself
 
 EXT=pk3
-ROOTDIR=../../../../
+ROOTDIR=../../../
 #relative from root dir
-INSTDIR=src/ports/linux/installer/
+INSTDIR=contrib/installer/linux/
 #everything inside this dir will be compressed to the self extracting archive
 DATADIR=data
 #this is only for arranging the path names and tar the zip files
