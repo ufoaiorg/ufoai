@@ -4,7 +4,7 @@ TARGET_CPU?=universal
 EXT=pk3
 ROOTDIR=../../..
 #relative from root dir
-INSTDIR=src/ports/macosx/installer/
+INSTDIR=contrib/installer/mac
 UFOAI_VERSION ?= 0.0
 UFORADIANT_VERSION ?= 0.0
 
@@ -24,12 +24,12 @@ include $(ROOTDIR)/build/pk3_def.mk
 
 BASE_PK3 = $(addprefix $(ROOTDIR)/base/, $(PAK_FILES))
 
-BUNDLE_PK3 = $(addprefix UFOAI.app/base/, $(PAK_FILES))
+BUNDLE_PK3 = $(addprefix $(ROOTDIR)/contrib/installer/mac/UFOAI.app/base/, $(PAK_FILES))
 
 # =======================
 
 bundle-dirs-ufoai:
-	@mkdir -p UFOAI.app/base
+	@mkdir -p $(ROOTDIR)/contrib/installer/mac/UFOAI.app/base
 
 bundle-dirs-uforadiant:
 
@@ -38,77 +38,76 @@ bundle-dirs-uforadiant:
 $(BASE_PK3) :
 	$(MAKE) -C $(ROOTDIR) $(addprefix base/,$(notdir $@))
 
-$(BUNDLE_PK3) : UFOAI.app/base/%.pk3 : $(ROOTDIR)/base/%.pk3
+$(BUNDLE_PK3) : $(ROOTDIR)/contrib/installer/mac/UFOAI.app/base/%.pk3 : $(ROOTDIR)/base/%.pk3
 	cp $< $@
 
 # =======================
 
 package-dir-ufoai:
-	@rm -rf $(UFOAI_PACKAGE_NAME)
-	@mkdir -p $(UFOAI_PACKAGE_NAME)
+	@rm -rf $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)
+	@mkdir -p $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)
 
 package-dir-uforadiant:
-	@rm -rf $(UFORADIANT_PACKAGE_NAME)
-	@mkdir -p $(UFORADIANT_PACKAGE_NAME)
+	@rm -rf $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME)
+	@mkdir -p $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME)
 
 # =======================
 
 updateversion-ufoai:
-	@sed 's/@UFOAI_VERSION@/$(UFOAI_VERSION)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
+	@sed 's/@UFOAI_VERSION@/$(UFOAI_VERSION)/g' $(ROOTDIR)/contrib/installer/mac/UFOAI.app/Contents/Info.plist.in > $(ROOTDIR)/contrib/installer/mac/UFOAI.app/Contents/Info.plist
 
 updateversion-uforadiant:
-	@sed 's/@UFORADIANT_VERSION@/$(UFORADIANT_VERSION)/g' UFORadiant.app/Contents/Info.plist.in > UFORadiant.app/Contents/Info.plist
+	@sed 's/@UFORADIANT_VERSION@/$(UFORADIANT_VERSION)/g' $(ROOTDIR)/contrib/installer/mac/UFORadiant.app/Contents/Info.plist.in > $(ROOTDIR)/contrib/installer/mac/UFORadiant.app/Contents/Info.plist
 
 # =======================
 
 copybinaries-ufoai: bundle-dirs-ufoai
-	@cp $(BINARIES) UFOAI.app/Contents/MacOS
-	@cp $(BINARIES_BASE) UFOAI.app/base
+	@cp $(BINARIES) $(ROOTDIR)/contrib/installer/mac/UFOAI.app/Contents/MacOS
+	@cp $(BINARIES_BASE) $(ROOTDIR)/contrib/installer/mac/UFOAI.app/base
 
 copybinaries-uforadiant: bundle-dirs-uforadiant
-	@cp $(BINARIES_RADIANT) UFORadiant.app/Contents/MacOS
+	@cp $(BINARIES_RADIANT) $(ROOTDIR)/contrib/installer/mac/UFORadiant.app/Contents/MacOS
 
 # =======================
 
 copydata-ufoai: bundle-dirs-ufoai $(BUNDLE_PK3)
-	@mkdir -p UFOAI.app/base/i18n
-	@cp -r $(ROOTDIR)/base/i18n/[^.]* UFOAI.app/base/i18n
+	@mkdir -p $(ROOTDIR)/contrib/installer/mac/UFOAI.app/base/i18n
+	@cp -r $(ROOTDIR)/base/i18n/[^.]* $(ROOTDIR)/contrib/installer/mac/UFOAI.app/base/i18n
 
 copydata-uforadiant:
-	@svn export --force $(ROOTDIR)/radiant UFORadiant.app
-	@cp -r $(ROOTDIR)/radiant/i18n/[^.]* UFORadiant.app/i18n
-	@cp -rf $(ROOTDIR)/radiant/modules/[^.]*.dylib UFORadiant.app/modules
-	@cp -rf $(ROOTDIR)/radiant/plugins/[^.]*.dylib UFORadiant.app/plugins
+	@svn export --force $(ROOTDIR)/radiant $(ROOTDIR)/contrib/installer/mac/UFORadiant.app
+	@cp -r $(ROOTDIR)/radiant/i18n/[^.]* $(ROOTDIR)/contrib/installer/mac/UFORadiant.app/i18n
+	@cp -rf $(ROOTDIR)/radiant/plugins/[^.]*.dylib $(ROOTDIR)/contrib/installer/mac/UFORadiant.app/plugins
 
 # =======================
 
 copynotes-ufoai: package-dir-ufoai
-	@cp $(ROOTDIR)/README $(UFOAI_PACKAGE_NAME)
-	@cp $(ROOTDIR)/CONTRIBUTORS $(UFOAI_PACKAGE_NAME)
-	@cp $(ROOTDIR)/COPYING $(UFOAI_PACKAGE_NAME)
+	@cp $(ROOTDIR)/README $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)
+	@cp $(ROOTDIR)/CONTRIBUTORS $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)
+	@cp $(ROOTDIR)/COPYING $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)
 
 copynotes-uforadiant: package-dir-uforadiant
-	@cp $(ROOTDIR)/src/tools/radiant/LICENSE $(UFORADIANT_PACKAGE_NAME)
+	@cp $(ROOTDIR)/src/tools/radiant/LICENSE $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME)
 
 # =======================
 
 copylibs-ufoai:
 	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
-	@perl macfixlibs.pl UFOAI.app ufo ufoded ufo2map
+	@perl $(ROOTDIR)/contrib/installer/mac/macfixlibs.pl $(ROOTDIR)/contrib/installer/mac/UFOAI.app ufo ufoded ufo2map
 
 copylibs-uforadiant:
 	@rm -rf UFORadiant.app/Contents/Frameworks/*.framework
-	@perl macfixlibs.pl UFORadiant.app uforadiant
+	@perl $(ROOTDIR)/contrib/installer/mac/macfixlibs.pl $(ROOTDIR)/contrib/installer/mac/UFORadiant.app uforadiant
 
 # =======================
 
 copy-package-bundle-ufoai: package-dir-ufoai bundle-ufoai
-	@cp -r UFOAI.app $(UFOAI_PACKAGE_NAME)
-	@rm $(UFOAI_PACKAGE_NAME)/UFOAI.app/Contents/Info.plist.in
+	@cp -r $(ROOTDIR)/contrib/installer/mac/UFOAI.app $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)
+	@rm $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME)/UFOAI.app/Contents/Info.plist.in
 
 copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
-	@cp -r UFORadiant.app $(UFORADIANT_PACKAGE_NAME)
-	@rm $(UFORADIANT_PACKAGE_NAME)/UFORadiant.app/Contents/Info.plist.in
+	@cp -r $(ROOTDIR)/contrib/installer/mac/UFORadiant.app $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME)
+	@rm $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME)/UFORadiant.app/Contents/Info.plist.in
 
 # =======================
 
@@ -130,12 +129,12 @@ bundle-nodata-ufoai: copybinaries-ufoai copylibs-ufoai copynotes-ufoai
 # =======================
 
 create-dmg-ufoai: bundle-ufoai updateversion-ufoai copy-package-bundle-ufoai strip-dev-files-ufoai
-	@rm -f $(UFOAI_PACKAGE_NAME).dmg
-	@hdiutil create -volname "UFO: Alien Invasion $(UFOAI_VERSION)" -srcfolder $(UFOAI_PACKAGE_NAME) $(UFOAI_PACKAGE_NAME).dmg
+	@rm -f $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME).dmg
+	@hdiutil create -volname "UFO: Alien Invasion $(UFOAI_VERSION)" -srcfolder $(ROOTDIR)/contrib/installer/mac/$(UFOAI_PACKAGE_NAME) $(UFOAI_PACKAGE_NAME).dmg
 
 create-dmg-uforadiant: bundle-uforadiant updateversion-uforadiant copy-package-bundle-uforadiant strip-dev-files-uforadiant
-	@rm -f $(UFORADIANT_PACKAGE_NAME).dmg
-	@hdiutil create -volname "UFORadiant $(UFORADIANT_VERSION)" -srcfolder $(UFORADIANT_PACKAGE_NAME) $(UFORADIANT_PACKAGE_NAME).dmg
+	@rm -f $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME).dmg
+	@hdiutil create -volname "UFORadiant $(UFORADIANT_VERSION)" -srcfolder $(ROOTDIR)/contrib/installer/mac/$(UFORADIANT_PACKAGE_NAME) $(UFORADIANT_PACKAGE_NAME).dmg
 
 create-dmg: create-dmg-ufoai create-dmg-uforadiant
 
