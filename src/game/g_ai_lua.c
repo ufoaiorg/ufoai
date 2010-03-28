@@ -710,17 +710,28 @@ static int AIL_morale (lua_State *L)
 }
 
 /**
- * @brief Sets the actor's reaction fire.
+ * @brief Sets the actor's reaction fire mode.
  */
 static int AIL_reactionfire (lua_State *L)
 {
+	int reactionState = 0;
 	if (lua_gettop(L) > 0) {
-		if (lua_isboolean(L, 1)) {
-			const int state = lua_toboolean(L, 1);
-			G_ClientStateChange(AIL_player, AIL_ent, STATE_REACTION_ONCE,
+
+		if (lua_isstring(L, 1)) {
+			/* get reaction fire mode */
+			const char* cmd = lua_tostring(L, 1);
+			reactionState = !strcmp(cmd, "disable") ? ~STATE_REACTION
+				: !strcmp(cmd, "once") ? STATE_REACTION_ONCE
+				: !strcmp(cmd, "many") ? STATE_REACTION_MANY : 0;
+		}
+
+		if (reactionState && lua_gettop(L) > 1 && lua_isboolean(L, 2)) {
+			const int state = lua_toboolean(L, 2);
+			G_ClientStateChange(AIL_player, AIL_ent, reactionState,
 				(state) ? qtrue : qfalse);
-		} else
-			AIL_invalidparameter(1);
+		} else {
+			AIL_invalidparameter(reactionState ? 2 : 1);
+		}
 	}
 
 	lua_pushboolean(L, G_IsReaction(AIL_ent));
