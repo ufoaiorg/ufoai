@@ -59,7 +59,7 @@ void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
 		pos[0] = 0;
 		break;
 	case 1:	/* middle */
-		pos[0] = node->size[0] / 2;
+		pos[0] = (int)(node->size[0] / 2);
 		break;
 	case 2:	/* right */
 		pos[0] = node->size[0];
@@ -74,7 +74,7 @@ void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
 		pos[1] = 0;
 		break;
 	case 1: /* middle */
-		pos[1] = node->size[1] / 2;
+		pos[1] = (int)(node->size[1] / 2);
 		break;
 	case 2: /* bottom */
 		pos[1] = node->size[1];
@@ -94,12 +94,16 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 	assert(node);
 	assert(pos);
 
-	/* if we request the position of an undrawable node, there is a problem */
+	/* if we request the position of a non drawable node, there is a problem */
 	if (node->behaviour->isVirtual)
-		Com_Error(ERR_FATAL, "MN_NodeAbsoluteToRelativePos: Node '%s' doesn't have a position", node->name);
+		Com_Error(ERR_FATAL, "MN_GetNodeAbsPos: Node '%s' doesn't have a position", node->name);
 
 	Vector2Set(pos, 0, 0);
 	while (node) {
+#ifdef DEBUG
+		if (node->pos[0] != (int)node->pos[0] || node->pos[1] != (int)node->pos[1])
+			Com_Error(ERR_FATAL, "MN_GetNodeAbsPos: Node '%s' position %f,%f is not integer", MN_GetPath(node), node->pos[0], node->pos[1]);
+#endif
 		pos[0] += node->pos[0];
 		pos[1] += node->pos[1];
 		node = node->parent;
