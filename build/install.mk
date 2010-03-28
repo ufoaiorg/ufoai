@@ -1,5 +1,5 @@
-UFOAI_VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
-UFORADIANT_VERSION=$(shell grep RADIANT_VERSION src/tools/radiant/include/version.h | sed -e 's/.*RADIANT_VERSION \"\(.*\)\"/\1/')
+UFOAI_VERSION=$(shell grep UFO_VERSION $(SRCDIR)/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
+UFORADIANT_VERSION=$(shell grep RADIANT_VERSION $(SRCDIR)/tools/radiant/include/version.h | sed -e 's/.*RADIANT_VERSION \"\(.*\)\"/\1/')
 
 include build/install_linux.mk
 include build/install_mac.mk
@@ -10,7 +10,7 @@ installer-pre: lang maps-sync pk3
 installer: wininstaller linuxinstaller sourcearchive mappack
 
 mappack: maps-sync
-	tar -cvjp --exclude-from=build/tar.ex -f ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 ./base/maps
+	tar -cvjp --exclude-from=build/tar.ex -f ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 base/maps
 
 dataarchive: pk3
 	tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar base/*.pk3

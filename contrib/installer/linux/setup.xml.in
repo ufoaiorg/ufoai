@@ -52,7 +52,6 @@
   </option>
  </component>
 
-
  <component if="|(x86,x86_64)" name="i386" version="@VERSION@">
   <option arch="any" install="true">
    32 bit binaries
@@ -62,25 +61,6 @@
    </binary>
    <files>
     ufo-x86.tar.bz2
-   </files>
-  </option>
- </component>
-
- <!-- make sure to grab the linux version from mattn.ninex.info -->
- <component if="|(x86,x86_64)" name="gtkradiant" version="1.5">
-  <option arch="any" install="true" default="yes" size="5M">
-   GTKRadiant 1.5
-   <files>
-    gtkradiant.tar.bz2
-   </files>
-  </option>
- </component>
-
- <component name="mapsource" version="@VERSION@">
-  <option arch="any" install="true" default="yes" size="80M">
-   Mapsource files
-   <files>
-    mapsource.tar.bz2
    </files>
   </option>
  </component>

@@ -10,9 +10,6 @@ LINUX_INST_TMPDIR=$(LINUX_INST_DIR)/tmp
 #get the size of the zip data archives
 LINUX_INST_SIZE=$(shell LANG=C; du -sch $(LINUX_INST_TMPDIR)/base/*.pk3 $(BINARIES) | tail -1 | cut -f1;)
 
-#grab the gtkradiant 1.5 archive from this url
-GTKRADIANT_URL=http://mattn.ninex.info/download/gtkradiant.tar.bz2
-
 BINARIES = \
 	ufo \
 	ufoded \
@@ -30,12 +27,8 @@ packdata:
 	@tar -cvjp -f $(LINUX_INST_DATADIR)/ufo-x86.tar.bz2 $(BINARIES)
 	@tar -cvjp -f $(LINUX_INST_DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES_64)
 	@cd $(ROOTDIR); tar -cvjp -f $(LINUX_INST_DIR)$(LINUX_INST_DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
-# FIXME Use find -name "*.bsp" and exclude invalid files like autosaves and so on
-	cd $(ROOTDIR); tar -cvjp -f $(LINUX_INST_DIR)/$(LINUX_INST_DATADIR)/mapsource.tar.bz2 base/maps/ --exclude .svn --exclude *.bsp --exclude *.autosave* --exclude *.bak
-	@cp -u $(ROOTDIR)base/*.pk3 $(LINUX_INST_TMPDIR)/base
+	@cp $(PAK_FILES) $(LINUX_INST_TMPDIR)/base
 	@cd $(LINUX_INST_TMPDIR); tar -cvp -f ../$(LINUX_INST_DATADIR)/data.tar base
-# FIXME: Get the 64bit binary, too
-	@cd $(LINUX_INST_DATADIR); wget -nc $(GTKRADIANT_URL)
 
 update_installer_data:
 	@sed 's/@VERSION@/$(UFOAI_VERSION)/g' $(LINUX_INST_DIR)/setup.xml.in | sed 's/@LINUX_INST_SIZE@/$(LINUX_INST_SIZE)/g' > $(LINUX_INST_DATADIR)/setup.data/setup.xml
