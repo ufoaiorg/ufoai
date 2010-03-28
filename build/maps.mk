@@ -48,6 +48,9 @@ maps-fast:
 maps-ents:
 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
+maps-sync:
+	contrib/scripts/map-get.py upgrade
+
 clean-maps:
 	@echo "Deleting maps..."
 ifeq ($(USEWINDOWSCMD),1)
