@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
  libtheora-dev | libxvidcore4-dev, libpng-dev, libjpeg-dev,
  libglib2.0-dev, zlib1g-dev, gettext, libncurses5-dev,
  pkg-config, libopenal-dev, libgtksourceview2.0-dev,
- libsdl-image1.2-dev
+ libsdl-image1.2-dev, python
 Standards-Version: 3.7.3
 Homepage: http://ufoai.sf.net
 Vcs-Svn: https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
