@@ -99,7 +99,8 @@ Suggests: blender, ufoai-radiant
 Description: UFO: Alien Invasion - data-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
- This package includes the map-building tool.
+ This package includes the map-compiling tool and some blender
+ scripts for modelling.
 
 Package: ufoai-radiant
 Section: games
@@ -110,7 +111,8 @@ Suggests: ufoai-map-sources, g3dviewer
 Description: UFO: Alien Invasion - map-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
- This package includes the map-building tool.
+ This package includes the map-building tool UFORadiant. It's based on
+ GTKRadiant 1.5.
 
 Package: ufoai-map-sources
 Section: games
