@@ -2,7 +2,7 @@ all: create-dmg
 
 TARGET_CPU?=universal
 EXT=pk3
-ROOTDIR=../../../..
+ROOTDIR=../../..
 #relative from root dir
 INSTDIR=src/ports/macosx/installer/
 UFOAI_VERSION ?= 0.0
