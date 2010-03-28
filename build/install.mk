@@ -8,13 +8,12 @@ include build/install_windows.mk
 installer: wininstaller linuxinstaller sourcearchive mappack
 
 mappack: maps-sync
-	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 ./base/maps
-	scp ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 ufo:~/public_html/download
+	tar -cvjp --exclude-from=build/tar.ex -f ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 ./base/maps
 
 dataarchive: pk3
 	tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar base/*.pk3
 
-USER=tlh2000
+USER?=tlh2000
 upload-sf:
 	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
 	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
