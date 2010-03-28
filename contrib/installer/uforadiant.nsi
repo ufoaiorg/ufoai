@@ -42,16 +42,7 @@ Section "UFORadiant"
 	SetOverwrite ifnewer
 	SetOutPath "$INSTDIR"
 		File /r /x *.svn /x CVS "..\..\radiant\*"
-		File "..\dlls\OpenAL32.dll"
-		File "..\dlls\libvorbis*.dll"
-		File "..\dlls\libogg*.dll"
-		File "..\dlls\libgtk*.dll"
-	SetOutPath $TEMP
-		File "..\dlls\radiant_runtime.exe"
-		ExecWait '"$TEMP\radiant_runtime.exe" -o"$INSTDIR" "-y"'
-			IfErrors 0 +2
-			Abort "Error during radiant_runtime extraction"
-		Delete "$TEMP\radiant_runtime.exe"
+		File /r /x *.svn /x CVS "..\dlls\radiant\*"
 
 		SetOutPath "$INSTDIR"
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
