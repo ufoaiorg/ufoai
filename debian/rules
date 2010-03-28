@@ -59,7 +59,7 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	$(MAKE) lang pk3 maps-sync
+	$(MAKE) installer-pre
 	$(MAKE) -C src/docs/tex
 
 	mkdir -p stamps
