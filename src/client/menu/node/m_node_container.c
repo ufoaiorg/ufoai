@@ -764,7 +764,7 @@ static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *h
 				MN_DrawString("f_verysmall", ALIGN_LC,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
-					cellWidth - 5,	/* maxWidth */
+					cellWidth - 5 - ammopos[0],	/* maxWidth */
 					0,	/* maxHeight */
 					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, 0);
 				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
