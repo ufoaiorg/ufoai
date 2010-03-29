@@ -392,6 +392,7 @@ void CL_ActorCleanup (le_t *le)
 	if (le->pathMap)
 		Mem_Free(le->pathMap);
 	le->pathMap = NULL;
+	cls.i.DestroyInventory(&cls.i, &le->i);
 }
 
 /**
