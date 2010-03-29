@@ -1341,18 +1341,6 @@ void CP_StartSelectedMission (void)
 
 	/* if we retry a mission we have to drop from the current game before */
 	SV_Shutdown("Server quit.", qfalse);
-	/* temporarily print a msg while we are hunting the 'No space in inventory' bug.
-	 * @note this must be called before CL_Disconnect() coz that removes the aliens somehow.
-	 * Mattn, plz don't apply coding guidlines yet. This is WIP;) Duke, 26.03.10 */
-	{
-		int i = 0;
-		le_t *le = NULL;
-		while ((le = LE_GetNextInUse(le))) {
-			if (LE_IsAlien(le))
-				i++;
-		}
-		Com_Printf("Uncleared aliens: %i\n",i);
-	}
 	CL_Disconnect();
 
 	CP_CreateBattleParameters(mis);
