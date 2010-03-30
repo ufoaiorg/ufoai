@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-17 21:25+0100\n"
+"POT-Creation-Date: 2010-03-30 10:59+0700\n"
 "PO-Revision-Date: 2009-03-27 18:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -71,27 +71,27 @@ msgstr "小树林"
 msgid "Little bungalo in forest"
 msgstr "森林独屋"
 
-#: ../base/maps/frozen.ump:284
+#: ../base/maps/frozen.ump:292
 msgid "Snow"
 msgstr "雪地"
 
-#: ../base/maps/frozen.ump:301
+#: ../base/maps/frozen.ump:309
 msgid "Alien landing - Snow"
 msgstr "外星人着陆中 - 雪地"
 
-#: ../base/maps/frozen.ump:319
+#: ../base/maps/frozen.ump:327
 msgid "Industrial"
 msgstr "工业区"
 
-#: ../base/maps/frozen.ump:340
+#: ../base/maps/frozen.ump:348
 msgid "Alien landing - Industrial"
 msgstr "外星人着陆中 - 工业区"
 
-#: ../base/maps/frozen.ump:362
+#: ../base/maps/frozen.ump:370
 msgid "Multiplayer Coop"
 msgstr "联机协作模式"
 
-#: ../base/maps/frozen.ump:383
+#: ../base/maps/frozen.ump:391
 msgid "Multiplayer Deathmatch"
 msgstr "联机死亡竞赛模式"
 
@@ -107,15 +107,15 @@ msgstr "UFO 着陆点"
 msgid "Italy"
 msgstr "意大利"
 
-#: ../base/maps/japan.ump:285
+#: ../base/maps/japan.ump:291
 msgid "Japan"
 msgstr "日本"
 
-#: ../base/maps/japan.ump:293
+#: ../base/maps/japan.ump:299
 msgid "Small eastern park."
 msgstr "小型公园"
 
-#: ../base/maps/japan.ump:321
+#: ../base/maps/japan.ump:327
 msgid "Harvester"
 msgstr "洗劫区"
 
@@ -3013,13 +3013,9 @@ msgstr ""
 #: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:22
 #: ../base/ufos/fonts.ufo:28 ../base/ufos/fonts.ufo:35
 #: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:48
-#: ../base/ufos/fonts.ufo:54
+#: ../base/ufos/fonts.ufo:54 ../base/ufos/fonts.ufo:60
+#: ../base/ufos/fonts.ufo:66 ../base/ufos/fonts.ufo:73
 msgid "media/DejaVuSans.ttf"
-msgstr "media/wqy-zenhei.ttf"
-
-#: ../base/ufos/fonts.ufo:60 ../base/ufos/fonts.ufo:66
-#: ../base/ufos/fonts.ufo:73
-msgid "media/FreeSans.ttf"
 msgstr "media/wqy-zenhei.ttf"
 
 #: ../base/ufos/gametypes.ufo:4
@@ -3227,202 +3223,202 @@ msgid "A river runs through this piece of jungle."
 msgstr "丛林里的河流水域。"
 
 #: ../base/ufos/maps.ufo:772 ../base/ufos/maps.ufo:813
-#: ../base/ufos/maps.ufo:853
+#: ../base/ufos/maps.ufo:854
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "丛林里的一片空地。"
 
-#: ../base/ufos/maps.ufo:899 ../base/ufos/maps.ufo:938
-#: ../base/ufos/maps.ufo:979 ../base/ufos/maps.ufo:1019
+#: ../base/ufos/maps.ufo:900 ../base/ufos/maps.ufo:939
+#: ../base/ufos/maps.ufo:980 ../base/ufos/maps.ufo:1020
 msgid "A peaceful neighbourhood on the outskirts of a centre of population."
 msgstr "郊外的一个小镇。"
 
-#: ../base/ufos/maps.ufo:1058 ../base/ufos/maps.ufo:1139
-#: ../base/ufos/maps.ufo:1179
+#: ../base/ufos/maps.ufo:1059 ../base/ufos/maps.ufo:1140
+#: ../base/ufos/maps.ufo:1180
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "无人林区。"
 
-#: ../base/ufos/maps.ufo:1099
+#: ../base/ufos/maps.ufo:1100
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "UFO坠落无人林区。"
 
-#: ../base/ufos/maps.ufo:1219 ../base/ufos/maps.ufo:1261
+#: ../base/ufos/maps.ufo:1221 ../base/ufos/maps.ufo:1263
 msgid "Some houses in desert"
 msgstr "沙漠平房"
 
-#: ../base/ufos/maps.ufo:1302
+#: ../base/ufos/maps.ufo:1304
 msgid "An excavation site that has fallen under alien attack."
 msgstr "地下矿井。"
 
-#: ../base/ufos/maps.ufo:1349
+#: ../base/ufos/maps.ufo:1351
 msgid "An estate owned by rich and influential people."
 msgstr "贵族庄园。"
 
-#: ../base/ufos/maps.ufo:1393
+#: ../base/ufos/maps.ufo:1395
 msgid "A small village in England."
 msgstr "英格兰小镇"
 
-#: ../base/ufos/maps.ufo:1439
+#: ../base/ufos/maps.ufo:1441
 msgid "A small office in a mountainous region."
 msgstr "山里的一处工作室。"
 
-#: ../base/ufos/maps.ufo:1487
+#: ../base/ufos/maps.ufo:1489
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
 msgstr "社区超市。"
 
-#: ../base/ufos/maps.ufo:1537
+#: ../base/ufos/maps.ufo:1539
 msgid "An old mine."
 msgstr "一个废弃矿井。"
 
-#: ../base/ufos/maps.ufo:1585
+#: ../base/ufos/maps.ufo:1587
 msgid "An industrial area, used for loading and unloading goods."
 msgstr "工业货运站。"
 
-#: ../base/ufos/maps.ufo:1631
+#: ../base/ufos/maps.ufo:1633
 msgid "A bunker used in a previous conflict."
 msgstr "采石场。"
 
-#: ../base/ufos/maps.ufo:1677
+#: ../base/ufos/maps.ufo:1679
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
 msgstr "水利大坝。"
 
-#: ../base/ufos/maps.ufo:1721 ../base/ufos/maps.ufo:1771
-#: ../base/ufos/maps.ufo:1821
+#: ../base/ufos/maps.ufo:1723 ../base/ufos/maps.ufo:1773
+#: ../base/ufos/maps.ufo:1823
 msgid "A classic eastern suburban area."
 msgstr "典型的东部郊区。"
 
-#: ../base/ufos/maps.ufo:1870
+#: ../base/ufos/maps.ufo:1872
 msgid "A small industrial area."
 msgstr "小型工业区。"
 
-#: ../base/ufos/maps.ufo:1916
+#: ../base/ufos/maps.ufo:1918
 msgid "A stadium used for various recreational events."
 msgstr "体育场。"
 
-#: ../base/ufos/maps.ufo:1965
+#: ../base/ufos/maps.ufo:1967
 msgid "A tropical area where several suspected criminals have made their homes."
 msgstr "热带雨林的几间小屋。"
 
-#: ../base/ufos/maps.ufo:2023
+#: ../base/ufos/maps.ufo:2025
 msgid "A small estate in the mountains"
 msgstr "山间一地产"
 
-#: ../base/ufos/maps.ufo:2072
+#: ../base/ufos/maps.ufo:2075
 msgid "A crashed Scout UFO"
 msgstr "一架坠毁的侦察UFO"
 
-#: ../base/ufos/maps.ufo:2107
+#: ../base/ufos/maps.ufo:2110
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr "有架UFO降落这里"
 
-#: ../base/ufos/maps.ufo:2154
+#: ../base/ufos/maps.ufo:2157
 msgid "A ferry."
 msgstr "渡轮"
 
-#: ../base/ufos/maps.ufo:2202
+#: ../base/ufos/maps.ufo:2205
 msgid "A rather old-fashioned suburban district."
 msgstr "比较老式的近郊区。"
 
-#: ../base/ufos/maps.ufo:2251 ../base/ufos/maps.ufo:2298
+#: ../base/ufos/maps.ufo:2254 ../base/ufos/maps.ufo:2301
 msgid "A small neighbourhood in a warm urban region."
 msgstr "大城市的一处小型居民区。"
 
-#: ../base/ufos/maps.ufo:2346
+#: ../base/ufos/maps.ufo:2349
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "加油站。"
 
-#: ../base/ufos/maps.ufo:2395 ../base/ufos/maps.ufo:2439
+#: ../base/ufos/maps.ufo:2398 ../base/ufos/maps.ufo:2442
 msgid "An urban district in an oriental region."
 msgstr "老城区。"
 
-#: ../base/ufos/maps.ufo:2483
+#: ../base/ufos/maps.ufo:2486
 msgid "Underground pipe construction site."
 msgstr "地下管道施工现场"
 
-#: ../base/ufos/maps.ufo:2530
+#: ../base/ufos/maps.ufo:2533
 msgid "A subway station in a suburban part of town."
 msgstr "地铁车站。"
 
-#: ../base/ufos/maps.ufo:2576
+#: ../base/ufos/maps.ufo:2579
 msgid "An office complex in the centre of town."
 msgstr "市中心办公楼。"
 
-#: ../base/ufos/maps.ufo:2624
+#: ../base/ufos/maps.ufo:2627
 msgid "A suburban district."
 msgstr "郊区县。"
 
-#: ../base/ufos/maps.ufo:2669
+#: ../base/ufos/maps.ufo:2672
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "行进中的运兵车队。"
 
-#: ../base/ufos/maps.ufo:2716 ../base/ufos/maps.ufo:2762
+#: ../base/ufos/maps.ufo:2719 ../base/ufos/maps.ufo:2767
 msgid "A small UFO has crashed in this mining region."
 msgstr "小型UFO坠落点。"
 
-#: ../base/ufos/maps.ufo:2812
+#: ../base/ufos/maps.ufo:2817
 msgid "An office complex under construction."
 msgstr "建造中的办公楼。"
 
-#: ../base/ufos/maps.ufo:2859
+#: ../base/ufos/maps.ufo:2864
 msgid "A local harbour."
 msgstr "港口。"
 
-#: ../base/ufos/maps.ufo:2904
+#: ../base/ufos/maps.ufo:2909
 msgid "An office complex on the outskirts of town."
 msgstr "小镇的办公楼。"
 
-#: ../base/ufos/maps.ufo:2949
+#: ../base/ufos/maps.ufo:2954
 msgid "A luxurious vacation resort."
 msgstr "豪华度假区。"
 
-#: ../base/ufos/maps.ufo:3006
+#: ../base/ufos/maps.ufo:3011
 msgid "A suburb that has been visited by UFO."
 msgstr "土著据点。"
 
-#: ../base/ufos/maps.ufo:3058
+#: ../base/ufos/maps.ufo:3063
 msgid "A suburb that has received a visit from a Harvester."
 msgstr "大型UFO坠落土著据点。"
 
-#: ../base/ufos/maps.ufo:3110
+#: ../base/ufos/maps.ufo:3115
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr "大型UFO坠落荒地。"
 
-#: ../base/ufos/maps.ufo:3156 ../base/ufos/maps.ufo:3190
+#: ../base/ufos/maps.ufo:3161 ../base/ufos/maps.ufo:3195
 msgid "A small settlement in winter."
 msgstr "冬季小屋。"
 
-#: ../base/ufos/maps.ufo:3229
+#: ../base/ufos/maps.ufo:3234
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr "受到外星人攻击的建筑物。"
 
-#: ../base/ufos/maps.ufo:3277
+#: ../base/ufos/maps.ufo:3282
 msgid "A Bomber has landed in the middle of a city."
 msgstr "城市里的UFO降落点。"
 
-#: ../base/ufos/maps.ufo:3330
+#: ../base/ufos/maps.ufo:3335
 msgid "A place where people come to relax and mingle."
 msgstr "公园。"
 
-#: ../base/ufos/maps.ufo:3378
+#: ../base/ufos/maps.ufo:3383
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "UFO坠落残骸。"
 
-#: ../base/ufos/maps.ufo:3426
+#: ../base/ufos/maps.ufo:3431
 msgid "A fuel depot the aliens try to destroy."
 msgstr "油库。"
 
-#: ../base/ufos/maps.ufo:3465
+#: ../base/ufos/maps.ufo:3470
 msgid "Wilderness terror mission."
 msgstr "荒野。"
 
-#: ../base/ufos/maps.ufo:3511
+#: ../base/ufos/maps.ufo:3516
 msgid "UFO Crashsite."
 msgstr "UFO坠落现场。"
 
-#: ../base/ufos/maps.ufo:3542
+#: ../base/ufos/maps.ufo:3547
 msgid "An alien base."
 msgstr "一个外星人基地。"
 
-#: ../base/ufos/maps.ufo:3557
+#: ../base/ufos/maps.ufo:3562
 msgid "Base is under attack."
 msgstr "基地受到攻击。"
 
@@ -4776,7 +4772,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1036 ../base/ufos/weapons_human.ufo:1869
+#: ../base/ufos/research.ufo:1036 ../base/ufos/weapons_human.ufo:1873
 msgid "Electromagnetic Rifle"
 msgstr "电磁步枪"
 
@@ -4812,7 +4808,7 @@ msgstr ""
 "\n"
 "---司令官纳瓦拉"
 
-#: ../base/ufos/research.ufo:1075 ../base/ufos/weapons_human.ufo:1889
+#: ../base/ufos/research.ufo:1075 ../base/ufos/weapons_human.ufo:1893
 msgid "Electromagnetic Rifle Magazine"
 msgstr "电磁步枪弹夹"
 
@@ -5782,7 +5778,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2006 ../base/ufos/research.ufo:2014
-#: ../base/ufos/weapons_human.ufo:388
+#: ../base/ufos/weapons_human.ufo:390
 msgid "Coilgun"
 msgstr "线圈炮"
 
@@ -10679,7 +10675,7 @@ msgstr "为射击保留活动时间。"
 msgid "Equip Defence Weapons"
 msgstr "装备防御武器"
 
-#: ../base/ufos/ui/basedefence.ufo:55
+#: ../base/ufos/ui/basedefence.ufo:55 client/campaign/cp_base.c:2330
 msgid "Information"
 msgstr "基站信息"
 
@@ -12305,13 +12301,23 @@ msgstr "一般"
 msgid "High"
 msgstr "高"
 
-#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:118
+#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "优秀"
 
 #: ../base/ufos/ui/options.ufo:472
 msgid "Extreme"
 msgstr "极致"
+
+#: ../base/ufos/ui/options.ufo:495
+#, fuzzy
+msgid "All ratios"
+msgstr "基站"
+
+#: ../base/ufos/ui/options.ufo:519
+#, fuzzy
+msgid "Others"
+msgstr "其它"
 
 #: ../base/ufos/ui/options.ufo:551
 msgid "Sound settings"
@@ -12812,9 +12818,9 @@ msgstr "射钉枪弹夹"
 
 #: ../base/ufos/weapons_aliens.ufo:62 ../base/ufos/weapons_aliens.ufo:125
 #: ../base/ufos/weapons_human.ufo:42 ../base/ufos/weapons_human.ufo:122
-#: ../base/ufos/weapons_human.ufo:343 ../base/ufos/weapons_human.ufo:424
-#: ../base/ufos/weapons_human.ufo:504 ../base/ufos/weapons_human.ufo:604
-#: ../base/ufos/weapons_human.ufo:705 ../base/ufos/weapons_human.ufo:1906
+#: ../base/ufos/weapons_human.ufo:343 ../base/ufos/weapons_human.ufo:426
+#: ../base/ufos/weapons_human.ufo:508 ../base/ufos/weapons_human.ufo:608
+#: ../base/ufos/weapons_human.ufo:709 ../base/ufos/weapons_human.ufo:1910
 #: ../base/ufos/weapons_particle.ufo:41 ../base/ufos/weapons_particle.ufo:122
 #: ../base/ufos/weapons_particle.ufo:223 ../base/ufos/weapons_plasma.ufo:41
 #: ../base/ufos/weapons_plasma.ufo:142 ../base/ufos/weapons_plasma.ufo:267
@@ -12838,18 +12844,18 @@ msgid "Assault Rifle Magazine"
 msgstr "突击步枪弹夹"
 
 #: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:141
-#: ../base/ufos/weapons_human.ufo:523 ../base/ufos/weapons_human.ufo:623
-#: ../base/ufos/weapons_human.ufo:847 ../base/ufos/weapons_human.ufo:931
-#: ../base/ufos/weapons_human.ufo:978 ../base/ufos/weapons_human.ufo:1666
-#: ../base/ufos/weapons_human.ufo:1926
+#: ../base/ufos/weapons_human.ufo:527 ../base/ufos/weapons_human.ufo:627
+#: ../base/ufos/weapons_human.ufo:851 ../base/ufos/weapons_human.ufo:935
+#: ../base/ufos/weapons_human.ufo:982 ../base/ufos/weapons_human.ufo:1670
+#: ../base/ufos/weapons_human.ufo:1931
 msgid "3-Round Burst"
 msgstr "三发连射"
 
 #: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:161
-#: ../base/ufos/weapons_human.ufo:262 ../base/ufos/weapons_human.ufo:643
-#: ../base/ufos/weapons_human.ufo:744 ../base/ufos/weapons_human.ufo:1000
-#: ../base/ufos/weapons_multiplayer.ufo:68
-#: ../base/ufos/weapons_multiplayer.ufo:279
+#: ../base/ufos/weapons_human.ufo:262 ../base/ufos/weapons_human.ufo:647
+#: ../base/ufos/weapons_human.ufo:748 ../base/ufos/weapons_human.ufo:1004
+#: ../base/ufos/weapons_multiplayer.ufo:69
+#: ../base/ufos/weapons_multiplayer.ufo:283
 #: ../base/ufos/weapons_plasma.ufo:202 ../base/ufos/weapons_ugv.ufo:101
 msgid "Full-Auto"
 msgstr "全自动"
@@ -12870,8 +12876,8 @@ msgstr "机关枪弹夹"
 msgid "5-Shot Burst"
 msgstr "五发联射"
 
-#: ../base/ufos/weapons_human.ufo:281 ../base/ufos/weapons_multiplayer.ufo:87
-#: ../base/ufos/weapons_multiplayer.ufo:298
+#: ../base/ufos/weapons_human.ufo:281 ../base/ufos/weapons_multiplayer.ufo:89
+#: ../base/ufos/weapons_multiplayer.ufo:303
 msgid "Full-Auto Sweep"
 msgstr "全自动扫射"
 
@@ -12883,147 +12889,147 @@ msgstr "阻击步枪"
 msgid "Sniper Rifle Magazine"
 msgstr "阻击步枪弹夹"
 
-#: ../base/ufos/weapons_human.ufo:362 ../base/ufos/weapons_human.ufo:443
-#: ../base/ufos/weapons_human.ufo:543 ../base/ufos/weapons_human.ufo:764
-#: ../base/ufos/weapons_human.ufo:1172 ../base/ufos/weapons_human.ufo:1214
-#: ../base/ufos/weapons_human.ufo:1946 ../base/ufos/weapons_particle.ufo:141
+#: ../base/ufos/weapons_human.ufo:363 ../base/ufos/weapons_human.ufo:446
+#: ../base/ufos/weapons_human.ufo:547 ../base/ufos/weapons_human.ufo:768
+#: ../base/ufos/weapons_human.ufo:1176 ../base/ufos/weapons_human.ufo:1218
+#: ../base/ufos/weapons_human.ufo:1952 ../base/ufos/weapons_particle.ufo:141
 #: ../base/ufos/weapons_plasma.ufo:61 ../base/ufos/weapons_plasma.ufo:162
 msgid "Aimed Shot"
 msgstr "瞄准射击"
 
-#: ../base/ufos/weapons_human.ufo:408
+#: ../base/ufos/weapons_human.ufo:410
 msgid "Coilgun Clip"
 msgstr "线圈炮弹夹"
 
-#: ../base/ufos/weapons_human.ufo:469
+#: ../base/ufos/weapons_human.ufo:473
 msgid "7.62mm Pistol"
 msgstr "7.62mm 手枪"
 
-#: ../base/ufos/weapons_human.ufo:488
+#: ../base/ufos/weapons_human.ufo:492
 msgid "7.62mm Pistol Magazine"
 msgstr "7.62mm 手枪弹夹"
 
-#: ../base/ufos/weapons_human.ufo:568
+#: ../base/ufos/weapons_human.ufo:572
 msgid "Machine Pistol"
 msgstr "冲锋手枪"
 
-#: ../base/ufos/weapons_human.ufo:588
+#: ../base/ufos/weapons_human.ufo:592
 msgid "4.2mm MP Magazine"
 msgstr "4.2mm 冲锋手枪弹夹"
 
-#: ../base/ufos/weapons_human.ufo:670
+#: ../base/ufos/weapons_human.ufo:674
 msgid "Submachine Gun"
 msgstr "小型轻机枪"
 
-#: ../base/ufos/weapons_human.ufo:689
+#: ../base/ufos/weapons_human.ufo:693
 msgid "SMG Magazine"
 msgstr "小型轻机枪弹夹"
 
-#: ../base/ufos/weapons_human.ufo:724 ../base/ufos/weapons_multiplayer.ufo:48
+#: ../base/ufos/weapons_human.ufo:728 ../base/ufos/weapons_multiplayer.ufo:48
 msgid "5-Round Burst"
 msgstr "五发联射"
 
-#: ../base/ufos/weapons_human.ufo:789
+#: ../base/ufos/weapons_human.ufo:793
 msgid "Riot Shotgun"
 msgstr "防暴霰弹枪"
 
-#: ../base/ufos/weapons_human.ufo:809
+#: ../base/ufos/weapons_human.ufo:813
 msgid "Saboted Slugs"
 msgstr "远距散弹弹夹"
 
-#: ../base/ufos/weapons_human.ufo:825 ../base/ufos/weapons_human.ufo:909
-#: ../base/ufos/weapons_human.ufo:956 ../base/ufos/weapons_human.ufo:1645
-#: ../base/ufos/weapons_multiplayer.ufo:149
+#: ../base/ufos/weapons_human.ufo:829 ../base/ufos/weapons_human.ufo:913
+#: ../base/ufos/weapons_human.ufo:960 ../base/ufos/weapons_human.ufo:1649
+#: ../base/ufos/weapons_multiplayer.ufo:152
 msgid "Single Shot"
 msgstr "单发点射"
 
-#: ../base/ufos/weapons_human.ufo:874
+#: ../base/ufos/weapons_human.ufo:878
 msgid "Micro Shotgun"
 msgstr "迷你散弹枪"
 
-#: ../base/ufos/weapons_human.ufo:893 ../base/ufos/weapons_multiplayer.ufo:133
+#: ../base/ufos/weapons_human.ufo:897 ../base/ufos/weapons_multiplayer.ufo:136
 msgid "Flechette Shells"
 msgstr "散弹弹夹"
 
-#: ../base/ufos/weapons_human.ufo:1027
+#: ../base/ufos/weapons_human.ufo:1031
 msgid "Flamethrower"
 msgstr "火焰喷射器"
 
-#: ../base/ufos/weapons_human.ufo:1047
+#: ../base/ufos/weapons_human.ufo:1051
 msgid "C90 Canister"
 msgstr "C90 气体罐"
 
-#: ../base/ufos/weapons_human.ufo:1064
+#: ../base/ufos/weapons_human.ufo:1068
 msgid "Candlelight"
 msgstr "快速喷射"
 
-#: ../base/ufos/weapons_human.ufo:1085
+#: ../base/ufos/weapons_human.ufo:1089
 msgid "Inferno"
 msgstr "普通喷射"
 
-#: ../base/ufos/weapons_human.ufo:1106
+#: ../base/ufos/weapons_human.ufo:1110
 msgid "Inferno Sweep"
 msgstr "范围喷射"
 
-#: ../base/ufos/weapons_human.ufo:1134
+#: ../base/ufos/weapons_human.ufo:1138
 msgid "Rocket Launcher"
 msgstr "火箭发射器"
 
-#: ../base/ufos/weapons_human.ufo:1155
+#: ../base/ufos/weapons_human.ufo:1159
 msgid "HE Rocket"
 msgstr "爆破火箭弹"
 
-#: ../base/ufos/weapons_human.ufo:1197
+#: ../base/ufos/weapons_human.ufo:1201
 msgid "IC Rocket"
 msgstr "燃烧火箭弹"
 
-#: ../base/ufos/weapons_human.ufo:1242
+#: ../base/ufos/weapons_human.ufo:1246
 msgid "Grenade Launcher"
 msgstr "榴弹发射器"
 
-#: ../base/ufos/weapons_human.ufo:1263
+#: ../base/ufos/weapons_human.ufo:1267
 msgid "25mm HIT Grenades"
 msgstr "25mm 高爆弹弹夹"
 
-#: ../base/ufos/weapons_human.ufo:1280 ../base/ufos/weapons_human.ufo:1461
-#: ../base/ufos/weapons_human.ufo:1706
+#: ../base/ufos/weapons_human.ufo:1284 ../base/ufos/weapons_human.ufo:1465
+#: ../base/ufos/weapons_human.ufo:1710
 msgid "Snap Shot - Airburst"
 msgstr "点射 - 快速引信"
 
-#: ../base/ufos/weapons_human.ufo:1306 ../base/ufos/weapons_human.ufo:1487
-#: ../base/ufos/weapons_human.ufo:1732
+#: ../base/ufos/weapons_human.ufo:1310 ../base/ufos/weapons_human.ufo:1491
+#: ../base/ufos/weapons_human.ufo:1736
 msgid "Aimed Shot - Airburst"
 msgstr "瞄准射击 - 快速引信"
 
-#: ../base/ufos/weapons_human.ufo:1332 ../base/ufos/weapons_human.ufo:1513
-#: ../base/ufos/weapons_human.ufo:1757
+#: ../base/ufos/weapons_human.ufo:1336 ../base/ufos/weapons_human.ufo:1517
+#: ../base/ufos/weapons_human.ufo:1761
 msgid "3-Round Burst - Airburst"
 msgstr "三发连射 - 快速引信"
 
-#: ../base/ufos/weapons_human.ufo:1358 ../base/ufos/weapons_human.ufo:1539
-#: ../base/ufos/weapons_human.ufo:1782
+#: ../base/ufos/weapons_human.ufo:1362 ../base/ufos/weapons_human.ufo:1543
+#: ../base/ufos/weapons_human.ufo:1786
 msgid "Snap Shot - Timed"
 msgstr "点射 - 延时引信"
 
-#: ../base/ufos/weapons_human.ufo:1386 ../base/ufos/weapons_human.ufo:1567
-#: ../base/ufos/weapons_human.ufo:1809
+#: ../base/ufos/weapons_human.ufo:1390 ../base/ufos/weapons_human.ufo:1571
+#: ../base/ufos/weapons_human.ufo:1813
 msgid "Aimed Shot - Timed"
 msgstr "瞄准射击 - 延时引信"
 
-#: ../base/ufos/weapons_human.ufo:1414 ../base/ufos/weapons_human.ufo:1595
-#: ../base/ufos/weapons_human.ufo:1836
+#: ../base/ufos/weapons_human.ufo:1418 ../base/ufos/weapons_human.ufo:1599
+#: ../base/ufos/weapons_human.ufo:1840
 msgid "3-Round Burst - Timed"
 msgstr "三发连射 - 延时引信"
 
-#: ../base/ufos/weapons_human.ufo:1444
+#: ../base/ufos/weapons_human.ufo:1448
 msgid "25mm IC Grenades"
 msgstr "25mm 燃烧弹弹夹"
 
-#: ../base/ufos/weapons_human.ufo:1628
+#: ../base/ufos/weapons_human.ufo:1632
 msgid "25mm Flechette Grenades"
 msgstr "25mm 碎片弹弹夹"
 
-#: ../base/ufos/weapons_human.ufo:1689
+#: ../base/ufos/weapons_human.ufo:1693
 msgid "25mm PB Grenades"
 msgstr "25mm 等离子弹弹夹"
 
@@ -13111,27 +13117,27 @@ msgstr "机枪"
 msgid "Minigun Magazine"
 msgstr "机枪弹夹"
 
-#: ../base/ufos/weapons_multiplayer.ufo:114
+#: ../base/ufos/weapons_multiplayer.ufo:117
 msgid "Shotgun"
 msgstr "散弹枪"
 
-#: ../base/ufos/weapons_multiplayer.ufo:171
+#: ../base/ufos/weapons_multiplayer.ufo:174
 msgid "Double Shot"
 msgstr "双发连射"
 
-#: ../base/ufos/weapons_multiplayer.ufo:198
+#: ../base/ufos/weapons_multiplayer.ufo:201
 msgid "VHS Assault Rifle"
 msgstr "VHS突击步枪"
 
-#: ../base/ufos/weapons_multiplayer.ufo:221
+#: ../base/ufos/weapons_multiplayer.ufo:224
 msgid "XAW95"
 msgstr "XAW95"
 
-#: ../base/ufos/weapons_multiplayer.ufo:242
+#: ../base/ufos/weapons_multiplayer.ufo:245
 msgid "XAW95 Magazine"
 msgstr "XAW95 弹夹"
 
-#: ../base/ufos/weapons_multiplayer.ufo:259 ../base/ufos/weapons_ugv.ufo:80
+#: ../base/ufos/weapons_multiplayer.ufo:262 ../base/ufos/weapons_ugv.ufo:80
 msgid "10-Round Burst"
 msgstr "十发联射"
 
@@ -13209,87 +13215,87 @@ msgstr "机枪弹链"
 msgid "Autocannon Module"
 msgstr "自动加农炮模块"
 
-#: client/battlescape/cl_actor.c:104
+#: client/battlescape/cl_actor.c:105
 msgid "Poor"
 msgstr "无能"
 
-#: client/battlescape/cl_actor.c:106
+#: client/battlescape/cl_actor.c:107
 msgid "Mediocre"
 msgstr "平凡"
 
-#: client/battlescape/cl_actor.c:108
+#: client/battlescape/cl_actor.c:109
 msgid "Average"
 msgstr "一般"
 
-#: client/battlescape/cl_actor.c:110
+#: client/battlescape/cl_actor.c:111
 msgid "Competent"
 msgstr "稍好"
 
-#: client/battlescape/cl_actor.c:112
+#: client/battlescape/cl_actor.c:113
 msgid "Proficient"
 msgstr "熟练"
 
-#: client/battlescape/cl_actor.c:114
+#: client/battlescape/cl_actor.c:115
 msgid "Very Good"
 msgstr "不错"
 
-#: client/battlescape/cl_actor.c:116
+#: client/battlescape/cl_actor.c:117
 msgid "Highly Proficient"
 msgstr "精通"
 
-#: client/battlescape/cl_actor.c:120
+#: client/battlescape/cl_actor.c:121
 msgid "Outstanding"
 msgstr "杰出"
 
-#: client/battlescape/cl_actor.c:123
+#: client/battlescape/cl_actor.c:124
 msgid "Superhuman"
 msgstr "超人"
 
-#: client/battlescape/cl_actor.c:695
+#: client/battlescape/cl_actor.c:697
 msgid "This isn't your round\n"
 msgstr "这不是你的回合\n"
 
-#: client/battlescape/cl_actor.c:957
+#: client/battlescape/cl_actor.c:959
 msgid "You cannot reload this unknown item.\n"
 msgstr "不能装载未知物品。\n"
 
-#: client/battlescape/cl_actor.c:1797
+#: client/battlescape/cl_actor.c:1799
 msgid "Unknown alien race"
 msgstr "未知外星人种类"
 
-#: client/battlescape/cl_actor.c:2499
+#: client/battlescape/cl_actor.c:2502
 msgid "Toggle to next actor"
 msgstr "切换下一个士兵"
 
-#: client/battlescape/cl_actor.c:2500
+#: client/battlescape/cl_actor.c:2503
 msgid "Select an actor from list"
 msgstr "从列表里选择一个士兵"
 
-#: client/battlescape/cl_actor.c:2501
+#: client/battlescape/cl_actor.c:2504
 msgid "Update an actor"
 msgstr "更新一个士兵"
 
-#: client/battlescape/cl_actor.c:2503
+#: client/battlescape/cl_actor.c:2506
 msgid "Toggle stand/crounch"
 msgstr "切换站姿/蹲姿"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2507
 msgid "Toggle the headgear"
 msgstr "切换护目镜"
 
-#: client/battlescape/cl_actor.c:2505
+#: client/battlescape/cl_actor.c:2508
 msgid "Opens or closes a door"
 msgstr "开关一扇门"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2509
 msgid "Confirm the current action"
 msgstr "确认当前的操作"
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2510
 msgid "Toggle to next alien visible from selected actor."
 msgstr "切换当前选定士兵可见的外星人"
 
-#: client/battlescape/cl_actor.c:2509
+#: client/battlescape/cl_actor.c:2512
 msgid "Toggle to next alien"
 msgstr "切换下一个外星人"
 
@@ -13710,8 +13716,8 @@ msgstr "一个新的%s已经开始在%s待命"
 #: client/campaign/cp_aliencont.c:191 client/campaign/cp_aliencont.c:223
 #: client/campaign/cp_aliencont.c:242 client/campaign/cp_aliencont.c:252
 #: client/campaign/cp_base.c:868 client/campaign/cp_base.c:1442
-#: client/campaign/cp_base.c:2578 client/campaign/cp_base.c:2583
-#: client/campaign/cp_base.c:3267 client/campaign/cp_base_callbacks.c:71
+#: client/campaign/cp_base.c:2581 client/campaign/cp_base.c:2586
+#: client/campaign/cp_base.c:3270 client/campaign/cp_base_callbacks.c:71
 #: client/campaign/cp_base_callbacks.c:187
 #: client/campaign/cp_base_callbacks.c:237
 #: client/campaign/cp_base_callbacks.c:588
@@ -13722,9 +13728,9 @@ msgstr "一个新的%s已经开始在%s待命"
 #: client/campaign/cp_base_callbacks.c:645
 #: client/campaign/cp_base_callbacks.c:653
 #: client/campaign/cp_base_callbacks.c:658
-#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1473
-#: client/campaign/cp_campaign.c:1518 client/campaign/cp_campaign.c:1574
-#: client/campaign/cp_campaign.c:1587 client/campaign/cp_campaign.c:1589
+#: client/campaign/cp_base_callbacks.c:663 client/campaign/cp_campaign.c:1484
+#: client/campaign/cp_campaign.c:1529 client/campaign/cp_campaign.c:1585
+#: client/campaign/cp_campaign.c:1598 client/campaign/cp_campaign.c:1600
 #: client/campaign/cp_installation_callbacks.c:156
 #: client/campaign/cp_mapfightequip.c:355
 #: client/campaign/cp_mapfightequip.c:376
@@ -13877,7 +13883,7 @@ msgstr "拦截"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO拦截成功l -- UFO坠落海中。"
 
-#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1589
+#: client/campaign/cp_airfight.c:478 client/campaign/cp_campaign.c:1600
 msgid "You've lost the battle"
 msgstr "战斗失败"
 
@@ -14077,40 +14083,45 @@ msgstr "注意"
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "基地里没有航空机--你需要购买一架航空机\n"
 
-#: client/campaign/cp_base.c:2473
+#: client/campaign/cp_base.c:2329
+#, fuzzy
+msgid "Antimatter (current/max):"
+msgstr "反物质仓库"
+
+#: client/campaign/cp_base.c:2476
 #, c-format
 msgid "Construction of %s building finished in %s."
 msgstr "%s 建设完工在基地 %s。"
 
-#: client/campaign/cp_base.c:2474
+#: client/campaign/cp_base.c:2477
 msgid "Building finished"
 msgstr "建造完工"
 
-#: client/campaign/cp_base.c:2576
+#: client/campaign/cp_base.c:2579
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "出售%s使你获得%i资金"
 
-#: client/campaign/cp_base.c:2577
+#: client/campaign/cp_base.c:2580
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i 装备"
 msgstr[1] "%i 装备"
 
-#: client/campaign/cp_base.c:2581
+#: client/campaign/cp_base.c:2584
 #, c-format
 msgid "Not enough storage space in %s. %s"
 msgstr "仓库剩余空间不足在基地 %s. %s"
 
-#: client/campaign/cp_base.c:2582
+#: client/campaign/cp_base.c:2585
 #, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i个卖了 %ic 。"
 msgstr[1] "%i个卖了 %ic 。"
 
-#: client/campaign/cp_base.c:3265
+#: client/campaign/cp_base.c:3268
 #, c-format
 msgid "%s does not have Antimatter Storage Facility. %i units of antimatter got removed."
 msgstr "基地 %s 没有反物质仓库，%i单元的反物质丢弃。"
@@ -14419,34 +14430,34 @@ msgid ""
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cp_campaign.c:1473
+#: client/campaign/cp_campaign.c:1484
 msgid "Collected dead alien bodies"
 msgstr "收集了外星人尸体"
 
-#: client/campaign/cp_campaign.c:1518
+#: client/campaign/cp_campaign.c:1529
 msgid "Your dropship is not near the landing zone"
 msgstr "你的登陆机没有靠近登陆点"
 
-#: client/campaign/cp_campaign.c:1573 client/campaign/cp_missions.c:1175
+#: client/campaign/cp_campaign.c:1584 client/campaign/cp_missions.c:1175
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "基地防御： %s 成功！"
 
-#: client/campaign/cp_campaign.c:1587
+#: client/campaign/cp_campaign.c:1598
 msgid "You've won the battle"
 msgstr "战斗胜利"
 
-#: client/campaign/cp_campaign.c:1606
+#: client/campaign/cp_campaign.c:1617
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "杀死外星人\t%i\n"
 
-#: client/campaign/cp_campaign.c:1607
+#: client/campaign/cp_campaign.c:1618
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "俘虏外星人\t%i\n"
 
-#: client/campaign/cp_campaign.c:1608
+#: client/campaign/cp_campaign.c:1619
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -14455,22 +14466,22 @@ msgstr ""
 "幸存外星人\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1610
+#: client/campaign/cp_campaign.c:1621
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "被外星人杀死的士兵\t%i\n"
 
-#: client/campaign/cp_campaign.c:1611
+#: client/campaign/cp_campaign.c:1622
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "丢失的士兵\t%i\n"
 
-#: client/campaign/cp_campaign.c:1612
+#: client/campaign/cp_campaign.c:1623
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "误伤死亡的士兵\t%i\n"
 
-#: client/campaign/cp_campaign.c:1613
+#: client/campaign/cp_campaign.c:1624
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -14479,17 +14490,17 @@ msgstr ""
 "幸存的士兵\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1615
+#: client/campaign/cp_campaign.c:1626
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "被外星人杀死的平民\t%i\n"
 
-#: client/campaign/cp_campaign.c:1616
+#: client/campaign/cp_campaign.c:1627
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "误伤死亡的平民\t%i\n"
 
-#: client/campaign/cp_campaign.c:1617
+#: client/campaign/cp_campaign.c:1628
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -14498,17 +14509,17 @@ msgstr ""
 "获救平民\t%i\n"
 "\n"
 
-#: client/campaign/cp_campaign.c:1618
+#: client/campaign/cp_campaign.c:1629
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "收集的物资 （种类/数量）\t%i/%i\n"
 
-#: client/campaign/cp_campaign.c:1695
+#: client/campaign/cp_campaign.c:1706
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已经升级到 %s。\n"
 
-#: client/campaign/cp_campaign.c:1697
+#: client/campaign/cp_campaign.c:1708
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
@@ -14517,7 +14528,7 @@ msgstr ""
 "%s 在战斗中光荣牺牲，被追封%s。\n"
 "以表彰其精神。\n"
 
-#: client/campaign/cp_campaign.c:1698
+#: client/campaign/cp_campaign.c:1709
 msgid "Soldier promoted"
 msgstr "士兵晋升"
 
@@ -16531,7 +16542,7 @@ msgstr "未知科技可以研究"
 msgid "Server closed connection"
 msgstr "服务器关闭"
 
-#: client/cl_language.c:268
+#: client/cl_language.c:272
 msgid "..."
 msgstr "..."
 
@@ -16871,11 +16882,11 @@ msgstr "新的队伍"
 msgid "Error saving team. Check free disk space!"
 msgstr "保存发生错误，请检查磁盘空间。"
 
-#: game/g_actor.c:388
+#: game/g_actor.c:408
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "无法执行：活动时间不足！\n"
 
-#: game/g_actor.c:392
+#: game/g_actor.c:412
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "无法执行：武器已装同类型弹药！\n"
 
@@ -16921,7 +16932,7 @@ msgstr ""
 msgid "Flood protection: You can't talk for %d seconds.\n"
 msgstr ""
 
-#: game/g_combat.c:395
+#: game/g_combat.c:397
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -16929,28 +16940,28 @@ msgstr ""
 "士兵昏迷了！\n"
 "敌人使用了闪光雷！\n"
 
-#: game/g_combat.c:625
+#: game/g_combat.c:626
 msgid "Can't perform action - impossible throw!\n"
 msgstr "无法行动：不能扔出！\n"
 
-#: game/g_combat.c:1088
+#: game/g_combat.c:1089
 #, fuzzy
 msgid "Can't perform action - object not activatable!\n"
 msgstr "无法行动：不能使用！\n"
 
-#: game/g_combat.c:1106
+#: game/g_combat.c:1107
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "无法行动：武器不能单手使用！\n"
 
-#: game/g_combat.c:1113
+#: game/g_combat.c:1114
 msgid "Can't perform action - no ammo!\n"
 msgstr "无法行动：没有弹药！\n"
 
-#: game/g_combat.c:1121
+#: game/g_combat.c:1122
 msgid "Can't perform action - target out of range!\n"
 msgstr "无法行动：目标太远！\n"
 
-#: game/g_combat.c:1167
+#: game/g_combat.c:1168
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "无法行动：弹药不足！\n"
 
@@ -16981,22 +16992,22 @@ msgstr "%s处于狂乱状态。\n"
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s怒不可遏！\n"
 
-#: game/g_morale.c:175
+#: game/g_morale.c:176
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s当前\n"
 
-#: game/g_reaction.c:183
+#: game/g_reaction.c:184
 #, fuzzy
 msgid "No reaction fire enabled weapon.\n"
 msgstr "无自动反应"
 
-#: game/g_reaction.c:188
+#: game/g_reaction.c:189
 #, fuzzy
 msgid "No fire mode selected for reaction fire.\n"
 msgstr "使用此攻击方式为自动反应攻击方式"
 
-#: game/g_reaction.c:193
+#: game/g_reaction.c:194
 #, fuzzy
 msgid "Not enough TUs left for activating reaction fire.\n"
 msgstr "没有足够时间站立。"
@@ -17052,6 +17063,9 @@ msgstr "自由"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "游戏进行中"
+
+#~ msgid "media/FreeSans.ttf"
+#~ msgstr "media/wqy-zenhei.ttf"
 
 #, fuzzy
 #~ msgid "b_laser_txt"
