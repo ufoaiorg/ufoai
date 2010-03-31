@@ -3770,12 +3770,15 @@ base/textures/tex_mattn/wood024_nm.tga | GNU General Public License 2.0 or later
 base/textures/tex_mattn/wood025.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/advert_back.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advert_back_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertaa0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertaa0_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertaa1.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertaa2.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertaa3.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertaa4.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertab0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertab0_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertab1.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertab2.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertab3.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3783,6 +3786,7 @@ base/textures/tex_misc/advertab4.png | GNU General Public License 2.0 or later |
 base/textures/tex_misc/advertab5.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertab6.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertba.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertba_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertbb.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertbb0.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertbb1.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3793,6 +3797,7 @@ base/textures/tex_misc/advertbb5.png | GNU General Public License 2.0 or later |
 base/textures/tex_misc/advertbb6.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertbb7.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertbb8.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/advertbba_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/barrel1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel2.tga | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst.jpg
 base/textures/tex_misc/barrel_top.tga | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/textures/evil2_misc/barrel_rst_top2.jpg
