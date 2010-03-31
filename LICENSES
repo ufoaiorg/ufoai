@@ -3334,19 +3334,13 @@ base/textures/tex_furniture/table005_nm.tga | GNU General Public License 2.0 or 
 base/textures/tex_furniture/table006_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table007_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_lights/light001.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light001_nm.psd | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light003_nm.psd | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003_shell.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003_shell_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light004.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light004_nm.psd | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light004off.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light004off_nm.psd | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light005.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light005_nm.psd | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light005off.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_lights/light005off_nm.psd | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light_grill01.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx0.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
