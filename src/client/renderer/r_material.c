@@ -738,7 +738,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			if (i > -1 && i < NUM_FLARETEXTURES)
 				s->image = r_flaretextures[i];
 			else
-				s->image = R_FindImage(va("flares/%s", c), it_material);
+				s->image = R_FindImage(va("pics/flares/%s", c), it_material);
 
 			if (s->image == r_noTexture) {
 				Com_Printf("R_ParseStage: Failed to resolve flare: %s\n", c);

@@ -629,7 +629,9 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 /**
  * @brief Finds or loads the given image
  * @sa R_RegisterImage
- * @param pname Image name
+ * @param[in] pname Image name Path relative to the game dir (e.g. textures/tex_common/nodraw)
+ * @param[in] type The type of the image. This has influence on image filters and texture
+ * parameters when uploading the image data
  * @note the image name has to be at least 5 chars long
  * @sa R_LoadTGA
  * @sa R_LoadJPG
