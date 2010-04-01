@@ -89,14 +89,14 @@ TRACING NODES
 */
 
 /**
- * @brief Converts the disk node structure into the efficient tracing structure
+ * @brief Converts the disk node structure into the efficient tracing structure for LineTraces
  */
 static void TR_MakeTracingNode (int nodenum)
 {
-	tnode_t *t;
+	tnode_t *t;				/* the tracing node to build */
 	TR_PLANE_TYPE *plane;
 	int i;
-	TR_NODE_TYPE *node;
+	TR_NODE_TYPE *node;		/* the node we are investigating */
 
 	t = tnode_p++;
 
@@ -112,21 +112,21 @@ static void TR_MakeTracingNode (int nodenum)
 	t->dist = plane->dist;
 
 	for (i = 0; i < 2; i++) {
-		if (node->children[i] < 0) {
+		if (node->children[i] < 0) {	/* is it a leaf ? */
 			const int index = -(node->children[i]) - 1;
 			const TR_LEAF_TYPE *leaf = &curTile->leafs[index];
 			const int contentFlags = leaf->contentFlags & ~(1 << 31);
 			if ((contentFlags & (MASK_IMPASSABLE | CONTENTS_LIGHTCLIP | CONTENTS_WEAPONCLIP)) && !(contentFlags & CONTENTS_PASSABLE))
-				t->children[i] = -node->children[i] | (1 << 31);
+				t->children[i] = -node->children[i] | (1 << 31);	/* mark as 'blocking' */
 			else
-				t->children[i] = (1 << 31);
-		} else {
+				t->children[i] = (1 << 31);				/* mark as 'empty leaf' */
+		} else {										/* not a leaf */
 			t->children[i] = tnode_p - curTile->tnodes;
 			if (t->children[i] > curTile->numnodes) {
 				Com_Printf("Exceeded allocated memory for tracing structure (%i > %i)\n",
 						t->children[i], curTile->numnodes);
 			}
-			TR_MakeTracingNode(node->children[i]);
+			TR_MakeTracingNode(node->children[i]);		/* recurse further down the tree */
 		}
 	}
 }
@@ -222,6 +222,7 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  * @param[in] node Node index
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
+ * @return zero if the line is not blocked, else a positive value
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
@@ -231,7 +232,8 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
 	float front, back;
 	int r;
 
-	/* leaf node */
+	/* negative numbers indicate leaf nodes. Empty leaf nodes are marked as (1 << 31).
+	 * Turning off that bit makes us return 0 or the positive node number to indicate blocking. */
 	if (node & (1 << 31))
 		return node & ~(1 << 31);
 
@@ -280,6 +282,7 @@ static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, cons
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
+ * @return true if the line is blocked
  * @note This function uses levels and levelmasks.  The levels are as following:
  * 0-255: brushes are assigned to a level based on their assigned viewing levels.  A brush with
  *    no levels assigned will be stuck in 0, a brush viewable from all 8 levels will be in 255, and
