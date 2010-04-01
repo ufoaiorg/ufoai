@@ -42,9 +42,9 @@ DTD:
 <!ELEMENT type EMPTY>
 <!ATTLIST type
 	name		CDATA		#REQUIRED
-	notify		CDATA		false
-	pause		CDATA		false
-	sound		CDATA		false
+	notify		CDATA		'false'
+	pause		CDATA		'false'
+	sound		CDATA		'false'
 >
 
 */

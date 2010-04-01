@@ -44,20 +44,20 @@ DTD:
 <!ELEMENT item EMPTY>
 <!ATTLIST item
 	id			CDATA	#REQUIRED
-	num			CDATA	0
-	bid			CDATA	0
-	ask			CDATA	0
-	evo			CDATA	0.0
+	num			CDATA	'0'
+	bid			CDATA	'0'
+	ask			CDATA	'0'
+	evo			CDATA	'0.0'
 	autoSell	(false,
 				true)	false
 >
 <!ELEMENT aircraft EMPTY>
 <!ATTLIST aircraft
 	id			CDATA	#REQUIRED
-	num			CDATA	0
-	bid			CDATA	0
-	ask			CDATA	0
-	evo			CDATA	0.0
+	num			CDATA	'0'
+	bid			CDATA	'0'
+	ask			CDATA	'0'
+	evo			CDATA	'0.0'
 >
 
 */

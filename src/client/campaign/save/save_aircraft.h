@@ -37,17 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_DIRECTION "direction"
 #define SAVE_AIRCRAFT_POINT "point"
 #define SAVE_AIRCRAFT_TIME "time"
-#define SAVE_AIRCRAFT_SLOT "slot"
-#define SAVE_AIRCRAFT_ITEMID "itemid"
-#define SAVE_AIRCRAFT_NEXTITEMID "nextItemid"
-#define SAVE_AIRCRAFT_INSTALLATIONTIME "installationTime"
-#define SAVE_AIRCRAFT_AMMOID "ammoid"
-#define SAVE_AIRCRAFT_NEXTAMMOID "nextAmmoid"
-#define SAVE_AIRCRAFT_AMMOLEFT "ammoLeft"
-#define SAVE_AIRCRAFT_DELAYNEXTSHOT "delayNextShot"
-#define SAVE_AIRCRAFT_WEAPONS "weapons"
-#define SAVE_AIRCRAFT_SHIELDS "shields"
-#define SAVE_AIRCRAFT_ELECTRONICS "electronics"
+
 #define SAVE_AIRCRAFT_ROUTE "route"
 #define SAVE_AIRCRAFT_DISTANCE "distance"
 #define SAVE_AIRCRAFT_POINT "point"
@@ -68,9 +58,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_TEAM_IDX "idx"
 #define SAVE_AIRCRAFT_TYPE "type"
 #define SAVE_AIRCRAFT_PILOTIDX "pilotIDX"
+
 #define SAVE_AIRCRAFT_CARGO "cargo"
 #define SAVE_AIRCRAFT_TYPES "types"
+
 #define SAVE_AIRCRAFT_ITEM "item"
+#define SAVE_AIRCRAFT_ITEMID "itemid"
 #define SAVE_AIRCRAFT_AMOUNT "amount"
 #define SAVE_AIRCRAFT_RADAR_RANGE "radarRange"
 #define SAVE_AIRCRAFT_RADAR_TRACKINGRANGE "radarTrackingrange"
@@ -81,6 +74,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_ALIVE "alive"
 #define SAVE_AIRCRAFT_DEAD "dead"
 
+#define SAVE_AIRCRAFT_WEAPONS "weapons"
+#define SAVE_AIRCRAFT_SHIELDS "shields"
+#define SAVE_AIRCRAFT_ELECTRONICS "electronics"
+#define SAVE_AIRCRAFT_SLOT "slot"
+
 #define SAVE_AIRCRAFT_PROJECTILES "projectiles"
 
 #endif
@@ -88,6 +86,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 DTD: (incomplete)
 
+<!ELEMENT weapons slot*>
+<!ELEMENT shields slot>
+<!ELEMENT electronics slot*>
+<!ELEMENT slot EMPTY>
+**Note: ATTLIST of slot is defined in save_fightequip.h
+
 <!ELEMENT projectiles projectile*>
+**Note: projectile is defined in save_airfight.h
 
 */
+

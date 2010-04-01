@@ -57,21 +57,22 @@ DTD:
 	name			CDATA		#IMPLIED
 	status			(construction,
 					working)	#REQUIRED
-	damage			CDATA		0
-	alienInterest	CDATA		0.0
-	buildStart		CDATA		0
+	damage			CDATA		'0'
+	alienInterest	CDATA		'0.0'
+	buildStart		CDATA		'0'
 >
 <!ELEMENT pos EMPTY>
 <!ATTLIST pos
-	x				CDATA		0
-	y				CDATA		0
-	z				CDATA		0
+	x				CDATA		'0'
+	y				CDATA		'0'
+	z				CDATA		'0'
 >
 <!ELEMENT batteries weapon*>
 <!ATTLIST batteries
-	num				CDATA		0
+	num				CDATA		'0'
 >
 
-*Note: weapon defined in save_bases.h
+**Note: weapon defined in save_bases.h
+
 */
 

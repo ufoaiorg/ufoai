@@ -59,19 +59,19 @@ DTD:  (incomplete)
 <!ATTLIST transfer
 	destBase	CDATA		#REQUIRED
 	srcBase		CDATA		#REQUIRED
-	day			CDATA		0
-	sec			CDATA		0
+	day			CDATA		'0'
+	sec			CDATA		'0'
 >
 <!ELEMENT item EMPTY>
 <!ATTLIST item
 	itemid		CDATA		#REQUIRED
-	amount		CDATA		1
+	amount		CDATA		'1'
 >
 <!ELEMENT alien EMPTY>
 <!ATTLIST alien
 	alienid		CDATA		#REQUIRED
-	aliveAmount	CDATA		0
-	deadAmount	CDATA		0
+	aliveAmount	CDATA		'0'
+	deadAmount	CDATA		'0'
 >
 <!ELEMENT employee EMPTY>
 <!ATTLIST employee

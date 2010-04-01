@@ -2410,20 +2410,6 @@ static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t route)
 	}
 }
 
-void AIR_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboolean weapon)
-{
-	mxml_AddString(p, SAVE_AIRCRAFT_ITEMID, slot->item ? slot->item->id : "");
-	mxml_AddString(p, SAVE_AIRCRAFT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
-	mxml_AddInt(p, SAVE_AIRCRAFT_INSTALLATIONTIME, slot->installationTime);
-	/* everything below is only for weapon */
-	if (!weapon)
-		return;
-	mxml_AddString(p, SAVE_AIRCRAFT_AMMOID, slot->ammo ? slot->ammo->id : "");
-	mxml_AddString(p, SAVE_AIRCRAFT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
-	mxml_AddInt(p, SAVE_AIRCRAFT_AMMOLEFT, slot->ammoLeft);
-	mxml_AddInt(p, SAVE_AIRCRAFT_DELAYNEXTSHOT, slot->delayNextShot);
-}
-
 /**
  * @brief Saves an item slot
  * @param[in] slot Pointer to the slot where item is.
@@ -2441,7 +2427,7 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
 
 	for (i = 0; i < num; i++) {
 		sub = mxml_AddNode(p, SAVE_AIRCRAFT_SLOT);
-		AIR_SaveOneSlotXML(&slot[i], sub, weapon);
+		AII_SaveOneSlotXML(sub, &slot[i], weapon);
 	}
 }
 
@@ -2592,62 +2578,6 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 }
 
 /**
- * @brief Loads one slot (base, installation or aircraft)
- * @param[out] slot Pointer to the slot where item should be added.
- * @param[in] node XML Node structure, where we get the information from
- * @param[in] weapon True if the slot is a weapon slot.
- * @sa B_Load
- * @sa B_SaveAircraftSlots
- */
-void AIR_LoadOneSlotXML (aircraftSlot_t* slot, mxml_node_t *node, qboolean weapon)
-{
-	const char *name;
-	name = mxml_GetString(node, SAVE_AIRCRAFT_ITEMID);
-	if (name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
-		/* base is NULL here to not check against the storage amounts - they
-		* are already loaded in the campaign load function and set to the value
-		* after the craftitem was already removed from the initial game - thus
-		* there might not be any of these items in the storage at this point.
-		* Furthermore, they have already be taken from storage during game. */
-		if (tech)
-			AII_AddItemToSlot(NULL, tech, slot, qfalse);
-	}
-
-	/* item to install after current one is removed */
-	name = mxml_GetString(node, SAVE_AIRCRAFT_NEXTITEMID);
-	if (name && name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
-		if (tech)
-			AII_AddItemToSlot(NULL, tech, slot, qtrue);
-	}
-
-	slot->installationTime = mxml_GetInt(node, SAVE_AIRCRAFT_INSTALLATIONTIME, 0);
-
-	/* everything below is weapon specific */
-	if (!weapon)
-		return;
-
-	/* current ammo */
-	name = mxml_GetString(node, SAVE_AIRCRAFT_AMMOID);
-	if (name && name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
-		/* next Item must not be loaded yet in order to install ammo properly */
-		if (tech)
-			AII_AddAmmoToSlot(NULL, tech, slot);
-	}
-	/* ammo to install after current one is removed */
-	name = mxml_GetString(node, SAVE_AIRCRAFT_NEXTAMMOID);
-	if (name && name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
-		if (tech)
-			AII_AddAmmoToSlot(NULL, tech, slot);
-	}
-	slot->ammoLeft = mxml_GetInt(node, SAVE_AIRCRAFT_AMMOLEFT, 0);
-	slot->delayNextShot = mxml_GetInt(node, SAVE_AIRCRAFT_DELAYNEXTSHOT, 0);
-}
-
-/**
  * @brief Loads the weapon slots of an aircraft.
  * @param[in] aircraft Pointer to the aircraft.
  * @param[out] slot Pointer to the slot where item should be added.
@@ -2663,7 +2593,7 @@ static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot
 	int i;
 	for (i = 0, act = mxml_GetNode(p, SAVE_AIRCRAFT_SLOT); act && i <= max; act = mxml_GetNextNode(act, p, SAVE_AIRCRAFT_SLOT), i++) {
 		slot[i].aircraft = aircraft;
-		AIR_LoadOneSlotXML(&slot[i], act, weapon);
+		AII_LoadOneSlotXML(act, &slot[i], weapon);
 	}
 	if (i > max)
 		Com_Printf("Error: Trying to assign more than max (%d) Aircraft Slots (cur is %d)\n", max, i);

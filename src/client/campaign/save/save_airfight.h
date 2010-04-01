@@ -51,8 +51,8 @@ DTD:
 	itemid			CDATA	#REQUIRED		
 	time			CDATA	'0'
 	angle			CDATA	'0.0'
-	bullet			CDATA	false
-	beam			CDATA	false
+	bullet			CDATA	'false'
+	beam			CDATA	'false'
 >
 
 <!ELEMENT attackingAircraft EMPTY>

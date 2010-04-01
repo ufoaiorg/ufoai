@@ -59,23 +59,23 @@ DTD:
 <!ELEMENT research tech*>
 <!ELEMENT tech mail*>
 <!ATTLIST tech
-	id					CDATA		REQUIRED
-	statusCollected		CDATA		IMPLIED
-	time				CDATA		IMPLIED
-	statusResearch		CDATA		REQUIRED
-	baseIDX				CDATA		IMPLIED
-	scientists			CDATA		IMPLIED
-	statusResearchable	CDATA		IMPLIED
-	preDay				CDATA		IMPLIED
-	preSec				CDATA		IMPLIED
-	day					CDATA		IMPLIED
-	sec					CDATA		IMPLIED
-	mailSent			CDATA		IMPLIED
+	id					CDATA		#REQUIRED
+	statusCollected		CDATA		#IMPLIED
+	time				CDATA		#IMPLIED
+	statusResearch		CDATA		#REQUIRED
+	baseIDX				CDATA		#IMPLIED
+	scientists			CDATA		#IMPLIED
+	statusResearchable	CDATA		#IMPLIED
+	preDay				CDATA		#IMPLIED
+	preSec				CDATA		#IMPLIED
+	day					CDATA		#IMPLIED
+	sec					CDATA		#IMPLIED
+	mailSent			CDATA		#IMPLIED
 >
 
 <!ELEMENT mail EMPTY>
 <!ATTLIST mail
-	id					CDATA		REQUIRED
+	id					CDATA		#REQUIRED
 >
 
 */

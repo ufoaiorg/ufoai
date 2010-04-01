@@ -1,5 +1,5 @@
 /**
- * @file save_inventory.h
+ * @file save_fightequip.h
  * @brief XML tag constants for savegame.
  */
 
@@ -22,37 +22,32 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef SAVE_INVENTORY_H
-#define SAVE_INVENTORY_H
+#ifndef SAVE_FIGHTEQUIP_H
+#define SAVE_FIGHTEQUIP_H
 
-#define SAVE_INVENTORY_INVENTORY "inventory"
-
-#define SAVE_INVENTORY_ITEM "item"
-#define SAVE_INVENTORY_AMMO "ammo"
-#define SAVE_INVENTORY_ROTATED "rotated"
-#define SAVE_INVENTORY_AMOUNT "amount"
-#define SAVE_INVENTORY_X "x"
-#define SAVE_INVENTORY_Y "y"
-#define SAVE_INVENTORY_CONTAINER "container"
-#define SAVE_INVENTORY_WEAPONID "weaponid"
-#define SAVE_INVENTORY_MUNITIONID "munitionid"
+#define SAVE_SLOT_ITEMID "itemid"
+#define SAVE_SLOT_NEXTITEMID "nextItemid"
+#define SAVE_SLOT_INSTALLATIONTIME "installationTime"
+#define SAVE_SLOT_AMMOID "ammoid"
+#define SAVE_SLOT_NEXTAMMOID "nextAmmoid"
+#define SAVE_SLOT_AMMOLEFT "ammoLeft"
+#define SAVE_SLOT_DELAYNEXTSHOT "delayNextShot"
 
 #endif
 
-/*
+/**
 DTD:
 
-<!ELEMENT inventory item*>
-<!ELEMENT item EMPTY>
-<!ATTLIST item
-	container	CDATA	#REQUIRED
-	weaponid	CDATA	#REQUIRED
-	x			CDATA	'0'
-	y			CDATA	'0'
-	rotated		CDATA	'0'
-	amount		CDATA	'1'
-	ammoid		CDATA	#IMPLIED
-	ammo		CDATA	'0'
+<!ATTLIST slot
+	itemid				CDATA	#IMPLIED
+	nextItemid			CDATA	#IMPLIED
+	installationTime	CDATA	'0'
+	ammoid				CDATA	#IMPLIED
+	nextAmmoid			CDATA	#IMPLIED
+	ammoLeft			CDATA	'0'
+	delayNextSlot		CDATA	'0'
 >
-*/
 
+**Note: slot element is defined in save_aircraft.h and save_base.h
+
+*/

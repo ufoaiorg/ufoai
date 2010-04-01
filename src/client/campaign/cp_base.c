@@ -2722,7 +2722,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml
 
 	for (i = 0; i < numWeapons; i++) {
 		mxml_node_t *sub = mxml_AddNode(node, SAVE_BASES_WEAPON);
-		AIR_SaveOneSlotXML(&weapons[i].slot, sub, qtrue);
+		AII_SaveOneSlotXML(sub, &weapons[i].slot, qtrue);
 		mxml_AddBoolValue(sub, SAVE_BASES_AUTOFIRE, weapons[i].autofire);
 		if (weapons[i].target)
 			mxml_AddInt(sub, SAVE_BASES_TARGET, weapons[i].target->idx);
@@ -2856,7 +2856,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
 	mxml_node_t *s;
 	for (i = 0, s = mxml_GetNode(p, SAVE_BASES_WEAPON); s && i < max; i++, s = mxml_GetNextNode(s, p, SAVE_BASES_WEAPON)) {
 		const int target = mxml_GetInt(s, SAVE_BASES_TARGET, -1);
-		AIR_LoadOneSlotXML(&weapons[i].slot, s, qtrue);
+		AII_LoadOneSlotXML(s, &weapons[i].slot, qtrue);
 		weapons[i].autofire = mxml_GetBool(s, SAVE_BASES_AUTOFIRE, qtrue);
 		weapons[i].target = (target >= 0) ? UFO_GetByIDX(target) : NULL;
 	}

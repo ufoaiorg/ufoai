@@ -51,12 +51,12 @@ DTD:
 <!ELEMENT UFO EMPTY>
 <!ATTLIST UFO
 	id				CDATA		#REQUIRED
-	day				CDATA		0
-	sec				CDATA		0
+	day				CDATA		'0'
+	sec				CDATA		'0'
 	status			(recovered,
 					stored,
 					transfered)	#REQUIRED
-	condition		CDATA		1.0
+	condition		CDATA		'1.0'
 	installationIDX CDATA		#REQUIRED
 >
 */

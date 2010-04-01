@@ -41,15 +41,15 @@ DTD:
 
 <!ELEMENT XVI entry*>
 <!ATTLIST XVI
-	width	CDATA	0
-	height	CDATA	0
+	width	CDATA	'0'
+	height	CDATA	'0'
 <
 
 <!ELEMENT entry EMPTY>
 <!ATTLIST entry
-	x		CDATA	0
-	y		CDATA	0
-	level	CDATA	0
+	x		CDATA	'0'
+	y		CDATA	'0'
+	level	CDATA	'0'
 >
 
 */

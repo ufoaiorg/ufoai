@@ -56,8 +56,8 @@ DTD:
 	aircraftid	CDATA	#IMPLIED
 	UFOIDX		CDATA	#IMPLIED
 	amount		CDATA	#REQUIRED
-	percentDone	CDATA	0.0
-	itemsCached	CDATA	false
+	percentDone	CDATA	'0.0'
+	itemsCached	CDATA	'false'
 >
 
 *Note: One of itemid, aircraftid, UFOIDX is required

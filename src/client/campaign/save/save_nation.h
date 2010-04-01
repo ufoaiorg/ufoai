@@ -48,8 +48,8 @@ DTD:
 <!ELEMENT month EMPTY>
 <!ATTLIST month
 	IDX			CDATA		#REQUIRED
-	happiness	CDATA		0.0
-	XVI			CDATA		0
+	happiness	CDATA		'0.0'
+	XVI			CDATA		'0'
 >
 */
 

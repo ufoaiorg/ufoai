@@ -88,36 +88,36 @@ DTD:
 	body			CDATA		#IMPLIED
 	path			CDATA		#IMPLIED
 	head			CDATA		#IMPLIED
-	skin			CDATA		0
+	skin			CDATA		'0'
 	teamdefIDX		CDATA		#REQUIRED
-	gender			CDATA		0
-	ucn				CDATA		0
-	maxHp			CDATA		0
-	hp				CDATA		0
-	stun			CDATA		0
-	morale			CDATA		0
-	fieldSize		CDATA		1
+	gender			CDATA		'0'
+	ucn				CDATA		'0'
+	maxHp			CDATA		'0'
+	hp				CDATA		'0'
+	stun			CDATA		'0'
+	morale			CDATA		'0'
+	fieldSize		CDATA		'1'
 >
 
 <!ELEMENT scores (skill*, kill*)>
 <!ATTLIST scores
-	missions		CDATA		0
-	rank			CDATA		-1
+	missions		CDATA		'0'
+	rank			CDATA		'-1'
 >
 
 <!ELEMENT skill EMPTY>
 <!ATTLIST skill
 	type			CDATA		#REQUIRED
-	initial			CDATA		0
-	experience		CDATA		0
-	improve			CDATA		0
+	initial			CDATA		'0'
+	experience		CDATA		'0'
+	improve			CDATA		'0'
 >
 
 <!ELEMENT kill EMPTY>
 <!ATTLIST kill
 	type			CDATA		#REQUIRED
-	killed			CDATA		0
-	stunned			CDATA		0
+	killed			CDATA		'0'
+	stunned			CDATA		'0'
 >
 
 */
