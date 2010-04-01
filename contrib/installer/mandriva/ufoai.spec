@@ -1,27 +1,18 @@
-%define	name	ufo
-%define	version	2.2.1
-%define	release	%mkrel 1
-%define	Summary	UFO: Alien Invasion
+%define	oname	ufo
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		ufoai
+Version:	2.2.1
+Release:	%mkrel 1
 URL:		http://ufoai.sourceforge.net/
-Source0:	%{name}ai-%{version}-source.tar.bz2
+Source0:	%{name}-%{version}-source.tar.bz2
 License:	GPL
 Group:		Games/Strategy
-Summary:	%{Summary}
+Summary:	UFO: Alien Invasion
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
+%rename ufo
+
 Requires:	%{name}-data = %{version}
-Requires:	libcurl4
-Requires:	libjpeg62
-Requires:	libSDL1 >= 1.2.10
-Requires:	libSDL_image1 >= 1.2.7
-Requires:	libSDL_mixer1 >= 1.2.7
-Requires:	libSDL_ttf2 >= 2.0.7
-Requires:	libvorbis
-Requires:	zlib1 >= 1.2.3
 
 BuildRequires:  libcurl-devel
 BuildRequires:  libjpeg62-devel
@@ -42,8 +33,9 @@ their technologies in order to learn as much as possible about their
 technology, their goals and the aliens themselves. 'UFO: Alien Invasion'
 is heavily inspired by the 'X-COM' series by Mythos and Microprose.
 
+
 %prep
-%setup -q -n %{name}ai-%{version}-source
+%setup -q -n %{name}-%{version}-source
 
 %build
 ./configure --enable-release --prefix=/usr
@@ -52,45 +44,22 @@ is heavily inspired by the 'X-COM' series by Mythos and Microprose.
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall
-
-%post
-%update_menus
-
-%postun
-%clean_menus
+%find_lang ufoai
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
-%defattr(0755,root,root)
-%doc CONTRIBUTORS COPYING README
-%{_bindir}/%{name}
-%{_bindir}/%{name}ded
-/usr/share/ufoai/base/game.so
-/usr/share/ufoai/base/i18n/cs/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/da/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/de/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/el/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/en/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/es/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/es_ES/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/est/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/fi/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/fr/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/it/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/ja/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/pl/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/pt_BR/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/ru/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/slo/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/sv/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/base/i18n/th/LC_MESSAGES/ufoai.mo
-/usr/share/ufoai/ufo
-/usr/share/ufoai/ufo2map
-/usr/share/ufoai/ufoded
+%files -f ufoai.lang
+%defattr(-,root,root)
+%doc CONTRIBUTORS README
+%{_bindir}/%{oname}
+%{_bindir}/%{oname}ded
+%{_datadir}/ufoai/*
 
 %changelog
+* Tue Mar 31 2010 Johnny A. Solbu <johnny@solbu.net> 2.2.1-1mdv
+- More spec cleanup, after tip from Per Ã˜yvind Karlsen
+
 * Tue Mar 30 2010 Johnny A. Solbu <johnny@solbu.net> 2.2.1-1mdv
 - Upgraded the package.
 - spec cleanup
@@ -106,8 +75,8 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Sep 28 2004 Guillaume Rousse <guillomovitch@zarb.org> 0.10-2plf
 - moved to plf, as it is useless without its data
 
-* Tue Mar 02 2004 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 0.10-2mdk
+* Tue Mar 02 2004 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 0.10-2mdk
 - buildrequires
 
-* Fri Feb 20 2004 Per Øyvind Karlsen <peroyvind@linux-mandrake.com> 0.10-1mdk
+* Fri Feb 20 2004 Per Ã˜yvind Karlsen <peroyvind@linux-mandrake.com> 0.10-1mdk
 - initial mdk release

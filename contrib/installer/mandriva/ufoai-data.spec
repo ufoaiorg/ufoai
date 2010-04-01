@@ -1,20 +1,20 @@
-%define	name	ufo-data
-%define	version	2.2.1
-%define	release	%mkrel 1
-%define	Summary	Datafiles for UFO: Alien Invasion
+%define oname   ufoai
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		ufoai-data
+Version:	2.2.1
+Release:	%mkrel 1
 URL:		http://ufoai.sourceforge.net/
-Source0:	ufoai-%{version}-data.tar
+Source0:	%{oname}-%{version}-data.tar
 License:	GPL
 Group:		Games/Strategy
-Summary:	%{Summary}
+Summary:	Datafiles for %{oname}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
+Requires:	%{oname}
+
 %description
-This is the datafiles needed to run UFO: ALIEN INVASION.
+Datafiles needed to run ufoai
+
 
 %prep
 %setup -q -n base
@@ -28,17 +28,16 @@ cp -p *pk3 $RPM_BUILD_ROOT/usr/share/ufoai/base/
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(0755,root,root)
-/usr/share/ufoai/base/0base.pk3
-/usr/share/ufoai/base/0maps.pk3
-/usr/share/ufoai/base/0media.pk3
-/usr/share/ufoai/base/0models.pk3
-/usr/share/ufoai/base/0music.pk3
-/usr/share/ufoai/base/0pics.pk3
-/usr/share/ufoai/base/0snd.pk3
-/usr/share/ufoai/base/0ufos.pk3
+%defattr(-,root,root)
+%{_datadir}/ufoai/*
 
 %changelog
+* Tue Mar 31 2010 Johnny A. Solbu <johnny@solbu.net> 2.2.1-1mdv
+- Renamed to ufoai.
+- Some spec cleanup
+
 * Tue Mar 30 2010 Johnny A. Solbu <johnny@solbu.net> 2.2.1-1mdv
 - Upgraded the package, which now have free licenses.
-- Created new spec file, didn't find an old one.
+
+* Fri Feb 20 2004 Per Øyvind Karlsen <peroyvind@sintrax.net> 0.10-1plf
+- initial plf release
