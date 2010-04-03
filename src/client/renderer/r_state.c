@@ -36,13 +36,11 @@ const float default_texcoords[] = {
  */
 qboolean R_SelectTexture (gltexunit_t *texunit)
 {
-	const int maxTextureUnits = max(r_config.maxTextureCoords, r_config.maxTextureUnits);
-
 	if (texunit == r_state.active_texunit)
 		return qtrue;
 
 	/* not supported */
-	if (texunit->texture >= maxTextureUnits + GL_TEXTURE0_ARB)
+	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0_ARB)
 		return qfalse;
 
 	r_state.active_texunit = texunit;

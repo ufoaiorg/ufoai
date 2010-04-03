@@ -704,6 +704,7 @@ static qboolean R_InitExtensions (void)
 
 	glGetIntegerv(GL_MAX_TEXTURE_COORDS, &r_config.maxTextureCoords);
 	Com_Printf("max texture coords: %i\n", r_config.maxTextureCoords);
+	r_config.maxTextureCoords = max(r_config.maxTextureUnits, r_config.maxTextureCoords);
 
 	/* reset gl error state */
 	R_CheckError();
