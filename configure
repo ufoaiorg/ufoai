@@ -4758,7 +4758,7 @@ fi
 
 	if test "$HAVE_WINDRES" != "yes"
 	then
-		WINDRES="$target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
+		WINDRES="$host-windres"
 		# Extract the first word of "$WINDRES", so it can be a program name with args.
 set dummy $WINDRES; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -6032,7 +6032,7 @@ for ac_lib in '' intl; do
     ac_res="none required"
   else
     ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+    LIBS="-l$ac_lib -liconv $ac_func_search_save_LIBS"
   fi
   if ac_fn_c_try_link "$LINENO"; then :
   ac_cv_search_gettext=$ac_res
@@ -8598,5 +8598,4 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
-
 

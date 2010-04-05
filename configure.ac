@@ -311,7 +311,7 @@ then
 	AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
 	if test "$HAVE_WINDRES" != "yes"
 	then
-		WINDRES="$target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
+		WINDRES="$host-windres"
 		AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
 		if test "$HAVE_WINDRES" != "yes"
 		then
@@ -559,7 +559,7 @@ then
 		AC_MSG_ERROR([Could not find libintl.h!])
 	fi
 
-	AC_SEARCH_LIBS([gettext],[intl])
+	AC_SEARCH_LIBS([gettext],[intl],[],[],[-liconv])
 	if test "$ac_cv_search_gettext" = "no"
 	then
 		AC_MSG_ERROR([Could not find internationalization library with gettext in it])
