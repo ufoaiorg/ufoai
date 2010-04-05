@@ -3117,8 +3117,3 @@ mxml_write_ws(mxml_node_t     *node,	/* I - Current node */
 
   return (col);
 }
-
-
-/*
- * End of "$Id: mxml-file.c 329 2008-01-13 00:42:35Z mike $".
- */

@@ -278,8 +278,3 @@ _mxml_global(void)
   return (&global);
 }
 #endif /* HAVE_PTHREAD_H */
-
-
-/*
- * End of "$Id: mxml-private.c 315 2007-11-22 18:01:52Z mike $".
- */

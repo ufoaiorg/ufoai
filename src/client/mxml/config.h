@@ -92,7 +92,3 @@ extern int	_mxml_snprintf(char *, size_t, const char *, ...);
 extern int	_mxml_vsnprintf(char *, size_t, const char *, va_list);
 #    define vsnprintf _mxml_vsnprintf
 #  endif /* !HAVE_VSNPRINTF */
-
-/*
- * End of "$Id: config.h.in 310 2007-09-22 21:00:56Z mike $".
- */

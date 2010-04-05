@@ -1139,6 +1139,3 @@ $tree = parseResearchedList($tree, $filenameResearched);
 
 #$useProvidesInfo = 1;	# Activate to draw "provides" links
 writeDotFile($tree, $filenameDot);
-
-#############
-# EOF

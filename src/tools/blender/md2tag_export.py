@@ -682,5 +682,3 @@ def load_md2_tags(filename):
 	Blender.Set("curframe", previous_curframe)
 
 	Blender.Window.RedrawAll()
-
-################

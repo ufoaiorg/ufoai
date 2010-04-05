@@ -82,5 +82,3 @@ cmove_pistol_d				72		72		1	//cstand2
 cmove_grenade				68		68		1	//cstand0
 cmove_item				68		68		1	//cstand0
 cmove_rpg				74		74		1	//cstand3
-
-// End of file

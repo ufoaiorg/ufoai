@@ -409,7 +409,3 @@ foreach my $class  (keys %{$map->{classes}}) {
 obj_write($map, $obj_filename);
 
 # TODO: write mtl
-
-########################
-# End of File/EOF
-########################

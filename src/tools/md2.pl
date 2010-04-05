@@ -865,10 +865,4 @@ if ($param_action eq 'skinedit') {
 	print "Unknown action: '", $param_action, "'.\n";
 }
 
-
-
 __END__
-
-##########
-# EOF
-##########
