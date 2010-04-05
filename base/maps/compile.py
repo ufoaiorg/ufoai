@@ -58,7 +58,7 @@ def compile(root):
                    os.unlink(bspf)
                    sys.exit("Terminated.")
                compiled += 1
-                   
+
             except KeyboardInterrupt:
                print "User terminated. Deleting %s" % bspf
                os.unlink(bspf)

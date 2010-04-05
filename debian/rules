@@ -49,7 +49,7 @@ build-arch: stamps/build-arch
 stamps/build-arch: config.status
 	dh_testdir
 
-	$(MAKE) 
+	$(MAKE)
 	$(MAKE) radiant
 
 	mkdir -p stamps

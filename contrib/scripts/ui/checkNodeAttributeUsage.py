@@ -128,7 +128,7 @@ for a in attributes:
 	print "<td>"
 	for fd in files:
 		f, data = fd
-		
+
 		c = data.count("node->" + a)
 		style = ""
 		if c > 0:

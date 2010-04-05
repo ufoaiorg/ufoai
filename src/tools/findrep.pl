@@ -69,7 +69,7 @@ sub replace_in_files {
 	my $file = $File::Find::name;
 
 	if (not $file =~ m/$file_regex/) { return; }
-	
+
 	print "Processing $file - " unless $quiet || $print; # string continued below.
 
 	open(FH, $file) || die "Cannot open file: $file";
@@ -91,7 +91,7 @@ sub replace_in_files {
 			}
 		}
 	}
-	
+
 	if ($print) {
 		if ($match) {
 			print $file, " - ", $match, " matching line(s) found.\n";

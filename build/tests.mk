@@ -95,7 +95,7 @@ endif
 # Say how to link the exe
 $(TESTS_TARGET): $(TESTS_OBJS)
 	@echo " * [TEST] ... linking $(LNKFLAGS) ($(TESTS_LIBS) $(SERVER_LIBS) $(SDL_LIBS))"; \
-		$(CC) $(LDFLAGS) -o $@ $(TESTS_OBJS) $(LNKFLAGS) $(TESTS_LIBS) $(SDL_LIBS) $(SERVER_LIBS) 
+		$(CC) $(LDFLAGS) -o $@ $(TESTS_OBJS) $(LNKFLAGS) $(TESTS_LIBS) $(SDL_LIBS) $(SERVER_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tests/%.o: $(SRCDIR)/%.c

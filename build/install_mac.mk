@@ -125,5 +125,3 @@ create-dmg-uforadiant: bundle-uforadiant updateversion-uforadiant copy-package-b
 	@hdiutil create -volname "UFORadiant $(UFORADIANT_VERSION)" -srcfolder $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME) $(UFORADIANT_MAC_PACKAGE_NAME).dmg
 
 create-dmg: create-dmg-ufoai create-dmg-uforadiant
-
-	

@@ -275,7 +275,7 @@ def gen(args):
                 GzipFile(os.path.join(dst, bfile) + '.gz', 'w').write(data)
             else:
                 print '%s - already up to date' % bfile
-            
+
             maps.write(' '.join((bfile, bmd5, mmd5)) + '\n')
     print ' %s maps compiled' % maps_compiled
     return maps_compiled

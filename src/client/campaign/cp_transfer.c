@@ -1139,7 +1139,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if ((base->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {	
+			if ((base->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
 				if (cnt == num) {
 					int amount;
 					const objDef_t *od = &csi.ods[i];

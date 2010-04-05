@@ -1,7 +1,7 @@
 #!/usr/bin/python
 '''
   This code is distributed under the GPLv2 licence as a contribution to the Ufo Alien Invasion project.
-  
+
   Coded by Dumper.
 '''
 
@@ -141,4 +141,3 @@ for i in firedefs:
     print str(round(avg_damage,1))+'\t',                 #average damage/use
     print str(round(avg_damage/time,1))+'\t',            #average damage/TU
   print ''
-

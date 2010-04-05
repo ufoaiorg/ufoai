@@ -283,7 +283,7 @@ static void BS_MarketClick_f (void)
 static void BS_MarketInfoClick_f (void)
 {
 	const technology_t *tech = RS_GetTechByProvided(Cvar_GetString("mn_item"));
-	
+
 	if (tech)
 		UP_OpenWith(tech->id);
 }

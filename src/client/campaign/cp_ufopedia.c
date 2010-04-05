@@ -85,7 +85,7 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 		return qfalse;
 	/* Is already researched OR has collected items OR (researchable AND have description)
 	 * AND not a logical block AND not redirected */
-	return (RS_IsResearched_ptr(tech) || RS_Collected_(tech) 
+	return (RS_IsResearched_ptr(tech) || RS_Collected_(tech)
 	 || (tech->statusResearchable && tech->preDescription.numDescriptions > 0))
 	 && tech->type != RS_LOGIC && !tech->redirect;
 }

@@ -33,7 +33,7 @@ class Element:
 			if prop != None:
 				return prop
 			behaviour = behaviour.getSuperclass()
-		
+
 class NodeBehaviour:
 	def __init__(self):
 		self.name = ""
@@ -57,7 +57,7 @@ class NodeBehaviour:
 
 	def getSuperclass(self):
 		return self.package.getBehaviour(self.extends)
-	
+
 	def getProperty(self, propertyName):
 		if propertyName in self.methods:
 			return self.methods[propertyName]
@@ -202,7 +202,7 @@ class ExtractNodeBehaviour:
 	def extractHeaderComments(self, filedata):
 		comments = []
 		codeBlock = False
-		
+
 		for line in filedata.splitlines():
 			line = line.strip()
 
@@ -256,7 +256,7 @@ class ExtractNodeBehaviour:
 			doc = None
 			if len(registrationFunctions) == 1:
 				doc = self.extractHeaderComments(data)
-			
+
 			for code in registrationFunctions:
 				lines = code.splitlines()
 				dic = {}
@@ -277,5 +277,5 @@ class ExtractNodeBehaviour:
 					props = self.extractProperties(node, data, dic['properties'])
 				if doc != None:
 					node.doc = doc
-					
+
 				self.package.addBehaviour(node)

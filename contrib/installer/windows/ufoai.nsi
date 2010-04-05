@@ -83,7 +83,7 @@ FunctionEnd
 SectionGroup /e "Game" SECGROUP01
 	Section "Game Files" SEC01
 		SetOverwrite ifnewer
-		
+
 		SetOutPath "$INSTDIR"
 			File "..\..\..\COPYING"
 			File "..\..\..\README"
@@ -97,7 +97,7 @@ SectionGroup /e "Game" SECGROUP01
 			File "..\..\..\base\*.pk3"
 		SetOutPath "$INSTDIR\base\i18n"
 			File /r "..\..\..\base\i18n\*.mo"
-		
+
 	SectionEnd
 
 	Section "Game Shortcuts" SEC01B
@@ -136,7 +136,7 @@ SectionGroup /e "Mapping" SECGROUP02
 
 	Section "Mapping Tools Shortcuts" SEC02B
 		SetOutPath "$INSTDIR\radiant"
-		
+
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\radiant\uforadiant.exe" "" "$INSTDIR\radiant\uforadiant.exe" 0
 	SectionEnd

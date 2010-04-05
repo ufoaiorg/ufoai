@@ -276,14 +276,14 @@ def plot(d, data, times):
     cmds+= 'set data style linespoints;\n'
     cmds+= 'set output "licenses/html/%s/plot.png";\n' % d
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + (max(times)-min(times))*0.15)
-    
+
     cmds+= 'plot '
     p = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
         p.append("'%s' title \"%s\" " % ('/tmp/' + md5.md5(i).hexdigest(), i))
         open('/tmp/' + md5.md5(i).hexdigest(), 'w').write(plot_data)
-    
+
     cmds+= ', '.join(p) + ';\n'
     open('/tmp/cmds', 'w').write(cmds)
     os.system('gnuplot /tmp/cmds')

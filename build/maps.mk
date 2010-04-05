@@ -4,7 +4,7 @@ UFO2MAP = ./ufo2map
 
 # Excludes "*tutorial*", "*prefab*" and "*autosave*" maps
 ifeq ($(USEWINDOWSCMD),1)
-    MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "tutorial" | findstr /V "autosave") 
+    MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "tutorial" | findstr /V "autosave")
 else
     MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' )
 endif

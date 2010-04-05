@@ -57,5 +57,5 @@ void main()
 	vec4 nightColor = diffuseNightColor * diffuseLight2 * NdotL2;
 
 	/* calculate final color */
-	gl_FragColor = defaultColor + (ambientLight * diffuseColor) + color + nightColor; 
+	gl_FragColor = defaultColor + (ambientLight * diffuseColor) + color + nightColor;
 }

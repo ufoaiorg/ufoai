@@ -15,7 +15,7 @@ def genBehaviourDot(node):
 	label = ""
 
 	label = '<tr><td align="center">' + node.name + '</td></tr>\n'
-	
+
 	if len(node.properties) != 0:
 		p = ''
 		names = node.properties.keys()
@@ -26,7 +26,7 @@ def genBehaviourDot(node):
 				p = p + '<br />'
 			p = p + '+ ' + e.name + ': ' + e.type
 		label = label + '<tr><td align="left" balign="left">' + p + '</td></tr>'
-	
+
 	if len(node.methods) != 0:
 		p = ''
 		names = node.methods.keys()
@@ -43,7 +43,7 @@ def genBehaviourDot(node):
 	result = result + "\t_%s [rankdir=TB,shape=plaintext,label=<\n%s>]\n" % (node.name, label)
 	if node.extends != None:
 		result = result + "\t_%s -> _%s\n" % (node.name, node.extends)
-	
+
 	return result
 
 

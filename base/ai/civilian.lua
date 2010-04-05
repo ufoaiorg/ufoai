@@ -5,7 +5,7 @@
 function think()
 
 	alien = ai.see("all","alien")
-	
+
 	-- Choose proper action
 	if #alien < 1 then
 
@@ -61,4 +61,3 @@ function hide()
 		ai.crouch()
 	end
 end
-

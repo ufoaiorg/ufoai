@@ -192,7 +192,7 @@ static DWORD _mxml_tls_index;		/* Index for global storage */
 /*
  * 'DllMain()' - Main entry for library.
  */
- 
+
 BOOL WINAPI				/* O - Success/failure */
 DllMain(HINSTANCE hinst,		/* I - DLL module handle */
         DWORD     reason,		/* I - Reason */
@@ -204,28 +204,28 @@ DllMain(HINSTANCE hinst,		/* I - DLL module handle */
   (void)hinst;
   (void)reserved;
 
-  switch (reason) 
-  { 
+  switch (reason)
+  {
     case DLL_PROCESS_ATTACH :		/* Called on library initialization */
-        if ((_mxml_tls_index = TlsAlloc()) == TLS_OUT_OF_INDEXES) 
-          return (FALSE); 
-        break; 
+        if ((_mxml_tls_index = TlsAlloc()) == TLS_OUT_OF_INDEXES)
+          return (FALSE);
+        break;
 
     case DLL_THREAD_DETACH :		/* Called when a thread terminates */
         if ((global = (_mxml_global_t *)TlsGetValue(_mxml_tls_index)) != NULL)
           free(global);
-        break; 
+        break;
 
     case DLL_PROCESS_DETACH :		/* Called when library is unloaded */
         if ((global = (_mxml_global_t *)TlsGetValue(_mxml_tls_index)) != NULL)
           free(global);
 
-        TlsFree(_mxml_tls_index); 
-        break; 
+        TlsFree(_mxml_tls_index);
+        break;
 
-    default: 
-        break; 
-  } 
+    default:
+        break;
+  }
 
   return (TRUE);
 }
@@ -249,7 +249,7 @@ _mxml_global(void)
     global->entity_cbs[0]  = _mxml_entity_cb;
     global->wrap           = 72;
 
-    TlsSetValue(_mxml_tls_index, (LPVOID)global); 
+    TlsSetValue(_mxml_tls_index, (LPVOID)global);
   }
 
   return (global);

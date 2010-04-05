@@ -485,7 +485,7 @@ local function install_archive(archive, file, option)
                 ent.filename = nil
             end
         end
-        
+
         -- See if we should install this file...
         if (ent.filename ~= nil) and (ent.filename ~= "") then
             local should_install = false
@@ -1089,4 +1089,3 @@ if not saw_an_installer then
 end
 
 -- end of mojosetup_mainline.lua ...
-

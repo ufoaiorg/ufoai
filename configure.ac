@@ -493,7 +493,7 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check Vorbis
 	#---------------------------------------------------------------------------------------------
-	PKG_CHECK_MODULES(VORBIS, vorbis, HAVE_VORBIS="yes", HAVE_VORBIS="no") 
+	PKG_CHECK_MODULES(VORBIS, vorbis, HAVE_VORBIS="yes", HAVE_VORBIS="no")
 	if test "x$HAVE_VORBIS" = "xno" ; then
 		AC_CHECK_HEADERS([vorbis/codec.h])
 		if test "$ac_cv_header_vorbis_codec_h" = "no"
@@ -526,7 +526,7 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check Theora
 	#---------------------------------------------------------------------------------------------
-	PKG_CHECK_MODULES(THEORA, theora, HAVE_THEORA="yes", HAVE_THEORA="no") 
+	PKG_CHECK_MODULES(THEORA, theora, HAVE_THEORA="yes", HAVE_THEORA="no")
 	if test "x$HAVE_THEORA" = "xno" ; then
 		AC_CHECK_HEADERS([theora/theora.h])
 		if test "$ac_cv_header_theora_theora_h" = "no"
@@ -641,7 +641,7 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL image headers and libraries
 	#---------------------------------------------------------------------------------------------
-	
+
 	LIBS=
 	AC_CHECK_HEADERS([SDL_image.h])
 	if test "$ac_cv_header_SDL_image_h" != "yes"
@@ -829,7 +829,7 @@ then
 		OPENAL_CFLAGS="$OPENAL_CFLAGS -F$with_openal_framework"
 		OPENAL_LIBS="$OPENAL_LIBS -framework OpenAL"
 	else
-		PKG_CHECK_MODULES(OPENAL, openal, HAVE_OPENAL="yes", HAVE_OPENAL="no") 
+		PKG_CHECK_MODULES(OPENAL, openal, HAVE_OPENAL="yes", HAVE_OPENAL="no")
 		if test "x$HAVE_OPENAL" = "xno" ; then
 			AC_CHECK_HEADERS([AL/al.h])
 			if test "$ac_cv_header_AL_al_h" = "no"
@@ -840,7 +840,7 @@ then
 			AC_SEARCH_LIBS([alEnable], [openal32 openal], , AC_MSG_ERROR([You must have libopenal!!!]))
 			OPENAL_LIBS="$LIBS $OPENAL_LIBS"
 		fi
-	fi	
+	fi
 else
 	AC_MSG_NOTICE([Without UFORadiant])
 fi
@@ -1001,4 +1001,3 @@ AC_SUBST([OPENAL_CFLAGS], "$OPENAL_CFLAGS")
 AC_CONFIG_HEADERS([config.h:config.h.in])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
-

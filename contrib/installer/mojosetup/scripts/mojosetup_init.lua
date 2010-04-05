@@ -321,8 +321,8 @@ function Setup.Package(tab)
             scripts. This file is not installed, but is added to the
             beginning of uninstall script.
 
- postuninstall 
-            This is a shell script which is executed at the very end of the 
+ postuninstall
+            This is a shell script which is executed at the very end of the
             uninstall process. It will be run after any RPM uninstall
             scripts. This file is not installed, but is added to the
             end of the uninstall script.
@@ -333,9 +333,9 @@ function Setup.Package(tab)
 
             Both the preuninstall and postuninstall scripts will have access
             to the default environment variables. See the 'SCRIPT' section
-            for details. 
+            for details.
 
-            Also, these scripts will be run at the very beginning and very 
+            Also, these scripts will be run at the very beginning and very
             end of the install cleanup if the install is aborted.
 
  nouninstall This is an optional flag which, if specified, tells setup
@@ -343,7 +343,7 @@ function Setup.Package(tab)
              doesn't generate any data for product queries and auto-updating.
 
  promptbinaries When set to "yes", setup will create a checkbox
-                to allow the user whether or not to create 
+                to allow the user whether or not to create
                 a symbolic link to the binaries.
 
                 This setting has no effect if nobinaries is "yes".
@@ -365,7 +365,7 @@ function Setup.Package(tab)
  appbundle  (CARBON ONLY) If this is "yes", the destination folder does not include the product
             name as part of the path.  An application bundle is typically installed much like
             a single file would be...and so is treated as such.
-            
+
             The app bundle path usually specified in the "path" attribute of the "files" element,
             or it is specified in the archives directly.
 
@@ -443,4 +443,3 @@ function Setup.OptionGroup(tab)
 end
 
 -- end of mojosetup_init.lua ...
-

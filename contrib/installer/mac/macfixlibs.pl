@@ -8,11 +8,11 @@ my @apps = @ARGV;
 
 my @explicit_libs = ('libcurl', 'libvorbis', 'libogg');
 
-# Replaces the relative framework path returned by otool with 
+# Replaces the relative framework path returned by otool with
 # the path to the library in the framework top level directory.
-# We will now only copy the framework from it's original location 
+# We will now only copy the framework from it's original location
 # to the application bundle $appdir/Contents/Frameworks directory,
-# removing the need to update all of the binary dependencies on 
+# removing the need to update all of the binary dependencies on
 # a given framework.
 sub fixframeworkpath {
 	my $old = shift;
@@ -24,7 +24,7 @@ sub fixframeworkpath {
 	return $old;
 }
 
-# Given a relative path to a framework, returns a canonical path 
+# Given a relative path to a framework, returns a canonical path
 # assuming that the framework is installed in /Library/Framework
 sub frameworkdir {
 	my $old = shift;

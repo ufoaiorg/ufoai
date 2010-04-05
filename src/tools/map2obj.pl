@@ -33,28 +33,28 @@ my $version = "0.0.4";
 ############################
 sub map_init ($) {
 	my ($map) = @_;
-	
+
 	# Init the material list
 	$map->{materials} = {};
 	$map->{materialcount} = 0;
 
 	$map->{classes} = {};
 	$map->{classcount} = 0;
-	
+
 	$map->{entities} = [];
 	$map->{entitycount} = 0;
-	
+
 	# Init the brush-array
 	$map->{brushes} = [];
 	$map->{brushcount} = 0;
-	
+
 	$map->{vertices} = [];
 	$map->{vertexcount} = 0;
-	
+
 	$map->{uv} = [];
 	$map->{uvcount} = 0;
-	
-	
+
+
 	# Init map filename (just for info)
 	$map->{map_filename} = '';
 	return $map;
@@ -89,13 +89,13 @@ sub str2array ($) {
 
 	$string =~ s/^\s+//;
 	my @array = split(/\s+/, $string);
-	
+
 	return @array;
 }
 
 sub obj_write($$) {
 	my ($map, $filename) = @_;
-	
+
 	open(OBJ, "> ".$filename)
 		|| die "failed to open obj file for writing: $filename\n";
 
@@ -103,7 +103,7 @@ sub obj_write($$) {
 	printf OBJ "\n";
 	printf OBJ "# Debug\n";
 	#printf OBJ "o Dummy\n"; #Debug
-	
+
 	# Write vertex list.
 	my $counter =0;
 	foreach my $vertex (@{$map->{vertices}}) {
@@ -115,7 +115,7 @@ sub obj_write($$) {
 		$counter++;
 	}
 	printf OBJ "# %i vertices written\n", $counter;
-	
+
 	# Write uv list
 	$counter =0;
 	foreach my $uv (@{$map->{uv}}) {
@@ -126,7 +126,7 @@ sub obj_write($$) {
 		$counter++;
 	}
 	printf OBJ "# %i uv coords written\n", $counter;
-	
+
 	my $current_material = '';
 	my $temp_string;
 	my $brushcount;
@@ -143,9 +143,9 @@ sub obj_write($$) {
 				printf OBJ "o Brush_%i\n", $brushcount;
 
 				#print $vertex->[0]; # Debug
-				
+
 				for (my $polycount=0; $polycount < $brush->{polycount}; $polycount++) {
-					# Write material data if it (material/texture) changed.		
+					# Write material data if it (material/texture) changed.
 					if ($current_material ne $brush->{textures}->[$polycount]) {
 						$temp_string = '';
 						# New material-usage found.
@@ -154,7 +154,7 @@ sub obj_write($$) {
 						# Write material link.
 						printf OBJ "usemtl %s\n", $temp_string;
 					}
-					
+
 					# Write face/polygon data.
 #					print Dumper($polygon);
 					my $polygon = $brush->{vertices}->[$polycount];
@@ -195,16 +195,16 @@ sub map_parse ($$) {
 	my ($map, $filename) = @_;
 	my $entity_open = 0;
 	my $brush_open = 0;
-	
+
 	open(MAP_INPUT, "< ".$filename) ||
 		die "Failed to open mapfile '", $filename, "' .\n";
 
 	my $entity;
 	my $brush;
-		
+
 	$map->{map_filename} = $filename;
 	my $line;
-	
+
 	while(<MAP_INPUT>) {
 		next if /^\s*\/\//;	# Skip comments
 		next if /^$/;		# Skip newlines
@@ -226,7 +226,7 @@ sub map_parse ($$) {
 			if ($entity_open) {
 				if (!$brush_open) {
 					# Brush opening curly-bracket found.
-					
+
 					# init brush (TODO: extra function?)
 					$brush_open = 1;
 					$brush = brush_init($brush);
@@ -240,14 +240,14 @@ sub map_parse ($$) {
 				# Entity opening curly-bracket found.
 				$entity_open = 1;
 				$entity = entity_init($entity);
-		
+
 				# Add brush to map-tree
 				push (@{$map->{entities}}, $entity);
 				$map->{entitycount}++;
 			}
 			next;
-		} 
-	
+		}
+
 		# (1) (2) (3) 4 5
 		if (($line =~ m/^\s*\(([^)]*)\)\s*\(([^)]*)\)\s*\(([^)]*)\)\s*([^\s]*)\s*([-\d.\s]*)\s*$/) && $brush_open) {
 			# Found a polygon with texture.
@@ -270,7 +270,7 @@ sub map_parse ($$) {
 			#print Dumper(@uv1); # Debug
 			#print Dumper(@vert1); # Debug
 			my $polygon = [[@vert1],[@vert2], [@vert3]];
-			
+
 			# TODO: correctly transform face+uv info here .... dammit, these are _plane_ coordinates :(
 
 #{ Brush Begin
@@ -283,7 +283,7 @@ sub map_parse ($$) {
 # TEXSCALEX	- scales x-dimension of texture (negative value to flip)
 # TEXSCALEY	- scales y-dimension of texture (negative value to flip)
 
-			
+
 			push (@{$brush->{polygons}}, $polygon);	# Store polygon. ... better always use the "vertices" later on (as soon as it works)
 			push (@{$brush->{textures}}, $tex);		# Store texture path.
 
@@ -326,15 +326,15 @@ sub map_parse ($$) {
 						$map->{classes}->{$entity->{data}->{$1} } = 1;
 						$map->{classcount}++;
 					}
-				} elsif  (($1 eq  'origin') || ($1 eq  'color') || ($1 eq  '_color') || ($1 eq  'angles')){ 
+				} elsif  (($1 eq  'origin') || ($1 eq  'color') || ($1 eq  '_color') || ($1 eq  'angles')){
 					my @threes = str2array($2);
 					$entity->{data}->{$1} = @threes;
-					
+
 				}
 				next;
 			}
 		}
-	
+
 		if ($line =~ m/^\s*}\s*$/) {
 			# Closing curly bracket found
 			if ($entity_open) {
@@ -356,8 +356,8 @@ sub map_parse ($$) {
 				return;
 			}
 			next;
-		} 
-		
+		}
+
 	}
 	close(MAP_INPUT);
 } # parse
@@ -368,7 +368,7 @@ sub map_parse ($$) {
 my $map_filename = 'condor04.map'; # Dummy, never used
 my $obj_filename;
 my $map = {};
-	
+
 # parse commandline paarameters (md2-filenames)
 if ( $#ARGV < 0 ) {
 	die "Usage:\tmap2obj.pl <file.map>\n";

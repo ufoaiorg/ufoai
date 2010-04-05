@@ -65,11 +65,11 @@ rm -rf $RPM_BUILD_ROOT
 - spec cleanup
 
 * Fri Jan 27 2006 Guillaume Rousse <guillomovitch@zarb.org> 0.10-4plf
-- %%mkrel 
+- %%mkrel
 - spec cleanup
 
 * Sun Nov 28 2004 Guillaume Rousse <guillomovitch@zarb.org> 0.10-3plf
-- fix macros 
+- fix macros
 - PLF reason
 
 * Tue Sep 28 2004 Guillaume Rousse <guillomovitch@zarb.org> 0.10-2plf

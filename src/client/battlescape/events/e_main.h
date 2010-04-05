@@ -54,7 +54,7 @@ typedef struct eventRegister_s {
 	 * @param dt The delta time value
 	 */
 	int (*timeCallback)(const struct eventRegister_s *self, struct dbuffer *msg, const int dt);
-	
+
 	/**
 	 * @brief Called to determine if this event is ok to run at this point. Should check any
 	 * conflicts with other ongoing events (see @c le_t->locked ).

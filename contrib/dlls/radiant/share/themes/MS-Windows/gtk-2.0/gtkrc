@@ -27,10 +27,10 @@ style "msw-default"
   # Owen and I disagree that these should be themable
   #GtkUIManager::add-tearoffs = 0
   #GtkComboBox::add-tearoffs = 0
-  
+
   GtkComboBox::appears-as-list = 1
   GtkComboBox::focus-on-click = 0
-  
+
   GOComboBox::add_tearoffs = 0
 
   GtkTreeView::allow-rules = 0
@@ -42,7 +42,7 @@ style "msw-default"
 
   GtkSeparatorMenuItem::horizontal-padding = 2
 
-  engine "wimp" 
+  engine "wimp"
   {
   }
 }
@@ -58,7 +58,7 @@ class "GtkTreeView" binding "ms-windows-tree-view"
 
 style "msw-combobox-thickness" = "msw-default"
 {
-  xthickness = 0 
+  xthickness = 0
   ythickness = 0
 }
 
