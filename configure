@@ -619,9 +619,9 @@ RADIANT_LIBS
 RADIANT_CFLAGS
 MSYS
 HAVE_CURSES
+HAVE_SDL_CONFIG
 SDL_LIBS
 SDL_CFLAGS
-HAVE_SDL_CONFIG
 HAVE_THEORA_THEORA_H
 THEORA_LIBS
 THEORA_CFLAGS
@@ -739,6 +739,8 @@ VORBIS_CFLAGS
 VORBIS_LIBS
 THEORA_CFLAGS
 THEORA_LIBS
+SDL_CFLAGS
+SDL_LIBS
 RADIANT_CFLAGS
 RADIANT_LIBS
 OPENAL_CFLAGS
@@ -1403,6 +1405,8 @@ Some influential environment variables:
   THEORA_CFLAGS
               C compiler flags for THEORA, overriding pkg-config
   THEORA_LIBS linker flags for THEORA, overriding pkg-config
+  SDL_CFLAGS  C compiler flags for SDL, overriding pkg-config
+  SDL_LIBS    linker flags for SDL, overriding pkg-config
   RADIANT_CFLAGS
               C compiler flags for RADIANT, overriding pkg-config
   RADIANT_LIBS
@@ -6086,7 +6090,79 @@ fi
 
 	if test $TARGET_OS != "darwin"
 	then
-		# Extract the first word of "$sdl_config", so it can be a program name with args.
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL" >&5
+$as_echo_n "checking for SDL... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_CFLAGS"; then
+        pkg_cv_SDL_CFLAGS="$SDL_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_CFLAGS=`$PKG_CONFIG --cflags "sdl" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_LIBS"; then
+        pkg_cv_SDL_LIBS="$SDL_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_LIBS=`$PKG_CONFIG --libs "sdl" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        SDL_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "sdl"`
+        else
+	        SDL_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "sdl"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$SDL_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_SDL="no"
+elif test $pkg_failed = untried; then
+	HAVE_SDL="no"
+else
+	SDL_CFLAGS=$pkg_cv_SDL_CFLAGS
+	SDL_LIBS=$pkg_cv_SDL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_SDL="yes"
+fi
+		if test "x$HAVE_SDL" = "xno" ; then
+			# Extract the first word of "$sdl_config", so it can be a program name with args.
 set dummy $sdl_config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -6123,17 +6199,29 @@ $as_echo "no" >&6; }
 fi
 
 
-		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$sdl_config --cflags`
-			LDFLAGS=`$sdl_config --libs`
+			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+			then
+				CPPFLAGS=`$sdl_config --cflags`
+				CFLAGS=$CPPFLAGS
+				LDFLAGS=`$sdl_config --libs`
+				SDL_CFLAGS=$CPPFLAGS
+
+				SDL_LIBS=$LDFLAGS
+
+			else
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+			fi
+		else
+			CPPFLAGS=$SDL_CFLAGS
+			CFLAGS=$CPPFLAGS
+			LDFLAGS=$SDL_LIBS
 			SDL_CFLAGS=$CPPFLAGS
 
 			SDL_LIBS=$LDFLAGS
 
-		else
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
-$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: Using pkg-config to get the sdl flags" >&5
+$as_echo "$as_me: Using pkg-config to get the sdl flags" >&6;}
 		fi
 	else
 		# mac is special...again
@@ -6480,7 +6568,79 @@ else
 
 	if test $TARGET_OS != "darwin"
 	then
-		# Extract the first word of "$sdl_config", so it can be a program name with args.
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL" >&5
+$as_echo_n "checking for SDL... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_CFLAGS"; then
+        pkg_cv_SDL_CFLAGS="$SDL_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_CFLAGS=`$PKG_CONFIG --cflags "sdl" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_LIBS"; then
+        pkg_cv_SDL_LIBS="$SDL_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_LIBS=`$PKG_CONFIG --libs "sdl" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        SDL_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "sdl"`
+        else
+	        SDL_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "sdl"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$SDL_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_SDL="no"
+elif test $pkg_failed = untried; then
+	HAVE_SDL="no"
+else
+	SDL_CFLAGS=$pkg_cv_SDL_CFLAGS
+	SDL_LIBS=$pkg_cv_SDL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_SDL="yes"
+fi
+		if test "x$HAVE_SDL" = "xno" ; then
+			# Extract the first word of "$sdl_config", so it can be a program name with args.
 set dummy $sdl_config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -6517,17 +6677,27 @@ $as_echo "no" >&6; }
 fi
 
 
-		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$sdl_config --cflags`
-			LDFLAGS=`$sdl_config --libs`
+			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+			then
+				CPPFLAGS=`$sdl_config --cflags`
+				LDFLAGS=`$sdl_config --libs`
+				SDL_CFLAGS=$CPPFLAGS
+
+				SDL_LIBS=$LDFLAGS
+
+			else
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+			fi
+		else
+			CPPFLAGS=$SDL_CFLAGS
+			LDFLAGS=$SDL_LIBS
 			SDL_CFLAGS=$CPPFLAGS
 
 			SDL_LIBS=$LDFLAGS
 
-		else
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
-$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: Using pkg-config to get the sdl flags" >&5
+$as_echo "$as_me: Using pkg-config to get the sdl flags" >&6;}
 		fi
 	else
 		# mac is special...again

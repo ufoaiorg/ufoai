@@ -577,15 +577,26 @@ then
 
 	if test $TARGET_OS != "darwin"
 	then
-		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$sdl_config --cflags`
-			LDFLAGS=`$sdl_config --libs`
+		PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
+		if test "x$HAVE_SDL" = "xno" ; then
+			AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+			then
+				CPPFLAGS=`$sdl_config --cflags`
+				CFLAGS=$CPPFLAGS
+				LDFLAGS=`$sdl_config --libs`
+				AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
+				AC_SUBST([SDL_LIBS],$LDFLAGS)
+			else
+				AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+			fi
+		else
+			CPPFLAGS=$SDL_CFLAGS
+			CFLAGS=$CPPFLAGS
+			LDFLAGS=$SDL_LIBS
 			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
 			AC_SUBST([SDL_LIBS],$LDFLAGS)
-		else
-			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+			AC_MSG_NOTICE([Using pkg-config to get the sdl flags])
 		fi
 	else
 		# mac is special...again
@@ -695,15 +706,24 @@ else
 
 	if test $TARGET_OS != "darwin"
 	then
-		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$sdl_config --cflags`
-			LDFLAGS=`$sdl_config --libs`
+		PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
+		if test "x$HAVE_SDL" = "xno" ; then
+			AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+			then
+				CPPFLAGS=`$sdl_config --cflags`
+				LDFLAGS=`$sdl_config --libs`
+				AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
+				AC_SUBST([SDL_LIBS],$LDFLAGS)
+			else
+				AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+			fi
+		else
+			CPPFLAGS=$SDL_CFLAGS
+			LDFLAGS=$SDL_LIBS
 			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
 			AC_SUBST([SDL_LIBS],$LDFLAGS)
-		else
-			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+			AC_MSG_NOTICE([Using pkg-config to get the sdl flags])
 		fi
 	else
 		# mac is special...again
