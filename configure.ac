@@ -311,9 +311,9 @@ then
 	AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
 	if test "$HAVE_WINDRES" != "yes"
 	then
-		WINDRES="$host-windres"
-		AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
-		if test "$HAVE_WINDRES" != "yes"
+		WINDRES="$host-windres $target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
+		AC_CHECK_PROGS(WINDRES,$WINDRES,no)
+		if test "$WINDRES" == "no"
 		then
 			WINDRES=""
 			AC_MSG_ERROR([You must have the windres program installed])

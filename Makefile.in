@@ -70,6 +70,17 @@ all: all2
 
 ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS) $(ALL_RADIANT_OBJS))
 
+ifeq ($(wildcard .svn),.svn)
+	SVN_REV=$(shell LANG=C svnversion .)
+	ifeq ($(SVN_REV),)
+		SVN_REV=$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
+	endif
+	ifneq ($(SVN_REV),)
+		VERSION:=$(VERSION)-svn$(SVN_REV)
+	endif
+endif
+
+
 all2: Makefile $(BUILDDIR)/.dirs $(TARGETS) echo_info
 
 # check that the makefile is up to date
@@ -117,6 +128,7 @@ echo_info:
 	@echo
 	@echo "Installation"
 	@echo "-----------------------"
+	@echo "Version $(VERSION)"
 	@echo "Install data into $(DATADIR)"
 	@echo "Install libs into $(LIBDIR)"
 	@echo "Install translations into $(LOCALEDIR)"
