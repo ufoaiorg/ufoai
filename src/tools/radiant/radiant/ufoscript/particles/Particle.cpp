@@ -13,7 +13,17 @@ namespace scripts
 	{
 	}
 
-	void Particle::render ()
+	/** Submit renderable geometry when rendering takes place in Solid mode. */
+	void Particle::renderSolid (Renderer& renderer, const VolumeTest& volume) const
+	{
+	}
+
+	/** Submit renderable geometry when rendering takes place in Wireframe mode */
+	void Particle::renderWireframe (Renderer& renderer, const VolumeTest& volume) const
+	{
+	}
+
+	void Particle::renderComponents (Renderer&, const VolumeTest&)
 	{
 	}
 

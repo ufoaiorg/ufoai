@@ -5,6 +5,7 @@
 #include <string>
 #include "imodel.h"
 #include "texturelib.h"
+#include "renderable.h"
 #include "math/Vector2.h"
 #include "math/Vector3.h"
 #include "math/Vector4.h"
@@ -189,7 +190,7 @@ namespace scripts
 			 * off via cvar cl_particleweather) */
 	};
 
-	class Particle
+	class Particle: public Renderable
 	{
 		private:
 
@@ -200,9 +201,15 @@ namespace scripts
 
 			virtual ~Particle ();
 
-			void render ();
-
 			std::string toString ();
+
+			/** Submit renderable geometry when rendering takes place in Solid mode. */
+			void renderSolid (Renderer& renderer, const VolumeTest& volume) const;
+
+			/** Submit renderable geometry when rendering takes place in Wireframe mode */
+			void renderWireframe (Renderer& renderer, const VolumeTest& volume) const;
+
+			void renderComponents (Renderer&, const VolumeTest&);
 
 	};
 	scripts::IParticlePtr loadParticle (const std::string& particleID);
