@@ -141,6 +141,12 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Define to path containing the game data. */
+#undef PKGDATADIR
+
+/* Define to path containing the shared modules. */
+#undef PKGLIBDIR
+
 /* The size of `int', as computed by sizeof. */
 #undef SIZEOF_INT
 

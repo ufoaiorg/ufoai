@@ -593,6 +593,10 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+LOCALEDIR
+BINDIR
+PKGLIBDIR
+PKGDATADIR
 TOOLS_LIBS
 GAME_LIBS
 SERVER_LIBS
@@ -7323,7 +7327,38 @@ else
 
 fi
 
+
 #---------------------------------------------------------------------------------------------
+# Fill in path variables
+#---------------------------------------------------------------------------------------------
+
+test "$prefix" = "NONE" && prefix=/usr/local
+test "$exec_prefix" = "NONE" && exec_prefix=$prefix
+test "$localedir" = "NONE" && localedir=$prefix/share/locale
+datarootdir=$prefix/share
+test "$datadir" = "NONE" && datadir=$datarootdir
+
+eval PKGLIBDIR="$libdir/$PACKAGE_NAME"
+
+cat >>confdefs.h <<_ACEOF
+#define PKGLIBDIR "$PKGLIBDIR"
+_ACEOF
+
+
+eval PKGDATADIR="$datadir/$PACKAGE_NAME"
+
+cat >>confdefs.h <<_ACEOF
+#define PKGDATADIR "$PKGDATADIR"
+_ACEOF
+
+
+eval BINDIR="$bindir"
+eval LOCALEDIR="$localedir"
+eval PKGLIBDIR="$PKGLIBDIR"
+eval PKGDATADIR="$PKGDATADIR"
+
+#---------------------------------------------------------------------------------------------
+
 
 EXE_EXT="$ac_exe_ext"
 
@@ -7347,9 +7382,12 @@ OPENAL_LIBS="$OPENAL_LIBS"
 OPENAL_CFLAGS="$OPENAL_CFLAGS"
 
 
-#AC_MSG_NOTICE(Compiler flags: $CFLAGS)
-#AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
-#AC_MSG_NOTICE(Link against:   $LIBS)
+
+
+
+
+
+
 
 ac_config_headers="$ac_config_headers config.h:config.h.in"
 
@@ -8604,4 +8642,40 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
+
+
+#---------------------------------------------------------------------------------------------
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result:
+${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
+
+  Configuration summary:
+    Platform: .......... ${host}
+    Compiler: .......... ${CC}
+
+  Installation directories:
+
+    Program: ........... ${BINDIR}
+    Locales: ........... ${LOCALEDIR}
+    Libraries: ......... ${PKGLIBDIR}
+    Data: .............. ${PKGDATADIR}
+
+Type 'make' to build $PROGRAM.  Type 'make install' to install it.
+" >&5
+$as_echo "
+${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
+
+  Configuration summary:
+    Platform: .......... ${host}
+    Compiler: .......... ${CC}
+
+  Installation directories:
+
+    Program: ........... ${BINDIR}
+    Locales: ........... ${LOCALEDIR}
+    Libraries: ......... ${PKGLIBDIR}
+    Data: .............. ${PKGDATADIR}
+
+Type 'make' to build $PROGRAM.  Type 'make install' to install it.
+" >&6; }
 

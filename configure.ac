@@ -980,7 +980,30 @@ else
 	AC_SUBST([HARD_LINKED_GAME],0)
 fi
 
+
 #---------------------------------------------------------------------------------------------
+# Fill in path variables
+#---------------------------------------------------------------------------------------------
+
+test "$prefix" = "NONE" && prefix=/usr/local
+test "$exec_prefix" = "NONE" && exec_prefix=$prefix
+test "$localedir" = "NONE" && localedir=$prefix/share/locale
+datarootdir=$prefix/share
+test "$datadir" = "NONE" && datadir=$datarootdir
+
+eval PKGLIBDIR="$libdir/$PACKAGE_NAME"
+AC_DEFINE_UNQUOTED(PKGLIBDIR, "$PKGLIBDIR", [Define to path containing the shared modules.])
+
+eval PKGDATADIR="$datadir/$PACKAGE_NAME"
+AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR", [Define to path containing the game data.])
+
+eval BINDIR="$bindir"
+eval LOCALEDIR="$localedir"
+eval PKGLIBDIR="$PKGLIBDIR"
+eval PKGDATADIR="$PKGDATADIR"
+
+#---------------------------------------------------------------------------------------------
+
 
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
 
@@ -994,10 +1017,33 @@ AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
 AC_SUBST([OPENAL_LIBS], "$OPENAL_LIBS")
 AC_SUBST([OPENAL_CFLAGS], "$OPENAL_CFLAGS")
 
-#AC_MSG_NOTICE(Compiler flags: $CFLAGS)
-#AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
-#AC_MSG_NOTICE(Link against:   $LIBS)
+AC_SUBST(PKGDATADIR)
+AC_SUBST(PKGLIBDIR)
+AC_SUBST(BINDIR)
+AC_SUBST(LOCALEDIR)
+AC_SUBST(PACKAGE_NAME)
+AC_SUBST(PACKAGE_VERSION)
 
 AC_CONFIG_HEADERS([config.h:config.h.in])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
+#---------------------------------------------------------------------------------------------
+
+AC_MSG_RESULT([
+${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
+
+  Configuration summary:
+    Platform: .......... ${host}
+    Compiler: .......... ${CC}
+
+  Installation directories:
+
+    Program: ........... ${BINDIR}
+    Locales: ........... ${LOCALEDIR}
+    Libraries: ......... ${PKGLIBDIR}
+    Data: .............. ${PKGDATADIR}
+
+Type 'make' to build $PROGRAM.  Type 'make install' to install it.
+])
+
