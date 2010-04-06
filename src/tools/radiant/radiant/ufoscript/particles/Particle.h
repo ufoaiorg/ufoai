@@ -203,6 +203,8 @@ namespace scripts
 
 			std::string toString ();
 
+			void render ();
+
 			/** Submit renderable geometry when rendering takes place in Solid mode. */
 			void renderSolid (Renderer& renderer, const VolumeTest& volume) const;
 

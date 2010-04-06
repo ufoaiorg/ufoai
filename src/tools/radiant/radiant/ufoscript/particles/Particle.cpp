@@ -27,6 +27,10 @@ namespace scripts
 	{
 	}
 
+	void Particle::render ()
+	{
+	}
+
 	std::string Particle::toString ()
 	{
 		return "";
