@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef _WIN32
 #  ifdef DEBUG
-#    define BUILDSTRING "Win32 DEBUG"
+#    define BUILDSTRING_OS "Win32 DEBUG"
 #  else
-#    define BUILDSTRING "Win32 RELEASE"
+#    define BUILDSTRING_OS "Win32 RELEASE"
 #  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dll"
@@ -59,9 +59,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined __linux__
 #  ifdef DEBUG
-#    define BUILDSTRING "Linux DEBUG"
+#    define BUILDSTRING_OS "Linux DEBUG"
 #  else
-#    define BUILDSTRING "Linux RELEASE"
+#    define BUILDSTRING_OS "Linux RELEASE"
 #  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
@@ -78,9 +78,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 #  ifdef DEBUG
-#    define BUILDSTRING "FreeBSD DEBUG"
+#    define BUILDSTRING_OS "FreeBSD DEBUG"
 #  else
-#    define BUILDSTRING "FreeBSD RELEASE"
+#    define BUILDSTRING_OS "FreeBSD RELEASE"
 #  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
@@ -97,9 +97,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined __sun
 #  ifdef DEBUG
-#    define BUILDSTRING "Solaris DEBUG"
+#    define BUILDSTRING_OS "Solaris DEBUG"
 #  else
-#    define BUILDSTRING "Solaris RELEASE"
+#    define BUILDSTRING_OS "Solaris RELEASE"
 #  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
@@ -112,9 +112,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined (__APPLE__) || defined (MACOSX)
 #  ifdef DEBUG
-#    define BUILDSTRING "MacOSX DEBUG"
+#    define BUILDSTRING_OS "MacOSX DEBUG"
 #  else
-#    define BUILDSTRING "MacOSX RELEASE"
+#    define BUILDSTRING_OS "MacOSX RELEASE"
 #  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dylib"
@@ -128,8 +128,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #else
-#  define BUILDSTRING "NON-WIN32"
+#  define BUILDSTRING_OS "NON-WIN32"
 #  define CPUSTRING	"NON-WIN32"
+#endif
+
+#ifdef UFO_REVISION
+	#define BUILDSTRING BUILDSTRING_OS " build" UFO_REVISION
+#else
+	#define BUILDSTRING BUILDSTRING_OS
 #endif
 
 #define MASTER_SERVER "http://ufoai.ninex.info/" /* sponsored by NineX */

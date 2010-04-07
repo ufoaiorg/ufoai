@@ -53,6 +53,18 @@ INSTALL=./install-sh
 
 #######################################################################################################
 
+ifeq ($(wildcard .svn),.svn)
+	SVN_REV=$(shell LANG=C svnversion .)
+	ifeq ($(SVN_REV),)
+		SVN_REV=$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
+	endif
+	ifneq ($(SVN_REV),)
+		CFLAGS+=-DUFO_REVISION=\"$(SVN_REV)\"
+	endif
+endif
+
+#######################################################################################################
+
 include build/platform_specific.mk
 include build/defs.mk
 
@@ -67,17 +79,6 @@ all: all2
 -include $(patsubst %, build/%.mk, $(MODULES))
 
 ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS) $(ALL_RADIANT_OBJS))
-
-ifeq ($(wildcard .svn),.svn)
-	SVN_REV=$(shell LANG=C svnversion .)
-	ifeq ($(SVN_REV),)
-		SVN_REV=$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
-	endif
-	ifneq ($(SVN_REV),)
-		VERSION:=$(VERSION)-svn$(SVN_REV)
-	endif
-endif
-
 
 all2: Makefile $(BUILDDIR)/.dirs $(TARGETS) echo_info
 
