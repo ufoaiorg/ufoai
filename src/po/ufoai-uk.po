@@ -29,7 +29,7 @@ msgstr "ГенШтаб"
 
 #: ../base/maps/bomber_city.ump:68
 msgid "Bomber_city"
-msgstr "\"Бомбардувальник\" в місті"
+msgstr "Бомбардувальник в місті"
 
 #: ../base/maps/bridge.ump:67
 msgid "Bridge"
@@ -42,7 +42,7 @@ msgstr "Невеличкий цвинтар"
 
 #: ../base/maps/city_disco.ump:65
 msgid "City_disco"
-msgstr "\"Дискотека\""
+msgstr "Дискотека"
 
 #: ../base/maps/community_centre.ump:61
 msgid "Community_centre"
@@ -54,7 +54,7 @@ msgstr "Будівництво"
 
 #: ../base/maps/desert.ump:53
 msgid "Crashed Harvester"
-msgstr "Розбитий НЛО - Пожинач"
+msgstr "Підбитий НЛО - Пожинач"
 
 #: ../base/maps/druglord.ump:67
 msgid "Druglord"
@@ -186,7 +186,7 @@ msgstr "Тропічний НЛО"
 #: ../base/maps/ufocrash.ump:420
 #: client/campaign/cp_missions.c:456
 msgid "Crashed UFO"
-msgstr "Розбитий НЛО"
+msgstr "Підбитий НЛО"
 
 #: ../base/maps/village.ump:370
 #: ../base/maps/village.ump:403
@@ -337,12 +337,12 @@ msgstr "Постачальник Н"
 #: ../base/ufos/research.ufo:3891
 #, fuzzy
 msgid "UFO - Ripper"
-msgstr "НЛО - Ripper"
+msgstr "НЛО - \"Різник\""
 
 #: ../base/ufos/aircraftmanagement.ufo:627
 #, fuzzy
 msgid "Ripper U"
-msgstr "Ripper U"
+msgstr "Різник Н"
 
 #: ../base/ufos/aircraftmanagement.ufo:654
 #: ../base/ufos/otheritems.ufo:70
@@ -624,7 +624,7 @@ msgstr "Дуже важка кампанія"
 #: ../base/ufos/campaign.ufo:4
 msgid "veryhard_campaign_txt"
 msgstr ""
-"Це екстремально важкий варіант Стандартної Кампанії. В цьому сценарії все настроєно проти вас. Ви отримаєте лише кілька найманців, а уряди країн будуть виключно вимогливі. Прибульці не подарують вам жодного шансу.\n"
+"Це екстремально важкий варіант Стандартної Кампанії. В цьому сценарії все настроєно проти Вас. Ви отримаєте лише кілька найманців, а уряди країн будуть виключно вимогливі. Прибульці не подарують вам жодного шансу.\n"
 "\n"
 "Цей пункт репрезентує Дуже Важкий рівень складності, тому рекомендується для тих, хто подужав Важкий рівень, але йому цього виявилося замало."
 
@@ -646,9 +646,9 @@ msgstr "Стандартна кампанія"
 #: ../base/ufos/campaign.ufo:59
 msgid "standard_campaign_txt"
 msgstr ""
-"Це сценарій військового протистояння іншопланетному Вторгненню для одного гравця. Ви отримаєте командування над проектом PHALANX, що протистоїть іншопланетній загрозі, від імені всієї Землі, і зможете грати в динамічну гру з великою кількістю різноманітних подій та всеохоплюючим сюжетом.\n"
+"Це сценарій військового протистояння іншопланетному Вторгненню для одного гравця. Ви отримаєте командування над проектом PHALANX, що протистоїть іншопланетній загрозі від імені всієї Землі, і зможете грати в динамічну гру з великою кількістю різноманітних подій та всеохоплюючим сюжетом.\n"
 "\n"
-"Ця кампанія доступна з кількома рівнями складності. Цей пункт репрезентує Стандартний рівень складності, рекомендований для нових гравців, що хочуть прийняти цей виклик."
+"Ця кампанія доступна з кількома рівнями складності. Цей пункт репрезентує Стандартний рівень складності, рекомендований для нових гравців,що хочуть прийняти виклик."
 
 #: ../base/ufos/campaign.ufo:107
 msgid "Easy Campaign"
@@ -2688,13 +2688,13 @@ msgstr "Щасти вам"
 #: ../base/ufos/events.ufo:37
 msgid "mail_prolog"
 msgstr ""
-"Вітаємо вас на новій посаді, Командоре. З цього моменту ви отримуєте повний контроль над PHALANX, Підрозділом протидії позаземній загрозі. Ваша ціль - захистити мешканців планети Земля і зупинити вторгнення прибульців будь-якою ціною. Як ви цього доб'єтесь залежить лише від вас; ми вимагаємо одного - перемоги!\n"
+"Вітаємо вас на новій посаді, Командоре. З цього моменту ви отримуєте повний контроль над PHALANX, Підрозділом протидії позаземній загрозі. Ваша ціль - захистити мешканців планети Земля і зупинити вторгнення прибульців будь-якою ціною. Як ви цього доб'єтесь залежить лише від вас; ми вимагаємо одного - перемоги.\n"
 "\n"
-"Насамперед ви мусите визначитись з розташуванням Штабу організації. ООН має доступ до військових баз по всьому світу, тому ви можете обрати будь-який регіон для вашої бази. Обміркуйте свій вибір, оскільки це суттєво вплине на успіх проекту PHALANX.\n"
+"Насамперед ви мусите визначитись з розташуванням Штабу організації. ООН має доступ до військових баз по всьому світу, тому ви можете вибрати будь-який регіон для вашої бази. Обміркуйте свій вибір, оскільки це дуже вплине на успіх проекту PHALANX.\n"
 "\n"
-"Із результатів аналізу останніх атак на Бомбей та Бон випливає, що прибульці концентрують свою увагу на найбільш густонаселених регіонах Землі, включаючи узбережжя Північної та Південної Америки, Европу, Східну Азію, Південну та Середземноморську Африку й Австралію. Ви мусите розглядати ці регіони, як першочергові, для здійснення своїх операцій.\n"
+"За резельтатами аналізу останніх атак на Бомбей та Бон видно, що прибульці концентрують свою увагу на найбільш густонаселених регіонах Землі, включаючи узбережжя Північної та Південної Америки, Европу, Східну Азію, Південну та Середземноморську Африку й Австралію. Ви мусите розглядати ці регіони, як першочергові, для здійснення своїх операцій.\n"
 "\n"
-"Одразу після побудови вашої першої бази вам необхідно підготовити ударні сили. Бійці, яких ми найняли до лав PHALANX, повинні бути прив'язані до десантного авіатранспорту, а потім належно екіпіровані.\n"
+"Одразу після побудови вашої першої бази вам необхідно підготовити бійців. Бійці, яких ми найняли до лав PHALANX, мусять бути приписані до десантного авіатранспорту, а потім екіпіровані до бою.\n"
 "\n"
 "Дбайте про них, Командоре. Ми всі дуже розраховуємо на вас і молимося за вас.\n"
 "\n"
@@ -3217,7 +3217,7 @@ msgstr "Словенська"
 
 #: ../base/ufos/language.ufo:264
 msgid "Swedish"
-msgstr "Швецька"
+msgstr "Шведська"
 
 #: ../base/ufos/language.ufo:276
 msgid "Thai"
@@ -3257,7 +3257,7 @@ msgstr "Приміський район близькосхідного регі�
 
 #: ../base/ufos/maps.ufo:211
 msgid "Crashed UFO in oriental suburban district."
-msgstr "Розбитий НЛО у передмісті на Близькому сході."
+msgstr "Підбитий НЛО у передмісті на Близькому сході."
 
 #: ../base/ufos/maps.ufo:292
 #: ../base/ufos/maps.ufo:334
@@ -3292,7 +3292,7 @@ msgstr "Річка протікає через цю частину джунгл�
 #: ../base/ufos/maps.ufo:813
 #: ../base/ufos/maps.ufo:854
 msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "Поляна посеред джунглів."
+msgstr "Галявина посеред джунглів."
 
 #: ../base/ufos/maps.ufo:900
 #: ../base/ufos/maps.ufo:939
@@ -3305,7 +3305,7 @@ msgstr "Затишний район на околиці населеного п�
 #: ../base/ufos/maps.ufo:1140
 #: ../base/ufos/maps.ufo:1180
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "Поява прибульців у цьому малонаселеному лісовому регіоні не обіцяє нічого доброго."
+msgstr "Поява прибульців у цьому малонаселеному лісистому регіоні не обіцяє нічого доброго."
 
 #: ../base/ufos/maps.ufo:1100
 msgid "UFO crashed in this sparsely populated forest region."
@@ -4666,6 +4666,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1036
 #: ../base/ufos/weapons_human.ufo:1873
+#, fuzzy
 msgid "Electromagnetic Rifle"
 msgstr "Електромагнітна гвинтівка"
 
@@ -4701,6 +4702,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1075
 #: ../base/ufos/weapons_human.ufo:1893
+#, fuzzy
 msgid "Electromagnetic Rifle Magazine"
 msgstr "Магазин для електромагнітної гвинтівки"
 
@@ -4746,6 +4748,7 @@ msgstr ""
 "Немає."
 
 #: ../base/ufos/research.ufo:1112
+#, fuzzy
 msgid "Monomolecular Blades"
 msgstr "Мономолекулярні леза"
 
@@ -5214,8 +5217,9 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:1382
+#, fuzzy
 msgid "Alien Artifact - Kerrblade"
-msgstr "Артефакт прибульців - Керр-лезо"
+msgstr "Артефакт прибульців - Керрізак"
 
 #: ../base/ufos/research.ufo:1387
 msgid "kerrblade_txt"
@@ -5481,6 +5485,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1697
 #: ../base/ufos/research.ufo:1737
+#, fuzzy
 msgid "Alien Artifact - Plasma Blaster"
 msgstr "Артефакт прибульців - Плазмовий бластер"
 
@@ -5509,8 +5514,9 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1755
+#, fuzzy
 msgid "Alien Artifact - Plasma Blade"
-msgstr "Артефакт прибульців - Плазмовий клинок"
+msgstr "Артефакт прибульців - Плазмове лезо"
 
 #: ../base/ufos/research.ufo:1760
 msgid "plasblade_txt"
@@ -5604,7 +5610,7 @@ msgstr ""
 #: ../base/ufos/weapons_aliens.ufo:6
 #, fuzzy
 msgid "Needler Gun"
-msgstr "Needler Gun"
+msgstr "Голкомет"
 
 #: ../base/ufos/research.ufo:1899
 msgid "needlergun_txt"
@@ -5634,9 +5640,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1934
 #: ../base/ufos/weapons_aliens.ufo:26
-#, fuzzy
 msgid "Heavy Needler Gun"
-msgstr "Важкий Needler Gun"
+msgstr "Важкий Голкомет"
 
 #: ../base/ufos/research.ufo:1939
 msgid "needlerheavy_txt"
@@ -5681,6 +5686,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2006
 #: ../base/ufos/research.ufo:2014
 #: ../base/ufos/weapons_human.ufo:390
+#, fuzzy
 msgid "Coilgun"
 msgstr "Індукційна гвинтівка"
 
@@ -6141,6 +6147,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2356
 #: ../base/ufos/research.ufo:2396
+#, fuzzy
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Артефакт прибульців - Опромінюючий пістолет"
 
@@ -6174,6 +6181,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2415
 #: ../base/ufos/research.ufo:2456
+#, fuzzy
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Артефакт прибульців - Опромінююча гармата"
 
@@ -6207,8 +6215,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2475
 #: ../base/ufos/research.ufo:2515
+#, fuzzy
 msgid "Alien Artifact - Particle Beam Rifle"
-msgstr "Alien Artifact - Particle Beam Rifle"
+msgstr "Артефакт прибульців - Променева рушниця"
 
 #: ../base/ufos/research.ufo:2480
 msgid "pbeamrifle_txt"
@@ -6241,6 +6250,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2535
+#, fuzzy
 msgid "Man-Portable Particle Beams"
 msgstr "Артефакт прибульців - Опромінююча гвинтівка"
 
@@ -7038,7 +7048,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5081
 msgid "The Enemy On Earth - Revisited"
-msgstr "Ворог на Землі - Обновлено"
+msgstr "Ворог на Землі - Оновлено"
 
 #: ../base/ufos/research.ufo:5086
 msgid "enemy_on_earth_rev_txt"
@@ -7219,7 +7229,7 @@ msgstr "Kostia Romanov (Kildor)"
 
 #: ../base/ufos/seq_credits.ufo:487
 msgid "This game is now community driven"
-msgstr "Ця гра тепер провадеться співдружнісю"
+msgstr "Ця гра тепер керується співдружнісю"
 
 #: ../base/ufos/seq_credits.ufo:494
 msgid "To honor the original development team:"
@@ -7395,7 +7405,7 @@ msgstr "Клікніть, щоб вийти"
 
 #: ../base/ufos/seq_tutorials.ufo:57
 msgid "Set up a base"
-msgstr "Побудуйте базу"
+msgstr "Збудуйте базу"
 
 #: ../base/ufos/seq_tutorials.ufo:95
 msgid "Hire employees: scientists, soldiers"
@@ -7451,11 +7461,11 @@ msgstr "Вибраний боєць"
 
 #: ../base/ufos/seq_tutorials.ufo:441
 msgid "Select soldiers via click"
-msgstr "Виберіть бійця кліком по номеру"
+msgstr "Клікніть по бійцю для вибору"
 
 #: ../base/ufos/seq_tutorials.ufo:453
 msgid "Or via the keys 1-8 or Tab"
-msgstr "або клавішами від 1 до 8 чи Tab-ом"
+msgstr "або клавішами 1-8 чи Tab"
 
 #: ../base/ufos/seq_tutorials.ufo:474
 msgid "Physical stats"
@@ -7634,7 +7644,7 @@ msgstr "Завжди слідкуйте чи достатньо у вас зал
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr "Коли використовуєте \"Вогонь увідповідь\", пам'ятайте, що можете задати його режим , позначивши галочкою відповідний пункт на панелі вибору режиму вогню."
+msgstr "Коли використовуєте вогонь увідповідь, пам'ятайте, що можете задати його режим , позначивши галочкою відповідний пункт на панелі режиму вогню."
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
@@ -7682,11 +7692,11 @@ msgstr "Пам'ятайте, що вам потрібен діючий Кома�
 
 #: ../base/ufos/tips.ufo:21
 msgid "Never pass up an opportunity to capture a live alien, even one of a species you have already researched."
-msgstr "Не втрачайте можливості захопити живого прибульця, навіть, якщо ви вже дослідили особу такого виду."
+msgstr "Не втрачайте можливості захопити живого прибульця, навіть якщо ви вже дослідили особу такого виду."
 
 #: ../base/ufos/tips.ufo:22
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
-msgstr "Будьте пильні! Ваші бійці можуть виявити ворога тільки спереду, у своєму полі зору."
+msgstr "Будьте пильні! Ваші бійці можуть виявити ворога тільки попереду себе, у своєму полі зору."
 
 #: ../base/ufos/tips.ufo:23
 msgid "Building a workshop and off-base installations UFO yards allows you to disassemble UFOs."
@@ -7694,7 +7704,7 @@ msgstr "Будівництво майстерень і НЛО-майданчик
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
-msgstr "Ви можете наказати бійцеві присісти для кращого захисту від ворожого вогню. Але пам'ятайте, що на присідання та вставання затрачаються Одиниці часу (ОЧ), а пересування навприсядки забирає більше ОЧ, ніж звичайна ходьба."
+msgstr "Ви можете наказати бійцю присісти для кращого захисту від ворожого вогню. Але пам'ятайте, що на присідання та вставання затрачаються Одиниці часу (ОЧ), а пересування навприсядки забирає більше ОЧ, ніж звичайна ходьба."
 
 #: ../base/ufos/tips.ufo:25
 msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
@@ -7738,11 +7748,11 @@ msgstr "Ви можете збільшити діапазон покриття �
 
 #: ../base/ufos/tips.ufo:35
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
-msgstr "Режим вогню увідповідь може виснажити ваші одиниці часу(ОЧ) до нуля. Якщо ви вимкнете режим вогню увідповідь, то не зможете його повернути, поки не буде достатньо ОЧ, але можете залишити його увімкненим. Постарайтеся не налаштувати бійців з 0 ОЧ, поки ви не впевнені."
+msgstr "Режим вогню увідповідь може виснажити ваші одиниці часу(ОЧ) до нуля. Якщо ви вимкнете режим вогню увідповідь, то не зможете його повернути, поки не буде достатньо ОЧ, але можете залишити його увімкненим. Постарайтесь не налаштовувати бійців з 0 ОЧ, поки ви не впевнені."
 
 #: ../base/ufos/tips.ufo:36
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
-msgstr "Стиснуте повітря з Гранатомета дозволяє вам проводити вибух гранат у визначеному місці. Дуже корисно коли ви цілетесь близько краю карти чи якогось виступу."
+msgstr "Стиснуте повітря з Гранатомета дозволяє вам здійснювати вибух гранат у визначеному місці. Дуже корисно, коли ви цілетесь близько краю карти чи якогось виступу."
 
 #: ../base/ufos/tips.ufo:37
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
@@ -7754,11 +7764,11 @@ msgstr "Перед використанням гранати огляньте п
 
 #: ../base/ufos/tips.ufo:39
 msgid "Grenades don't bounce well on sand or dirt."
-msgstr "Осколки від гранат гірше розлітаються при вибуху на піску чи в болоті."
+msgstr "Осколки гранат гірше розлітаються при вибуху на піску чи в болоті."
 
 #: ../base/ufos/tips.ufo:40
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
-msgstr "Ви можете включити свої карти для гри через мережу чи створювати власні кампанії. Загляньте до нашої ВіКі та ознайомтесь з тим, як створювати власний контент."
+msgstr "Ви можете включити свої карти для гри через мережу чи створити власні кампанії. Загляньте до нашої ВіКі та ознайомтесь з тим, як створювати власний контент."
 
 #: ../base/ufos/tips.ufo:41
 msgid "You can use [space] to cycle between all geoscape items."
@@ -7770,7 +7780,7 @@ msgstr "Ви можете прискорювати/сповільнювати ч
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
-msgstr "Переконайтесь, що ваш перехоплювач обладнаний зброєю, ще до запуску його у повітря."
+msgstr "Переконайтесь, що ваш перехоплювач обладнаний зброєю перед запуском його у повітря."
 
 #: ../base/ufos/tips.ufo:44
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
@@ -7790,7 +7800,7 @@ msgstr "Виявлені супротивники: Під-час наземни�
 
 #: ../base/ufos/tips.ufo:48
 msgid "You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base, not in the tactical missions where such an action would cost TUs."
-msgstr "Можна використовувати праву клавішу миші на екрані екіпіровки бійців,щоб оснастити їх зброєю, набоями чи бронею, або розброювати їх. Це працює виключно на базі, а не на тактичних операціях,  де такі дії забирають ОЧ."
+msgstr "Можна використовувати праву клавішу миші на екрані екіпіровки бійців, щоб оснастити їх зброєю, набоями чи бронею, або розброювати їх. Це працює виключно на базі, а не на тактичних операціях,  де такі дії забирають ОЧ."
 
 #: ../base/ufos/tips.ufo:49
 msgid "You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
@@ -7798,7 +7808,7 @@ msgstr "Перевірте чи не занадто багато цивільн�
 
 #: ../base/ufos/tips.ufo:50
 msgid "Utilize sniper cover. Get snipers to spots with good visibility (high ground and rooftop corners, for example). Leave them crouched and Reaction Fire mode set to 'multiple shots' to pick off aliens."
-msgstr "Застосовуйте снайперське прикриття. Забезпечте снайперу місце з доброю оглядовістю (горбок чи схил даху, наприклад). Залиште його в положенні навприсядки і встановіть режим вогню увідповідь на \"кілька пострілів\" для відстрілу щойно виявлених прибульців."
+msgstr "Застосовуйте снайперське прикриття. Забезпечте снайперу місце з доброю оглядовістю (горбки чи краї дахів, наприклад). Залиште його в положенні навприсядки і встановіть режим вогню увідповідь на \"кілька пострілів\" для ведення вогню по виявлених прибульцях."
 
 #: ../base/ufos/tips.ufo:51
 msgid "Consider launching interceptors to catch a faster UFO when it's really close to your base to avoid the chase and so that your interceptors are already in weapons range when they launch."
@@ -7826,7 +7836,7 @@ msgstr "Щоб швидко купити/продати предмети, нав
 
 #: ../base/ufos/tips.ufo:57
 msgid "Beware of friendly fire! While lobbing a grenade at an enemy who snuck up on your troops might be an easy kill, chances are you'll do the aliens' work for them. The same can be said about bullets, make sure once the enemy is dead you wont be shooting your own troops behind him."
-msgstr "Оберігайтесь від вогню по-своїх! Хоча кинута граната в раптово з'явившогося прибульця може легко вбити його, завжди є ймовірність, що ви цим можете зробити роботу прибульця за нього ж. Також це можна сказати і про кулі: впевнітся, що коли ворог впаде мертвим, наступні постріли не будуть здійснені по-своїх."
+msgstr "Остерігайтесь вогню по-своїх! Хоча кинута граната в раптово з'явившогося прибульця може легко вбити його, завжди є ймовірність, що ви цим можете зробити роботу прибульця за нього ж. Таке ж можна сказати і про кулі: впевнітся, що коли ворог впаде мертвим, наступні постріли не будуть по-своїх."
 
 # Військово-промисловий комплекс
 #: ../base/ufos/tips.ufo:58
@@ -8497,7 +8507,7 @@ msgstr "Госпіталізація та хірургічні операції"
 
 #: ../base/ufos/ui/bases.ufo:233
 msgid "Base Summary"
-msgstr "Статистика"
+msgstr "Резюме Бази"
 
 #: ../base/ufos/ui/bases.ufo:234
 msgid "Base Information"
@@ -8632,7 +8642,7 @@ msgstr "Права рука"
 #: ../base/ufos/ui/inventory.ufo:57
 #: ../base/ufos/ui/multiplayer_team.ufo:47
 msgid "Extension"
-msgstr "Насадка"
+msgstr "Додаток"
 
 #: ../base/ufos/ui/equipment.ufo:56
 #: ../base/ufos/ui/inventory.ufo:66
@@ -8882,7 +8892,7 @@ msgstr "Автобій"
 #: ../base/ufos/ui/geoscape.ufo:715
 #: ../base/ufos/ui/geoscape.ufo:834
 msgid "Automatically finish mission"
-msgstr "Автоматично завершити місію"
+msgstr "Автоматично розрахувати й завершити місію"
 
 #: ../base/ufos/ui/geoscape.ufo:748
 msgid "Base is under attack"
@@ -9066,9 +9076,8 @@ msgid "Select aircraft"
 msgstr "Виберіть авіасудно"
 
 #: ../base/ufos/ui/geoscape.ufo:1759
-#, fuzzy
 msgid "ETA:"
-msgstr "ETA:"
+msgstr "РТП:"
 
 #: ../base/ufos/ui/geoscape.ufo:1797
 msgid "Select item"
@@ -9112,7 +9121,7 @@ msgstr "Перейменувати працівника"
 
 #: ../base/ufos/ui/hire.ufo:406
 msgid "Occupation"
-msgstr "Задіяно"
+msgstr "Заселено"
 
 #: ../base/ufos/ui/hire.ufo:499
 msgid "Workers"
@@ -9260,7 +9269,7 @@ msgstr "Нема зв'язку"
 
 #: ../base/ufos/ui/irc.ufo:248
 msgid "You are not connected to the lobby. Do you want to connect?"
-msgstr "Не вдалось з'єднатисьіз лоббі. Хочете з'єднатись?"
+msgstr "Не вдалось з'єднатись із лоббі. Хочете з'єднатись?"
 
 #: ../base/ufos/ui/irc.ufo:256
 #: ../base/ufos/ui/multiplayer.ufo:197
@@ -9276,7 +9285,7 @@ msgstr "З'єднати з лоббі"
 #: ../base/ufos/ui/lostwon.ufo:36
 #: ../base/ufos/ui/lostwon.ufo:118
 msgid "Try again"
-msgstr "Спробуйте ще"
+msgstr "Ще раз"
 
 #: ../base/ufos/ui/lostwon.ufo:37
 #: ../base/ufos/ui/lostwon.ufo:119
@@ -9425,7 +9434,7 @@ msgstr "Зберегти налаштування"
 
 #: ../base/ufos/ui/main.ufo:255
 msgid "Tip of the day"
-msgstr "Порада"
+msgstr "Корисна порада"
 
 #: ../base/ufos/ui/main.ufo:268
 msgid "Show tip of the day"
@@ -10184,7 +10193,7 @@ msgstr "Фонове освітлення глобусу:"
 
 #: ../base/ufos/ui/options.ufo:919
 msgid "Show tip of the day:"
-msgstr "Показувати поради:"
+msgstr "Показувати корисні поради:"
 
 #: ../base/ufos/ui/options.ufo:937
 msgid "Precache models:"
@@ -10372,7 +10381,7 @@ msgstr "Налаштування швидкої гри"
 
 #: ../base/ufos/ui/skirmish.ufo:46
 msgid "Equipment AI"
-msgstr "Екіпіровка комп. гравця"
+msgstr "Екіпіровка ШІ-у"
 
 #: ../base/ufos/ui/skirmish.ufo:151
 msgid "Max AI actors for this game"
@@ -10442,7 +10451,7 @@ msgstr "Поточне фінансування"
 
 #: ../base/ufos/ui/stats.ufo:365
 msgid "Month (Relative to current)"
-msgstr "Місяць (відносно сьгоднішнього)"
+msgstr "Місяць (відносно сьогоднішнього)"
 
 #: ../base/ufos/ui/stats.ufo:446
 msgid "Funding"
@@ -10450,7 +10459,7 @@ msgstr "Фінансування"
 
 #: ../base/ufos/ui/stats.ufo:460
 msgid "max"
-msgstr "max"
+msgstr "макс"
 
 #: ../base/ufos/ui/sys_editor.ufo:12
 msgid "Node editor"
@@ -10620,8 +10629,9 @@ msgid "Bomb"
 msgstr "Бомба"
 
 #: ../base/ufos/weapons_aliens.ufo:46
+#, fuzzy
 msgid "Needler Gun Magazine"
-msgstr ""
+msgstr "Патрони до голкомета"
 
 #: ../base/ufos/weapons_aliens.ufo:62
 #: ../base/ufos/weapons_aliens.ufo:125
@@ -10691,12 +10701,14 @@ msgid "Aimed shot"
 msgstr "Прицільно"
 
 #: ../base/ufos/weapons_human.ufo:204
+#, fuzzy
 msgid "Machine Gun"
-msgstr ""
+msgstr "Ручний Кулемет"
 
 #: ../base/ufos/weapons_human.ufo:225
+#, fuzzy
 msgid "Machine Gun Magazine"
-msgstr ""
+msgstr "Патрони до кулемета"
 
 #: ../base/ufos/weapons_human.ufo:242
 msgid "5-Shot Burst"
@@ -10710,11 +10722,12 @@ msgstr "Чергою"
 
 #: ../base/ufos/weapons_human.ufo:307
 msgid "Sniper Rifle"
-msgstr ""
+msgstr "Снайперська гвинтівка"
 
+# для скорочення можливо СГ
 #: ../base/ufos/weapons_human.ufo:327
 msgid "Sniper Rifle Magazine"
-msgstr ""
+msgstr "Набої для снайперської гвинтівки"
 
 #: ../base/ufos/weapons_human.ufo:363
 #: ../base/ufos/weapons_human.ufo:446
@@ -10730,32 +10743,39 @@ msgid "Aimed Shot"
 msgstr "Прицільний постріл"
 
 #: ../base/ufos/weapons_human.ufo:410
+#, fuzzy
 msgid "Coilgun Clip"
-msgstr ""
+msgstr "Патрони до гармати Гауса"
 
 #: ../base/ufos/weapons_human.ufo:473
+#, fuzzy
 msgid "7.62mm Pistol"
-msgstr ""
+msgstr "7.62 мм Пістолет"
 
 #: ../base/ufos/weapons_human.ufo:492
+#, fuzzy
 msgid "7.62mm Pistol Magazine"
-msgstr ""
+msgstr "7.62 мм патронтаж"
 
 #: ../base/ufos/weapons_human.ufo:572
+#, fuzzy
 msgid "Machine Pistol"
-msgstr ""
+msgstr "Пістолет-кулемет"
 
 #: ../base/ufos/weapons_human.ufo:592
+#, fuzzy
 msgid "4.2mm MP Magazine"
-msgstr ""
+msgstr "4.2 мм П-К ріжок"
 
 #: ../base/ufos/weapons_human.ufo:674
+#, fuzzy
 msgid "Submachine Gun"
-msgstr ""
+msgstr "Автомат"
 
 #: ../base/ufos/weapons_human.ufo:693
+#, fuzzy
 msgid "SMG Magazine"
-msgstr ""
+msgstr "Автоматний ріжок"
 
 #: ../base/ufos/weapons_human.ufo:728
 #: ../base/ufos/weapons_multiplayer.ufo:48
@@ -10763,12 +10783,14 @@ msgid "5-Round Burst"
 msgstr "Черга х 5 пострілів"
 
 #: ../base/ufos/weapons_human.ufo:793
+#, fuzzy
 msgid "Riot Shotgun"
-msgstr ""
+msgstr "Короткоствольний дробовик"
 
 #: ../base/ufos/weapons_human.ufo:813
+#, fuzzy
 msgid "Saboted Slugs"
-msgstr ""
+msgstr "Патрони"
 
 #: ../base/ufos/weapons_human.ufo:829
 #: ../base/ufos/weapons_human.ufo:913
@@ -10779,21 +10801,24 @@ msgid "Single Shot"
 msgstr "Одиночний"
 
 #: ../base/ufos/weapons_human.ufo:878
+#, fuzzy
 msgid "Micro Shotgun"
-msgstr ""
+msgstr "Мікро дробовик"
 
 #: ../base/ufos/weapons_human.ufo:897
 #: ../base/ufos/weapons_multiplayer.ufo:136
+#, fuzzy
 msgid "Flechette Shells"
-msgstr ""
+msgstr "Розривні  патрони"
 
 #: ../base/ufos/weapons_human.ufo:1031
 msgid "Flamethrower"
-msgstr ""
+msgstr "Вогнемет"
 
 #: ../base/ufos/weapons_human.ufo:1051
+#, fuzzy
 msgid "C90 Canister"
-msgstr ""
+msgstr "Каністра"
 
 #: ../base/ufos/weapons_human.ufo:1068
 msgid "Candlelight"
@@ -10807,25 +10832,30 @@ msgstr "Пекло"
 msgid "Inferno Sweep"
 msgstr "Пекельна мітла"
 
+# Ручна (ракетна) Гармата ?
 #: ../base/ufos/weapons_human.ufo:1138
+#, fuzzy
 msgid "Rocket Launcher"
-msgstr ""
+msgstr "Ракетниця"
 
 #: ../base/ufos/weapons_human.ufo:1159
+#, fuzzy
 msgid "HE Rocket"
-msgstr ""
+msgstr "Вибухова ракета"
 
 #: ../base/ufos/weapons_human.ufo:1201
+#, fuzzy
 msgid "IC Rocket"
-msgstr ""
+msgstr "Запалювальна ракета"
 
 #: ../base/ufos/weapons_human.ufo:1246
 msgid "Grenade Launcher"
-msgstr ""
+msgstr "Гранатомет"
 
 #: ../base/ufos/weapons_human.ufo:1267
+#, fuzzy
 msgid "25mm HIT Grenades"
-msgstr ""
+msgstr "25 мм Вибухові гранати"
 
 #: ../base/ufos/weapons_human.ufo:1284
 #: ../base/ufos/weapons_human.ufo:1465
@@ -10864,36 +10894,44 @@ msgid "3-Round Burst - Timed"
 msgstr "Чергою х3 - з таймером"
 
 #: ../base/ufos/weapons_human.ufo:1448
+#, fuzzy
 msgid "25mm IC Grenades"
-msgstr ""
+msgstr "25 мм Запалювальні гранати"
 
 #: ../base/ufos/weapons_human.ufo:1632
+#, fuzzy
 msgid "25mm Flechette Grenades"
-msgstr ""
+msgstr "25 мм Шрапнельні гранати"
 
 #: ../base/ufos/weapons_human.ufo:1693
+#, fuzzy
 msgid "25mm PB Grenades"
-msgstr ""
+msgstr "25 мм Газові гранати"
 
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
-msgstr ""
+msgstr "Лазерний пістолет"
 
+# Можливо все ж "Гвинтівка"?
 #: ../base/ufos/weapons_laser.ufo:28
+#, fuzzy
 msgid "Laser Rifle"
-msgstr ""
+msgstr "Лазерна рушниця"
 
 #: ../base/ufos/weapons_laser.ufo:52
+#, fuzzy
 msgid "Heavy Laser"
-msgstr ""
+msgstr "Важкий лазер"
 
 #: ../base/ufos/weapons_laser.ufo:76
+#, fuzzy
 msgid "Electro Laser"
-msgstr ""
+msgstr "Електролазер"
 
 #: ../base/ufos/weapons_laser.ufo:96
+#, fuzzy
 msgid "D-F Cartridge"
-msgstr ""
+msgstr "ДФ-картридж"
 
 #: ../base/ufos/weapons_laser.ufo:112
 #: ../base/ufos/weapons_laser.ufo:155
@@ -10916,12 +10954,14 @@ msgid "Combat Knife"
 msgstr "Бойовий ніж"
 
 #: ../base/ufos/weapons_melee.ufo:65
+#, fuzzy
 msgid "Monomolecular Knife"
-msgstr ""
+msgstr "Мономолекулярний ніж"
 
 #: ../base/ufos/weapons_melee.ufo:124
+#, fuzzy
 msgid "Stun Rod"
-msgstr ""
+msgstr "Шокер"
 
 #: ../base/ufos/weapons_melee.ufo:145
 msgid "Stun Charge"
@@ -10932,52 +10972,61 @@ msgid "Double Charge"
 msgstr "Подвійний розряд"
 
 #: ../base/ufos/weapons_melee.ufo:181
+#, fuzzy
 msgid "Bludgeon"
-msgstr ""
+msgstr "Битка"
 
 #: ../base/ufos/weapons_melee.ufo:204
+#, fuzzy
 msgid "Kerrblade"
-msgstr ""
+msgstr "Керрізак"
 
 #: ../base/ufos/weapons_melee.ufo:239
 msgid "Slash"
 msgstr "Рубанути"
 
 #: ../base/ufos/weapons_melee.ufo:262
+#, fuzzy
 msgid "Plasma Blade"
-msgstr ""
+msgstr "Плазмове лезо"
 
 #: ../base/ufos/weapons_melee.ufo:283
 msgid "Lock"
 msgstr "Впритул"
 
 #: ../base/ufos/weapons_multiplayer.ufo:10
+#, fuzzy
 msgid "Minigun"
-msgstr ""
+msgstr "Кулемет"
 
 #: ../base/ufos/weapons_multiplayer.ufo:31
+#, fuzzy
 msgid "Minigun Magazine"
-msgstr ""
+msgstr "Кулеметний ріжок"
 
 #: ../base/ufos/weapons_multiplayer.ufo:117
+#, fuzzy
 msgid "Shotgun"
-msgstr ""
+msgstr "Дробовик"
 
 #: ../base/ufos/weapons_multiplayer.ufo:174
 msgid "Double Shot"
 msgstr "Подвійний постріл"
 
 #: ../base/ufos/weapons_multiplayer.ufo:201
+#, fuzzy
 msgid "VHS Assault Rifle"
-msgstr ""
+msgstr "Хорватський універсальний автомат"
 
 #: ../base/ufos/weapons_multiplayer.ufo:224
+#, fuzzy
 msgid "XAW95"
-msgstr ""
+msgstr "Рушниця XAW95"
 
 #: ../base/ufos/weapons_multiplayer.ufo:245
+#, fuzzy
 msgid "XAW95 Magazine"
-msgstr ""
+msgstr "Патрони XAW95 "
 
 #: ../base/ufos/weapons_multiplayer.ufo:262
 #: ../base/ufos/weapons_ugv.ufo:80
@@ -10985,12 +11034,14 @@ msgid "10-Round Burst"
 msgstr "Чергою х10 пострілів"
 
 #: ../base/ufos/weapons_particle.ufo:6
+#, fuzzy
 msgid "Particle Beam Pistol"
-msgstr ""
+msgstr "Променевий пістолет"
 
 #: ../base/ufos/weapons_particle.ufo:25
+#, fuzzy
 msgid "Pistol Particle Accelerator"
-msgstr ""
+msgstr "Пістолет-прискорювач часток"
 
 #: ../base/ufos/weapons_particle.ufo:60
 #: ../base/ufos/weapons_particle.ufo:159
@@ -11001,21 +11052,27 @@ msgstr ""
 msgid "Burst"
 msgstr "Шквал"
 
+# Гвинтівка?
 #: ../base/ufos/weapons_particle.ufo:86
+#, fuzzy
 msgid "Particle Beam Rifle"
-msgstr ""
+msgstr "Променева рушниця"
 
+# ?
 #: ../base/ufos/weapons_particle.ufo:106
+#, fuzzy
 msgid "Rifle Particle Accelerator"
-msgstr ""
+msgstr "Рушниця-прискорювач часток"
 
 #: ../base/ufos/weapons_particle.ufo:186
+#, fuzzy
 msgid "Particle Beam Cannon"
-msgstr ""
+msgstr "Променева гармата"
 
 #: ../base/ufos/weapons_particle.ufo:206
+#, fuzzy
 msgid "Cannon Particle Accelerator"
-msgstr ""
+msgstr "Гармата-прискорювач часток"
 
 #: ../base/ufos/weapons_particle.ufo:263
 msgid "Unrestricted Blast"
@@ -11023,43 +11080,51 @@ msgstr "Необмежений вибух"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
-msgstr ""
+msgstr "Плазмовий пістолет"
 
 #: ../base/ufos/weapons_plasma.ufo:25
+#, fuzzy
 msgid "Plasma Pistol Charger"
-msgstr ""
+msgstr "Заряд плазмового пістолета"
 
 #: ../base/ufos/weapons_plasma.ufo:107
 msgid "Plasma Rifle"
-msgstr ""
+msgstr "Плазмова гвинтівка"
 
 #: ../base/ufos/weapons_plasma.ufo:126
+#, fuzzy
 msgid "Plasma Rifle Charger"
-msgstr ""
+msgstr "Заряд плазмової гвинтівка"
 
 #: ../base/ufos/weapons_plasma.ufo:229
+#, fuzzy
 msgid "Plasma Blaster"
-msgstr ""
+msgstr "Плазмовий бластер"
 
 #: ../base/ufos/weapons_plasma.ufo:250
+#, fuzzy
 msgid "Plasma Blaster Charge"
-msgstr ""
+msgstr "Заряд до плазмового бластера"
 
 #: ../base/ufos/weapons_plasma.ufo:288
 msgid "Ball"
 msgstr "Куля"
 
 #: ../base/ufos/weapons_ugv.ufo:44
+#, fuzzy
 msgid "Chaingun"
-msgstr ""
+msgstr "Станковий кулемет"
 
 #: ../base/ufos/weapons_ugv.ufo:64
+#, fuzzy
 msgid "Chaingun Belt"
-msgstr ""
+msgstr "Кулеметна стрічка"
 
+# МАГ? (модуль автоматичної гармати)
 #: ../base/ufos/weapons_ugv.ufo:146
+#, fuzzy
 msgid "Autocannon Module"
-msgstr ""
+msgstr "Крупнокаліберна гармата"
 
 #: client/battlescape/cl_actor.c:105
 msgid "Poor"
@@ -11127,7 +11192,7 @@ msgstr "Перемикач положень встати/присісти"
 
 #: client/battlescape/cl_actor.c:2507
 msgid "Toggle the headgear"
-msgstr "Надіти на голову"
+msgstr "Одягти на голову"
 
 #: client/battlescape/cl_actor.c:2508
 msgid "Opens or closes a door"
@@ -12313,7 +12378,7 @@ msgstr ""
 #: client/campaign/cp_campaign.c:855
 #, c-format
 msgid "Max. allowed debts: %ic\n"
-msgstr "Максимально допустимий борг: %iкр\n"
+msgstr "Максимально допустимий борг: %i кр\n"
 
 # ПЗВІ
 #: client/campaign/cp_campaign.c:860
@@ -12542,7 +12607,7 @@ msgstr "Спочатку встановіть зброю."
 
 #: client/campaign/cp_fightequip_callbacks.c:584
 msgid "Ammo not usable with current weapon."
-msgstr "Боєприпаси несумісні із даною зброєю."
+msgstr "Боєприпаси не сумісні із даною зброєю."
 
 #: client/campaign/cp_fightequip_callbacks.c:587
 msgid "Unknown problem."
@@ -12640,7 +12705,7 @@ msgid ""
 msgstr ""
 "Місцевість: %s\n"
 "Тип: %s\n"
-"Завдання: %s"
+"Деталі: %s"
 
 #: client/campaign/cp_map.c:1607
 #, c-format
@@ -12668,11 +12733,12 @@ msgstr "Стан:\t%s\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Відстань до цілі:\t\t%.0f\n"
 
+# розрахункова тривалість польоту
 #: client/campaign/cp_map.c:1633
 #: client/campaign/cp_map.c:1643
-#, fuzzy, c-format
+#, c-format
 msgid "ETA:\t%sh\n"
-msgstr "ETA:\t%sh\n"
+msgstr "РТП:\t%s год\n"
 
 #: client/campaign/cp_map.c:1661
 #, c-format
@@ -13304,7 +13370,7 @@ msgstr "Ціна за одиницю\t%i кр\n"
 #: client/campaign/cp_produce_callbacks.c:429
 #, c-format
 msgid "Production time\t%ih\n"
-msgstr "Час на виготовлення\t%iгод\n"
+msgstr "Час на виготовлення\t%i год\n"
 
 #: client/campaign/cp_produce_callbacks.c:360
 #, c-format
@@ -13319,7 +13385,7 @@ msgstr "Зберігається на: %s\n"
 #: client/campaign/cp_produce_callbacks.c:391
 #, c-format
 msgid "Disassembly time: %ih\n"
-msgstr "Час на демонтаж: %iгод\n"
+msgstr "Час на демонтаж: %i год\n"
 
 #: client/campaign/cp_produce_callbacks.c:392
 msgid "Components:\n"
@@ -14304,7 +14370,7 @@ msgstr ""
 #: client/cl_game_campaign.c:459
 #, c-format
 msgid "Rank: %s"
-msgstr "Статус: %s"
+msgstr "Звання: %s"
 
 #: client/cl_game_multiplayer.c:64
 msgid "Set soldiers per player lower than soldiers per team"
@@ -14385,23 +14451,23 @@ msgstr ""
 
 #: client/cl_inventory_callbacks.c:43
 msgid "skill_close"
-msgstr "навик_ближній бій"
+msgstr "н_ближній бій"
 
 #: client/cl_inventory_callbacks.c:45
 msgid "skill_heavy"
-msgstr "навик_важка зброя"
+msgstr "н_важка зброя"
 
 #: client/cl_inventory_callbacks.c:47
 msgid "skill_assault"
-msgstr "навик_штурмовик"
+msgstr "н_штурмовик"
 
 #: client/cl_inventory_callbacks.c:49
 msgid "skill_sniper"
-msgstr "навик_снайпер"
+msgstr "н_снайпер"
 
 #: client/cl_inventory_callbacks.c:51
 msgid "skill_explosive"
-msgstr "навик_підривник"
+msgstr "н_підривник"
 
 #: client/cl_inventory_callbacks.c:130
 #, c-format
@@ -14415,7 +14481,7 @@ msgstr "^BТип ураження:\tЗахист:\n"
 #: client/cl_inventory_callbacks.c:144
 #, c-format
 msgid "%s weapon\n"
-msgstr "%sзброя\n"
+msgstr "%s зброя\n"
 
 #: client/cl_inventory_callbacks.c:144
 #: client/cl_inventory_callbacks.c:183
