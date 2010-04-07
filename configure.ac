@@ -459,6 +459,38 @@ AC_CHECK_HEADER(curl/curl.h, LIBS=`$with_curl_config --libs`, AC_MSG_ERROR([You 
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
+#---------------------------------------------------------------------------------------------
+# Check JPEG
+#---------------------------------------------------------------------------------------------
+AC_CHECK_HEADERS([jpeglib.h])
+if test "$ac_cv_header_jpeglib_h" = "no"
+then
+	AC_MSG_ERROR([You must have the JPEG development headers])
+fi
+LIBS=
+AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+
+#---------------------------------------------------------------------------------------------
+# Check PNG
+#---------------------------------------------------------------------------------------------
+PKG_CHECK_MODULES(libpng, libpng, HAVE_libpng="yes", HAVE_libpng="no")
+if test "x$HAVE_libpng" = "xno" ; then
+	LIBS=
+	AC_CHECK_HEADERS([png.h])
+	if test "$ac_cv_header_png_h" = "no"
+	then
+		AC_MSG_ERROR([You must have the PNG development headers])
+	fi
+	AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
+	libpng_LIBS=$LIBS
+fi
+CLIENT_LIBS="$CLIENT_LIBS $libpng_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $libpng_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $libpng_LIBS"
+TOOLS_CFLAGS="$TOOLS_LIBS $libpng_CFLAGS"
+
 if test $TARGET_OS != "darwin" 
 then
 	#---------------------------------------------------------------------------------------------
@@ -497,16 +529,15 @@ AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
 AC_SUBST(SDL_CFLAGS)
 AC_SUBST(SDL_LIBS)
 
-AC_MSG_NOTICE([SDL_image cflags: $SDL_IMAGE_CFLAGS])
-AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
-AC_SUBST(SDL_IMAGE_CFLAGS)
-AC_SUBST(SDL_IMAGE_LIBS)
+AC_MSG_NOTICE([SDL_image cflags: $SDL_image_CFLAGS])
+AC_MSG_NOTICE([SDL_image ldflags: $SDL_image_LIBS])
+AC_SUBST([SDL_IMAGE_CFLAGS], "$SDL_image_CFLAGS")
+AC_SUBST([SDL_IMAGE_LIBS], "$SDL_image_LIBS")
 
 CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
 CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
 TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
-
 
 if test "$enable_client" = "yes"
 then
@@ -545,45 +576,16 @@ then
 
 	AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
 	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
-	AC_SUBST(SDL_mixer_CFLAGS)
-	AC_SUBST(SDL_mixer_LIBS)
-
+	AC_SUBST([SDL_MIXER_CFLAGS], "$SDL_mixer_CFLAGS")
+	AC_SUBST([SDL_MIXER_LIBS], "$SDL_mixer_LIBS")
+	
 	AC_MSG_NOTICE([SDL_ttf cflags: $SDL_ttf_CFLAGS])
 	AC_MSG_NOTICE([SDL_ttf ldflags: $SDL_ttf_LIBS])
-	AC_SUBST(SDL_ttf_CFLAGS)
-	AC_SUBST(SDL_ttf_LIBS)
+	AC_SUBST([SDL_TTF_CFLAGS], "$SDL_ttf_CFLAGS")
+	AC_SUBST([SDL_TTF_LIBS], "$SDL_ttf_LIBS")
 
 	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer_LIBS $SDL_ttf_LIBS"
 	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check JPEG
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([jpeglib.h])
-	if test "$ac_cv_header_jpeglib_h" = "no"
-	then
-		AC_MSG_ERROR([You must have the JPEG development headers])
-	fi
-	LIBS=
-	AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check PNG
-	#---------------------------------------------------------------------------------------------
-	PKG_CHECK_MODULES(libpng, libpng, HAVE_libpng="yes", HAVE_libpng="no")
-	if test "x$HAVE_libpng" = "xno" ; then
-		LIBS=
-		AC_CHECK_HEADERS([png.h])
-		if test "$ac_cv_header_png_h" = "no"
-		then
-			AC_MSG_ERROR([You must have the PNG development headers])
-		fi
-		AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
-		libpng_LIBS=$LIBS
-	fi
-	CLIENT_LIBS="$CLIENT_LIBS $libpng_LIBS"
-	CLIENT_CFLAGS="$CLIENT_CFLAGS $libpng_CFLAGS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check OGG
