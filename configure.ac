@@ -459,91 +459,103 @@ AC_CHECK_HEADER(curl/curl.h, LIBS=`$with_curl_config --libs`, AC_MSG_ERROR([You 
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check SDL
-#---------------------------------------------------------------------------------------------
-PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
-if test "x$HAVE_SDL" = "xno" ; then
-	sdl_config=$with_sdl_config
-	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-	then
-		SDL_CFLAGS=`$sdl_config --cflags`
-		SDL_LIBS=`$sdl_config --libs`
-	else
-		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+if test $TARGET_OS != "darwin" 
+then
+	#---------------------------------------------------------------------------------------------
+	# Check SDL
+	#---------------------------------------------------------------------------------------------
+	PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
+	if test "x$HAVE_SDL" = "xno" ; then
+		sdl_config=$with_sdl_config
+		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+		then
+			SDL_CFLAGS=`$sdl_config --cflags`
+			SDL_LIBS=`$sdl_config --libs`
+		else
+			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+		fi
 	fi
+	
+	AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
+	AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
+	AC_SUBST(SDL_CFLAGS)
+	AC_SUBST(SDL_LIBS)
+	
+	#---------------------------------------------------------------------------------------------
+	# Check SDL_image
+	#---------------------------------------------------------------------------------------------
+	PKG_CHECK_MODULES(SDL_IMAGE, SDL_image, HAVE_SDL_IMAGE="yes", HAVE_SDL_IMAGE="no")
+	if test "x$HAVE_SDL_IMAGE" = "xno" ; then
+		LIBS=
+		AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+		if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+		then
+			AC_MSG_ERROR([You must have the SDL_image development libraries])
+		fi
+		SDL_IMAGE_LIBS=$LIBS
+	fi
+
+	AC_MSG_NOTICE([SDL_image cflags: $SDL_IMAGE_CFLAGS])
+	AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
+	AC_SUBST(SDL_IMAGE_CFLAGS)
+	AC_SUBST(SDL_IMAGE_LIBS)
+	
+	CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+	TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
+	TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+else
+	CLIENT_LIBS="$CLIENT_LIBS $sdl_mac_ldflags"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $sdl_mac_cflags"
+	TOOLS_LIBS="$TOOLS_LIBS $sdl_mac_ldflags"
+	TOOLS_CFLAGS="$TOOLS_CFLAGS $sdl_mac_cflags"
 fi
 
-AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
-AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
-AC_SUBST(SDL_CFLAGS)
-AC_SUBST(SDL_LIBS)
-
-#---------------------------------------------------------------------------------------------
-# Check SDL_image
-#---------------------------------------------------------------------------------------------
-PKG_CHECK_MODULES(SDL_IMAGE, SDL_image, HAVE_SDL_IMAGE="yes", HAVE_SDL_IMAGE="no")
-if test "x$HAVE_SDL_IMAGE" = "xno" ; then
-	LIBS=
-	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development libraries])
-	fi
-	SDL_IMAGE_LIBS=$LIBS
-fi
-
-AC_MSG_NOTICE([SDL_image cflags: $SDL_IMAGE_CFLAGS])
-AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
-AC_SUBST(SDL_IMAGE_CFLAGS)
-AC_SUBST(SDL_IMAGE_LIBS)
-
-CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
-CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
-TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
-TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 
 if test "$enable_client" = "yes"
 then
-	#---------------------------------------------------------------------------------------------
-	# Check SDL_mixer
-	#---------------------------------------------------------------------------------------------
-	PKG_CHECK_MODULES(SDL_mixer, SDL_mixer, HAVE_SDL_mixer="yes", HAVE_SDL_mixer="no")
-	if test "x$HAVE_SDL_mixer" = "xno" ; then
-		LIBS=
-		AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
-		if test "$ac_cv_search_Mix_OpenAudio" = "no"
-		then
-			AC_MSG_ERROR([You must have the SDL_mixer development libraries])
-		fi
-		SDL_mixer_LIBS=$LIBS
-	fi
-	
-	AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
-	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
-	AC_SUBST(SDL_mixer_CFLAGS)
-	AC_SUBST(SDL_mixer_LIBS)
-
-	OLD_CFLAGS=$CPPFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-	CPPFLAGS=$SDL_CFLAGS
-	LDFLAGS=$SDL_LIBS
-
-	LIBS=
-	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
-	if test "$ac_cv_search_TTF_Init" = "no"
+	if test $TARGET_OS != "darwin" 
 	then
-		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+		#---------------------------------------------------------------------------------------------
+		# Check SDL_mixer
+		#---------------------------------------------------------------------------------------------
+		PKG_CHECK_MODULES(SDL_mixer, SDL_mixer, HAVE_SDL_mixer="yes", HAVE_SDL_mixer="no")
+		if test "x$HAVE_SDL_mixer" = "xno" ; then
+			LIBS=
+			AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
+			if test "$ac_cv_search_Mix_OpenAudio" = "no"
+			then
+				AC_MSG_ERROR([You must have the SDL_mixer development libraries])
+			fi
+			SDL_mixer_LIBS=$LIBS
+		fi
+		
+		AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
+		AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
+		AC_SUBST(SDL_mixer_CFLAGS)
+		AC_SUBST(SDL_mixer_LIBS)
+	
+		OLD_CFLAGS=$CPPFLAGS
+		OLD_LDFLAGS=$LDFLAGS
+		CPPFLAGS=$SDL_CFLAGS
+		LDFLAGS=$SDL_LIBS
+	
+		LIBS=
+		AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
+		if test "$ac_cv_search_TTF_Init" = "no"
+		then
+			AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+		fi
+		SDL_ttf_LIBS=$LIBS
+	
+		CPPFLAGS=$OLD_CFLAGS
+		LDFLAGS=$OLD_LDFLAGS
+		
+		CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
+		CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
 	fi
-	SDL_ttf_LIBS=$LIBS
 
-	CPPFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
-	
-	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
-	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
-	
 	#---------------------------------------------------------------------------------------------
 	# Check JPEG
 	#---------------------------------------------------------------------------------------------

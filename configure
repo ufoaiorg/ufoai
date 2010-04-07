@@ -5405,9 +5405,11 @@ fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check SDL
-#---------------------------------------------------------------------------------------------
+if test $TARGET_OS != "darwin"
+then
+	#---------------------------------------------------------------------------------------------
+	# Check SDL
+	#---------------------------------------------------------------------------------------------
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
@@ -5595,9 +5597,9 @@ else
 $as_echo "yes" >&6; }
 	HAVE_SDL="yes"
 fi
-if test "x$HAVE_SDL" = "xno" ; then
-	sdl_config=$with_sdl_config
-	# Extract the first word of "$sdl_config", so it can be a program name with args.
+	if test "x$HAVE_SDL" = "xno" ; then
+		sdl_config=$with_sdl_config
+		# Extract the first word of "$sdl_config", so it can be a program name with args.
 set dummy $sdl_config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -5634,26 +5636,26 @@ $as_echo "no" >&6; }
 fi
 
 
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-	then
-		SDL_CFLAGS=`$sdl_config --cflags`
-		SDL_LIBS=`$sdl_config --libs`
-	else
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+		then
+			SDL_CFLAGS=`$sdl_config --cflags`
+			SDL_LIBS=`$sdl_config --libs`
+		else
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
 $as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+		fi
 	fi
-fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL cflags: $SDL_CFLAGS" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL cflags: $SDL_CFLAGS" >&5
 $as_echo "$as_me: SDL cflags: $SDL_CFLAGS" >&6;}
-{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL ldflags: $SDL_LIBS" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL ldflags: $SDL_LIBS" >&5
 $as_echo "$as_me: SDL ldflags: $SDL_LIBS" >&6;}
 
 
 
-#---------------------------------------------------------------------------------------------
-# Check SDL_image
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Check SDL_image
+	#---------------------------------------------------------------------------------------------
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_IMAGE" >&5
@@ -5725,9 +5727,9 @@ else
 $as_echo "yes" >&6; }
 	HAVE_SDL_IMAGE="yes"
 fi
-if test "x$HAVE_SDL_IMAGE" = "xno" ; then
-	LIBS=
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
+	if test "x$HAVE_SDL_IMAGE" = "xno" ; then
+		LIBS=
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
 $as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
 if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
   $as_echo_n "(cached) " >&6
@@ -5783,30 +5785,39 @@ if test "$ac_res" != no; then :
 
 fi
 
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
+		if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+		then
+			as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
+		fi
+		SDL_IMAGE_LIBS=$LIBS
 	fi
-	SDL_IMAGE_LIBS=$LIBS
-fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_image cflags: $SDL_IMAGE_CFLAGS" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_image cflags: $SDL_IMAGE_CFLAGS" >&5
 $as_echo "$as_me: SDL_image cflags: $SDL_IMAGE_CFLAGS" >&6;}
-{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_image ldflags: $SDL_IMAGE_LIBS" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_image ldflags: $SDL_IMAGE_LIBS" >&5
 $as_echo "$as_me: SDL_image ldflags: $SDL_IMAGE_LIBS" >&6;}
 
 
 
-CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
-CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
-TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
-TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+	CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+	TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
+	TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+else
+	CLIENT_LIBS="$CLIENT_LIBS $sdl_mac_ldflags"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $sdl_mac_cflags"
+	TOOLS_LIBS="$TOOLS_LIBS $sdl_mac_ldflags"
+	TOOLS_CFLAGS="$TOOLS_CFLAGS $sdl_mac_cflags"
+fi
+
 
 if test "$enable_client" = "yes"
 then
-	#---------------------------------------------------------------------------------------------
-	# Check SDL_mixer
-	#---------------------------------------------------------------------------------------------
+	if test $TARGET_OS != "darwin"
+	then
+		#---------------------------------------------------------------------------------------------
+		# Check SDL_mixer
+		#---------------------------------------------------------------------------------------------
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_mixer" >&5
@@ -5878,9 +5889,9 @@ else
 $as_echo "yes" >&6; }
 	HAVE_SDL_mixer="yes"
 fi
-	if test "x$HAVE_SDL_mixer" = "xno" ; then
-		LIBS=
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing Mix_OpenAudio" >&5
+		if test "x$HAVE_SDL_mixer" = "xno" ; then
+			LIBS=
+			{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing Mix_OpenAudio" >&5
 $as_echo_n "checking for library containing Mix_OpenAudio... " >&6; }
 if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
   $as_echo_n "(cached) " >&6
@@ -5936,27 +5947,27 @@ if test "$ac_res" != no; then :
 
 fi
 
-		if test "$ac_cv_search_Mix_OpenAudio" = "no"
-		then
-			as_fn_error "You must have the SDL_mixer development libraries" "$LINENO" 5
+			if test "$ac_cv_search_Mix_OpenAudio" = "no"
+			then
+				as_fn_error "You must have the SDL_mixer development libraries" "$LINENO" 5
+			fi
+			SDL_mixer_LIBS=$LIBS
 		fi
-		SDL_mixer_LIBS=$LIBS
-	fi
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_mixer cflags: $SDL_mixer_CFLAGS" >&5
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_mixer cflags: $SDL_mixer_CFLAGS" >&5
 $as_echo "$as_me: SDL_mixer cflags: $SDL_mixer_CFLAGS" >&6;}
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_mixer ldflags: $SDL_mixer_LIBS" >&5
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_mixer ldflags: $SDL_mixer_LIBS" >&5
 $as_echo "$as_me: SDL_mixer ldflags: $SDL_mixer_LIBS" >&6;}
 
 
 
-	OLD_CFLAGS=$CPPFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-	CPPFLAGS=$SDL_CFLAGS
-	LDFLAGS=$SDL_LIBS
+		OLD_CFLAGS=$CPPFLAGS
+		OLD_LDFLAGS=$LDFLAGS
+		CPPFLAGS=$SDL_CFLAGS
+		LDFLAGS=$SDL_LIBS
 
-	LIBS=
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing TTF_Init" >&5
+		LIBS=
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing TTF_Init" >&5
 $as_echo_n "checking for library containing TTF_Init... " >&6; }
 if test "${ac_cv_search_TTF_Init+set}" = set; then :
   $as_echo_n "(cached) " >&6
@@ -6012,17 +6023,18 @@ if test "$ac_res" != no; then :
 
 fi
 
-	if test "$ac_cv_search_TTF_Init" = "no"
-	then
-		as_fn_error "You must have the SDL_ttf development libraries" "$LINENO" 5
+		if test "$ac_cv_search_TTF_Init" = "no"
+		then
+			as_fn_error "You must have the SDL_ttf development libraries" "$LINENO" 5
+		fi
+		SDL_ttf_LIBS=$LIBS
+
+		CPPFLAGS=$OLD_CFLAGS
+		LDFLAGS=$OLD_LDFLAGS
+
+		CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
+		CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
 	fi
-	SDL_ttf_LIBS=$LIBS
-
-	CPPFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
-
-	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
-	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check JPEG
