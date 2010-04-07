@@ -38,6 +38,8 @@ else
 	ifneq ($(TARGET_OS),darwin)
 		CLIENT_LIBS+=-lGL
 	else
+		LDFLAGS+=-framework IOKit -framework Foundation -framework Cocoa
+		CLIENT_LIBS+=-framework OpenGL
 		RADIANT_LIBS+=-headerpad_max_install_names
 	endif
 endif
