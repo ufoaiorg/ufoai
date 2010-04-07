@@ -499,15 +499,13 @@ AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
 AC_SUBST(SDL_IMAGE_CFLAGS)
 AC_SUBST(SDL_IMAGE_LIBS)
 
-CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
-CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
-TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
-TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
+CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 
 if test "$enable_client" = "yes"
 then
-	CLIENT_CFLAGS=
-
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_mixer
 	#---------------------------------------------------------------------------------------------
@@ -603,7 +601,7 @@ then
 	else
 		AC_SUBST([HAVE_VORBIS_CODEC_H],1)
 		AC_DEFINE([HAVE_VORBIS_CODEC_H],[1],[Have vorbis library])
-		CLIENT_CFLAGS="$CLIENT_LIBS $VORBIS_CFLAGS"
+		CLIENT_CFLAGS="$CLIENT_CFLAGS $VORBIS_CFLAGS"
 		CLIENT_LIBS="$VORBIS_LIBS $CLIENT_LIBS"
 	fi
 
@@ -682,7 +680,6 @@ then
 	# Set the client clags and libs - the rest are shared libs
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	CLIENT_CFLAGS="$CFLAGS"
 # end of client only checks
 fi
 	
@@ -976,6 +973,18 @@ ${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
     Locales: ........... ${LOCALEDIR}
     Libraries: ......... ${PKGLIBDIR}
     Data: .............. ${PKGDATADIR}
+
+  Compiler flags:
+
+    Client: ............ ${CLIENT_CFLAGS}
+    Tools: ............. ${TOOLS_CFLAGS}
+    UFORadiant: ........ ${RADIANT_CFLAGS}
+
+  Linker flags:
+
+    Client: ............ ${CLIENT_LIBS}
+    Tools: ............. ${TOOLS_LIBS}
+    UFORadiant: ........ ${RADIANT_LIBS}
 
 Type 'make' to build $PROGRAM.  Type 'make install' to install it.
 ])

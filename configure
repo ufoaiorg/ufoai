@@ -5410,7 +5410,6 @@ SERVER_LIBS="$SERVER_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 
-
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
 	if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
@@ -5656,7 +5655,6 @@ $as_echo "$as_me: SDL ldflags: $SDL_LIBS" >&6;}
 # Check SDL_image
 #---------------------------------------------------------------------------------------------
 
-
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_IMAGE" >&5
 $as_echo_n "checking for SDL_IMAGE... " >&6; }
@@ -5799,19 +5797,16 @@ $as_echo "$as_me: SDL_image ldflags: $SDL_IMAGE_LIBS" >&6;}
 
 
 
-CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
-CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
-TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
-TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
+CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 
 if test "$enable_client" = "yes"
 then
-	CLIENT_CFLAGS=
-
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_mixer
 	#---------------------------------------------------------------------------------------------
-
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_mixer" >&5
@@ -6096,7 +6091,6 @@ fi
 	#---------------------------------------------------------------------------------------------
 	# Check PNG
 	#---------------------------------------------------------------------------------------------
-
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for libpng" >&5
@@ -6443,7 +6437,7 @@ fi
 
 $as_echo "#define HAVE_VORBIS_CODEC_H 1" >>confdefs.h
 
-		CLIENT_CFLAGS="$CLIENT_LIBS $VORBIS_CFLAGS"
+		CLIENT_CFLAGS="$CLIENT_CFLAGS $VORBIS_CFLAGS"
 		CLIENT_LIBS="$VORBIS_LIBS $CLIENT_LIBS"
 	fi
 
@@ -6795,7 +6789,6 @@ $as_echo "#define GL_H_WITHOUT_GL_DIR 1" >>confdefs.h
 	# Set the client clags and libs - the rest are shared libs
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	CLIENT_CFLAGS="$CFLAGS"
 # end of client only checks
 fi
 
@@ -8748,6 +8741,18 @@ ${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
     Libraries: ......... ${PKGLIBDIR}
     Data: .............. ${PKGDATADIR}
 
+  Compiler flags:
+
+    Client: ............ ${CLIENT_CFLAGS}
+    Tools: ............. ${TOOLS_CFLAGS}
+    UFORadiant: ........ ${RADIANT_CFLAGS}
+
+  Linker flags:
+
+    Client: ............ ${CLIENT_LIBS}
+    Tools: ............. ${TOOLS_LIBS}
+    UFORadiant: ........ ${RADIANT_LIBS}
+
 Type 'make' to build $PROGRAM.  Type 'make install' to install it.
 " >&5
 $as_echo "
@@ -8763,6 +8768,18 @@ ${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
     Locales: ........... ${LOCALEDIR}
     Libraries: ......... ${PKGLIBDIR}
     Data: .............. ${PKGDATADIR}
+
+  Compiler flags:
+
+    Client: ............ ${CLIENT_CFLAGS}
+    Tools: ............. ${TOOLS_CFLAGS}
+    UFORadiant: ........ ${RADIANT_CFLAGS}
+
+  Linker flags:
+
+    Client: ............ ${CLIENT_LIBS}
+    Tools: ............. ${TOOLS_LIBS}
+    UFORadiant: ........ ${RADIANT_LIBS}
 
 Type 'make' to build $PROGRAM.  Type 'make install' to install it.
 " >&6; }
