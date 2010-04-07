@@ -250,17 +250,4 @@ public:
 	}
 };
 
-
-template<typename Type>
-class NamedNew {
-public:
-	typedef New<Type, NamedAllocator<Type> > type;
-};
-
-template<typename Type>
-class NamedDelete {
-public:
-	typedef Delete<Type, NamedAllocator<Type> > type;
-};
-
 #endif
