@@ -619,15 +619,21 @@ RADIANT_LIBS
 RADIANT_CFLAGS
 MSYS
 HAVE_CURSES
-HAVE_SDL_CONFIG
-SDL_LIBS
-SDL_CFLAGS
 HAVE_THEORA_THEORA_H
 THEORA_LIBS
 THEORA_CFLAGS
 HAVE_VORBIS_CODEC_H
 VORBIS_LIBS
 VORBIS_CFLAGS
+libpng_LIBS
+libpng_CFLAGS
+SDL_mixer_LIBS
+SDL_mixer_CFLAGS
+SDL_IMAGE_LIBS
+SDL_IMAGE_CFLAGS
+HAVE_SDL_CONFIG
+SDL_LIBS
+SDL_CFLAGS
 PKG_CONFIG
 WINDRES
 HAVE_WINDRES
@@ -735,12 +741,18 @@ CXXFLAGS
 CCC
 CPP
 PKG_CONFIG
+SDL_CFLAGS
+SDL_LIBS
+SDL_IMAGE_CFLAGS
+SDL_IMAGE_LIBS
+SDL_mixer_CFLAGS
+SDL_mixer_LIBS
+libpng_CFLAGS
+libpng_LIBS
 VORBIS_CFLAGS
 VORBIS_LIBS
 THEORA_CFLAGS
 THEORA_LIBS
-SDL_CFLAGS
-SDL_LIBS
 RADIANT_CFLAGS
 RADIANT_LIBS
 OPENAL_CFLAGS
@@ -1399,14 +1411,25 @@ Some influential environment variables:
   CXXFLAGS    C++ compiler flags
   CPP         C preprocessor
   PKG_CONFIG  path to pkg-config utility
+  SDL_CFLAGS  C compiler flags for SDL, overriding pkg-config
+  SDL_LIBS    linker flags for SDL, overriding pkg-config
+  SDL_IMAGE_CFLAGS
+              C compiler flags for SDL_IMAGE, overriding pkg-config
+  SDL_IMAGE_LIBS
+              linker flags for SDL_IMAGE, overriding pkg-config
+  SDL_mixer_CFLAGS
+              C compiler flags for SDL_mixer, overriding pkg-config
+  SDL_mixer_LIBS
+              linker flags for SDL_mixer, overriding pkg-config
+  libpng_CFLAGS
+              C compiler flags for libpng, overriding pkg-config
+  libpng_LIBS linker flags for libpng, overriding pkg-config
   VORBIS_CFLAGS
               C compiler flags for VORBIS, overriding pkg-config
   VORBIS_LIBS linker flags for VORBIS, overriding pkg-config
   THEORA_CFLAGS
               C compiler flags for THEORA, overriding pkg-config
   THEORA_LIBS linker flags for THEORA, overriding pkg-config
-  SDL_CFLAGS  C compiler flags for SDL, overriding pkg-config
-  SDL_LIBS    linker flags for SDL, overriding pkg-config
   RADIANT_CFLAGS
               C compiler flags for RADIANT, overriding pkg-config
   RADIANT_LIBS
@@ -5383,143 +5406,9 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
-# Check JPEG
+# Check SDL
 #---------------------------------------------------------------------------------------------
-for ac_header in jpeglib.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "jpeglib.h" "ac_cv_header_jpeglib_h" "$ac_includes_default"
-if test "x$ac_cv_header_jpeglib_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_JPEGLIB_H 1
-_ACEOF
 
-fi
-
-done
-
-if test "$ac_cv_header_jpeglib_h" = "no"
-then
-	as_fn_error "You must have the JPEG development headers" "$LINENO" 5
-fi
-LIBS=
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for jpeg_CreateDecompress in -ljpeg" >&5
-$as_echo_n "checking for jpeg_CreateDecompress in -ljpeg... " >&6; }
-if test "${ac_cv_lib_jpeg_jpeg_CreateDecompress+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-ljpeg  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char jpeg_CreateDecompress ();
-int
-main ()
-{
-return jpeg_CreateDecompress ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_jpeg_jpeg_CreateDecompress=yes
-else
-  ac_cv_lib_jpeg_jpeg_CreateDecompress=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_jpeg_jpeg_CreateDecompress" >&5
-$as_echo "$ac_cv_lib_jpeg_jpeg_CreateDecompress" >&6; }
-if test "x$ac_cv_lib_jpeg_jpeg_CreateDecompress" = x""yes; then :
-  LIBS="-ljpeg"
-else
-  as_fn_error "You must have libjpeg!!!" "$LINENO" 5
-fi
-
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-#RADIANT_LIBS="$RADIANT_LIBS $LIBS"
-
-if test "$enable_client" = "yes"
-then
-	CLIENT_CFLAGS=
-	LIBS=
-
-	#---------------------------------------------------------------------------------------------
-	# Check OGG
-	#---------------------------------------------------------------------------------------------
-	for ac_header in ogg/ogg.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "ogg/ogg.h" "ac_cv_header_ogg_ogg_h" "$ac_includes_default"
-if test "x$ac_cv_header_ogg_ogg_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_OGG_OGG_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_ogg_ogg_h" = "no"
-	then
-		as_fn_error "You must have the OGG development headers" "$LINENO" 5
-	fi
-	LIBS=
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ogg_sync_init in -logg" >&5
-$as_echo_n "checking for ogg_sync_init in -logg... " >&6; }
-if test "${ac_cv_lib_ogg_ogg_sync_init+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-logg  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char ogg_sync_init ();
-int
-main ()
-{
-return ogg_sync_init ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_ogg_ogg_sync_init=yes
-else
-  ac_cv_lib_ogg_ogg_sync_init=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ogg_ogg_sync_init" >&5
-$as_echo "$ac_cv_lib_ogg_ogg_sync_init" >&6; }
-if test "x$ac_cv_lib_ogg_ogg_sync_init" = x""yes; then :
-  LIBS="-logg"
-else
-  as_fn_error "You must have libogg!!!" "$LINENO" 5
-fi
-
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check Vorbis
-	#---------------------------------------------------------------------------------------------
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
@@ -5636,6 +5525,786 @@ $as_echo "no" >&6; }
 	fi
 
 fi
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL" >&5
+$as_echo_n "checking for SDL... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_CFLAGS"; then
+        pkg_cv_SDL_CFLAGS="$SDL_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_CFLAGS=`$PKG_CONFIG --cflags "sdl" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_LIBS"; then
+        pkg_cv_SDL_LIBS="$SDL_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_LIBS=`$PKG_CONFIG --libs "sdl" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        SDL_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "sdl"`
+        else
+	        SDL_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "sdl"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$SDL_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_SDL="no"
+elif test $pkg_failed = untried; then
+	HAVE_SDL="no"
+else
+	SDL_CFLAGS=$pkg_cv_SDL_CFLAGS
+	SDL_LIBS=$pkg_cv_SDL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_SDL="yes"
+fi
+if test "x$HAVE_SDL" = "xno" ; then
+	sdl_config=$with_sdl_config
+	# Extract the first word of "$sdl_config", so it can be a program name with args.
+set dummy $sdl_config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_prog_HAVE_SDL_CONFIG+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$HAVE_SDL_CONFIG"; then
+  ac_cv_prog_HAVE_SDL_CONFIG="$HAVE_SDL_CONFIG" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_HAVE_SDL_CONFIG="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+HAVE_SDL_CONFIG=$ac_cv_prog_HAVE_SDL_CONFIG
+if test -n "$HAVE_SDL_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_SDL_CONFIG" >&5
+$as_echo "$HAVE_SDL_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+	then
+		SDL_CFLAGS=`$sdl_config --cflags`
+		SDL_LIBS=`$sdl_config --libs`
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
+	fi
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL cflags: $SDL_CFLAGS" >&5
+$as_echo "$as_me: SDL cflags: $SDL_CFLAGS" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL ldflags: $SDL_LIBS" >&5
+$as_echo "$as_me: SDL ldflags: $SDL_LIBS" >&6;}
+
+
+
+#---------------------------------------------------------------------------------------------
+# Check SDL_image
+#---------------------------------------------------------------------------------------------
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_IMAGE" >&5
+$as_echo_n "checking for SDL_IMAGE... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_IMAGE_CFLAGS"; then
+        pkg_cv_SDL_IMAGE_CFLAGS="$SDL_IMAGE_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"SDL_image\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "SDL_image") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_IMAGE_CFLAGS=`$PKG_CONFIG --cflags "SDL_image" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_IMAGE_LIBS"; then
+        pkg_cv_SDL_IMAGE_LIBS="$SDL_IMAGE_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"SDL_image\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "SDL_image") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_IMAGE_LIBS=`$PKG_CONFIG --libs "SDL_image" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        SDL_IMAGE_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "SDL_image"`
+        else
+	        SDL_IMAGE_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "SDL_image"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$SDL_IMAGE_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_SDL_IMAGE="no"
+elif test $pkg_failed = untried; then
+	HAVE_SDL_IMAGE="no"
+else
+	SDL_IMAGE_CFLAGS=$pkg_cv_SDL_IMAGE_CFLAGS
+	SDL_IMAGE_LIBS=$pkg_cv_SDL_IMAGE_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_SDL_IMAGE="yes"
+fi
+if test "x$HAVE_SDL_IMAGE" = "xno" ; then
+	LIBS=
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
+$as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
+if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char IMG_LoadTyped_RW ();
+int
+main ()
+{
+return IMG_LoadTyped_RW ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' SDL_image; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_IMG_LoadTyped_RW=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+  break
+fi
+done
+if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
+
+else
+  ac_cv_search_IMG_LoadTyped_RW=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_IMG_LoadTyped_RW" >&5
+$as_echo "$ac_cv_search_IMG_LoadTyped_RW" >&6; }
+ac_res=$ac_cv_search_IMG_LoadTyped_RW
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
+	fi
+	SDL_IMAGE_LIBS=$LIBS
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_image cflags: $SDL_IMAGE_CFLAGS" >&5
+$as_echo "$as_me: SDL_image cflags: $SDL_IMAGE_CFLAGS" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_image ldflags: $SDL_IMAGE_LIBS" >&5
+$as_echo "$as_me: SDL_image ldflags: $SDL_IMAGE_LIBS" >&6;}
+
+
+
+CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
+
+if test "$enable_client" = "yes"
+then
+	CLIENT_CFLAGS=
+
+	#---------------------------------------------------------------------------------------------
+	# Check SDL_mixer
+	#---------------------------------------------------------------------------------------------
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_mixer" >&5
+$as_echo_n "checking for SDL_mixer... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_mixer_CFLAGS"; then
+        pkg_cv_SDL_mixer_CFLAGS="$SDL_mixer_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"SDL_mixer\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "SDL_mixer") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_mixer_CFLAGS=`$PKG_CONFIG --cflags "SDL_mixer" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$SDL_mixer_LIBS"; then
+        pkg_cv_SDL_mixer_LIBS="$SDL_mixer_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"SDL_mixer\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "SDL_mixer") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_SDL_mixer_LIBS=`$PKG_CONFIG --libs "SDL_mixer" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        SDL_mixer_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "SDL_mixer"`
+        else
+	        SDL_mixer_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "SDL_mixer"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$SDL_mixer_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_SDL_mixer="no"
+elif test $pkg_failed = untried; then
+	HAVE_SDL_mixer="no"
+else
+	SDL_mixer_CFLAGS=$pkg_cv_SDL_mixer_CFLAGS
+	SDL_mixer_LIBS=$pkg_cv_SDL_mixer_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_SDL_mixer="yes"
+fi
+	if test "x$HAVE_SDL_mixer" = "xno" ; then
+		LIBS=
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing Mix_OpenAudio" >&5
+$as_echo_n "checking for library containing Mix_OpenAudio... " >&6; }
+if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char Mix_OpenAudio ();
+int
+main ()
+{
+return Mix_OpenAudio ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' SDL_mixer; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_Mix_OpenAudio=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
+  break
+fi
+done
+if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
+
+else
+  ac_cv_search_Mix_OpenAudio=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_Mix_OpenAudio" >&5
+$as_echo "$ac_cv_search_Mix_OpenAudio" >&6; }
+ac_res=$ac_cv_search_Mix_OpenAudio
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+		if test "$ac_cv_search_Mix_OpenAudio" = "no"
+		then
+			as_fn_error "You must have the SDL_mixer development libraries" "$LINENO" 5
+		fi
+		SDL_mixer_LIBS=$LIBS
+	fi
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_mixer cflags: $SDL_mixer_CFLAGS" >&5
+$as_echo "$as_me: SDL_mixer cflags: $SDL_mixer_CFLAGS" >&6;}
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: SDL_mixer ldflags: $SDL_mixer_LIBS" >&5
+$as_echo "$as_me: SDL_mixer ldflags: $SDL_mixer_LIBS" >&6;}
+
+
+
+	OLD_CFLAGS=$CPPFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+	CPPFLAGS=$SDL_CFLAGS
+	LDFLAGS=$SDL_LIBS
+
+	LIBS=
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing TTF_Init" >&5
+$as_echo_n "checking for library containing TTF_Init... " >&6; }
+if test "${ac_cv_search_TTF_Init+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char TTF_Init ();
+int
+main ()
+{
+return TTF_Init ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' SDL_ttf; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib -lfreetype -lz $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_TTF_Init=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if test "${ac_cv_search_TTF_Init+set}" = set; then :
+  break
+fi
+done
+if test "${ac_cv_search_TTF_Init+set}" = set; then :
+
+else
+  ac_cv_search_TTF_Init=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_TTF_Init" >&5
+$as_echo "$ac_cv_search_TTF_Init" >&6; }
+ac_res=$ac_cv_search_TTF_Init
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+	if test "$ac_cv_search_TTF_Init" = "no"
+	then
+		as_fn_error "You must have the SDL_ttf development libraries" "$LINENO" 5
+	fi
+	SDL_ttf_LIBS=$LIBS
+
+	CPPFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
+
+	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check JPEG
+	#---------------------------------------------------------------------------------------------
+	for ac_header in jpeglib.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "jpeglib.h" "ac_cv_header_jpeglib_h" "$ac_includes_default"
+if test "x$ac_cv_header_jpeglib_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_JPEGLIB_H 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_jpeglib_h" = "no"
+	then
+		as_fn_error "You must have the JPEG development headers" "$LINENO" 5
+	fi
+	LIBS=
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for jpeg_CreateDecompress in -ljpeg" >&5
+$as_echo_n "checking for jpeg_CreateDecompress in -ljpeg... " >&6; }
+if test "${ac_cv_lib_jpeg_jpeg_CreateDecompress+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ljpeg  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char jpeg_CreateDecompress ();
+int
+main ()
+{
+return jpeg_CreateDecompress ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_jpeg_jpeg_CreateDecompress=yes
+else
+  ac_cv_lib_jpeg_jpeg_CreateDecompress=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_jpeg_jpeg_CreateDecompress" >&5
+$as_echo "$ac_cv_lib_jpeg_jpeg_CreateDecompress" >&6; }
+if test "x$ac_cv_lib_jpeg_jpeg_CreateDecompress" = x""yes; then :
+  LIBS="-ljpeg"
+else
+  as_fn_error "You must have libjpeg!!!" "$LINENO" 5
+fi
+
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check PNG
+	#---------------------------------------------------------------------------------------------
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libpng" >&5
+$as_echo_n "checking for libpng... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$libpng_CFLAGS"; then
+        pkg_cv_libpng_CFLAGS="$libpng_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libpng\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libpng") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_libpng_CFLAGS=`$PKG_CONFIG --cflags "libpng" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$libpng_LIBS"; then
+        pkg_cv_libpng_LIBS="$libpng_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libpng\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libpng") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_libpng_LIBS=`$PKG_CONFIG --libs "libpng" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        libpng_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "libpng"`
+        else
+	        libpng_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "libpng"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$libpng_PKG_ERRORS" >&5
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+                HAVE_libpng="no"
+elif test $pkg_failed = untried; then
+	HAVE_libpng="no"
+else
+	libpng_CFLAGS=$pkg_cv_libpng_CFLAGS
+	libpng_LIBS=$pkg_cv_libpng_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	HAVE_libpng="yes"
+fi
+	if test "x$HAVE_libpng" = "xno" ; then
+		LIBS=
+		for ac_header in png.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "png.h" "ac_cv_header_png_h" "$ac_includes_default"
+if test "x$ac_cv_header_png_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_PNG_H 1
+_ACEOF
+
+fi
+
+done
+
+		if test "$ac_cv_header_png_h" = "no"
+		then
+			as_fn_error "You must have the PNG development headers" "$LINENO" 5
+		fi
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for png_create_info_struct in -lpng" >&5
+$as_echo_n "checking for png_create_info_struct in -lpng... " >&6; }
+if test "${ac_cv_lib_png_png_create_info_struct+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpng  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char png_create_info_struct ();
+int
+main ()
+{
+return png_create_info_struct ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_png_png_create_info_struct=yes
+else
+  ac_cv_lib_png_png_create_info_struct=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_png_png_create_info_struct" >&5
+$as_echo "$ac_cv_lib_png_png_create_info_struct" >&6; }
+if test "x$ac_cv_lib_png_png_create_info_struct" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBPNG 1
+_ACEOF
+
+  LIBS="-lpng $LIBS"
+
+else
+  as_fn_error "You must have libpng!!!" "$LINENO" 5
+fi
+
+		libpng_LIBS=$LIBS
+	fi
+	CLIENT_LIBS="$CLIENT_LIBS $libpng_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $libpng_CFLAGS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check OGG
+	#---------------------------------------------------------------------------------------------
+	for ac_header in ogg/ogg.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "ogg/ogg.h" "ac_cv_header_ogg_ogg_h" "$ac_includes_default"
+if test "x$ac_cv_header_ogg_ogg_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_OGG_OGG_H 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_ogg_ogg_h" = "no"
+	then
+		as_fn_error "You must have the OGG development headers" "$LINENO" 5
+	fi
+	LIBS=
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ogg_sync_init in -logg" >&5
+$as_echo_n "checking for ogg_sync_init in -logg... " >&6; }
+if test "${ac_cv_lib_ogg_ogg_sync_init+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-logg  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char ogg_sync_init ();
+int
+main ()
+{
+return ogg_sync_init ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_ogg_ogg_sync_init=yes
+else
+  ac_cv_lib_ogg_ogg_sync_init=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ogg_ogg_sync_init" >&5
+$as_echo "$ac_cv_lib_ogg_ogg_sync_init" >&6; }
+if test "x$ac_cv_lib_ogg_ogg_sync_init" = x""yes; then :
+  LIBS="-logg"
+else
+  as_fn_error "You must have libogg!!!" "$LINENO" 5
+fi
+
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check Vorbis
+	#---------------------------------------------------------------------------------------------
 
 pkg_failed=no
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for VORBIS" >&5
@@ -6080,433 +6749,6 @@ fi
 	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
 
 	#---------------------------------------------------------------------------------------------
-	# Check SDL
-	#---------------------------------------------------------------------------------------------
-	sdl_config=$with_sdl_config
-
-	OLD_CPPFLAGS=$CPPFLAGS
-	OLD_CFLAGS=$CFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-
-	if test $TARGET_OS != "darwin"
-	then
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL" >&5
-$as_echo_n "checking for SDL... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$SDL_CFLAGS"; then
-        pkg_cv_SDL_CFLAGS="$SDL_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_SDL_CFLAGS=`$PKG_CONFIG --cflags "sdl" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$SDL_LIBS"; then
-        pkg_cv_SDL_LIBS="$SDL_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_SDL_LIBS=`$PKG_CONFIG --libs "sdl" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        SDL_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "sdl"`
-        else
-	        SDL_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "sdl"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$SDL_PKG_ERRORS" >&5
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-                HAVE_SDL="no"
-elif test $pkg_failed = untried; then
-	HAVE_SDL="no"
-else
-	SDL_CFLAGS=$pkg_cv_SDL_CFLAGS
-	SDL_LIBS=$pkg_cv_SDL_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-	HAVE_SDL="yes"
-fi
-		if test "x$HAVE_SDL" = "xno" ; then
-			# Extract the first word of "$sdl_config", so it can be a program name with args.
-set dummy $sdl_config; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_prog_HAVE_SDL_CONFIG+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$HAVE_SDL_CONFIG"; then
-  ac_cv_prog_HAVE_SDL_CONFIG="$HAVE_SDL_CONFIG" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_SDL_CONFIG="yes"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-fi
-fi
-HAVE_SDL_CONFIG=$ac_cv_prog_HAVE_SDL_CONFIG
-if test -n "$HAVE_SDL_CONFIG"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_SDL_CONFIG" >&5
-$as_echo "$HAVE_SDL_CONFIG" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-			then
-				CPPFLAGS=`$sdl_config --cflags`
-				CFLAGS=$CPPFLAGS
-				LDFLAGS=`$sdl_config --libs`
-				SDL_CFLAGS=$CPPFLAGS
-
-				SDL_LIBS=$LDFLAGS
-
-			else
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
-$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
-			fi
-		else
-			CPPFLAGS=$SDL_CFLAGS
-			CFLAGS=$CPPFLAGS
-			LDFLAGS=$SDL_LIBS
-			SDL_CFLAGS=$CPPFLAGS
-
-			SDL_LIBS=$LDFLAGS
-
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: Using pkg-config to get the sdl flags" >&5
-$as_echo "$as_me: Using pkg-config to get the sdl flags" >&6;}
-		fi
-	else
-		# mac is special...again
-		CFLAGS="$CFLAGS $sdl_mac_cflags"
-		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-		SDL_CFLAGS="$sdl_mac_cflags"
-		SDL_LIBS="$sdl_mac_ldflags"
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL headers and libraries
-	#---------------------------------------------------------------------------------------------
-	for ac_header in SDL.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL.h" "ac_cv_header_SDL_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_h" != "yes"
-	then
-		as_fn_error "You must have the SDL development headers" "$LINENO" 5
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL mixer headers and libraries
-	#---------------------------------------------------------------------------------------------
-	for ac_header in SDL_mixer.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL_mixer.h" "ac_cv_header_SDL_mixer_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_mixer_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_MIXER_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_mixer_h" != "yes"
-	then
-		as_fn_error "You must have the SDL_mixer development headers" "$LINENO" 5
-	fi
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing Mix_OpenAudio" >&5
-$as_echo_n "checking for library containing Mix_OpenAudio... " >&6; }
-if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char Mix_OpenAudio ();
-int
-main ()
-{
-return Mix_OpenAudio ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL_mixer; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_Mix_OpenAudio=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_Mix_OpenAudio+set}" = set; then :
-
-else
-  ac_cv_search_Mix_OpenAudio=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_Mix_OpenAudio" >&5
-$as_echo "$ac_cv_search_Mix_OpenAudio" >&6; }
-ac_res=$ac_cv_search_Mix_OpenAudio
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-	if test "$ac_cv_search_Mix_OpenAudio" = "no"
-	then
-		as_fn_error "You must have the SDL_mixer development libraries" "$LINENO" 5
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL_ttf
-	#---------------------------------------------------------------------------------------------
-	for ac_header in SDL_ttf.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL_ttf.h" "ac_cv_header_SDL_ttf_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_ttf_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_TTF_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_ttf_h" != "yes"
-	then
-		as_fn_error "You must have the SDL_ttf development headers" "$LINENO" 5
-	fi
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing TTF_Init" >&5
-$as_echo_n "checking for library containing TTF_Init... " >&6; }
-if test "${ac_cv_search_TTF_Init+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char TTF_Init ();
-int
-main ()
-{
-return TTF_Init ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL_ttf; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_TTF_Init=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_TTF_Init+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_TTF_Init+set}" = set; then :
-
-else
-  ac_cv_search_TTF_Init=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_TTF_Init" >&5
-$as_echo "$ac_cv_search_TTF_Init" >&6; }
-ac_res=$ac_cv_search_TTF_Init
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-	if test "$ac_cv_search_TTF_Init" = "no"
-	then
-		as_fn_error "You must have the SDL_ttf development libraries" "$LINENO" 5
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Set the client clags and libs - the rest are shared libs
-	#---------------------------------------------------------------------------------------------
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	CLIENT_CFLAGS="$CFLAGS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL image headers and libraries
-	#---------------------------------------------------------------------------------------------
-
-	LIBS=
-	for ac_header in SDL_image.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL_image.h" "ac_cv_header_SDL_image_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_image_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_IMAGE_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		as_fn_error "You must have the SDL_image development headers" "$LINENO" 5
-	fi
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
-$as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
-if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char IMG_LoadTyped_RW ();
-int
-main ()
-{
-return IMG_LoadTyped_RW ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL_image; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_IMG_LoadTyped_RW=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-
-else
-  ac_cv_search_IMG_LoadTyped_RW=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_IMG_LoadTyped_RW" >&5
-$as_echo "$ac_cv_search_IMG_LoadTyped_RW" >&6; }
-ac_res=$ac_cv_search_IMG_LoadTyped_RW
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
-	fi
-	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	LIBS=
-
-	CPPFLAGS=$OLD_CPPFLAGS
-	CFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
-
-	#---------------------------------------------------------------------------------------------
 	# Check for opengl headers
 	#---------------------------------------------------------------------------------------------
 	for ac_header in GL/gl.h GL/glu.h
@@ -6554,332 +6796,8 @@ $as_echo "#define GL_H_WITHOUT_GL_DIR 1" >>confdefs.h
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	CLIENT_CFLAGS="$CFLAGS"
-
 # end of client only checks
-else
-	#---------------------------------------------------------------------------------------------
-	# Check SDL
-	#---------------------------------------------------------------------------------------------
-	sdl_config=$with_sdl_config
-
-	OLD_CPPFLAGS=$CPPFLAGS
-	OLD_CFLAGS=$CFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-
-	if test $TARGET_OS != "darwin"
-	then
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL" >&5
-$as_echo_n "checking for SDL... " >&6; }
-
-if test -n "$PKG_CONFIG"; then
-    if test -n "$SDL_CFLAGS"; then
-        pkg_cv_SDL_CFLAGS="$SDL_CFLAGS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_SDL_CFLAGS=`$PKG_CONFIG --cflags "sdl" 2>/dev/null`
-else
-  pkg_failed=yes
 fi
-    fi
-else
-	pkg_failed=untried
-fi
-if test -n "$PKG_CONFIG"; then
-    if test -n "$SDL_LIBS"; then
-        pkg_cv_SDL_LIBS="$SDL_LIBS"
-    else
-        if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"sdl\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "sdl") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_SDL_LIBS=`$PKG_CONFIG --libs "sdl" 2>/dev/null`
-else
-  pkg_failed=yes
-fi
-    fi
-else
-	pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        SDL_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "sdl"`
-        else
-	        SDL_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "sdl"`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$SDL_PKG_ERRORS" >&5
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-                HAVE_SDL="no"
-elif test $pkg_failed = untried; then
-	HAVE_SDL="no"
-else
-	SDL_CFLAGS=$pkg_cv_SDL_CFLAGS
-	SDL_LIBS=$pkg_cv_SDL_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-	HAVE_SDL="yes"
-fi
-		if test "x$HAVE_SDL" = "xno" ; then
-			# Extract the first word of "$sdl_config", so it can be a program name with args.
-set dummy $sdl_config; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_prog_HAVE_SDL_CONFIG+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$HAVE_SDL_CONFIG"; then
-  ac_cv_prog_HAVE_SDL_CONFIG="$HAVE_SDL_CONFIG" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_SDL_CONFIG="yes"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-fi
-fi
-HAVE_SDL_CONFIG=$ac_cv_prog_HAVE_SDL_CONFIG
-if test -n "$HAVE_SDL_CONFIG"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_SDL_CONFIG" >&5
-$as_echo "$HAVE_SDL_CONFIG" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-			then
-				CPPFLAGS=`$sdl_config --cflags`
-				LDFLAGS=`$sdl_config --libs`
-				SDL_CFLAGS=$CPPFLAGS
-
-				SDL_LIBS=$LDFLAGS
-
-			else
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
-$as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
-			fi
-		else
-			CPPFLAGS=$SDL_CFLAGS
-			LDFLAGS=$SDL_LIBS
-			SDL_CFLAGS=$CPPFLAGS
-
-			SDL_LIBS=$LDFLAGS
-
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: Using pkg-config to get the sdl flags" >&5
-$as_echo "$as_me: Using pkg-config to get the sdl flags" >&6;}
-		fi
-	else
-		# mac is special...again
-		CFLAGS="$CFLAGS $sdl_mac_cflags"
-		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-		SDL_CFLAGS="$sdl_mac_cflags"
-		SDL_LIBS="$sdl_mac_ldflags"
-	fi
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL headers and libraries
-	#---------------------------------------------------------------------------------------------
-	for ac_header in SDL.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL.h" "ac_cv_header_SDL_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_h" != "yes"
-	then
-		as_fn_error "You must have the SDL development headers" "$LINENO" 5
-	fi
-
-	LIBS=
-	for ac_header in SDL_image.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "SDL_image.h" "ac_cv_header_SDL_image_h" "$ac_includes_default"
-if test "x$ac_cv_header_SDL_image_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SDL_IMAGE_H 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		as_fn_error "You must have the SDL_image development headers" "$LINENO" 5
-	fi
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
-$as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
-if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char IMG_LoadTyped_RW ();
-int
-main ()
-{
-return IMG_LoadTyped_RW ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL_image; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_IMG_LoadTyped_RW=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_IMG_LoadTyped_RW+set}" = set; then :
-
-else
-  ac_cv_search_IMG_LoadTyped_RW=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_IMG_LoadTyped_RW" >&5
-$as_echo "$ac_cv_search_IMG_LoadTyped_RW" >&6; }
-ac_res=$ac_cv_search_IMG_LoadTyped_RW
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
-	fi
-	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-
-	CPPFLAGS=$OLD_CPPFLAGS
-	CFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check PNG
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-for ac_header in png.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "png.h" "ac_cv_header_png_h" "$ac_includes_default"
-if test "x$ac_cv_header_png_h" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_PNG_H 1
-_ACEOF
-
-fi
-
-done
-
-if test "$ac_cv_header_png_h" = "no"
-then
-	as_fn_error "You must have the PNG development headers" "$LINENO" 5
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for png_create_info_struct in -lpng" >&5
-$as_echo_n "checking for png_create_info_struct in -lpng... " >&6; }
-if test "${ac_cv_lib_png_png_create_info_struct+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lpng  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char png_create_info_struct ();
-int
-main ()
-{
-return png_create_info_struct ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_png_png_create_info_struct=yes
-else
-  ac_cv_lib_png_png_create_info_struct=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_png_png_create_info_struct" >&5
-$as_echo "$ac_cv_lib_png_png_create_info_struct" >&6; }
-if test "x$ac_cv_lib_png_png_create_info_struct" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBPNG 1
-_ACEOF
-
-  LIBS="-lpng $LIBS"
-
-else
-  as_fn_error "You must have libpng!!!" "$LINENO" 5
-fi
-
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for curses

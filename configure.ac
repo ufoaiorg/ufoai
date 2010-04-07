@@ -460,23 +460,120 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
-# Check JPEG
+# Check SDL
 #---------------------------------------------------------------------------------------------
-AC_CHECK_HEADERS([jpeglib.h])
-if test "$ac_cv_header_jpeglib_h" = "no"
-then
-	AC_MSG_ERROR([You must have the JPEG development headers])
+PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
+if test "x$HAVE_SDL" = "xno" ; then
+	sdl_config=$with_sdl_config
+	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+	then
+		SDL_CFLAGS=`$sdl_config --cflags`
+		SDL_LIBS=`$sdl_config --libs`
+	else
+		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+	fi
 fi
-LIBS=
-AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-#RADIANT_LIBS="$RADIANT_LIBS $LIBS"
+
+AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
+AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
+AC_SUBST(SDL_CFLAGS)
+AC_SUBST(SDL_LIBS)
+
+#---------------------------------------------------------------------------------------------
+# Check SDL_image
+#---------------------------------------------------------------------------------------------
+PKG_CHECK_MODULES(SDL_IMAGE, SDL_image, HAVE_SDL_IMAGE="yes", HAVE_SDL_IMAGE="no")
+if test "x$HAVE_SDL_IMAGE" = "xno" ; then
+	LIBS=
+	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development libraries])
+	fi
+	SDL_IMAGE_LIBS=$LIBS
+fi
+
+AC_MSG_NOTICE([SDL_image cflags: $SDL_IMAGE_CFLAGS])
+AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
+AC_SUBST(SDL_IMAGE_CFLAGS)
+AC_SUBST(SDL_IMAGE_LIBS)
+
+CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_IMAGE_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_IMAGE_CFLAGS"
 
 if test "$enable_client" = "yes"
 then
 	CLIENT_CFLAGS=
+
+	#---------------------------------------------------------------------------------------------
+	# Check SDL_mixer
+	#---------------------------------------------------------------------------------------------
+	PKG_CHECK_MODULES(SDL_mixer, SDL_mixer, HAVE_SDL_mixer="yes", HAVE_SDL_mixer="no")
+	if test "x$HAVE_SDL_mixer" = "xno" ; then
+		LIBS=
+		AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
+		if test "$ac_cv_search_Mix_OpenAudio" = "no"
+		then
+			AC_MSG_ERROR([You must have the SDL_mixer development libraries])
+		fi
+		SDL_mixer_LIBS=$LIBS
+	fi
+	
+	AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
+	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
+	AC_SUBST(SDL_mixer_CFLAGS)
+	AC_SUBST(SDL_mixer_LIBS)
+
+	OLD_CFLAGS=$CPPFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+	CPPFLAGS=$SDL_CFLAGS
+	LDFLAGS=$SDL_LIBS
+
 	LIBS=
+	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
+	if test "$ac_cv_search_TTF_Init" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+	fi
+	SDL_ttf_LIBS=$LIBS
+
+	CPPFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
+	
+	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
+	
+	#---------------------------------------------------------------------------------------------
+	# Check JPEG
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([jpeglib.h])
+	if test "$ac_cv_header_jpeglib_h" = "no"
+	then
+		AC_MSG_ERROR([You must have the JPEG development headers])
+	fi
+	LIBS=
+	AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check PNG
+	#---------------------------------------------------------------------------------------------
+	PKG_CHECK_MODULES(libpng, libpng, HAVE_libpng="yes", HAVE_libpng="no")
+	if test "x$HAVE_libpng" = "xno" ; then
+		LIBS=
+		AC_CHECK_HEADERS([png.h])
+		if test "$ac_cv_header_png_h" = "no"
+		then
+			AC_MSG_ERROR([You must have the PNG development headers])
+		fi
+		AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
+		libpng_LIBS=$LIBS
+	fi
+	CLIENT_LIBS="$CLIENT_LIBS $libpng_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $libpng_CFLAGS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check OGG
@@ -567,112 +664,6 @@ then
 	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
 
 	#---------------------------------------------------------------------------------------------
-	# Check SDL
-	#---------------------------------------------------------------------------------------------
-	sdl_config=$with_sdl_config
-
-	OLD_CPPFLAGS=$CPPFLAGS
-	OLD_CFLAGS=$CFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-
-	if test $TARGET_OS != "darwin"
-	then
-		PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
-		if test "x$HAVE_SDL" = "xno" ; then
-			AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-			then
-				CPPFLAGS=`$sdl_config --cflags`
-				CFLAGS=$CPPFLAGS
-				LDFLAGS=`$sdl_config --libs`
-				AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-				AC_SUBST([SDL_LIBS],$LDFLAGS)
-			else
-				AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-			fi
-		else
-			CPPFLAGS=$SDL_CFLAGS
-			CFLAGS=$CPPFLAGS
-			LDFLAGS=$SDL_LIBS
-			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-			AC_SUBST([SDL_LIBS],$LDFLAGS)
-			AC_MSG_NOTICE([Using pkg-config to get the sdl flags])
-		fi
-	else
-		# mac is special...again
-		CFLAGS="$CFLAGS $sdl_mac_cflags"
-		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-		SDL_CFLAGS="$sdl_mac_cflags"
-		SDL_LIBS="$sdl_mac_ldflags"
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL headers and libraries
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL.h])
-	if test "$ac_cv_header_SDL_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL development headers])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL mixer headers and libraries
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL_mixer.h])
-	if test "$ac_cv_header_SDL_mixer_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_mixer development headers])
-	fi
-	AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
-	if test "$ac_cv_search_Mix_OpenAudio" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_mixer development libraries])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL_ttf
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL_ttf.h])
-	if test "$ac_cv_header_SDL_ttf_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_ttf development headers])
-	fi
-	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
-	if test "$ac_cv_search_TTF_Init" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Set the client clags and libs - the rest are shared libs
-	#---------------------------------------------------------------------------------------------
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	CLIENT_CFLAGS="$CFLAGS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL image headers and libraries
-	#---------------------------------------------------------------------------------------------
-
-	LIBS=
-	AC_CHECK_HEADERS([SDL_image.h])
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development headers])
-	fi
-	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development libraries])
-	fi
-	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	LIBS=
-
-	CPPFLAGS=$OLD_CPPFLAGS
-	CFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
-
-	#---------------------------------------------------------------------------------------------
 	# Check for opengl headers
 	#---------------------------------------------------------------------------------------------
 	AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
@@ -692,87 +683,9 @@ then
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	CLIENT_CFLAGS="$CFLAGS"
-
 # end of client only checks
-else
-	#---------------------------------------------------------------------------------------------
-	# Check SDL
-	#---------------------------------------------------------------------------------------------
-	sdl_config=$with_sdl_config
-
-	OLD_CPPFLAGS=$CPPFLAGS
-	OLD_CFLAGS=$CFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-
-	if test $TARGET_OS != "darwin"
-	then
-		PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
-		if test "x$HAVE_SDL" = "xno" ; then
-			AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-			if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-			then
-				CPPFLAGS=`$sdl_config --cflags`
-				LDFLAGS=`$sdl_config --libs`
-				AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-				AC_SUBST([SDL_LIBS],$LDFLAGS)
-			else
-				AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-			fi
-		else
-			CPPFLAGS=$SDL_CFLAGS
-			LDFLAGS=$SDL_LIBS
-			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-			AC_SUBST([SDL_LIBS],$LDFLAGS)
-			AC_MSG_NOTICE([Using pkg-config to get the sdl flags])
-		fi
-	else
-		# mac is special...again
-		CFLAGS="$CFLAGS $sdl_mac_cflags"
-		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-		SDL_CFLAGS="$sdl_mac_cflags"
-		SDL_LIBS="$sdl_mac_ldflags"
-	fi
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL headers and libraries
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL.h])
-	if test "$ac_cv_header_SDL_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL development headers])
-	fi
-
-	LIBS=
-	AC_CHECK_HEADERS([SDL_image.h])
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development headers])
-	fi
-	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development libraries])
-	fi
-	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-
-	CPPFLAGS=$OLD_CPPFLAGS
-	CFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check PNG
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_HEADERS([png.h])
-if test "$ac_cv_header_png_h" = "no"
-then
-	AC_MSG_ERROR([You must have the PNG development headers])
-fi
-AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
+	
 #---------------------------------------------------------------------------------------------
 # Check for curses
 #---------------------------------------------------------------------------------------------
