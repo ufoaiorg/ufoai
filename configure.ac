@@ -166,13 +166,13 @@ then
 	if test -x /opt/local/bin/sdl-config
 	then
 		# SDL installed using MacPorts
-		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
-		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
+		SDL_CFLAGS=`/opt/local/bin/sdl-config --cflags`
+		SDL_LIBS=`/opt/local/bin/sdl-config --libs`
 	else
 		if test -d /Library/Frameworks/SDL.framework
 		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+			SDL_CFLAGS="-I/Library/Frameworks/SDL.framework/Headers"
+			SDL_LIBS="-framework SDL"
 		else
 			# should test for different framework locations, like /System/Library/Frameworks
 			# and ~/Library/Frameworks..... later....
@@ -180,22 +180,22 @@ then
 		fi
 		if test -d /Library/Frameworks/SDL_mixer.framework
 		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
+			SDL_mixer_CFLAGS="-I/Library/Frameworks/SDL_mixer.framework/Headers"
+			SDL_mixer_LIBS="-framework SDL_mixer"
 		else
 			AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
 		fi
 		if test -d /Library/Frameworks/SDL_image.framework
 		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_image.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_image"
+			SDL_image_CFLAGS="-I/Library/Frameworks/SDL_image.framework/Headers"
+			SDL_image_LIBS="-framework SDL_image"
 		else
 			AC_MSG_ERROR([Could not find SDL_image Framework at /Library/Frameworks.])
 		fi
 		if test -d /Library/Frameworks/SDL_ttf.framework
 		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
+			SDL_ttf_CFLAGS="-I/Library/Frameworks/SDL_ttf.framework/Headers"
+			SDL_ttf_LIBS="-framework SDL_ttf"
 		else
 			AC_MSG_ERROR([Could not find SDL_ttf Framework at /Library/Frameworks.])
 		fi
@@ -477,11 +477,6 @@ then
 		fi
 	fi
 	
-	AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
-	AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
-	AC_SUBST(SDL_CFLAGS)
-	AC_SUBST(SDL_LIBS)
-	
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_image
 	#---------------------------------------------------------------------------------------------
@@ -495,22 +490,22 @@ then
 		fi
 		SDL_IMAGE_LIBS=$LIBS
 	fi
-
-	AC_MSG_NOTICE([SDL_image cflags: $SDL_IMAGE_CFLAGS])
-	AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
-	AC_SUBST(SDL_IMAGE_CFLAGS)
-	AC_SUBST(SDL_IMAGE_LIBS)
-	
-	CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
-	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
-	TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
-	TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
-else
-	CLIENT_LIBS="$CLIENT_LIBS $sdl_mac_ldflags"
-	CLIENT_CFLAGS="$CLIENT_CFLAGS $sdl_mac_cflags"
-	TOOLS_LIBS="$TOOLS_LIBS $sdl_mac_ldflags"
-	TOOLS_CFLAGS="$TOOLS_CFLAGS $sdl_mac_cflags"
 fi
+
+AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
+AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
+AC_SUBST(SDL_CFLAGS)
+AC_SUBST(SDL_LIBS)
+
+AC_MSG_NOTICE([SDL_image cflags: $SDL_IMAGE_CFLAGS])
+AC_MSG_NOTICE([SDL_image ldflags: $SDL_IMAGE_LIBS])
+AC_SUBST(SDL_IMAGE_CFLAGS)
+AC_SUBST(SDL_IMAGE_LIBS)
+
+CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 
 
 if test "$enable_client" = "yes"
@@ -531,11 +526,6 @@ then
 			SDL_mixer_LIBS=$LIBS
 		fi
 		
-		AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
-		AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
-		AC_SUBST(SDL_mixer_CFLAGS)
-		AC_SUBST(SDL_mixer_LIBS)
-	
 		OLD_CFLAGS=$CPPFLAGS
 		OLD_LDFLAGS=$LDFLAGS
 		CPPFLAGS=$SDL_CFLAGS
@@ -551,10 +541,20 @@ then
 	
 		CPPFLAGS=$OLD_CFLAGS
 		LDFLAGS=$OLD_LDFLAGS
-		
-		CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer $SDL_ttf_LIBS"
-		CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
 	fi
+
+	AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
+	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
+	AC_SUBST(SDL_mixer_CFLAGS)
+	AC_SUBST(SDL_mixer_LIBS)
+
+	AC_MSG_NOTICE([SDL_ttf cflags: $SDL_ttf_CFLAGS])
+	AC_MSG_NOTICE([SDL_ttf ldflags: $SDL_ttf_LIBS])
+	AC_SUBST(SDL_ttf_CFLAGS)
+	AC_SUBST(SDL_ttf_LIBS)
+
+	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer_LIBS $SDL_ttf_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check JPEG
@@ -959,6 +959,8 @@ AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
 AC_SUBST([OPENAL_LIBS], "$OPENAL_LIBS")
 AC_SUBST([OPENAL_CFLAGS], "$OPENAL_CFLAGS")
 
+AC_SUBST(CFLAGS)
+AC_SUBST(LDFLAGS)
 AC_SUBST(PKGDATADIR)
 AC_SUBST(PKGLIBDIR)
 AC_SUBST(BINDIR)
