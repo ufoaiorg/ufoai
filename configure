@@ -5927,17 +5927,17 @@ fi
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-                HAVE_SDL_IMAGE="no"
+                HAVE_SDL_image="no"
 elif test $pkg_failed = untried; then
-	HAVE_SDL_IMAGE="no"
+	HAVE_SDL_image="no"
 else
 	SDL_image_CFLAGS=$pkg_cv_SDL_image_CFLAGS
 	SDL_image_LIBS=$pkg_cv_SDL_image_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	HAVE_SDL_IMAGE="yes"
+	HAVE_SDL_image="yes"
 fi
-	if test "x$HAVE_SDL_IMAGE" = "xno" ; then
+	if test "x$HAVE_SDL_image" = "xno" ; then
 		LIBS=
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing IMG_LoadTyped_RW" >&5
 $as_echo_n "checking for library containing IMG_LoadTyped_RW... " >&6; }
@@ -5999,7 +5999,7 @@ fi
 		then
 			as_fn_error "You must have the SDL_image development libraries" "$LINENO" 5
 		fi
-		SDL_IMAGE_LIBS=$LIBS
+		SDL_image_LIBS=$LIBS
 	fi
 fi
 

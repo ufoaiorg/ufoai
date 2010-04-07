@@ -512,15 +512,15 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_image
 	#---------------------------------------------------------------------------------------------
-	PKG_CHECK_MODULES(SDL_image, SDL_image, HAVE_SDL_IMAGE="yes", HAVE_SDL_IMAGE="no")
-	if test "x$HAVE_SDL_IMAGE" = "xno" ; then
+	PKG_CHECK_MODULES(SDL_image, SDL_image, HAVE_SDL_image="yes", HAVE_SDL_image="no")
+	if test "x$HAVE_SDL_image" = "xno" ; then
 		LIBS=
 		AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
 		if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
 		then
 			AC_MSG_ERROR([You must have the SDL_image development libraries])
 		fi
-		SDL_IMAGE_LIBS=$LIBS
+		SDL_image_LIBS=$LIBS
 	fi
 fi
 
