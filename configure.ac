@@ -512,7 +512,7 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_image
 	#---------------------------------------------------------------------------------------------
-	PKG_CHECK_MODULES(SDL_IMAGE, SDL_image, HAVE_SDL_IMAGE="yes", HAVE_SDL_IMAGE="no")
+	PKG_CHECK_MODULES(SDL_image, SDL_image, HAVE_SDL_IMAGE="yes", HAVE_SDL_IMAGE="no")
 	if test "x$HAVE_SDL_IMAGE" = "xno" ; then
 		LIBS=
 		AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])

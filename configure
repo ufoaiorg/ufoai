@@ -633,6 +633,8 @@ SDL_mixer_LIBS
 SDL_mixer_CFLAGS
 SDL_IMAGE_LIBS
 SDL_IMAGE_CFLAGS
+SDL_image_LIBS
+SDL_image_CFLAGS
 HAVE_SDL_CONFIG
 SDL_LIBS
 SDL_CFLAGS
@@ -749,8 +751,8 @@ libpng_CFLAGS
 libpng_LIBS
 SDL_CFLAGS
 SDL_LIBS
-SDL_IMAGE_CFLAGS
-SDL_IMAGE_LIBS
+SDL_image_CFLAGS
+SDL_image_LIBS
 SDL_mixer_CFLAGS
 SDL_mixer_LIBS
 VORBIS_CFLAGS
@@ -1420,10 +1422,10 @@ Some influential environment variables:
   libpng_LIBS linker flags for libpng, overriding pkg-config
   SDL_CFLAGS  C compiler flags for SDL, overriding pkg-config
   SDL_LIBS    linker flags for SDL, overriding pkg-config
-  SDL_IMAGE_CFLAGS
-              C compiler flags for SDL_IMAGE, overriding pkg-config
-  SDL_IMAGE_LIBS
-              linker flags for SDL_IMAGE, overriding pkg-config
+  SDL_image_CFLAGS
+              C compiler flags for SDL_image, overriding pkg-config
+  SDL_image_LIBS
+              linker flags for SDL_image, overriding pkg-config
   SDL_mixer_CFLAGS
               C compiler flags for SDL_mixer, overriding pkg-config
   SDL_mixer_LIBS
@@ -5866,12 +5868,12 @@ $as_echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;
 	#---------------------------------------------------------------------------------------------
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_IMAGE" >&5
-$as_echo_n "checking for SDL_IMAGE... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SDL_image" >&5
+$as_echo_n "checking for SDL_image... " >&6; }
 
 if test -n "$PKG_CONFIG"; then
-    if test -n "$SDL_IMAGE_CFLAGS"; then
-        pkg_cv_SDL_IMAGE_CFLAGS="$SDL_IMAGE_CFLAGS"
+    if test -n "$SDL_image_CFLAGS"; then
+        pkg_cv_SDL_image_CFLAGS="$SDL_image_CFLAGS"
     else
         if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"SDL_image\""; } >&5
@@ -5879,7 +5881,7 @@ if test -n "$PKG_CONFIG"; then
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_SDL_IMAGE_CFLAGS=`$PKG_CONFIG --cflags "SDL_image" 2>/dev/null`
+  pkg_cv_SDL_image_CFLAGS=`$PKG_CONFIG --cflags "SDL_image" 2>/dev/null`
 else
   pkg_failed=yes
 fi
@@ -5888,8 +5890,8 @@ else
 	pkg_failed=untried
 fi
 if test -n "$PKG_CONFIG"; then
-    if test -n "$SDL_IMAGE_LIBS"; then
-        pkg_cv_SDL_IMAGE_LIBS="$SDL_IMAGE_LIBS"
+    if test -n "$SDL_image_LIBS"; then
+        pkg_cv_SDL_image_LIBS="$SDL_image_LIBS"
     else
         if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"SDL_image\""; } >&5
@@ -5897,7 +5899,7 @@ if test -n "$PKG_CONFIG"; then
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_SDL_IMAGE_LIBS=`$PKG_CONFIG --libs "SDL_image" 2>/dev/null`
+  pkg_cv_SDL_image_LIBS=`$PKG_CONFIG --libs "SDL_image" 2>/dev/null`
 else
   pkg_failed=yes
 fi
@@ -5916,12 +5918,12 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        SDL_IMAGE_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "SDL_image"`
+	        SDL_image_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "SDL_image"`
         else
-	        SDL_IMAGE_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "SDL_image"`
+	        SDL_image_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "SDL_image"`
         fi
 	# Put the nasty error message in config.log where it belongs
-	echo "$SDL_IMAGE_PKG_ERRORS" >&5
+	echo "$SDL_image_PKG_ERRORS" >&5
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -5929,8 +5931,8 @@ $as_echo "no" >&6; }
 elif test $pkg_failed = untried; then
 	HAVE_SDL_IMAGE="no"
 else
-	SDL_IMAGE_CFLAGS=$pkg_cv_SDL_IMAGE_CFLAGS
-	SDL_IMAGE_LIBS=$pkg_cv_SDL_IMAGE_LIBS
+	SDL_image_CFLAGS=$pkg_cv_SDL_image_CFLAGS
+	SDL_image_LIBS=$pkg_cv_SDL_image_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 	HAVE_SDL_IMAGE="yes"
