@@ -26,11 +26,6 @@ bundle-dirs-uforadiant:
 
 # =======================
 
-$(BUNDLE_PK3) : $(MAC_INST_DIR)/UFOAI.app/base/%.pk3 : base/%.pk3
-	cp $< $@
-
-# =======================
-
 package-dir-ufoai:
 	@rm -rf $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
 	@mkdir -p $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
@@ -58,9 +53,10 @@ copybinaries-uforadiant: bundle-dirs-uforadiant
 
 # =======================
 
-copydata-ufoai: bundle-dirs-ufoai $(BUNDLE_PK3)
+copydata-ufoai: bundle-dirs-ufoai
 	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/base/i18n
 	@cp -r base/i18n/[^.]* $(MAC_INST_DIR)/UFOAI.app/base/i18n
+	@cp base/*.pk3 $(MAC_INST_DIR)/UFOAI.app/base
 
 copydata-uforadiant:
 	@svn export --force radiant $(MAC_INST_DIR)/UFORadiant.app
