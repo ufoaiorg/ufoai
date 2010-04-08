@@ -642,7 +642,6 @@ libpng_LIBS
 libpng_CFLAGS
 PKG_CONFIG
 WINDRES
-HAVE_WINDRES
 HAVE_MKDIR
 HAVE_RM
 EGREP
@@ -746,6 +745,7 @@ CXX
 CXXFLAGS
 CCC
 CPP
+WINDRES
 PKG_CONFIG
 libpng_CFLAGS
 libpng_LIBS
@@ -1416,6 +1416,7 @@ Some influential environment variables:
   CXX         C++ compiler command
   CXXFLAGS    C++ compiler flags
   CPP         C preprocessor
+  WINDRES     path to windres utility
   PKG_CONFIG  path to pkg-config utility
   libpng_CFLAGS
               C compiler flags for libpng, overriding pkg-config
@@ -2810,10 +2811,7 @@ fi
 
 #---------------------------------------------------------------------------------------------
 # defined some defaults for users (mac-users..) who might not have pkg-config.
-# actually, right now this is only required for the UFORadiant built
-# this is kind-of a work-around,,,
 #---------------------------------------------------------------------------------------------
-
 
 
 #---------------------------------------------------------------------------------------------
@@ -4715,70 +4713,32 @@ fi
 # CHECK windres
 #---------------------------------------------------------------------------------------------
 
-WINDRES=""
 if test $TARGET_OS = "mingw32"
 then
-	WINDRES=windres
-	# Extract the first word of "$WINDRES", so it can be a program name with args.
-set dummy $WINDRES; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_prog_HAVE_WINDRES+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$HAVE_WINDRES"; then
-  ac_cv_prog_HAVE_WINDRES="$HAVE_WINDRES" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_WINDRES="yes"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
 
-fi
-fi
-HAVE_WINDRES=$ac_cv_prog_HAVE_WINDRES
-if test -n "$HAVE_WINDRES"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_WINDRES" >&5
-$as_echo "$HAVE_WINDRES" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-	if test "$HAVE_WINDRES" != "yes"
+	if test "x$ac_cv_env_WINDRES_set" != "xset"
 	then
-		WINDRES="$host-windres $target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
-		for ac_prog in $WINDRES
-do
-  # Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
+		if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}windres", so it can be a program name with args.
+set dummy ${ac_tool_prefix}windres; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_prog_WINDRES+set}" = set; then :
+if test "${ac_cv_path_WINDRES+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
-  if test -n "$WINDRES"; then
-  ac_cv_prog_WINDRES="$WINDRES" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+  case $WINDRES in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_WINDRES="$WINDRES" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
 for as_dir in $PATH
 do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
     for ac_exec_ext in '' $ac_executable_extensions; do
   if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_WINDRES="$ac_prog"
+    ac_cv_path_WINDRES="$as_dir/$ac_word$ac_exec_ext"
     $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
   fi
@@ -4786,9 +4746,10 @@ done
   done
 IFS=$as_save_IFS
 
+  ;;
+esac
 fi
-fi
-WINDRES=$ac_cv_prog_WINDRES
+WINDRES=$ac_cv_path_WINDRES
 if test -n "$WINDRES"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: $WINDRES" >&5
 $as_echo "$WINDRES" >&6; }
@@ -4798,19 +4759,69 @@ $as_echo "no" >&6; }
 fi
 
 
-  test -n "$WINDRES" && break
+fi
+if test -z "$ac_cv_path_WINDRES"; then
+  ac_pt_WINDRES=$WINDRES
+  # Extract the first word of "windres", so it can be a program name with args.
+set dummy windres; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_path_ac_pt_WINDRES+set}" = set; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $ac_pt_WINDRES in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ac_pt_WINDRES="$ac_pt_WINDRES" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_ac_pt_WINDRES="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
 done
-test -n "$WINDRES" || WINDRES="no"
+  done
+IFS=$as_save_IFS
 
-		if test "$WINDRES" == "no"
-		then
-			WINDRES=""
-			as_fn_error "You must have the windres program installed" "$LINENO" 5
-		fi
+  ;;
+esac
+fi
+ac_pt_WINDRES=$ac_cv_path_ac_pt_WINDRES
+if test -n "$ac_pt_WINDRES"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_pt_WINDRES" >&5
+$as_echo "$ac_pt_WINDRES" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_pt_WINDRES" = x; then
+    WINDRES=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    WINDRES=$ac_pt_WINDRES
+  fi
+else
+  WINDRES="$ac_cv_path_WINDRES"
+fi
+
+	fi
+	if test -z "$WINDRES"
+	then
+		as_fn_error "You must have the windres program installed" "$LINENO" 5
 	fi
 fi
-WINDRES=$WINDRES
-
 
 #---------------------------------------------------------------------------------------------
 # CHECK winsock2
@@ -7441,7 +7452,6 @@ eval PKGLIBDIR="$PKGLIBDIR"
 eval PKGDATADIR="$PKGDATADIR"
 
 #---------------------------------------------------------------------------------------------
-
 
 EXE_EXT="$ac_exe_ext"
 

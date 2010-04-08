@@ -109,12 +109,9 @@ AC_ARG_ENABLE(universal,
 
 #---------------------------------------------------------------------------------------------
 # defined some defaults for users (mac-users..) who might not have pkg-config.
-# actually, right now this is only required for the UFORadiant built
-# this is kind-of a work-around,,,
 #---------------------------------------------------------------------------------------------
 m4_define_default([PKG_CHECK_MODULES],
 	[AC_MSG_ERROR([For current build options, pkg-config is required. Did you maybe forget to run aclocal with the current include path?])])
-
 
 #---------------------------------------------------------------------------------------------
 # CHECK SED
@@ -267,23 +264,18 @@ fi
 # CHECK windres
 #---------------------------------------------------------------------------------------------
 
-WINDRES=""
 if test $TARGET_OS = "mingw32"
 then
-	WINDRES=windres
-	AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
-	if test "$HAVE_WINDRES" != "yes"
+	AC_ARG_VAR([WINDRES], [path to windres utility])
+	if test "x$ac_cv_env_WINDRES_set" != "xset"
 	then
-		WINDRES="$host-windres $target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
-		AC_CHECK_PROGS(WINDRES,$WINDRES,no)
-		if test "$WINDRES" == "no"
-		then
-			WINDRES=""
-			AC_MSG_ERROR([You must have the windres program installed])
-		fi
+		AC_PATH_TOOL([WINDRES], [windres])
+	fi
+	if test -z "$WINDRES"
+	then
+		AC_MSG_ERROR([You must have the windres program installed])
 	fi
 fi
-AC_SUBST([WINDRES],$WINDRES)
 
 #---------------------------------------------------------------------------------------------
 # CHECK winsock2
@@ -921,7 +913,6 @@ eval PKGLIBDIR="$PKGLIBDIR"
 eval PKGDATADIR="$PKGDATADIR"
 
 #---------------------------------------------------------------------------------------------
-
 
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
 
