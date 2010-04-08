@@ -2752,10 +2752,16 @@ base/sound/geoscape/newmission.wav | GNU General Public License 2.0 | Karen Rei 
 base/sound/geoscape/promotion.wav |  |  | ambience/jingle.ogg
 base/sound/geoscape/standard.wav | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/ufospotted.wav | GNU General Public License 2.0 | BlakeD
+base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
 base/sound/misc/breakwood01.wav | Creative Commons Sampling Plus 1.0 | kevinkace | http://www.freesound.org/samplesViewSingle.php?id=66769
 base/sound/misc/breakwood02.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
 base/sound/misc/breakwood03.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
 base/sound/misc/breakwood04.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
+base/sound/misc/breakwood05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
 base/sound/misc/lobbyprivmsg.wav | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/misc/popup.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.wav | GNU General Public License 2.0 | Karen Rei Pease
