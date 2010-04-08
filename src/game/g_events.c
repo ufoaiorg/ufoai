@@ -24,6 +24,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+/**
+ * @brief Spawns a sound for all connected clients (that will be spatialized
+ * on the client side)
+ * @param ent The edict that is causing the sound
+ * @param origin The origin of the sound
+ * @param sound The sound file, path relative to sounds/. If there is a + at the end
+ * of the path, a random sound will be taken.
+ */
+void G_EventSpawnSound (const edict_t* ent, const vec3_t origin, const char *sound)
+{
+	gi.PositionedSound(PM_ALL, origin, ent, sound);
+}
 
 /**
  * @brief Send the turn event for the given entity

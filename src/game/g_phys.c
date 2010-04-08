@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void G_PhysicsStep (edict_t *ent)
 {
+	/**
+	 * @todo don't play foot step sounds for flying units.
+	 */
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
 		const int contentFlags = ent->contentFlags;
 		const int visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];

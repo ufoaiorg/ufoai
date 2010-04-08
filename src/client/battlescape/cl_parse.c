@@ -184,7 +184,18 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	sound = NET_ReadString(msg);
 	NET_ReadPos(msg, origin);
 
-	sample = S_LoadSample(sound);
+	if (sound[strlen(sound) - 1] == '+') {
+		const int length = strlen(sound) - 1;
+		char randomSound[MAX_QPATH];
+		Com_sprintf(randomSound, sizeof(randomSound), "%s", sound);
+		/** @todo make this random */
+		randomSound[length + 0] = '0';
+		randomSound[length + 1] = '1';
+		sample = S_LoadSample(randomSound);
+	} else {
+		sample = S_LoadSample(sound);
+	}
+
 	S_PlaySample(origin, sample, SOUND_ATTN_NORM, SND_VOLUME_DEFAULT);
 }
 

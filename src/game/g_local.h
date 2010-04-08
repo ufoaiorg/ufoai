@@ -364,6 +364,7 @@ void G_RecalcRouting(const edict_t * ent);
 void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 
 /* g_events.c */
+void G_EventSpawnSound(const edict_t* ent, const vec3_t origin, const char *sound);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventActorFall(const edict_t* ent);
 void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
