@@ -100,10 +100,10 @@ copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
 # =======================
 
 strip-dev-files-ufoai: copy-package-bundle-ufoai
-	@find $(UFOAI_MAC_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
+	@find $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
 
 strip-dev-files-uforadiant: copy-package-bundle-uforadiant
-	@find $(UFORADIANT_MAC_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
+	@find $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
 
 # =======================
 
