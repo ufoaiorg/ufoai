@@ -80,11 +80,11 @@ copynotes-uforadiant: package-dir-uforadiant
 # =======================
 
 copylibs-ufoai:
-	@rm -rf UFOAI.app/Contents/Frameworks/*.framework
+	@rm -rf $(MAC_INST_DIR)/UFOAI.app/Contents/Frameworks/*.framework
 	@perl $(MAC_INST_DIR)/macfixlibs.pl $(MAC_INST_DIR)/UFOAI.app ufo ufoded ufo2map
 
 copylibs-uforadiant:
-	@rm -rf UFORadiant.app/Contents/Frameworks/*.framework
+	@rm -rf $(MAC_INST_DIR)/UFORadiant.app/Contents/Frameworks/*.framework
 	@perl $(MAC_INST_DIR)/macfixlibs.pl $(MAC_INST_DIR)/UFORadiant.app uforadiant
 
 # =======================
@@ -117,11 +117,11 @@ bundle-nodata-ufoai: copybinaries-ufoai copylibs-ufoai copynotes-ufoai
 # =======================
 
 create-dmg-ufoai: bundle-ufoai updateversion-ufoai copy-package-bundle-ufoai strip-dev-files-ufoai
-	@rm -f $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME).dmg
+	@rm -f $(UFOAI_MAC_PACKAGE_NAME).dmg
 	@hdiutil create -volname "UFO: Alien Invasion $(UFOAI_VERSION)" -srcfolder $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME) $(UFOAI_MAC_PACKAGE_NAME).dmg
 
 create-dmg-uforadiant: bundle-uforadiant updateversion-uforadiant copy-package-bundle-uforadiant strip-dev-files-uforadiant
-	@rm -f $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME).dmg
+	@rm -f $(UFORADIANT_MAC_PACKAGE_NAME).dmg
 	@hdiutil create -volname "UFORadiant $(UFORADIANT_VERSION)" -srcfolder $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME) $(UFORADIANT_MAC_PACKAGE_NAME).dmg
 
 create-dmg: create-dmg-ufoai create-dmg-uforadiant
