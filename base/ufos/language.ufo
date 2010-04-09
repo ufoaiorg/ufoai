@@ -316,6 +316,14 @@ language bg {
 	}
 }
 
+language no {
+	"_Norwegian"
+	{
+		no.UTF-8
+		no.utf8
+	}
+}
+
 language none {
 	"_No language"
 	{
