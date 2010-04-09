@@ -1,44 +1,48 @@
-#!/bin/bash
-
-DIR="${1:-.}"
-#silent=no
-[[ $silent ]] && echo "using directory $DIR"
-
-# define REPORTNEGATIVES to report all files that had no modifications performed
-#REPORTNEGATIVES=yes
-
-# define REPORTPOSITIVES to report action on svn setting
-#REPORTPOSITIVES=yes
-
-set -f
-[[ $silent ]] && echo "setting mime types"
-
-# we use order created by sort_mimetypes.sh
-
-. mimetypes
-for ((EXTENSION=0; EXTENSION < ${#MIME_EXTENSION[@]}; EXTENSION++)); do
-	[[ $NOTFIRST ]] && {
-		EXPRESSION="$EXPRESSION -o "
-	} || {
-		NOTFIRST=yes
-	}
-	EXPRESSION="${EXPRESSION}-name *.${MIME_EXTENSION[$EXTENSION]}"
-done
+#! /bin/sh
 
 mime () {
-	if [ "$(svn pg svn:mime-type "$3")" == "$2" ]; then
-		[[ $REPORTNEGATIVES ]] && echo "not setting mime type for $3, already $2"
-	else
-		[[ $REPORTPOSITIVES ]] && echo "*** setting svn:mime-type to $2 for $3"
-		svn ps svn:mime-type $2 "$3"
-	fi
+	for D in "$@"; do
+		find "$D" -type f | while read I; do
+			case "$I" in
+				*.3ds)   TYPE=application/x-3ds;;
+				*.blend) TYPE=application/x-blender;;
+				*.bmp)   TYPE=image/bmp;;
+				*.bz2)   TYPE=application/bzip2;;
+				*.doc)   TYPE=application/msword;;
+				*.exe)   TYPE=application/x-executable;;
+				*.gif)   TYPE=image/gif;;
+				*.html)  TYPE=text/html;;
+				*.ico)   TYPE=image/x-icon;;
+				*.jpeg)  TYPE=image/jpeg;;
+				*.jpg)   TYPE=image/jpeg;;
+				*.odg)   TYPE=application/vnd.oasis.opendocument.graphics;;
+				*.ogg)   TYPE=audio/ogg;;
+				*.pdf)   TYPE=application/pdf;;
+				*.pl)    TYPE=text/x-perl;;
+				*.png)   TYPE=image/png;;
+				*.po)    TYPE=text/x-gettext-translation;;
+				*.psd)   TYPE=image/psd;;
+				*.py)    TYPE=text/x-python;;
+				*.sh)    TYPE=text/x-sh;;
+				*.svg)   TYPE=image/svg+xml;;
+				*.tga)   TYPE=image/x-tga;;
+				*.tif)   TYPE=image/tiff;;
+				*.ttf)   TYPE=application/x-truetype-font;;
+				*.txt)   TYPE=text/plain;;
+				*.wav)   TYPE=audio/x-wav;;
+				*.xbm)   TYPE=image/x-xbitmap;;
+				*.xcf)   TYPE=image/x-xcf;;
+				*.xpm)   TYPE=image/x-xpixmap;;
+				*.zip)   TYPE=application/zip;;
+				*)       continue;;
+			esac
+			svn ps -q svn:mime-type "$TYPE" "$I"
+		done
+	done
 }
 
-while read FILENAME; do
-	for ((EXTENSION=0; EXTENSION < ${#MIME_EXTENSION[@]}; EXTENSION++)); do
-	if [ "${FILENAME##*.}" == "${MIME_EXTENSION[$EXTENSION]}" ]; then
-		mime "${MIME_EXTENSION[$EXTENSION]}" "${MIME_TYPE[$EXTENSION]}" "$FILENAME"
-	fi
-	done
-done < <(find "$DIR" -type f ! -wholename '*/.svn*' $EXPRESSION)
-set +f
+if [ "$#" = 0 ]; then
+	mime .
+else
+	mime "$@"
+fi
