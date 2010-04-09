@@ -119,7 +119,7 @@ typedef struct {
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
 	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
 
-	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound);
+	void (IMPORT *PositionedSound) (int mask, const vec3_t origin, const edict_t *ent, const char *sound);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when

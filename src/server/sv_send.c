@@ -145,7 +145,7 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 /**
  * @brief If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound)
+void SV_StartSound (int mask, const vec3_t origin, const edict_t *entity, const char *sound)
 {
 	vec3_t origin_v;
 	struct dbuffer *msg;

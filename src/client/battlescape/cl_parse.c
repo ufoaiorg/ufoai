@@ -187,11 +187,19 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	if (sound[strlen(sound) - 1] == '+') {
 		const int length = strlen(sound) - 1;
 		char randomSound[MAX_QPATH];
+		int i = 1;
 		Com_sprintf(randomSound, sizeof(randomSound), "%s", sound);
-		/** @todo make this random */
-		randomSound[length + 0] = '0';
-		randomSound[length + 1] = '1';
-		sample = S_LoadSample(randomSound);
+		randomSound[length + 0] = '\0';
+		for (;;) {
+			if (i > 99)
+				break;
+
+			if (FS_CheckFile("sounds/%s%c%c", randomSound, i / 10 + '0', i % 10 + '0') == -1)
+				break;
+			i++;
+		}
+
+		sample = S_LoadSample(va("%s%02i", randomSound, (rand() % i) + 1));
 	} else {
 		sample = S_LoadSample(sound);
 	}

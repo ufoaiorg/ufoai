@@ -157,7 +157,7 @@ void SV_ReadPacket(struct net_stream *s);
 void SV_Map(qboolean day, const char *levelstring, const char *assembly);
 
 void SV_Multicast(int mask, struct dbuffer *msg);
-void SV_StartSound(int mask, vec3_t origin, edict_t *entity, const char* sound);
+void SV_StartSound(int mask, const vec3_t origin, const edict_t *entity, const char* sound);
 void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
 void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...) __attribute__((format(printf,3,4)));
 void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(printf,2,3)));
