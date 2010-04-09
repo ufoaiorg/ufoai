@@ -4244,7 +4244,7 @@ base/textures/tex_trak/wall4d.tga | MIT/X11 license (GPL compatible) | Georges "
 base/textures/tex_trak/wall4d_nm.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/wall7a.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/wall7a_nm.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
-base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_01.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_01_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_02.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_02_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4260,19 +4260,19 @@ base/textures/tex_ufo/ufo1_02a6.png | GNU General Public License 2.0 or later | 
 base/textures/tex_ufo/ufo1_02a7.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_02a8.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_02a9.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_03.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_03_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_04.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_04.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_04_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo1_05_glow.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_05.png | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo1_05_glow.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_05_glow_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_05_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_01.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_01_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_02.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_02.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_02_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_03.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_03_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_04.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_04_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4292,9 +4292,9 @@ base/textures/tex_ufo/ufo2_04a6.png | GNU General Public License 2.0 or later | 
 base/textures/tex_ufo/ufo2_04a7.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_04a8.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_04a9.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_05.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_05_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_06.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_06.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_06_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_06a0.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_06a1.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
@@ -4324,7 +4324,7 @@ base/textures/tex_ufo/ufo2_07a6.png | GNU General Public License 2.0 or later | 
 base/textures/tex_ufo/ufo2_07a7.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07a8.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07a9.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_08.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_08.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_08_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_09.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_09_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4358,17 +4358,17 @@ base/textures/tex_ufo/ufo2_10a6.png | GNU General Public License 2.0 or later | 
 base/textures/tex_ufo/ufo2_10a7.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10a8.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10a9.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_11.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_12_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_13_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_14.jpg | GNU General Public License 2.0 | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_14.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_14_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_15_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_16_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_17_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_medic01.jpg |  | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_medic02.jpg |  | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_medic01.png |  | "SparX" Beyeler
+base/textures/tex_ufo/ufo2_medic02.png |  | "SparX" Beyeler
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
