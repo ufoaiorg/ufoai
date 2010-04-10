@@ -286,7 +286,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		/* server info cvars and users are seperated via newline */
 		const char *users = strstr(s, "\n");
 		if (!users) {
-			Com_Printf("%c%s\n", COLORED_GREEN, s);
+			Com_Printf(COLORED_GREEN "%s\n", s);
 			return;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
@@ -343,7 +343,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		MN_RegisterText(TEXT_LIST, userInfoText);
 		MN_PushWindow("serverinfo", NULL);
 	} else
-		Com_Printf("%c%s", COLORED_GREEN, s);
+		Com_Printf(COLORED_GREEN "%s", s);
 }
 
 /**

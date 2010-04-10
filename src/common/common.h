@@ -184,7 +184,7 @@ MISC
 #define	ERR_QUIT	2			/* not an error, just a normal exit */
 
 /* text color constant */
-#define	COLORED_GREEN		1
+#define	COLORED_GREEN "\1"
 
 void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
 void Com_EndRedirect(void);
