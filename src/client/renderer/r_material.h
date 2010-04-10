@@ -110,8 +110,15 @@ typedef struct tape_s {
 	float center;	/**< the center where the maximum alpha value should be */
 } tape_t;
 
+typedef enum {
+	ANIM_NORMAL,	/**< loops the animation from frame [0, n-1] */
+	ANIM_ALTERNATE,	/**< amount of frames should be uneven [0, n-1, 1] */
+	ANIM_BACKWARDS	/**< plays the animation in reverse order. Loops from [n-1, 0] */
+} animLoop_t;
+
 typedef struct anim_s {
 	int num_frames;
+	animLoop_t type;
 	struct image_s *images[MAX_ANIM_FRAMES];
 	float fps;
 	float dtime;
