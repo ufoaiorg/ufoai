@@ -68,10 +68,9 @@ void R_InitFBObjects (void)
 	activeFramebuffer = &screenBuffer;
 
 	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
-	colorAttachments = malloc(sizeof(GLenum) * maxDrawBuffers);
-	for (i = 0; i < maxDrawBuffers; i++){
+	colorAttachments = Mem_Alloc(sizeof(GLenum) * maxDrawBuffers);
+	for (i = 0; i < maxDrawBuffers; i++)
 		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
-	}
 
 	filters[0] = GL_NEAREST;
 	filters[1] = GL_LINEAR_MIPMAP_LINEAR;
@@ -105,8 +104,10 @@ void R_DeleteFBObject (r_framebuffer_t *buf)
 		qglDeleteRenderbuffersEXT(1, &buf->depth);
 	buf->depth = 0;
 
-	if (buf->textures)
+	if (buf->textures) {
 		glDeleteTextures(buf->nTextures, buf->textures);
+		Mem_Free(buf->textures);
+	}
 	buf->textures = 0;
 
 	if (buf->fbo)
@@ -120,11 +121,12 @@ void R_DeleteFBObject (r_framebuffer_t *buf)
  */
 void R_ShutdownFBObjects (void)
 {
+	int i;
 	Com_Printf("Shutting down framebuffer objects...\n");
 	if (!r_framebuffer_objects_initialized)
 		return;
 
-	for (int i = 0; i < FBObjectCount; i++)
+	for (i = 0; i < FBObjectCount; i++)
 		R_DeleteFBObject(&FBObjects[i]);
 
 	R_UseFramebuffer(&screenBuffer);
@@ -132,6 +134,8 @@ void R_ShutdownFBObjects (void)
 	FBObjectCount = 0;
 	memset(FBObjects, 0, sizeof(FBObjects));
 	r_framebuffer_objects_initialized = qfalse;
+
+	Mem_Free(colorAttachments);
 }
 
 
@@ -142,6 +146,8 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 {
 	GLint maxDrawBuffers;
 	r_framebuffer_t *buf;
+	int i;
+
 	if (!r_framebuffer_objects_initialized) {
 		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
 		return 0;
@@ -153,7 +159,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	if (ntextures > maxDrawBuffers)
 		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
 
-	for (int i = 0; i < 4; i++)
+	for (i = 0; i < 4; i++)
 		buf->clearColor[i] = 0.0;
 
 	buf->width = width;
@@ -164,14 +170,14 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	buf->viewport.height = height;
 
 	buf->nTextures = ntextures;
-	buf->textures = malloc(sizeof(GLuint) * (ntextures + 1));
+	buf->textures = Mem_Alloc(sizeof(GLuint) * (ntextures + 1));
 
 	buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA16F_ARB : GL_RGBA8;
 	buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 
 	glGenTextures(buf->nTextures, buf->textures);
 
-	for (int i = 0 ; i < buf->nTextures; i++) {
+	for (i = 0 ; i < buf->nTextures; i++) {
 		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
 
@@ -204,7 +210,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	R_CheckError();
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
 
-	for (int i = 0; i < buf->nTextures; i++) {
+	for (i = 0; i < buf->nTextures; i++) {
 		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
 		R_CheckError();

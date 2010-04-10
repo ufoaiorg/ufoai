@@ -669,7 +669,9 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 qboolean R_ImageExists (const char *pname)
 {
 	const char **types = Img_GetImageTypes();
-	for (int i = 0; types[i]; i++) {
+	int i;
+
+	for (i = 0; types[i]; i++) {
 		if (FS_CheckFile("%s.%s", pname, types[i]) != -1)
 			return qtrue;
 	}
