@@ -1272,7 +1272,7 @@ static void MAP3D_SmoothRotate (void)
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		/* when we rotate (and zoom) */
 		if (diff_angle > epsilon) {
-			const float rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle / smoothDeltaLength;
+			const float rotationSpeed = sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle;
 			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
