@@ -41,31 +41,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dll"
 #  endif
-#  if defined __i386__
-#    define CPUSTRING "x86"
-#  elif defined __x86_64__
-#    define CPUSTRING "x86_64"
-#  elif defined __ia64__
-#    define CPUSTRING "IA-64"
-#  elif defined __alpha__
-#    define CPUSTRING "AXP"
-#  else
-#    define CPUSTRING "Unknown"
-#  endif
 
 #elif defined __linux__
 #  define BUILDSTRING_OS "Linux"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
-#  endif
-#  if defined  __i386__
-#    define CPUSTRING "i386"
-#  elif defined __x86_64__
-#    define CPUSTRING "x86_64"
-#  elif defined __alpha__
-#    define CPUSTRING "axp"
-#  else
-#    define CPUSTRING "Unknown"
 #  endif
 
 #elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
@@ -73,25 +53,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
 #  endif
-#  if defined  __i386__
-#    define CPUSTRING "i386"
-#  elif defined __x86_64__
-#    define CPUSTRING "x86_64"
-#  elif defined __alpha__
-#    define CPUSTRING "axp"
-#  else
-#    define CPUSTRING "Unknown"
-#  endif
 
 #elif defined __sun
 #  define BUILDSTRING_OS "Solaris"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
-#  endif
-#  if defined __i386__
-#    define CPUSTRING "i386"
-#  else
-#    define CPUSTRING "sparc"
 #  endif
 
 #elif defined (__APPLE__) || defined (MACOSX)
@@ -99,17 +65,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dylib"
 #  endif
-#  if defined __i386__
-#    define CPUSTRING "i386"
-#  elif defined __powerpc__
-#    define CPUSTRING "ppc"
-#  else
-#    define CPUSTRING "Unknown"
-#  endif
 
 #else
 #  define BUILDSTRING_OS "Unknown"
-#  define CPUSTRING	"Unknown"
+#endif
+
+#if defined __alpha__ || defined __alpha || defined _M_ALPHA
+#  define CPUSTRING "Alpha"
+#elif defined __amd64__ || defined __amd64 || defined __x86_64__ || defined __x86_64 || defined _M_X64
+#  define CPUSTRING "AMD64"
+#elif defined __arm__ || defined __thumb__ || defined _ARM
+#  define CPUSTRING "ARM"
+#elif defined i386 || defined __i386__ || defined __i386 || defined _M_IX86 || defined __X86__ || defined _X86_ || defined __THW_INTEL__ || defined __I86__ || defined __INTEL__
+#  define CPUSTRING "IA-32"
+#elif defined __ia64__ || defined _IA64 || defined __IA64__ || defined __ia64 || defined _M_IA64
+#  define CPUSTRING "IA-64"
+#elif defined __mips__ || defined mips || defined __mips || defined __MIPS__
+#  define CPUSTRING "MIPS"
+#elif defined __powerpc || defined __powerpc__ || defined __POWERPC__ || defined __ppc__ || defined _M_PPC || defined _ARCH_PPC
+#  define CPUSTRING "PowerPC"
+#elif defined __sparc__ || defined __sparc
+#  define CPUSTRING "SPARC"
+#else
+#  define CPUSTRING "Unknown"
 #endif
 
 #ifdef DEBUG
