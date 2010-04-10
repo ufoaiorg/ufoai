@@ -94,6 +94,7 @@ cvar_t *r_parallax;
 cvar_t *r_fog;
 cvar_t *r_flares;
 cvar_t *r_coronas;
+cvar_t *r_postprocess;
 
 /**
  * @brief Prints some OpenGL strings
@@ -388,6 +389,13 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
 }
 
+static qboolean R_CvarPostProcess (cvar_t *cvar)
+{
+	if (r_programs->integer && r_config.frameBufferObject)
+		return Cvar_AssertValue(r_postprocess, 0, 1, qtrue);
+	return Cvar_AssertValue(r_postprocess, 0, 0, qtrue);
+}
+
 static void R_RegisterSystemVars (void)
 {
 	const cmdList_t *commands;
@@ -513,6 +521,8 @@ qboolean R_SetMode (void)
 	}
 
 	result = R_InitGraphics();
+	R_ShutdownFBObjects();
+	R_InitFBObjects();
 	R_UpdateVidDef();
 	MN_InvalidateStack();
 
@@ -536,6 +546,8 @@ qboolean R_SetMode (void)
 		return qfalse;
 
 	result = R_InitGraphics();
+	R_ShutdownFBObjects();
+	R_InitFBObjects();
 	R_UpdateVidDef();
 	MN_InvalidateStack();
 	return result;
@@ -657,6 +669,7 @@ static qboolean R_InitExtensions (void)
 		qglGetUniformLocation = SDL_GL_GetProcAddress("glGetUniformLocation");
 		qglUniform1i = SDL_GL_GetProcAddress("glUniform1i");
 		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
+		qglUniform1fv = SDL_GL_GetProcAddress("glUniform1fv");
 		qglUniform2fv = SDL_GL_GetProcAddress("glUniform2fv");
 		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
 		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
@@ -687,12 +700,16 @@ static qboolean R_InitExtensions (void)
 		qglFramebufferRenderbufferEXT = SDL_GL_GetProcAddress("glFramebufferRenderbufferEXT");
 		qglGetFramebufferAttachmentParameterivEXT = SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
 		qglGenerateMipmapEXT = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
+		qglDrawBuffers = SDL_GL_GetProcAddress("glDrawBuffers");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
 		 && qglCheckFramebufferStatusEXT)
 			r_config.frameBufferObject = qtrue;
 	}
+
+	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
+	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
 
 	/* reset gl error state */
 	R_CheckError();
@@ -729,6 +746,25 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("but using %i as requested\n", r_maxtexres->integer);
 			r_config.maxTextureSize = r_maxtexres->integer;
 		}
+	}
+
+	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {
+		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir)); 
+		Com_Printf("Using high resolution globe textures as requested.\n");
+	} else if (r_config.maxTextureSize > 2048 && R_ImageExists("pics/geoscape/med/map_earth_season_00")) {
+		if (r_config.maxTextureSize > 4096) {
+			Com_Printf("Warning: high resolution globe textures requested, but could not be found; falling back to medium resolution globe textures.\n");
+		} else {
+			Com_Printf("Using medium resolution globe textures as requested.\n");
+		}
+		Q_strncpyz(r_config.lodDir, "med", sizeof(r_config.lodDir)); 
+	} else {
+		if (r_config.maxTextureSize > 2048) {
+			Com_Printf("Warning: medium resolution globe textures requested, but could not be found; falling back to low resolution globe textures.\n");
+		} else {
+			Com_Printf("Using low resolution globe textures as requested.\n");
+		}
+		Q_strncpyz(r_config.lodDir, "low", sizeof(r_config.lodDir)); 
 	}
 
 	/* multitexture is the only one we absolutely need */
@@ -877,6 +913,7 @@ void R_Shutdown (void)
 
 	R_ShutdownPrograms();
 	R_FontShutdown();
+	R_ShutdownFBObjects();
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	Rimp_Shutdown();

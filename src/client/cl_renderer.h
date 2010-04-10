@@ -55,6 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f
+#define SUN_RADIUS 1024.0f
 
 #define WEATHER_NONE	0
 #define WEATHER_FOG 	1

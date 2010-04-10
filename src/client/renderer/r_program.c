@@ -110,6 +110,16 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
+void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform1fv(v->location, size, value);
+}
+
 void R_ProgramParameter2fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;
@@ -118,6 +128,16 @@ void R_ProgramParameter2fv (const char *name, GLfloat *value)
 		return;
 
 	qglUniform2fv(v->location, 1, value);
+}
+
+void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform2fv(v->location, size, value);
 }
 
 void R_ProgramParameter3fv (const char *name, GLfloat *value)
@@ -356,7 +376,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		return NULL;
 	}
 
-	strncpy(sh->name, name, sizeof(sh->name));
+	Q_strncpyz(sh->name, name, sizeof(sh->name));
 
 	sh->type = type;
 
@@ -502,17 +522,61 @@ static void R_UseWarpProgram (r_program_t *prog)
 static void R_InitGeoscapeProgram (r_program_t *prog)
 {
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
+	static vec4_t cityLightColor = {1.0, 1.0, 0.8, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
-	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter4fv("defaultColor", defaultColor);
+	R_ProgramParameter4fv("cityLightColor", cityLightColor);
 	R_ProgramParameter2fv("uvScale", uvScale);
 	R_ProgramParameter1f("specularExp", 32.0);
+}
+
+/**
+ * @note this is a not-terribly-efficient recursive implementation,
+ * but it only happens once and shouldn't have to go very deep.
+ */
+static int R_PascalTriangle (int row, int col)
+{
+	if (row <= 1 || col <= 1 || col >= row)
+		return 1;
+	return R_PascalTriangle(row - 1, col) + R_PascalTriangle(row - 1, col - 1);
+}
+
+static void R_InitConvolveProgram (r_program_t *prog)
+{
+	int filterSize = FILTER_SIZE;
+	float *filter;
+	float sum = 0;
+	int i;
+
+	filter = malloc(sizeof(float) * filterSize);
+	r_state.filterSize = filterSize;
+
+	/* approximate a Gaussian by normalizing the Nth row of Pascale's Triangle */
+	for (i = 0; i < filterSize; i++) {
+		filter[i] = (float)R_PascalTriangle(filterSize, i + 1);
+		sum += filter[i];
+	}
+
+	for (i = 0; i < filterSize; i++)
+		filter[i] = (filter[i] / sum);
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1fvs("coefficients", filterSize, filter);
+}
+
+static void R_InitCombine2Program (r_program_t *prog)
+{
+	GLfloat defaultColor[4] = {0.0, 0.0, 0.0, 0.0};
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 1);
+
+	R_ProgramParameter4fv("defaultColor", defaultColor);
 }
 
 void R_InitParticleProgram (r_program_t *prog)
@@ -527,6 +591,7 @@ void R_UseParticleProgram (r_program_t *prog)
 
 void R_InitPrograms (void)
 {
+	char buf[] = "convolve###\0";
 	if (!qglCreateProgram) {
 		Cvar_Set("r_programs", "0");
 		r_programs->modified = qfalse;
@@ -545,6 +610,10 @@ void R_InitPrograms (void)
 	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
+	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
+
+	sprintf(buf, "convolve%d", FILTER_SIZE);
+	r_state.convolve_program = R_LoadProgram(buf, R_InitConvolveProgram, NULL);
 }
 
 /**

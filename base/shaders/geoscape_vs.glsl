@@ -1,18 +1,13 @@
-varying vec2 tex;
-varying vec4 vertPos;
-varying vec3 normal;
-varying vec3 tangent;
-varying vec3 binormal;
+varying out vec2 tex;
 
-varying vec4 lightPos;
-varying vec4 ambientLight;
-varying vec4 diffuseLight;
-varying vec4 specularLight;
+varying out vec4 ambientLight;
+varying out vec4 diffuseLight;
+varying out vec4 specularLight;
+varying out vec4 diffuseLight2;
 
-varying vec4 lightPos2;
-varying vec4 ambientLight2;
-varying vec4 diffuseLight2;
-varying vec4 specularLight2;
+varying out vec3 lightVec;
+varying out vec3 lightVec2;
+varying out vec3 eyeVec;
 
 uniform vec2 uvScale;
 
@@ -20,19 +15,32 @@ void main()
 {
 	gl_Position = ftransform();
 	tex = gl_MultiTexCoord0.xy * uvScale;
-	vertPos = gl_ModelViewMatrix * gl_Vertex;
 
-	lightPos = gl_LightSource[0].position;
+	vec4 lightPos = gl_LightSource[0].position;
 	ambientLight = gl_LightSource[0].ambient;
 	diffuseLight = gl_LightSource[0].diffuse;
 	specularLight = gl_LightSource[0].specular;
 
-	lightPos2 =  gl_LightSource[1].position;
-	ambientLight2 = gl_LightSource[1].ambient;
+	vec4 lightPos2 =  gl_LightSource[1].position;
 	diffuseLight2 = gl_LightSource[1].diffuse;
-	specularLight2 = gl_LightSource[1].specular;
 
-	tangent = gl_NormalMatrix * gl_MultiTexCoord3.xyz;
-	binormal = gl_NormalMatrix * gl_MultiTexCoord4.xyz;
-	normal = gl_NormalMatrix * gl_Normal;
+	vec3 t, b, n;
+	n = normalize(gl_NormalMatrix * gl_Normal);
+	t = normalize(cross(n, vec3(1.0, 0.0, 0.0)));
+	b = normalize(cross(t, n)); 
+
+	lightVec.x = dot(lightPos.rgb, t);
+	lightVec.y = dot(lightPos.rgb, b);
+	lightVec.z = dot(lightPos.rgb, n);
+
+	lightVec2.x = dot(lightPos2.rgb, t);
+	lightVec2.y = dot(lightPos2.rgb, b);
+	lightVec2.z = dot(lightPos2.rgb, n);
+
+	/* estimate view vector (orthographic projection means we don't really have one) */
+	vec4 view = {0.0, 0.0, 100.0, 1.0};
+	eyeVec.x = dot(view, t);
+	eyeVec.y = dot(view, b);
+	eyeVec.z = dot(view, n);
 }
+

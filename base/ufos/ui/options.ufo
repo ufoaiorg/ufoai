@@ -416,6 +416,20 @@ window options
 			image		"ui/checkbox_blue"
 		}
 
+		string postprocess_str
+		{
+			string		"_Enable post-processing shader effects:"
+			pos			"85 640"
+			size		"370 20"
+		}
+		checkbox postprocess
+		{
+			current		*cvar:r_postprocess
+			pos			"463 640"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+		}
+
 		selectbox lightmapres_box
 		{
 			cvar		*cvar:r_maxlightmap

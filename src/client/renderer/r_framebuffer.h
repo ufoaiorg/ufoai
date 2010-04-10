@@ -24,11 +24,40 @@
 #ifndef R_FRAMEBUFFER_H_
 #define R_FRAMEBUFFER_H_
 
+typedef struct {
+	GLint x;
+	GLint y;
+	GLsizei width;
+	GLsizei height;
+} r_viewport_t;
+
+typedef struct {
+	GLsizei width;
+	GLsizei height;
+	GLfloat clearColor[4];
+	r_viewport_t viewport;
+	GLenum pixelFormat;
+	GLenum byteFormat;
+	GLuint depth;
+	GLuint fbo;
+	GLsizei nTextures;
+	GLuint *textures;
+} r_framebuffer_t;
+
+
 void R_InitFBObjects(void);
-int R_RegisterFBObject(void);
-qboolean R_UseFBObject(int object);
-int R_ActiveFBObject(void);
-qboolean R_AttachTextureToFBOject(int object, image_t *texture);
 void R_ShutdownFBObjects(void);
 
-#endif
+r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters);
+void R_DeleteFBObject(r_framebuffer_t *buf);
+
+void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);
+void R_SetClearColor(r_framebuffer_t *buf, float r, float g, float b, float a);
+void R_UseViewport(r_framebuffer_t *buf);
+
+void R_UseFramebuffer(r_framebuffer_t *buf);
+void R_ClearBuffer(void);
+void R_DrawBuffers(int n);
+
+#endif /* R_FRAMEBUFFER_H_ */
+

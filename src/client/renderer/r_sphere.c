@@ -31,6 +31,7 @@ static cvar_t *r_sphereDetails;
 
 sphere_t r_globeEarth;
 sphere_t r_globeMoon;
+sphere_t r_globeSun;
 
 static inline float rhoSpiral (const int index, const float deltaRho,const float thetaAngle)
 {
@@ -107,6 +108,24 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 	sphere->num_tris = (tris + 1) * (tris + 2) * 2;
 }
 
+/**
+ * @brief Creates the spheres we need for rendering the 3d globe
+ * @note The moon sphere has less detail because it's smaller in the scene
+ * @note The sizes are arbitrary, becasue we use orthographic projection.  The real
+ * 		sizes are: lunarRadius = 0.273 * earthRadius, solarRadius = 110.0 * earthRadius
+ * @sa R_Init
+ */
+void R_SphereInit (void)
+{
+	r_sphereDetails = Cvar_Get("r_sphereDetails", "1.0", CVAR_ARCHIVE, "Factor to increase or decrease the sphere tris");
+	if (r_sphereDetails->integer <= 0)
+		Cvar_SetValue("r_sphereDetails", 1.0);
+
+	R_SphereGenerate(&r_globeEarth, 60 * r_sphereDetails->value, EARTH_RADIUS);
+	/* the earth has more details than the moon */
+	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
+}
+
 static inline void R_SphereActivateTextureUnit (gltexunit_t *texunit, void *texCoordBuffer)
 {
 	R_SelectTexture(texunit);
@@ -136,9 +155,9 @@ static void R_SphereRenderTris (const sphere_t *sphere)
  * @param sphere The sphere to check
  * @return @c true if all needed data is loaded to use the geoscape glsl shaders, @c false otherwise
  */
-static inline qboolean R_SphereGLSL (const sphere_t *sphere)
+static inline qboolean R_SphereCheckGLSL (const sphere_t *sphere)
 {
-	return sphere->blendTexture && sphere->normalMap && sphere->glossMap && sphere->nightOverlay;
+	return sphere->blendTexture && sphere->normalMap && qglUseProgram && r_programs->integer;
 }
 
 /**
@@ -151,9 +170,11 @@ static inline qboolean R_SphereGLSL (const sphere_t *sphere)
  */
 void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos)
 {
+
 	/* go to a new matrix */
 	glPushMatrix();
 
+	glMatrixMode(GL_MODELVIEW);
 	glTranslatef(pos[0], pos[1], pos[2]);
 
 	/* flatten the sphere */
@@ -165,78 +186,17 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	glRotatef(rotate[ROLL], 0, 1, 0);
 	glRotatef(rotate[PITCH], 0, 0, 1);
 
-	if (lightPos && !VectorNotEmpty(lightPos))
+	if (lightPos && VectorNotEmpty(lightPos))
 		glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	R_CheckError();
 
-	/* render base globe texture with bump mapping */
-	if (!sphere->overlay && r_programs->integer && R_SphereGLSL(sphere)) {
-		vec3_t v;
+	if (!sphere->overlay  && R_SphereCheckGLSL(sphere))
+		R_SphereShadeGLSL(sphere); /* render globe with bump mapping, specularity, etc. */
+	else 
+		R_SphereShade(sphere); /* otherwise, use basic OpenGL rendering */
 
-		if (!Vector4NotEmpty(sphere->nightLightPos))
-			glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
-
-		/* configure openGL to use our shader program */
-		R_EnableLighting(r_state.geoscape_program, qtrue);
-
-		R_BindTexture(sphere->texture->texnum);
-		R_BindDeluxemapTexture(sphere->glossMap->texnum);
-		R_BindNormalmapTexture(sphere->normalMap->texnum);
-		R_BindLightmapTexture(sphere->nightOverlay->texnum);
-		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_4);
-
-		R_ProgramParameter1f("blendScale", sphere->blendScale);
-		VectorCopy(pos, v);
-		R_ProgramParameter3fv("viewVec", v);
-
-		/* set up pointers */
-		R_SphereActivateTextureUnit(&texunit_4, sphere->texes);
-		R_SphereActivateTextureUnit(&texunit_normalmap, sphere->texes);
-
-		R_SelectTexture(&texunit_diffuse);
-		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
-
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
-
-		R_SphereRenderTris(sphere);
-
-		R_SphereDeactivateTextureUnit(&texunit_4);
-		R_SphereDeactivateTextureUnit(&texunit_normalmap);
-		R_SphereDeactivateTextureUnit(&texunit_lightmap);
-
-		/* deactivate the shader program */
-		R_EnableLighting(NULL, qfalse);
-		R_SelectTexture(&texunit_diffuse);
-	} else {
-		/* solid globe texture */
-		if (sphere->overlay)
-			R_BindTexture(sphere->overlay->texnum);
-		else
-			R_BindTexture(sphere->texture->texnum);
-
-		if (sphere->overlayAlphaMask) {
-			R_EnableTexture(&texunit_lightmap, qtrue);
-			R_SelectTexture(&texunit_lightmap);
-			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-			R_BindLightmapTexture(sphere->overlayAlphaMask->texnum);
-		}
-
-		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
-		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
-
-		glEnableClientState(GL_NORMAL_ARRAY);
-
-		R_SphereRenderTris(sphere);
-
-		glDisableClientState(GL_NORMAL_ARRAY);
-
-		if (sphere->overlayAlphaMask)
-			R_EnableTexture(&texunit_lightmap, qfalse);
-	}
-
+	/* cleanup common to both GLSL and normal rendering */
 	R_CheckError();
 
 	/* restore the previous matrix */
@@ -249,18 +209,71 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 }
 
-/**
- * @brief Creates the spheres we need for rendering the 3d globe
- * @note The moon sphere has less details because it's a lot smaller in the real scene
- * @sa R_Init
+/** 
+ * @brief render sphere using standard OpenGL lighting
  */
-void R_SphereInit (void)
+void R_SphereShade (const sphere_t *sphere)
 {
-	r_sphereDetails = Cvar_Get("r_sphereDetails", "1.0", CVAR_ARCHIVE, "Factor to increase or decrease the sphere tris");
-	if (r_sphereDetails->integer <= 0)
-		Cvar_SetValue("r_sphereDetails", 1.0);
+	if (sphere->overlay)
+		R_BindTexture(sphere->overlay->texnum);
+	else
+		R_BindTexture(sphere->texture->texnum);
 
-	R_SphereGenerate(&r_globeEarth, 60 * r_sphereDetails->value, EARTH_RADIUS);
-	/* the earth has more details than the moon */
-	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
+	if (sphere->overlayAlphaMask) {
+		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_SelectTexture(&texunit_lightmap);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+		R_BindLightmapTexture(sphere->overlayAlphaMask->texnum);
+	}
+
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
+
+	glEnableClientState(GL_NORMAL_ARRAY);
+
+	R_SphereRenderTris(sphere);
+
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	if (sphere->overlayAlphaMask)
+		R_EnableTexture(&texunit_lightmap, qfalse);
 }
+
+/**
+ * @brief render sphere using GLSL (bump mapping, specularity, and season-blending)
+ */
+void R_SphereShadeGLSL (const sphere_t *sphere)
+{
+	if (Vector4NotEmpty(sphere->nightLightPos))
+		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
+
+	/* configure openGL to use our shader program */
+	R_EnableLighting(r_state.geoscape_program, qtrue);
+
+	R_BindTexture(sphere->texture->texnum);
+	R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_1);
+	R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
+
+	R_ProgramParameter1f("blendScale", sphere->blendScale);
+	R_ProgramParameter1f("glowScale", sphere->glowScale);
+
+	/* set up pointers */
+	R_SphereActivateTextureUnit(&texunit_1, sphere->texes);
+	R_SphereActivateTextureUnit(&texunit_2, sphere->texes);
+
+	R_SelectTexture(&texunit_diffuse);
+	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, sphere->texes);
+	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, sphere->normals);
+
+	R_SphereRenderTris(sphere);
+
+	R_SphereDeactivateTextureUnit(&texunit_1);
+	R_SphereDeactivateTextureUnit(&texunit_2);
+
+	/* deactivate the shader program */
+	R_EnableLighting(NULL, qfalse);
+	R_SelectTexture(&texunit_diffuse);
+}
+

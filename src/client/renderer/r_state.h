@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_program.h"
 #include "r_material.h"
+#include "r_framebuffer.h"
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
@@ -56,6 +57,15 @@ typedef struct gltexunit_s {
 #define texunit_deluxemap	texunit_2
 #define texunit_normalmap	texunit_3
 
+
+#define DOWNSAMPLE_PASSES	5
+#define DOWNSAMPLE_SCALE	2
+
+#define fbo_screen			0
+#define fbo_render			r_state.renderBuffer
+#define fbo_bloom0			r_state.bloomBuffer0
+#define fbo_bloom1			r_state.bloomBuffer1
+
 typedef struct {
 	qboolean fullscreen;
 
@@ -69,6 +79,13 @@ typedef struct {
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];
 
+	/* framebuffer objects*/
+	r_framebuffer_t *renderBuffer;
+	r_framebuffer_t *bloomBuffer0;
+	r_framebuffer_t *bloomBuffer1;
+	r_framebuffer_t *buffers0[DOWNSAMPLE_PASSES];
+	r_framebuffer_t *buffers1[DOWNSAMPLE_PASSES];
+
 	/* texunit in use */
 	gltexunit_t *active_texunit;
 
@@ -78,12 +95,17 @@ typedef struct {
 	r_program_t *mesh_program;
 	r_program_t *warp_program;
 	r_program_t *geoscape_program;
+	r_program_t *convolve_program;
+	r_program_t *combine2_program;
 	r_program_t *active_program;
 
 	/* blend function */
 	GLenum blend_src, blend_dest;
 
 	material_t *active_material;
+
+	/* convolution filter (for glow/blur) */
+	int filterSize;
 
 	/* states */
 	qboolean blend_enabled;

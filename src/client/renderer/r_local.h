@@ -149,6 +149,7 @@ typedef struct {
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;
+	char lodDir[8];
 
 	int videoMemory;
 
