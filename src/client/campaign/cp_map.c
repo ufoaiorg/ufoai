@@ -133,6 +133,10 @@ static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we n
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
+static float curZoomSpeed = 0.0f;			/**< The current zooming speed. Used for smooth zooming. */
+static float curRotationSpeed = 0.0f;		/**< The current rotation speed. Used for smooth rotating.*/
+
+
 static const float defaultBaseAngle = 90.0f;	/**< Default angle value for 3D models like bases */
 
 static byte *terrainPic;				/**< this is the terrain mask for separating the clima
@@ -1271,8 +1275,16 @@ static void MAP3D_SmoothRotate (void)
 
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		/* when we rotate (and zoom) */
+		float rotationSpeed;
 		if (diff_angle > epsilon) {
-			const float rotationSpeed = sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle;
+			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
+			 * This allows the globe to rotate at maximum speed when the button is held down. */
+			if (diff_angle / smoothDeltaLength > 0.5)
+				rotationSpeed = min(diff_angle, curRotationSpeed + sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle * 0.5);
+			else {
+				rotationSpeed = sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle;
+			}
+			curRotationSpeed = rotationSpeed;
 			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
@@ -1281,7 +1293,15 @@ static void MAP3D_SmoothRotate (void)
 	} else {
 		/* when we zoom only */
 		if (fabs(diff_zoom) > epsilonZoom) {
-			const float speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
+			float speed;
+			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
+			 * This allows the globe to zoom at maximum speed when the button is held down. */
+			if (fabs(diff_zoom) / smoothDeltaZoom > 0.5)
+				speed = min(smoothAcceleration * 2.0, curZoomSpeed + sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration);
+			else {
+				speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
+			}
+			curZoomSpeed = speed;
 			ccs.zoom = ccs.zoom + diff_zoom * speed;
 			return;
 		}
