@@ -37,11 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_TITLE_LONG "UFO:Alien Invasion"
 
 #ifdef _WIN32
-#  ifdef DEBUG
-#    define BUILDSTRING_OS "Win32 DEBUG"
-#  else
-#    define BUILDSTRING_OS "Win32 RELEASE"
-#  endif
+#  define BUILDSTRING_OS "Win32"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dll"
 #  endif
@@ -58,11 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined __linux__
-#  ifdef DEBUG
-#    define BUILDSTRING_OS "Linux DEBUG"
-#  else
-#    define BUILDSTRING_OS "Linux RELEASE"
-#  endif
+#  define BUILDSTRING_OS "Linux"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
 #  endif
@@ -77,11 +69,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
-#  ifdef DEBUG
-#    define BUILDSTRING_OS "FreeBSD DEBUG"
-#  else
-#    define BUILDSTRING_OS "FreeBSD RELEASE"
-#  endif
+#  define BUILDSTRING_OS "FreeBSD"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
 #  endif
@@ -96,11 +84,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined __sun
-#  ifdef DEBUG
-#    define BUILDSTRING_OS "Solaris DEBUG"
-#  else
-#    define BUILDSTRING_OS "Solaris RELEASE"
-#  endif
+#  define BUILDSTRING_OS "Solaris"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
 #  endif
@@ -111,11 +95,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined (__APPLE__) || defined (MACOSX)
-#  ifdef DEBUG
-#    define BUILDSTRING_OS "MacOSX DEBUG"
-#  else
-#    define BUILDSTRING_OS "MacOSX RELEASE"
-#  endif
+#  define BUILDSTRING_OS "MacOSX"
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dylib"
 #  endif
@@ -132,10 +112,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define CPUSTRING	"Unknown"
 #endif
 
-#ifdef UFO_REVISION
-	#define BUILDSTRING BUILDSTRING_OS " build " UFO_REVISION
+#ifdef DEBUG
+#  define BUILDSTRING_VARIANT "DEBUG"
 #else
-	#define BUILDSTRING BUILDSTRING_OS
+#  define BUILDSTRING_VARIANT "RELEASE"
+#endif
+
+#ifdef UFO_REVISION
+#  define BUILDSTRING BUILDSTRING_OS " " BUILDSTRING_VARIANT " build " UFO_REVISION
+#else
+#  define BUILDSTRING BUILDSTRING_OS " " BUILDSTRING_VARIANT
 #endif
 
 #define MASTER_SERVER "http://ufoai.ninex.info/" /* sponsored by NineX */
