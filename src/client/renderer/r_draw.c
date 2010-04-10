@@ -600,7 +600,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 			glVertex2f(x, y);
 	}
 
-	glVertex2f(x + radius * cos(2.0 * M_PI), y - radius * sin(2.0 * M_PI));
+	glVertex2f(x + radius, y);
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 	R_Color(NULL);
