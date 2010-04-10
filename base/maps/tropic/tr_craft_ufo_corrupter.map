@@ -2543,7 +2543,7 @@
 {
 ( 1476 896 64 ) ( 1272 896 64 ) ( 1272 640 64 ) tex_ufo/ufo2_02 0 238.8003 0 0.25 0.234375 65024 0 0
 ( 1280 263 128 ) ( 1228 263 128 ) ( 1228 267 128 ) tex_material/c_black 0 0 0 0.5 0.5 65024 0 0
-( 1324 1088 128 ) ( 1536 1088 128 ) ( 1536 1088 64 ) tex_ufo/ufo2_02 0 34 0 0.25 0.234375 65024 0 0
+( 1324 1088 128 ) ( 1536 1088 128 ) ( 1536 1088 64 ) tex_ufo/ufo2_01 0 48 0 0.25 0.25 65024 0 0
 ( 832 672 2 ) ( 832 672 10 ) ( 832 928 10 ) tex_ufo/ufo2_02 0 34 0 0.25 0.234375 65024 0 0
 ( 832 1124 128 ) ( 828 1124 128 ) ( 828 1124 64 ) tex_ufo/ufo2_02 0 34 0 0.25 0.234375 65024 0 0
 ( 828 1276 64 ) ( 828 1276 128 ) ( 828 1088 128 ) tex_ufo/ufo2_02 0 34 0 0.25 0.234375 65024 0 0
@@ -8106,11 +8106,11 @@
 // entity 113
 {
 "classname" "misc_model"
-"origin" "384 368 32"
+"origin" "395 369 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "35"
+"angles" "0 35 0"
 }
 // entity 114
 {
@@ -8124,11 +8124,11 @@
 // entity 115
 {
 "classname" "misc_model"
-"origin" "424 272 32"
+"origin" "441 268 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 116
 {
@@ -8142,11 +8142,11 @@
 // entity 117
 {
 "classname" "misc_model"
-"origin" "264 368 32"
+"origin" "280 368 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving3"
 "spawnflags" "254"
-"angle" "25"
+"angles" "0 25 0"
 }
 // entity 118
 {
@@ -8160,11 +8160,11 @@
 // entity 119
 {
 "classname" "misc_model"
-"origin" "320 248 32"
+"origin" "337 244 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving3"
 "spawnflags" "254"
-"angle" "18"
+"angles" "0 18 0"
 }
 // entity 120
 {
@@ -8352,11 +8352,11 @@
 // entity 144
 {
 "classname" "misc_model"
-"origin" "424 528 32"
+"origin" "438 522 115"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 145
 {
@@ -8370,11 +8370,11 @@
 // entity 146
 {
 "classname" "misc_model"
-"origin" "608 1264 32"
+"origin" "622 1260 117"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 147
 {
@@ -8388,11 +8388,11 @@
 // entity 148
 {
 "classname" "misc_model"
-"origin" "520 1120 32"
+"origin" "534 1120 115"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 149
 {
@@ -8406,11 +8406,11 @@
 // entity 150
 {
 "classname" "misc_model"
-"origin" "56 944 32"
+"origin" "72 939 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 151
 {
@@ -8424,11 +8424,11 @@
 // entity 152
 {
 "classname" "misc_model"
-"origin" "696 1360 32"
+"origin" "712 1356 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 153
 {
@@ -8442,11 +8442,11 @@
 // entity 154
 {
 "classname" "misc_model"
-"origin" "872 1008 32"
+"origin" "885 1004 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 155
 {
@@ -8460,11 +8460,11 @@
 // entity 156
 {
 "classname" "misc_model"
-"origin" "808 64 32"
+"origin" "821 59 118"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "254"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 157
 {
