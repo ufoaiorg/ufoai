@@ -122,7 +122,7 @@ void R_DeleteFBObject (r_framebuffer_t *buf)
 void R_ShutdownFBObjects (void)
 {
 	int i;
-	Com_Printf("Shutting down framebuffer objects...\n");
+
 	if (!r_framebuffer_objects_initialized)
 		return;
 
@@ -141,6 +141,12 @@ void R_ShutdownFBObjects (void)
 
 /**
  * @brief create a new framebuffer object
+ * @param[in] width The width of the framebuffer
+ * @param[in] height The height of the framebuffer
+ * @param[in] ntextures The amount of textures for this framebuffer. See also the filters array.
+ * @param[in] depth Also generate a depth buffer
+ * @param[in] halfFloat Use half float pixel format
+ * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
 r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters)
 {
@@ -159,8 +165,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	if (ntextures > maxDrawBuffers)
 		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
 
-	for (i = 0; i < 4; i++)
-		buf->clearColor[i] = 0.0;
+	Vector4Clear(buf->clearColor);
 
 	buf->width = width;
 	buf->height = height;
@@ -229,9 +234,13 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 /**
  * @brief bind specified framebuffer object so we render to it
+ * @param[in] buf the framebuffer to use, if @c NULL the screen buffer will be used.
  */
 void R_UseFramebuffer (const r_framebuffer_t *buf)
 {
+	if (!r_config.frameBufferObject)
+		return;
+
 	if (!r_framebuffer_objects_initialized){
 		Com_Printf("Can't bind framebuffer: framebuffers not initialized\n");
 		return;
@@ -256,6 +265,11 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 	R_CheckError();
 }
 
+/**
+ * @brief Sets the framebuffer dimensions of the viewport
+ * @param[out] buf The framebuffer to initialize the viewport for. If @c NULL the screen buffer will be taken.
+ * @sa R_UseViewport
+ */
 void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
 {
 	if (!buf)
@@ -267,6 +281,11 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
 	buf->viewport.height = height;
 }
 
+/**
+ * @brief Set the viewport to the dimensions of the given framebuffer
+ * @param[out] buf The framebuffer to set the viewport for. If @c NULL the screen buffer will be taken.
+ * @sa R_SetupViewport
+ */
 void R_UseViewport (const r_framebuffer_t *buf)
 {
 	if (!buf)
@@ -276,17 +295,13 @@ void R_UseViewport (const r_framebuffer_t *buf)
 
 void R_SetClearColor (r_framebuffer_t *buf, float r, float g, float b, float a)
 {
-	buf->clearColor[0] = r;
-	buf->clearColor[1] = g;
-	buf->clearColor[2] = b;
-	buf->clearColor[3] = a;
+	Vector4Set(buf->clearColor, r, g, b, a);
 }
 
 void R_ClearBuffer (void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | ((activeFramebuffer->depth) ? GL_DEPTH_BUFFER_BIT : 0));
 }
-
 
 void R_DrawBuffers (int n)
 {
