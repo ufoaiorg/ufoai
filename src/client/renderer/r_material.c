@@ -45,10 +45,10 @@ static void R_UpdateMaterial (material_t *m)
 
 	for (s = m->stages; s; s = s->next) {
 		if (s->flags & STAGE_PULSE)
-			s->pulse.dhz = (sin(refdef.time * s->pulse.hz * 2 * M_PI) + 1.0) / 2.0;
+			s->pulse.dhz = (sin(refdef.time * s->pulse.hz * (2 * M_PI)) + 1.0) / 2.0;
 
 		if (s->flags & STAGE_STRETCH) {
-			s->stretch.dhz = (sin(refdef.time * s->stretch.hz * 2 * M_PI) + 1.0) / 2.0;
+			s->stretch.dhz = (sin(refdef.time * s->stretch.hz * (2 * M_PI)) + 1.0) / 2.0;
 			s->stretch.damp = 1.5 - s->stretch.dhz * s->stretch.amp;
 		}
 
@@ -78,7 +78,7 @@ static void R_UpdateMaterial (material_t *m)
 					frame -= s->anim.dframe % s->anim.num_frames;
 					break;
 				}
-				s->anim.images[frame];
+				s->image = s->anim.images[frame];
 			}
 		}
 	}
