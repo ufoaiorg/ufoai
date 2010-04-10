@@ -389,10 +389,6 @@ static void MN_InitRadar (const menuNode_t *node)
  DRAW FUNCTIONS
 =========================================*/
 
-#ifndef M_PI
-#define M_PI		3.14159265358979323846
-#endif
-
 static void MN_RadarNodeGetActorColor (const le_t *le, vec4_t color)
 {
 	const int actorLevel = le->pos[2];
