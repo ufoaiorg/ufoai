@@ -590,7 +590,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	glVertex2f(x + radius, y);
 
 	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
-		const float angle = (i * 2.0 * M_PI) / CIRCLE_LINE_COUNT;
+		const float angle = (2.0 * M_PI / CIRCLE_LINE_COUNT) * i;
 		glVertex2f(x + radius * cos(angle), y - radius * sin(angle));
 
 		/* When filling we're drawing triangles so we need to
@@ -988,12 +988,12 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const float seasonProgress = season - (float) currSeason;
 
 	/* Compute sun position in absolute frame */
-	const float q = (day % DAYS_PER_YEAR + (float) (second / (float) SECONDS_PER_DAY)) * (2 * M_PI) / DAYS_PER_YEAR;	/* sun rotation (year) */
+	const float q = (day % DAYS_PER_YEAR * SECONDS_PER_DAY + second) * (2 * M_PI / (SECONDS_PER_DAY * DAYS_PER_YEAR));	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
 
 	/* earth rotation (day) */
-	float p = (float) (second / (float) SECONDS_PER_DAY) * 2.0 * M_PI - 0.5f * M_PI;
+	float p = (second - SECONDS_PER_DAY / 4) * (2.0 * M_PI / SECONDS_PER_DAY);
 
 	if (zoom > 3.3)
 		disableSolarRender = qtrue;
@@ -1038,7 +1038,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* calculate position of the moon (it rotates around earth with a period of
 	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
 	 * every time the day is changing) */
-	p = (float) ((day % 249) + second / (24.9f * (float) SECONDS_PER_HOUR)) * 2.0 * M_PI;
+	p = (day % 249 + second / (24.9f * SECONDS_PER_HOUR)) * (2.0 * M_PI);
 	VectorSet(moonLoc, cos(p) * sqrta, -sin(p) * sqrta, a);
 	RotateCelestialBody(moonLoc, &moonLoc, rotate, earthPos, celestialDist);
 

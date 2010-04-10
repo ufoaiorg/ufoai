@@ -1284,7 +1284,7 @@ void CL_ActorMouseTrace (void)
 	if (cl_isometric->integer)
 		frustumSlope[0] = 10.0 * refdef.fieldOfViewX;
 	else
-		frustumSlope[0] = tan(refdef.fieldOfViewX * M_PI / 360.0) * projectionDistance;
+		frustumSlope[0] = tan(refdef.fieldOfViewX * (M_PI / 360.0)) * projectionDistance;
 	frustumSlope[1] = frustumSlope[0] * ((float)viddef.viewHeight / (float)viddef.viewWidth);
 
 	/* transform cursor position into perspective space */

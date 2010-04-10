@@ -79,8 +79,8 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 			const float srhodrho = (float) (sin(rhodrho));
 			const float crhodrho = (float) (cos(rhodrho));
 
-			const float st = (M_PI - rho) / M_PI;
-			const float stdt = (M_PI - rhodrho) / M_PI;
+			const float st   = 1 - rho     / M_PI;
+			const float stdt = 1 - rhodrho / M_PI;
 
 			const float s = theta / (4.0f * M_PI);
 

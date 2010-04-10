@@ -392,7 +392,7 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
 	} else {
-		xmax = zNear * tan(refdef.fieldOfViewX * M_PI / 360.0);
+		xmax = zNear * tan(refdef.fieldOfViewX * (M_PI / 360.0));
 		xmin = -xmax;
 
 		ymin = xmin * yaspect;

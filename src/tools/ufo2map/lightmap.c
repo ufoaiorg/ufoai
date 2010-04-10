@@ -363,7 +363,7 @@ void BuildLights (void)
 			l->stopdot = FloatForKey(e, "_cone");
 			if (!l->stopdot)
 				l->stopdot = 10;
-			l->stopdot = cos(l->stopdot / 180.0f * M_PI);
+			l->stopdot = cos(l->stopdot * (M_PI / 180.0f));
 			if (target[0] != '\0') {	/* point towards target */
 				entity_t *e2 = FindTargetEntity(target);
 				if (!e2)
@@ -385,8 +385,8 @@ void BuildLights (void)
 					l->normal[2] = -1.0;
 				} else {
 					l->normal[2] = 0;
-					l->normal[0] = cos(angle / 180.0f * M_PI);
-					l->normal[1] = sin(angle / 180.0f * M_PI);
+					l->normal[0] = cos(angle * (M_PI / 180.0f));
+					l->normal[1] = sin(angle * (M_PI / 180.0f));
 				}
 			}
 		}

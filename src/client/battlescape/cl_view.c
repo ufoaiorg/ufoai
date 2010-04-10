@@ -144,8 +144,7 @@ void CL_ViewCalcFieldOfViewX (void)
  */
 static inline void CL_ViewCalcFieldOfViewY (const float width, const float height)
 {
-	const float x = width / tan(refdef.fieldOfViewX / 360.0 * M_PI);
-	refdef.fieldOfViewY = atan(height / x) * 360.0 / M_PI;
+	refdef.fieldOfViewY = atan(tan(refdef.fieldOfViewX * (M_PI / 360.0)) * (height / width)) * (360.0 / M_PI);
 }
 
 /**
