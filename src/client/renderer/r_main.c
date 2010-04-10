@@ -729,23 +729,22 @@ static qboolean R_InitExtensions (void)
 	R_CheckError();
 
 	/* check max texture size */
-	Com_Printf("max texture size: ");
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &r_config.maxTextureSize);
 	/* stubbed or broken drivers may have reported 0 */
 	if (r_config.maxTextureSize <= 0)
 		r_config.maxTextureSize = 256;
 
 	if ((err = glGetError()) != GL_NO_ERROR) {
-		Com_Printf("cannot detect - using %i! (%s)\n", r_config.maxTextureSize, R_TranslateError(err));
+		Com_Printf("max texture size: cannot detect - using %i! (%s)\n", r_config.maxTextureSize, R_TranslateError(err));
 		Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
 	} else {
-		Com_Printf("detected %d\n", r_config.maxTextureSize);
+		Com_Printf("max texture size: detected %d\n", r_config.maxTextureSize);
 		if (r_maxtexres->integer > r_config.maxTextureSize) {
-			Com_Printf("downgrading from %i\n", r_maxtexres->integer);
+			Com_Printf("...downgrading from %i\n", r_maxtexres->integer);
 			Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
 		/* check for a minimum */
 		} else if (r_maxtexres->integer >= 128 && r_maxtexres->integer < r_config.maxTextureSize) {
-			Com_Printf("but using %i as requested\n", r_maxtexres->integer);
+			Com_Printf("...but using %i as requested\n", r_maxtexres->integer);
 			r_config.maxTextureSize = r_maxtexres->integer;
 		}
 	}
