@@ -69,7 +69,7 @@ void R_InitFBObjects (void)
 
 	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
 	colorAttachments = malloc(sizeof(GLenum) * maxDrawBuffers);
-	for (int i = 0; i < maxDrawBuffers; i++){
+	for (i = 0; i < maxDrawBuffers; i++){
 		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
 	}
 
@@ -85,9 +85,9 @@ void R_InitFBObjects (void)
 
 	filters[0] = GL_LINEAR;
 	/* setup extra framebuffers */
-	for (int i = 0; i < DOWNSAMPLE_PASSES; i++) {
-		int h = (int)((float)viddef.height / scales[i]);
-		int w = (int)((float)viddef.width / scales[i]);
+	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
+		const int h = (int)((float)viddef.height / scales[i]);
+		const int w = (int)((float)viddef.width / scales[i]);
 		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
 		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
 
