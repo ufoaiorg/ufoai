@@ -549,7 +549,7 @@ static int R_PascalTriangle (int row, int col)
 
 static void R_InitConvolveProgram (r_program_t *prog)
 {
-	static float filter[FILTER_SIZE];
+	float filter[FILTER_SIZE];
 	float sum = 0;
 	int i;
 
