@@ -10968,12 +10968,11 @@
 // entity 177
 {
 "classname" "misc_model"
-"origin" "1742 242 35"
+"origin" "1753 236 115"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "255"
-"anim" "moving4"
 "target" "misc_model3"
-"tag" "top"
+"tag" "tag_top"
 }
 // entity 178
 {
@@ -10996,22 +10995,20 @@
 // entity 180
 {
 "classname" "misc_model"
-"origin" "690 912 39"
+"origin" "701 906 119"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "255"
-"anim" "moving4"
 "target" "misc_model1"
-"tag" "top"
+"tag" "tag_top"
 }
 // entity 181
 {
 "classname" "misc_model"
-"origin" "819 912 39"
+"origin" "830 906 119"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "255"
-"anim" "moving3"
 "target" "misc_model2"
-"tag" "top"
+"tag" "tag_top"
 }
 // entity 182
 {
