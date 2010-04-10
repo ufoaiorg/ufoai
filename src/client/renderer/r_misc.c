@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_misc.h"
 #include "r_error.h"
+#include "../../shared/images.h"
 
 static const byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},

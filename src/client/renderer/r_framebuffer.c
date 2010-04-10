@@ -31,7 +31,7 @@
 static qboolean r_framebuffer_objects_initialized;
 static int FBObjectCount;
 static r_framebuffer_t FBObjects[MAX_FRAMEBUFFER_OBJECTS];
-static r_framebuffer_t *activeFramebuffer;
+static const r_framebuffer_t *activeFramebuffer;
 
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
@@ -224,7 +224,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 /**
  * @brief bind specified framebuffer object so we render to it
  */
-void R_UseFramebuffer (r_framebuffer_t *buf)
+void R_UseFramebuffer (const r_framebuffer_t *buf)
 {
 	if (!r_framebuffer_objects_initialized){
 		Com_Printf("Can't bind framebuffer: framebuffers not initialized\n");
@@ -261,7 +261,7 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
 	buf->viewport.height = height;
 }
 
-void R_UseViewport (r_framebuffer_t *buf)
+void R_UseViewport (const r_framebuffer_t *buf)
 {
 	if (!buf)
 		buf = &screenBuffer;
