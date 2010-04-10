@@ -27,6 +27,7 @@
 #include "r_local.h"
 #include "r_error.h"
 #include "../../shared/parse.h"
+#include "../../shared/shared.h"
 
 void R_UseProgram  (r_program_t *prog)
 {
@@ -589,7 +590,6 @@ void R_UseParticleProgram (r_program_t *prog)
 
 void R_InitPrograms (void)
 {
-	char buf[MAX_VAR];
 	if (!qglCreateProgram) {
 		Cvar_Set("r_programs", "0");
 		r_programs->modified = qfalse;
@@ -610,8 +610,7 @@ void R_InitPrograms (void)
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
 
-	Com_sprintf(buf, sizeof(buf), "convolve%d", FILTER_SIZE);
-	r_state.convolve_program = R_LoadProgram(buf, R_InitConvolveProgram, NULL);
+	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, NULL);
 }
 
 /**
