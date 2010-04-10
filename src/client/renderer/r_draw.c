@@ -1365,13 +1365,14 @@ static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, i
 	float offset = 1.2f / source->width;
 	float halfWidth = (FILTER_SIZE - 1) * 0.5;
 	float offsets[FILTER_SIZE * 2];
+	int c;
 
 	/* use the filter convolution glsl program */
 	R_UseProgram(r_state.convolve_program);
 	R_UseFramebuffer(dest);
 	R_ClearBuffer();
 
-	for (int c = 0; c < FILTER_SIZE; c++) {
+	for (c = 0; c < FILTER_SIZE; c++) {
 		offsets[c * 2 + 0] = (1 - dir) * offset * (c - halfWidth);
 		offsets[c * 2 + 1] = dir * offset * (c - halfWidth);
 	}
@@ -1391,8 +1392,10 @@ static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, i
  */
 static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t ** dests)
 {
-	for (int i = 0; i < levels; i++) {
-		int l = levels - i - 1;
+	int i;
+
+	for (i = 0; i < levels; i++) {
+		const int l = levels - i - 1;
 
 		R_UseProgram(i == 0 ? 0 : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
