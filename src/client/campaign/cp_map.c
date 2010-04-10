@@ -2261,8 +2261,8 @@ qboolean MAP_IsNight (const vec2_t pos)
 	/* set p to hours (we don't use ccs.day here because we need a float value) */
 	p = (float) ccs.date.sec / SECONDS_PER_DAY;
 	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
-	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
-	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
+	q = (ccs.date.day + p) * (2 * M_PI) / (DAYS_PER_YEAR_AVG - M_PI);
+	p = (0.5 + pos[0] / 360 - p) * (2 * M_PI) - q;
 	a = -sin(pos[1] * torad);
 	root = sqrt(1.0 - a * a);
 	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);

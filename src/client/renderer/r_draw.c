@@ -988,7 +988,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const float seasonProgress = season - (float) currSeason;
 
 	/* Compute sun position in absolute frame */
-	const float q = (day % DAYS_PER_YEAR + (float) (second / (float) SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;	/* sun rotation (year) */
+	const float q = (day % DAYS_PER_YEAR + (float) (second / (float) SECONDS_PER_DAY)) * (2 * M_PI) / DAYS_PER_YEAR;	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
 

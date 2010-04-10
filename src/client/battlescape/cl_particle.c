@@ -505,7 +505,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for sin (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * 2 * M_PI);
+			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * (2 * M_PI));
 			e += sizeof(float);
 			break;
 
@@ -514,7 +514,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for cos (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * 2 * M_PI);
+			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * (2 * M_PI));
 			e += sizeof(float);
 			break;
 
@@ -523,7 +523,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' for tan (particle %s)", vt_names[stackType[stackIdx - 1]], p->ctrl->name);
 			stackPtr[stackIdx] = &cmdStack[e];
 			stackType[stackIdx] = cmd->type;
-			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * 2 * M_PI);
+			*(float *) stackPtr[stackIdx++] = sin(*(float *) cmdData * (2 * M_PI));
 			e += sizeof(float);
 			break;
 
