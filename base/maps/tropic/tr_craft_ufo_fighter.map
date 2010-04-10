@@ -1227,7 +1227,7 @@
 // entity 21
 {
 "classname" "misc_model"
-"origin" "399 656 35"
+"origin" "411 651 122"
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "spawnflags" "254"
 }
