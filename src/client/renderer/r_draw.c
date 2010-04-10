@@ -1379,7 +1379,7 @@ static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, i
 	R_ProgramParameter2fvs("offsets", FILTER_SIZE, offsets);
 
 	/* draw new texture onto a flat surface */
-	R_BindTextureForTexUnit(source->textures[tex], texunit_0);
+	R_BindTextureForTexUnit(source->textures[tex], &texunit_0);
 	R_UseViewport(source);
 	R_DrawQuad();
 
@@ -1400,9 +1400,9 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 		R_UseProgram(i == 0 ? 0 : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
 		R_ClearBuffer();
-		R_BindTextureForTexUnit(sources[l]->textures[0], texunit_0);
+		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit_0);
 		if (i != 0)
-			R_BindTextureForTexUnit(dests[l + 1]->textures[0], texunit_1);
+			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &texunit_1);
 
 		R_UseViewport(sources[l]);
 		R_DrawQuad();
@@ -1450,8 +1450,8 @@ void R_DrawBloom (void)
 	R_UseProgram(r_state.combine2_program);
 	R_UseFramebuffer(fbo_bloom0);
 	R_ClearBuffer();
-	R_BindTextureForTexUnit(fbo_render->textures[1], texunit_0);
-	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], texunit_1);
+	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit_0);
+	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit_1);
 
 	R_UseViewport(fbo_render);
 	R_DrawQuad();
@@ -1459,8 +1459,8 @@ void R_DrawBloom (void)
 	/* draw final result to the screenbuffer */
 	R_UseFramebuffer(0);
 	R_UseProgram(r_state.combine2_program);
-	R_BindTextureForTexUnit(fbo_render->textures[0], texunit_0);
-	R_BindTextureForTexUnit(fbo_bloom0->textures[0], texunit_1);
+	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit_0);
+	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit_1);
 
 	R_DrawQuad();
 
