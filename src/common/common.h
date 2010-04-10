@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  elif defined __x86_64__
 #    define CPUSTRING "x86_64"
 #  elif defined __ia64__
-#    define CPUSTRING "x86_64"
+#    define CPUSTRING "IA-64"
 #  elif defined __alpha__
 #    define CPUSTRING "AXP"
 #  else
