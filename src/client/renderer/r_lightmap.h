@@ -42,7 +42,7 @@ void R_BeginBuildingLightmaps(void);
 
 void R_Trace(vec3_t start, vec3_t end, float size, int contentmask);
 
-/* in the bsp, they are just rgb, and we work with floats */
+/** in the bsp, they are just rgb, and we work with floats */
 #define LIGHTMAP_FBUFFER_SIZE \
 	(MAX_MAP_LIGHTMAP * LIGHTMAP_BYTES)
 
@@ -50,13 +50,13 @@ typedef struct lightmaps_s {
 	GLuint lightmap_texnum;
 	GLuint deluxemap_texnum;
 
-	int size;  /* lightmap block size (NxN) */
+	int size;  /**< lightmap block size (NxN) */
 
-	unsigned *allocated; /* block availability */
+	unsigned *allocated; /**< block availability */
 
-	byte *sample_buffer; /* RGBA buffers for uploading */
+	byte *sample_buffer; /**< RGBA buffers for uploading */
 	byte *direction_buffer;
-	float fbuffer[LIGHTMAP_FBUFFER_SIZE]; /* RGB buffer for bsp loading */
+	float fbuffer[LIGHTMAP_FBUFFER_SIZE]; /**< RGB buffer for bsp loading */
 } lightmaps_t;
 
 extern lightmaps_t r_lightmaps;
