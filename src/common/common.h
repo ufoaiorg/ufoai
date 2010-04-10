@@ -128,8 +128,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #else
-#  define BUILDSTRING_OS "NON-WIN32"
-#  define CPUSTRING	"NON-WIN32"
+#  define BUILDSTRING_OS "Unknown"
+#  define CPUSTRING	"Unknown"
 #endif
 
 #ifdef UFO_REVISION
