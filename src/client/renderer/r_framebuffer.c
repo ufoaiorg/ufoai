@@ -28,13 +28,37 @@
 
 #define MAX_FRAMEBUFFER_OBJECTS	    64
 
-static qboolean r_framebuffer_objects_initialized;
-static int FBObjectCount;
-static r_framebuffer_t FBObjects[MAX_FRAMEBUFFER_OBJECTS];
+static qboolean frameBufferObjectsInitialized;
+static int frameBufferObjectCount;
+static r_framebuffer_t frameBufferObjects[MAX_FRAMEBUFFER_OBJECTS];
+static GLuint frameBufferTextures[TEXNUM_FRAMEBUFFER_TEXTURES];
 static const r_framebuffer_t *activeFramebuffer;
 
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
+
+static GLuint R_GetFreeFBOTexture (void)
+{
+	int i;
+
+	for (i = 0; i < TEXNUM_FRAMEBUFFER_TEXTURES; i++) {
+		if (frameBufferTextures[i] == 0) {
+			frameBufferTextures[i] = 1;
+			return TEXNUM_FRAMEBUFFER_TEXTURES + i;
+		}
+	}
+
+	Com_Error(ERR_FATAL, "Exceeded max frame buffer textures");
+}
+
+static void R_FreeFBOTexture (int texnum)
+{
+	const int i = texnum - TEXNUM_FRAMEBUFFER_TEXTURES;
+	assert(i >= 0);
+	assert(i < TEXNUM_FRAMEBUFFER_TEXTURES);
+	frameBufferTextures[i] = 0;
+	glDeleteTextures(1, (GLuint *) &texnum);
+}
 
 void R_InitFBObjects (void)
 {
@@ -47,10 +71,11 @@ void R_InitFBObjects (void)
 	if (!r_config.frameBufferObject)
 		return;
 
-	FBObjectCount = 0;
-	memset(FBObjects, 0, sizeof(FBObjects));
+	frameBufferObjectCount = 0;
+	memset(frameBufferObjects, 0, sizeof(frameBufferObjects));
+	memset(frameBufferTextures, 0, sizeof(frameBufferTextures));
 
-	r_framebuffer_objects_initialized = qtrue;
+	frameBufferObjectsInitialized = qtrue;
 
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++)
 		scales[i] = powf(DOWNSAMPLE_SCALE, i + 1);
@@ -105,7 +130,9 @@ void R_DeleteFBObject (r_framebuffer_t *buf)
 	buf->depth = 0;
 
 	if (buf->textures) {
-		glDeleteTextures(buf->nTextures, buf->textures);
+		int i;
+		for (i = 0; i < buf->nTextures; i++)
+			R_FreeFBOTexture(buf->textures[i]);
 		Mem_Free(buf->textures);
 	}
 	buf->textures = 0;
@@ -123,17 +150,17 @@ void R_ShutdownFBObjects (void)
 {
 	int i;
 
-	if (!r_framebuffer_objects_initialized)
+	if (!frameBufferObjectsInitialized)
 		return;
 
-	for (i = 0; i < FBObjectCount; i++)
-		R_DeleteFBObject(&FBObjects[i]);
+	for (i = 0; i < frameBufferObjectCount; i++)
+		R_DeleteFBObject(&frameBufferObjects[i]);
 
 	R_UseFramebuffer(&screenBuffer);
 
-	FBObjectCount = 0;
-	memset(FBObjects, 0, sizeof(FBObjects));
-	r_framebuffer_objects_initialized = qfalse;
+	frameBufferObjectCount = 0;
+	memset(frameBufferObjects, 0, sizeof(frameBufferObjects));
+	frameBufferObjectsInitialized = qfalse;
 
 	Mem_Free(colorAttachments);
 }
@@ -154,12 +181,12 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	r_framebuffer_t *buf;
 	int i;
 
-	if (!r_framebuffer_objects_initialized) {
+	if (!frameBufferObjectsInitialized) {
 		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
 		return 0;
 	}
 
-	buf = &FBObjects[FBObjectCount++];
+	buf = &frameBufferObjects[frameBufferObjectCount++];
 
 	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
 	if (ntextures > maxDrawBuffers)
@@ -175,14 +202,13 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	buf->viewport.height = height;
 
 	buf->nTextures = ntextures;
-	buf->textures = Mem_Alloc(sizeof(GLuint) * (ntextures + 1));
+	buf->textures = Mem_Alloc(sizeof(GLuint) * ntextures);
 
 	buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA16F_ARB : GL_RGBA8;
 	buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 
-	glGenTextures(buf->nTextures, buf->textures);
-
 	for (i = 0 ; i < buf->nTextures; i++) {
+		buf->textures[i] = R_GetFreeFBOTexture();
 		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
 		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
 
@@ -241,7 +267,7 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 	if (!r_config.frameBufferObject)
 		return;
 
-	if (!r_framebuffer_objects_initialized){
+	if (!frameBufferObjectsInitialized){
 		Com_Printf("Can't bind framebuffer: framebuffers not initialized\n");
 		return;
 	}
@@ -305,6 +331,6 @@ void R_ClearBuffer (void)
 
 void R_DrawBuffers (int n)
 {
-	if (r_framebuffer_objects_initialized && activeFramebuffer && activeFramebuffer->nTextures > 0)
+	if (frameBufferObjectsInitialized && activeFramebuffer && activeFramebuffer->nTextures > 0)
 		qglDrawBuffers(n, colorAttachments);
 }
