@@ -392,8 +392,10 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 static qboolean R_CvarPostProcess (cvar_t *cvar)
 {
 	if (r_programs->integer && r_config.frameBufferObject)
-		return Cvar_AssertValue(r_postprocess, 0, 1, qtrue);
-	return Cvar_AssertValue(r_postprocess, 0, 0, qtrue);
+		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+
+	Cvar_SetValue(cvar->name, 0);
+	return qtrue;
 }
 
 static void R_RegisterSystemVars (void)
@@ -749,7 +751,7 @@ static qboolean R_InitExtensions (void)
 	}
 
 	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {
-		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir)); 
+		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir));
 		Com_Printf("Using high resolution globe textures as requested.\n");
 	} else if (r_config.maxTextureSize > 2048 && R_ImageExists("pics/geoscape/med/map_earth_season_00")) {
 		if (r_config.maxTextureSize > 4096) {
@@ -757,14 +759,14 @@ static qboolean R_InitExtensions (void)
 		} else {
 			Com_Printf("Using medium resolution globe textures as requested.\n");
 		}
-		Q_strncpyz(r_config.lodDir, "med", sizeof(r_config.lodDir)); 
+		Q_strncpyz(r_config.lodDir, "med", sizeof(r_config.lodDir));
 	} else {
 		if (r_config.maxTextureSize > 2048) {
 			Com_Printf("Warning: medium resolution globe textures requested, but could not be found; falling back to low resolution globe textures.\n");
 		} else {
 			Com_Printf("Using low resolution globe textures as requested.\n");
 		}
-		Q_strncpyz(r_config.lodDir, "low", sizeof(r_config.lodDir)); 
+		Q_strncpyz(r_config.lodDir, "low", sizeof(r_config.lodDir));
 	}
 
 	/* multitexture is the only one we absolutely need */
