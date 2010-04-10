@@ -133,9 +133,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #ifdef UFO_REVISION
-	#define DOSTR(x) #x
-	#define MAKESTR(x) DOSTR(x)
-	#define BUILDSTRING BUILDSTRING_OS " build " MAKESTR(UFO_REVISION)
+	#define BUILDSTRING BUILDSTRING_OS " build " UFO_REVISION
 #else
 	#define BUILDSTRING BUILDSTRING_OS
 #endif
