@@ -669,7 +669,7 @@ void Matrix4x4_CreateRotate (matrix4x4_t *out, double angle, double x, double y,
 	y *= len;
 	z *= len;
 
-	angle *= (-M_PI / 180.0);
+	angle *= -torad;
 	c = cos(angle);
 	s = sin(angle);
 
@@ -756,13 +756,13 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 	double angle, sr, sp, sy, cr, cp, cy;
 
 	if (roll) {
-		angle = yaw * (M_PI * 2 / 360);
+		angle = yaw * torad;
 		sy = sin(angle);
 		cy = cos(angle);
-		angle = pitch * (M_PI * 2 / 360);
+		angle = pitch * torad;
 		sp = sin(angle);
 		cp = cos(angle);
-		angle = roll * (M_PI * 2 / 360);
+		angle = roll * torad;
 		sr = sin(angle);
 		cr = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
@@ -801,10 +801,10 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 		out->m[3][3] = 1;
 #endif
 	} else if (pitch) {
-		angle = yaw * (M_PI * 2 / 360);
+		angle = yaw * torad;
 		sy = sin(angle);
 		cy = cos(angle);
-		angle = pitch * (M_PI * 2 / 360);
+		angle = pitch * torad;
 		sp = sin(angle);
 		cp = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
@@ -843,7 +843,7 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 		out->m[3][3] = 1;
 #endif
 	} else if (yaw) {
-		angle = yaw * (M_PI * 2 / 360);
+		angle = yaw * torad;
 		sy = sin(angle);
 		cy = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
