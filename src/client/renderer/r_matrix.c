@@ -1557,8 +1557,8 @@ void Matrix4x4_ToBonePose6s (const matrix4x4_t *m, float origininvscale, short *
 		quat[2] *= s;
 		quat[3] *= s;
 	}
-	// use a negative scale on the quat because the above function produces a
-	// positive quat[3] and canonical quaternions have negative quat[3]
+	/* use a negative scale on the quat because the above function produces a
+	 * positive quat[3] and canonical quaternions have negative quat[3] */
 	pose6s[0] = origin[0] * origininvscale;
 	pose6s[1] = origin[1] * origininvscale;
 	pose6s[2] = origin[2] * origininvscale;

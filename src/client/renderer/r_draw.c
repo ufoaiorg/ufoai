@@ -949,7 +949,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	/* lighting colors */
 	static const vec4_t diffuseLightColor = { 1.75f, 1.75f, 1.75f, 1.0f };
-	//static const vec4_t specularLightColor = { 2.0f, 1.8f, 0.6f, 1.0f };
 	static const vec4_t specularLightColor = { 2.0f, 1.9f, 1.7f, 1.0f };
 	static const vec4_t darknessLightColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static const vec4_t brightDiffuseLightColor = { 5.0f, 5.0f, 5.0f, 1.0f };
