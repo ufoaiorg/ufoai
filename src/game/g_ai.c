@@ -309,6 +309,80 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 	return qfalse;
 }
 
+/** 
+ * @brief Tries to search a spot where actor will be more closer to the target and
+ * behind the target from enemy
+ * @param[in] ent The actor edict.
+ * @param[in] from The grid position the actor is (theoretically) standing at and
+ * searching the nearest location from
+ * @param[in] target Tries to find the nearest position to this location
+ * @param[in] tu The available TUs of the actor
+ */
+qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t target, int tu)
+{
+	static pathing_t hidePathingTable;
+	byte minX, maxX, minY, maxY;
+	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
+	const int distance = min(tu, HERD_DIST * 2);
+	vec_t length;
+	vec_t bestlength = 0.0f; 
+	pos3_t bestpos;
+	edict_t* next = NULL;
+	edict_t* enemy = NULL;
+	vec3_t vfriend, venemy;
+
+	/* find the nearest enemy actor to the target*/
+	while ((next = G_EdictsGetNextLivingActorOfTeam(next, AI_GetHidingTeam(ent)))) {
+		length = VectorDistSqr(target, next->origin);
+		if (!bestlength || length < bestlength) {
+			enemy = next;
+			bestlength = length;
+		}
+	}
+	assert(enemy);
+
+	/* calculate move table */
+	G_MoveCalcLocal(&hidePathingTable, 0, ent, from, crouchingState, distance);
+	ent->pos[2] = from[2];
+	minX = max(from[0] - HERD_DIST, 0);
+	minY = max(from[1] - HERD_DIST, 0);
+	maxX = min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	maxY = min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
+	
+	/* search the location */
+	VectorCopy(from, bestpos);
+	bestlength = VectorDistSqr(target, ent->origin);
+	for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
+		for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
+			/* time */
+			const pos_t delta = gi.MoveLength(&hidePathingTable, ent->pos, crouchingState, qfalse);
+			if (delta > tu || delta == ROUTING_NOT_REACHABLE)
+				continue;
+
+			G_EdictCalcOrigin(ent);
+			length = VectorDistSqr(ent->origin, target);
+			if (length < bestlength) {
+				/* check this position to locate behind target from enemy */
+				VectorSubtract(target, ent->origin, vfriend);
+				VectorNormalize(vfriend);
+				VectorSubtract(enemy->origin, ent->origin, venemy);
+				VectorNormalize(venemy);
+				if (DotProduct(vfriend, venemy) > 0.5) {
+					bestlength = length;
+					VectorCopy(ent->pos, bestpos);
+				}
+			}
+		}
+	}
+
+	if (!VectorCompare(from, bestpos)) {
+		VectorCopy(bestpos, ent->pos);
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
 /**
  * @sa AI_ActorThink
  * @todo fill z_align values

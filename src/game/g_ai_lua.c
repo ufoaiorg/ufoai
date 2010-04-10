@@ -161,6 +161,7 @@ static int AIL_canreload(lua_State *L);
 static int AIL_reload(lua_State *L);
 static int AIL_positionshoot(lua_State *L);
 static int AIL_positionhide(lua_State *L);
+static int AIL_positionherd(lua_State *L);
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -178,6 +179,7 @@ static const luaL_reg AIL_methods[] = {
 	{"reload", AIL_reload},
 	{"positionshoot", AIL_positionshoot},
 	{"positionhide", AIL_positionhide},
+	{"positionherd", AIL_positionherd},
 	{NULL, NULL}
 };
 
@@ -896,6 +898,35 @@ static int AIL_positionhide (lua_State *L)
 
 	if (AI_FindHidingLocation(hidingTeam, AIL_ent, AIL_ent->pos, &tus)) {
 		/* Return the spot. */
+		lua_pushpos3(L, &AIL_ent->pos);
+	} else {
+		lua_pushboolean(L, 0);
+	}
+	G_EdictSetOrigin(AIL_ent, save);
+	return 1;
+}
+
+/**
+ * @brief Determine the position where actor is more closer to the target and
+ * locate behind the target from enemy
+ * @note @c target (parameter is passed through the lua stack) The actor
+ * to which AI tries to become closer
+ */
+static int AIL_positionherd (lua_State *L)
+{
+	pos3_t save;
+	aiActor_t* target;
+		
+	/* check parameter */
+	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
+		AIL_invalidparameter(1);
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+	
+	VectorCopy(AIL_ent->pos, save);
+	target = lua_toactor(L, 1);
+	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->ent->origin, AIL_ent->TU)) {
 		lua_pushpos3(L, &AIL_ent->pos);
 	} else {
 		lua_pushboolean(L, 0);

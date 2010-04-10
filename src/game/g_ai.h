@@ -60,12 +60,14 @@ typedef struct {
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
 /** @brief distance for (ai) hiding in grid tiles */
 #define HIDE_DIST			7
+#define HERD_DIST			7
 
 /*
  * Shared functions (between C AI and LUA AI)
  */
 void AI_TurnIntoDirection(edict_t *ent, const pos3_t pos);
 qboolean AI_FindHidingLocation(int team, edict_t *ent, const pos3_t from, int *tuLeft);
+qboolean AI_FindHerdLocation(edict_t *ent, const pos3_t from, const vec3_t target, int tu);
 int AI_GetHidingTeam(const edict_t *ent);
 const item_t *AI_GetItemForShootType(shoot_types_t shootType, const edict_t *ent);
 
