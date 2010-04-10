@@ -1365,21 +1365,21 @@ static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, i
 	float offset = 1.2f / source->width;
 	float halfWidth = (FILTER_SIZE - 1) * 0.5;
 	float offsets[FILTER_SIZE * 2];
-	int c;
+	int i;
 
 	/* use the filter convolution glsl program */
 	R_UseProgram(r_state.convolve_program);
 	R_UseFramebuffer(dest);
 	R_ClearBuffer();
 
-	for (c = 0; c < FILTER_SIZE; c++) {
-		offsets[c * 2 + 0] = (1 - dir) * offset * (c - halfWidth);
-		offsets[c * 2 + 1] = dir * offset * (c - halfWidth);
+	for (i = 0; i < FILTER_SIZE; i++) {
+		offsets[i * 2 + 0] = (1 - dir) * offset * (i - halfWidth);
+		offsets[i * 2 + 1] = dir * offset * (i - halfWidth);
 	}
 	R_ProgramParameter2fvs("offsets", FILTER_SIZE, offsets);
 
 	/* draw new texture onto a flat surface */
-	R_BindTextureForTexUnit(source->textures[tex], &r_state.texunits[0]);
+	R_BindTextureForTexUnit(source->textures[tex], texunit_0);
 	R_UseViewport(source);
 	R_DrawQuad();
 
@@ -1400,9 +1400,9 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 		R_UseProgram(i == 0 ? 0 : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
 		R_ClearBuffer();
-		R_BindTextureForTexUnit(sources[l]->textures[0], &r_state.texunits[0]);
+		R_BindTextureForTexUnit(sources[l]->textures[0], texunit_0);
 		if (i != 0)
-			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &r_state.texunits[1]);
+			R_BindTextureForTexUnit(dests[l + 1]->textures[0], texunit_1);
 
 		R_UseViewport(sources[l]);
 		R_DrawQuad();
@@ -1415,7 +1415,7 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 /**
  * @brief handle post-processing bloom
  */
-void R_DrawBloom ()
+void R_DrawBloom (void)
 {
 	int i;
 
@@ -1450,8 +1450,8 @@ void R_DrawBloom ()
 	R_UseProgram(r_state.combine2_program);
 	R_UseFramebuffer(fbo_bloom0);
 	R_ClearBuffer();
-	R_BindTextureForTexUnit(fbo_render->textures[1], &r_state.texunits[0]);
-	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &r_state.texunits[1]);
+	R_BindTextureForTexUnit(fbo_render->textures[1], texunit_0);
+	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], texunit_1);
 
 	R_UseViewport(fbo_render);
 	R_DrawQuad();
@@ -1459,8 +1459,8 @@ void R_DrawBloom ()
 	/* draw final result to the screenbuffer */
 	R_UseFramebuffer(0);
 	R_UseProgram(r_state.combine2_program);
-	R_BindTextureForTexUnit(fbo_render->textures[0], &r_state.texunits[0]);
-	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &r_state.texunits[1]);
+	R_BindTextureForTexUnit(fbo_render->textures[0], texunit_0);
+	R_BindTextureForTexUnit(fbo_bloom0->textures[0], texunit_1);
 
 	R_DrawQuad();
 
