@@ -548,25 +548,23 @@ static int R_PascalTriangle (int row, int col)
 
 static void R_InitConvolveProgram (r_program_t *prog)
 {
-	int filterSize = FILTER_SIZE;
-	float *filter;
+	static float filter[FILTER_SIZE];
 	float sum = 0;
 	int i;
 
-	filter = malloc(sizeof(float) * filterSize);
-	r_state.filterSize = filterSize;
+	r_state.filterSize = FILTER_SIZE;
 
 	/* approximate a Gaussian by normalizing the Nth row of Pascale's Triangle */
-	for (i = 0; i < filterSize; i++) {
-		filter[i] = (float)R_PascalTriangle(filterSize, i + 1);
+	for (i = 0; i < r_state.filterSize; i++) {
+		filter[i] = (float)R_PascalTriangle(r_state.filterSize, i + 1);
 		sum += filter[i];
 	}
 
-	for (i = 0; i < filterSize; i++)
+	for (i = 0; i < r_state.filterSize; i++)
 		filter[i] = (filter[i] / sum);
 
 	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1fvs("coefficients", filterSize, filter);
+	R_ProgramParameter1fvs("coefficients", r_state.filterSize, filter);
 }
 
 static void R_InitCombine2Program (r_program_t *prog)
@@ -591,7 +589,7 @@ void R_UseParticleProgram (r_program_t *prog)
 
 void R_InitPrograms (void)
 {
-	char buf[] = "convolve###\0";
+	char buf[MAX_VAR];
 	if (!qglCreateProgram) {
 		Cvar_Set("r_programs", "0");
 		r_programs->modified = qfalse;
@@ -612,7 +610,7 @@ void R_InitPrograms (void)
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
 
-	sprintf(buf, "convolve%d", FILTER_SIZE);
+	Com_sprintf(buf, sizeof(buf), "convolve%d", FILTER_SIZE);
 	r_state.convolve_program = R_LoadProgram(buf, R_InitConvolveProgram, NULL);
 }
 
