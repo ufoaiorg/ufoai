@@ -80,7 +80,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
 
 	if (dist > 50.0) {  /* resolve stereo panning */
 		const float dot = DotProduct(s_env.right, delta);
-		angle = (int)(450.0 - acos(dot) * (180.0 / M_PI)) % 360;
+		angle = (int)(450.0 - acos(dot) * todeg) % 360;
 	} else
 		angle = 0;
 
