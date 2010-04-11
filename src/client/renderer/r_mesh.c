@@ -146,7 +146,7 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
 
 	R_Color(color);
 
-	R_BindTexture(r_envmaptextures[2]->texnum);
+	R_BindTexture(r_envmaptextures[1]->texnum);
 
 	R_EnableShell(qtrue);
 
