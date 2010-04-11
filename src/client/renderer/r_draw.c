@@ -1002,6 +1002,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	if (r_postprocess->integer) {
 		R_UseFramebuffer(fbo_render);
+		/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and below */
 		R_DrawBuffers(1);
 	}
 
