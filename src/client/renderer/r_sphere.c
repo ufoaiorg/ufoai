@@ -193,7 +193,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 
 	if (!sphere->overlay  && R_SphereCheckGLSL(sphere))
 		R_SphereShadeGLSL(sphere); /* render globe with bump mapping, specularity, etc. */
-	else 
+	else
 		R_SphereShade(sphere); /* otherwise, use basic OpenGL rendering */
 
 	/* cleanup common to both GLSL and normal rendering */
@@ -209,7 +209,7 @@ void R_SphereRender (const sphere_t *sphere, const vec3_t pos, const vec3_t rota
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
 }
 
-/** 
+/**
  * @brief render sphere using standard OpenGL lighting
  */
 void R_SphereShade (const sphere_t *sphere)
@@ -255,8 +255,8 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 	R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_1);
 	R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
 
-	R_ProgramParameter1f("blendScale", sphere->blendScale);
-	R_ProgramParameter1f("glowScale", sphere->glowScale);
+	R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
+	R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
 
 	/* set up pointers */
 	R_SphereActivateTextureUnit(&texunit_1, sphere->texes);

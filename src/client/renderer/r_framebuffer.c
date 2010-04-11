@@ -320,6 +320,9 @@ void R_UseViewport (const r_framebuffer_t *buf)
 
 void R_DrawBuffers (int n)
 {
-	if (frameBufferObjectsInitialized && activeFramebuffer && activeFramebuffer->nTextures > 0)
+	if (!r_config.frameBufferObject)
+		return;
+
+	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
 		qglDrawBuffers(n, colorAttachments);
 }

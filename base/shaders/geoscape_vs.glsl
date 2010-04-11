@@ -9,12 +9,12 @@ varying out vec3 lightVec;
 varying out vec3 lightVec2;
 varying out vec3 eyeVec;
 
-uniform vec2 uvScale;
+uniform vec2 UVSCALE;
 
 void main()
 {
 	gl_Position = ftransform();
-	tex = gl_MultiTexCoord0.xy * uvScale;
+	tex = gl_MultiTexCoord0.xy * UVSCALE;
 
 	vec4 lightPos = gl_LightSource[0].position;
 	ambientLight = gl_LightSource[0].ambient;

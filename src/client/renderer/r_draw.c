@@ -1053,7 +1053,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s/%s_season_%02d\n", r_config.lodDir, map, currSeason);
 
 	/* set up for advanced GLSL rendering if we have the capability */
-	if (qglUseProgram) {
+	if (r_programs->integer) {
 		/* load earth image for the next month so we can blend them */
 		r_globeEarth.blendTexture = R_FindImage(va("pics/geoscape/%s/%s_season_%02d", r_config.lodDir, map, nextSeason), it_wrappic);
 		if (r_globeEarth.blendTexture == r_noTexture)
@@ -1100,12 +1100,12 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	/* draw the earth */
 	R_DrawBuffers(2);
-	if (!qglUseProgram) /* ignore alpha channel, since the city-light map is stored there */
+	if (r_programs->integer == 0) /* ignore alpha channel, since the city-light map is stored there */
 		glBlendFunc(GL_ONE, GL_ZERO);
 
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 
-	if (!qglUseProgram) /* restore default blend function */
+	if (r_programs->integer == 0) /* restore default blend function */
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	R_DrawBuffers(1);

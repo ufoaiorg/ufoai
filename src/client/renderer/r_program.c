@@ -530,10 +530,9 @@ static void R_InitGeoscapeProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 
-	R_ProgramParameter4fv("defaultColor", defaultColor);
-	R_ProgramParameter4fv("cityLightColor", cityLightColor);
-	R_ProgramParameter2fv("uvScale", uvScale);
-	R_ProgramParameter1f("specularExp", 32.0);
+	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
+	R_ProgramParameter4fv("CITYLIGHTCOLOR", cityLightColor);
+	R_ProgramParameter2fv("UVSCALE", uvScale);
 }
 
 /**
@@ -567,7 +566,7 @@ static void R_InitConvolveProgram (r_program_t *prog)
 		filter[i] = (filter[i] / sum);
 
 	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1fvs("coefficients", size, filter);
+	R_ProgramParameter1fvs("COEFFICIENTS", size, filter);
 }
 
 /**
@@ -588,7 +587,7 @@ static void R_UseConvolveProgram (r_program_t *prog)
 		offsets[i * 2 + 0] = offset * y - z;
 		offsets[i * 2 + 1] = z;
 	}
-	R_ProgramParameter2fvs("offsets", FILTER_SIZE, offsets);
+	R_ProgramParameter2fvs("OFFSETS", FILTER_SIZE, offsets);
 }
 
 static void R_InitCombine2Program (r_program_t *prog)
@@ -598,7 +597,7 @@ static void R_InitCombine2Program (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 
-	R_ProgramParameter4fv("defaultColor", defaultColor);
+	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 }
 
 void R_InitParticleProgram (r_program_t *prog)
@@ -615,7 +614,9 @@ void R_InitPrograms (void)
 {
 	if (!qglCreateProgram) {
 		Cvar_Set("r_programs", "0");
+		Cvar_Set("r_postprocess", "0");
 		r_programs->modified = qfalse;
+		r_postprocess->modified = qfalse;
 		return;
 	}
 
@@ -624,8 +625,11 @@ void R_InitPrograms (void)
 
 	/* shaders are deactivated - don't try to load them - some cards
 	 * even have problems with this */
-	if (!r_programs->integer)
+	if (!r_programs->integer) {
+		Cvar_Set("r_postprocess", "0");
+		r_postprocess->modified = qfalse;
 		return;
+	}
 
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
 	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
