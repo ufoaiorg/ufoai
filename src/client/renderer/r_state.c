@@ -386,6 +386,34 @@ void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *sourc
 	R_SelectTexture(&texunit_diffuse);
 }
 
+void R_EnableShell (qboolean enable)
+{
+	if (enable == r_state.shell_enabled)
+		return;
+
+	r_state.shell_enabled = enable;
+
+	if (enable) {
+		glEnable(GL_POLYGON_OFFSET_FILL);
+		glPolygonOffset(-1.0, 1.0);
+
+		R_EnableBlend(qtrue);
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+		if (r_state.lighting_enabled)
+			R_ProgramParameter1f("OFFSET", refdef.time / 3.0);
+	} else {
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		R_EnableBlend(qfalse);
+
+		glPolygonOffset(0.0, 0.0);
+		glDisable(GL_POLYGON_OFFSET_FILL);
+
+		if (r_state.lighting_enabled)
+			R_ProgramParameter1f("OFFSET", 0.0);
+	}
+}
+
 #define FOG_START	300.0
 #define FOG_END		2500.0
 

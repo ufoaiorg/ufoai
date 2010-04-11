@@ -134,14 +134,40 @@ void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *m
 }
 
 /**
+ * @brief Draws an animated, colored shell for the specified entity. Rather than
+ * re-lerping or re-scaling the entity, the currently bound vertex arrays
+ * are simply re-drawn using a small depth offset and varying texcoord delta.
+ */
+static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
+{
+	/* check whether rgb is set */
+	if (!VectorNotEmpty(color))
+		return;
+
+	R_Color(color);
+
+	R_BindTexture(r_envmaptextures[2]->texnum);
+
+	R_EnableShell(qtrue);
+
+	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	R_EnableShell(qfalse);
+
+	R_Color(NULL);
+}
+
+/**
  * @brief Animated model render function
  * @see R_DrawAliasStatic
  */
-static void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
+static void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
 {
 	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	R_DrawMeshModelShell(mesh, shellColor);
 
 	R_CheckError();
 }
@@ -150,13 +176,15 @@ static void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *
  * @brief Static model render function
  * @sa R_DrawAliasFrameLerp
  */
-static void R_DrawAliasStatic (const mAliasMesh_t *mesh)
+static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor)
 {
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
+
+	R_DrawMeshModelShell(mesh, shellColor);
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
@@ -304,9 +332,9 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	mesh = &mi->model->alias.meshes[0];
 	refdef.aliasCount += mesh->num_tris;
 	if (mesh->verts != NULL)
-		R_DrawAliasStatic(mesh);
+		R_DrawAliasStatic(mesh, vec4_origin);
 	else
-		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
+		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe, vec4_origin);
 
 	/* show model bounding box */
 	if (r_showbox->integer)
@@ -354,9 +382,9 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	mesh = &mi->model->alias.meshes[0];
 	refdef.aliasCount += mesh->num_tris;
 	if (mesh->verts != NULL)
-		R_DrawAliasStatic(mesh);
+		R_DrawAliasStatic(mesh, vec4_origin);
 	else
-		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe);
+		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe, vec4_origin);
 
 	/* show model bounding box */
 	if (r_showbox->integer)
@@ -517,7 +545,7 @@ void R_DrawAliasModel (entity_t *e)
 
 	/* IR goggles override color for entities that are affected */
 	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
-		color[0] = 1.0;
+		Vector4Set(e->shell, 1.0, 0.3, 0.3, 1.0);
 
 	if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
 		const float f = 1.0 + sin((refdef.time + (e->model->alias.meshes[0].num_tris)) * 6.0) * 0.33;
@@ -547,9 +575,9 @@ void R_DrawAliasModel (entity_t *e)
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
 	refdef.aliasCount += lodMesh->num_tris;
 	if (lodMesh->verts != NULL)
-		R_DrawAliasStatic(lodMesh);
+		R_DrawAliasStatic(lodMesh, e->shell);
 	else
-		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe);
+		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
 
 	/* show model bounding box */
 	if (r_showbox->integer)

@@ -105,6 +105,7 @@ typedef struct {
 	material_t *active_material;
 
 	/* states */
+	qboolean shell_enabled;
 	qboolean blend_enabled;
 	qboolean color_array_enabled;
 	qboolean alpha_test_enabled;
@@ -144,6 +145,7 @@ void R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(material_t *material, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
+void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 
 #endif
