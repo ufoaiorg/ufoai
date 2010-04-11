@@ -450,8 +450,6 @@ static void R_RegisterSystemVars (void)
 	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate or deactivate fog");
 	r_flares = Cvar_Get("r_flares", "1", CVAR_ARCHIVE, "Activate or deactivate flares");
 	r_coronas = Cvar_Get("r_coronas", "1", CVAR_ARCHIVE, "Activate or deactivate coronas");
-	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
-	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -711,6 +709,9 @@ static qboolean R_InitExtensions (void)
 		 && qglCheckFramebufferStatusEXT)
 			r_config.frameBufferObject = qtrue;
 	}
+
+	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
+	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
 
 	/* reset gl error state */
 	R_CheckError();
