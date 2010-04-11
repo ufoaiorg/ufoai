@@ -31,7 +31,7 @@ static cvar_t *r_sphereDetails;
 
 sphere_t r_globeEarth;
 sphere_t r_globeMoon;
-sphere_t r_globeSun;
+sphere_t r_globeEarthAtmosphere;
 
 static inline float rhoSpiral (const int index, const float deltaRho,const float thetaAngle)
 {
@@ -58,6 +58,8 @@ void R_SphereGenerate (sphere_t *sphere, const int tris, const float radius)
 
 	int vertspos = 0;
 	int texespos = 0;
+
+	sphere->glslProgram = NULL;
 
 	sphere->verts = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 6), vid_genericPool, 0);
 	sphere->texes = (float*)Mem_PoolAlloc(sizeof(float) * ((tris + 1) * (tris + 2) * 4), vid_genericPool, 0);
@@ -122,6 +124,7 @@ void R_SphereInit (void)
 		Cvar_SetValue("r_sphereDetails", 1.0);
 
 	R_SphereGenerate(&r_globeEarth, 60 * r_sphereDetails->value, EARTH_RADIUS);
+	R_SphereGenerate(&r_globeEarthAtmosphere, 60 * r_sphereDetails->value, EARTH_RADIUS * 1.03);
 	/* the earth has more details than the moon */
 	R_SphereGenerate(&r_globeMoon, 20 * r_sphereDetails->value, MOON_RADIUS);
 }
@@ -157,7 +160,7 @@ static void R_SphereRenderTris (const sphere_t *sphere)
  */
 static inline qboolean R_SphereCheckGLSL (const sphere_t *sphere)
 {
-	return sphere->blendTexture && sphere->normalMap && qglUseProgram && r_programs->integer;
+	return sphere->glslProgram && qglUseProgram && r_programs->integer;
 }
 
 /**
@@ -249,14 +252,18 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
 
 	/* configure openGL to use our shader program */
-	R_EnableLighting(r_state.geoscape_program, qtrue);
+	R_EnableLighting(sphere->glslProgram, qtrue);
 
 	R_BindTexture(sphere->texture->texnum);
-	R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_1);
-	R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
+	if (sphere->blendTexture)
+		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_1);
+	if (sphere->normalMap)
+		R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
 
-	R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
-	R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
+	if (sphere->blendScale >= 0)
+		R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
+	if (sphere->glowScale >= 0)
+		R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
 
 	/* set up pointers */
 	R_SphereActivateTextureUnit(&texunit_1, sphere->texes);

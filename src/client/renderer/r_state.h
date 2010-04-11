@@ -97,6 +97,7 @@ typedef struct {
 	r_program_t *geoscape_program;
 	r_program_t *convolve_program;
 	r_program_t *combine2_program;
+	r_program_t *atmosphere_program;
 	r_program_t *active_program;
 
 	/* blend function */

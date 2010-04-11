@@ -993,7 +993,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const float sqrta = sqrt(0.5f * (1 - a * a));
 
 	/* earth rotation (day) */
-	float p = (second - SECONDS_PER_DAY / 4) * (2.0 * M_PI / SECONDS_PER_DAY);
+	const float p = (second - SECONDS_PER_DAY / 4) * (2.0 * M_PI / SECONDS_PER_DAY);
+	/* lunar orbit */
+	const float m = p + (((double)((10 * day % 249) / 10.0) + ((double)second / (double)SECONDS_PER_DAY)) / 24.9) * (2.0 * M_PI);
 
 	if (zoom > 3.3)
 		disableSolarRender = qtrue;
@@ -1025,8 +1027,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	sun = R_FindImage(va("pics/geoscape/%s_sun", map), it_wrappic);
 	sunOverlay = R_FindImage(va("pics/geoscape/%s_sun_overlay", map), it_pic);
 	if (sun != r_noTexture && sunOverlay != r_noTexture && sunLoc[2] > 0 && !disableSolarRender) {
-		const int sunx = earthPos[0] + viddef.rx * (-128.0 + celestialDist * 0.66 * (sunLoc[0] - earthPos[0]));
-		const int suny = earthPos[1] + viddef.ry * (-128.0 + celestialDist * 0.66 * (sunLoc[1] - earthPos[1]));
+		const int sunx = earthPos[0] + viddef.rx * (-128.0 + celestialDist * 1.0 * (sunLoc[0] - earthPos[0]));
+		const int suny = earthPos[1] + viddef.ry * (-128.0 + celestialDist * 1.0 * (sunLoc[1] - earthPos[1]));
 
 		R_DrawTexture(sunOverlay->texnum, sunx, suny, 256.0 * viddef.rx, 256.0 * viddef.ry);
 		R_DrawBuffers(2);
@@ -1037,9 +1039,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* calculate position of the moon (it rotates around earth with a period of
 	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
 	 * every time the day is changing) */
-	p = (day % 249 + second / (24.9f * SECONDS_PER_HOUR)) * (2.0 * M_PI);
-	VectorSet(moonLoc, cos(p) * sqrta, -sin(p) * sqrta, a);
+	VectorSet(moonLoc, cos(m) * sqrta, -sin(m) * sqrta, a);
 	RotateCelestialBody(moonLoc, &moonLoc, rotate, earthPos, celestialDist);
+
 
 	/* free last month's texture image */
 	if (r_globeEarth.season != currSeason) {
@@ -1054,6 +1056,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	/* set up for advanced GLSL rendering if we have the capability */
 	if (r_programs->integer) {
+		r_globeEarth.glslProgram = r_state.geoscape_program;
 		/* load earth image for the next month so we can blend them */
 		r_globeEarth.blendTexture = R_FindImage(va("pics/geoscape/%s/%s_season_%02d", r_config.lodDir, map, nextSeason), it_wrappic);
 		if (r_globeEarth.blendTexture == r_noTexture)
@@ -1108,6 +1111,32 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	if (r_programs->integer == 0) /* restore default blend function */
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
+	
+	if (r_postprocess->integer) {
+		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
+		r_globeEarthAtmosphere.glowScale = 1.0;
+		r_globeEarthAtmosphere.blendScale = -1.0;
+		r_globeEarthAtmosphere.glslProgram = r_state.atmosphere_program;
+		R_SphereRender(&r_globeEarthAtmosphere, earthPos, rotate, fullscale, sunPos);
+	} else {
+		/* Draw earth atmosphere */
+		halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
+		if (halo != r_noTexture) {
+			const float earthSizeX = fullscale * 20500.0 * viddef.rx;
+			const float earthSizeY = fullscale * 20500.0 * viddef.ry;
+			glPushMatrix();
+			glMatrixMode(GL_TEXTURE);
+			glLoadIdentity();
+			glMatrixMode(GL_MODELVIEW);
+			glDisable(GL_LIGHTING);
+
+			R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
+			glEnable(GL_LIGHTING);
+			glPopMatrix();
+		}
+	}
+
 	R_DrawBuffers(1);
 
 	/* draw nation overlay */
@@ -1157,14 +1186,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 
-	/* Draw earth atmosphere */
-	halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
-	if (halo != r_noTexture) {
-		const float earthSizeX = fullscale * 20500.0 * viddef.rx;
-		const float earthSizeY = fullscale * 20500.0 * viddef.ry;
-
-		R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
-	}
 
 	if (r_postprocess->integer)
 		R_DrawBloom();

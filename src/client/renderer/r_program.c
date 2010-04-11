@@ -600,6 +600,18 @@ static void R_InitCombine2Program (r_program_t *prog)
 	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 }
 
+static void R_InitAtmosphereProgram (r_program_t *prog)
+{
+	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
+	static vec2_t uvScale = {2.0, 1.0};
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER2", 2);
+
+	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
+	R_ProgramParameter2fv("UVSCALE", uvScale);
+}
+
 void R_InitParticleProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -637,6 +649,7 @@ void R_InitPrograms (void)
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
+	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 }
 
 /**
