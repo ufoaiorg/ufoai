@@ -60,7 +60,7 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
-cvar_t *r_deluxemap;
+static cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
 static cvar_t *r_ext_nonpoweroftwo;
@@ -683,6 +683,11 @@ static qboolean R_InitExtensions (void)
 		qglEnableVertexAttribArray = SDL_GL_GetProcAddress("glEnableVertexAttribArray");
 		qglDisableVertexAttribArray = SDL_GL_GetProcAddress("glDisableVertexAttribArray");
 		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
+
+		if (qglGetProgramiv) {
+			qglGetProgramiv(GL_FRAGMENT_PROGRAM_ARB, GL_MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB, &r_config.maxGLSLInstructions);
+			qglGetProgramiv(GL_FRAGMENT_PROGRAM_ARB, GL_MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB, &r_config.maxGLSLIndirections);
+		}
 	}
 
 	/* framebuffer objects */
