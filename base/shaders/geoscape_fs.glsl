@@ -27,6 +27,8 @@ const float specularExp = 32.0;
 const float n1 = 1.0;
 const float n2 = 1.333;
 const float eta = n1 / n2;
+
+/* calculate reflection component of Frenel's equations */
 float fresnelReflect(in float cos_a)
 {
 	float cos_b = sqrt(1.0 - ((eta * eta) * ( 1.0 - (cos_a * cos_a))));
