@@ -170,9 +170,6 @@ typedef struct {
 
 	qboolean lod_bias;
 
-	GLuint maxGLSLInstructions;
-	GLuint maxGLSLIndirections;
-
 	qboolean nonPowerOfTwo;	/**< support for non power of two textures */
 
 	hardwareType_t hardwareType;

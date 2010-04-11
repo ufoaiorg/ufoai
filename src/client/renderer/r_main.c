@@ -683,11 +683,6 @@ static qboolean R_InitExtensions (void)
 		qglEnableVertexAttribArray = SDL_GL_GetProcAddress("glEnableVertexAttribArray");
 		qglDisableVertexAttribArray = SDL_GL_GetProcAddress("glDisableVertexAttribArray");
 		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
-
-		if (qglGetProgramiv) {
-			qglGetProgramiv(GL_FRAGMENT_PROGRAM_ARB, GL_MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB, &r_config.maxGLSLInstructions);
-			qglGetProgramiv(GL_FRAGMENT_PROGRAM_ARB, GL_MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB, &r_config.maxGLSLIndirections);
-		}
 	}
 
 	/* framebuffer objects */
