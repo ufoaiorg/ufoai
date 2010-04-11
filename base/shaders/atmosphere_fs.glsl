@@ -17,6 +17,7 @@ uniform vec4 DEFAULTCOLOR;
 
 const float specularExp = 32.0;
 
+/* Fresnel's equations for reflection and refraction between different density media */
 void fresnelRefract(in vec3 L, in vec3 N, in float n1, in float n2, 
 	out vec3 reflection, out vec3 refraction, 
 	out float reflectance, out float transmittance) 
@@ -51,8 +52,10 @@ void main()
 	float LNdotV = clamp(dot(reflect(-L, N), V), 0.0, 1.0);
 	float VdotL = clamp(((dot(L, -V) + 1.0) / 2.0), 0.0, 1.0);
 
+	vec4 ambient = {0.05, 0.05, 0.05, 0.05};
+
 	/* calculate reflections */
-	vec4 reflectColor = diffuseColor * (0.5 * ambientLight + pow(NdotL, 4.0) * TdotV + 0.3 * pow(VdotL, 4.0));
+	vec4 reflectColor = diffuseColor * (ambient + pow(NdotL, 4.0) * TdotV + 0.2 * pow(VdotL, 16.0));
 
 	float d = clamp(pow(1.0 + dot(V, L), 0.4), 0.0, 1.0);
 	vec4 specularColor = d * RdotV * pow(LNdotV, specularExp) * specularLight;
