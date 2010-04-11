@@ -1027,8 +1027,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	sun = R_FindImage(va("pics/geoscape/%s_sun", map), it_wrappic);
 	sunOverlay = R_FindImage(va("pics/geoscape/%s_sun_overlay", map), it_pic);
 	if (sun != r_noTexture && sunOverlay != r_noTexture && sunLoc[2] > 0 && !disableSolarRender) {
-		const int sunx = earthPos[0] + viddef.rx * (-128.0 + celestialDist * 1.0 * (sunLoc[0] - earthPos[0]));
-		const int suny = earthPos[1] + viddef.ry * (-128.0 + celestialDist * 1.0 * (sunLoc[1] - earthPos[1]));
+		const int sunx = earthPos[0] + viddef.rx * (-128.0 + celestialDist * (sunLoc[0] - earthPos[0]));
+		const int suny = earthPos[1] + viddef.ry * (-128.0 + celestialDist * (sunLoc[1] - earthPos[1]));
 
 		R_DrawTexture(sunOverlay->texnum, sunx, suny, 256.0 * viddef.rx, 256.0 * viddef.ry);
 		R_DrawBuffers(2);
@@ -1041,7 +1041,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	 * every time the day is changing) */
 	VectorSet(moonLoc, cos(m) * sqrta, -sin(m) * sqrta, a);
 	RotateCelestialBody(moonLoc, &moonLoc, rotate, earthPos, celestialDist);
-
 
 	/* free last month's texture image */
 	if (r_globeEarth.season != currSeason) {
@@ -1112,7 +1111,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
-	
+
 	if (r_postprocess->integer) {
 		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
 		r_globeEarthAtmosphere.glowScale = 1.0;
@@ -1123,6 +1122,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		/* Draw earth atmosphere */
 		halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
 		if (halo != r_noTexture) {
+			/** @todo Replace this magic number with some speaking constant */
 			const float earthSizeX = fullscale * 20500.0 * viddef.rx;
 			const float earthSizeY = fullscale * 20500.0 * viddef.ry;
 			glPushMatrix();
