@@ -52,7 +52,6 @@ void R_DrawBoundingBox(const vec3_t mins, const vec3_t maxs);
 void R_DrawBloom(void);
 
 extern cvar_t *r_geoscape_overlay;
-extern cvar_t *r_postprocess;
 
 #define OVERLAY_NATION		(1<<0)
 #define OVERLAY_XVI			(1<<1)

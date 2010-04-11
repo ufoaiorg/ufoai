@@ -998,9 +998,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	if (zoom > 3.3)
 		disableSolarRender = qtrue;
 
-	if (r_postprocess && r_postprocess->integer) {
+	if (r_postprocess->integer) {
 		R_UseFramebuffer(fbo_render);
-		R_ClearBuffer();
 		R_DrawBuffers(1);
 	}
 
@@ -1167,7 +1166,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
 	}
 
-	if (r_postprocess && r_postprocess->integer)
+	if (r_postprocess->integer)
 		R_DrawBloom();
 }
 
@@ -1362,29 +1361,14 @@ static inline void R_DrawQuad (void)
  */
 static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, int dir)
 {
-	float offset = 1.2f / source->width;
-	float halfWidth = (FILTER_SIZE - 1) * 0.5;
-	float offsets[FILTER_SIZE * 2];
-	int i;
-
-	/* use the filter convolution glsl program */
-	R_UseProgram(r_state.convolve_program);
-	R_UseFramebuffer(dest);
-	R_ClearBuffer();
-
-	for (i = 0; i < FILTER_SIZE; i++) {
-		offsets[i * 2 + 0] = (1 - dir) * offset * (i - halfWidth);
-		offsets[i * 2 + 1] = dir * offset * (i - halfWidth);
-	}
-	R_ProgramParameter2fvs("offsets", FILTER_SIZE, offsets);
+	R_EnableBlur(r_state.convolve_program, qtrue, source, dest, dir);
 
 	/* draw new texture onto a flat surface */
 	R_BindTextureForTexUnit(source->textures[tex], &texunit_0);
 	R_UseViewport(source);
 	R_DrawQuad();
 
-	R_UseProgram(0);
-	R_UseFramebuffer(0);
+	R_EnableBlur(r_state.convolve_program, qfalse, NULL, NULL, 0);
 }
 
 /**
@@ -1399,7 +1383,6 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 
 		R_UseProgram(i == 0 ? 0 : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
-		R_ClearBuffer();
 		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit_0);
 		if (i != 0)
 			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &texunit_1);
@@ -1436,7 +1419,6 @@ void R_DrawBloom (void)
 	qglGenerateMipmapEXT(GL_TEXTURE_2D);
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
 		R_UseFramebuffer(r_state.buffers0[i]);
-		R_ClearBuffer();
 		glBindTexture(GL_TEXTURE_2D, fbo_bloom1->textures[0]);
 
 		R_UseViewport(r_state.buffers0[i]);
@@ -1449,7 +1431,6 @@ void R_DrawBloom (void)
 	/* re-combine the blurred version with the original "glow" image */
 	R_UseProgram(r_state.combine2_program);
 	R_UseFramebuffer(fbo_bloom0);
-	R_ClearBuffer();
 	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit_0);
 	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit_1);
 

@@ -104,9 +104,6 @@ typedef struct {
 
 	material_t *active_material;
 
-	/* convolution filter (for glow/blur) */
-	int filterSize;
-
 	/* states */
 	qboolean blend_enabled;
 	qboolean color_array_enabled;
@@ -115,6 +112,7 @@ typedef struct {
 	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
 	qboolean fog_enabled;
+	qboolean blur_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -145,6 +143,7 @@ void R_EnableColorArray(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(material_t *material, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
+void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
 void R_EnableFog(qboolean enable);
 
 #endif

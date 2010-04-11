@@ -67,7 +67,6 @@ void R_InitFBObjects (void)
 	float scales[DOWNSAMPLE_PASSES];
 	int i;
 
-	Com_Printf("Initializing framebuffer objects...\n");
 	if (!r_config.frameBufferObject)
 		return;
 
@@ -87,7 +86,7 @@ void R_InitFBObjects (void)
 	screenBuffer.width = viddef.width;
 	screenBuffer.height = viddef.height;
 	R_SetupViewport(&screenBuffer, 0, 0, viddef.width, viddef.height);
-	R_SetClearColor(&screenBuffer, 0, 0, 0, 0);
+	Vector4Clear(screenBuffer.clearColor);
 
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	activeFramebuffer = &screenBuffer;
@@ -196,10 +195,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	buf->width = width;
 	buf->height = height;
-	buf->viewport.x = 0;
-	buf->viewport.y = 0;
-	buf->viewport.width = width;
-	buf->viewport.height = height;
+	R_SetupViewport(buf, 0, 0, width, height);
 
 	buf->nTextures = ntextures;
 	buf->textures = Mem_Alloc(sizeof(GLuint) * ntextures);
@@ -267,7 +263,7 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 	if (!r_config.frameBufferObject)
 		return;
 
-	if (!frameBufferObjectsInitialized){
+	if (!frameBufferObjectsInitialized) {
 		Com_Printf("Can't bind framebuffer: framebuffers not initialized\n");
 		return;
 	}
@@ -279,12 +275,15 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 	if (buf == activeFramebuffer)
 		return;
 
-    qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
+	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
 
-	if (buf->nTextures > 0) /* don't call glDrawBuffers for main screenbuffer */
+	/* don't call glDrawBuffers for main screenbuffer */
+	/** @todo buf != &screenBuffer */
+	if (buf->nTextures > 0)
 		qglDrawBuffers(buf->nTextures, colorAttachments);
 
 	glClearColor(activeFramebuffer->clearColor[0], activeFramebuffer->clearColor[1], activeFramebuffer->clearColor[2], activeFramebuffer->clearColor[3]);
+	glClear(GL_COLOR_BUFFER_BIT | (buf->depth ? GL_DEPTH_BUFFER_BIT : 0));
 
 	activeFramebuffer = buf;
 
@@ -317,16 +316,6 @@ void R_UseViewport (const r_framebuffer_t *buf)
 	if (!buf)
 		buf = &screenBuffer;
 	glViewport(buf->viewport.x, buf->viewport.y, buf->viewport.width, buf->viewport.height);
-}
-
-void R_SetClearColor (r_framebuffer_t *buf, float r, float g, float b, float a)
-{
-	Vector4Set(buf->clearColor, r, g, b, a);
-}
-
-void R_ClearBuffer (void)
-{
-	glClear(GL_COLOR_BUFFER_BIT | ((activeFramebuffer->depth) ? GL_DEPTH_BUFFER_BIT : 0));
 }
 
 void R_DrawBuffers (int n)

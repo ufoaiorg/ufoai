@@ -358,6 +358,34 @@ void R_EnableWarp (r_program_t *program, qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
+void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
+{
+	if (!r_programs->integer)
+		return;
+
+	if (enable && (!program || !program->id))
+		return;
+
+	if (!r_postprocess->integer || r_state.blur_enabled == enable)
+		return;
+
+	r_state.blur_enabled = enable;
+
+	R_SelectTexture(&texunit_lightmap);
+
+	if (enable) {
+		float userdata[] = { source->width, dir };
+		R_UseFramebuffer(dest);
+		program->userdata = userdata;
+		R_UseProgram(program);
+	} else {
+		R_UseFramebuffer(NULL);
+		R_UseProgram(NULL);
+	}
+
+	R_SelectTexture(&texunit_diffuse);
+}
+
 #define FOG_START	300.0
 #define FOG_END		2500.0
 

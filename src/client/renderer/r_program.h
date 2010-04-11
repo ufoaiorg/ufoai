@@ -24,9 +24,6 @@
 
 #include "r_gl.h"
 
-/* width of convolution filter (for blur/bloom effects) */
-#define FILTER_SIZE 3
-
 /* glsl vertex and fragment shaders */
 typedef struct r_shader_s {
 	GLenum type;

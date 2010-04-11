@@ -87,6 +87,7 @@ extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
 extern cvar_t *r_lights;
 extern cvar_t *r_programs;
+extern cvar_t *r_postprocess;
 extern cvar_t *r_shownormals;
 extern cvar_t *r_bumpmap;
 extern cvar_t *r_specular;

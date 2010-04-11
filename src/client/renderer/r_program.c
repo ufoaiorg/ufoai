@@ -547,25 +547,48 @@ static int R_PascalTriangle (int row, int col)
 	return R_PascalTriangle(row - 1, col) + R_PascalTriangle(row - 1, col - 1);
 }
 
+/** @brief width of convolution filter (for blur/bloom effects) */
+#define FILTER_SIZE 3
+
 static void R_InitConvolveProgram (r_program_t *prog)
 {
 	float filter[FILTER_SIZE];
 	float sum = 0;
 	int i;
-
-	r_state.filterSize = FILTER_SIZE;
+	const size_t size = lengthof(filter);
 
 	/* approximate a Gaussian by normalizing the Nth row of Pascale's Triangle */
-	for (i = 0; i < r_state.filterSize; i++) {
-		filter[i] = (float)R_PascalTriangle(r_state.filterSize, i + 1);
+	for (i = 0; i < size; i++) {
+		filter[i] = (float)R_PascalTriangle(size, i + 1);
 		sum += filter[i];
 	}
 
-	for (i = 0; i < r_state.filterSize; i++)
+	for (i = 0; i < size; i++)
 		filter[i] = (filter[i] / sum);
 
 	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1fvs("coefficients", r_state.filterSize, filter);
+	R_ProgramParameter1fvs("coefficients", size, filter);
+}
+
+/**
+ * @brief Use the filter convolution glsl program
+ */
+static void R_UseConvolveProgram (r_program_t *prog)
+{
+	int i;
+	const float *userdata= (float *)prog->userdata;
+	float offsets[FILTER_SIZE * 2];
+	const float halfWidth = (FILTER_SIZE - 1) * 0.5;
+	const float offset = 1.2f / userdata[0];
+	const float x = userdata[1] * offset;
+
+	for (i = 0; i < FILTER_SIZE; i++) {
+		const float y = (float)i - halfWidth;
+		const float z = x * y;
+		offsets[i * 2 + 0] = offset * y - z;
+		offsets[i * 2 + 1] = z;
+	}
+	R_ProgramParameter2fvs("offsets", FILTER_SIZE, offsets);
 }
 
 static void R_InitCombine2Program (r_program_t *prog)
@@ -609,8 +632,7 @@ void R_InitPrograms (void)
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
-
-	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, NULL);
+	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 }
 
 /**

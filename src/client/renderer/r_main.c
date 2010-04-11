@@ -84,6 +84,7 @@ cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
 cvar_t *r_lights;
 cvar_t *r_programs;
+cvar_t *r_postprocess;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
 cvar_t *r_shownormals;
@@ -94,7 +95,6 @@ cvar_t *r_parallax;
 cvar_t *r_fog;
 cvar_t *r_flares;
 cvar_t *r_coronas;
-cvar_t *r_postprocess;
 
 /**
  * @brief Prints some OpenGL strings
@@ -451,6 +451,9 @@ static void R_RegisterSystemVars (void)
 	r_flares = Cvar_Get("r_flares", "1", CVAR_ARCHIVE, "Activate or deactivate flares");
 	r_coronas = Cvar_Get("r_coronas", "1", CVAR_ARCHIVE, "Activate or deactivate coronas");
 
+	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
+	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
+
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
 }
@@ -709,9 +712,6 @@ static qboolean R_InitExtensions (void)
 		 && qglCheckFramebufferStatusEXT)
 			r_config.frameBufferObject = qtrue;
 	}
-
-	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
-	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
 
 	/* reset gl error state */
 	R_CheckError();

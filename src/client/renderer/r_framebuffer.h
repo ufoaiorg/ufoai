@@ -52,11 +52,9 @@ r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qbool
 void R_DeleteFBObject(r_framebuffer_t *buf);
 
 void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);
-void R_SetClearColor(r_framebuffer_t *buf, float r, float g, float b, float a);
 void R_UseViewport(const r_framebuffer_t *buf);
 
 void R_UseFramebuffer(const r_framebuffer_t *buf);
-void R_ClearBuffer(void);
 void R_DrawBuffers(int n);
 
 #endif /* R_FRAMEBUFFER_H_ */
