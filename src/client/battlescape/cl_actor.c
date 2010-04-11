@@ -1502,6 +1502,9 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.tagname = "tag_head";
 	add.lighting = &le->lighting; /* values from the actor */
 
+	if (le->team != cls.team)
+		add.flags |= RF_IRGOGGLES;
+
 	R_AddEntity(&add);
 
 	/** Add actor special effects.
@@ -1514,8 +1517,10 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	else
 		ent->flags |= RF_SHADOW;
 
+	ent->flags |= RF_ACTOR;
 	/* actors are highlighted if some other actor uses ir goggles */
-	ent->flags |= (RF_ACTOR | RF_IRGOGGLES);
+	if (le->team != cls.team)
+		ent->flags |= RF_IRGOGGLES;
 
 	if (!LE_IsDead(le) && !LE_IsStunned(le)) {
 		if (le->selected)
