@@ -847,14 +847,21 @@ fi
 # Check for signal handling
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_signals" = "no"
+if test $TARGET_OS != "darwin" 
 then
-	AC_MSG_NOTICE([Disable signal handling])
-	AC_SUBST([USE_SIGNALS],0)
+	if test "$enable_signals" = "no"
+	then
+		AC_MSG_NOTICE([Disable signal handling])
+		USE_SIGNALS=0
+	else
+		AC_MSG_NOTICE([Enabling signal handling])
+		USE_SIGNALS=1
+	fi
 else
-	AC_MSG_NOTICE([Enabling signal handling])
-	AC_SUBST([USE_SIGNALS],1)
+	AC_MSG_NOTICE([Always disable signal handling for $TARGET_OS])
+	USE_SIGNALS=0
 fi
+AC_SUBST([USE_SIGNALS])
 
 #---------------------------------------------------------------------------------------------
 # Check for PARANOID

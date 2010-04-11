@@ -7366,18 +7366,24 @@ fi
 # Check for signal handling
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_signals" = "no"
+if test $TARGET_OS != "darwin"
 then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: Disable signal handling" >&5
+	if test "$enable_signals" = "no"
+	then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: Disable signal handling" >&5
 $as_echo "$as_me: Disable signal handling" >&6;}
-	USE_SIGNALS=0
-
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: Enabling signal handling" >&5
+		USE_SIGNALS=0
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: Enabling signal handling" >&5
 $as_echo "$as_me: Enabling signal handling" >&6;}
-	USE_SIGNALS=1
-
+		USE_SIGNALS=1
+	fi
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: Always disable signal handling for $TARGET_OS" >&5
+$as_echo "$as_me: Always disable signal handling for $TARGET_OS" >&6;}
+	USE_SIGNALS=0
 fi
+
 
 #---------------------------------------------------------------------------------------------
 # Check for PARANOID
