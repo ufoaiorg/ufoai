@@ -1178,6 +1178,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
+	if (r_postprocess->integer)
+		R_DrawBloom();
+
 	glDisable(GL_DEPTH_TEST);
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
@@ -1186,10 +1189,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
-
-
-	if (r_postprocess->integer)
-		R_DrawBloom();
 }
 
 typedef struct {
