@@ -362,18 +362,19 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 		/* and size, texcoords, etc */
 		R_SetSurfaceExtents(out, r_worldmodel);
 
+		if (!(out->texinfo->flags & SURF_WARP))
+			out->flags |= MSURF_LIGHTMAP;
+
 		/* lastly lighting info */
 		if (day)
 			i = LittleLong(in->lightofs[LIGHTMAP_DAY]);
 		else
 			i = LittleLong(in->lightofs[LIGHTMAP_NIGHT]);
 
-		if (i == -1 || (out->texinfo->flags & SURF_WARP))
+		if (i == -1)
 			out->samples = NULL;
-		else {
+		else
 			out->samples = r_worldmodel->bsp.lightdata + i;
-			out->flags |= MSURF_LIGHTMAP;
-		}
 
 		/* create lightmaps */
 		R_CreateSurfaceLightmap(out);
