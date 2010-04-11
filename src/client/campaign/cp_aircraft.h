@@ -298,8 +298,8 @@ void AIM_AddEmployeeFromMenu(aircraft_t *aircraft, const int num);
 void AIR_AssignInitial(aircraft_t *aircraft);
 qboolean AIR_CanIntercept(const aircraft_t *aircraft);
 
-qboolean AIR_LoadAircraftXML(aircraft_t *craft, qboolean isUfo, mxml_node_t *p);
-void AIR_SaveAircraftXML(mxml_node_t *node, const aircraft_t* const aircraft, qboolean const isUfo);
+qboolean AIR_LoadAircraftXML(aircraft_t *craft, struct base_s *base, mxml_node_t *p);
+qboolean AIR_SaveAircraftXML(mxml_node_t *node, const aircraft_t* const aircraft, qboolean const isUfo);
 
 int AIR_GetOperationRange(const aircraft_t *aircraft);
 int AIR_GetRemainingRange(const aircraft_t *aircraft);

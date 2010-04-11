@@ -2817,8 +2817,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		node = mxml_AddNode(act_base, SAVE_BASES_AIRCRAFTS);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			const aircraft_t* const aircraft = &b->aircraft[k];
-			mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_AIRCRAFT);
-			AIR_SaveAircraftXML(snode, aircraft, qfalse);
+			AIR_SaveAircraftXML(node, aircraft, qfalse);
 		}
 		/* store equipment */
 		node = mxml_AddNode(act_base, SAVE_BASES_STORAGE);
@@ -2911,6 +2910,10 @@ qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 	return qtrue;
 }
 
+/**
+ * @brief Loads base data
+ * @param[in] p XML Node structure, where we get the information from
+ */
 qboolean B_LoadXML (mxml_node_t *parent)
 {
 	int i;
@@ -2999,12 +3002,8 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		node = mxml_GetNode(base, SAVE_BASES_AIRCRAFTS);
 		for (k = 0, snode = mxml_GetNode(node, SAVE_BASES_AIRCRAFT); k < MAX_AIRCRAFT && snode;
 				snode = mxml_GetNextNode(snode, node, SAVE_BASES_AIRCRAFT), k++) {
-			const aircraft_t *const model = AIR_GetAircraft(mxml_GetString(snode, SAVE_BASES_ID));
 			aircraft_t *aircraft = &b->aircraft[k];
-			Com_DPrintf(DEBUG_CLIENT, "Adding Aircraft %d to base %d\n", k, i);
-			*aircraft = *model;
-			aircraft->homebase = b;
-			AIR_LoadAircraftXML(aircraft, qfalse, snode);
+			AIR_LoadAircraftXML(aircraft, b, snode);
 		}
 		b->numAircraftInBase = k;
 

@@ -25,12 +25,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SAVE_AIRCRAFT_H
 #define SAVE_AIRCRAFT_H
 
-#define SAVE_AIRCRAFT_IDX "idx"
 #define SAVE_AIRCRAFT_UFOS "UFOs"
-#define SAVE_AIRCRAFT_AIRCRAFT "aircraft"
+
+#define SAVE_AIRCRAFT_AIRCRAFT "craft"
 #define SAVE_AIRCRAFT_ID "id"
 #define SAVE_AIRCRAFT_NAME "name"
+#define SAVE_AIRCRAFT_IDX "idx"
+
 #define SAVE_AIRCRAFT_STATUS "status"
+
 #define SAVE_AIRCRAFT_FUEL "fuel"
 #define SAVE_AIRCRAFT_DAMAGE "damage"
 #define SAVE_AIRCRAFT_POS "pos"
@@ -38,16 +41,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_POINT "point"
 #define SAVE_AIRCRAFT_TIME "time"
 
-#define SAVE_AIRCRAFT_ROUTE "route"
-#define SAVE_AIRCRAFT_DISTANCE "distance"
-#define SAVE_AIRCRAFT_POINT "point"
 #define SAVE_AIRCRAFT_MISSIONID "missionid"
 #define SAVE_AIRCRAFT_DETECTIONIDX "detectionIDX"
-#define SAVE_AIRCRAFT_LASTSPOTTED_DAY "lastSpottedDay"
-#define SAVE_AIRCRAFT_LASTSPOTTED_SEC "lastSpottedSec"
-#define SAVE_AIRCRAFT_MISSIONID "missionid"
+#define SAVE_AIRCRAFT_LASTSPOTTED_DATE "lastSpottedDate"
+
+
 #define SAVE_AIRCRAFT_AIRCRAFTTARGET "aircraftTarget"
-#define SAVE_AIRCRAFT_AIRCRAFTTARGET "aircraftTarget"
+
 #define SAVE_AIRCRAFT_AIRSTATS "airstats"
 #define SAVE_AIRCRAFT_VAL "val"
 #define SAVE_AIRCRAFT_DETECTED "detected"
@@ -74,6 +74,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_ALIVE "alive"
 #define SAVE_AIRCRAFT_DEAD "dead"
 
+
+#define SAVE_AIRCRAFT_ROUTE "route"
+#define SAVE_AIRCRAFT_ROUTE_DISTANCE "distance"
+#define SAVE_AIRCRAFT_ROUTE_POINT "point"
+
 #define SAVE_AIRCRAFT_WEAPONS "weapons"
 #define SAVE_AIRCRAFT_SHIELDS "shields"
 #define SAVE_AIRCRAFT_ELECTRONICS "electronics"
@@ -81,10 +86,56 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_AIRCRAFT_PROJECTILES "projectiles"
 
+#define SAVE_AIRCRAFTSTATUS_NAMESPACE "saveAircraftStatus"
+static const constListEntry_t saveAircraftConstants[] = {
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::none", AIR_NONE},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::refuel", AIR_REFUEL},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::home", AIR_HOME},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::idle", AIR_IDLE},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::transit", AIR_TRANSIT},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::mission", AIR_MISSION},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::ufo", AIR_UFO},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::drop", AIR_DROP},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::intercept", AIR_INTERCEPT},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::transfer", AIR_TRANSFER},
+	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::returning", AIR_RETURNING},
+
+	{NULL, -1}
+};
+
 #endif
 
 /*
 DTD: (incomplete)
+
+<!ELEMENT UFOs aircraft*>
+<!ELEMENT aircraft >
+<!ATTLIST aircraft (pos direction weapons shields electronics route lastSpottedDate?)
+	id					CDATA	#REQUIRED
+	name				CDATA	#IMPLIED
+	status		(none,refuel,home,idle,
+				transit,mission,ufo,
+				drop,intercept,transfer,
+				returning)		#REQUIRED
+	fuel				CDATA	#IMPLIED
+	damage				CDATA	#IMPLIED
+	point				CDATA	#IMPLIED
+	time				CDATA	#IMPLIED
+	missionid			CDATA	#IMPLIED
+	detectionIDX		CDATA	#IMPLIED
+	aircraftTarget		CDATA	#IMPLIED
+>
+
+<!ELEMENT route point*>
+<!ATTLIST route
+	distance			CDATA	'0.0'
+>
+
+<!ELEMENT point EMPTY>
+<!ATTLIST point
+	x					CDATA	'0.0'
+	y					CDATA	'0.0'
+>
 
 <!ELEMENT weapons slot*>
 <!ELEMENT shields slot>
