@@ -626,9 +626,7 @@ void R_InitPrograms (void)
 {
 	if (!qglCreateProgram) {
 		Cvar_Set("r_programs", "0");
-		Cvar_Set("r_postprocess", "0");
 		r_programs->modified = qfalse;
-		r_postprocess->modified = qfalse;
 		return;
 	}
 
@@ -638,8 +636,6 @@ void R_InitPrograms (void)
 	/* shaders are deactivated - don't try to load them - some cards
 	 * even have problems with this */
 	if (!r_programs->integer) {
-		Cvar_Set("r_postprocess", "0");
-		r_postprocess->modified = qfalse;
 		return;
 	}
 

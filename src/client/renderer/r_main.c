@@ -391,7 +391,7 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 
 static qboolean R_CvarPostProcess (cvar_t *cvar)
 {
-	if (r_programs->integer && r_config.frameBufferObject)
+	if (r_config.frameBufferObject)
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 
 	Cvar_SetValue(cvar->name, 0);

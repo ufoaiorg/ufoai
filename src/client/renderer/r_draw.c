@@ -1000,7 +1000,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	if (zoom > 3.3)
 		disableSolarRender = qtrue;
 
-	if (r_postprocess->integer) {
+	if (r_programs->integer && r_postprocess->integer) {
 		R_UseFramebuffer(fbo_render);
 		/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and below */
 		R_DrawBuffers(1);
@@ -1113,7 +1113,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
 
-	if (r_postprocess->integer) {
+	if (r_programs->integer && r_postprocess->integer) {
 		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
 		r_globeEarthAtmosphere.glowScale = 1.0;
 		r_globeEarthAtmosphere.blendScale = -1.0;
@@ -1178,7 +1178,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
-	if (r_postprocess->integer)
+	if (r_programs->integer && r_postprocess->integer)
 		R_DrawBloom();
 
 	glDisable(GL_DEPTH_TEST);
