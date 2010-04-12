@@ -37,7 +37,7 @@ for MAPDIR in $MAPDIRS; do
 		fail "can't access map directory '$MAPDIR'"
 	}
 	while read DIRECTORY; do
-		if [ "$(diff "$PROPFILE" <(svn pg svn:ignore "$DIRECTORY" | strings))" == "" ]; then
+		if [ "$(diff "$PROPFILE" <(svn pg svn:ignore "$DIRECTORY" | strings))" = "" ]; then
 			[[ $REPORTNEGATIVES ]] && echo "not setting svn:ignore property for $DIRECTORY, already correct"
 		else
 			echo "*** setting svn:ignore property for $DIRECTORY"

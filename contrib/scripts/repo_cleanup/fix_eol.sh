@@ -23,7 +23,7 @@ for i in $EXT; do
 done
 
 while read FILENAME; do
-	if [ "$(svn pg svn:eol-style "$FILENAME")" == "native" ]; then
+	if [ "$(svn pg svn:eol-style "$FILENAME")" = "native" ]; then
 		[[ $REPORTNEGATIVES ]] && echo "not setting eol style for $FILENAME, already native"
 	else
 		# make sure there are no dos style newlines before setting eol style - that can fail if there are mixed newlines

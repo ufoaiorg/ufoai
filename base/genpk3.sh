@@ -15,7 +15,7 @@ IMAGE_TYPES="jpg tga png pcx"
 
 GetMapModels()
 {
-	if test "$VERBOSE" == 1; then
+	if test "$VERBOSE" = 1; then
 		echo "... checking $1 for models"
 	fi
 	FILES=`awk ' BEGIN {line="jsqhdflzhfliuazblrfhb"}
@@ -31,7 +31,7 @@ GetMapModels()
 
 GetMapTextures()
 {
-	if test "$VERBOSE" == 1; then
+	if test "$VERBOSE" = 1; then
 		echo "... checking $1 for textures"
 	fi
 	FILES=`awk 'BEGIN {line="jsqhdflzhfliuazblrfhb";test=0}
@@ -67,7 +67,7 @@ GenPK3_Usage()
 
 CheckExistenceInPK3()
 {
-	if test "$VERBOSE" == 1; then
+	if test "$VERBOSE" = 1; then
 		echo "... check for $1 in pk3 files"
 	fi
 	# check whether file exists in pk3 archives
@@ -127,11 +127,11 @@ done
 
 ZIP_PARM=-9
 
-if test "$UPDATE" == 1; then
+if test "$UPDATE" = 1; then
 	ZIP_PARM+=u
 fi
 
-if test "$VERBOSE" == 1; then
+if test "$VERBOSE" = 1; then
 	ZIP_PARM+=
 else
 	ZIP_PARM+=q
@@ -198,7 +198,7 @@ else
 				else
 					echo "the model $model is already in a pk3"
 				fi
-			elif test "$VERBOSE" == 1; then
+			elif test "$VERBOSE" = 1; then
 				echo "... $model must be in a pk3 file or doesn't exists"
 			fi
 			# add animation if it exists and is not in pk3
@@ -228,7 +228,7 @@ else
 						echo "the texture textures/$texture.$extension is already in a pk3"
 						break;
 					fi
-				elif test "$VERBOSE" == 1; then
+				elif test "$VERBOSE" = 1; then
 					echo "... textures/$texture.$extension must be in a pk3 file or doesn't exists"
 				fi
 			done

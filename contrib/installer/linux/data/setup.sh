@@ -162,7 +162,6 @@ try_run()
     fi
 
     fatal=0
-    # older bash < 2.* don't like == operator, using =
     if [ "$1" = "-fatal" ]; then
       # got fatal
       fatal=1
