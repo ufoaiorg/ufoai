@@ -625,6 +625,7 @@ void R_UseParticleProgram (r_program_t *prog)
 void R_InitPrograms (void)
 {
 	if (!qglCreateProgram) {
+		Com_Printf("not using GLSL shaders\n");
 		Cvar_Set("r_programs", "0");
 		r_programs->modified = qfalse;
 		return;
