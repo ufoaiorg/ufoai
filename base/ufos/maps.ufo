@@ -3425,6 +3425,54 @@ mapdef laboratory
 	}
 }
 
+mapdef wip_city_rma
+{
+	map		+city
+	description	"Big city"
+	teams		4
+	multiplayer	false
+	maxaliens	2
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
+
+	aircraft 
+	{
+//		craft_drop_firebird
+	}
+
+//	ufos
+//	{
+//	}
+
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		village
+		suburban
+		rural
+		nonpopulation
+	}
+}
+
 mapdef fueldump
 {
 	map				fueldump
