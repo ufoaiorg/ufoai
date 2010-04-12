@@ -635,9 +635,8 @@ void R_InitPrograms (void)
 
 	/* shaders are deactivated - don't try to load them - some cards
 	 * even have problems with this */
-	if (!r_programs->integer) {
+	if (!r_programs->integer)
 		return;
-	}
 
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
 	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);

@@ -706,8 +706,10 @@ static qboolean R_InitExtensions (void)
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
-		 && qglCheckFramebufferStatusEXT)
+		 && qglCheckFramebufferStatusEXT) {
 			r_config.frameBufferObject = qtrue;
+			Com_Printf("using GL_ARB_framebuffer_object\n");
+		}
 	}
 
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
