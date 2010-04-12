@@ -37,16 +37,24 @@ team latin
 	actorsounds {
 		female {
 			hurtsound	civilians/femalehurt01
+			hurtsound	civilians/civfemscream01a
+			hurtsound	civilians/civfemscream02a
 			deathsound	civilians/femaledeath01
+			deathsound	civilians/civfemdeath01a
+			deathsound	civilians/civfemdeath02a
+			deathsound	civilians/civboydeath01a
 		}
 		male {
 			hurtsound	civilians/malehurt01
 			hurtsound	civilians/malehurt02
 			hurtsound	civilians/malehurt03
 			hurtsound	civilians/malehurt04
+			hurtsound	civilians/civmalehurt01a
 			deathsound	civilians/maledeath01
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
+			deathsound	civilians/civmaledeath01a
+			deathsound	civilians/civmaledeath02a
 		}
 	}
 }
