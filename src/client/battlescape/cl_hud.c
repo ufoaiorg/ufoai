@@ -385,10 +385,12 @@ static void HUD_ShotReserve_f (void)
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
 		character_t* chr = CL_ActorGetChr(selActor);
 		assert(chr);
-		CL_ActorReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
-		CL_ActorSetShotSettings(chr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
-		if (popupListNode)
-			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
+		if (GAME_ItemIsUseable(od)) {
+			CL_ActorReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
+			CL_ActorSetShotSettings(chr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
+			if (popupListNode)
+				MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
+		}
 	}
 }
 
@@ -1319,7 +1321,7 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
 		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST) {
 			/* if the actor is still living */
 			if (cl.teamList[actorIdx])
-				MN_ExecuteConfunc("huddeselect %s", oldValue);
+				MN_ExecuteConfunc("hudenable %s", oldValue);
 		}
 	}
 
