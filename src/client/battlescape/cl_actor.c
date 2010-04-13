@@ -381,7 +381,7 @@ void CL_ActorAddToTeamList (le_t * le)
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
-		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
+		MN_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}

@@ -157,7 +157,7 @@ window althud extends ahud
 			size		"32 128"
 		}
 		
-		confunc numonteam
+		confunc hudenable
 		{
 			*cvar:tmp = "<1>"
 			*cvar:i = 1

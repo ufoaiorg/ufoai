@@ -37,7 +37,7 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 {
 	CL_ActorSelect(NULL);
 	cl.numTeamList = 0;
-	MN_ExecuteConfunc("numonteam 1");
+	MN_ExecuteConfunc("hudenable 1");
 
 	/* set the active player */
 	NET_ReadFormat(msg, self->formatString, &cls.team, &cl.actTeam);

@@ -1316,15 +1316,6 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
 	if (!CL_OnBattlescape())
 		return;
 
-	if (oldValue[0] != '\0') {
-		const int actorIdx = atoi(oldValue);
-		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST) {
-			/* if the actor is still living */
-			if (cl.teamList[actorIdx])
-				MN_ExecuteConfunc("hudenable %s", oldValue);
-		}
-	}
-
 	if (newValue[0] != '\0') {
 		const int actorIdx = atoi(newValue);
 		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST)
