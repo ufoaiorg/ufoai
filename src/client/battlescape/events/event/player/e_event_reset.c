@@ -44,7 +44,7 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 
 	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
 
-	/** @todo this can and should be done ealier - it's not the correct place here for doing this */
+	/** @todo this can and should be done earlier - it's not the correct place here for doing this */
 	if (GAME_IsMultiplayer()) {
 		MN_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
 	}
@@ -56,4 +56,3 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }
-
