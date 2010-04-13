@@ -157,7 +157,7 @@ window althud extends ahud
 			size		"32 128"
 		}
 		
-		confunc hudenable
+		confunc hudenable_floor
 		{
 			*cvar:tmp = "<1>"
 			*cvar:i = 1
@@ -1141,6 +1141,11 @@ window althud extends ahud
 	confunc reserve_shot_disable
 	{
 		*right.bt_shot_reservation@image = althud/buttons_althud1g
+	}
+	
+	confunc hudenable
+	{
+		cmd "*node:floor.hudenable_floor <1>;"
 	}
 	
 	// ==================
