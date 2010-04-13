@@ -828,7 +828,7 @@ window hud extends ahud
 		*team_selection.bt_actor<1>@disabled = false
 		*cvar:selected_soldier = <1>
 	}
-	confunc huddeselect {
+	confunc hudenable {
 		*team_selection.bt_actor<1>@disabled = false
 	}
 	confunc huddisable {
