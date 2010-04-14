@@ -1,13 +1,13 @@
-varying in vec2 tex;
+varying vec2 tex;
 
-varying in vec4 ambientLight;
-varying in vec4 diffuseLight;
-varying in vec4 specularLight;
-varying in vec4 diffuseLight2;
+varying vec4 ambientLight;
+varying vec4 diffuseLight;
+varying vec4 specularLight;
+varying vec4 diffuseLight2;
 
-varying in vec3 lightVec;
-varying in vec3 lightVec2;
-varying in vec3 eyeVec;
+varying vec3 lightVec;
+varying vec3 lightVec2;
+varying vec3 eyeVec;
 
 /* diffuse */
 uniform sampler2D SAMPLER0;
@@ -63,7 +63,6 @@ void main()
 	float d = clamp(pow(1.0 + dot(V, L), 0.4), 0.0, 1.0);
 	float fresnel = 2.0 * fresnelReflect(NdotL);
 	vec4 specularColor = (d * d * fresnel * fresnel) * gloss * pow(RdotL, specularExp) * specularLight;
-
 
 	/* calculate night illumination */
 	float diffuseNightColor = texture2D(SAMPLER0, tex).a;

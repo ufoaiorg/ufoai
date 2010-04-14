@@ -1,11 +1,11 @@
-varying in vec2 tex;
+varying vec2 tex;
 
-varying in vec4 ambientLight;
-varying in vec4 diffuseLight;
-varying in vec4 specularLight;
+varying vec4 ambientLight;
+varying vec4 diffuseLight;
+varying vec4 specularLight;
 
-varying in vec3 lightVec;
-varying in vec3 eyeVec;
+varying vec3 lightVec;
+varying vec3 eyeVec;
 
 /* diffuse */
 uniform sampler2D SAMPLER0;
@@ -18,9 +18,9 @@ uniform vec4 DEFAULTCOLOR;
 const float specularExp = 32.0;
 
 /* Fresnel's equations for reflection and refraction between different density media */
-void fresnelRefract(in vec3 L, in vec3 N, in float n1, in float n2, 
-	out vec3 reflection, out vec3 refraction, 
-	out float reflectance, out float transmittance) 
+void fresnelRefract(vec3 L, vec3 N, float n1, float n2, 
+	vec3 reflection, vec3 refraction, 
+	float reflectance, float transmittance) 
 {
 	float eta = n1/n2;
 	float cos_theta1 = dot(L, N);
@@ -52,7 +52,7 @@ void main()
 	float LNdotV = clamp(dot(reflect(-L, N), V), 0.0, 1.0);
 	float VdotL = clamp(((dot(L, -V) + 1.0) / 2.0), 0.0, 1.0);
 
-	vec4 ambient = {0.05, 0.05, 0.05, 0.05};
+	vec4 ambient = vec4(0.05, 0.05, 0.05, 0.05);
 
 	/* calculate reflections */
 	vec4 reflectColor = diffuseColor * (ambient + pow(NdotL, 4.0) * TdotV + 0.2 * pow(VdotL, 16.0));
@@ -60,11 +60,10 @@ void main()
 	float d = clamp(pow(1.0 + dot(V, L), 0.4), 0.0, 1.0);
 	vec4 specularColor = d * RdotV * pow(LNdotV, specularExp) * specularLight;
 
-	vec4 color = DEFAULTCOLOR;
 	vec4 hdrColor = GLOWSCALE * (0.5 * reflectColor + 1.0 * specularColor);
 	hdrColor.a = 1.0;
 
 	/* calculate final color */
-	gl_FragData[0] = color;
+	gl_FragData[0] = DEFAULTCOLOR;
 	gl_FragData[1] = hdrColor;
 }
