@@ -20,7 +20,7 @@ void main(void){
 	vec2 coord = vec2(gl_TexCoord[0].x + warp.z, gl_TexCoord[0].y + warp.w);
 
 	// sample the diffuse texture, factoring in primary color as well
-	gl_FragColor = gl_Color * texture2D(SAMPLER0, coord);
+	gl_FragData[0] = gl_Color * texture2D(SAMPLER0, coord);
 
 #if r_fog
 	FogFragment();  // add fog

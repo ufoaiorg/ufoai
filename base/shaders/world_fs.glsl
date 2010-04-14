@@ -56,16 +56,19 @@ void main(void){
 	FogFragment();  // add fog
 #endif
 
+
+
 // developer tools
 #if r_lightmap
-	gl_FragColor.rgb = lightmap;
-	gl_FragColor.a = 1.0;
+	gl_FragData[0].rgb = lightmap;
+	gl_FragData[0].a = 1.0;
 #endif
 
 #if r_deluxemap
 	if(BUMPMAP > 0){
-		gl_FragColor.rgb = deluxemap;
-		gl_FragColor.a = 1.0;
+		gl_FragData[0].rgb = deluxemap;
+		gl_FragData[0].a = 1.0;
 	}
 #endif
+
 }

@@ -326,3 +326,12 @@ void R_DrawBuffers (int n)
 	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
 		qglDrawBuffers(n, colorAttachments);
 }
+
+void R_BindColorAttachments (int n, GLenum *attachments)
+{
+	if (!r_config.frameBufferObject)
+		return;
+
+	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
+		qglDrawBuffers(n, attachments);
+}

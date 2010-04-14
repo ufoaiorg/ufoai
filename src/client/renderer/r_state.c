@@ -397,6 +397,8 @@ void R_EnableShell (qboolean enable)
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glPolygonOffset(-1.0, 1.0);
 
+		R_EnableGlow(qtrue);
+		R_EnableDrawAsGlow(qtrue);
 		R_EnableBlend(qtrue);
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
 
@@ -405,6 +407,8 @@ void R_EnableShell (qboolean enable)
 	} else {
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		R_EnableBlend(qfalse);
+		R_EnableDrawAsGlow(qfalse);
+		R_EnableGlow(qfalse);
 
 		glPolygonOffset(0.0, 0.0);
 		glDisable(GL_POLYGON_OFFSET_FILL);
@@ -436,6 +440,42 @@ void R_EnableFog (qboolean enable)
 		glFogf(GL_FOG_DENSITY, 0.0);
 		glDisable(GL_FOG);
 	}
+}
+
+void R_EnableGlow (qboolean enable)
+{
+	if (!r_postprocess->integer || r_state.glow_enabled == enable)
+		return;
+
+
+	if (enable)
+		R_DrawBuffers(2);
+	else 
+		R_DrawBuffers(1);
+
+	if (!R_CheckError())
+		r_state.glow_enabled = enable;
+}
+
+
+void R_EnableDrawAsGlow (qboolean enable)
+{
+	static GLenum defaultRenderTarget = GL_COLOR_ATTACHMENT0_EXT;
+	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+
+	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
+		return;
+	if (!r_state.glow_enabled){
+		r_state.draw_glow_enabled = qfalse;
+		return;
+	}
+
+	r_state.draw_glow_enabled = enable;
+	
+	if (enable)
+		R_BindColorAttachments(1, &glowRenderTarget);
+	else
+		R_BindColorAttachments(1, &defaultRenderTarget);
 }
 
 /**
@@ -502,6 +542,12 @@ void R_Setup3D (void)
 
 	glEnable(GL_DEPTH_TEST);
 
+	/* set up framebuffers for postprocessing */
+	if (r_postprocess->integer) {
+		R_UseFramebuffer(fbo_render);
+		R_DrawBuffers(1);
+	}
+
 	R_CheckError();
 }
 
@@ -533,6 +579,9 @@ void R_Setup2D (void)
 	glEnable(GL_BLEND);
 
 	glDisable(GL_DEPTH_TEST);
+
+	if (r_postprocess->integer)
+		R_UseFramebuffer(fbo_screen);
 
 	R_CheckError();
 }

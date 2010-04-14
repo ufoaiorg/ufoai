@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_program.h"
 #include "r_sphere.h"
+#include "r_draw.h"
 #include "r_font.h"
 #include "r_light.h"
 #include "r_lightmap.h"
@@ -329,6 +330,10 @@ void R_RenderFrame (void)
 	R_DrawParticles();
 
 	R_EnableBlend(qfalse);
+
+	if (r_postprocess->integer) {
+		R_DrawBloom();
+	}
 
 	/* leave wire mode again */
 	if (r_wire->integer)

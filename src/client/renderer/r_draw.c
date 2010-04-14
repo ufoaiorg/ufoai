@@ -1422,11 +1422,23 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 void R_DrawBloom (void)
 {
 	int i;
+	const static float pmat[16] = { 0.00125, 0.0, 0.0, 0.0,
+									0.0, -0.001666667, 0.0, 0.0,
+									0.0, 0.0, 0.0001, 0.0,
+									-1.0, 1.0, 0, 1.0 };
 
-	/* set up for blit-style buffer rendering */
+	/* save state, then set up for blit-style rendering to quads*/
+	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
 	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadMatrixf(pmat);
+
 	glDisable(GL_LIGHTING);
 
 	/* downsample into image pyramid */
@@ -1455,11 +1467,11 @@ void R_DrawBloom (void)
 	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit_0);
 	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit_1);
 
-	R_UseViewport(fbo_render);
+	R_UseViewport(fbo_screen);
 	R_DrawQuad();
 
 	/* draw final result to the screenbuffer */
-	R_UseFramebuffer(0);
+	R_UseFramebuffer(fbo_screen);
 	R_UseProgram(r_state.combine2_program);
 	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit_0);
 	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit_1);
@@ -1467,8 +1479,15 @@ void R_DrawBloom (void)
 	R_DrawQuad();
 
 	/* cleanup before returning */
+	R_UseProgram(default_program);
+
 	R_CheckError();
-	R_UseProgram(0);
+
 	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glMatrixMode(GL_TEXTURE);
+	glPopMatrix();
+	glPopAttrib();
 	R_CheckError();
 }

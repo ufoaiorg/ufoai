@@ -66,6 +66,8 @@ typedef struct gltexunit_s {
 #define fbo_bloom0			r_state.bloomBuffer0
 #define fbo_bloom1			r_state.bloomBuffer1
 
+#define default_program		0
+
 typedef struct {
 	qboolean fullscreen;
 
@@ -115,6 +117,8 @@ typedef struct {
 	qboolean warp_enabled;
 	qboolean fog_enabled;
 	qboolean blur_enabled;
+	qboolean glow_enabled;
+	qboolean draw_glow_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -148,5 +152,7 @@ void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
+void R_EnableGlow(qboolean enable);
+void R_EnableDrawAsGlow(qboolean enable);
 
 #endif
