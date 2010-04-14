@@ -1422,12 +1422,14 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 void R_DrawBloom (void)
 {
 	int i;
-	const static float pmat[16] = { 0.00125, 0.0, 0.0, 0.0,
-									0.0, -0.001666667, 0.0, 0.0,
-									0.0, 0.0, 0.0001, 0.0,
-									-1.0, 1.0, 0, 1.0 };
+	static const float pmat[] = { 0.00125, 0.0, 0.0, 0.0,
+		0.0, -0.001666667, 0.0, 0.0, 0.0, 0.0, 0.0001, 0.0,
+		-1.0, 1.0, 0, 1.0 };
 
-	/* save state, then set up for blit-style rendering to quads*/
+	if (!r_config.frameBufferObject)
+		return;
+
+	/* save state, then set up for blit-style rendering to quads */
 	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();

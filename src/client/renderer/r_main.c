@@ -331,9 +331,8 @@ void R_RenderFrame (void)
 
 	R_EnableBlend(qfalse);
 
-	if (r_postprocess->integer) {
+	if (r_programs->integer && r_postprocess->integer)
 		R_DrawBloom();
-	}
 
 	/* leave wire mode again */
 	if (r_wire->integer)

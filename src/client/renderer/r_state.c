@@ -379,7 +379,7 @@ void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *sourc
 		program->userdata = userdata;
 		R_UseProgram(program);
 	} else {
-		R_UseFramebuffer(NULL);
+		R_UseFramebuffer(fbo_screen);
 		R_UseProgram(NULL);
 	}
 
@@ -447,10 +447,9 @@ void R_EnableGlow (qboolean enable)
 	if (!r_postprocess->integer || r_state.glow_enabled == enable)
 		return;
 
-
 	if (enable)
 		R_DrawBuffers(2);
-	else 
+	else
 		R_DrawBuffers(1);
 
 	if (!R_CheckError())
@@ -465,13 +464,14 @@ void R_EnableDrawAsGlow (qboolean enable)
 
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
 		return;
-	if (!r_state.glow_enabled){
+
+	if (!r_state.glow_enabled) {
 		r_state.draw_glow_enabled = qfalse;
 		return;
 	}
 
 	r_state.draw_glow_enabled = enable;
-	
+
 	if (enable)
 		R_BindColorAttachments(1, &glowRenderTarget);
 	else
