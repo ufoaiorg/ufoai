@@ -66,7 +66,7 @@ typedef struct gltexunit_s {
 #define fbo_bloom0			r_state.bloomBuffer0
 #define fbo_bloom1			r_state.bloomBuffer1
 
-#define default_program		0
+#define default_program		NULL
 
 typedef struct {
 	qboolean fullscreen;

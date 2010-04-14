@@ -1402,7 +1402,7 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 	for (i = 0; i < levels; i++) {
 		const int l = levels - i - 1;
 
-		R_UseProgram(i == 0 ? 0 : r_state.combine2_program);
+		R_UseProgram(i == 0 ? default_program : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
 		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit_0);
 		if (i != 0)
