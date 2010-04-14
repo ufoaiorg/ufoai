@@ -1,13 +1,13 @@
-varying out vec2 tex;
+varying vec2 tex;
 
-varying out vec4 ambientLight;
-varying out vec4 diffuseLight;
-varying out vec4 specularLight;
-varying out vec4 diffuseLight2;
+varying vec4 ambientLight;
+varying vec4 diffuseLight;
+varying vec4 specularLight;
+varying vec4 diffuseLight2;
 
-varying out vec3 lightVec;
-varying out vec3 lightVec2;
-varying out vec3 eyeVec;
+varying vec3 lightVec;
+varying vec3 lightVec2;
+varying vec3 eyeVec;
 
 uniform vec2 UVSCALE;
 
@@ -38,9 +38,9 @@ void main()
 	lightVec2.z = dot(lightPos2.rgb, n);
 
 	/* estimate view vector (orthographic projection means we don't really have one) */
-	vec4 view = {0.0, 0.0, 100.0, 1.0};
-	eyeVec.x = dot(view, t);
-	eyeVec.y = dot(view, b);
-	eyeVec.z = dot(view, n);
+	vec4 view = vec4(0.0, 0.0, 100.0, 1.0);
+	eyeVec.x = dot(view.xyz, t);
+	eyeVec.y = dot(view.xyz, b);
+	eyeVec.z = dot(view.xyz, n);
 }
 
