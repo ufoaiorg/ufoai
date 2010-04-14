@@ -688,7 +688,8 @@ static qboolean R_InitExtensions (void)
 	}
 
 	/* framebuffer objects */
-	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")) {
+	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")
+	 || strstr(r_config.extensionsString, "GL_EXT_framebuffer_object")) {
 		qglIsRenderbufferEXT = SDL_GL_GetProcAddress("glIsRenderbufferEXT");
 		qglBindRenderbufferEXT = SDL_GL_GetProcAddress("glBindRenderbufferEXT");
 		qglDeleteRenderbuffersEXT = SDL_GL_GetProcAddress("glDeleteRenderbuffersEXT");
