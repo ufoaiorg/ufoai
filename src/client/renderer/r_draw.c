@@ -1422,9 +1422,6 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 void R_DrawBloom (void)
 {
 	int i;
-	static const float pmat[] = { 0.00125, 0.0, 0.0, 0.0,
-		0.0, -0.001666667, 0.0, 0.0, 0.0, 0.0, 0.0001, 0.0,
-		-1.0, 1.0, 0, 1.0 };
 
 	if (!r_config.frameBufferObject)
 		return;
@@ -1439,7 +1436,8 @@ void R_DrawBloom (void)
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
-	glLoadMatrixf(pmat);
+	glLoadIdentity();
+	glOrtho(0, viddef.width, viddef.height, 0, 9999.0f, SKYBOX_DEPTH);
 
 	glDisable(GL_LIGHTING);
 
@@ -1485,6 +1483,7 @@ void R_DrawBloom (void)
 
 	R_CheckError();
 
+	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
