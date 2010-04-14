@@ -62,7 +62,6 @@ static void R_FreeFBOTexture (int texnum)
 
 void R_InitFBObjects (void)
 {
-	GLint maxDrawBuffers;
 	GLenum filters[2];
 	float scales[DOWNSAMPLE_PASSES];
 	int i;
@@ -91,9 +90,9 @@ void R_InitFBObjects (void)
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	activeFramebuffer = &screenBuffer;
 
-	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
-	colorAttachments = Mem_Alloc(sizeof(GLenum) * maxDrawBuffers);
-	for (i = 0; i < maxDrawBuffers; i++)
+	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &r_config.maxDrawBuffers);
+	colorAttachments = Mem_Alloc(sizeof(GLenum) * r_config.maxDrawBuffers);
+	for (i = 0; i < r_config.maxDrawBuffers; i++)
 		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
 
 	filters[0] = GL_NEAREST;
@@ -320,17 +319,18 @@ void R_UseViewport (const r_framebuffer_t *buf)
 
 void R_DrawBuffers (int n)
 {
-	if (!r_config.frameBufferObject)
-		return;
-
-	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
-		qglDrawBuffers(n, colorAttachments);
+	R_BindColorAttachments(n, colorAttachments);
 }
 
 void R_BindColorAttachments (int n, GLenum *attachments)
 {
 	if (!r_config.frameBufferObject)
 		return;
+
+	if (n >= r_config.maxDrawBuffers) {
+		Com_DPrintf(DEBUG_RENDERER, "Max drawbuffers hit\n");
+		n = r_config.maxDrawBuffers;
+	}
 
 	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
 		qglDrawBuffers(n, attachments);
