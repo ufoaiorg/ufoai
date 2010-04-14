@@ -312,6 +312,9 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
  */
 void R_UseViewport (const r_framebuffer_t *buf)
 {
+	if (!r_config.frameBufferObject)
+		return;
+
 	if (!buf)
 		buf = &screenBuffer;
 	glViewport(buf->viewport.x, buf->viewport.y, buf->viewport.width, buf->viewport.height);
