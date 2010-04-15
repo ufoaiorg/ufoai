@@ -107,7 +107,9 @@ def get_data(d, files):
         if i[0] in files:
             files.remove(i[0])
     licenses['UNKNOWN'] = files
+
     return licenses
+
 
 # filters for files to ignore
 FFILTERS = (re.compile('.txt$'),
@@ -143,9 +145,10 @@ def get_all_data():
             # get list of files
             for path, dirnames, fnames in os.walk('base/' + i):
                 for fname in fnames:
-                    if not '/.' in fname or ffilter(fname):
-                        files.append(path + fname)
-            re[i] = get_data(i, [x[len(i)+1:] for x in files if x.startswith(i + '/')])
+                    if not '/.' in path and ffilter(fname):
+                        f = path[len(i)+ 6:] + '/' + fname
+                        files.append(f)
+            re[i] = get_data(i, files)
 
     re[''] = get_data('', files) # mae
     return re
@@ -195,12 +198,17 @@ def generate(d, data, texture_map, map_texture):
     html = HTML % (d, rev, content)
     open('licenses/html/%s/index.html' % d, 'w').write(html)
 
-
-
     sources = [i.split(' - ', 1) for i in get('svn propget svn:source base/%s -R' % d, False).split('\n') if i != '']
 
     print 'Generating stats per license'
-
+    print ' collecting svn:copytight',
+    copyright =  {}
+    for tmp in get('svn propget svn:copyright base/%s' % d, False).split('\n'):
+        if ' - ' in tmp:
+            fname, author = tmp.split(' - ', 1)
+            copyright[fname] = author
+    print 'done.'
+            
     for i in licenses:
         h = md5.md5(i).hexdigest()
         content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>' % i
@@ -217,8 +225,8 @@ def generate(d, data, texture_map, map_texture):
                 img = '<img src="%s%s"/>' % (ABS_URL, thumb)
 
             content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
-            copy = get('svn propget svn:copyright base/%s/%s' % (d, j), False).strip()
-            copy =  'UNKNOWN' if copy =='' else copy
+
+            copy =  copyright.get('base/%s/%s' % (d,j), 'UNKNOWN')
             content+= u' <span>by %s</span>' % unicode(copy.decode('utf-8'))
 
             if j in sources:
