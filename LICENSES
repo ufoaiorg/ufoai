@@ -21,11 +21,18 @@ base/maps/africa/af_house5.map | GNU General Public License 2.0 or later
 base/maps/africa/af_misc1.map | GNU General Public License 2.0 or later
 base/maps/africa/af_mp_team2.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_empty.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_entrance.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_hangar.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_incubation_small.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_lab.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_tunnel_h.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_tunnel_mb.map | GNU General Public License 2.0 or later
+base/maps/alienb/a_tunnel_ml.map | GNU General Public License 2.0 or later
+base/maps/alienb/a_tunnel_mr.map | GNU General Public License 2.0 or later
+base/maps/alienb/a_tunnel_mt.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_tunnel_v.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_tunnel_x.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_wormhole.map | GNU General Public License 2.0 or later
 base/maps/alienbase.ump | GNU General Public License 2.0 or later
 base/maps/b/aliencont.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/antimatter.map | GNU General Public License 2.0 or later | Martin Gerhardy
