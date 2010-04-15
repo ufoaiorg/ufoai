@@ -393,9 +393,21 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
 }
 
+static qboolean R_CvarPrograms (cvar_t *cvar)
+{
+	if (qglUseProgram) {
+		if (!cvar->integer)
+			Cvar_SetValue("r_postprocess", 0);
+		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+	}
+
+	Cvar_SetValue(cvar->name, 0);
+	return qtrue;
+}
+
 static qboolean R_CvarPostProcess (cvar_t *cvar)
 {
-	if (r_config.frameBufferObject)
+	if (r_config.frameBufferObject && r_programs->integer)
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 
 	Cvar_SetValue(cvar->name, 0);
@@ -446,6 +458,7 @@ static void R_RegisterSystemVars (void)
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
 	r_programs->modified = qfalse;
+	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
