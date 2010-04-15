@@ -2688,6 +2688,30 @@ base/pics/ui/transtypebox.tga | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/bump_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/combine2_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/combine2_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve3_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve3_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve5_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve5_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve9_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve9_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/fog_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/fog_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/geoscape_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/geoscape_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/light_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/light_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/mesh_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/mesh_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/world_vs.glsl | GNU General Public License 2.0 or later
 base/sound/aliens/aliendeath01.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath02.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath03.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
