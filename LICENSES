@@ -2,7 +2,24 @@ filename | license | author | source
 base/maps/africa.ump | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/africa/af_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/africa/af_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/africa/af_craft_ufo_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/africa/af_craft_ufo_scout.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty5.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty6.map | GNU General Public License 2.0 or later
+base/maps/africa/af_fence1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_fence2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_fence3.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house3.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house4.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house5.map | GNU General Public License 2.0 or later
+base/maps/africa/af_misc1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_mp_team2.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_empty.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_hangar.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_lab.map | GNU General Public License 2.0 or later | Martin Gerhardy
