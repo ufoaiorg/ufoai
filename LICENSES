@@ -58,10 +58,12 @@ base/maps/b/workshop.map | GNU General Public License 2.0 or later | Martin Gerh
 base/maps/bomber_city.ump | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/bomber_city/bc_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_main.map | GNU General Public License 2.0 or later
 base/maps/bridge.ump | GNU General Public License 2.0 or later
 base/maps/bridge/br_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/bridge/br_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/bridge/br_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bunker.map | GNU General Public License 2.0 or later
 base/maps/cemetery.ump | GNU General Public License 2.0 or later
@@ -183,12 +185,15 @@ base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/farm/f_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/farm/f_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_bomber.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_b.map | GNU General Public License 2.0 or later
+base/maps/farm/f_farmhouse_c.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_c.map | GNU General Public License 2.0 or later
@@ -197,9 +202,17 @@ base/maps/farm/f_filler_l_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_filler_m_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_filler_m_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_filler_s.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_h.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_h1.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_hs.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_r.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_rt.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_v.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_v1.map | GNU General Public License 2.0 or later
 base/maps/farm/f_silo.map | GNU General Public License 2.0 or later
 base/maps/farm/f_stables_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0 or later
+base/maps/farm/f_wind.map | GNU General Public License 2.0 or later
 base/maps/ferry.map | GNU General Public License 2.0 or later
 base/maps/fighter_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -209,6 +222,8 @@ base/maps/forest/fr_craft_crash_fighter.map | GNU General Public License 2.0 or 
 base/maps/forest/fr_craft_crash_harvester.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/forest/fr_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -223,6 +238,7 @@ base/maps/forest/fr_f7.map | GNU General Public License 2.0 or later | Kostia "K
 base/maps/forest/fr_f8.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_f9.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_h2.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_w2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_w3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -233,7 +249,10 @@ base/maps/forest/fr_w7.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w8.map | GNU General Public License 2.0 or later
 base/maps/frozen.ump | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_fighter.map | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_supply.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h01.map | GNU General Public License 2.0 or later
@@ -267,7 +286,9 @@ base/maps/ice/ice_r03.map | GNU General Public License 2.0 or later
 base/maps/industrial.ump | GNU General Public License 2.0 or later
 base/maps/industrial/craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/industrial/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/industrial/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
@@ -385,12 +406,15 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
+base/maps/ufocrash/uc_craft_crash_bomber.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_corrupter.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_scout.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_scout
 base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_supply and terrain08
 base/maps/ufocrash/uc_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/ufocrash/uc_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/ufocrash/uc_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d01.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d02_harvester.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d03.map | GNU General Public License 2.0 or later
@@ -408,6 +432,10 @@ base/maps/village/vil_c02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c03.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_ufo_harvester.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d03.map | GNU General Public License 2.0 or later
