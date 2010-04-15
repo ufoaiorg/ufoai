@@ -18,6 +18,7 @@
 // g		  citystrh_cwl*			This tile has a crosswalk on the left side
 // h		  citystrh_cwr*			This tile has a crosswalk on the right side
 // i		 citystr_rail_cross		A street tile that is an intersection between vertical and horizontal streets with a vertical rail line
+// l		 citystr_cross			A street tile that is an intersection between vertical and horizontal streets with NO rail line
 // 		citybld*			A city building tile
 // j		 citybldl_*			A city building tile for the left side of main road
 // k		 citybldr_*			A city building tile for the right side of main road
@@ -41,11 +42,29 @@ tile +str_rail_cross
 	0		bd		bd		bd		0
 }
 
+// Street intersection without rail line
+tile +str_cross
+{
+	3 3
+	0		abe		0
+	fh		l		fg
+	0		abe		0
+}
+
 // ---------------------
-// Vertical Street Tiles
-	
+// Vertical Street Tiles	
+
+	// Vertical street base tile (straight lines painted)
+	tile +strv_1a
+	{
+		3 3
+		0		a		0
+		jk		a		jk
+		0		a		0
+	}
+
 	// Vertical street with rail station
-	// 		- Subway exits bottom left and right
+	// 	- Subway exits bottom left and right
 	tile +strv_rail_1a
 	{
 		5 6
@@ -84,15 +103,6 @@ tile +str_rail_cross
 		0		ce		ce		ce		0
 	}
 
-	// Vertical street base tile (straight lines painted)
-	tile +strh_1a
-	{
-		3 3
-		0		a		0
-		jk		a		jk
-		0		a		0
-	}
-
 // ---------------------
 // Horizontal Street Tiles
 		
@@ -101,7 +111,7 @@ tile +str_rail_cross
 	{
 		3 3
 		0		jk		0
-		ifg		+f		ifh
+		ilfg		+f		ilfh
 		0		jk		0
 	}
 	
@@ -110,7 +120,7 @@ tile +str_rail_cross
 	{
 		3 3
 		0		jk		0
-		i		+g		f
+		il		+g		fl
 		0		jk		0
 	}
 		
@@ -119,7 +129,7 @@ tile +str_rail_cross
 	{
 		3 3
 		0		jk		0
-		f		+h		i
+		fl		+h		il
 		0		jk		0
 	}
 	
@@ -131,8 +141,8 @@ tile +str_rail_cross
 	tile +strc_sw_1a
 	{
 		3 3
-		0		a		0
-		jk		af		f
+		0		al		0
+		jk		af		fl
 		0		jk		0
 	}	
 
@@ -195,12 +205,32 @@ tile +str_rail_cross
 
 assembly garage
 {
-	size "5 4"
-	fix +bldl_4x4_2a "0 0"
-	fix +strv_rail_btm2a "4 0"
-	fix +strv_rail_2a "4 1"
+	size "8 6"
+	fix +strcross "0 0"
+	fix +strv_1a "0 1"
+	fix +strv_1a "0 2"
+	fix +strv_1a "0 3"
+	fix +strv_1a "0 4"
+	fix +strcross "0 5"
+
+	fix +strh_cwl_1a "1 0"
+	fix +strh_1a "2 0"
+	fix +strh_1b "3 0"
+	fix +strh_cwr_1a "4 0"
+
+	fix +bldl_4x4_2a "1 1"
+
+	fix +strh_cwl_1a "1 5"
+	fix +strh_1a "2 5"
+	fix +strh_1b "3 5"
+	fix +strh_cwr_1a "4 5"
+
+	fix +strv_rail_cross "4 0"
+	fix +strv_rail_btm2a "4 1"
 	fix +strv_rail_2a "4 2"
-	fix +strv_rail_top2a "4 3"
+	fix +strv_rail_2a "4 3"
+	fix +strv_rail_top2a "4 4"
+	fix +strv_rail_cross "4 5"
 }
 
 /*

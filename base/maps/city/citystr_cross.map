@@ -7,6 +7,10 @@
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
+"light_night" "45"
+"ambient_night" "0.15 0.15 0.19"
+"angles_night" "-85 100"
+"color_night" "0.55 0.55 0.95"
 // brush 0
 {
 ( 128 256 68 ) ( 128 192 68 ) ( 64 256 68 ) tex_streets/2ln 0 0 0 0.25 0.25 65024 0 0
@@ -70,48 +74,4 @@
 ( 0 192 64 ) ( 0 192 96 ) ( 64 192 64 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 ( 0 192 64 ) ( 0 256 64 ) ( 0 192 96 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 }
-}
-// entity 1
-{
-"classname" "info_human_start"
-"origin" "592 144 92"
-"angle" "180"
-}
-// entity 2
-{
-"classname" "info_human_start"
-"origin" "592 80 92"
-"angle" "180"
-}
-// entity 3
-{
-"classname" "info_human_start"
-"origin" "208 176 92"
-}
-// entity 4
-{
-"classname" "info_human_start"
-"origin" "208 80 92"
-}
-// entity 5
-{
-"classname" "info_human_start"
-"origin" "272 112 92"
-}
-// entity 6
-{
-"classname" "info_human_start"
-"origin" "304 176 92"
-}
-// entity 7
-{
-"classname" "info_human_start"
-"origin" "656 208 92"
-"angle" "180"
-}
-// entity 8
-{
-"classname" "info_human_start"
-"origin" "656 112 92"
-"angle" "180"
 }
