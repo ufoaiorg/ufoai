@@ -456,9 +456,6 @@ static void R_RegisterSystemVars (void)
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
 	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activates or deactivates hardware lighting");
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
-	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
-	r_programs->modified = qfalse;
-	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
@@ -729,6 +726,10 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("using GL_ARB_framebuffer_object\n");
 		}
 	}
+
+	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
+	r_programs->modified = qfalse;
+	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
 
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
 	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
