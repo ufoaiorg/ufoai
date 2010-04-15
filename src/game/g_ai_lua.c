@@ -162,6 +162,7 @@ static int AIL_reload(lua_State *L);
 static int AIL_positionshoot(lua_State *L);
 static int AIL_positionhide(lua_State *L);
 static int AIL_positionherd(lua_State *L);
+static int AIL_distance(lua_State *L);
 /** Lua AI module methods.
  * http://www.lua.org/manual/5.1/manual.html#lua_CFunction
  */
@@ -180,6 +181,7 @@ static const luaL_reg AIL_methods[] = {
 	{"positionshoot", AIL_positionshoot},
 	{"positionhide", AIL_positionhide},
 	{"positionherd", AIL_positionherd},
+	{"distance", AIL_distance},
 	{NULL, NULL}
 };
 
@@ -932,6 +934,25 @@ static int AIL_positionherd (lua_State *L)
 		lua_pushboolean(L, 0);
 	}
 	G_EdictSetOrigin(AIL_ent, save);
+	return 1;
+}
+
+/**
+ * @brief Returns distance between AI and target
+ * @note @c target (passed trough the lua stack) The target to which the distance is calculated
+ */
+static int AIL_distance (lua_State *L)
+{
+	vec_t dist;
+	aiActor_t* target;
+	
+	/* check parameter */
+	assert(lua_gettop(L) && lua_isactor(L, 1));
+	
+	/* calculate distance */
+	target = lua_toactor(L, 1);
+	dist = VectorDist(AIL_ent->origin, target->ent->origin);
+	lua_pushnumber(L, dist);
 	return 1;
 }
 
