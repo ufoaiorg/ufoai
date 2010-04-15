@@ -1440,6 +1440,7 @@ void R_DrawBloom (void)
 	glOrtho(0, viddef.width, viddef.height, 0, 9999.0f, SKYBOX_DEPTH);
 
 	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
 
 	/* downsample into image pyramid */
 	R_BindTexture(fbo_render->textures[1]);
