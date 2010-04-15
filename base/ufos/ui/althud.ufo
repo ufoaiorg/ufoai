@@ -157,7 +157,7 @@ window althud extends ahud
 			size		"32 128"
 		}
 		
-		confunc hudenable_floor
+		func hudenable_floor
 		{
 			*cvar:tmp = "<1>"
 			*cvar:i = 1
@@ -1145,7 +1145,7 @@ window althud extends ahud
 	
 	confunc hudenable
 	{
-		cmd "*node:floor.hudenable_floor <1>;"
+		call *floor.hudenable_floor ( <1> )
 	}
 	
 	// ==================
