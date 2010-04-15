@@ -82,6 +82,7 @@ def get_rev(d):
     rev = [i for i in get('svn info base/%s' % d, False).split('\n') if i.startswith('Revision')]
     return int(rev[0][10:])
 
+
 def get_data(d, files):
     print ' getting data for "%s"' % d
 
@@ -107,6 +108,7 @@ def get_data(d, files):
     licenses['UNKNOWN'] = files
     return licenses
 
+# filters for files to ignore
 FFILTERS = (re.compile('.txt$'),
             re.compile('.ufo$'),
             re.compile('.anm$'),
@@ -125,17 +127,23 @@ def ffilter(fname):
             return False
     return True
 
+
 def get_all_data():
     print 'get all data'
     re = {}
-    print ' svn list'
-    files = filter(ffilter, get('svn list -r %i -R base/' % get_rev('.')).split('\n'))
+#    print ' svn list'
+#    files = filter(ffilter, get('svn list -r %i -R base/' % get_rev('.')).split('\n'))
 
-    print '  done'
+#    print '  done'
 
-    print 'calculate'
     for i in os.listdir('base'):
-        if os.path.isdir('base/'+i) and not i.startswith('.')and os.path.exists('base/%s/.svn' % i):
+        if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
+            files = []
+            # get list of files
+            for path, dirnames, fnames in os.walk('base/' + i):
+                for fname in fnames:
+                    if not '/.' in fname or ffilter(fname):
+                        files.append(path + fname)
             re[i] = get_data(i, [x[len(i)+1:] for x in files if x.startswith(i + '/')])
 
     re[''] = get_data('', files) # mae
@@ -191,7 +199,6 @@ def generate(d, data, texture_map, map_texture):
     sources = [i.split(' - ', 1) for i in get('svn propget svn:source base/%s -R' % d, False).split('\n') if i != '']
 
     print 'Generating stats per license'
-
 
     for i in licenses:
         h = md5.md5(i).hexdigest()
@@ -290,39 +297,58 @@ def plot(d, data, times):
     # raw_input('press return to continue')
 
 
+def setup(output_path):
+    """Check if output folders etc. are in place"""
+    if not os.path.exists(output_path + '/licenses'):
+        print 'creating bas directory'
+        os.mkdir(output_path + '/licenses')
+    
+    for p in ['cache', 'history', 'html']:
+        test_path = '%s/licenses/%s' % (output_path, p)
+        if not os.path.exists(test_path):
+            print 'creating', os.path.abspath(test_path)
+            os.mkdir(test_path)
+
+
 from shutil import rmtree, copy
-def clean_up():
+def clean_up(output_path):
+    """Delete old html files and create needed directories"""
     print 'clean up'
-    rmtree('licenses/html')
-    os.mkdir('licenses/html')
+    rmtree(output_path + '/licenses/html')
+    os.mkdir(output_path + '/licenses/html')
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-            os.mkdir('licenses/html/'+i)
-            if not os.path.exists('licenses/history/'+i):
-                os.mkdir('licenses/history/'+i)
+            os.mkdir(output_path + '/licenses/html/'+i)
+            if not os.path.exists(output_path + '/licenses/history/'+i):
+                os.mkdir(output_path + '/licenses/history/'+i)
 
-    for i in os.walk('base'):
-        print i[0]
-        if '/.' in i[0]:
+    for path, dnames, fnames in os.walk('base'):
+        if '/.' in path:
             continue
-
-        os.mkdir('licenses/html/.thumbnails/'+i[0][5:])
-
-
-
-def setup():
-    # TODO check if all folders are in place
-    pass
+        os.mkdir(output_path + '/licenses/html/.thumbnails/'+path[5:])
 
 
 def kill_suffix(i):
     return '.'.join(i.split('.')[:-1])
 
 
-def main():
-    global texture_map, map_texture #debugging
-    setup()
-    clean_up()
+def main(argv):
+    global texture_map, map_texture # debugging
+    from optparse import OptionParser
+
+    parser = OptionParser()
+    parser.add_option("-o", "--output", dest="output",
+                      help="Path to output/working directory ", metavar="DIR")
+
+    (options, args) = parser.parse_args()
+    output_path = options.output
+
+    if not output_path:
+        # default path: relative to working directory
+        output_path = '.'
+
+    setup(output_path)
+    clean_up(output_path)
 
     # do it for the hole thing
     data = get_all_data()
@@ -353,7 +379,11 @@ def main():
             print '\n'
     generate('', data, texture_map, map_texture)
 
-    copy('licenses.py', 'licenses/html')
+    # copy('licenses.py', 'licenses/html')
     print 'bye'
 
-main()
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
+
