@@ -397,7 +397,6 @@ void R_EnableShell (qboolean enable)
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glPolygonOffset(-1.0, 1.0);
 
-		R_EnableGlow(qtrue);
 		R_EnableDrawAsGlow(qtrue);
 		R_EnableBlend(qtrue);
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -408,7 +407,6 @@ void R_EnableShell (qboolean enable)
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		R_EnableBlend(qfalse);
 		R_EnableDrawAsGlow(qfalse);
-		R_EnableGlow(qfalse);
 
 		glPolygonOffset(0.0, 0.0);
 		glDisable(GL_POLYGON_OFFSET_FILL);
@@ -452,8 +450,8 @@ void R_EnableGlow (qboolean enable)
 	else
 		R_DrawBuffers(1);
 
-	if (!R_CheckError())
-		r_state.glow_enabled = enable;
+	r_state.draw_glow_enabled = qfalse;
+	r_state.glow_enabled = enable;
 }
 
 
@@ -465,11 +463,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
 		return;
 
-	if (!r_state.glow_enabled) {
-		r_state.draw_glow_enabled = qfalse;
-		return;
-	}
-
+	r_state.glow_enabled = qfalse;
 	r_state.draw_glow_enabled = enable;
 
 	if (enable)
