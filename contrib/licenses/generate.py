@@ -121,7 +121,8 @@ FFILTERS = (re.compile('.txt$'),
             re.compile('^Makefile'),
             re.compile('.html$'),
             re.compile('.cfg$'),
-            re.compile('.lua$'))
+            re.compile('.lua$'),
+            re.compile('.bsp$'))
 
 def ffilter(fname):
     for i in FFILTERS:
