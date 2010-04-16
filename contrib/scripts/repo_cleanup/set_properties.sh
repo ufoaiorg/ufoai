@@ -1,8 +1,53 @@
 #! /bin/sh
 
-mime () {
+prop () {
 	for D in "$@"; do
 		find "$D" -type f | while read I; do
+			case "$I" in
+				*/irc_motd.txt)
+					svn ps -q svn:eol-style LF "$I";;
+
+				*.6       | \
+				*.ac      | \
+				*.anm     | \
+				*.bat     | \
+				*.c       | \
+				*.cfg     | \
+				*.cpp     | \
+				*.def     | \
+				*.desktop | \
+				*.dirs    | \
+				*.glsl    | \
+				*.h       | \
+				*.html    | \
+				*.in      | \
+				*.install | \
+				*.lang    | \
+				*.launch  | \
+				*.lua     | \
+				*.m       | \
+				*.menu    | \
+				*.ms      | \
+				*.map     | \
+				*.mat     | \
+				*.mk      | \
+				*.pl      | \
+				*.po      | \
+				*.pot     | \
+				*.py      | \
+				*.qe4     | \
+				*.rc      | \
+				*.rng     | \
+				*.sh      | \
+				*.tex     | \
+				*.tpl     | \
+				*.txt     | \
+				*.ufo     | \
+				*.ump     | \
+				*.xml)
+					svn ps -q svn:eol-style native "$I";;
+			esac
+
 			case "$I" in
 				*.3ds)   TYPE=application/x-3ds;;
 				*.blend) TYPE=application/x-blender;;
@@ -43,7 +88,7 @@ mime () {
 }
 
 if [ "$#" = 0 ]; then
-	mime .
+	prop .
 else
-	mime "$@"
+	prop "$@"
 fi
