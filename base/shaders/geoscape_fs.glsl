@@ -48,9 +48,9 @@ void main()
 	diffuseColor.a = 1.0;
 
 	/* calculate diffuse reflections */
-	vec3 V = normalize(eyeVec);
-	vec3 L = normalize(lightVec);
-	vec3 N = normalize(texture2D(SAMPLER2, tex).rgb * 2.0 - 1.0);
+	vec3 V = vec3(normalize(eyeVec).rgb);
+	vec3 L = vec3(normalize(lightVec).rgb);
+	vec3 N = vec3(normalize(texture2D(SAMPLER2, tex).rgb * 2.0 - 1.0).rgb);
 	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 	vec4 reflectColor = diffuseColor * diffuseLight * NdotL;
 	
