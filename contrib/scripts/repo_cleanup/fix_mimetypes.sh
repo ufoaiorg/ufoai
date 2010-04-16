@@ -15,6 +15,7 @@ mime () {
 				*.ico)   TYPE=image/x-icon;;
 				*.jpeg)  TYPE=image/jpeg;;
 				*.jpg)   TYPE=image/jpeg;;
+				*.mo)    TYPE=application/x-gettext-translation;;
 				*.odg)   TYPE=application/vnd.oasis.opendocument.graphics;;
 				*.ogg)   TYPE=audio/ogg;;
 				*.pdf)   TYPE=application/pdf;;
