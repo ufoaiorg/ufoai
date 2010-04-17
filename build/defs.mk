@@ -6,13 +6,13 @@ CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -DUSE_SIGNALS=$(USE_SIGNALS)
 CFLAGS+=-DHAVE_CONFIG_H -DUSE_SIGNALS=$(USE_SIGNALS) $(GENERIC_FLAGS) -pipe -Winline \
 	-Wcast-qual -Wcast-align -Wdeclaration-after-statement -Wmissing-prototypes \
 	-Wmissing-declarations -std=c99
-#	-Wunreachable-code -Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
+#	-Wunreachable-code -Wlogical-op -Wc++-compat
+#	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses -Wpadded \
 #	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable \
 #	-fstack-protector-all -Wstack-protector \
 #	-Wfloat-equal -Wconversion -Wbad-function-cast \
-#	-Wshadow -pedantic -std=c99
-#-combine -fwhole-program
+#	-Wshadow -pedantic -combine -fwhole-program -fexcess-precision=fast
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))
