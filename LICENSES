@@ -2762,7 +2762,7 @@ base/sound/aliens/tamancall05.ogg | Creative Commons Attribution-Share Alike 3.0
 base/sound/ambience/alien_engine.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/bloodspiderwalk.ogg | Creative Commons Attribution 3.0 License | Gren | http://wiki.creativecommons.org/File:BloodSpiderWalk.ogg
 base/sound/ambience/creak.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/cricket_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/cricket_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/disco.ogg | Creative Commons Sampling Plus 1.0 License | zilverton | http://www.freesound.org/samplesViewSingle.php?id=72153
 base/sound/ambience/droning_long.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_short.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -2770,17 +2770,17 @@ base/sound/ambience/fire03.ogg | Creative Commons Attribution-Share Alike 3.0 Un
 base/sound/ambience/fire04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/fire05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/fire06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
-base/sound/ambience/fire1.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
-base/sound/ambience/fire2.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
-base/sound/ambience/firesoft.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/fire1.ogg | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/fire2.ogg | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/firesoft.ogg | GNU General Public License 2.0 | Openarena | Openarena GPLed data
 base/sound/ambience/hum.ogg | GNU General Public 2.0 or later | Max Neave
 base/sound/ambience/hum2.ogg | GNU General Public 2.0 or later | Max Neave
 base/sound/ambience/jingle.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/jingle2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/lights_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/lights_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/machine1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/minepump03.ogg | Creative Commons Attribution 3.0 License | Gren | http://wiki.creativecommons.org/File:MinePump03.ogg
-base/sound/ambience/radiomessage.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/radiomessage.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/sparks_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | sparks.ogg
 base/sound/ambience/tv_newswav.ogg | Creative Commons Sampling Plus 1.0 License | Connum | http://www.freesound.org/samplesViewSingle.php?id=23874
@@ -2789,7 +2789,7 @@ base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz's GPL
 base/sound/ambience/water01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/water02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/water03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
-base/sound/ambience/wind_turbine.wav | Creative Commons Sampling Plus 1.0 |  | http://www.freesound.org/samplesViewSingle.php?id=13160
+base/sound/ambience/wind_turbine.ogg | Creative Commons Sampling Plus 1.0 |  | http://www.freesound.org/samplesViewSingle.php?id=13160
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/civilians/civboydeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civfemdeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
