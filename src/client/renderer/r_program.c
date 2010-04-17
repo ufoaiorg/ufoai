@@ -235,12 +235,10 @@ void R_ShutdownPrograms (void)
 
 static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
 {
-	size_t inLength = strlen(in);
+	const size_t inLength = strlen(in);
 	strcpy(*out, in);
 	*out += inLength;
 	*len -= inLength;
-	if (*len < 0)
-		Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
 	return inLength;
 }
 
@@ -248,7 +246,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 {
 	char path[MAX_QPATH];
 	byte *buf;
-	int i;
+	size_t i;
 	const char *hwHack, *defines;
 
 	switch (r_config.hardwareType) {
