@@ -1104,6 +1104,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
 
+	/* Draw earth atmosphere */
 	if (r_programs->integer && r_postprocess->integer) {
 		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
 		r_globeEarthAtmosphere.glowScale = 1.0;
@@ -1111,25 +1112,25 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarthAtmosphere.glslProgram = r_state.atmosphere_program;
 		R_SphereRender(&r_globeEarthAtmosphere, earthPos, rotate, fullscale, sunPos);
 	} else {
-		/* Draw earth atmosphere */
 		halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
 		if (halo != r_noTexture) {
 			/** @todo Replace this magic number with some speaking constant */
 			const float earthSizeX = fullscale * 20500.0 * viddef.rx;
 			const float earthSizeY = fullscale * 20500.0 * viddef.ry;
-			glPushMatrix();
 			glMatrixMode(GL_TEXTURE);
+			glPushMatrix();
 			glLoadIdentity();
-			glMatrixMode(GL_MODELVIEW);
 			glDisable(GL_LIGHTING);
 
 			R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
 			glEnable(GL_LIGHTING);
 			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);
 		}
 	}
 
 	R_DrawBuffers(1);
+	glDisable(GL_DEPTH_TEST);
 
 	/* draw nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
@@ -1170,7 +1171,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	}
 
 
-	glDisable(GL_DEPTH_TEST);
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
 

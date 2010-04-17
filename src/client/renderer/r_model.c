@@ -332,6 +332,7 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 
 image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)
 {
+	/* arisian: bookmark */
 	if (skin[0] != '.')
 		return R_FindImage(skin, it_skin);
 	else {

@@ -314,7 +314,7 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
  */
 void R_UseViewport (const r_framebuffer_t *buf)
 {
-	if (!r_config.frameBufferObject)
+	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
 
 	if (!buf)
@@ -329,7 +329,7 @@ void R_DrawBuffers (int n)
 
 void R_BindColorAttachments (int n, GLenum *attachments)
 {
-	if (!r_config.frameBufferObject)
+	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
 
 	if (n >= r_config.maxDrawBuffers) {
@@ -343,7 +343,7 @@ void R_BindColorAttachments (int n, GLenum *attachments)
 
 qboolean R_EnableRenderbuffer (qboolean enable)
 {
-	if (!frameBufferObjectsInitialized || !r_postprocess->integer || !r_programs->integer)
+	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return qfalse;
 
 	if (enable == renderbuffer)
