@@ -2713,38 +2713,38 @@ base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_vs.glsl | GNU General Public License 2.0 or later
-base/sound/aliens/aliendeath01.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath02.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath03.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath04.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath05.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath06.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath07.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/aliens/aliendeath01.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath02.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath03.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath04.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath05.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath06.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath07.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/aliens/aliendeath08.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/aliens/alienhurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/aliens/alienhurt02.wav | Creative Commons Sampling Plus 1.0 License | Syna-Max | http://www.freesound.org/samplesViewSingle.php?id=61648
-base/sound/aliens/big_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/big_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/big_angry3.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike1.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike3.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/burble.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice1.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice3.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/growl.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/gurgle.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/hiss.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/ortnok.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/alienhurt02.ogg | Creative Commons Sampling Plus 1.0 License | Syna-Max | http://www.freesound.org/samplesViewSingle.php?id=61648
+base/sound/aliens/big_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/big_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/big_angry3.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/birdlike1.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/birdlike2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/birdlike3.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/burble.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/echovoice1.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/echovoice2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/echovoice3.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/growl.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/gurgle.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/hiss.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/huge_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/huge_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/ortnok.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/ortnokcalll01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/ortnokcalll02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/ortnokcalll03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/ortnokhurt01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/ortnokhurt02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaar.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/shevaar.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/shevaarcall01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/shevaardeath01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/shevaardeath02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
@@ -2752,8 +2752,8 @@ base/sound/aliens/shevaarhurt01.ogg | Creative Commons Attribution-Share Alike 3
 base/sound/aliens/shevaarhurt02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/shevaarhurt03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/shevaarhurt04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/slithering.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/strange_chat.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/slithering.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/strange_chat.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/tamancall01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/tamancall02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/tamancall03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
