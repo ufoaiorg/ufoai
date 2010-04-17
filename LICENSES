@@ -2900,13 +2900,13 @@ base/sound/misc/lobbyprivmsg.ogg | GNU General Public License 2.0 |  | OpenQuart
 base/sound/misc/popup.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/talk.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/soldiers/femaledeath01.wav | GNU General Public License 2.0 | Openarena GPLed Data
-base/sound/soldiers/femaledeath02.wav | GNU General Public License 2.0 | Openarena GPLed Data
-base/sound/soldiers/femaledeath03.wav | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femaledeath01.ogg | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femaledeath02.ogg | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femaledeath03.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/femaledeath04.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/soldiers/femalehurt01.wav | GNU General Public License 2.0 | OpenArena GPLed Data
-base/sound/soldiers/maledeath04.wav | GNU General Public License 2.0 | Openarena GPLed Data
-base/sound/soldiers/maledeath05.wav | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femalehurt01.ogg | GNU General Public License 2.0 | OpenArena GPLed Data
+base/sound/soldiers/maledeath04.ogg | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/maledeath05.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/malehurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/weapons/assaultrifle.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
