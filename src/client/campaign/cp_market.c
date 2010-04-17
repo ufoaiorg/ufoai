@@ -397,7 +397,7 @@ void CL_CampaignRunMarket (void)
 qboolean BS_IsOnMarket (const objDef_t const* item)
 {
 	assert(item);
-	return !(item->virtual || item->notOnMarket);
+	return !(item->isVirtual || item->notOnMarket);
 }
 
 /**

@@ -81,7 +81,7 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 	assert(tech);
 	/* virtual items are hidden */
 	item = INVSH_GetItemByIDSilent(tech->provides);
-	if (item && item->virtual)
+	if (item && item->isVirtual)
 		return qfalse;
 	/* Is already researched OR has collected items OR (researchable AND have description)
 	 * AND not a logical block AND not redirected */

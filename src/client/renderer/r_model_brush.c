@@ -478,14 +478,14 @@ static void R_ModLoadSurfedges (const lump_t *l)
 	const int *in;
 	int *out;
 
-	in = (const void *) (mod_base + l->fileofs);
+	in = (const int *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: funny lump size in %s", r_worldmodel->name);
 	count = l->filelen / sizeof(*in);
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
 		Com_Error(ERR_DROP, "R_ModLoadSurfedges: bad surfedges count in %s: %i", r_worldmodel->name, count);
 
-	out = Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
+	out = (int *) Mem_PoolAlloc(count * sizeof(*out), vid_modelPool, 0);
 	Com_DPrintf(DEBUG_RENDERER, "...surface edges: %i\n", count);
 
 	r_worldmodel->bsp.surfedges = out;

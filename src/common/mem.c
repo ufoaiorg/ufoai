@@ -360,7 +360,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 {
 	memBlock_t *mem;
 	memPool_t *pool;
-	void *new;
+	void *newPtr;
 
 	if (!size)
 		Sys_Error("Use Mem_Free instead");
@@ -379,21 +379,21 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	pool = mem->pool;
 
 	/* allocate memory for the new size */
-	new = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
+	newPtr = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
 
 	/* copy old data */
-	memcpy(new, ptr, min(mem->memSize, size));
+	memcpy(newPtr, ptr, min(mem->memSize, size));
 	if (mem->memSize < size) {
 		const size_t delta = size - mem->memSize;
-		memset(new + mem->memSize, 0, delta);
+		memset(newPtr + mem->memSize, 0, delta);
 	}
 
 	/* if there was old data, free it */
 	_Mem_Free(ptr, fileName, fileLine);
 
-	_Mem_CheckSentinels(new, fileName, fileLine);
+	_Mem_CheckSentinels(newPtr, fileName, fileLine);
 
-	return new;
+	return newPtr;
 }
 
 /*==============================================================================

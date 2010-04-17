@@ -75,8 +75,8 @@ const char *Info_ValueForKey (const char *s, const char *key)
 
 const char *Info_BoolForKey (const char *s, const char *key)
 {
-	const char *bool = Info_ValueForKey(s, key);
-	if (bool[0] == '0' || bool[0] == '\0' || !strcmp(bool, "No"))
+	const char *boolStr = Info_ValueForKey(s, key);
+	if (boolStr[0] == '0' || boolStr[0] == '\0' || !strcmp(boolStr, "No"))
 		return "No";
 	return "Yes";
 }

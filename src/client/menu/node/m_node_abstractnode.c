@@ -319,7 +319,7 @@ void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void*
 			**(int **) mem = *(int*) rawValue;
 			break;
 		default:
-			*(byte **) mem = rawValue;
+			*(byte **) mem = (byte*) rawValue;
 		}
 	} else if (property->type == V_UI_ACTION) {
 		*(menuAction_t**) mem = (menuAction_t*) rawValue;
@@ -425,7 +425,7 @@ const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t*
 			}
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
-			return MN_GetReferenceString(node, *(const void*const*)b);
+			return MN_GetReferenceString(node, *(const char*const*)b);
 		}
 		break;
 	default:

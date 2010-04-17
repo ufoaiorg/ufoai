@@ -72,7 +72,7 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 		qboolean check = qfalse;
 		while (ic) {
 			assert(ic->item.t);
-			if (ic->item.t->virtual) {
+			if (ic->item.t->isVirtual) {
 				invList_t *next = ic->next;
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))

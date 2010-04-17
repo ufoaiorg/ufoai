@@ -408,14 +408,14 @@ static void CMod_LoadLeafBrushes (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const unsigned short *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);
 	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...leafbrushes: %i\n", count);
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (unsigned short *)Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");

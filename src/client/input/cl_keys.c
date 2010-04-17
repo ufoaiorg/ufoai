@@ -610,7 +610,6 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  */
 void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 {
-	char *new;
 	char **keySpace = NULL;
 
 	if (keynum == -1 || keynum >= K_KEY_SIZE)
@@ -642,10 +641,8 @@ void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 	}
 
 	/* allocate memory for new binding, but don't set empty commands*/
-	if (binding) {
-		new = Mem_PoolStrDup(binding, com_genericPool, 0);
-		*keySpace = new;
-	}
+	if (binding)
+		*keySpace = Mem_PoolStrDup(binding, com_genericPool, 0);
 }
 
 /**
@@ -748,7 +745,7 @@ void Key_WriteBindings (const char* filename)
 {
 	int i;
 	/* this gets true in case of an error */
-	qboolean delete = qfalse;
+	qboolean deleteFile = qfalse;
 	qFILE f;
 	int cnt = 0;
 
@@ -765,22 +762,22 @@ void Key_WriteBindings (const char* filename)
 	FS_Printf(&f, "unbindall\n");
 	FS_Printf(&f, "unbindallbattle\n");
 	/* failfast, stops loop for first occurred error in fprintf */
-	for (i = 0; i < K_LAST_KEY && !delete; i++)
+	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
 		if (menuKeyBindings[i] && menuKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menuKeyBindings[i]) < 0)
-				delete = qtrue;
+				deleteFile = qtrue;
 			cnt++;
 		}
-	for (i = 0; i < K_LAST_KEY && !delete; i++)
+	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
 		if (keyBindings[i] && keyBindings[i][0]) {
 			if (FS_Printf(&f, "bind %s \"%s\"\n", Key_KeynumToString(i), keyBindings[i]) < 0)
-				delete = qtrue;
+				deleteFile = qtrue;
 			cnt++;
 		}
-	for (i = 0; i < K_LAST_KEY && !delete; i++)
+	for (i = 0; i < K_LAST_KEY && !deleteFile; i++)
 		if (battleKeyBindings[i] && battleKeyBindings[i][0]) {
 			if (FS_Printf(&f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battleKeyBindings[i]) < 0)
-				delete = qtrue;
+				deleteFile = qtrue;
 			cnt++;
 		}
 
@@ -795,11 +792,11 @@ void Key_WriteBindings (const char* filename)
 			path = va("%s@%s", MN_GetPath(binding->node), binding->property->string);
 
 		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), path) < 0)
-			delete = qtrue;
+			deleteFile = qtrue;
 	}
 
 	FS_CloseFile(&f);
-	if (!delete && cnt)
+	if (!deleteFile && cnt)
 		Com_Printf("Wrote %s\n", filename);
 	else
 		/* error in writing the keys.cfg - remove the file again */
