@@ -440,6 +440,8 @@ void R_EnableFog (qboolean enable)
 	}
 }
 
+/** @sa R_EnableRenderbuffer (in r_framebuffer.c)
+ */
 void R_EnableGlow (qboolean enable)
 {
 	if (!r_postprocess->integer || r_state.glow_enabled == enable)

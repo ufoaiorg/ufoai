@@ -37,6 +37,8 @@ static const r_framebuffer_t *activeFramebuffer;
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
 
+static qboolean renderbuffer; /*< renderbuffer vs screen as render target*/
+
 static GLuint R_GetFreeFBOTexture (void)
 {
 	int i;
@@ -259,7 +261,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
  */
 void R_UseFramebuffer (const r_framebuffer_t *buf)
 {
-	if (!r_config.frameBufferObject)
+	if (!r_config.frameBufferObject || !r_programs->integer || !r_postprocess->integer)
 		return;
 
 	if (!frameBufferObjectsInitialized) {
@@ -338,3 +340,26 @@ void R_BindColorAttachments (int n, GLenum *attachments)
 	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
 		qglDrawBuffers(n, attachments);
 }
+
+qboolean R_EnableRenderbuffer (qboolean enable)
+{
+	if (!frameBufferObjectsInitialized || !r_postprocess->integer || !r_programs->integer)
+		return qfalse;
+
+	if (enable == renderbuffer)
+		return qtrue;
+
+	renderbuffer = enable;
+
+	if (enable)
+		R_UseFramebuffer(fbo_render);
+	else
+		R_UseFramebuffer(fbo_screen);
+
+	/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and below */
+	/** @note numbers are simply how many of the (pre-set) color attachments are drawn to */
+	R_DrawBuffers(1);
+
+	return qtrue;
+}
+

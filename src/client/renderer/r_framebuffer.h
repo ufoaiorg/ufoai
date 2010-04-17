@@ -57,6 +57,7 @@ void R_UseViewport(const r_framebuffer_t *buf);
 void R_UseFramebuffer(const r_framebuffer_t *buf);
 void R_DrawBuffers(int n);
 void R_BindColorAttachments(int n, GLenum *Attachments);
+qboolean R_EnableRenderbuffer(qboolean enable);
 
 #endif /* R_FRAMEBUFFER_H_ */
 

@@ -1919,7 +1919,7 @@ void MAP_DrawMap (const menuNode_t* node)
 #endif
 			disableSolarRender = qtrue;
 
-		/*R_EnablePostprocess(qtrue);*/
+		R_EnableRenderbuffer(qtrue);
 
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
@@ -1929,7 +1929,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		MAP_DrawMapMarkers(node);
 
 		R_DrawBloom();
-		/*R_EnablePostprocess(qfalse);*/
+		R_EnableRenderbuffer(qfalse);
 	} else {
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;

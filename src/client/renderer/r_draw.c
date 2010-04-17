@@ -997,15 +997,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* lunar orbit */
 	const float m = p + (((double)((10 * day % 249) / 10.0) + ((double)second / (double)SECONDS_PER_DAY)) / 24.9) * (2.0 * M_PI);
 
-	if (zoom > 3.3)
-		disableSolarRender = qtrue;
-
-	if (r_programs->integer && r_postprocess->integer) {
-		R_UseFramebuffer(fbo_render);
-		/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and below */
-		R_DrawBuffers(1);
-	}
-
 	glPushMatrix();
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
@@ -1178,8 +1169,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
-	if (r_programs->integer && r_postprocess->integer)
-		R_DrawBloom();
 
 	glDisable(GL_DEPTH_TEST);
 	/* disable 3d geoscape lighting */
@@ -1423,7 +1412,7 @@ void R_DrawBloom (void)
 {
 	int i;
 
-	if (!r_config.frameBufferObject)
+	if (!r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
 
 	/* save state, then set up for blit-style rendering to quads */
