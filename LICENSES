@@ -2908,45 +2908,45 @@ base/sound/soldiers/femalehurt01.ogg | GNU General Public License 2.0 | OpenAren
 base/sound/soldiers/maledeath04.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/maledeath05.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/malehurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/weapons/assaultrifle.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
-base/sound/weapons/bolter2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/boltercannonade.wav | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/assaultrifle.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/bloodspider.ogg | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
+base/sound/weapons/bolter2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/boltercannonade.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/brass1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/casings3.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/chaingun.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/deepexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/electrolaser.wav | Public Domain | Vermind
+base/sound/weapons/chaingun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/deepexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/electrolaser.ogg | Public Domain | Vermind
 base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/fireexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/grenade.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/grenade_launcher.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/grenl_fle_3shot.wav |  |  | shotgun.wav file
-base/sound/weapons/heavy_laser.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/incendiary_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/incendiary_rocket.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/irgoggles.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/weapons/kerrblade.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/fireexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/grenade.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/grenade_launcher.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/grenl_fle_3shot.ogg |  |  | shotgun.wav file
+base/sound/weapons/heavy_laser.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/incendiary_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/incendiary_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/irgoggles.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/weapons/kerrblade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/kerrblade_swip.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/knife.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/machinegun.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/machinepistol.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/medikit.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/microshotgun2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/pbeam_rocket.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamcannon_explosive.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamrifle.wav |  | Mikolaj Konarski (bandobraz)
-base/sound/weapons/pistol2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/plasma_big.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasma_blade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasma_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasmablade.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/riotshotgun.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/smg2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/smokeexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/sniperrifle.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/stun_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/knife.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/machinegun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/machinepistol.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/medikit.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/microshotgun2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/pbeam_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/pbeamcannon_explosive.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/pbeamrifle.ogg |  | Mikolaj Konarski (bandobraz)
+base/sound/weapons/pistol2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/plasma_big.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/plasma_blade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/plasma_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/plasmablade.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/riotshotgun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/smg2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/smokeexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/sniperrifle.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/stun_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/textures/tex_base/bollard.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_base/d_drkmtl_dpanelb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/d_drkmtl_dpanelb_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
