@@ -1910,7 +1910,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
 		qboolean disableSolarRender = qfalse;
-		/** @todo I think this check is wrong; isn't zoom clamped to this value already? 
+		/** @todo I think this check is wrong; isn't zoom clamped to this value already?
 		 *  A value of 3.3 seems about right for me, but this should probably be fixed...*/
 #if 0
 		if (ccs.zoom > cl_mapzoommax->value)
@@ -1919,7 +1919,7 @@ void MAP_DrawMap (const menuNode_t* node)
 #endif
 			disableSolarRender = qtrue;
 
-		R_EnablePostprocess(qtrue);
+		/*R_EnablePostprocess(qtrue);*/
 
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
@@ -1929,7 +1929,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		MAP_DrawMapMarkers(node);
 
 		R_DrawBloom();
-		R_EnablePostprocess(qfalse);
+		/*R_EnablePostprocess(qfalse);*/
 	} else {
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
