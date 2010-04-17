@@ -206,31 +206,31 @@ tile +str_cross
 assembly garage
 {
 	size "8 6"
-	fix +strcross "0 0"
+	fix +str_cross "0 0"
 	fix +strv_1a "0 1"
 	fix +strv_1a "0 2"
 	fix +strv_1a "0 3"
 	fix +strv_1a "0 4"
-	fix +strcross "0 5"
+	fix +str_cross "0 5"
 
 	fix +strh_cwl_1a "1 0"
 	fix +strh_1a "2 0"
-	fix +strh_1b "3 0"
+	fix +strh_1a "3 0"
 	fix +strh_cwr_1a "4 0"
 
 	fix +bldl_4x4_2a "1 1"
 
 	fix +strh_cwl_1a "1 5"
 	fix +strh_1a "2 5"
-	fix +strh_1b "3 5"
+	fix +strh_1a "3 5"
 	fix +strh_cwr_1a "4 5"
 
-	fix +strv_rail_cross "4 0"
+	fix +str_rail_cross "4 0"
 	fix +strv_rail_btm2a "4 1"
 	fix +strv_rail_2a "4 2"
 	fix +strv_rail_2a "4 3"
 	fix +strv_rail_top2a "4 4"
-	fix +strv_rail_cross "4 5"
+	fix +str_rail_cross "4 5"
 }
 
 /*
