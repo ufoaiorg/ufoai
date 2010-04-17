@@ -209,10 +209,8 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 	a->dy = 1;
 
 	token = Com_EParse(text, errhead, filename);
-	if (!*text || *token != '{') {
+	if (!*text || *token != '{')
 		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'", a->id, token);
-		return 0;
-	}
 
 	do {
 		/* get tile name */

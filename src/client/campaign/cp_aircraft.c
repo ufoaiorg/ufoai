@@ -2986,7 +2986,7 @@ qboolean AIR_ScriptSanityCheck (void)
 	aircraft_t* a;
 
 	for (i = 0, a = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, a++) {
-		if (!a->name) {
+		if (a->name[0] == '\0') {
 			error++;
 			Com_Printf("...... aircraft '%s' has no name\n", a->id);
 		}

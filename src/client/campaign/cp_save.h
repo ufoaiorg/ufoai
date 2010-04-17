@@ -35,11 +35,11 @@ extern cvar_t *cl_lastsave;
 
 /**
  * HISTORY
- * version id   | game version | compatible with trunk
- * ===================================================
- *          1   | 2.1.1        | no
- *          2   | 2.2          | yes
- *          3   | 2.3          | yes
+ * version id   | game version
+ * ===========================
+ *          1   | 2.1.1
+ *          2   | 2.2
+ *          3   | 2.3
  */
 #define SAVE_FILE_VERSION 3
 

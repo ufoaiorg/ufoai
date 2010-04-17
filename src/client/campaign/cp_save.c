@@ -107,8 +107,8 @@ static qboolean SAV_VerifyXMLHeader (saveFileHeader_t const * const header)
 		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
 		return qfalse;
 	}
-	if (header->version < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Version is less than zero!\n");
+	if (header->version == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Version is invalid - must be greater than zero\n");
 		return qfalse;
 	}
 	if (header->version > SAVE_FILE_VERSION) {

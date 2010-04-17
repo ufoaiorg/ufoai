@@ -2319,8 +2319,10 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					/** @note The new version of RT_UpdateConnectionColumn can work bidirectional, so we can
 					 * trace every other dir, unless we are on the edge. */
-					if (RT_IS_BIDIRECTIONAL && (dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
+#if RT_IS_BIDIRECTIONAL == 1
+					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
+#endif
 					RT_UpdateConnectionColumn(map, actorSize, x, y, dir);
 				}
 			}
