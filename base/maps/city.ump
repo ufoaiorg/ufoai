@@ -33,6 +33,24 @@
 // ----------------
 base city/city		// Prefix for each tile's .map file including path from /maps/
 
+
+// ---------
+// Dropships
+
+// Firebird on street intersection with rail line
+tile +craft_drop_firebird
+{
+	5 3
+	0		be		be		be		0
+	h		+i		+i		+i		g
+	0		bd		bd		bd		0
+}
+
+
+// --------------------
+// Street Intersections
+
+
 // Street intersection with rail line
 tile +str_rail_cross
 {
@@ -225,12 +243,12 @@ assembly garage
 	fix +strh_1a "3 5"
 	fix +strh_cwr_1a "4 5"
 
-	fix +str_rail_cross "4 0"
-	fix +strv_rail_btm2a "4 1"
-	fix +strv_rail_2a "4 2"
-	fix +strv_rail_2a "4 3"
-	fix +strv_rail_top2a "4 4"
-	fix +str_rail_cross "4 5"
+	fix +craft_drop_firebird "5 0"
+	fix +strv_rail_btm2a "5 1"
+	fix +strv_rail_2a "5 2"
+	fix +strv_rail_2a "5 3"
+	fix +strv_rail_top2a "5 4"
+	fix +str_rail_cross "5 5"
 }
 
 /*
