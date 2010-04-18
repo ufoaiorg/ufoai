@@ -8,6 +8,6 @@ varying float fog;
  */
 void FogFragment(void){
 
-	gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_Fog.color.rgb, fog);
+	gl_FragData[0].rgb = mix(gl_FragData[0].rgb, gl_Fog.color.rgb, fog);
 }
 

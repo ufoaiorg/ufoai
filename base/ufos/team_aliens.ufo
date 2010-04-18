@@ -83,6 +83,11 @@ team taman
 			hurtsound aliens/echovoice1
 			hurtsound aliens/echovoice2
 			hurtsound aliens/echovoice3
+			hurtsound aliens/tamancall01
+			hurtsound aliens/tamancall02
+			hurtsound aliens/tamancall03
+			hurtsound aliens/tamancall04
+			hurtsound aliens/tamancall05
 			deathsound aliens/aliendeath01
 			deathsound aliens/aliendeath03
 		}
@@ -161,6 +166,11 @@ team ortnok
 			hurtsound aliens/big_angry
 			hurtsound aliens/big_angry2
 			hurtsound aliens/big_angry3
+			hurtsound aliens/ortnokhurt01
+			hurtsound aliens/ortnokhurt02
+			hurtsound aliens/ortnokcall01
+			hurtsound aliens/ortnokcall02
+			hurtsound aliens/ortnokcall03
 			deathsound aliens/ortnok
 		}
 	}
@@ -196,9 +206,16 @@ team shevaar
 
 	actorsounds {
 		neutral {
+			hurtsound aliens/shevaarhurt01
+			hurtsound aliens/shevaarhurt02
+			hurtsound aliens/shevaarhurt03
+			hurtsound aliens/shevaarhurt04
 			hurtsound aliens/gurgle
+			hurtsound aliens/shevaarcall01
 			deathsound aliens/slithering
 			deathsound aliens/shevaar
+			deathsound aliens/shevaardeath01
+			deathsound aliens/shevaardeath02
 		}
 	}
 }

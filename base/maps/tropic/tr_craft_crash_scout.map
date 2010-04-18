@@ -591,15 +591,17 @@
 "spawnflags" "255"
 "anim" "moving4"
 "angle" "35"
+"targetname" "misc_model2"
 }
 // entity 16
 {
 "classname" "misc_model"
-"origin" "176 320 32"
+"origin" "190 320 116"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"anim" "moving4"
 "spawnflags" "255"
-"angle" "35"
+"angles" "0 35 0"
+"tag" "tag_top"
+"target" "misc_model2"
 }
 // entity 17
 {
@@ -609,13 +611,15 @@
 "spawnflags" "255"
 "anim" "moving4"
 "angle" "35"
+"targetname" "misc_model1"
 }
 // entity 18
 {
 "classname" "misc_model"
-"origin" "80 288 32"
+"origin" "94 288 116"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"anim" "moving4"
 "spawnflags" "255"
-"angle" "35"
+"angles" "0 35 0"
+"tag" "tag_top"
+"target" "misc_model1"
 }

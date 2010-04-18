@@ -415,14 +415,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
 
-	if (image->flags & if_framebuffer) {
-		image->fbo = R_RegisterFBObject();
-		if (image->fbo && !R_AttachTextureToFBOject(image->fbo, image)) {
-			Com_Printf("Warning: Error attaching texture to a FBO: %s\n", image->name);
-			image->fbo = 0;
-		}
-	}
-
 	if (scaled != data)
 		Mem_Free(scaled);
 }
@@ -664,6 +656,10 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
 			if (image->normalmap == r_noTexture)
 				image->normalmap = NULL;
+		} else if (image->type == it_world || image->type == it_skin) {
+			image->glowmap = R_FindImage(va("%s_gm", image->name), it_glowmap);
+			if (image->glowmap == r_noTexture)
+				image->glowmap = NULL;
 		}
 	}
 
@@ -672,6 +668,18 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		image = r_noTexture;
 
 	return image;
+}
+
+qboolean R_ImageExists (const char *pname)
+{
+	const char **types = Img_GetImageTypes();
+	int i;
+
+	for (i = 0; types[i]; i++) {
+		if (FS_CheckFile("%s.%s", pname, types[i]) != -1)
+			return qtrue;
+	}
+	return qfalse;
 }
 
 /**
@@ -863,3 +871,4 @@ void R_TextureSolidMode (const char *string)
 
 	r_config.gl_solid_format = gl_solid_modes[i].mode;
 }
+

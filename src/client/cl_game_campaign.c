@@ -361,6 +361,7 @@ const mapDef_t* GAME_CP_MapInfo (int step)
 
 qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
 {
+	assert(od);
 	return RS_IsResearched_ptr(od->tech);
 }
 

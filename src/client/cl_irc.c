@@ -977,7 +977,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		}
 
 		if (MN_GetActiveWindow() && strcmp(MN_GetActiveWindowName(), "irc")) {
-			Com_Printf("%c<%s@lobby> %s\n", COLORED_GREEN, nick, trailing);
+			Com_Printf(COLORED_GREEN "<%s@lobby> %s\n", nick, trailing);
 		}
 	}
 }

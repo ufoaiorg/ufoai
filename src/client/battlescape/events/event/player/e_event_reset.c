@@ -37,14 +37,14 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 {
 	CL_ActorSelect(NULL);
 	cl.numTeamList = 0;
-	MN_ExecuteConfunc("numonteam 1");
+	MN_ExecuteConfunc("hudenable 1");
 
 	/* set the active player */
 	NET_ReadFormat(msg, self->formatString, &cls.team, &cl.actTeam);
 
 	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
 
-	/** @todo this can and should be done ealier - it's not the correct place here for doing this */
+	/** @todo this can and should be done earlier - it's not the correct place here for doing this */
 	if (GAME_IsMultiplayer()) {
 		MN_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
 	}
@@ -56,4 +56,3 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }
-

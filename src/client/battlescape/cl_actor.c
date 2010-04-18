@@ -381,7 +381,7 @@ void CL_ActorAddToTeamList (le_t * le)
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
-		MN_ExecuteConfunc("numonteam %i", cl.numTeamList); /* althud */
+		MN_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}
@@ -1284,7 +1284,7 @@ void CL_ActorMouseTrace (void)
 	if (cl_isometric->integer)
 		frustumSlope[0] = 10.0 * refdef.fieldOfViewX;
 	else
-		frustumSlope[0] = tan(refdef.fieldOfViewX * M_PI / 360.0) * projectionDistance;
+		frustumSlope[0] = tan(refdef.fieldOfViewX * (M_PI / 360.0)) * projectionDistance;
 	frustumSlope[1] = frustumSlope[0] * ((float)viddef.viewHeight / (float)viddef.viewWidth);
 
 	/* transform cursor position into perspective space */
@@ -1427,7 +1427,7 @@ static inline qboolean CL_AddActorWeapon (int objID)
 {
 	if (objID != NONE) {
 		const objDef_t *od = INVSH_GetItemByIDX(objID);
-		if (od->virtual)
+		if (od->isVirtual)
 			return qfalse;
 		return qtrue;
 	}
@@ -1502,6 +1502,9 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.tagname = "tag_head";
 	add.lighting = &le->lighting; /* values from the actor */
 
+	if (le->team != cls.team)
+		add.flags |= RF_IRGOGGLES;
+
 	R_AddEntity(&add);
 
 	/** Add actor special effects.
@@ -1514,8 +1517,10 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	else
 		ent->flags |= RF_SHADOW;
 
+	ent->flags |= RF_ACTOR;
 	/* actors are highlighted if some other actor uses ir goggles */
-	ent->flags |= (RF_ACTOR | RF_IRGOGGLES);
+	if (le->team != cls.team)
+		ent->flags |= RF_IRGOGGLES;
 
 	if (!LE_IsDead(le) && !LE_IsStunned(le)) {
 		if (le->selected)

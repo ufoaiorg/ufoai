@@ -37,7 +37,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[0].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[1].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[1].position.xyz - point;
@@ -53,7 +53,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[1].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[2].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[2].position.xyz - point;
@@ -69,7 +69,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[2].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[3].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[3].position.xyz - point;
@@ -85,7 +85,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[3].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[4].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[4].position.xyz - point;
@@ -101,7 +101,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[4].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[5].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[5].position.xyz - point;
@@ -117,7 +117,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[5].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[6].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[6].position.xyz - point;
@@ -133,7 +133,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 				light += gl_LightSource[6].diffuse.rgb * d * ATTENUATION;
 			}
 		}
-
+	}
 	if(gl_LightSource[7].constantAttenuation > 0.0){
 
 		delta = gl_LightSource[7].position.xyz - point;
@@ -150,21 +150,17 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 			}
 		}
 	}
-	}
-	}
-	}
-	}
-	}
-	}
-	}
 
 	light = clamp(light, 0.0, 1.8);
 
 #endif
 
 	// now modulate the diffuse sample with the modified lightmap
-	gl_FragColor.rgb = diffuse.rgb * (lightmap + light);
+	gl_FragData[0].rgb = diffuse.rgb * (lightmap + light);
 
 	// lastly modulate the alpha channel by the color
-	gl_FragColor.a = diffuse.a * gl_Color.a;
+	gl_FragData[0].a = diffuse.a * gl_Color.a;
+
+	//gl_FragData[1].r = gl_FragData[0].r;
+	//gl_FragData[1].a = diffuse.a * gl_Color.a;
 }

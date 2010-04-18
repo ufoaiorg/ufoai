@@ -146,7 +146,7 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(*in));
 	count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, "%c...submodels: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...submodels: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no models");
@@ -190,7 +190,7 @@ static void CMod_LoadSurfaces (const lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, "%c...surfaces: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...surfaces: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no surfaces");
@@ -230,7 +230,7 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, "%c...nodes: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...nodes: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map has no nodes");
@@ -279,7 +279,7 @@ static void CMod_LoadBrushes (const lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, "%c...brushes: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...brushes: %i\n", count);
 
 	if (count > MAX_MAP_BRUSHES)
 		Com_Error(ERR_DROP, "Map has too many brushes");
@@ -315,7 +315,7 @@ static void CMod_LoadLeafs (const lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, "%c...leafs: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...leafs: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no leafs");
@@ -368,7 +368,7 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
-	Com_DPrintf(DEBUG_ENGINE, "%c...planes: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...planes: %i\n", count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
@@ -408,14 +408,14 @@ static void CMod_LoadLeafBrushes (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const unsigned short *) (cModelBase + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);
-	Com_DPrintf(DEBUG_ENGINE, "%c...leafbrushes: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...leafbrushes: %i\n", count);
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (unsigned short *)Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
@@ -448,7 +448,7 @@ static void CMod_LoadBrushSides (const lump_t * l)
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
-	Com_DPrintf(DEBUG_ENGINE, "%c...brushsides: %i\n", COLORED_GREEN, count);
+	Com_DPrintf(DEBUG_ENGINE, COLORED_GREEN "...brushsides: %i\n", count);
 
 	/* need to save space for box planes */
 	if (count > MAX_MAP_BRUSHSIDES)
@@ -2319,8 +2319,10 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					/** @note The new version of RT_UpdateConnectionColumn can work bidirectional, so we can
 					 * trace every other dir, unless we are on the edge. */
-					if (RT_IS_BIDIRECTIONAL && (dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
+#if RT_IS_BIDIRECTIONAL == 1
+					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
+#endif
 					RT_UpdateConnectionColumn(map, actorSize, x, y, dir);
 				}
 			}

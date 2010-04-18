@@ -56,8 +56,9 @@ namespace brushconstruct
 		brush.addPlane(planepts[0], planepts[1], planepts[2], shader, projection);
 
 		for (std::size_t i = 0; i < sides; ++i) {
-			const double sv = sin(i * M_PI * 2 / sides);
-			const double cv = cos(i * M_PI * 2 / sides);
+			const double v  = i * (M_PI * 2 / sides);
+			const double sv = sin(v);
+			const double cv = cos(v);
 
 			planepts[0][(axis + 1) % 3] = static_cast<float> (floor(mid[(axis + 1) % 3] + radius * cv + 0.5));
 			planepts[0][(axis + 2) % 3] = static_cast<float> (floor(mid[(axis + 2) % 3] + radius * sv + 0.5));

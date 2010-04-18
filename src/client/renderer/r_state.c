@@ -358,6 +358,64 @@ void R_EnableWarp (r_program_t *program, qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
+void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
+{
+	if (!r_programs->integer)
+		return;
+
+	if (enable && (!program || !program->id))
+		return;
+
+	if (!r_postprocess->integer || r_state.blur_enabled == enable)
+		return;
+
+	r_state.blur_enabled = enable;
+
+	R_SelectTexture(&texunit_lightmap);
+
+	if (enable) {
+		float userdata[] = { source->width, dir };
+		R_UseFramebuffer(dest);
+		program->userdata = userdata;
+		R_UseProgram(program);
+	} else {
+		R_UseFramebuffer(fbo_screen);
+		R_UseProgram(NULL);
+	}
+
+	R_SelectTexture(&texunit_diffuse);
+}
+
+void R_EnableShell (qboolean enable)
+{
+	if (enable == r_state.shell_enabled)
+		return;
+
+	r_state.shell_enabled = enable;
+
+	if (enable) {
+		glEnable(GL_POLYGON_OFFSET_FILL);
+		glPolygonOffset(-1.0, 1.0);
+
+		R_EnableDrawAsGlow(qtrue);
+		R_EnableBlend(qtrue);
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+		if (r_state.lighting_enabled)
+			R_ProgramParameter1f("OFFSET", refdef.time / 3.0);
+	} else {
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		R_EnableBlend(qfalse);
+		R_EnableDrawAsGlow(qfalse);
+
+		glPolygonOffset(0.0, 0.0);
+		glDisable(GL_POLYGON_OFFSET_FILL);
+
+		if (r_state.lighting_enabled)
+			R_ProgramParameter1f("OFFSET", 0.0);
+	}
+}
+
 #define FOG_START	300.0
 #define FOG_END		2500.0
 
@@ -382,6 +440,40 @@ void R_EnableFog (qboolean enable)
 	}
 }
 
+/** @sa R_EnableRenderbuffer (in r_framebuffer.c)
+ */
+void R_EnableGlow (qboolean enable)
+{
+	if (!r_postprocess->integer || r_state.glow_enabled == enable)
+		return;
+
+	if (enable)
+		R_DrawBuffers(2);
+	else
+		R_DrawBuffers(1);
+
+	r_state.draw_glow_enabled = qfalse;
+	r_state.glow_enabled = enable;
+}
+
+
+void R_EnableDrawAsGlow (qboolean enable)
+{
+	static GLenum defaultRenderTarget = GL_COLOR_ATTACHMENT0_EXT;
+	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+
+	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
+		return;
+
+	r_state.glow_enabled = qfalse;
+	r_state.draw_glow_enabled = enable;
+
+	if (enable)
+		R_BindColorAttachments(1, &glowRenderTarget);
+	else
+		R_BindColorAttachments(1, &defaultRenderTarget);
+}
+
 /**
  * @sa R_Setup3D
  */
@@ -392,7 +484,7 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
 	} else {
-		xmax = zNear * tan(refdef.fieldOfViewX * M_PI / 360.0);
+		xmax = zNear * tan(refdef.fieldOfViewX * (M_PI / 360.0));
 		xmin = -xmax;
 
 		ymin = xmin * yaspect;
@@ -446,6 +538,9 @@ void R_Setup3D (void)
 
 	glEnable(GL_DEPTH_TEST);
 
+	/* set up framebuffers for postprocessing */
+	R_EnableRenderbuffer(qtrue);
+
 	R_CheckError();
 }
 
@@ -477,6 +572,9 @@ void R_Setup2D (void)
 	glEnable(GL_BLEND);
 
 	glDisable(GL_DEPTH_TEST);
+
+	/* disable render-to-framebuffer */
+	R_EnableRenderbuffer(qfalse);
 
 	R_CheckError();
 }

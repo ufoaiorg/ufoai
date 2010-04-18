@@ -56,9 +56,9 @@ static struct dbuffer_element * allocate_element (void)
 	struct dbuffer_element *e;
 
 	if (free_elements == 0) {
-		struct dbuffer_element *new = Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
-		new->next = free_element_list;
-		free_element_list = new;
+		struct dbuffer_element *newBuf = Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
+		newBuf->next = free_element_list;
+		free_element_list = newBuf;
 		free_elements++;
 		allocated_elements++;
 	}
@@ -100,9 +100,9 @@ struct dbuffer * new_dbuffer (void)
 {
 	struct dbuffer *buf;
 	if (free_dbuffers == 0) {
-		struct dbuffer *new = Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
-		new->next_free = free_dbuffer_list;
-		free_dbuffer_list = new;
+		struct dbuffer *newBuf = Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
+		newBuf->next_free = free_dbuffer_list;
+		free_dbuffer_list = newBuf;
 		free_dbuffers++;
 		allocated_dbuffers++;
 	}

@@ -360,7 +360,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 {
 	memBlock_t *mem;
 	memPool_t *pool;
-	void *new;
+	void *newPtr;
 
 	if (!size)
 		Sys_Error("Use Mem_Free instead");
@@ -379,21 +379,21 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	pool = mem->pool;
 
 	/* allocate memory for the new size */
-	new = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
+	newPtr = _Mem_Alloc(size, qfalse, pool, mem->tagNum, fileName, fileLine);
 
 	/* copy old data */
-	memcpy(new, ptr, min(mem->memSize, size));
+	memcpy(newPtr, ptr, min(mem->memSize, size));
 	if (mem->memSize < size) {
 		const size_t delta = size - mem->memSize;
-		memset(new + mem->memSize, 0, delta);
+		memset(newPtr + mem->memSize, 0, delta);
 	}
 
 	/* if there was old data, free it */
 	_Mem_Free(ptr, fileName, fileLine);
 
-	_Mem_CheckSentinels(new, fileName, fileLine);
+	_Mem_CheckSentinels(newPtr, fileName, fileLine);
 
-	return new;
+	return newPtr;
 }
 
 /*==============================================================================
@@ -667,7 +667,7 @@ static void Mem_Stats_f (void)
 		for (j = 0; j < MEM_HASH; j++) {
 			for (i = 0, mem = best->blocks[j]; mem; mem = mem->next, i++) {
 				if (i & 1)
-					Com_Printf("%c", COLORED_GREEN);
+					Com_Printf(COLORED_GREEN);
 
 				Com_Printf("%5i %5i %20s "UFO_SIZE_T"B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
 
@@ -693,7 +693,7 @@ static void Mem_Stats_f (void)
 
 		poolNum++;
 		if (poolNum & 1)
-			Com_Printf("%c", COLORED_GREEN);
+			Com_Printf(COLORED_GREEN);
 
 		Com_Printf("#%2i %6i %9iB (%6.3fMB) %s\n", poolNum, pool->blockCount, pool->byteCount, pool->byteCount/1048576.0f, pool->name);
 

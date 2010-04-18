@@ -85,70 +85,6 @@ inline bool operator==(const DefaultAllocator<Type>&, const OtherAllocator&) {
 }
 
 
-template<typename Type>
-class NamedAllocator : public DefaultAllocator<Type> {
-	typedef DefaultAllocator<Type> allocator_type;
-
-	const std::string& m_name;
-public:
-
-	typedef Type value_type;
-	typedef value_type* pointer;
-	typedef const Type* const_pointer;
-	typedef Type& reference;
-	typedef const Type& const_reference;
-	typedef size_t size_type;
-	typedef ptrdiff_t difference_type;
-
-	template<typename Other>
-	struct rebind {
-		typedef NamedAllocator<Other> other;
-	};
-
-	explicit NamedAllocator(const std::string& name) : m_name(name) {
-	}
-	NamedAllocator(const NamedAllocator<Type>& other) : m_name(other.m_name) {
-	}
-	template<typename Other> NamedAllocator(const NamedAllocator<Other>& other) : m_name(other.m_name) {
-	}
-	~NamedAllocator() {
-	}
-
-	pointer address(reference instance) const {
-		return allocator_type::address(instance);
-	}
-	const_pointer address(const_reference instance) const {
-		return allocator_type::address(instance);
-	}
-	Type* allocate(size_type size, const void* = 0) {
-		return allocator_type::allocate(size);
-	}
-	void deallocate(pointer p, size_type size) {
-		allocator_type::deallocate(p, size);
-	}
-	size_type max_size() const {
-		return allocator_type::max_size();
-	}
-	void construct(pointer p, const Type& value) {
-		allocator_type::construct(p, value);
-	}
-	void destroy(pointer p) {
-		allocator_type::destroy(p);
-	}
-
-	template<typename Other>
-	bool operator==(const NamedAllocator<Other>& other) {
-		return true;
-	}
-
-	// returns true if the allocators are not interchangeable
-	template<typename Other>
-	bool operator!=(const NamedAllocator<Other>& other) {
-		return false;
-	}
-};
-
-
 
 #include <algorithm>
 #include "generic/object.h"
@@ -248,19 +184,6 @@ public:
 			Allocator::deallocate(p, size);
 		}
 	}
-};
-
-
-template<typename Type>
-class NamedNew {
-public:
-	typedef New<Type, NamedAllocator<Type> > type;
-};
-
-template<typename Type>
-class NamedDelete {
-public:
-	typedef Delete<Type, NamedAllocator<Type> > type;
 };
 
 #endif

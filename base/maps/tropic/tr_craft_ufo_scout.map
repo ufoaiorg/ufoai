@@ -472,15 +472,17 @@
 "spawnflags" "255"
 "anim" "moving3"
 "angle" "-5"
+"targetname" "misc_model1"
 }
 // entity 5
 {
 "classname" "misc_model"
-"origin" "56 192 32"
+"origin" "67 186 117"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"anim" "moving3"
 "spawnflags" "255"
-"angle" "-5"
+"tag" "tag_top"
+"angles" "0 -4.99999 0"
+"target" "misc_model1"
 }
 // entity 6
 {

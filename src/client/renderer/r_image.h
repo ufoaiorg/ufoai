@@ -45,6 +45,7 @@ typedef enum {
 	it_wrappic,
 	it_skin,
 	it_normalmap,
+	it_glowmap,
 
 	/** the following are freed with every mapchange */
 	it_world,
@@ -52,11 +53,6 @@ typedef enum {
 	it_deluxemap,
 	it_material
 } imagetype_t;
-
-typedef enum {
-	if_framebuffer	= 1 << 0,
-	if_depth		= 1 << 1
-} imageflags_t;
 
 typedef struct image_s {
 	char name[MAX_QPATH];				/**< game path, including extension, must be first */
@@ -67,9 +63,8 @@ typedef struct image_s {
 	unsigned int texnum;				/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
-	int fbo;							/**< frame buffer object texture is attached to */
-	imageflags_t flags;
 	struct image_s *normalmap;			/**< normalmap texture  */
+	struct image_s *glowmap;			/**< glowmap texture  */
 	struct image_s *hashNext;			/**< hash map next pointer in case of collision */
 	struct image_s *hashPrev;			/**< hash map prev pointer for easier removing */
 } image_t;
@@ -77,17 +72,14 @@ typedef struct image_s {
 #define MAX_GL_TEXTURES		1024
 #define MAX_GL_LIGHTMAPS	256
 #define MAX_GL_DELUXEMAPS	256
+#define MAX_GL_FRAMEBUFFERS	256
 
 #define TEXNUM_LIGHTMAPS	MAX_GL_TEXTURES
 #define TEXNUM_DELUXEMAPS	(TEXNUM_LIGHTMAPS + MAX_GL_LIGHTMAPS)
+#define TEXNUM_FRAMEBUFFER_TEXTURES	(TEXNUM_DELUXEMAPS + MAX_GL_DELUXEMAPS)
 
 extern image_t r_images[MAX_GL_TEXTURES];
 extern int r_numImages;
-
-void R_WritePNG(qFILE *f, byte *buffer, int width, int height);
-void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);
-void R_WriteTGA(qFILE *f, const byte *buffer, int width, int height, int channels);
-void R_WriteCompressedTGA(qFILE *f, const byte *buffer, int width, int height);
 
 void R_UploadTexture(unsigned *data, int width, int height, image_t* image);
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
@@ -114,6 +106,8 @@ image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file,
 #else
 image_t *R_FindImage(const char *pname, imagetype_t type);
 #endif
+
+qboolean R_ImageExists(const char *pname);
 
 #define MAX_ENVMAPTEXTURES 2
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];

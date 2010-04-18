@@ -60,18 +60,6 @@
 /* Define to 1 if you have the <png.h> header file. */
 #undef HAVE_PNG_H
 
-/* Define to 1 if you have the <SDL.h> header file. */
-#undef HAVE_SDL_H
-
-/* Define to 1 if you have the <SDL_image.h> header file. */
-#undef HAVE_SDL_IMAGE_H
-
-/* Define to 1 if you have the <SDL_mixer.h> header file. */
-#undef HAVE_SDL_MIXER_H
-
-/* Define to 1 if you have the <SDL_ttf.h> header file. */
-#undef HAVE_SDL_TTF_H
-
 /* Define to 1 if you have the `setpriority' function. */
 #undef HAVE_SETPRIORITY
 
@@ -140,6 +128,12 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
+
+/* Define to path containing the game data. */
+#undef PKGDATADIR
+
+/* Define to path containing the shared modules. */
+#undef PKGLIBDIR
 
 /* The size of `int', as computed by sizeof. */
 #undef SIZEOF_INT

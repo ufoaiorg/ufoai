@@ -1,0 +1,261 @@
+// *********************************
+// CITY (maps/city)
+// *********************************
+//
+// Tile types, naming conventions and descriptions:
+// ------------------------------------------------
+//
+// Code		Name Pattern			Description
+// 		citystr*			A street tile
+// a		 citystrv*			A street tile that runs vertically
+// 		  citystrv_rail*		A street tile that runs vertically and has a rail line down the middle
+// b		  citystrv_rail_1*		All with 1* suffix reserved for rail station tiles
+// c		  citystrv_rail_2*		Variations of vertical street with rail line
+// d		   citystrv_rail_top2*		"top" connects with street crossing at its top edge
+// e		   citystrv_rail_btm2*		"btm" connects with street crossing at its btm edge
+// 		 citystrh*			A street tile that runs horizontally
+// f		  citystrh_1*			A tile with basic, straight street painting
+// g		  citystrh_cwl*			This tile has a crosswalk on the left side
+// h		  citystrh_cwr*			This tile has a crosswalk on the right side
+// i		 citystr_rail_cross		A street tile that is an intersection between vertical and horizontal streets with a vertical rail line
+// l		 citystr_cross			A street tile that is an intersection between vertical and horizontal streets with NO rail line
+// 		citybld*			A city building tile
+// j		 citybldl_*			A city building tile for the left side of main road
+// k		 citybldr_*			A city building tile for the right side of main road
+// 		 citybld*_4x4			City building with tile size (4x4)
+// 		 citybld*_*x*_1*		All 1* reserved for plots with tunnel entrances
+// s						Tunnel entrance in sidewalk (must connect to tunnel)
+// t						Tunnel passage underground (must connect to tunnel entrance)
+// 		citystrc*			A street tile that turns 90 degrees. The suffix (sw, ne, etc.) specifies which corner it connects (sw = southwest)
+
+
+// Tile Definitions
+// ----------------
+base city/city		// Prefix for each tile's .map file including path from /maps/
+
+// Street intersection with rail line
+tile +str_rail_cross
+{
+	5 3
+	0		be		be		be		0
+	h		+i		+i		+i		g
+	0		bd		bd		bd		0
+}
+
+// Street intersection without rail line
+tile +str_cross
+{
+	3 3
+	0		abe		0
+	fh		l		fg
+	0		abe		0
+}
+
+// ---------------------
+// Vertical Street Tiles	
+
+	// Vertical street base tile (straight lines painted)
+	tile +strv_1a
+	{
+		3 3
+		0		a		0
+		jk		a		jk
+		0		a		0
+	}
+
+	// Vertical street with rail station
+	// 	- Subway exits bottom left and right
+	tile +strv_rail_1a
+	{
+		5 6
+		0		i		i		i		0
+		j		+ba		+b		+ba		k
+		j		+ba		+b		+ba		k
+		j		+ba		+b		+ba		k
+		s		+tba	+b		+tba	s
+		0		i		i		i		0
+	}
+	
+	// Vertical street with rail line (borders intersection at top)
+	tile +strv_rail_top2a
+	{
+		5 3
+		0		i		i		i		0
+		j		+da		+d		+da		k
+		0		c		c		c		0
+	}
+	
+	// Vertical street with rail line (borders intersection at bottom)
+	tile +strv_rail_btm2a
+	{
+		5 3
+		0		c		c		c		0
+		j		+ea		+e		+ea		k
+		0		i		i		i		0
+	}
+		
+	// Vertical street with rail line (doesn't border intersection)
+	tile +strv_rail_2a
+	{
+		5 3
+		0		cd		cd		cd		0
+		j		+ca		+c		+ca		k
+		0		ce		ce		ce		0
+	}
+
+// ---------------------
+// Horizontal Street Tiles
+		
+	// Horizontal street base tile (straight lines painted)
+	tile +strh_1a
+	{
+		3 3
+		0		jk		0
+		ilfg		+f		ilfh
+		0		jk		0
+	}
+	
+	// Horizontal street with crosswalk on left side
+	tile +strh_cwl_1a
+	{
+		3 3
+		0		jk		0
+		il		+g		fl
+		0		jk		0
+	}
+		
+	// Horizontal street with crosswalk on right side
+	tile +strh_cwr_1a
+	{
+		3 3
+		0		jk		0
+		fl		+h		il
+		0		jk		0
+	}
+	
+
+// -------------------
+// Corner Street Tiles
+
+	// Southwest corner (connects to top and right)
+	tile +strc_sw_1a
+	{
+		3 3
+		0		al		0
+		jk		af		fl
+		0		jk		0
+	}	
+
+// --------------
+// Building Tiles
+
+	// 4x4 building tile on left side of main street (ie - storefronts facing right)
+	// Has entrance to subway on bottom-right corner
+	tile +bldl_4x4_1a
+	{
+		6 6
+		0		fg		f		f		fh		0
+		a		+j		+j		+j		+j		a
+		a		+j		+j		+j		+j		a
+		a		+j		+j		+j		+j		a
+		a		+j		+j		+j		+js		t
+		0		fg		f		f		fh		0
+	}
+	
+	// 4x4 building tile on right side of main street (ie - storefronts facing left)
+	// Has entrance to subway on bottom-left corner
+	tile +bldr_4x4_1a
+	{
+		6 6
+		0		fg		f		f		fh		0
+		a		+k		+k		+k		+k		a
+		a		+k		+k		+k		+k		a
+		a		+k		+k		+k		+k		a
+		t		+ks		+k		+k		+k		a
+		0		fg		f		f		fh		0
+	}
+
+	// 4x4 building tile on left side of main street (ie - storefronts facing right)
+	tile +bldl_4x4_2a
+	{
+		6 6
+		0		fg		f		f		fh		0
+		a		+j		+j		+j		+j		a
+		a		+j		+j		+j		+j		a
+		a		+j		+j		+j		+j		a
+		a		+j		+j		+j		+j		a
+		0		fg		f		f		fh		0
+	}
+	
+	// 4x4 building tile on right side of main street (ie - storefronts facing left)
+	tile +bldr_4x4_2a
+	{
+		6 6
+		0		fg		f		f		fh		0
+		a		+k		+k		+k		+k		a
+		a		+k		+k		+k		+k		a
+		a		+k		+k		+k		+k		a
+		a		+k		+k		+k		+k		a
+		0		fg		f		f		fh		0
+	}
+	
+	
+// Assembly definitions
+// --------------------
+
+assembly garage
+{
+	size "8 6"
+	fix +str_cross "0 0"
+	fix +strv_1a "0 1"
+	fix +strv_1a "0 2"
+	fix +strv_1a "0 3"
+	fix +strv_1a "0 4"
+	fix +str_cross "0 5"
+
+	fix +strh_cwl_1a "1 0"
+	fix +strh_1a "2 0"
+	fix +strh_1a "3 0"
+	fix +strh_cwr_1a "4 0"
+
+	fix +bldl_4x4_2a "1 1"
+
+	fix +strh_cwl_1a "1 5"
+	fix +strh_1a "2 5"
+	fix +strh_1a "3 5"
+	fix +strh_cwr_1a "4 5"
+
+	fix +str_rail_cross "4 0"
+	fix +strv_rail_btm2a "4 1"
+	fix +strv_rail_2a "4 2"
+	fix +strv_rail_2a "4 3"
+	fix +strv_rail_top2a "4 4"
+	fix +str_rail_cross "4 5"
+}
+
+/*
+assembly static
+{
+	size "11 9"
+	fix +bldl_4x4_1a "0 5"
+	fix +strv_rail_1a "4 5"
+	fix +bldr_4x4_1a "7 5"
+
+	fix +strh_1a "0 4"
+	fix +strh_1a "1 4"
+	fix +strh_1a "2 4"
+	fix +strh_cwr_1a "3 4"
+	fix +str_rail_cross "4 4"
+	fix +strh_cwl_1a "7 4"
+	fix +strh_1a "8 4"
+	fix +strh_1a "9 4"
+	fix +strh_1a "10 4"
+
+	fix +bldl_4x4_2a "0 0"
+	fix +strv_rail_btm2a "4 0"
+	fix +strv_rail_2a "4 1"
+	fix +strv_rail_2a "4 2"
+	fix +strv_rail_top2a "4 3"
+	fix +bldr_4x4_2a "7 0"
+}
+*/

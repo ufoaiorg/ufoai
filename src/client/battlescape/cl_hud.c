@@ -379,16 +379,21 @@ static void HUD_ShotReserve_f (void)
 	if (!reserveShotData)
 		return;
 
+	if (reserveShotData->weaponIndex == NONE)
+		return;
+
 	/** @todo do this on the server */
 	/* Check if we have enough TUs (again) */
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
 		character_t* chr = CL_ActorGetChr(selActor);
 		assert(chr);
-		CL_ActorReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
-		CL_ActorSetShotSettings(chr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
-		if (popupListNode)
-			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
+		if (GAME_ItemIsUseable(od)) {
+			CL_ActorReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
+			CL_ActorSetShotSettings(chr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
+			if (popupListNode)
+				MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
+		}
 	}
 }
 
@@ -1313,15 +1318,6 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
 {
 	if (!CL_OnBattlescape())
 		return;
-
-	if (oldValue[0] != '\0') {
-		const int actorIdx = atoi(oldValue);
-		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST) {
-			/* if the actor is still living */
-			if (cl.teamList[actorIdx])
-				MN_ExecuteConfunc("huddeselect %s", oldValue);
-		}
-	}
 
 	if (newValue[0] != '\0') {
 		const int actorIdx = atoi(newValue);

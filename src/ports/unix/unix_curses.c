@@ -80,7 +80,7 @@ char *Curses_Input (void)
 			/* Mark the end of our input */
 			input[inputline][inputpos] = '\0';
 
-			Com_Printf("%c]%s\n", COLORED_GREEN, input[historyline]);
+			Com_Printf(COLORED_GREEN "]%s\n", input[historyline]);
 
 			/* Flush the command */
 			inputpos = 0;

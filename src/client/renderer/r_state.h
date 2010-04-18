@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_program.h"
 #include "r_material.h"
+#include "r_framebuffer.h"
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
@@ -55,6 +56,18 @@ typedef struct gltexunit_s {
 #define texunit_lightmap	texunit_1
 #define texunit_deluxemap	texunit_2
 #define texunit_normalmap	texunit_3
+#define texunit_glowmap		texunit_4
+
+
+#define DOWNSAMPLE_PASSES	5
+#define DOWNSAMPLE_SCALE	2
+
+#define fbo_screen			NULL
+#define fbo_render			r_state.renderBuffer
+#define fbo_bloom0			r_state.bloomBuffer0
+#define fbo_bloom1			r_state.bloomBuffer1
+
+#define default_program		NULL
 
 typedef struct {
 	qboolean fullscreen;
@@ -69,6 +82,13 @@ typedef struct {
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];
 
+	/* framebuffer objects*/
+	r_framebuffer_t *renderBuffer;
+	r_framebuffer_t *bloomBuffer0;
+	r_framebuffer_t *bloomBuffer1;
+	r_framebuffer_t *buffers0[DOWNSAMPLE_PASSES];
+	r_framebuffer_t *buffers1[DOWNSAMPLE_PASSES];
+
 	/* texunit in use */
 	gltexunit_t *active_texunit;
 
@@ -78,6 +98,9 @@ typedef struct {
 	r_program_t *mesh_program;
 	r_program_t *warp_program;
 	r_program_t *geoscape_program;
+	r_program_t *convolve_program;
+	r_program_t *combine2_program;
+	r_program_t *atmosphere_program;
 	r_program_t *active_program;
 
 	/* blend function */
@@ -86,6 +109,7 @@ typedef struct {
 	material_t *active_material;
 
 	/* states */
+	qboolean shell_enabled;
 	qboolean blend_enabled;
 	qboolean color_array_enabled;
 	qboolean alpha_test_enabled;
@@ -93,6 +117,9 @@ typedef struct {
 	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
 	qboolean fog_enabled;
+	qboolean blur_enabled;
+	qboolean glow_enabled;
+	qboolean draw_glow_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -123,6 +150,10 @@ void R_EnableColorArray(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(material_t *material, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
+void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
+void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
+void R_EnableGlow(qboolean enable);
+void R_EnableDrawAsGlow(qboolean enable);
 
 #endif

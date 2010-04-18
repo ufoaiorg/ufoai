@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_screen.h"
 #include "../renderer/r_draw.h"
+#include "../renderer/r_framebuffer.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_font.h"
@@ -133,6 +134,10 @@ static float smoothDeltaLength = 0.0f;		/**< angle/position difference that we n
 static float smoothFinalZoom = 0.0f;		/**< value of finale ccs.zoom for a smooth change of angle (see MAP_CenterOnPoint)*/
 static float smoothDeltaZoom = 0.0f;		/**< zoom difference that we need to change when smoothing */
 static const float smoothAcceleration = 0.06f;		/**< the acceleration to use during a smooth motion (This affects the speed of the smooth motion) */
+static float curZoomSpeed = 0.0f;			/**< The current zooming speed. Used for smooth zooming. */
+static float curRotationSpeed = 0.0f;		/**< The current rotation speed. Used for smooth rotating.*/
+
+
 static const float defaultBaseAngle = 90.0f;	/**< Default angle value for 3D models like bases */
 
 static byte *terrainPic;				/**< this is the terrain mask for separating the clima
@@ -1271,8 +1276,16 @@ static void MAP3D_SmoothRotate (void)
 
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		/* when we rotate (and zoom) */
+		float rotationSpeed;
 		if (diff_angle > epsilon) {
-			const float rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle / smoothDeltaLength;
+			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
+			 * This allows the globe to rotate at maximum speed when the button is held down. */
+			if (diff_angle / smoothDeltaLength > 0.5)
+				rotationSpeed = min(diff_angle, curRotationSpeed + sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle * 0.5);
+			else {
+				rotationSpeed = sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle;
+			}
+			curRotationSpeed = rotationSpeed;
 			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
@@ -1281,7 +1294,15 @@ static void MAP3D_SmoothRotate (void)
 	} else {
 		/* when we zoom only */
 		if (fabs(diff_zoom) > epsilonZoom) {
-			const float speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
+			float speed;
+			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
+			 * This allows the globe to zoom at maximum speed when the button is held down. */
+			if (fabs(diff_zoom) / smoothDeltaZoom > 0.5)
+				speed = min(smoothAcceleration * 2.0, curZoomSpeed + sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration);
+			else {
+				speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
+			}
+			curZoomSpeed = speed;
 			ccs.zoom = ccs.zoom + diff_zoom * speed;
 			return;
 		}
@@ -1889,12 +1910,26 @@ void MAP_DrawMap (const menuNode_t* node)
 	/* Draw the map and markers */
 	if (cl_3dmap->integer) {
 		qboolean disableSolarRender = qfalse;
+		/** @todo I think this check is wrong; isn't zoom clamped to this value already?
+		 *  A value of 3.3 seems about right for me, but this should probably be fixed...*/
+#if 0
 		if (ccs.zoom > cl_mapzoommax->value)
+#else
+		if (ccs.zoom > 3.3)
+#endif
 			disableSolarRender = qtrue;
+
+		R_EnableRenderbuffer(qtrue);
+
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
-			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value);
+				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value);
+
+		MAP_DrawMapMarkers(node);
+
+		R_DrawBloom();
+		R_EnableRenderbuffer(qfalse);
 	} else {
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
@@ -1902,8 +1937,8 @@ void MAP_DrawMap (const menuNode_t* node)
 			MAP_SmoothTranslate();
 		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map);
+		MAP_DrawMapMarkers(node);
 	}
-	MAP_DrawMapMarkers(node);
 
 	/* display text */
 	MN_ResetData(TEXT_STANDARD);
@@ -2261,8 +2296,8 @@ qboolean MAP_IsNight (const vec2_t pos)
 	/* set p to hours (we don't use ccs.day here because we need a float value) */
 	p = (float) ccs.date.sec / SECONDS_PER_DAY;
 	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
-	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
-	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
+	q = (ccs.date.day + p) * (2 * M_PI / DAYS_PER_YEAR_AVG) - M_PI;
+	p = (0.5 + pos[0] / 360 - p) * (2 * M_PI) - q;
 	a = -sin(pos[1] * torad);
 	root = sqrt(1.0 - a * a);
 	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);

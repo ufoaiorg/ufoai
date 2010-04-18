@@ -1312,7 +1312,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 	/* create the list */
 	if (!*listDest) {
 		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(**listDest), com_genericPool, 0);
-		(*listDest)->data = data;
+		(*listDest)->data = (byte *)data;
 		(*listDest)->ptr = qtrue;
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
@@ -1324,7 +1324,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 
 	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(*newEntry), com_genericPool, 0);
 	list->next = newEntry;
-	newEntry->data = data;
+	newEntry->data = (byte *)data;
 	newEntry->ptr = qtrue;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 }

@@ -84,6 +84,8 @@ typedef struct entity_s {
 
 	transform_t transform;
 
+	vec3_t shell;					/**< shell color */
+
 	static_lighting_t *lighting;	/**< cached static lighting info */
 
 	image_t *deathTexture;

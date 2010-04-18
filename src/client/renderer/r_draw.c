@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_draw.h"
 #include "r_mesh.h"
 #include "r_overlay.h"
+#include "r_framebuffer.h"
+#include "r_program.h"
 #include "../cl_console.h"
 
 extern const float STANDARD_3D_ZOOM;
@@ -588,7 +590,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	glVertex2f(x + radius, y);
 
 	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
-		const float angle = (i * 2.0 * M_PI) / CIRCLE_LINE_COUNT;
+		const float angle = (2.0 * M_PI / CIRCLE_LINE_COUNT) * i;
 		glVertex2f(x + radius * cos(angle), y - radius * sin(angle));
 
 		/* When filling we're drawing triangles so we need to
@@ -598,7 +600,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 			glVertex2f(x, y);
 	}
 
-	glVertex2f(x + radius * cos(2.0 * M_PI), y - radius * sin(2.0 * M_PI));
+	glVertex2f(x + radius, y);
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 	R_Color(NULL);
@@ -713,7 +715,7 @@ void R_Draw2DMapMarkers (const vec2_t screenPos, float direction, const char *mo
 	glPushMatrix();
 
 	/* Apply all transformation to model. Note that the transformations are applied starting
-	from the last one and ending with the first one */
+	 * from the last one and ending with the first one */
 
 	/* move model to its location */
 	glTranslatef(screenPos[0]* viddef.rx, screenPos[1]* viddef.ry, 0);
@@ -781,10 +783,10 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	glPushMatrix();
 
 	/* Apply all transformation to model. Note that the transformations are applied starting
-	from the last one and ending with the first one */
+	 * from the last one and ending with the first one */
 
 	/* center model on earth. Translate also along z to avoid seeing
-	bottom part of the model through earth (only half of earth is drawn) */
+	 * bottom part of the model through earth (only half of earth is drawn) */
 	glTranslatef(earthPos[0], earthPos[1], 10.0f);
 	/* scale model to proper resolution */
 	glScalef(viddef.rx, viddef.ry, 1.0f);
@@ -792,7 +794,7 @@ void R_Draw3DMapMarkers (int x, int y, int w, int h, const vec3_t rotate, const 
 	glRotatef(-rotate[1], 1, 0, 0);
 	glRotatef(rotate[2], 0, 1, 0);
 	glRotatef(rotate[0] - pos[0], 0, 0, 1);
-	glRotatef(90.0f - pos[1] , 1, 0, 0);
+	glRotatef(90.0f - pos[1], 1, 0, 0);
 	glTranslatef(0, 0, earthRadius);
 	glRotatef(-90.0f + direction, 0, 0, 1);
 
@@ -905,6 +907,30 @@ static void R_DrawStarfield (int texnum, const vec3_t pos, const vec3_t rotate, 
 }
 
 /**
+ * @brief rotate a planet (sun or moon) with respect to the earth
+ * @param[in] v
+ * @param[out] r
+ * @param[int] rotate
+ * @param[int] earthPos
+ * @param[int] celestialDist
+ */
+static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t rotate, const vec3_t earthPos, const float celestialDist)
+{
+	vec4_t v1;
+	vec4_t v2;
+	vec3_t rotationAxis;
+
+	VectorSet(v2, v[1], v[0], v[2]);
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v1, rotationAxis, v2, -rotate[PITCH]);
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(v2, rotationAxis, v1, -rotate[YAW]);
+
+	Vector4Set((*r), earthPos[0] + celestialDist * v2[1], earthPos[1] + celestialDist * v2[0], -celestialDist * v2[2], 0);
+}
+
+
+/**
  * @brief responsible for drawing the 3d globe on geoscape
  * @param[in] x menu node x position
  * @param[in] y menu node y position
@@ -920,128 +946,137 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
-	vec4_t sunPos, antiSunPos;
-	const vec4_t darknessLightColor = {0.0f, 0.0f, 0.0f, 1.0f};
-	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 1.0f};
-	const vec4_t ambientLightColor = {ambient + 0.2f, ambient + 0.2f, ambient + 0.2f, ambient + 0.2f};
-	const vec4_t brightDiffuseLightColor = {5.0f, 5.0f, 5.0f, 1.0f};
-	const vec4_t specularLightColor = {1.0f, 1.0f, 0.8f, 1.0f};
-	float p;
-	/* set distance of the moon to make it static on starfield when time is stoped.
-	 * this distance should be used for any celestial body considered at infinite location (sun, moon) */
-	const float celestialDist = 1.37f * SKYBOX_HALFSIZE;
-	const float moonSize = 0.025f;
 
-	image_t *starfield, *halo, *sun;
+	/* lighting colors */
+	static const vec4_t diffuseLightColor = { 1.75f, 1.75f, 1.75f, 1.0f };
+	static const vec4_t specularLightColor = { 2.0f, 1.9f, 1.7f, 1.0f };
+	static const vec4_t darknessLightColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+	static const vec4_t brightDiffuseLightColor = { 5.0f, 5.0f, 5.0f, 1.0f };
+	const vec4_t ambientLightColor = { ambient + 0.2f, ambient + 0.2f, ambient + 0.2f, ambient + 0.2f };
+	/* billboard textures */
+	image_t *starfield;
+	image_t *halo;
+	image_t *sun;
+	image_t *sunOverlay;
+
+	/* set distance of the sun and moon to make them static on starfield when
+	 * time is stoped.  this distance should be used for any celestial body
+	 * considered at infinite location (sun, moon) */
+	static const float celestialDist = 1.37f * SKYBOX_HALFSIZE;
+	static const float moonSize = 0.025f;
+	vec4_t sunPos;
+	vec4_t antiSunPos;
+	vec4_t moonLoc;
+	vec4_t sunLoc;
+
 	/* normalize */
 	const float nx = x * viddef.rx;
 	const float ny = y * viddef.ry;
 	const float nw = w * viddef.rx;
 	const float nh = h * viddef.ry;
 
-	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};	/* Earth center is in the middle of node.
-								* Due to Orthographic view, this is also camera position */
-	vec4_t moonPos;
-	vec3_t v, v1, rotationAxis;
+	/* Earth center is in the middle of node.
+	 * Due to Orthographic view, this is also camera position */
+	const vec3_t earthPos = { nx + nw / 2.0, ny + nh / 2.0, 0.0 };
 
 	/* estimate the progress through the current season so we can do
 	 * smooth transitions between textures.  Currently there are 12
 	 * "seasons", because we have one image per Earth-month. */
-	const float season = (float)(day % DAYS_PER_YEAR) / ((float)(DAYS_PER_YEAR) / (float)(SEASONS_PER_YEAR));
-	const int currSeason = (int)floorf(season) % SEASONS_PER_YEAR;
-	const int nextSeason = (int)ceilf(season) % SEASONS_PER_YEAR;
-	const float seasonProgress = season - (float)currSeason;
+	const float season = (float) (day % DAYS_PER_YEAR) / ((float) (DAYS_PER_YEAR) / (float) (SEASONS_PER_YEAR));
+	const int currSeason = (int) floorf(season) % SEASONS_PER_YEAR;
+	const int nextSeason = (int) ceilf(season) % SEASONS_PER_YEAR;
+	const float seasonProgress = season - (float) currSeason;
 
-	/* Compute light position in absolute frame */
-	const float q = (day % DAYS_PER_YEAR + (float) (second / (float)SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;	/* sun rotation (year) */
+	/* Compute sun position in absolute frame */
+	const float q = (day % DAYS_PER_YEAR * SECONDS_PER_DAY + second) * (2 * M_PI / (SECONDS_PER_DAY * DAYS_PER_YEAR));	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
 
-	char mapName[MAX_VAR];
+	/* earth rotation (day) */
+	const float p = (second - SECONDS_PER_DAY / 4) * (2.0 * M_PI / SECONDS_PER_DAY);
+	/* lunar orbit */
+	const float m = p + (((double)((10 * day % 249) / 10.0) + ((double)second / (double)SECONDS_PER_DAY)) / 24.9) * (2.0 * M_PI);
 
-	p = (float) (second / (float)SECONDS_PER_DAY) * 2.0 * M_PI - 0.5f * M_PI;		/* earth rotation (day) */
-	Vector4Set(sunPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0); /* final 0 means the light source is directional (ie. infinitely far away) */
-	Vector4Set(antiSunPos, -cos(p) * sqrta, sin(p) * sqrta, -a, 0); /* for rendering man-made lights at night */
-
-	/* Then rotate it in the relative frame of player view, to get sun position (no need to rotate
-	 * sunPos: all models will be rotated after light effect is applied) */
-	VectorSet(v, sunPos[1], sunPos[0], sunPos[2]);
-	VectorSet(rotationAxis, 0, 0, 1);
-	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
-	VectorSet(rotationAxis, 0, 1, 0);
-	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-
+	glPushMatrix();
+	glMatrixMode(GL_TEXTURE);
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glDisable(GL_LIGHTING);
+	/* draw the starfield, rotating with the planet */
 	starfield = R_FindImage(va("pics/geoscape/%s_stars", map), it_wrappic);
 	if (starfield != r_noTexture)
 		R_DrawStarfield(starfield->texnum, earthPos, rotate, p);
 
-	/* load sun image */
-	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
-	if (sun != r_noTexture && v[2] < 0 && !disableSolarRender) {
-		R_DrawTexture(sun->texnum, earthPos[0] - 64.0 * viddef.rx + celestialDist * v[1] * viddef.rx , earthPos[1] - 64.0 * viddef.ry + celestialDist * v[0] * viddef.ry, 128.0 * viddef.rx, 128.0 * viddef.ry);
+	glPopMatrix();
+
+	/* set up position vectors for celestial bodies */
+	Vector4Set(sunPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0);
+	Vector4Set(antiSunPos, -cos(p) * sqrta, sin(p) * sqrta, -a, 0);
+
+	/* Rotate the sun in the relative frame of player view, to get sun location */
+	RotateCelestialBody(sunPos, &sunLoc, rotate, earthPos, 1.0);
+	/* load sun texture image */
+	sun = R_FindImage(va("pics/geoscape/%s_sun", map), it_wrappic);
+	sunOverlay = R_FindImage(va("pics/geoscape/%s_sun_overlay", map), it_pic);
+	if (sun != r_noTexture && sunOverlay != r_noTexture && sunLoc[2] > 0 && !disableSolarRender) {
+		const int sunx = earthPos[0] + viddef.rx * (-128.0 + celestialDist * (sunLoc[0] - earthPos[0]));
+		const int suny = earthPos[1] + viddef.ry * (-128.0 + celestialDist * (sunLoc[1] - earthPos[1]));
+
+		R_DrawTexture(sunOverlay->texnum, sunx, suny, 256.0 * viddef.rx, 256.0 * viddef.ry);
+		R_DrawBuffers(2);
+		R_DrawTexture(sun->texnum, sunx, suny, 256.0 * viddef.rx, 256.0 * viddef.ry);
+		R_DrawBuffers(1);
 	}
 
+	/* calculate position of the moon (it rotates around earth with a period of
+	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
+	 * every time the day is changing) */
+	VectorSet(moonLoc, cos(m) * sqrta, -sin(m) * sqrta, a);
+	RotateCelestialBody(moonLoc, &moonLoc, rotate, earthPos, celestialDist);
+
+	/* free last month's texture image */
 	if (r_globeEarth.season != currSeason) {
 		r_globeEarth.season = currSeason;
 		R_FreeImage(r_globeEarth.texture);
 	}
 
-	/* load earth images for the current month and the next month so we can blend them */
-	Com_sprintf(mapName, sizeof(mapName), "%s_season_%02d", map, currSeason);
-	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s", mapName), it_wrappic);
+	/* load diffuse texture map (with embedded night-glow map as alpha channel) */
+	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s/%s_season_%02d", r_config.lodDir, map, currSeason), it_wrappic);
 	if (r_globeEarth.texture == r_noTexture)
-		Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s\n", mapName);
+		Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s/%s_season_%02d\n", r_config.lodDir, map, currSeason);
 
-	Com_sprintf(mapName, sizeof(mapName), "%s_season_%02d", map, nextSeason);
-	r_globeEarth.blendTexture = R_FindImage(va("pics/geoscape/%s", mapName), it_wrappic);
-	if (r_globeEarth.blendTexture == r_noTexture)
-		Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s\n", mapName);
+	/* set up for advanced GLSL rendering if we have the capability */
+	if (r_programs->integer) {
+		r_globeEarth.glslProgram = r_state.geoscape_program;
+		/* load earth image for the next month so we can blend them */
+		r_globeEarth.blendTexture = R_FindImage(va("pics/geoscape/%s/%s_season_%02d", r_config.lodDir, map, nextSeason), it_wrappic);
+		if (r_globeEarth.blendTexture == r_noTexture)
+			Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s/%s_season_%02d\n", r_config.lodDir, map, nextSeason);
 
-	if (qglUseProgram) {
-		r_globeEarth.nightOverlay = R_FindImage(va("pics/geoscape/%s_night_lights", map), it_wrappic);
-		if (r_globeEarth.nightOverlay == r_noTexture)
-			r_globeEarth.nightOverlay = NULL;
-
-		/* load normal map */
-		r_globeEarth.normalMap = R_FindImage(va("pics/geoscape/%s_bump", map), it_wrappic);
+		/* load normal map (with embedded gloss map as alpha channel) */
+		r_globeEarth.normalMap = R_FindImage(va("pics/geoscape/%s/%s_bump", r_config.lodDir, map), it_wrappic);
 		if (r_globeEarth.normalMap == r_noTexture)
 			r_globeEarth.normalMap = NULL;
 
-		/* load specularity map */
-		r_globeEarth.glossMap = R_FindImage(va("pics/geoscape/%s_gloss", map), it_wrappic);
-		if (r_globeEarth.glossMap == r_noTexture)
-			r_globeEarth.glossMap = NULL;
-
 		/* weight the blending based on how much of the month has elapsed */
 		r_globeEarth.blendScale = seasonProgress;
-		/* set up lights for nighttime city illumination*/
+		/* set up lights for nighttime city glow */
 		VectorCopy(antiSunPos, r_globeEarth.nightLightPos);
 		glLightfv(GL_LIGHT1, GL_AMBIENT, darknessLightColor);
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, brightDiffuseLightColor);
 		glLightfv(GL_LIGHT1, GL_SPECULAR, darknessLightColor);
+
+		r_globeEarth.glowScale = 0.7;
 	}
 
-	/* load moon image */
+	/* load moon texture image */
 	r_globeMoon.texture = R_FindImage(va("pics/geoscape/%s_moon", map), it_wrappic);
 
 	/* globe texture scaling */
 	glMatrixMode(GL_TEXTURE);
 	glLoadIdentity();
-	/* scale the textures */
 	glScalef(2, 1, 1);
 	glMatrixMode(GL_MODELVIEW);
-
-	/* calculate position of the moon (it rotates around earth with a period of
-	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
-	 * every time the day is changing) */
-	p = (float) ((day % 249) + second / (24.9f * (float)SECONDS_PER_HOUR)) * 2.0 * M_PI;
-	VectorSet(moonPos, cos(p) * sqrta, - sin(p) * sqrta, a);
-	VectorSet(v, moonPos[1], moonPos[0], moonPos[2]);
-	VectorSet(rotationAxis, 0, 0, 1);
-	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
-	VectorSet(rotationAxis, 0, 1, 0);
-	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	Vector4Set(moonPos, earthPos[0] + celestialDist * v[1], earthPos[1] + celestialDist * v[0], -celestialDist * v[2], 0);
 
 	/* enable the lighting */
 	glEnable(GL_LIGHTING);
@@ -1051,39 +1086,71 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLightColor);
 
 	/* draw the moon */
-	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
-		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize, sunPos);
-
-	/* Draw earth atmosphere */
-	glMatrixMode(GL_TEXTURE);
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glDisable(GL_LIGHTING);
-	halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
-	if (halo != r_noTexture) {
-		const float earthSizeX = fullscale * 20500.0 * viddef.rx;
-		const float earthSizeY = fullscale * 20500.0 * viddef.ry;
-		R_DrawTexture(halo->texnum,  earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
-	}
-	glEnable(GL_LIGHTING);
-
-	/* globe texture scaling */
-	glMatrixMode(GL_TEXTURE);
-	glLoadIdentity();
-	glScalef(2, 1, 1);
-	glMatrixMode(GL_MODELVIEW);
+	if (r_globeMoon.texture != r_noTexture && moonLoc[2] > 0 && !disableSolarRender)
+		R_SphereRender(&r_globeMoon, moonLoc, rotate, moonSize, sunPos);
 
 	/* activate depth to hide 3D models behind earth */
 	glEnable(GL_DEPTH_TEST);
-	/* draw the globe */
+
+	/* draw the earth */
+	R_DrawBuffers(2);
+	if (r_programs->integer == 0) /* ignore alpha channel, since the city-light map is stored there */
+		glBlendFunc(GL_ONE, GL_ZERO);
+
 	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+
+	if (r_programs->integer == 0) /* restore default blend function */
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
+
+	/* Draw earth atmosphere */
+	if (r_programs->integer && r_postprocess->integer) {
+		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
+		r_globeEarthAtmosphere.glowScale = 1.0;
+		r_globeEarthAtmosphere.blendScale = -1.0;
+		r_globeEarthAtmosphere.glslProgram = r_state.atmosphere_program;
+		R_SphereRender(&r_globeEarthAtmosphere, earthPos, rotate, fullscale, sunPos);
+	} else {
+		halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
+		if (halo != r_noTexture) {
+			/** @todo Replace this magic number with some speaking constant */
+			const float earthSizeX = fullscale * 20500.0 * viddef.rx;
+			const float earthSizeY = fullscale * 20500.0 * viddef.ry;
+			glMatrixMode(GL_TEXTURE);
+			glPushMatrix();
+			glLoadIdentity();
+			glDisable(GL_LIGHTING);
+
+			R_DrawTexture(halo->texnum, earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
+			glEnable(GL_LIGHTING);
+			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);
+		}
+	}
+
+	R_DrawBuffers(1);
+	glDisable(GL_DEPTH_TEST);
 
 	/* draw nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (r_globeEarth.overlay == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay image");
+
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+
+		/* draw glowing borders */
+		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay_glow", map), it_wrappic);
+		if (r_globeEarth.overlay == r_noTexture)
+			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay glow image");
+
+		R_DrawBuffers(2);
+		glDisable(GL_LIGHTING);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+		glEnable(GL_LIGHTING);
+		R_DrawBuffers(1);
+
 		r_globeEarth.overlay = NULL;
 	}
 	/* draw XVI overlay */
@@ -1103,7 +1170,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
-	glDisable(GL_DEPTH_TEST);
+
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
 
@@ -1132,7 +1199,7 @@ static int currentClipRect = 0;
  * @param[in] b A rect
  * @param[out] out The intersection rect
  */
-static void R_RectIntersection(rect_t *a, rect_t *b, rect_t *out)
+static void R_RectIntersection (const rect_t* a, const rect_t* b, rect_t* out)
 {
 	out->x = (a->x > b->x) ? a->x : b->x;
 	out->y = (a->y > b->y) ? a->y : b->y;
@@ -1191,7 +1258,7 @@ void R_PopClipRect (void)
 }
 
 /**
- * "Clean up" the depth buffer into a rect
+ * @brief "Clean up" the depth buffer into a rect
  * @note we use a big value (but not too big) to set the depth buffer, then it is not really a clean up
  * @todo can we fix bigZ with a value come from glGet?
  */
@@ -1279,4 +1346,146 @@ void R_DrawBoundingBox (const vec3_t mins, const vec3_t maxs)
 	glEnd();
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+/**
+ * @brief Draw the current texture on a quad the size of the renderbuffer
+ */
+static inline void R_DrawQuad (void)
+{
+	glBegin(GL_QUADS);
+	glTexCoord2i(0, 1);
+	glVertex2i(0, 0);
+	glTexCoord2i(1, 1);
+	glVertex2i(fbo_render->width, 0);
+	glTexCoord2i(1, 0);
+	glVertex2i(fbo_render->width, fbo_render->height);
+	glTexCoord2i(0, 0);
+	glVertex2i(0, fbo_render->height);
+	glEnd();
+}
+
+/**
+ * @brief does 1D filter convolution to blur a framebuffer texture.
+ * dir=0 for horizontal, dir=1 for vertical
+ */
+static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, int dir)
+{
+	R_EnableBlur(r_state.convolve_program, qtrue, source, dest, dir);
+
+	/* draw new texture onto a flat surface */
+	R_BindTextureForTexUnit(source->textures[tex], &texunit_0);
+	R_UseViewport(source);
+	R_DrawQuad();
+
+	R_EnableBlur(r_state.convolve_program, qfalse, NULL, NULL, 0);
+}
+
+/**
+ * @brief blur from the source image pyramid into the dest image pyramid
+ */
+static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t ** dests)
+{
+	int i;
+
+	for (i = 0; i < levels; i++) {
+		const int l = levels - i - 1;
+
+		R_UseProgram(i == 0 ? default_program : r_state.combine2_program);
+		R_UseFramebuffer(dests[l]);
+		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit_0);
+		if (i != 0)
+			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &texunit_1);
+
+		R_UseViewport(sources[l]);
+		R_DrawQuad();
+
+		R_Blur(dests[l], sources[l], 0, 1);
+		R_Blur(sources[l], dests[l], 0, 0);
+	}
+}
+
+/**
+ * @brief handle post-processing bloom
+ */
+void R_DrawBloom (void)
+{
+	int i;
+	qboolean rb_enable;
+
+	if (!r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+		return;
+
+
+	/* save state, then set up for blit-style rendering to quads */
+	rb_enable = R_RenderbufferEnabled();
+	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
+	glMatrixMode(GL_TEXTURE);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, viddef.width, viddef.height, 0, 9999.0f, SKYBOX_DEPTH);
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+
+	/* downsample into image pyramid */
+	R_BindTexture(fbo_render->textures[1]);
+	qglGenerateMipmapEXT(GL_TEXTURE_2D);
+
+	R_Blur(fbo_render, fbo_bloom0, 1, 0);
+	R_Blur(fbo_bloom0, fbo_bloom1, 0, 1);
+
+	R_BindTexture(fbo_bloom1->textures[0]);
+	qglGenerateMipmapEXT(GL_TEXTURE_2D);
+	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
+		R_UseFramebuffer(r_state.buffers0[i]);
+		glBindTexture(GL_TEXTURE_2D, fbo_bloom1->textures[0]);
+
+		R_UseViewport(r_state.buffers0[i]);
+		R_DrawQuad();
+	}
+
+	/* blur and combine downsampled images */
+	R_BlurStack(DOWNSAMPLE_PASSES, r_state.buffers0, r_state.buffers1);
+
+	/* re-combine the blurred version with the original "glow" image */
+	R_UseProgram(r_state.combine2_program);
+	R_UseFramebuffer(fbo_bloom0);
+	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit_0);
+	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit_1);
+
+	R_UseViewport(fbo_screen);
+	R_DrawQuad();
+
+	/* draw final result to the screenbuffer */
+	R_UseFramebuffer(fbo_screen);
+	R_UseProgram(r_state.combine2_program);
+	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit_0);
+	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit_1);
+
+	R_DrawQuad();
+
+	/* cleanup before returning */
+	R_UseProgram(default_program);
+
+	R_CheckError();
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glMatrixMode(GL_TEXTURE);
+	glPopMatrix();
+	glPopAttrib();
+	R_CheckError();
+
+	/* reset renderbuffer state to what it was before */
+	R_EnableRenderbuffer(rb_enable);
+
 }

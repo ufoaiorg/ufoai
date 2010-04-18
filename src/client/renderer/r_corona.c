@@ -77,7 +77,7 @@ void R_DrawCoronas (void)
 		vertind = 3; /* and the origin */
 
 		for (i = verts; i >= 0; i--) { /* now draw the corners */
-			const float a = i / (float) verts * M_PI * 2;
+			const float a = (M_PI * 2 / verts) * i;
 
 			for (j = 0; j < 3; j++)
 				v[j] = c->org[j] + r_locals.right[j] * (float) cos(a) * c->radius + r_locals.up[j] * (float) sin(a)

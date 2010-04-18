@@ -507,10 +507,10 @@ function start_downloads()
 	download_archive http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-${SDL_MIXER_VERSION}-VC8.zip sdl_mixer.zip
 	download_archive http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-${SDL_IMAGE_VERSION}-VC8.zip sdl_image.zip
 
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.2.3-gcc42.tar.bz2 libvorbis.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-1.3.1-gcc42.tar.bz2 libvorbis.tar.bz2
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-1.1.1-gcc42.tar.bz2 libtheora.tar.bz2
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.2-gcc42.tar.bz2 xvidcore.tar.bz2
-	download_archive http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.4-gcc42.tar.bz2 libogg.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.2-vaq-gcc42.tar.bz2 xvidcore.tar.bz2
+	download_archive http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.2.0-gcc42.tar.bz2 libogg.tar.bz2
 
 #	download_archive http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download_archive http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
@@ -587,11 +587,11 @@ fi
 
 ACTION=${1:-help}
 
-if [ "$ACTION" == "create" ]; then
+if [ "$ACTION" = "create" ]; then
 	create
-elif [ "$ACTION" == "download" ]; then
+elif [ "$ACTION" = "download" ]; then
 	download
-elif [ "$ACTION" == "help" ]; then
+elif [ "$ACTION" = "help" ]; then
 	echo "Valid parameters are:"
 	echo " - create   : creates the ${ARCHIVE_NAME} with the"
 	echo "              latest versions of the needed programs and libs"
@@ -601,14 +601,14 @@ elif [ "$ACTION" == "help" ]; then
 	echo " - help     : prints this help message"
 	echo " - upload   : uploads the created archive - ./ssh/config must be"
 	echo "              set up for this to work"
-elif [ "$ACTION" == "upload" ]; then
+elif [ "$ACTION" = "upload" ]; then
 	if [ ! -e "${ARCHIVE_NAME}" ]; then
 		echo "${ARCHIVE_NAME} doesn't exist. Hit any key to create it."
 		read
 		create
 	fi
 	scp ${ARCHIVE_NAME} ufo:~/public_html/mattn/download
-elif [ "$ACTION" == "clean" ]; then
+elif [ "$ACTION" = "clean" ]; then
 	rm -rf "${TEMP_DIR}"
 	echo "clean finished"
 else
@@ -662,3 +662,8 @@ fi
 #			bzip2
 #			bash
 #			make
+#	      Muton (2010.04.17)
+#		update package
+#			libvorbis
+#			xvidcore
+#			libogg

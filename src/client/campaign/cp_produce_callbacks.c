@@ -302,7 +302,7 @@ static void PR_UpdateProductionList (const base_t* base)
 	} else {
 		objDef_t *od;
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->virtual)
+			if (od->isVirtual)
 				continue;
 			assert(od->tech);
 			/* We will not show items with producetime = -1 - these are not producible.

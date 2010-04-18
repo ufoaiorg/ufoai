@@ -2,13 +2,37 @@ filename | license | author | source
 base/maps/africa.ump | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/africa/af_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/africa/af_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/africa/af_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/africa/af_craft_ufo_harvester.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/africa/af_craft_ufo_scout.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty5.map | GNU General Public License 2.0 or later
+base/maps/africa/af_empty6.map | GNU General Public License 2.0 or later
+base/maps/africa/af_fence1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_fence2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_fence3.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house2.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house3.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house4.map | GNU General Public License 2.0 or later
+base/maps/africa/af_house5.map | GNU General Public License 2.0 or later
+base/maps/africa/af_misc1.map | GNU General Public License 2.0 or later
+base/maps/africa/af_mp_team2.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_empty.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_entrance.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_hangar.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_incubation_small.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_lab.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_tunnel_h.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_tunnel_mb.map | GNU General Public License 2.0 or later
+base/maps/alienb/a_tunnel_ml.map | GNU General Public License 2.0 or later
+base/maps/alienb/a_tunnel_mr.map | GNU General Public License 2.0 or later
+base/maps/alienb/a_tunnel_mt.map | GNU General Public License 2.0 or later
 base/maps/alienb/a_tunnel_v.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/alienb/a_tunnel_x.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/alienb/a_wormhole.map | GNU General Public License 2.0 or later
 base/maps/alienbase.ump | GNU General Public License 2.0 or later
 base/maps/b/aliencont.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/b/antimatter.map | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -31,10 +55,12 @@ base/maps/b/workshop.map | GNU General Public License 2.0 or later | Martin Gerh
 base/maps/bomber_city.ump | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/bomber_city/bc_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/bomber_city/bc_main.map | GNU General Public License 2.0 or later
 base/maps/bridge.ump | GNU General Public License 2.0 or later
 base/maps/bridge/br_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bridge/br_craft_drop_herakles.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/bridge/br_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/bridge/br_main.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/bunker.map | GNU General Public License 2.0 or later
 base/maps/cemetery.ump | GNU General Public License 2.0 or later
@@ -55,6 +81,22 @@ base/maps/cemetery/cem_p10.map | GNU General Public License 2.0 or later | wotwo
 base/maps/cemetery/cem_p11.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_p12.map | GNU General Public License 2.0 or later | wotwot
 base/maps/cemetery/cem_p13.map | GNU General Public License 2.0 or later | wotwot
+base/maps/city.ump | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citybldl_4x4_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citybldl_4x4_2a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citybldr_4x4_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citybldr_4x4_2a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystr_cross.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystr_rail_cross.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrc_sw_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrh_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrh_cwl_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrh_cwr_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrv_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrv_rail_1a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrv_rail_2a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrv_rail_btm2a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrv_rail_top2a.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city_disco.ump | GNU General Public License 2.0 or later
 base/maps/city_disco/cd_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/city_disco/cd_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
@@ -141,12 +183,15 @@ base/maps/farm.ump | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_barn_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/farm/f_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/farm/f_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_bomber.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/farm/f_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_farmhouse_b.map | GNU General Public License 2.0 or later
+base/maps/farm/f_farmhouse_c.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_field_c.map | GNU General Public License 2.0 or later
@@ -155,9 +200,17 @@ base/maps/farm/f_filler_l_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_filler_m_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_filler_m_b.map | GNU General Public License 2.0 or later
 base/maps/farm/f_filler_s.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_h.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_h1.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_hs.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_r.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_rt.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_v.map | GNU General Public License 2.0 or later
+base/maps/farm/f_road_v1.map | GNU General Public License 2.0 or later
 base/maps/farm/f_silo.map | GNU General Public License 2.0 or later
 base/maps/farm/f_stables_a.map | GNU General Public License 2.0 or later
 base/maps/farm/f_stables_b.map | GNU General Public License 2.0 or later
+base/maps/farm/f_wind.map | GNU General Public License 2.0 or later
 base/maps/ferry.map | GNU General Public License 2.0 or later
 base/maps/fighter_crash.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/forest.ump | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -167,6 +220,8 @@ base/maps/forest/fr_craft_crash_fighter.map | GNU General Public License 2.0 or 
 base/maps/forest/fr_craft_crash_harvester.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_crash_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_craft_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/forest/fr_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_craft_ufo_scout.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -181,6 +236,7 @@ base/maps/forest/fr_f7.map | GNU General Public License 2.0 or later | Kostia "K
 base/maps/forest/fr_f8.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_f9.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/forest/fr_h2.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_w2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/forest/fr_w3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -191,7 +247,10 @@ base/maps/forest/fr_w7.map | GNU General Public License 2.0 or later
 base/maps/forest/fr_w8.map | GNU General Public License 2.0 or later
 base/maps/frozen.ump | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_fighter.map | GNU General Public License 2.0 or later
+base/maps/frozen/st_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_craft_ufo_supply.map | GNU General Public License 2.0 or later
 base/maps/frozen/st_h01.map | GNU General Public License 2.0 or later
@@ -225,7 +284,9 @@ base/maps/ice/ice_r03.map | GNU General Public License 2.0 or later
 base/maps/industrial.ump | GNU General Public License 2.0 or later
 base/maps/industrial/craft_drop_firebird.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_drop_herakles.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/industrial/craft_ufo_fighter.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/maps/industrial/craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/industrial/craft_ufo_scout.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/craft_ufo_supply.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/maps/industrial/fr01.map | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
@@ -343,12 +404,15 @@ base/maps/tropic/tr_r03.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r04.map | GNU General Public License 2.0 or later
 base/maps/tropic/tr_r05.map | GNU General Public License 2.0 or later
 base/maps/ufocrash.ump | GNU General Public License 2.0 or later
+base/maps/ufocrash/uc_craft_crash_bomber.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_corrupter.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_craft_crash_fighter.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_harvester.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/ufocrash/uc_craft_crash_scout.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_scout
 base/maps/ufocrash/uc_craft_crash_supply.map | GNU General Public License 2.0 or later | Martin Gerhardy | prefab_ufo_supply and terrain08
 base/maps/ufocrash/uc_craft_drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/ufocrash/uc_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/ufocrash/uc_craft_drop_raptor.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d01.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d02_harvester.map | GNU General Public License 2.0 or later
 base/maps/ufocrash/uc_d03.map | GNU General Public License 2.0 or later
@@ -366,6 +430,10 @@ base/maps/village/vil_c02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c03.map | GNU General Public License 2.0 or later
 base/maps/village/vil_c04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_ufo_harvester.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d01.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d02.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d03.map | GNU General Public License 2.0 or later
@@ -794,9 +862,9 @@ base/models/objects/aircraft/hheli/hheli.md2 | GNU General Public License 2.0 or
 base/models/objects/aircraft/hheli/hheli.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/airpipe/airpipe.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/airpipe/airpipe.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/alien/barrel/barrel.md2 |  | GNU General Public License 2.0 or later
-base/models/objects/alien/barrel/barrel.png |  | GNU General Public License 2.0 or later
-base/models/objects/alien/barrel/barrel_nm.png |  | GNU General Public License 2.0 or later
+base/models/objects/alien/barrel/barrel.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/barrel/barrel.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/barrel/barrel_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/battery/battery.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/box/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -2609,60 +2677,114 @@ base/pics/ui/transtypebox.tga | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.tga | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/sound/aliens/aliendeath01.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath02.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath03.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath04.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath05.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath06.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath07.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/bump_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/combine2_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/combine2_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve3_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve3_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve5_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve5_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve9_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/convolve9_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/fog_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/fog_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/light_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/light_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/mesh_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/mesh_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
+base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
+base/shaders/world_vs.glsl | GNU General Public License 2.0 or later
+base/sound/aliens/aliendeath01.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath02.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath03.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath04.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath05.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath06.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath07.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/aliens/aliendeath08.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/sound/aliens/alienhurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/aliens/alienhurt02.wav | Creative Commons Sampling Plus 1.0 License | Syna-Max | http://www.freesound.org/samplesViewSingle.php?id=61648
-base/sound/aliens/big_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/big_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/big_angry3.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike1.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike3.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/burble.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice1.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice3.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/growl.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/gurgle.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/hiss.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/ortnok.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/shevaar.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/slithering.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/strange_chat.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/alienhurt02.ogg | Creative Commons Sampling Plus 1.0 License | Syna-Max | http://www.freesound.org/samplesViewSingle.php?id=61648
+base/sound/aliens/big_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/big_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/big_angry3.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/birdlike1.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/birdlike2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/birdlike3.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/burble.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/echovoice1.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/echovoice2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/echovoice3.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/growl.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/gurgle.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/hiss.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/huge_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/huge_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/ortnok.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/ortnokcalll01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/ortnokcalll02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/ortnokcalll03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/ortnokhurt01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/ortnokhurt02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaar.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/shevaarcall01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaardeath01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaardeath02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaarhurt01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaarhurt02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaarhurt03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/shevaarhurt04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/slithering.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/strange_chat.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/aliens/tamancall01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/tamancall02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/tamancall03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/tamancall04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/aliens/tamancall05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/ambience/alien_engine.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/creak.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/cricket_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/cricket_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/disco.ogg | Creative Commons Sampling Plus 1.0 License | zilverton | http://www.freesound.org/samplesViewSingle.php?id=72153
 base/sound/ambience/droning_long.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_short.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/fire1.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
-base/sound/ambience/fire2.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
-base/sound/ambience/firesoft.wav | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/fire03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/fire04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/fire05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/fire06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/fire1.ogg | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/fire2.ogg | GNU General Public License 2.0 | Openarena | Openarena GPLed data
+base/sound/ambience/firesoft.ogg | GNU General Public License 2.0 | Openarena | Openarena GPLed data
 base/sound/ambience/hum.ogg | GNU General Public 2.0 or later | Max Neave
 base/sound/ambience/hum2.ogg | GNU General Public 2.0 or later | Max Neave
 base/sound/ambience/jingle.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/jingle2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/lights_loop.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/lights_loop.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/machine1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/ambience/radiomessage.wav | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/ambience/radiomessage.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/ambience/sparks.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/sparks_short.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | sparks.ogg
 base/sound/ambience/tv_newswav.ogg | Creative Commons Sampling Plus 1.0 License | Connum | http://www.freesound.org/samplesViewSingle.php?id=23874
 base/sound/ambience/tv_static.ogg | Creative Commons Sampling Plus 1.0 License | Gaiamuse | http://www.freesound.org/samplesViewSingle.php?id=50500
 base/sound/ambience/water.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
-base/sound/ambience/wind_turbine.wav |  | Creative Commons Sampling Plus 1.0 | http://www.freesound.org/samplesViewSingle.php?id=13160
+base/sound/ambience/water01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/water02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/water03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/ambience/wind_turbine.ogg | Creative Commons Sampling Plus 1.0 |  | http://www.freesound.org/samplesViewSingle.php?id=13160
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
+base/sound/civilians/civboydeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civfemdeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civfemdeath02a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civfemscream01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civfemscream02a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civmaledeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civmaledeath02a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
+base/sound/civilians/civmalehurt01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/femaledeath01.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
-base/sound/civilians/femalehurt01.wav | Creative Commons Sampling Plus 1.0 License | Robinhood76 | http://www.freesound.org/samplesViewSingle.php?id=66949
+base/sound/civilians/femalehurt01.ogg | Creative Commons Sampling Plus 1.0 License | Robinhood76 | http://www.freesound.org/samplesViewSingle.php?id=66949
 base/sound/civilians/maledeath01.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/maledeath02.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/maledeath03.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
@@ -2670,14 +2792,14 @@ base/sound/civilians/malehurt01.ogg | Creative Commons Sampling Plus 1.0 |  | ht
 base/sound/civilians/malehurt02.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/malehurt03.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/malehurt04.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/doors/creak_low_short.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/latch_01.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/latch_sharp.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/open_and_creak.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/open_close.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/doors/squeaky_close.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/footsteps/carpet1.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/footsteps/carpet2.wav | Creative Commons Attribution 3.0 Unported | David Reeves (Destructavator) | footsteps_carpet_over_concrete1.ogg
+base/sound/doors/creak_low_short.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/latch_01.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/latch_sharp.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/open_and_creak.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/open_close.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/doors/squeaky_close.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/footsteps/carpet1.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/footsteps/carpet2.ogg | Creative Commons Attribution 3.0 Unported | David Reeves (Destructavator) | footsteps_carpet_over_concrete1.ogg
 base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -2727,70 +2849,88 @@ base/sound/footsteps/stone1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/stone2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/straw1.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/footsteps/straw1.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/wood1.ogg | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
-base/sound/geoscape/attack.wav | GNU General Public License 2.0 | BlakeD
-base/sound/geoscape/info.wav | GNU General Public License 2.0 | BlakeD
-base/sound/geoscape/mail.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/geoscape/newmission.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/geoscape/promotion.wav |  |  | ambience/jingle.ogg
-base/sound/geoscape/standard.wav | GNU General Public License 2.0 | BlakeD
-base/sound/geoscape/ufospotted.wav | GNU General Public License 2.0 | BlakeD
-base/sound/misc/breakwood.wav | Creative Commons Sampling Plus 1.0 | kevinkace | http://www.freesound.org/samplesViewSingle.php?id=66769
-base/sound/misc/lobbyprivmsg.wav | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/misc/popup.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/misc/roundstart.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/misc/talk.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/soldiers/femaledeath01.wav | GNU General Public License 2.0 | Openarena GPLed Data
-base/sound/soldiers/femaledeath02.wav | GNU General Public License 2.0 | Openarena GPLed Data
-base/sound/soldiers/femaledeath03.wav | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/geoscape/attack.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/info.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/mail.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/geoscape/newmission.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/geoscape/promotion.ogg |  |  | ambience/jingle.ogg
+base/sound/geoscape/standard.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/ufospotted.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakglass02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/misc/breakglass03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/misc/breakglass04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/misc/breakglass05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/misc/breakglass06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/misc/breakglass07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
+base/sound/misc/breakmetal02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on NN-19 sampler
+base/sound/misc/breakmetal03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on NN-19 sampler
+base/sound/misc/breakmetal04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on NN-19 sampler
+base/sound/misc/breakwood01.ogg | Creative Commons Sampling Plus 1.0 | kevinkace | http://www.freesound.org/samplesViewSingle.php?id=66769
+base/sound/misc/breakwood02.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
+base/sound/misc/breakwood03.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
+base/sound/misc/breakwood04.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
+base/sound/misc/breakwood05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/lobbyprivmsg.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
+base/sound/misc/popup.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/misc/roundstart.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/misc/talk.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/soldiers/femaledeath01.ogg | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femaledeath02.ogg | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femaledeath03.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/femaledeath04.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/soldiers/femalehurt01.wav | GNU General Public License 2.0 | OpenArena GPLed Data
-base/sound/soldiers/maledeath04.wav | GNU General Public License 2.0 | Openarena GPLed Data
-base/sound/soldiers/maledeath05.wav | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/femalehurt01.ogg | GNU General Public License 2.0 | OpenArena GPLed Data
+base/sound/soldiers/maledeath04.ogg | GNU General Public License 2.0 | Openarena GPLed Data
+base/sound/soldiers/maledeath05.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/malehurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/weapons/assaultrifle.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
-base/sound/weapons/bolter2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/boltercannonade.wav | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/assaultrifle.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/bloodspider.ogg | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
+base/sound/weapons/bolter2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/boltercannonade.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/brass1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/casings3.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/chaingun.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/deepexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/electrolaser.wav | Public Domain | Vermind
+base/sound/weapons/chaingun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/deepexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/electrolaser.ogg | Public Domain | Vermind
 base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/fireexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/grenade.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/grenade_launcher.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/grenl_fle_3shot.wav |  |  | shotgun.wav file
-base/sound/weapons/heavy_laser.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/incendiary_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/incendiary_rocket.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/irgoggles.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/weapons/kerrblade.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/fireexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/grenade.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/grenade_launcher.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/grenl_fle_3shot.ogg |  |  | shotgun.wav file
+base/sound/weapons/heavy_laser.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/incendiary_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/incendiary_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/irgoggles.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
+base/sound/weapons/kerrblade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/kerrblade_swip.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/knife.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/machinegun.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/machinepistol.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/medikit.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/microshotgun2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/pbeam_rocket.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamcannon_explosive.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamrifle.wav |  | Mikolaj Konarski (bandobraz)
-base/sound/weapons/pistol2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/plasma_big.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasma_blade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasma_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasmablade.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/riotshotgun.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/smg2.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/smokeexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/sniperrifle.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/stun_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/knife.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/machinegun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/machinepistol.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/medikit.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/microshotgun2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/pbeam_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/pbeamcannon_explosive.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/pbeamrifle.ogg |  | Mikolaj Konarski (bandobraz)
+base/sound/weapons/pistol2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/plasma_big.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/plasma_blade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/plasma_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/weapons/plasmablade.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/riotshotgun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/smg2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/smokeexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/sniperrifle.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/stun_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/textures/tex_base/bollard.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_base/d_drkmtl_dpanelb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/d_drkmtl_dpanelb_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3869,6 +4009,12 @@ base/textures/tex_misc/rail_sign0.tga | GNU General Public License 2.0 or later 
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/sign_falloutshelter.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
+base/textures/tex_misc/sign_parkbld.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/sign_parkblda.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/sign_parkblda0.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/sign_parkblda1.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/sign_parkblda2.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_misc/sign_parkblda3.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/silo_a_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
@@ -4035,55 +4181,31 @@ base/textures/tex_shop/rack_pharma1.jpg | GNU General Public License 2.0 | Xaver
 base/textures/tex_streets/2ln.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_blend.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crn_ne.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crn_ne_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crn_nw.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crn_nw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crn_se.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crn_se_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crn_sw.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crn_sw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crnw_ne.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crnw_ne_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crnw_nw.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crnw_nw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crnw_se.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crnw_se_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_crnw_sw.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_crnw_sw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_cw.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_cw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_cwbtm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_cwbtm_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_cwtop.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_cwtop_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_endbtm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_endbtm_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2ln_endtop.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_endtop_g.tga | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2ln_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_blend.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_cw.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_cw_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_cwlft.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_cwlft_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_cwrgt.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_cwrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_endlft.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_endlft_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_endrgt.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_endrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_trnlft.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_trnlft_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/2lnh_trnrgt.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/2lnh_trnrgt_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/base.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/base_blend.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/park1h.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/park1h_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/park1v.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/park1v_g.tga | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
@@ -4181,131 +4303,36 @@ base/textures/tex_trak/wall4d.tga | MIT/X11 license (GPL compatible) | Georges "
 base/textures/tex_trak/wall4d_nm.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/wall7a.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/wall7a_nm.tga | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
-base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo1_01_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ua/usk2_04_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_04_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_04_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_04_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_04_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_06_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_06_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_06_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_06_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_06_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_07_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_07_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_07_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_07_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_07_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_11_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_13_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_13_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_13_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_13_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_13_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_17_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_17_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_17_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/tex_ua/usk2_17_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo1_02.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_02a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo1_03_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_04.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo1_04_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo1_05_glow.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo1_05_glow_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_05_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_01.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_01_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_02.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_02_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_03.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_03_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_04.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_04a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a14.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a15.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_05.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_05_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_06.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_06a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_07a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a14.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a15.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_08.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_08_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_09.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_09a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_10a0.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a1.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a10.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a11.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a12.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a13.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a2.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a3.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a4.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a5.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a6.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a7.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a8.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a9.tga | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_11_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_12_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_13_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_14.jpg | GNU General Public License 2.0 | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_14_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_15_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_16_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_17_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_medic01.jpg |  | "SparX" Beyeler
-base/textures/tex_ufo/ufo2_medic02.jpg |  | "SparX" Beyeler
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf

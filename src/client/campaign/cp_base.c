@@ -683,7 +683,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
-	const building_t const *template = building->tpl;	/**< Template of the removed building */
+	const building_t const *buildingTemplate = building->tpl;	/**< Template of the removed building */
 	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	qboolean test;
@@ -759,8 +759,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	 * (we do that after base capacity has been updated) */
 	if (onDestroyCommand) {
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
-			template->onDestroy, base->idx, buildingType);
-		Cmd_ExecuteString(va("%s %i %i", template->onDestroy, base->idx, buildingType));
+			buildingTemplate->onDestroy, base->idx, buildingType);
+		Cmd_ExecuteString(va("%s %i %i", buildingTemplate->onDestroy, base->idx, buildingType));
 	}
 
 	return qtrue;
@@ -1021,13 +1021,13 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] pos The position on the base grid
  */
-static void B_AddBuildingToBasePos (base_t *base, const building_t const *template, qboolean hire, const vec2_t pos)
+static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildingTemplate, qboolean hire, const vec2_t pos)
 {
 	/* new building in base (not a template) */
 	building_t *buildingNew;
 
 	/* fake a click to basemap */
-	buildingNew = B_SetBuildingByClick(base, template, (int)pos[0], (int)pos[1]);
+	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[0], (int)pos[1]);
 	B_UpdateAllBaseBuildingStatus(buildingNew, base, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
 			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
@@ -1093,7 +1093,7 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
  */
 static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolean hire)
 {
-	const baseTemplate_t *template = B_GetBaseTemplate(templateName);
+	const baseTemplate_t *baseTemplate = B_GetBaseTemplate(templateName);
 	int freeSpace = BASE_SIZE * BASE_SIZE;
 	int i;
 
@@ -1115,15 +1115,15 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 		}
 	}
 
-	if (template) {
+	if (baseTemplate) {
 		/* find each building in the template */
-		for (i = 0; i < template->numBuildings; i++) {
+		for (i = 0; i < baseTemplate->numBuildings; i++) {
 			vec2_t pos;
 
-			Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
+			Vector2Set(pos, baseTemplate->buildings[i].posX, baseTemplate->buildings[i].posY);
 
 			if (!(base->map[(int)pos[0]][(int)pos[1]].blocked || base->map[(int)pos[0]][(int)pos[1]].building)) {
-				B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
+				B_AddBuildingToBasePos(base, baseTemplate->buildings[i].building, hire, pos);
 				freeSpace--;
 			}
 		}
@@ -1429,15 +1429,15 @@ static void B_NewBuilding (base_t* base, building_t *building)
  * @param[in] col Set building to col
  * @return building created in base (this is not a building template)
  */
-building_t* B_SetBuildingByClick (base_t *base, const building_t const *template, int row, int col)
+building_t* B_SetBuildingByClick (base_t *base, const building_t const *buildingTemplate, int row, int col)
 {
 #ifdef DEBUG
 	if (!base)
 		Com_Error(ERR_DROP, "no current base\n");
-	if (!template)
+	if (!buildingTemplate)
 		Com_Error(ERR_DROP, "no current building\n");
 #endif
-	if (!B_CheckCredits(template->fixCosts)) {
+	if (!B_CheckCredits(buildingTemplate->fixCosts)) {
 		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return NULL;
 	}
@@ -1450,7 +1450,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 		building_t *buildingNew = &ccs.buildings[base->idx][ccs.numBuildings[base->idx]];
 
 		/* copy building from template list to base-buildings-list */
-		*buildingNew = *template;
+		*buildingNew = *buildingTemplate;
 
 		/* self-link to building-list in base */
 		buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
@@ -1826,7 +1826,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 {
 	const char *errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
 	const char *token;
-	baseTemplate_t* template;
+	baseTemplate_t* baseTemplate;
 	baseBuildingTile_t* tile;
 	vec2_t pos;
 	qboolean map[BASE_SIZE][BASE_SIZE];
@@ -1845,8 +1845,8 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many base templates");
 
 	/* create new Template */
-	template = &ccs.baseTemplates[ccs.numBaseTemplates];
-	template->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
+	baseTemplate = &ccs.baseTemplates[ccs.numBaseTemplates];
+	baseTemplate->id = Mem_PoolStrDup(name, cp_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingNums for checking moreThanOne constraint */
 	memset(&map, 0, sizeof(map));
@@ -1856,33 +1856,33 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	do {
 		/* get the building */
-		token = Com_EParse(text, errhead, template->id);
+		token = Com_EParse(text, errhead, baseTemplate->id);
 		if (!*text)
 			break;
 		if (*token == '}')
 			break;
 
-		if (template->numBuildings >= MAX_BASEBUILDINGS)
+		if (baseTemplate->numBuildings >= MAX_BASEBUILDINGS)
 			Com_Error(ERR_DROP, "B_ParseBaseTemplate: too many buildings");
 
 		/* check if building type is known */
-		tile = &template->buildings[template->numBuildings];
-		template->numBuildings++;
+		tile = &baseTemplate->buildings[baseTemplate->numBuildings];
+		baseTemplate->numBuildings++;
 
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
 			if (!strcmp(ccs.buildingTemplates[i].id, token)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (tile->building->maxCount >= 0 && tile->building->maxCount <= buildingNums[i])
-					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", token, template->id, tile->building->maxCount);
+					Com_Error(ERR_DROP, "B_ParseBaseTemplate: Found more %s than allowed in template %s (%d))", token, baseTemplate->id, tile->building->maxCount);
 				buildingNums[i]++;
 				break;
 			}
 
 		if (!tile->building)
-			Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", template->id);
+			Com_Error(ERR_DROP, "B_ParseBaseTemplate: Could not find building with id %s\n", baseTemplate->id);
 
 		/* get the position */
-		token = Com_EParse(text, errhead, template->id);
+		token = Com_EParse(text, errhead, baseTemplate->id);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1893,11 +1893,11 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		tile->posY = pos[1];
 		if (tile->posX < 0 || tile->posX >= BASE_SIZE || tile->posY < 0 || tile->posY >= BASE_SIZE)
 			Com_Error(ERR_DROP, "Invalid template coordinates for building %s in template %s given",
-					tile->building->id, template->id);
+					tile->building->id, baseTemplate->id);
 
 		/* check for buildings on same position */
 		if (map[tile->posX][tile->posY])
-			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", template->id);
+			Com_Error(ERR_DROP, "Base template '%s' has ambiguous positions for buildings set.", baseTemplate->id);
 		map[tile->posX][tile->posY] = qtrue;
 	} while (*text);
 
@@ -1905,7 +1905,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t *building = &ccs.buildingTemplates[i];
 		if (building && building->mandatory && !buildingNums[i]) {
-			Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, template->id);
+			Com_Error(ERR_DROP, "Every base template needs one '%s'! '%s' has none.", building->id, baseTemplate->id);
 		}
 	}
 }
@@ -2320,7 +2320,6 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 			break;
 		case B_ANTIMATTER:
 			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), base->capacities[CAP_ANTIMATTER].cur, base->capacities[CAP_ANTIMATTER].max);
-//			Com_sprintf(str, sizeof(str), _("Antimatter: %d/100"), base->capacities[CAP_ANTIMATTER]);
 			MN_Popup(_("Information"), popupText);
 			break;
 		default:
@@ -2626,7 +2625,7 @@ qboolean B_BaseHasItem (const base_t *base, const objDef_t *item)
 {
 	assert(base);
 	assert(item);
-	return (item->virtual || base->storage.numItems[item->idx] > 0);
+	return (item->isVirtual || base->storage.numItems[item->idx] > 0);
 }
 
 /**
@@ -2641,7 +2640,7 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
 
 	if (!item)
 		return -1;
-	if (item->virtual)
+	if (item->isVirtual)
 		return -1;
 	if (!base)
 		return -1;
@@ -3053,7 +3052,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (obj->virtual || !strcmp(obj->id, ANTIMATTER_TECH_ID))
+	if (obj->isVirtual || !strcmp(obj->id, ANTIMATTER_TECH_ID))
 		return qfalse;
 
 	return qtrue;
@@ -3074,7 +3073,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 	assert(base);
 	assert(obj);
 
-	if (obj->virtual)
+	if (obj->isVirtual)
 		return qtrue;
 
 	if (reset) {

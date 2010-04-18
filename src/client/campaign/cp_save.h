@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern cvar_t *cl_lastsave;
 
 #define MAX_SAVESUBSYSTEMS 32
-
 #define SAVE_FILE_VERSION 4
 
 #include <zlib.h>

@@ -109,12 +109,9 @@ AC_ARG_ENABLE(universal,
 
 #---------------------------------------------------------------------------------------------
 # defined some defaults for users (mac-users..) who might not have pkg-config.
-# actually, right now this is only required for the UFORadiant built
-# this is kind-of a work-around,,,
 #---------------------------------------------------------------------------------------------
 m4_define_default([PKG_CHECK_MODULES],
 	[AC_MSG_ERROR([For current build options, pkg-config is required. Did you maybe forget to run aclocal with the current include path?])])
-
 
 #---------------------------------------------------------------------------------------------
 # CHECK SED
@@ -158,48 +155,11 @@ then
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
-	CFLAGS="$CFLAGS -F$with_opengl_framework"
-	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework Cocoa"
-	SERVER_LIBS="$SERVER_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS -F$with_opengl_framework"
 
 	# fix this darn SDL stuff....
-	if test -x /opt/local/bin/sdl-config
-	then
-		# SDL installed using MacPorts
-		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
-		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
-	else
-		if test -d /Library/Frameworks/SDL.framework
-		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
-		else
-			# should test for different framework locations, like /System/Library/Frameworks
-			# and ~/Library/Frameworks..... later....
-			AC_MSG_ERROR([Could not find SDL Framework at /Library/Frameworks.])
-		fi
-		if test -d /Library/Frameworks/SDL_mixer.framework
-		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
-		else
-			AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
-		fi
-		if test -d /Library/Frameworks/SDL_image.framework
-		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_image.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_image"
-		else
-			AC_MSG_ERROR([Could not find SDL_image Framework at /Library/Frameworks.])
-		fi
-		if test -d /Library/Frameworks/SDL_ttf.framework
-		then
-			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
-			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
-		else
-			AC_MSG_ERROR([Could not find SDL_ttf Framework at /Library/Frameworks.])
-		fi
-	fi
+	with_sdl_config=/opt/local/bin/sdl-config
+
 	### most mac users will have their additional libs and headers under /opt/local,
 	### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
 	if test -d /opt/local
@@ -304,23 +264,18 @@ fi
 # CHECK windres
 #---------------------------------------------------------------------------------------------
 
-WINDRES=""
 if test $TARGET_OS = "mingw32"
 then
-	WINDRES=windres
-	AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
-	if test "$HAVE_WINDRES" != "yes"
+	AC_ARG_VAR([WINDRES], [path to windres utility])
+	if test "x$ac_cv_env_WINDRES_set" != "xset"
 	then
-		WINDRES="$target_cpu-$target_os-windres $host_alias-windres $host_os-windres i586-mingw32msvc-windres"
-		AC_CHECK_PROG(HAVE_WINDRES,$WINDRES,yes)
-		if test "$HAVE_WINDRES" != "yes"
-		then
-			WINDRES=""
-			AC_MSG_ERROR([You must have the windres program installed])
-		fi
+		AC_PATH_TOOL([WINDRES], [windres])
+	fi
+	if test -z "$WINDRES"
+	then
+		AC_MSG_ERROR([You must have the windres program installed])
 	fi
 fi
-AC_SUBST([WINDRES],$WINDRES)
 
 #---------------------------------------------------------------------------------------------
 # CHECK winsock2
@@ -469,14 +424,134 @@ then
 fi
 LIBS=
 AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-#RADIANT_LIBS="$RADIANT_LIBS $LIBS"
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+
+#---------------------------------------------------------------------------------------------
+# Check PNG
+#---------------------------------------------------------------------------------------------
+PKG_CHECK_MODULES(libpng, libpng, HAVE_libpng="yes", HAVE_libpng="no")
+if test "x$HAVE_libpng" = "xno" ; then
+	LIBS=
+	AC_CHECK_HEADERS([png.h])
+	if test "$ac_cv_header_png_h" = "no"
+	then
+		AC_MSG_ERROR([You must have the PNG development headers])
+	fi
+	AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
+	libpng_LIBS=$LIBS
+fi
+CLIENT_LIBS="$CLIENT_LIBS $libpng_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $libpng_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $libpng_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $libpng_CFLAGS"
+
+#---------------------------------------------------------------------------------------------
+# Check SDL
+#---------------------------------------------------------------------------------------------
+if test $TARGET_OS != "darwin" 
+then
+	PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
+else
+	HAVE_SDL=no
+fi
+
+if test "x$HAVE_SDL" = "xno" ; then
+	sdl_config=$with_sdl_config
+	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes" || test -x $sdl_config
+	then
+		SDL_CFLAGS=`$sdl_config --cflags`
+		SDL_LIBS=`$sdl_config --libs`
+	else
+		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+	fi
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check SDL_image
+#---------------------------------------------------------------------------------------------
+if test $TARGET_OS != "darwin" 
+then
+	PKG_CHECK_MODULES(SDL_image, SDL_image, HAVE_SDL_image="yes", HAVE_SDL_image="no")
+else
+	HAVE_SDL_image=no
+fi
+
+if test "x$HAVE_SDL_image" = "xno" ; then
+	LIBS=
+	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_image development libraries])
+	fi
+	SDL_image_LIBS=$LIBS
+fi
+
+AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
+AC_MSG_NOTICE([SDL ldflags: $SDL_LIBS])
+AC_SUBST(SDL_CFLAGS)
+AC_SUBST(SDL_LIBS)
+
+AC_MSG_NOTICE([SDL_image cflags: $SDL_image_CFLAGS])
+AC_MSG_NOTICE([SDL_image ldflags: $SDL_image_LIBS])
+AC_SUBST([SDL_IMAGE_CFLAGS], "$SDL_image_CFLAGS")
+AC_SUBST([SDL_IMAGE_LIBS], "$SDL_image_LIBS")
+
+CLIENT_LIBS="$CLIENT_LIBS $SDL_LIBS $SDL_image_LIBS"
+CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
+TOOLS_LIBS="$TOOLS_LIBS $SDL_LIBS $SDL_image_LIBS"
+TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 
 if test "$enable_client" = "yes"
 then
-	CLIENT_CFLAGS=
+	#---------------------------------------------------------------------------------------------
+	# Check SDL_mixer
+	#---------------------------------------------------------------------------------------------
+	if test $TARGET_OS != "darwin" 
+	then
+		PKG_CHECK_MODULES(SDL_mixer, SDL_mixer, HAVE_SDL_mixer="yes", HAVE_SDL_mixer="no")
+	else
+		HAVE_SDL_mixer=no
+	fi
+	if test "x$HAVE_SDL_mixer" = "xno" ; then
+		LIBS=
+		AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
+		if test "$ac_cv_search_Mix_OpenAudio" = "no"
+		then
+			AC_MSG_ERROR([You must have the SDL_mixer development libraries])
+		fi
+		SDL_mixer_LIBS=$LIBS
+	fi
+
+	OLD_CFLAGS=$CPPFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+	CPPFLAGS=$SDL_CFLAGS
+	LDFLAGS=$SDL_LIBS
+
 	LIBS=
+	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
+	if test "$ac_cv_search_TTF_Init" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+	fi
+	SDL_ttf_LIBS=$LIBS
+
+	CPPFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
+
+	AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
+	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
+	AC_SUBST([SDL_MIXER_CFLAGS], "$SDL_mixer_CFLAGS")
+	AC_SUBST([SDL_MIXER_LIBS], "$SDL_mixer_LIBS")
+	
+	AC_MSG_NOTICE([SDL_ttf cflags: $SDL_ttf_CFLAGS])
+	AC_MSG_NOTICE([SDL_ttf ldflags: $SDL_ttf_LIBS])
+	AC_SUBST([SDL_TTF_CFLAGS], "$SDL_ttf_CFLAGS")
+	AC_SUBST([SDL_TTF_LIBS], "$SDL_ttf_LIBS")
+
+	CLIENT_LIBS="$CLIENT_LIBS $SDL_mixer_LIBS $SDL_ttf_LIBS"
+	CLIENT_CFLAGS="$CLIENT_CFLAGS $SDL_mixer_CFLAGS $SDL_ttf_CFLAGS"
 
 	#---------------------------------------------------------------------------------------------
 	# Check OGG
@@ -506,7 +581,7 @@ then
 	else
 		AC_SUBST([HAVE_VORBIS_CODEC_H],1)
 		AC_DEFINE([HAVE_VORBIS_CODEC_H],[1],[Have vorbis library])
-		CLIENT_CFLAGS="$CLIENT_LIBS $VORBIS_CFLAGS"
+		CLIENT_CFLAGS="$CLIENT_CFLAGS $VORBIS_CFLAGS"
 		CLIENT_LIBS="$VORBIS_LIBS $CLIENT_LIBS"
 	fi
 
@@ -559,107 +634,12 @@ then
 		AC_MSG_ERROR([Could not find libintl.h!])
 	fi
 
-	AC_SEARCH_LIBS([gettext],[intl])
+	AC_SEARCH_LIBS([gettext],[intl],[],[],[-liconv])
 	if test "$ac_cv_search_gettext" = "no"
 	then
 		AC_MSG_ERROR([Could not find internationalization library with gettext in it])
 	fi
 	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
-
-	#---------------------------------------------------------------------------------------------
-	# Check SDL
-	#---------------------------------------------------------------------------------------------
-	sdl_config=$with_sdl_config
-
-	OLD_CPPFLAGS=$CPPFLAGS
-	OLD_CFLAGS=$CFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-
-	if test $TARGET_OS != "darwin"
-	then
-		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$sdl_config --cflags`
-			LDFLAGS=`$sdl_config --libs`
-			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-			AC_SUBST([SDL_LIBS],$LDFLAGS)
-		else
-			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-		fi
-	else
-		# mac is special...again
-		CFLAGS="$CFLAGS $sdl_mac_cflags"
-		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-		SDL_CFLAGS="$sdl_mac_cflags"
-		SDL_LIBS="$sdl_mac_ldflags"
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL headers and libraries
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL.h])
-	if test "$ac_cv_header_SDL_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL development headers])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL mixer headers and libraries
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL_mixer.h])
-	if test "$ac_cv_header_SDL_mixer_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_mixer development headers])
-	fi
-	AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
-	if test "$ac_cv_search_Mix_OpenAudio" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_mixer development libraries])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL_ttf
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL_ttf.h])
-	if test "$ac_cv_header_SDL_ttf_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_ttf development headers])
-	fi
-	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
-	if test "$ac_cv_search_TTF_Init" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Set the client clags and libs - the rest are shared libs
-	#---------------------------------------------------------------------------------------------
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	CLIENT_CFLAGS="$CFLAGS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL image headers and libraries
-	#---------------------------------------------------------------------------------------------
-
-	LIBS=
-	AC_CHECK_HEADERS([SDL_image.h])
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development headers])
-	fi
-	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development libraries])
-	fi
-	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	LIBS=
-
-	CPPFLAGS=$OLD_CPPFLAGS
-	CFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------
 	# Check for opengl headers
@@ -680,79 +660,9 @@ then
 	# Set the client clags and libs - the rest are shared libs
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	CLIENT_CFLAGS="$CFLAGS"
-
 # end of client only checks
-else
-	#---------------------------------------------------------------------------------------------
-	# Check SDL
-	#---------------------------------------------------------------------------------------------
-	sdl_config=$with_sdl_config
-
-	OLD_CPPFLAGS=$CPPFLAGS
-	OLD_CFLAGS=$CFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-
-	if test $TARGET_OS != "darwin"
-	then
-		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$sdl_config --cflags`
-			LDFLAGS=`$sdl_config --libs`
-			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-			AC_SUBST([SDL_LIBS],$LDFLAGS)
-		else
-			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-		fi
-	else
-		# mac is special...again
-		CFLAGS="$CFLAGS $sdl_mac_cflags"
-		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-		SDL_CFLAGS="$sdl_mac_cflags"
-		SDL_LIBS="$sdl_mac_ldflags"
-	fi
-	#---------------------------------------------------------------------------------------------
-	# Check for SDL headers and libraries
-	#---------------------------------------------------------------------------------------------
-	AC_CHECK_HEADERS([SDL.h])
-	if test "$ac_cv_header_SDL_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL development headers])
-	fi
-
-	LIBS=
-	AC_CHECK_HEADERS([SDL_image.h])
-	if test "$ac_cv_header_SDL_image_h" != "yes"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development headers])
-	fi
-	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development libraries])
-	fi
-	TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-
-	CPPFLAGS=$OLD_CPPFLAGS
-	CFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check PNG
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_HEADERS([png.h])
-if test "$ac_cv_header_png_h" = "no"
-then
-	AC_MSG_ERROR([You must have the PNG development headers])
-fi
-AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
+	
 #---------------------------------------------------------------------------------------------
 # Check for curses
 #---------------------------------------------------------------------------------------------
@@ -937,14 +847,21 @@ fi
 # Check for signal handling
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_signals" = "no"
+if test $TARGET_OS != "darwin" 
 then
-	AC_MSG_NOTICE([Disable signal handling])
-	AC_SUBST([USE_SIGNALS],0)
+	if test "$enable_signals" = "no"
+	then
+		AC_MSG_NOTICE([Disable signal handling])
+		USE_SIGNALS=0
+	else
+		AC_MSG_NOTICE([Enabling signal handling])
+		USE_SIGNALS=1
+	fi
 else
-	AC_MSG_NOTICE([Enabling signal handling])
-	AC_SUBST([USE_SIGNALS],1)
+	AC_MSG_NOTICE([Always disable signal handling for $TARGET_OS])
+	USE_SIGNALS=0
 fi
+AC_SUBST([USE_SIGNALS])
 
 #---------------------------------------------------------------------------------------------
 # Check for PARANOID
@@ -980,6 +897,28 @@ else
 	AC_SUBST([HARD_LINKED_GAME],0)
 fi
 
+
+#---------------------------------------------------------------------------------------------
+# Fill in path variables
+#---------------------------------------------------------------------------------------------
+
+test "$prefix" = "NONE" && prefix=/usr/local
+test "$exec_prefix" = "NONE" && exec_prefix=$prefix
+test "$localedir" = "NONE" && localedir=$prefix/share/locale
+datarootdir=$prefix/share
+test "$datadir" = "NONE" && datadir=$datarootdir
+
+eval PKGLIBDIR="$libdir/$PACKAGE_NAME"
+AC_DEFINE_UNQUOTED(PKGLIBDIR, "$PKGLIBDIR", [Define to path containing the shared modules.])
+
+eval PKGDATADIR="$datadir/$PACKAGE_NAME"
+AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR", [Define to path containing the game data.])
+
+eval BINDIR="$bindir"
+eval LOCALEDIR="$localedir"
+eval PKGLIBDIR="$PKGLIBDIR"
+eval PKGDATADIR="$PKGDATADIR"
+
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
@@ -994,10 +933,47 @@ AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
 AC_SUBST([OPENAL_LIBS], "$OPENAL_LIBS")
 AC_SUBST([OPENAL_CFLAGS], "$OPENAL_CFLAGS")
 
-#AC_MSG_NOTICE(Compiler flags: $CFLAGS)
-#AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
-#AC_MSG_NOTICE(Link against:   $LIBS)
+AC_SUBST(CFLAGS)
+AC_SUBST(LDFLAGS)
+AC_SUBST(PKGDATADIR)
+AC_SUBST(PKGLIBDIR)
+AC_SUBST(BINDIR)
+AC_SUBST(LOCALEDIR)
+AC_SUBST(PACKAGE_NAME)
+AC_SUBST(PACKAGE_VERSION)
 
 AC_CONFIG_HEADERS([config.h:config.h.in])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
+
+#---------------------------------------------------------------------------------------------
+
+AC_MSG_RESULT([
+${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
+
+  Configuration summary:
+    Platform: .......... ${host}
+    Compiler: .......... ${CC}
+
+  Installation directories:
+
+    Program: ........... ${BINDIR}
+    Locales: ........... ${LOCALEDIR}
+    Libraries: ......... ${PKGLIBDIR}
+    Data: .............. ${PKGDATADIR}
+
+  Compiler flags:
+
+    Client: ............ ${CLIENT_CFLAGS}
+    Tools: ............. ${TOOLS_CFLAGS}
+    UFORadiant: ........ ${RADIANT_CFLAGS}
+
+  Linker flags:
+
+    Client: ............ ${CLIENT_LIBS}
+    Tools: ............. ${TOOLS_LIBS}
+    UFORadiant: ........ ${RADIANT_LIBS}
+
+Type 'make' to build $PROGRAM.  Type 'make install' to install it.
+])
+

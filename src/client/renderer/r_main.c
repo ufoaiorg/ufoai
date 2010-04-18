@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_program.h"
 #include "r_sphere.h"
+#include "r_draw.h"
 #include "r_font.h"
 #include "r_light.h"
 #include "r_lightmap.h"
@@ -60,7 +61,7 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
-cvar_t *r_deluxemap;
+static cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
 static cvar_t *r_ext_nonpoweroftwo;
@@ -84,6 +85,7 @@ cvar_t *r_vertexbuffers;
 cvar_t *r_warp;
 cvar_t *r_lights;
 cvar_t *r_programs;
+cvar_t *r_postprocess;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
 cvar_t *r_shownormals;
@@ -321,13 +323,17 @@ void R_RenderFrame (void)
 		}
 	}
 
+	R_EnableGlow(qtrue);
 	R_DrawEntities();
+	R_EnableGlow(qfalse);
 
 	R_EnableBlend(qtrue);
 
 	R_DrawParticles();
 
 	R_EnableBlend(qfalse);
+
+	R_DrawBloom();
 
 	/* leave wire mode again */
 	if (r_wire->integer)
@@ -388,6 +394,27 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 128, LIGHTMAP_BLOCK_WIDTH, qtrue);
 }
 
+static qboolean R_CvarPrograms (cvar_t *cvar)
+{
+	if (qglUseProgram) {
+		if (!cvar->integer)
+			Cvar_SetValue("r_postprocess", 0);
+		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+	}
+
+	Cvar_SetValue(cvar->name, 0);
+	return qtrue;
+}
+
+static qboolean R_CvarPostProcess (cvar_t *cvar)
+{
+	if (r_config.frameBufferObject && r_programs->integer)
+		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+
+	Cvar_SetValue(cvar->name, 0);
+	return qtrue;
+}
+
 static void R_RegisterSystemVars (void)
 {
 	const cmdList_t *commands;
@@ -430,8 +457,6 @@ static void R_RegisterSystemVars (void)
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
 	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activates or deactivates hardware lighting");
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
-	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
-	r_programs->modified = qfalse;
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
@@ -513,6 +538,8 @@ qboolean R_SetMode (void)
 	}
 
 	result = R_InitGraphics();
+	R_ShutdownFBObjects();
+	R_InitFBObjects();
 	R_UpdateVidDef();
 	MN_InvalidateStack();
 
@@ -536,6 +563,8 @@ qboolean R_SetMode (void)
 		return qfalse;
 
 	result = R_InitGraphics();
+	R_ShutdownFBObjects();
+	R_InitFBObjects();
 	R_UpdateVidDef();
 	MN_InvalidateStack();
 	return result;
@@ -657,6 +686,7 @@ static qboolean R_InitExtensions (void)
 		qglGetUniformLocation = SDL_GL_GetProcAddress("glGetUniformLocation");
 		qglUniform1i = SDL_GL_GetProcAddress("glUniform1i");
 		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
+		qglUniform1fv = SDL_GL_GetProcAddress("glUniform1fv");
 		qglUniform2fv = SDL_GL_GetProcAddress("glUniform2fv");
 		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
 		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
@@ -669,7 +699,8 @@ static qboolean R_InitExtensions (void)
 	}
 
 	/* framebuffer objects */
-	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")) {
+	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")
+	 || strstr(r_config.extensionsString, "GL_EXT_framebuffer_object")) {
 		qglIsRenderbufferEXT = SDL_GL_GetProcAddress("glIsRenderbufferEXT");
 		qglBindRenderbufferEXT = SDL_GL_GetProcAddress("glBindRenderbufferEXT");
 		qglDeleteRenderbuffersEXT = SDL_GL_GetProcAddress("glDeleteRenderbuffersEXT");
@@ -687,12 +718,22 @@ static qboolean R_InitExtensions (void)
 		qglFramebufferRenderbufferEXT = SDL_GL_GetProcAddress("glFramebufferRenderbufferEXT");
 		qglGetFramebufferAttachmentParameterivEXT = SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
 		qglGenerateMipmapEXT = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
+		qglDrawBuffers = SDL_GL_GetProcAddress("glDrawBuffers");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
-		 && qglCheckFramebufferStatusEXT)
+		 && qglCheckFramebufferStatusEXT) {
 			r_config.frameBufferObject = qtrue;
+			Com_Printf("using GL_ARB_framebuffer_object\n");
+		}
 	}
+
+	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
+	r_programs->modified = qfalse;
+	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
+
+	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
+	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
 
 	/* reset gl error state */
 	R_CheckError();
@@ -710,25 +751,43 @@ static qboolean R_InitExtensions (void)
 	R_CheckError();
 
 	/* check max texture size */
-	Com_Printf("max texture size: ");
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &r_config.maxTextureSize);
 	/* stubbed or broken drivers may have reported 0 */
 	if (r_config.maxTextureSize <= 0)
 		r_config.maxTextureSize = 256;
 
 	if ((err = glGetError()) != GL_NO_ERROR) {
-		Com_Printf("cannot detect - using %i! (%s)\n", r_config.maxTextureSize, R_TranslateError(err));
+		Com_Printf("max texture size: cannot detect - using %i! (%s)\n", r_config.maxTextureSize, R_TranslateError(err));
 		Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
 	} else {
-		Com_Printf("detected %d\n", r_config.maxTextureSize);
+		Com_Printf("max texture size: detected %d\n", r_config.maxTextureSize);
 		if (r_maxtexres->integer > r_config.maxTextureSize) {
-			Com_Printf("downgrading from %i\n", r_maxtexres->integer);
+			Com_Printf("...downgrading from %i\n", r_maxtexres->integer);
 			Cvar_SetValue("r_maxtexres", r_config.maxTextureSize);
 		/* check for a minimum */
 		} else if (r_maxtexres->integer >= 128 && r_maxtexres->integer < r_config.maxTextureSize) {
-			Com_Printf("but using %i as requested\n", r_maxtexres->integer);
+			Com_Printf("...but using %i as requested\n", r_maxtexres->integer);
 			r_config.maxTextureSize = r_maxtexres->integer;
 		}
+	}
+
+	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {
+		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir));
+		Com_Printf("Using high resolution globe textures as requested.\n");
+	} else if (r_config.maxTextureSize > 2048 && R_ImageExists("pics/geoscape/med/map_earth_season_00")) {
+		if (r_config.maxTextureSize > 4096) {
+			Com_Printf("Warning: high resolution globe textures requested, but could not be found; falling back to medium resolution globe textures.\n");
+		} else {
+			Com_Printf("Using medium resolution globe textures as requested.\n");
+		}
+		Q_strncpyz(r_config.lodDir, "med", sizeof(r_config.lodDir));
+	} else {
+		if (r_config.maxTextureSize > 2048) {
+			Com_Printf("Warning: medium resolution globe textures requested, but could not be found; falling back to low resolution globe textures.\n");
+		} else {
+			Com_Printf("Using low resolution globe textures as requested.\n");
+		}
+		Q_strncpyz(r_config.lodDir, "low", sizeof(r_config.lodDir));
 	}
 
 	/* multitexture is the only one we absolutely need */
@@ -877,6 +936,7 @@ void R_Shutdown (void)
 
 	R_ShutdownPrograms();
 	R_FontShutdown();
+	R_ShutdownFBObjects();
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	Rimp_Shutdown();

@@ -3,4 +3,19 @@ is based on the information stored via svn porperties (svn:copyright,
 svn:licenses and svn:source).
 
 It runs right now (but will move to another URL sometime) on:
- http://ludwigf.org:8080
+ http://static.ufo.ludwigf.org/html/
+
+There are two version of the script available:
+ 1) a on-the-fly html generating version
+ 2) a version that generates static html files
+
+1) Is newer and doesn't work
+   Usage: just don't
+
+2) Is a bit slow but works
+   You need:
+    * python 2.5+
+    * imagemagick (or something compatible to "convert")
+    * subversion / svn commandline client
+   Usage: python scripts/licenses/generate.py
+   Note: must be started from within svn root directory

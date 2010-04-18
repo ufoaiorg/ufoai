@@ -190,7 +190,7 @@ static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *s
 	item = INVSH_GetItemByID(tech->provides);
 	if (!item)
 		return qfalse;
-	if (item->virtual)
+	if (item->isVirtual)
 		return qfalse;
 	if (!B_BaseHasItem(base, item))
 		return qfalse;
@@ -427,12 +427,12 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 			AIM_NoEmphazeAmmoSlotText();
 			assert(slot->ammo->tech);
 			if (slot->nextAmmo) {
-				if (!slot->nextAmmo->virtual)
+				if (!slot->nextAmmo->isVirtual)
 					Q_strncpyz(smallbuffer2, _(slot->nextAmmo->tech->name), sizeof(smallbuffer2));
 				else
 					Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));
 			} else {
-				if (!slot->ammo->virtual)
+				if (!slot->ammo->isVirtual)
 					Q_strncpyz(smallbuffer2, _(slot->ammo->tech->name), sizeof(smallbuffer2));
 				else
 					Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));

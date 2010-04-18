@@ -66,7 +66,6 @@ extern cvar_t *r_materials;
 extern cvar_t *r_screenshot_format;
 extern cvar_t *r_screenshot_jpeg_quality;
 extern cvar_t *r_lightmap;
-extern cvar_t *r_deluxemap;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;
@@ -87,6 +86,7 @@ extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
 extern cvar_t *r_lights;
 extern cvar_t *r_programs;
+extern cvar_t *r_postprocess;
 extern cvar_t *r_shownormals;
 extern cvar_t *r_bumpmap;
 extern cvar_t *r_specular;
@@ -149,6 +149,7 @@ typedef struct {
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;
+	char lodDir[8];
 
 	int videoMemory;
 
@@ -157,6 +158,7 @@ typedef struct {
 	int32_t maxAnisotropic;
 	qboolean anisotropic;
 	qboolean frameBufferObject;
+	GLint maxDrawBuffers;
 
 	int gl_solid_format;
 	int gl_alpha_format;

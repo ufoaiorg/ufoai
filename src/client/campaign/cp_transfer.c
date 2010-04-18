@@ -476,7 +476,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++)
-				if ((srcbase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
+				if ((srcbase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].isVirtual) {
 					if (td.trItemsTmp[i] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
 					else
@@ -1140,7 +1140,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if ((base->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
+			if ((base->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].isVirtual) {
 				if (cnt == num) {
 					int amount;
 					const objDef_t *od = &csi.ods[i];
@@ -2031,11 +2031,12 @@ static void TR_TransferList_Scroll_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if ((srcBase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].virtual) {
+		if ((srcBase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].isVirtual) {
 			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
 				break;
 			if (cnt >= viewPos)
-				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos, td.trItemsTmp[i], 0, srcBase->storage.numItems[i] + td.trItemsTmp[i]);
+				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
+						td.trItemsTmp[i], 0, srcBase->storage.numItems[i] + td.trItemsTmp[i]);
 			cnt++;
 		}
 	}

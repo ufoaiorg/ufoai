@@ -669,7 +669,7 @@ void Matrix4x4_CreateRotate (matrix4x4_t *out, double angle, double x, double y,
 	y *= len;
 	z *= len;
 
-	angle *= (-M_PI / 180.0);
+	angle *= -torad;
 	c = cos(angle);
 	s = sin(angle);
 
@@ -756,13 +756,13 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 	double angle, sr, sp, sy, cr, cp, cy;
 
 	if (roll) {
-		angle = yaw * (M_PI * 2 / 360);
+		angle = yaw * torad;
 		sy = sin(angle);
 		cy = cos(angle);
-		angle = pitch * (M_PI * 2 / 360);
+		angle = pitch * torad;
 		sp = sin(angle);
 		cp = cos(angle);
-		angle = roll * (M_PI * 2 / 360);
+		angle = roll * torad;
 		sr = sin(angle);
 		cr = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
@@ -801,10 +801,10 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 		out->m[3][3] = 1;
 #endif
 	} else if (pitch) {
-		angle = yaw * (M_PI * 2 / 360);
+		angle = yaw * torad;
 		sy = sin(angle);
 		cy = cos(angle);
-		angle = pitch * (M_PI * 2 / 360);
+		angle = pitch * torad;
 		sp = sin(angle);
 		cp = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
@@ -843,7 +843,7 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 		out->m[3][3] = 1;
 #endif
 	} else if (yaw) {
-		angle = yaw * (M_PI * 2 / 360);
+		angle = yaw * torad;
 		sy = sin(angle);
 		cy = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
@@ -1557,8 +1557,8 @@ void Matrix4x4_ToBonePose6s (const matrix4x4_t *m, float origininvscale, short *
 		quat[2] *= s;
 		quat[3] *= s;
 	}
-	// use a negative scale on the quat because the above function produces a
-	// positive quat[3] and canonical quaternions have negative quat[3]
+	/* use a negative scale on the quat because the above function produces a
+	 * positive quat[3] and canonical quaternions have negative quat[3] */
 	pose6s[0] = origin[0] * origininvscale;
 	pose6s[1] = origin[1] * origininvscale;
 	pose6s[2] = origin[2] * origininvscale;

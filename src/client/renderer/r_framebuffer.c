@@ -23,187 +23,125 @@
  */
 
 #include "r_local.h"
+#include "r_framebuffer.h"
+#include "r_error.h"
 
-#define MAX_FRAMEBUFFER_OBJECTS	    1024
+#define MAX_FRAMEBUFFER_OBJECTS	    64
 
-typedef struct r_fbo_s {
-	int objectID;
-	int renderBufferAttachment;
-	image_t *textureAttachment;
-} r_fbo_t;
+static qboolean frameBufferObjectsInitialized;
+static int frameBufferObjectCount;
+static r_framebuffer_t frameBufferObjects[MAX_FRAMEBUFFER_OBJECTS];
+static GLuint frameBufferTextures[TEXNUM_FRAMEBUFFER_TEXTURES];
+static const r_framebuffer_t *activeFramebuffer;
 
-static qboolean r_frambuffer_objects_initialized;
-static int r_bound_framebuffer_object;
-static int r_num_framebuffer_objects;
-static r_fbo_t r_framebuffer_objects[MAX_FRAMEBUFFER_OBJECTS];
+static r_framebuffer_t screenBuffer;
+static GLenum *colorAttachments;
+
+static qboolean renderbuffer_enabled; /*< renderbuffer vs screen as render target*/
+
+static GLuint R_GetFreeFBOTexture (void)
+{
+	int i;
+
+	for (i = 0; i < TEXNUM_FRAMEBUFFER_TEXTURES; i++) {
+		if (frameBufferTextures[i] == 0) {
+			frameBufferTextures[i] = 1;
+			return TEXNUM_FRAMEBUFFER_TEXTURES + i;
+		}
+	}
+
+	Com_Error(ERR_FATAL, "Exceeded max frame buffer textures");
+}
+
+static void R_FreeFBOTexture (int texnum)
+{
+	const int i = texnum - TEXNUM_FRAMEBUFFER_TEXTURES;
+	assert(i >= 0);
+	assert(i < TEXNUM_FRAMEBUFFER_TEXTURES);
+	frameBufferTextures[i] = 0;
+	glDeleteTextures(1, (GLuint *) &texnum);
+}
 
 void R_InitFBObjects (void)
 {
+	GLenum filters[2];
+	float scales[DOWNSAMPLE_PASSES];
+	int i;
+
 	if (!r_config.frameBufferObject)
 		return;
 
-	r_num_framebuffer_objects = 0;
-	memset(r_framebuffer_objects, 0, sizeof(r_framebuffer_objects));
+	frameBufferObjectCount = 0;
+	memset(frameBufferObjects, 0, sizeof(frameBufferObjects));
+	memset(frameBufferTextures, 0, sizeof(frameBufferTextures));
+
+	frameBufferObjectsInitialized = qtrue;
+
+	for (i = 0; i < DOWNSAMPLE_PASSES; i++)
+		scales[i] = powf(DOWNSAMPLE_SCALE, i + 1);
+
+	/* setup default screen framebuffer */
+	screenBuffer.fbo = 0;
+	screenBuffer.depth = 0;
+	screenBuffer.nTextures = 0;
+	screenBuffer.width = viddef.width;
+	screenBuffer.height = viddef.height;
+	R_SetupViewport(&screenBuffer, 0, 0, viddef.width, viddef.height);
+	Vector4Clear(screenBuffer.clearColor);
 
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-	r_bound_framebuffer_object = 0;
+	activeFramebuffer = &screenBuffer;
 
-	r_frambuffer_objects_initialized = qtrue;
+	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &r_config.maxDrawBuffers);
+	colorAttachments = Mem_Alloc(sizeof(GLenum) * r_config.maxDrawBuffers);
+	for (i = 0; i < r_config.maxDrawBuffers; i++)
+		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
+
+	filters[0] = GL_NEAREST;
+	filters[1] = GL_LINEAR_MIPMAP_LINEAR;
+
+	/* setup main 3D render target */
+	r_state.renderBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 2, qtrue, qfalse, filters);
+
+	/* setup bloom render targets */
+	fbo_bloom0 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, filters);
+	fbo_bloom1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, filters);
+
+	filters[0] = GL_LINEAR;
+	/* setup extra framebuffers */
+	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
+		const int h = (int)((float)viddef.height / scales[i]);
+		const int w = (int)((float)viddef.width / scales[i]);
+		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
+		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
+
+		R_CheckError();
+	}
 }
+
 
 /**
  * @brief Delete framebuffer object along with attached render buffer
  */
-static void R_DeleteFBObject (r_fbo_t *fbo)
+void R_DeleteFBObject (r_framebuffer_t *buf)
 {
-	GLuint t;
+	if (buf->depth)
+		qglDeleteRenderbuffersEXT(1, &buf->depth);
+	buf->depth = 0;
 
-	if (fbo->renderBufferAttachment) {
-		t = fbo->renderBufferAttachment;
-		qglDeleteRenderbuffersEXT(1, &t);
-		fbo->renderBufferAttachment = 0;
+	if (buf->textures) {
+		int i;
+		for (i = 0; i < buf->nTextures; i++)
+			R_FreeFBOTexture(buf->textures[i]);
+		Mem_Free(buf->textures);
 	}
+	buf->textures = 0;
 
-	if (fbo->objectID) {
-		t = fbo->objectID;
-		qglDeleteFramebuffersEXT(1, &t);
-		fbo->objectID = 0;
-	}
+	if (buf->fbo)
+		qglDeleteFramebuffersEXT(1, &buf->fbo);
+	buf->fbo = 0;
 }
 
-int R_RegisterFBObject (void)
-{
-	int i;
-	GLuint fbID;
-	r_fbo_t *fbo;
-
-	if (!r_frambuffer_objects_initialized)
-		return 0;
-	if (r_num_framebuffer_objects == MAX_FRAMEBUFFER_OBJECTS) {
-		Com_Printf("R_RegisterFBObject: framebuffer objects limit exceeded\n");
-		return 0;
-	}
-
-	qglGenFramebuffersEXT(1, &fbID);
-
-	i = r_num_framebuffer_objects++;
-	fbo = r_framebuffer_objects + i;
-	memset(fbo, 0, sizeof(*fbo));
-	fbo->objectID = fbID;
-
-	return i + 1;
-}
-
-int R_ActiveFBObject (void)
-{
-	return r_bound_framebuffer_object;
-}
-
-
-/**
- * @return @c false in case of error
- */
-static qboolean R_CheckFBObjectStatus (void)
-{
-	GLenum status;
-
-	if (!r_frambuffer_objects_initialized)
-		return qfalse;
-
-	status = qglCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
-	switch (status) {
-	case GL_FRAMEBUFFER_COMPLETE_EXT:
-		return qtrue;
-	case GL_FRAMEBUFFER_UNSUPPORTED_EXT:
-		return qfalse;
-	default:
-		/* programming error; will fail on all hardware */
-		assert(0);
-	}
-
-	return qfalse;
-}
-
-qboolean R_UseFBObject (int object)
-{
-	qboolean status;
-
-	if (!object) {
-		if (r_frambuffer_objects_initialized)
-			qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		r_bound_framebuffer_object = 0;
-
-		return r_frambuffer_objects_initialized;
-	}
-
-	assert(object > 0 && object <= r_num_framebuffer_objects);
-
-	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, r_framebuffer_objects[object - 1].objectID);
-	r_bound_framebuffer_object = object;
-
-	status = R_CheckFBObjectStatus();
-
-	return status;
-}
-
-qboolean R_AttachTextureToFBOject (int object, image_t *image)
-{
-	r_fbo_t *fbo;
-	qboolean status;
-
-	if (!object)
-		return qfalse;
-
-	if (!r_frambuffer_objects_initialized)
-		return qfalse;
-
-	assert(object > 0 && object <= r_num_framebuffer_objects);
-	assert(image);
-
-	fbo = r_framebuffer_objects + object - 1;
-
-	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo->objectID);
-
-	if (image->flags & if_depth) {
-		/* Set up depth_tex for render-to-texture */
-		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, image->texnum, 0);
-
-		/* inform the driver we do not wish to render to the color buffer */
-		glDrawBuffer(GL_NONE);
-		glReadBuffer(GL_NONE);
-	} else {
-		/* initialize depth renderbuffer */
-		if (!fbo->renderBufferAttachment) {
-			GLuint rbID;
-			qglGenRenderbuffersEXT(1, &rbID);
-			fbo->renderBufferAttachment = rbID;
-		}
-
-		/* setup 24bit depth buffer for render-to-texture */
-		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, fbo->renderBufferAttachment);
-		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, image->upload_width,
-				image->upload_height);
-		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, 0);
-
-		/* attach depth renderbuffer */
-		qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT,
-				fbo->renderBufferAttachment);
-
-		/* attach texture */
-		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
-				 GL_TEXTURE_2D, image->texnum, 0);
-		fbo->textureAttachment = image;
-	}
-
-	status = R_CheckFBObjectStatus();
-
-	if (r_bound_framebuffer_object)
-		qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, r_framebuffer_objects[r_bound_framebuffer_object - 1].objectID);
-	else
-		qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-
-	return status;
-}
 
 /**
  * @brief Delete all registered framebuffer and render buffer objects, clear memory
@@ -212,16 +150,218 @@ void R_ShutdownFBObjects (void)
 {
 	int i;
 
-	if (!r_frambuffer_objects_initialized)
+	if (!frameBufferObjectsInitialized)
 		return;
 
-	for (i = 0; i < r_num_framebuffer_objects; i++)
-		R_DeleteFBObject(r_framebuffer_objects + i);
+	for (i = 0; i < frameBufferObjectCount; i++)
+		R_DeleteFBObject(&frameBufferObjects[i]);
+
+	R_UseFramebuffer(&screenBuffer);
+
+	frameBufferObjectCount = 0;
+	memset(frameBufferObjects, 0, sizeof(frameBufferObjects));
+	frameBufferObjectsInitialized = qfalse;
+
+	Mem_Free(colorAttachments);
+}
+
+
+/**
+ * @brief create a new framebuffer object
+ * @param[in] width The width of the framebuffer
+ * @param[in] height The height of the framebuffer
+ * @param[in] ntextures The amount of textures for this framebuffer. See also the filters array.
+ * @param[in] depth Also generate a depth buffer
+ * @param[in] halfFloat Use half float pixel format
+ * @param[in] filters Filters for the textures. Must have @c ntextures entries
+ */
+r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters)
+{
+	GLint maxDrawBuffers;
+	r_framebuffer_t *buf;
+	int i;
+
+	if (!frameBufferObjectsInitialized) {
+		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
+		return 0;
+	}
+
+	buf = &frameBufferObjects[frameBufferObjectCount++];
+
+	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
+	if (ntextures > maxDrawBuffers)
+		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
+
+	Vector4Clear(buf->clearColor);
+
+	buf->width = width;
+	buf->height = height;
+	R_SetupViewport(buf, 0, 0, width, height);
+
+	buf->nTextures = ntextures;
+	buf->textures = Mem_Alloc(sizeof(GLuint) * ntextures);
+
+	buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA16F_ARB : GL_RGBA8;
+	buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
+
+	for (i = 0 ; i < buf->nTextures; i++) {
+		buf->textures[i] = R_GetFreeFBOTexture();
+		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		if (r_config.anisotropic)
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
+
+		R_CheckError();
+	}
+
+	/* create depth renderbuffer */
+	if (depth == qtrue) {
+		qglGenRenderbuffersEXT(1, &buf->depth);
+		qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
+		qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, buf->width, buf->height);
+		R_CheckError();
+	} else {
+		buf->depth = 0;
+	}
+
+	R_CheckError();
+
+	/* create FBO itself */
+	qglGenFramebuffersEXT(1, &buf->fbo);
+	R_CheckError();
+	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
+
+	for (i = 0; i < buf->nTextures; i++) {
+		glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+		qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
+		R_CheckError();
+	}
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	if (depth)
+		qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
+
+	R_CheckError();
 
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-	r_bound_framebuffer_object = 0;
 
-	r_frambuffer_objects_initialized = qfalse;
-	r_num_framebuffer_objects = 0;
-	memset(r_framebuffer_objects, 0, sizeof(r_framebuffer_objects));
+	return buf;
 }
+
+/**
+ * @brief bind specified framebuffer object so we render to it
+ * @param[in] buf the framebuffer to use, if @c NULL the screen buffer will be used.
+ */
+void R_UseFramebuffer (const r_framebuffer_t *buf)
+{
+	if (!r_config.frameBufferObject || !r_programs->integer || !r_postprocess->integer)
+		return;
+
+	if (!frameBufferObjectsInitialized) {
+		Com_Printf("Can't bind framebuffer: framebuffers not initialized\n");
+		return;
+	}
+
+	if (!buf)
+		buf = &screenBuffer;
+
+	/* don't re-bind if we're already using the requested buffer */
+	if (buf == activeFramebuffer)
+		return;
+
+	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
+
+	/* don't call glDrawBuffers for main screenbuffer */
+	/** @todo buf != &screenBuffer */
+	if (buf->nTextures > 0)
+		qglDrawBuffers(buf->nTextures, colorAttachments);
+
+	glClearColor(activeFramebuffer->clearColor[0], activeFramebuffer->clearColor[1], activeFramebuffer->clearColor[2], activeFramebuffer->clearColor[3]);
+	glClear(GL_COLOR_BUFFER_BIT | (buf->depth ? GL_DEPTH_BUFFER_BIT : 0));
+
+	activeFramebuffer = buf;
+
+	R_CheckError();
+}
+
+/**
+ * @brief Sets the framebuffer dimensions of the viewport
+ * @param[out] buf The framebuffer to initialize the viewport for. If @c NULL the screen buffer will be taken.
+ * @sa R_UseViewport
+ */
+void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
+{
+	if (!buf)
+		buf = &screenBuffer;
+
+	buf->viewport.x = x;
+	buf->viewport.y = y;
+	buf->viewport.width = width;
+	buf->viewport.height = height;
+}
+
+/**
+ * @brief Set the viewport to the dimensions of the given framebuffer
+ * @param[out] buf The framebuffer to set the viewport for. If @c NULL the screen buffer will be taken.
+ * @sa R_SetupViewport
+ */
+void R_UseViewport (const r_framebuffer_t *buf)
+{
+	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+		return;
+
+	if (!buf)
+		buf = &screenBuffer;
+	glViewport(buf->viewport.x, buf->viewport.y, buf->viewport.width, buf->viewport.height);
+}
+
+/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and elsewhere */
+void R_DrawBuffers (int n)
+{
+	R_BindColorAttachments(n, colorAttachments);
+}
+
+void R_BindColorAttachments (int n, GLenum *attachments)
+{
+	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+		return;
+
+	if (n >= r_config.maxDrawBuffers) {
+		Com_DPrintf(DEBUG_RENDERER, "Max drawbuffers hit\n");
+		n = r_config.maxDrawBuffers;
+	}
+
+	if (activeFramebuffer && activeFramebuffer->nTextures > 0)
+		qglDrawBuffers(n, attachments);
+}
+
+qboolean R_EnableRenderbuffer (qboolean enable)
+{
+	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+		return qfalse;
+
+	if (enable != renderbuffer_enabled) {
+		renderbuffer_enabled = enable;
+		if (enable)
+			R_UseFramebuffer(fbo_render);
+		else
+			R_UseFramebuffer(fbo_screen);
+	}
+
+	R_DrawBuffers(1);
+
+	return qtrue;
+}
+
+qboolean R_RenderbufferEnabled (void)
+{
+	return renderbuffer_enabled;
+}
+

@@ -67,6 +67,10 @@ static SDL_PixelFormat format = {
 #define TGA_UNMAP_UNCOMP		2
 #define TGA_UNMAP_COMP			10
 
+const char** Img_GetImageTypes (void)
+{
+	return (const char **)IMAGE_TYPES;
+}
 
 /**
  * @sa R_LoadTGA

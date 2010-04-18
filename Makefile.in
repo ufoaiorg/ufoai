@@ -10,6 +10,8 @@ CPPFLAGS=@CPPFLAGS@
 WINDRES=@WINDRES@
 LIBS=@LIBS@
 LDFLAGS=@LDFLAGS@
+PACKAGE_VERSION=@PACKAGE_VERSION@
+PACKAGE_NAME=@PACKAGE_NAME@
 
 TARGET_OS=@TARGET_OS@
 TARGET_CPU=@TARGET_CPU@
@@ -42,16 +44,24 @@ BUILD_UFORADIANT=@BUILD_UFORADIANT@
 BUILD_DEBUG=@BUILD_DEBUG@
 
 # assign parameters from configure
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-BINDIR=@bindir@
-datarootdir=@datarootdir@
-DATADIR=@datadir@/ufoai
-LIBDIR=@libdir@/ufoai
-LOCALEDIR=@localedir@
+DATAROOTDIR=@datarootdir@
+BINDIR=@BINDIR@
+LOCALEDIR=@LOCALEDIR@
+DATADIR=@PKGDATADIR@
+LIBDIR=@PKGLIBDIR@
 INSTALL=./install-sh
 
-VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
+#######################################################################################################
+
+ifeq ($(wildcard .svn),.svn)
+	SVN_REV:=$(shell LANG=C svnversion .)
+	ifeq ($(SVN_REV),)
+		SVN_REV:=$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
+	endif
+	ifneq ($(SVN_REV),)
+		CFLAGS+=-DUFO_REVISION=\"$(SVN_REV)\"
+	endif
+endif
 
 #######################################################################################################
 
@@ -117,6 +127,7 @@ echo_info:
 	@echo
 	@echo "Installation"
 	@echo "-----------------------"
+	@echo "Version $(PACKAGE_VERSION)"
 	@echo "Install data into $(DATADIR)"
 	@echo "Install libs into $(LIBDIR)"
 	@echo "Install translations into $(LOCALEDIR)"

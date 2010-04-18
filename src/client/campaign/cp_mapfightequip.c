@@ -464,7 +464,7 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 	assert(slot);
 
 	/* Get the weapon (either current weapon or weapon to install after this one is removed) */
-	item = (slot->nextItem) ? slot->nextItem : slot->item;
+	item = slot->nextItem ? slot->nextItem : slot->item;
 	/* no items assigned */
 	if (!item)
 		return;
@@ -472,15 +472,22 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 	if (item->craftitem.type > AC_ITEM_WEAPON)
 		return;
 	/* don't try to add ammo to a slot that already has ammo */
-	if ((slot->nextItem) ? slot->nextAmmo : slot->ammo)
+	if (slot->nextItem ? slot->nextAmmo : slot->ammo)
 		return;
 	/* Try every ammo usable with this weapon until we find one we have in storage */
 	for (k = 0; k < item->numAmmos; k++) {
 		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
-			const technology_t *ammo_tech = ammo->tech;
-			if (ammo_tech && AIM_SelectableCraftItem(slot, ammo_tech)) {
-				AII_AddAmmoToSlot((ammo->virtual) ? NULL : (slot->aircraft) ? slot->aircraft->homebase : slot->base, ammo_tech, slot);
+			const technology_t *ammoTech = ammo->tech;
+			if (ammoTech && AIM_SelectableCraftItem(slot, ammoTech)) {
+				base_t* base;
+				if (ammo->isVirtual)
+					base = NULL;
+				else if (slot->aircraft)
+					base = slot->aircraft->homebase;
+				else
+					base = slot->base;
+				AII_AddAmmoToSlot(base, ammoTech, slot);
 				break;
 			}
 		}
@@ -506,7 +513,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		/* only remove the ammo */
 		if (slot->ammo) {
 			/* Can only remove non-virtual ammo */
-			if (!slot->ammo->virtual) {
+			if (!slot->ammo->isVirtual) {
 				if (base)
 					B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 				slot->ammo = NULL;
@@ -515,7 +522,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 	} else if (slot->item) {
 		/* remove ammo */
 		AII_RemoveItemFromSlot(base, slot, qtrue);
-		if (!slot->item->virtual) {
+		if (!slot->item->isVirtual) {
 			if (base)
 				B_UpdateStorageAndCapacity(base, slot->item, 1, qfalse, qfalse);
 			/* the removal is over */
@@ -556,7 +563,7 @@ void AII_RemoveNextItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean am
 	if (ammo) {
 		/* only remove the ammo */
 		if (slot->nextAmmo) {
-			if (!slot->nextAmmo->virtual) {
+			if (!slot->nextAmmo->isVirtual) {
 				if (base)
 					B_UpdateStorageAndCapacity(base, slot->nextAmmo, 1, qfalse, qfalse);
 				slot->nextAmmo = NULL;

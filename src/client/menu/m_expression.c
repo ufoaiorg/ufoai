@@ -238,7 +238,6 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallCo
 				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (BOOL2BOOL) Invalid expression type");
 			}
 		}
-		break;
 
 	case EA_OPERATOR_FLOAT2BOOLEAN:
 		{
@@ -262,7 +261,6 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallCo
 				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (FLOAT2BOOL) Invalid expression type");
 			}
 		}
-		break;
 
 	case EA_OPERATOR_EXISTS:
 		{
@@ -275,7 +273,6 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallCo
 				cvarName = MN_GenInjectedString(cvarName, qfalse, context);
 			return Cvar_FindVar(cvarName) != NULL;
 		}
-		break;
 
 	case EA_OPERATOR_STRING2BOOLEAN:
 		{
@@ -295,7 +292,6 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallCo
 	default:
 		Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
 	}
-	return qfalse;
 }
 
 /**
@@ -491,8 +487,7 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 
 		return expression;
 	} else {
-
-		int type = MN_GetActionTokenType(token, EA_UNARYOPERATOR);
+		const int type = MN_GetActionTokenType(token, EA_UNARYOPERATOR);
 		if (type == EA_NULL) {
 			Com_UnParseLastToken();
 			return MN_ParseValueExpression(text, errhead, source);
@@ -513,13 +508,4 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 			return expression;
 		}
 	}
-
-#if 0
-	/* prevent wrong code */
-	if (condition->type.left == condition->type.right
-		 && (condition->type.left == IF_VALUE_STRING || condition->type.left == IF_VALUE_FLOAT)) {
-		Com_Printf("MN_InitCondition: '%s' dont use any var operand.\n", token);
-	}
-#endif
-	return NULL;
 }

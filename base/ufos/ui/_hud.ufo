@@ -80,7 +80,7 @@ window levelbuttons {
 window ahud extends levelbuttons {
 
 	confunc hudselect { }
-	confunc huddeselect { }
+	confunc hudenable { }
 	confunc huddisable { }
 
 	confunc deselect_primaryleft { }

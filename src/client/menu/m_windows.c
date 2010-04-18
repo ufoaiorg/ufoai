@@ -86,11 +86,11 @@ void MN_MoveWindowOnTop (menuNode_t * window)
 	if (i + 1 == j)
 		return;
 
-	// translate windows
+	/* translate windows */
 	for (; i < j - 1; i++) {
 		mn.windowStack[i] = mn.windowStack[i+1];
 	}
-	// add the current window on top
+	/* add the current window on top */
 	mn.windowStack[i] = window;
 }
 

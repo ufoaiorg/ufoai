@@ -126,7 +126,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 	int minY = node->padding;
 	int maxY = node->size[1] - node->padding;
 
-	// top
+	/* top */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->align != LAYOUTALIGN_TOP)
 			continue;
@@ -140,7 +140,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 		minY += child->size[1] + margin;
 	}
 
-	// bottom
+	/* bottom */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->align != LAYOUTALIGN_BOTTOM)
 			continue;
@@ -154,7 +154,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 		maxY -= child->size[1] + margin;
 	}
 
-	// left
+	/* left */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->align != LAYOUTALIGN_LEFT)
 			continue;
@@ -168,7 +168,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 		minX += child->size[0] + margin;
 	}
 
-	// right
+	/* right */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->align != LAYOUTALIGN_RIGHT)
 			continue;
@@ -182,7 +182,7 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
 		maxX -= child->size[0] + margin;
 	}
 
-	// middle
+	/* middle */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->align != LAYOUTALIGN_MIDDLE)
 			continue;

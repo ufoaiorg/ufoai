@@ -91,6 +91,8 @@ static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
 static kbutton_t in_turnup, in_turndown;
 
+static kbutton_t in_pantilt;
+
 /**
  * @brief
  * @sa IN_KeyUp
@@ -433,6 +435,8 @@ static void CL_LeftClickUp_f (void)
 }
 
 #define SCROLL_BORDER	4
+#define MOUSE_YAW_SCALE		0.1
+#define MOUSE_PITCH_SCALE	0.1
 
 /**
  * @note see SCROLL_BORDER define
@@ -455,9 +459,13 @@ float CL_GetKeyMouseState (int dir)
 		break;
 	case STATE_ROT:
 		value = (in_turnleft.state & 1) - (in_turnright.state & 1);
+		if (in_pantilt.state)
+			value -= (float) (mousePosX - oldMousePosX) * MOUSE_YAW_SCALE;
 		break;
 	case STATE_TILT:
 		value = (in_turnup.state & 1) - (in_turndown.state & 1);
+		if (in_pantilt.state)
+			value += (float) (mousePosY - oldMousePosY) * MOUSE_PITCH_SCALE;
 		break;
 	default:
 		value = 0.0;
@@ -788,6 +796,15 @@ void IN_Frame (void)
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_MOUSEBUTTONDOWN:
+			in_pantilt.state = 0;
+			switch (event.button.button) {
+			case SDL_BUTTON_MIDDLE:
+				mouse_buttonstate = K_MOUSE3;
+				in_pantilt.state = 1;
+				break;
+			}
+			if (in_pantilt.state)
+				break;
 		case SDL_MOUSEBUTTONUP:
 			switch (event.button.button) {
 			case SDL_BUTTON_LEFT:
@@ -795,6 +812,7 @@ void IN_Frame (void)
 				break;
 			case SDL_BUTTON_MIDDLE:
 				mouse_buttonstate = K_MOUSE3;
+				in_pantilt.state = 0;
 				break;
 			case SDL_BUTTON_RIGHT:
 				mouse_buttonstate = K_MOUSE2;

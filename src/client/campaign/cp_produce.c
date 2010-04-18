@@ -127,7 +127,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 	for (i = 0; i < reqs->numLinks; i++) {
 		requirement_t *req = &reqs->links[i];
 		if (req->type == RS_LINK_ITEM) {
-			const objDef_t *item = req->link;
+			const objDef_t *item = (const objDef_t *)req->link;
 			assert(item);
 			if (amount > 0) {
 				/* Add items to the base-storage. */

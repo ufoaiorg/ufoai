@@ -27,6 +27,7 @@
 #include "r_local.h"
 #include "r_error.h"
 #include "../../shared/parse.h"
+#include "../../shared/shared.h"
 
 void R_UseProgram  (r_program_t *prog)
 {
@@ -110,6 +111,16 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
+void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform1fv(v->location, size, value);
+}
+
 void R_ProgramParameter2fv (const char *name, GLfloat *value)
 {
 	r_progvar_t *v;
@@ -118,6 +129,16 @@ void R_ProgramParameter2fv (const char *name, GLfloat *value)
 		return;
 
 	qglUniform2fv(v->location, 1, value);
+}
+
+void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform2fv(v->location, size, value);
 }
 
 void R_ProgramParameter3fv (const char *name, GLfloat *value)
@@ -214,12 +235,10 @@ void R_ShutdownPrograms (void)
 
 static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
 {
-	size_t inLength = strlen(in);
+	const size_t inLength = strlen(in);
 	strcpy(*out, in);
 	*out += inLength;
 	*len -= inLength;
-	if (*len < 0)
-		Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
 	return inLength;
 }
 
@@ -227,7 +246,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 {
 	char path[MAX_QPATH];
 	byte *buf;
-	int i;
+	size_t i;
 	const char *hwHack, *defines;
 
 	switch (r_config.hardwareType) {
@@ -356,7 +375,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		return NULL;
 	}
 
-	strncpy(sh->name, name, sizeof(sh->name));
+	Q_strncpyz(sh->name, name, sizeof(sh->name));
 
 	sh->type = type;
 
@@ -475,10 +494,12 @@ static void R_InitMeshProgram (r_program_t *prog)
 	static vec3_t lightPos;
 
 	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter3fv("LIGHTPOS", lightPos);
 
 	R_ProgramParameter1f("OFFSET", 0.0);
+	R_ProgramParameter1i("GLOWMAP", 0);
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -502,17 +523,93 @@ static void R_UseWarpProgram (r_program_t *prog)
 static void R_InitGeoscapeProgram (r_program_t *prog)
 {
 	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
+	static vec4_t cityLightColor = {1.0, 1.0, 0.8, 1.0};
 	static vec2_t uvScale = {2.0, 1.0};
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
-	R_ProgramParameter1i("SAMPLER4", 4);
 
-	R_ProgramParameter4fv("defaultColor", defaultColor);
-	R_ProgramParameter2fv("uvScale", uvScale);
-	R_ProgramParameter1f("specularExp", 32.0);
+	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
+	R_ProgramParameter4fv("CITYLIGHTCOLOR", cityLightColor);
+	R_ProgramParameter2fv("UVSCALE", uvScale);
+}
+
+/**
+ * @note this is a not-terribly-efficient recursive implementation,
+ * but it only happens once and shouldn't have to go very deep.
+ */
+static int R_PascalTriangle (int row, int col)
+{
+	if (row <= 1 || col <= 1 || col >= row)
+		return 1;
+	return R_PascalTriangle(row - 1, col) + R_PascalTriangle(row - 1, col - 1);
+}
+
+/** @brief width of convolution filter (for blur/bloom effects) */
+#define FILTER_SIZE 3
+
+static void R_InitConvolveProgram (r_program_t *prog)
+{
+	float filter[FILTER_SIZE];
+	float sum = 0;
+	int i;
+	const size_t size = lengthof(filter);
+
+	/* approximate a Gaussian by normalizing the Nth row of Pascale's Triangle */
+	for (i = 0; i < size; i++) {
+		filter[i] = (float)R_PascalTriangle(size, i + 1);
+		sum += filter[i];
+	}
+
+	for (i = 0; i < size; i++)
+		filter[i] = (filter[i] / sum);
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1fvs("COEFFICIENTS", size, filter);
+}
+
+/**
+ * @brief Use the filter convolution glsl program
+ */
+static void R_UseConvolveProgram (r_program_t *prog)
+{
+	int i;
+	const float *userdata= (float *)prog->userdata;
+	float offsets[FILTER_SIZE * 2];
+	const float halfWidth = (FILTER_SIZE - 1) * 0.5;
+	const float offset = 1.2f / userdata[0];
+	const float x = userdata[1] * offset;
+
+	for (i = 0; i < FILTER_SIZE; i++) {
+		const float y = (float)i - halfWidth;
+		const float z = x * y;
+		offsets[i * 2 + 0] = offset * y - z;
+		offsets[i * 2 + 1] = z;
+	}
+	R_ProgramParameter2fvs("OFFSETS", FILTER_SIZE, offsets);
+}
+
+static void R_InitCombine2Program (r_program_t *prog)
+{
+	GLfloat defaultColor[4] = {0.0, 0.0, 0.0, 0.0};
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 1);
+
+	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
+}
+
+static void R_InitAtmosphereProgram (r_program_t *prog)
+{
+	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
+	static vec2_t uvScale = {2.0, 1.0};
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER2", 2);
+
+	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
+	R_ProgramParameter2fv("UVSCALE", uvScale);
 }
 
 void R_InitParticleProgram (r_program_t *prog)
@@ -528,6 +625,7 @@ void R_UseParticleProgram (r_program_t *prog)
 void R_InitPrograms (void)
 {
 	if (!qglCreateProgram) {
+		Com_Printf("not using GLSL shaders\n");
 		Cvar_Set("r_programs", "0");
 		r_programs->modified = qfalse;
 		return;
@@ -545,6 +643,9 @@ void R_InitPrograms (void)
 	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
+	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
+	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
+	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 }
 
 /**

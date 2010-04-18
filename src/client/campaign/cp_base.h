@@ -282,7 +282,7 @@ base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
-building_t* B_SetBuildingByClick(base_t *base, const building_t const *template, int row, int col);
+building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
 void B_InitStartup(void);
 void B_NewBases(void);
 void B_BuildingStatus(const base_t* base, const building_t* building);
