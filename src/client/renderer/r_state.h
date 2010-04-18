@@ -56,6 +56,7 @@ typedef struct gltexunit_s {
 #define texunit_lightmap	texunit_1
 #define texunit_deluxemap	texunit_2
 #define texunit_normalmap	texunit_3
+#define texunit_glowmap		texunit_4
 
 
 #define DOWNSAMPLE_PASSES	5

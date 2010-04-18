@@ -37,7 +37,7 @@ static const r_framebuffer_t *activeFramebuffer;
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
 
-static qboolean renderbuffer; /*< renderbuffer vs screen as render target*/
+static qboolean renderbuffer_enabled; /*< renderbuffer vs screen as render target*/
 
 static GLuint R_GetFreeFBOTexture (void)
 {
@@ -322,6 +322,7 @@ void R_UseViewport (const r_framebuffer_t *buf)
 	glViewport(buf->viewport.x, buf->viewport.y, buf->viewport.width, buf->viewport.height);
 }
 
+/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and elsewhere */
 void R_DrawBuffers (int n)
 {
 	R_BindColorAttachments(n, colorAttachments);
@@ -346,20 +347,21 @@ qboolean R_EnableRenderbuffer (qboolean enable)
 	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return qfalse;
 
-	if (enable == renderbuffer)
-		return qtrue;
+	if (enable != renderbuffer_enabled) {
+		renderbuffer_enabled = enable;
+		if (enable)
+			R_UseFramebuffer(fbo_render);
+		else
+			R_UseFramebuffer(fbo_screen);
+	}
 
-	renderbuffer = enable;
-
-	if (enable)
-		R_UseFramebuffer(fbo_render);
-	else
-		R_UseFramebuffer(fbo_screen);
-
-	/** @todo introduce enum or speaking constants for the buffer numbers that are drawn here and below */
-	/** @note numbers are simply how many of the (pre-set) color attachments are drawn to */
 	R_DrawBuffers(1);
 
 	return qtrue;
+}
+
+qboolean R_RenderbufferEnabled (void)
+{
+	return renderbuffer_enabled;
 }
 

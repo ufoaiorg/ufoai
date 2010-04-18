@@ -323,7 +323,9 @@ void R_RenderFrame (void)
 		}
 	}
 
+	R_EnableGlow(qtrue);
 	R_DrawEntities();
+	R_EnableGlow(qfalse);
 
 	R_EnableBlend(qtrue);
 
@@ -331,8 +333,7 @@ void R_RenderFrame (void)
 
 	R_EnableBlend(qfalse);
 
-	if (r_programs->integer && r_postprocess->integer)
-		R_DrawBloom();
+	R_DrawBloom();
 
 	/* leave wire mode again */
 	if (r_wire->integer)

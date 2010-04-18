@@ -570,6 +570,11 @@ void R_DrawAliasModel (entity_t *e)
 	assert(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum > 0);
 	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
 
+	if (mod->meshes[e->as.mesh].skins[e->skinnum].skin->glowmap && r_postprocess->integer) {
+		R_BindTextureForTexUnit(mod->meshes[e->as.mesh].skins[e->skinnum].skin->glowmap->texnum, &texunit_glowmap);
+		R_ProgramParameter1i("GLOWMAP", 1);
+	}
+
 	R_ResetArrayState();
 
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
@@ -578,6 +583,9 @@ void R_DrawAliasModel (entity_t *e)
 		R_DrawAliasStatic(lodMesh, e->shell);
 	else
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
+
+	if (r_postprocess->integer)
+		R_ProgramParameter1i("GLOWMAP", 0);
 
 	/* show model bounding box */
 	if (r_showbox->integer)

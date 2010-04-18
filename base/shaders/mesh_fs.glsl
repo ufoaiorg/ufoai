@@ -7,6 +7,10 @@ uniform vec3 LIGHTPOS;
 
 uniform sampler2D SAMPLER0;
 
+uniform int GLOWMAP;
+/* glowmap */
+uniform sampler2D SAMPLER4;
+
 varying vec3 lightpos;
 
 
@@ -24,6 +28,10 @@ void main(void){
 
 	// add any dynamic lighting and yield a base fragment color
 	LightFragment(diffuse, gl_Color.rgb * shade);
+
+	if(GLOWMAP > 0) {
+		gl_FragData[1] = texture2D(SAMPLER4, gl_TexCoord[0].st);
+	}
 
 #if r_fog
 	FogFragment();  // add fog

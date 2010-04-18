@@ -1411,11 +1411,14 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 void R_DrawBloom (void)
 {
 	int i;
+	qboolean rb_enable;
 
 	if (!r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
 
+
 	/* save state, then set up for blit-style rendering to quads */
+	rb_enable = R_RenderbufferEnabled();
 	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
@@ -1481,4 +1484,8 @@ void R_DrawBloom (void)
 	glPopMatrix();
 	glPopAttrib();
 	R_CheckError();
+
+	/* reset renderbuffer state to what it was before */
+	R_EnableRenderbuffer(rb_enable);
+
 }

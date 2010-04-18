@@ -36,7 +36,7 @@ else
 endif
 
 NICE = 19
-UFO2MAPFLAGS = -v 2 -nice $(NICE) -extra -t $(NUMTHREADS)
+UFO2MAPFLAGS = -v 4 -nice $(NICE) -extra -t $(NUMTHREADS)
 FAST_UFO2MAPFLAGS = -v 2 -quant 6 -nice $(NICE) -t $(NUMTHREADS)
 ENTS_UFO2MAPFLAGS = -v 2 -nice $(NICE) -onlyents
 

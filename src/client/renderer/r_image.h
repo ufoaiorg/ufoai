@@ -45,6 +45,7 @@ typedef enum {
 	it_wrappic,
 	it_skin,
 	it_normalmap,
+	it_glowmap,
 
 	/** the following are freed with every mapchange */
 	it_world,
@@ -63,6 +64,7 @@ typedef struct image_s {
 	qboolean has_alpha;
 	material_t material;
 	struct image_s *normalmap;			/**< normalmap texture  */
+	struct image_s *glowmap;			/**< glowmap texture  */
 	struct image_s *hashNext;			/**< hash map next pointer in case of collision */
 	struct image_s *hashPrev;			/**< hash map prev pointer for easier removing */
 } image_t;

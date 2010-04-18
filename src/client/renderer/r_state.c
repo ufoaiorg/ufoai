@@ -539,10 +539,7 @@ void R_Setup3D (void)
 	glEnable(GL_DEPTH_TEST);
 
 	/* set up framebuffers for postprocessing */
-	if (r_postprocess->integer) {
-		R_UseFramebuffer(fbo_render);
-		R_DrawBuffers(1);
-	}
+	R_EnableRenderbuffer(qtrue);
 
 	R_CheckError();
 }
@@ -576,8 +573,8 @@ void R_Setup2D (void)
 
 	glDisable(GL_DEPTH_TEST);
 
-	if (r_postprocess->integer)
-		R_UseFramebuffer(fbo_screen);
+	/* disable render-to-framebuffer */
+	R_EnableRenderbuffer(qfalse);
 
 	R_CheckError();
 }
