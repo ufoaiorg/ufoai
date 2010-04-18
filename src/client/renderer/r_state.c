@@ -267,6 +267,8 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 
 		R_UseProgram(NULL);
 	}
+
+	R_EnableGlow(enable);
 }
 
 static inline void R_UseMaterial (material_t *material)
@@ -444,22 +446,26 @@ void R_EnableFog (qboolean enable)
  */
 void R_EnableGlow (qboolean enable)
 {
+	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+
 	if (!r_postprocess->integer || r_state.glow_enabled == enable)
 		return;
 
 	if (enable)
 		R_DrawBuffers(2);
-	else
-		R_DrawBuffers(1);
-
-	r_state.draw_glow_enabled = qfalse;
+	else {
+		if (r_state.draw_glow_enabled){
+			R_BindColorAttachments(1, &glowRenderTarget);
+		} else {
+			R_DrawBuffers(1);
+		}
+	}
 	r_state.glow_enabled = enable;
 }
 
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
-	static GLenum defaultRenderTarget = GL_COLOR_ATTACHMENT0_EXT;
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
@@ -473,7 +479,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 		if (r_state.glow_enabled) {
 			R_DrawBuffers(2);
 		} else {
-			R_BindColorAttachments(1, &defaultRenderTarget);
+			R_DrawBuffers(1);
 		}
 	}
 }

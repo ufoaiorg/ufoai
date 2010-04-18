@@ -72,6 +72,13 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 			R_EnableBumpmap(NULL, qfalse);
 	}
 
+	if (image->glowmap && r_postprocess->integer) {
+		R_BindTextureForTexUnit(image->glowmap->texnum, &texunit_glowmap);
+		R_ProgramParameter1i("GLOWMAP", 1);
+	} else if (r_postprocess->integer){
+		R_ProgramParameter1i("GLOWMAP", 0);
+	}
+
 	R_CheckError();
 }
 
@@ -112,6 +119,9 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 		if (r_state.bumpmap_enabled)
 			R_EnableBumpmap(NULL, qfalse);
 	}
+
+	if (r_postprocess->integer)
+		R_ProgramParameter1i("GLOWMAP", 0);
 
 	/* and restore array pointers */
 	R_ResetArrayState();

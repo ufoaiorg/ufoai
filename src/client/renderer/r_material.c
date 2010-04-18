@@ -106,8 +106,16 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 					R_BindNormalmapTexture(stage->image->normalmap->texnum);
 
 					R_EnableBumpmap(&stage->image->material, qtrue);
+					
 				} else if (r_state.bumpmap_enabled)
 					R_EnableBumpmap(NULL, qfalse);
+
+				if (stage->image->glowmap && r_postprocess->integer) {
+					R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+					R_ProgramParameter1i("GLOWMAP", 1);
+				} else if (r_postprocess->integer) {
+					R_ProgramParameter1i("GLOWMAP", 0);
+				}
 			}
 		} else
 			R_EnableLighting(NULL, qfalse);
@@ -344,6 +352,9 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 	}
 
 	glDrawArrays(GL_POLYGON, 0, i);
+
+	if (r_postprocess->integer) 
+		R_ProgramParameter1i("GLOWMAP", 0);
 
 	R_CheckError();
 }

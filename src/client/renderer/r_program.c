@@ -480,8 +480,10 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 	R_ProgramParameter1i("SAMPLER3", 3);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("GLOWMAP", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
@@ -508,8 +510,10 @@ static void R_InitWarpProgram (r_program_t *prog)
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter4fv("OFFSET", offset);
+	R_ProgramParameter1i("GLOWMAP", 0);
 }
 
 static void R_UseWarpProgram (r_program_t *prog)

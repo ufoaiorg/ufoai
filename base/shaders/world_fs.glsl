@@ -5,6 +5,7 @@
 #include "fog_fs.glsl"
 
 uniform int BUMPMAP;
+uniform int GLOWMAP;
 
 uniform sampler2D SAMPLER0;
 /* lightmap */
@@ -13,10 +14,11 @@ uniform sampler2D SAMPLER1;
 uniform sampler2D SAMPLER2;
 /* normalmap */
 uniform sampler2D SAMPLER3;
+/* glowmap */
+uniform sampler2D SAMPLER4;
 
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
-
 
 /*
  * main
@@ -70,5 +72,9 @@ void main(void){
 		gl_FragData[0].a = 1.0;
 	}
 #endif
+
+	if(GLOWMAP > 0) {
+		gl_FragData[1] = texture2D(SAMPLER4, gl_TexCoord[0].st);
+	}
 
 }
