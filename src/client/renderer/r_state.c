@@ -465,13 +465,17 @@ void R_EnableDrawAsGlow (qboolean enable)
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
 		return;
 
-	r_state.glow_enabled = qfalse;
 	r_state.draw_glow_enabled = enable;
 
-	if (enable)
+	if (enable) {
 		R_BindColorAttachments(1, &glowRenderTarget);
-	else
-		R_BindColorAttachments(1, &defaultRenderTarget);
+	} else {
+		if (r_state.glow_enabled) {
+			R_DrawBuffers(2);
+		} else {
+			R_BindColorAttachments(1, &defaultRenderTarget);
+		}
+	}
 }
 
 /**
