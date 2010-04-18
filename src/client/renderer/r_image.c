@@ -656,11 +656,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
 			if (image->normalmap == r_noTexture)
 				image->normalmap = NULL;
-		}
-		/* @todo: we probably don't need to check for this for all imagetypes */
-		if (image->type == it_glowmap) {
-			image->glowmap = NULL;
-		} else {
+		} else if (image->type == it_world || image->type == it_skin) {
 			image->glowmap = R_FindImage(va("%s_gm", image->name), it_glowmap);
 			if (image->glowmap == r_noTexture)
 				image->glowmap = NULL;
