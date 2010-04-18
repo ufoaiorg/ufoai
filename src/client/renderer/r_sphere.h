@@ -28,15 +28,23 @@ typedef struct sphere_s {
 	float *verts;		/**< globe vertices, points in 3D on the surface of the sphere */
 	float *normals;		/**< vertex normal array */
 	image_t* texture;	/**< the texture for this globe - @note scaled texture matrix */
+	image_t* blendTexture;	/**< the texture for the next season (for blending) */
+	image_t* nightOverlay;	/**< the texture for night illumination*/
 	image_t* overlay;	/**< the overlay for the world (e.g. nation borders) */
 	image_t* overlayAlphaMask;	/**< in case of multitexture this is the alpha mask */
-	image_t* bumpMap;	/**< @todo implement bump mapping for globes */
+	image_t* normalMap;	/**< bump map */
+	image_t* glossMap;	/**< gloss map */
 	int num_tris;		/**< number of tris */
+
+	/** @note  extra stuff for new GLSL renderer*/
+	float blendScale;
+	vec4_t nightLightPos;
+	int season;
 } sphere_t;
 
 extern sphere_t r_globeEarth;
 extern sphere_t r_globeMoon;
 
 void R_SphereGenerate(sphere_t *sphere, const int tris, const float radius);
-void R_SphereRender(const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec3_t lightPos);
+void R_SphereRender(const sphere_t *sphere, const vec3_t pos, const vec3_t rotate, const float scale, const vec4_t lightPos);
 void R_SphereInit(void);

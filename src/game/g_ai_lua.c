@@ -48,6 +48,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define AIL_invalidparameter(n)	\
 	gi.dprintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
 
+/*
+ * Helper functions
+ */
+
+/**
+ * @brief Converts integer team representation into string
+ * @param team The team to convert to the string representation
+ * @return The team string
+ * @sa AIL_Init
+ */
+static const char *AIL_toTeamString (const int team)
+{
+	const char *teamStr = gi.GetConstVariable("luaaiteam", team);
+	if (teamStr == NULL)
+		AIL_invalidparameter(1);
+	return teamStr;
+}
+
+/**
+ * @brief Converts team string into int representation
+ * @param team The team to convert (alien, phalanx, civilian, ...)
+ * @return The integer representation of the given team string
+ * @sa AIL_Init
+ */
+static int AIL_toTeamInt (const char *team)
+{
+	int teamInt = TEAM_DEFAULT;
+	if (!gi.GetConstIntFromNamespace("luaaiteam", team, &teamInt))
+		AIL_invalidparameter(1);
+	return teamInt;
+}
+
 /**
  * @brief Wrapper around edict.
  */
@@ -119,7 +151,10 @@ static const luaL_reg pos3L_methods[] = {
 static int AIL_print(lua_State *L);
 static int AIL_see(lua_State *L);
 static int AIL_crouch(lua_State *L);
+static int AIL_isinjured(lua_State *L);
 static int AIL_TU(lua_State *L);
+static int AIL_HP(lua_State *L);
+static int AIL_morale(lua_State *L);
 static int AIL_reactionfire(lua_State *L);
 static int AIL_roundsleft(lua_State *L);
 static int AIL_canreload(lua_State *L);
@@ -133,7 +168,10 @@ static const luaL_reg AIL_methods[] = {
 	{"print", AIL_print},
 	{"see", AIL_see},
 	{"crouch", AIL_crouch},
+	{"isinjured", AIL_isinjured},
 	{"TU", AIL_TU},
+	{"HP", AIL_HP},
+	{"morale", AIL_morale},
 	{"reactionfire", AIL_reactionfire},
 	{"roundsleft", AIL_roundsleft},
 	{"canreload", AIL_canreload},
@@ -275,24 +313,15 @@ static int actorL_shoot (lua_State *L)
 		tu = AIL_ent->TU;
 	}
 
-	/** @todo figure out this shot mode stuff out. */
 	shootType = ST_RIGHT;
+	item = AI_GetItemForShootType(shootType, AIL_ent);
+	if (item == NULL) {
+		shootType = ST_LEFT;
+		item = AI_GetItemForShootType(shootType, AIL_ent);
+	}
 
-	/* Figure out weapon to use. */
-	if (IS_SHOT_RIGHT(shootType) && RIGHT(AIL_ent)
-			&& RIGHT(AIL_ent)->item.m
-			&& RIGHT(AIL_ent)->item.t->weapon
-			&& (!RIGHT(AIL_ent)->item.t->reload
-				|| RIGHT(AIL_ent)->item.a > 0)) {
-		item = &RIGHT(AIL_ent)->item;
-	} else if (IS_SHOT_LEFT(shootType) && LEFT(AIL_ent)
-			&& LEFT(AIL_ent)->item.m
-			&& LEFT(AIL_ent)->item.t->weapon
-			&& (!LEFT(AIL_ent)->item.t->reload
-				|| LEFT(AIL_ent)->item.a > 0)) {
-		item = &LEFT(AIL_ent)->item;
-	} else {
-		/* Failure - no weapon. */
+	/* Failure - no weapon. */
+	if (item == NULL) {
 		lua_pushboolean(L, 0);
 		return 1;
 	}
@@ -349,24 +378,14 @@ static int actorL_face (lua_State *L)
 static int actorL_team (lua_State *L)
 {
 	const aiActor_t *target;
+	const char *team;
 
 	assert(lua_isactor(L, 1));
 
 	target = lua_toactor(L, 1);
-	switch (target->ent->team) {
-	case TEAM_PHALANX:
-		lua_pushstring(L, "phalanx");
-		break;
-	case TEAM_CIVILIAN:
-		lua_pushstring(L, "civilian");
-		break;
-	case TEAM_ALIEN:
-		lua_pushstring(L, "alien");
-		break;
-	default:
-		lua_pushstring(L, "unknown");
-		break;
-	}
+	assert(target != NULL);
+	team = AIL_toTeamString(target->ent->team);
+	lua_pushstring(L, team);
 	return 1;
 }
 
@@ -587,16 +606,7 @@ static int AIL_see (lua_State *L)
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				const char *s = lua_tostring(L, 2);
-				if (strcmp(s, "all") == 0)
-					team = TEAM_ALL;
-				else if (strcmp(s, "alien") == 0)
-					team = TEAM_ALIEN;
-				else if (strcmp(s, "civilian") == 0)
-					team = TEAM_CIVILIAN;
-				else if (strcmp(s, "phalanx") == 0)
-					team = TEAM_PHALANX;
-				else
-					AIL_invalidparameter(2);
+				team = AIL_toTeamInt(s);
 			} else
 				AIL_invalidparameter(2);
 		}
@@ -664,6 +674,15 @@ static int AIL_crouch (lua_State *L)
 }
 
 /**
+* @brief Checks to see if the actor is injured
+*/
+static int AIL_isinjured (lua_State *L)
+{
+	lua_pushboolean(L, AIL_ent->HP != AIL_ent->chr.maxHP);
+	return 1;
+}
+
+/**
  * @brief Gets the number of TU the actor has left.
  */
 static int AIL_TU (lua_State *L)
@@ -673,20 +692,49 @@ static int AIL_TU (lua_State *L)
 }
 
 /**
- * @brief Sets the actor's reaction fire.
+ * @brief Gets the number of HP the actor has left.
+ */
+static int AIL_HP (lua_State *L)
+{
+	lua_pushnumber(L, AIL_ent->HP);
+	return 1;
+}
+
+/**
+ * @brief Gets the current morale of the actor onto the stack.
+ */
+static int AIL_morale (lua_State *L)
+{
+	lua_pushnumber(L, AIL_ent->morale);
+	return 1;
+}
+
+/**
+ * @brief Sets the actor's reaction fire mode.
  */
 static int AIL_reactionfire (lua_State *L)
 {
+	int reactionState = 0;
 	if (lua_gettop(L) > 0) {
-		if (lua_isboolean(L, 1)) {
-			const int state = lua_toboolean(L, 1);
-			G_ClientStateChange(AIL_player, AIL_ent, STATE_REACTION_ONCE,
+
+		if (lua_isstring(L, 1)) {
+			/* get reaction fire mode */
+			const char* cmd = lua_tostring(L, 1);
+			reactionState = !strcmp(cmd, "disable") ? ~STATE_REACTION
+				: !strcmp(cmd, "once") ? STATE_REACTION_ONCE
+				: !strcmp(cmd, "many") ? STATE_REACTION_MANY : 0;
+		}
+
+		if (reactionState && lua_gettop(L) > 1 && lua_isboolean(L, 2)) {
+			const int state = lua_toboolean(L, 2);
+			G_ClientStateChange(AIL_player, AIL_ent, reactionState,
 				(state) ? qtrue : qfalse);
-		} else
-			AIL_invalidparameter(1);
+		} else {
+			AIL_invalidparameter(reactionState ? 2 : 1);
+		}
 	}
 
-	lua_pushboolean(L, AIL_ent->state & STATE_REACTION_ONCE);
+	lua_pushboolean(L, G_IsReaction(AIL_ent));
 	return 1;
 }
 
@@ -821,6 +869,8 @@ static int AIL_positionshoot (lua_State *L)
 
 /**
  * @brief Moves the actor into a position in which he can hide.
+ * @note @c team (parameter is passed through the lua stack) means that the AI tries to find
+ * a hide position from the @c team members, if parameter is empty - from any enemy
  */
 static int AIL_positionhide (lua_State *L)
 {
@@ -831,6 +881,19 @@ static int AIL_positionhide (lua_State *L)
 	VectorCopy(AIL_ent->pos, save);
 
 	hidingTeam = AI_GetHidingTeam(AIL_ent);
+
+	/* parse parameter */
+	if (lua_gettop(L)) {
+		if (lua_isstring(L, 1)) {
+			const char* s = lua_tostring(L, 1);
+			hidingTeam = AIL_toTeamInt(s);
+			if (hidingTeam == TEAM_ALL)
+				AIL_invalidparameter(1);
+		} else {
+			AIL_invalidparameter(1);
+		}
+	}
+
 	if (AI_FindHidingLocation(hidingTeam, AIL_ent, AIL_ent->pos, &tus)) {
 		/* Return the spot. */
 		lua_pushpos3(L, &AIL_ent->pos);
@@ -940,6 +1003,21 @@ static void AIL_CleanupActor (edict_t * ent)
 	}
 }
 
+void AIL_Init (void)
+{
+	gi.RegisterConstInt("luaaiteam::phalanx", TEAM_PHALANX);
+	gi.RegisterConstInt("luaaiteam::civilian", TEAM_CIVILIAN);
+	gi.RegisterConstInt("luaaiteam::alien", TEAM_ALIEN);
+	gi.RegisterConstInt("luaaiteam::all", TEAM_ALL);
+}
+
+void AIL_Shutdown (void)
+{
+	gi.UnregisterConstVariable("luaaiteam::phalanx");
+	gi.UnregisterConstVariable("luaaiteam::civilian");
+	gi.UnregisterConstVariable("luaaiteam::alien");
+	gi.UnregisterConstVariable("luaaiteam::all");
+}
 
 /**
  * @brief Purges all the AI from the entities.

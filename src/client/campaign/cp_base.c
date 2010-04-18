@@ -2313,11 +2313,15 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 			}
 			break;
 		case B_STORAGE:
-		case B_ANTIMATTER:
 			if (BS_BuySellAllowed(base))
 				MN_PushWindow("market", NULL);
 			else
 				UP_OpenWith(building->pedia);
+			break;
+		case B_ANTIMATTER:
+			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), base->capacities[CAP_ANTIMATTER].cur, base->capacities[CAP_ANTIMATTER].max);
+//			Com_sprintf(str, sizeof(str), _("Antimatter: %d/100"), base->capacities[CAP_ANTIMATTER]);
+			MN_Popup(_("Information"), popupText);
 			break;
 		default:
 			UP_OpenWith(building->pedia);
@@ -3297,4 +3301,3 @@ void B_RemoveAntimatterExceedingCapacity (base_t *base)
 
 	B_ManageAntimatter(base, amount, qfalse);
 }
-

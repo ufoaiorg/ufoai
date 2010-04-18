@@ -57,20 +57,20 @@ font f_big
 
 font f_menu
 {
-	font	"_media/FreeSans.ttf"
+	font	"_media/DejaVuSans.ttf"
 	size	22
 }
 
 font f_menubig
 {
-	font	"_media/FreeSans.ttf"
+	font	"_media/DejaVuSans.ttf"
 	size	24
 	style	TTF_STYLE_BOLD
 }
 
 font f_menusmall
 {
-	font	"_media/FreeSans.ttf"
+	font	"_media/DejaVuSans.ttf"
 	size	18
 	style	TTF_STYLE_BOLD
 }

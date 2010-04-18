@@ -7,8 +7,11 @@
 uniform int BUMPMAP;
 
 uniform sampler2D SAMPLER0;
+/* lightmap */
 uniform sampler2D SAMPLER1;
+/* deluxemap */
 uniform sampler2D SAMPLER2;
+/* normalmap */
 uniform sampler2D SAMPLER3;
 
 const vec3 two = vec3(2.0);

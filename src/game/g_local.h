@@ -165,18 +165,20 @@ extern game_export_t globals;
 #define random()	((rand() & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
-#define G_IsShaken(ent)		((ent)->state & STATE_SHAKEN)
-#define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
-#define G_IsPaniced(ent)	((ent)->state & STATE_PANIC)
-#define G_IsRaged(ent)		((ent)->state & STATE_RAGE)
-#define G_IsInsane(ent)		((ent)->state & STATE_INSANE)
-#define G_IsDazed(ent)		((ent)->state & STATE_DAZED)
-#define G_IsCrouched(ent)	((ent)->state & STATE_CROUCHED)
+#define G_IsState(ent, s)		((ent)->state & (s))
+#define G_IsShaken(ent)			G_IsState(ent, STATE_SHAKEN)
+#define G_IsStunned(ent)		(G_IsState(ent, STATE_STUN) & ~STATE_DEAD)
+#define G_IsPaniced(ent)		G_IsState(ent, STATE_PANIC)
+#define G_IsReaction(ent)		G_IsState(ent, STATE_REACTION)
+#define G_IsRaged(ent)			G_IsState(ent, STATE_RAGE)
+#define G_IsInsane(ent)			G_IsState(ent, STATE_INSANE)
+#define G_IsDazed(ent)			G_IsState(ent, STATE_DAZED)
+#define G_IsCrouched(ent)		G_IsState(ent, STATE_CROUCHED)
 /** @note This check also includes the IsStunned check - see the STATE_* bitmasks */
-#define G_IsDead(ent)		(((ent)->state & STATE_DEAD))
-#define G_IsActor(ent)		((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
-#define G_IsBreakable(ent)	((ent)->flags & FL_DESTROYABLE)
-#define G_IsBrushModel(ent)	((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR)
+#define G_IsDead(ent)			G_IsState(ent, STATE_DEAD)
+#define G_IsActor(ent)			((ent)->type == ET_ACTOR || (ent)->type == ET_ACTOR2x2)
+#define G_IsBreakable(ent)		((ent)->flags & FL_DESTROYABLE)
+#define G_IsBrushModel(ent)		((ent)->type == ET_BREAKABLE || (ent)->type == ET_DOOR)
 /** @note Every none solid (none-bmodel) edict that is visible for the client */
 #define G_IsVisibleOnBattlefield(ent)	(G_IsActor((ent)) || (ent)->type == ET_ITEM || (ent)->type == ET_PARTICLE)
 #define G_IsAI(ent)				(G_PLAYER_FROM_ENT((ent))->pers.ai)
@@ -187,6 +189,30 @@ extern game_export_t globals;
 #define G_IsCivilian(ent)		((ent)->team == TEAM_CIVILIAN)
 #define G_IsAlien(ent)			((ent)->team == TEAM_ALIEN)
 #define G_IsBlockingMovementActor(ent)	(((ent)->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2)
+
+#define G_ToggleState(ent, s)	(ent)->state ^= (s)
+#define G_ToggleCrouched(ent)	G_ToggleState(ent, STATE_CROUCHED)
+
+#define G_SetState(ent, s)		(ent)->state |= (s)
+#define G_SetShaken(ent)		G_SetState((ent), STATE_SHAKEN)
+#define G_SetDazed(ent)			G_SetState((ent), STATE_DAZED)
+#define G_SetStunned(ent)		G_SetState((ent), STATE_STUN)
+#define G_SetDead(ent)			G_SetState((ent), STATE_DEAD)
+#define G_SetInsane(ent)		G_SetState((ent), STATE_INSANE)
+#define G_SetRage(ent)			G_SetState((ent), STATE_RAGE)
+#define G_SetPanic(ent)			G_SetState((ent), STATE_PANIC)
+#define G_SetCrouched(ent)		G_SetState((ent), STATE_CROUCHED)
+
+#define G_RemoveState(ent, s)	(ent)->state &= ~(s)
+#define G_RemoveShaken(ent)		G_RemoveState((ent), STATE_SHAKEN)
+#define G_RemoveDazed(ent)		G_RemoveState((ent), STATE_DAZED)
+#define G_RemoveStunned(ent)	G_RemoveState((ent), STATE_STUN)
+#define G_RemoveDead(ent)		G_RemoveState((ent), STATE_DEAD)
+#define G_RemoveInsane(ent)		G_RemoveState((ent), STATE_INSANE)
+#define G_RemoveRage(ent)		G_RemoveState((ent), STATE_RAGE)
+#define G_RemovePanic(ent)		G_RemoveState((ent), STATE_PANIC)
+#define G_RemoveCrouched(ent)	G_RemoveState((ent), STATE_CROUCHED)
+#define G_RemoveReaction(ent)	G_RemoveState((ent), STATE_REACTION)
 
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
@@ -255,7 +281,6 @@ extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_reaction_fair;
-extern cvar_t *g_reaction_leftover;
 extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_drawtraces;
@@ -277,7 +302,7 @@ extern cvar_t *difficulty;
 void G_SendPlayerStats(const player_t *player);
 
 /* g_inventory.c */
-void G_WriteItem(item_t item, const invDef_t *container, int x, int y);
+void G_WriteItem(const item_t *item, const invDef_t *container, int x, int y);
 void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
 edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
@@ -325,11 +350,10 @@ qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 qboolean G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_reaction.c */
-qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
 void G_ReactionFirePreShot(const edict_t *target);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
-qboolean G_CanEnableReactionFire(const edict_t *ent);
+qboolean G_ReactionFireCanBeEnabled(const edict_t *ent);
 qboolean G_ReactionFireSetDefault(edict_t *ent);
 void G_ReactionFireUpdate(edict_t *ent, fireDefIndex_t fmIdx, actorHands_t hand, const objDef_t *od);
 qboolean G_ReactionFireOnMovement(edict_t *target);
@@ -401,9 +425,11 @@ qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_GetActorByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
-void G_ActorDie(edict_t *ent, int state, edict_t *attacker);
+void G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
 void G_ActorGiveTimeUnits(edict_t *ent);
+void G_ActorSetTU(edict_t *ent, int tus);
+void G_ActorUseTU(edict_t *ent, int tus);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);
@@ -424,7 +450,6 @@ void G_ClientDisconnect(player_t * player);
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
 qboolean G_ClientCanReload(player_t *player, edict_t *ent, containerIndex_t containerID);
 void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
-qboolean G_ActorShouldStopInMidMove(const edict_t *ent, int visState, byte* dvtab, int max);
 void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, const pos3_t to);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
@@ -560,7 +585,7 @@ struct player_s {
 	qboolean began;				/**< the player sent his 'begin' already */
 	qboolean roundDone;			/**< ready to end his round */
 
-
+	int reactionLeftover;		/**< Minimum TU left over by reaction fire */
 	qboolean autostand;			/**< autostand for long walks */
 
 	client_persistant_t pers;

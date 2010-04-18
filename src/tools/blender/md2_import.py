@@ -13,7 +13,7 @@ __url__ = ["Bob's site, http://bane.servebeer.com",
      "Support forum, http://scourage.servebeer.com/phpbb/", "blender", "blenderartists.org"]
 __email__ = ["Bob Holcomb, bob_holcomb:hotmail*com", "scripts"]
 __bpydoc__ = """\
-This script imports a Quake 2 file (MD2), textures, 
+This script imports a Quake 2 file (MD2), textures,
 and animations into blender for editing.  Loader is based on MD2 loader from www.gametutorials.com-Thanks DigiBen! and the md3 blender loader by PhaethonH <phaethon@linux.ucla.edu><br>
 
  Additional help from: Shadwolf, Skandal, Rojo and Campbell Barton<br>
@@ -82,7 +82,7 @@ MD2_MAX_FRAMESIZE=(MD2_MAX_VERTICES * 4 + 128)
 class md2_alias_triangle(object):
 	__slots__ = 'vertices', 'lightnormalindex'
 	binary_format="<3BB" #little-endian (<), 3 Unsigned char
-	
+
 	def __init__(self):
 		self.vertices=[0]*3
 		self.lightnormalindex=0
@@ -105,11 +105,11 @@ class md2_alias_triangle(object):
 		print ""
 
 class md2_face(object):
-	
+
 	binary_format="<3h3h" #little-endian (<), 3 short, 3 short
-	
+
 	__slots__ = 'vertex_index', 'texture_index'
-	
+
 	def __init__(self):
 		self.vertex_index = [ 0, 0, 0 ]
 		self.texture_index = [ 0, 0, 0]
@@ -138,7 +138,7 @@ class md2_face(object):
 class md2_tex_coord(object):
 	__slots__ = 'u', 'v'
 	binary_format="<2h" #little-endian (<), 2 unsigned short
-	
+
 	def __init__(self):
 		self.u=0
 		self.v=0
@@ -221,7 +221,7 @@ class md2_obj(object):
 	'num_tex_coords', 'num_faces', 'num_GL_commands',\
 	'num_frames', 'offset_skins', 'offset_tex_coords',\
 	'offset_faces', 'offset_frames', 'offset_GL_commands'
-	
+
 	'''
 	#Header Structure
 	ident=0				#int 0	This is used to identify the file
@@ -356,7 +356,7 @@ def load_textures(md2, texture_filename):
 		if (Blender.sys.exists(texture_filename)):
 			try:	return Blender.Image.Load(texture_filename)
 			except:	return -1 # could not load?
-			
+
 	#does the model have textures specified with it?
 	if int(md2.num_skins) > 0:
 		for i in xrange(0,md2.num_skins):
@@ -364,15 +364,15 @@ def load_textures(md2, texture_filename):
 			if (Blender.sys.exists(md2.skins[i].name)):
 				try:	return Blender.Image.Load(md2.skins[i].name)
 				except:	return -1
-	
+
 
 def animate_md2(md2, mesh):
 	######### Animate the verts through keyframe animation
-	
+
 	# Fast access to the meshes vertex coords
-	verts = [v.co for v in mesh.verts] 
+	verts = [v.co for v in mesh.verts]
 	scale = g_scale.val
-	
+
 	for i in xrange(1, md2.num_frames):
 		frame = md2.frames[i]
 		#update the vertices
@@ -380,32 +380,32 @@ def animate_md2(md2, mesh):
 			x=(frame.scale[0] * frame.vertices[j].vertices[0] + frame.translate[0]) * scale
 			y=(frame.scale[1] * frame.vertices[j].vertices[1] + frame.translate[1]) * scale
 			z=(frame.scale[2] * frame.vertices[j].vertices[2] + frame.translate[2]) * scale
-			
+
 			#put the vertex in the right spot
 			verts[j][:] = y,-x,z
-			
+
 		mesh.insertKey(i,"absolute")
 		# mesh.insertKey(i)
-		
+
 		#not really necissary, but I like playing with the frame counter
 		Blender.Set("curframe", i)
-	
-	
+
+
 	# Make the keys animate in the 3d view.
 	key = mesh.key
 	key.relative = False
-	
+
 	# Add an IPO to teh Key
 	ipo = Blender.Ipo.New('Key', 'md2')
 	key.ipo = ipo
 	# Add a curve to the IPO
 	curve = ipo.addCurve('Basis')
-	
+
 	# Add 2 points to cycle through the frames.
 	curve.append((1, 0))
 	curve.append((md2.num_frames, (md2.num_frames-1)/10.0))
 	curve.interpolation = Blender.IpoCurve.InterpTypes.LINEAR
-	
+
 
 
 def load_md2(md2_filename, texture_filename):
@@ -434,20 +434,20 @@ def load_md2(md2_filename, texture_filename):
 	DrawProgressBar(0.25,"Loading Vertex Data")
 	frame = md2.frames[0]
 	scale = g_scale.val
-	
+
 	def tmp_get_vertex(i):
 		#use the first frame for the mesh vertices
 		x=(frame.scale[0]*frame.vertices[i].vertices[0]+frame.translate[0])*scale
 		y=(frame.scale[1]*frame.vertices[i].vertices[1]+frame.translate[1])*scale
 		z=(frame.scale[2]*frame.vertices[i].vertices[2]+frame.translate[2])*scale
 		return y,-x,z
-	
+
 	mesh.verts.extend( [tmp_get_vertex(i) for i in xrange(0,md2.num_vertices)] )
 	del tmp_get_vertex
-	
+
 	######## Make the UV list
 	DrawProgressBar(0.50,"Loading UV Data")
-	
+
 	w = float(md2.skin_width)
 	h = float(md2.skin_height)
 	if w <= 0.0: w = 1.0
@@ -455,7 +455,7 @@ def load_md2(md2_filename, texture_filename):
 	#for some reason quake2 texture maps are upside down, flip that
 	uv_list = [Vector(co.u/w, 1-(co.v/h)) for co in md2.tex_coords]
 	del w, h
-	
+
 	######### Make the faces
 	DrawProgressBar(0.75,"Loading Face Data")
 	faces = []
@@ -463,17 +463,17 @@ def load_md2(md2_filename, texture_filename):
 	for md2_face in md2.faces:
 		f = md2_face.vertex_index[0], md2_face.vertex_index[2], md2_face.vertex_index[1]
 		uv = uv_list[md2_face.texture_index[0]], uv_list[md2_face.texture_index[2]], uv_list[md2_face.texture_index[1]]
-		
+
 		if f[2] == 0:
 			# EEKADOODLE :/
 			f= f[1], f[2], f[0]
 			uv= uv[1], uv[2], uv[0]
-		
+
 		#ditto in reverse order with the texture verts
 		faces.append(f)
 		face_uvs.append(uv)
-	
-	
+
+
 	face_mapping = mesh.faces.extend(faces, indexList=True)
 	print len(faces)
 	print len(mesh.faces)
@@ -485,16 +485,16 @@ def load_md2(md2_filename, texture_filename):
 			f.uv = uv
 			if (mesh_image!=-1):
 				f.image=mesh_image
-	
+
 	scn= Blender.Scene.GetCurrent()
 	mesh_obj= scn.objects.new(mesh)
 	animate_md2(md2, mesh)
 	DrawProgressBar(0.98,"Loading Animation Data")
-	
+
 	#locate the Object containing the mesh at the cursor location
 	cursor_pos=Blender.Window.GetCursorPos()
 	mesh_obj.setLocation(float(cursor_pos[0]),float(cursor_pos[1]),float(cursor_pos[2]))
-	DrawProgressBar (1.0, "") 
+	DrawProgressBar (1.0, "")
 	WaitCursor(0)
 
 #***********************************************
@@ -572,7 +572,7 @@ def draw_gui():
 	Button("Load",EVENT_LOAD_MD2 , 10, 10, 80, 18)
 	Button("Exit",EVENT_EXIT , 170, 10, 80, 18)
 
-def event(evt, val):	
+def event(evt, val):
 	if (evt == QKEY and not val):
 		Blender.Draw.Exit()
 

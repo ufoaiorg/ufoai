@@ -123,7 +123,7 @@ function greenecho() {
 	echo -e "\033[1;32m${1}\033[0m"
 }
 
-function failure() 
+function failure()
 {
 	magentaecho "${2}"
 	redecho "${1}"
@@ -132,7 +132,7 @@ function failure()
 	exit 1
 }
 
-function check_error() 
+function check_error()
 {
 	error=${1}
 	errormessage=${2}
@@ -162,9 +162,9 @@ create()
 	echo $(date) > ${LOGFILE_NAME}
 
 	start_downloads
-	
+
 	correctme
-	
+
 	echo -n $environment_ver>"${MINGW_DIR}/bin/WINenvVER"
 
 	echo -n "Used space in ${CODEBLOCKS_DIR}: "
@@ -182,12 +182,12 @@ create()
 		${UN7ZIP} a -t7z -mx=9 ~/${ARCHIVE_NAME} "${CODEBLOCKS_DIR}" || failure "cant create ${ARCHIVE_NAME}" "$what_do_we_try"
 	fi
 	greenecho "codeblock created\nFINISHED"
-	
+
 	echo $(date) >> ${LOGFILE_NAME} 2>&1
 	echo "finished creating $(du -h ~/${ARCHIVE_NAME})"
 }
 
-download() 
+download()
 {
 	mkdir -p "${TEMP_DIR}"
 	mkdir -p "${TARGET_DIR}"
@@ -205,10 +205,10 @@ function download_archive()
 	baseurl=${1}
 	filename=${2}
 	targetname=${3}
-	
+
 	local what_do_we_try="downloading ${filename}..."
 	magentaecho "$what_do_we_try"
-	
+
 	for ((a=0; a<=25; a++))
 	do
 		# if the mirror is down get another mirror
@@ -219,7 +219,7 @@ function download_archive()
 		fi
 	done
 	greenecho "${filename} successfully downloaded"
-	
+
 	extract ${3}
 }
 
@@ -230,9 +230,9 @@ function extract()
 	rm -rf "${EXTRACT_DIR}"
 	${UN7ZIP} l "${DOWNLOAD_DIR}/${1}" || failure "${1} cant be extracted" "$what_do_we_try"
 	greenecho "a 7z extractable archive"
-	
+
 	infooutput "extracting ${1}"
-	
+
 	${UN7ZIP} x -y -o"${EXTRACT_DIR}" "${DOWNLOAD_DIR}/${1}" || failure "unable to extract ${1}" "$what_do_we_try"
 	greenecho "${1} extracted"
 
@@ -240,12 +240,12 @@ function extract()
 	echo "[$isTAR]"
 	if [ -n "$isTAR" ] ;then
 		infooutput "extracting $isTAR"
-	
+
 		${UN7ZIP} x -y -o"${EXTRACT_DIR}" "$isTAR" || failure "unable to extract $isTAR" "$what_do_we_try"
 		rm -f "$isTAR"
 		greenecho "$isTAR extracted"
 	fi
-	
+
 
 	if [ $(echo ${1} | grep -i -c -e "^codeblocks" -e "^7zip" -e "^NSIS.zip$" -e "^rxvt.7z$" -e "^make_UfoAI_win32.7z$") -eq 0 ] ;then
 		infooutput "try to find usable directories"
@@ -273,25 +273,25 @@ function extract()
 						for find_include_array_element in ${find_include_array[@]}
 						do
 							infooutput "found include folder $find_include_array_element"
-							
+
 							local find_include_subdirs=$(eval "find "$find_include_array_element" $exclude_from_find_result -iname "*.h" -type f -exec dirname {} \; | sort | uniq") # look for header files inside the include folder, but exclude things from var exclude_from_find_result
-							if [ -n "$find_include_subdirs" ] ;then				
+							if [ -n "$find_include_subdirs" ] ;then
 								local -a find_include_subdirs_array
 								find_include_subdirs_array=(`echo -e "$find_include_subdirs" | tr '\n' ' '`)
-								
+
 								for find_include_subdirs_array_element in ${find_include_subdirs_array[@]}
 								do
 									infooutput "found include subdirs $find_include_subdirs_array_element"
-									
+
 									if [ "$find_include_subdirs_array_element" != "${EXTRACT_DIR}/include" ] ;then	# if the header files are not inside of ..../include ; in that case we dont need to move things
 										if [ -d "$find_include_subdirs_array_element" ] ;then
 											if [ "$find_include_subdirs_array_element" = "$find_include_array_element" ] ;then	# if the headers are inside of /libs/glib-2.0/include ,and not /include/glib-2.0/gtk
 												infooutput "cp -vR \"$find_include_subdirs_array_element/\"* \"${EXTRACT_DIR}/include\""
-											
+
 												cp -vR "$find_include_subdirs_array_element/"* "${EXTRACT_DIR}/include" || failure "unable to move $find_include_subdirs_array_element" "$what_do_we_try"
 												rm -rf "$find_include_subdirs_array_element"
 												find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
-												
+
 												greenecho "\"$find_include_subdirs_array_element\" moved"
 											else
 												for (( i=0; i<${#include_array[@]}; i++ )) #include_array_element in ${include_array[@]} # hold dirs that must be at mingw/include
@@ -300,22 +300,22 @@ function extract()
 													if [ $( echo $find_include_subdirs_array_element | grep -ice "${include_array[${i}]}$" ) -gt 0 ] ;then # if the subfolder inside of /somwhere/include must stay at mingw/include
 														if [ $(readlink -f "$find_include_subdirs_array_element/..") != "${EXTRACT_DIR}/include" ] ;then # to be shure the directory is'nt copied on itself
 															infooutput "mv -vf \"$find_include_subdirs_array_element\" \"${EXTRACT_DIR}/include\""
-							
+
 															mv -vf "$find_include_subdirs_array_element" "${EXTRACT_DIR}/include" || failure "unable to move $find_include_subdirs_array_element" "$what_do_we_try"
 															rm -rf "$find_include_subdirs_array_element"
 															find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
-															
+
 															greenecho "\"$find_include_subdirs_array_element\" moved"
 														fi
 														break
 													fi
 													if [ $(((i+1))) -eq ${#include_array[@]} ] ;then	# if the folder is not part of mingw/include like /include/cairo then move all things from that folder at mingw/include
 														infooutput "mv -vf \"$find_include_subdirs_array_element/\"* \"${EXTRACT_DIR}/include\""
-						
+
 														mv -vf "$find_include_subdirs_array_element/"* "${EXTRACT_DIR}/include" || failure "unable to move $find_include_subdirs_array_element" "$what_do_we_try"
 														rm -rf "$find_include_subdirs_array_element"
 														find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
-														
+
 														greenecho "\"$find_include_subdirs_array_element/\"* moved"
 													fi
 												done
@@ -331,16 +331,16 @@ function extract()
 					find "${EXTRACT_DIR}" -depth -type d -empty -exec rmdir {} \;
 				fi
 				# END header search and move/copy algo
-				
-				
-				
-				
-				
-				
+
+
+
+
+
+
 				infooutput "copy usable directories"
-								
+
 				local -a array
-				array=(`echo -e "$find_output" | tr '\n' ' '`) 
+				array=(`echo -e "$find_output" | tr '\n' ' '`)
 
 				for s in ${array[@]}
 				do
@@ -357,16 +357,16 @@ function extract()
 		done
 	else
 		infooutput "found codeblocks or 7zip or NSIS or rxvt archive"
-		
+
 		if [ $(echo ${1} | grep -i -c -e "^codeblocks") -gt 0 ] ;then
 			infooutput "try to copy codeblocks files"
-			
+
 			cp -v -R "${EXTRACT_DIR}/"* "${CB_DIR}" || failure "unable to copy codeblocks files" "$what_do_we_try"
 			greenecho "codeblocks copied"
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^7zip") -gt 0 ] ;then
 			infooutput "try to copy 7zip files"
-			
+
 			if [ -e "${EXTRACT_DIR}/7za.exe" ] ;then
 				cp -v -R "${EXTRACT_DIR}/7za.exe" "${MINGW_DIR}/bin" || failure "unable to copy 7za.exe" "$what_do_we_try"
 				greenecho "7za.exe copied"
@@ -382,7 +382,7 @@ function extract()
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^NSIS.zip$") -gt 0 ] ;then
 			infooutput "try to copy NSIS files"
-			
+
 			local makenspath=$(find "${EXTRACT_DIR}" -iname "makensisw.exe" -type f | sed 's/makensisw.exe//gI')
 			if [ -n "$makenspath" ] ;then
 				cp -v -R "$makenspath"* "${NSIS_DIR}" || failure "unable to copy NSIS files" "$what_do_we_try"
@@ -393,13 +393,13 @@ function extract()
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^rxvt.7z$") -gt 0 ] ;then
 			infooutput "try to copy rxvt files"
-			
+
 			cp -v -R "${EXTRACT_DIR}/"* "${MINGW_DIR}" || failure "unable to copy rxvt files" "$what_do_we_try"
 			greenecho "rxvt copied"
 		fi
 		if [ $(echo ${1} | grep -i -c -e "^make_UfoAI_win32.7z$") -gt 0 ] ;then
 			infooutput "try to copy make_UfoAI_win32 files"
-			
+
 			cp -v -R "${EXTRACT_DIR}/"* "${CODEBLOCKS_DIR}" || failure "unable to copy rxvt make_UfoAI_win32" "$what_do_we_try"
 			greenecho "make_UfoAI_win32 copied"
 		fi
@@ -416,7 +416,7 @@ function correctme()
 	#glib-2.0
 #	if [ -f "${MINGW_DIR}/include/glib-2.0/glib.h" ] ;then
 #		infooutput "try to move header for glib-2.0"
-#	
+#
 #		mv -f -v "${MINGW_DIR}/include/glib-2.0/"* "${MINGW_DIR}/include" || failure "unable to move headers" "$what_do_we_try"
 #		greenecho "headers moved"
 #		rm -rf "${MINGW_DIR}/include/glib-2.0"
@@ -511,7 +511,7 @@ function start_downloads()
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ libtheora-mingw32-1.1.1-gcc42.tar.bz2 libtheora.tar.bz2
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ xvidcore-mingw32-1.2.2-gcc42.tar.bz2 xvidcore.tar.bz2
 	download_archive http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-1.1.4-gcc42.tar.bz2 libogg.tar.bz2
-	
+
 #	download_archive http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download_archive http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
 
@@ -545,15 +545,15 @@ function start_downloads()
 	download_archive http://subversion.tigris.org/files/documents/15/46880/ svn-win32-1.6.6.zip svn.zip
 
 	download_archive http://www.libsdl.org/extras/win32/common/ directx-devel.tar.gz directx.tar.gz
-	
+
 	download_archive http://www.meduniwien.ac.at/user/michael.zellhofer/ufoai/ rxvt.7z rxvt.7z
 	download_archive http://www.meduniwien.ac.at/user/michael.zellhofer/ufoai/ make_UfoAI_win32.7z make_UfoAI_win32.7z
 	download_archive http://www.meduniwien.ac.at/user/michael.zellhofer/ufoai/ 7z_sfx.7z 7z_sfx.7z
-	
+
 	download_archive http://downloads.sourceforge.net/nsis/ nsis-2.46.zip NSIS.zip
 }
 
-function exitscript() 
+function exitscript()
 {
 	exit 2
 }
@@ -639,9 +639,9 @@ fi
 #			store a txt file at "${MINGW_DIR}/bin/WINenvVER" containing the version of the last build
 #		changed
 #			changed variable ARCHIVE_NAME, UN7ZIP, TARGET_DIR
-#			changed function failure(), start_downloads(), create(), download(), download_archive(), 
+#			changed function failure(), start_downloads(), create(), download(), download_archive(),
 #			moved global vars topside
-#			removed function extract_ogg(), extract_openal(), extract_gtk(), extract_tools(), extract_sdl(), extract_libcurl(), extract_cunit(), extract_libs(), extract_mingw(), extract_codeblocks(), extract_archive_gz(), extract_archive_bz2(), extract_archive_zip(), extract_archive_7z(), extract_archive_tar7z(), 
+#			removed function extract_ogg(), extract_openal(), extract_gtk(), extract_tools(), extract_sdl(), extract_libcurl(), extract_cunit(), extract_libs(), extract_mingw(), extract_codeblocks(), extract_archive_gz(), extract_archive_bz2(), extract_archive_zip(), extract_archive_7z(), extract_archive_tar7z(),
 #		update package
 #			svn
 #			pango

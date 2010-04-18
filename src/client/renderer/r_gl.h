@@ -64,6 +64,7 @@ void (APIENTRY *qglGetProgramInfoLog)(GLuint id, GLuint maxlen, GLuint *len, GLc
 GLint (APIENTRY *qglGetUniformLocation)(GLuint id, const GLchar *name);
 void (APIENTRY *qglUniform1i)(GLint location, GLint i);
 void (APIENTRY *qglUniform1f)(GLint location, GLfloat f);
+void (APIENTRY *qglUniform2fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform3fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform4fv)(GLint location, int count, GLfloat *f);
 GLint(APIENTRY *qglGetAttribLocation)(GLuint id, const GLchar *name);

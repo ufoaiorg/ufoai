@@ -132,7 +132,7 @@ static int		mxml_write_node(mxml_node_t *node, void *p,
 					_mxml_global_t *global);
 static int		mxml_write_string(const char *s, void *p,
 					  _mxml_putc_cb_t putc_cb);
-static int		mxml_write_ws(mxml_node_t *node, void *p, 
+static int		mxml_write_ws(mxml_node_t *node, void *p,
 			              mxml_save_cb_t cb, int ws,
 				      int col, _mxml_putc_cb_t putc_cb);
 
@@ -571,7 +571,7 @@ mxmlSAXLoadString(
  *
  * The save function accepts a node pointer and must return a malloc'd
  * string on success and NULL on error.
- * 
+ *
  */
 
 void
@@ -763,7 +763,7 @@ mxml_fd_getc(void *p,			/* I  - File descriptor buffer */
 	      return (EOF);
 
 	  ch = *(buf->current)++;
-          
+
 	  if (ch != 0xff)
 	    return (EOF);
 
@@ -782,7 +782,7 @@ mxml_fd_getc(void *p,			/* I  - File descriptor buffer */
 	      return (EOF);
 
 	  ch = *(buf->current)++;
-          
+
 	  if (ch != 0xfe)
 	    return (EOF);
 
@@ -1572,7 +1572,7 @@ mxml_load_data(
         default : /* Ignore... */
 	    node = NULL;
 	    break;
-      }	  
+      }
 
       if (*bufptr)
       {
@@ -2281,7 +2281,7 @@ mxml_parse_element(
 	    if (ch == '&')
 	      if ((ch = mxml_get_entity(node, p, encoding, getc_cb)) == EOF)
 	        goto error;
-	      
+
 	    if (mxml_add_char(ch, &ptr, &value, &valsize))
 	      goto error;
 	  }
@@ -2305,7 +2305,7 @@ mxml_parse_element(
 	    if (ch == '&')
 	      if ((ch = mxml_get_entity(node, p, encoding, getc_cb)) == EOF)
 	        goto error;
-	      
+
 	    if (mxml_add_char(ch, &ptr, &value, &valsize))
 	      goto error;
 	  }
@@ -3117,8 +3117,3 @@ mxml_write_ws(mxml_node_t     *node,	/* I - Current node */
 
   return (col);
 }
-
-
-/*
- * End of "$Id: mxml-file.c 329 2008-01-13 00:42:35Z mike $".
- */

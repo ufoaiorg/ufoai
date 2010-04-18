@@ -50,7 +50,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
 		/* check whether the door is still reachable (this might have
-		 * changed due to the rotation) or whether a actor can reach it now */
+		 * changed due to the rotation) or whether an actor can reach it now */
 		if (!G_TouchTriggers(closeActor))
 			G_ActorSetClientAction(closeActor, NULL);
 	}
@@ -84,7 +84,8 @@ int G_ActorGetReservedTUs (const edict_t *ent)
 
 /**
  * @brief Calculates the amount of usable TUs. This is without the reserved TUs.
- * @param ent The actor to calculate the amount of usable TUs for
+ * @param[in] ent The actor to calculate the amount of usable TUs for. If @c ent is @c NULL, we
+ * return zero here
  * @return The amount of usable TUs for the given actor edict
  */
 int G_ActorUsableTUs (const edict_t *ent)
@@ -98,7 +99,7 @@ int G_ActorUsableTUs (const edict_t *ent)
 /**
  * @brief Calculates the amount of TUs that are needed for the current selected reaction fire mode.
  * @note It's assumed that there is a sane fire mode selected for reaction fire
- * @param ent The actors edict
+ * @param[in] ent The actors edict
  * @return The amount of TUs that are needed for the current selected reaction fire mode.
  */
 int G_ActorGetTUForReactionFire (const edict_t *ent)
@@ -116,6 +117,13 @@ int G_ActorGetTUForReactionFire (const edict_t *ent)
 	return fd[fm->fmIdx].time;
 }
 
+/**
+ * @brief Reserves TUs for different actor actions
+ * @param[in,out] ent The actor to reserve TUs for. Might not be @c NULL.
+ * @param[in] resReaction TUs for reaction fire
+ * @param[in] resShot TUs for shooting
+ * @param[in] resCrouch TUs for going into crouch mode
+ */
 void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouch)
 {
 	if (ent->TU >= resReaction + resShot + resCrouch) {
@@ -243,44 +251,56 @@ void G_ActorSetMaxs (edict_t* ent)
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
-	ent->state &= ~STATE_DAZED;
-	ent->TU = GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+	G_RemoveDazed(ent);
+	G_ActorSetTU(ent, GET_TU(ent->chr.score.skills[ABILITY_SPEED]));
 }
 
-/**
- * @brief Reports and handles death or stun of an actor.
- * @param[in] ent Pointer to an entity being killed or stunned actor.
- * @param[in] state Dead or stunned?
- * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
- * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
- * it should drop only what he has in hands? Stunned actor can wake later during mission.
- * @todo Renameme - stunned actor is not dead actor.
- */
-void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
+void G_ActorSetTU (edict_t *ent, int tus)
+{
+	ent->TU = max(tus, 0);
+}
+
+void G_ActorUseTU (edict_t *ent, int tus)
+{
+	G_ActorSetTU(ent, ent->TU - tus);
+}
+
+static void G_ActorStun (edict_t * ent, const edict_t *attacker)
+{
+	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
+	 * @sa CL_ActorDie */
+	ent->STUN = 0;
+	ent->state = STATE_STUN;
+	if (attacker != NULL)
+		level.num_stuns[attacker->team][ent->team]++;
+}
+
+static void G_ActorDie (edict_t * ent, const edict_t *attacker)
 {
 	assert(ent);
 
 	Com_DPrintf(DEBUG_GAME, "G_ActorDie: kill actor on team %i\n", ent->team);
-	switch (state) {
-	case STATE_DEAD:
-		ent->state |= (1 + rand() % MAX_DEATH);
-		if (attacker != NULL)
-			level.num_kills[attacker->team][ent->team]++;
-		break;
-	case STATE_STUN:
-		/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
-		 * @sa CL_ActorDie */
-		ent->STUN = 0;
-		ent->state = state;
-		if (attacker != NULL)
-			level.num_stuns[attacker->team][ent->team]++;
-		break;
-	default:
-		Com_DPrintf(DEBUG_GAME, "G_ActorDie: unknown state %i\n", state);
-		break;
-	}
+	G_SetState(ent, 1 + rand() % MAX_DEATH);
+	if (attacker != NULL)
+		level.num_kills[attacker->team][ent->team]++;
 	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
 	gi.LinkEdict(ent);
+}
+
+/**
+ * @brief Reports and handles death or stun of an actor. If the HP of an actor is zero the actor
+ * will die, otherwise the actor will get stunned.
+ * @param[in] ent Pointer to an entity being killed or stunned actor.
+ * @param[in] attacker Pointer to attacker - it must be notified about state of victim.
+ * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
+ * it should drop only what he has in hands? Stunned actor can wake later during mission.
+ */
+void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
+{
+	if (ent->HP == 0)
+		G_ActorDie(ent, attacker);
+	else
+		G_ActorStun(ent, attacker);
 
 	level.num_alive[ent->team]--;
 	/* send death */
@@ -374,11 +394,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	originalTU = ent->TU;
 	reservedTU = G_ActorGetReservedTUs(ent);
 	/* Temporary decrease ent->TU to make I_MoveInInventory do what expected. */
-	ent->TU -= reservedTU;
+	G_ActorUseTU(ent, reservedTU);
 	/* Try to actually move the item and check the return value after restoring valid ent->TU. */
 	ia = game.i.MoveInInventory(&game.i, &ent->chr.i, from, fItem, to, tx, ty, checkaction ? &ent->TU : NULL, &ic);
 	/* Now restore the original ent->TU and decrease it for TU used for inventory move. */
-	ent->TU = originalTU - (originalTU - reservedTU - ent->TU);
+	G_ActorSetTU(ent, originalTU - (originalTU - reservedTU - ent->TU));
 
 	switch (ia) {
 	case IA_NONE:
@@ -457,11 +477,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			/* use the backup item to use the old amount values, because the clients have to use the same actions
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
-			G_WriteItem(fItemBackup.item, to, tx, ty);
+			G_WriteItem(&fItemBackup.item, to, tx, ty);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
-		G_WriteItem(item, to, tx, ty);
+		G_WriteItem(&item, to, tx, ty);
 	}
 
 	G_ReactionFireUpdate(ent, ent->chr.RFmode.fmIdx, ent->chr.RFmode.hand, ent->chr.RFmode.weapon);
@@ -474,7 +494,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		}
 		if (INV_IsRightDef(to) || INV_IsLeftDef(to)) {
 			G_EventInventoryAdd(ent, mask, 1);
-			G_WriteItem(item, to, tx, ty);
+			G_WriteItem(&item, to, tx, ty);
 		}
 	}
 	gi.EndEvents();

@@ -226,12 +226,18 @@ static void G_MatchSendResults (int team)
 			attacker = ent;
 	}
 
+	/**
+	 * @todo remove this - we can still start a rescue mission if
+	 * there were stunned actors left.
+	 */
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
 		ent = NULL;
 		while ((ent = G_EdictsGetNextLivingActor(ent)))
-			if (ent->team != team)
-				G_ActorDie(ent, STATE_DEAD, attacker);
+			if (ent->team != team) {
+				ent->HP = 0;
+				G_ActorDieOrStun(ent, attacker);
+			}
 	}
 
 	/* Make everything visible to anyone who can't already see it */

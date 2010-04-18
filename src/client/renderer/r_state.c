@@ -40,7 +40,7 @@ qboolean R_SelectTexture (gltexunit_t *texunit)
 		return qtrue;
 
 	/* not supported */
-	if (texunit->texture >= r_config.maxTextureUnits + GL_TEXTURE0_ARB)
+	if (texunit->texture >= r_config.maxTextureCoords + GL_TEXTURE0_ARB)
 		return qfalse;
 
 	r_state.active_texunit = texunit;
@@ -71,41 +71,32 @@ void R_BindTextureDebug (int texnum, const char *file, int line, const char *fun
 	R_BindTexture_(texnum);
 }
 
-void R_BindLightmapTexture (GLuint texnum)
+void R_BindTextureForTexUnit (GLuint texnum, gltexunit_t *texunit)
 {
-	if (texnum == texunit_lightmap.texnum)
-		return;  /* small optimization to save state changes */
+	/* small optimization to save state changes */
+	if (texnum == texunit->texnum)
+		return;
 
-	R_SelectTexture(&texunit_lightmap);
+	R_SelectTexture(texunit);
 
 	R_BindTexture(texnum);
 
 	R_SelectTexture(&texunit_diffuse);
+}
+
+void R_BindLightmapTexture (GLuint texnum)
+{
+	R_BindTextureForTexUnit(texnum, &texunit_lightmap);
 }
 
 void R_BindDeluxemapTexture (GLuint texnum)
 {
-	if (texnum == texunit_deluxemap.texnum)
-		return;  /* small optimization to save state changes */
-
-	R_SelectTexture(&texunit_deluxemap);
-
-	R_BindTexture(texnum);
-
-	R_SelectTexture(&texunit_diffuse);
+	R_BindTextureForTexUnit(texnum, &texunit_deluxemap);
 }
 
 void R_BindNormalmapTexture (GLuint texnum)
 {
-	/* small optimization to save state changes  */
-	if (texnum == texunit_normalmap.texnum)
-		return;
-
-	R_SelectTexture(&texunit_normalmap);
-
-	R_BindTexture(texnum);
-
-	R_SelectTexture(&texunit_diffuse);
+	R_BindTextureForTexUnit(texnum, &texunit_normalmap);
 }
 
 void R_BindArray (GLenum target, GLenum type, const void *array)
@@ -524,7 +515,7 @@ void R_SetDefaultState (void)
 	R_CheckError();
 
 	/* setup texture units */
-	for (i = 0; i < r_config.maxTextureUnits && i < MAX_GL_TEXUNITS; i++) {
+	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
 		tex->texture = GL_TEXTURE0_ARB + i;
 

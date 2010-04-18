@@ -7,7 +7,7 @@
 #
 
 import os, sys, re
-import os.path 
+import os.path
 
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../../..')
@@ -46,7 +46,7 @@ class Root:
 					# is event alone
 					if value != '...':
 						result.insert(0, value)
-			
+
 			else:
 				if len(result) > 0:
 					value = result.pop(0)
@@ -60,11 +60,11 @@ class Root:
 		data = removeFunctions.sub('\\1\\2\\3\\4\\5{}', data)
 		data = removeOptions.sub('\\1\\2\\3\\4\\5', data)
 		data = '\n\n' + data
-		
+
 		menus = data.split('\nmenu')
 		menus.pop(0)
 		for m in menus:
-			
+
 			m = m.split('{', 1)
 			name = m[0].strip()
 			menu = NodeObject("menu", name)
@@ -83,7 +83,7 @@ class Root:
 				params = m[0][1:]
 				m = m[1].strip()
 				self.parseUFOParam(menu, params)
-			
+
 			# nodes
 			nodes = parseNodes.findall(m)
 			for node in nodes:
@@ -94,7 +94,7 @@ class Root:
 				node.parent = menu
 				menu.addChild(node)
 				self.parseUFOParam(node, param)
-			
+
 			self.nodes.addChild(menu)
 
 	def loadFile(self, filename):
@@ -102,10 +102,10 @@ class Root:
 		file = open(UFOAI_ROOT + '/' + filename, "rt")
 		data = file.read()
 		file.close()
-		
+
 		self.files[filename] = data
 		self.fileBases[filename] = data
-		
+
 		self.parseUFOMenu(data, filename)
 
 	def loadAll(self):
@@ -127,7 +127,7 @@ class Root:
 	def renameMenuParam(self, node, param, newname):
 		menu = node.name
 		filename = node.filename
-	
+
 		data = self.files[filename]
 		match = re.compile(renameMenuParam % (menu, param), re.DOTALL)
 		data = match.sub('\\1' + newname + '\\3', data, 1)
@@ -136,7 +136,7 @@ class Root:
 	def updateMenuParam(self, node, param, value):
 		menu = node.name
 		filename = node.filename
-	
+
 		data = self.files[filename]
 		match = re.compile(updateMenuParam % (menu, param), re.DOTALL)
 		data = match.sub('\\1' + value + '\\3', data, 1)
@@ -145,7 +145,7 @@ class Root:
 	def updateNodeParam(self, node, param, value):
 		menu = node.parent.name
 		filename = node.filename
-	
+
 		data = self.files[filename]
 		match = re.compile(updateNodeParam % (menu, node.behaviour, node.name, param), re.DOTALL)
 		data = match.sub('\\1' + value + '\\3', data, 1)
@@ -154,7 +154,7 @@ class Root:
 	def renameNodeParam(self, node, param, newname):
 		menu = node.parent.name
 		filename = node.filename
-	
+
 		data = self.files[filename]
 		match = re.compile(renameNodeParam % (menu, node.behaviour, node.name, param), re.DOTALL)
 		data = match.sub('\\1' + newname + '\\3', data, 1)
@@ -181,7 +181,7 @@ class NodeObject:
 		elif name == 'size':
 			v = value[1:len(value)-1].split(" ")
 			self.size = (int(v[0]), int(v[len(v)-1]))
-		
+
 		self.param[name] = value
 
 	def __print__(self, level = 0):

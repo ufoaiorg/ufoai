@@ -39,7 +39,7 @@ void R_UseProgram  (r_program_t *prog)
 		qglUseProgram(prog->id);
 
 		if (prog->use)  /* invoke use function */
-			prog->use();
+			prog->use(prog);
 	} else {
 		qglUseProgram(0);
 	}
@@ -108,6 +108,16 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 		return;
 
 	qglUniform1f(v->location, value);
+}
+
+void R_ProgramParameter2fv (const char *name, GLfloat *value)
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	qglUniform2fv(v->location, 1, value);
 }
 
 void R_ProgramParameter3fv (const char *name, GLfloat *value)
@@ -181,7 +191,7 @@ static void R_ShutdownProgram (r_program_t *prog)
 
 	qglDeleteProgram(prog->id);
 
-	memset(prog, 0, sizeof(r_program_t));
+	memset(prog, 0, sizeof(*prog));
 }
 
 void R_ShutdownPrograms (void)
@@ -202,12 +212,23 @@ void R_ShutdownPrograms (void)
 	}
 }
 
+static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in, char **out, size_t *len)
+{
+	size_t inLength = strlen(in);
+	strcpy(*out, in);
+	*out += inLength;
+	*len -= inLength;
+	if (*len < 0)
+		Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
+	return inLength;
+}
+
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
 {
 	char path[MAX_QPATH];
 	byte *buf;
 	int i;
-	const char *hwHack;
+	const char *hwHack, *defines;
 
 	switch (r_config.hardwareType) {
 	case GLHW_ATI:
@@ -228,15 +249,13 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 	i = 0;
 
-	if (hwHack) {
-		size_t hwHackLength = strlen(hwHack);
-		strcpy(out, hwHack);
-		out += hwHackLength;
-		len -= hwHackLength;
-		if (len < 0)
-			Com_Error(ERR_FATAL, "overflow in shader loading '%s'", name);
-		i += hwHackLength;
-	}
+	if (hwHack)
+		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
+
+	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.width);
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
@@ -249,7 +268,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				continue;
 			}
 
-			inc_len = R_PreprocessShader(name,  (const char *)buf, out, len);
+			inc_len = R_PreprocessShader(name, (const char *)buf, out, len);
 			len -= inc_len;
 			out += inc_len;
 			FS_FreeFile(buf);
@@ -368,12 +387,21 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	return sh;
 }
 
-static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
+r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 {
 	r_program_t *prog;
 	unsigned e;
 	int i;
 
+	/* search existing one */
+	for (i = 0; i < MAX_PROGRAMS; i++) {
+		prog = &r_state.programs[i];
+
+		if (!strcmp(prog->name, name))
+			return prog;
+	}
+
+	/* search free slot */
 	for (i = 0; i < MAX_PROGRAMS; i++) {
 		prog = &r_state.programs[i];
 
@@ -415,7 +443,7 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	if (prog->init) {  /* invoke initialization function */
 		R_UseProgram(prog);
 
-		prog->init();
+		prog->init(prog);
 
 		R_UseProgram(NULL);
 	}
@@ -427,7 +455,7 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	return prog;
 }
 
-static void R_InitWorldProgram (void)
+static void R_InitWorldProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
@@ -442,7 +470,7 @@ static void R_InitWorldProgram (void)
 	R_ProgramParameter1f("SPECULAR", 1.0);
 }
 
-static void R_InitMeshProgram (void)
+static void R_InitMeshProgram (r_program_t *prog)
 {
 	static vec3_t lightPos;
 
@@ -453,7 +481,7 @@ static void R_InitMeshProgram (void)
 	R_ProgramParameter1f("OFFSET", 0.0);
 }
 
-static void R_InitWarpProgram (void)
+static void R_InitWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
 
@@ -463,7 +491,7 @@ static void R_InitWarpProgram (void)
 	R_ProgramParameter4fv("OFFSET", offset);
 }
 
-static void R_UseWarpProgram (void)
+static void R_UseWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
 
@@ -471,10 +499,39 @@ static void R_UseWarpProgram (void)
 	R_ProgramParameter4fv("OFFSET", offset);
 }
 
+static void R_InitGeoscapeProgram (r_program_t *prog)
+{
+	static vec4_t defaultColor = {0.0, 0.0, 0.0, 1.0};
+	static vec2_t uvScale = {2.0, 1.0};
+
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 1);
+	R_ProgramParameter1i("SAMPLER2", 2);
+	R_ProgramParameter1i("SAMPLER3", 3);
+	R_ProgramParameter1i("SAMPLER4", 4);
+
+	R_ProgramParameter4fv("defaultColor", defaultColor);
+	R_ProgramParameter2fv("uvScale", uvScale);
+	R_ProgramParameter1f("specularExp", 32.0);
+}
+
+void R_InitParticleProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER0", 0);
+}
+
+void R_UseParticleProgram (r_program_t *prog)
+{
+/*	ptl_t *ptl = (ptl_t *)prog->userdata;*/
+}
+
 void R_InitPrograms (void)
 {
-	if (!qglCreateProgram)
+	if (!qglCreateProgram) {
+		Cvar_Set("r_programs", "0");
+		r_programs->modified = qfalse;
 		return;
+	}
 
 	memset(r_state.shaders, 0, sizeof(r_state.shaders));
 	memset(r_state.programs, 0, sizeof(r_state.programs));
@@ -487,6 +544,7 @@ void R_InitPrograms (void)
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
 	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
+	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 }
 
 /**

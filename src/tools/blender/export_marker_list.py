@@ -50,7 +50,7 @@ def generate_mlist (markerData, printInfo):
 		markerData[previousFrame] = (markerData[previousFrame][0], frame-1)
 		# Remember the previous frame
 		previousFrame = frame
-				
+
 	if (printInfo):
 		print str(frame) + ": Last frame."
 		print str(len(markerData)) + " markers found."

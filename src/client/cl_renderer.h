@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_material.h"
 #include "renderer/r_image.h"
 #include "renderer/r_model.h"
+#include "renderer/r_program.h"
 
 #include <SDL.h>
 
@@ -107,9 +108,10 @@ typedef struct {
 } modelInfo_t;
 
 typedef struct ptlCmd_s {
-	byte cmd;
-	byte type;
-	int ref;	/**< if negative this is relative to the particle, otherwise relative to particle command hunk */
+	byte cmd;	/**< the type of the command - @sa pc_t */
+	byte type;	/**< the type of the data refereced by this particle command */
+	int ref;	/**< This is the location of the data for this particle command. If negative this is relative
+				 * to the particle, otherwise relative to particle command hunk */
 } ptlCmd_t;
 
 typedef struct ptlDef_s {
@@ -131,6 +133,8 @@ typedef struct ptlArt_s {
 typedef struct ptl_s {
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
+
+	r_program_t *program;
 
 	ptlArt_t *pic;			/**< Picture link. */
 	ptlArt_t *model;		/**< Model link. */

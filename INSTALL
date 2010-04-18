@@ -43,7 +43,7 @@ The simplest way to compile this package is:
      `make install_data' to install data files (including the maps).
 
   5. You can remove the program binaries and object files from the
-     source code directory by typing `make clean'.  
+     source code directory by typing `make clean'.
 
 Compilers and Options
 =====================

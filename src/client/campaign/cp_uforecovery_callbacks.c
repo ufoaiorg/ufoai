@@ -59,7 +59,7 @@ typedef enum {
 	ORDER_NATION,
 	ORDER_PRICE,
 	ORDER_HAPPINESS,
-	
+
 	MAX_ORDER
 } ufoRecoveryNationOrder_t;
 

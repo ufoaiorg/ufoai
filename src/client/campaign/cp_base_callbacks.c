@@ -758,7 +758,7 @@ static void BaseSummary_Init (const base_t *base)
 			const aircraft_t *aircraft = production->aircraft;
 			const storedUFO_t *ufo = production->ufo;
 			const char *name;
-			
+
 			if (objDef)
 				name = _(objDef->name);
 			else if (aircraft)

@@ -34,8 +34,8 @@ for object in objects:
 	if object.getType()=="Empty":
 		origin = object.getLocation('worldspace')
 		matrix = object.getMatrix('worldspace')
-		print "Name", object.name 
-		print " Origin:", origin[0], " ",origin[1]," ",origin[2] 
+		print "Name", object.name
+		print " Origin:", origin[0], " ",origin[1]," ",origin[2]
 		print " Matrix:"
 		print "", matrix[0][0], " ",matrix[0][1]," ",matrix[0][2]
 		print "", matrix[1][0], " ",matrix[1][1]," ",matrix[1][2]

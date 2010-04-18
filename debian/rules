@@ -49,7 +49,7 @@ build-arch: stamps/build-arch
 stamps/build-arch: config.status
 	dh_testdir
 
-	$(MAKE) 
+	$(MAKE)
 	$(MAKE) radiant
 
 	mkdir -p stamps
@@ -59,9 +59,7 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	./contrib/scripts/map-get.py upgrade
-	$(MAKE) lang pk3
-	$(MAKE) -C src/docs/tex
+	$(MAKE) installer-pre pdf-manual
 
 	mkdir -p stamps
 	touch $@

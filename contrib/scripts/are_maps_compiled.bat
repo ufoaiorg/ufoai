@@ -11,7 +11,7 @@ cd ..\..
 
 for /R base\maps %%i in (*.map) DO (
 	if NOT EXIST %%~di%%~pi%%~ni.bsp (
-		echo todo: %%i 
+		echo todo: %%i
 	)
 )
 

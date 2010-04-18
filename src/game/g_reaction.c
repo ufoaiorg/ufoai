@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
  * @todo why only right hand?
  */
-static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, const invList_t *invList)
+static int G_ReactionFireGetTUsForItem (const edict_t *ent, const edict_t *target, const invList_t *invList)
 {
 	if (invList && invList->item.m && invList->item.t->weapon
 	 && (!invList->item.t->reload || invList->item.a > 0)) {
@@ -41,10 +41,11 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, con
 		if (ent->chr.RFmode.hand == ACTOR_HAND_RIGHT && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			const fireDefIndex_t fmIdx = ent->chr.RFmode.fmIdx;
+			const int reactionFire = G_PLAYER_FROM_ENT(ent)->reactionLeftover;
 
-			if (fdArray[fmIdx].time + g_reaction_leftover->integer <= ent->TU
+			if (fdArray[fmIdx].time + reactionFire <= ent->TU
 			 && fdArray[fmIdx].range > VectorDist(ent->origin, target->origin)) {
-				return fdArray[fmIdx].time + g_reaction_leftover->integer;
+				return fdArray[fmIdx].time + reactionFire;
 			}
 		}
 	}
@@ -166,7 +167,7 @@ qboolean G_ReactionFireSetDefault (edict_t *ent)
  * @param ent The actor to check
  * @return @c true if the actor is allowed to activate it, @c false otherwise
  */
-qboolean G_CanEnableReactionFire (const edict_t *ent)
+qboolean G_ReactionFireCanBeEnabled (const edict_t *ent)
 {
 	/* check ent is a suitable shooter */
 	if (!ent->inuse || !G_IsLivingActor(ent))
@@ -203,7 +204,7 @@ qboolean G_CanEnableReactionFire (const edict_t *ent)
  * @param[in] target The entity that might be fired at
  * @return @c true if 'ent' can actually fire at 'target', @c false otherwise
  */
-static qboolean G_CanReactionFire (const edict_t *ent, const edict_t *target)
+static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *target)
 {
 	float actorVis;
 	qboolean frustum;
@@ -272,11 +273,11 @@ static void G_ReactionFireSearchTarget (edict_t *target)
 			continue;
 
 		/* check whether reaction fire is possible */
-		if (!G_CanReactionFire(ent, target))
+		if (!G_ReactionFireIsPossible(ent, target))
 			continue;
 
 		/* see how quickly ent can fire (if it can fire at all) */
-		tus = G_GetFiringTUsForItem(ent, target, RIGHT(ent));
+		tus = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
 		if (tus < 0)
 			continue;
 
@@ -346,7 +347,7 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 
 	/* ent can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive */
-	if (!G_CanReactionFire(ent, ent->reactionTarget)) {
+	if (!G_ReactionFireIsPossible(ent, ent->reactionTarget)) {
 		ent->reactionTarget = NULL;
 		return qfalse;
 	}
@@ -362,9 +363,9 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 	level.activeTeam = team;
 
 	/* clear any shakenness */
-	if (tookShot) {
-		ent->state &= ~STATE_SHAKEN;
-	}
+	if (tookShot)
+		G_RemoveShaken(ent);
+
 	return tookShot;
 }
 
@@ -439,14 +440,14 @@ void G_ReactionFirePreShot (const edict_t *target)
 			continue;
 
 		/* can't reaction fire if no TUs to fire */
-		entTUs = G_GetFiringTUsForItem(ent, target, RIGHT(ent));
+		entTUs = G_ReactionFireGetTUsForItem(ent, target, RIGHT(ent));
 		if (entTUs < 0) {
 			ent->reactionTarget = NULL;
 			continue;
 		}
 
 		/* see who won */
-		targTUs = G_GetFiringTUsForItem(target, ent, RIGHT(ent));
+		targTUs = G_ReactionFireGetTUsForItem(target, ent, RIGHT(ent));
 		if (entTUs >= targTUs) {
 			/* target wins, so delay ent */
 			/* target gets the difference in TUs */
@@ -500,7 +501,7 @@ void G_ReactionFireReset (int team)
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, team))) {
 		/** @todo why do we send the state here and why do we change the "shaken"
 		 * state? - see G_MoraleBehaviour */
-		ent->state &= ~STATE_SHAKEN;
+		G_RemoveShaken(ent);
 		ent->reactionTarget = NULL;
 		ent->reactionTUs = 0;
 		ent->reactionNoDraw = qfalse;

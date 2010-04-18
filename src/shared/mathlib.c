@@ -442,6 +442,18 @@ void VectorMidpoint (const vec3_t point1, const vec3_t point2, vec3_t midpoint)
 	VectorScale(midpoint, 0.5f, midpoint);
 }
 
+/**
+ * @brief Calculates the angle (in radians) between the two given vectors.
+ * @note Both vectors must be normalized.
+ * @return the angle in radians.
+ */
+float VectorAngleBetween (const vec3_t vec1, const vec3_t vec2)
+{
+	const float dot = DotProduct(vec1, vec2);
+	const float angle = acos(dot);
+	return angle;
+}
+
 
 int Q_log2 (int val)
 {

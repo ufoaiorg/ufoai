@@ -13,7 +13,7 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
- 
+
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -116,7 +116,7 @@ def needsSplitting(mesh, scale):
 		if dot(fs[0].no, fs[1].cent - fs[0].cent) >= 0:
 			warning('\t\tNeeds splitting: Concave around: %s.' % around((fs[0].cent + fs[1].cent) / 2 / scale, 2))
 			'''
-			# sometimes a handy way to help in fixing those 'where is it concave?' things			
+			# sometimes a handy way to help in fixing those 'where is it concave?' things
 			mesh.mode = Mesh.SelectModes['FACE']
 			fs[0].sel = fs[1].sel = 1
 			mesh = mesh.__copy__()
@@ -125,7 +125,7 @@ def needsSplitting(mesh, scale):
 			sob.link(mesh)
 			'''
 			return True
-		
+
 	'''
 	# check face areas, that's only needed with early coordinates rounding
 	# such checks would only be needed without enlarging coordinates
@@ -213,7 +213,7 @@ def Q2Texture(face):
 
 	# bottom and left edge of the image, or uv unit vectors, in the scene coordinates
 	# (uvs may lie on a line -- noninvertible, *** a better approximation of offset and rotation is needed in such cases)
-	try: 
+	try:
 		units = asarray(edgesImage.I * edgesScene)
 	except LinAlgError:
 		warning('\t\tA texture line to be mapped onto a face, uvs: %s.' % [tuple(around(v, 2)) for v in face.uv])
@@ -225,7 +225,7 @@ def Q2Texture(face):
 	except LinAlgError:
 		error('\t\tBUG: A line face in texture mapping.')
 		return ' 0 0 0 1 1'
-	
+
 	# unscaled scale
 	scale = apply_along_axis(norm, 1, units)
 
@@ -282,7 +282,7 @@ def writeFace(file, face, flags, coordinatesMultiplier, imagePaths, missingImage
 		ps = array([vs[1] - vs[0], vs[2] - vs[1], vs[0] - vs[2]], dtype=longdouble) # some increased precision won't hurt here
 		ps = apply_along_axis(normalize, 1, ps) * coordinatesMultiplier + vs
 	file.write('( %d %d %d ) ( %d %d %d ) ( %d %d %d )' % tuple(around(ravel(ps))))
-	
+
 	# write texture information, it's assumed here that the mesh has an uv layer
 	if face.image:
 		file.write(' %s %s' % (imagePaths[face.image], Q2Texture(face)))
@@ -328,7 +328,7 @@ def writeMesh(file, mesh, scale, quadToleration, splitMethod, splitHeight, minFa
 	# apply object transform to all vertices to get their world coordinates
 	dm.transform(mesh.matrix * scale, recalc_normals=True)
 
-	# round vertices before performing any calculations (goes with writing them verbatim later), 
+	# round vertices before performing any calculations (goes with writing them verbatim later),
 	# this can turn some faces completely, however sometimes is better at avoiding breaks in split meshes
 	if coordinatesMultiplier == 1:
 		for v in dm.verts:
@@ -348,7 +348,7 @@ def writeMesh(file, mesh, scale, quadToleration, splitMethod, splitHeight, minFa
 	if needsSplitting(dm, scale):
 		if splitMethod: # *** just one (not really working) method at the moment :)
 			ms = split(dm)
-		else: 
+		else:
 			warning('\t\tSplitting Disabled!')
 			ms = [dm]
 	else:
@@ -363,7 +363,7 @@ def writeMesh(file, mesh, scale, quadToleration, splitMethod, splitHeight, minFa
 		del ps['flags']
 	else:
 		flags = [0, 0, 0]
-		
+
 	# level visibility
 	if 'levels' in ps:
 		lf = sum(map(lambda x: 1 << x if ps['levels'].find(str(x+1)) != -1 else 0, range(8)))
@@ -426,7 +426,7 @@ def writeModel(file, model, scale, modelsFolder, stats):
 	'''
 	Writes model entity to the file. Path ("model" property) is required and should begin with models/.
 	Adds angles, origin and spawnflags to the defined properties (if not already set).
-	You can use "levels" property as with meshes, overriding spawnflags. 
+	You can use "levels" property as with meshes, overriding spawnflags.
 	'''
 	# check and normalize the path, can be absolute or relative to modelsFolder
 	try:
@@ -450,8 +450,8 @@ def writeModel(file, model, scale, modelsFolder, stats):
 	p = p[len(modelsFolder)+1:]
 
 	# level -- spawnflags
-	l = int(max(0, min(7, floor(model.LocZ / 2)))) 
-	
+	l = int(max(0, min(7, floor(model.LocZ / 2))))
+
 	# define origin and angles (pitch, yaw, roll), update with user-defined game properties
 	ps = dict()
 	ps['origin'] = '%d %d %d' % tuple(around(array(model.loc) * scale))
@@ -478,7 +478,7 @@ def writeModel(file, model, scale, modelsFolder, stats):
 
 def writeEntity(file, entity, scale, stats):
 	'''
-	Write generic entity to the map file. 
+	Write generic entity to the map file.
 	Writes game logic properties as entity properties, adds origin and angle.
 	The classname must be already set as game property is required.
 	'''
@@ -487,7 +487,7 @@ def writeEntity(file, entity, scale, stats):
 	ps['origin'] = '%d %d %d' % tuple(around(array(entity.loc) * scale))
 	ps['angle'] = '%d' % round(entity.RotZ * 180.0 / pi)
 	ps.update(dict((p.name, p.data) for p in entity.game_properties))
-	
+
 	# write it out, including properties
 	file.write('// %s\n{\n' % entity.name)
 	for p in sorted(ps.iteritems()):
@@ -504,7 +504,7 @@ def writeEntity(file, entity, scale, stats):
 			warning('Player spawn with no team set.')
 		stats['teams'] = max(stats['teams'], ps['team'])
 		stats['players'] += 1
-	else: 
+	else:
 		stats['entities'] += 1
 
 
@@ -583,7 +583,7 @@ def export(fileName):
 		return
 
 	Window.WaitCursor(1)
-	
+
 	Window.EditMode(0) # *** reenter if enabled
 
 	st = clock()
@@ -593,9 +593,9 @@ def export(fileName):
 	# written things counters
 	stats = { 'meshes' : 0, 'lights' : 0, 'models' : 0, 'entities' : 0, 'faces' : 0, 'brushes' : 0, 'aliens' : 0, 'humans' : 0, 'players' : 0, 'teams' : 0, 'levels' : 0 }
 
-	# options 
+	# options
 	#	opts = { 'scale' : scaleField.val, 'light' : lightField.val, ...
-	
+
 	# if requested, operate on a deep scene copy
 	if sceneCopyButton.val:
 		sceneToExport = Scene.GetCurrent()
@@ -724,7 +724,7 @@ def export(fileName):
 		warning('Map does not have any multiplier spawns (classname info_player_start).')
 	# *** check some more, any lights?
 
-	# write to disk	    
+	# write to disk
 	file = open(fileName, 'wb')
 	file.write('// Exported on: %s.\n' % datetime.now())
 	file.write('{\n')

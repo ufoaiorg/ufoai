@@ -356,6 +356,7 @@ item sniper_ammo
 			damage		"105 0"
 			dmgweight	normal_heavy
 			reaction	true
+			throughwall 1
 		}
 		firedef
 		{
@@ -375,6 +376,7 @@ item sniper_ammo
 			damage		"105 0"
 			dmgweight	normal_heavy
 			reaction	true
+			throughwall 1
 		}
 	}
 }
@@ -437,6 +439,7 @@ item coilgun_ammo
 			damage		"180 36"
 			dmgweight	normal_heavy
 			reaction	true
+			throughwall 3
 		}
 		firedef
 		{
@@ -456,6 +459,7 @@ item coilgun_ammo
 			damage		"180 36"
 			dmgweight	normal_heavy
 			reaction	true
+			throughwall 3
 		}
 	}
 }
@@ -1919,6 +1923,7 @@ item bolterrifle_ammo
 			damage		"75 10"
 			dmgweight	normal_heavy
 			reaction	true
+			throughwall 2
 		}
 
 		firedef
@@ -1939,6 +1944,7 @@ item bolterrifle_ammo
 			damage		"75 10"
 			dmgweight	normal_heavy
 			reaction	true
+			throughwall 2
 		}
 
 		firedef
@@ -1959,6 +1965,7 @@ item bolterrifle_ammo
 			time				16
 			damage				"75 10"
 			dmgweight			normal_heavy
+			throughwall 2
 		}
 	}
 }

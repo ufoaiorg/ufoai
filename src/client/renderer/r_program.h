@@ -22,14 +22,14 @@
 #ifndef __R_PROGRAM_H__
 #define __R_PROGRAM_H__
 
+#include "r_gl.h"
+
 /* glsl vertex and fragment shaders */
 typedef struct r_shader_s {
 	GLenum type;
 	GLuint id;
 	char name[MAX_QPATH];
 } r_shader_t;
-
-#define MAX_SHADERS 16
 
 #define GL_UNIFORM 1
 #define GL_ATTRIBUTE 2
@@ -49,11 +49,13 @@ typedef struct r_program_s {
 	r_shader_t *v;	/**< vertex shader */
 	r_shader_t *f;	/**< fragment shader */
 	r_progvar_t vars[MAX_PROGRAM_VARS];
-	void (*init)(void);
-	void (*use)(void);
+	void (*init)(struct r_program_s *prog);
+	void (*use)(struct r_program_s *prog);
+	void *userdata;
 } r_program_t;
 
-#define MAX_PROGRAMS 8
+#define MAX_PROGRAMS 16
+#define MAX_SHADERS MAX_PROGRAMS * 2
 
 void R_UseProgram(r_program_t *prog);
 void R_AttributePointer(const char *name, GLuint size, const GLvoid *array);
@@ -63,9 +65,14 @@ void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
 void R_ProgramParameter1f(const char *name, GLfloat value);
 void R_ProgramParameter1i(const char *name, GLint value);
+void R_ProgramParameter2fv(const char *name, GLfloat *value);
 void R_ProgramParameter3fv(const char *name, GLfloat *value);
 void R_ProgramParameter4fv(const char *name, GLfloat *value);
 
+void R_InitParticleProgram(r_program_t *prog);
+void R_UseParticleProgram(r_program_t *prog);
+
+r_program_t *R_LoadProgram(const char *name, void *init, void *use);
 void R_RestartPrograms_f(void);
 
 #endif

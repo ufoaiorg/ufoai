@@ -53,7 +53,7 @@ typedef struct storedUFO_s {
 	storedUFOStatus_t status;
 	/* arrival date (recovery/transfer) */
 	date_t arrive;
-	
+
 	float condition;
 
 	/* installation UFO is stored */

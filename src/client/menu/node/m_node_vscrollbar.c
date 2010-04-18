@@ -359,12 +359,13 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 			MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, description[1],
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 				image);
+			y += description[1];
 		}
 		texY += TILE_HEIGHT;
-		y += description[1];
 
 		/* slider */
 		texX = (houveredElement == 2)?TILE_WIDTH:0;
+
 		/* top slider */
 		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
 			texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
@@ -377,9 +378,9 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 			MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT,
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 				image);
+			y += description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT;
 		}
 		texY += TILE_HEIGHT;
-		y += description[2]-ELEMENT_HEIGHT-ELEMENT_HEIGHT;
 
 		/* bottom slider */
 		MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, ELEMENT_HEIGHT,
@@ -394,9 +395,9 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 			MN_DrawNormImage(pos[0], y, ELEMENT_WIDTH, description[3],
 				texX + ELEMENT_WIDTH, texY + ELEMENT_HEIGHT, texX, texY,
 				image);
+			y += description[3];
 		}
 		texY += TILE_HEIGHT;
-		y += description[3];
 		assert(y == pos[1] + node->size[1] - ELEMENT_HEIGHT);
 
 		/* bottom */

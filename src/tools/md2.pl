@@ -389,7 +389,7 @@ sub md3_update_offsets ($) {
 
 	die "md3_update_offsets only supports MD3 files!.\n"
 		unless (ref($model) eq "MD3");
-	
+
 	$model->set_field('OffsetFrames', $headerSize);
 
 	# Calculate the size of the frames-array and add its size to the header-size (i.e. to the previous offset to the frames.)
@@ -413,18 +413,18 @@ sub md3_update_offsets ($) {
 		my $ofsVerts = $SurfaceHeaderSize;
 
 		$surface->set_field('OffsetShaders', $SurfaceHeaderSize);
-		
+
 		$ofsTris += ($surface->NumShaders * length($surface->MD3_Shader->[0][0])) if ($surface->NumShaders > 0);
 		$surface->set_field('OffsetTris', $ofsTris);
 		$ofsST = $ofsVerts = $ofsTris;
-		
+
 		$ofsST += ($surface->NumTris * length($surface->MD3_Triangle->[0][0])) if ($surface->NumTris > 0);
 		$surface->set_field('OffsetST', $ofsST);
 		$ofsVerts = $ofsST;
-		
+
 		$ofsVerts += ($surface->NumVerts * length($surface->MD3_TexCoord->[0][0])) if ($surface->NumVerts > 0);
 		$surface->set_field('OffsetVerts', $ofsVerts);
-		
+
 		$surface->set_field('OffsetEnd', $surface->size);
 	}
 
@@ -865,10 +865,4 @@ if ($param_action eq 'skinedit') {
 	print "Unknown action: '", $param_action, "'.\n";
 }
 
-
-
 __END__
-
-##########
-# EOF
-##########

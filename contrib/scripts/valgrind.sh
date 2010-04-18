@@ -29,7 +29,7 @@ SUP="${SUP}/valgrind.sup"
 cd ${PATH_ONLY}
 LOG=${PATH_ONLY}/valgrind.log
 
-if [ -f "${SUP}" ] 
+if [ -f "${SUP}" ]
 then
 	echo "Using valgrind suppression file from '${SUP}'"
 	VALGRIND_OPTIONS="${VALGRIND_OPTIONS} --suppressions=${SUP}"

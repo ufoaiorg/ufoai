@@ -504,6 +504,12 @@ void SV_InitGameProgs (void)
 	import.ReadData = SV_ReadData;
 	import.ReadFormat = SV_ReadFormat;
 
+	import.GetConstInt = Com_GetConstInt;
+	import.GetConstIntFromNamespace = Com_GetConstIntFromNamespace;
+	import.GetConstVariable = Com_GetConstVariable;
+	import.RegisterConstInt = Com_RegisterConstInt;
+	import.UnregisterConstVariable = Com_UnregisterConstVariable;
+
 	import.GetCharacterValues = Com_GetCharacterValues;
 
 	import.TagMalloc = SV_TagAlloc;

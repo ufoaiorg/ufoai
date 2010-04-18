@@ -1146,6 +1146,17 @@ void CP_StartSelectedMission (void)
 	CL_CleanTempInventory(base);
 	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
 
+	/* temporarily print a msg while we are hunting the 'No space in inventory' bug.
+	 * Mattn, plz don't apply coding guidlines yet. This is WIP;) Duke, 26.03.10 */
+	{
+		int i = 0;
+		invList_t* slot = cls.i.invUnused;
+		while (slot) {
+			slot = slot->next;
+			i++;
+		}
+		Com_Printf("Free inventory slots: %i\n",i);
+	}
 	CP_StartMissionMap(mis);
 }
 

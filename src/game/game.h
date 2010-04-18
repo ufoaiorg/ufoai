@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/typedefs.h"
 #include "../common/tracing.h"
 
-#define	GAME_API_VERSION	6
+#define	GAME_API_VERSION	7
 
 /** @brief edict->solid values */
 typedef enum {
@@ -199,10 +199,6 @@ typedef struct {
 	int (IMPORT *GetEvent) (void);
 
 	/* network messaging (reading) */
-	/* only use after a call from one of these functions: */
-	/* ClientAction */
-	/* (more to come?) */
-
 	int (IMPORT *ReadChar) (void);
 	int (IMPORT *ReadByte) (void);
 	int (IMPORT *ReadShort) (void);
@@ -214,6 +210,12 @@ typedef struct {
 	float (IMPORT *ReadAngle) (void);
 	void (IMPORT *ReadData) (void *buffer, int size);
 	void (IMPORT *ReadFormat) (const char *format, ...);
+
+	qboolean (IMPORT *GetConstInt) (const char *name, int *value);
+	qboolean (IMPORT *GetConstIntFromNamespace) (const char *space, const char *name, int *value);
+	const char* (IMPORT *GetConstVariable) (const char *space, int value);
+	void (IMPORT *RegisterConstInt) (const char *name, int value);
+	qboolean (IMPORT *UnregisterConstVariable) (const char *name);
 
 	/* misc functions */
 	void (IMPORT *GetCharacterValues) (const char *teamDefinition, character_t *chr);

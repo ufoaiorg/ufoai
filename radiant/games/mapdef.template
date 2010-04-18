@@ -9,7 +9,7 @@ mapdef <yourname>
 	multiplayer	<false|true>
 	maxaliens	<maxaliens>
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor

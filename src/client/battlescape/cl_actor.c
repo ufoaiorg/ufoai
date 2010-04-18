@@ -44,6 +44,7 @@ static cvar_t *confirm_actions;
 /** @brief Player preference: should the server make guys stand for long walks, to save TU. */
 static cvar_t *cl_autostand;
 static cvar_t *cl_showactors;
+static cvar_t *cl_reactionleftover;
 
 /* public */
 le_t *selActor;
@@ -354,7 +355,7 @@ ACTOR SELECTION AND TEAM LIST
 */
 
 /**
- * @brief Adds the actor the the team list.
+ * @brief Adds the actor to the team list.
  * @sa CL_ActorAppear
  * @sa CL_ActorRemoveFromTeamList
  * @param le Pointer to local entity struct
@@ -391,6 +392,7 @@ void CL_ActorCleanup (le_t *le)
 	if (le->pathMap)
 		Mem_Free(le->pathMap);
 	le->pathMap = NULL;
+	cls.i.DestroyInventory(&cls.i, &le->i);
 }
 
 /**
@@ -2493,6 +2495,7 @@ static void CL_ActorConfirmAction_f (void)
 
 void ACTOR_InitStartup (void)
 {
+	cl_reactionleftover = Cvar_Get("cl_reactionleftover", "0", CVAR_USERINFO | CVAR_ARCHIVE, "Minimum TU left over by reaction fire");
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_showactors = Cvar_Get("cl_showactors", "1", 0, "Show actors on the battlefield");

@@ -105,6 +105,8 @@ void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
 
+void R_FreeImage(image_t *image);
+
 image_t *R_LoadImageData(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
 image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);

@@ -146,7 +146,7 @@ static void G_EdictAppear (unsigned int playerMask, const edict_t *ent)
 }
 
 /**
- * @brief Send the appear or perish event the the affected clients
+ * @brief Send the appear or perish event to the affected clients
  * @param[in] playerMask These are the affected players or clients
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
@@ -288,7 +288,7 @@ int G_GetActiveTeam (void)
 }
 
 /**
- * @brief Checks whether the the requested action is possible
+ * @brief Checks whether the requested action is possible
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent Which of his units is trying to do the action.
  * @param[in] TU The time units to check against the ones ent has.
@@ -361,7 +361,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 
 	/* do the turn */
 	G_ActorDoTurn(ent, dir);
-	ent->TU -= TU_TURN;
+	G_ActorUseTU(ent, TU_TURN);
 
 	/* send the turn */
 	G_EventActorTurn(ent);
@@ -419,18 +419,18 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
 		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH)) {
-			ent->state ^= STATE_CROUCHED;
-			ent->TU -= TU_CROUCH;
+			G_ToggleCrouched(ent);
+			G_ActorUseTU(ent, TU_CROUCH);
 			G_ActorSetMaxs(ent);
 		}
 		break;
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
-		if (ent->state & STATE_REACTION) {
+		if (G_IsReaction(ent)) {
 			if (G_IsShaken(ent)) {
 				G_ClientPrintf(player, PRINT_HUD, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
-				ent->state &= ~STATE_REACTION;
+				G_RemoveReaction(ent);
 				G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 			}
 		}
@@ -439,12 +439,12 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	case STATE_REACTION_MANY:
 	case STATE_REACTION_ONCE:
 		/* Disable reaction fire. */
-		ent->state &= ~STATE_REACTION;
+		G_RemoveReaction(ent);
 
-		if (G_ReactionFireSetDefault(ent) && G_CanEnableReactionFire(ent)) {
+		if (G_ReactionFireSetDefault(ent) && G_ReactionFireCanBeEnabled(ent)) {
 			const int TUs = G_ActorGetTUForReactionFire(ent);
 			/* Enable requested reaction fire. */
-			ent->state |= reqState;
+			G_SetState(ent, reqState);
 			G_ActorReserveTUs(ent, TUs, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
 		} else {
 			G_ActorReserveTUs(ent, 0, ent->chr.reservedTus.shot, ent->chr.reservedTus.crouch);
@@ -560,7 +560,7 @@ qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edic
 		return qfalse;
 
 	/* using a group of edicts only costs TUs once (for the master) */
-	actor->TU -= edict->TU;
+	G_ActorUseTU(actor, edict->TU);
 	/* send the new TUs */
 	G_SendStats(actor);
 
@@ -911,7 +911,7 @@ static inline qboolean G_ActorSpawnIsAllowed (const int num, const int team)
  */
 static void G_ThinkActorDieAfterSpawn (edict_t *ent)
 {
-	G_ActorDie(ent, STATE_DEAD, NULL);
+	G_ActorDieOrStun(ent, NULL);
 	ent->think = NULL;
 }
 
@@ -970,6 +970,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	}
 
 	if (ent->spawnflags & STATE_DEAD) {
+		ent->HP = 0;
 		ent->think = G_ThinkActorDieAfterSpawn;
 		ent->nextthink = 1;
 	}
@@ -1100,7 +1101,7 @@ void G_ClientInitActorStates (const player_t * player)
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
 		G_ClientStateChange(player, ent, gi.ReadShort(), qfalse);
-		ent->TU = saveTU;
+		G_ActorSetTU(ent, saveTU);
 		G_ClientStateChangeUpdate(ent);
 	}
 }
@@ -1279,6 +1280,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 
 	s = Info_ValueForKey(userinfo, "cl_autostand");
 	player->autostand = atoi(s);
+
+	s = Info_ValueForKey(userinfo, "cl_reactionleftover");
+	player->reactionLeftover = atoi(s);
 
 	s = Info_ValueForKey(userinfo, "cl_ready");
 	player->isReady = atoi(s);

@@ -95,7 +95,7 @@ typedef enum mxml_type_e		/**** The XML node type. ****/
 typedef void (*mxml_custom_destroy_cb_t)(void *);
 					/**** Custom data destructor ****/
 
-typedef void (*mxml_error_cb_t)(const char *);  
+typedef void (*mxml_error_cb_t)(const char *);
 					/**** Error callback function ****/
 
 typedef struct mxml_attr_s		/**** An XML element attribute value. ****/
@@ -158,7 +158,7 @@ typedef struct mxml_index_s		/**** An XML node index. ****/
 typedef int (*mxml_custom_load_cb_t)(mxml_node_t *, const char *);
 					/**** Custom data load callback function ****/
 
-typedef char *(*mxml_custom_save_cb_t)(mxml_node_t *);  
+typedef char *(*mxml_custom_save_cb_t)(mxml_node_t *);
 					/**** Custom data save callback function ****/
 
 typedef mxml_type_t (*mxml_load_cb_t)(mxml_node_t *);
@@ -167,7 +167,7 @@ typedef mxml_type_t (*mxml_load_cb_t)(mxml_node_t *);
 typedef const char *(*mxml_save_cb_t)(mxml_node_t *, int);
 					/**** Save callback function ****/
 
-typedef void (*mxml_sax_cb_t)(mxml_node_t *, mxml_sax_event_t, void *);  
+typedef void (*mxml_sax_cb_t)(mxml_node_t *, mxml_sax_event_t, void *);
 					/**** SAX callback function ****/
 
 
@@ -298,8 +298,3 @@ extern mxml_type_t	mxml_real_cb(mxml_node_t *node);
 }
 #  endif /* __cplusplus */
 #endif /* !_mxml_h_ */
-
-
-/*
- * End of "$Id: mxml.h 307 2007-09-15 20:03:15Z mike $".
- */

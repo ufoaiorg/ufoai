@@ -112,7 +112,7 @@ def draw_gui():
                                 g_frame_filename.val, 255, "Frame List to load-overrides MD2 defaults")
 	########## Frame List Search Button
 	Button("Search",EVENT_CHOOSE_FRAME,220,55,80,18)
-	
+
 	##########  Texture path to append
 	g_texture_path=String("Texture Path: ", EVENT_NOEVENT, 10,35,210,18,
 														g_texture_path.val,255, "Texture path to prepend")
@@ -126,7 +126,7 @@ def draw_gui():
 	Button("Export",EVENT_SAVE_MD2 , 10, 10, 80, 18)
 	Button("Exit",EVENT_EXIT , 170, 10, 80, 18)
 
-def event(evt, val):	
+def event(evt, val):
 	if (evt == QKEY and not val):
 		Exit()
 
@@ -185,168 +185,168 @@ MD2_FRAME_NAME_LIST=(("stand",1,40),
 					("death2",185,190),
 					("death3",191,198))
 					#198 frames
-					
-MD2_NORMALS=((-0.525731, 0.000000, 0.850651), 
-			(-0.442863, 0.238856, 0.864188), 
-			(-0.295242, 0.000000, 0.955423), 
-			(-0.309017, 0.500000, 0.809017), 
-			(-0.162460, 0.262866, 0.951056), 
-			(0.000000, 0.000000, 1.000000), 
-			(0.000000, 0.850651, 0.525731), 
-			(-0.147621, 0.716567, 0.681718), 
-			(0.147621, 0.716567, 0.681718), 
-			(0.000000, 0.525731, 0.850651), 
-			(0.309017, 0.500000, 0.809017), 
-			(0.525731, 0.000000, 0.850651), 
-			(0.295242, 0.000000, 0.955423), 
-			(0.442863, 0.238856, 0.864188), 
-			(0.162460, 0.262866, 0.951056), 
-			(-0.681718, 0.147621, 0.716567), 
-			(-0.809017, 0.309017, 0.500000), 
-			(-0.587785, 0.425325, 0.688191), 
-			(-0.850651, 0.525731, 0.000000), 
-			(-0.864188, 0.442863, 0.238856), 
-			(-0.716567, 0.681718, 0.147621), 
-			(-0.688191, 0.587785, 0.425325), 
-			(-0.500000, 0.809017, 0.309017), 
-			(-0.238856, 0.864188, 0.442863), 
-			(-0.425325, 0.688191, 0.587785), 
-			(-0.716567, 0.681718, -0.147621), 
-			(-0.500000, 0.809017, -0.309017), 
-			(-0.525731, 0.850651, 0.000000), 
-			(0.000000, 0.850651, -0.525731), 
-			(-0.238856, 0.864188, -0.442863), 
-			(0.000000, 0.955423, -0.295242), 
-			(-0.262866, 0.951056, -0.162460), 
-			(0.000000, 1.000000, 0.000000), 
-			(0.000000, 0.955423, 0.295242), 
-			(-0.262866, 0.951056, 0.162460), 
-			(0.238856, 0.864188, 0.442863), 
-			(0.262866, 0.951056, 0.162460), 
-			(0.500000, 0.809017, 0.309017), 
-			(0.238856, 0.864188, -0.442863), 
-			(0.262866, 0.951056, -0.162460), 
-			(0.500000, 0.809017, -0.309017), 
-			(0.850651, 0.525731, 0.000000), 
-			(0.716567, 0.681718, 0.147621), 
-			(0.716567, 0.681718, -0.147621), 
-			(0.525731, 0.850651, 0.000000), 
-			(0.425325, 0.688191, 0.587785), 
-			(0.864188, 0.442863, 0.238856), 
-			(0.688191, 0.587785, 0.425325), 
-			(0.809017, 0.309017, 0.500000), 
-			(0.681718, 0.147621, 0.716567), 
-			(0.587785, 0.425325, 0.688191), 
-			(0.955423, 0.295242, 0.000000), 
-			(1.000000, 0.000000, 0.000000), 
-			(0.951056, 0.162460, 0.262866), 
-			(0.850651, -0.525731, 0.000000), 
-			(0.955423, -0.295242, 0.000000), 
-			(0.864188, -0.442863, 0.238856), 
-			(0.951056, -0.162460, 0.262866), 
-			(0.809017, -0.309017, 0.500000), 
-			(0.681718, -0.147621, 0.716567), 
-			(0.850651, 0.000000, 0.525731), 
-			(0.864188, 0.442863, -0.238856), 
-			(0.809017, 0.309017, -0.500000), 
-			(0.951056, 0.162460, -0.262866), 
-			(0.525731, 0.000000, -0.850651), 
-			(0.681718, 0.147621, -0.716567), 
-			(0.681718, -0.147621, -0.716567), 
-			(0.850651, 0.000000, -0.525731), 
-			(0.809017, -0.309017, -0.500000), 
-			(0.864188, -0.442863, -0.238856), 
-			(0.951056, -0.162460, -0.262866), 
-			(0.147621, 0.716567, -0.681718), 
-			(0.309017, 0.500000, -0.809017), 
-			(0.425325, 0.688191, -0.587785), 
-			(0.442863, 0.238856, -0.864188), 
-			(0.587785, 0.425325, -0.688191), 
-			(0.688191, 0.587785, -0.425325), 
-			(-0.147621, 0.716567, -0.681718), 
-			(-0.309017, 0.500000, -0.809017), 
-			(0.000000, 0.525731, -0.850651), 
-			(-0.525731, 0.000000, -0.850651), 
-			(-0.442863, 0.238856, -0.864188), 
-			(-0.295242, 0.000000, -0.955423), 
-			(-0.162460, 0.262866, -0.951056), 
-			(0.000000, 0.000000, -1.000000), 
-			(0.295242, 0.000000, -0.955423), 
-			(0.162460, 0.262866, -0.951056), 
-			(-0.442863, -0.238856, -0.864188), 
-			(-0.309017, -0.500000, -0.809017), 
-			(-0.162460, -0.262866, -0.951056), 
-			(0.000000, -0.850651, -0.525731), 
-			(-0.147621, -0.716567, -0.681718), 
-			(0.147621, -0.716567, -0.681718), 
-			(0.000000, -0.525731, -0.850651), 
-			(0.309017, -0.500000, -0.809017), 
-			(0.442863, -0.238856, -0.864188), 
-			(0.162460, -0.262866, -0.951056), 
-			(0.238856, -0.864188, -0.442863), 
-			(0.500000, -0.809017, -0.309017), 
-			(0.425325, -0.688191, -0.587785), 
-			(0.716567, -0.681718, -0.147621), 
-			(0.688191, -0.587785, -0.425325), 
-			(0.587785, -0.425325, -0.688191), 
-			(0.000000, -0.955423, -0.295242), 
-			(0.000000, -1.000000, 0.000000), 
-			(0.262866, -0.951056, -0.162460), 
-			(0.000000, -0.850651, 0.525731), 
-			(0.000000, -0.955423, 0.295242), 
-			(0.238856, -0.864188, 0.442863), 
-			(0.262866, -0.951056, 0.162460), 
-			(0.500000, -0.809017, 0.309017), 
-			(0.716567, -0.681718, 0.147621), 
-			(0.525731, -0.850651, 0.000000), 
-			(-0.238856, -0.864188, -0.442863), 
-			(-0.500000, -0.809017, -0.309017), 
-			(-0.262866, -0.951056, -0.162460), 
-			(-0.850651, -0.525731, 0.000000), 
-			(-0.716567, -0.681718, -0.147621), 
-			(-0.716567, -0.681718, 0.147621), 
-			(-0.525731, -0.850651, 0.000000), 
-			(-0.500000, -0.809017, 0.309017), 
-			(-0.238856, -0.864188, 0.442863), 
-			(-0.262866, -0.951056, 0.162460), 
-			(-0.864188, -0.442863, 0.238856), 
-			(-0.809017, -0.309017, 0.500000), 
-			(-0.688191, -0.587785, 0.425325), 
-			(-0.681718, -0.147621, 0.716567), 
-			(-0.442863, -0.238856, 0.864188), 
-			(-0.587785, -0.425325, 0.688191), 
-			(-0.309017, -0.500000, 0.809017), 
-			(-0.147621, -0.716567, 0.681718), 
-			(-0.425325, -0.688191, 0.587785), 
-			(-0.162460, -0.262866, 0.951056), 
-			(0.442863, -0.238856, 0.864188), 
-			(0.162460, -0.262866, 0.951056), 
-			(0.309017, -0.500000, 0.809017), 
-			(0.147621, -0.716567, 0.681718), 
-			(0.000000, -0.525731, 0.850651), 
-			(0.425325, -0.688191, 0.587785), 
-			(0.587785, -0.425325, 0.688191), 
-			(0.688191, -0.587785, 0.425325), 
-			(-0.955423, 0.295242, 0.000000), 
-			(-0.951056, 0.162460, 0.262866), 
-			(-1.000000, 0.000000, 0.000000), 
-			(-0.850651, 0.000000, 0.525731), 
-			(-0.955423, -0.295242, 0.000000), 
-			(-0.951056, -0.162460, 0.262866), 
-			(-0.864188, 0.442863, -0.238856), 
-			(-0.951056, 0.162460, -0.262866), 
-			(-0.809017, 0.309017, -0.500000), 
-			(-0.864188, -0.442863, -0.238856), 
-			(-0.951056, -0.162460, -0.262866), 
-			(-0.809017, -0.309017, -0.500000), 
-			(-0.681718, 0.147621, -0.716567), 
-			(-0.681718, -0.147621, -0.716567), 
-			(-0.850651, 0.000000, -0.525731), 
-			(-0.688191, 0.587785, -0.425325), 
-			(-0.587785, 0.425325, -0.688191), 
-			(-0.425325, 0.688191, -0.587785), 
-			(-0.425325, -0.688191, -0.587785), 
-			(-0.587785, -0.425325, -0.688191), 
+
+MD2_NORMALS=((-0.525731, 0.000000, 0.850651),
+			(-0.442863, 0.238856, 0.864188),
+			(-0.295242, 0.000000, 0.955423),
+			(-0.309017, 0.500000, 0.809017),
+			(-0.162460, 0.262866, 0.951056),
+			(0.000000, 0.000000, 1.000000),
+			(0.000000, 0.850651, 0.525731),
+			(-0.147621, 0.716567, 0.681718),
+			(0.147621, 0.716567, 0.681718),
+			(0.000000, 0.525731, 0.850651),
+			(0.309017, 0.500000, 0.809017),
+			(0.525731, 0.000000, 0.850651),
+			(0.295242, 0.000000, 0.955423),
+			(0.442863, 0.238856, 0.864188),
+			(0.162460, 0.262866, 0.951056),
+			(-0.681718, 0.147621, 0.716567),
+			(-0.809017, 0.309017, 0.500000),
+			(-0.587785, 0.425325, 0.688191),
+			(-0.850651, 0.525731, 0.000000),
+			(-0.864188, 0.442863, 0.238856),
+			(-0.716567, 0.681718, 0.147621),
+			(-0.688191, 0.587785, 0.425325),
+			(-0.500000, 0.809017, 0.309017),
+			(-0.238856, 0.864188, 0.442863),
+			(-0.425325, 0.688191, 0.587785),
+			(-0.716567, 0.681718, -0.147621),
+			(-0.500000, 0.809017, -0.309017),
+			(-0.525731, 0.850651, 0.000000),
+			(0.000000, 0.850651, -0.525731),
+			(-0.238856, 0.864188, -0.442863),
+			(0.000000, 0.955423, -0.295242),
+			(-0.262866, 0.951056, -0.162460),
+			(0.000000, 1.000000, 0.000000),
+			(0.000000, 0.955423, 0.295242),
+			(-0.262866, 0.951056, 0.162460),
+			(0.238856, 0.864188, 0.442863),
+			(0.262866, 0.951056, 0.162460),
+			(0.500000, 0.809017, 0.309017),
+			(0.238856, 0.864188, -0.442863),
+			(0.262866, 0.951056, -0.162460),
+			(0.500000, 0.809017, -0.309017),
+			(0.850651, 0.525731, 0.000000),
+			(0.716567, 0.681718, 0.147621),
+			(0.716567, 0.681718, -0.147621),
+			(0.525731, 0.850651, 0.000000),
+			(0.425325, 0.688191, 0.587785),
+			(0.864188, 0.442863, 0.238856),
+			(0.688191, 0.587785, 0.425325),
+			(0.809017, 0.309017, 0.500000),
+			(0.681718, 0.147621, 0.716567),
+			(0.587785, 0.425325, 0.688191),
+			(0.955423, 0.295242, 0.000000),
+			(1.000000, 0.000000, 0.000000),
+			(0.951056, 0.162460, 0.262866),
+			(0.850651, -0.525731, 0.000000),
+			(0.955423, -0.295242, 0.000000),
+			(0.864188, -0.442863, 0.238856),
+			(0.951056, -0.162460, 0.262866),
+			(0.809017, -0.309017, 0.500000),
+			(0.681718, -0.147621, 0.716567),
+			(0.850651, 0.000000, 0.525731),
+			(0.864188, 0.442863, -0.238856),
+			(0.809017, 0.309017, -0.500000),
+			(0.951056, 0.162460, -0.262866),
+			(0.525731, 0.000000, -0.850651),
+			(0.681718, 0.147621, -0.716567),
+			(0.681718, -0.147621, -0.716567),
+			(0.850651, 0.000000, -0.525731),
+			(0.809017, -0.309017, -0.500000),
+			(0.864188, -0.442863, -0.238856),
+			(0.951056, -0.162460, -0.262866),
+			(0.147621, 0.716567, -0.681718),
+			(0.309017, 0.500000, -0.809017),
+			(0.425325, 0.688191, -0.587785),
+			(0.442863, 0.238856, -0.864188),
+			(0.587785, 0.425325, -0.688191),
+			(0.688191, 0.587785, -0.425325),
+			(-0.147621, 0.716567, -0.681718),
+			(-0.309017, 0.500000, -0.809017),
+			(0.000000, 0.525731, -0.850651),
+			(-0.525731, 0.000000, -0.850651),
+			(-0.442863, 0.238856, -0.864188),
+			(-0.295242, 0.000000, -0.955423),
+			(-0.162460, 0.262866, -0.951056),
+			(0.000000, 0.000000, -1.000000),
+			(0.295242, 0.000000, -0.955423),
+			(0.162460, 0.262866, -0.951056),
+			(-0.442863, -0.238856, -0.864188),
+			(-0.309017, -0.500000, -0.809017),
+			(-0.162460, -0.262866, -0.951056),
+			(0.000000, -0.850651, -0.525731),
+			(-0.147621, -0.716567, -0.681718),
+			(0.147621, -0.716567, -0.681718),
+			(0.000000, -0.525731, -0.850651),
+			(0.309017, -0.500000, -0.809017),
+			(0.442863, -0.238856, -0.864188),
+			(0.162460, -0.262866, -0.951056),
+			(0.238856, -0.864188, -0.442863),
+			(0.500000, -0.809017, -0.309017),
+			(0.425325, -0.688191, -0.587785),
+			(0.716567, -0.681718, -0.147621),
+			(0.688191, -0.587785, -0.425325),
+			(0.587785, -0.425325, -0.688191),
+			(0.000000, -0.955423, -0.295242),
+			(0.000000, -1.000000, 0.000000),
+			(0.262866, -0.951056, -0.162460),
+			(0.000000, -0.850651, 0.525731),
+			(0.000000, -0.955423, 0.295242),
+			(0.238856, -0.864188, 0.442863),
+			(0.262866, -0.951056, 0.162460),
+			(0.500000, -0.809017, 0.309017),
+			(0.716567, -0.681718, 0.147621),
+			(0.525731, -0.850651, 0.000000),
+			(-0.238856, -0.864188, -0.442863),
+			(-0.500000, -0.809017, -0.309017),
+			(-0.262866, -0.951056, -0.162460),
+			(-0.850651, -0.525731, 0.000000),
+			(-0.716567, -0.681718, -0.147621),
+			(-0.716567, -0.681718, 0.147621),
+			(-0.525731, -0.850651, 0.000000),
+			(-0.500000, -0.809017, 0.309017),
+			(-0.238856, -0.864188, 0.442863),
+			(-0.262866, -0.951056, 0.162460),
+			(-0.864188, -0.442863, 0.238856),
+			(-0.809017, -0.309017, 0.500000),
+			(-0.688191, -0.587785, 0.425325),
+			(-0.681718, -0.147621, 0.716567),
+			(-0.442863, -0.238856, 0.864188),
+			(-0.587785, -0.425325, 0.688191),
+			(-0.309017, -0.500000, 0.809017),
+			(-0.147621, -0.716567, 0.681718),
+			(-0.425325, -0.688191, 0.587785),
+			(-0.162460, -0.262866, 0.951056),
+			(0.442863, -0.238856, 0.864188),
+			(0.162460, -0.262866, 0.951056),
+			(0.309017, -0.500000, 0.809017),
+			(0.147621, -0.716567, 0.681718),
+			(0.000000, -0.525731, 0.850651),
+			(0.425325, -0.688191, 0.587785),
+			(0.587785, -0.425325, 0.688191),
+			(0.688191, -0.587785, 0.425325),
+			(-0.955423, 0.295242, 0.000000),
+			(-0.951056, 0.162460, 0.262866),
+			(-1.000000, 0.000000, 0.000000),
+			(-0.850651, 0.000000, 0.525731),
+			(-0.955423, -0.295242, 0.000000),
+			(-0.951056, -0.162460, 0.262866),
+			(-0.864188, 0.442863, -0.238856),
+			(-0.951056, 0.162460, -0.262866),
+			(-0.809017, 0.309017, -0.500000),
+			(-0.864188, -0.442863, -0.238856),
+			(-0.951056, -0.162460, -0.262866),
+			(-0.809017, -0.309017, -0.500000),
+			(-0.681718, 0.147621, -0.716567),
+			(-0.681718, -0.147621, -0.716567),
+			(-0.850651, 0.000000, -0.525731),
+			(-0.688191, 0.587785, -0.425325),
+			(-0.587785, 0.425325, -0.688191),
+			(-0.425325, 0.688191, -0.587785),
+			(-0.425325, -0.688191, -0.587785),
+			(-0.587785, -0.425325, -0.688191),
 			(-0.688191, -0.587785, -0.425325))
 
 
@@ -375,7 +375,7 @@ class md2_point:
 		print "vertex Z: ", self.vertices[2]
 		print "lightnormalindex: ",self.lightnormalindex
 		print ""
-		
+
 class md2_face:
 	vertex_index=[]
 	texture_index=[]
@@ -404,7 +404,7 @@ class md2_face:
 		print "texture 2 index: ", self.texture_index[1]
 		print "texture 3 index: ", self.texture_index[2]
 		print ""
-		
+
 class md2_tex_coord:
 	u=0
 	v=0
@@ -423,13 +423,13 @@ class md2_tex_coord:
 		print "texture coordinate u: ",self.u
 		print "texture coordinate v: ",self.v
 		print ""
-		
+
 class md2_GL_command:
 	s=0.0
 	t=0.0
 	vert_index=0
 	binary_format="<2fi"
-	
+
 	def __init__(self):
 		self.s=0.0
 		self.t=0.0
@@ -452,11 +452,11 @@ class md2_GL_cmd_list:
 	num=0
 	cmd_list=[]
 	binary_format="<i"
-	
+
 	def __init__(self):
 		self.num=0
 		self.cmd_list=[]
-	
+
 	def save(self,file):
 		data=struct.pack(self.binary_format, self.num)
 		file.write(data)
@@ -482,7 +482,7 @@ class md2_skin:
 		print "MD2 Skin"
 		print "skin name: ",self.name
 		print ""
-		
+
 class md2_frame:
 	scale=[]
 	translate=[]
@@ -516,7 +516,7 @@ class md2_frame:
 		print "translate z: ",self.translate[2]
 		print "name: ",self.name
 		print ""
-		
+
 class md2_obj:
 	#Header Structure
 	ident=0				#int 0	This is used to identify the file
@@ -543,7 +543,7 @@ class md2_obj:
 	frames=[]
 	skins=[]
 	GL_commands=[]
-	
+
 	def __init__ (self):
 		self.tex_coords=[]
 		self.faces=[]
@@ -625,16 +625,16 @@ def validation(object):
 		object.setSize(1.0,1.0,1.0)
 		print "Object is scaled-You should scale the mesh verts, not the object"
 		result=Blender.Draw.PupMenu("Object is scaled-You should scale the mesh verts, not the object")
-		
+
 	if object.rot!=(0.0,0.0,0.0):
 		object.rot=(0.0,0.0,0.0)
 		print "Object is rotated-You should rotate the mesh verts, not the object"
 		result=Blender.Draw.PupMenu("Object is rotated-You should rotate the mesh verts, not the object")
-	
+
 	#get access to the mesh data
 	mesh=object.getData(False, True) #get the object (not just name) and the Mesh, not NMesh
 
-	#check it's composed of only tri's	
+	#check it's composed of only tri's
 	result=0
 	for face in mesh.faces:
 		if len(face.verts)!=3:
@@ -643,15 +643,15 @@ def validation(object):
 			if result==0:  #first time we have this problem, don't pop-up a window every time it finds a quad
 			  print "Model not made entirely of triangles"
 			  result=Blender.Draw.PupMenu("Model not made entirely out of Triangles-Convert?%t|YES|NO")
-	
+
 	#triangulate or quit
 	if result==1:
 		#selecting face mode
 		Blender.Mesh.Mode(3)
-		
+
 		editmode = Window.EditMode()    # are we in edit mode?  If so ...
 		if editmode: Window.EditMode(0) # leave edit mode before getting the mesh
-			
+
 		mesh.quadToTriangle(0) #use closest verticies in breaking a quad
 	elif result==2:
 		return False #user will fix (I guess)
@@ -661,7 +661,7 @@ def validation(object):
 		print "Vertex UV not supported"
 		result=Blender.Draw.PupMenu("Vertex UV not suppored-Use Sticky UV%t|Quit")
 		return False
-			
+
 	elif mesh.faceUV==True:
 		for face in mesh.faces:
 			if(len(face.uv)==3):
@@ -670,7 +670,7 @@ def validation(object):
 				print "Model's vertices do not all have UV"
 				result=Blender.Draw.PupMenu("Model's vertices do not all have UV%t|Quit")
 				return False
-	
+
 	else:
 		print "Model does not have UV (face or vertex)"
 		result=Blender.Draw.PupMenu("Model does not have UV (face or vertex)%t|Quit")
@@ -695,7 +695,7 @@ def validation(object):
 			print "Model has more than 1 texture map assigned"
 			result=Blender.Draw.PupMenu("Model has more than 1 texture map assigned%t|Quit")
 			return False
-		
+
 	size=mesh_image.getSize()
 	#is this really what the user wants
 	if (size[0]!=256 or size[1]!=256):
@@ -705,15 +705,15 @@ def validation(object):
 			return False
 
 	#verify frame list data
-	user_frame_list=get_frame_list()	
+	user_frame_list=get_frame_list()
 	temp=user_frame_list[len(user_frame_list)-1]
 	temp_num_frames=temp[2]
-	
+
 	#verify tri/vert/frame counts are within MD2 standard
 	face_count=len(mesh.faces)
-	vert_count=len(mesh.verts)	
+	vert_count=len(mesh.verts)
 	frame_count=temp_num_frames
-	
+
 	if face_count>MD2_MAX_TRIANGLES:
 		print "Number of triangles exceeds MD2 standard: ", face_count,">",MD2_MAX_TRIANGLES
 		result=Blender.Draw.PupMenu("Number of triangles exceeds MD2 standard: Continue?%t|YES|NO")
@@ -739,21 +739,21 @@ def fill_md2(md2, object):
 	#global defines
 	global user_frame_list
 	global g_texture_path
-	
+
 	Blender.Window.DrawProgressBar(0.25,"Filling MD2 Data")
-	
+
 	#get a Mesh, not NMesh
-	mesh=object.getData(False, True)	
-	
+	mesh=object.getData(False, True)
+
 	#load up some intermediate data structures
 	tex_list={}
 	tex_count=0
 	#create the vertex list from the first frame
 	Blender.Set("curframe", 1)
-	
+
 	#header information
 	md2.ident=844121161
-	md2.version=8	
+	md2.version=8
 	md2.num_vertices=len(mesh.verts)
 	md2.num_faces=len(mesh.faces)
 
@@ -802,7 +802,7 @@ def fill_md2(md2, object):
 			tex_key=(uv_coord[0],uv_coord[1])
 			tex_index=tex_list[tex_key]
 			md2.faces[this_face].texture_index[i]=tex_index
-	
+
 	Blender.Window.DrawProgressBar(0.5, "Computing GL Commands")
 
 	#compute GL commands
@@ -811,7 +811,7 @@ def fill_md2(md2, object):
 	#get the frame data
 	#calculate 1 frame size  + (1 vert size*num_verts)
 	md2.frame_size=40+(md2.num_vertices*4) #in bytes
-	
+
 	#get the frame list
 	user_frame_list=get_frame_list()
 	if user_frame_list=="default":
@@ -819,27 +819,27 @@ def fill_md2(md2, object):
 	else:
 		temp=user_frame_list[len(user_frame_list)-1]  #last item
 		md2.num_frames=temp[2] #last frame number
-	
+
 
 	progress=0.5
 	progressIncrement=0.25/md2.num_frames
 
 	#fill in each frame with frame info and all the vertex data for that frame
 	for frame_counter in range(0,md2.num_frames):
-		
+
 		progress+=progressIncrement
 		Blender.Window.DrawProgressBar(progress, "Calculating Frame: "+str(frame_counter))
-			
+
 		#add a frame
 		md2.frames.append(md2_frame())
 		#update the mesh objects vertex positions for the animation
 		Blender.Set("curframe", frame_counter)  #set blender to the correct frame
 		mesh.getFromObject(object.name)  #update the mesh to make verts current
-		
+
 #each frame has a scale and transform value that gets the vertex value between 0-255
 #since the scale and transform are the same for the all the verts in the frame, we only need
 #to figure this out once per frame
-		
+
 		#we need to start with the bounding box
 		bounding_box=object.getBoundBox() #uses the object, not the mesh data
 		#initialize with the first vertex for both min and max.  X and Y are swapped for MD2 format
@@ -863,16 +863,16 @@ def fill_md2(md2, object):
 		frame_scale_x=(frame_max_x-frame_min_x)/255
 		frame_scale_y=(frame_max_y-frame_min_y)/255
 		frame_scale_z=(frame_max_z-frame_min_z)/255
-		
+
 		#translate value of the mesh to center it on the origin
 		frame_trans_x=frame_min_x
 		frame_trans_y=frame_min_y
 		frame_trans_z=frame_min_z
-		
+
 		#fill in the data
 		md2.frames[frame_counter].scale=(-frame_scale_x, frame_scale_y, frame_scale_z)
 		md2.frames[frame_counter].translate=(-frame_trans_x, frame_trans_y, frame_trans_z)
-		
+
 		#now for the vertices
 		for vert_counter in range(0, md2.num_vertices):
 			#add a vertex to the md2 structure
@@ -892,7 +892,7 @@ def fill_md2(md2, object):
 
 			for j in range(0,162):
 				#dot = (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
-				#swap y and x for difference in axis orientation 
+				#swap y and x for difference in axis orientation
 				x1=-mesh.verts[vert_counter].no[1]
 				y1=mesh.verts[vert_counter].no[0]
 				z1=mesh.verts[vert_counter].no[2]
@@ -902,15 +902,15 @@ def fill_md2(md2, object):
 				if (dot > maxdot):
 					maxdot = dot;
 					maxdotindex = j;
-			
+
 			md2.frames[frame_counter].vertices[vert_counter].lightnormalindex=maxdotindex
-			
+
 			del maxdot, maxdotindex
 			del new_x, new_y, new_z
 		del frame_max_x, frame_max_y, frame_max_z, frame_min_x, frame_min_y, frame_min_z
-		del frame_scale_x, frame_scale_y, frame_scale_z, frame_trans_x, frame_trans_y, frame_trans_z			
-			
-			
+		del frame_scale_x, frame_scale_y, frame_scale_z, frame_trans_x, frame_trans_y, frame_trans_z
+
+
 	#output all the frame names-user_frame_list is loaded during the validation
 	for frame_set in user_frame_list:
 		for counter in range(frame_set[1]-1, frame_set[2]):
@@ -923,7 +923,7 @@ def fill_md2(md2, object):
 	face_size=12*md2.num_faces #3 shorts for vertex index, 3 shorts for tex index
 	frames_size=(((12+12+16)+(4*md2.num_vertices)) * md2.num_frames) #frame info+verts per frame*num frames
 	GL_command_size=md2.num_GL_commands*4 #each is an int or float, so 4 bytes per
-	
+
 	#fill in the info about offsets
 	md2.offset_skins=0+header_size
 	md2.offset_tex_coords=md2.offset_skins+skin_size
@@ -987,7 +987,7 @@ strip_count=0
 ######################################################
 def find_strip_length(md2, start_tri, start_vert):
 	print "Finding strip length"
-	
+
 	global used
 	global strip_verts
 	global strip_st
@@ -996,16 +996,16 @@ def find_strip_length(md2, start_tri, start_vert):
 	m1=m2=0
 
 	used[start_tri]=2
-	
+
 	strip_verts=[0]*0
 	strip_tris=[0]*0
 	strip_st=[0]*0
-	
-	
+
+
 	strip_verts.append(md2.faces[start_tri].vertex_index[start_vert%3])
 	strip_verts.append(md2.faces[start_tri].vertex_index[(start_vert+2)%3])
 	strip_verts.append(md2.faces[start_tri].vertex_index[(start_vert+1)%3])
-	
+
 	strip_st.append(md2.faces[start_tri].texture_index[start_vert%3])
 	strip_st.append(md2.faces[start_tri].texture_index[(start_vert+2)%3])
 	strip_st.append(md2.faces[start_tri].texture_index[(start_vert+1)%3])
@@ -1020,26 +1020,26 @@ def find_strip_length(md2, start_tri, start_vert):
 		for k in range(0,3):
 			if(md2.faces[tri_counter].vertex_index[k]!=m1) or (md2.faces[tri_counter].vertex_index[(k+1)%3]!=m2):
 				pass
-			else: 
+			else:
 				#found a matching edge
 				print "Found a triangle with a matching edge: ", tri_counter
 				if(used[tri_counter]!=0):
 					print "Poop! I can't use it!"
 				else:
 					print "Yeah! I can use it"
-				
+
 					if(strip_count%2==1):  #is this an odd tri
 						print "odd triangle"
 						m2=md2.faces[tri_counter].vertex_index[(k+2)%3]
 					else:
 						print "even triangle"
 						m1=md2.faces[tri_counter].vertex_index[(k+2)%3]
-	
+
 					strip_verts.append(md2.faces[tri_counter].vertex_index[(k+2)%3])
 					strip_st.append(md2.faces[tri_counter].texture_index[(k+2)%3])
 					strip_count+=1
 					strip_tris.append(tri_counter)
-	
+
 					used[tri_counter]=2
 					tri_counter=start_tri+1 # restart looking
 
@@ -1053,12 +1053,12 @@ def find_strip_length(md2, start_tri, start_vert):
 #***********************************************
 def find_fan_length(md2, start_tri, start_vert):
 	print "Finding fan length"
-	
+
 	global used
 	global strip_verts
 	global strip_tris
 	global strip_st
-	
+
 	strip_verts=[0]*0
 	strip_tris=[0]*0
 	strip_st=[0]*0
@@ -1066,11 +1066,11 @@ def find_fan_length(md2, start_tri, start_vert):
 	m1=m2=0
 
 	used[start_tri]=2
-	
+
 	strip_verts.append(md2.faces[start_tri].vertex_index[start_vert%3])
 	strip_verts.append(md2.faces[start_tri].vertex_index[(start_vert+2)%3])
 	strip_verts.append(md2.faces[start_tri].vertex_index[(start_vert+1)%3])
-	
+
 	strip_st.append(md2.faces[start_tri].texture_index[start_vert%3])
 	strip_st.append(md2.faces[start_tri].texture_index[(start_vert+2)%3])
 	strip_st.append(md2.faces[start_tri].texture_index[(start_vert+1)%3])
@@ -1092,43 +1092,43 @@ def find_fan_length(md2, start_tri, start_vert):
 					print "Poop! I can't use it!"
 				else:
 					print "Yeah! I can use it"
-				
+
 					m2=md2.faces[tri_counter].vertex_index[(k+1)%3]
-	
+
 					strip_verts.append(md2.faces[tri_counter].vertex_index[(k+1)%3])
 					strip_st.append(md2.faces[tri_counter].texture_index[(k+1)%3])
-					
+
 					strip_count+=1
 					strip_tris.append(tri_counter)
-	
+
 					used[tri_counter]=2
 					tri_counter=start_tri+1 #restart looking
-				
+
 	#clear used counter
 	for used_counter in range(0, md2.num_faces):
 		if used[used_counter]==2:
 			used[used_counter]=0
-	
+
 	return strip_count
-	
+
 ######################################################
 # Build GL command List
 ######################################################
 def build_GL_commands(md2):
 	print "Building GL Commands"
-	
+
 	global used
 	global strip_verts
 	global strip_tris
 	global strip_st
-	
+
 	#globals initialization
 	used=[0]*md2.num_faces
 	print "Used: ", used
 	num_commands=0
 
 	for tri_counter in range(0,md2.num_faces):
-		if used[tri_counter]!=0: 
+		if used[tri_counter]!=0:
 			print "Found a used triangle: ", tri_counter
 		else:
 			print "Found an unused triangle: ", tri_counter
@@ -1139,7 +1139,7 @@ def build_GL_commands(md2):
 			best_verts=[0]*0
 			best_tris=[0]*0
 			best_st=[0]*0
-			
+
 
 			for start_vert in range(0,3):
 				fan_length=find_fan_length(md2, tri_counter, start_vert)
@@ -1152,12 +1152,12 @@ def build_GL_commands(md2):
 					best_verts=strip_verts
 					best_tris=strip_tris
 					best_st=strip_st
-				
+
 				#strip_length=find_strip_length(md2, tri_counter, start_vert)
 				strip_length=0
 				print "Triangle: ", tri_counter, " Vertex: ", start_vert, " Strip Length: ", strip_length
-		
-				if (strip_length>best_length): 
+
+				if (strip_length>best_length):
 					best_type=0
 					best_length=strip_length
 					best_verts=strip_verts
@@ -1179,12 +1179,12 @@ def build_GL_commands(md2):
 			cmd_list=md2_GL_cmd_list()
 			if best_type==0:
 				cmd_list.num=(-(best_length+2))
-			else:	
+			else:
 				cmd_list.num=best_length+2
 
 			num_commands+=1
 			for command_counter in range(0,best_length+2):
-				cmd=md2_GL_command()										
+				cmd=md2_GL_command()
 				s=md2.tex_coords[best_st[command_counter]].u
 				t=md2.tex_coords[best_st[command_counter]].v
 				cmd.s=s/float(md2.skin_width)
@@ -1194,19 +1194,19 @@ def build_GL_commands(md2):
 				cmd_list.cmd_list.append(cmd)
 			cmd_list.dump()
 			md2.GL_commands.append(cmd_list)
-		
-		print "Used: ", used			
+
+		print "Used: ", used
 
 	#add the null command at the end
-	temp_cmdlist=md2_GL_cmd_list()	
+	temp_cmdlist=md2_GL_cmd_list()
 	temp_cmdlist.num=0
-	md2.GL_commands.append(temp_cmdlist)  
-	num_commands+=1		
+	md2.GL_commands.append(temp_cmdlist)
+	num_commands+=1
 
 	#cleanup and return
 	used=best_vert=best_st=best_tris=strip_vert=strip_st=strip_tris=0
 	return num_commands
-		
+
 
 
 
@@ -1219,9 +1219,9 @@ def save_md2(filename):
 	print "MD2 Export"
 	print "***********************************"
 	print ""
-	
+
 	Blender.Window.DrawProgressBar(0.0,"Begining MD2 Export")
-	
+
 	md2=md2_obj()  #blank md2 object to save
 
 	#get the object
@@ -1246,18 +1246,18 @@ def save_md2(filename):
 	ok=validation(mesh_obj)
 	if ok==False:
 		return
-	
+
 	fill_md2(md2, mesh_obj)
 	md2.dump()
-	
+
 	Blender.Window.DrawProgressBar(1.0, "Writing to Disk")
-	
+
 	#actually write it to disk
 	file=open(filename,"wb")
 	md2.save(file)
 	file.close()
-	
+
 	#cleanup
 	md2=0
-	
+
 	print "Closed the file"

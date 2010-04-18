@@ -642,8 +642,3 @@ index_sort(mxml_index_t *ind,		/* I - Index to sort */
   }
   while (right > (left = tempr + 1));
 }
-
-
-/*
- * End of "$Id: mxml-index.c 184 2005-01-29 07:21:44Z mike $".
- */

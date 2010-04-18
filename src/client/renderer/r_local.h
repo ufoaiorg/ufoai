@@ -148,6 +148,7 @@ typedef struct {
 	const char *extensionsString;
 	int maxTextureSize;
 	int maxTextureUnits;
+	int maxTextureCoords;
 
 	int videoMemory;
 

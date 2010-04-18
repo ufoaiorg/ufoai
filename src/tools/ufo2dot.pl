@@ -157,14 +157,14 @@ sub convertGettextString($) {
 sub skipMultilineComment ($) {
 	my ($d) = @_;
 	my $text = $$d;
-	
+
 	while (not ($text =~ m/^\*\//)) {
 		$text =~ s/^.|\n|\r//;	# Dunno why [.\n\r] doesn't work here ?
 		#print substr($text, 0, 10). "\n";	# DEBUG
 	}
 
 	$text =~ s/^\*\///;
-	
+
 	$$d = $text;
 }
 
@@ -223,25 +223,25 @@ sub parseUfoToken ($) {
 sub parseTechChapters ($) {
 	my ($d) = @_;
 	my $text = $$d;
-	
+
 	my $token = parseUfoToken(\$text);
 	my $chaptersDef = { 'id' => $token};
-	
+
 	$token = parseUfoToken(\$text);
 	if ($token ne '{') {
 		die "parseTechChapters: Empty chapter definition found ('", $token, "').\n";
 	}
-	
+
 
 	$token = parseUfoToken(\$text);
-	while ($token ne '}') {		
+	while ($token ne '}') {
 		my $chapter = { 'id' => $token };
 
 		$token = parseUfoToken(\$text);
 		$chapter->{'name'} = convertGettextString($token);
-		
+
 		$chaptersDef->{$chapter->{'id'}} = $chapter;
-		
+
 		$token = parseUfoToken(\$text);
 	}
 
@@ -384,7 +384,7 @@ sub parseTech ($) {
 				$token = parseUfoToken(\$text);
 				print "Parsed setting '", $setting, "' ... next token: '", $token, "'\n";
 				$parsed = 1;
-				
+
 				# Remove gettext character from string if any.
 				if ($setting eq 'name') {
 					$tech->{$setting} = convertGettextString($tech->{$setting});
@@ -587,13 +587,13 @@ sub parseResearchedList (%$) {
 			my $researchedListID = $token;
 
 			$token = parseUfoToken(\$text);
-			
+
 			if ($token ne '{') {
 				print "parseResearchedList: Empty 'researched' list ('", $token, "'). Abort.\n";
 				exit;
 			}
 			$token = parseUfoToken(\$text);
-			
+
 			if ($token eq '') {
 				print "parseResearchedList: Empty 'researched' list ('", $token, "'). Abort.\n";
 				exit;
@@ -607,7 +607,7 @@ sub parseResearchedList (%$) {
 					$researchedList->{$token} = 1;
 					$token = parseUfoToken(\$text);
 				}
-				
+
 				if ($type eq "researched") {
 					$researched->{$researchedListID} = $researchedList;
 				} else {
@@ -634,13 +634,13 @@ sub parseResearchedList (%$) {
 
 sub skipTech ($) {
 	my ($tech) = @_;
-	
+
 	foreach my $ignore (@{$ignoredTechs}) {
 		if ($tech->{'id'} =~ m/$ignore/) {
 			return 1;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -650,7 +650,7 @@ sub techResearched ($$$) {
 	if (exists($researchedList->{$tech->{'id'}})) {
 		return 1;
 	}
-	
+
 #	if ($tech->{'id'} eq 'rs_advanced_combat_armour') {	#DEBUG
 #		print Dumper($tech);
 #		print Dumper($researchedList);
@@ -663,7 +663,7 @@ sub techResearched ($$$) {
 		if (reqMet($tech, $techs)) {
 			return 1;
 		}
-		
+
 		# researchtime=0, there is at least one requirement (in the AND list) and they are researched as well. (e.g. ammo)
 		if (exists($tech->{'AND'})
 		&& $#{$tech->{'AND'}} >= 0) {
@@ -683,12 +683,12 @@ sub techResearched ($$$) {
 		}
 	}
 	return 0;
-	
+
 }
 
 sub printTechnologyStyle ($$) {
 	my ($FH, $status) = @_;
-	
+
 	if ($status eq 'researchable') {
 		printf $FH "\t".'node [shape=box, color="#00004e99", fillcolor="#00004e99",style=filled, fontcolor=black];'."\n";
 	} elsif ($status eq 'researched') {
@@ -697,7 +697,7 @@ sub printTechnologyStyle ($$) {
 		# To be researched later on after req. are met.
 		printf $FH "\t".'node [shape=box, color="#004e0099", fillcolor="#004e0099", style=filled, fontcolor=black];'."\n";
 	}
-	
+
 }
 
 sub printTech ($$$) {
@@ -710,7 +710,7 @@ sub printTech ($$$) {
 	} else {
 		$name = $tech->{'id'};
 	}
-	
+
 	# Add note for automatically researched techs such as most ammo.
 	if (exists($tech->{'time'})) {
 		if ($tech->{'time'} == 0) {
@@ -721,16 +721,16 @@ sub printTech ($$$) {
 	}
 
 	my $additionalOptions = '';
-	
+
 	if ($tech->{'type'} eq 'logic') {
 		$additionalOptions .= ', color="red"';
 	}
-	
+
 	if ((exists($tech->{'description'}) && descNumber($tech, 'description', $techs) > 1)
 	||  (exists($tech->{'pre_description'}) && descNumber($tech, 'pre_description', $techs) > 1)) {
 		$name = '{ '. $name;
 		$additionalOptions .= ', shape=record';
-		
+
 		if (descNumber($tech, 'pre_description', $techs) > 1) {
 			$name .= "|Research Proposal";
 #print Dumper($tech->{'pre_description'}); # DEBUG
@@ -759,13 +759,13 @@ sub printTech ($$$) {
 		}
 		$name .= '}'
 	}
-	
+
 	printf $FH "\t\t".$tech->{'id'}.' [label="'.$name.'"'. $additionalOptions .'];'."\n";
 }
 
 sub descNumber($$$) {
 	my ($tech, $descType, $techs) = @_;
-	
+
 	if (exists($tech->{$descType})) {
 		my $numDesc = $#{$tech->{$descType}};
 		if ($numDesc >= 0) {
@@ -773,7 +773,7 @@ sub descNumber($$$) {
 				if ($desc->{'id'} ne 'default' && skipTech($techs->{$desc->{'id'}})) {
 					# Reduce number of requirements if there is an unwanted tech inside.
 					$numDesc--;
-				}			
+				}
 			}
 		}
 		if ($numDesc >= 0) {
@@ -785,7 +785,7 @@ sub descNumber($$$) {
 
 sub reqExists($$$) {
 	my ($tech, $reqType, $techs) = @_;
-	
+
 	if (exists($tech->{$reqType}) and $#{$tech->{$reqType}} >= 0) {
 		my $numReq = $#{$tech->{$reqType}};
 		foreach my $req (@{$tech->{$reqType}}) {
@@ -794,7 +794,7 @@ sub reqExists($$$) {
 			and skipTech($techs->{$req->{'value1'}})) {
 				$numReq--;
 			}
-			
+
 		}
 		if ($numReq >= 0) {
 			return 1;
@@ -805,13 +805,13 @@ sub reqExists($$$) {
 
 sub reqMet($$) {
 	my ($tech, $techs) = @_;
-	
+
 	my $orHasReqs = (exists($tech->{'OR'}) and $#{$tech->{'OR'}} >= 0);
 	my $andHasReqs = (exists($tech->{'AND'}) and $#{$tech->{'AND'}} >= 0);
 	if (!$orHasReqs && !$andHasReqs) {
 		return 1;
 	}
-	
+
 	if (reqExists($tech, 'OR', $techs)
 	 || reqExists($tech, 'AND', $techs)) {
 		return 0;
@@ -820,7 +820,7 @@ sub reqMet($$) {
 	}
 }
 
-sub getReqNotStyle () {	
+sub getReqNotStyle () {
 	my $color = "#ffb14199";	# TODO fix color
 	return 'shape=ellipse, label="NOT", color="'.$color.'", fillcolor="'.$color.'",style=filled, fontcolor=black';
 }
@@ -879,14 +879,14 @@ sub printTechGroup ($$$) {
 
 	my $hasOR = reqExists($tech, 'OR', $techs);
 	my $hasAND = reqExists($tech, 'AND', $techs);
-	
+
 	if (!$hasOR and !$hasAND) {
 		return;
 	}
 
-	
+
 if (0) {	# subgraphs just do not help anybody here
-	# subgraph techID_C { 
+	# subgraph techID_C {
 	printf $FH "\t".'subgraph cluster_'.$tech->{'id'}.' { ';
 }
 	if ($hasOR) {
@@ -948,12 +948,12 @@ sub printTechLinks ($$$) {
 			printf $FH "\t".'alienglobal -> '.$tech->{'id'}.'_OR [label="'. $req->{'value1'} .'"]'."\n";
 		}
 	}
-	
+
 	# Back-link to provided items if the otpion was set.
 	if ($useProvidesInfo) {
 		if (exists($tech->{'provides'})
 		&& ($tech->{'type'} eq 'weapon' || $tech->{'type'} eq 'armour')) {
-			printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." [constraint=false]; /* Provided */\n";	
+			printf $FH "\t".$tech->{'id'}.' -> '.$tech->{'provides'}." [constraint=false]; /* Provided */\n";
 		}
 	}
 }
@@ -996,7 +996,7 @@ sub writeDotFile(%$) {
 		}
 	}
 	printf $DOT "\n";
-	
+
 	printf $DOT "/* Technology boxes (researched techs) */\n";
 	printTechnologyStyle($DOT, 'researched');
 	foreach $techId (keys %{$techs}) {
@@ -1007,7 +1007,7 @@ sub writeDotFile(%$) {
 		}
 	}
 	printf $DOT "\n";
-	
+
 	printf $DOT "/* Technology boxes (unresearched/open techs) */\n";
 	printTechnologyStyle($DOT, 'open');
 	foreach $techId (keys %{$techs}) {
@@ -1060,7 +1060,7 @@ sub writeDotFile(%$) {
 		printAlien($alien, 'alien', $DOT);
 	}
 	printf $DOT "\n";
-	
+
 	# Draw (dead) alien boxes
 	printf $DOT "/* Dead alien boxes */\n";
 	printAlienStyle($DOT);
@@ -1139,6 +1139,3 @@ $tree = parseResearchedList($tree, $filenameResearched);
 
 #$useProvidesInfo = 1;	# Activate to draw "provides" links
 writeDotFile($tree, $filenameDot);
-
-#############
-# EOF

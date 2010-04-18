@@ -10,7 +10,7 @@ import sys
 from Tkinter import *
 from UFOMenuAPI import Root
 
-#print "Python version", sys.version_info 
+#print "Python version", sys.version_info
 
 # @brief Window to view an UFOAI window
 class View(Toplevel):
@@ -32,7 +32,7 @@ class View(Toplevel):
 
 		self.canvas.delete(ALL)
 		menu = self.parent.content.nodes.childname[name]
-		
+
 		menux, menuy, x2, y2 = 0, 0, 1024, 768
 		if menu.existsParam("pos") and menu.existsParam("size"):
 			menux, menuy = menu.pos
@@ -48,11 +48,11 @@ class View(Toplevel):
 			w, h = node.size
 			x2, y2 = x + w, y + h
 			self.canvas.create_rectangle(x, y, x2, y2, outline="black")
-	
+
 	def close(self):
 		self.parent.view = None
 		self.destroy()
-	
+
 # @brief Main window to select UFOAI windows
 class Application(Tk):
 	def __init__(self, parent):
@@ -73,7 +73,7 @@ class Application(Tk):
 		scroll.config(command=list.yview)
 		list.config(yscrollcommand=scroll.set)
 		self.list = list
-		
+
 		button = Button(self, text="Next", command=self.next)
 		button.pack(side=TOP)
 		#button = Button(self, text="Save")
@@ -82,7 +82,7 @@ class Application(Tk):
 		button.pack(side=TOP)
 
 		list.bind("<Double-Button-1>", self.updateView)
-		
+
 		self.view = None
 
 	def viewInitialize(self):
@@ -93,7 +93,7 @@ class Application(Tk):
 	def updateView(self, event):
 		self.viewInitialize()
 		self.view.update()
-		
+
 	def next(self):
 		sel = self.list.curselection()
 		i = -1

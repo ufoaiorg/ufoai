@@ -28,13 +28,13 @@ sub find_msgstr {
 	while (<TRUNKFILE>) {
 			unless (/^msgid "$msgid"$/i) {
 				next;
-			}	
+			}
 			$test=1;
 			last;
 	}
 	while (($trunk_line=<TRUNKFILE>) && $test) {
 		if ($trunk_line =~ /^msgstr "(.*)"$/) {
-			$test=2;	
+			$test=2;
 			last
 		}
 	}
@@ -83,6 +83,6 @@ while (<PATCHFILE>) {     # each line is successively affected to $_
 }
 
 print "\n";
-    
+
 close PATCHFILE;
 close OUTFILE;

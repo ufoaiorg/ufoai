@@ -224,23 +224,23 @@ class MD2:
 		self.basename = basename
 		self.object = None
 		return
-	
+
 	def setObject(self, object):
 		self.object = object
-	
+
 	def write(self, filename):
 		self.ident = 'IDP2'
 		self.version = 8
-		
+
 		self.skinwidth = 2**10-1
 		self.skinheight = 2**10-1
-		
+
 		# self.framesize : see below
-		
+
 		mesh = self.object.getData(mesh=True)
-		
+
 		skins = Util.getSkins(mesh)
-		
+
 		self.num_skins = len(skins)
 		self.num_xyz = len(mesh.verts)
 		self.num_st = len(mesh.faces)*3
@@ -251,16 +251,16 @@ class MD2:
 			                    - Blender.Get('staframe')
 		else:
 			self.num_frames = 1
-		
+
 		self.framesize = 40+4*self.num_xyz
-		
+
 		self.ofs_skins = 68 # size of the header
 		self.ofs_st = self.ofs_skins + 64*self.num_skins
 		self.ofs_tris = self.ofs_st + 4*self.num_st
 		self.ofs_frames = self.ofs_tris + 12*self.num_tris
 		self.ofs_glcmds = self.ofs_frames + self.framesize*self.num_frames
 		self.ofs_end = self.ofs_glcmds + 4*self.num_glcmds
-		
+
 		file = open(filename, 'wb')
 		try:
 			bin = struct.pack('<4s16i',
@@ -282,19 +282,19 @@ class MD2:
 			                  self.ofs_glcmds,
 			                  self.ofs_end)
 			file.write(bin) # header
-			
+
 			for skin in skins:
 				if len(skin) > 63 or self.basename:
 					skin = Blender.sys.basename(skin)
 				bin = struct.pack('<64s', skin[0:63])
 				file.write(bin) # skin name
-			
+
 			for face in mesh.faces:
 				try:
 					uvs = face.uv
 				except:
 					uvs = ([0,0],[0,0],[0,0])
-				
+
 				# (u,v) in blender -> (u,1-v)
 				bin = struct.pack('<6h',
 				                  uvs[0][0]*self.skinwidth,
@@ -306,7 +306,7 @@ class MD2:
 				                  )
 				file.write(bin) # uv
 				# (uv index is : face.index*3+i)
-			
+
 			for face in mesh.faces:
 				# 0,2,1 for good cw/ccw
 				bin = struct.pack('<3h',
@@ -321,14 +321,14 @@ class MD2:
 				                  face.index*3 + 1,
 				                  )
 				file.write(bin) # uv index
-			
+
 			if self.anim:
 				min = None
 				max = None
 				for frame in range(1, self.num_frames+1):
 					Blender.Set('curframe', frame)
 					(min, max) = self.findMinMax(min, max)
-					
+
 				timeLine = Blender.Scene.GetCurrent().getTimeLine()
 				frameNames = timeLine.getMarked()
 				name = 'frame'
@@ -347,7 +347,7 @@ class MD2:
 			else:
 				(min, max) = self.findMinMax()
 				self.outFrame(file, min, max)
-			
+
 			# gl commands
 			for face in mesh.faces:
 				try:
@@ -369,13 +369,13 @@ class MD2:
 			file.write(bin)
 		finally:
 			file.close()
-	
+
 	def findMinMax(self, min=None, max=None):
 		mesh = Blender.Mesh.New()
 		mesh.getFromObject(self.object.name)
 		mesh.transform(self.object.getMatrix())
 		mesh.transform(Blender.Mathutils.RotationMatrix(90, 4, 'z')) # Hoehrer: rotate 90 degrees
-		
+
 		if min == None:
 			min = [mesh.verts[0].co[0],
 			       mesh.verts[0].co[1],
@@ -384,22 +384,22 @@ class MD2:
 			max = [mesh.verts[0].co[0],
 			       mesh.verts[0].co[1],
 			       mesh.verts[0].co[2]]
-		
+
 		for vert in mesh.verts:
 			for i in range(3):
 				if vert.co[i] < min[i]:
 					min[i] = vert.co[i]
 				if vert.co[i] > max[i]:
 					max[i] = vert.co[i]
-		
+
 		return (min, max)
-	
+
 	def outFrame(self, file, min, max, frameName = 'frame'):
 		mesh = Blender.Mesh.New()
 		mesh.getFromObject(self.object.name)
 		mesh.transform(self.object.getMatrix())
 		mesh.transform(Blender.Mathutils.RotationMatrix(90, 4, 'z')) # Hoehrer: rotate 90 degrees
-		
+
 		bin = struct.pack('<6f16s',
 		                  self.object.getSize()[0]*(max[0]-min[0])/255.,
 		                  self.object.getSize()[1]*(max[1]-min[1])/255.,
@@ -417,7 +417,7 @@ class MD2:
 				if (i==0) or (dot > maxDot):
 					maxDot = dot
 					bestNormalIndex = i
-			
+
 			bin = struct.pack('<4B',
 			                  int((vert.co[0]-min[0])/(max[0]-min[0])*255.),
 			                  int((vert.co[1]-min[1])/(max[1]-min[1])*255.),
@@ -430,7 +430,7 @@ class Util:
 	def pickName():
 		name = '_MD2Obj_'+str(random.random())
 		return name[0:20]
-	
+
 	@staticmethod
 	def duplicateObject(object, name):
 		object.select(True)
@@ -440,14 +440,14 @@ class Util:
 		object = Blender.Object.GetSelected()[0]
 		object.setName(name)
 		return object
-	
+
 	@staticmethod
 	def getTriangMesh(object):
 		mesh = object.getData(mesh=True)
 		mesh.sel = True
 		mesh.quadToTriangle()
 		return mesh
-	
+
 	@staticmethod
 	def getSkins(mesh):
 		skins = []
@@ -465,27 +465,27 @@ class ObjectInfo:
 		self.verts = -1
 		self.faces = -1
 		self.status = ('','')
-		
+
 		self.ismesh = object and object.getType() == 'Mesh'
-		
+
 		if self.ismesh:
 			originalObject = object
-			
+
 			mesh = object.getData(mesh=True)
-			
+
 			self.skins = Util.getSkins(mesh)
-			
+
 			for face in mesh.faces:
 				if len(face) == 4:
 					self.triang = True
 					break
-			
+
 			tmpObjectName = Util.pickName()
 			try:
 				if self.triang:
 					object = Util.duplicateObject(object, tmpObjectName)
 					mesh = Util.getTriangMesh(object)
-				
+
 				self.status = (str(len(mesh.verts)) + ' vertices',
 							str(len(mesh.faces)) + ' faces')
 			finally:
@@ -502,32 +502,32 @@ class GUI:
 	id_basename = 6
 	val_anim     = True
 	val_basename = True
-	
+
 	str_export = 'Export to MD2...'
-	
+
 	def __init__(self):
 		try:
 			self.object = Blender.Object.GetSelected()[0]
 		except:
 			self.object = None
-		
+
 		self.info = ObjectInfo(self.object)
-	
+
 	def draw(self):
 		(width, height) = Blender.Window.GetAreaSize()
-		
+
 		# export - cancel - help
 		eWidth = Blender.Draw.GetStringWidth(self.str_export)+20
 		if self.info.ismesh:
 			Blender.Draw.PushButton(self.str_export, self.id_export,
 			                        width-eWidth-11, height-37, eWidth, 21)
-		
+
 		Blender.Draw.PushButton('Cancel', self.id_cancel,
 		                        width-eWidth-11, height-37-24, eWidth, 21)
-		
+
 		Blender.Draw.PushButton('Help', self.id_help,
 		                        width-eWidth-11, height-100, eWidth, 21)
-		
+
 		# *n* frames - export animation
 		left    = width-eWidth-140
 		farLeft = left-120
@@ -567,18 +567,18 @@ class GUI:
 				status = '- No need to triangulate'
 			Blender.Draw.Label(status,
 			                   left, height-150, width-left, 20)
-			
+
 			for i in range(len(self.info.status)):
 				Blender.Draw.Label('- ' + self.info.status[i],
 				                   left, height-150-(i+1)*15,
 				                   width-left, 20)
-			
+
 		else:
 			status = 'Not a mesh!'
 			Blender.Draw.Label(status,
 			                   width-Blender.Draw.GetStringWidth(status)-40,
 			                   height-37, eWidth, 21)
-	
+
 	def button_event(self, evt):
 		if evt == self.id_export:
 			Blender.Window.FileSelector(self.export, self.str_export,
@@ -594,34 +594,34 @@ class GUI:
 			Blender.Draw.Redraw()
 		if evt == self.id_help:
 			Blender.ShowHelp('export_md2_new.py')
-	
+
 	def export(self, filename):
-		
+
 		if Blender.sys.exists(filename) == 1:
 			overwrite = Blender.Draw.PupMenu('File already exists, overwrite?%t|Yes%x1|No%x0')
 			if overwrite == 0:
 				return
-		
+
 		Blender.Window.WaitCursor(True)
-		
+
 		object = self.object
 		originalObject = object
-		
+
 		if object.getType() != 'Mesh':
 			raise NameError, 'Selected object must be a mesh!'
-		
+
 		# different name each time or we can't unlink it later
 		tmpObjectName = Util.pickName()
-		
+
 		mesh = object.getData(mesh=True)
-		
+
 		if self.info.triang:
 			object = Util.duplicateObject(object, tmpObjectName)
 			mesh = Util.getTriangMesh(object)
-		
+
 		if self.val_anim:
 			frame = Blender.Get('curframe')
-		
+
 		try:
 			md2 = MD2(self.val_anim, self.val_basename)
 			md2.setObject(object)

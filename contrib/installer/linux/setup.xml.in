@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<install
+ product="ufoai"
+ desc="UFO: Alien Invasion"
+ version="@VERSION@"
+ promptbinaries="yes"
+ express="no"
+ category="Games"
+ superuser="no"
+ reinstall="yes"
+ reinstallnowarning="no"
+ nopromptoverwrite="yes"
+ splashpos="top"
+ nomenuitems="no"
+ reinstallfast="yes"
+ update_url="http://ufoai.ninex.info/updates/updates.txt"
+>
+
+ <readme>
+  README
+ </readme>
+
+ <eula>
+  ../../../../COPYING
+ </eula>
+
+ <component name="UFO:Alien Invasion gamedata" version="@VERSION@" default="yes">
+  <option install="true" required="true" size="@SIZE@">
+   Base Install
+   <help>
+    Required for play
+   </help>
+   <files>
+    data.tar
+    i18n.tar.bz2
+   </files>
+  </option>
+ </component>
+
+ <component arch="x86_64" name="x86_64" version="@VERSION@">
+  <option arch="x86_64" install="true">
+   64 bit binaries
+   <binary arch="any" libc="any" binpath="bin/ufoai" symlink="ufoai"
+          icon="ufo.xpm" name="UFO: Alien Invasion 64-bit" menu="Games" desc="UFO: Alien Invasion" play="gui">
+    ufoai
+   </binary>
+   <files>
+    ufo-x86_64.tar.bz2
+    ufo.xpm
+   </files>
+  </option>
+ </component>
+
+ <component if="|(x86,x86_64)" name="i386" version="@VERSION@">
+  <option arch="any" install="true">
+   32 bit binaries
+   <binary arch="any" libc="any" binpath="bin/ufoai" symlink="ufoai"
+          icon="ufo.xpm" name="UFO: Alien Invasion" menu="Games" desc="UFO: Alien Invasion">
+    ufoai
+   </binary>
+   <files>
+    ufo-x86.tar.bz2
+   </files>
+  </option>
+ </component>
+</install>

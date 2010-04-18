@@ -920,9 +920,12 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
-	vec4_t lightPos;
-	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 2.0f};
+	vec4_t sunPos, antiSunPos;
+	const vec4_t darknessLightColor = {0.0f, 0.0f, 0.0f, 1.0f};
+	const vec4_t diffuseLightColor = {2.0f, 2.0f, 2.0f, 1.0f};
 	const vec4_t ambientLightColor = {ambient + 0.2f, ambient + 0.2f, ambient + 0.2f, ambient + 0.2f};
+	const vec4_t brightDiffuseLightColor = {5.0f, 5.0f, 5.0f, 1.0f};
+	const vec4_t specularLightColor = {1.0f, 1.0f, 0.8f, 1.0f};
 	float p;
 	/* set distance of the moon to make it static on starfield when time is stoped.
 	 * this distance should be used for any celestial body considered at infinite location (sun, moon) */
@@ -938,20 +941,31 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 
 	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};	/* Earth center is in the middle of node.
 								* Due to Orthographic view, this is also camera position */
-	vec3_t moonPos;
-
+	vec4_t moonPos;
 	vec3_t v, v1, rotationAxis;
+
+	/* estimate the progress through the current season so we can do
+	 * smooth transitions between textures.  Currently there are 12
+	 * "seasons", because we have one image per Earth-month. */
+	const float season = (float)(day % DAYS_PER_YEAR) / ((float)(DAYS_PER_YEAR) / (float)(SEASONS_PER_YEAR));
+	const int currSeason = (int)floorf(season) % SEASONS_PER_YEAR;
+	const int nextSeason = (int)ceilf(season) % SEASONS_PER_YEAR;
+	const float seasonProgress = season - (float)currSeason;
 
 	/* Compute light position in absolute frame */
 	const float q = (day % DAYS_PER_YEAR + (float) (second / (float)SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
+
+	char mapName[MAX_VAR];
+
 	p = (float) (second / (float)SECONDS_PER_DAY) * 2.0 * M_PI - 0.5f * M_PI;		/* earth rotation (day) */
-	Vector4Set(lightPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0);
+	Vector4Set(sunPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0); /* final 0 means the light source is directional (ie. infinitely far away) */
+	Vector4Set(antiSunPos, -cos(p) * sqrta, sin(p) * sqrta, -a, 0); /* for rendering man-made lights at night */
 
 	/* Then rotate it in the relative frame of player view, to get sun position (no need to rotate
-	 * lightpos: all models will be rotated after light effect is applied) */
-	VectorSet(v, lightPos[1], lightPos[0], lightPos[2]);
+	 * sunPos: all models will be rotated after light effect is applied) */
+	VectorSet(v, sunPos[1], sunPos[0], sunPos[2]);
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
 	VectorSet(rotationAxis, 0, 1, 0);
@@ -967,11 +981,44 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		R_DrawTexture(sun->texnum, earthPos[0] - 64.0 * viddef.rx + celestialDist * v[1] * viddef.rx , earthPos[1] - 64.0 * viddef.ry + celestialDist * v[0] * viddef.ry, 128.0 * viddef.rx, 128.0 * viddef.ry);
 	}
 
-	/* load earth image */
-	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s_day", map), it_wrappic);
-	if (r_globeEarth.texture == r_noTexture) {
-		Com_Printf("Could not find pics/geoscape/%s_day\n", map);
-		return;
+	if (r_globeEarth.season != currSeason) {
+		r_globeEarth.season = currSeason;
+		R_FreeImage(r_globeEarth.texture);
+	}
+
+	/* load earth images for the current month and the next month so we can blend them */
+	Com_sprintf(mapName, sizeof(mapName), "%s_season_%02d", map, currSeason);
+	r_globeEarth.texture = R_FindImage(va("pics/geoscape/%s", mapName), it_wrappic);
+	if (r_globeEarth.texture == r_noTexture)
+		Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s\n", mapName);
+
+	Com_sprintf(mapName, sizeof(mapName), "%s_season_%02d", map, nextSeason);
+	r_globeEarth.blendTexture = R_FindImage(va("pics/geoscape/%s", mapName), it_wrappic);
+	if (r_globeEarth.blendTexture == r_noTexture)
+		Com_Error(ERR_FATAL, "Could not find pics/geoscape/%s\n", mapName);
+
+	if (qglUseProgram) {
+		r_globeEarth.nightOverlay = R_FindImage(va("pics/geoscape/%s_night_lights", map), it_wrappic);
+		if (r_globeEarth.nightOverlay == r_noTexture)
+			r_globeEarth.nightOverlay = NULL;
+
+		/* load normal map */
+		r_globeEarth.normalMap = R_FindImage(va("pics/geoscape/%s_bump", map), it_wrappic);
+		if (r_globeEarth.normalMap == r_noTexture)
+			r_globeEarth.normalMap = NULL;
+
+		/* load specularity map */
+		r_globeEarth.glossMap = R_FindImage(va("pics/geoscape/%s_gloss", map), it_wrappic);
+		if (r_globeEarth.glossMap == r_noTexture)
+			r_globeEarth.glossMap = NULL;
+
+		/* weight the blending based on how much of the month has elapsed */
+		r_globeEarth.blendScale = seasonProgress;
+		/* set up lights for nighttime city illumination*/
+		VectorCopy(antiSunPos, r_globeEarth.nightLightPos);
+		glLightfv(GL_LIGHT1, GL_AMBIENT, darknessLightColor);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, brightDiffuseLightColor);
+		glLightfv(GL_LIGHT1, GL_SPECULAR, darknessLightColor);
 	}
 
 	/* load moon image */
@@ -994,17 +1041,18 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	RotatePointAroundVector(v1, rotationAxis, v, -rotate[PITCH]);
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, -rotate[YAW]);
-	VectorSet(moonPos, earthPos[0] + celestialDist * v[1], earthPos[1] + celestialDist * v[0], -celestialDist * v[2]);
+	Vector4Set(moonPos, earthPos[0] + celestialDist * v[1], earthPos[1] + celestialDist * v[0], -celestialDist * v[2], 0);
 
 	/* enable the lighting */
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLightColor);
 
 	/* draw the moon */
 	if (r_globeMoon.texture != r_noTexture && moonPos[2] > 0 && !disableSolarRender)
-		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize , NULL);
+		R_SphereRender(&r_globeMoon, moonPos, rotate, moonSize, sunPos);
 
 	/* Draw earth atmosphere */
 	glMatrixMode(GL_TEXTURE);
@@ -1028,37 +1076,30 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* activate depth to hide 3D models behind earth */
 	glEnable(GL_DEPTH_TEST);
 	/* draw the globe */
-	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-	/* load nation overlay */
+	R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
+
+	/* draw nation overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_NATION) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (r_globeEarth.overlay == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay image");
-		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 		r_globeEarth.overlay = NULL;
 	}
+	/* draw XVI overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_XVI) {
 		assert(r_xviTexture);
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_xvi_overlay", map), it_wrappic);
 		r_globeEarth.overlayAlphaMask = r_xviTexture;
-		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 		r_globeEarth.overlayAlphaMask = NULL;
 		r_globeEarth.overlay = NULL;
 	}
+	/* draw radar overlay */
 	if (r_geoscape_overlay->integer & OVERLAY_RADAR) {
 		assert(r_radarTexture);
 		r_globeEarth.overlay = r_radarTexture;
-		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-		r_globeEarth.overlay = NULL;
-	}
-
-	r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_citylights", map), it_wrappic);
-	if (r_globeEarth.overlay != r_noTexture) {
-		const vec3_t whiteEmissiveMaterial = {1.0, 1.0, 1.0};
-		const vec3_t blankMaterial = {0.0, 0.0, 0.0};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, whiteEmissiveMaterial);
-		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, lightPos);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, blankMaterial);
+		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 		r_globeEarth.overlay = NULL;
 	}
 

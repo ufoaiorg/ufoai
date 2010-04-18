@@ -128,7 +128,7 @@ static void BDEF_SelectItem_f (void)
 		slot = (installation) ? BDEF_GetInstallationSlotByIDX(installation, bdefType, 0) : BDEF_GetBaseSlotByIDX(base, bdefType, 0);
 		list = AII_GetCraftitemTechsByType(bdefType);
 		while (*list && i <= itemIDX) {
-			if (AIM_SelectableCraftItem(slot, *list)) {			
+			if (AIM_SelectableCraftItem(slot, *list)) {
 				itemTech = *list;
 				i++;
 				break;
@@ -186,7 +186,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 
 			if (installation->batteries[0].target)
 				Cvar_ForceSet("mn_target", UFO_AircraftToIDOnGeoscape(installation->batteries[0].target));
-		}		
+		}
 	} else if (base) {
 		qboolean autofire = qfalse;
 		/** Every slot aims the same target */

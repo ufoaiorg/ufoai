@@ -1,6 +1,6 @@
 '''
   This code is distributed under the GPLv2 licence as a contribution to the Ufo Alien Invasion project.
-  
+
   Coded by Dumper.
 '''
 
@@ -135,4 +135,3 @@ def tostring(node):
   for i in node.getiterator():
     s=s+node_level(i,node,parent_dic)*'  '+str(i.tag)+' '+readtext(i)+'\n'
   return s
-

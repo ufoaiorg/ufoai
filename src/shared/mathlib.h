@@ -118,7 +118,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 )
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
- * back the the vector coordinates - now go into the middle of the grid field
+ * back the vector coordinates - now go into the middle of the grid field
  * by adding the half of the grid unit size to this value
  * @sa PATHFINDING_WIDTH */
 #define PosToVec(p, v) ( \
@@ -200,6 +200,7 @@ int Q_log2(int val);
 float GetDistanceOnGlobe(const vec2_t pos1, const vec2_t pos2);
 
 void VectorCenterFromMinsMaxs(const vec3_t mins, const vec3_t maxs, vec3_t center);
+float VectorAngleBetween(const vec3_t vec1, const vec3_t vec2);
 
 void VecToAngles(const vec3_t vec, vec3_t angles);
 

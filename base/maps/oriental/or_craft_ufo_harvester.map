@@ -4620,7 +4620,7 @@
 "classname" "misc_model"
 "origin" "829 909 121"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 "target" "misc_model2"
 "tag" "tag_top"
 }
@@ -4687,7 +4687,7 @@
 "classname" "misc_model"
 "origin" "894 779 121"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 "target" "misc_model3"
 "tag" "tag_top"
 }
@@ -4754,7 +4754,7 @@
 "classname" "misc_model"
 "origin" "640 905 121"
 "model" "models/objects/vegi/palm_a/palm2.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 "target" "misc_model1"
 "tag" "tag_top"
 }

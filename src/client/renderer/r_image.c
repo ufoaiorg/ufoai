@@ -629,7 +629,9 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 /**
  * @brief Finds or loads the given image
  * @sa R_RegisterImage
- * @param pname Image name
+ * @param[in] pname Image name Path relative to the game dir (e.g. textures/tex_common/nodraw)
+ * @param[in] type The type of the image. This has influence on image filters and texture
+ * parameters when uploading the image data
  * @note the image name has to be at least 5 chars long
  * @sa R_LoadTGA
  * @sa R_LoadJPG
@@ -673,6 +675,22 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 }
 
 /**
+ * @brief Free the image and its normalmap (if there is one)
+ * @param image The image that should be freed
+ */
+void R_FreeImage (image_t *image)
+{
+	/* free image slot */
+	if (!image || !image->texnum)
+		return;
+
+	/* also free a normalmap if there is one */
+	if (image->normalmap)
+		R_DeleteImage(image->normalmap);
+	R_DeleteImage(image);
+}
+
+/**
  * @brief Any image that is a mesh or world texture will be removed here
  * @sa R_ShutdownImages
  */
@@ -683,15 +701,11 @@ void R_FreeWorldImages (void)
 
 	R_CheckError();
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
-		if (!image->texnum)
-			continue;			/* free image slot */
 		if (image->type < it_world)
 			continue;			/* keep them */
 
 		/* free it */
-		if (image->normalmap)
-			R_DeleteImage(image->normalmap);
-		R_DeleteImage(image);
+		R_FreeImage(image);
 	}
 }
 

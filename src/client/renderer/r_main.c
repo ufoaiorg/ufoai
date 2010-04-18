@@ -577,6 +577,7 @@ static qboolean R_InitExtensions (void)
 	qglGetUniformLocation = NULL;
 	qglUniform1i = NULL;
 	qglUniform1f = NULL;
+	qglUniform2fv = NULL;
 	qglUniform3fv = NULL;
 	qglUniform4fv = NULL;
 
@@ -656,6 +657,7 @@ static qboolean R_InitExtensions (void)
 		qglGetUniformLocation = SDL_GL_GetProcAddress("glGetUniformLocation");
 		qglUniform1i = SDL_GL_GetProcAddress("glUniform1i");
 		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
+		qglUniform2fv = SDL_GL_GetProcAddress("glUniform2fv");
 		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
 		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
 		qglGetAttribLocation = SDL_GL_GetProcAddress("glGetAttribLocation");
@@ -699,6 +701,10 @@ static qboolean R_InitExtensions (void)
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
 	if (r_config.maxTextureUnits < 2)
 		Com_Error(ERR_FATAL, "You need at least 2 texture units to run "GAME_TITLE);
+
+	glGetIntegerv(GL_MAX_TEXTURE_COORDS, &r_config.maxTextureCoords);
+	Com_Printf("max texture coords: %i\n", r_config.maxTextureCoords);
+	r_config.maxTextureCoords = max(r_config.maxTextureUnits, r_config.maxTextureCoords);
 
 	/* reset gl error state */
 	R_CheckError();

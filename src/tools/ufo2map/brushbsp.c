@@ -247,7 +247,7 @@ static vec_t BrushVolume (bspbrush_t *brush)
 }
 
 /**
- * @brief Returns the amount of brushes in the the given brushlist
+ * @brief Returns the amount of brushes in the given brushlist
  */
 int CountBrushList (bspbrush_t *brushes)
 {

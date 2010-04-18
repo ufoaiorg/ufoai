@@ -129,7 +129,7 @@ typedef struct fireDef_s {
 
 /**
  * @brief The max width and height of an item-shape
- * @note these values depend on the the usage of an uint32_t that has 32 bits and a width of 8bit => 4 rows
+ * @note these values depend on the usage of an uint32_t that has 32 bits and a width of 8bit => 4 rows
  * @sa SHAPE_BIG_MAX_HEIGHT
  * @sa SHAPE_BIG_MAX_WIDTH
  * @note This is also used for bit shifting, so please don't change this until
