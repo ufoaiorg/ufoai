@@ -379,6 +379,9 @@ static void HUD_ShotReserve_f (void)
 	if (!reserveShotData)
 		return;
 
+	if (reserveShotData->weaponIndex == NONE)
+		return;
+
 	/** @todo do this on the server */
 	/* Check if we have enough TUs (again) */
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
