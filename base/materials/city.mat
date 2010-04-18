@@ -70,7 +70,6 @@
 	{
 		texture tex_misc/advertaa0
 		anim 5 8.0
-		lightmap
 	}
 }
 {
@@ -80,7 +79,6 @@
 	{
 		texture tex_misc/advertab0
 		anim 7 1.0
-		lightmap
 	}
 }
 {
@@ -96,9 +94,31 @@
 		texture tex_misc/advertbb0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		anim 8 3.0
-		lightmap
 	}
 }
+
+###
+### Signs
+###
+
+# Parking Garage Sign
+{
+	material tex_misc/sign_parkbld
+	specular 2.0
+	hardness 2.0
+}
+# Parking Garage Sign (animated side)
+{
+	material tex_misc/sign_parkblda
+	specular 2.0
+	hardness 2.0
+	{
+		texture tex_misc/sign_parkblda0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		anim 3 3.0
+	}
+}
+
 
 # Vehicle Entrance Panel
 {
@@ -109,7 +129,6 @@
 		texture tex_misc/vehentpan0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		anim 9 2
-		lightmap
 	}
 }
 
