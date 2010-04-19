@@ -1768,10 +1768,8 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		mxml_AddString(missionNode, SAVE_MISSIONS_LOCATION, mission->location);
 		mxml_AddShort(missionNode, SAVE_MISSIONS_INITIALOVERALLINTEREST, mission->initialOverallInterest);
 		mxml_AddShort(missionNode, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
-		mxml_AddLong(missionNode, SAVE_MISSIONS_STARTDATE_DAY, mission->startDate.day);
-		mxml_AddLong(missionNode, SAVE_MISSIONS_STARTDATE_SEC, mission->startDate.sec);
-		mxml_AddLong(missionNode, SAVE_MISSIONS_FINALDATE_DAY, mission->finalDate.day);
-		mxml_AddLong(missionNode, SAVE_MISSIONS_FINALDATE_SEC, mission->finalDate.sec);
+		mxml_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
+		mxml_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
 		mxml_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
 		if (mission->ufo)
 			mxml_AddShort(missionNode, SAVE_MISSIONS_UFO, mission->ufo - ccs.ufos);
@@ -1895,11 +1893,8 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 
 		Q_strncpyz(mission.location, mxml_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
 
-		mission.startDate.day = mxml_GetInt(node, SAVE_MISSIONS_STARTDATE_DAY, 0);
-		mission.startDate.sec = mxml_GetInt(node, SAVE_MISSIONS_STARTDATE_SEC, 0);
-		mission.finalDate.day = mxml_GetInt(node, SAVE_MISSIONS_FINALDATE_DAY, 0);
-		mission.finalDate.sec = mxml_GetInt(node, SAVE_MISSIONS_FINALDATE_SEC, 0);
-
+		mxml_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
+		mxml_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
 		mxml_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
 
 		ufoIdx = mxml_GetInt(node, SAVE_MISSIONS_UFO, -1);

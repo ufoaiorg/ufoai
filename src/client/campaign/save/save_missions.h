@@ -43,10 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MISSIONS_LOCATION "location"
 #define SAVE_MISSIONS_INITIALOVERALLINTEREST "initialOverallInterest"
 #define SAVE_MISSIONS_INITIALINDIVIDUALINTEREST "initialIndividualInterest"
-#define SAVE_MISSIONS_STARTDATE_DAY "startDateDay"
-#define SAVE_MISSIONS_STARTDATE_SEC "startDateSec"
-#define SAVE_MISSIONS_FINALDATE_DAY "finalDateDay"
-#define SAVE_MISSIONS_FINALDATE_SEC "finalDateSec"
+#define SAVE_MISSIONS_STARTDATE "startDate"
+#define SAVE_MISSIONS_FINALDATE "finalDate"
 #define SAVE_MISSIONS_POS "pos"
 #define SAVE_MISSIONS_UFO "UFO"
 #define SAVE_MISSIONS_ONGEOSCAPE "onGeoscape"
@@ -78,7 +76,7 @@ static const constListEntry_t saveMissionConstants[] = {
 DTD:
 
 <!ELEMENT missions EMPTY>
-<!ELEMENT mission pos>
+<!ELEMENT mission pos startDate finalDate>
 <!ATTLIST mission
 	IDX							CDATA	#REQUIRED
 	id							CDATA	#REQUIRED
@@ -110,12 +108,20 @@ DTD:
 	location					CDATA	#IMPLIED
 	initialOverallInterest		CDATA	'0'
 	initialIndividualInterest	CDATA	'0'
-	startDateDay				CDATA	'0'
-	startDateSec				CDATA	'0'
-	finalDateDay				CDATA	'0'
-	finalDateSec				CDATA	'0'
 	UFO							CDATA	#IMPLIED
 	onGeoscape					CDATA	'false'
+>
+
+<!ELEMENT startDate EMPTY>
+<!ATTLIST
+	day							CDATA	'0'
+	sec							CDATA	'0'
+>
+
+<!ELEMENT finalDate EMPTY>
+<!ATTLIST
+	day							CDATA	'0'
+	sec							CDATA	'0'
 >
 
 */

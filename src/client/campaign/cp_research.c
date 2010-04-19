@@ -1786,10 +1786,8 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 			mxml_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
 		mxml_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
 		mxml_AddInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
-		mxml_AddIntValue(snode, SAVE_RESEARCH_PREDAY, t->preResearchedDate.day);
-		mxml_AddIntValue(snode, SAVE_RESEARCH_PRESEC, t->preResearchedDate.sec);
-		mxml_AddIntValue(snode, SAVE_RESEARCH_DAY, t->researchedDate.day);
-		mxml_AddIntValue(snode, SAVE_RESEARCH_SEC, t->researchedDate.sec);
+		mxml_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
+		mxml_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
 		mxml_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
 
 		/* save which techMails were read */
@@ -1849,10 +1847,8 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			t->base = B_GetBaseByIDX(baseIdx);
 		t->scientists = mxml_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
 		t->statusResearchable = mxml_GetInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, 0);
-		t->preResearchedDate.day = mxml_GetInt(snode, SAVE_RESEARCH_PREDAY, 0);
-		t->preResearchedDate.sec = mxml_GetInt(snode, SAVE_RESEARCH_PRESEC, 0);
-		t->researchedDate.day = mxml_GetInt(snode, SAVE_RESEARCH_DAY, 0);
-		t->researchedDate.sec = mxml_GetInt(snode, SAVE_RESEARCH_SEC, 0);
+		mxml_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
+		mxml_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
 		t->mailSent = mxml_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
 		/* load which techMails were read */

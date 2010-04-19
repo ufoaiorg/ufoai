@@ -320,8 +320,7 @@ qboolean US_SaveXML (mxml_node_t *p)
 		mxml_node_t * snode = mxml_AddNode(node, SAVE_UFORECOVERY_UFO);
 
 		mxml_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
-		mxml_AddInt(snode, SAVE_UFORECOVERY_DAY, ufo->arrive.day);
-		mxml_AddInt(snode, SAVE_UFORECOVERY_SEC, ufo->arrive.sec);
+		mxml_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
 		mxml_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
 		mxml_AddFloat(snode, SAVE_UFORECOVERY_CONDITION, ufo->condition);
 
@@ -357,8 +356,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 		const char *statusId = mxml_GetString(snode, SAVE_UFORECOVERY_STATUS);
 		storedUFOStatus_t status;
 
-		arrive.day = mxml_GetInt(snode, SAVE_UFORECOVERY_DAY, 0);
-		arrive.sec = mxml_GetInt(snode, SAVE_UFORECOVERY_SEC, 0);
+		mxml_GetDate(snode, SAVE_UFORECOVERY_DATE, &arrive.day, &arrive.sec);
 
 		if (!ufoTemplate) {
 			Com_Printf("Invalid ufo type\n");

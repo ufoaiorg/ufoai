@@ -34,10 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_RESEARCH_BASE "baseIDX"
 #define SAVE_RESEARCH_SCIENTISTS "scientists"
 #define SAVE_RESEARCH_STATUSRESEARCHABLE "statusResearchable"
-#define SAVE_RESEARCH_PREDAY "preDay"
-#define SAVE_RESEARCH_PRESEC "preSec"
-#define SAVE_RESEARCH_DAY "day"
-#define SAVE_RESEARCH_SEC "sec"
+#define SAVE_RESEARCH_PREDATE "preDate"
+#define SAVE_RESEARCH_DATE "date"
 #define SAVE_RESEARCH_MAILSENT "mailSent"
 #define SAVE_RESEARCH_MAIL "mail"
 #define SAVE_RESEARCH_MAIL_ID "id"
@@ -57,7 +55,7 @@ static const constListEntry_t saveResearchConstants[] = {
 DTD:
 
 <!ELEMENT research tech*>
-<!ELEMENT tech mail*>
+<!ELEMENT tech mail* preDate date>
 <!ATTLIST tech
 	id					CDATA		#REQUIRED
 	statusCollected		CDATA		#IMPLIED
@@ -66,11 +64,19 @@ DTD:
 	baseIDX				CDATA		#IMPLIED
 	scientists			CDATA		#IMPLIED
 	statusResearchable	CDATA		#IMPLIED
-	preDay				CDATA		#IMPLIED
-	preSec				CDATA		#IMPLIED
-	day					CDATA		#IMPLIED
-	sec					CDATA		#IMPLIED
 	mailSent			CDATA		#IMPLIED
+>
+
+<!ELEMENT preDate EMPTY>
+<!ATTLIST preDate
+	day					CDATA		'0'
+	sec					CDATA		'0'
+>
+
+<!ELEMENT date EMPTY>
+<!ATTLIST date
+	day					CDATA		'0'
+	sec					CDATA		'0'
 >
 
 <!ELEMENT mail EMPTY>
@@ -79,3 +85,4 @@ DTD:
 >
 
 */
+

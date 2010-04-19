@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_UFORECOVERY_STOREDUFOS "storedUFOs"
 #define SAVE_UFORECOVERY_UFO "UFO"
 #define SAVE_UFORECOVERY_UFOID "id"
-#define SAVE_UFORECOVERY_DAY "day"
-#define SAVE_UFORECOVERY_SEC "sec"
+#define SAVE_UFORECOVERY_DATE "date"
 #define SAVE_UFORECOVERY_STATUS "status"
 #define SAVE_UFORECOVERY_CONDITION "condition"
 #define SAVE_UFORECOVERY_INSTALLATIONIDX "installationIDX"
@@ -48,16 +47,20 @@ static const constListEntry_t saveStoredUFOConstants[] = {
 DTD:
 
 <!ELEMENT storedUFOs UFO*>
-<!ELEMENT UFO EMPTY>
+<!ELEMENT UFO date>
 <!ATTLIST UFO
 	id				CDATA		#REQUIRED
-	day				CDATA		'0'
-	sec				CDATA		'0'
 	status			(recovered,
 					stored,
 					transfered)	#REQUIRED
 	condition		CDATA		'1.0'
 	installationIDX CDATA		#REQUIRED
+>
+
+<!ELEMENT date EMPTY>
+<!ATTLIST date
+	day				CDATA		'0'
+	sec				CDATA		'0'
 >
 */
 

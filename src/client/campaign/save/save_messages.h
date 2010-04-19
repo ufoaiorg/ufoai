@@ -33,8 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MESSAGES_EVENTMAILID "eventMailid"
 #define SAVE_MESSAGES_EVENTMAILREAD "eventMailRead"
 #define SAVE_MESSAGES_PEDIAID "pediaid"
-#define SAVE_MESSAGES_DAY "day"
-#define SAVE_MESSAGES_SEC "sec"
+#define SAVE_MESSAGES_DATE "date"
 
 #define SAVE_MESSAGETYPE_NAMESPACE "saveMessageType"
 static const constListEntry_t saveMessageConstants[] = {
@@ -64,7 +63,7 @@ static const constListEntry_t saveMessageConstants[] = {
 DTD:
 
 <!ELEMENT messages message*>
-<!ELEMENT message EMPTY>
+<!ELEMENT message date>
 <!ATTLIST message
 	title			CDATA		#IMPLIED
 	text			CDATA		#IMPILED
@@ -72,9 +71,12 @@ DTD:
 	eventMailid		CDATA		#IMPLIED
 	eventmailRead	CDATA		#IMPLIED
 	pediaid			CDATA		#IMPLIED
-	day				NMTOKEN		#IMPLIED
-	sec				NMTOKEN		#IMPLIED
 >
 
+<!ELEMENT date EMPTY>
+<!ATTLIST date
+	day				CDATA		'0'
+	sec				CDATA		'0'
+>
 */
 

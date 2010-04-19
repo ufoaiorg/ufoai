@@ -189,8 +189,7 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t *message)
 	}
 	if (message->pedia)
 		mxml_AddString(n, SAVE_MESSAGES_PEDIAID, message->pedia->id);
-	mxml_AddInt(n, SAVE_MESSAGES_DAY, message->date.day);
-	mxml_AddInt(n, SAVE_MESSAGES_SEC, message->date.sec);
+	mxml_AddDate(n, SAVE_MESSAGES_DATE, message->date.day, message->date.sec);
 	Com_UnregisterConstList(saveMessageConstants);
 }
 
@@ -268,8 +267,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 			}
 			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
 			mess->eventMail = mail;
-			mess->date.day = mxml_GetInt(sn, SAVE_MESSAGES_DAY, 0);
-			mess->date.sec = mxml_GetInt(sn, SAVE_MESSAGES_SEC, 0);
+			mxml_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
 			/* redo timestamp text after setting date */
 			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 		}
