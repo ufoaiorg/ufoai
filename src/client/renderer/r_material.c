@@ -95,38 +95,39 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
-		R_EnableLighting(NULL, qfalse);
 		/* hardware lighting */
-		if (stage->flags & STAGE_LIGHTING) {
-			R_EnableLighting(r_state.world_program, qtrue);
+		if ( (stage->flags & STAGE_LIGHTING) && R_EnableLighting(r_state.world_program, qtrue)) {
+			if (r_bumpmap->value && stage->image->normalmap) {
+				R_BindDeluxemapTexture(surf->deluxemap_texnum);
+				R_BindNormalmapTexture(stage->image->normalmap->texnum);
 
-			if (r_state.lighting_enabled) {
-				R_UseProgram(r_state.world_program);
-				if (r_bumpmap->value && stage->image->normalmap) {
-					R_BindDeluxemapTexture(surf->deluxemap_texnum);
-					R_BindNormalmapTexture(stage->image->normalmap->texnum);
+				R_EnableBumpmap(&stage->image->material, qtrue);
 
-					R_EnableBumpmap(&stage->image->material, qtrue);
-					
-				} else if (r_state.bumpmap_enabled)
-					R_EnableBumpmap(NULL, qfalse);
+			} else if (r_state.bumpmap_enabled)
+				R_EnableBumpmap(NULL, qfalse);
 
-				if (stage->image->glowmap && r_postprocess->integer) {
-					R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
-					R_ProgramParameter1i("GLOWMAP", 1);
-				} else if (r_postprocess->integer) {
-					R_ProgramParameter1i("GLOWMAP", 0);
-				}
+			if (stage->image->glowmap && r_postprocess->integer) {
+				R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+				R_ProgramParameter1i("GLOWMAP", 1);
+				R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
+			} else if (r_postprocess->integer) {
+				R_ProgramParameter1i("GLOWMAP", 0);
 			}
-		} else if (stage->image->glowmap && r_postprocess->integer) {
-			R_EnableLighting(r_state.simple_glow_program, qtrue);
-			R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+		} else {
+			if (stage->image->glowmap && r_postprocess->integer) {
+				R_EnableLighting(r_state.simple_glow_program, qtrue);
+				R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+				R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
+			} else 
+				R_EnableLighting(NULL, qfalse);
 		}
 	} else {
 		if (stage->image->glowmap && r_postprocess->integer) {
 			R_EnableLighting(r_state.simple_glow_program, qtrue);
 			R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
-		} 
+		} else 
+			R_EnableLighting(NULL, qfalse);
+
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 }
@@ -519,6 +520,15 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 		if (!strlen(c))
 			break;
+
+		if (!strcmp(c, "glowscale")) {
+			s->glowscale = atof(Com_Parse(buffer));
+			if (s->glowscale < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", c);
+				s->glowscale = DEFAULT_GLOWSCALE;
+			}
+			continue;
+		}
 
 		if (!strcmp(c, "texture")) {
 			c = Com_Parse(buffer);
@@ -932,8 +942,17 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 
+		if (!strcmp(c, "glowscale")) {
+			m->glowscale = atof(Com_Parse(&buffer));
+			if (m->glowscale < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", image->name);
+				m->glowscale = DEFAULT_GLOWSCALE;
+			}
+		}
+
 		if (*c == '{' && inmaterial) {
 			s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
+			s->glowscale = DEFAULT_GLOWSCALE;
 
 			if (R_ParseStage(s, &buffer) == -1) {
 				Mem_Free(s);
@@ -947,6 +966,7 @@ void R_LoadMaterials (const char *map)
 					continue;
 				}
 			}
+
 
 			/* append the stage to the chain */
 			if (!m->stages)
@@ -967,8 +987,16 @@ void R_LoadMaterials (const char *map)
 			Com_DPrintf(DEBUG_RENDERER, "Parsed material %s with %d stages\n", image->name, m->num_stages);
 			inmaterial = qfalse;
 			image = NULL;
+			/* multiply stage glowscale values by material glowscale */
+			ss = m->stages;
+			while (ss) {
+				ss->glowscale *= m->glowscale;
+				ss = ss->next;
+			}
 		}
 	}
+
+	
 
 	FS_FreeFile(fileBuffer);
 }

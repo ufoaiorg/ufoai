@@ -52,7 +52,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	int i;
 
 	if (!r_state.active_program) {
-		Com_Printf("R_ProgramVariable: No program bound.\n");
+		Com_Printf("R_ProgramVariable: \"%s\" - No program bound.\n", name);
 		return NULL;
 	}
 
@@ -489,6 +489,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("HARDNESS", 0.2);
 	R_ProgramParameter1f("SPECULAR", 1.0);
+	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
 static void R_InitMeshProgram (r_program_t *prog)
@@ -620,6 +621,7 @@ static void R_InitSimpleGlowProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 4);
+	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
 void R_InitParticleProgram (r_program_t *prog)

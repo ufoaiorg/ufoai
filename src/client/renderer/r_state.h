@@ -148,7 +148,7 @@ void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableColorArray(qboolean enable);
-void R_EnableLighting(r_program_t *program, qboolean enable);
+qboolean R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(material_t *material, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);

@@ -245,16 +245,16 @@ void R_EnableColorArray (qboolean enable)
  * should be called after any texture units which will be active for lighting
  * have been enabled.
  */
-void R_EnableLighting (r_program_t *program, qboolean enable)
+qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 {
 	if (!r_programs->integer)
-		return;
+		return r_state.lighting_enabled;
 
 	if (enable && (!program || !program->id))
-		return;
+		return r_state.lighting_enabled;
 
-	if (!r_lights->integer || r_state.lighting_enabled == enable)
-		return;
+	if (!r_lights->integer || (r_state.lighting_enabled == enable && r_state.active_program == program))
+		return r_state.lighting_enabled;
 
 	r_state.lighting_enabled = enable;
 
@@ -269,6 +269,8 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 	}
 
 	R_EnableGlow(enable);
+
+	return r_state.lighting_enabled;
 }
 
 static inline void R_UseMaterial (material_t *material)

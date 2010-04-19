@@ -6,6 +6,7 @@
 
 uniform int BUMPMAP;
 uniform int GLOWMAP;
+uniform float GLOWSCALE;
 
 uniform sampler2D SAMPLER0;
 /* lightmap */
@@ -74,7 +75,9 @@ void main(void){
 #endif
 
 	if(GLOWMAP > 0) {
-		gl_FragData[1] = texture2D(SAMPLER4, gl_TexCoord[0].st);
+		 vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
+		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
+		 gl_FragData[1].a = 1.0;
 	}
 
 }
