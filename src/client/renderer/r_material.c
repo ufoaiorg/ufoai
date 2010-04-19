@@ -439,6 +439,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableBumpmap(NULL, qfalse);
 
+	R_EnableLighting(r_state.world_program, qtrue);
+	R_ProgramParameter1i("GLOWMAP", 0);
 	R_EnableLighting(NULL, qfalse);
 
 	R_Color(NULL);
