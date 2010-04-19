@@ -90,7 +90,6 @@ static void R_UpdateMaterial (material_t *m)
 static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	/* if the surface has a lightmap, and the stage specifies lighting.. */
-
 	if (surf->flags & MSURF_LIGHTMAP &&
 			(stage->flags & (STAGE_LIGHTMAP | STAGE_LIGHTING))) {
 		R_EnableTexture(&texunit_lightmap, qtrue);
@@ -98,7 +97,10 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 
 		/* hardware lighting */
 		if (stage->flags & STAGE_LIGHTING) {
-			R_EnableLighting(r_state.world_program, qtrue);
+			if (r_state.lighting_enabled) 
+				R_UseProgram(r_state.world_program);
+			else 
+				R_EnableLighting(r_state.world_program, qtrue);
 
 			if (r_state.lighting_enabled) {
 				if (r_bumpmap->value && stage->image->normalmap) {
@@ -117,10 +119,28 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 					R_ProgramParameter1i("GLOWMAP", 0);
 				}
 			}
-		} else
-			R_EnableLighting(NULL, qfalse);
+		} else {
+			if (stage->image->glowmap && r_postprocess->integer) {
+				if(r_state.lighting_enabled)
+					R_UseProgram(r_state.simple_glow_program);
+				else 
+					R_EnableLighting(r_state.simple_glow_program, qtrue);
+				R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+			} else {
+				R_EnableLighting(NULL, qfalse);
+			}
+
+		}
 	} else {
-		R_EnableLighting(NULL, qfalse);
+		if (stage->image->glowmap && r_postprocess->integer) {
+			if(r_state.lighting_enabled)
+				R_UseProgram(r_state.simple_glow_program);
+			else 
+				R_EnableLighting(r_state.simple_glow_program, qtrue);
+			R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+		} else {
+			R_EnableLighting(NULL, qfalse);
+		}
 
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
@@ -352,9 +372,6 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 	}
 
 	glDrawArrays(GL_POLYGON, 0, i);
-
-	if (r_postprocess->integer) 
-		R_ProgramParameter1i("GLOWMAP", 0);
 
 	R_CheckError();
 }

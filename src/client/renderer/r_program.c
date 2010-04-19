@@ -616,6 +616,12 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 	R_ProgramParameter2fv("UVSCALE", uvScale);
 }
 
+static void R_InitSimpleGlowProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 4);
+}
+
 void R_InitParticleProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -650,6 +656,7 @@ void R_InitPrograms (void)
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
+	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
 }
 
 /**
