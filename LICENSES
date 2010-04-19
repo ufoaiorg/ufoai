@@ -571,30 +571,39 @@ base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public Lic
 base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_engines_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_fighter/ufo_fighter_hull.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_hull.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_hull_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_fighter/ufo_fighter_upper.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_upper.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_upper_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_fighter/ufo_fighter_wings_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_engines_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_scout/ufo_scout_hull.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_hull.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_scout/ufo_scout_hull_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_scout/ufo_scout_upper.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_upper2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy | ufo_scout_upper.md2
+base/models/aircraft/ufo_scout/ufo_scout_upper_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_supply/ufo_supply.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_body_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_body_open.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_engine.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_engine_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_supply/ufo_supply_engine_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_engine_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aircraft/ufo_supply/ufo_supply_wing_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
