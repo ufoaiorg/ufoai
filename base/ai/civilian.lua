@@ -1,63 +1,96 @@
-
 --[[
 	AI Entry point.
 --]]
 function think()
+	local alien = ai.see("all", "alien")[1]
+	local civ = ai.see("all", "civilian")[1]
+	local phalanx = ai.see("all", "phalanx")[1]
 
-	alien = ai.see("all","alien")
+	if alien then
+		local alienDist = ai.distance(alien)
+		-- check danger close
+		if alienDist < 128 then
+			if phalanx then
+				local phalanxDist = ai.distance(phalanx)
 
-	-- Choose proper action
-	if #alien < 1 then
-
-		phalanx = ai.see("all","phalanx")
-		if #phalanx < 1 then
-			civilian = ai.see("all","civilian")
-			if #civilian < 1 then
-				ai.crouch()
+				-- check alien closer than phalanx
+				if alienDist < phalanxDist then
+					hide(alien:team())
+				else
+					if ai.isinjured() then
+						hide(alien:team())
+					else
+						herd(phalanx)
+					end
+				end
 			else
-				friend( civilian[1] )
+				hide(alien:team())
 			end
 		else
-			friend( phalanx[1] )
+			if phalanx then
+				local phalanxDist = ai.distance(phalanx)
+				-- check alien closer than phalanx
+				if alienDist < phalanxDist then
+					hide(alien:team())
+				else
+					if civ then
+						local civDist = ai.distance(civ)
+
+						-- check phalanx closer than civilian
+						if phalanxDist < civDist then
+							herd(phalanx)
+						else
+							herd(civ)
+						end
+					else
+						herd(phalanx)
+					end
+				end
+			else
+				if civ then
+					local civDist = ai.distance(civ)
+
+					-- check alien closer than civilian
+					if alienDist < civDist then
+						hide(alien:team()) 
+					else
+						herd(civ)
+					end
+				else
+					hide(alien:team())
+				end
+			end
 		end
 	else
-		hide()
+		if civ then
+			herd(civ)
+		else
+			if phalanx then
+				herd(phalanx) 
+			else
+				ai.crouch(false)
+			end
+		end
 	end
 end
 
-
 --[[
-	Try to get close to the friends.
+	Tries to move to herd position
 --]]
-function friend( target )
-
-	-- Move until target in sight
-	target_pos = target:pos()
-	target_pos:goto()
-
-	-- Hide
-	hide_pos = ai.positionhide()
-	if not hide_pos then -- No position available
-		ai.crouch()
-		target:face()
-	else
-		hide_pos:goto()
-		ai.crouch()
+function herd(target)
+	local pos = ai.positionherd(target)
+	if pos then
+		pos:goto()
 	end
 end
 
-
 --[[
-	Try to hide from aliens
+	Tries to move to hide position
 --]]
-function hide()
-
-	-- Hide
-	hide_pos = ai.positionhide()
-	if not hide_pos then -- No position available
-		ai.crouch()
-	else
-		hide_pos:goto()
-		ai.crouch()
+function hide(team)
+	local pos = ai.positionhide(team)
+	if pos then
+		pos:goto()
 	end
+	ai.crouch(false)
 end
