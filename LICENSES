@@ -3337,6 +3337,8 @@ base/textures/tex_common/actorclip.tga | GNU General Public License 2.0 or later
 base/textures/tex_common/caulk.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/error.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/hint.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_common/ladder.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_common/lightclip.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/nodraw.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/origin.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_common/slick.tga | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3554,6 +3556,8 @@ base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or late
 base/textures/tex_material/wood004_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art002.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/art003.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/art004.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/automat.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/bar1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/bar2.png | GNU General Public License 2.0 or later | Martin Gerhardy
