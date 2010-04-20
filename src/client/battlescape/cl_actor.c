@@ -1372,8 +1372,6 @@ qboolean CL_ActorMouseTrace (void)
 	if (testPos[2] > PATHFINDING_HEIGHT)
 		return qfalse;
 
-	restingLevel = Grid_Fall(clMap, fieldSize, testPos);
-
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	 * playerclip surface (in most cases anyway) */
 	PosToVec(testPos, pA);
@@ -1390,6 +1388,7 @@ qboolean CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
+	restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
