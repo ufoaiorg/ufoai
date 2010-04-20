@@ -1302,11 +1302,6 @@ qboolean CL_ActorMouseTrace (void)
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
 
-	/* Get size of selected actor or fall back to 1x1. */
-	const actorSizeEnum_t fieldSize = selActor
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
-
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
 	cur[1] = (mousePosY * viddef.ry - viddef.viewHeight * 0.5 - viddef.y) / (viddef.viewHeight * 0.5);
@@ -1388,10 +1383,10 @@ qboolean CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	restingLevel = Grid_Fall(clMap, fieldSize, testPos);
+	restingLevel = Grid_Fall(clMap, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
-	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
+	restingLevel = min(restingLevel, Grid_Fall(clMap, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < cl_worldlevel->integer) {
@@ -1399,7 +1394,7 @@ qboolean CL_ActorMouseTrace (void)
 		from[2] -= CURSOR_OFFSET;
 		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
-		restingLevel = Grid_Fall(clMap, fieldSize, testPos);
+		restingLevel = Grid_Fall(clMap, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	}
 
 	/* test if the selected grid is out of the world */
@@ -1777,9 +1772,6 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	entity_t ent;
 	vec3_t realBoxSize;
 	vec3_t cursorOffset;
-	const actorSizeEnum_t fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
 
 	if (!cl_showactors->integer)
 		return;
@@ -1787,12 +1779,13 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;
 
-	Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
+	Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
 	 * soldier does not have enough TimeUnits left. */
-	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE && selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
+	if (selActor && selActor->actorMoveLength < ROUTING_NOT_REACHABLE
+	 && selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
 		VectorSet(ent.color, 0, 1, 0); /* Green */
 	else
 		VectorSet(ent.color, 0, 0, 0.6); /* Dark Blue */
@@ -2001,8 +1994,6 @@ static void CL_AddPathingBox (pos3_t pos)
 		int height; /* The total opening size */
 		int base; /* The floor relative to this cell */
 
-		/* Get size of selected actor */
-		const actorSizeEnum_t fieldSize = selActor->fieldSize;
 		const byte crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 		const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 		const int TUhave = CL_ActorUsableTUs(selActor);
@@ -2010,10 +2001,10 @@ static void CL_AddPathingBox (pos3_t pos)
 		memset(&ent, 0, sizeof(ent));
 		ent.flags = RF_PATH;
 
-		Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
+		Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 		VectorSubtract(ent.origin, boxShift, ent.origin);
 
-		base = Grid_Floor(clMap, fieldSize, pos);
+		base = Grid_Floor(clMap, ACTOR_GET_FIELDSIZE(selActor), pos);
 
 		/* Paint the box green if it is reachable,
 		 * yellow if it can be entered but is too far,
@@ -2098,13 +2089,9 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
  */
 void CL_DisplayFloorArrows (void)
 {
-	/* Get size of selected actor or fall back to 1x1. */
-	const actorSizeEnum_t fieldSize = selActor
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
 
-	Grid_PosToVec(clMap, fieldSize, truePos, base);
+	Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	base[2] -= QUANT;
 	start[2] += QUANT;
@@ -2116,13 +2103,9 @@ void CL_DisplayFloorArrows (void)
  */
 void CL_DisplayObstructionArrows (void)
 {
-	/* Get size of selected actor or fall back to 1x1. */
-	const actorSizeEnum_t fieldSize = selActor
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
 
-	Grid_PosToVec(clMap, fieldSize, truePos, base);
+	Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
 }
@@ -2133,10 +2116,6 @@ void CL_DisplayObstructionArrows (void)
  */
 static void CL_DumpMoveMark_f (void)
 {
-	/* Get size of selected actor or fall back to 1x1. */
-	const actorSizeEnum_t fieldSize = selActor
-		? selActor->fieldSize
-		: ACTOR_SIZE_NORMAL;
 	const byte crouchingState = selActor ? (LE_IsCrouched(selActor) ? 1 : 0) : 0;
 	const int temp = developer->integer;
 
@@ -2146,7 +2125,7 @@ static void CL_DumpMoveMark_f (void)
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(clMap, fieldSize, selActor->pathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+	Grid_MoveCalc(clMap, ACTOR_GET_FIELDSIZE(selActor), selActor->pathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 
 	developer->integer ^= DEBUG_PATHING;
 

@@ -49,6 +49,8 @@ extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
 
+#define ACTOR_GET_FIELDSIZE(actor) ((actor != NULL) ? (actor)->fieldSize : ACTOR_SIZE_NORMAL)
+
 extern pos_t *fb_list[MAX_FORBIDDENLIST];
 extern int fb_length;
 
