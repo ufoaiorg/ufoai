@@ -1248,28 +1248,64 @@ MOUSE SCANNING
 */
 
 /**
+ * @brief Searches an actor at the given position.
+ * @param[in] pos The grid position to search an actor at
+ */
+static le_t* CL_ActorSearchAtGridPos (const pos3_t pos)
+{
+	le_t *le;
+
+	/* search for an actor on this field */
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingAndVisibleActor(le))
+			switch (le->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+				if (VectorCompare(le->pos, mousePos))
+					return le;
+				break;
+			case ACTOR_SIZE_2x2: {
+				pos3_t actor2x2[3];
+
+				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
+				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
+				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
+				if (VectorCompare(le->pos, mousePos)
+				|| VectorCompare(actor2x2[0], mousePos)
+				|| VectorCompare(actor2x2[1], mousePos)
+				|| VectorCompare(actor2x2[2], mousePos))
+					return le;
+				break;
+			}
+			default:
+				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
+		}
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Battlescape cursor positioning.
  * @note Sets global var mouseActor to current selected le
  * @sa IN_Parse
  */
-void CL_ActorMouseTrace (void)
+qboolean CL_ActorMouseTrace (void)
 {
 	int restingLevel;
-	float cur[2], frustumSlope[2], projectionDistance = 2048.0f;
+	float cur[2], frustumSlope[2];
+	const float projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
 	vec3_t from, end, dir;
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
-	pos3_t actor2x2[3];
 
 	/* Get size of selected actor or fall back to 1x1. */
 	const actorSizeEnum_t fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
-
-	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */
 	cur[0] = (mousePosX * viddef.rx - viddef.viewWidth * 0.5 - viddef.x) / (viddef.viewWidth * 0.5);
@@ -1334,7 +1370,7 @@ void CL_ActorMouseTrace (void)
 	/* cursor would be higher than max allowed levels, this can happen if e.g. actorclip
 	 * or nodraw brushes are on level 8 */
 	if (testPos[2] > PATHFINDING_HEIGHT)
-		return;
+		return qfalse;
 
 	restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 
@@ -1346,7 +1382,7 @@ void CL_ActorMouseTrace (void)
 	 * this could result in different problems like the zooming issue (where you can't zoom
 	 * in again, because in_zoomout->state is not reseted). */
 	if (CL_OutsideMap(pA, MAP_SIZE_OFFSET))
-		return;
+		return qfalse;
 
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
@@ -1369,7 +1405,7 @@ void CL_ActorMouseTrace (void)
 
 	/* test if the selected grid is out of the world */
 	if (restingLevel < 0 || restingLevel >= PATHFINDING_HEIGHT)
-		return;
+		return qfalse;
 
 	/* Set truePos- test pos is under the cursor. */
 	VectorCopy(testPos, truePos);
@@ -1379,32 +1415,7 @@ void CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	/* search for an actor on this field */
-	mouseActor = NULL;
-	le = NULL;
-	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingAndVisibleActor(le))
-			switch (le->fieldSize) {
-			case ACTOR_SIZE_NORMAL:
-				if (VectorCompare(le->pos, mousePos)) {
-					mouseActor = le;
-				}
-				break;
-			case ACTOR_SIZE_2x2:
-				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
-				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
-				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
-				if (VectorCompare(le->pos, mousePos)
-				|| VectorCompare(actor2x2[0], mousePos)
-				|| VectorCompare(actor2x2[1], mousePos)
-				|| VectorCompare(actor2x2[2], mousePos)) {
-					mouseActor = le;
-				}
-				break;
-			default:
-				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
-		}
-	}
+	mouseActor = CL_ActorSearchAtGridPos(mousePos);
 
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
@@ -1412,10 +1423,8 @@ void CL_ActorMouseTrace (void)
 		CL_ActorResetMoveLength(selActor);
 	}
 
-	/* mouse is in the world */
-	mouseSpace = MS_WORLD;
+	return qtrue;
 }
-
 
 /*
 ==============================================================
