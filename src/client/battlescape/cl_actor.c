@@ -1330,6 +1330,12 @@ void CL_ActorMouseTrace (void)
 	}
 
 	VecToPos(end, testPos);
+
+	/* cursor would be higher than max allowed levels, this can happen if e.g. actorclip
+	 * or nodraw brushes are on level 8 */
+	if (testPos[2] > PATHFINDING_HEIGHT)
+		return;
+
 	restingLevel = Grid_Fall(clMap, fieldSize, testPos);
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
