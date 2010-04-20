@@ -7,7 +7,7 @@ component cmpDefNamedTbar cmpPhysNamedTbar {
 		pos "3 18"
 	}
 	tbar		bar {
-		pos "3 18"
+		pos "5 18"
 	}
 	string	val {
 		pos "140 0"
