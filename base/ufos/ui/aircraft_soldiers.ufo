@@ -34,18 +34,11 @@ window team extends iaircraft
 		image	"ui/panel_grey_green_large"
 	}
 
-	panel actormodel_background {
-		pos		"358 443"
-		size	"205 321"
-		image	"ui/panel_grey_green_large"
+	panel tab_background {
+		pos		"24 386"
+		size	"986 56"
+		image	"ui/panel_tab"
 	}
-
-	panel actorstats_background {
-		pos		"564 443"
-		size	"458 321"
-		image	"ui/panel_grey_green_large"
-	}
-
 	// ==================
 	// aircraft
 	// ==================
@@ -452,8 +445,22 @@ window team extends iaircraft
 	// actor info
 	// ==================
 
+	panel actor_background {
+	{
+		pos		"358 443"
+		size	"663 321"
+		image	"ui/panel_grey_black"
+	}
+
+	panel actormodel_background {
+	{
+		pos		"12 12"
+		size	"179 296"
+		image	"ui/panel_green"
+	}
+
 	pic	rank_img {
-		pos "378 465"
+		pos "8 10"
 		size "50 50"
 		image *cvar:mn_chrrank_img
 	}
@@ -466,7 +473,7 @@ window team extends iaircraft
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"5.5 5.5 5.5"
-			pos		"378 465"
+			pos		"8 10"
 			size	"167 278"
 			origin	"0 -35 0"
 		}
@@ -492,12 +499,38 @@ window team extends iaircraft
 		}
 	}
 
-	string	name { pos "380 700" size "165 20" string *cvar:mn_name }
-	string	rank_lbl { pos "380 720" size "165 20" string *cvar:mn_chrrank }
+	string	name { pos "10 245" size "165 20" string *cvar:mn_name }
+	string	rank_lbl { pos "10 265" size "165 20" string *cvar:mn_chrrank }
+	}
+
+	tab actor_stat {
+		pos		"212 12"
+		size	"432 39"
+		cvar	*cvar:mn_actor_stat
+		onChange {
+			cmd "select_actor_stat <cvar:mn_actor_stat>;"
+		}
+		option phys {
+			label	"_Physical stats"
+			value	"stats_phys"
+		}
+		option missions {
+			label	"_Missions info"
+			value	"stats_missions"
+		}
+	}
+
+
+	panel stats_phys {
+	{
+		pos		"208 44"
+		size	"440 264"
+		image	"ui/panel_green_tab"
+	}
 
 	cmpNamedTbar pwr {
 		{
-			pos "585 470"
+			pos "9 27"
 		}
 		tbar bar   { current *cvar:mn_vpwr }
 		string lbl { string "_Strength:" }
@@ -505,7 +538,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar spd {
 	{
-		pos "585 493"
+		pos "9 50"
 	}
 		tbar bar   { current *cvar:mn_vspd }
 		string lbl { string "_Speed:" }
@@ -513,7 +546,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar acc {
 	{
-		pos "585 516"
+		pos "9 73"
 	}
 		tbar bar   { current *cvar:mn_vacc }
 		string lbl { string "_Accuracy:" }
@@ -521,7 +554,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar mnd {
 	{
-		pos "585 539"
+		pos "9 96"
 	}
 		tbar bar   { current *cvar:mn_vmnd }
 		string lbl { string "_Mind:" }
@@ -529,7 +562,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar cls {
 	{
-		pos "585 562"
+		pos "9 119"
 	}
 		tbar bar   { current *cvar:mn_vcls }
 		string lbl { string "_Close Combat:" }
@@ -538,7 +571,7 @@ window team extends iaircraft
 
 	cmpNamedTbar hvy {
 	{
-		pos "585 585"
+		pos "9 142"
 	}
 		tbar bar   { current *cvar:mn_vhvy }
 		string lbl { string "_Heavy Weapons:" }
@@ -547,7 +580,7 @@ window team extends iaircraft
 
 	cmpNamedTbar ass {
 	{
-		pos "585 608"
+		pos "9 165"
 	}
 		tbar bar   { current *cvar:mn_vass }
 		string lbl { string "_Assault Weapons:" }
@@ -556,7 +589,7 @@ window team extends iaircraft
 
 	cmpNamedTbar snp {
 	{
-		pos "585 631"
+		pos "9 188"
 	}
 		tbar bar   { current *cvar:mn_vsnp }
 		string lbl { string "_Sniper Rifles:" }
@@ -565,16 +598,16 @@ window team extends iaircraft
 
 	cmpNamedTbar exp {
 	{
-		pos "585 654"
+		pos "9 211"
 	}
 		tbar bar   { current *cvar:mn_vexp }
 		string lbl { string "_High-Explosives:" }
 		string val { string *cvar:mn_texp }
 	}
 
-	cmpNamedTbar  {
+	cmpNamedTbar hp {
 	{
-		pos "585 677"
+		pos "9 234"
 	}
 		tbar bar   {
 			current *cvar:mn_vhp
@@ -584,14 +617,41 @@ window team extends iaircraft
 		string lbl { string "_Health:" }
 		string val { string *cvar:mn_thp }
 	}
-	string	missions_lbl { pos "585 700" size "200 20" string "_Missions Performed:" }
-	string	missions_val { pos "850 700" size "150 20" string *cvar:mn_chrmis textalign ur }
 
-	string	kills_lbl { pos "585 723" size "200 20" string "_Enemies Killed:" }
-	string	kills_val { pos "850 723" size "150 20" string *cvar:mn_chrkillalien textalign ur }
+	}
 
-	//mn_chrkillcivilian
-	//mn_chrkillteam
+	panel stats_missions {
+	{
+		pos		"208 44"
+		size	"440 264"
+		image	"ui/panel_green_tab"
+		invis true
+	}
+
+	pic	rank_img {
+		pos "195 30"
+		size "50 50"
+		image *cvar:mn_chrrank_img
+	}
+
+	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign uc font f_normal_bold }
+
+	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
+	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ur }
+
+	string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
+	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ur }
+
+	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
+	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ur }
+
+	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
+	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ur }
+
+	}  
+
+	}
+
 
 	/** @todo Activate this again - used for UGVs */
 	// ==================
@@ -604,6 +664,22 @@ window team extends iaircraft
 	confunc toggle_show_soldiersbutton {
 		*bt_switch_list@tooltip	= "_Assign soldiers"
 		*bt_switch_list@icon	= soldier
+	}
+
+	/**
+	 * @note call when tab actor_stat changed.
+	 */
+	confunc select_actor_stat {
+		if ( <1> eq "stats_phys" ) {
+			*actor_background.stats_phys@invis = false
+			*actor_background.stats_missions@invis = true
+		}
+		elif ( <1> eq "stats_missions" ) {
+			*actor_background.stats_phys@invis = true
+			*actor_background.stats_missions@invis = false
+		}
+
+	
 	}
 
 	/**
