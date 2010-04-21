@@ -45,11 +45,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_DETECTIONIDX "detectionIDX"
 #define SAVE_AIRCRAFT_LASTSPOTTED_DATE "lastSpottedDate"
 
-
 #define SAVE_AIRCRAFT_AIRCRAFTTARGET "aircraftTarget"
 
 #define SAVE_AIRCRAFT_AIRSTATS "airstats"
+#define SAVE_AIRCRAFT_AIRSTAT "stat"
+#define SAVE_AIRCRAFT_AIRSTATID "id"
 #define SAVE_AIRCRAFT_VAL "val"
+
 #define SAVE_AIRCRAFT_DETECTED "detected"
 #define SAVE_AIRCRAFT_LANDED "landed"
 #define SAVE_AIRCRAFT_HANGAR "hangar"
@@ -87,6 +89,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_PROJECTILES "projectiles"
 
 #define SAVE_AIRCRAFTSTATUS_NAMESPACE "saveAircraftStatus"
+#define SAVE_AIRCRAFTSTAT_NAMESPACE "saveAircraftStat"
 static const constListEntry_t saveAircraftConstants[] = {
 	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::none", AIR_NONE},
 	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::refuel", AIR_REFUEL},
@@ -100,6 +103,16 @@ static const constListEntry_t saveAircraftConstants[] = {
 	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::transfer", AIR_TRANSFER},
 	{SAVE_AIRCRAFTSTATUS_NAMESPACE"::returning", AIR_RETURNING},
 
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::speed", AIR_STATS_SPEED},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::maxspeed", AIR_STATS_MAXSPEED},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::shield", AIR_STATS_SHIELD},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::ecm", AIR_STATS_ECM},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::damage", AIR_STATS_DAMAGE},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::accuracy", AIR_STATS_ACCURACY},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::fuelsize", AIR_STATS_FUELSIZE},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::weaponrange", AIR_STATS_WRANGE},
+	{SAVE_AIRCRAFTSTAT_NAMESPACE"::antimatter", AIR_STATS_ANTIMATTER},
+
 	{NULL, -1}
 };
 
@@ -110,7 +123,7 @@ DTD: (incomplete)
 
 <!ELEMENT UFOs aircraft*>
 <!ELEMENT aircraft >
-<!ATTLIST aircraft (pos direction weapons shields electronics route lastSpottedDate?)
+<!ATTLIST aircraft (pos direction weapons shields electronics route lastSpottedDate? airstats)
 	id					CDATA	#REQUIRED
 	name				CDATA	#IMPLIED
 	status		(none,refuel,home,idle,
@@ -142,6 +155,16 @@ DTD: (incomplete)
 <!ELEMENT electronics slot*>
 <!ELEMENT slot EMPTY>
 **Note: ATTLIST of slot is defined in save_fightequip.h
+
+<!ELEMENT airstats airstat*>
+<!ELEMENT airstat EMPTY>
+<!ATTLIST airstat
+	id		(speed,maxspeed,shield,
+			ecm,damage,accuracy,
+			fuelsize,weaponrange,
+			antimatter)			#REQUIRED
+	val					CDATA	'0'
+>
 
 <!ELEMENT projectiles projectile*>
 **Note: projectile is defined in save_airfight.h

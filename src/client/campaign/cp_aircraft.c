@@ -2498,18 +2498,23 @@ qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, 
 			mxml_AddInt(node, SAVE_AIRCRAFT_AIRCRAFTTARGET, aircraft->aircraftTarget - ccs.ufos);
 	}
 
+	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);
 	for (l = 0; l < AIR_STATS_MAX; l++) {
+		mxml_node_t *statNode;
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
 		if (!(isUfo && l == AIR_STATS_DAMAGE) && aircraft->stats[l] < 0)
 			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft->id, l, aircraft->stats[l]);
 #endif
-		subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRSTATS);
-		mxml_AddLong(subnode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
+		if (aircraft->stats[l] != 0) {
+			statNode = mxml_AddNode(subnode, SAVE_AIRCRAFT_AIRSTAT);
+			mxml_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
+			mxml_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
+		}
 	 }
 
-	mxml_AddBool(node, SAVE_AIRCRAFT_DETECTED, aircraft->detected);
-	mxml_AddBool(node, SAVE_AIRCRAFT_LANDED, aircraft->landed);
+	mxml_AddBoolValue(node, SAVE_AIRCRAFT_DETECTED, aircraft->detected);
+	mxml_AddBoolValue(node, SAVE_AIRCRAFT_LANDED, aircraft->landed);
 
 	Com_UnregisterConstList(saveAircraftConstants);
 
@@ -2673,6 +2678,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 	statusId = mxml_GetString(p, SAVE_AIRCRAFT_STATUS);
 	if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, (int*) &craft->status)) {
 		Com_Printf("Invaild aircraft status '%s'\n", statusId);
+		Com_UnregisterConstList(saveAircraftConstants);
 		return qfalse;
 	}
 
@@ -2684,8 +2690,10 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 	craft->point = mxml_GetInt(p, SAVE_AIRCRAFT_POINT, 0);
 	craft->time = mxml_GetInt(p, SAVE_AIRCRAFT_TIME, 0);
 
-	if (!AIR_LoadRouteXML(p, &craft->route))
+	if (!AIR_LoadRouteXML(p, &craft->route)) {
+		Com_UnregisterConstList(saveAircraftConstants);
 		return qfalse;
+	}
 
 	s = mxml_GetString(p, SAVE_AIRCRAFT_NAME);
 	if (s[0] == '\0')
@@ -2695,6 +2703,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 	s = mxml_GetString(p, SAVE_AIRCRAFT_MISSIONID);
 	if (s[0] == '\0' && !base) {
 		Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
+		Com_UnregisterConstList(saveAircraftConstants);
 		return qfalse;
 	}
 
@@ -2708,12 +2717,21 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 		craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 	}
 
-	for (l = 0, snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRSTATS); snode && l < AIR_STATS_MAX; snode = mxml_GetNextNode(snode, p, SAVE_AIRCRAFT_AIRSTATS), l++) {
-		craft->stats[l] = mxml_GetLong(snode, SAVE_AIRCRAFT_VAL, 0);
+	snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);
+	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRSTAT); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRSTAT)) {
+		const char *statId =  mxml_GetString(ssnode, SAVE_AIRCRAFT_AIRSTATID);
+		int idx;
+
+		if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
+			Com_Printf("Invaild aircraft stat '%s'\n", statId);
+			Com_UnregisterConstList(saveAircraftConstants);
+			return qfalse;
+		}
+		craft->stats[idx] = mxml_GetLong(ssnode, SAVE_AIRCRAFT_VAL, 0);
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
-		if (!(!base && l == AIR_STATS_DAMAGE) && craft->stats[l] < 0)
-			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, l, craft->stats[l]);
+		if (!(!base && idx == AIR_STATS_DAMAGE) && craft->stats[idx] < 0)
+			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, l, craft->stats[idx]);
 #endif
 	}
 
