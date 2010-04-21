@@ -9,7 +9,7 @@ uniform int LIGHTS;
 #define ATTENUATION (0.15 + 1.8 * dist + 3.5 * dist * dist)
 
 #if r_lights
-void LightContribution(gl_LightSourceParameters param, out vec3 light){
+void LightContribution(gl_LightSourceParameters param, inout vec3 light){
 
 	float attenuation = param.constantAttenuation;
 	if(attenuation > 0.0){
