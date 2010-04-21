@@ -151,3 +151,32 @@ size_t UTF8_strlen (const char *str)
 	}
 	return result;
 }
+
+/**
+ * @brief UTF8 capable string copy function
+ * @param[out] dest Pointer to the output string
+ * @param[in] src Pointer to the input string
+ * @param[in] limit Maximum number of bytes to copy
+ * @return dest pointer
+ */
+char *UTF8_strncpyz (char *dest, char *src, size_t limit)
+{
+	size_t i;
+	size_t length;
+
+	length = strlen(src);
+	if (length > limit - 1)
+		length = limit - 1;
+	i = length;
+	if (src[i] > 0x80)
+		while ((i > 0) && src[i] <= 0xc0)
+			i--;
+	if ((UTF8_char_len(src[i]) + i) - 1 > length)
+		length = i;
+
+	memcpy(dest, src, length);
+	dest[length] = '\0';
+
+	return dest;
+}
+
