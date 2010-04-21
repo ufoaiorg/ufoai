@@ -142,7 +142,7 @@ window serverinfo
 		pos			"500 200"
 		size		"420 490"
 		lineheight	20
-		tabwidth	200
+		tabwidth	250
 		rows		"24"
 	}
 
@@ -227,10 +227,11 @@ window serverinfo
 	button button_favorite
 	{
 		string		"_Bookmark"
-		pos			"200 720"
-		size		"128 35"
+		tooltip		"_Add server to bookmarks"
+		pos			"150 720"
+		size		"178 35"
 		image		ui/button_blue
-		font		f_menu
+		font		f_normal_bold
 		color		"1 1 1 0.8"
 		selectcolor	"1 1 1 1"
 		onClick		{ cmd "bookmark_add;" }
@@ -502,8 +503,9 @@ window mp_create_server extends abstract_multiplayer
 {
 
 	tab create_natigation {
-		pos		"472 200"
-		size	"466 40"
+		pos	"462 200"
+		size	"500 40"
+
 		cvar	*cvar:mn_server_config_tab
 		option map {
 			label	"_Map"
@@ -1144,7 +1146,7 @@ window multiplayer_wait extends levelbuttons
 	panel partyinfo {
 		{
 			pos		"100 30"
-			size	"400 430"
+			size	"400 460"
 			padding	5
 			image	"ui/panel_window"
 		}
@@ -1289,9 +1291,9 @@ window multiplayer_wait extends levelbuttons
 
 	panel teamselection {
 		{
-			pos		"520 310"
-			size	"400 150"
-			padding	5
+			pos		"520 290"
+			size	"400 200"
+			padding	10
 			image	"ui/panel_window"
 		}
 
@@ -1300,7 +1302,7 @@ window multiplayer_wait extends levelbuttons
 			string		"_Team selection"
 			font		f_big
 			color		"1 1 1 1"
-			pos			"0 0"
+			pos			"5 0"
 			size		"415 50"
 			textalign	cc
 		}
@@ -1308,11 +1310,11 @@ window multiplayer_wait extends levelbuttons
 		text teamnum_status
 		{
 			dataid		TEXT_STANDARD
-			pos			"0 50"
-			size		"400 16"
+			pos			"10 50"
+			size		"380 32"
 			lineheight	16
 			tabwidth	60
-			rows		1
+			rows		2
 			textalign	cc
 		}
 
@@ -1320,12 +1322,12 @@ window multiplayer_wait extends levelbuttons
 		{
 			string		"_Team preference:"
 			pos			"25 80"
-			size		"185 20"
+			size		"205 20"
 		}
 		string teamnum_value
 		{
 			string		*cvar:cl_teamnum
-			pos			"210 80"
+			pos			"240 80"
 			size		"40 20"
 			textalign	ur
 		}
@@ -1334,7 +1336,7 @@ window multiplayer_wait extends levelbuttons
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Next free team"
 			image		ui/buttons_small
-			pos			"268 82"
+			pos			"298 82"
 			texl		"0 0"
 			texh		"16 16"
 			mousefx		true
@@ -1345,7 +1347,7 @@ window multiplayer_wait extends levelbuttons
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
 			image		ui/buttons_small
-			pos			"284 82"
+			pos			"314 82"
 			texl		"16 0"
 			texh		"32 16"
 			mousefx		true
@@ -1359,8 +1361,8 @@ window multiplayer_wait extends levelbuttons
 			string		"_Force start"
 			tooltip		"_Start the game even if not all teams is ready or have joined"
 			image		ui/button_blue
-			pos			"50 110"
-			size		"120 30"
+			pos			"35 130"
+			size		"150 30"
 			color		"0.8 0.8 0.8 1"
 			selectcolor "1 1 1 1"
 			onClick		{ cmd "startgame;" }
@@ -1370,7 +1372,7 @@ window multiplayer_wait extends levelbuttons
 		{
 			tooltip		"_Finish the teamselection and start the game"
 			image		ui/checkbox_green
-			pos			"200 120"
+			pos			"200 130"
 			size		"20 20"
 			current		*cvar:cl_ready
 		}
@@ -1378,7 +1380,7 @@ window multiplayer_wait extends levelbuttons
 		{
 			string		"_Are you ready?"
 			tooltip		"_Finish the teamselection and start the game"
-			pos			"230 120"
+			pos			"230 130"
 			size		"180 20"
 			onClick		{ call *node:parent.cb_ready@toggle }
 		}
