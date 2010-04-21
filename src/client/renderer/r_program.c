@@ -492,6 +492,11 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
+static void R_UseWorldProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("LIGHTS", refdef.numLights);
+}
+
 static void R_InitMeshProgram (r_program_t *prog)
 {
 	static vec3_t lightPos;
@@ -503,6 +508,11 @@ static void R_InitMeshProgram (r_program_t *prog)
 
 	R_ProgramParameter1f("OFFSET", 0.0);
 	R_ProgramParameter1i("GLOWMAP", 0);
+}
+
+static void R_UseMeshProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("LIGHTS", refdef.numLights);
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -651,8 +661,8 @@ void R_InitPrograms (void)
 	if (!r_programs->integer)
 		return;
 
-	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
-	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
+	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
+	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, R_UseMeshProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);

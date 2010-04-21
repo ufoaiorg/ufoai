@@ -738,6 +738,9 @@ static qboolean R_InitExtensions (void)
 	/* reset gl error state */
 	R_CheckError();
 
+	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
+	Com_Printf("max supported lights: %i\n", r_config.maxLights);
+
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
 	if (r_config.maxTextureUnits < 2)
