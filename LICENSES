@@ -879,9 +879,11 @@ base/models/objects/airpipe/airpipe.md2 | GNU General Public License 2.0 or late
 base/models/objects/airpipe/airpipe.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/barrel/barrel.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/barrel/barrel.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/barrel/barrel_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/barrel/barrel_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/battery/battery.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/battery/battery_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/box/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/box/box.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/box/box_nm.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -900,7 +902,7 @@ base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public L
 base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/panel/panel.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/panel/panel_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/pstation/pstation01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/pstation/pstation01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/pstation/pstation02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -911,6 +913,7 @@ base/models/objects/alien/pstation/pstation04.jpg | GNU General Public License 2
 base/models/objects/alien/pstation/pstation04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/seat/seat.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/seat/seat.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/seat/seat_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/ufo_crashed/acrash_engine.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_engine.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_hull.jpg | GNU General Public License 2.0
