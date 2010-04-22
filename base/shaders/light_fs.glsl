@@ -9,12 +9,13 @@ uniform int LIGHTS;
 #define ATTENUATION (0.15 + 1.8 * dist + 3.5 * dist * dist)
 
 #if r_lights
-void LightContribution(gl_LightSourceParameters param, inout vec3 light){
+void LightContribution(in int i, inout vec3 light){
 
-	float attenuation = param.constantAttenuation;
+	//gl_LightSourceParameters param = gl_LightSource[i];
+	float attenuation = gl_LightSource[i].constantAttenuation;
 	if(attenuation > 0.0){
-		vec3 lightPos = param.position.xyz;
-		vec3 lightColor = param.diffuse.rgb;
+		vec3 lightPos = gl_LightSource[i].position.xyz;
+		vec3 lightColor = gl_LightSource[i].diffuse.rgb;
 		vec3 delta = lightPos - point;
 		float dist = length(delta);
 		if(dist < attenuation){
@@ -38,8 +39,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 #if r_lights
 
 	for (int i = 0; i < LIGHTS; i++) {
-		gl_LightSourceParameters param = gl_LightSource[i];
-		LightContribution(param, light);
+		LightContribution(i, light);
 	}
 
 	light = clamp(light, 0.0, 1.8);
