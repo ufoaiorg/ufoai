@@ -74,10 +74,11 @@ void main(void){
 	}
 #endif
 
-	if(GLOWMAP > 0) {
+#if r_postprocess
+	if(GLOWMAP > 0){
 		 vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
 		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
 		 gl_FragData[1].a = 1.0;
 	}
-
+#endif
 }

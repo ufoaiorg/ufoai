@@ -84,6 +84,16 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
+static void R_StageGlow (const mBspSurface_t *surf, const materialStage_t *stage)
+{
+	R_EnableGlowMap(NULL, qfalse);
+
+	if (stage->image->glowmap) {
+		R_EnableGlowMap(stage->image->glowmap, qtrue);
+		R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
+	}
+}
+
 /**
  * @brief Manages state for stages supporting static, dynamic, and per-pixel lighting.
  */
@@ -96,39 +106,16 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 		/* hardware lighting */
-		if ( (stage->flags & STAGE_LIGHTING) && R_EnableLighting(r_state.world_program, qtrue)) {
+		if ((stage->flags & STAGE_LIGHTING) && R_EnableLighting(r_state.world_program, qtrue)) {
 			if (r_bumpmap->value && stage->image->normalmap) {
 				R_BindDeluxemapTexture(surf->deluxemap_texnum);
 				R_BindNormalmapTexture(stage->image->normalmap->texnum);
 
 				R_EnableBumpmap(&stage->image->material, qtrue);
-
 			} else if (r_state.bumpmap_enabled)
 				R_EnableBumpmap(NULL, qfalse);
-
-			if (stage->image->glowmap && r_postprocess->integer) {
-				R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
-				R_ProgramParameter1i("GLOWMAP", 1);
-				R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
-			} else if (r_postprocess->integer) {
-				R_ProgramParameter1i("GLOWMAP", 0);
-			}
-		} else {
-			if (stage->image->glowmap && r_postprocess->integer) {
-				R_EnableLighting(r_state.simple_glow_program, qtrue);
-				R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
-				R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
-			} else 
-				R_EnableLighting(NULL, qfalse);
 		}
 	} else {
-		if (stage->image->glowmap && r_postprocess->integer) {
-			R_EnableLighting(r_state.simple_glow_program, qtrue);
-			R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
-			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
-		} else 
-			R_EnableLighting(NULL, qfalse);
-
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 }
@@ -276,6 +263,8 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 
 	/* and optionally the lightmap */
 	R_StageLighting(surf, stage);
+
+	R_StageGlow(surf, stage);
 
 	/* load the texture matrix for rotations, stretches, etc.. */
 	R_StageTextureMatrix(surf, stage);
@@ -440,10 +429,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableBumpmap(NULL, qfalse);
 
-	if (r_postprocess->integer) {
-		R_EnableLighting(r_state.world_program, qtrue);
-		R_ProgramParameter1i("GLOWMAP", 0);
-	}
+	R_EnableGlowMap(NULL, qfalse);
+
 	R_EnableLighting(NULL, qfalse);
 
 	R_Color(NULL);

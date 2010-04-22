@@ -323,9 +323,7 @@ void R_RenderFrame (void)
 		}
 	}
 
-	R_EnableGlow(qtrue);
 	R_DrawEntities();
-	R_EnableGlow(qfalse);
 
 	R_EnableBlend(qtrue);
 

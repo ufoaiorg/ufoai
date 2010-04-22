@@ -268,8 +268,6 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 		R_UseProgram(NULL);
 	}
 
-	R_EnableGlow(enable);
-
 	return r_state.lighting_enabled;
 }
 
@@ -444,27 +442,36 @@ void R_EnableFog (qboolean enable)
 	}
 }
 
-/** @sa R_EnableRenderbuffer (in r_framebuffer.c)
- */
-void R_EnableGlow (qboolean enable)
+void R_EnableGlowMap (image_t *image, qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
-	if (!r_postprocess->integer || r_state.glow_enabled == enable)
+	if (!r_postprocess->integer || r_state.glowmap_enabled == enable)
 		return;
 
-	if (enable)
-		R_DrawBuffers(2);
-	else {
-		if (r_state.draw_glow_enabled){
-			R_BindColorAttachments(1, &glowRenderTarget);
-		} else {
-			R_DrawBuffers(1);
-		}
-	}
-	r_state.glow_enabled = enable;
-}
+	r_state.glowmap_enabled = enable;
 
+	if (enable) {
+		if (!r_state.active_program)
+			R_UseProgram(r_state.simple_glow_program);
+		else
+			R_ProgramParameter1i("GLOWMAP", 1);
+
+		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
+		R_DrawBuffers(2);
+	} else {
+		if (r_state.active_program == r_state.simple_glow_program)
+			R_UseProgram(NULL);
+		else
+			R_ProgramParameter1i("GLOWMAP", 0);
+
+		if (r_state.draw_glow_enabled)
+			R_BindColorAttachments(1, &glowRenderTarget);
+		else
+			R_DrawBuffers(1);
+	}
+}
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
@@ -478,7 +485,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 	if (enable) {
 		R_BindColorAttachments(1, &glowRenderTarget);
 	} else {
-		if (r_state.glow_enabled) {
+		if (r_state.glowmap_enabled) {
 			R_DrawBuffers(2);
 		} else {
 			R_DrawBuffers(1);
