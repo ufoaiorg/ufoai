@@ -1284,7 +1284,7 @@
 "model" "models/animals/cow/cow.md2"
 "spawnflags" "1"
 "anim" "idle"
-"angle" "90"
+"angles" "0 90 0"
 }
 // entity 19
 {
