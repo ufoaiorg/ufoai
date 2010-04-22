@@ -106,14 +106,18 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 		/* hardware lighting */
-		if ((stage->flags & STAGE_LIGHTING) && R_EnableLighting(r_state.world_program, qtrue)) {
-			if (r_bumpmap->value && stage->image->normalmap) {
-				R_BindDeluxemapTexture(surf->deluxemap_texnum);
-				R_BindNormalmapTexture(stage->image->normalmap->texnum);
+		if ((stage->flags & STAGE_LIGHTING)) {
+			R_EnableLighting(r_state.world_program, qtrue);
+			if (r_state.lighting_enabled) {
+				if (r_bumpmap->value && stage->image->normalmap) {
+					R_BindDeluxemapTexture(surf->deluxemap_texnum);
+					R_BindNormalmapTexture(stage->image->normalmap->texnum);
 
-				R_EnableBumpmap(&stage->image->material, qtrue);
-			} else if (r_state.bumpmap_enabled)
-				R_EnableBumpmap(NULL, qfalse);
+					R_EnableBumpmap(&stage->image->material, qtrue);
+				} else if (r_state.bumpmap_enabled)
+					R_EnableBumpmap(NULL, qfalse);
+			} else
+				R_EnableLighting(NULL, qfalse);
 		}
 	} else {
 		R_EnableTexture(&texunit_lightmap, qfalse);

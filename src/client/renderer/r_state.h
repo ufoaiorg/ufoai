@@ -155,6 +155,6 @@ void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
-void R_EnableGlowMap(image_t *image, qboolean enable);
+void R_EnableGlowMap(const image_t *image, qboolean enable);
 
 #endif

@@ -442,7 +442,7 @@ void R_EnableFog (qboolean enable)
 	}
 }
 
-void R_EnableGlowMap (image_t *image, qboolean enable)
+void R_EnableGlowMap (const image_t *image, qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 

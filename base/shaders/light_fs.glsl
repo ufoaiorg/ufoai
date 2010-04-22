@@ -2,31 +2,9 @@
 
 varying vec3 point;
 varying vec3 normal;
-// amount of lights add to the scene
-uniform int LIGHTS;
 
 // constant + linear + quadratic attenuation
 #define ATTENUATION (0.15 + 1.8 * dist + 3.5 * dist * dist)
-
-#if r_lights
-void LightContribution(in int i, inout vec3 light){
-
-	//gl_LightSourceParameters param = gl_LightSource[i];
-	float attenuation = gl_LightSource[i].constantAttenuation;
-	if(attenuation > 0.0){
-		vec3 lightPos = gl_LightSource[i].position.xyz;
-		vec3 lightColor = gl_LightSource[i].diffuse.rgb;
-		vec3 delta = lightPos - point;
-		float dist = length(delta);
-		if(dist < attenuation){
-			vec3 dir = normalize(delta);
-			float d = dot(normal, dir);
-			if(d > 0.0)
-				light += lightColor * d * ATTENUATION;
-		}
-	}
-}
-#endif
 
 
 /*
@@ -34,12 +12,143 @@ void LightContribution(in int i, inout vec3 light){
  */
 void LightFragment(in vec4 diffuse, in vec3 lightmap){
 
-	vec3 light = vec3(0.0);
+	vec3 delta, dir, light = vec3(0.0);
+	float dist, d;
 
 #if r_lights
+	/*
+	 * Any reasonable GLSL compiler could handle this as a for-loop
+	 * and unroll it nicely.  But apparently some vendors are mental
+	 * midgets.  So we do their job for them.
+	 */
 
-	for (int i = 0; i < LIGHTS; i++) {
-		LightContribution(i, light);
+	if(gl_LightSource[0].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[0].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[0].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[0].constantAttenuation;
+				light += gl_LightSource[0].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[1].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[1].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[1].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[1].constantAttenuation;
+				light += gl_LightSource[1].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[2].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[2].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[2].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[2].constantAttenuation;
+				light += gl_LightSource[2].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[3].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[3].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[3].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[3].constantAttenuation;
+				light += gl_LightSource[3].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[4].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[4].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[4].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[4].constantAttenuation;
+				light += gl_LightSource[4].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[5].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[5].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[5].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[5].constantAttenuation;
+				light += gl_LightSource[5].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[6].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[6].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[6].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[6].constantAttenuation;
+				light += gl_LightSource[6].diffuse.rgb * d * ATTENUATION;
+			}
+		}
+	}
+	if(gl_LightSource[7].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[7].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[7].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				dist = 1.0 - dist / gl_LightSource[7].constantAttenuation;
+				light += gl_LightSource[7].diffuse.rgb * d * ATTENUATION;
+			}
+		}
 	}
 
 	light = clamp(light, 0.0, 1.8);
