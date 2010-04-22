@@ -573,7 +573,8 @@ void R_DrawAliasModel (entity_t *e)
 	if (r_state.lighting_enabled && mod->meshes[e->as.mesh].skins[e->skinnum].skin->glowmap && r_postprocess->integer) {
 		R_BindTextureForTexUnit(mod->meshes[e->as.mesh].skins[e->skinnum].skin->glowmap->texnum, &texunit_glowmap);
 		R_ProgramParameter1i("GLOWMAP", 1);
-	}
+	} else if (r_state.lighting_enabled && r_postprocess->integer)
+		R_ProgramParameter1i("GLOWMAP", 0);
 
 	R_ResetArrayState();
 
