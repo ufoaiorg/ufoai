@@ -125,6 +125,7 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 		if (stage->image->glowmap && r_postprocess->integer) {
 			R_EnableLighting(r_state.simple_glow_program, qtrue);
 			R_BindTextureForTexUnit(stage->image->glowmap->texnum, &texunit_glowmap);
+			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
 		} else 
 			R_EnableLighting(NULL, qfalse);
 
@@ -439,8 +440,10 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableBumpmap(NULL, qfalse);
 
-	R_EnableLighting(r_state.world_program, qtrue);
-	R_ProgramParameter1i("GLOWMAP", 0);
+	if (r_postprocess->integer) {
+		R_EnableLighting(r_state.world_program, qtrue);
+		R_ProgramParameter1i("GLOWMAP", 0);
+	}
 	R_EnableLighting(NULL, qfalse);
 
 	R_Color(NULL);
