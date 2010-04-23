@@ -37,7 +37,7 @@
 //			male {}
 //	actorsounds {}
 //		A list of soundfiles for the various sound-events. Syntax
-//		<sound-event> <path/to/soundfile/soundfile/relative/to/base/sounds>
+//		<sound-event> <path/to/soundfile/soundfile/relative/to/base/sound>
 //		Uses sub-lists as follows:
 //			neutral {}
 //			female {}
