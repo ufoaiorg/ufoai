@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-30 10:59+0700\n"
+"POT-Creation-Date: 2010-04-23 16:21+0200\n"
 "PO-Revision-Date: 2009-12-24 09:07+0900\n"
 "Last-Translator: 신재종 <morpheuz@hanmail.net>\n"
 "Language-Team: UFO: Alien Invasion KR\n"
@@ -74,27 +74,27 @@ msgstr "조그만 숲"
 msgid "Little bungalo in forest"
 msgstr "숲의 작은 오두막집"
 
-#: ../base/maps/frozen.ump:292
+#: ../base/maps/frozen.ump:284
 msgid "Snow"
 msgstr "설원"
 
-#: ../base/maps/frozen.ump:309
+#: ../base/maps/frozen.ump:301
 msgid "Alien landing - Snow"
 msgstr "외계 우주선 착륙 - 설원"
 
-#: ../base/maps/frozen.ump:327
+#: ../base/maps/frozen.ump:319
 msgid "Industrial"
 msgstr "공업지대"
 
-#: ../base/maps/frozen.ump:348
+#: ../base/maps/frozen.ump:340
 msgid "Alien landing - Industrial"
 msgstr "외계 우주선 착륙 - 공업지대"
 
-#: ../base/maps/frozen.ump:370
+#: ../base/maps/frozen.ump:362
 msgid "Multiplayer Coop"
 msgstr "동맹 멀티플레이"
 
-#: ../base/maps/frozen.ump:391
+#: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
 msgstr "데스매치 멀티플레이"
 
@@ -110,16 +110,16 @@ msgstr "착륙한 UFO"
 msgid "Italy"
 msgstr "이탈리아"
 
-#: ../base/maps/japan.ump:291
+#: ../base/maps/japan.ump:285
 msgid "Japan"
 msgstr "일본"
 
-#: ../base/maps/japan.ump:299
+#: ../base/maps/japan.ump:293
 #, fuzzy
 msgid "Small eastern park."
 msgstr "소형 격납고"
 
-#: ../base/maps/japan.ump:327
+#: ../base/maps/japan.ump:321
 #, fuzzy
 msgid "Harvester"
 msgstr "Harvester U"
@@ -3271,6 +3271,11 @@ msgid "Bulgarian"
 msgstr "불가리아어"
 
 #: ../base/ufos/language.ufo:320
+#, fuzzy
+msgid "Norwegian"
+msgstr "한국어"
+
+#: ../base/ufos/language.ufo:328
 msgid "No language"
 msgstr "언어 없음"
 
@@ -3496,23 +3501,23 @@ msgstr "사람들이 교제하고 쉴 수 있는 곳."
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "발견된 UFO 잔해를 실험하는 연구실."
 
-#: ../base/ufos/maps.ufo:3431
+#: ../base/ufos/maps.ufo:3479
 msgid "A fuel depot the aliens try to destroy."
 msgstr "연료기지를 외계인들이 파괴하려 합니다."
 
-#: ../base/ufos/maps.ufo:3470
+#: ../base/ufos/maps.ufo:3518
 msgid "Wilderness terror mission."
 msgstr "황무지 테러 임무."
 
-#: ../base/ufos/maps.ufo:3516
+#: ../base/ufos/maps.ufo:3564
 msgid "UFO Crashsite."
 msgstr "UFO 추락 지점"
 
-#: ../base/ufos/maps.ufo:3547
+#: ../base/ufos/maps.ufo:3595
 msgid "An alien base."
 msgstr "외계인 기지."
 
-#: ../base/ufos/maps.ufo:3562
+#: ../base/ufos/maps.ufo:3610
 msgid "Base is under attack."
 msgstr "기지가 공격당했습니다."
 
@@ -3728,7 +3733,7 @@ msgstr "역사적배경"
 #: ../base/ufos/research.ufo:109 ../base/ufos/ui/bases.ufo:129
 #: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
-#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
+#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:350
 msgid "Aircraft"
 msgstr "항공기"
 
@@ -9439,6 +9444,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "혹은 1 - 8의 키에 의해 선택이 가능합니다"
 
 #: ../base/ufos/seq_tutorials.ufo:474
+#: ../base/ufos/ui/aircraft_soldiers.ufo:514
 msgid "Physical stats"
 msgstr "능력치를 열람합니다"
 
@@ -9558,7 +9564,7 @@ msgstr ""
 msgid "How to play multiplayer"
 msgstr "멀티플레이 방법"
 
-#: ../base/ufos/seq_tutorials.ufo:1057 ../base/ufos/ui/multiplayer.ufo:985
+#: ../base/ufos/seq_tutorials.ufo:1057 ../base/ufos/ui/multiplayer.ufo:970
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "방화벽 설정중 TCP 27910 포트가 열려있는지 확인하십시오."
 
@@ -9578,15 +9584,15 @@ msgstr ""
 msgid "Taman"
 msgstr "타만"
 
-#: ../base/ufos/team_aliens.ufo:94
+#: ../base/ufos/team_aliens.ufo:99
 msgid "Ortnok"
 msgstr "오트녹"
 
-#: ../base/ufos/team_aliens.ufo:171
+#: ../base/ufos/team_aliens.ufo:181
 msgid "Shevaar"
 msgstr "쉐바"
 
-#: ../base/ufos/team_aliens.ufo:208
+#: ../base/ufos/team_aliens.ufo:225
 msgid "Bloodspider"
 msgstr "로봇거미"
 
@@ -9974,7 +9980,7 @@ msgid "Select this slot"
 msgstr "이 슬롯을 선택합니다"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
-#: ../base/ufos/ui/aircraft_soldiers.ufo:65
+#: ../base/ufos/ui/aircraft_soldiers.ufo:58
 msgid "Team Members:"
 msgstr "탑승인원:"
 
@@ -10013,112 +10019,129 @@ msgstr "이 항공기를 조종하지 않도록 합니다"
 msgid "Add/remove this soldier"
 msgstr "이 병사를 팀에 넣는다/제외한다"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:87
-#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:769
+#: ../base/ufos/ui/aircraft_soldiers.ufo:80
+#: ../base/ufos/ui/aircraft_soldiers.ufo:692 ../base/ufos/ui/geoscape.ufo:769
 msgid "Equip soldiers"
 msgstr "병사 장비착용"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:115
+#: ../base/ufos/ui/aircraft_soldiers.ufo:108
 msgid "Soldier is assigned to another craft"
 msgstr "다른 항공기에 탑승중인 병사입니다"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:134
+#: ../base/ufos/ui/aircraft_soldiers.ufo:127
 msgid "No more soldiers can be assigned to this craft"
 msgstr "이 항공기에는 더 이상 탑승할 수 없습니다"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:136
+#: ../base/ufos/ui/aircraft_soldiers.ufo:129
 msgid "Assign soldier to this craft"
 msgstr "항공기에 병사를 탑승시킵니다"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:147
+#: ../base/ufos/ui/aircraft_soldiers.ufo:140
 msgid "Remove soldier from this craft"
 msgstr "항공기에서 병사를 하차시킵니다"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:157
+#: ../base/ufos/ui/aircraft_soldiers.ufo:150
 msgid "Soldier carries equipment"
 msgstr "장비소지 완료된 병사"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:166
+#: ../base/ufos/ui/aircraft_soldiers.ufo:159
 msgid "Soldier carries no equipment"
 msgstr "장비 미소지 병사"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:483
+#: ../base/ufos/ui/aircraft_soldiers.ufo:518
+#, fuzzy
+msgid "Missions info"
+msgstr "임무"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:536 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "체력:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:511 ../base/ufos/ui/equipment.ufo:492
+#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
-#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1133
+#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1147
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "속도:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:519 ../base/ufos/ui/equipment.ufo:501
+#: ../base/ufos/ui/aircraft_soldiers.ufo:552 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "정확도:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:527 ../base/ufos/ui/equipment.ufo:510
+#: ../base/ufos/ui/aircraft_soldiers.ufo:560 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "정신력:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/equipment.ufo:519
+#: ../base/ufos/ui/aircraft_soldiers.ufo:568 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "백병전:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:528
+#: ../base/ufos/ui/aircraft_soldiers.ufo:577 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "중화기:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:553 ../base/ufos/ui/equipment.ufo:537
+#: ../base/ufos/ui/aircraft_soldiers.ufo:586 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
 msgstr "근거리전:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:562 ../base/ufos/ui/equipment.ufo:546
+#: ../base/ufos/ui/aircraft_soldiers.ufo:595 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "저격:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:571 ../base/ufos/ui/equipment.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:604 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
 msgstr "폭발물:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:584 ../base/ufos/ui/hire.ufo:383
+#: ../base/ufos/ui/aircraft_soldiers.ufo:617 ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
 msgstr "생명력:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:587 ../base/ufos/ui/hire.ufo:387
-msgid "Missions Performed:"
+#: ../base/ufos/ui/aircraft_soldiers.ufo:639
+#, fuzzy
+msgid "Missions performed:"
 msgstr "미션 참가수:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:590 ../base/ufos/ui/hire.ufo:390
-msgid "Enemies Killed:"
+#: ../base/ufos/ui/aircraft_soldiers.ufo:642
+#, fuzzy
+msgid "Enemies killed:"
 msgstr "적 사살수:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:601
+#: ../base/ufos/ui/aircraft_soldiers.ufo:645
+#, fuzzy
+msgid "Civilians killed:"
+msgstr "민간인이 살해되었습니다.\n"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:648
+#, fuzzy
+msgid "Our team killed:"
+msgstr "%s 가 살해당했습니다\n"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:661
 msgid "Assign tanks"
 msgstr "탱크 적재"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:605
+#: ../base/ufos/ui/aircraft_soldiers.ufo:665
 msgid "Assign soldiers"
 msgstr "병사 탑승"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:619
+#: ../base/ufos/ui/aircraft_soldiers.ufo:695
 msgid "No soldiers assigned"
 msgstr "병사들이 타고 있지 않습니다"
 
@@ -10227,7 +10250,7 @@ msgstr "발견중인 적을 바꾸기 위해 클릭합니다"
 msgid "Finish round"
 msgstr "이번 차례를 종료합니다"
 
-#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:894
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:893
 msgid "Multiple-shot reaction fire"
 msgstr "대응사격 여러번"
 
@@ -10235,7 +10258,7 @@ msgstr "대응사격 여러번"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "대응사격 여러번(불가능)"
 
-#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:906
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:905
 msgid "One-shot reaction fire"
 msgstr "대응사격 1회"
 
@@ -10243,12 +10266,12 @@ msgstr "대응사격 1회"
 msgid "One-shot reaction fire (not possible)"
 msgstr "대응사격 1회(불가능)"
 
-#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:918
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:917
 msgid "No reaction fire"
 msgstr "대응사격 없음"
 
-#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:809
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:873
+#: client/battlescape/cl_hud.c:814
 msgid "Reserve TUs for shooting."
 msgstr "사격을 위해 TU를 예약함."
 
@@ -10463,7 +10486,7 @@ msgid "Load last saved game or continue playing"
 msgstr "마지막에 저장된 게임을 읽어오거나, 현재의 게임을 재개합니다"
 
 #: ../base/ufos/ui/campaign.ufo:60 ../base/ufos/ui/campaign.ufo:373
-#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:66
+#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:80
 #: ../base/ufos/ui/options.ufo:75 ../base/ufos/ui/singleplayer.ufo:43
 #: ../base/ufos/ui/skirmish.ufo:18 ../base/ufos/ui/tutorials.ufo:27
 msgid "Back"
@@ -10475,7 +10498,7 @@ msgid "Save"
 msgstr "저장하기"
 
 #: ../base/ufos/ui/campaign.ufo:169 ../base/ufos/ui/hud.ufo:664
-#: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:530
+#: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:515
 #: ../base/ufos/ui/multiplayeringame.ufo:37
 #: ../base/ufos/ui/singleplayer.ufo:98
 msgid "Options"
@@ -10785,8 +10808,8 @@ msgstr "새로운 기지"
 #: ../base/ufos/ui/geoscape.ufo:945 ../base/ufos/ui/geoscape.ufo:1370
 #: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
-#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:342
-#: ../base/ufos/ui/options.ufo:736
+#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:357
+#: ../base/ufos/ui/options.ufo:750
 msgid "Name:"
 msgstr "이름:"
 
@@ -10838,7 +10861,7 @@ msgstr "비용:"
 msgid "Radar tower"
 msgstr "레이더 타워"
 
-#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:339
+#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:344
 msgid "Base"
 msgstr "기지"
 
@@ -10959,6 +10982,14 @@ msgstr "고용/해고 - 제거하려면 오른쪽 클릭을 하세요"
 msgid "Rename your employee"
 msgstr "인원의 이름을 변경합니다"
 
+#: ../base/ufos/ui/hire.ufo:387
+msgid "Missions Performed:"
+msgstr "미션 참가수:"
+
+#: ../base/ufos/ui/hire.ufo:390
+msgid "Enemies Killed:"
+msgstr "적 사살수:"
+
 #: ../base/ufos/ui/hire.ufo:406
 msgid "Occupation"
 msgstr "인원"
@@ -11000,35 +11031,35 @@ msgstr "아래로 스크롤합니다"
 msgid "Implants"
 msgstr "이식수술"
 
-#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1074
+#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1059
 msgid "Level 1"
 msgstr "1 층"
 
-#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1085
+#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1070
 msgid "Level 2"
 msgstr "2 층"
 
-#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1096
+#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1081
 msgid "Level 3"
 msgstr "3 층"
 
-#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1107
+#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1092
 msgid "Level 4"
 msgstr "4 층"
 
-#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1118
+#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1103
 msgid "Level 5"
 msgstr "5 층"
 
-#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1129
+#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1114
 msgid "Level 6"
 msgstr "6 층"
 
-#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1140
+#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1125
 msgid "Level 7"
 msgstr "7 층"
 
-#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1151
+#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1136
 msgid "Level 8"
 msgstr "8 층"
 
@@ -11040,11 +11071,11 @@ msgstr "공격방법 1로 공격합니다"
 msgid "Physical stats of this soldier"
 msgstr "병사의 신체상태"
 
-#: ../base/ufos/ui/hud.ufo:900
+#: ../base/ufos/ui/hud.ufo:899
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "복수회의 대응사격 (사용불가)"
 
-#: ../base/ufos/ui/hud.ufo:912
+#: ../base/ufos/ui/hud.ufo:911
 msgid "One-shot reaction fire (Not possible)"
 msgstr "1회 대응사격 (사용불가)"
 
@@ -11052,9 +11083,9 @@ msgstr "1회 대응사격 (사용불가)"
 msgid "Floor"
 msgstr "층"
 
-#: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:58
-#: ../base/ufos/ui/multiplayer.ufo:97 ../base/ufos/ui/multiplayer.ufo:1828
-#: ../base/ufos/ui/multiplayer.ufo:1881
+#: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:72
+#: ../base/ufos/ui/multiplayer.ufo:111 ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1866
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 msgid "Lobby"
 msgstr "대기실"
@@ -11101,8 +11132,8 @@ msgstr "접속되지 않았습니다"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "대기실에 접속하지 않았습니다. 접속하시겠습니까?"
 
-#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:197
-#: ../base/ufos/ui/multiplayer.ufo:385 ../base/ufos/ui/multiplayer.ufo:1790
+#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:211
+#: ../base/ufos/ui/multiplayer.ufo:400 ../base/ufos/ui/multiplayer.ufo:1775
 msgid "Connect"
 msgstr "접속"
 
@@ -11221,15 +11252,15 @@ msgstr "초기설정"
 msgid "User Information"
 msgstr "기지 정보"
 
-#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:560
+#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:574
 msgid "Volume Control"
 msgstr "음량"
 
-#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:566
+#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:580
 msgid "Effects:"
 msgstr "효과음:"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:587
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:601
 msgid "Music:"
 msgstr "음악:"
 
@@ -11237,7 +11268,7 @@ msgstr "음악:"
 msgid "Language"
 msgstr "사용언어"
 
-#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:798
 msgid "Language:"
 msgstr "사용언어:"
 
@@ -11245,7 +11276,7 @@ msgstr "사용언어:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr "플레이어명을 입력하고 'OK' 버튼을 눌러주세요:"
 
-#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1789
+#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1774
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
 #, fuzzy
 msgid "OK"
@@ -11455,307 +11486,298 @@ msgid ""
 "Left click enables all sounds, right click disables."
 msgstr "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
 
-#: ../base/ufos/ui/multiplayer.ufo:37 ../base/ufos/ui/multiplayer.ufo:155
-msgid "Team"
-msgstr "팀"
-
-#: ../base/ufos/ui/multiplayer.ufo:44
-msgid "Join"
-msgstr "참여"
-
-#: ../base/ufos/ui/multiplayer.ufo:51
-msgid "Create"
-msgstr "생성"
-
-#: ../base/ufos/ui/multiplayer.ufo:83
-msgid "Internet/Lan"
-msgstr "Internet/Lan"
-
-#: ../base/ufos/ui/multiplayer.ufo:87
-msgid "Lan"
-msgstr "Lan"
-
-#: ../base/ufos/ui/multiplayer.ufo:92 ../base/ufos/ui/multiplayer.ufo:215
-msgid "Bookmark"
-msgstr "바로가기"
-
-#: ../base/ufos/ui/multiplayer.ufo:137
-msgid "Userlist"
-msgstr "접속자 목록"
-
-#: ../base/ufos/ui/multiplayer.ufo:146
-msgid "Name"
-msgstr "이름"
-
-#: ../base/ufos/ui/multiplayer.ufo:204
-msgid "Leave Serverbrowser"
-msgstr "서버목록 나가기"
-
-#: ../base/ufos/ui/multiplayer.ufo:252
-msgid "Serverfilter:"
-msgstr "서버필터:"
-
-#: ../base/ufos/ui/multiplayer.ufo:327
-msgid "Refresh"
-msgstr "갱신"
-
-#: ../base/ufos/ui/multiplayer.ufo:366
-msgid "Connect to IP"
-msgstr "IP 주소에 접속"
-
-#: ../base/ufos/ui/multiplayer.ufo:429
-msgid "Bookmarks"
-msgstr "바로가기 목록"
-
-#: ../base/ufos/ui/multiplayer.ufo:445 ../base/ufos/ui/multiplayer.ufo:448
-#: ../base/ufos/ui/multiplayer.ufo:451 ../base/ufos/ui/multiplayer.ufo:454
-#: ../base/ufos/ui/multiplayer.ufo:457 ../base/ufos/ui/multiplayer.ufo:460
-#: ../base/ufos/ui/multiplayer.ufo:463 ../base/ufos/ui/multiplayer.ufo:466
-#: ../base/ufos/ui/multiplayer.ufo:469 ../base/ufos/ui/multiplayer.ufo:472
-#: ../base/ufos/ui/multiplayer.ufo:475 ../base/ufos/ui/multiplayer.ufo:478
-#: ../base/ufos/ui/multiplayer.ufo:481 ../base/ufos/ui/multiplayer.ufo:484
-#: ../base/ufos/ui/multiplayer.ufo:487 ../base/ufos/ui/multiplayer.ufo:490
+#: ../base/ufos/ui/multiplayer.ufo:9
 #, fuzzy
 msgid "Connect to this server"
 msgstr "대기실로 접속"
 
-#: ../base/ufos/ui/multiplayer.ufo:446 ../base/ufos/ui/multiplayer.ufo:449
-#: ../base/ufos/ui/multiplayer.ufo:452 ../base/ufos/ui/multiplayer.ufo:455
-#: ../base/ufos/ui/multiplayer.ufo:458 ../base/ufos/ui/multiplayer.ufo:461
-#: ../base/ufos/ui/multiplayer.ufo:464 ../base/ufos/ui/multiplayer.ufo:467
-#: ../base/ufos/ui/multiplayer.ufo:470 ../base/ufos/ui/multiplayer.ufo:473
-#: ../base/ufos/ui/multiplayer.ufo:476 ../base/ufos/ui/multiplayer.ufo:479
-#: ../base/ufos/ui/multiplayer.ufo:482 ../base/ufos/ui/multiplayer.ufo:485
-#: ../base/ufos/ui/multiplayer.ufo:488 ../base/ufos/ui/multiplayer.ufo:491
+#: ../base/ufos/ui/multiplayer.ufo:13
 msgid "Delete this bookmark"
 msgstr "바로가기 삭제"
 
-#: ../base/ufos/ui/multiplayer.ufo:526 ../base/ufos/ui/skirmish.ufo:264
+#: ../base/ufos/ui/multiplayer.ufo:51 ../base/ufos/ui/multiplayer.ufo:169
+msgid "Team"
+msgstr "팀"
+
+#: ../base/ufos/ui/multiplayer.ufo:58
+msgid "Join"
+msgstr "참여"
+
+#: ../base/ufos/ui/multiplayer.ufo:65
+msgid "Create"
+msgstr "생성"
+
+#: ../base/ufos/ui/multiplayer.ufo:97
+msgid "Internet/Lan"
+msgstr "Internet/Lan"
+
+#: ../base/ufos/ui/multiplayer.ufo:101
+msgid "Lan"
+msgstr "Lan"
+
+#: ../base/ufos/ui/multiplayer.ufo:106 ../base/ufos/ui/multiplayer.ufo:229
+msgid "Bookmark"
+msgstr "바로가기"
+
+#: ../base/ufos/ui/multiplayer.ufo:151
+msgid "Userlist"
+msgstr "접속자 목록"
+
+#: ../base/ufos/ui/multiplayer.ufo:160
+msgid "Name"
+msgstr "이름"
+
+#: ../base/ufos/ui/multiplayer.ufo:218
+msgid "Leave Serverbrowser"
+msgstr "서버목록 나가기"
+
+#: ../base/ufos/ui/multiplayer.ufo:230
+#, fuzzy
+msgid "Add server to bookmarks"
+msgstr "바로가기 삭제"
+
+#: ../base/ufos/ui/multiplayer.ufo:267
+msgid "Serverfilter:"
+msgstr "서버필터:"
+
+#: ../base/ufos/ui/multiplayer.ufo:342
+msgid "Refresh"
+msgstr "갱신"
+
+#: ../base/ufos/ui/multiplayer.ufo:381
+msgid "Connect to IP"
+msgstr "IP 주소에 접속"
+
+#: ../base/ufos/ui/multiplayer.ufo:444
+msgid "Bookmarks"
+msgstr "바로가기 목록"
+
+#: ../base/ufos/ui/multiplayer.ufo:511 ../base/ufos/ui/skirmish.ufo:264
 msgid "Map"
 msgstr "지도"
 
-#: ../base/ufos/ui/multiplayer.ufo:534
+#: ../base/ufos/ui/multiplayer.ufo:519
 msgid "Security/registration"
 msgstr "보안/등록"
 
-#: ../base/ufos/ui/multiplayer.ufo:553
+#: ../base/ufos/ui/multiplayer.ufo:538
 msgid "Hostname:"
 msgstr "서버명:"
 
-#: ../base/ufos/ui/multiplayer.ufo:580
+#: ../base/ufos/ui/multiplayer.ufo:565
 msgid "Gametype:"
 msgstr "게임 종류:"
 
-#: ../base/ufos/ui/multiplayer.ufo:617
+#: ../base/ufos/ui/multiplayer.ufo:602
 msgid "Teamplay:"
 msgstr "팀전:"
 
-#: ../base/ufos/ui/multiplayer.ufo:643
+#: ../base/ufos/ui/multiplayer.ufo:628
 msgid "Preview:"
 msgstr "미리보기:"
 
-#: ../base/ufos/ui/multiplayer.ufo:669
+#: ../base/ufos/ui/multiplayer.ufo:654
 msgid "Map name:"
 msgstr "지도 이름:"
 
-#: ../base/ufos/ui/multiplayer.ufo:685
+#: ../base/ufos/ui/multiplayer.ufo:670
 msgid "Allowed gametype:"
 msgstr "허용가능한 게임유형:"
 
-#: ../base/ufos/ui/multiplayer.ufo:708 ../base/ufos/ui/skirmish.ufo:131
+#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:131
 #, fuzzy
 msgid "Day version:"
 msgstr "Day version:"
 
-#: ../base/ufos/ui/multiplayer.ufo:732
+#: ../base/ufos/ui/multiplayer.ufo:717
 msgid "Enable morale states:"
 msgstr "심리적 영향을 받도록 합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:749
+#: ../base/ufos/ui/multiplayer.ufo:734
 msgid "Max. clients:"
 msgstr "최대 클라이언트:"
 
-#: ../base/ufos/ui/multiplayer.ufo:750
+#: ../base/ufos/ui/multiplayer.ufo:735
 msgid "Sets the max allowed clients to connect"
 msgstr "클라이언트의 최대 접속수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:776
+#: ../base/ufos/ui/multiplayer.ufo:761
 msgid "Max. soldiers per team:"
 msgstr "팀 당 최대병사수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:777
+#: ../base/ufos/ui/multiplayer.ufo:762
 msgid "Sets the max allowed soldiers per team"
 msgstr "팀 당 최대 병사수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:803
+#: ../base/ufos/ui/multiplayer.ufo:788
 msgid "Max. soldiers per player:"
 msgstr "플레이어 당 최대 병사수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:804
+#: ../base/ufos/ui/multiplayer.ufo:789
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "팀전시의 플레이어 당 최대병사수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:831
+#: ../base/ufos/ui/multiplayer.ufo:816
 msgid "Max. human players per team:"
 msgstr "팀 당 인간 플레이어 최대수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:857 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:148
 msgid "Max. AI actors:"
 msgstr "AI캐릭터의 수:"
 
-#: ../base/ufos/ui/multiplayer.ufo:858
+#: ../base/ufos/ui/multiplayer.ufo:843
 msgid "Max AI actors for teamplay mode"
 msgstr "팀전시 AI캐릭터의 수를 설정합니다"
 
-#: ../base/ufos/ui/multiplayer.ufo:885
+#: ../base/ufos/ui/multiplayer.ufo:870
 msgid "Round time limit in seconds:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:918
+#: ../base/ufos/ui/multiplayer.ufo:903
 msgid "Make this server public:"
 msgstr "이 서버를 공개로 한다:"
 
-#: ../base/ufos/ui/multiplayer.ufo:935
+#: ../base/ufos/ui/multiplayer.ufo:920
 msgid "Server-Password:"
 msgstr "서버 접속암호:"
 
-#: ../base/ufos/ui/multiplayer.ufo:958
+#: ../base/ufos/ui/multiplayer.ufo:943
 msgid "RCON-Password:"
 msgstr "RCON 접속암호:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1000
+#: ../base/ufos/ui/multiplayer.ufo:985
 msgid "Start server"
 msgstr "서버가동"
 
-#: ../base/ufos/ui/multiplayer.ufo:1171
+#: ../base/ufos/ui/multiplayer.ufo:1156
 #, fuzzy
 msgid "Party info"
 msgstr "기지 정보"
 
-#: ../base/ufos/ui/multiplayer.ufo:1181
+#: ../base/ufos/ui/multiplayer.ufo:1166
 msgid "Display/hide the panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1226
+#: ../base/ufos/ui/multiplayer.ufo:1211
 msgid "Max. players per team"
 msgstr "팀별 최고 인원"
 
-#: ../base/ufos/ui/multiplayer.ufo:1240
+#: ../base/ufos/ui/multiplayer.ufo:1225
 msgid "Max. teams for this map"
 msgstr "맵별 최고 팀수"
 
-#: ../base/ufos/ui/multiplayer.ufo:1263
+#: ../base/ufos/ui/multiplayer.ufo:1248
 #, fuzzy
 msgid "Players connected"
 msgstr "접속한 플레이어가 없습니다\n"
 
-#: ../base/ufos/ui/multiplayer.ufo:1317
+#: ../base/ufos/ui/multiplayer.ufo:1302
 msgid "Team selection"
 msgstr "팀 선택"
 
-#: ../base/ufos/ui/multiplayer.ufo:1338
+#: ../base/ufos/ui/multiplayer.ufo:1323
 msgid "Team preference:"
 msgstr "팀 설정:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1352
+#: ../base/ufos/ui/multiplayer.ufo:1337
 #, fuzzy
 msgid "Next free team"
 msgstr "Next free team"
 
-#: ../base/ufos/ui/multiplayer.ufo:1363
+#: ../base/ufos/ui/multiplayer.ufo:1348
 #, fuzzy
 msgid "Previous free team"
 msgstr "Previous free team"
 
-#: ../base/ufos/ui/multiplayer.ufo:1376
+#: ../base/ufos/ui/multiplayer.ufo:1361
 msgid "Force start"
 msgstr "강제 시작"
 
-#: ../base/ufos/ui/multiplayer.ufo:1377
+#: ../base/ufos/ui/multiplayer.ufo:1362
 #, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr "모든 팀이 참가하지 않아도 게임을 시작하기"
 
-#: ../base/ufos/ui/multiplayer.ufo:1388 ../base/ufos/ui/multiplayer.ufo:1397
+#: ../base/ufos/ui/multiplayer.ufo:1373 ../base/ufos/ui/multiplayer.ufo:1382
 msgid "Finish the teamselection and start the game"
 msgstr "팀 선택을 마치고 게임을 시작합니다."
 
-#: ../base/ufos/ui/multiplayer.ufo:1396
+#: ../base/ufos/ui/multiplayer.ufo:1381
 msgid "Are you ready?"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1405 ../base/ufos/ui/multiplayer.ufo:1415
+#: ../base/ufos/ui/multiplayer.ufo:1390 ../base/ufos/ui/multiplayer.ufo:1400
 #, fuzzy
 msgid "Activate IRC"
 msgstr "Activate chat"
 
-#: ../base/ufos/ui/multiplayer.ufo:1421
+#: ../base/ufos/ui/multiplayer.ufo:1406
 msgid "Deactivate IRC"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1429 ../base/ufos/ui/multiplayer.ufo:1439
+#: ../base/ufos/ui/multiplayer.ufo:1414 ../base/ufos/ui/multiplayer.ufo:1424
 msgid "Display IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1442
+#: ../base/ufos/ui/multiplayer.ufo:1427
 msgid "Hide IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1448
+#: ../base/ufos/ui/multiplayer.ufo:1433
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
 
-#: ../base/ufos/ui/multiplayer.ufo:1450
+#: ../base/ufos/ui/multiplayer.ufo:1435
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1486
+#: ../base/ufos/ui/multiplayer.ufo:1471
 #, fuzzy
 msgid "Party chat"
 msgstr "Activate chat"
 
-#: ../base/ufos/ui/multiplayer.ufo:1490
+#: ../base/ufos/ui/multiplayer.ufo:1475
 msgid "Global lobby (IRC)"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1573 ../base/ufos/ui/multiplayer.ufo:1646
+#: ../base/ufos/ui/multiplayer.ufo:1558 ../base/ufos/ui/multiplayer.ufo:1631
 #, fuzzy
 msgid "Say:"
 msgstr "S:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1756
+#: ../base/ufos/ui/multiplayer.ufo:1741
 msgid "Enter server password"
 msgstr "접속암호를 입력하시오"
 
-#: ../base/ufos/ui/multiplayer.ufo:1769
+#: ../base/ufos/ui/multiplayer.ufo:1754
 msgid "Password:"
 msgstr "접속암호:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1807
+#: ../base/ufos/ui/multiplayer.ufo:1792
 msgid "Personal message"
 msgstr "개인 메시지"
 
-#: ../base/ufos/ui/multiplayer.ufo:1829 ../base/ufos/ui/multiplayer.ufo:1882
+#: ../base/ufos/ui/multiplayer.ufo:1814 ../base/ufos/ui/multiplayer.ufo:1867
 msgid "Go into the lobby"
 msgstr "대기실로 나감"
 
-#: ../base/ufos/ui/multiplayer.ufo:1846
+#: ../base/ufos/ui/multiplayer.ufo:1831
 #, fuzzy
 msgid "Game invitation"
 msgstr "설치물 이름변경"
 
-#: ../base/ufos/ui/multiplayer.ufo:1865
+#: ../base/ufos/ui/multiplayer.ufo:1850
 #, fuzzy
 msgid "Server info"
 msgstr "기지 정보"
 
-#: ../base/ufos/ui/multiplayer.ufo:1866
+#: ../base/ufos/ui/multiplayer.ufo:1851
 #, fuzzy
 msgid "Show server information"
 msgstr "기지 정보"
 
-#: ../base/ufos/ui/multiplayer.ufo:1894
+#: ../base/ufos/ui/multiplayer.ufo:1879
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
@@ -11899,214 +11921,218 @@ msgstr "Lightmap scale:"
 msgid "Strech the screen with a 4:3 ratio:"
 msgstr "4:3 비율로 화면을 늘림:"
 
-#: ../base/ufos/ui/options.ufo:427 ../base/ufos/ui/options.ufo:452
+#: ../base/ufos/ui/options.ufo:421
+msgid "Enable post-processing shader effects:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:441 ../base/ufos/ui/options.ufo:466
 msgid "Low"
 msgstr "낮음"
 
-#: ../base/ufos/ui/options.ufo:431 ../base/ufos/ui/options.ufo:456
+#: ../base/ufos/ui/options.ufo:445 ../base/ufos/ui/options.ufo:470
 msgid "Medium"
 msgstr "중간"
 
-#: ../base/ufos/ui/options.ufo:435 ../base/ufos/ui/options.ufo:460
+#: ../base/ufos/ui/options.ufo:449 ../base/ufos/ui/options.ufo:474
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "보통"
 
-#: ../base/ufos/ui/options.ufo:439 ../base/ufos/ui/options.ufo:464
+#: ../base/ufos/ui/options.ufo:453 ../base/ufos/ui/options.ufo:478
 msgid "High"
 msgstr "높음"
 
-#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:482 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "훌륭함"
 
-#: ../base/ufos/ui/options.ufo:472
+#: ../base/ufos/ui/options.ufo:486
 msgid "Extreme"
 msgstr "최고"
 
-#: ../base/ufos/ui/options.ufo:495
+#: ../base/ufos/ui/options.ufo:509
 #, fuzzy
 msgid "All ratios"
 msgstr "건설중인 목록"
 
-#: ../base/ufos/ui/options.ufo:519
+#: ../base/ufos/ui/options.ufo:533
 #, fuzzy
 msgid "Others"
 msgstr "기타 자재류"
 
-#: ../base/ufos/ui/options.ufo:551
+#: ../base/ufos/ui/options.ufo:565
 msgid "Sound settings"
 msgstr "음향효과 설정"
 
-#: ../base/ufos/ui/options.ufo:608
+#: ../base/ufos/ui/options.ufo:622
 msgid "Sound rate:"
 msgstr "음향의 품질:"
 
-#: ../base/ufos/ui/options.ufo:614
+#: ../base/ufos/ui/options.ufo:628
 msgid "Restart sound to change the settings"
 msgstr "변경된 설정으로 음원을 재시작합니다"
 
-#: ../base/ufos/ui/options.ufo:650
+#: ../base/ufos/ui/options.ufo:664
 msgid "Enable sound:"
 msgstr "음향을 켬:"
 
-#: ../base/ufos/ui/options.ufo:676
+#: ../base/ufos/ui/options.ufo:690
 msgid "Show key bindings"
 msgstr "단축키를 봅니다"
 
-#: ../base/ufos/ui/options.ufo:724
+#: ../base/ufos/ui/options.ufo:738
 msgid "Game settings"
 msgstr "게임 설정"
 
-#: ../base/ufos/ui/options.ufo:758
+#: ../base/ufos/ui/options.ufo:772
 msgid "HUD Design:"
 msgstr "HUD 디자인:"
 
-#: ../base/ufos/ui/options.ufo:770
+#: ../base/ufos/ui/options.ufo:784
 msgid "Original HUD"
 msgstr "기본 HUD"
 
-#: ../base/ufos/ui/options.ufo:774
+#: ../base/ufos/ui/options.ufo:788
 msgid "Alternative HUD"
 msgstr "대체 HUD"
 
-#: ../base/ufos/ui/options.ufo:822
+#: ../base/ufos/ui/options.ufo:836
 msgid "Tooltips:"
 msgstr "툴팁:"
 
-#: ../base/ufos/ui/options.ufo:829
+#: ../base/ufos/ui/options.ufo:843
 msgid "Activates tooltips"
 msgstr "툴팁을 보여줍니다"
 
-#: ../base/ufos/ui/options.ufo:840
+#: ../base/ufos/ui/options.ufo:854
 msgid "Centre view:"
 msgstr "캐릭터 중심표시:"
 
-#: ../base/ufos/ui/options.ufo:847
+#: ../base/ufos/ui/options.ufo:861
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "병사의 선택시 및 사격이나 적의 발견시에 화면의 중심으로 이동시킵니다"
 
-#: ../base/ufos/ui/options.ufo:858
+#: ../base/ufos/ui/options.ufo:872
 msgid "Cursor tooltips:"
 msgstr "즉석 도움말:"
 
-#: ../base/ufos/ui/options.ufo:865
+#: ../base/ufos/ui/options.ufo:879
 msgid "Activates cursor tooltips"
 msgstr "즉석 도움말을 활성화 시킵니다"
 
-#: ../base/ufos/ui/options.ufo:876
+#: ../base/ufos/ui/options.ufo:890
 msgid "3D Geoscape:"
 msgstr "3D 세계지도:"
 
-#: ../base/ufos/ui/options.ufo:883
+#: ../base/ufos/ui/options.ufo:897
 msgid "Use 3D geoscape"
 msgstr "3D 세계지도를 사용합니다"
 
-#: ../base/ufos/ui/options.ufo:894
+#: ../base/ufos/ui/options.ufo:908
 #, fuzzy
 msgid "3D Geoscape ambient lighting:"
 msgstr "3D Geoscape ambient lighting:"
 
-#: ../base/ufos/ui/options.ufo:919
+#: ../base/ufos/ui/options.ufo:933
 msgid "Show tip of the day:"
 msgstr "오늘의 조언을 표시함"
 
-#: ../base/ufos/ui/options.ufo:937
+#: ../base/ufos/ui/options.ufo:951
 msgid "Precache models:"
 msgstr "모델 사전 캐쉬:"
 
-#: ../base/ufos/ui/options.ufo:944
+#: ../base/ufos/ui/options.ufo:958
 msgid "Precache models (faster menus)"
 msgstr "모델을 사전에 캐쉬합니다 (메뉴표시가 빨라집니다)"
 
-#: ../base/ufos/ui/options.ufo:955
+#: ../base/ufos/ui/options.ufo:969
 #, fuzzy
 msgid "Actor speed:"
 msgstr "Actor speed:"
 
-#: ../base/ufos/ui/options.ufo:989
+#: ../base/ufos/ui/options.ufo:1003
 msgid "Input settings"
 msgstr "초기설정"
 
-#: ../base/ufos/ui/options.ufo:1001
+#: ../base/ufos/ui/options.ufo:1015
 msgid "Camera"
 msgstr "카메라"
 
-#: ../base/ufos/ui/options.ufo:1007
+#: ../base/ufos/ui/options.ufo:1021
 msgid "Scroll Speed:"
 msgstr "위로 스크롤합니다"
 
-#: ../base/ufos/ui/options.ufo:1032
+#: ../base/ufos/ui/options.ufo:1046
 msgid "Rotation Speed:"
 msgstr "회전속도:"
 
-#: ../base/ufos/ui/options.ufo:1057
+#: ../base/ufos/ui/options.ufo:1071
 msgid "Move Acceleration:"
 msgstr "이동가속:"
 
-#: ../base/ufos/ui/options.ufo:1082
+#: ../base/ufos/ui/options.ufo:1096
 msgid "Joystick settings:"
 msgstr "조이스틱 설정"
 
-#: ../base/ufos/ui/options.ufo:1089
+#: ../base/ufos/ui/options.ufo:1103
 #, fuzzy
 msgid "Enable:"
 msgstr "음향을 켬:"
 
-#: ../base/ufos/ui/options.ufo:1097
+#: ../base/ufos/ui/options.ufo:1111
 msgid "Enables/Disables Joysticks"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1108
+#: ../base/ufos/ui/options.ufo:1122
 #, fuzzy
 msgid "Threshold:"
 msgstr "Threshold:"
 
-#: ../base/ufos/ui/options.ufo:1158
+#: ../base/ufos/ui/options.ufo:1172
 msgid "Keys"
 msgstr "입력키"
 
-#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:99
+#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:99
 #, fuzzy
 msgid "Autostand"
 msgstr "Autostand"
 
-#: ../base/ufos/ui/options.ufo:1185 ../base/ufos/ui/options.ufo:1211
+#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "예"
 
-#: ../base/ufos/ui/options.ufo:1189 ../base/ufos/ui/options.ufo:1215
+#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "아니오"
 
-#: ../base/ufos/ui/options.ufo:1199
+#: ../base/ufos/ui/options.ufo:1213
 msgid "Confirm Actions:"
 msgstr "행동 확인:"
 
-#: ../base/ufos/ui/options.ufo:1219
+#: ../base/ufos/ui/options.ufo:1233
 msgid "Only for moving"
 msgstr "이동시만"
 
-#: ../base/ufos/ui/options.ufo:1229
+#: ../base/ufos/ui/options.ufo:1243
 msgid "Joystick:"
 msgstr "조이스틱:"
 
-#: ../base/ufos/ui/options.ufo:1262
+#: ../base/ufos/ui/options.ufo:1276
 msgid "Maintain resolution"
 msgstr "해상도의 변경"
 
-#: ../base/ufos/ui/options.ufo:1272
+#: ../base/ufos/ui/options.ufo:1286
 #, fuzzy
 msgid "Want To Maintain resolution"
 msgstr "Want To Maintain resolution"
 
-#: ../base/ufos/ui/options.ufo:1279
+#: ../base/ufos/ui/options.ufo:1293
 msgid "Accept"
 msgstr "승인"
 
-#: ../base/ufos/ui/options.ufo:1280
+#: ../base/ufos/ui/options.ufo:1294
 msgid "Change the resolution"
 msgstr "해상도를 변경합니다"
 
@@ -12900,46 +12926,46 @@ msgstr "지금은 당신의 차례가 아닙니다\n"
 msgid "You cannot reload this unknown item.\n"
 msgstr "알 수 없는 물품을 재장전 할 수 없습니다.\n"
 
-#: client/battlescape/cl_actor.c:1799
+#: client/battlescape/cl_actor.c:1811
 msgid "Unknown alien race"
 msgstr "알 수 없는 외계인 종족"
 
-#: client/battlescape/cl_actor.c:2502
+#: client/battlescape/cl_actor.c:2500
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "다음의 병사를 선택"
 
-#: client/battlescape/cl_actor.c:2503
+#: client/battlescape/cl_actor.c:2501
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "리스트에서 병사를 선택"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2502
 #, fuzzy
 msgid "Update an actor"
 msgstr "병사의 이름을 변경합니다"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2504
 msgid "Toggle stand/crounch"
 msgstr "일어서기/앉기 교체"
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2505
 msgid "Toggle the headgear"
 msgstr "헤드기어 사용 토글"
 
-#: client/battlescape/cl_actor.c:2508
+#: client/battlescape/cl_actor.c:2506
 msgid "Opens or closes a door"
 msgstr "문을 열거나 닫습니다"
 
-#: client/battlescape/cl_actor.c:2509
+#: client/battlescape/cl_actor.c:2507
 msgid "Confirm the current action"
 msgstr "현재 행동을 실행"
 
-#: client/battlescape/cl_actor.c:2510
+#: client/battlescape/cl_actor.c:2508
 msgid "Toggle to next alien visible from selected actor."
 msgstr "현재 대원에서 부터 다음 보이는 외계인으로 토글"
 
-#: client/battlescape/cl_actor.c:2512
+#: client/battlescape/cl_actor.c:2510
 msgid "Toggle to next alien"
 msgstr "다음 외계인을 선택합니다"
 
@@ -12976,71 +13002,71 @@ msgstr "사격 및 행동을 위해 TU를 예약함."
 msgid "Shot Reservation"
 msgstr "사격 예약"
 
-#: client/battlescape/cl_hud.c:426
+#: client/battlescape/cl_hud.c:431
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "남은 행동력: %i"
 
-#: client/battlescape/cl_hud.c:429
+#: client/battlescape/cl_hud.c:434
 msgid "No remaining TUs left after shot."
 msgstr "다음 공격을 위한 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:432
+#: client/battlescape/cl_hud.c:437
 #, c-format
 msgid "TU: %i"
 msgstr "행동력: %i"
 
-#: client/battlescape/cl_hud.c:433
+#: client/battlescape/cl_hud.c:438
 #, c-format
 msgid "Shots: %i"
 msgstr "사용탄수: %i"
 
-#: client/battlescape/cl_hud.c:653
+#: client/battlescape/cl_hud.c:658
 #, fuzzy
 msgid "No weapon."
 msgstr "%s 무기\n"
 
-#: client/battlescape/cl_hud.c:662
+#: client/battlescape/cl_hud.c:667
 #, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr ""
 "이 무기는\n"
 "한손으로 사용할 수 없습니다.\n"
 
-#: client/battlescape/cl_hud.c:668
+#: client/battlescape/cl_hud.c:673
 #, fuzzy
 msgid "No reload possible, already fully loaded."
 msgstr "왼쪽 무기의 탄약을 장전할수 없습니다.(탄약이 가득 장전되었음)"
 
-#: client/battlescape/cl_hud.c:678
+#: client/battlescape/cl_hud.c:683
 #, fuzzy
 msgid "Not enough TUs for reloading weapon."
 msgstr "일어서기에는 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:681
+#: client/battlescape/cl_hud.c:686
 #, fuzzy
 msgid "No reload possible, you don't have backup ammo."
 msgstr "왼쪽 무기의 탄약을 장전할수 없습니다.(탄약이 가득 장전되었음)"
 
-#: client/battlescape/cl_hud.c:773
+#: client/battlescape/cl_hud.c:778
 msgid "Not enough TUs for standing up."
 msgstr "일어서기에는 행동력이 부족합니다."
 
-#: client/battlescape/cl_hud.c:776
+#: client/battlescape/cl_hud.c:781
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "일어서기 (%i 행동력)"
 
-#: client/battlescape/cl_hud.c:781
+#: client/battlescape/cl_hud.c:786
 msgid "Not enough TUs for crouching."
 msgstr "쭈그려앉기에는 행동력이 부족합니다.."
 
-#: client/battlescape/cl_hud.c:784
+#: client/battlescape/cl_hud.c:789
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "웅크리기 (%i 행동력)"
 
-#: client/battlescape/cl_hud.c:792
+#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -13049,16 +13075,16 @@ msgstr ""
 "%i 의 TU가 앉거나 일어서는데 예약되었습니다.\n"
 "클릭하면 사라집니다."
 
-#: client/battlescape/cl_hud.c:796
+#: client/battlescape/cl_hud.c:801
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "%i 의 TU를 앉거나 일어서는데 예약합니다."
 
-#: client/battlescape/cl_hud.c:799
+#: client/battlescape/cl_hud.c:804
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "앉거나 일어서는 행동을 예약하기 위한 TU가 부족합니다."
 
-#: client/battlescape/cl_hud.c:805
+#: client/battlescape/cl_hud.c:810
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -13069,16 +13095,16 @@ msgstr ""
 "바꾸려면 클릭하십시오.\n"
 "오른쪽 클릭하면 사라집니다."
 
-#: client/battlescape/cl_hud.c:812
+#: client/battlescape/cl_hud.c:817
 msgid "Reserving TUs for shooting not possible."
 msgstr "사격을 위해 TU를 예약할수 없습니다."
 
-#: client/battlescape/cl_hud.c:833 client/battlescape/cl_hud.c:842
+#: client/battlescape/cl_hud.c:838 client/battlescape/cl_hud.c:847
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "탄약 재장전 (%i TU)."
 
-#: client/battlescape/cl_hud.c:1091
+#: client/battlescape/cl_hud.c:1095
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -13086,7 +13112,7 @@ msgstr ""
 "미지의 아이템을 사용할 수 없습니다.\n"
 "이 아이템을 사용하기 위해서는 연구가 필요합니다.\n"
 
-#: client/battlescape/cl_hud.c:1112
+#: client/battlescape/cl_hud.c:1116
 #, c-format
 msgid ""
 "%s\n"
@@ -13095,17 +13121,17 @@ msgstr ""
 "%s\n"
 "(비었음)\n"
 
-#: client/battlescape/cl_hud.c:1134
+#: client/battlescape/cl_hud.c:1138
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "심리 %i | 예약된 TU: %i\n"
 
-#: client/battlescape/cl_hud.c:1136
+#: client/battlescape/cl_hud.c:1140
 #, c-format
 msgid "Morale  %i"
 msgstr "사기  %i"
 
-#: client/battlescape/cl_hud.c:1141
+#: client/battlescape/cl_hud.c:1145
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -13114,7 +13140,7 @@ msgstr ""
 "심리 %i | 예약된 TU: %i\n"
 "%s %i (%i|%i TU 남음)\n"
 
-#: client/battlescape/cl_hud.c:1145
+#: client/battlescape/cl_hud.c:1149
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -13123,7 +13149,7 @@ msgstr ""
 "사기  %i\n"
 "%s %i (행동력 %i 남음)\n"
 
-#: client/battlescape/cl_hud.c:1177
+#: client/battlescape/cl_hud.c:1181
 #, c-format
 msgid ""
 "Time Units\n"
@@ -13136,7 +13162,7 @@ msgstr ""
 "- 예약: %i\n"
 "- 남음: %i\n"
 
-#: client/battlescape/cl_hud.c:1201
+#: client/battlescape/cl_hud.c:1205
 msgid "Currently panics!\n"
 msgstr "겁에 질려있습니다!\n"
 
@@ -13484,14 +13510,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "항공기를 발진시킵니다"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1630
-#: client/campaign/cp_map.c:1637
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1651
+#: client/campaign/cp_map.c:1658
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "속도:\t%i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1631
-#: client/campaign/cp_map.c:1638
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1652
+#: client/campaign/cp_map.c:1659
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "연료:\t%i/%i\n"
@@ -14229,8 +14255,8 @@ msgstr "%i년 %s %02i일"
 msgid "You've got a new mail: %s"
 msgstr "새로운 메일이 도착했습니다: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1591
-#: client/campaign/cp_map.c:1610
+#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1612
+#: client/campaign/cp_map.c:1631
 msgid "Unknown"
 msgstr "알수없는 장비"
 
@@ -14344,7 +14370,7 @@ msgid_plural "%d days"
 msgstr[0] "%d 일"
 msgstr[1] "%d 일"
 
-#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:354
+#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:359
 msgid "Installation"
 msgstr "건설물"
 
@@ -14379,20 +14405,20 @@ msgstr "이 시설을 해체하시겠습니까?"
 msgid "Forget it"
 msgstr "Forget it"
 
-#: client/campaign/cp_map.c:365
+#: client/campaign/cp_map.c:370
 #, fuzzy
 msgid "UFO Sighting"
 msgstr "UFO Sighting"
 
-#: client/campaign/cp_map.c:1383
+#: client/campaign/cp_map.c:1404
 msgid "Day"
 msgstr "주간"
 
-#: client/campaign/cp_map.c:1383
+#: client/campaign/cp_map.c:1404
 msgid "Night"
 msgstr "야간"
 
-#: client/campaign/cp_map.c:1590
+#: client/campaign/cp_map.c:1611
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -14403,61 +14429,61 @@ msgstr ""
 "상황: %s\n"
 "목적: %s"
 
-#: client/campaign/cp_map.c:1607
+#: client/campaign/cp_map.c:1628
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s (%s 에서)"
 
-#: client/campaign/cp_map.c:1627 client/campaign/cp_map.c:1635
+#: client/campaign/cp_map.c:1648 client/campaign/cp_map.c:1656
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "이름:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1628 client/campaign/cp_map.c:1636
+#: client/campaign/cp_map.c:1649 client/campaign/cp_map.c:1657
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "상태:\t%s\n"
 
-#: client/campaign/cp_map.c:1629
+#: client/campaign/cp_map.c:1650
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "목표물까지 거리:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1633 client/campaign/cp_map.c:1643
+#: client/campaign/cp_map.c:1654 client/campaign/cp_map.c:1664
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sh\n"
 
-#: client/campaign/cp_map.c:1661
+#: client/campaign/cp_map.c:1682
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "속도:\t%i\n"
 
-#: client/campaign/cp_map.c:1861
+#: client/campaign/cp_map.c:1882
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1912
+#: client/campaign/cp_map.c:1947
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/campaign/cp_map.c:1915
+#: client/campaign/cp_map.c:1950
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "새로운 기지를 건설할 맵 상의 위치를 선택하세요.\n"
 
-#: client/campaign/cp_map.c:1920
+#: client/campaign/cp_map.c:1955
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Aliens are attacking our base at this very moment.\n"
 
-#: client/campaign/cp_map.c:1925
+#: client/campaign/cp_map.c:1960
 msgid "Select ufo or mission on map\n"
 msgstr "지도에서 UFO 혹은 임무를 선택하십시오\n"
 
-#: client/campaign/cp_map.c:1930
+#: client/campaign/cp_map.c:1965
 msgid "UFO in radar range\n"
 msgstr "레이더에 UFO 출현\n"
 
@@ -14496,19 +14522,19 @@ msgstr "%s was successfully removed from installation %s."
 msgid "%s was successfully removed from %s."
 msgstr "%s가 %s에서 성공적으로 제거되었습니다."
 
-#: client/campaign/cp_mapfightequip.c:1348
+#: client/campaign/cp_mapfightequip.c:1355
 msgid "Light weight"
 msgstr "경량"
 
-#: client/campaign/cp_mapfightequip.c:1351
+#: client/campaign/cp_mapfightequip.c:1358
 msgid "Medium weight"
 msgstr "중경량"
 
-#: client/campaign/cp_mapfightequip.c:1354
+#: client/campaign/cp_mapfightequip.c:1361
 msgid "Heavy weight"
 msgstr "중량"
 
-#: client/campaign/cp_mapfightequip.c:1357
+#: client/campaign/cp_mapfightequip.c:1364
 msgid "Unknown weight"
 msgstr "무게를 알 수 없음"
 
@@ -16041,7 +16067,7 @@ msgstr ""
 "부채 한도: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:459
+#: client/cl_game_campaign.c:460
 #, c-format
 msgid "Rank: %s"
 msgstr "계급: %s"
@@ -16288,80 +16314,80 @@ msgstr "CCCP"
 msgid "Update the GUI with the selected item"
 msgstr "선택된 항목으로 GUI를 갱신합니다"
 
-#: client/input/cl_input.c:895
+#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "전술맵의 시점을 시계 반대방향으로 회전"
 
-#: client/input/cl_input.c:897
+#: client/input/cl_input.c:918
 msgid "Rotate battlescape camera clockwise"
 msgstr "전술맵의 시점을 시계 방향으로 회전"
 
-#: client/input/cl_input.c:899
+#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera up"
 msgstr "전술맵의 시점높이를 상승"
 
-#: client/input/cl_input.c:901
+#: client/input/cl_input.c:922
 msgid "Tilt battlescape camera down"
 msgstr "전술맵의 시점높이를 하강"
 
-#: client/input/cl_input.c:903
+#: client/input/cl_input.c:924
 msgid "Move battlescape camera left"
 msgstr "전술맵의 시점을 왼쪽로 이동"
 
-#: client/input/cl_input.c:905
+#: client/input/cl_input.c:926
 msgid "Move battlescape camera right"
 msgstr "전술맵의 시점을 오른쪽로 이동"
 
-#: client/input/cl_input.c:907
+#: client/input/cl_input.c:928
 msgid "Move battlescape camera forward"
 msgstr "전술맵의 시점을 앞으로 이동"
 
-#: client/input/cl_input.c:909
+#: client/input/cl_input.c:930
 msgid "Move battlescape camera backward"
 msgstr "전술맵의 시점을 뒤로 이동"
 
-#: client/input/cl_input.c:911 client/input/cl_input.c:933
+#: client/input/cl_input.c:932 client/input/cl_input.c:954
 msgid "Zoom in"
 msgstr "확대"
 
-#: client/input/cl_input.c:913 client/input/cl_input.c:934
+#: client/input/cl_input.c:934 client/input/cl_input.c:955
 msgid "Zoom out"
 msgstr "축소"
 
-#: client/input/cl_input.c:916
+#: client/input/cl_input.c:937
 msgid "Left mouse button click (menu)"
 msgstr "마우스 왼쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.c:918
+#: client/input/cl_input.c:939
 msgid "Middle mouse button click (menu)"
 msgstr "마우스 휠 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.c:920
+#: client/input/cl_input.c:941
 msgid "Right mouse button click (menu)"
 msgstr "마우스 오른쪽 버튼 클릭(메뉴)"
 
-#: client/input/cl_input.c:922
+#: client/input/cl_input.c:943
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "오브젝트/이동목표/공격방법 선택,공격 그외"
 
-#: client/input/cl_input.c:924
+#: client/input/cl_input.c:945
 #, fuzzy
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Walk to a square/In fire mode, cancel action"
 
-#: client/input/cl_input.c:926
+#: client/input/cl_input.c:947
 msgid "Turn soldier toward mouse pointer"
 msgstr "마우스포인터의 방향으로 병사를 보게 한다"
 
-#: client/input/cl_input.c:928
+#: client/input/cl_input.c:949
 msgid "Toggles the hud radar mode"
 msgstr "HUD 레이더 사용 토글"
 
-#: client/input/cl_input.c:931
+#: client/input/cl_input.c:952
 msgid "Slice through terrain at a higher level"
 msgstr "지형표시 고도레벨을 증가"
 
-#: client/input/cl_input.c:932
+#: client/input/cl_input.c:953
 msgid "Slice through terrain at a lower level"
 msgstr "지형표시 고도레벨을 감소"
 
