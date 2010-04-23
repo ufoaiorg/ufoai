@@ -1,3 +1,4 @@
+#version 110
 // mesh vertex shader
 
 #include "light_vs.glsl"

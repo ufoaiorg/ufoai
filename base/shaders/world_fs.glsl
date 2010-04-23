@@ -1,3 +1,4 @@
+#version 110
 // default fragment shader
 
 #include "light_fs.glsl"
@@ -5,7 +6,7 @@
 #include "fog_fs.glsl"
 
 uniform int BUMPMAP;
-uniform int GLOWMAP;
+uniform int STATICLIGHT;
 uniform float GLOWSCALE;
 
 uniform sampler2D SAMPLER0;
@@ -21,7 +22,9 @@ uniform sampler2D SAMPLER4;
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
 
-/*
+varying vec3 lightpos;
+
+/**
  * main
  */
 void main(void){
@@ -52,14 +55,24 @@ void main(void){
 	// factor in bump mapping
 	diffuse.rgb *= bump;
 
-	// add any dynamic lighting and yield a base fragment color
-	LightFragment(diffuse, lightmap);
+	// use static lighting if enabled
+	vec3 lightdir = normalize(lightpos - point);
+	if (STATICLIGHT > 0) {
+		float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
+
+		vec3 color = vec3(1.0);
+		if (gl_Color.r > 0.0 || gl_Color.g > 0.0 || gl_Color.b > 0.0) {
+			color = gl_Color.rgb;
+		} 
+		LightFragment(diffuse, color * shade);
+	} else {
+		// otherwise, add any dynamic lighting and yield a base fragment color
+		LightFragment(diffuse, lightmap);
+	}
 
 #if r_fog
 	FogFragment();  // add fog
 #endif
-
-
 
 // developer tools
 #if r_lightmap
@@ -75,7 +88,7 @@ void main(void){
 #endif
 
 #if r_postprocess
-	if(GLOWMAP > 0){
+	if(GLOWSCALE > 0.01){
 		 vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
 		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
 		 gl_FragData[1].a = 1.0;

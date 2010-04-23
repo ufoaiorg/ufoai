@@ -455,16 +455,15 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 		if (!r_state.active_program)
 			R_UseProgram(r_state.simple_glow_program);
 		else
-			R_ProgramParameter1i("GLOWMAP", 1);
+			R_ProgramParameter1f("GLOWSCALE", 1.0);
 
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
-		R_ProgramParameter1f("GLOWSCALE", 1.0);
 		R_DrawBuffers(2);
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program)
 			R_UseProgram(NULL);
 		else
-			R_ProgramParameter1i("GLOWMAP", 0);
+			R_ProgramParameter1f("GLOWSCALE", 0.0);
 
 		if (r_state.draw_glow_enabled)
 			R_BindColorAttachments(1, &glowRenderTarget);

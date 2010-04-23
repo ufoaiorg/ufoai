@@ -49,7 +49,7 @@ void R_UseProgram  (r_program_t *prog)
 #ifdef DEBUG
 #define R_ProgramVariable(x, y) R_ProgramVariable_Debug(x, y, file, line)
 static r_progvar_t *R_ProgramVariable_Debug (int type, const char *name, const char *file, int line)
-#else 
+#else
 static r_progvar_t *R_ProgramVariable (int type, const char *name)
 #endif
 {
@@ -91,7 +91,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 #ifdef DEBUG
 		Com_Printf("R_ProgramVariable: Could not find %s in program %s. (%s: line %d)\n",
 			name, r_state.active_program->name, file, line);
-#else 
+#else
 		Com_Printf("R_ProgramVariable: Could not find parameter in program.\n");
 #endif
 		v->location = 0;
@@ -536,7 +536,6 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
-	R_ProgramParameter1i("GLOWMAP", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
@@ -547,7 +546,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 
 static void R_UseWorldProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("LIGHTS", refdef.numLights);
+	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 }
 
 static void R_InitMeshProgram (r_program_t *prog)
@@ -560,12 +559,12 @@ static void R_InitMeshProgram (r_program_t *prog)
 	R_ProgramParameter3fv("LIGHTPOS", lightPos);
 
 	R_ProgramParameter1f("OFFSET", 0.0);
-	R_ProgramParameter1i("GLOWMAP", 0);
+	R_ProgramParameter1f("GLOWSCALE", 0.0);
 }
 
 static void R_UseMeshProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("LIGHTS", refdef.numLights);
+	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -577,7 +576,7 @@ static void R_InitWarpProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter4fv("OFFSET", offset);
-	R_ProgramParameter1i("GLOWMAP", 0);
+	R_ProgramParameter1f("GLOWSCALE", 0.0);
 }
 
 static void R_UseWarpProgram (r_program_t *prog)
