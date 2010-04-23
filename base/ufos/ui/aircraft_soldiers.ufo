@@ -18,6 +18,36 @@ component cmpDefNamedTbar cmpNamedTbar {
 	}
 }
 
+component cmpActorSelect cmpSoldierSelect {
+	{
+		num "0"
+	}
+
+	pic bt_equip
+	{
+		pos			"0 10"
+		image		ui/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+	}
+	checkbox check_actor
+	{
+		tooltip	"_Add/remove this soldier"
+		onChange { cmd "team_hire <node:parent@num> <cvar:mn_relative_id>;" }
+	}
+
+	string txt_actor
+	{
+		string	*cvar:mn_ename<node:parent@num>
+		onClick { cmd "team_select <node:parent@num> <cvar:mn_relative_id>;" }
+	}
+
+}
+
 
 /**
  * @todo rename the menu according to the file
@@ -103,30 +133,30 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_usedelsewhere
 	{
-		*txt_actor<1>@color = ".50 .50 .50 1"
-		*(checkbox)check_actor<1>@current = 0
-		*(checkbox)check_actor<1>@tooltip = "_Soldier is assigned to another craft"
-		*check_actor<1>@disabled = true
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
-		*(pic)bt_equip<1>@invis = false
+		*actor_select<1>.txt_actor@color = ".50 .50 .50 1"
+		*(checkbox)actor_select<1>.check_actor@current = 0
+		*(checkbox)actor_select<1>.check_actor@tooltip = "_Soldier is assigned to another craft"
+		*actor_select<1>.check_actor@disabled = true
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
+		*(pic)actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unassigned {
-		*txt_actor<1>@color = "0 .78 0 1"
-		*check_actor<1>@disabled = false
-		*(checkbox)check_actor<1>@current = 0
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
-		*(pic)bt_equip<1>@invis = false
+		*actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*actor_select<1>.check_actor@disabled = false
+		*(checkbox)actor_select<1>.check_actor@current = 0
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
+		*(pic)actor_select<1>.bt_equip@invis = false
 		if ( *cvar:mn_hirable_count == 0 ) {
-			*(checkbox)check_actor<1>@disabled = true
-			*(checkbox)check_actor<1>@tooltip = "_No more soldiers can be assigned to this craft"
+			*(checkbox)actor_select<1>.check_actor@disabled = true
+			*(checkbox)actor_select<1>.check_actor@tooltip = "_No more soldiers can be assigned to this craft"
 		} else {
-			*(checkbox)check_actor<1>@tooltip = "_Assign soldier to this craft"
+			*(checkbox)actor_select<1>.check_actor@tooltip = "_Assign soldier to this craft"
 		}
 	}
 
@@ -134,40 +164,40 @@ window team extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_assigned {
-		*txt_actor<1>@color = "0 .78 0 1"
-		*check_actor<1>@disabled = false
-		*(checkbox)check_actor<1>@current = 1
-		*(checkbox)check_actor<1>@tooltip = "_Remove soldier from this craft"
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
-		*(pic)bt_equip<1>@invis = false
+		*actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*actor_select<1>.check_actor@disabled = false
+		*(checkbox)actor_select<1>.check_actor@current = 1
+		*(checkbox)actor_select<1>.check_actor@tooltip = "_Remove soldier from this craft"
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
+		*(pic)actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsequip {
-		*(pic)bt_equip<1>@tooltip = "_Soldier carries equipment"
-		*(pic)bt_equip<1>@texl = "16 0"
-		*(pic)bt_equip<1>@texh = "32 16"
+		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
+		*(pic)actor_select<1>.bt_equip@texl = "16 0"
+		*(pic)actor_select<1>.bt_equip@texh = "32 16"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsnoequip {
-		*(pic)bt_equip<1>@tooltip = "_Soldier carries no equipment"
-		*(pic)bt_equip<1>@texl = "0 0"
-		*(pic)bt_equip<1>@texh = "16 16"
+		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
+		*(pic)actor_select<1>.bt_equip@texl = "0 0"
+		*(pic)actor_select<1>.bt_equip@texh = "16 16"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unusedslot {
-		*(pic)bt_equip<1>@invis = true
-		*check_actor<1>@invis = true
-		*txt_actor<1>@invis = true
+		*(pic)actor_select<1>.bt_equip@invis = true
+		*actor_select<1>.check_actor@invis = true
+		*actor_select<1>.txt_actor@invis = true
 	}
 
 	/**
@@ -181,253 +211,46 @@ window team extends iaircraft
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_soldier_selected {
-		*txt_actor<1>@color = "1 1 1 1"
+		*actor_select<1>.txt_actor@color = "1 1 1 1"
 	}
 
-	pic bt_equip0
-	{
-		pos			"38 470"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
+	cmpSoldierSelect actor_select0 {
+  	pos "38 470"
 	}
 
-	pic bt_equip1
-	{
-		pos			"38 505"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
+	cmpSoldierSelect actor_select1 {
+  	pos "38 505"
 	}
 
-	pic bt_equip2
+	cmpSoldierSelect actor_select2
 	{
 		pos			"38 540"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip3
+	cmpSoldierSelect actor_select3
 	{
 		pos			"38 575"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip4
+	cmpSoldierSelect actor_select4
 	{
 		pos			"38 610"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip5
+	cmpSoldierSelect actor_select5
 	{
 		pos			"38 645"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip6
+	cmpSoldierSelect actor_select6
 	{
 		pos			"38 680"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip7
+	cmpSoldierSelect actor_select7
 	{
 		pos			"38 715"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
-
-	// checkbox
-
-	checkbox check_actor0
-	{
-		pos	"280 470"
-		onChange { cmd "team_hire 0 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor1
-	{
-		pos	"280 505"
-		onChange { cmd "team_hire 1 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor2
-	{
-		pos	"280 540"
-		onChange { cmd "team_hire 2 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor3
-	{
-		pos	"280 575"
-		onChange { cmd "team_hire 3 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor4
-	{
-		pos	"280 610"
-		onChange { cmd "team_hire 4 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor5
-	{
-		pos	"280 645"
-		onChange { cmd "team_hire 5 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor6
-	{
-		pos	"280 680"
-		onChange { cmd "team_hire 6 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor7
-	{
-		pos	"280 715"
-		onChange { cmd "team_hire 7 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-
-	string txt_actor0
-	{
-		string	*cvar:mn_ename0
-		pos		"60 460"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 0 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor1
-	{
-		string	*cvar:mn_ename1
-		pos		"60 495"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 1 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor2
-	{
-		string	*cvar:mn_ename2
-		pos		"60 530"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 2 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor3
-	{
-		string	*cvar:mn_ename3
-		pos		"60 565"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 3 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor4
-	{
-		string	*cvar:mn_ename4
-		pos		"60 600"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 4 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor5
-	{
-		string	*cvar:mn_ename5
-		pos		"60 635"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 5 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor6
-	{
-		string	*cvar:mn_ename6
-		pos		"60 670"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 6 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor7
-	{
-		string	*cvar:mn_ename7
-		pos		"60 705"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 7 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-
 	vscrollbar scroll_employees
 	{
 		image	ui/scrollbar_v_green
@@ -714,6 +537,14 @@ window team extends iaircraft
 	func onInit
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			*actor_select<cvar:i>@num = <cvar:i>
+			*actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+
 		*scroll_employees@current = 0
 		*cvar:mn_relative_id = 0
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
