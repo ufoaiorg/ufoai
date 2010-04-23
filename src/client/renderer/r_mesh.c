@@ -502,13 +502,14 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
  */
 void R_DrawAliasModel (entity_t *e)
 {
-	const mAliasModel_t *mod;
+	const mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
+	/* the values are sane here already - see R_DrawEntities */
+	/* Let's assert if the above is true. Duke, 23.01.10 */
+	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
 	mAliasMesh_t* lodMesh;
-
-	mod = (mAliasModel_t *)&e->model->alias;
 
 	glPushMatrix();
 
@@ -565,13 +566,11 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_Color(color);
 
-	/* the values are sane here already - see R_DrawEntities */
-	/* Let's assert if the above is true. Duke, 23.01.10 */
-	assert(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum > 0);
-	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
+	assert(skin->texnum > 0);
+	R_BindTexture(skin->texnum);
 
-	if (mod->meshes[e->as.mesh].skins[e->skinnum].skin->glowmap)
-		R_EnableGlowMap(mod->meshes[e->as.mesh].skins[e->skinnum].skin->glowmap, qtrue);
+	if (skin->glowmap)
+		R_EnableGlowMap(skin->glowmap, qtrue);
 
 	R_ResetArrayState();
 
