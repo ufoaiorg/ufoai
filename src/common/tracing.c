@@ -116,7 +116,7 @@ static void TR_MakeTracingNode (int nodenum)
 			const int index = -(node->children[i]) - 1;
 			const TR_LEAF_TYPE *leaf = &curTile->leafs[index];
 			const int contentFlags = leaf->contentFlags & ~(1 << 31);
-			if ((contentFlags & (MASK_IMPASSABLE | CONTENTS_LIGHTCLIP | CONTENTS_WEAPONCLIP)) && !(contentFlags & CONTENTS_PASSABLE))
+			if ((contentFlags & (CONTENTS_SOLID | MASK_CLIP)) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);	/* mark as 'blocking' */
 			else
 				t->children[i] = (1 << 31);				/* mark as 'empty leaf' */

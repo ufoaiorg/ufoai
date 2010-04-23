@@ -709,8 +709,14 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		}
 
 		/* translucent objects are automatically classified as detail */
-		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST))
+		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST)) {
 			side->contentFlags |= CONTENTS_DETAIL;
+			side->contentFlags |= CONTENTS_TRANSLUCENT;
+			if (side->contentFlags & CONTENTS_SOLID) {
+				side->contentFlags &= ~CONTENTS_SOLID;
+				side->contentFlags |= CONTENTS_WINDOW;
+			}
+		}
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;
 		if (!checkOrFix) {
