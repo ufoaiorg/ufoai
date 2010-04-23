@@ -56,8 +56,8 @@ void main(void){
 	diffuse.rgb *= bump;
 
 	// use static lighting if enabled
-	vec3 lightdir = normalize(lightpos - point);
 	if (STATICLIGHT > 0) {
+		vec3 lightdir = normalize(lightpos - point);
 		float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
 
 		vec3 color = vec3(1.0);
