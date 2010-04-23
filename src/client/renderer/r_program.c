@@ -46,13 +46,22 @@ void R_UseProgram  (r_program_t *prog)
 	}
 }
 
-static r_progvar_t *R_ProgramVariable (int type, const char *name)
+#ifdef DEBUG
+#define R_ProgramVariable(x, y) R_ProgramVariable_Debug(x, y, file, line)
+static r_progvar_t *R_ProgramVariable_Debug (int type, const char *name, const char *file, int line)
+#else 
+static r_progvar_t *R_ProgramVariable (int type, const char *name )
+#endif
 {
 	r_progvar_t *v;
 	int i;
 
 	if (!r_state.active_program) {
-		Com_Printf("R_ProgramVariable: \"%s\" - No program bound.\n", name);
+#ifdef DEBUG
+		Com_Printf("R_ProgramVariable: \"%s\" - No program bound. (%s: line %d)\n", name, file, line);
+#else
+		Com_Printf("R_ProgramVariable: No program bound.\n");
+#endif
 		return NULL;
 	}
 
@@ -79,8 +88,12 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 		v->location = qglGetAttribLocation(r_state.active_program->id, name);
 
 	if (v->location == -1) {
-		Com_Printf("R_ProgramVariable: Could not find %s in program %s\n",
-			name, r_state.active_program->name);
+#ifdef DEBUG
+		Com_Printf("R_ProgramVariable: Could not find %s in program %s. (%s: line %d)\n",
+			name, r_state.active_program->name, file, line);
+#else 
+		Com_Printf("R_ProgramVariable: Could not find parameter in program.\n");
+#endif
 		v->location = 0;
 		return NULL;
 	}
@@ -91,7 +104,11 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	return v;
 }
 
-void R_ProgramParameter1i (const char *name, GLint value)
+#ifdef DEBUG
+void R_ProgramParameter1i_Debug (const char *name, GLint value , const char *file, int line)
+#else
+void R_ProgramParameter1i (const char *name, GLint value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -101,7 +118,11 @@ void R_ProgramParameter1i (const char *name, GLint value)
 	qglUniform1i(v->location, value);
 }
 
-void R_ProgramParameter1f (const char *name, GLfloat value)
+#ifdef DEBUG
+void R_ProgramParameter1f_Debug (const char *name, GLfloat value , const char *file, int line)
+#else
+void R_ProgramParameter1f (const char *name, GLfloat value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -111,7 +132,11 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
-void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
+#ifdef DEBUG
+void R_ProgramParameter1fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
+#else
+void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -121,7 +146,11 @@ void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform1fv(v->location, size, value);
 }
 
-void R_ProgramParameter2fv (const char *name, GLfloat *value)
+#ifdef DEBUG
+void R_ProgramParameter2fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+#else
+void R_ProgramParameter2fv (const char *name, GLfloat *value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -131,7 +160,11 @@ void R_ProgramParameter2fv (const char *name, GLfloat *value)
 	qglUniform2fv(v->location, 1, value);
 }
 
-void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
+#ifdef DEBUG
+void R_ProgramParameter2fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
+#else
+void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -141,7 +174,11 @@ void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform2fv(v->location, size, value);
 }
 
-void R_ProgramParameter3fv (const char *name, GLfloat *value)
+#ifdef DEBUG
+void R_ProgramParameter3fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+#else
+void R_ProgramParameter3fv (const char *name, GLfloat *value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -151,7 +188,11 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value)
 	qglUniform3fv(v->location, 1, value);
 }
 
-void R_ProgramParameter4fv (const char *name, GLfloat *value)
+#ifdef DEBUG
+void R_ProgramParameter4fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+#else
+void R_ProgramParameter4fv (const char *name, GLfloat *value )
+#endif
 {
 	r_progvar_t *v;
 
@@ -161,7 +202,11 @@ void R_ProgramParameter4fv (const char *name, GLfloat *value)
 	qglUniform4fv(v->location, 1, value);
 }
 
+#ifdef DEBUG
+void R_AttributePointer_Debug (const char *name, GLuint size, const GLvoid *array , const char *file, int line)
+#else
 void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
+#endif
 {
 	r_progvar_t *v;
 
@@ -171,7 +216,11 @@ void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
 	qglVertexAttribPointer(v->location, size, GL_FLOAT, GL_FALSE, 0, array);
 }
 
+#ifdef DEBUG
+void R_EnableAttribute_Debug (const char *name , const char *file, int line)
+#else
 void R_EnableAttribute (const char *name)
+#endif
 {
 	r_progvar_t *v;
 
@@ -181,7 +230,11 @@ void R_EnableAttribute (const char *name)
 	qglEnableVertexAttribArray(v->location);
 }
 
+#ifdef DEBUG
+void R_DisableAttribute_Debug (const char *name , const char *file, int line)
+#else
 void R_DisableAttribute (const char *name)
+#endif
 {
 	r_progvar_t *v;
 
