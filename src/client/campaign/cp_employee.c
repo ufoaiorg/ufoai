@@ -1246,7 +1246,6 @@ qboolean E_LoadXML (mxml_node_t *p)
 			mxml_node_t * chrNode;
 			employee_t *e = &ccs.employees[emplType][i];
 
-
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = mxml_GetInt(ssnode, SAVE_EMPLOYEE_IDX, MAX_EMPLOYEES);
 			if (e->idx >= MAX_EMPLOYEES) {

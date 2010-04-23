@@ -2445,7 +2445,7 @@ static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num,
  * @param[in] aircraft Aircraft we save
  * @param[in] isUfo If this aircraft is a UFO
  */
-qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, qboolean const isUfo)
+static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, qboolean const isUfo)
 {
 	mxml_node_t *node;
 	mxml_node_t *subnode;
@@ -2489,6 +2489,9 @@ qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, 
 			assert(aircraft->mission);
 			mxml_AddString(node, SAVE_AIRCRAFT_MISSIONID, aircraft->mission->id);
 		}
+		if (aircraft->homebase) {
+			mxml_AddInt(node, SAVE_AIRCRAFT_HOMEBASE, aircraft->homebase->idx);
+		}
 	}
 
 	if (aircraft->aircraftTarget) {
@@ -2511,7 +2514,7 @@ qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, 
 			mxml_AddString(statNode, SAVE_AIRCRAFT_AIRSTATID, Com_GetConstVariable(SAVE_AIRCRAFTSTAT_NAMESPACE, l));
 			mxml_AddLong(statNode, SAVE_AIRCRAFT_VAL, aircraft->stats[l]);
 		}
-	 }
+	}
 
 	mxml_AddBoolValue(node, SAVE_AIRCRAFT_DETECTED, aircraft->detected);
 	mxml_AddBoolValue(node, SAVE_AIRCRAFT_LANDED, aircraft->landed);
@@ -2529,13 +2532,12 @@ qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, 
 	for (l = 0; l < MAX_ACTIVETEAM; l++) {
 		if (aircraft->acTeam[l]) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
-			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_IDX, aircraft->acTeam[l]->idx);
-			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TYPE, aircraft->acTeam[l]->type);
+			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, aircraft->acTeam[l]->chr.ucn);
 		}
 	}
 
 	if (aircraft->pilot)
-		mxml_AddInt(node, SAVE_AIRCRAFT_PILOTIDX, aircraft->pilot->idx);
+		mxml_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, aircraft->pilot->chr.ucn);
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_CARGO);
 	mxml_AddInt(subnode, SAVE_AIRCRAFT_TYPES, aircraft->itemTypes);
@@ -2547,8 +2549,8 @@ qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const aircraft, 
 		mxml_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[l].amount);
 	}
 
-	mxml_AddInt(node, SAVE_AIRCRAFT_RADAR_RANGE, aircraft->radar.range);
-	mxml_AddInt(node, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, aircraft->radar.trackingRange);
+	mxml_AddIntValue(node, SAVE_AIRCRAFT_RADAR_RANGE, aircraft->radar.range);
+	mxml_AddIntValue(node, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, aircraft->radar.trackingRange);
 
 	{
 		const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
@@ -2578,6 +2580,22 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t * node, *snode;
+
+	/* save phalanx aircraft */
+	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
+	mxml_AddIntValue(snode, SAVE_AIRCRAFT_NUMAIRCRAFT, ccs.numAircraft);
+	for (i = 0; i < MAX_BASES; i++) {
+		int j;
+		base_t *base = B_GetFoundedBaseByIDX(i);
+
+		if (!base)
+			continue;
+
+		for (j = 0; j < base->numAircraftInBase; j++) {
+			aircraft_t *aircraft = &base->aircraft[j];
+			AIR_SaveAircraftXML(snode, aircraft, qfalse);
+		}
+	}
 
 	/* save the ufos on geoscape */
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_UFOS);
@@ -2652,7 +2670,7 @@ static qboolean AIR_LoadRouteXML (mxml_node_t *p, mapline_t *route)
  * @param[in] base Pointer to the homebase of the aircraft. NULL means it's a UFO.
  * @param[in] p XML Node structure, where we get the information from
  */
-qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_t *p)
+static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 {
 	mxml_node_t *snode;
 	mxml_node_t *ssnode;
@@ -2671,7 +2689,9 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 
 	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 	*craft = *crafttype;
-	craft->homebase = base;
+
+	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
+	craft->homebase = (tmp_int != MAX_BASES) ? B_GetBaseByIDX(tmp_int) : NULL;
 
 	Com_RegisterConstList(saveAircraftConstants);
 
@@ -2701,13 +2721,13 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 	Q_strncpyz(craft->name, s, sizeof(craft->name));
 
 	s = mxml_GetString(p, SAVE_AIRCRAFT_MISSIONID);
-	if (s[0] == '\0' && !base) {
+	if (s[0] == '\0' && !craft->homebase) {
 		Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
 		Com_UnregisterConstList(saveAircraftConstants);
 		return qfalse;
 	}
 
-	if (!base) {
+	if (!craft->homebase) {
 		craft->idx = ccs.numUFOs;
 		craft->mission = CP_GetMissionByID(s);
 		/* detection id and time */
@@ -2730,7 +2750,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 		craft->stats[idx] = mxml_GetLong(ssnode, SAVE_AIRCRAFT_VAL, 0);
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
-		if (!(!base && idx == AIR_STATS_DAMAGE) && craft->stats[idx] < 0)
+		if (!(!craft->homebase && idx == AIR_STATS_DAMAGE) && craft->stats[idx] < 0)
 			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, l, craft->stats[idx]);
 #endif
 	}
@@ -2741,7 +2761,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
 	if (tmp_int == -1)
 		craft->aircraftTarget = NULL;
-	else if (!base)
+	else if (!craft->homebase)
 		craft->aircraftTarget = AIR_AircraftGetFromIDX(tmp_int);
 	else
 		craft->aircraftTarget = ccs.ufos + tmp_int;
@@ -2757,32 +2777,29 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, struct base_s *base, mxml_node_
 	Com_UnregisterConstList(saveAircraftConstants);
 
 	/* All other informations are not needed for ufos */
-	if (!base)
+	if (!craft->homebase)
 		return qtrue;
 
-	craft->idx = mxml_GetInt(p, SAVE_AIRCRAFT_IDX, 0);
+	craft->idx = mxml_GetInt(p, SAVE_AIRCRAFT_IDX, -1);
+	if (craft->idx == -1)
+		return qfalse;
 	craft->hangar = mxml_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
 	craft->teamSize = 0;
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_MEMBER); l < MAX_ACTIVETEAM && snode; l++,
+	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_MEMBER); craft->teamSize < MAX_ACTIVETEAM && ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_MEMBER)) {
-		const int teamIdx = mxml_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_IDX, BYTES_NONE);
-		if (teamIdx != BYTES_NONE) {
-			const int teamType = mxml_GetInt(ssnode, SAVE_AIRCRAFT_TYPE, BYTES_NONE);
-			assert(teamType != MAX_EMPL);
-			/* We link to not yet parsed employee. */
-			craft->acTeam[l] = &ccs.employees[teamType][teamIdx];
-			craft->teamSize++;
-		}
+		const int ucn = mxml_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, -1);
+		if (ucn != -1)
+			craft->acTeam[craft->teamSize++] = E_GetEmployeeFromChrUCN(ucn);
 	}
 
-	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_PILOTIDX, BYTES_NONE);
+	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_PILOTUCN, -1);
 	/* the employee subsystem is loaded after the base subsystem
 	 * this means, that the pilot pointer is not (really) valid until
 	 * E_Load was called, too */
-	if (tmp_int != BYTES_NONE)
-		craft->pilot = &ccs.employees[EMPL_PILOT][tmp_int];
+	if (tmp_int != -1)
+		craft->pilot = E_GetEmployeeFromChrUCN(tmp_int);
 	else
 		craft->pilot = NULL;
 
@@ -2837,12 +2854,26 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 	mxml_node_t *projectiles;
 	int i;
 
+	/* load phalanx aircraft */
+	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_PHALANX);
+	ccs.numAircraft = mxml_GetInt(snode, SAVE_AIRCRAFT_NUMAIRCRAFT, 0);
+	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_AIRCRAFT && ssnode;
+			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
+		aircraft_t craft;
+		if (!AIR_LoadAircraftXML(ssnode, &craft))
+			return qfalse;
+		assert(craft.homebase);
+		craft.homebase->aircraft[craft.homebase->numAircraftInBase] = craft;
+		AII_CorrectAircraftSlotPointers(&craft.homebase->aircraft[craft.homebase->numAircraftInBase]);
+		craft.homebase->numAircraftInBase++;
+	}
+
 	/* load the ufos on geoscape */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_UFOS);
 
 	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_UFOONGEOSCAPE && ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
-		if (!AIR_LoadAircraftXML(&ccs.ufos[i], NULL, ssnode))
+		if (!AIR_LoadAircraftXML(ssnode, &ccs.ufos[i]))
 			return qfalse;
 		ccs.numUFOs++;
 	}

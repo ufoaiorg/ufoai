@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_H
 
 #define SAVE_BASES_BASES "bases"
-#define SAVE_BASES_NUMAIRCRAFT "numAircraft"
+
 #define SAVE_BASES_BASE "base"
 #define SAVE_BASES_NAME "name"
 #define SAVE_BASES_POS "pos"
@@ -50,8 +50,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_BATTERIES "batteries"
 #define SAVE_BASES_LASERS "lasers"
 #define SAVE_BASES_CURRENTAIRCRAFTIDX "currentAircraftIDX"
-#define SAVE_BASES_AIRCRAFTS "aircraft"
-#define SAVE_BASES_AIRCRAFT "craft"
 #define SAVE_BASES_STORAGE "storage"
 #define SAVE_BASES_RADARRANGE "radarRange"
 #define SAVE_BASES_TRACKINGRANGE "trackingRange"
@@ -67,13 +65,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_WEAPON "weapon"
 #define SAVE_BASES_AUTOFIRE "autoFire"
 #define SAVE_BASES_TARGET "target"
-#define SAVE_BASES_ITEMID "itemid"
-#define SAVE_BASES_AMMOID "ammoid"
-#define SAVE_BASES_NEXTITEMID "nextItemid"
-#define SAVE_BASES_NEXTAMMOID "nextAmmoid"
-#define SAVE_BASES_INSTALLATIONTIME "installationTime"
-#define SAVE_BASES_AMMOLEFT "ammoLeft"
-#define SAVE_BASES_DELAYNEXTSHOT "delayNextShot"
 
 #endif
 

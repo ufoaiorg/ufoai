@@ -2763,8 +2763,6 @@ qboolean B_SaveXML (mxml_node_t *parent)
 	mxml_node_t * bases;
 
 	bases = mxml_AddNode(parent, SAVE_BASES_BASES);
-	mxml_AddInt(bases, SAVE_BASES_NUMAIRCRAFT, ccs.numAircraft);
-
 	for (i = 0; i < ccs.numBases; i++) {
 		int k;
 		mxml_node_t * act_base, *node;
@@ -2817,11 +2815,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		B_SaveBaseSlotsXML(b->lasers, b->numLasers, node);
 
 		mxml_AddInt(act_base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIR_GetAircraftIDXInBase(b->aircraftCurrent));
-		node = mxml_AddNode(act_base, SAVE_BASES_AIRCRAFTS);
-		for (k = 0; k < b->numAircraftInBase; k++) {
-			const aircraft_t* const aircraft = &b->aircraft[k];
-			AIR_SaveAircraftXML(node, aircraft, qfalse);
-		}
+
 		/* store equipment */
 		node = mxml_AddNode(act_base, SAVE_BASES_STORAGE);
 		B_SaveStorageXML(node, b->storage);
@@ -2928,7 +2922,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		Com_Printf("Error: Base Node wasn't found in savegame\n");
 		return qfalse;
 	}
-	ccs.numAircraft = mxml_GetInt(bases, SAVE_BASES_NUMAIRCRAFT, 0);
 
 	for (base = mxml_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		mxml_node_t * node, * snode;
@@ -3001,14 +2994,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
 		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
 			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
-
-		node = mxml_GetNode(base, SAVE_BASES_AIRCRAFTS);
-		for (k = 0, snode = mxml_GetNode(node, SAVE_BASES_AIRCRAFT); k < MAX_AIRCRAFT && snode;
-				snode = mxml_GetNextNode(snode, node, SAVE_BASES_AIRCRAFT), k++) {
-			aircraft_t *aircraft = &b->aircraft[k];
-			AIR_LoadAircraftXML(aircraft, b, snode);
-		}
-		b->numAircraftInBase = k;
 
 		/* read equipment */
 		node = mxml_GetNode(base, SAVE_BASES_STORAGE);

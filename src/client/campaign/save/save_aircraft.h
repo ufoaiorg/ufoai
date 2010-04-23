@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_H
 
 #define SAVE_AIRCRAFT_UFOS "UFOs"
+#define SAVE_AIRCRAFT_PHALANX "aircraft"
+#define SAVE_AIRCRAFT_NUMAIRCRAFT "numAircraft"
 
 #define SAVE_AIRCRAFT_AIRCRAFT "craft"
 #define SAVE_AIRCRAFT_ID "id"
@@ -33,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_IDX "idx"
 
 #define SAVE_AIRCRAFT_STATUS "status"
+#define SAVE_AIRCRAFT_HOMEBASE "homebase"
 
 #define SAVE_AIRCRAFT_FUEL "fuel"
 #define SAVE_AIRCRAFT_DAMAGE "damage"
@@ -55,20 +58,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_AIRCRAFT_DETECTED "detected"
 #define SAVE_AIRCRAFT_LANDED "landed"
 #define SAVE_AIRCRAFT_HANGAR "hangar"
+
 #define SAVE_AIRCRAFT_AIRCRAFTTEAM "aircraftTeam"
 #define SAVE_AIRCRAFT_MEMBER "member"
-#define SAVE_AIRCRAFT_TEAM_IDX "idx"
-#define SAVE_AIRCRAFT_TYPE "type"
-#define SAVE_AIRCRAFT_PILOTIDX "pilotIDX"
+#define SAVE_AIRCRAFT_TEAM_UCN "ucn"
+
+#define SAVE_AIRCRAFT_PILOTUCN "pilotUCN"
 
 #define SAVE_AIRCRAFT_CARGO "cargo"
 #define SAVE_AIRCRAFT_TYPES "types"
 
+#define SAVE_AIRCRAFT_RADAR_RANGE "radarRange"
+#define SAVE_AIRCRAFT_RADAR_TRACKINGRANGE "radarTrackingrange"
+
 #define SAVE_AIRCRAFT_ITEM "item"
 #define SAVE_AIRCRAFT_ITEMID "itemid"
 #define SAVE_AIRCRAFT_AMOUNT "amount"
-#define SAVE_AIRCRAFT_RADAR_RANGE "radarRange"
-#define SAVE_AIRCRAFT_RADAR_TRACKINGRANGE "radarTrackingrange"
 #define SAVE_AIRCRAFT_ALIENCARGO "alienCargo"
 #define SAVE_AIRCRAFT_TYPES "types"
 #define SAVE_AIRCRAFT_CARGO "cargo"
@@ -121,22 +126,48 @@ static const constListEntry_t saveAircraftConstants[] = {
 /*
 DTD: (incomplete)
 
-<!ELEMENT UFOs aircraft*>
-<!ELEMENT aircraft >
-<!ATTLIST aircraft (pos direction weapons shields electronics route lastSpottedDate? airstats)
+<!ELEMENT aircraft craft*>
+<!ELEMENT UFOs craft*>
+<!ELEMENT craft >
+<!ATTLIST craft (pos direction weapons shields electronics route lastSpottedDate? airstats aircraftTeam)
 	id					CDATA	#REQUIRED
 	name				CDATA	#IMPLIED
 	status		(none,refuel,home,idle,
 				transit,mission,ufo,
 				drop,intercept,transfer,
 				returning)		#REQUIRED
-	fuel				CDATA	#IMPLIED
-	damage				CDATA	#IMPLIED
-	point				CDATA	#IMPLIED
-	time				CDATA	#IMPLIED
+	homebase			CDATA	#IMPLIED
+	fuel				CDATA	'0'
+	damage				CDATA	'0'
+	point				CDATA	'0'
+	time				CDATA	'0'
 	missionid			CDATA	#IMPLIED
 	detectionIDX		CDATA	#IMPLIED
+	detected			CDATA	'false'
+	landed				CDATA	'false'
 	aircraftTarget		CDATA	#IMPLIED
+	
+	idx					CDATA	#REQUIRED
+	hangar				CDATA	'0'
+	pilotUCN			CDATA	#IMPLIED
+
+	radarRange			CDATA	'0'
+	radarTrackingRange	CDATA	'0'
+>
+** Note: idx is required for Phalanx crafts only
+
+<!ELEMENT pos EMPTY>
+<!ATTLIST pos
+	x					CDATA	'0.0'
+	y					CDATA	'0.0'
+	z					CDATA	'0.0'
+>
+
+<!ELEMENT direction EMPTY>
+<!ATTLIST direction
+	x					CDATA	'0.0'
+	y					CDATA	'0.0'
+	z					CDATA	'0.0'
 >
 
 <!ELEMENT route point*>
@@ -148,6 +179,12 @@ DTD: (incomplete)
 <!ATTLIST point
 	x					CDATA	'0.0'
 	y					CDATA	'0.0'
+>
+
+<!ELEMENT lastSpottedDate EMPTY>
+<!ATTLIST lastSpottedDate
+	day					CDATA	'0'
+	sec					CDATA	'0'
 >
 
 <!ELEMENT weapons slot*>
@@ -164,6 +201,12 @@ DTD: (incomplete)
 			fuelsize,weaponrange,
 			antimatter)			#REQUIRED
 	val					CDATA	'0'
+>
+
+<!ELEMENT aircraftTeam member*>
+<!ELEMENT member EMPTY>
+<!ATTLIST member
+	ucn					CDATA	#IMPLIED
 >
 
 <!ELEMENT projectiles projectile*>

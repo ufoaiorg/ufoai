@@ -437,13 +437,15 @@ typedef struct ccs_s {
 	/* == bases == */
 	/* A list of _all_ bases ... even unbuilt ones. */
 	base_t bases[MAX_BASES];
-	/* used for unique aircraft ids */
-	int numAircraft;
 	/* Total number of built bases (how many are enabled). */
 	int numBases;
+
 	/* a list of all templates for building bases */
 	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
 	int numBaseTemplates;
+
+	/* used for unique aircraft ids */
+	int numAircraft;
 
 	alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
 	int numAlienBases;							/**< Number of alien bases in game */

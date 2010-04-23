@@ -1408,9 +1408,9 @@ void AII_SaveOneSlotXML (mxml_node_t *p, const aircraftSlot_t* slot, qboolean we
 	if (!weapon)
 		return;
 
+	mxml_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
 	mxml_AddStringValue(p, SAVE_SLOT_AMMOID, slot->ammo ? slot->ammo->id : "");
 	mxml_AddStringValue(p, SAVE_SLOT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
-	mxml_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
 	mxml_AddIntValue(p, SAVE_SLOT_DELAYNEXTSHOT, slot->delayNextShot);
 }
 
@@ -1452,6 +1452,8 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 		return;
 
 	/* current ammo */
+	/* load ammoLeft before adding ammo to avoid unnecessary auto-reloading */
+	slot->ammoLeft = mxml_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
 	name = mxml_GetString(node, SAVE_SLOT_AMMOID);
 	if (name && name[0] != '\0') {
 		technology_t *tech = RS_GetTechByProvided(name);
@@ -1466,7 +1468,6 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 		if (tech)
 			AII_AddAmmoToSlot(NULL, tech, slot);
 	}
-	slot->ammoLeft = mxml_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
 	slot->delayNextShot = mxml_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
 }
 
