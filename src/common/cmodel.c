@@ -635,9 +635,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		/** @todo passing CONTENTS_WINDOW as brushreject should not be necessary but atm it IS !
-		 *	That's because func_brakable windows have both the solid and the window flag set. */
-		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_VISIBILILITY, CONTENTS_WINDOW, model->origin, model->angles, model->shift, 1.0);
+		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
