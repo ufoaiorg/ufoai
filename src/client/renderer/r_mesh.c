@@ -504,7 +504,6 @@ void R_DrawAliasModel (entity_t *e)
 {
 	const mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
 	/* the values are sane here already - see R_DrawEntities */
-	/* Let's assert if the above is true. Duke, 23.01.10 */
 	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 	int i;
 	float g;

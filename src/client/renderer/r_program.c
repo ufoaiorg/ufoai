@@ -50,7 +50,7 @@ void R_UseProgram  (r_program_t *prog)
 #define R_ProgramVariable(x, y) R_ProgramVariable_Debug(x, y, file, line)
 static r_progvar_t *R_ProgramVariable_Debug (int type, const char *name, const char *file, int line)
 #else 
-static r_progvar_t *R_ProgramVariable (int type, const char *name )
+static r_progvar_t *R_ProgramVariable (int type, const char *name)
 #endif
 {
 	r_progvar_t *v;
@@ -107,7 +107,7 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name )
 #ifdef DEBUG
 void R_ProgramParameter1i_Debug (const char *name, GLint value , const char *file, int line)
 #else
-void R_ProgramParameter1i (const char *name, GLint value )
+void R_ProgramParameter1i (const char *name, GLint value)
 #endif
 {
 	r_progvar_t *v;
@@ -121,7 +121,7 @@ void R_ProgramParameter1i (const char *name, GLint value )
 #ifdef DEBUG
 void R_ProgramParameter1f_Debug (const char *name, GLfloat value , const char *file, int line)
 #else
-void R_ProgramParameter1f (const char *name, GLfloat value )
+void R_ProgramParameter1f (const char *name, GLfloat value)
 #endif
 {
 	r_progvar_t *v;
@@ -135,7 +135,7 @@ void R_ProgramParameter1f (const char *name, GLfloat value )
 #ifdef DEBUG
 void R_ProgramParameter1fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value )
+void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
@@ -149,7 +149,7 @@ void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value )
 #ifdef DEBUG
 void R_ProgramParameter2fv_Debug (const char *name, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter2fv (const char *name, GLfloat *value )
+void R_ProgramParameter2fv (const char *name, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
@@ -163,7 +163,7 @@ void R_ProgramParameter2fv (const char *name, GLfloat *value )
 #ifdef DEBUG
 void R_ProgramParameter2fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value )
+void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
@@ -177,7 +177,7 @@ void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value )
 #ifdef DEBUG
 void R_ProgramParameter3fv_Debug (const char *name, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter3fv (const char *name, GLfloat *value )
+void R_ProgramParameter3fv (const char *name, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
@@ -191,7 +191,7 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value )
 #ifdef DEBUG
 void R_ProgramParameter4fv_Debug (const char *name, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter4fv (const char *name, GLfloat *value )
+void R_ProgramParameter4fv (const char *name, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
