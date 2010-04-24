@@ -29,6 +29,9 @@
 #include "../../shared/parse.h"
 #include "../../shared/shared.h"
 
+
+#define SHADER_BUF_SIZE 16384
+
 void R_UseProgram  (r_program_t *prog)
 {
 	if (!qglUseProgram || r_state.active_program == prog)
@@ -329,6 +332,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
+	/* @todo (arisian): don't GLSL compilers have built-in preprocessors that can handle this kind of stuff? */
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
 			size_t inc_len;
@@ -348,6 +352,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 		if (!strncmp(in, "#if", 3)) {  /* conditionals */
 			float f;
+			qboolean elseclause = qfalse;
 
 			in += 3;
 
@@ -359,13 +364,18 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 					break;
 				}
 
+				if (!strncmp(in, "#else", 5)) {
+					in += 5;
+					elseclause = qtrue;
+				}
+
 				len--;
 				if (len < 0) {
 					Com_Error(ERR_DROP, "R_PreprocessShader: "
 							"Overflow: %s", name);
 				}
 
-				if (f) {
+				if ( (f && !elseclause) || (!f && elseclause)){
 					*out++ = *in++;
 					i++;
 				} else
@@ -376,6 +386,46 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				Com_Error(ERR_DROP, "R_PreprocessShader: "
 						"Unterminated conditional: %s", name);
 			}
+		}
+
+
+		if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
+			int j, z;
+			size_t sub_len = 0;
+
+			buf = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+
+			in += 7;
+			z = Cvar_GetValue(Com_Parse(&in)); 
+
+			while (*in) {
+				if (!strncmp(in, "#endunroll", 10)) {
+					in += 10;
+					break;
+				}
+
+				buf[sub_len++] = *in++;
+			}
+
+			for (j = 0; j < z; j++) {
+				int l;
+				for (l = 0; l < sub_len; l++) {
+					if (!strncmp(&buf[l], "$", 1)) {
+						Com_sprintf(out, sub_len - l, "%d", j);
+						out += (j / 10) + 1;
+						i += (j / 10) + 1;
+						len -= (j / 10) + 1;
+					} else {
+						*out++ = buf[l];
+						i++;
+						len--;
+					}
+					if (len < 0)
+						Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
+				}
+			}
+
+			Mem_Free(buf);
 		}
 
 		/* general case is to copy so long as the buffer has room */
@@ -389,7 +439,6 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 	return i;
 }
 
-#define SHADER_BUF_SIZE 16384
 
 static r_shader_t *R_LoadShader (GLenum type, const char *name)
 {
