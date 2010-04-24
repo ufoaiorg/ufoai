@@ -86,11 +86,11 @@ static void R_UpdateMaterial (material_t *m)
 
 static void R_StageGlow (const mBspSurface_t *surf, const materialStage_t *stage)
 {
-	R_EnableGlowMap(NULL, qfalse);
-
 	if (stage->image->glowmap) {
 		R_EnableGlowMap(stage->image->glowmap, qtrue);
 		R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
+	} else {
+		R_EnableGlowMap(NULL, qfalse);
 	}
 }
 
@@ -992,8 +992,6 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 	}
-
-	
 
 	FS_FreeFile(fileBuffer);
 }

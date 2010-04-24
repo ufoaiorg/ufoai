@@ -446,7 +446,13 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
-	if (!r_postprocess->integer || r_state.glowmap_enabled == enable)
+	if (!r_postprocess->integer)
+		return;
+
+	if (enable && image != NULL)
+		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
+
+	if (r_state.glowmap_enabled == enable)
 		return;
 
 	r_state.glowmap_enabled = enable;
@@ -457,7 +463,6 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 		else
 			R_ProgramParameter1f("GLOWSCALE", 1.0);
 
-		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 		R_DrawBuffers(2);
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program)
