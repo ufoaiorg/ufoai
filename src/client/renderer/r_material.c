@@ -895,7 +895,6 @@ void R_LoadMaterials (const char *map)
 			continue;
 
 		m = &image->material;
-		m->glowscale = DEFAULT_GLOWSCALE;
 
 		if (!strcmp(c, "normalmap")){
 			c = Com_Parse(&buffer);
