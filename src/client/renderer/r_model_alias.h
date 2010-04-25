@@ -131,4 +131,5 @@ typedef	struct	mAliasModel_s {
 } mAliasModel_t;
 
 void R_ModLoadAnims(mAliasModel_t *mod, void *buffer);
+void R_ModCalcNormalsAndTangents(mAliasMesh_t *mesh);
 void R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh);
