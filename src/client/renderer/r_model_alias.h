@@ -78,6 +78,7 @@ typedef	struct mAliasMesh_s {
 	float *verts;
 	float *texcoords;
 	float *normals;
+	float *tangents;
 
 	int	num_tris;
 	int32_t	*indexes;

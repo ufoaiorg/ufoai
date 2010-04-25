@@ -58,7 +58,8 @@ static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh,
 	const float frontlerp = 1.0 - backlerp;
 	vec3_t r_mesh_verts[MD3_MAX_VERTS];
 	vec3_t r_mesh_norms[MD3_MAX_VERTS];
-	float *texcoord_array, *vertex_array_3d, *normal_array;
+	vec3_t r_mesh_tangents[MD3_MAX_VERTS];
+	float *texcoord_array, *vertex_array_3d, *normal_array, *tangent_array;
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
@@ -83,26 +84,39 @@ static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh,
 					v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
 					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
 		}
+		if (r_state.bumpmap_enabled) {  /* and the tangents */
+			VectorSet(r_mesh_tangents[i],
+					v->tangent[0] + (ov->tangent[0] - v->tangent[0]) * backlerp,
+					v->tangent[1] + (ov->tangent[1] - v->tangent[1]) * backlerp,
+					v->tangent[2] + (ov->tangent[2] - v->tangent[2]) * backlerp);
+		}
 	}
 
 	texcoord_array = texunit_diffuse.texcoord_array;
 	vertex_array_3d = r_state.vertex_array_3d;
 	normal_array = r_state.normal_array;
+	tangent_array = r_state.tangent_array;
 
 	/** @todo damn slow - optimize this */
 	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
 		for (j = 0; j < 3; j++) {
 			const int arrayIndex = 3 * i + j;
-			Vector2Copy(mesh->stcoords[mesh->indexes[arrayIndex]], texcoord_array);
-			VectorCopy(r_mesh_verts[mesh->indexes[arrayIndex]], vertex_array_3d);
+			const int meshIndex = mesh->indexes[arrayIndex];
+			Vector2Copy(mesh->stcoords[meshIndex], texcoord_array);
+			VectorCopy(r_mesh_verts[meshIndex], vertex_array_3d);
 
 			/* normal vectors for lighting */
 			if (r_state.lighting_enabled)
-				VectorCopy(r_mesh_norms[mesh->indexes[arrayIndex]], normal_array);
+				VectorCopy(r_mesh_norms[meshIndex], normal_array);
+
+			/* tangent vectors for bump mapping */
+			if (r_state.bumpmap_enabled)
+				VectorCopy(r_mesh_tangents[meshIndex], tangent_array);
 
 			texcoord_array += 2;
 			vertex_array_3d += 3;
 			normal_array += 3;
+			tangent_array += 3;
 		}
 	}
 }
@@ -121,15 +135,18 @@ void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *m
 	assert(mesh->verts == NULL);
 	assert(mesh->texcoords == NULL);
 	assert(mesh->normals == NULL);
+	assert(mesh->tangents == NULL);
 
 	R_FillArrayData(mod, mesh, 0.0, 0, 0);
 
 	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
 
 	memcpy(mesh->verts, r_state.vertex_array_3d, sizeof(float) * v);
 	memcpy(mesh->normals, r_state.normal_array, sizeof(float) * v);
+	memcpy(mesh->tangents, r_state.tangent_array, sizeof(float) * v);
 	memcpy(mesh->texcoords, texunit_diffuse.texcoord_array, sizeof(float) * st);
 }
 
@@ -180,6 +197,8 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 {
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
+	if (r_state.bumpmap_enabled)
+		R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mesh->tangents);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
@@ -188,6 +207,8 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
+	if (r_state.bumpmap_enabled)
+		R_BindDefaultArray(GL_TANGENT_ARRAY);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }
 

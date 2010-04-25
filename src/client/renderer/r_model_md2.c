@@ -50,7 +50,7 @@ static void R_CalcAliasNormals (const int numIndexes, int32_t *indexArray, const
 	mAliasVertex_t *vertexes = mesh->vertexes;
 	mAliasCoord_t *stcoords = mesh->stcoords;
 
-	/* figure out which verticies are shared between which triangles*/
+	/* figure out which verticies are shared between which triangles */
 	for (i = 0; i < numVerts; i++) {
 		qboolean found = qfalse;
 
