@@ -47,11 +47,12 @@ image_t *r_flaretextures[NUM_FLARETEXTURES];
  */
 void R_ImageClearMaterials (void)
 {
-	image_t *image;
 	int i;
+	const size_t length = lengthof(r_images);
 
 	/* clear previously loaded materials */
-	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
+	for (i = 0; i < length; i++) {
+		image_t *image = &r_images[i];
 		material_t *m = &image->material;
 		materialStage_t *s = m->stages;
 
@@ -62,10 +63,12 @@ void R_ImageClearMaterials (void)
 		}
 
 		memset(m, 0, sizeof(*m));
+
 		m->bump = DEFAULT_BUMP;
 		m->parallax = DEFAULT_PARALLAX;
 		m->specular = DEFAULT_SPECULAR;
 		m->hardness = DEFAULT_HARDNESS;
+		m->glowscale = DEFAULT_GLOWSCALE;
 	}
 }
 
@@ -656,7 +659,8 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
 			if (image->normalmap == r_noTexture)
 				image->normalmap = NULL;
-		} else if (image->type == it_world || image->type == it_skin) {
+		}
+		if (image->type != it_glowmap) {
 			image->glowmap = R_FindImage(va("%s_gm", image->name), it_glowmap);
 			if (image->glowmap == r_noTexture)
 				image->glowmap = NULL;

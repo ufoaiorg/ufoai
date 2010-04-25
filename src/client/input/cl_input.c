@@ -496,7 +496,10 @@ static void IN_Parse (void)
 	if (!viddef.viewWidth || !viddef.viewHeight)
 		return;
 
-	CL_ActorMouseTrace();
+	if (CL_ActorMouseTrace()) {
+		/* mouse is in the world */
+		mouseSpace = MS_WORLD;
+	}
 }
 
 /**

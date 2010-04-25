@@ -76,7 +76,7 @@
 {
 	material tex_nature/desert004
 	{
-		texture   tex_material/desert001
+		texture   tex_nature/desert001
 		terrain   5.5 8.0	
 		lightmap
 	}

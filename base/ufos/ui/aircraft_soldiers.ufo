@@ -18,6 +18,36 @@ component cmpDefNamedTbar cmpNamedTbar {
 	}
 }
 
+component cmpActorSelect cmpSoldierSelect {
+	{
+		num "0"
+	}
+
+	pic bt_equip
+	{
+		pos			"0 10"
+		image		ui/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+	}
+	checkbox check_actor
+	{
+		tooltip	"_Add/remove this soldier"
+		onChange { cmd "team_hire <node:parent@num> <cvar:mn_relative_id>;" }
+	}
+
+	string txt_actor
+	{
+		string	*cvar:mn_ename<node:parent@num>
+		onClick { cmd "team_select <node:parent@num> <cvar:mn_relative_id>;" }
+	}
+
+}
+
 
 /**
  * @todo rename the menu according to the file
@@ -34,18 +64,11 @@ window team extends iaircraft
 		image	"ui/panel_grey_green_large"
 	}
 
-	panel actormodel_background {
-		pos		"358 443"
-		size	"205 321"
-		image	"ui/panel_grey_green_large"
+	panel tab_background {
+		pos		"24 386"
+		size	"986 56"
+		image	"ui/panel_tab"
 	}
-
-	panel actorstats_background {
-		pos		"564 443"
-		size	"458 321"
-		image	"ui/panel_grey_green_large"
-	}
-
 	// ==================
 	// aircraft
 	// ==================
@@ -110,30 +133,30 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_usedelsewhere
 	{
-		*txt_actor<1>@color = ".50 .50 .50 1"
-		*(checkbox)check_actor<1>@current = 0
-		*(checkbox)check_actor<1>@tooltip = "_Soldier is assigned to another craft"
-		*check_actor<1>@disabled = true
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
-		*(pic)bt_equip<1>@invis = false
+		*actor_select<1>.txt_actor@color = ".50 .50 .50 1"
+		*(checkbox)actor_select<1>.check_actor@current = 0
+		*(checkbox)actor_select<1>.check_actor@tooltip = "_Soldier is assigned to another craft"
+		*actor_select<1>.check_actor@disabled = true
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
+		*(pic)actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unassigned {
-		*txt_actor<1>@color = "0 .78 0 1"
-		*check_actor<1>@disabled = false
-		*(checkbox)check_actor<1>@current = 0
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
-		*(pic)bt_equip<1>@invis = false
+		*actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*actor_select<1>.check_actor@disabled = false
+		*(checkbox)actor_select<1>.check_actor@current = 0
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
+		*(pic)actor_select<1>.bt_equip@invis = false
 		if ( *cvar:mn_hirable_count == 0 ) {
-			*(checkbox)check_actor<1>@disabled = true
-			*(checkbox)check_actor<1>@tooltip = "_No more soldiers can be assigned to this craft"
+			*(checkbox)actor_select<1>.check_actor@disabled = true
+			*(checkbox)actor_select<1>.check_actor@tooltip = "_No more soldiers can be assigned to this craft"
 		} else {
-			*(checkbox)check_actor<1>@tooltip = "_Assign soldier to this craft"
+			*(checkbox)actor_select<1>.check_actor@tooltip = "_Assign soldier to this craft"
 		}
 	}
 
@@ -141,40 +164,40 @@ window team extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_assigned {
-		*txt_actor<1>@color = "0 .78 0 1"
-		*check_actor<1>@disabled = false
-		*(checkbox)check_actor<1>@current = 1
-		*(checkbox)check_actor<1>@tooltip = "_Remove soldier from this craft"
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
-		*(pic)bt_equip<1>@invis = false
+		*actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*actor_select<1>.check_actor@disabled = false
+		*(checkbox)actor_select<1>.check_actor@current = 1
+		*(checkbox)actor_select<1>.check_actor@tooltip = "_Remove soldier from this craft"
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
+		*(pic)actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsequip {
-		*(pic)bt_equip<1>@tooltip = "_Soldier carries equipment"
-		*(pic)bt_equip<1>@texl = "16 0"
-		*(pic)bt_equip<1>@texh = "32 16"
+		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
+		*(pic)actor_select<1>.bt_equip@texl = "16 0"
+		*(pic)actor_select<1>.bt_equip@texh = "32 16"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsnoequip {
-		*(pic)bt_equip<1>@tooltip = "_Soldier carries no equipment"
-		*(pic)bt_equip<1>@texl = "0 0"
-		*(pic)bt_equip<1>@texh = "16 16"
+		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
+		*(pic)actor_select<1>.bt_equip@texl = "0 0"
+		*(pic)actor_select<1>.bt_equip@texh = "16 16"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unusedslot {
-		*(pic)bt_equip<1>@invis = true
-		*check_actor<1>@invis = true
-		*txt_actor<1>@invis = true
+		*(pic)actor_select<1>.bt_equip@invis = true
+		*actor_select<1>.check_actor@invis = true
+		*actor_select<1>.txt_actor@invis = true
 	}
 
 	/**
@@ -188,253 +211,46 @@ window team extends iaircraft
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_soldier_selected {
-		*txt_actor<1>@color = "1 1 1 1"
+		*actor_select<1>.txt_actor@color = "1 1 1 1"
 	}
 
-	pic bt_equip0
-	{
-		pos			"38 470"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
+	cmpSoldierSelect actor_select0 {
+  	pos "38 470"
 	}
 
-	pic bt_equip1
-	{
-		pos			"38 505"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
+	cmpSoldierSelect actor_select1 {
+  	pos "38 505"
 	}
 
-	pic bt_equip2
+	cmpSoldierSelect actor_select2
 	{
 		pos			"38 540"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip3
+	cmpSoldierSelect actor_select3
 	{
 		pos			"38 575"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip4
+	cmpSoldierSelect actor_select4
 	{
 		pos			"38 610"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip5
+	cmpSoldierSelect actor_select5
 	{
 		pos			"38 645"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip6
+	cmpSoldierSelect actor_select6
 	{
 		pos			"38 680"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
 
-	pic bt_equip7
+	cmpSoldierSelect actor_select7
 	{
 		pos			"38 715"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
-		invis		true
 	}
-
-	// checkbox
-
-	checkbox check_actor0
-	{
-		pos	"280 470"
-		onChange { cmd "team_hire 0 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor1
-	{
-		pos	"280 505"
-		onChange { cmd "team_hire 1 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor2
-	{
-		pos	"280 540"
-		onChange { cmd "team_hire 2 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor3
-	{
-		pos	"280 575"
-		onChange { cmd "team_hire 3 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor4
-	{
-		pos	"280 610"
-		onChange { cmd "team_hire 4 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor5
-	{
-		pos	"280 645"
-		onChange { cmd "team_hire 5 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor6
-	{
-		pos	"280 680"
-		onChange { cmd "team_hire 6 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor7
-	{
-		pos	"280 715"
-		onChange { cmd "team_hire 7 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-
-	string txt_actor0
-	{
-		string	*cvar:mn_ename0
-		pos		"60 460"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 0 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor1
-	{
-		string	*cvar:mn_ename1
-		pos		"60 495"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 1 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor2
-	{
-		string	*cvar:mn_ename2
-		pos		"60 530"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 2 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor3
-	{
-		string	*cvar:mn_ename3
-		pos		"60 565"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 3 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor4
-	{
-		string	*cvar:mn_ename4
-		pos		"60 600"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 4 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor5
-	{
-		string	*cvar:mn_ename5
-		pos		"60 635"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 5 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor6
-	{
-		string	*cvar:mn_ename6
-		pos		"60 670"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 6 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor7
-	{
-		string	*cvar:mn_ename7
-		pos		"60 705"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "team_select 7 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-
 	vscrollbar scroll_employees
 	{
 		image	ui/scrollbar_v_green
@@ -452,8 +268,22 @@ window team extends iaircraft
 	// actor info
 	// ==================
 
+	panel actor_background {
+	{
+		pos		"358 443"
+		size	"663 321"
+		image	"ui/panel_grey_black"
+	}
+
+	panel actormodel_background {
+	{
+		pos		"12 12"
+		size	"179 296"
+		image	"ui/panel_green"
+	}
+
 	pic	rank_img {
-		pos "378 465"
+		pos "8 10"
 		size "50 50"
 		image *cvar:mn_chrrank_img
 	}
@@ -466,7 +296,7 @@ window team extends iaircraft
 			anim	"stand2"
 			angles	"0 70 90"
 			scale	"5.5 5.5 5.5"
-			pos		"378 465"
+			pos		"8 10"
 			size	"167 278"
 			origin	"0 -35 0"
 		}
@@ -492,12 +322,38 @@ window team extends iaircraft
 		}
 	}
 
-	string	name { pos "380 700" size "165 20" string *cvar:mn_name }
-	string	rank_lbl { pos "380 720" size "165 20" string *cvar:mn_chrrank }
+	string	name { pos "10 245" size "165 20" string *cvar:mn_name }
+	string	rank_lbl { pos "10 265" size "165 20" string *cvar:mn_chrrank }
+	}
+
+	tab actor_stat {
+		pos		"212 12"
+		size	"432 39"
+		cvar	*cvar:mn_actor_stat
+		onChange {
+			cmd "select_actor_stat <cvar:mn_actor_stat>;"
+		}
+		option phys {
+			label	"_Physical stats"
+			value	"stats_phys"
+		}
+		option missions {
+			label	"_Missions info"
+			value	"stats_missions"
+		}
+	}
+
+
+	panel stats_phys {
+	{
+		pos		"208 44"
+		size	"440 264"
+		image	"ui/panel_green_tab"
+	}
 
 	cmpNamedTbar pwr {
 		{
-			pos "585 470"
+			pos "9 27"
 		}
 		tbar bar   { current *cvar:mn_vpwr }
 		string lbl { string "_Strength:" }
@@ -505,7 +361,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar spd {
 	{
-		pos "585 493"
+		pos "9 50"
 	}
 		tbar bar   { current *cvar:mn_vspd }
 		string lbl { string "_Speed:" }
@@ -513,7 +369,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar acc {
 	{
-		pos "585 516"
+		pos "9 73"
 	}
 		tbar bar   { current *cvar:mn_vacc }
 		string lbl { string "_Accuracy:" }
@@ -521,7 +377,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar mnd {
 	{
-		pos "585 539"
+		pos "9 96"
 	}
 		tbar bar   { current *cvar:mn_vmnd }
 		string lbl { string "_Mind:" }
@@ -529,7 +385,7 @@ window team extends iaircraft
 	}
 	cmpNamedTbar cls {
 	{
-		pos "585 562"
+		pos "9 119"
 	}
 		tbar bar   { current *cvar:mn_vcls }
 		string lbl { string "_Close Combat:" }
@@ -538,7 +394,7 @@ window team extends iaircraft
 
 	cmpNamedTbar hvy {
 	{
-		pos "585 585"
+		pos "9 142"
 	}
 		tbar bar   { current *cvar:mn_vhvy }
 		string lbl { string "_Heavy Weapons:" }
@@ -547,7 +403,7 @@ window team extends iaircraft
 
 	cmpNamedTbar ass {
 	{
-		pos "585 608"
+		pos "9 165"
 	}
 		tbar bar   { current *cvar:mn_vass }
 		string lbl { string "_Assault Weapons:" }
@@ -556,7 +412,7 @@ window team extends iaircraft
 
 	cmpNamedTbar snp {
 	{
-		pos "585 631"
+		pos "9 188"
 	}
 		tbar bar   { current *cvar:mn_vsnp }
 		string lbl { string "_Sniper Rifles:" }
@@ -565,16 +421,16 @@ window team extends iaircraft
 
 	cmpNamedTbar exp {
 	{
-		pos "585 654"
+		pos "9 211"
 	}
 		tbar bar   { current *cvar:mn_vexp }
 		string lbl { string "_High-Explosives:" }
 		string val { string *cvar:mn_texp }
 	}
 
-	cmpNamedTbar  {
+	cmpNamedTbar hp {
 	{
-		pos "585 677"
+		pos "9 234"
 	}
 		tbar bar   {
 			current *cvar:mn_vhp
@@ -584,14 +440,41 @@ window team extends iaircraft
 		string lbl { string "_Health:" }
 		string val { string *cvar:mn_thp }
 	}
-	string	missions_lbl { pos "585 700" size "200 20" string "_Missions Performed:" }
-	string	missions_val { pos "850 700" size "150 20" string *cvar:mn_chrmis textalign ur }
 
-	string	kills_lbl { pos "585 723" size "200 20" string "_Enemies Killed:" }
-	string	kills_val { pos "850 723" size "150 20" string *cvar:mn_chrkillalien textalign ur }
+	}
 
-	//mn_chrkillcivilian
-	//mn_chrkillteam
+	panel stats_missions {
+	{
+		pos		"208 44"
+		size	"440 264"
+		image	"ui/panel_green_tab"
+		invis true
+	}
+
+	pic	rank_img {
+		pos "195 30"
+		size "50 50"
+		image *cvar:mn_chrrank_img
+	}
+
+	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign uc font f_normal_bold }
+
+	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
+	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ur }
+
+	string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
+	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ur }
+
+	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
+	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ur }
+
+	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
+	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ur }
+
+	}  
+
+	}
+
 
 	/** @todo Activate this again - used for UGVs */
 	// ==================
@@ -604,6 +487,22 @@ window team extends iaircraft
 	confunc toggle_show_soldiersbutton {
 		*bt_switch_list@tooltip	= "_Assign soldiers"
 		*bt_switch_list@icon	= soldier
+	}
+
+	/**
+	 * @note call when tab actor_stat changed.
+	 */
+	confunc select_actor_stat {
+		if ( <1> eq "stats_phys" ) {
+			*actor_background.stats_phys@invis = false
+			*actor_background.stats_missions@invis = true
+		}
+		elif ( <1> eq "stats_missions" ) {
+			*actor_background.stats_phys@invis = true
+			*actor_background.stats_missions@invis = false
+		}
+
+	
 	}
 
 	/**
@@ -638,6 +537,14 @@ window team extends iaircraft
 	func onInit
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			*actor_select<cvar:i>@num = <cvar:i>
+			*actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+
 		*scroll_employees@current = 0
 		*cvar:mn_relative_id = 0
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"

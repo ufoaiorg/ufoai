@@ -139,6 +139,7 @@ typedef struct materialStage_s {
 	tape_t tape;
 	dirt_t dirt;
 	anim_t anim;
+	float glowscale;
 	struct materialStage_s *next;
 } materialStage_t;
 
@@ -146,6 +147,7 @@ typedef struct materialStage_s {
 #define DEFAULT_PARALLAX 1.0
 #define DEFAULT_SPECULAR 1.0
 #define DEFAULT_HARDNESS 1.0
+#define DEFAULT_GLOWSCALE 1.0
 
 typedef struct material_s {
 	unsigned flags;
@@ -154,6 +156,7 @@ typedef struct material_s {
 	float parallax;
 	float hardness;
 	float specular;
+	float glowscale;
 	materialStage_t *stages;
 	int num_stages;
 } material_t;

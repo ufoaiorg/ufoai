@@ -619,10 +619,10 @@ static int AIL_see (lua_State *L)
 	n = 0;
 	/* Get visible things. */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
-		if (AIL_ent != check
-		 && vision == 0 /* Vision checks. */
-		 && G_IsVisibleForTeam(check, team)
-		 && (team == TEAM_ALL || check->team == team)) {/* Check for team match if needed. */
+		if (AIL_ent == check)
+			continue;
+		if (vision == 0 && (team == TEAM_ALL || check->team == team) /* Check for team match if needed. */
+		 && G_Vis(AIL_ent->team, AIL_ent, check, VT_NOFRUSTUM)) {
 			distLookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}

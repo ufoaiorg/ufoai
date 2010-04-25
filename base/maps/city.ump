@@ -33,6 +33,47 @@
 // ----------------
 base city/city		// Prefix for each tile's .map file including path from /maps/
 
+
+// ---------
+// Dropships
+
+// Firebird on street intersection with rail line
+tile +craft_drop_firebird
+{
+	5 5
+	0		i		i		i		0
+	j		+da		+d		+da		k
+	j		+ca		+c		+ca		k
+	j		+ca		+c		+ca		k
+	0		ce		ce		ce		0
+}
+
+// Herakles pod on vertical street with rail line
+tile +craft_drop_herakles
+{
+	5 5
+	0		i		i		i		0
+	j		+da		+d		+da		k
+	j		+ca		+c		+ca		k
+	j		+ca		+c		+ca		k
+	0		ce		ce		ce		0
+}
+
+// Raptor on vertical street with rail line
+tile +craft_drop_raptor
+{
+	5 5
+	0		i		i		i		0
+	j		+da		+d		+da		k
+	j		+ca		+c		+ca		k
+	j		+ca		+c		+ca		k
+	0		ce		ce		ce		0
+}
+
+// --------------------
+// Street Intersections
+
+
 // Street intersection with rail line
 tile +str_rail_cross
 {
@@ -225,16 +266,16 @@ assembly garage
 	fix +strh_1a "3 5"
 	fix +strh_cwr_1a "4 5"
 
-	fix +str_rail_cross "4 0"
-	fix +strv_rail_btm2a "4 1"
-	fix +strv_rail_2a "4 2"
-	fix +strv_rail_2a "4 3"
-	fix +strv_rail_top2a "4 4"
-	fix +str_rail_cross "4 5"
-}
+	fix +str_rail_cross "5 0"
+	fix +strv_rail_btm2a "5 1"
+	fix +craft_drop_firebird "5 2"
+	fix +str_rail_cross "5 5"
 
+}
 /*
-assembly static
+	*rm_drop +craft_drop_firebird "1 1"
+
+assembly full_grid
 {
 	size "11 9"
 	fix +bldl_4x4_1a "0 5"

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-30 10:59+0700\n"
+"POT-Creation-Date: 2010-04-23 16:21+0200\n"
 "PO-Revision-Date: 2009-10-21 12:38+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -89,27 +89,27 @@ msgstr "Lille skov"
 msgid "Little bungalo in forest"
 msgstr "Lille bungalow i skov"
 
-#: ../base/maps/frozen.ump:292
+#: ../base/maps/frozen.ump:284
 msgid "Snow"
 msgstr "Sne"
 
-#: ../base/maps/frozen.ump:309
+#: ../base/maps/frozen.ump:301
 msgid "Alien landing - Snow"
 msgstr "Rumvæsen landsætning - sne"
 
-#: ../base/maps/frozen.ump:327
+#: ../base/maps/frozen.ump:319
 msgid "Industrial"
 msgstr "Industri"
 
-#: ../base/maps/frozen.ump:348
+#: ../base/maps/frozen.ump:340
 msgid "Alien landing - Industrial"
 msgstr "Rumvæsen landsætning - industri"
 
-#: ../base/maps/frozen.ump:370
+#: ../base/maps/frozen.ump:362
 msgid "Multiplayer Coop"
 msgstr "Flere sammen"
 
-#: ../base/maps/frozen.ump:391
+#: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
 msgstr "Flerspiller dødskamp"
 
@@ -126,16 +126,16 @@ msgstr "Ufo landet"
 msgid "Italy"
 msgstr "Italien"
 
-#: ../base/maps/japan.ump:291
+#: ../base/maps/japan.ump:285
 msgid "Japan"
 msgstr "Japan"
 
-#: ../base/maps/japan.ump:299
+#: ../base/maps/japan.ump:293
 #, fuzzy
 msgid "Small eastern park."
 msgstr "Lille hangar"
 
-#: ../base/maps/japan.ump:327
+#: ../base/maps/japan.ump:321
 #, fuzzy
 msgid "Harvester"
 msgstr "Høstmaskine U"
@@ -3254,6 +3254,11 @@ msgid "Bulgarian"
 msgstr "Bulgarsk"
 
 #: ../base/ufos/language.ufo:320
+#, fuzzy
+msgid "Norwegian"
+msgstr "Koreansk"
+
+#: ../base/ufos/language.ufo:328
 msgid "No language"
 msgstr "Intet sprog"
 
@@ -3478,23 +3483,23 @@ msgstr "Et sted hvor folk kommer for at slappe af og omgås."
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Et laboratorium hvor der undersøges indsamlede vragdele fra ufoer."
 
-#: ../base/ufos/maps.ufo:3431
+#: ../base/ufos/maps.ufo:3479
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Et brændstofdepot rumvæsenerne forsøger at ødelægge."
 
-#: ../base/ufos/maps.ufo:3470
+#: ../base/ufos/maps.ufo:3518
 msgid "Wilderness terror mission."
 msgstr "Ødemarksterrormission."
 
-#: ../base/ufos/maps.ufo:3516
+#: ../base/ufos/maps.ufo:3564
 msgid "UFO Crashsite."
 msgstr "Ufonedstyrtningssted."
 
-#: ../base/ufos/maps.ufo:3547
+#: ../base/ufos/maps.ufo:3595
 msgid "An alien base."
 msgstr "En rumvæsenbase."
 
-#: ../base/ufos/maps.ufo:3562
+#: ../base/ufos/maps.ufo:3610
 msgid "Base is under attack."
 msgstr "Base er under angreb."
 
@@ -3709,7 +3714,7 @@ msgstr "Baggrund"
 #: ../base/ufos/research.ufo:109 ../base/ufos/ui/bases.ufo:129
 #: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
-#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
+#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:350
 msgid "Aircraft"
 msgstr "Luftfartøj"
 
@@ -9057,6 +9062,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "Eller via tasterne 1-8"
 
 #: ../base/ufos/seq_tutorials.ufo:474
+#: ../base/ufos/ui/aircraft_soldiers.ufo:514
 msgid "Physical stats"
 msgstr "Fysisk status"
 
@@ -9177,7 +9183,7 @@ msgstr ""
 msgid "How to play multiplayer"
 msgstr "Sådan foregår flerspiller"
 
-#: ../base/ufos/seq_tutorials.ufo:1057 ../base/ufos/ui/multiplayer.ufo:985
+#: ../base/ufos/seq_tutorials.ufo:1057 ../base/ufos/ui/multiplayer.ufo:970
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "Vær sikker på at du har åbnet TCP-port 27910 i din brandmur"
 
@@ -9197,15 +9203,15 @@ msgstr ""
 msgid "Taman"
 msgstr "Taman"
 
-#: ../base/ufos/team_aliens.ufo:94
+#: ../base/ufos/team_aliens.ufo:99
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:171
+#: ../base/ufos/team_aliens.ufo:181
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:208
+#: ../base/ufos/team_aliens.ufo:225
 msgid "Bloodspider"
 msgstr "Blodedderkop"
 
@@ -9576,7 +9582,7 @@ msgid "Select this slot"
 msgstr "Vælg denne plads"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
-#: ../base/ufos/ui/aircraft_soldiers.ufo:65
+#: ../base/ufos/ui/aircraft_soldiers.ufo:58
 msgid "Team Members:"
 msgstr "Holdmedlemmer:"
 
@@ -9615,112 +9621,129 @@ msgstr "Fjern pilot fra dette luftfartøj"
 msgid "Add/remove this soldier"
 msgstr "Tilføj/fjern denne soldat"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:87
-#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:769
+#: ../base/ufos/ui/aircraft_soldiers.ufo:80
+#: ../base/ufos/ui/aircraft_soldiers.ufo:692 ../base/ufos/ui/geoscape.ufo:769
 msgid "Equip soldiers"
 msgstr "Udstyr soldater"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:115
+#: ../base/ufos/ui/aircraft_soldiers.ufo:108
 msgid "Soldier is assigned to another craft"
 msgstr "Soldat er tildelt et andet luftfartøj"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:134
+#: ../base/ufos/ui/aircraft_soldiers.ufo:127
 msgid "No more soldiers can be assigned to this craft"
 msgstr "Ingen yderligere soldater kan tildeles dette luftfartøj"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:136
+#: ../base/ufos/ui/aircraft_soldiers.ufo:129
 msgid "Assign soldier to this craft"
 msgstr "Tildel soldat til dette luftfartøj"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:147
+#: ../base/ufos/ui/aircraft_soldiers.ufo:140
 msgid "Remove soldier from this craft"
 msgstr "Fjern soldat fra dette luftfartøj"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:157
+#: ../base/ufos/ui/aircraft_soldiers.ufo:150
 msgid "Soldier carries equipment"
 msgstr "Soldat bærer udstyr"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:166
+#: ../base/ufos/ui/aircraft_soldiers.ufo:159
 msgid "Soldier carries no equipment"
 msgstr "Soldat har ikke noget udstyr"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:483
+#: ../base/ufos/ui/aircraft_soldiers.ufo:518
+#, fuzzy
+msgid "Missions info"
+msgstr "Missioner"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:536 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "Styrke:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:511 ../base/ufos/ui/equipment.ufo:492
+#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
-#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1133
+#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1147
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "Fart:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:519 ../base/ufos/ui/equipment.ufo:501
+#: ../base/ufos/ui/aircraft_soldiers.ufo:552 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "Nøjagtighed:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:527 ../base/ufos/ui/equipment.ufo:510
+#: ../base/ufos/ui/aircraft_soldiers.ufo:560 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "Sind:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/equipment.ufo:519
+#: ../base/ufos/ui/aircraft_soldiers.ufo:568 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "Nærkamp:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:528
+#: ../base/ufos/ui/aircraft_soldiers.ufo:577 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "Tunge våben:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:553 ../base/ufos/ui/equipment.ufo:537
+#: ../base/ufos/ui/aircraft_soldiers.ufo:586 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
 msgstr "Angrebsvåben:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:562 ../base/ufos/ui/equipment.ufo:546
+#: ../base/ufos/ui/aircraft_soldiers.ufo:595 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "Snigskytterifler:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:571 ../base/ufos/ui/equipment.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:604 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
 msgstr "Sprængladninger:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:584 ../base/ufos/ui/hire.ufo:383
+#: ../base/ufos/ui/aircraft_soldiers.ufo:617 ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
 msgstr "Liv:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:587 ../base/ufos/ui/hire.ufo:387
-msgid "Missions Performed:"
+#: ../base/ufos/ui/aircraft_soldiers.ufo:639
+#, fuzzy
+msgid "Missions performed:"
 msgstr "Udførte missioner:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:590 ../base/ufos/ui/hire.ufo:390
-msgid "Enemies Killed:"
+#: ../base/ufos/ui/aircraft_soldiers.ufo:642
+#, fuzzy
+msgid "Enemies killed:"
 msgstr "Fjender dræbt:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:601
+#: ../base/ufos/ui/aircraft_soldiers.ufo:645
+#, fuzzy
+msgid "Civilians killed:"
+msgstr "En civil blev dræbt.\n"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:648
+#, fuzzy
+msgid "Our team killed:"
+msgstr "%s blev dræbt\n"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:661
 msgid "Assign tanks"
 msgstr "Tildel kampvogne"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:605
+#: ../base/ufos/ui/aircraft_soldiers.ufo:665
 msgid "Assign soldiers"
 msgstr "Tildel soldater"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:619
+#: ../base/ufos/ui/aircraft_soldiers.ufo:695
 msgid "No soldiers assigned"
 msgstr "Ingen soldater tildelt"
 
@@ -9830,7 +9853,7 @@ msgstr "Klik for at skifte mellem sete fjender"
 msgid "Finish round"
 msgstr "Afslut runde"
 
-#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:894
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:893
 msgid "Multiple-shot reaction fire"
 msgstr "Flerskud reaktionsild"
 
@@ -9838,7 +9861,7 @@ msgstr "Flerskud reaktionsild"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "Flerskud reaktionsild (ikke mulig)"
 
-#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:906
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:905
 msgid "One-shot reaction fire"
 msgstr "Et skud reaktionsild"
 
@@ -9846,12 +9869,12 @@ msgstr "Et skud reaktionsild"
 msgid "One-shot reaction fire (not possible)"
 msgstr "Et skud reaktionsild (ikke mulig)"
 
-#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:918
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:917
 msgid "No reaction fire"
 msgstr "Ingen reaktionsild"
 
-#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:809
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:873
+#: client/battlescape/cl_hud.c:814
 msgid "Reserve TUs for shooting."
 msgstr "Reserver TE'er til skydning."
 
@@ -10069,7 +10092,7 @@ msgid "Load last saved game or continue playing"
 msgstr "Hent det sidste gemte spil eller forsæt spillet"
 
 #: ../base/ufos/ui/campaign.ufo:60 ../base/ufos/ui/campaign.ufo:373
-#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:66
+#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:80
 #: ../base/ufos/ui/options.ufo:75 ../base/ufos/ui/singleplayer.ufo:43
 #: ../base/ufos/ui/skirmish.ufo:18 ../base/ufos/ui/tutorials.ufo:27
 msgid "Back"
@@ -10081,7 +10104,7 @@ msgid "Save"
 msgstr "Gem"
 
 #: ../base/ufos/ui/campaign.ufo:169 ../base/ufos/ui/hud.ufo:664
-#: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:530
+#: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:515
 #: ../base/ufos/ui/multiplayeringame.ufo:37
 #: ../base/ufos/ui/singleplayer.ufo:98
 msgid "Options"
@@ -10387,8 +10410,8 @@ msgstr "Ny base"
 #: ../base/ufos/ui/geoscape.ufo:945 ../base/ufos/ui/geoscape.ufo:1370
 #: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
-#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:342
-#: ../base/ufos/ui/options.ufo:736
+#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:357
+#: ../base/ufos/ui/options.ufo:750
 msgid "Name:"
 msgstr "Navn:"
 
@@ -10440,7 +10463,7 @@ msgstr "Pris"
 msgid "Radar tower"
 msgstr "Radartårn"
 
-#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:339
+#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:344
 msgid "Base"
 msgstr "Base"
 
@@ -10561,6 +10584,14 @@ msgstr "Ansæt/Fyr - højreklik for at fjerne"
 msgid "Rename your employee"
 msgstr "Giv nyt navn"
 
+#: ../base/ufos/ui/hire.ufo:387
+msgid "Missions Performed:"
+msgstr "Udførte missioner:"
+
+#: ../base/ufos/ui/hire.ufo:390
+msgid "Enemies Killed:"
+msgstr "Fjender dræbt:"
+
 #: ../base/ufos/ui/hire.ufo:406
 msgid "Occupation"
 msgstr "Beskæftigelse"
@@ -10602,35 +10633,35 @@ msgstr "Rul ned"
 msgid "Implants"
 msgstr "Implantationer"
 
-#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1074
+#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1059
 msgid "Level 1"
 msgstr "Niveau 1"
 
-#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1085
+#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1070
 msgid "Level 2"
 msgstr "Niveau 2"
 
-#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1096
+#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1081
 msgid "Level 3"
 msgstr "Niveau 3"
 
-#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1107
+#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1092
 msgid "Level 4"
 msgstr "Niveau 4"
 
-#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1118
+#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1103
 msgid "Level 5"
 msgstr "Niveau 5"
 
-#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1129
+#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1114
 msgid "Level 6"
 msgstr "Niveau 6"
 
-#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1140
+#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1125
 msgid "Level 7"
 msgstr "Niveau 7"
 
-#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1151
+#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1136
 msgid "Level 8"
 msgstr "Niveau 8"
 
@@ -10642,11 +10673,11 @@ msgstr "Primær ildindstilling"
 msgid "Physical stats of this soldier"
 msgstr "Helbredsstatus for denne soldat"
 
-#: ../base/ufos/ui/hud.ufo:900
+#: ../base/ufos/ui/hud.ufo:899
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "Flerskud reaktionsild (ikke mulig)"
 
-#: ../base/ufos/ui/hud.ufo:912
+#: ../base/ufos/ui/hud.ufo:911
 msgid "One-shot reaction fire (Not possible)"
 msgstr "Et-skud reaktionsild (ikke mulig)"
 
@@ -10654,9 +10685,9 @@ msgstr "Et-skud reaktionsild (ikke mulig)"
 msgid "Floor"
 msgstr "Gulv"
 
-#: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:58
-#: ../base/ufos/ui/multiplayer.ufo:97 ../base/ufos/ui/multiplayer.ufo:1828
-#: ../base/ufos/ui/multiplayer.ufo:1881
+#: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:72
+#: ../base/ufos/ui/multiplayer.ufo:111 ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1866
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 msgid "Lobby"
 msgstr "Forhal"
@@ -10703,8 +10734,8 @@ msgstr "Ikke forbundet"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Du er ikke forbundet med lobbyen. Ønsker du at opnå forbindelse?"
 
-#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:197
-#: ../base/ufos/ui/multiplayer.ufo:385 ../base/ufos/ui/multiplayer.ufo:1790
+#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:211
+#: ../base/ufos/ui/multiplayer.ufo:400 ../base/ufos/ui/multiplayer.ufo:1775
 msgid "Connect"
 msgstr "Forbind"
 
@@ -10822,15 +10853,15 @@ msgstr "Oprindelige indstillinger"
 msgid "User Information"
 msgstr "Brugerinformation"
 
-#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:560
+#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:574
 msgid "Volume Control"
 msgstr "Lydstyrke"
 
-#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:566
+#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:580
 msgid "Effects:"
 msgstr "Effekter:"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:587
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:601
 msgid "Music:"
 msgstr "Musik:"
 
@@ -10838,7 +10869,7 @@ msgstr "Musik:"
 msgid "Language"
 msgstr "Sprog"
 
-#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:798
 msgid "Language:"
 msgstr "Sprog:"
 
@@ -10846,7 +10877,7 @@ msgstr "Sprog:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr "Du skal skrive spillernavnet og trykke på »O.k.« knappen:"
 
-#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1789
+#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1774
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
 msgid "OK"
 msgstr "O.k."
@@ -11043,305 +11074,296 @@ msgid ""
 "Left click enables all sounds, right click disables."
 msgstr "Slå alle lyde afspillet for alle beskedstyper til eller fra.\\nVenstreklik slår alle lyde til, højreklik slår dem fra."
 
-#: ../base/ufos/ui/multiplayer.ufo:37 ../base/ufos/ui/multiplayer.ufo:155
-msgid "Team"
-msgstr "Hold"
-
-#: ../base/ufos/ui/multiplayer.ufo:44
-msgid "Join"
-msgstr "Forbind"
-
-#: ../base/ufos/ui/multiplayer.ufo:51
-msgid "Create"
-msgstr "Opret"
-
-#: ../base/ufos/ui/multiplayer.ufo:83
-msgid "Internet/Lan"
-msgstr "Internet/Lan"
-
-# # cl_campaign.c
-#: ../base/ufos/ui/multiplayer.ufo:87
-msgid "Lan"
-msgstr "Lan"
-
-#: ../base/ufos/ui/multiplayer.ufo:92 ../base/ufos/ui/multiplayer.ufo:215
-msgid "Bookmark"
-msgstr "Bogmærke"
-
-#: ../base/ufos/ui/multiplayer.ufo:137
-msgid "Userlist"
-msgstr "Brugerliste"
-
-#: ../base/ufos/ui/multiplayer.ufo:146
-msgid "Name"
-msgstr "Navn"
-
-#: ../base/ufos/ui/multiplayer.ufo:204
-msgid "Leave Serverbrowser"
-msgstr "Forlad servernetlæser"
-
-#: ../base/ufos/ui/multiplayer.ufo:252
-msgid "Serverfilter:"
-msgstr "Serverfilter:"
-
-#: ../base/ufos/ui/multiplayer.ufo:327
-msgid "Refresh"
-msgstr "Opdater"
-
-#: ../base/ufos/ui/multiplayer.ufo:366
-msgid "Connect to IP"
-msgstr "Forbind til IP"
-
-#: ../base/ufos/ui/multiplayer.ufo:429
-msgid "Bookmarks"
-msgstr "Bogmærker"
-
-#: ../base/ufos/ui/multiplayer.ufo:445 ../base/ufos/ui/multiplayer.ufo:448
-#: ../base/ufos/ui/multiplayer.ufo:451 ../base/ufos/ui/multiplayer.ufo:454
-#: ../base/ufos/ui/multiplayer.ufo:457 ../base/ufos/ui/multiplayer.ufo:460
-#: ../base/ufos/ui/multiplayer.ufo:463 ../base/ufos/ui/multiplayer.ufo:466
-#: ../base/ufos/ui/multiplayer.ufo:469 ../base/ufos/ui/multiplayer.ufo:472
-#: ../base/ufos/ui/multiplayer.ufo:475 ../base/ufos/ui/multiplayer.ufo:478
-#: ../base/ufos/ui/multiplayer.ufo:481 ../base/ufos/ui/multiplayer.ufo:484
-#: ../base/ufos/ui/multiplayer.ufo:487 ../base/ufos/ui/multiplayer.ufo:490
+#: ../base/ufos/ui/multiplayer.ufo:9
 #, fuzzy
 msgid "Connect to this server"
 msgstr "Forbind til lobbyen"
 
-#: ../base/ufos/ui/multiplayer.ufo:446 ../base/ufos/ui/multiplayer.ufo:449
-#: ../base/ufos/ui/multiplayer.ufo:452 ../base/ufos/ui/multiplayer.ufo:455
-#: ../base/ufos/ui/multiplayer.ufo:458 ../base/ufos/ui/multiplayer.ufo:461
-#: ../base/ufos/ui/multiplayer.ufo:464 ../base/ufos/ui/multiplayer.ufo:467
-#: ../base/ufos/ui/multiplayer.ufo:470 ../base/ufos/ui/multiplayer.ufo:473
-#: ../base/ufos/ui/multiplayer.ufo:476 ../base/ufos/ui/multiplayer.ufo:479
-#: ../base/ufos/ui/multiplayer.ufo:482 ../base/ufos/ui/multiplayer.ufo:485
-#: ../base/ufos/ui/multiplayer.ufo:488 ../base/ufos/ui/multiplayer.ufo:491
+#: ../base/ufos/ui/multiplayer.ufo:13
 msgid "Delete this bookmark"
 msgstr "Slet dette bogmærke"
 
-#: ../base/ufos/ui/multiplayer.ufo:526 ../base/ufos/ui/skirmish.ufo:264
+#: ../base/ufos/ui/multiplayer.ufo:51 ../base/ufos/ui/multiplayer.ufo:169
+msgid "Team"
+msgstr "Hold"
+
+#: ../base/ufos/ui/multiplayer.ufo:58
+msgid "Join"
+msgstr "Forbind"
+
+#: ../base/ufos/ui/multiplayer.ufo:65
+msgid "Create"
+msgstr "Opret"
+
+#: ../base/ufos/ui/multiplayer.ufo:97
+msgid "Internet/Lan"
+msgstr "Internet/Lan"
+
+# # cl_campaign.c
+#: ../base/ufos/ui/multiplayer.ufo:101
+msgid "Lan"
+msgstr "Lan"
+
+#: ../base/ufos/ui/multiplayer.ufo:106 ../base/ufos/ui/multiplayer.ufo:229
+msgid "Bookmark"
+msgstr "Bogmærke"
+
+#: ../base/ufos/ui/multiplayer.ufo:151
+msgid "Userlist"
+msgstr "Brugerliste"
+
+#: ../base/ufos/ui/multiplayer.ufo:160
+msgid "Name"
+msgstr "Navn"
+
+#: ../base/ufos/ui/multiplayer.ufo:218
+msgid "Leave Serverbrowser"
+msgstr "Forlad servernetlæser"
+
+#: ../base/ufos/ui/multiplayer.ufo:230
+#, fuzzy
+msgid "Add server to bookmarks"
+msgstr "Slet dette bogmærke"
+
+#: ../base/ufos/ui/multiplayer.ufo:267
+msgid "Serverfilter:"
+msgstr "Serverfilter:"
+
+#: ../base/ufos/ui/multiplayer.ufo:342
+msgid "Refresh"
+msgstr "Opdater"
+
+#: ../base/ufos/ui/multiplayer.ufo:381
+msgid "Connect to IP"
+msgstr "Forbind til IP"
+
+#: ../base/ufos/ui/multiplayer.ufo:444
+msgid "Bookmarks"
+msgstr "Bogmærker"
+
+#: ../base/ufos/ui/multiplayer.ufo:511 ../base/ufos/ui/skirmish.ufo:264
 msgid "Map"
 msgstr "Kort"
 
-#: ../base/ufos/ui/multiplayer.ufo:534
+#: ../base/ufos/ui/multiplayer.ufo:519
 msgid "Security/registration"
 msgstr "Sikkerhed/registrering"
 
-#: ../base/ufos/ui/multiplayer.ufo:553
+#: ../base/ufos/ui/multiplayer.ufo:538
 msgid "Hostname:"
 msgstr "Værtsnavn:"
 
-#: ../base/ufos/ui/multiplayer.ufo:580
+#: ../base/ufos/ui/multiplayer.ufo:565
 msgid "Gametype:"
 msgstr "Spiltype:"
 
-#: ../base/ufos/ui/multiplayer.ufo:617
+#: ../base/ufos/ui/multiplayer.ufo:602
 msgid "Teamplay:"
 msgstr "Holdspil:"
 
-#: ../base/ufos/ui/multiplayer.ufo:643
+#: ../base/ufos/ui/multiplayer.ufo:628
 msgid "Preview:"
 msgstr "Forhåndsvisning:"
 
-#: ../base/ufos/ui/multiplayer.ufo:669
+#: ../base/ufos/ui/multiplayer.ufo:654
 msgid "Map name:"
 msgstr "Kortnavn:"
 
-#: ../base/ufos/ui/multiplayer.ufo:685
+#: ../base/ufos/ui/multiplayer.ufo:670
 msgid "Allowed gametype:"
 msgstr "Tilladt spiltype:"
 
-#: ../base/ufos/ui/multiplayer.ufo:708 ../base/ufos/ui/skirmish.ufo:131
+#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:131
 msgid "Day version:"
 msgstr "Dag version:"
 
-#: ../base/ufos/ui/multiplayer.ufo:732
+#: ../base/ufos/ui/multiplayer.ufo:717
 msgid "Enable morale states:"
 msgstr "Slå moral til:"
 
-#: ../base/ufos/ui/multiplayer.ufo:749
+#: ../base/ufos/ui/multiplayer.ufo:734
 msgid "Max. clients:"
 msgstr "Maks klienter:"
 
-#: ../base/ufos/ui/multiplayer.ufo:750
+#: ../base/ufos/ui/multiplayer.ufo:735
 msgid "Sets the max allowed clients to connect"
 msgstr "Sætter maks tilladte klienter der kan slutte sig til"
 
-#: ../base/ufos/ui/multiplayer.ufo:776
+#: ../base/ufos/ui/multiplayer.ufo:761
 msgid "Max. soldiers per team:"
 msgstr "Maks soldater per hold:"
 
-#: ../base/ufos/ui/multiplayer.ufo:777
+#: ../base/ufos/ui/multiplayer.ufo:762
 msgid "Sets the max allowed soldiers per team"
 msgstr "Sætter maks tilladte soldater per hold"
 
-#: ../base/ufos/ui/multiplayer.ufo:803
+#: ../base/ufos/ui/multiplayer.ufo:788
 msgid "Max. soldiers per player:"
 msgstr "Maks. soldater per spiller:"
 
-#: ../base/ufos/ui/multiplayer.ufo:804
+#: ../base/ufos/ui/multiplayer.ufo:789
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Sætter det tilladte maks soldater per spiller i holdspil"
 
-#: ../base/ufos/ui/multiplayer.ufo:831
+#: ../base/ufos/ui/multiplayer.ufo:816
 msgid "Max. human players per team:"
 msgstr "Maks spillere per hold:"
 
-#: ../base/ufos/ui/multiplayer.ufo:857 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:148
 msgid "Max. AI actors:"
 msgstr "Maks computerespillere:"
 
-#: ../base/ufos/ui/multiplayer.ufo:858
+#: ../base/ufos/ui/multiplayer.ufo:843
 msgid "Max AI actors for teamplay mode"
 msgstr "Maks computerespillere i holdspil"
 
-#: ../base/ufos/ui/multiplayer.ufo:885
+#: ../base/ufos/ui/multiplayer.ufo:870
 msgid "Round time limit in seconds:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:918
+#: ../base/ufos/ui/multiplayer.ufo:903
 msgid "Make this server public:"
 msgstr "Gør denne server offentlig:"
 
-#: ../base/ufos/ui/multiplayer.ufo:935
+#: ../base/ufos/ui/multiplayer.ufo:920
 msgid "Server-Password:"
 msgstr "Serveradganskode:"
 
-#: ../base/ufos/ui/multiplayer.ufo:958
+#: ../base/ufos/ui/multiplayer.ufo:943
 msgid "RCON-Password:"
 msgstr "RCON-adgangskode:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1000
+#: ../base/ufos/ui/multiplayer.ufo:985
 msgid "Start server"
 msgstr "Start server"
 
-#: ../base/ufos/ui/multiplayer.ufo:1171
+#: ../base/ufos/ui/multiplayer.ufo:1156
 #, fuzzy
 msgid "Party info"
 msgstr "Base info"
 
-#: ../base/ufos/ui/multiplayer.ufo:1181
+#: ../base/ufos/ui/multiplayer.ufo:1166
 msgid "Display/hide the panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1226
+#: ../base/ufos/ui/multiplayer.ufo:1211
 msgid "Max. players per team"
 msgstr "Maks. spillere per hold"
 
-#: ../base/ufos/ui/multiplayer.ufo:1240
+#: ../base/ufos/ui/multiplayer.ufo:1225
 msgid "Max. teams for this map"
 msgstr "Maks hold til dette kort"
 
-#: ../base/ufos/ui/multiplayer.ufo:1263
+#: ../base/ufos/ui/multiplayer.ufo:1248
 #, fuzzy
 msgid "Players connected"
 msgstr "Ingen spillere forbundet\n"
 
-#: ../base/ufos/ui/multiplayer.ufo:1317
+#: ../base/ufos/ui/multiplayer.ufo:1302
 msgid "Team selection"
 msgstr "Hold udvælgelse"
 
-#: ../base/ufos/ui/multiplayer.ufo:1338
+#: ../base/ufos/ui/multiplayer.ufo:1323
 msgid "Team preference:"
 msgstr "Hold indstillinger:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1352
+#: ../base/ufos/ui/multiplayer.ufo:1337
 msgid "Next free team"
 msgstr "Næste ledige hold"
 
-#: ../base/ufos/ui/multiplayer.ufo:1363
+#: ../base/ufos/ui/multiplayer.ufo:1348
 msgid "Previous free team"
 msgstr "Forrige ledige hold"
 
-#: ../base/ufos/ui/multiplayer.ufo:1376
+#: ../base/ufos/ui/multiplayer.ufo:1361
 msgid "Force start"
 msgstr "Fremprovoker start"
 
-#: ../base/ufos/ui/multiplayer.ufo:1377
+#: ../base/ufos/ui/multiplayer.ufo:1362
 #, fuzzy
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr "Start spillet selv om ikke alle hold er tilsluttet"
 
-#: ../base/ufos/ui/multiplayer.ufo:1388 ../base/ufos/ui/multiplayer.ufo:1397
+#: ../base/ufos/ui/multiplayer.ufo:1373 ../base/ufos/ui/multiplayer.ufo:1382
 msgid "Finish the teamselection and start the game"
 msgstr "Afslut holdudvælgelsen og begynd spillet"
 
-#: ../base/ufos/ui/multiplayer.ufo:1396
+#: ../base/ufos/ui/multiplayer.ufo:1381
 msgid "Are you ready?"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1405 ../base/ufos/ui/multiplayer.ufo:1415
+#: ../base/ufos/ui/multiplayer.ufo:1390 ../base/ufos/ui/multiplayer.ufo:1400
 #, fuzzy
 msgid "Activate IRC"
 msgstr "Aktiver snak"
 
-#: ../base/ufos/ui/multiplayer.ufo:1421
+#: ../base/ufos/ui/multiplayer.ufo:1406
 msgid "Deactivate IRC"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1429 ../base/ufos/ui/multiplayer.ufo:1439
+#: ../base/ufos/ui/multiplayer.ufo:1414 ../base/ufos/ui/multiplayer.ufo:1424
 msgid "Display IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1442
+#: ../base/ufos/ui/multiplayer.ufo:1427
 msgid "Hide IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1448
+#: ../base/ufos/ui/multiplayer.ufo:1433
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
 
-#: ../base/ufos/ui/multiplayer.ufo:1450
+#: ../base/ufos/ui/multiplayer.ufo:1435
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1486
+#: ../base/ufos/ui/multiplayer.ufo:1471
 #, fuzzy
 msgid "Party chat"
 msgstr "Aktiver snak"
 
-#: ../base/ufos/ui/multiplayer.ufo:1490
+#: ../base/ufos/ui/multiplayer.ufo:1475
 msgid "Global lobby (IRC)"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1573 ../base/ufos/ui/multiplayer.ufo:1646
+#: ../base/ufos/ui/multiplayer.ufo:1558 ../base/ufos/ui/multiplayer.ufo:1631
 #, fuzzy
 msgid "Say:"
 msgstr "S:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1756
+#: ../base/ufos/ui/multiplayer.ufo:1741
 msgid "Enter server password"
 msgstr "Indtast serveradgangskode"
 
-#: ../base/ufos/ui/multiplayer.ufo:1769
+#: ../base/ufos/ui/multiplayer.ufo:1754
 msgid "Password:"
 msgstr "Adgangskode:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1807
+#: ../base/ufos/ui/multiplayer.ufo:1792
 msgid "Personal message"
 msgstr "Personlig besked"
 
-#: ../base/ufos/ui/multiplayer.ufo:1829 ../base/ufos/ui/multiplayer.ufo:1882
+#: ../base/ufos/ui/multiplayer.ufo:1814 ../base/ufos/ui/multiplayer.ufo:1867
 msgid "Go into the lobby"
 msgstr "Gå til lobbyen"
 
-#: ../base/ufos/ui/multiplayer.ufo:1846
+#: ../base/ufos/ui/multiplayer.ufo:1831
 #, fuzzy
 msgid "Game invitation"
 msgstr "Omdøb installation"
 
-#: ../base/ufos/ui/multiplayer.ufo:1865
+#: ../base/ufos/ui/multiplayer.ufo:1850
 #, fuzzy
 msgid "Server info"
 msgstr "Base info"
 
-#: ../base/ufos/ui/multiplayer.ufo:1866
+#: ../base/ufos/ui/multiplayer.ufo:1851
 #, fuzzy
 msgid "Show server information"
 msgstr "Brugerinformation"
 
-#: ../base/ufos/ui/multiplayer.ufo:1894
+#: ../base/ufos/ui/multiplayer.ufo:1879
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
@@ -11482,209 +11504,213 @@ msgstr "Skala for lyskort:"
 msgid "Strech the screen with a 4:3 ratio:"
 msgstr "Træk skærmen med et 4:3 forhold:"
 
-#: ../base/ufos/ui/options.ufo:427 ../base/ufos/ui/options.ufo:452
+#: ../base/ufos/ui/options.ufo:421
+msgid "Enable post-processing shader effects:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:441 ../base/ufos/ui/options.ufo:466
 msgid "Low"
 msgstr "Lav"
 
-#: ../base/ufos/ui/options.ufo:431 ../base/ufos/ui/options.ufo:456
+#: ../base/ufos/ui/options.ufo:445 ../base/ufos/ui/options.ufo:470
 msgid "Medium"
 msgstr "Mellem"
 
-#: ../base/ufos/ui/options.ufo:435 ../base/ufos/ui/options.ufo:460
+#: ../base/ufos/ui/options.ufo:449 ../base/ufos/ui/options.ufo:474
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "Normal"
 
-#: ../base/ufos/ui/options.ufo:439 ../base/ufos/ui/options.ufo:464
+#: ../base/ufos/ui/options.ufo:453 ../base/ufos/ui/options.ufo:478
 msgid "High"
 msgstr "Høj"
 
-#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:482 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "Fortræffelig"
 
-#: ../base/ufos/ui/options.ufo:472
+#: ../base/ufos/ui/options.ufo:486
 msgid "Extreme"
 msgstr "Ekstrem"
 
-#: ../base/ufos/ui/options.ufo:495
+#: ../base/ufos/ui/options.ufo:509
 #, fuzzy
 msgid "All ratios"
 msgstr "Installationer"
 
-#: ../base/ufos/ui/options.ufo:519
+#: ../base/ufos/ui/options.ufo:533
 #, fuzzy
 msgid "Others"
 msgstr "Andet"
 
-#: ../base/ufos/ui/options.ufo:551
+#: ../base/ufos/ui/options.ufo:565
 msgid "Sound settings"
 msgstr "Lydindstillinger"
 
-#: ../base/ufos/ui/options.ufo:608
+#: ../base/ufos/ui/options.ufo:622
 msgid "Sound rate:"
 msgstr "Lydniveau:"
 
-#: ../base/ufos/ui/options.ufo:614
+#: ../base/ufos/ui/options.ufo:628
 msgid "Restart sound to change the settings"
 msgstr "Genstart lyd for at ændre indstillinger"
 
-#: ../base/ufos/ui/options.ufo:650
+#: ../base/ufos/ui/options.ufo:664
 msgid "Enable sound:"
 msgstr "Slå lyd til:"
 
-#: ../base/ufos/ui/options.ufo:676
+#: ../base/ufos/ui/options.ufo:690
 msgid "Show key bindings"
 msgstr "Vis nøglebindinger"
 
-#: ../base/ufos/ui/options.ufo:724
+#: ../base/ufos/ui/options.ufo:738
 msgid "Game settings"
 msgstr "Spilindstillinger"
 
-#: ../base/ufos/ui/options.ufo:758
+#: ../base/ufos/ui/options.ufo:772
 msgid "HUD Design:"
 msgstr "HUD design:"
 
-#: ../base/ufos/ui/options.ufo:770
+#: ../base/ufos/ui/options.ufo:784
 msgid "Original HUD"
 msgstr "Original HUD"
 
-#: ../base/ufos/ui/options.ufo:774
+#: ../base/ufos/ui/options.ufo:788
 msgid "Alternative HUD"
 msgstr "Alternativ HUD"
 
-#: ../base/ufos/ui/options.ufo:822
+#: ../base/ufos/ui/options.ufo:836
 msgid "Tooltips:"
 msgstr "Værktøjstip:"
 
-#: ../base/ufos/ui/options.ufo:829
+#: ../base/ufos/ui/options.ufo:843
 msgid "Activates tooltips"
 msgstr "Aktiver værktøjtip"
 
-#: ../base/ufos/ui/options.ufo:840
+#: ../base/ufos/ui/options.ufo:854
 msgid "Centre view:"
 msgstr "Centrer billede:"
 
-#: ../base/ufos/ui/options.ufo:847
+#: ../base/ufos/ui/options.ufo:861
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "Centrer på soldatudvælgelse, skydning og opdukning"
 
-#: ../base/ufos/ui/options.ufo:858
+#: ../base/ufos/ui/options.ufo:872
 msgid "Cursor tooltips:"
 msgstr "Markør værktøjstip:"
 
-#: ../base/ufos/ui/options.ufo:865
+#: ../base/ufos/ui/options.ufo:879
 msgid "Activates cursor tooltips"
 msgstr "Aktiver markørværktøjstip"
 
-#: ../base/ufos/ui/options.ufo:876
+#: ../base/ufos/ui/options.ufo:890
 msgid "3D Geoscape:"
 msgstr "3D geoscape:"
 
-#: ../base/ufos/ui/options.ufo:883
+#: ../base/ufos/ui/options.ufo:897
 msgid "Use 3D geoscape"
 msgstr "Anvend 3D geoscape"
 
-#: ../base/ufos/ui/options.ufo:894
+#: ../base/ufos/ui/options.ufo:908
 msgid "3D Geoscape ambient lighting:"
 msgstr "3D Geoscape omgivende lys:"
 
-#: ../base/ufos/ui/options.ufo:919
+#: ../base/ufos/ui/options.ufo:933
 msgid "Show tip of the day:"
 msgstr "Vis dagens tip:"
 
-#: ../base/ufos/ui/options.ufo:937
+#: ../base/ufos/ui/options.ufo:951
 msgid "Precache models:"
 msgstr "Læg modeller i mellemlager:"
 
-#: ../base/ufos/ui/options.ufo:944
+#: ../base/ufos/ui/options.ufo:958
 msgid "Precache models (faster menus)"
 msgstr "Læg modeller i mellemlager (hurtigere menuer)"
 
-#: ../base/ufos/ui/options.ufo:955
+#: ../base/ufos/ui/options.ufo:969
 msgid "Actor speed:"
 msgstr "Skuespillerhastighed:"
 
-#: ../base/ufos/ui/options.ufo:989
+#: ../base/ufos/ui/options.ufo:1003
 msgid "Input settings"
 msgstr "Inddataopsætning"
 
-#: ../base/ufos/ui/options.ufo:1001
+#: ../base/ufos/ui/options.ufo:1015
 msgid "Camera"
 msgstr "Kamera"
 
-#: ../base/ufos/ui/options.ufo:1007
+#: ../base/ufos/ui/options.ufo:1021
 msgid "Scroll Speed:"
 msgstr "Markørens rullehastighed:"
 
-#: ../base/ufos/ui/options.ufo:1032
+#: ../base/ufos/ui/options.ufo:1046
 msgid "Rotation Speed:"
 msgstr "Rotationhastighed:"
 
-#: ../base/ufos/ui/options.ufo:1057
+#: ../base/ufos/ui/options.ufo:1071
 msgid "Move Acceleration:"
 msgstr "Bevægelsesacceleration:"
 
-#: ../base/ufos/ui/options.ufo:1082
+#: ../base/ufos/ui/options.ufo:1096
 msgid "Joystick settings:"
 msgstr "Joystickopsætning:"
 
-#: ../base/ufos/ui/options.ufo:1089
+#: ../base/ufos/ui/options.ufo:1103
 #, fuzzy
 msgid "Enable:"
 msgstr "Slå lyd til:"
 
-#: ../base/ufos/ui/options.ufo:1097
+#: ../base/ufos/ui/options.ufo:1111
 msgid "Enables/Disables Joysticks"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1108
+#: ../base/ufos/ui/options.ufo:1122
 msgid "Threshold:"
 msgstr "Grænseværdi:"
 
-#: ../base/ufos/ui/options.ufo:1158
+#: ../base/ufos/ui/options.ufo:1172
 msgid "Keys"
 msgstr "Nøgler"
 
-#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:99
+#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:99
 msgid "Autostand"
 msgstr "Autostand"
 
-#: ../base/ufos/ui/options.ufo:1185 ../base/ufos/ui/options.ufo:1211
+#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Ja"
 
-#: ../base/ufos/ui/options.ufo:1189 ../base/ufos/ui/options.ufo:1215
+#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Nej"
 
-#: ../base/ufos/ui/options.ufo:1199
+#: ../base/ufos/ui/options.ufo:1213
 msgid "Confirm Actions:"
 msgstr "Bekræft aktioner:"
 
-#: ../base/ufos/ui/options.ufo:1219
+#: ../base/ufos/ui/options.ufo:1233
 msgid "Only for moving"
 msgstr "Kun for bevægelse"
 
-#: ../base/ufos/ui/options.ufo:1229
+#: ../base/ufos/ui/options.ufo:1243
 msgid "Joystick:"
 msgstr "Joystick:"
 
-#: ../base/ufos/ui/options.ufo:1262
+#: ../base/ufos/ui/options.ufo:1276
 msgid "Maintain resolution"
 msgstr "Vedligehold opløsning"
 
-#: ../base/ufos/ui/options.ufo:1272
+#: ../base/ufos/ui/options.ufo:1286
 msgid "Want To Maintain resolution"
 msgstr "Ønske om at vedligeholde opløsning"
 
-#: ../base/ufos/ui/options.ufo:1279
+#: ../base/ufos/ui/options.ufo:1293
 msgid "Accept"
 msgstr "Accepter"
 
-#: ../base/ufos/ui/options.ufo:1280
+#: ../base/ufos/ui/options.ufo:1294
 msgid "Change the resolution"
 msgstr "Ændr opløsningen"
 
@@ -12457,46 +12483,46 @@ msgstr "Det er ikke din runde\n"
 msgid "You cannot reload this unknown item.\n"
 msgstr "Du kan ikke anvende dette ukendte udstyr.\n"
 
-#: client/battlescape/cl_actor.c:1799
+#: client/battlescape/cl_actor.c:1811
 msgid "Unknown alien race"
 msgstr "Ukendt rumvæsenart"
 
-#: client/battlescape/cl_actor.c:2502
+#: client/battlescape/cl_actor.c:2500
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "Skift til næste soldat"
 
-#: client/battlescape/cl_actor.c:2503
+#: client/battlescape/cl_actor.c:2501
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "Vælg en soldat fra listen"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2502
 #, fuzzy
 msgid "Update an actor"
 msgstr "Opdater en soldat"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2504
 msgid "Toggle stand/crounch"
 msgstr "Skift stå/knæl"
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2505
 msgid "Toggle the headgear"
 msgstr "Skift hovedtøj"
 
-#: client/battlescape/cl_actor.c:2508
+#: client/battlescape/cl_actor.c:2506
 msgid "Opens or closes a door"
 msgstr "Åbner eller lukker en dør"
 
-#: client/battlescape/cl_actor.c:2509
+#: client/battlescape/cl_actor.c:2507
 msgid "Confirm the current action"
 msgstr "Bekræft den nuværende aktion"
 
-#: client/battlescape/cl_actor.c:2510
+#: client/battlescape/cl_actor.c:2508
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Skift til næste synlig rumvæsen fra valgt soldat."
 
-#: client/battlescape/cl_actor.c:2512
+#: client/battlescape/cl_actor.c:2510
 msgid "Toggle to next alien"
 msgstr "Skift til næste rumvæsen"
 
@@ -12533,71 +12559,71 @@ msgstr "Reserver TE til skydning/brug."
 msgid "Shot Reservation"
 msgstr "Skudreservation"
 
-#: client/battlescape/cl_hud.c:426
+#: client/battlescape/cl_hud.c:431
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Tilbageværende TE'er:%i"
 
-#: client/battlescape/cl_hud.c:429
+#: client/battlescape/cl_hud.c:434
 msgid "No remaining TUs left after shot."
 msgstr "Ingen tilbageværende TE'er tilbage når skudt."
 
-#: client/battlescape/cl_hud.c:432
+#: client/battlescape/cl_hud.c:437
 #, c-format
 msgid "TU: %i"
 msgstr "TE: %i"
 
-#: client/battlescape/cl_hud.c:433
+#: client/battlescape/cl_hud.c:438
 #, c-format
 msgid "Shots: %i"
 msgstr "Skud: %i"
 
-#: client/battlescape/cl_hud.c:653
+#: client/battlescape/cl_hud.c:658
 #, fuzzy
 msgid "No weapon."
 msgstr "%s våben med\n"
 
-#: client/battlescape/cl_hud.c:662
+#: client/battlescape/cl_hud.c:667
 #, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr ""
 "Dette våben kan ikke affyres\n"
 "med en hånd\n"
 
-#: client/battlescape/cl_hud.c:668
+#: client/battlescape/cl_hud.c:673
 #, fuzzy
 msgid "No reload possible, already fully loaded."
 msgstr "Kan ikke genlade i venstre hånd, allerede ladt."
 
-#: client/battlescape/cl_hud.c:678
+#: client/battlescape/cl_hud.c:683
 #, fuzzy
 msgid "Not enough TUs for reloading weapon."
 msgstr "Ikke nok TE'er til at stå op."
 
-#: client/battlescape/cl_hud.c:681
+#: client/battlescape/cl_hud.c:686
 #, fuzzy
 msgid "No reload possible, you don't have backup ammo."
 msgstr "Kan ikke genlade i venstre hånd, allerede ladt."
 
-#: client/battlescape/cl_hud.c:773
+#: client/battlescape/cl_hud.c:778
 msgid "Not enough TUs for standing up."
 msgstr "Ikke nok TE'er til at stå op."
 
-#: client/battlescape/cl_hud.c:776
+#: client/battlescape/cl_hud.c:781
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Stå op (%i TE)"
 
-#: client/battlescape/cl_hud.c:781
+#: client/battlescape/cl_hud.c:786
 msgid "Not enough TUs for crouching."
 msgstr "Ikke nok TE'er for knæling."
 
-#: client/battlescape/cl_hud.c:784
+#: client/battlescape/cl_hud.c:789
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "Knæl (%i TE)"
 
-#: client/battlescape/cl_hud.c:792
+#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -12606,16 +12632,16 @@ msgstr ""
 "%i TE'er reserveret for knæl/stå op.\n"
 "Klik for at rydde."
 
-#: client/battlescape/cl_hud.c:796
+#: client/battlescape/cl_hud.c:801
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Reserver %i TE'er for knæl/stå op."
 
-#: client/battlescape/cl_hud.c:799
+#: client/battlescape/cl_hud.c:804
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Ikke nok TE'er til at kunne reservere for knæl/stå op."
 
-#: client/battlescape/cl_hud.c:805
+#: client/battlescape/cl_hud.c:810
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -12626,16 +12652,16 @@ msgstr ""
 "Klik for at ændre.\n"
 "Højreklik for at rydde."
 
-#: client/battlescape/cl_hud.c:812
+#: client/battlescape/cl_hud.c:817
 msgid "Reserving TUs for shooting not possible."
 msgstr "Det er ikke muligt at reservere TE'er til skydning."
 
-#: client/battlescape/cl_hud.c:833 client/battlescape/cl_hud.c:842
+#: client/battlescape/cl_hud.c:838 client/battlescape/cl_hud.c:847
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Lad våben (%i TE)."
 
-#: client/battlescape/cl_hud.c:1091
+#: client/battlescape/cl_hud.c:1095
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -12643,7 +12669,7 @@ msgstr ""
 "Du kan ikke anvende dette ukendte udstyr.\n"
 "Du må forske i det først.\n"
 
-#: client/battlescape/cl_hud.c:1112
+#: client/battlescape/cl_hud.c:1116
 #, c-format
 msgid ""
 "%s\n"
@@ -12652,17 +12678,17 @@ msgstr ""
 "%s\n"
 "(tom)\n"
 
-#: client/battlescape/cl_hud.c:1134
+#: client/battlescape/cl_hud.c:1138
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "Moral %i | Reserverede TE: %i\n"
 
-#: client/battlescape/cl_hud.c:1136
+#: client/battlescape/cl_hud.c:1140
 #, c-format
 msgid "Morale  %i"
 msgstr "Moral  %i"
 
-#: client/battlescape/cl_hud.c:1141
+#: client/battlescape/cl_hud.c:1145
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -12671,7 +12697,7 @@ msgstr ""
 "Moral  %i | Reserverede TE'er: %i\n"
 "%s %i (%i|%i TE tilb.)\n"
 
-#: client/battlescape/cl_hud.c:1145
+#: client/battlescape/cl_hud.c:1149
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -12680,7 +12706,7 @@ msgstr ""
 "Moral  %i\n"
 "%s %i (%i TE tilb.)\n"
 
-#: client/battlescape/cl_hud.c:1177
+#: client/battlescape/cl_hud.c:1181
 #, c-format
 msgid ""
 "Time Units\n"
@@ -12694,7 +12720,7 @@ msgstr ""
 "- Tilbage:     %i\n"
 
 # # in game
-#: client/battlescape/cl_hud.c:1201
+#: client/battlescape/cl_hud.c:1205
 msgid "Currently panics!\n"
 msgstr "Er i panik!\n"
 
@@ -13046,14 +13072,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Luftfartøj lettet"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1630
-#: client/campaign/cp_map.c:1637
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1651
+#: client/campaign/cp_map.c:1658
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Fart:\t%i km/t\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1631
-#: client/campaign/cp_map.c:1638
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1652
+#: client/campaign/cp_map.c:1659
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Brændstof:\t%i/%i\n"
@@ -13772,8 +13798,8 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Du har ny e-post: %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1591
-#: client/campaign/cp_map.c:1610
+#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1612
+#: client/campaign/cp_map.c:1631
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -13887,7 +13913,7 @@ msgid_plural "%d days"
 msgstr[0] "%d dag"
 msgstr[1] "%d dage"
 
-#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:354
+#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:359
 msgid "Installation"
 msgstr "Installation"
 
@@ -13921,19 +13947,19 @@ msgstr "Er du sikker på, at du ønsker at ødelægge denne installation?"
 msgid "Forget it"
 msgstr "Glem det"
 
-#: client/campaign/cp_map.c:365
+#: client/campaign/cp_map.c:370
 msgid "UFO Sighting"
 msgstr "Ufo set"
 
-#: client/campaign/cp_map.c:1383
+#: client/campaign/cp_map.c:1404
 msgid "Day"
 msgstr "Dag"
 
-#: client/campaign/cp_map.c:1383
+#: client/campaign/cp_map.c:1404
 msgid "Night"
 msgstr "Nat"
 
-#: client/campaign/cp_map.c:1590
+#: client/campaign/cp_map.c:1611
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -13944,60 +13970,60 @@ msgstr ""
 "Type: %s\n"
 "Mål: %s"
 
-#: client/campaign/cp_map.c:1607
+#: client/campaign/cp_map.c:1628
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s (på %s)"
 
-#: client/campaign/cp_map.c:1627 client/campaign/cp_map.c:1635
+#: client/campaign/cp_map.c:1648 client/campaign/cp_map.c:1656
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Navn:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1628 client/campaign/cp_map.c:1636
+#: client/campaign/cp_map.c:1649 client/campaign/cp_map.c:1657
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
 
-#: client/campaign/cp_map.c:1629
+#: client/campaign/cp_map.c:1650
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Afstand til mål:\t\t%.0f\n"
 
-#: client/campaign/cp_map.c:1633 client/campaign/cp_map.c:1643
+#: client/campaign/cp_map.c:1654 client/campaign/cp_map.c:1664
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "AAT:\t%st\n"
 
-#: client/campaign/cp_map.c:1661
+#: client/campaign/cp_map.c:1682
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Fart:\t%i km/t\n"
 
-#: client/campaign/cp_map.c:1861
+#: client/campaign/cp_map.c:1882
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/campaign/cp_map.c:1912
+#: client/campaign/cp_map.c:1947
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Vælg den ønskede placering for den nye base på kortet.\n"
 
-#: client/campaign/cp_map.c:1915
+#: client/campaign/cp_map.c:1950
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr "Vælg den ønskede placering for den nye installation på kortet.\n"
 
-#: client/campaign/cp_map.c:1920
+#: client/campaign/cp_map.c:1955
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Rumvæsenere angriber vores base på dette tidspunkt.\n"
 
-#: client/campaign/cp_map.c:1925
+#: client/campaign/cp_map.c:1960
 msgid "Select ufo or mission on map\n"
 msgstr "Vælg ufo eller mission på kortet\n"
 
-#: client/campaign/cp_map.c:1930
+#: client/campaign/cp_map.c:1965
 msgid "UFO in radar range\n"
 msgstr "Ufo indenfor rangerafstand\n"
 
@@ -14036,19 +14062,19 @@ msgstr "%s blev med succes fjernet fra installation %s."
 msgid "%s was successfully removed from %s."
 msgstr "%s blev med succes fjernet fra %s."
 
-#: client/campaign/cp_mapfightequip.c:1348
+#: client/campaign/cp_mapfightequip.c:1355
 msgid "Light weight"
 msgstr "Let vægt"
 
-#: client/campaign/cp_mapfightequip.c:1351
+#: client/campaign/cp_mapfightequip.c:1358
 msgid "Medium weight"
 msgstr "Mellem vægt"
 
-#: client/campaign/cp_mapfightequip.c:1354
+#: client/campaign/cp_mapfightequip.c:1361
 msgid "Heavy weight"
 msgstr "Tung vægt"
 
-#: client/campaign/cp_mapfightequip.c:1357
+#: client/campaign/cp_mapfightequip.c:1364
 msgid "Unknown weight"
 msgstr "Ukendt vægt"
 
@@ -15569,7 +15595,7 @@ msgstr ""
 "Maks tilladt gæld: %i kr\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:459
+#: client/cl_game_campaign.c:460
 #, c-format
 msgid "Rank: %s"
 msgstr "Rang: %s"
@@ -15812,79 +15838,79 @@ msgstr "CCCP"
 msgid "Update the GUI with the selected item"
 msgstr "Opdater grænsefladen med det valgte udstyr"
 
-#: client/input/cl_input.c:895
+#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Roter kampscenens kamera mod uret"
 
-#: client/input/cl_input.c:897
+#: client/input/cl_input.c:918
 msgid "Rotate battlescape camera clockwise"
 msgstr "Roter kampscenens kamera med uret"
 
-#: client/input/cl_input.c:899
+#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera up"
 msgstr "Ryk kampscenens kamera op"
 
-#: client/input/cl_input.c:901
+#: client/input/cl_input.c:922
 msgid "Tilt battlescape camera down"
 msgstr "Ryk kampscenens kamera ned"
 
-#: client/input/cl_input.c:903
+#: client/input/cl_input.c:924
 msgid "Move battlescape camera left"
 msgstr "Flyt kampscenens kamera mod venstre"
 
-#: client/input/cl_input.c:905
+#: client/input/cl_input.c:926
 msgid "Move battlescape camera right"
 msgstr "Flyt kampscenens kamera mod højre"
 
-#: client/input/cl_input.c:907
+#: client/input/cl_input.c:928
 msgid "Move battlescape camera forward"
 msgstr "Flyt kampscenens kamera fremad"
 
-#: client/input/cl_input.c:909
+#: client/input/cl_input.c:930
 msgid "Move battlescape camera backward"
 msgstr "Flyt kampscenens kamera tilbage"
 
-#: client/input/cl_input.c:911 client/input/cl_input.c:933
+#: client/input/cl_input.c:932 client/input/cl_input.c:954
 msgid "Zoom in"
 msgstr "Zoom ind"
 
-#: client/input/cl_input.c:913 client/input/cl_input.c:934
+#: client/input/cl_input.c:934 client/input/cl_input.c:955
 msgid "Zoom out"
 msgstr "Zoom ud"
 
-#: client/input/cl_input.c:916
+#: client/input/cl_input.c:937
 msgid "Left mouse button click (menu)"
 msgstr "Venstre museknapklik (menu)"
 
-#: client/input/cl_input.c:918
+#: client/input/cl_input.c:939
 msgid "Middle mouse button click (menu)"
 msgstr "Midt museknapklik (menu)"
 
-#: client/input/cl_input.c:920
+#: client/input/cl_input.c:941
 msgid "Right mouse button click (menu)"
 msgstr "Højre museknapklik (menu)"
 
-#: client/input/cl_input.c:922
+#: client/input/cl_input.c:943
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Vælg objekter/Gå til en firkant/I ildindstilling, ild etc."
 
-#: client/input/cl_input.c:924
+#: client/input/cl_input.c:945
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Gå til en firkant/I ildindstilling, afbryd aktion"
 
-#: client/input/cl_input.c:926
+#: client/input/cl_input.c:947
 msgid "Turn soldier toward mouse pointer"
 msgstr "Vend soldat mod musen"
 
-#: client/input/cl_input.c:928
+#: client/input/cl_input.c:949
 msgid "Toggles the hud radar mode"
 msgstr "Skift hudradartilstanden"
 
-#: client/input/cl_input.c:931
+#: client/input/cl_input.c:952
 msgid "Slice through terrain at a higher level"
 msgstr "Glid igennem terræn på et højere niveau"
 
-#: client/input/cl_input.c:932
+#: client/input/cl_input.c:953
 msgid "Slice through terrain at a lower level"
 msgstr "Glid igennem terræn på et lavere niveau"
 

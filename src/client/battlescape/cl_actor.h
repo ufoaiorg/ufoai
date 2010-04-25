@@ -49,6 +49,8 @@ extern le_t *selActor;
 extern pos3_t truePos;
 extern pos3_t mousePos;
 
+#define ACTOR_GET_FIELDSIZE(actor) ((actor != NULL) ? (actor)->fieldSize : ACTOR_SIZE_NORMAL)
+
 extern pos_t *fb_list[MAX_FORBIDDENLIST];
 extern int fb_length;
 
@@ -94,7 +96,7 @@ void CL_NextRound_f(void);
 
 void CL_ResetMouseLastPos(void);
 void CL_ActorResetMoveLength(le_t *le);
-void CL_ActorMouseTrace(void);
+qboolean CL_ActorMouseTrace(void);
 
 qboolean CL_AddActor(le_t *le, entity_t *ent);
 qboolean CL_AddUGV(le_t *le, entity_t *ent);

@@ -430,6 +430,29 @@ window options
 			image		"ui/checkbox_blue"
 		}
 
+		string dynamiclights_str
+		{
+			string		"_Max dynamic lights allowed:"
+			pos			"85 665"
+			size		"240 20"
+		}
+		string dynamiclights_value
+		{
+			string		*cvar:r_dynamic_lights
+			pos			"360 665"
+			size		"100 20"
+			textalign	cc
+		}
+		spinner dynamiclights_change
+		{
+			current		*cvar:r_dynamic_lights
+			image		ui/spinner_blue
+			pos			"466 665"
+			min			0
+			max			8
+			delta		1
+		}
+
 		selectbox lightmapres_box
 		{
 			cvar		*cvar:r_maxlightmap

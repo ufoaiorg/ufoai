@@ -635,7 +635,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, model->shift, 1.0);
+		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)

@@ -245,16 +245,16 @@ void R_EnableColorArray (qboolean enable)
  * should be called after any texture units which will be active for lighting
  * have been enabled.
  */
-void R_EnableLighting (r_program_t *program, qboolean enable)
+qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 {
 	if (!r_programs->integer)
-		return;
+		return r_state.lighting_enabled;
 
 	if (enable && (!program || !program->id))
-		return;
+		return r_state.lighting_enabled;
 
-	if (!r_lights->integer || r_state.lighting_enabled == enable)
-		return;
+	if (!r_lights->integer || (r_state.lighting_enabled == enable && r_state.active_program == program))
+		return r_state.lighting_enabled;
 
 	r_state.lighting_enabled = enable;
 
@@ -267,6 +267,8 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 
 		R_UseProgram(NULL);
 	}
+
+	return r_state.lighting_enabled;
 }
 
 static inline void R_UseMaterial (material_t *material)
@@ -440,38 +442,59 @@ void R_EnableFog (qboolean enable)
 	}
 }
 
-/** @sa R_EnableRenderbuffer (in r_framebuffer.c)
- */
-void R_EnableGlow (qboolean enable)
+void R_EnableGlowMap (const image_t *image, qboolean enable)
 {
-	if (!r_postprocess->integer || r_state.glow_enabled == enable)
+	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+
+	if (!r_postprocess->integer)
 		return;
 
-	if (enable)
+	if (enable && image != NULL)
+		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
+
+	if (r_state.glowmap_enabled == enable)
+		return;
+
+	r_state.glowmap_enabled = enable;
+
+	if (enable) {
+		if (!r_state.active_program)
+			R_UseProgram(r_state.simple_glow_program);
+		else
+			R_ProgramParameter1f("GLOWSCALE", 1.0);
+
 		R_DrawBuffers(2);
-	else
-		R_DrawBuffers(1);
+	} else {
+		if (r_state.active_program == r_state.simple_glow_program)
+			R_UseProgram(NULL);
+		else
+			R_ProgramParameter1f("GLOWSCALE", 0.0);
 
-	r_state.draw_glow_enabled = qfalse;
-	r_state.glow_enabled = enable;
+		if (r_state.draw_glow_enabled)
+			R_BindColorAttachments(1, &glowRenderTarget);
+		else
+			R_DrawBuffers(1);
+	}
 }
-
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
-	static GLenum defaultRenderTarget = GL_COLOR_ATTACHMENT0_EXT;
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
 		return;
 
-	r_state.glow_enabled = qfalse;
 	r_state.draw_glow_enabled = enable;
 
-	if (enable)
+	if (enable) {
 		R_BindColorAttachments(1, &glowRenderTarget);
-	else
-		R_BindColorAttachments(1, &defaultRenderTarget);
+	} else {
+		if (r_state.glowmap_enabled) {
+			R_DrawBuffers(2);
+		} else {
+			R_DrawBuffers(1);
+		}
+	}
 }
 
 /**

@@ -72,6 +72,11 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 			R_EnableBumpmap(NULL, qfalse);
 	}
 
+	if (image->glowmap)
+		R_EnableGlowMap(image->glowmap, qtrue);
+	else
+		R_EnableGlowMap(NULL, qfalse);
+
 	R_CheckError();
 }
 
@@ -112,6 +117,9 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 		if (r_state.bumpmap_enabled)
 			R_EnableBumpmap(NULL, qfalse);
 	}
+
+	if (r_state.glowmap_enabled)
+		R_EnableGlowMap(NULL, qfalse);
 
 	/* and restore array pointers */
 	R_ResetArrayState();

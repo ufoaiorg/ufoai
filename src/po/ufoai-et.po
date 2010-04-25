@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-03-30 10:59+0700\n"
+"POT-Creation-Date: 2010-04-23 16:21+0200\n"
 "PO-Revision-Date: 2009-07-12 18:41+0300\n"
 "Last-Translator: Madis Veskimeister <madis@sisust.pri.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -69,27 +69,27 @@ msgstr "Väike mets"
 msgid "Little bungalo in forest"
 msgstr "Väike majake metsas"
 
-#: ../base/maps/frozen.ump:292
+#: ../base/maps/frozen.ump:284
 msgid "Snow"
 msgstr "Lumi"
 
-#: ../base/maps/frozen.ump:309
+#: ../base/maps/frozen.ump:301
 msgid "Alien landing - Snow"
 msgstr "Tulnukate maandumine - lumes"
 
-#: ../base/maps/frozen.ump:327
+#: ../base/maps/frozen.ump:319
 msgid "Industrial"
 msgstr "Tööstuslik"
 
-#: ../base/maps/frozen.ump:348
+#: ../base/maps/frozen.ump:340
 msgid "Alien landing - Industrial"
 msgstr "Tulnukate maandumine - tehases"
 
-#: ../base/maps/frozen.ump:370
+#: ../base/maps/frozen.ump:362
 msgid "Multiplayer Coop"
 msgstr "Multiplayer Coop"
 
-#: ../base/maps/frozen.ump:391
+#: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
 msgstr "Multiplayer Deathmatch"
 
@@ -105,16 +105,16 @@ msgstr "Maandunud Ufo"
 msgid "Italy"
 msgstr "Itaalia"
 
-#: ../base/maps/japan.ump:291
+#: ../base/maps/japan.ump:285
 msgid "Japan"
 msgstr "Jaapan"
 
-#: ../base/maps/japan.ump:299
+#: ../base/maps/japan.ump:293
 #, fuzzy
 msgid "Small eastern park."
 msgstr "Väike angaar"
 
-#: ../base/maps/japan.ump:327
+#: ../base/maps/japan.ump:321
 #, fuzzy
 msgid "Harvester"
 msgstr "Ufo - Koguja"
@@ -3238,6 +3238,11 @@ msgid "Bulgarian"
 msgstr "Bulgaaria"
 
 #: ../base/ufos/language.ufo:320
+#, fuzzy
+msgid "Norwegian"
+msgstr "Kracken"
+
+#: ../base/ufos/language.ufo:328
 msgid "No language"
 msgstr "Keelt pole"
 
@@ -3462,23 +3467,23 @@ msgstr ""
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3431
+#: ../base/ufos/maps.ufo:3479
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3470
+#: ../base/ufos/maps.ufo:3518
 msgid "Wilderness terror mission."
 msgstr "Terror looduses."
 
-#: ../base/ufos/maps.ufo:3516
+#: ../base/ufos/maps.ufo:3564
 msgid "UFO Crashsite."
 msgstr "UFO allakukkumise koht."
 
-#: ../base/ufos/maps.ufo:3547
+#: ../base/ufos/maps.ufo:3595
 msgid "An alien base."
 msgstr "Tulnukabaas."
 
-#: ../base/ufos/maps.ufo:3562
+#: ../base/ufos/maps.ufo:3610
 msgid "Base is under attack."
 msgstr "Sinu baasi on rünnaku all."
 
@@ -3699,7 +3704,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:109 ../base/ufos/ui/bases.ufo:129
 #: ../base/ufos/ui/geoscape.ufo:1864 ../base/ufos/ui/market.ufo:95
 #: ../base/ufos/ui/production.ufo:75 ../base/ufos/ui/transfer.ufo:41
-#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:345
+#: ../base/ufos/ui/transfer.ufo:57 client/campaign/cp_map.c:350
 msgid "Aircraft"
 msgstr "Lennumasin"
 
@@ -8246,6 +8251,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "või numbritele 1-8"
 
 #: ../base/ufos/seq_tutorials.ufo:474
+#: ../base/ufos/ui/aircraft_soldiers.ufo:514
 msgid "Physical stats"
 msgstr "Füüsilised omadused"
 
@@ -8362,7 +8368,7 @@ msgstr ""
 msgid "How to play multiplayer"
 msgstr ""
 
-#: ../base/ufos/seq_tutorials.ufo:1057 ../base/ufos/ui/multiplayer.ufo:985
+#: ../base/ufos/seq_tutorials.ufo:1057 ../base/ufos/ui/multiplayer.ufo:970
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
 
@@ -8382,15 +8388,15 @@ msgstr ""
 msgid "Taman"
 msgstr "Taman"
 
-#: ../base/ufos/team_aliens.ufo:94
+#: ../base/ufos/team_aliens.ufo:99
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:171
+#: ../base/ufos/team_aliens.ufo:181
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:208
+#: ../base/ufos/team_aliens.ufo:225
 msgid "Bloodspider"
 msgstr "Vereämblik"
 
@@ -8774,7 +8780,7 @@ msgid "Select this slot"
 msgstr "Vali ese"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
-#: ../base/ufos/ui/aircraft_soldiers.ufo:65
+#: ../base/ufos/ui/aircraft_soldiers.ufo:58
 msgid "Team Members:"
 msgstr "Tiimi Liikmed:"
 
@@ -8816,120 +8822,136 @@ msgstr "Praegune tiim"
 msgid "Add/remove this soldier"
 msgstr "Lisa/eemalda see sõdur"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:87
-#: ../base/ufos/ui/aircraft_soldiers.ufo:616 ../base/ufos/ui/geoscape.ufo:769
+#: ../base/ufos/ui/aircraft_soldiers.ufo:80
+#: ../base/ufos/ui/aircraft_soldiers.ufo:692 ../base/ufos/ui/geoscape.ufo:769
 #, fuzzy
 msgid "Equip soldiers"
 msgstr "Relvasta see sõdur"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:115
+#: ../base/ufos/ui/aircraft_soldiers.ufo:108
 #, fuzzy
 msgid "Soldier is assigned to another craft"
 msgstr "Vali lennumasin"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:134
+#: ../base/ufos/ui/aircraft_soldiers.ufo:127
 msgid "No more soldiers can be assigned to this craft"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:136
+#: ../base/ufos/ui/aircraft_soldiers.ufo:129
 #, fuzzy
 msgid "Assign soldier to this craft"
 msgstr "Määra sõdurite Asukoht"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:147
+#: ../base/ufos/ui/aircraft_soldiers.ufo:140
 #, fuzzy
 msgid "Remove soldier from this craft"
 msgstr "Vali sõdurenimekirjast"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:157
+#: ../base/ufos/ui/aircraft_soldiers.ufo:150
 msgid "Soldier carries equipment"
 msgstr "Sõdur kannab varustust"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:166
+#: ../base/ufos/ui/aircraft_soldiers.ufo:159
 #, fuzzy
 msgid "Soldier carries no equipment"
 msgstr "Sõdur kannab varustust"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:503 ../base/ufos/ui/equipment.ufo:483
+#: ../base/ufos/ui/aircraft_soldiers.ufo:518
+#, fuzzy
+msgid "Missions info"
+msgstr "Missioone"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:536 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "Tugevus:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:511 ../base/ufos/ui/equipment.ufo:492
+#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
-#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1133
+#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1147
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "Kiirus:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:519 ../base/ufos/ui/equipment.ufo:501
+#: ../base/ufos/ui/aircraft_soldiers.ufo:552 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "Täpsus:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:527 ../base/ufos/ui/equipment.ufo:510
+#: ../base/ufos/ui/aircraft_soldiers.ufo:560 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "Mõttejõud:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:535 ../base/ufos/ui/equipment.ufo:519
+#: ../base/ufos/ui/aircraft_soldiers.ufo:568 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "Lähivõitlus:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:528
+#: ../base/ufos/ui/aircraft_soldiers.ufo:577 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "Raskerelvad:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:553 ../base/ufos/ui/equipment.ufo:537
+#: ../base/ufos/ui/aircraft_soldiers.ufo:586 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 #, fuzzy
 msgid "Assault Weapons:"
 msgstr "Ründe relvad"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:562 ../base/ufos/ui/equipment.ufo:546
+#: ../base/ufos/ui/aircraft_soldiers.ufo:595 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "Snaipripüssid;"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:571 ../base/ufos/ui/equipment.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:604 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
 msgstr "Raske Lõhkeained"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:584 ../base/ufos/ui/hire.ufo:383
+#: ../base/ufos/ui/aircraft_soldiers.ufo:617 ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
 msgstr "Tervis:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:587 ../base/ufos/ui/hire.ufo:387
-msgid "Missions Performed:"
+#: ../base/ufos/ui/aircraft_soldiers.ufo:639
+#, fuzzy
+msgid "Missions performed:"
 msgstr "Missioone tehtud:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:590 ../base/ufos/ui/hire.ufo:390
+#: ../base/ufos/ui/aircraft_soldiers.ufo:642
 #, fuzzy
-msgid "Enemies Killed:"
+msgid "Enemies killed:"
 msgstr "Vastaseid tapetud\t%i\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:601
+#: ../base/ufos/ui/aircraft_soldiers.ufo:645
+#, fuzzy
+msgid "Civilians killed:"
+msgstr "Tsiviilisik tapeti.\n"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:648
+#, fuzzy
+msgid "Our team killed:"
+msgstr "%s %s tapeti\n"
+
+#: ../base/ufos/ui/aircraft_soldiers.ufo:661
 msgid "Assign tanks"
 msgstr "Lisa tankid"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:605
+#: ../base/ufos/ui/aircraft_soldiers.ufo:665
 #, fuzzy
 msgid "Assign soldiers"
 msgstr "Määra sõdurite Asukoht"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:619
+#: ../base/ufos/ui/aircraft_soldiers.ufo:695
 #, fuzzy
 msgid "No soldiers assigned"
 msgstr "Pole ühtegi kilpi"
@@ -9049,7 +9071,7 @@ msgstr "Vajuta, et vaadelda erinevaid nähtavaid vastaseid"
 msgid "Finish round"
 msgstr "Lõpeta käik"
 
-#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:894
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:893
 #, fuzzy
 msgid "Multiple-shot reaction fire"
 msgstr "Reaktsioon tulistamine Sees/väljas"
@@ -9059,7 +9081,7 @@ msgstr "Reaktsioon tulistamine Sees/väljas"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:906
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:905
 #, fuzzy
 msgid "One-shot reaction fire"
 msgstr "Reaktsioon tulistamine Sees/väljas"
@@ -9069,13 +9091,13 @@ msgstr "Reaktsioon tulistamine Sees/väljas"
 msgid "One-shot reaction fire (not possible)"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:918
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:917
 #, fuzzy
 msgid "No reaction fire"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:874
-#: client/battlescape/cl_hud.c:809
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:873
+#: client/battlescape/cl_hud.c:814
 msgid "Reserve TUs for shooting."
 msgstr ""
 
@@ -9309,7 +9331,7 @@ msgid "Load last saved game or continue playing"
 msgstr "Laadi viimati salvestatud mäng või jätka mängimist"
 
 #: ../base/ufos/ui/campaign.ufo:60 ../base/ufos/ui/campaign.ufo:373
-#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:66
+#: ../base/ufos/ui/campaign.ufo:554 ../base/ufos/ui/multiplayer.ufo:80
 #: ../base/ufos/ui/options.ufo:75 ../base/ufos/ui/singleplayer.ufo:43
 #: ../base/ufos/ui/skirmish.ufo:18 ../base/ufos/ui/tutorials.ufo:27
 msgid "Back"
@@ -9321,7 +9343,7 @@ msgid "Save"
 msgstr "Salvesta"
 
 #: ../base/ufos/ui/campaign.ufo:169 ../base/ufos/ui/hud.ufo:664
-#: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:530
+#: ../base/ufos/ui/main.ufo:49 ../base/ufos/ui/multiplayer.ufo:515
 #: ../base/ufos/ui/multiplayeringame.ufo:37
 #: ../base/ufos/ui/singleplayer.ufo:98
 msgid "Options"
@@ -9647,8 +9669,8 @@ msgstr "Uus baas"
 #: ../base/ufos/ui/geoscape.ufo:945 ../base/ufos/ui/geoscape.ufo:1370
 #: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
-#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:342
-#: ../base/ufos/ui/options.ufo:736
+#: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:357
+#: ../base/ufos/ui/options.ufo:750
 msgid "Name:"
 msgstr "Nimi:"
 
@@ -9707,7 +9729,7 @@ msgstr "Maksumus:"
 msgid "Radar tower"
 msgstr "Radar"
 
-#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:339
+#: ../base/ufos/ui/geoscape.ufo:1243 client/campaign/cp_map.c:344
 msgid "Base"
 msgstr "Baas"
 
@@ -9840,6 +9862,15 @@ msgstr ""
 msgid "Rename your employee"
 msgstr "Nimeta oma baas ümber"
 
+#: ../base/ufos/ui/hire.ufo:387
+msgid "Missions Performed:"
+msgstr "Missioone tehtud:"
+
+#: ../base/ufos/ui/hire.ufo:390
+#, fuzzy
+msgid "Enemies Killed:"
+msgstr "Vastaseid tapetud\t%i\n"
+
 #: ../base/ufos/ui/hire.ufo:406
 #, fuzzy
 msgid "Occupation"
@@ -9884,35 +9915,35 @@ msgstr "Keri alla"
 msgid "Implants"
 msgstr "Kiibid"
 
-#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1074
+#: ../base/ufos/ui/hud.ufo:54 ../base/ufos/ui/multiplayer.ufo:1059
 msgid "Level 1"
 msgstr "Tase 1"
 
-#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1085
+#: ../base/ufos/ui/hud.ufo:65 ../base/ufos/ui/multiplayer.ufo:1070
 msgid "Level 2"
 msgstr "Tase 2"
 
-#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1096
+#: ../base/ufos/ui/hud.ufo:76 ../base/ufos/ui/multiplayer.ufo:1081
 msgid "Level 3"
 msgstr "Tase 3"
 
-#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1107
+#: ../base/ufos/ui/hud.ufo:87 ../base/ufos/ui/multiplayer.ufo:1092
 msgid "Level 4"
 msgstr "Tase 4"
 
-#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1118
+#: ../base/ufos/ui/hud.ufo:98 ../base/ufos/ui/multiplayer.ufo:1103
 msgid "Level 5"
 msgstr "Tase 5"
 
-#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1129
+#: ../base/ufos/ui/hud.ufo:109 ../base/ufos/ui/multiplayer.ufo:1114
 msgid "Level 6"
 msgstr "Tase 6"
 
-#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1140
+#: ../base/ufos/ui/hud.ufo:120 ../base/ufos/ui/multiplayer.ufo:1125
 msgid "Level 7"
 msgstr "Tase 7"
 
-#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1151
+#: ../base/ufos/ui/hud.ufo:131 ../base/ufos/ui/multiplayer.ufo:1136
 msgid "Level 8"
 msgstr "Tase 8"
 
@@ -9924,12 +9955,12 @@ msgstr "Esmane tulistamine"
 msgid "Physical stats of this soldier"
 msgstr "Selle sõduri füüsilised omadused"
 
-#: ../base/ufos/ui/hud.ufo:900
+#: ../base/ufos/ui/hud.ufo:899
 #, fuzzy
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: ../base/ufos/ui/hud.ufo:912
+#: ../base/ufos/ui/hud.ufo:911
 #, fuzzy
 msgid "One-shot reaction fire (Not possible)"
 msgstr "Reaktsioon tulistamine Sees/väljas"
@@ -9938,9 +9969,9 @@ msgstr "Reaktsioon tulistamine Sees/väljas"
 msgid "Floor"
 msgstr "Maapind"
 
-#: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:58
-#: ../base/ufos/ui/multiplayer.ufo:97 ../base/ufos/ui/multiplayer.ufo:1828
-#: ../base/ufos/ui/multiplayer.ufo:1881
+#: ../base/ufos/ui/irc.ufo:19 ../base/ufos/ui/multiplayer.ufo:72
+#: ../base/ufos/ui/multiplayer.ufo:111 ../base/ufos/ui/multiplayer.ufo:1813
+#: ../base/ufos/ui/multiplayer.ufo:1866
 #: ../base/ufos/ui/multiplayeringame.ufo:45
 #, fuzzy
 msgid "Lobby"
@@ -9991,8 +10022,8 @@ msgstr "Ühtegi eseti pole valitud"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr ""
 
-#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:197
-#: ../base/ufos/ui/multiplayer.ufo:385 ../base/ufos/ui/multiplayer.ufo:1790
+#: ../base/ufos/ui/irc.ufo:256 ../base/ufos/ui/multiplayer.ufo:211
+#: ../base/ufos/ui/multiplayer.ufo:400 ../base/ufos/ui/multiplayer.ufo:1775
 msgid "Connect"
 msgstr "Ühenda"
 
@@ -10121,15 +10152,15 @@ msgstr "Mängu valikud:"
 msgid "User Information"
 msgstr "Baasi info"
 
-#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:560
+#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:574
 msgid "Volume Control"
 msgstr "Heli paneel"
 
-#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:566
+#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:580
 msgid "Effects:"
 msgstr "Effektid:"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:587
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:601
 msgid "Music:"
 msgstr "Muusika:"
 
@@ -10138,7 +10169,7 @@ msgstr "Muusika:"
 msgid "Language"
 msgstr "Laen...."
 
-#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:798
 msgid "Language:"
 msgstr "Keel:"
 
@@ -10146,7 +10177,7 @@ msgstr "Keel:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1789
+#: ../base/ufos/ui/main.ufo:232 ../base/ufos/ui/multiplayer.ufo:1774
 #: ../base/ufos/ui/sys_popup.ufo:49 ../base/ufos/ui/sys_popup.ufo:111
 msgid "OK"
 msgstr "OK"
@@ -10358,320 +10389,310 @@ msgid ""
 "Left click enables all sounds, right click disables."
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:37 ../base/ufos/ui/multiplayer.ufo:155
-msgid "Team"
-msgstr "Tiim"
-
-#: ../base/ufos/ui/multiplayer.ufo:44
-msgid "Join"
-msgstr "Ühine"
-
-#: ../base/ufos/ui/multiplayer.ufo:51
-msgid "Create"
-msgstr "Loo"
-
-#: ../base/ufos/ui/multiplayer.ufo:83
-#, fuzzy
-msgid "Internet/Lan"
-msgstr "Internett"
-
-#: ../base/ufos/ui/multiplayer.ufo:87
-#, fuzzy
-msgid "Lan"
-msgstr "Jan"
-
-#: ../base/ufos/ui/multiplayer.ufo:92 ../base/ufos/ui/multiplayer.ufo:215
-msgid "Bookmark"
-msgstr "Järjehoidja"
-
-#: ../base/ufos/ui/multiplayer.ufo:137
-#, fuzzy
-msgid "Userlist"
-msgstr "Ärritunud"
-
-#: ../base/ufos/ui/multiplayer.ufo:146
-msgid "Name"
-msgstr "Nimi"
-
-#: ../base/ufos/ui/multiplayer.ufo:204
-msgid "Leave Serverbrowser"
-msgstr ""
-
-#: ../base/ufos/ui/multiplayer.ufo:252
-msgid "Serverfilter:"
-msgstr ""
-
-#: ../base/ufos/ui/multiplayer.ufo:327
-msgid "Refresh"
-msgstr "Uuenda"
-
-#: ../base/ufos/ui/multiplayer.ufo:366
-msgid "Connect to IP"
-msgstr "Ühenda IP-ga"
-
-#: ../base/ufos/ui/multiplayer.ufo:429
-msgid "Bookmarks"
-msgstr "Järjehoidjad"
-
-#: ../base/ufos/ui/multiplayer.ufo:445 ../base/ufos/ui/multiplayer.ufo:448
-#: ../base/ufos/ui/multiplayer.ufo:451 ../base/ufos/ui/multiplayer.ufo:454
-#: ../base/ufos/ui/multiplayer.ufo:457 ../base/ufos/ui/multiplayer.ufo:460
-#: ../base/ufos/ui/multiplayer.ufo:463 ../base/ufos/ui/multiplayer.ufo:466
-#: ../base/ufos/ui/multiplayer.ufo:469 ../base/ufos/ui/multiplayer.ufo:472
-#: ../base/ufos/ui/multiplayer.ufo:475 ../base/ufos/ui/multiplayer.ufo:478
-#: ../base/ufos/ui/multiplayer.ufo:481 ../base/ufos/ui/multiplayer.ufo:484
-#: ../base/ufos/ui/multiplayer.ufo:487 ../base/ufos/ui/multiplayer.ufo:490
+#: ../base/ufos/ui/multiplayer.ufo:9
 #, fuzzy
 msgid "Connect to this server"
 msgstr "Ühenda IP-ga"
 
-#: ../base/ufos/ui/multiplayer.ufo:446 ../base/ufos/ui/multiplayer.ufo:449
-#: ../base/ufos/ui/multiplayer.ufo:452 ../base/ufos/ui/multiplayer.ufo:455
-#: ../base/ufos/ui/multiplayer.ufo:458 ../base/ufos/ui/multiplayer.ufo:461
-#: ../base/ufos/ui/multiplayer.ufo:464 ../base/ufos/ui/multiplayer.ufo:467
-#: ../base/ufos/ui/multiplayer.ufo:470 ../base/ufos/ui/multiplayer.ufo:473
-#: ../base/ufos/ui/multiplayer.ufo:476 ../base/ufos/ui/multiplayer.ufo:479
-#: ../base/ufos/ui/multiplayer.ufo:482 ../base/ufos/ui/multiplayer.ufo:485
-#: ../base/ufos/ui/multiplayer.ufo:488 ../base/ufos/ui/multiplayer.ufo:491
+#: ../base/ufos/ui/multiplayer.ufo:13
 msgid "Delete this bookmark"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:526 ../base/ufos/ui/skirmish.ufo:264
+#: ../base/ufos/ui/multiplayer.ufo:51 ../base/ufos/ui/multiplayer.ufo:169
+msgid "Team"
+msgstr "Tiim"
+
+#: ../base/ufos/ui/multiplayer.ufo:58
+msgid "Join"
+msgstr "Ühine"
+
+#: ../base/ufos/ui/multiplayer.ufo:65
+msgid "Create"
+msgstr "Loo"
+
+#: ../base/ufos/ui/multiplayer.ufo:97
+#, fuzzy
+msgid "Internet/Lan"
+msgstr "Internett"
+
+#: ../base/ufos/ui/multiplayer.ufo:101
+#, fuzzy
+msgid "Lan"
+msgstr "Jan"
+
+#: ../base/ufos/ui/multiplayer.ufo:106 ../base/ufos/ui/multiplayer.ufo:229
+msgid "Bookmark"
+msgstr "Järjehoidja"
+
+#: ../base/ufos/ui/multiplayer.ufo:151
+#, fuzzy
+msgid "Userlist"
+msgstr "Ärritunud"
+
+#: ../base/ufos/ui/multiplayer.ufo:160
+msgid "Name"
+msgstr "Nimi"
+
+#: ../base/ufos/ui/multiplayer.ufo:218
+msgid "Leave Serverbrowser"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:230
+msgid "Add server to bookmarks"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:267
+msgid "Serverfilter:"
+msgstr ""
+
+#: ../base/ufos/ui/multiplayer.ufo:342
+msgid "Refresh"
+msgstr "Uuenda"
+
+#: ../base/ufos/ui/multiplayer.ufo:381
+msgid "Connect to IP"
+msgstr "Ühenda IP-ga"
+
+#: ../base/ufos/ui/multiplayer.ufo:444
+msgid "Bookmarks"
+msgstr "Järjehoidjad"
+
+#: ../base/ufos/ui/multiplayer.ufo:511 ../base/ufos/ui/skirmish.ufo:264
 msgid "Map"
 msgstr "Kaart"
 
-#: ../base/ufos/ui/multiplayer.ufo:534
+#: ../base/ufos/ui/multiplayer.ufo:519
 msgid "Security/registration"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:553
+#: ../base/ufos/ui/multiplayer.ufo:538
 msgid "Hostname:"
 msgstr "Hostname:"
 
-#: ../base/ufos/ui/multiplayer.ufo:580
+#: ../base/ufos/ui/multiplayer.ufo:565
 #, fuzzy
 msgid "Gametype:"
 msgstr "Mäng"
 
-#: ../base/ufos/ui/multiplayer.ufo:617
+#: ../base/ufos/ui/multiplayer.ufo:602
 msgid "Teamplay:"
 msgstr "Tiimimäng"
 
-#: ../base/ufos/ui/multiplayer.ufo:643
+#: ../base/ufos/ui/multiplayer.ufo:628
 #, fuzzy
 msgid "Preview:"
 msgstr "Tootmine"
 
-#: ../base/ufos/ui/multiplayer.ufo:669
+#: ../base/ufos/ui/multiplayer.ufo:654
 #, fuzzy
 msgid "Map name:"
 msgstr "Ulatus:\t%g\n"
 
-#: ../base/ufos/ui/multiplayer.ufo:685
+#: ../base/ufos/ui/multiplayer.ufo:670
 #, fuzzy
 msgid "Allowed gametype:"
 msgstr "Tulnukate liigid"
 
-#: ../base/ufos/ui/multiplayer.ufo:708 ../base/ufos/ui/skirmish.ufo:131
+#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:131
 #, fuzzy
 msgid "Day version:"
 msgstr "Versioon:\t%s\n"
 
-#: ../base/ufos/ui/multiplayer.ufo:732
+#: ../base/ufos/ui/multiplayer.ufo:717
 msgid "Enable morale states:"
 msgstr "Luba moraali seisundid"
 
-#: ../base/ufos/ui/multiplayer.ufo:749
+#: ../base/ufos/ui/multiplayer.ufo:734
 msgid "Max. clients:"
 msgstr "Maksimum ühendusi:"
 
-#: ../base/ufos/ui/multiplayer.ufo:750
+#: ../base/ufos/ui/multiplayer.ufo:735
 msgid "Sets the max allowed clients to connect"
 msgstr "Maksimum kliente lubatud ühendada"
 
-#: ../base/ufos/ui/multiplayer.ufo:776
+#: ../base/ufos/ui/multiplayer.ufo:761
 msgid "Max. soldiers per team:"
 msgstr "Maksimum sõdureid tiimi kohta"
 
-#: ../base/ufos/ui/multiplayer.ufo:777
+#: ../base/ufos/ui/multiplayer.ufo:762
 msgid "Sets the max allowed soldiers per team"
 msgstr "Maksimum sõdureid ühe tiimi kohta"
 
-#: ../base/ufos/ui/multiplayer.ufo:803
+#: ../base/ufos/ui/multiplayer.ufo:788
 msgid "Max. soldiers per player:"
 msgstr "Maksimum sõdureid mängija kohta:"
 
-#: ../base/ufos/ui/multiplayer.ufo:804
+#: ../base/ufos/ui/multiplayer.ufo:789
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Maksimum sõdureid lubatud mängija kohta kui mängitakse tiimi mängus"
 
-#: ../base/ufos/ui/multiplayer.ufo:831
+#: ../base/ufos/ui/multiplayer.ufo:816
 #, fuzzy
 msgid "Max. human players per team:"
 msgstr "Maksimum mängijaid ühe tiim kohta:"
 
-#: ../base/ufos/ui/multiplayer.ufo:857 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:148
 msgid "Max. AI actors:"
 msgstr "Maks. arvuti poolt juhitud tegelasi:"
 
-#: ../base/ufos/ui/multiplayer.ufo:858
+#: ../base/ufos/ui/multiplayer.ufo:843
 msgid "Max AI actors for teamplay mode"
 msgstr "Maks. arvuti poolt juhitud tegelasi tiimimängus"
 
-#: ../base/ufos/ui/multiplayer.ufo:885
+#: ../base/ufos/ui/multiplayer.ufo:870
 msgid "Round time limit in seconds:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:918
+#: ../base/ufos/ui/multiplayer.ufo:903
 msgid "Make this server public:"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:935
+#: ../base/ufos/ui/multiplayer.ufo:920
 msgid "Server-Password:"
 msgstr "Serveri salasõna"
 
-#: ../base/ufos/ui/multiplayer.ufo:958
+#: ../base/ufos/ui/multiplayer.ufo:943
 msgid "RCON-Password:"
 msgstr "Rcon(serveri admini) salasõna"
 
-#: ../base/ufos/ui/multiplayer.ufo:1000
+#: ../base/ufos/ui/multiplayer.ufo:985
 msgid "Start server"
 msgstr "Alusta server"
 
-#: ../base/ufos/ui/multiplayer.ufo:1171
+#: ../base/ufos/ui/multiplayer.ufo:1156
 #, fuzzy
 msgid "Party info"
 msgstr "Baasi info"
 
-#: ../base/ufos/ui/multiplayer.ufo:1181
+#: ../base/ufos/ui/multiplayer.ufo:1166
 msgid "Display/hide the panel"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1226
+#: ../base/ufos/ui/multiplayer.ufo:1211
 #, fuzzy
 msgid "Max. players per team"
 msgstr "Maksimum mängijaid ühe tiim kohta:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1240
+#: ../base/ufos/ui/multiplayer.ufo:1225
 msgid "Max. teams for this map"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1263
+#: ../base/ufos/ui/multiplayer.ufo:1248
 #, fuzzy
 msgid "Players connected"
 msgstr "Ühtegi eseti pole valitud"
 
-#: ../base/ufos/ui/multiplayer.ufo:1317
+#: ../base/ufos/ui/multiplayer.ufo:1302
 #, fuzzy
 msgid "Team selection"
 msgstr "Ühtegi eseti pole valitud"
 
-#: ../base/ufos/ui/multiplayer.ufo:1338
+#: ../base/ufos/ui/multiplayer.ufo:1323
 msgid "Team preference:"
 msgstr "Tiimi eelistused"
 
-#: ../base/ufos/ui/multiplayer.ufo:1352
+#: ../base/ufos/ui/multiplayer.ufo:1337
 msgid "Next free team"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1363
+#: ../base/ufos/ui/multiplayer.ufo:1348
 #, fuzzy
 msgid "Previous free team"
 msgstr "Eelmine sissekanne"
 
-#: ../base/ufos/ui/multiplayer.ufo:1376
+#: ../base/ufos/ui/multiplayer.ufo:1361
 msgid "Force start"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1377
+#: ../base/ufos/ui/multiplayer.ufo:1362
 msgid "Start the game even if not all teams is ready or have joined"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1388 ../base/ufos/ui/multiplayer.ufo:1397
+#: ../base/ufos/ui/multiplayer.ufo:1373 ../base/ufos/ui/multiplayer.ufo:1382
 msgid "Finish the teamselection and start the game"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1396
+#: ../base/ufos/ui/multiplayer.ufo:1381
 msgid "Are you ready?"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1405 ../base/ufos/ui/multiplayer.ufo:1415
+#: ../base/ufos/ui/multiplayer.ufo:1390 ../base/ufos/ui/multiplayer.ufo:1400
 #, fuzzy
 msgid "Activate IRC"
 msgstr "Käivita abi"
 
-#: ../base/ufos/ui/multiplayer.ufo:1421
+#: ../base/ufos/ui/multiplayer.ufo:1406
 #, fuzzy
 msgid "Deactivate IRC"
 msgstr "Ära näita abi"
 
-#: ../base/ufos/ui/multiplayer.ufo:1429 ../base/ufos/ui/multiplayer.ufo:1439
+#: ../base/ufos/ui/multiplayer.ufo:1414 ../base/ufos/ui/multiplayer.ufo:1424
 msgid "Display IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1442
+#: ../base/ufos/ui/multiplayer.ufo:1427
 msgid "Hide IRC users"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1448
+#: ../base/ufos/ui/multiplayer.ufo:1433
 #, fuzzy
 msgid "Invite others"
 msgstr "Sitters"
 
-#: ../base/ufos/ui/multiplayer.ufo:1450
+#: ../base/ufos/ui/multiplayer.ufo:1435
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1486
+#: ../base/ufos/ui/multiplayer.ufo:1471
 #, fuzzy
 msgid "Party chat"
 msgstr "Käivita abi"
 
-#: ../base/ufos/ui/multiplayer.ufo:1490
+#: ../base/ufos/ui/multiplayer.ufo:1475
 msgid "Global lobby (IRC)"
 msgstr ""
 
-#: ../base/ufos/ui/multiplayer.ufo:1573 ../base/ufos/ui/multiplayer.ufo:1646
+#: ../base/ufos/ui/multiplayer.ufo:1558 ../base/ufos/ui/multiplayer.ufo:1631
 #, fuzzy
 msgid "Say:"
 msgstr "S:"
 
-#: ../base/ufos/ui/multiplayer.ufo:1756
+#: ../base/ufos/ui/multiplayer.ufo:1741
 #, fuzzy
 msgid "Enter server password"
 msgstr "Serveri salasõna"
 
-#: ../base/ufos/ui/multiplayer.ufo:1769
+#: ../base/ufos/ui/multiplayer.ufo:1754
 #, fuzzy
 msgid "Password:"
 msgstr "Rcon(serveri admini) salasõna"
 
-#: ../base/ufos/ui/multiplayer.ufo:1807
+#: ../base/ufos/ui/multiplayer.ufo:1792
 #, fuzzy
 msgid "Personal message"
 msgstr "Ava teated"
 
-#: ../base/ufos/ui/multiplayer.ufo:1829 ../base/ufos/ui/multiplayer.ufo:1882
+#: ../base/ufos/ui/multiplayer.ufo:1814 ../base/ufos/ui/multiplayer.ufo:1867
 #, fuzzy
 msgid "Go into the lobby"
 msgstr "Ühenda IP-ga"
 
-#: ../base/ufos/ui/multiplayer.ufo:1846
+#: ../base/ufos/ui/multiplayer.ufo:1831
 #, fuzzy
 msgid "Game invitation"
 msgstr "Riigid"
 
-#: ../base/ufos/ui/multiplayer.ufo:1865
+#: ../base/ufos/ui/multiplayer.ufo:1850
 #, fuzzy
 msgid "Server info"
 msgstr "Baasi info"
 
-#: ../base/ufos/ui/multiplayer.ufo:1866
+#: ../base/ufos/ui/multiplayer.ufo:1851
 #, fuzzy
 msgid "Show server information"
 msgstr "Baasi info"
 
-#: ../base/ufos/ui/multiplayer.ufo:1894
+#: ../base/ufos/ui/multiplayer.ufo:1879
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 msgstr ""
 
@@ -10816,216 +10837,220 @@ msgstr ""
 msgid "Strech the screen with a 4:3 ratio:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:427 ../base/ufos/ui/options.ufo:452
+#: ../base/ufos/ui/options.ufo:421
+msgid "Enable post-processing shader effects:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:441 ../base/ufos/ui/options.ufo:466
 msgid "Low"
 msgstr "Madal"
 
-#: ../base/ufos/ui/options.ufo:431 ../base/ufos/ui/options.ufo:456
+#: ../base/ufos/ui/options.ufo:445 ../base/ufos/ui/options.ufo:470
 msgid "Medium"
 msgstr "Keskmine"
 
-#: ../base/ufos/ui/options.ufo:435 ../base/ufos/ui/options.ufo:460
+#: ../base/ufos/ui/options.ufo:449 ../base/ufos/ui/options.ufo:474
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "Tavaline"
 
-#: ../base/ufos/ui/options.ufo:439 ../base/ufos/ui/options.ufo:464
+#: ../base/ufos/ui/options.ufo:453 ../base/ufos/ui/options.ufo:478
 msgid "High"
 msgstr "Kõrge"
 
-#: ../base/ufos/ui/options.ufo:468 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:482 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "Suurepärane"
 
-#: ../base/ufos/ui/options.ufo:472
+#: ../base/ufos/ui/options.ufo:486
 msgid "Extreme"
 msgstr "Ekstreemne"
 
-#: ../base/ufos/ui/options.ufo:495
+#: ../base/ufos/ui/options.ufo:509
 #, fuzzy
 msgid "All ratios"
 msgstr "Riigid"
 
-#: ../base/ufos/ui/options.ufo:519
+#: ../base/ufos/ui/options.ufo:533
 #, fuzzy
 msgid "Others"
 msgstr "Sisene"
 
-#: ../base/ufos/ui/options.ufo:551
+#: ../base/ufos/ui/options.ufo:565
 msgid "Sound settings"
 msgstr "Heli "
 
-#: ../base/ufos/ui/options.ufo:608
+#: ../base/ufos/ui/options.ufo:622
 msgid "Sound rate:"
 msgstr "Helikõrgus:"
 
-#: ../base/ufos/ui/options.ufo:614
+#: ../base/ufos/ui/options.ufo:628
 msgid "Restart sound to change the settings"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:650
+#: ../base/ufos/ui/options.ufo:664
 msgid "Enable sound:"
 msgstr "Luba helid:"
 
-#: ../base/ufos/ui/options.ufo:676
+#: ../base/ufos/ui/options.ufo:690
 msgid "Show key bindings"
 msgstr "Näita klahvide tähendusi"
 
-#: ../base/ufos/ui/options.ufo:724
+#: ../base/ufos/ui/options.ufo:738
 msgid "Game settings"
 msgstr "Mängu valikud:"
 
-#: ../base/ufos/ui/options.ufo:758
+#: ../base/ufos/ui/options.ufo:772
 msgid "HUD Design:"
 msgstr "HUD kujundus:"
 
-#: ../base/ufos/ui/options.ufo:770
+#: ../base/ufos/ui/options.ufo:784
 msgid "Original HUD"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:774
+#: ../base/ufos/ui/options.ufo:788
 msgid "Alternative HUD"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:822
+#: ../base/ufos/ui/options.ufo:836
 msgid "Tooltips:"
 msgstr "Abi:"
 
-#: ../base/ufos/ui/options.ufo:829
+#: ../base/ufos/ui/options.ufo:843
 msgid "Activates tooltips"
 msgstr "Käivita abi"
 
-#: ../base/ufos/ui/options.ufo:840
+#: ../base/ufos/ui/options.ufo:854
 #, fuzzy
 msgid "Centre view:"
 msgstr "Keskele vaade:"
 
-#: ../base/ufos/ui/options.ufo:847
+#: ../base/ufos/ui/options.ufo:861
 #, fuzzy
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "Jälgi sõdurit kes on valitud, tulistab või ilmub vaatevälja"
 
-#: ../base/ufos/ui/options.ufo:858
+#: ../base/ufos/ui/options.ufo:872
 #, fuzzy
 msgid "Cursor tooltips:"
 msgstr "Abi:"
 
-#: ../base/ufos/ui/options.ufo:865
+#: ../base/ufos/ui/options.ufo:879
 #, fuzzy
 msgid "Activates cursor tooltips"
 msgstr "Käivita abi"
 
-#: ../base/ufos/ui/options.ufo:876
+#: ../base/ufos/ui/options.ufo:890
 msgid "3D Geoscape:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:883
+#: ../base/ufos/ui/options.ufo:897
 msgid "Use 3D geoscape"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:894
+#: ../base/ufos/ui/options.ufo:908
 msgid "3D Geoscape ambient lighting:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:919
+#: ../base/ufos/ui/options.ufo:933
 msgid "Show tip of the day:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:937
+#: ../base/ufos/ui/options.ufo:951
 msgid "Precache models:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:944
+#: ../base/ufos/ui/options.ufo:958
 msgid "Precache models (faster menus)"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:955
+#: ../base/ufos/ui/options.ufo:969
 msgid "Actor speed:"
 msgstr "Kiirus:"
 
-#: ../base/ufos/ui/options.ufo:989
+#: ../base/ufos/ui/options.ufo:1003
 msgid "Input settings"
 msgstr "Sisendi valikud"
 
-#: ../base/ufos/ui/options.ufo:1001
+#: ../base/ufos/ui/options.ufo:1015
 msgid "Camera"
 msgstr "Kaamera"
 
-#: ../base/ufos/ui/options.ufo:1007
+#: ../base/ufos/ui/options.ufo:1021
 #, fuzzy
 msgid "Scroll Speed:"
 msgstr "Keri ülesse"
 
-#: ../base/ufos/ui/options.ufo:1032
+#: ../base/ufos/ui/options.ufo:1046
 msgid "Rotation Speed:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1057
+#: ../base/ufos/ui/options.ufo:1071
 msgid "Move Acceleration:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1082
+#: ../base/ufos/ui/options.ufo:1096
 #, fuzzy
 msgid "Joystick settings:"
 msgstr "Mängu valikud:"
 
-#: ../base/ufos/ui/options.ufo:1089
+#: ../base/ufos/ui/options.ufo:1103
 #, fuzzy
 msgid "Enable:"
 msgstr "Luba helid:"
 
-#: ../base/ufos/ui/options.ufo:1097
+#: ../base/ufos/ui/options.ufo:1111
 msgid "Enables/Disables Joysticks"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1108
+#: ../base/ufos/ui/options.ufo:1122
 msgid "Threshold:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1158
+#: ../base/ufos/ui/options.ufo:1172
 msgid "Keys"
 msgstr "Nupud"
 
-#: ../base/ufos/ui/options.ufo:1173 client/battlescape/cl_hud.c:99
+#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:99
 #, fuzzy
 msgid "Autostand"
 msgstr "Sihtimata Valang"
 
-#: ../base/ufos/ui/options.ufo:1185 ../base/ufos/ui/options.ufo:1211
+#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Jah"
 
-#: ../base/ufos/ui/options.ufo:1189 ../base/ufos/ui/options.ufo:1215
+#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Ei"
 
-#: ../base/ufos/ui/options.ufo:1199
+#: ../base/ufos/ui/options.ufo:1213
 msgid "Confirm Actions:"
 msgstr "Kinnita tegevust:"
 
-#: ../base/ufos/ui/options.ufo:1219
+#: ../base/ufos/ui/options.ufo:1233
 msgid "Only for moving"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1229
+#: ../base/ufos/ui/options.ufo:1243
 msgid "Joystick:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1262
+#: ../base/ufos/ui/options.ufo:1276
 msgid "Maintain resolution"
 msgstr "Säilita suurus:"
 
-#: ../base/ufos/ui/options.ufo:1272
+#: ../base/ufos/ui/options.ufo:1286
 msgid "Want To Maintain resolution"
 msgstr "Want To Maintain resolution"
 
-#: ../base/ufos/ui/options.ufo:1279
+#: ../base/ufos/ui/options.ufo:1293
 msgid "Accept"
 msgstr "Nõustu"
 
-#: ../base/ufos/ui/options.ufo:1280
+#: ../base/ufos/ui/options.ufo:1294
 msgid "Change the resolution"
 msgstr "Muuda suurus"
 
@@ -11830,46 +11855,46 @@ msgstr ""
 "Sa ei saa seda tundmatud eset kasutada.\n"
 "Et seda eset kasutada pead enne seda uurima.\n"
 
-#: client/battlescape/cl_actor.c:1799
+#: client/battlescape/cl_actor.c:1811
 msgid "Unknown alien race"
 msgstr "tundmatu tulnukatõug"
 
-#: client/battlescape/cl_actor.c:2502
+#: client/battlescape/cl_actor.c:2500
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "Järgmine sõdur"
 
-#: client/battlescape/cl_actor.c:2503
+#: client/battlescape/cl_actor.c:2501
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "Vali sõdurenimekirjast"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2502
 #, fuzzy
 msgid "Update an actor"
 msgstr "Nimeta oma baas ümber"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2504
 msgid "Toggle stand/crounch"
 msgstr "Seisa/kükita"
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2505
 msgid "Toggle the headgear"
 msgstr "Vaheta prille"
 
-#: client/battlescape/cl_actor.c:2508
+#: client/battlescape/cl_actor.c:2506
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2509
+#: client/battlescape/cl_actor.c:2507
 msgid "Confirm the current action"
 msgstr "Kinnita tegevust"
 
-#: client/battlescape/cl_actor.c:2510
+#: client/battlescape/cl_actor.c:2508
 msgid "Toggle to next alien visible from selected actor."
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2512
+#: client/battlescape/cl_actor.c:2510
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "Järgmine tulnukas"
@@ -11907,86 +11932,86 @@ msgstr ""
 msgid "Shot Reservation"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:426
+#: client/battlescape/cl_hud.c:431
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:429
+#: client/battlescape/cl_hud.c:434
 msgid "No remaining TUs left after shot."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:432
+#: client/battlescape/cl_hud.c:437
 #, c-format
 msgid "TU: %i"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:433
+#: client/battlescape/cl_hud.c:438
 #, fuzzy, c-format
 msgid "Shots: %i"
 msgstr "%s\t%s\n"
 
-#: client/battlescape/cl_hud.c:653
+#: client/battlescape/cl_hud.c:658
 #, fuzzy
 msgid "No weapon."
 msgstr "%s relvi\n"
 
-#: client/battlescape/cl_hud.c:662
+#: client/battlescape/cl_hud.c:667
 #, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr "Sa ei saa seda teha - relva ei saa lasta ühe käega!\n"
 
-#: client/battlescape/cl_hud.c:668
+#: client/battlescape/cl_hud.c:673
 msgid "No reload possible, already fully loaded."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:678
+#: client/battlescape/cl_hud.c:683
 #, fuzzy
 msgid "Not enough TUs for reloading weapon."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:681
+#: client/battlescape/cl_hud.c:686
 msgid "No reload possible, you don't have backup ammo."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:773
+#: client/battlescape/cl_hud.c:778
 #, fuzzy
 msgid "Not enough TUs for standing up."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:776
+#: client/battlescape/cl_hud.c:781
 #, fuzzy, c-format
 msgid "Stand up (%i TU)"
 msgstr "Lae relv"
 
-#: client/battlescape/cl_hud.c:781
+#: client/battlescape/cl_hud.c:786
 #, fuzzy
 msgid "Not enough TUs for crouching."
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: client/battlescape/cl_hud.c:784
+#: client/battlescape/cl_hud.c:789
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:792
+#: client/battlescape/cl_hud.c:797
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
 "Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:796
+#: client/battlescape/cl_hud.c:801
 #, fuzzy, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:799
+#: client/battlescape/cl_hud.c:804
 #, fuzzy
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Peata uurimine"
 
-#: client/battlescape/cl_hud.c:805
+#: client/battlescape/cl_hud.c:810
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -11994,16 +12019,16 @@ msgid ""
 "Right-Click to clear."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:812
+#: client/battlescape/cl_hud.c:817
 msgid "Reserving TUs for shooting not possible."
 msgstr ""
 
-#: client/battlescape/cl_hud.c:833 client/battlescape/cl_hud.c:842
+#: client/battlescape/cl_hud.c:838 client/battlescape/cl_hud.c:847
 #, fuzzy, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Lae relv"
 
-#: client/battlescape/cl_hud.c:1091
+#: client/battlescape/cl_hud.c:1095
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -12012,7 +12037,7 @@ msgstr ""
 "Sa ei saa seda tundmatut eset laadida.\n"
 "Sa pead selle enne uurima. et seda relvastada\n"
 
-#: client/battlescape/cl_hud.c:1112
+#: client/battlescape/cl_hud.c:1116
 #, c-format
 msgid ""
 "%s\n"
@@ -12021,19 +12046,19 @@ msgstr ""
 "%s\n"
 "(tühi)\n"
 
-#: client/battlescape/cl_hud.c:1134
+#: client/battlescape/cl_hud.c:1138
 #, fuzzy, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr ""
 "Moraal %i | Reserveeritud TU: %i\n"
 "%s %i (%i|%i TU alles)\n"
 
-#: client/battlescape/cl_hud.c:1136
+#: client/battlescape/cl_hud.c:1140
 #, c-format
 msgid "Morale  %i"
 msgstr "Moraal  %i"
 
-#: client/battlescape/cl_hud.c:1141
+#: client/battlescape/cl_hud.c:1145
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -12042,7 +12067,7 @@ msgstr ""
 "Moraal %i | Reserveeritud TU: %i\n"
 "%s %i (%i|%i TU alles)\n"
 
-#: client/battlescape/cl_hud.c:1145
+#: client/battlescape/cl_hud.c:1149
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -12051,7 +12076,7 @@ msgstr ""
 "Moraal  %i\n"
 "%s %i (%i TU alles)\n"
 
-#: client/battlescape/cl_hud.c:1177
+#: client/battlescape/cl_hud.c:1181
 #, c-format
 msgid ""
 "Time Units\n"
@@ -12060,7 +12085,7 @@ msgid ""
 "- Remaining: %i\n"
 msgstr ""
 
-#: client/battlescape/cl_hud.c:1201
+#: client/battlescape/cl_hud.c:1205
 msgid "Currently panics!\n"
 msgstr "Praegu paanitseb!\n"
 
@@ -12406,14 +12431,14 @@ msgstr ""
 msgid "Aircraft started"
 msgstr "Lennumasin alustatud"
 
-#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1630
-#: client/campaign/cp_map.c:1637
+#: client/campaign/cp_aircraft_callbacks.c:257 client/campaign/cp_map.c:1651
+#: client/campaign/cp_map.c:1658
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Kiirus:\t%0f\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1631
-#: client/campaign/cp_map.c:1638
+#: client/campaign/cp_aircraft_callbacks.c:259 client/campaign/cp_map.c:1652
+#: client/campaign/cp_map.c:1659
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Kütus:\t%i/%i\n"
@@ -13136,8 +13161,8 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Sul on valmis uus lennuk (a %s) baasis %s"
 
-#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1591
-#: client/campaign/cp_map.c:1610
+#: client/campaign/cp_fightequip_callbacks.c:173 client/campaign/cp_map.c:1612
+#: client/campaign/cp_map.c:1631
 #, fuzzy
 msgid "Unknown"
 msgstr "Tundmatu relva oskus"
@@ -13258,7 +13283,7 @@ msgid_plural "%d days"
 msgstr[0] "Mai"
 msgstr[1] "Mai"
 
-#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:354
+#: client/campaign/cp_installation_callbacks.c:49 client/campaign/cp_map.c:359
 #, fuzzy
 msgid "Installation"
 msgstr "Riigid"
@@ -13293,20 +13318,20 @@ msgstr "Kas tahad tõesti tugipunkti hävitada?"
 msgid "Forget it"
 msgstr ""
 
-#: client/campaign/cp_map.c:365
+#: client/campaign/cp_map.c:370
 #, fuzzy
 msgid "UFO Sighting"
 msgstr "Ufo - Hävitus"
 
-#: client/campaign/cp_map.c:1383
+#: client/campaign/cp_map.c:1404
 msgid "Day"
 msgstr "Päev"
 
-#: client/campaign/cp_map.c:1383
+#: client/campaign/cp_map.c:1404
 msgid "Night"
 msgstr "Öö"
 
-#: client/campaign/cp_map.c:1590
+#: client/campaign/cp_map.c:1611
 #, fuzzy, c-format
 msgid ""
 "Location: %s\n"
@@ -13317,69 +13342,69 @@ msgstr ""
 "Tüüp: %s\n"
 "Ülesanne: %s\n"
 
-#: client/campaign/cp_map.c:1607
+#: client/campaign/cp_map.c:1628
 #, fuzzy, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cp_map.c:1627 client/campaign/cp_map.c:1635
+#: client/campaign/cp_map.c:1648 client/campaign/cp_map.c:1656
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Nimi:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1628 client/campaign/cp_map.c:1636
+#: client/campaign/cp_map.c:1649 client/campaign/cp_map.c:1657
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Seisund:\t%s\n"
 
-#: client/campaign/cp_map.c:1629
+#: client/campaign/cp_map.c:1650
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr ""
 
-#: client/campaign/cp_map.c:1633 client/campaign/cp_map.c:1643
+#: client/campaign/cp_map.c:1654 client/campaign/cp_map.c:1664
 #, fuzzy, c-format
 msgid "ETA:\t%sh\n"
 msgstr "Tegevus:\t%s\n"
 
-#: client/campaign/cp_map.c:1661
+#: client/campaign/cp_map.c:1682
 #, fuzzy, c-format
 msgid "Speed: %i km/h\n"
 msgstr "Kiirus:\t%0f\n"
 
-#: client/campaign/cp_map.c:1861
+#: client/campaign/cp_map.c:1882
 #, fuzzy, c-format
 msgid "%s\t%i%%\n"
 msgstr "Nimii:\t%s (%i/%i)\n"
 
-#: client/campaign/cp_map.c:1912
+#: client/campaign/cp_map.c:1947
 #, fuzzy
 msgid "Select the desired location of the new base on the map.\n"
 msgstr ""
 "Vali Soovitud asukoht uue\n"
 "baasi jaoks sellel kaartil.\n"
 
-#: client/campaign/cp_map.c:1915
+#: client/campaign/cp_map.c:1950
 #, fuzzy
 msgid "Select the desired location of the new installation on the map.\n"
 msgstr ""
 "Vali Soovitud asukoht uue\n"
 "baasi jaoks sellel kaartil.\n"
 
-#: client/campaign/cp_map.c:1920
+#: client/campaign/cp_map.c:1955
 #, fuzzy
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr ""
 "Tulnukad ründavad meie\n"
 "baasi !!!!\n"
 
-#: client/campaign/cp_map.c:1925
+#: client/campaign/cp_map.c:1960
 msgid "Select ufo or mission on map\n"
 msgstr "Vali UFO või mission kaartil\n"
 
-#: client/campaign/cp_map.c:1930
+#: client/campaign/cp_map.c:1965
 msgid "UFO in radar range\n"
 msgstr "Ufo on radari ulatuseses\n"
 
@@ -13418,21 +13443,21 @@ msgstr ""
 msgid "%s was successfully removed from %s."
 msgstr "Kampaania salvestati edukalt."
 
-#: client/campaign/cp_mapfightequip.c:1348
+#: client/campaign/cp_mapfightequip.c:1355
 msgid "Light weight"
 msgstr ""
 
-#: client/campaign/cp_mapfightequip.c:1351
+#: client/campaign/cp_mapfightequip.c:1358
 #, fuzzy
 msgid "Medium weight"
 msgstr "Meedik"
 
-#: client/campaign/cp_mapfightequip.c:1354
+#: client/campaign/cp_mapfightequip.c:1361
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Kahur-Laser"
 
-#: client/campaign/cp_mapfightequip.c:1357
+#: client/campaign/cp_mapfightequip.c:1364
 #, fuzzy
 msgid "Unknown weight"
 msgstr "Tundmatu relva oskus"
@@ -14944,7 +14969,7 @@ msgstr ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:459
+#: client/cl_game_campaign.c:460
 #, c-format
 msgid "Rank: %s"
 msgstr "Auaste: %s"
@@ -15223,80 +15248,80 @@ msgstr "CCCP"
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/input/cl_input.c:895
+#: client/input/cl_input.c:916
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr ""
 
-#: client/input/cl_input.c:897
+#: client/input/cl_input.c:918
 msgid "Rotate battlescape camera clockwise"
 msgstr ""
 
-#: client/input/cl_input.c:899
+#: client/input/cl_input.c:920
 msgid "Tilt battlescape camera up"
 msgstr ""
 
-#: client/input/cl_input.c:901
+#: client/input/cl_input.c:922
 msgid "Tilt battlescape camera down"
 msgstr ""
 
-#: client/input/cl_input.c:903
+#: client/input/cl_input.c:924
 msgid "Move battlescape camera left"
 msgstr ""
 
-#: client/input/cl_input.c:905
+#: client/input/cl_input.c:926
 msgid "Move battlescape camera right"
 msgstr ""
 
-#: client/input/cl_input.c:907
+#: client/input/cl_input.c:928
 msgid "Move battlescape camera forward"
 msgstr ""
 
-#: client/input/cl_input.c:909
+#: client/input/cl_input.c:930
 msgid "Move battlescape camera backward"
 msgstr ""
 
-#: client/input/cl_input.c:911 client/input/cl_input.c:933
+#: client/input/cl_input.c:932 client/input/cl_input.c:954
 msgid "Zoom in"
 msgstr ""
 
-#: client/input/cl_input.c:913 client/input/cl_input.c:934
+#: client/input/cl_input.c:934 client/input/cl_input.c:955
 msgid "Zoom out"
 msgstr ""
 
-#: client/input/cl_input.c:916
+#: client/input/cl_input.c:937
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:918
+#: client/input/cl_input.c:939
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:920
+#: client/input/cl_input.c:941
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/input/cl_input.c:922
+#: client/input/cl_input.c:943
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
-#: client/input/cl_input.c:924
+#: client/input/cl_input.c:945
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr ""
 
-#: client/input/cl_input.c:926
+#: client/input/cl_input.c:947
 msgid "Turn soldier toward mouse pointer"
 msgstr ""
 
-#: client/input/cl_input.c:928
+#: client/input/cl_input.c:949
 #, fuzzy
 msgid "Toggles the hud radar mode"
 msgstr "Järgmine tulnukas"
 
-#: client/input/cl_input.c:931
+#: client/input/cl_input.c:952
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/input/cl_input.c:932
+#: client/input/cl_input.c:953
 msgid "Slice through terrain at a lower level"
 msgstr ""
 

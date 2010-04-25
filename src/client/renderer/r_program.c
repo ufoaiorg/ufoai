@@ -29,6 +29,9 @@
 #include "../../shared/parse.h"
 #include "../../shared/shared.h"
 
+
+#define SHADER_BUF_SIZE 16384
+
 void R_UseProgram  (r_program_t *prog)
 {
 	if (!qglUseProgram || r_state.active_program == prog)
@@ -46,13 +49,22 @@ void R_UseProgram  (r_program_t *prog)
 	}
 }
 
+#ifdef DEBUG
+#define R_ProgramVariable(x, y) R_ProgramVariable_Debug(x, y, file, line)
+static r_progvar_t *R_ProgramVariable_Debug (int type, const char *name, const char *file, int line)
+#else
 static r_progvar_t *R_ProgramVariable (int type, const char *name)
+#endif
 {
 	r_progvar_t *v;
 	int i;
 
 	if (!r_state.active_program) {
+#ifdef DEBUG
+		Com_Printf("R_ProgramVariable: \"%s\" - No program bound. (%s: line %d)\n", name, file, line);
+#else
 		Com_Printf("R_ProgramVariable: No program bound.\n");
+#endif
 		return NULL;
 	}
 
@@ -79,8 +91,12 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 		v->location = qglGetAttribLocation(r_state.active_program->id, name);
 
 	if (v->location == -1) {
-		Com_Printf("R_ProgramVariable: Could not find %s in program %s\n",
-			name, r_state.active_program->name);
+#ifdef DEBUG
+		Com_Printf("R_ProgramVariable: Could not find %s in program %s. (%s: line %d)\n",
+			name, r_state.active_program->name, file, line);
+#else
+		Com_Printf("R_ProgramVariable: Could not find parameter in program.\n");
+#endif
 		v->location = 0;
 		return NULL;
 	}
@@ -91,7 +107,11 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 	return v;
 }
 
+#ifdef DEBUG
+void R_ProgramParameter1i_Debug (const char *name, GLint value , const char *file, int line)
+#else
 void R_ProgramParameter1i (const char *name, GLint value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -101,7 +121,11 @@ void R_ProgramParameter1i (const char *name, GLint value)
 	qglUniform1i(v->location, value);
 }
 
+#ifdef DEBUG
+void R_ProgramParameter1f_Debug (const char *name, GLfloat value , const char *file, int line)
+#else
 void R_ProgramParameter1f (const char *name, GLfloat value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -111,7 +135,11 @@ void R_ProgramParameter1f (const char *name, GLfloat value)
 	qglUniform1f(v->location, value);
 }
 
+#ifdef DEBUG
+void R_ProgramParameter1fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
+#else
 void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -121,7 +149,11 @@ void R_ProgramParameter1fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform1fv(v->location, size, value);
 }
 
+#ifdef DEBUG
+void R_ProgramParameter2fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+#else
 void R_ProgramParameter2fv (const char *name, GLfloat *value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -131,7 +163,11 @@ void R_ProgramParameter2fv (const char *name, GLfloat *value)
 	qglUniform2fv(v->location, 1, value);
 }
 
+#ifdef DEBUG
+void R_ProgramParameter2fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
+#else
 void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -141,7 +177,11 @@ void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
 	qglUniform2fv(v->location, size, value);
 }
 
+#ifdef DEBUG
+void R_ProgramParameter3fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+#else
 void R_ProgramParameter3fv (const char *name, GLfloat *value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -151,7 +191,11 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value)
 	qglUniform3fv(v->location, 1, value);
 }
 
+#ifdef DEBUG
+void R_ProgramParameter4fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+#else
 void R_ProgramParameter4fv (const char *name, GLfloat *value)
+#endif
 {
 	r_progvar_t *v;
 
@@ -161,7 +205,11 @@ void R_ProgramParameter4fv (const char *name, GLfloat *value)
 	qglUniform4fv(v->location, 1, value);
 }
 
+#ifdef DEBUG
+void R_AttributePointer_Debug (const char *name, GLuint size, const GLvoid *array , const char *file, int line)
+#else
 void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
+#endif
 {
 	r_progvar_t *v;
 
@@ -171,7 +219,11 @@ void R_AttributePointer (const char *name, GLuint size, const GLvoid *array)
 	qglVertexAttribPointer(v->location, size, GL_FLOAT, GL_FALSE, 0, array);
 }
 
+#ifdef DEBUG
+void R_EnableAttribute_Debug (const char *name , const char *file, int line)
+#else
 void R_EnableAttribute (const char *name)
+#endif
 {
 	r_progvar_t *v;
 
@@ -181,7 +233,11 @@ void R_EnableAttribute (const char *name)
 	qglEnableVertexAttribArray(v->location);
 }
 
+#ifdef DEBUG
+void R_DisableAttribute_Debug (const char *name , const char *file, int line)
+#else
 void R_DisableAttribute (const char *name)
+#endif
 {
 	r_progvar_t *v;
 
@@ -242,10 +298,8 @@ static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in
 	return inLength;
 }
 
-static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
+static size_t R_InitializeShader (const char *name, char *out, size_t len)
 {
-	char path[MAX_QPATH];
-	byte *buf;
 	size_t i;
 	const char *hwHack, *defines;
 
@@ -268,16 +322,29 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 	i = 0;
 
-	if (hwHack)
-		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
-
+	defines = "#version 110\n";
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.width);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
+	if (hwHack)
+		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
+
+	return i;
+}
+
+static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
+{
+	char *buffer;
+	size_t i = 0;
+
+	/** @todo (arisian): don't GLSL compilers have built-in preprocessors that can handle this kind of stuff? */
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
+			char path[MAX_QPATH];
+			byte *buf;
 			size_t inc_len;
 			in += 8;
 			Com_sprintf(path, sizeof(path), "shaders/%s", Com_Parse(&in));
@@ -295,6 +362,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 		if (!strncmp(in, "#if", 3)) {  /* conditionals */
 			float f;
+			qboolean elseclause = qfalse;
 
 			in += 3;
 
@@ -306,15 +374,59 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 					break;
 				}
 
+				if (!strncmp(in, "#else", 5)) {
+					in += 5;
+					elseclause = qtrue;
+				}
+
 				len--;
 				if (len < 0) {
 					Com_Error(ERR_DROP, "R_PreprocessShader: "
 							"Overflow: %s", name);
 				}
 
-				if (f) {
-					*out++ = *in++;
-					i++;
+				if ((f && !elseclause) || (!f && elseclause)) {
+					if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
+						int j, z;
+						size_t subLength = 0;
+
+						buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+
+						in += 7;
+						z = Cvar_GetValue(Com_Parse(&in));
+
+						while (*in) {
+							if (!strncmp(in, "#endunroll", 10)) {
+								in += 10;
+								break;
+							}
+
+							buffer[subLength++] = *in++;
+						}
+
+						for (j = 0; j < z; j++) {
+							int l;
+							for (l = 0; l < subLength; l++) {
+								if (buffer[l] == '$') {
+									Com_sprintf(out, subLength - l, "%d", j);
+									out += (j / 10) + 1;
+									i += (j / 10) + 1;
+									len -= (j / 10) + 1;
+								} else {
+									*out++ = buffer[l];
+									i++;
+									len--;
+								}
+								if (len < 0)
+									Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
+							}
+						}
+
+						Mem_Free(buffer);
+					} else {
+						*out++ = *in++;
+						i++;
+					}
 				} else
 					in++;
 			}
@@ -323,6 +435,46 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				Com_Error(ERR_DROP, "R_PreprocessShader: "
 						"Unterminated conditional: %s", name);
 			}
+		}
+
+
+		if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
+			int j, z;
+			size_t subLength = 0;
+
+			buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+
+			in += 7;
+			z = Cvar_GetValue(Com_Parse(&in));
+
+			while (*in) {
+				if (!strncmp(in, "#endunroll", 10)) {
+					in += 10;
+					break;
+				}
+
+				buffer[subLength++] = *in++;
+			}
+
+			for (j = 0; j < z; j++) {
+				int l;
+				for (l = 0; l < subLength; l++) {
+					if (buffer[l] == '$') {
+						Com_sprintf(out, subLength - l, "%d", j);
+						out += (j / 10) + 1;
+						i += (j / 10) + 1;
+						len -= (j / 10) + 1;
+					} else {
+						*out++ = buffer[l];
+						i++;
+						len--;
+					}
+					if (len < 0)
+						Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
+				}
+			}
+
+			Mem_Free(buffer);
 		}
 
 		/* general case is to copy so long as the buffer has room */
@@ -336,16 +488,17 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 	return i;
 }
 
-#define SHADER_BUF_SIZE 16384
 
 static r_shader_t *R_LoadShader (GLenum type, const char *name)
 {
 	r_shader_t *sh;
 	char path[MAX_QPATH], *src[1];
 	unsigned e, len, length[1];
-	char *source;
+	char *source, *srcBuf;
 	byte *buf;
 	int i;
+	size_t bufLength = SHADER_BUF_SIZE;
+	size_t initializeLength;
 
 	snprintf(path, sizeof(path), "shaders/%s", name);
 
@@ -354,9 +507,13 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		return NULL;
 	}
 
-	source = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+	srcBuf = source = Mem_PoolAlloc(bufLength, vid_imagePool, 0);
 
-	R_PreprocessShader(name, (const char *)buf, source, SHADER_BUF_SIZE);
+	initializeLength = R_InitializeShader(name, srcBuf, bufLength);
+	srcBuf += initializeLength;
+	bufLength -= initializeLength;
+
+	R_PreprocessShader(name, (const char *)buf, srcBuf, bufLength);
 	FS_FreeFile(buf);
 
 	src[0] = source;
@@ -389,6 +546,8 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	/* compile it and check for errors */
 	qglCompileShader(sh->id);
 
+	Mem_Free(source);
+
 	qglGetShaderiv(sh->id, GL_COMPILE_STATUS, &e);
 	if (!e) {
 		char log[MAX_STRING_CHARS];
@@ -398,11 +557,9 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		qglDeleteShader(sh->id);
 		memset(sh, 0, sizeof(*sh));
 
-		Mem_Free(source);
 		return NULL;
 	}
 
-	Mem_Free(source);
 	return sh;
 }
 
@@ -480,13 +637,21 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 	R_ProgramParameter1i("SAMPLER3", 3);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("STATICLIGHT", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("HARDNESS", 0.2);
 	R_ProgramParameter1f("SPECULAR", 1.0);
+	R_ProgramParameter1f("GLOWSCALE", 1.0);
+}
+
+static void R_UseWorldProgram (r_program_t *prog)
+{
+	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 }
 
 static void R_InitMeshProgram (r_program_t *prog)
@@ -499,7 +664,12 @@ static void R_InitMeshProgram (r_program_t *prog)
 	R_ProgramParameter3fv("LIGHTPOS", lightPos);
 
 	R_ProgramParameter1f("OFFSET", 0.0);
-	R_ProgramParameter1i("GLOWMAP", 0);
+	R_ProgramParameter1f("GLOWSCALE", 0.0);
+}
+
+static void R_UseMeshProgram (r_program_t *prog)
+{
+	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -508,8 +678,10 @@ static void R_InitWarpProgram (r_program_t *prog)
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
+	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter4fv("OFFSET", offset);
+	R_ProgramParameter1f("GLOWSCALE", 0.0);
 }
 
 static void R_UseWarpProgram (r_program_t *prog)
@@ -612,6 +784,13 @@ static void R_InitAtmosphereProgram (r_program_t *prog)
 	R_ProgramParameter2fv("UVSCALE", uvScale);
 }
 
+static void R_InitSimpleGlowProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER0", 0);
+	R_ProgramParameter1i("SAMPLER1", 4);
+	R_ProgramParameter1f("GLOWSCALE", 1.0);
+}
+
 void R_InitParticleProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -639,13 +818,14 @@ void R_InitPrograms (void)
 	if (!r_programs->integer)
 		return;
 
-	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
-	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
+	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
+	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, R_UseMeshProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
+	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
 }
 
 /**

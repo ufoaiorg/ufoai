@@ -55,7 +55,7 @@ PLANE FINDING
 */
 
 /**
- * @brief Planes are stored by there distance (resp. the calculated
+ * @brief Planes are stored by their distance (resp. the calculated
  * hash) in the plane hash table
  */
 static inline int GetPlaneHashValueForDistance (const vec_t distance)
@@ -92,7 +92,7 @@ static inline int PlaneTypeForNormal (const vec3_t normal)
 }
 
 /**
- * Checks whether the given normal and distance vectors match the given plane by some epsilon value
+ * @brief Checks whether the given normal and distance vectors match the given plane by some epsilon value
  * @param p The plane to compare the normal and distance with
  * @param normal
  * @param dist
@@ -179,7 +179,7 @@ static inline qboolean SnapVector (vec3_t normal)
 }
 
 /**
- * Snaps normal to axis-aligned if it is within an epsilon of axial.
+ * @brief Snaps normal to axis-aligned if it is within an epsilon of axial.
  * @param[in,out] normal - Plane normal vector (assumed to be unit length)
  * @param[in,out] dist - Plane constant - return as rounded to integer if it
  * is within an epsilon of @c MAP_DIST_EPSILON
@@ -246,12 +246,9 @@ static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p
 
 
 /**
- * Get the content flags for a given brush
+ * @brief Get the content flags for a given brush
  * @param b The mapbrush to get the content flags for
  * @return The calculated content flags
- * @note If any of the brush sides is translucent, we add
- * @c CONTENTS_TRANSLUCENT to content flags and change
- * @c CONTENTS_SOLID to @c CONTENTS_WINDOW
  */
 static int BrushContents (mapbrush_t *b)
 {
@@ -270,19 +267,11 @@ static int BrushContents (mapbrush_t *b)
 		}
 	}
 
-	if (trans & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST)) {
-		contentFlags |= CONTENTS_TRANSLUCENT;
-		if (contentFlags & CONTENTS_SOLID) {
-			contentFlags &= ~CONTENTS_SOLID;
-			contentFlags |= CONTENTS_WINDOW;
-		}
-	}
-
 	return contentFlags;
 }
 
 /**
- * Extract the level flags (1-8) from the content flags of the given brush
+ * @brief Extract the level flags (1-8) from the content flags of the given brush
  * @param brush The brush to extract the level flags from
  * @return The level flags (content flags) of the given brush
  */
@@ -443,7 +432,7 @@ static void AddBrushBevels (mapbrush_t *b)
 }
 
 /**
- * @brief makes basewindigs for sides and mins / maxs for the brush
+ * @brief makes basewindings for sides and mins / maxs for the brush
  */
 static qboolean MakeBrushWindings (mapbrush_t *brush)
 {
@@ -708,9 +697,13 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 				side->contentFlags = CONTENTS_SOLID;
 		}
 
-		/* translucent objects are automatically classified as detail */
-		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST))
+		/* translucent objects are automatically classified as detail and window */
+		if (side->surfaceFlags & (SURF_BLEND33 | SURF_BLEND66 | SURF_ALPHATEST)) {
 			side->contentFlags |= CONTENTS_DETAIL;
+			side->contentFlags |= CONTENTS_TRANSLUCENT;
+			side->contentFlags |= CONTENTS_WINDOW;
+			side->contentFlags &= ~CONTENTS_SOLID;
+		}
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;
 		if (!checkOrFix) {

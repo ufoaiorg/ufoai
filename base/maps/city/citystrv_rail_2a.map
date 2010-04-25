@@ -7,6 +7,10 @@
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
+"angles_night" "-85 100"
+"color_night" "0.55 0.55 0.95"
+"ambient_night" "0.15 0.15 0.19"
+"light_night" "45"
 // brush 0
 {
 ( 448 248 67 ) ( 449 256 69 ) ( 449 248 69 ) tex_buildings/concrete004 0 0 0 0.125 0.125 65024 1024 0

@@ -2,8 +2,28 @@
 // AIRCRAFT PILOTS MENU
 // ==================
 
+component cmpActorSelect cmpPilotSelect {
+	{
+		num "0"
+	}
+	checkbox check_actor
+	{
+		tooltip	"_Add/remove this pilot"
+		onChange { cmd "pilot_hire <node:parent@num> <cvar:mn_relative_id>;" }
+	}
+
+	string txt_actor
+	{
+		onClick { cmd "pilot_select <node:parent@num> <cvar:mn_relative_id>;" }
+	}
+
+}
+
+
 window aircraft_pilots extends iaircraft
 {
+
+
 	// ==================
 	// background
 	// ==================
@@ -119,29 +139,29 @@ window aircraft_pilots extends iaircraft
 	 */
 	confunc aircraft_pilot_usedelsewhere
 	{
-		*txt_actor<1>@color = ".50 .50 .50 1"
-		*(checkbox)check_actor<1>@current = 0
-		*(checkbox)check_actor<1>@tooltip = "_Pilot is assigned to another craft"
-		*check_actor<1>@disabled = true
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
+		*actor_select<1>.txt_actor@color = ".50 .50 .50 1"
+		*(checkbox)actor_select<1>.check_actor@current = 0
+		*(checkbox)actor_select<1>.check_actor@tooltip = "_Pilot is assigned to another craft"
+		*actor_select<1>.check_actor@disabled = true
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_unassigned {
-		*txt_actor<1>@color = "0 .78 0 1"
-		*check_actor<1>@disabled = false
-		*(checkbox)check_actor<1>@current = 0
+		*actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*actor_select<1>.check_actor@disabled = false
+		*(checkbox)actor_select<1>.check_actor@current = 0
 		
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
 		if ( *cvar:mn_pilotassigned == 1 ) {
-			*(checkbox)check_actor<1>@disabled = true
-			*(checkbox)check_actor<1>@tooltip = "_A pilot is already assigned to this craft"
+			*(checkbox)actor_select<1>.check_actor@disabled = true
+			*(checkbox)actor_select<1>.check_actor@tooltip = "_A pilot is already assigned to this craft"
 		} else {
-			*(checkbox)check_actor<1>@tooltip = "_Assign pilot to this craft"
+			*(checkbox)actor_select<1>.check_actor@tooltip = "_Assign pilot to this craft"
 		}
 	}
 
@@ -149,12 +169,12 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_assigned {
-		*txt_actor<1>@color = "0 .78 0 1"
-		*check_actor<1>@disabled = false
-		*(checkbox)check_actor<1>@current = 1
-		*(checkbox)check_actor<1>@tooltip = "_Remove pilot from this craft"
-		*check_actor<1>@invis = false
-		*txt_actor<1>@invis = false
+		*actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*actor_select<1>.check_actor@disabled = false
+		*(checkbox)actor_select<1>.check_actor@current = 1
+		*(checkbox)actor_select<1>.check_actor@tooltip = "_Remove pilot from this craft"
+		*actor_select<1>.check_actor@invis = false
+		*actor_select<1>.txt_actor@invis = false
 	}
 
 	/**
@@ -173,8 +193,8 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_unusedslot {
-		*check_actor<1>@invis = true
-		*txt_actor<1>@invis = true
+		*actor_select<1>.check_actor@invis = true
+		*actor_select<1>.txt_actor@invis = true
 	}
 
 	/**
@@ -188,179 +208,45 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_pilot_selected {
-		*txt_actor<1>@color = "1 1 1 1"
+		*actor_select<1>.txt_actor@color = "1 1 1 1"
 	}
 
-	// checkbox
-
-	checkbox check_actor0
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 470"
-		onChange { cmd "pilot_hire 0 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor1
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 505"
-		onChange { cmd "pilot_hire 1 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor2
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 540"
-		onChange { cmd "pilot_hire 2 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor3
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 575"
-		onChange { cmd "pilot_hire 3 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor4
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 610"
-		onChange { cmd "pilot_hire 4 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor5
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 645"
-		onChange { cmd "pilot_hire 5 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor6
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 680"
-		onChange { cmd "pilot_hire 6 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox check_actor7
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"280 715"
-		onChange { cmd "pilot_hire 7 <cvar:mn_relative_id>;" }
-		current 0
-		image ui/checkbox_green
-		size "20 20"
-		invis	true
+	cmpPilotSelect actor_select0 {
+  	pos "38 470"
 	}
 
-	string txt_actor0
-	{
-		string	*cvar:mn_ename0
-		pos		"60 460"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 0 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+	cmpPilotSelect actor_select1 {
+  	pos "38 505"
 	}
-	string txt_actor1
+
+	cmpPilotSelect actor_select2
 	{
-		string	*cvar:mn_ename1
-		pos		"60 495"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 1 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		pos			"38 540"
 	}
-	string txt_actor2
+
+	cmpPilotSelect actor_select3
 	{
-		string	*cvar:mn_ename2
-		pos		"60 530"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 2 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		pos			"38 575"
 	}
-	string txt_actor3
+
+	cmpPilotSelect actor_select4
 	{
-		string	*cvar:mn_ename3
-		pos		"60 565"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 3 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		pos			"38 610"
 	}
-	string txt_actor4
+
+	cmpPilotSelect actor_select5
 	{
-		string	*cvar:mn_ename4
-		pos		"60 600"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 4 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		pos			"38 645"
 	}
-	string txt_actor5
+
+	cmpPilotSelect actor_select6
 	{
-		string	*cvar:mn_ename5
-		pos		"60 635"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 5 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		pos			"38 680"
 	}
-	string txt_actor6
+
+	cmpPilotSelect actor_select7
 	{
-		string	*cvar:mn_ename6
-		pos		"60 670"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 6 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
-	}
-	string txt_actor7
-	{
-		string	*cvar:mn_ename7
-		pos		"60 705"
-		size	"190 35"
-		textalign cl
-		onClick { cmd "pilot_select 7 <cvar:mn_relative_id>;" }
-		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		pos			"38 715"
 	}
 
 	vscrollbar scroll_employees
@@ -395,6 +281,14 @@ window aircraft_pilots extends iaircraft
 
 	func onInit
 	{
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			*actor_select<cvar:i>@num = <cvar:i>
+			*actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*cvar:mn_relative_id = 0
 		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"

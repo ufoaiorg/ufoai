@@ -14,7 +14,12 @@ component button cmpMenuButton {
 	selectcolor "1 1 1 1"
 }
 
-		/// hire, mp_team
+/**
+ * Bar with border, label and value.
+ * Used to show stats of the actor. 
+ * This version is used in menu "employees" and "mp_team"
+ */
+
 component panel cmpDefNamedTbar {
 	{
 		size	"450 32"
@@ -41,6 +46,10 @@ component panel cmpDefNamedTbar {
 		textalign ur
 	}
 }
+
+/**
+ * screenshot of the map. Used in skirmish and mp.
+ */
 
 component pic cmpMapPic {
 	texl		"0 0"
@@ -93,6 +102,9 @@ component panel cmpMapSlot
 }
 
 
+/**
+ * Header for the base. Used in all baseview screens
+ */
 component panel cmpDefBaseHeader {
 {
 pos "0 0"
@@ -145,19 +157,21 @@ component cmpDefBaseHeader cmpBaseHeader
 	}
 }
 
+/**
+ * button on popups
+ */
 component button cmpPopupButton
 {
-//		string		"_Build"
-//		tooltip		"_Build the radar tower"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
 		image		ui/button_green_small
-//		pos			"109 240"
 		size		"176 32"
-//		onClick		{ cmd "mn_pop; mn_installation_build *cvar:mn_installation_type;" }
 }
 
+/**
+ * Cancel button on popups
+*/
 component cmpPopupButton cmpCancelButton
 {
 	string		"_Cancel"

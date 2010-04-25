@@ -84,22 +84,30 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
+static void R_StageGlow (const mBspSurface_t *surf, const materialStage_t *stage)
+{
+	if (stage->image->glowmap) {
+		R_EnableGlowMap(stage->image->glowmap, qtrue);
+		R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
+	} else {
+		R_EnableGlowMap(NULL, qfalse);
+	}
+}
+
 /**
  * @brief Manages state for stages supporting static, dynamic, and per-pixel lighting.
  */
 static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	/* if the surface has a lightmap, and the stage specifies lighting.. */
-
 	if (surf->flags & MSURF_LIGHTMAP &&
 			(stage->flags & (STAGE_LIGHTMAP | STAGE_LIGHTING))) {
 		R_EnableTexture(&texunit_lightmap, qtrue);
 		R_BindLightmapTexture(surf->lightmap_texnum);
 
 		/* hardware lighting */
-		if (stage->flags & STAGE_LIGHTING) {
+		if ((stage->flags & STAGE_LIGHTING)) {
 			R_EnableLighting(r_state.world_program, qtrue);
-
 			if (r_state.lighting_enabled) {
 				if (r_bumpmap->value && stage->image->normalmap) {
 					R_BindDeluxemapTexture(surf->deluxemap_texnum);
@@ -108,12 +116,10 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 					R_EnableBumpmap(&stage->image->material, qtrue);
 				} else if (r_state.bumpmap_enabled)
 					R_EnableBumpmap(NULL, qfalse);
-			}
-		} else
-			R_EnableLighting(NULL, qfalse);
+			} else
+				R_EnableLighting(NULL, qfalse);
+		}
 	} else {
-		R_EnableLighting(NULL, qfalse);
-
 		R_EnableTexture(&texunit_lightmap, qfalse);
 	}
 }
@@ -261,6 +267,8 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 
 	/* and optionally the lightmap */
 	R_StageLighting(surf, stage);
+
+	R_StageGlow(surf, stage);
 
 	/* load the texture matrix for rotations, stretches, etc.. */
 	R_StageTextureMatrix(surf, stage);
@@ -425,6 +433,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableBumpmap(NULL, qfalse);
 
+	R_EnableGlowMap(NULL, qfalse);
+
 	R_EnableLighting(NULL, qfalse);
 
 	R_Color(NULL);
@@ -506,6 +516,15 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 
 		if (!strlen(c))
 			break;
+
+		if (!strcmp(c, "glowscale")) {
+			s->glowscale = atof(Com_Parse(buffer));
+			if (s->glowscale < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", c);
+				s->glowscale = DEFAULT_GLOWSCALE;
+			}
+			continue;
+		}
 
 		if (!strcmp(c, "texture")) {
 			c = Com_Parse(buffer);
@@ -919,8 +938,17 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 
+		if (!strcmp(c, "glowscale")) {
+			m->glowscale = atof(Com_Parse(&buffer));
+			if (m->glowscale < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid glowscale value for %s\n", image->name);
+				m->glowscale = DEFAULT_GLOWSCALE;
+			}
+		}
+
 		if (*c == '{' && inmaterial) {
 			s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
+			s->glowscale = DEFAULT_GLOWSCALE;
 
 			if (R_ParseStage(s, &buffer) == -1) {
 				Mem_Free(s);
@@ -934,6 +962,7 @@ void R_LoadMaterials (const char *map)
 					continue;
 				}
 			}
+
 
 			/* append the stage to the chain */
 			if (!m->stages)
@@ -954,6 +983,12 @@ void R_LoadMaterials (const char *map)
 			Com_DPrintf(DEBUG_RENDERER, "Parsed material %s with %d stages\n", image->name, m->num_stages);
 			inmaterial = qfalse;
 			image = NULL;
+			/* multiply stage glowscale values by material glowscale */
+			ss = m->stages;
+			while (ss) {
+				ss->glowscale *= m->glowscale;
+				ss = ss->next;
+			}
 		}
 	}
 

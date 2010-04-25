@@ -101,6 +101,7 @@ typedef struct {
 	r_program_t *convolve_program;
 	r_program_t *combine2_program;
 	r_program_t *atmosphere_program;
+	r_program_t *simple_glow_program;
 	r_program_t *active_program;
 
 	/* blend function */
@@ -118,7 +119,7 @@ typedef struct {
 	qboolean warp_enabled;
 	qboolean fog_enabled;
 	qboolean blur_enabled;
-	qboolean glow_enabled;
+	qboolean glowmap_enabled;
 	qboolean draw_glow_enabled;
 } rstate_t;
 
@@ -147,13 +148,13 @@ void R_EnableTexture(gltexunit_t *texunit, qboolean enable);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableColorArray(qboolean enable);
-void R_EnableLighting(r_program_t *program, qboolean enable);
+qboolean R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(material_t *material, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
-void R_EnableGlow(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
+void R_EnableGlowMap(const image_t *image, qboolean enable);
 
 #endif
