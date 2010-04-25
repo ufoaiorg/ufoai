@@ -828,10 +828,14 @@ window hud extends ahud
 		*cvar:selected_soldier = <1>
 	}
 	confunc hudenable {
-		*team_selection.bt_actor<1>@disabled = false
+		*cvar:i = ( <1> - 1 )
+		*team_selection.bt_actor<cvar:i>@disabled = false
+		delete *cvar:i
 	}
 	confunc huddisable {
-		*team_selection.bt_actor<1>@disabled = true
+		*cvar:i = ( <1> - 1 )
+		*team_selection.bt_actor<cvar:i>@disabled = true
+		delete *cvar:i
 	}
 
 	// CROUCH/STAND UP BUTTON
