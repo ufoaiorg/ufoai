@@ -2773,54 +2773,58 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			return qfalse;
 		}
 
+		Com_RegisterConstList(saveBaseConstants);
+
 		act_base = mxml_AddNode(bases, SAVE_BASES_BASE);
 		mxml_AddString(act_base, SAVE_BASES_NAME, b->name);
 		mxml_AddPos3(act_base, SAVE_BASES_POS, b->pos);
+		mxml_AddString(act_base, SAVE_BASES_BASESTATUS, Com_GetConstVariable(SAVE_BASESTATUS_NAMESPACE, b->baseStatus));
+		mxml_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
+		if (b->aircraftCurrent)
+			mxml_AddInt(act_base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIR_GetAircraftIDXInBase(b->aircraftCurrent));
+
+		/* building space */
 		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGSPACE);
 		for (k = 0; k < BASE_SIZE; k++) {
 			int l;
 			for (l = 0; l < BASE_SIZE; l++) {
 				mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
-				mxml_AddInt(snode, SAVE_BASES_K, k);
-				mxml_AddInt(snode, SAVE_BASES_L, l);
+				mxml_AddInt(snode, SAVE_BASES_X, k);
+				mxml_AddInt(snode, SAVE_BASES_Y, l);
 				if (b->map[k][l].building)
 					mxml_AddInt(snode, SAVE_BASES_BUILDINGINDEX, b->map[k][l].building->idx);
-				if (b->map[k][l].blocked)
-					mxml_AddBool(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
+				mxml_AddBoolValue(snode, SAVE_BASES_BLOCKED, b->map[k][l].blocked);
 			}
 		}
+		/* buildings */
 		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGS);
-		for (k = 0; k < MAX_BUILDINGS; k++) {
+		for (k = 0; k < ccs.numBuildings[i]; k++) {
 			mxml_node_t * snode;
 			const building_t *building = &ccs.buildings[i][k];
+
 			if (!building->tpl)
 				continue;
+
 			snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
 			mxml_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
 			mxml_AddInt(snode, SAVE_BASES_BUILDING_PLACE, k);
-			mxml_AddInt(snode, SAVE_BASES_BUILDINGSTATUS, building->buildingStatus);
+			mxml_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
 			mxml_AddInt(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart);
 			mxml_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);
 			mxml_AddFloat(snode, SAVE_BASES_BUILDINGLEVEL, building->level);
 			mxml_AddPos2(snode, SAVE_BASES_POS, building->pos);
 		}
-		mxml_AddInt(act_base, SAVE_BASES_NUMBUILDINGS, ccs.numBuildings[i]);
-		mxml_AddShort(act_base, SAVE_BASES_BASESTATUS, b->baseStatus);
-		mxml_AddFloat(act_base, SAVE_BASES_ALIENINTEREST, b->alienInterest);
-
+		/* base defences */
 		node = mxml_AddNode(act_base, SAVE_BASES_BATTERIES);
 		B_SaveBaseSlotsXML(b->batteries, b->numBatteries, node);
-
 		node = mxml_AddNode(act_base, SAVE_BASES_LASERS);
 		B_SaveBaseSlotsXML(b->lasers, b->numLasers, node);
-
-		mxml_AddInt(act_base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIR_GetAircraftIDXInBase(b->aircraftCurrent));
-
 		/* store equipment */
 		node = mxml_AddNode(act_base, SAVE_BASES_STORAGE);
 		B_SaveStorageXML(node, b->storage);
-		mxml_AddInt(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
-		mxml_AddInt(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
+		/* radar */
+		mxml_AddIntValue(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
+		mxml_AddIntValue(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
 
 		/* Alien Containment. */
 		node = mxml_AddNode(act_base, SAVE_BASES_ALIENCONT);
@@ -2833,7 +2837,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			mxml_AddInt(snode, SAVE_BASES_AMOUNTALIVE, b->alienscont[k].amountAlive);
 			mxml_AddInt(snode, SAVE_BASES_AMOUNTDEAD, b->alienscont[k].amountDead);
 		}
-
+		Com_UnregisterConstList(saveBaseConstants);
 	}
 	return qtrue;
 }
@@ -2914,6 +2918,7 @@ qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 qboolean B_LoadXML (mxml_node_t *parent)
 {
 	int i;
+	int j;
 	int buildingIdx;
 	mxml_node_t *bases, *base;
 
@@ -2923,64 +2928,94 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		return qfalse;
 	}
 
+	Com_RegisterConstList(saveBaseConstants);
 	for (base = mxml_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		mxml_node_t * node, * snode;
 		int k;
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
+		const char *str = mxml_GetString(base, SAVE_BASES_BASESTATUS);
+
 		b->idx = B_GetBaseIDX(b);
 		b->founded = qtrue;
+		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
+			Com_Printf("Invaild base status '%s'\n", str);
+			Com_UnregisterConstList(saveBaseConstants);
+			return qfalse;
+		}
 
 		Q_strncpyz(b->name, mxml_GetString(base, SAVE_BASES_NAME), sizeof(b->name));
 		mxml_GetPos3(base, SAVE_BASES_POS, b->pos);
+		b->alienInterest = mxml_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
+
+		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
+		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
+			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
+		else 
+			b->aircraftCurrent = NULL;
+
+		/* building space*/
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
-			const int j = mxml_GetInt(snode, SAVE_BASES_K, 0);
-			const int l = mxml_GetInt(snode, SAVE_BASES_L, 0);
-			buildingIdx = mxml_GetInt(snode, SAVE_BASES_BUILDINGINDEX, BYTES_NONE);
-			if (buildingIdx != BYTES_NONE)
+			const int j = mxml_GetInt(snode, SAVE_BASES_X, 0);
+			const int l = mxml_GetInt(snode, SAVE_BASES_Y, 0);
+			buildingIdx = mxml_GetInt(snode, SAVE_BASES_BUILDINGINDEX, -1);
+
+			if (buildingIdx != -1)
 				/* The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
 				b->map[j][l].building = &ccs.buildings[i][buildingIdx];
 			else
 				b->map[j][l].building = NULL;
 			b->map[j][l].blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
 		}
+		/* buildings */
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGS);
-		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
-			const int buildId = mxml_GetInt(snode, SAVE_BASES_BUILDING_PLACE, 0);
+		for (j = 0, snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING), j++) {
+			const int buildId = mxml_GetInt(snode, SAVE_BASES_BUILDING_PLACE, MAX_BUILDINGS);
 			building_t *building;
 			char buildingType[MAX_VAR];
+
 			if (buildId >= MAX_BUILDINGS) {
 				Com_Printf("building ID is greater than MAX buildings\n");
+				Com_UnregisterConstList(saveBaseConstants);
 				return qfalse;
 			}
 			building = &ccs.buildings[i][buildId];
 
 			Q_strncpyz(buildingType, mxml_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
-			if (buildingType[0] == '\0')
+			if (buildingType[0] == '\0') {
+				Com_Printf("No buildingtype set\n");
+				Com_UnregisterConstList(saveBaseConstants);
 				return qfalse;
+			}
 
 			*building = *B_GetBuildingTemplate(buildingType);
 			if (!building)
 				continue;
+
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
 				Com_Printf("building ID doesn't match\n");
+				Com_UnregisterConstList(saveBaseConstants);
 				return qfalse;
 			}
 			building->base = b;
-			building->buildingStatus = mxml_GetInt(snode, SAVE_BASES_BUILDINGSTATUS, 0);
+
+			str = mxml_GetString(snode, SAVE_BASES_BUILDINGSTATUS);
+			if (!Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
+				Com_Printf("Invaild building status '%s'\n", str);
+				Com_UnregisterConstList(saveBaseConstants);
+				return qfalse;
+			}
+
 			building->timeStart = mxml_GetInt(snode, SAVE_BASES_BUILDINGTIMESTART, 0);
 			building->buildTime = mxml_GetInt(snode, SAVE_BASES_BUILDINGBUILDTIME, 0);
 			building->level = mxml_GetFloat(snode, SAVE_BASES_BUILDINGLEVEL, 0);
 			mxml_GetPos2(snode, SAVE_BASES_POS, building->pos);
 		}
+		ccs.numBuildings[i] = j;
 
-		ccs.numBuildings[i] = mxml_GetInt(base, SAVE_BASES_NUMBUILDINGS, 0);
-		b->baseStatus = mxml_GetShort(base, SAVE_BASES_BASESTATUS, 0);
-		b->alienInterest = mxml_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
 		BDEF_InitialiseBaseSlots(b);
-
 		/* read missile battery slots */
 		node = mxml_GetNode(base, SAVE_BASES_BATTERIES);
 		if (node)
@@ -2989,16 +3024,10 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		node = mxml_GetNode(base, SAVE_BASES_LASERS);
 		if (node)
 			b->numLasers = B_LoadBaseSlotsXML(b->lasers, MAX_BASE_SLOT, node);
-
-		b->aircraftCurrent = NULL;
-		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
-		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
-			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
-
 		/* read equipment */
 		node = mxml_GetNode(base, SAVE_BASES_STORAGE);
 		B_LoadStorageXML(node, &(b->storage));
-
+		/* read radar info */
 		RADAR_InitialiseUFOs(&b->radar);
 		RADAR_Initialise(&b->radar, mxml_GetInt(base, SAVE_BASES_RADARRANGE, 0), mxml_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
@@ -3023,6 +3052,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 		/* reset capacities */
 	}
+	Com_UnregisterConstList(saveBaseConstants);
 	ccs.numBases = B_GetFoundedBaseCount();
 	B_UpdateBaseCount();
 
