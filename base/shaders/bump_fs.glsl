@@ -7,7 +7,7 @@ uniform float PARALLAX;
 uniform float HARDNESS;
 uniform float SPECULAR;
 
-vec3 eye;
+vec3 V;
 
 
 /*
@@ -15,22 +15,26 @@ vec3 eye;
  */
 vec2 BumpTexcoord(in float height){
 
-	eye = normalize(eyedir);
+	V = normalize(eyedir);
 
-	return vec2(height * PARALLAX * 0.04 - 0.02) * eye.xy;
+	return vec2(height * PARALLAX * 0.04 - 0.02) * V.xy;
 }
 
 
 /*
  *BumpFragment
  */
-vec3 BumpFragment(in vec3 deluxemap, in vec3 normalmap){
+vec3 BumpFragment(in vec3 lightVec, in vec3 normalVec){
 
-	float diffuse = dot(deluxemap,
-			vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z));
+	V = normalize(eyedir);
+	vec3 L = vec3(normalize(lightVec).rgb);
+	vec3 N = vec3(normalize(normalVec).rgb);
+	N.xy *= BUMP;
 
-	float specular = HARDNESS * pow(max(-dot(eye,
-			reflect(deluxemap, normalmap)), 0.0), 8.0 * SPECULAR);
+	float diffuse = dot(N, L);
+
+	float specular = HARDNESS * pow(max(-dot(V, reflect(L, N)), 0.0), 
+									8.0 * SPECULAR);
 
 	return vec3(diffuse + specular);
 }
