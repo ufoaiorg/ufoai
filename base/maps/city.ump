@@ -268,7 +268,7 @@ assembly garage
 
 	fix +str_rail_cross "5 0"
 	fix +strv_rail_btm2a "5 1"
-	fix +craft_drop_raptor "5 2"
+	fix +craft_drop_firebird "5 2"
 	fix +str_rail_cross "5 5"
 
 }
