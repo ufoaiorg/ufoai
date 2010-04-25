@@ -3431,7 +3431,7 @@ mapdef wip_city_rma
 	description	"Big city"
 	teams		4
 	multiplayer	false
-	maxaliens	2
+	maxaliens	8
 	gametypes {
 		1on1
 		1on1on1
@@ -3446,17 +3446,19 @@ mapdef wip_city_rma
 
 	aircraft 
 	{
-//		craft_drop_firebird
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_raptor
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+//		craft_ufo_scout
+	}
 
 	terrains
 	{
-		grass
-		mountain
+		//any
 	}
 
 	cultures
@@ -3466,10 +3468,7 @@ mapdef wip_city_rma
 
 	populations
 	{
-		village
-		suburban
-		rural
-		nonpopulation
+		urban
 	}
 }
 
