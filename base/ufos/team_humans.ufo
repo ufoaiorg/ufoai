@@ -540,7 +540,8 @@ team phalanx
 			soldiers/male body head03b 0 // White Male with blond hair & grey glasses
 			soldiers/male body head04a 0 // Chinese Male with beard Camouflage
 			soldiers/male body head04b 0 // Chinese Male with beard
-			soldiers/male body head04c 0 // Chinese Male with beard & dark yellow glasses Camouflage
+			// TODO: only available as unarmoured version
+			//soldiers/male body head04c 0 // Chinese Male with beard & dark yellow glasses Camouflage
 			soldiers/male body head05a 0 // Black Male with short hair
 			soldiers/male body head05b 0 // Black Male with green glasses Camouflage
 		}
