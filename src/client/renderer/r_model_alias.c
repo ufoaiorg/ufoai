@@ -109,7 +109,7 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh)
 	vec4_t tangents[MD2_MAX_VERTS];
 	mAliasVertex_t *vertexes = mesh->vertexes;
 	mAliasCoord_t *stcoords = mesh->stcoords;
-	int32_t *indexArray = mesh->indexes;
+	const int32_t *indexArray = mesh->indexes;
 	const int numVerts = mesh->num_verts;
 	const int numIndexes = mesh->num_tris * 3;
 
