@@ -49,7 +49,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 		glTranslatef(mi->center[0], mi->center[1], mi->center[2]);
 }
 
-static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum)
+static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
 {
 	int i, j;
 	const mAliasFrame_t *frame, *oldframe;
@@ -78,13 +78,13 @@ static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh,
 				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
 				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
 
-		if (r_state.lighting_enabled) {  /* and the norms */
+		if (r_state.lighting_enabled || prerender) {  /* and the norms */
 			VectorSet(r_mesh_norms[i],
 					v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
 					v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
 					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
 		}
-		if (r_state.bumpmap_enabled) {  /* and the tangents */
+		if (r_state.bumpmap_enabled || prerender) {  /* and the tangents */
 			VectorSet(r_mesh_tangents[i],
 					v->tangent[0] + (ov->tangent[0] - v->tangent[0]) * backlerp,
 					v->tangent[1] + (ov->tangent[1] - v->tangent[1]) * backlerp,
@@ -106,12 +106,11 @@ static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh,
 			VectorCopy(r_mesh_verts[meshIndex], vertex_array_3d);
 
 			/* normal vectors for lighting */
-			if (r_state.lighting_enabled) {
+			if (r_state.lighting_enabled || prerender) 
 				VectorCopy(r_mesh_norms[meshIndex], normal_array);
-			}
 
 			/* tangent vectors for bump mapping */
-			if (r_state.bumpmap_enabled)
+			if (r_state.bumpmap_enabled || prerender)
 				VectorCopy(r_mesh_tangents[meshIndex], tangent_array);
 
 			texcoord_array += 2;
@@ -138,7 +137,7 @@ void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *m
 	assert(mesh->normals == NULL);
 	assert(mesh->tangents == NULL);
 
-	R_FillArrayData(mod, mesh, 0.0, 0, 0);
+	R_FillArrayData(mod, mesh, 0.0, 0, 0, qtrue);
 
 	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
@@ -181,7 +180,7 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
  */
 static void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
 {
-	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum);
+	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum, qfalse);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 

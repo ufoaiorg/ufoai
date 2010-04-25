@@ -221,8 +221,7 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 		VectorCopy(normals[vertRemap[i]], vertexes[i].normal);
 		Vector4Copy(tangents[vertRemap[i]], vertexes[i].tangent);
 
-		if (VectorLengthSqr(vertexes[i].normal) == 0) {
-			Com_Printf("%s: normals[%d]=[%f, %f, %f]\n", mesh->name, i, vertexes[i].normal[0], vertexes[i].normal[1], vertexes[i].normal[2]);
-		}
+		//if (VectorLengthSqr(vertexes[i].normal) == 0) 
+		//	Com_Printf("%s: normals[%d]=[%f, %f, %f]\n", mesh->name, i, vertexes[i].normal[0], vertexes[i].normal[1], vertexes[i].normal[2]);
 	}
 }
