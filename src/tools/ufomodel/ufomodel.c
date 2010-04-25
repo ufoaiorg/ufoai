@@ -53,6 +53,12 @@ void Com_Printf (const char *format, ...)
 
 static void PrecalcNormalsAndTangents (void)
 {
+	const char *filename;
+	FS_BuildFileList("**.md2");
+	while ((filename = FS_NextFileFromFileList("**.md2")) != NULL) {
+		Com_Printf("%s\n", filename);
+	}
+	FS_NextFileFromFileList(NULL);
 }
 
 int main (int argc, const char **argv)

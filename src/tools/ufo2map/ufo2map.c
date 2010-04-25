@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check/checkentities.h"
 #include "check/checklib.h"
 #include "../../shared/shared.h"
+#include "../../common/common.h"
 #include "ufo2map.h"
 
 #ifdef HAVE_SYS_STAT_H
