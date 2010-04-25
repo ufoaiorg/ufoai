@@ -376,15 +376,15 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 							"Overflow: %s", name);
 				}
 
-				if ( (f && !elseclause) || (!f && elseclause)){
+				if ((f && !elseclause) || (!f && elseclause)) {
 					if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
 						int j, z;
-						size_t sub_len = 0;
+						size_t subLength = 0;
 
 						buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
 						in += 7;
-						z = Cvar_GetValue(Com_Parse(&in)); 
+						z = Cvar_GetValue(Com_Parse(&in));
 
 						while (*in) {
 							if (!strncmp(in, "#endunroll", 10)) {
@@ -392,14 +392,14 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 								break;
 							}
 
-							buffer[sub_len++] = *in++;
+							buffer[subLength++] = *in++;
 						}
 
 						for (j = 0; j < z; j++) {
 							int l;
-							for (l = 0; l < sub_len; l++) {
+							for (l = 0; l < subLength; l++) {
 								if (buffer[l] == '$') {
-									Com_sprintf(out, sub_len - l, "%d", j);
+									Com_sprintf(out, subLength - l, "%d", j);
 									out += (j / 10) + 1;
 									i += (j / 10) + 1;
 									len -= (j / 10) + 1;
@@ -436,7 +436,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 			buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
 			in += 7;
-			z = Cvar_GetValue(Com_Parse(&in)); 
+			z = Cvar_GetValue(Com_Parse(&in));
 
 			while (*in) {
 				if (!strncmp(in, "#endunroll", 10)) {
