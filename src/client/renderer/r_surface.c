@@ -68,9 +68,12 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 	if (!r_state.lighting_enabled)
 		return;
 
+	if (!r_bumpmap->value)
+		return;
+
 	assert(surf);
 
-	if (r_bumpmap->value && normalMap && (surf->flags & MSURF_LIGHTMAP)) {
+	if (normalMap && (surf->flags & MSURF_LIGHTMAP)) {
 		const image_t *image = surf->texinfo->image;
 		R_BindDeluxemapTexture(surf->deluxemap_texnum);
 		R_UseMaterial(&image->material);
