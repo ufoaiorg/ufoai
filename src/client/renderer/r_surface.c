@@ -155,10 +155,8 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	}
 
 	/* reset state */
-	if (r_state.lighting_enabled) {
-		if (r_state.bumpmap_enabled)
-			R_EnableBumpmap(NULL, qfalse);
-	}
+	if (r_state.bumpmap_enabled)
+		R_EnableBumpmap(NULL, qfalse);
 
 	if (r_state.glowmap_enabled)
 		R_EnableGlowMap(NULL, qfalse);
