@@ -665,6 +665,11 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			if (image->glowmap == r_noTexture)
 				image->glowmap = NULL;
 		}
+		if (image->type != it_normalmap) {
+			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);
+			if (image->normalmap == r_noTexture)
+				image->normalmap = NULL;
+		}
 	}
 
 	/* no fitting texture found */

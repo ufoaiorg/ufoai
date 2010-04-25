@@ -114,6 +114,7 @@ void R_InitFBObjects (void)
 		const int w = (int)((float)viddef.width / scales[i]);
 		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
 		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
+		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, filters);
 
 		R_CheckError();
 	}

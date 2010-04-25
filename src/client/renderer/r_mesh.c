@@ -592,6 +592,9 @@ void R_DrawAliasModel (entity_t *e)
 	if (skin->glowmap)
 		R_EnableGlowMap(skin->glowmap, qtrue);
 
+	if (skin->normalmap)
+		R_EnableBumpmap(skin->normalmap, qtrue);
+
 	R_ResetArrayState();
 
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
@@ -603,6 +606,9 @@ void R_DrawAliasModel (entity_t *e)
 
 	if (r_state.glowmap_enabled)
 		R_EnableGlowMap(NULL, qfalse);
+
+	if (r_state.bumpmap_enabled)
+		R_EnableBumpmap(NULL, qfalse);
 
 	/* show model bounding box */
 	if (r_showbox->integer)

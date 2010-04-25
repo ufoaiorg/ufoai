@@ -1510,6 +1510,11 @@ void CP_SpawnNewMissions (void)
 	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
 		/* How many missions will be spawned until next cycle ? */
 		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
+#if 0		
+		/* select new number randomly, weighted by interest and difficulty level */
+		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6) * frand() * 0.05 * (ccs.curCampaign->difficulty + 16));
+		Com_Printf("interest = %d, val=%f, new missions = %d\n", ccs.overallInterest, (pow(ccs.overallInterest / 10.0f, 0.6)), newMissionNum);
+#endif
 		for (i = 0; i < newMissionNum; i++) {
 			const int type = CP_SelectNewMissionType();
 			CP_CreateNewMission(type, qfalse);

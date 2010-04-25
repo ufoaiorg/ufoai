@@ -1441,12 +1441,17 @@ void R_DrawBloom (void)
 	R_Blur(fbo_render, fbo_bloom0, 1, 0);
 	R_Blur(fbo_bloom0, fbo_bloom1, 0, 1);
 
+	R_UseFramebuffer(r_state.buffers0[0]);
 	R_BindTexture(fbo_bloom1->textures[0]);
 	qglGenerateMipmapEXT(GL_TEXTURE_2D);
-	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
-		R_UseFramebuffer(r_state.buffers0[i]);
-		glBindTexture(GL_TEXTURE_2D, fbo_bloom1->textures[0]);
+	R_UseViewport(r_state.buffers0[0]);
+	R_DrawQuad();
 
+	for (i = 1; i < DOWNSAMPLE_PASSES; i++) {
+		R_Blur(r_state.buffers0[i-1], r_state.buffers1[i-1], 0, 0);
+		R_Blur(r_state.buffers1[i-1], r_state.buffers2[i-1], 0, 1);
+		R_UseFramebuffer(r_state.buffers0[i]);
+		R_BindTexture(r_state.buffers2[i-1]->textures[0]);
 		R_UseViewport(r_state.buffers0[i]);
 		R_DrawQuad();
 	}

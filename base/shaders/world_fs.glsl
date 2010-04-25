@@ -6,6 +6,7 @@
 
 uniform int BUMPMAP;
 uniform int STATICLIGHT;
+uniform int DYNAMICLIGHTS;
 uniform float GLOWSCALE;
 
 uniform sampler2D SAMPLER0;
@@ -22,6 +23,7 @@ const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
 
 varying vec3 lightpos;
+varying vec3 lightDirs[];
 
 /**
  * main
@@ -31,21 +33,39 @@ void main(void){
 	vec2 offset = vec2(0.0);
 	vec3 bump = vec3(1.0);
 
-	// sample the lightmap
+	/* lightmap contains pre-computed incoming light color */
 	vec3 lightmap = texture2D(SAMPLER1, gl_TexCoord[1].st).rgb;
 
 #if r_bumpmap
 	if(BUMPMAP > 0){  // sample deluxemap and normalmap
-		vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
-		deluxemap = normalize(two * (deluxemap + negHalf));
 
 		vec4 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st);
 		normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
 
-		// resolve parallax offset and bump mapping
-		offset = BumpTexcoord(normalmap.a);
-		bump = BumpFragment(deluxemap, normalmap.rgb);
+		if(STATICLIGHT > 0){
+			/* these don't work right yet */
+			//offset = BumpTexcoord(normalmap.a);
+			//bump = BumpFragment(lightpos, normalmap.rgb);
+		} else {
+			/* deluxemap contains pre-computed incoming light vectors in object tangent space */
+			vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
+			deluxemap = normalize(two * (deluxemap + negHalf));
+
+
+			// resolve parallax offset and bump mapping
+			offset = BumpTexcoord(normalmap.a);
+			bump = BumpFragment(deluxemap, normalmap.rgb);
+		} 
 	}
+
+	if(DYNAMICLIGHTS > 0){
+		vec4 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st);	
+		offset = BumpTexcoord(normalmap.a);
+#unroll r_dynamic_lights
+		bump += BumpFragment(lightDirs[$], normalmap.rgb);
+#endunroll
+	}
+
 #endif
 
 	// sample the diffuse texture, honoring the parallax offset
@@ -58,6 +78,7 @@ void main(void){
 	if (STATICLIGHT > 0) {
 		vec3 lightdir = normalize(lightpos - point);
 		float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
+		//shade = dot(normal, normal);
 
 		vec3 color = vec3(1.0);
 		if (gl_Color.r > 0.0 || gl_Color.g > 0.0 || gl_Color.b > 0.0) {

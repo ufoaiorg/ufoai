@@ -76,6 +76,10 @@ void main()
 	hdrColor.a = 1.0;
 
 	/* calculate final color */
+#if r_postprocess
 	gl_FragData[0] = color;
 	gl_FragData[1] = hdrColor;
+#else
+	gl_FragColor = color;
+#endif
 }

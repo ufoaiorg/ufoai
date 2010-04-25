@@ -88,6 +88,7 @@ typedef struct {
 	r_framebuffer_t *bloomBuffer1;
 	r_framebuffer_t *buffers0[DOWNSAMPLE_PASSES];
 	r_framebuffer_t *buffers1[DOWNSAMPLE_PASSES];
+	r_framebuffer_t *buffers2[DOWNSAMPLE_PASSES];
 
 	/* texunit in use */
 	gltexunit_t *active_texunit;

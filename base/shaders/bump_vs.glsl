@@ -1,8 +1,10 @@
 // bumpmap vertex shader, requires light_vs.glsl
 
 attribute vec4 TANGENT;
+uniform int DYNAMICLIGHTS;
 
 varying vec3 eyedir;
+varying vec3 lightDirs[8];
 
 
 /*
@@ -23,4 +25,14 @@ void BumpVertex(void){
 	v.z = dot(point, n);
 
 	eyedir = -normalize(v);
+
+	vec3 lpos;
+	if(DYNAMICLIGHTS > 0) {
+#unroll r_dynamic_lights
+		lpos = gl_LightSource[$].position.rgb - point;
+		lightDirs[$].x = dot(lpos.rgb, t);
+		lightDirs[$].y = dot(lpos.rgb, b);
+		lightDirs[$].z = dot(lpos.rgb, n);
+#endunroll
+	}
 }
