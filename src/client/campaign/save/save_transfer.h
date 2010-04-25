@@ -46,12 +46,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_TRANSFER_AIRCRAFT "aircraft"
 #define SAVE_TRANSFER_ID "id"
-#define SAVE_TRANSFER_AIR "air"
 
 #endif
 
 /*
-DTD:  (incomplete)
+DTD:
 
 <!ELEMENT transfers transfer*>
 
@@ -62,20 +61,28 @@ DTD:  (incomplete)
 	day			CDATA		'0'
 	sec			CDATA		'0'
 >
+
 <!ELEMENT item EMPTY>
 <!ATTLIST item
 	itemid		CDATA		#REQUIRED
 	amount		CDATA		'1'
 >
+
 <!ELEMENT alien EMPTY>
 <!ATTLIST alien
 	alienid		CDATA		#REQUIRED
 	aliveAmount	CDATA		'0'
 	deadAmount	CDATA		'0'
 >
+
 <!ELEMENT employee EMPTY>
 <!ATTLIST employee
 	UCN			CDATA		#REQUIRED
+>
+
+<!ELEMENT aircraft EMPTY>
+<!ATTLIST aircraft
+	id			CDATA		#REQUIRED
 >
 
 */

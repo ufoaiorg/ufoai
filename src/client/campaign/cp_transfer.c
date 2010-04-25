@@ -1072,6 +1072,7 @@ static void TR_TransferStart_f (void)
 			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
+	memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
 	for (i = 0; i < ccs.numAircraft; i++) {	/* Aircraft. */
 		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
@@ -1879,10 +1880,11 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		}
 		/* save aircraft */
 		if (transfer->hasAircraft) {
-			for (j = 0; j < MAX_AIRCRAFT; j++) {
-				mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
-				mxml_AddInt(ss, SAVE_TRANSFER_ID, j);
-				mxml_AddInt(ss, SAVE_TRANSFER_AIR, transfer->aircraftArray[j]);
+			for (j = 0; j < ccs.numAircraft; j++) {
+				if (transfer->aircraftArray[j] > TRANS_LIST_EMPTY_SLOT) {
+					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
+					mxml_AddInt(ss, SAVE_TRANSFER_ID, j);
+				}
 			}
 		}
 	}
@@ -1992,10 +1994,10 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		if (ss) {
 			transfer->hasAircraft = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
-				const int j = mxml_GetInt(ss, SAVE_TRANSFER_ID, 0);
-				const int airc = mxml_GetInt(ss, SAVE_TRANSFER_AIR, TRANS_LIST_EMPTY_SLOT);
-				if (j >= 0 && j < MAX_AIRCRAFT)
-					transfer->aircraftArray[j] = airc;
+				const int j = mxml_GetInt(ss, SAVE_TRANSFER_ID, -1);
+
+				if (j >= 0 && j < ccs.numAircraft)
+					transfer->aircraftArray[j] = j;
 			}
 		}
 		ccs.numTransfers++;
@@ -2064,4 +2066,6 @@ void TR_InitStartup (void)
 #endif
 
 	memset(&td, 0, sizeof(td));
+	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 }
+
