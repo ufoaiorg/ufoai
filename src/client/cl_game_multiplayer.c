@@ -39,7 +39,7 @@ static void GAME_MP_AutoTeam (void)
 	/** @todo support more teamdefs */
 	const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 
-	GAME_GenerateTeam(teamDefID, ed);
+	GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
 }
 
 static void GAME_MP_AutoTeam_f (void)

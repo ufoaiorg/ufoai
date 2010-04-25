@@ -77,16 +77,19 @@ static const gameTypeList_t gameTypeList[] = {
 
 static character_t characters[MAX_ACTIVETEAM];
 
-void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed)
+void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMembers)
 {
 	int i;
+
+	if (teamMembers > lengthof(characters))
+		Com_Error(ERR_DROP, "More than the allowed amount of team members");
 
 	if (ed == NULL)
 		Com_Error(ERR_DROP, "No equipment definition given");
 
 	memset(&characters, 0, sizeof(characters));
 
-	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+	for (i = 0; i < teamMembers; i++) {
 		CL_GenerateCharacter(&characters[i], teamDefID);
 		/* pack equipment */
 		cls.i.EquipActor(&cls.i, &characters[i].i, ed, &characters[i]);
@@ -455,12 +458,12 @@ static qboolean GAME_Spawn (void)
 		memset(&invList, 0, sizeof(invList));
 		/* inventory structure switched/initialized */
 		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
-		GAME_GenerateTeam(teamDefID, ed);
+		GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
 	}
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++)
 		cl.chrList.chr[i] = chrDisplayList.chr[i];
-	cl.chrList.num = MAX_ACTIVETEAM;
+	cl.chrList.num = chrDisplayList.num;
 
 	return qtrue;
 }

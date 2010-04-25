@@ -76,7 +76,7 @@ static void GAME_SK_Start_f (void)
 
 	GAME_SK_SetMissionParameters();
 
-	GAME_GenerateTeam(teamDefID, ed);
+	GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
