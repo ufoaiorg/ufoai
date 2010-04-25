@@ -90,6 +90,8 @@ base/maps/city/citybldl_4x4_2a.map | GNU General Public License 2.0 or later | N
 base/maps/city/citybldr_4x4_1a.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citybldr_4x4_2a.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citycraft_drop_firebird.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citycraft_drop_herakles.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citycraft_drop_raptor.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystr_cross.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystr_rail_cross.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystrc_sw_1a.map | GNU General Public License 2.0 or later | Nate Wright
@@ -101,6 +103,7 @@ base/maps/city/citystrv_rail_1a.map | GNU General Public License 2.0 or later | 
 base/maps/city/citystrv_rail_2a.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystrv_rail_btm2a.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystrv_rail_top2a.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citystrv_rail_top2b.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city_disco.ump | GNU General Public License 2.0 or later
 base/maps/city_disco/cd_craft_drop_firebird.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/city_disco/cd_craft_drop_herakles.map | GNU General Public License 2.0 or later | "SparX" Beyeler
