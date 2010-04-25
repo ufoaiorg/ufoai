@@ -890,6 +890,7 @@ base/models/objects/alien/battery/battery.md2 | GNU General Public License 2.0 |
 base/models/objects/alien/battery/battery_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/box/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/box/box.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/alien/box/box_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/box/box_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/breathing/alienb.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/breathing/alienb.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -904,17 +905,22 @@ base/models/objects/alien/ion_condenser/ion_condenser.jpg | GNU General Public L
 base/models/objects/alien/ion_condenser/ion_condenser.md2 | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/ion_condenser/ion_condenser_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/panel/panel.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/panel/panel_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/pstation/pstation01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/pstation/pstation01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation01_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/pstation/pstation02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/pstation/pstation02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation02_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/pstation/pstation03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/pstation/pstation03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation03_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/pstation/pstation04.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/pstation/pstation04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/alien/pstation/pstation04_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/seat/seat.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/seat/seat.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/alien/seat/seat_gm.png | GNU General Public License 2.0 or later | MCR
@@ -937,6 +943,7 @@ base/models/objects/alien/wormhole/cable_low.md2 | GNU General Public License 2.
 base/models/objects/alien/wormhole/wormhole.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/alien/wormhole/wormhole.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/alien/wormhole/wormhole_bump.png | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
+base/models/objects/alien/wormhole/wormhole_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/alien/wormhole/wormhole_hi.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/alien/wormhole/wormhole_low.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
 base/models/objects/alien/wormhole/wormhole_mid.md2 | GNU General Public License 2.0 or later and CC-by-SA | Willem Sitters
