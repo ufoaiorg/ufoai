@@ -78,7 +78,6 @@ void main(void){
 	if (STATICLIGHT > 0) {
 		vec3 lightdir = normalize(lightpos - point);
 		float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
-		//shade = dot(normal, normal);
 
 		vec3 color = vec3(1.0);
 		if (gl_Color.r > 0.0 || gl_Color.g > 0.0 || gl_Color.b > 0.0) {

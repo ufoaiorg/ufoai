@@ -95,7 +95,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
  * @param[in,out] mesh The model mesh data that is used to calculate the normals and tangents.
  * The calculated data is stored here, too.
  */
-void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh)
+void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 {
 	/* count unique verts */
 	int numUniqueVerts = 0;
@@ -107,7 +107,7 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh)
 	vec3_t triangleCotangents[MD2_MAX_TRIANGLES];
 	vec3_t normals[MD2_MAX_VERTS];
 	vec4_t tangents[MD2_MAX_VERTS];
-	mAliasVertex_t *vertexes = mesh->vertexes;
+	mAliasVertex_t *vertexes = &mesh->vertexes[offset];
 	mAliasCoord_t *stcoords = mesh->stcoords;
 	const int32_t *indexArray = mesh->indexes;
 	const int numVerts = mesh->num_verts;
@@ -220,5 +220,9 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh)
 	for (i = 0; i < numVerts; i++) {
 		VectorCopy(normals[vertRemap[i]], vertexes[i].normal);
 		Vector4Copy(tangents[vertRemap[i]], vertexes[i].tangent);
+
+		if (VectorLengthSqr(vertexes[i].normal) == 0) {
+			Com_Printf("%s: normals[%d]=[%f, %f, %f]\n", mesh->name, i, vertexes[i].normal[0], vertexes[i].normal[1], vertexes[i].normal[2]);
+		}
 	}
 }

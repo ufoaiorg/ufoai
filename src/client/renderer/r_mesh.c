@@ -106,8 +106,9 @@ static void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh,
 			VectorCopy(r_mesh_verts[meshIndex], vertex_array_3d);
 
 			/* normal vectors for lighting */
-			if (r_state.lighting_enabled)
+			if (r_state.lighting_enabled) {
 				VectorCopy(r_mesh_norms[meshIndex], normal_array);
+			}
 
 			/* tangent vectors for bump mapping */
 			if (r_state.bumpmap_enabled)

@@ -274,7 +274,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 		}
 
 		/* Calculate normals and tangents */
-		/*R_ModCalcNormalsAndTangents(outMesh);*/
+		R_ModCalcNormalsAndTangents(outMesh, numVerts * i);
 	}
 
 	if (mod->alias.num_meshes > 1)
