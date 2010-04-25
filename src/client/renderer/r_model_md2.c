@@ -31,6 +31,73 @@ MD2 ALIAS MODELS
 ==============================================================================
 */
 
+#if 0
+/**
+ * @brief Calculates the normals of an md2 model
+ */
+static void R_CalcAliasNormals (const int numIndexes, int32_t *indexArray, const int numVerts, mAliasMesh_t *mesh)
+{
+	/* count unique verts */
+	int numUniqueVerts = 0;
+	int uniqueVerts[MD2_MAX_VERTS];
+	int vertRemap[MD2_MAX_VERTS];
+	int i, j;
+	vec3_t triangleNormals[MD2_MAX_TRIANGLES];
+	vec3_t normals[MD2_MAX_VERTS];
+	mAliasVertex_t *vertexes = mesh->vertexes;
+
+	for (i = 0; i < numVerts; i++) {
+		qboolean found = qfalse;
+
+		for (j = 0; j < numUniqueVerts; j++) {
+			if (VectorCompare(vertexes[uniqueVerts[j]].point, vertexes[i].point)) {
+				vertRemap[i] = j;
+				found = qtrue;
+				break;
+			}
+		}
+
+		if (!found) {
+			vertRemap[i] = numUniqueVerts;
+			uniqueVerts[numUniqueVerts++] = i;
+		}
+	}
+
+	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
+		vec3_t dir1, dir2;
+
+		/* calculate two mostly perpendicular edge directions */
+		VectorSubtract(vertexes[indexArray[i + 0]].point, vertexes[indexArray[i + 1]].point, dir1);
+		VectorSubtract(vertexes[indexArray[i + 2]].point, vertexes[indexArray[i + 1]].point, dir2);
+
+		/* we have two edge directions, we can calculate a third vector from
+		 * them, which is the direction of the surface normal */
+		CrossProduct(dir1, dir2, triangleNormals[j]);
+		VectorNormalize(triangleNormals[j]);
+	}
+
+	/* sum all triangle normals */
+	for (i = 0; i < numUniqueVerts; i++) {
+		vec3_t normal;
+		int k;
+
+		VectorClear(normal);
+
+		for (j = 0, k = 0; j < numIndexes; j += 3, k++) {
+			if (vertRemap[indexArray[j + 0]] == i || vertRemap[indexArray[j + 1]] == i || vertRemap[indexArray[j + 2]]
+					== i)
+				VectorAdd(normal, triangleNormals[k], normal);
+		}
+
+		VectorNormalize2(normal, normals[i]);
+	}
+
+	/* copy normals back */
+	for (i = 0; i < numVerts; i++)
+		VectorCopy(normals[vertRemap[i]], vertexes[i].normal);
+}
+#endif
+
 static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 {
 	dMD2tag_t *pintag, *pheader;
@@ -272,6 +339,11 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[1] * outFrame->scale[1];
 			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[2] * outFrame->scale[2];
 		}
+
+#if 0
+		/* Calculate normals */
+		R_CalcAliasNormals(numIndexes, outIndex, numVerts, outMesh);
+#endif
 	}
 
 	if (mod->alias.num_meshes > 1)
