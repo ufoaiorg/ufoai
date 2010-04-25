@@ -44,9 +44,25 @@ UFO2MAP_SRCS = \
 	common/routing.c \
 	common/ioapi.c
 
+UFOMODEL_SRC = \
+	tools/ufomodel/ufomodel.c \
+	\
+	shared/mathlib.c \
+	shared/byte.c \
+	shared/images.c \
+	shared/parse.c \
+	shared/shared.c \
+	\
+	common/files.c \
+	common/mem.c \
+	common/unzip.c \
+	common/ioapi.c
 
 ifneq ($(findstring $(TARGET_OS), solaris darwin netbsd freebsd linux-gnu),)
 	UFO2MAP_SRCS+= \
+		ports/unix/unix_main.c \
+		ports/unix/unix_glob.c
+	UFOMODEL_SRC+= \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
 endif
@@ -54,14 +70,22 @@ endif
 ifeq ($(TARGET_OS),mingw32)
 	UFO2MAP_SRCS+=\
 		ports/windows/win_shared.c
+	UFOMODEL_SRC+=\
+		ports/windows/win_shared.c
 endif
 
-UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
+UFO2MAP_OBJS=$(UFOMODEL_SRC:%.c=$(BUILDDIR)/tools/ufomodel/%.o)
 UFO2MAP_TARGET=ufo2map$(EXE_EXT)
+
+UFOMODEL_OBJS=$(UFOMODEL_SRC:%.c=$(BUILDDIR)/tools/ufomodel/%.o)
+UFOMODEL_TARGET=ufomodel$(EXE_EXT)
 
 ifeq ($(BUILD_UFO2MAP),1)
 	ALL_OBJS+=$(UFO2MAP_OBJS)
 	TARGETS+=$(UFO2MAP_TARGET)
+	
+	ALL_OBJS+=$(UFOMODEL_OBJS)
+	TARGETS+=$(UFOMODEL_TARGET)
 endif
 
 # Say how to link the exe
@@ -69,9 +93,18 @@ $(UFO2MAP_TARGET): $(UFO2MAP_OBJS)
 	@echo " * [MAP] ... linking $(LNKFLAGS) ($(TOOLS_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLS_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 
+$(UFOMODEL_TARGET): $(UFOMODEL_OBJS)
+	@echo " * [MOD] ... linking $(LNKFLAGS) ($(TOOLS_LIBS) $(SDL_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(UFOMODEL_OBJS) $(TOOLS_LIBS) $(SDL_LIBS) $(LNKFLAGS)
+
 # Say how to build .o files from .c files for this module
 # -ffloat-store option to ensure that maps are the same on every plattform
 # store the float values in buffers, not in cpu registers, maybe slower
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c
 	@echo " * [MAP] $<"; \
 		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+
+$(BUILDDIR)/tools/ufomodel/%.o: $(SRCDIR)/%.c
+	@echo " * [MOD] $<"; \
+		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		

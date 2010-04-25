@@ -15,9 +15,10 @@
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="main"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_REGISTER_BOOKKEEPING" value="false"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_VARIABLE_BOOKKEEPING" value="false"/>
-<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;color-MAP_GetCultureTypeByPos-(cast)&quot; val=&quot;unsigned char[4]&quot;/&gt;&lt;content id=&quot;color-MAP_GetTerrainTypeByPos-(cast)&quot; val=&quot;unsigned char[4]&quot;/&gt;&lt;/contentList&gt;"/>
+<stringAttribute key="org.eclipse.cdt.launch.FORMAT" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;contentList&gt;&lt;content id=&quot;color-MAP_GetTerrainTypeByPos-(cast)&quot; val=&quot;unsigned char[4]&quot;/&gt;&lt;content id=&quot;color-MAP_GetCultureTypeByPos-(cast)&quot; val=&quot;unsigned char[4]&quot;/&gt;&lt;/contentList&gt;"/>
 <stringAttribute key="org.eclipse.cdt.launch.GLOBAL_VARIABLES" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;globalVariableList&gt;&#10;&lt;globalVariable name=&quot;g_edicts&quot; path=&quot;&quot;/&gt;&#10;&lt;globalVariable name=&quot;selActor&quot; path=&quot;&quot;/&gt;&#10;&lt;globalVariable name=&quot;r_state&quot; path=&quot;&quot;/&gt;&#10;&lt;/globalVariableList&gt;&#10;"/>
 <stringAttribute key="org.eclipse.cdt.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;memoryBlockExpressionList/&gt;&#10;"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_ARGUMENTS" value="+set developer 1 +set cvar 0"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="ufo"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="ufoai-trunk"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.406131790"/>

@@ -609,6 +609,7 @@ int main (int argc, const char **argv)
 	U2M_Parameter(argc, argv);
 
 	Verb_Printf(VERB_NORMAL, "---- ufo2map "VERSION" ----\n");
+	Verb_Printf(VERB_NORMAL, BUILDSTRING);
 
 	if (argc < 2) {
 		Usage();
