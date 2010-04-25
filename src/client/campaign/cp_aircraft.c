@@ -2526,6 +2526,9 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 		return qtrue;
 
 	mxml_AddInt(node, SAVE_AIRCRAFT_IDX, aircraft->idx);
+
+	mxml_AddIntValue(node, SAVE_AIRCRAFT_RADAR_RANGE, aircraft->radar.range);
+	mxml_AddIntValue(node, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, aircraft->radar.trackingRange);
 	mxml_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
@@ -2539,9 +2542,8 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	if (aircraft->pilot)
 		mxml_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, aircraft->pilot->chr.ucn);
 
-	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_CARGO);
-	mxml_AddInt(subnode, SAVE_AIRCRAFT_TYPES, aircraft->itemTypes);
 	/* itemcargo */
+	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_CARGO);
 	for (l = 0; l < aircraft->itemTypes; l++) {
 		mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_ITEM);
 		assert(aircraft->itemcargo[l].item);
@@ -2549,21 +2551,17 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 		mxml_AddInt(ssnode, SAVE_AIRCRAFT_AMOUNT, aircraft->itemcargo[l].amount);
 	}
 
-	mxml_AddIntValue(node, SAVE_AIRCRAFT_RADAR_RANGE, aircraft->radar.range);
-	mxml_AddIntValue(node, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, aircraft->radar.trackingRange);
-
+	/* aliencargo */
 	{
 		const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 		const aliensTmp_t *cargo  = AL_GetAircraftAlienCargo(aircraft);
 		subnode = mxml_AddNode(node, SAVE_AIRCRAFT_ALIENCARGO);
-		mxml_AddInt(subnode, SAVE_AIRCRAFT_TYPES, alienCargoTypes);
-		/* aliencargo */
 		for (l = 0; l < alienCargoTypes; l++) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_CARGO);
 			assert(cargo[l].teamDef);
 			mxml_AddString(ssnode, SAVE_AIRCRAFT_TEAMDEFID, cargo[l].teamDef->id);
-			mxml_AddInt(ssnode, SAVE_AIRCRAFT_ALIVE, cargo[l].amountAlive);
-			mxml_AddInt(ssnode, SAVE_AIRCRAFT_DEAD, cargo[l].amountDead);
+			mxml_AddIntValue(ssnode, SAVE_AIRCRAFT_ALIVE, cargo[l].amountAlive);
+			mxml_AddIntValue(ssnode, SAVE_AIRCRAFT_DEAD, cargo[l].amountDead);
 		}
 	}
 
@@ -2678,7 +2676,6 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	/* vars, if aircraft wasn't found */
 	int tmp_int;
 	int l;
-	int alienCargoTypes;
 	const char *s = mxml_GetString(p, SAVE_AIRCRAFT_ID);
 	aircraft_t *crafttype = AIR_GetAircraft(s);
 
@@ -2807,44 +2804,43 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	craft->radar.range = mxml_GetInt(p, SAVE_AIRCRAFT_RADAR_RANGE, 0);
 	craft->radar.trackingRange = mxml_GetInt(p, SAVE_AIRCRAFT_RADAR_TRACKINGRANGE, 0);
 
-	snode = mxml_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
-	alienCargoTypes = mxml_GetInt(snode, SAVE_AIRCRAFT_TYPES, 0);
-	AL_SetAircraftAlienCargoTypes(craft, alienCargoTypes);
-	alienCargoTypes = AL_GetAircraftAlienCargoTypes(craft);
-	if (alienCargoTypes > MAX_CARGO) {
-		Com_Printf("B_Load: number of alien types (%i) exceed maximum value (%i)\n", alienCargoTypes, MAX_CARGO);
-		return qfalse;
-	}
-	/* aliencargo */
-	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_CARGO); l < alienCargoTypes && snode;
-			l++, ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_CARGO)) {
-		aliensTmp_t *cargo = AL_GetAircraftAlienCargo(craft);
-		cargo[l].teamDef = Com_GetTeamDefinitionByID(mxml_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID));
-		if (!cargo[l].teamDef)
-			return qfalse;
-		cargo[l].amountAlive = mxml_GetInt(ssnode, SAVE_AIRCRAFT_ALIVE, 0);
-		cargo[l].amountDead  =	mxml_GetInt(ssnode, SAVE_AIRCRAFT_DEAD, 0);
-	}
-
-	snode = mxml_GetNode(p, SAVE_AIRCRAFT_CARGO);
-	craft->itemTypes = mxml_GetInt(snode, SAVE_AIRCRAFT_TYPES, 0);
-	if (craft->itemTypes > MAX_CARGO) {
-		Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", craft->itemTypes, MAX_CARGO);
-		return qfalse;
-	}
-
 	/* itemcargo */
-	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < craft->itemTypes && snode;
+	snode = mxml_GetNode(p, SAVE_AIRCRAFT_CARGO);
+	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_ITEM); l < MAX_CARGO && ssnode;
 			l++, ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_ITEM)) {
 		const char *const str = mxml_GetString(ssnode, SAVE_AIRCRAFT_ITEMID);
 		const objDef_t *od = INVSH_GetItemByID(str);
+
 		if (!od) {
-			Com_Printf("B_Load: Could not find aircraftitem '%s'\n", str);
-		} else {
-			craft->itemcargo[l].item = od;
-			craft->itemcargo[l].amount = mxml_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
+			Com_Printf("AIR_LoadAircraftXML: Could not find aircraftitem '%s'\n", str);
+			l--;
+			continue;
 		}
+
+		craft->itemcargo[l].item = od;
+		craft->itemcargo[l].amount = mxml_GetInt(ssnode, SAVE_AIRCRAFT_AMOUNT, 0);
 	}
+	craft->itemTypes = l;
+
+	/* aliencargo */
+	snode = mxml_GetNode(p, SAVE_AIRCRAFT_ALIENCARGO);
+	for (l = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_CARGO); l < MAX_CARGO && ssnode;
+			l++, ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_CARGO)) {
+		aliensTmp_t *cargo = AL_GetAircraftAlienCargo(craft);
+		const char *const str = mxml_GetString(ssnode, SAVE_AIRCRAFT_TEAMDEFID);
+
+		cargo[l].teamDef = Com_GetTeamDefinitionByID(str);
+		if (!cargo[l].teamDef) {
+			Com_Printf("AIR_LoadAircraftXML: Could not find teamDef '%s'\n", str);
+			l--;
+			continue;
+		}
+
+		cargo[l].amountAlive = mxml_GetInt(ssnode, SAVE_AIRCRAFT_ALIVE, 0);
+		cargo[l].amountDead  =	mxml_GetInt(ssnode, SAVE_AIRCRAFT_DEAD, 0);
+	}
+	AL_SetAircraftAlienCargoTypes(craft, l);	
+
 	return qtrue;
 }
 
