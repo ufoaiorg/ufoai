@@ -109,8 +109,10 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 		if ((stage->flags & STAGE_LIGHTING)) {
 			R_EnableLighting(r_state.world_program, qtrue);
 			R_SetSurfaceBumpMappingParameters(surf, stage->image->normalmap);
-		} else
+		} else {
+			R_SetSurfaceBumpMappingParameters(surf, NULL);
 			R_EnableLighting(NULL, qfalse);
+		}
 	} else {
 		R_EnableLighting(NULL, qfalse);
 

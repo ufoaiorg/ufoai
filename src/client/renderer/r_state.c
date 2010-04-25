@@ -284,6 +284,9 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 	if (!r_bumpmap->value)
 		return;
 
+	if (enable)
+		R_BindNormalmapTexture(normalmap->texnum);
+
 	if (r_state.bumpmap_enabled == enable)
 		return;
 
@@ -291,7 +294,6 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 
 	if (enable) {  /* toggle state */
 		assert(normalmap);
-		R_BindNormalmapTexture(normalmap->texnum);
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
 	} else {
