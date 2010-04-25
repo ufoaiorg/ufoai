@@ -654,24 +654,6 @@ static void R_UseWorldProgram (r_program_t *prog)
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 }
 
-static void R_InitMeshProgram (r_program_t *prog)
-{
-	static vec3_t lightPos;
-
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER4", 4);
-
-	R_ProgramParameter3fv("LIGHTPOS", lightPos);
-
-	R_ProgramParameter1f("OFFSET", 0.0);
-	R_ProgramParameter1f("GLOWSCALE", 0.0);
-}
-
-static void R_UseMeshProgram (r_program_t *prog)
-{
-	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
-}
-
 static void R_InitWarpProgram (r_program_t *prog)
 {
 	static vec4_t offset;
