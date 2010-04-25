@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct mAliasVertex_s {
 	vec3_t	point;
 	vec3_t	normal;
+	vec4_t	tangent;
 } mAliasVertex_t;
 
 typedef struct mAliasBoneMatrix_s {
