@@ -302,6 +302,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 {
 	char path[MAX_QPATH];
 	byte *buf;
+	char *buffer;
 	size_t i;
 	const char *hwHack, *defines;
 
@@ -376,8 +377,47 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				}
 
 				if ( (f && !elseclause) || (!f && elseclause)){
-					*out++ = *in++;
-					i++;
+					if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
+						int j, z;
+						size_t sub_len = 0;
+
+						buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+
+						in += 7;
+						z = Cvar_GetValue(Com_Parse(&in)); 
+
+						while (*in) {
+							if (!strncmp(in, "#endunroll", 10)) {
+								in += 10;
+								break;
+							}
+
+							buffer[sub_len++] = *in++;
+						}
+
+						for (j = 0; j < z; j++) {
+							int l;
+							for (l = 0; l < sub_len; l++) {
+								if (!strncmp(&buffer[l], "$", 1)) {
+									Com_sprintf(out, sub_len - l, "%d", j);
+									out += (j / 10) + 1;
+									i += (j / 10) + 1;
+									len -= (j / 10) + 1;
+								} else {
+									*out++ = buffer[l];
+									i++;
+									len--;
+								}
+								if (len < 0)
+									Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
+							}
+						}
+
+						Mem_Free(buffer);
+					} else {
+						*out++ = *in++;
+						i++;
+					}
 				} else
 					in++;
 			}
@@ -393,7 +433,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 			int j, z;
 			size_t sub_len = 0;
 
-			buf = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+			buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
 			in += 7;
 			z = Cvar_GetValue(Com_Parse(&in)); 
@@ -404,19 +444,19 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 					break;
 				}
 
-				buf[sub_len++] = *in++;
+				buffer[sub_len++] = *in++;
 			}
 
 			for (j = 0; j < z; j++) {
 				int l;
 				for (l = 0; l < sub_len; l++) {
-					if (!strncmp(&buf[l], "$", 1)) {
+					if (!strncmp(&buffer[l], "$", 1)) {
 						Com_sprintf(out, sub_len - l, "%d", j);
 						out += (j / 10) + 1;
 						i += (j / 10) + 1;
 						len -= (j / 10) + 1;
 					} else {
-						*out++ = buf[l];
+						*out++ = buffer[l];
 						i++;
 						len--;
 					}
@@ -425,7 +465,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				}
 			}
 
-			Mem_Free(buf);
+			Mem_Free(buffer);
 		}
 
 		/* general case is to copy so long as the buffer has room */
@@ -585,6 +625,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("STATICLIGHT", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
