@@ -271,45 +271,12 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	return r_state.lighting_enabled;
 }
 
-static inline void R_UseMaterial (material_t *material)
-{
-	static float last_b, last_p, last_s, last_h;
-	float b, p, s, h;
-
-	if (r_state.active_material == material)
-		return;
-
-	r_state.active_material = material;
-
-	if (!r_state.active_material)
-		return;
-
-	b = r_state.active_material->bump * r_bumpmap->value;
-	if (b != last_b)
-		R_ProgramParameter1f("BUMP", b);
-	last_b = b;
-
-	p = r_state.active_material->parallax * r_parallax->value;
-	if (p != last_p)
-		R_ProgramParameter1f("PARALLAX", p);
-	last_p = p;
-
-	h = r_state.active_material->hardness * r_hardness->value;
-	if (h != last_h)
-		R_ProgramParameter1f("HARDNESS", h);
-	last_h = h;
-
-	s = r_state.active_material->specular * r_specular->value;
-	if (s != last_s)
-		R_ProgramParameter1f("SPECULAR", s);
-	last_s = s;
-}
-
 /**
- * @brief Enables bumpmapping while updating program parameters to reflect the
- * specified material.
+ * @brief Enables bumpmapping and binds the given normalmap.
+ * @note Don't forget to bind the deluxe map, too.
+ * @sa R_BindDeluxemapTexture
  */
-void R_EnableBumpmap (material_t *material, qboolean enable)
+void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 {
 	if (!r_state.lighting_enabled)
 		return;
@@ -317,14 +284,14 @@ void R_EnableBumpmap (material_t *material, qboolean enable)
 	if (!r_bumpmap->value)
 		return;
 
-	R_UseMaterial(material);
-
 	if (r_state.bumpmap_enabled == enable)
 		return;
 
 	r_state.bumpmap_enabled = enable;
 
 	if (enable) {  /* toggle state */
+		assert(normalmap);
+		R_BindNormalmapTexture(normalmap->texnum);
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
 	} else {

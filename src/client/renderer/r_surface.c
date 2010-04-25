@@ -29,6 +29,56 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_draw.h"
 
+static inline void R_UseMaterial (const material_t *material)
+{
+	static float last_b, last_p, last_s, last_h;
+	float b, p, s, h;
+
+	if (r_state.active_material == material)
+		return;
+
+	r_state.active_material = material;
+
+	if (!r_state.active_material)
+		return;
+
+	b = r_state.active_material->bump * r_bumpmap->value;
+	if (b != last_b)
+		R_ProgramParameter1f("BUMP", b);
+	last_b = b;
+
+	p = r_state.active_material->parallax * r_parallax->value;
+	if (p != last_p)
+		R_ProgramParameter1f("PARALLAX", p);
+	last_p = p;
+
+	h = r_state.active_material->hardness * r_hardness->value;
+	if (h != last_h)
+		R_ProgramParameter1f("HARDNESS", h);
+	last_h = h;
+
+	s = r_state.active_material->specular * r_specular->value;
+	if (s != last_s)
+		R_ProgramParameter1f("SPECULAR", s);
+	last_s = s;
+}
+
+void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t *normalMap)
+{
+	if (!r_state.lighting_enabled)
+		return;
+
+	assert(surf);
+
+	if (r_bumpmap->value && normalMap && (surf->flags & MSURF_LIGHTMAP)) {
+		const image_t *image = surf->texinfo->image;
+		R_BindDeluxemapTexture(surf->deluxemap_texnum);
+		R_UseMaterial(&image->material);
+		R_EnableBumpmap(normalMap, qtrue);
+	} else if (r_state.bumpmap_enabled)
+		R_EnableBumpmap(NULL, qfalse);
+}
+
 /**
  * @brief Set the surface state according to surface flags and bind the texture
  * @sa R_DrawSurfaces
@@ -62,15 +112,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 			R_BindLightmapTexture(surf->lightmap_texnum);
 	}
 
-	if (r_state.lighting_enabled && r_bumpmap->value) {
-		if (image->normalmap && (surf->flags & MSURF_LIGHTMAP)) {
-			R_BindDeluxemapTexture(surf->deluxemap_texnum);
-			R_BindNormalmapTexture(image->normalmap->texnum);
-
-			R_EnableBumpmap(&image->material, qtrue);
-		} else
-			R_EnableBumpmap(NULL, qfalse);
-	}
+	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
 
 	if (image->glowmap)
 		R_EnableGlowMap(image->glowmap, qtrue);

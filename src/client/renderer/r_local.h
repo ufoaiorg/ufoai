@@ -48,6 +48,8 @@ void R_DrawBlendWarpSurfaces(mBspSurfaces_t *surfs);
 void R_DrawAlphaTestSurfaces(mBspSurfaces_t *surfs);
 void R_DrawMaterialSurfaces(mBspSurfaces_t *surfs);
 
+void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t *normalMap);
+
 /*==================================================== */
 
 extern cvar_t *r_brightness;
