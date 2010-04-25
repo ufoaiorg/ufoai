@@ -958,7 +958,8 @@ static void CL_SendCommand (void)
 		break;
 	case ca_connecting:
 		if (cls.realtime - cls.connectTime > cl_connecttimeout->integer) {
-			Com_Error(ERR_DROP, "Server is not reachable");
+			if (GAME_IsMultiplayer())
+				Com_Error(ERR_DROP, "Server is not reachable");
 		}
 		break;
 	case ca_connected:
