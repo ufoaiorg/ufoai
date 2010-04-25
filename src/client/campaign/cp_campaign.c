@@ -930,7 +930,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
  	ccs.XVIShowMap = mxml_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
 
 	/* read interest values */
-	interests = mxml_GetNode(parent, SAVE_CAMPAIGN_MISSIONS);
+	interests = mxml_GetNode(parent, SAVE_CAMPAIGN_INTERESTS);
 	if (!interests) {
 		Com_Printf("Did not find interests entry in xml!\n");
 		return qfalse;
