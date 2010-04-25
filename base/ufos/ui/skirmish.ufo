@@ -124,23 +124,6 @@ window skirmish
 	}
 
 	// ===================
-	// DAY + NIGHT
-	// ===================
-	string daynight_str
-	{
-		string		"_Day version:"
-		pos			"500 250"
-		size		"200 20"
-	}
-	checkbox daynight_value
-	{
-		current		*cvar:mn_serverday
-		pos			"825 250"
-		image		"ui/checkbox_blue"
-		size		"20 18"
-	}
-
-	// ===================
 	// AI_NUMACTORS
 	// ===================
 	string ai_numactors_str
@@ -164,6 +147,33 @@ window skirmish
 		pos			"868 274"
 		min			1
 		max			30
+		delta		1
+	}
+
+	// =====================
+	// MAXSOLDIER PER PLAYER
+	// =====================
+	string maxsoldierperplayer_str
+	{
+		string		"_Max. soldiers:"
+		tooltip		"_Sets the amount of soldiers"
+		pos			"500 250"
+		size		"300 20"
+	}
+	string maxsoldierperplayer_value
+	{
+		string		*cvar:sv_maxsoldiersperplayer
+		pos			"810 250"
+		size		"50 20"
+		textalign	uc
+	}
+	spinner maxsoldierperplayer_change
+	{
+		current		*cvar:sv_maxsoldiersperplayer
+		image		ui/spinner_blue
+		pos			"868 249"
+		min			1
+		max			8
 		delta		1
 	}
 
@@ -257,19 +267,30 @@ window skirmish
 	}
 
 	// ===================
-	// MAP
+	// DAY + NIGHT
 	// ===================
 	string current_map
 	{
-		string		"_Map"
-		pos			"500 510"
+		string		"_Day version:"
+		pos			"525 510"
 		size		"450 20"
 	}
+	
+	checkbox daynight_value
+	{
+		current		*cvar:mn_serverday
+		pos			"500 510"
+		image		"ui/checkbox_blue"
+		size		"20 18"
+	}
 
+	// ===================
+	// MAP
+	// ===================
 	cmpMapSlot mapSlot 
 	{
 		{
-		pos			"468 530"
+			pos			"468 530"
 		}
 	}
 
