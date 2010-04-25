@@ -3,7 +3,7 @@
 #include "fog_fs.glsl"
 
 uniform vec4 OFFSET;
-uniform int GLOWSCALE;
+uniform float GLOWSCALE;
 
 uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
@@ -23,7 +23,7 @@ void main(void){
 
 	// sample the diffuse texture, factoring in primary color as well
 	gl_FragData[0] = gl_Color * texture2D(SAMPLER0, coord);
-	if (GLOWSCALE > 0) {
+	if (GLOWSCALE > 0.01) {
 		gl_FragData[1] = gl_Color * texture2D(SAMPLER4, coord) * GLOWSCALE;
 	}
 

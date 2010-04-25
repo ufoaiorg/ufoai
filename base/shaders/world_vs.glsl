@@ -1,4 +1,3 @@
-#version 110
 // world vertex shader
 
 #include "light_vs.glsl"

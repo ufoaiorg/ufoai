@@ -1,4 +1,3 @@
-#version 110
 // default fragment shader
 
 #include "light_fs.glsl"

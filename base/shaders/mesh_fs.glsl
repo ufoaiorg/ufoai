@@ -1,4 +1,3 @@
-#version 110
 // mesh fragment shader
 
 #include "light_fs.glsl"

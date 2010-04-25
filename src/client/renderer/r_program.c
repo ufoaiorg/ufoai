@@ -298,11 +298,8 @@ static size_t R_PreprocessShaderAddToShaderBuf (const char *name, const char *in
 	return inLength;
 }
 
-static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
+static size_t R_InitializeShader (const char *name, char *out, size_t len)
 {
-	char path[MAX_QPATH];
-	byte *buf;
-	char *buffer;
 	size_t i;
 	const char *hwHack, *defines;
 
@@ -325,17 +322,29 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 	i = 0;
 
-	if (hwHack)
-		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
-
+	defines = "#version 110\n";
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.width);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 
-	/* @todo (arisian): don't GLSL compilers have built-in preprocessors that can handle this kind of stuff? */
+	if (hwHack)
+		i += R_PreprocessShaderAddToShaderBuf(name, hwHack, &out, &len);
+
+	return i;
+}
+
+static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
+{
+	char *buffer;
+	size_t i = 0;
+
+	/** @todo (arisian): don't GLSL compilers have built-in preprocessors that can handle this kind of stuff? */
 	while (*in) {
 		if (!strncmp(in, "#include", 8)) {
+			char path[MAX_QPATH];
+			byte *buf;
 			size_t inc_len;
 			in += 8;
 			Com_sprintf(path, sizeof(path), "shaders/%s", Com_Parse(&in));
@@ -431,7 +440,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 		if (!strncmp(in, "#unroll", 7)) {  /* loop unrolling */
 			int j, z;
-			size_t sub_len = 0;
+			size_t subLength = 0;
 
 			buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
@@ -444,14 +453,14 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 					break;
 				}
 
-				buffer[sub_len++] = *in++;
+				buffer[subLength++] = *in++;
 			}
 
 			for (j = 0; j < z; j++) {
 				int l;
-				for (l = 0; l < sub_len; l++) {
+				for (l = 0; l < subLength; l++) {
 					if (buffer[l] == '$') {
-						Com_sprintf(out, sub_len - l, "%d", j);
+						Com_sprintf(out, subLength - l, "%d", j);
 						out += (j / 10) + 1;
 						i += (j / 10) + 1;
 						len -= (j / 10) + 1;
@@ -485,9 +494,11 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	r_shader_t *sh;
 	char path[MAX_QPATH], *src[1];
 	unsigned e, len, length[1];
-	char *source;
+	char *source, *srcBuf;
 	byte *buf;
 	int i;
+	size_t bufLength = SHADER_BUF_SIZE;
+	size_t initializeLength;
 
 	snprintf(path, sizeof(path), "shaders/%s", name);
 
@@ -496,9 +507,13 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		return NULL;
 	}
 
-	source = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+	srcBuf = source = Mem_PoolAlloc(bufLength, vid_imagePool, 0);
 
-	R_PreprocessShader(name, (const char *)buf, source, SHADER_BUF_SIZE);
+	initializeLength = R_InitializeShader(name, srcBuf, bufLength);
+	srcBuf += initializeLength;
+	bufLength -= initializeLength;
+
+	R_PreprocessShader(name, (const char *)buf, srcBuf, bufLength);
 	FS_FreeFile(buf);
 
 	src[0] = source;
@@ -531,6 +546,8 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	/* compile it and check for errors */
 	qglCompileShader(sh->id);
 
+	Mem_Free(source);
+
 	qglGetShaderiv(sh->id, GL_COMPILE_STATUS, &e);
 	if (!e) {
 		char log[MAX_STRING_CHARS];
@@ -540,11 +557,9 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		qglDeleteShader(sh->id);
 		memset(sh, 0, sizeof(*sh));
 
-		Mem_Free(source);
 		return NULL;
 	}
 
-	Mem_Free(source);
 	return sh;
 }
 
