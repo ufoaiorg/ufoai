@@ -398,7 +398,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 						for (j = 0; j < z; j++) {
 							int l;
 							for (l = 0; l < sub_len; l++) {
-								if (!strncmp(&buffer[l], "$", 1)) {
+								if (buffer[l] == '$') {
 									Com_sprintf(out, sub_len - l, "%d", j);
 									out += (j / 10) + 1;
 									i += (j / 10) + 1;
@@ -450,7 +450,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 			for (j = 0; j < z; j++) {
 				int l;
 				for (l = 0; l < sub_len; l++) {
-					if (!strncmp(&buffer[l], "$", 1)) {
+					if (buffer[l] == '$') {
 						Com_sprintf(out, sub_len - l, "%d", j);
 						out += (j / 10) + 1;
 						i += (j / 10) + 1;
