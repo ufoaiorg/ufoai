@@ -152,14 +152,14 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh)
 		float x1, x2, y1, y2, z1, z2, s1, s2, t1, t2, r;
 
 		/* vertex coordinates */
-		VectorCopy(v1, vertexes[indexArray[i + 0]].point);
-		VectorCopy(v2, vertexes[indexArray[i + 1]].point);
-		VectorCopy(v3, vertexes[indexArray[i + 2]].point);
+		VectorCopy(vertexes[indexArray[i + 0]].point, v1);
+		VectorCopy(vertexes[indexArray[i + 1]].point, v2);
+		VectorCopy(vertexes[indexArray[i + 2]].point, v3);
 
 		/* texture coordinates */
-		Vector2Copy(w1, stcoords[indexArray[i + 0]]);
-		Vector2Copy(w2, stcoords[indexArray[i + 1]]);
-		Vector2Copy(w3, stcoords[indexArray[i + 2]]);
+		Vector2Copy(stcoords[indexArray[i + 0]], w1);
+		Vector2Copy(stcoords[indexArray[i + 1]], w2);
+		Vector2Copy(stcoords[indexArray[i + 2]], w3);
 
 		/* triangle edge directions */
 		x1 = v2[0] - v1[0];
