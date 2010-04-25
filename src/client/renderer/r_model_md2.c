@@ -82,10 +82,10 @@ static void R_CalcAliasNormals (const int numIndexes, int32_t *indexArray, const
 		VectorNormalize(triangleNormals[j]);
 	}
 
-	/* calculate per-triangle tangents and cotangents*/
+	/* calculate per-triangle tangents and cotangents */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
-		vec3_t v1, v2, v3; 
-		vec2_t w1, w2, w3; 
+		vec3_t v1, v2, v3;
+		vec2_t w1, w2, w3;
 		float x1, x2, y1, y2, z1, z2, s1, s2, t1, t2, r;
 
 		/* vertex coordinates */
@@ -129,7 +129,8 @@ static void R_CalcAliasNormals (const int numIndexes, int32_t *indexArray, const
 		VectorClear(cotangent);
 
 		for (j = 0, k = 0; j < numIndexes; j += 3, k++) {
-			if (vertRemap[indexArray[j + 0]] == i || vertRemap[indexArray[j + 1]] == i || vertRemap[indexArray[j + 2]] == i) {
+			if (vertRemap[indexArray[j + 0]] == i || vertRemap[indexArray[j + 1]] == i || vertRemap[indexArray[j + 2]]
+					== i) {
 				VectorAdd(normal, triangleNormals[k], normal);
 				VectorAdd(tangent, triangleTangents[k], tangent);
 				VectorAdd(cotangent, triangleCotangents[k], cotangent);
@@ -140,7 +141,7 @@ static void R_CalcAliasNormals (const int numIndexes, int32_t *indexArray, const
 
 		/* calculate handedness */
 		CrossProduct(normal, tangent, v);
-		if( DotProduct(v, cotangent) < 0.0 )
+		if (DotProduct(v, cotangent) < 0.0)
 			handedness = -1.0;
 		else
 			handedness = 1.0;
@@ -149,14 +150,12 @@ static void R_CalcAliasNormals (const int numIndexes, int32_t *indexArray, const
 		VectorSubtract(tangent, normal, v);
 		VectorMul(DotProduct(tangent, normal), v, tangent);
 		VectorNormalize(tangent);
-		
+
 		/* copy normalized results to arrays */
 		VectorCopy(normal, normals[i]);
 		VectorCopy(tangent, tangents[i]);
 		tangents[i][3] = handedness;
 	}
-
-
 
 	/* copy normals and tangents back */
 	for (i = 0; i < numVerts; i++) {
