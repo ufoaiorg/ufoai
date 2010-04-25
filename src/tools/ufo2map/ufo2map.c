@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check/checkentities.h"
 #include "check/checklib.h"
 #include "../../shared/shared.h"
-#include "../../common/common.h"
 #include "ufo2map.h"
 
 #ifdef HAVE_SYS_STAT_H
@@ -610,7 +609,6 @@ int main (int argc, const char **argv)
 	U2M_Parameter(argc, argv);
 
 	Verb_Printf(VERB_NORMAL, "---- ufo2map "VERSION" ----\n");
-	Verb_Printf(VERB_NORMAL, BUILDSTRING);
 
 	if (argc < 2) {
 		Usage();
