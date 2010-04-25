@@ -819,7 +819,6 @@ void R_InitPrograms (void)
 		return;
 
 	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
-	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, R_UseMeshProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);

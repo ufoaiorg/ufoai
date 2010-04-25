@@ -95,7 +95,6 @@ typedef struct {
 	r_shader_t shaders[MAX_SHADERS];
 	r_program_t programs[MAX_PROGRAMS];
 	r_program_t *world_program;
-	r_program_t *mesh_program;
 	r_program_t *warp_program;
 	r_program_t *geoscape_program;
 	r_program_t *convolve_program;

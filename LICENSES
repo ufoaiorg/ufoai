@@ -2766,8 +2766,6 @@ base/shaders/geoscape_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/geoscape_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/light_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/light_vs.glsl | GNU General Public License 2.0 or later
-base/shaders/mesh_fs.glsl | GNU General Public License 2.0 or later
-base/shaders/mesh_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
