@@ -159,7 +159,7 @@ size_t UTF8_strlen (const char *str)
  * @param[in] limit Maximum number of bytes to copy
  * @return dest pointer
  */
-char *UTF8_strncpyz (char *dest, char *src, size_t limit)
+char *UTF8_strncpyz (char *dest, const char *src, size_t limit)
 {
 	size_t i;
 	size_t length;
@@ -171,7 +171,7 @@ char *UTF8_strncpyz (char *dest, char *src, size_t limit)
 	if (src[i] > 0x80)
 		while ((i > 0) && src[i] <= 0xc0)
 			i--;
-	if ((UTF8_char_len(src[i]) + i) - 1 > length)
+	if (UTF8_char_len(src[i]) + i - 1 > length)
 		length = i;
 
 	memcpy(dest, src, length);
