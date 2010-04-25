@@ -147,36 +147,32 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh)
 
 	/* calculate per-triangle tangents and cotangents */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
-		vec3_t v1, v2, v3;
-		vec2_t w1, w2, w3;
-		float x1, x2, y1, y2, z1, z2, s1, s2, t1, t2, r;
-
 		/* vertex coordinates */
-		VectorCopy(vertexes[indexArray[i + 0]].point, v1);
-		VectorCopy(vertexes[indexArray[i + 1]].point, v2);
-		VectorCopy(vertexes[indexArray[i + 2]].point, v3);
+		const float *v1 = vertexes[indexArray[i + 0]].point;
+		const float *v2 = vertexes[indexArray[i + 1]].point;
+		const float *v3 = vertexes[indexArray[i + 2]].point;
 
 		/* texture coordinates */
-		Vector2Copy(stcoords[indexArray[i + 0]], w1);
-		Vector2Copy(stcoords[indexArray[i + 1]], w2);
-		Vector2Copy(stcoords[indexArray[i + 2]], w3);
+		const float *w1 = stcoords[indexArray[i + 0]];
+		const float *w2 = stcoords[indexArray[i + 1]];
+		const float *w3 = stcoords[indexArray[i + 2]];
 
 		/* triangle edge directions */
-		x1 = v2[0] - v1[0];
-		x2 = v3[0] - v1[0];
-		y1 = v2[1] - v1[1];
-		y2 = v3[1] - v1[1];
-		z1 = v2[2] - v1[2];
-		z2 = v3[2] - v1[2];
+		const float x1 = v2[0] - v1[0];
+		const float x2 = v3[0] - v1[0];
+		const float y1 = v2[1] - v1[1];
+		const float y2 = v3[1] - v1[1];
+		const float z1 = v2[2] - v1[2];
+		const float z2 = v3[2] - v1[2];
 
 		/* texture coordinate edge directions */
-		s1 = w2[0] - w1[0];
-		s2 = w3[0] - w1[0];
-		t1 = w2[1] - w1[1];
-		t2 = w3[1] - w1[1];
+		const float s1 = w2[0] - w1[0];
+		const float s2 = w3[0] - w1[0];
+		const float t1 = w2[1] - w1[1];
+		const float t2 = w3[1] - w1[1];
 
 		/* calculate tangent and cotangent */
-		r = 1.0F / (s1 * t2 - s2 * t1);
+		const float r = 1.0F / (s1 * t2 - s2 * t1);
 		VectorSet(triangleTangents[j], (t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
 		VectorSet(triangleCotangents[j], (s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
 	}
