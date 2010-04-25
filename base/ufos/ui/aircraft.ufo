@@ -15,8 +15,8 @@ component panel cmpActorSelect {
 		image ui/checkbox_green
 		size "20 20"
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
 	}
 
 	string txt_actor
@@ -26,8 +26,8 @@ component panel cmpActorSelect {
 		size	"190 35"
 		textalign cl
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
 	}
 }
 

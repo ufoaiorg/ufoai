@@ -31,8 +31,8 @@ component cmpActorSelect cmpSoldierSelect {
 		texl		"0 0"
 		texh		"16 16"
 		invis		true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
 	}
 	checkbox check_actor
 	{
