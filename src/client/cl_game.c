@@ -176,6 +176,24 @@ void GAME_SetMode (int gametype)
 	}
 }
 
+static void MN_MapInfoGetNext (int step)
+{
+	const mapDef_t *md;
+
+	cls.currentSelectedMap += step;
+
+	if (cls.currentSelectedMap < 0)
+		cls.currentSelectedMap = csi.numMDs - 1;
+
+	cls.currentSelectedMap %= csi.numMDs;
+
+	md = &csi.mds[cls.currentSelectedMap];
+
+	/* special purpose maps are not startable without the specific context */
+	if (md->map[0] == '.')
+		MN_MapInfoGetNext(step);
+}
+
 /**
  * @brief Prints the map info for the server creation dialogue
  * @todo Skip special map that start with a '.' (e.g. .baseattack)
@@ -189,12 +207,7 @@ static void MN_MapInfo (int step)
 	if (!csi.numMDs)
 		return;
 
-	cls.currentSelectedMap += step;
-
-	if (cls.currentSelectedMap < 0)
-		cls.currentSelectedMap = csi.numMDs - 1;
-
-	cls.currentSelectedMap %= csi.numMDs;
+	MN_MapInfoGetNext(step);
 
 	md = NULL;
 	while (list->name) {

@@ -222,6 +222,10 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 const mapDef_t* GAME_SK_MapInfo (int step)
 {
 	const mapDef_t *md = &csi.mds[cls.currentSelectedMap];
+
+	if (md->map[0] == '.')
+		return NULL;
+
 	if (md->map[0] == '+') {
 		GAME_SK_HideUFOs(md->ufos);
 		GAME_SK_HideDropships(md->aircraft);
