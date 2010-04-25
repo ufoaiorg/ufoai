@@ -701,9 +701,35 @@ void AC_InitStartup (void)
 qboolean AC_SaveXML (mxml_node_t * parent)
 {
 	mxml_node_t *aliencont;
+	int i;
 
 	aliencont = mxml_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	mxml_AddInt(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
+	mxml_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
+
+	for (i = 0; i < MAX_BASES; i++) {
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		mxml_node_t *node;
+		int k;
+
+		if (!base)
+			continue;
+		if (!AC_ContainmentAllowed(base))
+			continue;
+
+		node = mxml_AddNode(aliencont, SAVE_ALIENCONT_CONT);
+		mxml_AddInt(node, SAVE_ALIENCONT_BASEIDX, i);
+		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
+			mxml_node_t * snode = mxml_AddNode(node, SAVE_ALIENCONT_ALIEN);
+			
+			assert(base->alienscont);
+			assert(base->alienscont[k].teamDef);
+			assert(base->alienscont[k].teamDef->id);
+			
+			mxml_AddString(snode, SAVE_ALIENCONT_TEAMID, base->alienscont[k].teamDef->id);
+			mxml_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTALIVE, base->alienscont[k].amountAlive);
+			mxml_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTDEAD, base->alienscont[k].amountDead);
+		}
+	}
 
 	return qtrue;
 }
@@ -717,14 +743,40 @@ qboolean AC_SaveXML (mxml_node_t * parent)
 qboolean AC_LoadXML (mxml_node_t * parent)
 {
 	mxml_node_t *aliencont;
+	mxml_node_t *contNode;
+	int i;
 
 	aliencont = mxml_GetNode(parent, SAVE_ALIENCONT_ALIENCONT);
-	if (aliencont) {
-		ccs.breathingMailSent = mxml_GetInt(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, 0);
-	} else {
-		/** @todo Remove this once we release 2.3 */
-		/* set defaults, old savegame without aliencont node*/
-		ccs.breathingMailSent = qfalse;
+	ccs.breathingMailSent = mxml_GetBool(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, qfalse);
+
+	/* Init alienContainers */
+	for (i = 0; i < MAX_BASES; i++) {
+		base_t *base = B_GetBaseByIDX(i);
+
+		AL_FillInContainment(base);
+	}
+	/* Load data */
+	for (contNode = mxml_GetNode(aliencont, SAVE_ALIENCONT_CONT); contNode;
+			contNode = mxml_GetNextNode(contNode, aliencont, SAVE_ALIENCONT_CONT)) {
+		int j = mxml_GetInt(contNode, SAVE_ALIENCONT_BASEIDX, MAX_BASES);
+		base_t *base = B_GetFoundedBaseByIDX(j);
+		int k;
+		mxml_node_t *alienNode;
+
+		if (!base) {
+			Com_Printf("AC_LoadXML: Invalid base idx '%i'\n", j);
+			continue;
+		}
+
+		for (k = 0, alienNode = mxml_GetNode(contNode, SAVE_ALIENCONT_ALIEN); alienNode && k < MAX_ALIENCONT_CAP; alienNode = mxml_GetNextNode(alienNode, contNode, SAVE_ALIENCONT_ALIEN), k++) {
+			const char *const s = mxml_GetString(alienNode, SAVE_ALIENCONT_TEAMID);
+			/* Fill Alien Containment with default values like the tech pointer. */
+			base->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
+			if (base->alienscont[k].teamDef) {
+				base->alienscont[k].amountAlive = mxml_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTALIVE, 0);
+				base->alienscont[k].amountDead = mxml_GetInt(alienNode, SAVE_ALIENCONT_AMOUNTDEAD, 0);
+			}
+		}
 	}
 
 	return qtrue;
@@ -743,3 +795,4 @@ qboolean AC_ContainmentAllowed (const base_t* base)
 		return qfalse;
 	}
 }
+

@@ -64,12 +64,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_BASES_RADARRANGE "radarRange"
 #define SAVE_BASES_TRACKINGRANGE "trackingRange"
 
-#define SAVE_BASES_ALIENCONT "aliensCont"
-#define SAVE_BASES_ALIEN "alien"
-#define SAVE_BASES_ID "id"
-#define SAVE_BASES_AMOUNTALIVE "amountAlive"
-#define SAVE_BASES_AMOUNTDEAD "amountDead"
-
 #define SAVE_BASESTATUS_NAMESPACE "savebaseStatus"
 #define SAVE_BUILDINGSTATUS_NAMESPACE "savebuildingStatus"
 static const constListEntry_t saveBaseConstants[] = {
@@ -87,7 +81,7 @@ static const constListEntry_t saveBaseConstants[] = {
 #endif
 
 /*
-DTD: (incomplete)
+DTD:
 
 <!ELEMENT bases base+>
 <!ELEMENT base pos buildingSpace buildings batteries lasers>

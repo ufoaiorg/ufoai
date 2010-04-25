@@ -2826,17 +2826,6 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		mxml_AddIntValue(act_base, SAVE_BASES_RADARRANGE, b->radar.range);
 		mxml_AddIntValue(act_base, SAVE_BASES_TRACKINGRANGE, b->radar.trackingRange);
 
-		/* Alien Containment. */
-		node = mxml_AddNode(act_base, SAVE_BASES_ALIENCONT);
-		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
-			mxml_node_t * snode = mxml_AddNode(node, SAVE_BASES_ALIEN);
-			assert(b->alienscont);
-			assert(b->alienscont[k].teamDef);
-			assert(b->alienscont[k].teamDef->id);
-			mxml_AddString(snode, SAVE_BASES_ID, b->alienscont[k].teamDef->id);
-			mxml_AddInt(snode, SAVE_BASES_AMOUNTALIVE, b->alienscont[k].amountAlive);
-			mxml_AddInt(snode, SAVE_BASES_AMOUNTDEAD, b->alienscont[k].amountDead);
-		}
 		Com_UnregisterConstList(saveBaseConstants);
 	}
 	return qtrue;
@@ -2931,7 +2920,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 	Com_RegisterConstList(saveBaseConstants);
 	for (base = mxml_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, SAVE_BASES_BASE)) {
 		mxml_node_t * node, * snode;
-		int k;
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = mxml_GetString(base, SAVE_BASES_BASESTATUS);
@@ -3031,22 +3019,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		RADAR_InitialiseUFOs(&b->radar);
 		RADAR_Initialise(&b->radar, mxml_GetInt(base, SAVE_BASES_RADARRANGE, 0), mxml_GetInt(base, SAVE_BASES_TRACKINGRANGE, 0), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
-		/* Alien Containment. */
-		AL_FillInContainment(b);
-		node = mxml_GetNode(base, SAVE_BASES_ALIENCONT);
-		if (!node)
-			Com_Printf("No aliensCont found\n");
-		else{
-			for (k = 0, snode = mxml_GetNode(node, SAVE_BASES_ALIEN); snode && k < MAX_ALIENCONT_CAP;snode = mxml_GetNextNode(snode, node, SAVE_BASES_ALIEN), k++) {
-				const char *const s = mxml_GetString(snode, SAVE_BASES_ID);
-				/* Fill Alien Containment with default values like the tech pointer. */
-				b->alienscont[k].teamDef = Com_GetTeamDefinitionByID(s);
-				if (b->alienscont[k].teamDef) {
-					b->alienscont[k].amountAlive = mxml_GetInt(snode, SAVE_BASES_AMOUNTALIVE, 0);
-					b->alienscont[k].amountDead = mxml_GetInt(snode, SAVE_BASES_AMOUNTDEAD, 0);
-				}
-			}
-		}
 		/** @todo can't we use something like I_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
