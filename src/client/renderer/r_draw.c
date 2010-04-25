@@ -1416,7 +1416,6 @@ void R_DrawBloom (void)
 	if (!r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
 
-
 	/* save state, then set up for blit-style rendering to quads */
 	rb_enable = R_RenderbufferEnabled();
 	glPushAttrib(GL_ENABLE_BIT | GL_VIEWPORT_BIT);
@@ -1448,10 +1447,10 @@ void R_DrawBloom (void)
 	R_DrawQuad();
 
 	for (i = 1; i < DOWNSAMPLE_PASSES; i++) {
-		R_Blur(r_state.buffers0[i-1], r_state.buffers1[i-1], 0, 0);
-		R_Blur(r_state.buffers1[i-1], r_state.buffers2[i-1], 0, 1);
+		R_Blur(r_state.buffers0[i - 1], r_state.buffers1[i - 1], 0, 0);
+		R_Blur(r_state.buffers1[i - 1], r_state.buffers2[i - 1], 0, 1);
 		R_UseFramebuffer(r_state.buffers0[i]);
-		R_BindTexture(r_state.buffers2[i-1]->textures[0]);
+		R_BindTexture(r_state.buffers2[i - 1]->textures[0]);
 		R_UseViewport(r_state.buffers0[i]);
 		R_DrawQuad();
 	}
@@ -1492,5 +1491,4 @@ void R_DrawBloom (void)
 
 	/* reset renderbuffer state to what it was before */
 	R_EnableRenderbuffer(rb_enable);
-
 }
