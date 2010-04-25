@@ -1364,7 +1364,7 @@ qboolean CL_ActorMouseTrace (void)
 
 	/* cursor would be higher than max allowed levels, this can happen if e.g. actorclip
 	 * or nodraw brushes are on level 8 */
-	if (testPos[2] > PATHFINDING_HEIGHT)
+	if (testPos[2] >= PATHFINDING_HEIGHT)
 		return qfalse;
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
