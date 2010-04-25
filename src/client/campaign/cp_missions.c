@@ -1442,7 +1442,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	linkedList_t *list;
 
 	/* Some event are non-occurrence */
-	if (category == INTERESTCATEGORY_NONE)
+	if (category <= INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
 		return NULL;
 
 	memset(&mission, 0, sizeof(mission));
