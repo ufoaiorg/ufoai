@@ -883,7 +883,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 	/* strip path */
 	if (stripPath) {
 		f = strrchr(name, '/');
-		if (f)
+		if (!f)
 			f = name;
 		else
 			f++;
