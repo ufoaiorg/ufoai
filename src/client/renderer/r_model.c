@@ -142,7 +142,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		return NULL;
 	}
 
-	/* call the apropriate loader */
+	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */

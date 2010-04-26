@@ -162,7 +162,7 @@ static model_t *LoadModel (const char *name)
 	mod = Mem_PoolAlloc(sizeof(*mod), vid_modelPool, 0);
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
 
-	/* call the apropriate loader */
+	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
