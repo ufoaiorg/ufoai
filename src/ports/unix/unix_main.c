@@ -35,7 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <signal.h>
 
 #include "../../common/common.h"
-#include "unix_glob.h"
 #include "unix_curses.h"
 
 #ifdef HAVE_EXECINFO_H
@@ -250,7 +249,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 		return NULL;
 
 	while ((d = readdir(fdir)) != NULL) {
-		if (!*findpattern || glob_match(findpattern, d->d_name)) {
+		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
 				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
 				return findpath;
@@ -273,7 +272,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 	if (fdir == NULL)
 		return NULL;
 	while ((d = readdir(fdir)) != NULL) {
-		if (!*findpattern || glob_match(findpattern, d->d_name)) {
+		if (!*findpattern || Com_Filter(findpattern, d->d_name)) {
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
 				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
 				return findpath;
@@ -288,6 +287,49 @@ void Sys_FindClose (void)
 	if (fdir != NULL)
 		closedir(fdir);
 	fdir = NULL;
+}
+
+#define MAX_FOUND_FILES 0x1000
+
+void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t **list)
+{
+	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
+	char filename[MAX_OSPATH];
+	DIR *fdir;
+	struct dirent *d;
+	struct stat st;
+
+	if (strlen(subdirs)) {
+		Com_sprintf(search, sizeof(search), "%s/%s", basedir, subdirs);
+	} else {
+		Com_sprintf(search, sizeof(search), "%s", basedir);
+	}
+
+	if ((fdir = opendir(search)) == NULL)
+		return;
+
+	while ((d = readdir(fdir)) != NULL) {
+		Com_sprintf(filename, sizeof(filename), "%s/%s", search, d->d_name);
+		if (stat(filename, &st) == -1)
+			continue;
+
+		if (st.st_mode & S_IFDIR) {
+			if (Q_strcasecmp(d->d_name, ".") && Q_strcasecmp(d->d_name, "..")) {
+				if (strlen(subdirs)) {
+					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s/%s", subdirs, d->d_name);
+				} else {
+					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s", d->d_name);
+				}
+				Sys_ListFilteredFiles(basedir, newsubdirs, filter, list);
+			}
+		}
+		Com_sprintf(filename, sizeof(filename), "%s/%s", subdirs, d->d_name);
+		if (!Com_Filter(filter, filename))
+			continue;
+		LIST_AddString(list, filename);
+	}
+
+	closedir(fdir);
 }
 
 #ifdef COMPILE_UFO

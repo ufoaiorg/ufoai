@@ -55,8 +55,7 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	TESTS_SRCS += \
 		ports/unix/unix_console.c \
 		ports/unix/unix_curses.c \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
@@ -70,15 +69,13 @@ ifeq ($(TARGET_OS),darwin)
 	TESTS_SRCS+=\
 		ports/unix/unix_console.c \
 		ports/unix/unix_curses.c \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 endif
 
 ifeq ($(TARGET_OS),solaris)
 	TESTS_SRCS += \
 		ports/unix/unix_console.c \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 endif
 
 TESTS_OBJS= \

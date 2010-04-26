@@ -874,18 +874,21 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock, char* name)
+static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock, const char* name, qboolean stripPath)
 {
-	char *f;
-	char *tl = NULL;
+	const char *f;
+	const char *tl = NULL;
 	char path[MAX_QPATH];
 
 	/* strip path */
-	f = strrchr(name, '/');
-	if (!f)
+	if (stripPath) {
+		f = strrchr(name, '/');
+		if (f)
+			f = name;
+		else
+			f++;
+	} else
 		f = name;
-	else
-		f++;
 
 	/* check for double occurrences */
 	for (tblock = block; tblock; tblock = tblock->next) {
@@ -1005,9 +1008,28 @@ int FS_BuildFileList (const char *fileList)
 				/* found it! */
 				if ((findname[0] == '*' || !strncmp(pak->files[i].name, findname, l))
 				 && (ext[0] == '*' || strstr(pak->files[i].name, ext))) {
-					_AddToListBlock(&fl, block, tblock, pak->files[i].name);
+					_AddToListBlock(&fl, block, tblock, pak->files[i].name, qtrue);
 					numfiles++;
 				}
+		} else if (strstr(files, "**")) {
+			linkedList_t *list = NULL, *loopList;
+			const char *wildcard = strstr(files, "**");
+			const size_t l = strlen(files) - strlen(wildcard);
+			const char *name = &findname[l + 1];
+
+			Q_strncpyz(findname, files, sizeof(findname));
+			FS_NormPath(findname);
+			findname[l] = '\0';
+
+			Sys_ListFilteredFiles(search->filename, findname, name, &list);
+
+			loopList = list;
+			while (loopList) {
+				_AddToListBlock(&fl, block, tblock, (const char *)loopList->data, qfalse);
+				loopList = loopList->next;
+			}
+
+			LIST_Delete(&list);
 		} else {
 			int nfiles = 0;
 			char **filenames;
@@ -1018,7 +1040,7 @@ int FS_BuildFileList (const char *fileList)
 			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != NULL) {
 				for (i = 0; i < nfiles - 1; i++) {
-					_AddToListBlock(&fl, block, tblock, filenames[i]);
+					_AddToListBlock(&fl, block, tblock, filenames[i], qtrue);
 					Mem_Free(filenames[i]);
 					numfiles++;
 				}

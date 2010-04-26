@@ -147,6 +147,7 @@ SYSTEM SPECIFIC
 char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
 char *Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
+void Sys_ListFilteredFiles(const char *basedir, const char *subdirs, const char *filter, linkedList_t **list);
 char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 int Sys_Milliseconds(void);

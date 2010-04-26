@@ -109,11 +109,15 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (Img_LoadImage(lname, &surf)) {
 		image = R_LoadImageData(lname, surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
+	} else {
+		image = NULL;
 	}
 
 	/* no fitting texture found */
-	if (!image)
+	if (!image) {
+		Com_Printf("  \\ - could not load skin '%s'\n", pname);
 		image = r_noTexture;
+	}
 
 	return image;
 }
@@ -193,22 +197,25 @@ static model_t *LoadModel (const char *name)
 static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh)
 {
 	int i;
-	const char *fileName;
+	char fileName[MAX_QPATH];
 	qFILE f;
 
-	fileName = va("models/%s.mdx", mod->name);
+	Com_StripExtension(mod->name, fileName, sizeof(fileName));
+	Q_strcat(fileName, ".mdx", sizeof(fileName));
+	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
 	FS_OpenFile(fileName, &f, FILE_WRITE);
 
 	for (i = 0; i < mesh->num_verts; i++) {
 		mAliasVertex_t *v = &mesh->vertexes[i];
 		int j;
+		const size_t length = sizeof(vec3_t);
 		for (j = 0; j < 3; j++) {
 			v->normal[j] = LittleFloat(v->normal[j]);
 			v->tangent[j] = LittleFloat(v->tangent[j]);
 		}
-		FS_Write(v->normal, sizeof(v->normal), &f);
-		FS_Write(v->tangent, sizeof(v->tangent), &f);
+		FS_Write(v->normal, length, &f);
+		FS_Write(v->tangent, length, &f);
 	}
 
 	FS_CloseFile(&f);
@@ -222,15 +229,16 @@ static void PrecalcNormalsAndTangents (void)
 		model_t *mod = LoadModel(filename);
 		int i;
 
-		Com_Printf("%s\n", filename);
+		Com_Printf("- model '%s'\n", filename);
+		Com_Printf("  \\ - # meshes '%i'\n", mod->alias.num_meshes);
 
 		for (i = 0; i < mod->alias.num_meshes; i++) {
 			int j;
 			mAliasMesh_t *mesh = &mod->alias.meshes[i];
 			for (j = 0; j < mod->alias.num_frames; j++) {
 				R_ModCalcNormalsAndTangents(mesh, mesh->num_verts * j);
-				WriteToFile(mod, mesh);
 			}
+			WriteToFile(mod, mesh);
 		}
 	}
 	FS_NextFileFromFileList(NULL);
@@ -252,6 +260,7 @@ int main (int argc, const char **argv)
 	FS_InitFilesystem(qfalse);
 
 	r_noTexture = Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
+	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));
 
 	PrecalcNormalsAndTangents();
 

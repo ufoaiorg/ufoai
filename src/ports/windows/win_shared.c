@@ -148,6 +148,45 @@ void Sys_FindClose (void)
 	findhandle = 0;
 }
 
+#define MAX_FOUND_FILES 0x1000
+
+void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t *list)
+{
+	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
+	char filename[MAX_OSPATH];
+	int findhandle;
+	struct _finddata_t findinfo;
+
+	if (strlen(subdirs)) {
+		Com_sprintf(search, sizeof(search), "%s\\%s\\*", basedir, subdirs);
+	} else {
+		Com_sprintf(search, sizeof(search), "%s\\*", basedir);
+	}
+
+	findhandle = _findfirst(search, &findinfo);
+	if (findhandle == -1)
+		return;
+
+	do {
+		if (findinfo.attrib & _A_SUBDIR) {
+			if (Q_strcasecmp(findinfo.name, ".") && Q_strcasecmp(findinfo.name, "..")) {
+				if (strlen(subdirs)) {
+					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s\\%s", subdirs, findinfo.name);
+				} else {
+					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s", findinfo.name);
+				}
+				Sys_ListFilteredFiles(basedir, newsubdirs, filter, list);
+			}
+		}
+		Com_sprintf(filename, sizeof(filename), "%s\\%s", subdirs, findinfo.name);
+		if (!Com_Filter(filter, filename))
+			continue;
+		LIST_AddString(&list, filename);
+	} while (_findnext(findhandle, &findinfo) != -1);
+
+	_findclose(findhandle);
+}
+
 void Sys_Quit (void)
 {
 	timeEndPeriod(1);

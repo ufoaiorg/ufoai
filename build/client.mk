@@ -305,8 +305,7 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \
 		ports/linux/linux_main.c \
 		ports/unix/unix_console.c \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
@@ -320,7 +319,6 @@ endif
 ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
 		ports/macosx/osx_main.m \
-		ports/unix/unix_glob.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
 endif
@@ -329,8 +327,7 @@ ifeq ($(TARGET_OS),solaris)
 	CLIENT_SRCS+= \
 		ports/solaris/solaris_main.c \
 		ports/unix/unix_console.c \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 endif
 
 CLIENT_OBJS= \

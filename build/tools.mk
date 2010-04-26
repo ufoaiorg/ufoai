@@ -68,11 +68,9 @@ UFOMODEL_SRC = \
 
 ifneq ($(findstring $(TARGET_OS), solaris darwin netbsd freebsd linux-gnu),)
 	UFO2MAP_SRCS+= \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 	UFOMODEL_SRC+= \
-		ports/unix/unix_main.c \
-		ports/unix/unix_glob.c
+		ports/unix/unix_main.c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
