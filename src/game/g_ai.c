@@ -309,7 +309,7 @@ qboolean AI_FindHidingLocation (int team, edict_t *ent, const pos3_t from, int *
 	return qfalse;
 }
 
-/** 
+/**
  * @brief Tries to search a spot where actor will be more closer to the target and
  * behind the target from enemy
  * @param[in] ent The actor edict.
@@ -325,7 +325,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 	const int distance = min(tu, HERD_DIST * 2);
 	vec_t length;
-	vec_t bestlength = 0.0f; 
+	vec_t bestlength = 0.0f;
 	pos3_t bestpos;
 	edict_t* next = NULL;
 	edict_t* enemy = NULL;
@@ -348,7 +348,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 	minY = max(from[1] - HERD_DIST, 0);
 	maxX = min(from[0] + HERD_DIST, PATHFINDING_WIDTH - 1);
 	maxY = min(from[1] + HERD_DIST, PATHFINDING_WIDTH - 1);
-	
+
 	/* search the location */
 	VectorCopy(from, bestpos);
 	bestlength = VectorDistSqr(target, ent->origin);
@@ -883,7 +883,7 @@ void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 	int dv;
 	const byte crouchingState = G_IsCrouched(ent) ? 1 : 0;
 
-	G_MoveCalc(ent->team, ent, pos, crouchingState, MAX_ROUTE);
+	G_MoveCalc(ent->team, ent, pos, crouchingState, ent->TU);
 
 	dv = gi.MoveNext(gi.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {

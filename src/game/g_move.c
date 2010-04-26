@@ -212,7 +212,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	oldState = 0;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
+	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
 	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
@@ -230,7 +230,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			G_ClientStateChange(player, ent, STATE_CROUCHED, qtrue); /* change to stand state */
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
-				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, MAX_ROUTE);
+				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
 				length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 				autoCrouchRequired = qtrue;
 			}
