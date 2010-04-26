@@ -150,7 +150,7 @@ void Sys_FindClose (void)
 
 #define MAX_FOUND_FILES 0x1000
 
-void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t *list)
+void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char *filter, linkedList_t **list)
 {
 	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char filename[MAX_OSPATH];
@@ -181,7 +181,7 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 		Com_sprintf(filename, sizeof(filename), "%s\\%s", subdirs, findinfo.name);
 		if (!Com_Filter(filter, filename))
 			continue;
-		LIST_AddString(&list, filename);
+		LIST_AddString(list, filename);
 	} while (_findnext(findhandle, &findinfo) != -1);
 
 	_findclose(findhandle);
