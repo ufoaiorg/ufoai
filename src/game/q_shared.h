@@ -61,23 +61,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #include "../shared/defines.h"
-
-/* LINKED LIST STUFF */
-
-typedef struct linkedList_s {
-	byte *data;
-	struct linkedList_s *next;
-	qboolean ptr;	/**< don't call Mem_Free for data */
-} linkedList_t;
-
-void LIST_AddString(linkedList_t** list, const char* data);
-void LIST_AddPointer(linkedList_t** listDest, void* data);
-linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
-const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
-void LIST_Delete(linkedList_t **list);
-void LIST_Remove(linkedList_t **list, linkedList_t *entry);
-int LIST_Count(const linkedList_t *list);
-void *LIST_GetByIdx(linkedList_t *list, int index);
+#include "../common/list.h"
 
 /*
 ==========================================================
