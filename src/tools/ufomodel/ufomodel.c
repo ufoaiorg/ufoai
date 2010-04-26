@@ -213,12 +213,21 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh)
 	for (i = 0; i < mesh->num_verts; i++) {
 		mAliasVertex_t *v = &mesh->vertexes[i];
 		int j;
-		const size_t length = sizeof(vec3_t);
 		for (j = 0; j < 3; j++) {
 			v->normal[j] = LittleFloat(v->normal[j]);
 			v->tangent[j] = LittleFloat(v->tangent[j]);
 		}
+	}
+
+	for (i = 0; i < mesh->num_verts; i++) {
+		mAliasVertex_t *v = &mesh->vertexes[i];
+		const size_t length = sizeof(vec3_t);
 		FS_Write(v->normal, length, &f);
+	}
+
+	for (i = 0; i < mesh->num_verts; i++) {
+		mAliasVertex_t *v = &mesh->vertexes[i];
+		const size_t length = sizeof(vec3_t);
 		FS_Write(v->tangent, length, &f);
 	}
 
