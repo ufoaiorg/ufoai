@@ -205,6 +205,10 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh)
 	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
 	FS_OpenFile(fileName, &f, FILE_WRITE);
+	if (!f.f) {
+		Com_Printf("  \\ - can not open '%s' for writing\n", fileName);
+		return;
+	}
 
 	for (i = 0; i < mesh->num_verts; i++) {
 		mAliasVertex_t *v = &mesh->vertexes[i];
