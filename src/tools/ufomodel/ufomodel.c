@@ -190,6 +190,30 @@ static model_t *LoadModel (const char *name)
 	return mod;
 }
 
+static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh)
+{
+	int i;
+	const char *fileName;
+	qFILE f;
+
+	fileName = va("models/%s.mdx", mod->name);
+
+	FS_OpenFile(fileName, &f, FILE_WRITE);
+
+	for (i = 0; i < mesh->num_verts; i++) {
+		mAliasVertex_t *v = &mesh->vertexes[i];
+		int j;
+		for (j = 0; j < 3; j++) {
+			v->normal[j] = LittleFloat(v->normal[j]);
+			v->tangent[j] = LittleFloat(v->tangent[j]);
+		}
+		FS_Write(v->normal, sizeof(v->normal), &f);
+		FS_Write(v->tangent, sizeof(v->tangent), &f);
+	}
+
+	FS_CloseFile(&f);
+}
+
 static void PrecalcNormalsAndTangents (void)
 {
 	const char *filename;
@@ -205,7 +229,7 @@ static void PrecalcNormalsAndTangents (void)
 			mAliasMesh_t *mesh = &mod->alias.meshes[i];
 			for (j = 0; j < mod->alias.num_frames; j++) {
 				R_ModCalcNormalsAndTangents(mesh, mesh->num_verts * j);
-				/** @todo write results to file */
+				WriteToFile(mod, mesh);
 			}
 		}
 	}
