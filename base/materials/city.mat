@@ -2,6 +2,9 @@
 ### NOTICE BOARDS
 ###
 
+/* -------------------
+   Commented out until rail station used
+
 # Rail Notice Board
 {
 	material tex_misc/rail_notice
@@ -54,6 +57,8 @@
 	}
 }
 
+*/
+
 ###
 ### Adverts
 ###
@@ -62,7 +67,10 @@
 	material tex_misc/advert_back
 	specular 2.0
 	hardness 2.0
-}	
+}
+
+/* -----------------
+   Commented out until adverts are used	
 {
 	material tex_misc/advertaa0
 	specular 2.0
@@ -97,6 +105,8 @@
 	}
 }
 
+*/
+
 ###
 ### Signs
 ###
@@ -115,7 +125,7 @@
 	{
 		texture tex_misc/sign_parkblda0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		anim 4 3.0
+		anim 4 8.0
 	}
 }
 
@@ -446,6 +456,11 @@
        }
 
 }
+
+/* -----------------
+   Commented out because the crosswalks and streets
+   that have yellow lines ending are not currently used
+
 {
        material tex_streets/2ln_cwbtm
 	bump 2.0
@@ -491,7 +506,7 @@
 
 }
 
-
+*/
 
 
 # Horizontal streets
@@ -518,6 +533,11 @@
        }
 
 }
+
+/* ------------------
+   Commented out because the crosswalks that have
+   yellow lines ending are currently not used
+
 {
        material tex_streets/2lnh_cwlft
 	bump 2.0
@@ -562,6 +582,9 @@
        }
 
 }
+
+*/
+
 {
 	material tex_streets/2lnh_trnlft
 	bump 2.0
