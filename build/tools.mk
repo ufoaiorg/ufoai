@@ -56,7 +56,13 @@ UFOMODEL_SRC = \
 	common/files.c \
 	common/mem.c \
 	common/unzip.c \
-	common/ioapi.c
+	common/ioapi.c \
+	\
+	client/renderer/r_model_alias.c \
+	client/renderer/r_model_dpm.c \
+	client/renderer/r_model_md2.c \
+	client/renderer/r_model_md3.c \
+	client/renderer/r_model_obj.c
 
 ifneq ($(findstring $(TARGET_OS), solaris darwin netbsd freebsd linux-gnu),)
 	UFO2MAP_SRCS+= \

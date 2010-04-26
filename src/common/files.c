@@ -993,7 +993,6 @@ int FS_BuildFileList (const char *fileList)
 			const char *ext = strrchr(files, '.');
 			const pack_t *pak = search->pack;
 			size_t l = strlen(files);
-			/* *.* is not implemented here - only e.g. *.ufo */
 			if (!ext)
 				break;
 			Q_strncpyz(findname, files, sizeof(findname));
@@ -1004,7 +1003,8 @@ int FS_BuildFileList (const char *fileList)
 			/* look through all the pak file elements */
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
-				if (!strncmp(pak->files[i].name, findname, l) && strstr(pak->files[i].name, ext)) {
+				if ((findname[0] == '*' || !strncmp(pak->files[i].name, findname, l))
+				 && (ext[0] == '*' || strstr(pak->files[i].name, ext))) {
 					_AddToListBlock(&fl, block, tblock, pak->files[i].name);
 					numfiles++;
 				}

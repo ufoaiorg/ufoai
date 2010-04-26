@@ -228,3 +228,163 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 #endif
 	}
 }
+
+image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)
+{
+	/* arisian: bookmark */
+	if (skin[0] != '.')
+		return R_FindImage(skin, it_skin);
+	else {
+		char path[MAX_QPATH];
+		char *slash, *end;
+
+		Q_strncpyz(path, mod->name, sizeof(path));
+		end = path;
+		while ((slash = strchr(end, '/')) != 0)
+			end = slash + 1;
+		strcpy(end, skin + 1);
+		return R_FindImage(path, it_skin);
+	}
+}
+
+image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin)
+{
+	/* check animations */
+	if ((*frame >= mod->alias.num_frames) || *frame < 0) {
+		Com_Printf("R_AliasModelState %s: no such frame %d (# %i)\n", mod->name, *frame, mod->alias.num_frames);
+		*frame = 0;
+	}
+	if ((*oldFrame >= mod->alias.num_frames) || *oldFrame < 0) {
+		Com_Printf("R_AliasModelState %s: no such oldframe %d (# %i)\n", mod->name, *oldFrame, mod->alias.num_frames);
+		*oldFrame = 0;
+	}
+
+	if (*mesh < 0 || *mesh >= mod->alias.num_meshes)
+		*mesh = 0;
+
+	if (!mod->alias.meshes)
+		return NULL;
+
+	/* use default skin - this is never null - but maybe the placeholder texture */
+	if (*skin < 0 || *skin >= mod->alias.meshes[*mesh].num_skins)
+		*skin = 0;
+
+	if (!mod->alias.meshes[*mesh].num_skins)
+		Com_Error(ERR_DROP, "Model with no skins");
+
+	if (mod->alias.meshes[*mesh].skins[*skin].skin->texnum <= 0)
+		Com_Error(ERR_DROP, "Texture is already freed and no longer uploaded, texnum is invalid for model %s", mod->name);
+
+	return mod->alias.meshes[*mesh].skins[*skin].skin;
+}
+
+/**
+ * @brief Converts the model data into the opengl arrays
+ * @param mod The model to convert
+ * @param mesh The particular mesh of the model to convert
+ * @param backlerp The linear back interpolation when loading the data
+ * @param framenum The frame number of the mesh to load (if animated)
+ * @param oldframenum The old frame number (used to interpolate)
+ * @param prerender If this is @c true, all data is filled to the arrays. If @c false, then
+ * e.g. the normals are only filled to the arrays if the lighting is activated.
+ */
+void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
+{
+	int i, j;
+	const mAliasFrame_t *frame, *oldframe;
+	const mAliasVertex_t *v, *ov;
+	vec3_t move;
+	const float frontlerp = 1.0 - backlerp;
+	vec3_t r_mesh_verts[MD3_MAX_VERTS];
+	vec3_t r_mesh_norms[MD3_MAX_VERTS];
+	vec3_t r_mesh_tangents[MD3_MAX_VERTS];
+	float *texcoord_array, *vertex_array_3d, *normal_array, *tangent_array;
+
+	frame = mod->frames + framenum;
+	oldframe = mod->frames + oldframenum;
+
+	for (i = 0; i < 3; i++)
+		move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
+
+	v = &mesh->vertexes[framenum * mesh->num_verts];
+	ov = &mesh->vertexes[oldframenum * mesh->num_verts];
+
+	assert(mesh->num_verts < lengthof(r_mesh_verts));
+
+	for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
+		VectorSet(r_mesh_verts[i],
+				move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
+				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
+				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
+
+		if (r_state.lighting_enabled || prerender) {  /* and the norms */
+			VectorSet(r_mesh_norms[i],
+					v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
+					v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
+					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
+		}
+		if (r_state.bumpmap_enabled || prerender) {  /* and the tangents */
+			VectorSet(r_mesh_tangents[i],
+					v->tangent[0] + (ov->tangent[0] - v->tangent[0]) * backlerp,
+					v->tangent[1] + (ov->tangent[1] - v->tangent[1]) * backlerp,
+					v->tangent[2] + (ov->tangent[2] - v->tangent[2]) * backlerp);
+		}
+	}
+
+	texcoord_array = texunit_diffuse.texcoord_array;
+	vertex_array_3d = r_state.vertex_array_3d;
+	normal_array = r_state.normal_array;
+	tangent_array = r_state.tangent_array;
+
+	/** @todo damn slow - optimize this */
+	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
+		for (j = 0; j < 3; j++) {
+			const int arrayIndex = 3 * i + j;
+			const int meshIndex = mesh->indexes[arrayIndex];
+			Vector2Copy(mesh->stcoords[meshIndex], texcoord_array);
+			VectorCopy(r_mesh_verts[meshIndex], vertex_array_3d);
+
+			/* normal vectors for lighting */
+			if (r_state.lighting_enabled || prerender)
+				VectorCopy(r_mesh_norms[meshIndex], normal_array);
+
+			/* tangent vectors for bump mapping */
+			if (r_state.bumpmap_enabled || prerender)
+				VectorCopy(r_mesh_tangents[meshIndex], tangent_array);
+
+			texcoord_array += 2;
+			vertex_array_3d += 3;
+			normal_array += 3;
+			tangent_array += 3;
+		}
+	}
+}
+
+/**
+ * @brief Loads array data for models with only one frame. Only called once at loading time.
+ */
+void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *mesh)
+{
+	const int v = mesh->num_tris * 3 * 3;
+	const int st = mesh->num_tris * 3 * 2;
+
+	if (mod->num_frames != 1)
+		return;
+
+	assert(mesh->verts == NULL);
+	assert(mesh->texcoords == NULL);
+	assert(mesh->normals == NULL);
+	assert(mesh->tangents == NULL);
+
+	R_FillArrayData(mod, mesh, 0.0, 0, 0, qtrue);
+
+	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
+
+	memcpy(mesh->verts, r_state.vertex_array_3d, sizeof(float) * v);
+	memcpy(mesh->normals, r_state.normal_array, sizeof(float) * v);
+	memcpy(mesh->tangents, r_state.tangent_array, sizeof(float) * v);
+	memcpy(mesh->texcoords, texunit_diffuse.texcoord_array, sizeof(float) * st);
+}
