@@ -138,6 +138,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/byte.h" />
+		<Unit filename="../../src/common/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/shared/images.c">
 			<Option compilerVar="CC" />
 		</Unit>

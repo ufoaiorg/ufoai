@@ -38,6 +38,7 @@ UFO2MAP_SRCS = \
 	shared/entitiesdef.c \
 	\
 	common/files.c \
+	common/list.c \
 	common/mem.c \
 	common/unzip.c \
 	common/tracing.c \
@@ -54,6 +55,7 @@ UFOMODEL_SRC = \
 	shared/shared.c \
 	\
 	common/files.c \
+	common/list.c \
 	common/mem.c \
 	common/unzip.c \
 	common/ioapi.c \

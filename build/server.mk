@@ -10,6 +10,7 @@ SERVER_SRCS += \
 	common/common.c \
 	common/cvar.c \
 	common/files.c \
+	common/list.c \
 	common/md4.c \
 	common/md5.c \
 	common/mem.c \

@@ -254,6 +254,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/infostring.h" />
+		<Unit filename="../../src/common/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/shared/mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
