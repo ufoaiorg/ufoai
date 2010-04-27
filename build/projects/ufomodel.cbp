@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ufomodel" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="windows">
+				<Option platforms="Windows;" />
+				<Option output="../../ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../" />
+				<Option object_output=".objs/ufomodel" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-ffloat-store" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DNODEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="winmm" />
+				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="windows_debug">
+				<Option platforms="Windows;" />
+				<Option output="../../ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../" />
+				<Option object_output=".objs/ufomodel" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="../../base/maps/mine.map" />
+				<Option host_application="../../ufomodel.exe" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-ffloat-store" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWINVER=0x501" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add library="winmm" />
+				</Linker>
+				<ExtraCommands>
+					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+				</ExtraCommands>
+			</Target>
+			<Target title="linux">
+				<Option platforms="Unix;" />
+				<Option output="../../ufomodel" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../../" />
+				<Option object_output=".objs/ufomodel" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="`sdl-config --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="`sdl-config --libs`" />
+				</Linker>
+			</Target>
+			<Target title="macosx">
+				<Option platforms="Mac;" />
+				<Option output="../../ufomodel" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../../" />
+				<Option object_output=".objs/ufomodel" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/sw/include" />
+					<Add directory="/Library/Frameworks/SDL.framework/Versions/A/Headers" />
+				</Compiler>
+				<Linker>
+					<Add option="-framework SDL" />
+					<Add directory="/sw/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DCOMPILE_MAP" />
+		</Compiler>
+		<Linker>
+			<Add library="SDL" />
+			<Add library="SDL_image" />
+			<Add library="z" />
+			<Add library="jpeg" />
+			<Add library="png" />
+		</Linker>
+		<Unit filename="../../src/common/files.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/ioapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/mem.h" />
+		<Unit filename="../../src/common/routing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/routing.h" />
+		<Unit filename="../../src/common/tracing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/tracing.h" />
+		<Unit filename="../../src/common/unzip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/unzip.h" />
+		<Unit filename="../../src/ports/unix/unix_main.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="../../src/ports/windows/win_shared.c">
+			<Option compilerVar="CC" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="../../src/shared/byte.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/byte.h" />
+		<Unit filename="../../src/common/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/images.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/images.h" />
+		<Unit filename="../../src/shared/defines.h" />
+		<Unit filename="../../src/shared/entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/entitiesdef.h" />
+		<Unit filename="../../src/shared/mathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/mathlib.h" />
+		<Unit filename="../../src/shared/parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/parse.h" />
+		<Unit filename="../../src/shared/shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/shared.h" />
+		<Unit filename="../../src/shared/typedefs.h" />
+		<Unit filename="../../src/tools/ufomodel/ufomodel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
