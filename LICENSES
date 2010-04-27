@@ -690,10 +690,8 @@ base/models/animals/dog/dog_death.tga | GNU General Public License 2.0 or later 
 base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/penguin/penguin.anm |  | hullbr3ach
 base/models/animals/penguin/penguin.jpg |  | hullbr3ach
 base/models/animals/penguin/penguin.md2 |  | hullbr3ach
-base/models/animals/penguin/penguin.tag |  | hullbr3ach
 base/models/animals/rat/rat.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/rat/rat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/al_kuhar.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
