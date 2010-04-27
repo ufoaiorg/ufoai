@@ -231,16 +231,16 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	FS_CloseFile(&f);
 }
 
-static void PrecalcNormalsAndTangents (void)
+static void PrecalcNormalsAndTangents (const char *pattern)
 {
 	const char *filename;
 	int cntCalculated, cntAll;
 
-	FS_BuildFileList("**.md2");
+	FS_BuildFileList(pattern);
 
 	cntAll = cntCalculated = 0;
 
-	while ((filename = FS_NextFileFromFileList("**.md2")) != NULL) {
+	while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
 		char mdxFileName[MAX_QPATH];
 		model_t *mod;
 		int i;
@@ -252,7 +252,7 @@ static void PrecalcNormalsAndTangents (void)
 		Com_StripExtension(filename, mdxFileName, sizeof(mdxFileName));
 		Q_strcat(mdxFileName, ".mdx", sizeof(mdxFileName));
 
-		if (FS_CheckFile("%s", filename)) {
+		if (FS_CheckFile("%s", mdxFileName) != -1) {
 			Com_Printf("  \\ - mdx already exists\n");
 			continue;
 		}
@@ -297,7 +297,10 @@ int main (int argc, const char **argv)
 	r_noTexture = Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
 	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));
 
-	PrecalcNormalsAndTangents();
+	PrecalcNormalsAndTangents("**.md2");
+	PrecalcNormalsAndTangents("**.md3");
+	PrecalcNormalsAndTangents("**.dpm");
+	PrecalcNormalsAndTangents("**.obj");
 
 	Mem_Shutdown();
 
