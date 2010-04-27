@@ -97,7 +97,17 @@ void main(void){
 	FogFragment();  // add fog
 #endif
 
+#if r_postprocess
+	if(GLOWSCALE > 0.0){
+		 vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
+		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
+		 gl_FragData[1].a = 1.0;
+	} 
+#endif
+
+
 // developer tools
+/*
 #if r_lightmap
 	gl_FragData[0].rgb = lightmap;
 	gl_FragData[0].a = 1.0;
@@ -109,12 +119,5 @@ void main(void){
 		gl_FragData[0].a = 1.0;
 	}
 #endif
-
-#if r_postprocess
-	if(GLOWSCALE > 0.01){
-		 vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
-		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
-		 gl_FragData[1].a = 1.0;
-	}
-#endif
+*/
 }

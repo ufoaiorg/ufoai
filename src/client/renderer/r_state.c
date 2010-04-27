@@ -296,7 +296,10 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		assert(normalmap);
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
-		R_ProgramParameter1f("HARDNESS", 0);
+		/* default parameters to use if no material gets loaded */
+		R_ProgramParameter1f("HARDNESS", 0.5);
+		R_ProgramParameter1f("BUMP", 1.0);
+		R_ProgramParameter1f("PARALLAX", 0.0);
 	} else {
 		R_DisableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 0);
@@ -430,6 +433,9 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	if (enable) {
 		if (!r_state.active_program)
 			R_UseProgram(r_state.simple_glow_program);
+
+		if (image == NULL)
+			R_ProgramParameter1f("GLOWSCALE", 0.0);
 		else
 			R_ProgramParameter1f("GLOWSCALE", 1.0);
 

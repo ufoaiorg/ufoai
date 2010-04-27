@@ -490,8 +490,7 @@ void R_DrawAliasModel (entity_t *e)
 	assert(skin->texnum > 0);
 	R_BindTexture(skin->texnum);
 
-	if (skin->glowmap)
-		R_EnableGlowMap(skin->glowmap, qtrue);
+	R_EnableGlowMap(skin->glowmap, qtrue);
 
 	if (skin->normalmap)
 		R_EnableBumpmap(skin->normalmap, qtrue);
