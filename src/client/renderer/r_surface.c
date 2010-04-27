@@ -76,11 +76,11 @@ void R_SetSurfaceBumpMappingParameters (const mBspSurface_t *surf, const image_t
 	if (normalMap && (surf->flags & MSURF_LIGHTMAP)) {
 		const image_t *image = surf->texinfo->image;
 		R_BindDeluxemapTexture(surf->deluxemap_texnum);
-		R_UseMaterial(&image->material);
 		R_EnableBumpmap(normalMap, qtrue);
+		R_UseMaterial(&image->material);
 	} else {
-		R_UseMaterial(NULL);
 		R_EnableBumpmap(NULL, qfalse);
+		R_UseMaterial(NULL);
 	}
 }
 

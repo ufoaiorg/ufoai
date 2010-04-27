@@ -23,7 +23,10 @@ const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
 
 varying vec3 lightpos;
+varying vec3 staticLightDir;
 varying vec3 lightDirs[];
+
+varying vec3 tangent;
 
 /**
  * main
@@ -43,9 +46,9 @@ void main(void){
 		normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
 
 		if(STATICLIGHT > 0){
-			/* these don't work right yet */
-			//offset = BumpTexcoord(normalmap.a);
-			//bump = BumpFragment(lightpos, normalmap.rgb);
+			offset = BumpTexcoord(normalmap.a);
+			/* note: clamp() is a hack we need because we don't actually want unlit surfaces to be totally dark */
+			bump = clamp(BumpFragment(staticLightDir, normalmap.rgb), 0.5, 1.0);
 		} else {
 			/* deluxemap contains pre-computed incoming light vectors in object tangent space */
 			vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;

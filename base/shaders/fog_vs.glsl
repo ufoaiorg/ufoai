@@ -2,7 +2,6 @@
 
 varying float fog;
 
-
 /*
  * FogVertex
  */

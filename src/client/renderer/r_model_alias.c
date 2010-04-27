@@ -98,20 +98,22 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 {
 	/* count unique verts */
-	int numUniqueVerts = 0;
-	int uniqueVerts[MD2_MAX_VERTS];
-	int vertRemap[MD2_MAX_VERTS];
 	int i, j;
 	vec3_t triangleNormals[MD2_MAX_TRIANGLES];
 	vec3_t triangleTangents[MD2_MAX_TRIANGLES];
-	vec3_t triangleCotangents[MD2_MAX_TRIANGLES];
-	vec3_t normals[MD2_MAX_VERTS];
-	vec4_t tangents[MD2_MAX_VERTS];
+	vec3_t triangleBitangents[MD2_MAX_TRIANGLES];
 	mAliasVertex_t *vertexes = &mesh->vertexes[offset];
 	mAliasCoord_t *stcoords = mesh->stcoords;
 	const int32_t *indexArray = mesh->indexes;
 	const int numVerts = mesh->num_verts;
 	const int numIndexes = mesh->num_tris * 3;
+
+#if 0
+	vec3_t normals[MD2_MAX_VERTS];
+	vec4_t tangents[MD2_MAX_VERTS];
+	int numUniqueVerts = 0;
+	int uniqueVerts[MD2_MAX_VERTS];
+	int vertRemap[MD2_MAX_VERTS];
 
 	/* figure out which verticies are shared between which triangles */
 	for (i = 0; i < numVerts; i++) {
@@ -130,6 +132,7 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 			uniqueVerts[numUniqueVerts++] = i;
 		}
 	}
+#endif
 
 	/* calculate per-triangle surface normals */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
@@ -143,71 +146,116 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 		 * them, which is the direction of the surface normal */
 		CrossProduct(dir1, dir2, triangleNormals[j]);
 		VectorNormalize(triangleNormals[j]);
+
+		VectorAdd(vertexes[indexArray[i + 0]].normal, triangleNormals[j], vertexes[indexArray[i + 0]].normal);
+		VectorAdd(vertexes[indexArray[i + 1]].normal, triangleNormals[j], vertexes[indexArray[i + 1]].normal);
+		VectorAdd(vertexes[indexArray[i + 2]].normal, triangleNormals[j], vertexes[indexArray[i + 2]].normal);
 	}
 
-	/* calculate per-triangle tangents and cotangents */
+	/* calculate per-triangle tangents and bitangents */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
-		/* vertex coordinates */
-		const float *v1 = vertexes[indexArray[i + 0]].point;
-		const float *v2 = vertexes[indexArray[i + 1]].point;
-		const float *v3 = vertexes[indexArray[i + 2]].point;
+		vec3_t dir1, dir2;
+		vec2_t dir1uv, dir2uv;
 
-		/* texture coordinates */
-		const float *w1 = stcoords[indexArray[i + 0]];
-		const float *w2 = stcoords[indexArray[i + 1]];
-		const float *w3 = stcoords[indexArray[i + 2]];
+		/* calculate the edge directions */
+		VectorSubtract(vertexes[indexArray[i + 0]].point, vertexes[indexArray[i + 1]].point, dir1);
+		VectorSubtract(vertexes[indexArray[i + 2]].point, vertexes[indexArray[i + 1]].point, dir2);
+		Vector2Subtract(stcoords[indexArray[i + 0]], stcoords[indexArray[i + 1]], dir1uv);
+		Vector2Subtract(stcoords[indexArray[i + 2]], stcoords[indexArray[i + 1]], dir2uv);
 
-		/* triangle edge directions */
-		const float x1 = v2[0] - v1[0];
-		const float x2 = v3[0] - v1[0];
-		const float y1 = v2[1] - v1[1];
-		const float y2 = v3[1] - v1[1];
-		const float z1 = v2[2] - v1[2];
-		const float z2 = v3[2] - v1[2];
+		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
+			const float frac = 1.0 / (dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]);
+			vec3_t tmp1, tmp2;
 
-		/* texture coordinate edge directions */
-		const float s1 = w2[0] - w1[0];
-		const float s2 = w3[0] - w1[0];
-		const float t1 = w2[1] - w1[1];
-		const float t2 = w3[1] - w1[1];
+			/* calculate tangent */
+			VectorMul(-1.0 * dir2uv[1] * frac, dir1, tmp1);
+			VectorMul(dir1uv[1] * frac, dir2, tmp2);
+			VectorAdd(tmp1, tmp2, triangleTangents[j]);
 
-		/* calculate tangent and cotangent */
-		const float r = 1.0F / (s1 * t2 - s2 * t1);
-		VectorSet(triangleTangents[j], (t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
-		VectorSet(triangleCotangents[j], (s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
+			/* calculate bitangent */
+			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
+			VectorMul(dir1uv[0] * frac, dir2, tmp2);
+			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
+		}
+
+		/* normalize */
+		VectorNormalize(triangleTangents[j]);
+		VectorNormalize(triangleBitangents[j]);
+
+		/* keep a running sum for averaging */
+		VectorAdd(vertexes[indexArray[i + 0]].tangent, triangleTangents[j], vertexes[indexArray[i + 0]].tangent);
+		VectorAdd(vertexes[indexArray[i + 1]].tangent, triangleTangents[j], vertexes[indexArray[i + 1]].tangent);
+		VectorAdd(vertexes[indexArray[i + 2]].tangent, triangleTangents[j], vertexes[indexArray[i + 2]].tangent);
+		VectorAdd(vertexes[indexArray[i + 0]].bitangent, triangleBitangents[j], vertexes[indexArray[i + 0]].bitangent);
+		VectorAdd(vertexes[indexArray[i + 1]].bitangent, triangleBitangents[j], vertexes[indexArray[i + 1]].bitangent);
+		VectorAdd(vertexes[indexArray[i + 2]].bitangent, triangleBitangents[j], vertexes[indexArray[i + 2]].bitangent);
 	}
 
+
+	/* average and orthogonalize tangents */
+	for (i = 0; i < numVerts; i ++) {
+		vec3_t v;
+
+		/* normalization here does shared-vertex smoothing */
+		VectorNormalize(vertexes[i].normal);
+		VectorNormalize(vertexes[i].tangent);
+		VectorNormalize(vertexes[i].bitangent);
+
+		/* Grahm-Schmidt orthogonalization */
+		VectorMul(DotProduct(vertexes[i].tangent, vertexes[i].normal), vertexes[i].normal, v);
+		VectorSubtract(vertexes[i].tangent, v, vertexes[i].tangent);
+		VectorNormalize(vertexes[i].tangent);
+
+		//if (fabs(DotProduct(vertexes[i].tangent, vertexes[i].normal)) >= 0.001)
+		//	Com_Printf("%f: %s\n", DotProduct(vertexes[i].tangent, vertexes[i].normal), mesh->name);
+
+		/* calculate handedness */
+		CrossProduct(vertexes[i].normal, vertexes[i].tangent, v);
+		vertexes[i].tangent[3] = (DotProduct(v, vertexes[i].bitangent) < 0.0) ? -1.0 : 1.0;
+	}
+
+#if 0
 	/* average all triangle normals and tangents */
 	for (i = 0; i < numUniqueVerts; i++) {
-		vec3_t normal, tangent, cotangent, v;
+		vec3_t normal, tangent, bitangent, v;
 		float handedness;
 		int k;
 
 		VectorClear(normal);
 		VectorClear(tangent);
-		VectorClear(cotangent);
+		VectorClear(bitangent);
 
 		for (j = 0, k = 0; j < numIndexes; j += 3, k++) {
 			if (vertRemap[indexArray[j + 0]] == i || vertRemap[indexArray[j + 1]] == i || vertRemap[indexArray[j + 2]]
 					== i) {
+
+				if ( VectorLengthSqr(normal) > 0 && (DotProduct(triangleNormals[k], normal) <= 0)){
+					//Com_Printf("%f, %f, %f dot %f, %f, %f = %f\n", normal[0], normal[1], normal[2], triangleNormals[k][0], triangleNormals[k][1], triangleNormals[k][2], DotProduct(triangleNormals[k], normal));
+				}
+				if ( VectorLengthSqr(tangent) > 0 && (DotProduct(triangleTangents[k], tangent) <= 0)){
+					//Com_Printf("%f, %f, %f dot %f, %f, %f\n", tangent[0], tangent[1], tangent[2], triangleTangents[k][0], triangleTangents[k][1], triangleTangents[k][2]);
+				}
 				VectorAdd(normal, triangleNormals[k], normal);
 				VectorAdd(tangent, triangleTangents[k], tangent);
-				VectorAdd(cotangent, triangleCotangents[k], cotangent);
+				VectorAdd(bitangent, triangleBitangents[k], bitangent);
+
 			}
 		}
 
 		VectorNormalize(normal);
+		VectorNormalize(tangent);
+		VectorNormalize(bitangent);
 
 		/* calculate handedness */
 		CrossProduct(normal, tangent, v);
-		if (DotProduct(v, cotangent) < 0.0)
+		if (DotProduct(v, bitangent) < 0.0)
 			handedness = -1.0;
 		else
 			handedness = 1.0;
 
 		/* Grahm-Schmidt orthogonalization */
-		VectorSubtract(tangent, normal, v);
-		VectorMul(DotProduct(tangent, normal), v, tangent);
+		VectorMul(DotProduct(tangent, normal), normal, v);
+		VectorSubtract(tangent, v, tangent);
 		VectorNormalize(tangent);
 
 		/* copy normalized results to arrays */
@@ -227,6 +275,7 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 					vertexes[i].normal[0], vertexes[i].normal[1], vertexes[i].normal[2]);
 #endif
 	}
+#endif
 }
 
 image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)

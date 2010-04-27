@@ -77,7 +77,7 @@ typedef struct {
 	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
 	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
 	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
-	GLfloat tangent_array[MAX_GL_ARRAY_LENGTH * 3];
+	GLfloat tangent_array[MAX_GL_ARRAY_LENGTH * 4];
 
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];

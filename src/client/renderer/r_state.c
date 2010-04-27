@@ -296,6 +296,7 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		assert(normalmap);
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
+		R_ProgramParameter1f("HARDNESS", 0);
 	} else {
 		R_DisableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 0);

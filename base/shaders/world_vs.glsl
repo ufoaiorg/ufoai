@@ -1,14 +1,30 @@
 // world vertex shader
 
+uniform float OFFSET;
+uniform int BUMPMAP;
+uniform vec3 LIGHTPOS;
+
+varying vec3 lightpos;
+
+/* from includes:
+varying vec3 point;
+varying vec3 normal;
+
+attribute vec4 TANGENT;
+uniform int DYNAMICLIGHTS;
+
+varying vec3 eyedir;
+varying vec3 lightDirs[8];
+varying vec3 staticLightDir;
+varying vec3 tangent;
+
+varying float fog; 
+*/
+
+
 #include "light_vs.glsl"
 #include "bump_vs.glsl"
 #include "fog_vs.glsl"
-
-uniform float OFFSET;
-uniform int BUMPMAP;
-
-uniform vec3 LIGHTPOS;
-varying vec3 lightpos;
 
 /**
  * main

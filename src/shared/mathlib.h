@@ -130,6 +130,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 /** @brief Returns the distance between two 3-dimensional vectors */
 #define DotProduct(x,y)         (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
 #define VectorSubtract(a,b,dest)   (dest[0]=a[0]-b[0],dest[1]=a[1]-b[1],dest[2]=a[2]-b[2])
+#define Vector2Subtract(a,b,dest)   (dest[0]=a[0]-b[0],dest[1]=a[1]-b[1])
 #define VectorAdd(a,b,dest)        (dest[0]=a[0]+b[0],dest[1]=a[1]+b[1],dest[2]=a[2]+b[2])
 #define VectorMul(scalar,b,dest)       (dest[0]=(scalar)*b[0],dest[1]=(scalar)*b[1],dest[2]=(scalar)*b[2])
 #define Vector2Mul(scalar,b,dest)      (c[0]=(scalar)*b[0],dest[1]=(scalar)*b[1])

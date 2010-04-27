@@ -31,6 +31,7 @@ typedef struct mAliasVertex_s {
 	vec3_t	point;
 	vec3_t	normal;
 	vec4_t	tangent;
+	vec4_t	bitangent;
 } mAliasVertex_t;
 
 typedef struct mAliasBoneMatrix_s {

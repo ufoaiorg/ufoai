@@ -3,7 +3,6 @@
 varying vec3 point;
 varying vec3 normal;
 
-
 /*
  * LightVertex
  */

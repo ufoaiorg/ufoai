@@ -5,34 +5,38 @@ uniform int DYNAMICLIGHTS;
 
 varying vec3 eyedir;
 varying vec3 lightDirs[8];
-
+varying vec3 staticLightDir;
+varying vec3 tangent;
 
 /*
  * BumpVertex
  */
 void BumpVertex(void){
-
-	vec3 n = normalize(gl_NormalMatrix * gl_Normal);
-	vec3 t = normalize(gl_NormalMatrix * TANGENT.xyz);
-
+	// load the tangent
+	tangent = normalize(gl_NormalMatrix * TANGENT.xyz);
 	// compute the bitangent
-	vec3 b = cross(n, t) * TANGENT.w;
+	vec3 bitangent = normalize(cross(normal, tangent) * TANGENT.w);
 
 	// transform the eye direction into tangent space
 	vec3 v;
-	v.x = dot(point, t);
-	v.y = dot(point, b);
-	v.z = dot(point, n);
+	v.x = dot(-point, tangent);
+	v.y = dot(-point, bitangent);
+	v.z = dot(-point, normal);
 
-	eyedir = -normalize(v);
+	eyedir = normalize(v);
 
-	vec3 lpos;
+	// transform relative light positions into tangent space
+	vec3 lpos = normalize(lightpos - point);
+	staticLightDir.x = dot(lpos, tangent);
+	staticLightDir.y = dot(lpos, bitangent);
+	staticLightDir.z = dot(lpos, normal);
+
 	if(DYNAMICLIGHTS > 0) {
 #unroll r_dynamic_lights
 		lpos = gl_LightSource[$].position.rgb - point;
-		lightDirs[$].x = dot(lpos.rgb, t);
-		lightDirs[$].y = dot(lpos.rgb, b);
-		lightDirs[$].z = dot(lpos.rgb, n);
+		lightDirs[$].x = dot(lpos, tangent);
+		lightDirs[$].y = dot(lpos, bitangent);
+		lightDirs[$].z = dot(lpos, normal);
 #endunroll
 	}
 }
