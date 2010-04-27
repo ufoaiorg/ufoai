@@ -55,6 +55,15 @@ sequence view
 		dist	100
 	}
 
+	model starchaser
+	{
+		model	aircraft/inter_starchaser/starchaser_folded
+		origin	"-350 -25 -45"
+		omega "0 -30 0"
+	}
+
+	click 1
+
 	model bloodspider
 	{
 		model	aliens/bloodspider/bloodspider
@@ -64,6 +73,8 @@ sequence view
 	}
 
 	click 1
+
 	wait 100
 	rem bloodspider
+	rem starchaser
 }
