@@ -108,32 +108,6 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 	const int numVerts = mesh->num_verts;
 	const int numIndexes = mesh->num_tris * 3;
 
-#if 0
-	vec3_t normals[MD2_MAX_VERTS];
-	vec4_t tangents[MD2_MAX_VERTS];
-	int numUniqueVerts = 0;
-	int uniqueVerts[MD2_MAX_VERTS];
-	int vertRemap[MD2_MAX_VERTS];
-
-	/* figure out which verticies are shared between which triangles */
-	for (i = 0; i < numVerts; i++) {
-		qboolean found = qfalse;
-
-		for (j = 0; j < numUniqueVerts; j++) {
-			if (VectorCompare(vertexes[uniqueVerts[j]].point, vertexes[i].point)) {
-				vertRemap[i] = j;
-				found = qtrue;
-				break;
-			}
-		}
-
-		if (!found) {
-			vertRemap[i] = numUniqueVerts;
-			uniqueVerts[numUniqueVerts++] = i;
-		}
-	}
-#endif
-
 	/* calculate per-triangle surface normals */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
 		vec3_t dir1, dir2;
@@ -191,9 +165,8 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 		VectorAdd(vertexes[indexArray[i + 2]].bitangent, triangleBitangents[j], vertexes[indexArray[i + 2]].bitangent);
 	}
 
-
 	/* average and orthogonalize tangents */
-	for (i = 0; i < numVerts; i ++) {
+	for (i = 0; i < numVerts; i++) {
 		vec3_t v;
 
 		/* normalization here does shared-vertex smoothing */
@@ -206,76 +179,15 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 		VectorSubtract(vertexes[i].tangent, v, vertexes[i].tangent);
 		VectorNormalize(vertexes[i].tangent);
 
-		//if (fabs(DotProduct(vertexes[i].tangent, vertexes[i].normal)) >= 0.001)
-		//	Com_Printf("%f: %s\n", DotProduct(vertexes[i].tangent, vertexes[i].normal), mesh->name);
+#ifdef PARANOID
+		if (fabs(DotProduct(vertexes[i].tangent, vertexes[i].normal)) >= 0.001)
+			Com_Printf("%f: %s\n", DotProduct(vertexes[i].tangent, vertexes[i].normal), mesh->name);
+#endif
 
 		/* calculate handedness */
 		CrossProduct(vertexes[i].normal, vertexes[i].tangent, v);
 		vertexes[i].tangent[3] = (DotProduct(v, vertexes[i].bitangent) < 0.0) ? -1.0 : 1.0;
 	}
-
-#if 0
-	/* average all triangle normals and tangents */
-	for (i = 0; i < numUniqueVerts; i++) {
-		vec3_t normal, tangent, bitangent, v;
-		float handedness;
-		int k;
-
-		VectorClear(normal);
-		VectorClear(tangent);
-		VectorClear(bitangent);
-
-		for (j = 0, k = 0; j < numIndexes; j += 3, k++) {
-			if (vertRemap[indexArray[j + 0]] == i || vertRemap[indexArray[j + 1]] == i || vertRemap[indexArray[j + 2]]
-					== i) {
-
-				if ( VectorLengthSqr(normal) > 0 && (DotProduct(triangleNormals[k], normal) <= 0)){
-					//Com_Printf("%f, %f, %f dot %f, %f, %f = %f\n", normal[0], normal[1], normal[2], triangleNormals[k][0], triangleNormals[k][1], triangleNormals[k][2], DotProduct(triangleNormals[k], normal));
-				}
-				if ( VectorLengthSqr(tangent) > 0 && (DotProduct(triangleTangents[k], tangent) <= 0)){
-					//Com_Printf("%f, %f, %f dot %f, %f, %f\n", tangent[0], tangent[1], tangent[2], triangleTangents[k][0], triangleTangents[k][1], triangleTangents[k][2]);
-				}
-				VectorAdd(normal, triangleNormals[k], normal);
-				VectorAdd(tangent, triangleTangents[k], tangent);
-				VectorAdd(bitangent, triangleBitangents[k], bitangent);
-
-			}
-		}
-
-		VectorNormalize(normal);
-		VectorNormalize(tangent);
-		VectorNormalize(bitangent);
-
-		/* calculate handedness */
-		CrossProduct(normal, tangent, v);
-		if (DotProduct(v, bitangent) < 0.0)
-			handedness = -1.0;
-		else
-			handedness = 1.0;
-
-		/* Grahm-Schmidt orthogonalization */
-		VectorMul(DotProduct(tangent, normal), normal, v);
-		VectorSubtract(tangent, v, tangent);
-		VectorNormalize(tangent);
-
-		/* copy normalized results to arrays */
-		VectorCopy(normal, normals[i]);
-		VectorCopy(tangent, tangents[i]);
-		tangents[i][3] = handedness;
-	}
-
-	/* copy normals and tangents back */
-	for (i = 0; i < numVerts; i++) {
-		VectorCopy(normals[vertRemap[i]], vertexes[i].normal);
-		Vector4Copy(tangents[vertRemap[i]], vertexes[i].tangent);
-
-#ifdef PARANOID
-		if (VectorLengthSqr(vertexes[i].normal) == 0)
-			Com_Printf("%s: normals[%d]=[%f, %f, %f]\n", mesh->name, i,
-					vertexes[i].normal[0], vertexes[i].normal[1], vertexes[i].normal[2]);
-#endif
-	}
-#endif
 }
 
 image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)
