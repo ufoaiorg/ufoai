@@ -194,14 +194,11 @@ static model_t *LoadModel (const char *name)
 	return mod;
 }
 
-static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh)
+static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const char *fileName)
 {
 	int i;
-	char fileName[MAX_QPATH];
 	qFILE f;
 
-	Com_StripExtension(mod->name, fileName, sizeof(fileName));
-	Q_strcat(fileName, ".mdx", sizeof(fileName));
 	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
 	FS_OpenFile(fileName, &f, FILE_WRITE);
@@ -237,12 +234,31 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh)
 static void PrecalcNormalsAndTangents (void)
 {
 	const char *filename;
+	int cntCalculated, cntAll;
+
 	FS_BuildFileList("**.md2");
+
+	cntAll = cntCalculated = 0;
+
 	while ((filename = FS_NextFileFromFileList("**.md2")) != NULL) {
-		model_t *mod = LoadModel(filename);
+		char mdxFileName[MAX_QPATH];
+		model_t *mod;
 		int i;
 
+		cntAll++;
+
 		Com_Printf("- model '%s'\n", filename);
+
+		Com_StripExtension(filename, mdxFileName, sizeof(mdxFileName));
+		Q_strcat(mdxFileName, ".mdx", sizeof(mdxFileName));
+
+		if (FS_CheckFile("%s", filename)) {
+			Com_Printf("  \\ - mdx already exists\n");
+			continue;
+		}
+
+		mod = LoadModel(filename);
+
 		Com_Printf("  \\ - # meshes '%i'\n", mod->alias.num_meshes);
 
 		for (i = 0; i < mod->alias.num_meshes; i++) {
@@ -251,10 +267,16 @@ static void PrecalcNormalsAndTangents (void)
 			for (j = 0; j < mod->alias.num_frames; j++) {
 				R_ModCalcNormalsAndTangents(mesh, mesh->num_verts * j);
 			}
-			WriteToFile(mod, mesh);
+			/** @todo currently md2 models only have one mesh - for
+			 * md3 files this would get overwritten for each mesh */
+			WriteToFile(mod, mesh, mdxFileName);
+
+			cntCalculated++;
 		}
 	}
 	FS_NextFileFromFileList(NULL);
+
+	Com_Printf("%i/%i\n", cntCalculated, cntAll);
 }
 
 int main (int argc, const char **argv)

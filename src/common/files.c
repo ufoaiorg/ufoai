@@ -860,10 +860,9 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
  * will be in reversed order
  */
 
-#define FL_BLOCKSIZE	2048
 typedef struct listBlock_s {
 	char path[MAX_QPATH];
-	char files[FL_BLOCKSIZE];
+	linkedList_t *files;
 	struct listBlock_s *next;
 } listBlock_t;
 
@@ -874,67 +873,25 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock, const char* name, qboolean stripPath)
+static void _AddToListBlock (linkedList_t** fl, listBlock_t* block, listBlock_t* tblock, const char* name, qboolean stripPath)
 {
 	const char *f;
-	const char *tl = NULL;
-	char path[MAX_QPATH];
+	const linkedList_t *entry;
 
 	/* strip path */
-	if (stripPath) {
-		f = strrchr(name, '/');
-		if (!f)
-			f = name;
-		else
-			f++;
-	} else
+	if (stripPath)
+		f = Com_SkipPath(name);
+	else
 		f = name;
 
-	/* check for double occurrences */
-	for (tblock = block; tblock; tblock = tblock->next) {
-		char *star;
+	if (*fl == NULL)
+		entry = NULL;
+	else
+		entry = LIST_ContainsString(*fl, f);
 
-		/* compute the relative path */
-		strcpy(path, tblock->path);
-		star = strchr(path, '*');
-		assert(star);
-		star[0] = '\0';
-		Q_strcat(path, f, sizeof(path));
-
-		/* skip incompatible blocks */
-		if (strstr(name, path) == NULL)
-			continue;
-
-		tl = tblock->files;
-		while (*tl) {
-			if (!strcmp(tl, f))
-				break;
-			tl += strlen(tl) + 1;
-		}
-		if (*tl)
-			break;
-	}
-
-	if (tl && !*tl) {
-		const size_t len = strlen(f);
-		if (*fl - block->files + len >= FL_BLOCKSIZE) {
-			/* terminate the last block */
-			**fl = 0;
-
-			/* allocate a new block */
-			tblock = Mem_PoolAlloc(sizeof(*tblock), com_fileSysPool, 0);
-			tblock->next = block->next;
-			block->next = tblock;
-
-			Q_strncpyz(tblock->path, block->path, sizeof(tblock->path));
-			*fl = tblock->files;
-			block = tblock;
-		}
-
-		/* add the new file */
-		Q_strncpyz(*fl, f, len + 1);
-		*fl += len + 1;
-	}
+	/* add the new file */
+	if (entry == NULL)
+		LIST_AddString(fl, f);
 }
 
 /**
@@ -947,7 +904,6 @@ int FS_BuildFileList (const char *fileList)
 	searchpath_t *search;
 	char files[MAX_QPATH];
 	char findname[1024];
-	char *fl;
 	int i;
 	int numfiles = 0;
 
@@ -987,7 +943,7 @@ int FS_BuildFileList (const char *fileList)
 	Q_strncpyz(block->path, files, sizeof(block->path));
 
 	/* search for the files */
-	fl = block->files;
+	LIST_Delete(&block->files);
 
 	/* search through the path, one element at a time */
 	for (search = fs_searchpaths; search; search = search->next) {
@@ -1008,7 +964,7 @@ int FS_BuildFileList (const char *fileList)
 				/* found it! */
 				if ((findname[0] == '*' || !strncmp(pak->files[i].name, findname, l))
 				 && (ext[0] == '*' || strstr(pak->files[i].name, ext))) {
-					_AddToListBlock(&fl, block, tblock, pak->files[i].name, qtrue);
+					_AddToListBlock(&block->files, block, tblock, pak->files[i].name, qtrue);
 					numfiles++;
 				}
 		} else if (strstr(files, "**")) {
@@ -1025,7 +981,7 @@ int FS_BuildFileList (const char *fileList)
 
 			loopList = list;
 			while (loopList) {
-				_AddToListBlock(&fl, block, tblock, (const char *)loopList->data, qfalse);
+				_AddToListBlock(&block->files, block, tblock, (const char *)loopList->data, qfalse);
 				loopList = loopList->next;
 			}
 
@@ -1040,7 +996,7 @@ int FS_BuildFileList (const char *fileList)
 			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != NULL) {
 				for (i = 0; i < nfiles - 1; i++) {
-					_AddToListBlock(&fl, block, tblock, filenames[i], qtrue);
+					_AddToListBlock(&block->files, block, tblock, filenames[i], qtrue);
 					Mem_Free(filenames[i]);
 					numfiles++;
 				}
@@ -1049,17 +1005,15 @@ int FS_BuildFileList (const char *fileList)
 		}
 	}
 
-	/* terminate the list */
-	*fl = 0;
 	return numfiles;
 }
 
 const char* FS_NextFileFromFileList (const char *files)
 {
-	static char *fileList = NULL;
+	static linkedList_t *listEntry = NULL;
 	static listBlock_t *_block = NULL;
 	listBlock_t *block;
-	char *file = NULL;
+	const char *file = NULL;
 
 	/* restart the list? */
 	if (files == NULL) {
@@ -1087,14 +1041,12 @@ const char* FS_NextFileFromFileList (const char *files)
 	 * first file again when we switch back */
 	if (_block != block) {
 		_block = block;
-		fileList = block->files;
+		listEntry = block->files;
 	}
 
-	assert(fileList);
-
-	if (*fileList) {
-		file = fileList;
-		fileList += strlen(fileList) + 1;
+	if (listEntry) {
+		file = (const char *)listEntry->data;
+		listEntry = listEntry->next;
 	}
 
 	/* finished */
@@ -1113,7 +1065,7 @@ const char* FS_NextFileFromFileList (const char *files)
 const char *FS_GetFileData (const char *files)
 {
 	listBlock_t *block;
-	static char *fileList;
+	static linkedList_t *fileList;
 	static byte *buffer = NULL;
 
 	if (!files) {
@@ -1149,16 +1101,16 @@ const char *FS_GetFileData (const char *files)
 	if (!fileList)
 		fileList = block->files;
 
-	if (*fileList) {
+	if (fileList) {
 		char filename[MAX_QPATH];
 
 		/* load a new file */
 		Q_strncpyz(filename, block->path, sizeof(filename));
-		strcpy(strrchr(filename, '/') + 1, fileList);
+		strcpy(strrchr(filename, '/') + 1, (const char *)fileList->data);
 
 		FS_LoadFile(filename, &buffer);
 		/* search a new file */
-		fileList += strlen(fileList) + 1;
+		fileList = fileList->next;
 		return (const char*)buffer;
 	}
 
@@ -1193,7 +1145,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 {
 	static char lastList[MAX_QPATH] = "";
 	static listBlock_t *lBlock;
-	static char *lFile = NULL;
+	static linkedList_t *lFile = NULL;
 	static byte *lBuffer = NULL;
 
 	static char headerType[MAX_VAR];
@@ -1242,9 +1194,9 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			}
 
 			/* search a new file */
-			lFile += strlen(lFile) + 1;
+			lFile = lFile->next;
 
-			while (!*lFile && lBlock)
+			while (!lFile && lBlock)
 				/* it was the last file in the block, continue to next block */
 				for (lBlock = lBlock->next; lBlock; lBlock = lBlock->next)
 					if (!strcmp(files, lBlock->path)) {
@@ -1253,7 +1205,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 					}
 		}
 
-		if (*lFile) {
+		if (lFile) {
 			char filename[MAX_QPATH];
 
 			/* free the old file */
@@ -1264,7 +1216,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 
 			/* load a new file */
 			Q_strncpyz(filename, lBlock->path, sizeof(filename));
-			strcpy(strrchr(filename, '/') + 1, lFile);
+			strcpy(strrchr(filename, '/') + 1, (const char *)lFile->data);
 
 			FS_LoadFile(filename, &lBuffer);
 			*text = (char*)lBuffer;
