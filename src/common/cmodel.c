@@ -1973,6 +1973,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 
 
 /**
+ * @brief Recalculate the pathing table for the given actor(-position)
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] actorSize The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the bottom-left (towards the lower coordinates) corner of the 2x2 square.
