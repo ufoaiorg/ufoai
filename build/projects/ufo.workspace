@@ -3,7 +3,7 @@
 	<Workspace title="Default workspace">
 		<Project filename="game.cbp" />
 		<Project filename="ufo2map.cbp" />
-		<Project filename="ufo.cbp" active="1" >
+		<Project filename="ufo.cbp" active="1">
 			<Depends filename="game.cbp" />
 			<Depends filename="ufo2map.cbp" />
 			<Depends filename="ufo_ded.cbp" />
@@ -17,5 +17,6 @@
 		</Project>
 		<Project filename="radiant_brushexport.cbp" />
 		<Project filename="ufo_tests.cbp" />
+		<Project filename="ufomodel.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

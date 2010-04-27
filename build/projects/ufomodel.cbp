@@ -25,7 +25,7 @@
 					<Add library="winmm" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
@@ -51,7 +51,7 @@
 					<Add library="winmm" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
 			</Target>
 			<Target title="linux">
@@ -96,6 +96,21 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
+		<Unit filename="../../src/client/renderer/r_model_alias.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_model_dpm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_model_md2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_model_md3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_model_obj.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/common/files.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -103,6 +118,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/list.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/common/mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -133,18 +151,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/byte.h" />
-		<Unit filename="../../src/common/list.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/shared/images.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/shared/images.h" />
 		<Unit filename="../../src/shared/defines.h" />
 		<Unit filename="../../src/shared/entitiesdef.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/entitiesdef.h" />
+		<Unit filename="../../src/shared/images.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/images.h" />
 		<Unit filename="../../src/shared/mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
