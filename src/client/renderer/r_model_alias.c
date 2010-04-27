@@ -111,7 +111,7 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 	const int numVerts = mesh->num_verts;
 	const int numIndexes = mesh->num_tris * 3;
 
-	for (i = 0; i < numVerts; i++){
+	for (i = 0; i < numVerts; i++) {
 		VectorClear(vertexes[i].normal);
 		Vector4Clear(vertexes[i].tangent);
 		VectorClear(bitangents[i]);
@@ -138,7 +138,6 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 		VectorAdd(vertexes[indexArray[i + 2]].normal, triangleNormals[j], vertexes[indexArray[i + 2]].normal);
 
 		/* calculate per-triangle tangents and bitangents */
-
 		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
 			const float frac = 1.0 / (dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]);
 			vec3_t tmp1, tmp2;
@@ -167,7 +166,6 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 		VectorAdd(bitangents[indexArray[i + 2]], triangleBitangents[j], bitangents[indexArray[i + 2]]);
 	}
 
-
 	/* average and orthogonalize tangents */
 	for (i = 0; i < numVerts; i++) {
 		vec3_t v;
@@ -193,7 +191,6 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 	}
 }
 
-
 void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 {
 	/* count unique verts */
@@ -211,8 +208,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 	int32_t *newIndexArray;
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int numVerts = 0;
-	
-	newIndexArray = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);;
+
+	newIndexArray = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+	;
 
 	/* calculate per-triangle surface normals */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
@@ -228,7 +226,6 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 		/* we have two edge directions, we can calculate a third vector from
 		 * them, which is the direction of the surface normal */
 		CrossProduct(dir1, dir2, triangleNormals[j]);
-
 
 		/* then we use the texture coordinates to calculate a tangent space */
 		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
@@ -250,11 +247,10 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 		VectorNormalize(triangleNormals[j]);
 		VectorNormalize(triangleTangents[j]);
 		VectorNormalize(triangleBitangents[j]);
-
 	}
 
-	/* assume all verticies are unique until proven otherwise */ 
-	for (i = 0; i < numIndexes; i++) 
+	/* assume all verticies are unique until proven otherwise */
+	for (i = 0; i < numIndexes; i++)
 		indRemap[i] = -1;
 
 	for (i = 0; i < numIndexes; i++) {
@@ -268,13 +264,12 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 		VectorCopy(triangleTangents[idx], t);
 		VectorCopy(triangleBitangents[idx], b);
 
-		for (j = i+1; j < numIndexes; j++) {
+		for (j = i + 1; j < numIndexes; j++) {
 			const int idx2 = (j - j % 3) / 3;
 			/* only average normals if verticies have the same position and texcoord, and the normals aren't too far appart to start with */
-			if ( VectorCompare(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
-				 && Vector2Compare(stcoords[indexArray[i]], stcoords[indexArray[j]])
-				 && DotProduct(triangleNormals[idx], triangleNormals[idx2]) > SMOOTH_THRESH
-			   ) {
+			if (VectorCompare(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
+					&& Vector2Compare(stcoords[indexArray[i]], stcoords[indexArray[j]])
+					&& DotProduct(triangleNormals[idx], triangleNormals[idx2]) > SMOOTH_THRESH) {
 				VectorAdd(n, triangleNormals[idx2], n);
 				VectorAdd(t, triangleTangents[idx2], t);
 				VectorAdd(b, triangleBitangents[idx2], b);
@@ -297,10 +292,10 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 
 		/* calculate handedness */
 		CrossProduct(n, t, v);
-		triangleTangentsH[idx]= (DotProduct(v, b) < 0.0) ? -1.0 : 1.0;
+		triangleTangentsH[idx] = (DotProduct(v, b) < 0.0) ? -1.0 : 1.0;
 		VectorCopy(n, triangleNormals[idx]);
 		VectorCopy(t, triangleTangents[idx]);
-		
+
 		/* update indexArray */
 		newIndexArray[i] = numVerts++;
 
