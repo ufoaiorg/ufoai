@@ -346,7 +346,7 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 	const float frontlerp = 1.0 - backlerp;
 	vec3_t r_mesh_verts[MD3_MAX_VERTS];
 	vec3_t r_mesh_norms[MD3_MAX_VERTS];
-	vec3_t r_mesh_tangents[MD3_MAX_VERTS];
+	vec4_t r_mesh_tangents[MD3_MAX_VERTS];
 	float *texcoord_array, *vertex_array_3d, *normal_array, *tangent_array;
 
 	frame = mod->frames + framenum;
@@ -373,10 +373,11 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
 		}
 		if (r_state.bumpmap_enabled || prerender) {  /* and the tangents */
-			VectorSet(r_mesh_tangents[i],
+			Vector4Set(r_mesh_tangents[i],
 					v->tangent[0] + (ov->tangent[0] - v->tangent[0]) * backlerp,
 					v->tangent[1] + (ov->tangent[1] - v->tangent[1]) * backlerp,
-					v->tangent[2] + (ov->tangent[2] - v->tangent[2]) * backlerp);
+					v->tangent[2] + (ov->tangent[2] - v->tangent[2]) * backlerp,
+					v->tangent[3] + (ov->tangent[3] - v->tangent[3]) * backlerp);
 		}
 	}
 
@@ -399,12 +400,12 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 
 			/* tangent vectors for bump mapping */
 			if (r_state.bumpmap_enabled || prerender)
-				VectorCopy(r_mesh_tangents[meshIndex], tangent_array);
+				Vector4Copy(r_mesh_tangents[meshIndex], tangent_array);
 
 			texcoord_array += 2;
 			vertex_array_3d += 3;
 			normal_array += 3;
-			tangent_array += 3;
+			tangent_array += 4;
 		}
 	}
 }
@@ -415,6 +416,7 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *mesh)
 {
 	const int v = mesh->num_tris * 3 * 3;
+	const int t = mesh->num_tris * 3 * 4;
 	const int st = mesh->num_tris * 3 * 2;
 
 	if (mod->num_frames != 1)
@@ -429,11 +431,11 @@ void R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *m
 
 	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
 	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
 
 	memcpy(mesh->verts, r_state.vertex_array_3d, sizeof(float) * v);
 	memcpy(mesh->normals, r_state.normal_array, sizeof(float) * v);
-	memcpy(mesh->tangents, r_state.tangent_array, sizeof(float) * v);
+	memcpy(mesh->tangents, r_state.tangent_array, sizeof(float) * t);
 	memcpy(mesh->texcoords, texunit_diffuse.texcoord_array, sizeof(float) * st);
 }
