@@ -76,7 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Move/Routing values */
 /* game/g_ai.c, game/g_client.c, client/cl_actor.c, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c */
-#define	MAX_ROUTE		31
+#define	MAX_ROUTE		33
 /* common/cmodel.c */
 #define	MAX_MOVELENGTH	60
 
