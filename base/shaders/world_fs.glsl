@@ -45,9 +45,10 @@ void main(void){
 		vec4 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st);
 		normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
 
+		/* note: clamp() is a hack we need because we don't actually 
+		 * want unlit surfaces to be totally dark */
 		if(STATICLIGHT > 0){
-			offset = BumpTexcoord(normalmap.a);
-			/* note: clamp() is a hack we need because we don't actually want unlit surfaces to be totally dark */
+			//offset = BumpTexcoord(normalmap.a);
 			bump = clamp(BumpFragment(staticLightDir, normalmap.rgb), 0.5, 1.0);
 		} else {
 			/* deluxemap contains pre-computed incoming light vectors in object tangent space */

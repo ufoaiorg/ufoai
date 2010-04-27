@@ -159,7 +159,6 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
-			/* arisian: bookmark */
 			outMesh->skins[i].skin = R_AliasModelGetSkin(mod, md2Path + i * MD2_MAX_SKINNAME);
 			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
 		}
@@ -272,10 +271,10 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[1] * outFrame->scale[1];
 			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[2] * outFrame->scale[2];
 		}
-
-		/* Calculate normals and tangents */
-		R_ModCalcNormalsAndTangents(outMesh, numVerts * i);
 	}
+
+	/* Calculate normals and tangents */
+	R_ModCalcUniqueNormalsAndTangents(outMesh, mod->alias.num_frames);
 
 	if (mod->alias.num_meshes > 1)
 		Mem_Free(outFrameTmp);

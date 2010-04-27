@@ -31,7 +31,6 @@ typedef struct mAliasVertex_s {
 	vec3_t	point;
 	vec3_t	normal;
 	vec4_t	tangent;
-	vec4_t	bitangent;
 } mAliasVertex_t;
 
 typedef struct mAliasBoneMatrix_s {
@@ -133,5 +132,6 @@ typedef	struct	mAliasModel_s {
 
 void R_ModLoadAnims(mAliasModel_t *mod, void *buffer);
 void R_ModCalcNormalsAndTangents(mAliasMesh_t *mesh, size_t offset);
+void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames);
 void R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh);
 void R_FillArrayData(const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);
