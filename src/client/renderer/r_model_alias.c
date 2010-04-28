@@ -93,6 +93,45 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 }
 
 /**
+ * @brief Tries to load a mdx file that contains the normals and the tangets for a model.
+ * @sa R_ModCalcNormalsAndTangents
+ * @sa R_ModCalcUniqueNormalsAndTangents
+ * @param mod The model to load the mdx file for
+ */
+void R_ModLoadMDX (model_t *mod)
+{
+	int i;
+	for (i = 0; i < mod->alias.num_meshes; i++) {
+		mAliasMesh_t *mesh = &mod->alias.meshes[i];
+		char mdxFileName[MAX_QPATH];
+		byte *buffer = NULL;
+		const float *buf;
+
+		Com_StripExtension(mod->name, mdxFileName, sizeof(mdxFileName));
+		Com_DefaultExtension(mdxFileName, sizeof(mdxFileName), ".mdx");
+
+		if (FS_LoadFile(mdxFileName, &buffer) == -1)
+			continue;
+
+		buf = (const float *)buffer;
+		for (i = 0; i < mesh->num_verts; i++) {
+			mAliasVertex_t *v = &mesh->vertexes[i];
+			int j;
+			for (j = 0; j < 3; j++) {
+				v->normal[j] = LittleFloat(*buf);
+				buf++;
+			}
+			for (j = 0; j < 3; j++) {
+				v->tangent[j] = LittleFloat(*buf);
+				buf++;
+			}
+		}
+
+		FS_FreeFile(buffer);
+	}
+}
+
+/**
  * @brief Calculates the normals and tangents of a mesh model
  * @param[in,out] mesh The model mesh data that is used to calculate the normals and tangents.
  * The calculated data is stored here, too.
@@ -191,6 +230,11 @@ void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset)
 	}
 }
 
+/**
+ * @todo Use R_ModLoadMDX
+ * @param mesh
+ * @param nFrames
+ */
 void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 {
 	/* count unique verts */
@@ -210,7 +254,6 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames)
 	int numVerts = 0;
 
 	newIndexArray = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
-	;
 
 	/* calculate per-triangle surface normals */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
