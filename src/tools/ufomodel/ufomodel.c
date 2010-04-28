@@ -41,6 +41,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 rstate_t r_state;
 image_t *r_noTexture;
 
+typedef struct modelConfig_s {
+	qboolean overwrite;
+} modelConfig_t;
+
+static modelConfig_t config;
 
 struct memPool_s *com_genericPool;
 struct memPool_s *com_fileSysPool;
@@ -252,7 +257,7 @@ static void PrecalcNormalsAndTangents (const char *pattern)
 		Com_StripExtension(filename, mdxFileName, sizeof(mdxFileName));
 		Q_strcat(mdxFileName, ".mdx", sizeof(mdxFileName));
 
-		if (FS_CheckFile("%s", mdxFileName) != -1) {
+		if (!config.overwrite && FS_CheckFile("%s", mdxFileName) != -1) {
 			Com_Printf("  \\ - mdx already exists\n");
 			continue;
 		}
@@ -279,10 +284,40 @@ static void PrecalcNormalsAndTangents (const char *pattern)
 	Com_Printf("%i/%i\n", cntCalculated, cntAll);
 }
 
+static void Usage (void)
+{
+	Com_Printf("Usage:\n");
+	Com_Printf(" -overwrite     will overwrite existing mdx files\n");
+	Com_Printf(" -h --help      will show this help screen\n");
+}
+
+/**
+ * @brief Parameter parsing
+ */
+static void UM_Parameter (int argc, const char **argv)
+{
+	int i;
+
+	for (i = 1; i < argc; i++) {
+		if (!strcmp(argv[i], "-overwrite")) {
+			config.overwrite = qtrue;
+		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+			Usage();
+			exit(0);
+		} else {
+			Com_Printf("Parameters unknown. Try --help.\n");
+			Usage();
+			exit(0);
+		}
+	}
+}
+
 int main (int argc, const char **argv)
 {
 	Com_Printf("---- ufomodel "VERSION" ----\n");
-	Com_Printf(BUILDSTRING);
+	Com_Printf(BUILDSTRING"\n");
+
+	UM_Parameter(argc, argv);
 
 	Swap_Init();
 	Mem_Init();
