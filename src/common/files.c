@@ -905,7 +905,6 @@ int FS_BuildFileList (const char *fileList)
 	char files[MAX_QPATH];
 	char findname[1024];
 	int i;
-	int numfiles = 0;
 
 	/* bring it into normal form */
 	Q_strncpyz(files, fileList, sizeof(files));
@@ -961,13 +960,28 @@ int FS_BuildFileList (const char *fileList)
 			findname[l] = '\0';
 
 			/* look through all the pak file elements */
-			for (i = 0; i < pak->numfiles; i++)
+			for (i = 0; i < pak->numfiles; i++) {
 				/* found it! */
-				if ((findname[0] == '*' || !strncmp(pak->files[i].name, findname, l))
-				 && (ext[0] == '*' || strstr(pak->files[i].name, ext))) {
-					_AddToListBlock(&block->files, block, tblock, pak->files[i].name, qtrue);
-					numfiles++;
+				const char *fileNameEntry = pak->files[i].name;
+				qboolean matchAlsoInSubDirs = (findname[0] == '*' || !strncmp(fileNameEntry, findname, l))
+						 && (ext[0] == '*' || strstr(fileNameEntry, ext));
+				if (matchAlsoInSubDirs) {
+					qboolean add = qfalse;
+					if (strstr(findname, "**"))
+						add = qtrue;
+					else {
+						char pathName[MAX_QPATH];
+						char pathNameEntry[MAX_QPATH];
+						Com_FilePath(findname, pathName);
+						Com_FilePath(fileNameEntry, pathNameEntry);
+						if (!strcmp(pathNameEntry, pathName))
+							add = qtrue;
+					}
+
+					if (add)
+						_AddToListBlock(&block->files, block, tblock, pak->files[i].name, qtrue);
 				}
+			}
 		} else if (strstr(files, "**")) {
 			linkedList_t *list = NULL, *loopList;
 			const char *wildcard = strstr(files, "**");
@@ -984,7 +998,6 @@ int FS_BuildFileList (const char *fileList)
 			while (loopList) {
 				_AddToListBlock(&block->files, block, tblock, (const char *)loopList->data, qfalse);
 				loopList = loopList->next;
-				numfiles++;
 			}
 
 			LIST_Delete(&list);
@@ -1000,14 +1013,13 @@ int FS_BuildFileList (const char *fileList)
 				for (i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&block->files, block, tblock, filenames[i], qtrue);
 					Mem_Free(filenames[i]);
-					numfiles++;
 				}
 				Mem_Free(filenames);
 			}
 		}
 	}
 
-	return numfiles;
+	return LIST_Count(block->files);
 }
 
 const char* FS_NextFileFromFileList (const char *files)

@@ -3167,7 +3167,7 @@ void Com_ParseScripts (qboolean onlyServer)
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 
 	/* pre-stage parsing */
-	FS_BuildFileList("ufos/*.ufo");
+	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));
 	text = NULL;
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
@@ -3217,7 +3217,7 @@ void Com_ParseScripts (qboolean onlyServer)
 
 	/* parse ui node script */
 	if (!onlyServer) {
-		FS_BuildFileList("ufos/ui/*.ufo");
+		Com_Printf("%i ui script files\n", FS_BuildFileList("ufos/ui/*.ufo"));
 		FS_NextScriptHeader(NULL, NULL, NULL);
 		text = NULL;
 		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != NULL)
