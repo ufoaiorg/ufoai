@@ -1653,7 +1653,7 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 		return qfalse;
 
 	/* too many civilians and team kills */
-	if (chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM] >= rank->killedOthers)
+	if (chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM] > rank->killedOthers)
 		return qfalse;
 
 	return qtrue;
