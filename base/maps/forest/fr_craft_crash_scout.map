@@ -164,7 +164,6 @@
 }
 // brush 17
 {
-( 257 416 54 ) ( 257 416 76 ) ( 257 256 76 ) tex_common/weaponclip 60 8 90 0.5 -0.5 33554432 0 0
 ( 228 256 72 ) ( 196 256 95 ) ( 198 256 97 ) tex_common/weaponclip 12 10 90 0.5 0.5 33554432 0 0
 ( 287 256 62 ) ( 287 256 84 ) ( 287 416 84 ) tex_common/weaponclip 12 8 90 0.5 -0.5 33554432 0 0
 ( 228 352 72 ) ( 198 352 97 ) ( 196 352 95 ) tex_common/weaponclip 12 10 90 0.5 0.5 33554432 0 0
@@ -698,10 +697,10 @@
 // entity 6
 {
 "classname" "misc_model"
-"origin" "300.781 391.135 50"
+"origin" "316.781 373.135 50"
 "model" "models/objects/alien/ufo_crashed/ufo_scout_engines.md2"
-"angle" "-19.2197"
 "spawnflags" "255"
+"angles" "0 -25 0"
 }
 // entity 7
 {
@@ -795,7 +794,14 @@
 // entity 19
 {
 "classname" "misc_particle"
-"origin" "96 176 40"
+"origin" "104 172 40"
 "particle" "crashsite_fire"
+"spawnflags" "255"
+}
+// entity 20
+{
+"classname" "misc_particle"
+"origin" "308 94 42"
+"particle" "white_smoke"
 "spawnflags" "255"
 }
