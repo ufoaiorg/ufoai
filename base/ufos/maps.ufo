@@ -2993,10 +2993,10 @@ mapdef resort
 	}
 }
 
-mapdef africa_common
+mapdef africa_small
 {
 	map				"+africa"
-	param     default
+	param     small
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -3045,10 +3045,10 @@ mapdef africa_common
 	}
 }
 
-mapdef africa
+mapdef africa_large
 {
 	map				"+africa"
-	param			harvester
+	param			large
 	multiplayer		true
 	teams			2
 	gametypes {

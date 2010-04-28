@@ -40,10 +40,10 @@ tile +craft_ufo_harvester
 10 6
 
 0       0      0      0      0      0      0      0      0     0
-a      +a     +a     +a     +a     +a     +a     +a     +a     0 
-a      +a     +a     +a     +a     +a     +a     +a     +a     0 
-0       a     +a     +a     +a     +a     +a     +a     +a     0 
-0       a     +a     +a     +a     +a     +a     +a     +a     0 
+a      +a     +a     +a     +a     +a     +a     +a     +a     0
+a      +a     +a     +a     +a     +a     +a     +a     +a     0
+0       a     +a     +a     +a     +a     +a     +a     +a     0
+0       a     +a     +a     +a     +a     +a     +a     +a     0
 0       0      0      0      0      0      0      0      0     0
 }
 
@@ -52,9 +52,9 @@ tile +craft_drop_firebird
 4 5
 
 0      a      a      0
-a      +b     +b     a 
-a      +b     +b     a 
-z      +b     +b     a 
+a      +b     +b     a
+a      +b     +b     a
+z      +b     +b     a
 0      a      a      0
 }
 
@@ -63,9 +63,9 @@ tile +craft_drop_herakles
 4 5
 
 0      a      a      0
-a      +b     +b     a 
-a      +b     +b     a 
-z      +b     +b     a 
+a      +b     +b     a
+a      +b     +b     a
+z      +b     +b     a
 0      a      a      0
 }
 
@@ -74,9 +74,9 @@ tile +craft_drop_raptor
 4 5
 
 0      a      a      0
-a      +b     +b     a 
-a      +b     +b     a 
-z      +b     +b     a 
+a      +b     +b     a
+a      +b     +b     a
+z      +b     +b     a
 0      a      a      0
 }
 
@@ -87,8 +87,8 @@ tile +mp_team2
 4 4
 
 0      0      0      0
-0      +a     +a     0 
-0      +a     +a     0 
+0      +a     +a     0
+0      +a     +a     0
 0      0      0      0
 }
 
@@ -219,7 +219,7 @@ ab  +a  +a  ab
 
 // ########################################
 // ########### Maps for the game ###########
-assembly default
+assembly small
 {
 size "6 4"
 title "_Africa"
@@ -240,7 +240,7 @@ multiplayer +mp_team2
 *rm_ufo +craft_ufo_scout "1 1"
 }
 
-assembly harvester
+assembly large
 {
 size "11 4"
 title "_Africa"
