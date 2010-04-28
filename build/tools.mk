@@ -80,7 +80,7 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/windows/win_shared.c
 endif
 
-UFO2MAP_OBJS=$(UFOMODEL_SRC:%.c=$(BUILDDIR)/tools/ufomodel/%.o)
+UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
 UFO2MAP_TARGET=ufo2map$(EXE_EXT)
 
 UFOMODEL_OBJS=$(UFOMODEL_SRC:%.c=$(BUILDDIR)/tools/ufomodel/%.o)
@@ -89,7 +89,7 @@ UFOMODEL_TARGET=ufomodel$(EXE_EXT)
 ifeq ($(BUILD_UFO2MAP),1)
 	ALL_OBJS+=$(UFO2MAP_OBJS)
 	TARGETS+=$(UFO2MAP_TARGET)
-	
+
 	ALL_OBJS+=$(UFOMODEL_OBJS)
 	TARGETS+=$(UFOMODEL_TARGET)
 endif
