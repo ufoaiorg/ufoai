@@ -34,6 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_MOD_KNOWN   512
 
+#define IDMDXHEADER "UFOMDX"
+#define MDX_VERSION		1
+
 /*========================================================================
 .MD2 triangle model file format
 ========================================================================*/

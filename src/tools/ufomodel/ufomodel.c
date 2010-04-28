@@ -203,6 +203,7 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 {
 	int i;
 	qFILE f;
+	uint32_t version = MDX_VERSION;
 
 	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
@@ -211,6 +212,9 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 		Com_Printf("  \\ - can not open '%s' for writing\n", fileName);
 		return;
 	}
+
+	FS_Write(IDMDXHEADER, strlen(IDMDXHEADER), &f);
+	FS_Write(&version, sizeof(version), &f);
 
 	for (i = 0; i < mesh->num_verts; i++) {
 		mAliasVertex_t *v = &mesh->vertexes[i];

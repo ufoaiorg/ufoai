@@ -104,8 +104,8 @@ void R_ModLoadMDX (model_t *mod)
 	for (i = 0; i < mod->alias.num_meshes; i++) {
 		mAliasMesh_t *mesh = &mod->alias.meshes[i];
 		char mdxFileName[MAX_QPATH];
-		byte *buffer = NULL;
-		const float *buf;
+		byte *buffer = NULL, *buf;
+		const float *dataBuf;
 
 		Com_StripExtension(mod->name, mdxFileName, sizeof(mdxFileName));
 		Com_DefaultExtension(mdxFileName, sizeof(mdxFileName), ".mdx");
@@ -113,21 +113,25 @@ void R_ModLoadMDX (model_t *mod)
 		if (FS_LoadFile(mdxFileName, &buffer) == -1)
 			continue;
 
-		buf = (const float *)buffer;
+		buf = buffer;
+		buffer += strlen(IDMDXHEADER) * sizeof(char);
+		buffer += sizeof(uint32_t);
+		dataBuf = (const float *)buffer;
+
 		for (i = 0; i < mesh->num_verts; i++) {
 			mAliasVertex_t *v = &mesh->vertexes[i];
 			int j;
 			for (j = 0; j < 3; j++) {
-				v->normal[j] = LittleFloat(*buf);
-				buf++;
+				v->normal[j] = LittleFloat(*dataBuf);
+				dataBuf++;
 			}
 			for (j = 0; j < 3; j++) {
-				v->tangent[j] = LittleFloat(*buf);
-				buf++;
+				v->tangent[j] = LittleFloat(*dataBuf);
+				dataBuf++;
 			}
 		}
 
-		FS_FreeFile(buffer);
+		FS_FreeFile(buf);
 	}
 }
 
