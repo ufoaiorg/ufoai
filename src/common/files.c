@@ -1065,13 +1065,8 @@ const char* FS_NextFileFromFileList (const char *files)
 const char *FS_GetFileData (const char *files)
 {
 	listBlock_t *block;
-	static linkedList_t *fileList;
+	static linkedList_t *fileList = NULL;
 	static byte *buffer = NULL;
-
-	if (!files) {
-		fileList = NULL;
-		return NULL;
-	}
 
 	/* free the old file */
 	if (buffer) {
@@ -1079,8 +1074,13 @@ const char *FS_GetFileData (const char *files)
 		buffer = NULL;
 	}
 
+	if (!files) {
+		fileList = NULL;
+		return NULL;
+	}
+
 	for (block = fs_blocklist; block; block = block->next)
-		if (!strncmp(files, block->path, MAX_QPATH))
+		if (!strcmp(files, block->path))
 			break;
 
 	if (!block) {
@@ -1088,7 +1088,7 @@ const char *FS_GetFileData (const char *files)
 		fileList = NULL;
 		FS_BuildFileList(files);
 		for (block = fs_blocklist; block; block = block->next)
-			if (!strncmp(files, block->path, MAX_QPATH))
+			if (!strcmp(files, block->path))
 				break;
 		if (!block) {
 			/* still no filelist */
@@ -1097,9 +1097,12 @@ const char *FS_GetFileData (const char *files)
 		}
 	}
 
-	/* list start */
 	if (!fileList)
+		/* start the list */
 		fileList = block->files;
+	else
+		/* search a new file */
+		fileList = fileList->next;
 
 	if (fileList) {
 		char filename[MAX_QPATH];
@@ -1109,16 +1112,7 @@ const char *FS_GetFileData (const char *files)
 		strcpy(strrchr(filename, '/') + 1, (const char *)fileList->data);
 
 		FS_LoadFile(filename, &buffer);
-		/* search a new file */
-		fileList = fileList->next;
 		return (const char*)buffer;
-	}
-
-	/* free the old file */
-	if (buffer) {
-		FS_FreeFile(buffer);
-		fileList = NULL;
-		buffer = NULL;
 	}
 
 	/* finished */
