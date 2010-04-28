@@ -921,6 +921,7 @@ int FS_BuildFileList (const char *fileList)
 			else
 				fs_blocklist = block->next;
 
+			LIST_Delete(&block->files);
 			Mem_Free(block);
 
 			if (tblock)
@@ -983,6 +984,7 @@ int FS_BuildFileList (const char *fileList)
 			while (loopList) {
 				_AddToListBlock(&block->files, block, tblock, (const char *)loopList->data, qfalse);
 				loopList = loopList->next;
+				numfiles++;
 			}
 
 			LIST_Delete(&list);
@@ -1152,12 +1154,12 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 		return NULL;
 	}
 
-	if (strncmp(files, lastList, MAX_QPATH)) {
+	if (strcmp(files, lastList)) {
 		/* search for file lists */
 		Q_strncpyz(lastList, files, sizeof(lastList));
 
 		for (block = fs_blocklist; block; block = block->next)
-			if (!strncmp(files, block->path, MAX_QPATH))
+			if (!strcmp(files, block->path))
 				break;
 
 		if (!block)
@@ -1213,6 +1215,11 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			strcpy(strrchr(filename, '/') + 1, (const char *)lFile->data);
 
 			FS_LoadFile(filename, &lBuffer);
+			/* skip a file that couldn't get loaded */
+			if (!lBuffer) {
+				lFile = lFile->next;
+				continue;
+			}
 			*text = (char*)lBuffer;
 		} else if (!lBuffer)
 			break;
