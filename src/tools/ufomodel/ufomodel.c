@@ -41,8 +41,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 rstate_t r_state;
 image_t *r_noTexture;
 
+typedef enum {
+	ACTION_NONE,
+
+	ACTION_MDX,
+	ACTION_SKINEDIT
+} ufoModelAction_t;
+
 typedef struct modelConfig_s {
 	qboolean overwrite;
+	qboolean verbose;
+	char fileName[MAX_QPATH];
+	ufoModelAction_t action;
 } modelConfig_t;
 
 static modelConfig_t config;
@@ -51,6 +61,15 @@ struct memPool_s *com_genericPool;
 struct memPool_s *com_fileSysPool;
 struct memPool_s *vid_modelPool;
 struct memPool_s *vid_imagePool;
+
+static void Exit(int exitCode) __attribute__ ((__noreturn__));
+
+static void Exit (int exitCode)
+{
+	Mem_Shutdown();
+
+	exit(exitCode);
+}
 
 void Com_Printf (const char *format, ...)
 {
@@ -66,6 +85,16 @@ void Com_Printf (const char *format, ...)
 
 void Com_DPrintf (int level, const char *fmt, ...)
 {
+	if (config.verbose) {
+		char outBuffer[4096];
+		va_list argptr;
+
+		va_start(argptr, fmt);
+		Q_vsnprintf(outBuffer, sizeof(outBuffer), fmt, argptr);
+		va_end(argptr);
+
+		Com_Printf("%s", outBuffer);
+	}
 }
 
 image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, imagetype_t type)
@@ -135,19 +164,13 @@ void Com_Error (int code, const char *fmt, ...)
 {
 	va_list argptr;
 	static char msg[1024];
-	static qboolean recursive = qfalse;
-
-	if (recursive)
-		Sys_Error("recursive error after: %s", msg);
-	recursive = qtrue;
 
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
-	recursive = qfalse;
-	Sys_Backtrace();
-	Sys_Error("%s", msg);
+	fprintf(stderr, "Error: %s\n", msg);
+	Exit(1);
 }
 
 
@@ -227,13 +250,13 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	}
 
 	for (i = 0; i < mesh->num_verts; i++) {
-		mAliasVertex_t *v = &mesh->vertexes[i];
+		const mAliasVertex_t *v = &mesh->vertexes[i];
 		const size_t length = sizeof(vec3_t);
 		FS_Write(v->normal, length, &f);
 	}
 
 	for (i = 0; i < mesh->num_verts; i++) {
-		mAliasVertex_t *v = &mesh->vertexes[i];
+		const mAliasVertex_t *v = &mesh->vertexes[i];
 		const size_t length = sizeof(vec3_t);
 		FS_Write(v->tangent, length, &f);
 	}
@@ -292,8 +315,11 @@ static void PrecalcNormalsAndTangents (const char *pattern)
 static void Usage (void)
 {
 	Com_Printf("Usage:\n");
-	Com_Printf(" -overwrite     will overwrite existing mdx files\n");
-	Com_Printf(" -h --help      will show this help screen\n");
+	Com_Printf(" -mdx                     generate mdx files\n");
+	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
+	Com_Printf(" -overwrite               overwrite existing mdx files\n");
+	Com_Printf(" -v --verbose             print debug messages\n");
+	Com_Printf(" -h --help                show this help screen\n");
 }
 
 /**
@@ -306,15 +332,84 @@ static void UM_Parameter (int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-overwrite")) {
 			config.overwrite = qtrue;
+		} else if (!strcmp(argv[i], "-mdx")) {
+			config.action = ACTION_MDX;
+		} else if (!strcmp(argv[i], "-skinedit")) {
+			config.action = ACTION_SKINEDIT;
+			if (i + 1 == argc) {
+				Usage();
+				Exit(1);
+			}
+			Q_strncpyz(config.fileName, argv[i + 1], sizeof(config.fileName));
+			i++;
+		} else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose")) {
+			config.verbose = qtrue;
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			Usage();
-			exit(0);
+			Exit(0);
 		} else {
 			Com_Printf("Parameters unknown. Try --help.\n");
 			Usage();
-			exit(0);
+			Exit(1);
 		}
 	}
+}
+
+static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSize)
+{
+	/* sanity checks */
+	const uint32_t version = LittleLong(md2->version);
+	const char *md2Path;
+	uint32_t numSkins;
+	int i;
+
+	if (version != MD2_ALIAS_VERSION)
+		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", fileName, version, MD2_ALIAS_VERSION);
+
+	if (bufSize != LittleLong(md2->ofs_end))
+		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", fileName, bufSize, LittleLong(md2->ofs_end));
+
+	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	numSkins = LittleLong(md2->num_skins);
+	if (numSkins < 0 || numSkins >= MD2_MAX_SKINS)
+		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", fileName, numSkins);
+
+	for (i = 0; i < numSkins; i++) {
+		char extension[4];
+		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+		Com_Printf("  \\ - skin %i: %s\n", i, name);
+
+		if (name[0] == '.') {
+			char path[MAX_QPATH];
+
+			Com_ReplaceFilename(fileName, name + 1, path, sizeof(path));
+		}
+
+		Com_StripExtension(name, extension, sizeof(extension));
+		if (extension[0] != '\0') {
+			Com_Printf("    \\ - skin contains extension\n");
+		}
+	}
+}
+
+static void SkinEdit (const char *fileName)
+{
+	byte *buf = NULL;
+	int modfilelen;
+
+	/* load the file */
+	modfilelen = FS_LoadFile(fileName, &buf);
+	if (!buf)
+		Com_Error(ERR_FATAL, "%s not found", fileName);
+
+	/* call the appropriate loader */
+	switch (LittleLong(*(unsigned *) buf)) {
+	case IDALIASHEADER:
+		MD2SkinEdit((const dMD2Model_t *)buf, fileName, modfilelen);
+		break;
+	}
+
+	FS_FreeFile(buf);
 }
 
 int main (int argc, const char **argv)
@@ -323,6 +418,11 @@ int main (int argc, const char **argv)
 	Com_Printf(BUILDSTRING"\n");
 
 	UM_Parameter(argc, argv);
+
+	if (config.action == ACTION_NONE) {
+		Usage();
+		Exit(1);
+	}
 
 	Swap_Init();
 	Mem_Init();
@@ -337,10 +437,21 @@ int main (int argc, const char **argv)
 	r_noTexture = Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
 	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));
 
-	PrecalcNormalsAndTangents("**.md2");
-	PrecalcNormalsAndTangents("**.md3");
-	PrecalcNormalsAndTangents("**.dpm");
-	PrecalcNormalsAndTangents("**.obj");
+	switch (config.action) {
+	case ACTION_MDX:
+		PrecalcNormalsAndTangents("**.md2");
+		PrecalcNormalsAndTangents("**.md3");
+		PrecalcNormalsAndTangents("**.dpm");
+		PrecalcNormalsAndTangents("**.obj");
+		break;
+
+	case ACTION_SKINEDIT:
+		SkinEdit(config.fileName);
+		break;
+
+	default:
+		Exit(1);
+	}
 
 	Mem_Shutdown();
 

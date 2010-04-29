@@ -184,6 +184,26 @@ int Com_Filter (const char *pattern, const char *text)
 }
 
 /**
+ * @brief Replaces the filename from one path with another one
+ * @param[in] fileName The full path to a filename
+ * @param[in] name The filename to insert into the given full path
+ * @param[out] path The target buffer
+ * @param[in] size The size of the target buffer
+ */
+void Com_ReplaceFilename (const char *fileName, const char *name, char *path, size_t size)
+{
+	char *slash, *end;
+
+	Q_strncpyz(path, fileName, size);
+
+	end = path;
+	while ((slash = strchr(end, '/')) != 0)
+		end = slash + 1;
+
+	strcpy(end, name + 1);
+}
+
+/**
  * @brief Removes the file extension from a filename
  * @sa Com_SkipPath
  * @param[in] in The incoming filename

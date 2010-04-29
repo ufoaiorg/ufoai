@@ -409,13 +409,7 @@ image_t* R_AliasModelGetSkin (const model_t* mod, const char *skin)
 		return R_FindImage(skin, it_skin);
 	else {
 		char path[MAX_QPATH];
-		char *slash, *end;
-
-		Q_strncpyz(path, mod->name, sizeof(path));
-		end = path;
-		while ((slash = strchr(end, '/')) != 0)
-			end = slash + 1;
-		strcpy(end, skin + 1);
+		Com_ReplaceFilename(mod->name, skin, path, sizeof(path));
 		return R_FindImage(path, it_skin);
 	}
 }

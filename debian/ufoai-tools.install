@@ -1,4 +1,5 @@
 ufo2map /usr/games/
+ufomodel /usr/games/
 src/tools/blender/md2tag_export.py /usr/share/blender/scripts/blender/
 contrib/scripts/bashcompletion/ufo2map /etc/bash_completion.d/ufo2map
-
+contrib/scripts/bashcompletion/ufomodel /etc/bash_completion.d/ufomodel
