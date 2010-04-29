@@ -214,6 +214,7 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	}
 
 	FS_Write(IDMDXHEADER, strlen(IDMDXHEADER), &f);
+	version = LittleLong(version);
 	FS_Write(&version, sizeof(version), &f);
 
 	for (i = 0; i < mesh->num_verts; i++) {
