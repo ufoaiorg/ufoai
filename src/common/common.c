@@ -1168,7 +1168,7 @@ void Qcommon_Frame (void)
 	 * IO is ready (but always try at least once, to make sure IO
 	 * doesn't stall) */
 	do {
-		/** @todo This shouldn't exist */
+		/** @todo This shouldn't exist - move into SV_Frame? */
 		if (sv_dedicated && sv_dedicated->integer) {
 			const char *s;
 			do {
