@@ -5361,7 +5361,12 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_z_compress" >&5
 $as_echo "$ac_cv_lib_z_compress" >&6; }
 if test "x$ac_cv_lib_z_compress" = x""yes; then :
-  LIBS="-lz"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBZ 1
+_ACEOF
+
+  LIBS="-lz $LIBS"
+
 else
   as_fn_error "You must have libz!!!" "$LINENO" 5
 fi
@@ -5442,7 +5447,12 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_jpeg_jpeg_CreateDecompress" >&5
 $as_echo "$ac_cv_lib_jpeg_jpeg_CreateDecompress" >&6; }
 if test "x$ac_cv_lib_jpeg_jpeg_CreateDecompress" = x""yes; then :
-  LIBS="-ljpeg"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBJPEG 1
+_ACEOF
+
+  LIBS="-ljpeg $LIBS"
+
 else
   as_fn_error "You must have libjpeg!!!" "$LINENO" 5
 fi
@@ -6302,7 +6312,12 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_ogg_ogg_sync_init" >&5
 $as_echo "$ac_cv_lib_ogg_ogg_sync_init" >&6; }
 if test "x$ac_cv_lib_ogg_ogg_sync_init" = x""yes; then :
-  LIBS="-logg"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBOGG 1
+_ACEOF
+
+  LIBS="-logg $LIBS"
+
 else
   as_fn_error "You must have libogg!!!" "$LINENO" 5
 fi
@@ -6438,7 +6453,12 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_vorbis_vorbis_synthesis_init" >&5
 $as_echo "$ac_cv_lib_vorbis_vorbis_synthesis_init" >&6; }
 if test "x$ac_cv_lib_vorbis_vorbis_synthesis_init" = x""yes; then :
-  LIBS="-lvorbis"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBVORBIS 1
+_ACEOF
+
+  LIBS="-lvorbis $LIBS"
+
 else
   as_fn_error "You must have libvorbis!!!" "$LINENO" 5
 fi
@@ -6512,7 +6532,12 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_xvidcore_xvid_decore" >&5
 $as_echo "$ac_cv_lib_xvidcore_xvid_decore" >&6; }
 if test "x$ac_cv_lib_xvidcore_xvid_decore" = x""yes; then :
-  LIBS="-lxvidcore"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBXVIDCORE 1
+_ACEOF
+
+  LIBS="-lxvidcore $LIBS"
+
 else
   as_fn_error "You must have libxvidcore!!!" "$LINENO" 5
 fi
@@ -6655,7 +6680,12 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_theora_theora_decode_packetin" >&5
 $as_echo "$ac_cv_lib_theora_theora_decode_packetin" >&6; }
 if test "x$ac_cv_lib_theora_theora_decode_packetin" = x""yes; then :
-  LIBS="-ltheora"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBTHEORA 1
+_ACEOF
+
+  LIBS="-ltheora $LIBS"
+
 else
   as_fn_error "You must have libtheora!!!" "$LINENO" 5
 fi

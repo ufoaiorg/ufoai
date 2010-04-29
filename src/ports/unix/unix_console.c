@@ -64,9 +64,6 @@ const char *Sys_ConsoleInput (void)
 	fd_set fdset;
 	struct timeval timeout;
 
-	if (!sv_dedicated || !sv_dedicated->integer)
-		return NULL;
-
 	if (!stdinActive)
 		return NULL;
 

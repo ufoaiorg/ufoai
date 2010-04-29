@@ -285,7 +285,7 @@ if test $TARGET_OS = "mingw32"
 then
 	AC_MSG_RESULT([Mingw32 - Trying to use Winsock2 (WS2_32)])
 	AC_CHECK_HEADERS([winsock2.h])
-	AC_CHECK_LIB(ws2_32, main, , AC_MSG_ERROR([Winsock2 is needed for a Windows mingw build.]))
+	AC_CHECK_LIB(ws2_32, main, [], AC_MSG_ERROR([Winsock2 is needed for a Windows mingw build.]))
 fi
 
 AC_CHECK_HEADERS([execinfo.h])
@@ -401,7 +401,7 @@ if test "$ac_cv_header_zlib_h" != "yes"
 then
 	AC_MSG_ERROR([Could not find zlib.h!])
 fi
-AC_CHECK_LIB(z, compress, LIBS="-lz", AC_MSG_ERROR([You must have libz!!!]))
+AC_CHECK_LIB(z, compress, [], AC_MSG_ERROR([You must have libz!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
@@ -423,7 +423,7 @@ then
 	AC_MSG_ERROR([You must have the JPEG development headers])
 fi
 LIBS=
-AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
+AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, [], AC_MSG_ERROR([You must have libjpeg!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
@@ -562,7 +562,7 @@ then
 		AC_MSG_ERROR([You must have the OGG development headers])
 	fi
 	LIBS=
-	AC_CHECK_LIB(ogg, ogg_sync_init, LIBS="-logg", AC_MSG_ERROR([You must have libogg!!!]))
+	AC_CHECK_LIB(ogg, ogg_sync_init, [], AC_MSG_ERROR([You must have libogg!!!]))
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 	#---------------------------------------------------------------------------------------------
@@ -576,7 +576,7 @@ then
 			AC_MSG_ERROR([You must have the Vorbis development headers])
 		fi
 		LIBS=
-		AC_CHECK_LIB(vorbis, vorbis_synthesis_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
+		AC_CHECK_LIB(vorbis, vorbis_synthesis_init, [], AC_MSG_ERROR([You must have libvorbis!!!]), [-lm -logg])
 		CLIENT_LIBS="$LIBS $CLIENT_LIBS"
 	else
 		AC_SUBST([HAVE_VORBIS_CODEC_H],1)
@@ -594,7 +594,7 @@ then
 		AC_MSG_WARN([Could not find the Xvid development headers])
 	else
 		LIBS=
-		AC_CHECK_LIB(xvidcore, xvid_decore, LIBS="-lxvidcore", AC_MSG_ERROR([You must have libxvidcore!!!]))
+		AC_CHECK_LIB(xvidcore, xvid_decore, [], AC_MSG_ERROR([You must have libxvidcore!!!]))
 		CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	fi
 
@@ -614,7 +614,7 @@ then
 			fi
 		else
 			LIBS=
-			AC_CHECK_LIB(theora, theora_decode_packetin, LIBS="-ltheora", AC_MSG_ERROR([You must have libtheora!!!]))
+			AC_CHECK_LIB(theora, theora_decode_packetin, [], AC_MSG_ERROR([You must have libtheora!!!]))
 			CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 		fi
 	else
