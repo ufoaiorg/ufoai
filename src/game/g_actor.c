@@ -63,6 +63,9 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
  */
 void G_ActorSetClientAction (edict_t *actor, edict_t *ent)
 {
+	if (actor->clientAction == ent)
+		return;
+
 	actor->clientAction = ent;
 	if (ent == NULL) {
 		G_EventResetClientAction(actor);

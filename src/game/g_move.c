@@ -399,6 +399,8 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					triggers = qtrue;
 					if (!clientAction)
 						status |= VIS_STOP;
+				} else if (clientAction) {
+					G_ActorSetClientAction(ent, NULL);
 				}
 				/* state has changed - maybe we walked on a trigger_hurt */
 				if (oldState != ent->state)

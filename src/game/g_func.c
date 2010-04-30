@@ -223,10 +223,8 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 		/* we don't want the client action stuff to be send for ai actors */
 		return qfalse;
 	} else {
-		if (activator->clientAction != self->owner) {
-			/* prepare for client action */
-			G_ActorSetClientAction(activator, self->owner);
-		}
+		/* prepare for client action */
+		G_ActorSetClientAction(activator, self->owner);
 		return qtrue;
 	}
 }
