@@ -72,7 +72,7 @@ campaign main
 		worker_rankbonus 0;
 		scientist_base 1000;
 		scientist_rankbonus 0;
-		pilot_base 15000;
+		pilot_base 1500;
 		pilot_rankbonus 0;
 		robot_base 7500;
 		robot_rankbonus 0;
