@@ -2426,7 +2426,8 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 	CM_SetInlineList(NULL);
 
 	end = time(NULL);
-	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n", name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
+	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",
+			name, min[0], min[1], min[2], max[0], max[1], max[2], end - start);
 }
 
 

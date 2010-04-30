@@ -114,7 +114,7 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VecToPos(v, p) (                  \
 	p[0] = ((int)v[0] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
 	p[1] = ((int)v[1] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
-	p[2] =  (int)v[2]                    / UNIT_HEIGHT \
+	p[2] =  min((PATHFINDING_HEIGHT - 1), ((int)v[2] / UNIT_HEIGHT)) \
 )
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
