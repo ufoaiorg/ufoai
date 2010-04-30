@@ -1,4 +1,4 @@
-_ufo2map()
+_ufomodel()
 {
 	local cur prev opts
 	COMPREPLY=()
@@ -16,4 +16,4 @@ _ufo2map()
 		return 0
 	fi
 }
-complete -F _ufo2map ufo2map
+complete -F _ufomodel ufomodel
