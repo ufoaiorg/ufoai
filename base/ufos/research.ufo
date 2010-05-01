@@ -4843,7 +4843,7 @@ tech rs_craft_el_targeting
 
 	provides	craft_el_targeting
 	time		0
-	producetime	571
+	producetime	180
 
 	mdl		"aircraft/craft_item_target/craft_item_target"
 }
