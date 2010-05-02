@@ -4,22 +4,21 @@ uniform vec2 OFFSETS[9];
 
 /* fragment shader that convolves a 9 element filter with the specified texture.  
  * Orientation of the filter is controlled by "OFFSETS".
- * The filter itself is specified by "COEFFICIENTS".
- */
-void main(void)
-{
-    vec2 inColor = gl_TexCoord[0].st;
-    vec4 outColor = vec4(0, 0, 0, 0);
+ * The filter itself is specified by "COEFFICIENTS". */
+void main(void){
 
-    outColor += COEFFICIENTS[0] * texture2D(SAMPLER0, inColor + OFFSETS[0]);
-    outColor += COEFFICIENTS[1] * texture2D(SAMPLER0, inColor + OFFSETS[1]);
-    outColor += COEFFICIENTS[2] * texture2D(SAMPLER0, inColor + OFFSETS[2]);
-    outColor += COEFFICIENTS[3] * texture2D(SAMPLER0, inColor + OFFSETS[3]);
-    outColor += COEFFICIENTS[4] * texture2D(SAMPLER0, inColor + OFFSETS[4]);
-    outColor += COEFFICIENTS[5] * texture2D(SAMPLER0, inColor + OFFSETS[5]);
-    outColor += COEFFICIENTS[6] * texture2D(SAMPLER0, inColor + OFFSETS[6]);
-    outColor += COEFFICIENTS[7] * texture2D(SAMPLER0, inColor + OFFSETS[7]);
-    outColor += COEFFICIENTS[8] * texture2D(SAMPLER0, inColor + OFFSETS[8]);
+	vec2 inColor = gl_TexCoord[0].st;
+	vec4 outColor = vec4(0, 0, 0, 0);
 
-    gl_FragColor = outColor;
+	outColor += COEFFICIENTS[0] * texture2D(SAMPLER0, inColor + OFFSETS[0]);
+	outColor += COEFFICIENTS[1] * texture2D(SAMPLER0, inColor + OFFSETS[1]);
+	outColor += COEFFICIENTS[2] * texture2D(SAMPLER0, inColor + OFFSETS[2]);
+	outColor += COEFFICIENTS[3] * texture2D(SAMPLER0, inColor + OFFSETS[3]);
+	outColor += COEFFICIENTS[4] * texture2D(SAMPLER0, inColor + OFFSETS[4]);
+	outColor += COEFFICIENTS[5] * texture2D(SAMPLER0, inColor + OFFSETS[5]);
+	outColor += COEFFICIENTS[6] * texture2D(SAMPLER0, inColor + OFFSETS[6]);
+	outColor += COEFFICIENTS[7] * texture2D(SAMPLER0, inColor + OFFSETS[7]);
+	outColor += COEFFICIENTS[8] * texture2D(SAMPLER0, inColor + OFFSETS[8]);
+
+	gl_FragColor = outColor;
 }

@@ -29,8 +29,8 @@ const float n2 = 1.333;
 const float eta = n1 / n2;
 
 /* calculate reflection component of Frenel's equations */
-float fresnelReflect(in float cos_a)
-{
+float fresnelReflect(in float cos_a){
+
 	float cos_b = sqrt(1.0 - ((eta * eta) * ( 1.0 - (cos_a * cos_a))));
 	float rs = (n1 * cos_a - n2 * cos_b ) / (n1 * cos_a + n2 * cos_b);
 	float rp = (n1 * cos_b - n2 * cos_a ) / (n1 * cos_b + n2 * cos_a);
@@ -38,8 +38,8 @@ float fresnelReflect(in float cos_a)
 }
 
 
-void main()
-{
+void main(void){
+
 	/* blend textures smoothly */
 	vec3 diffuseColorA = texture2D(SAMPLER0, tex).rgb;
 	vec3 diffuseColorB = texture2D(SAMPLER1, tex).rgb;

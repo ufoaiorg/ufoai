@@ -20,8 +20,8 @@ const float specularExp = 32.0;
 /* Fresnel's equations for reflection and refraction between different density media */
 void fresnelRefract(vec3 L, vec3 N, float n1, float n2, 
 	out vec3 reflection, out vec3 refraction, 
-	out float reflectance, out float transmittance) 
-{
+	out float reflectance, out float transmittance){
+
 	float eta = n1/n2;
 	float cos_theta1 = dot(L, N);
 	float cos_theta2 = sqrt(1.0 - ((eta * eta) * ( 1.0 - (cos_theta1 * cos_theta1))));
@@ -30,11 +30,11 @@ void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
 	float rs = (n1 * cos_theta1 - n2 * cos_theta2 ) / (n1 * cos_theta1 + n2 * cos_theta2);
 	float rp = (n1 * cos_theta2 - n2 * cos_theta1 ) / (n1 * cos_theta2 + n2 * cos_theta1);
 	reflectance = (rs * rs + rp * rp) / 2.0;
-	transmittance =((1.0-rs) * (1.0-rs) + (1.0-rp) * (1.0-rp)) / 2.0;
+	transmittance = ((1.0-rs) * (1.0-rs) + (1.0-rp) * (1.0-rp)) / 2.0;
 }
 
-void main()
-{
+void main(){
+
 	vec4 diffuseColor = texture2D(SAMPLER0, tex);
 	vec3 V = vec3(normalize(eyeVec).rgb);
 	vec3 L = vec3(normalize(lightVec).rgb);

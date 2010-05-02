@@ -9,8 +9,8 @@ varying vec3 eyeVec;
 
 uniform vec2 UVSCALE;
 
-void main()
-{
+void main(){
+
 	gl_Position = ftransform();
 	tex = gl_MultiTexCoord0.xy * UVSCALE;
 

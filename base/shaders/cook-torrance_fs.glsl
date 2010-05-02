@@ -9,15 +9,14 @@
  */
 
 
-vec3 LightContribution( int i, vec3 N, vec3 V, float NdotV, float R_2, vec4 Roughness, vec4 Specular, vec4 Diffuse )
-{
+vec3 LightContribution(int i, vec3 N, vec3 V, float NdotV, float R_2, vec4 roughness, vec4 specular, vec4 diffuse){
+
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource 
-	 * settings for spot-light sources.
-	 */
+	 * settings for spot-light sources. */
 	float attenuate = gl_LightSource[i].constantAttenuation;
 	if (attenuate > 0.0 && gl_LightSource[i].position.w != 0.0){ /* directional sources don't get attenuated */
-		float dist = length( (gl_LightSource[i].position).xyz - point);
+		float dist = length((gl_LightSource[i].position).xyz - point);
 		attenuate = 1.0 / (gl_LightSource[i].constantAttenuation + 
 				gl_LightSource[i].linearAttenuation * dist +
 				gl_LightSource[i].quadraticAttenuation * dist * dist); 
@@ -27,54 +26,54 @@ vec3 LightContribution( int i, vec3 N, vec3 V, float NdotV, float R_2, vec4 Roug
 	if(attenuate < ATTENUATE_THRESH) {
 		return vec3(0.0);
 	}
-	vec3 AmbientLight = gl_LightSource[i].ambient.rgb;
-	vec3 DiffuseLight = gl_LightSource[i].diffuse.rgb;
-	vec3 SpecularLight = gl_LightSource[i].specular.rgb;
+	vec3 ambientLight = gl_LightSource[i].ambient.rgb;
+	vec3 diffuseLight = gl_LightSource[i].diffuse.rgb;
+	vec3 specularLight = gl_LightSource[i].specular.rgb;
 
 	/* Normalize vectors and cache dot products */
-	vec3 L = normalize( lightDirs[i].rgb );
-	float NdotL = clamp(dot( N, -L ), 0.0, 1.0);
+	vec3 L = normalize(lightDirs[i].rgb);
+	float NdotL = clamp(dot(N, -L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
-	vec3 AmbientColor = Diffuse.rgb * AmbientLight * Diffuse.a;
-	vec3 DiffuseColor = Diffuse.rgb * Diffuse.a * DiffuseLight * NdotL;
-	vec3 SpecularColor;
+	vec3 ambientColor = diffuse.rgb * ambientLight * diffuse.a;
+	vec3 diffuseColor = diffuse.rgb * diffuse.a * diffuseLight * NdotL;
+	vec3 specularColor;
 
 	/* Cook-Torrance shading */
 	if (ROUGHMAP > 0) {
-		vec3 H = normalize( L + V );
-		float NdotH = clamp(dot( N, -H ), 0.0, 1.0);
-		float VdotH = clamp(dot( V, H ), 0.0, 1.0);
+		vec3 H = normalize(L + V);
+		float NdotH = clamp(dot(N, -H), 0.0, 1.0);
+		float VdotH = clamp(dot(V, H), 0.0, 1.0);
 		float NdotH_2 = NdotH * NdotH;
 
 		/* Compute the geometric term for specularity */
-		float G1 = ( 2.0 * NdotH * NdotV ) / VdotH;
-		float G2 = ( 2.0 * NdotH * NdotL ) / VdotH;
-		//float G = min( 1.0, max( 0.0, min( G1, G2 ) ) );
-		float G = min( 1.0, min( G1, G2 ) );
-		//G = clamp(min( G1, G2 ), 0.0, 1.0);
+		float G1 = (2.0 * NdotH * NdotV) / VdotH;
+		float G2 = (2.0 * NdotH * NdotL) / VdotH;
+		//float G = min(1.0, max(0.0, min(G1, G2)));
+		float G = min(1.0, min(G1, G2));
+		//G = clamp(min(G1, G2), 0.0, 1.0);
 
 		/* Compute the roughness term for specularity */
-		float A = 1.0 / ( 4.0 * R_2 * NdotH_2 * NdotH_2 );
-		float B = exp( ( NdotH_2 - 1.0) / ( R_2 * NdotH_2 ) );
+		float A = 1.0 / (4.0 * R_2 * NdotH_2 * NdotH_2);
+		float B = exp((NdotH_2 - 1.0) / (R_2 * NdotH_2));
 		float R = A * B;
 
 		/* Compute the fresnel term for specularity using Schlick's approximation*/
-		float F = Roughness.g + ( 1.0 - Roughness.g ) * pow( 1.0 - VdotH, 5.0 );
+		float F = roughness.g + (1.0 - roughness.g) * pow(1.0 - VdotH, 5.0);
 
-		SpecularColor = Roughness.b * Specular.rgb * SpecularLight * NdotL * (F * R * G) / (NdotV * NdotL);
+		specularColor = roughness.b * specular.rgb * specularLight * NdotL * (F * R * G) / (NdotV * NdotL);
 	} else { /* Phong shading */
-		SpecularColor = SpecularLight * Specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), Specular.a);
+		specularColor = specularLight * specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
 	}
 
 	/* NOTE: should we attenuate ambient light or not? */
-	return (attenuate * ( max(AmbientColor, 0.0) + max(DiffuseColor, 0.0) + max(SpecularColor, 0.0) ));
+	return (attenuate * (max(ambientColor, 0.0) + max(diffuseColor, 0.0) + max(specularColor, 0.0)));
 }
 
 
-vec4 IlluminateFragment( void )
-{
-	vec3 TotalColor= vec3(0.0);
+vec4 IlluminateFragment(void){
+
+	vec3 totalColor= vec3(0.0);
 
 	/* sample the relevant textures */
 	vec2 coords = gl_TexCoord[0].st;
@@ -84,12 +83,12 @@ vec4 IlluminateFragment( void )
 	vec3 N;
 	if (BUMPMAP > 0) {
 #if r_bumpmap
-		//vec3 NormalMap = normalize( ( 2.0 * texture2D( SAMPLER3, coords ).xyz ) - vec3(1.0) );
-		vec4 NormalMap = texture2D( SAMPLER3, coords );
-		N = vec3(normalize(NormalMap.xyz));
+		//vec3 normalMap = normalize(( 2.0 * texture2D(SAMPLER3, coords).xyz) - vec3(1.0));
+		vec4 normalMap = texture2D(SAMPLER3, coords);
+		N = vec3(normalize(normalMap.xyz));
 		N.xy *= BUMP;
 		if (PARALLAX > 0.0){
-			offset = BumpTexcoord(NormalMap.a);
+			offset = BumpTexcoord(normalMap.a);
 			coords += offset;
 		}
 #endif
@@ -97,36 +96,34 @@ vec4 IlluminateFragment( void )
 		N = vec3(0.0, 0.0, 1.0);
 	}
 
-	vec4 Diffuse = texture2D( SAMPLER0, coords );
-	vec4 Specular;
+	vec4 diffuse = texture2D(SAMPLER0, coords);
+	vec4 specular;
 	if (SPECULARMAP > 0) {
-		Specular = texture2D( SAMPLER1, coords );
+		specular = texture2D(SAMPLER1, coords);
 	} else {
-		Specular = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
+		specular = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 	}
-	vec4 Roughness;
+	vec4 roughness;
 	if (ROUGHMAP > 0) {
-		Roughness = texture2D( SAMPLER2, coords );
+		roughness = texture2D(SAMPLER2, coords);
 	} else {
-		Roughness = vec4(0.0);
+		roughness = vec4(0.0);
 	}
 
 	/* scale reflectance to a more useful range */
-	Roughness.r = clamp(Roughness.r, 0.05, 0.95);
-	Roughness.g *= 3.0;
-	Specular.a *= 512.0;
-
-	
+	roughness.r = clamp(roughness.r, 0.05, 0.95);
+	roughness.g *= 3.0;
+	specular.a *= 512.0;
 
 	vec3 V = -normalize(eyedir);
-	float NdotV = dot( N, V );
-	float R_2 = Roughness.r * Roughness.r;
+	float NdotV = dot(N, V);
+	float R_2 = roughness.r * roughness.r;
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
-	TotalColor += LightContribution($, N, V, NdotV, R_2, Roughness, Specular, Diffuse);
+	totalColor += LightContribution($, N, V, NdotV, R_2, roughness, specular, diffuse);
 #endunroll
 
-	return vec4( TotalColor, 1.0 );
+	return vec4(totalColor, 1.0);
 }
 

@@ -7,8 +7,7 @@ varying vec3 normal;
 #define ATTENUATION (0.15 + 1.8 * dist + 3.5 * dist * dist)
 
 
-vec3 LightContribution(int i, vec4 diffuse, vec3 lightmap)
-{
+vec3 LightContribution(int i, vec4 diffuse, vec3 lightmap){
 
 	vec3 delta, dir, light = vec3(0.0);
 	float dist, d;
@@ -37,6 +36,7 @@ vec3 LightContribution(int i, vec4 diffuse, vec3 lightmap)
  * LightFragment
  */
 vec4 LightFragment(in vec4 diffuse, in vec3 lightmap){
+
 	vec3 light = vec3(0.0);
 
 #unroll r_dynamic_lights

@@ -14,7 +14,8 @@ uniform sampler2D SAMPLER4;
  * main
  */
 void main(void){
-	vec4 FinalColor = vec4(0.0);
+
+	vec4 finalColor = vec4(0.0);
 
 	// sample the warp texture at a time-varied offset
 	vec4 warp = texture2D(SAMPLER1, gl_TexCoord[0].xy + OFFSET.xy);
@@ -23,19 +24,18 @@ void main(void){
 	vec2 coord = vec2(gl_TexCoord[0].x + warp.z, gl_TexCoord[0].y + warp.w);
 
 	// sample the diffuse texture, factoring in primary color as well
-	FinalColor = gl_Color * texture2D(SAMPLER0, coord);
+	finalColor = gl_Color * texture2D(SAMPLER0, coord);
 
 #if r_fog
-	FinalColor = FogFragment(FinalColor);  // add fog
+	finalColor = FogFragment(finalColor);  // add fog
 #endif
 
 #if r_postprocess
-	gl_FragData[0] = FinalColor;
+	gl_FragData[0] = finalColor;
 	if (GLOWSCALE > 0.01) {
 		gl_FragData[1] = gl_Color * texture2D(SAMPLER4, coord) * GLOWSCALE;
 	}
 #else 
-	gl_FragColor = FinalColor;
+	gl_FragColor = finalColor;
 #endif
-
 }

@@ -38,16 +38,15 @@ varying vec3 tangent;
  */
 void main(void){
 
-	vec4 FinalColor = vec4(0.0);
+	vec4 finalColor = vec4(0.0);
 
-	/** use new dynamic lighing system, including 
+	/* use new dynamic lighing system, including 
 	 * the Cook-Torrance specularity model with the Phong
-	 * model as a default if the roughness map isn't enabled
-	 */
+	 * model as a default if the roughness map isn't enabled */
 	if (DYNAMICLIGHTS > 0) {
-		FinalColor = IlluminateFragment();
+		finalColor = IlluminateFragment();
 	} else {
-	/* use static lighting (ie. legacy rendering code) */
+		/* use static lighting (ie. legacy rendering code) */
 		vec2 offset = vec2(0.0);
 		vec3 bump = vec3(1.0);
 
@@ -56,29 +55,23 @@ void main(void){
 
 #if r_bumpmap
 		if(BUMPMAP > 0){  // sample deluxemap and normalmap
-
 			vec4 normalmap = texture2D(SAMPLER3, gl_TexCoord[0].st);
 			normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
 
 			/* note: clamp() is a hack we need because we don't actually 
 			 * want unlit surfaces to be totally dark */
 			if(STATICLIGHT > 0){
-				//offset = BumpTexcoord(normalmap.a);
 				bump = clamp(BumpFragment(staticLightDir, normalmap.rgb), 0.5, 1.0);
 			} else if (DYNAMICLIGHTS == 0){
 				/* deluxemap contains pre-computed incoming light vectors in object tangent space */
 				vec3 deluxemap = texture2D(SAMPLER2, gl_TexCoord[1].st).rgb;
 				deluxemap = normalize(two * (deluxemap + negHalf));
 
-
 				// resolve parallax offset and bump mapping
 				offset = BumpTexcoord(normalmap.a);
 				bump = BumpFragment(deluxemap, normalmap.rgb);
 			}
-
 		}
-
-
 #endif
 
 		// sample the diffuse texture, honoring the parallax offset
@@ -96,29 +89,27 @@ void main(void){
 			if (gl_Color.r > 0.0 || gl_Color.g > 0.0 || gl_Color.b > 0.0) {
 				color = gl_Color.rgb;
 			} 
-			FinalColor = LightFragment(diffuse, color * shade);
+			finalColor = LightFragment(diffuse, color * shade);
 		} else {
 			// otherwise, add to lightmap
-			FinalColor = LightFragment(diffuse, lightmap);
+			finalColor = LightFragment(diffuse, lightmap);
 		}
-
 	}
 
 #if r_fog
-	FinalColor = FogFragment(FinalColor);  // add fog
+	finalColor = FogFragment(finalColor);  // add fog
 #endif
 
 #if r_postprocess
-	gl_FragData[0] = FinalColor;
+	gl_FragData[0] = finalColor;
 	if(GLOWSCALE > 0.0){
 		 vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
 		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
 		 gl_FragData[1].a = 1.0;
 	} 
 #else 
-	gl_FragColor = FinalColor;
+	gl_FragColor = finalColor;
 #endif
-
 
 // developer tools
 /*

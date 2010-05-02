@@ -13,6 +13,7 @@ varying vec3 tangent;
  * BumpVertex
  */
 void BumpVertex(void){
+
 	// load the tangent
 	tangent = normalize(gl_NormalMatrix * TANGENT.xyz );
 	// compute the bitangent
