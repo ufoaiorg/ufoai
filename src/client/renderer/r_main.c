@@ -407,7 +407,7 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 		Cvar_SetValue(cvar->name, 0);
 		return qfalse;
 	}
-	return Cvar_AssertValue(cvar, 0, 16, qtrue);
+	return Cvar_AssertValue(cvar, 0, r_config.maxLights, qtrue);
 }
 
 static qboolean R_CvarPrograms (cvar_t *cvar)
@@ -473,8 +473,6 @@ static void R_RegisterSystemVars (void)
 	r_multisample = Cvar_Get("r_multisample", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, "Controls multisampling (anti-aliasing). Values between 0 and 4");
 	r_lights = Cvar_Get("r_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activates or deactivates hardware lighting");
 	Cvar_SetCheckFunction("r_lights", R_CvarCheckLights);
-	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "4", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
-	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate bump mapping");
@@ -759,6 +757,9 @@ static qboolean R_InitExtensions (void)
 
 	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
+
+	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "4", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
+	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
