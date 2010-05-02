@@ -9,7 +9,7 @@
  */
 
 
-vec3 LightContribution(gl_LightSourceParameters lightSource, vec3 lightDir, vec3 N, vec3 V, float NdotV, float R_2, vec4 roughness, vec4 specular, vec4 diffuse){
+vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
 
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource 

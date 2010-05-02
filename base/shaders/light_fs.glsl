@@ -7,16 +7,15 @@ varying vec3 normal;
 #define ATTENUATION (0.15 + 1.8 * dist + 3.5 * dist * dist)
 
 
-vec3 LightContribution(gl_LightSourceParameters lightSource, vec4 diffuse, vec3 lightmap){
+vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse, in vec3 lightmap){
 
-	vec3 delta, dir, light = vec3(0.0);
-	float dist, d;
+	vec3 light = vec3(0.0);
 
 	if(lightSource.constantAttenuation > 0.0){
-		delta = lightSource.position.xyz - point;
-		dist = length(delta);
-		dir = normalize(delta);
-		d = max(0.0, dot(normal, dir));
+		vec3 delta = lightSource.position.xyz - point;
+		float dist = length(delta);
+		vec3 dir = normalize(delta);
+		float d = max(0.0, dot(normal, dir));
 		if (lightSource.position.w == 0.0){
 			light += lightSource.diffuse.rgb * d;
 			light += lightSource.ambient.rgb;
