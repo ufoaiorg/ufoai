@@ -187,7 +187,7 @@ static inline void R_SortLightList_qsort (r_light_t **list)
  * much (if at all) between calls.  Something like bubble-sort
  * might actually be more efficient in practice.
  */
-void R_SortLightList (r_light_t **list, vec3_t v)
+static void R_SortLightList (r_light_t **list, vec3_t v)
 {
 	VectorCopy(v, origin);
 	R_SortLightList_qsort(list);
