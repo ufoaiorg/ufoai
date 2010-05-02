@@ -27,7 +27,7 @@ const vec3 negHalf = vec3(-0.5);
 
 varying vec3 lightpos;
 varying vec3 staticLightDir;
-varying vec3 lightDirs[1];
+varying vec3 lightDirs[#replace r_dynamic_lights ];
 
 varying vec3 tangent;
 
