@@ -402,6 +402,9 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 							}
 
 							buffer[subLength++] = *in++;
+
+							if (subLength >= SHADER_BUF_SIZE)
+								Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
 						}
 
 						for (j = 0; j < z; j++) {
@@ -454,6 +457,8 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 				}
 
 				buffer[subLength++] = *in++;
+				if (subLength >= SHADER_BUF_SIZE)
+					Com_Error(ERR_FATAL, "R_PreprocessShader: Overflow in shader loading '%s'", name);
 			}
 
 			for (j = 0; j < z; j++) {

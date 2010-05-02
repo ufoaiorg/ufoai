@@ -113,4 +113,3 @@ $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c
 $(BUILDDIR)/tools/ufomodel/%.o: $(SRCDIR)/%.c
 	@echo " * [MOD] $<"; \
 		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-		
