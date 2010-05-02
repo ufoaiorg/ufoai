@@ -53,6 +53,14 @@ INSTALL=./install-sh
 
 #######################################################################################################
 
+ifneq ($(DATADIR),)
+	CFLAGS+=-DDATADIR=\"$(DATADIR)\"
+endif
+
+ifneq ($(LIBDIR),)
+	CFLAGS+=-DLIBDIR=\"$(LIBDIR)\"
+endif
+
 ifeq ($(wildcard .svn),.svn)
 	SVN_REV:=$(shell LANG=C svnversion .)
 	ifeq ($(SVN_REV),)

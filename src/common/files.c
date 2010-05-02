@@ -835,8 +835,11 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 
 #ifdef DATADIR
 	/* add the system search path */
-	FS_AddGameDirectory(LIBDIR"/"BASEDIRNAME);
 	FS_AddGameDirectory(DATADIR"/"BASEDIRNAME);
+#endif
+
+#ifdef LIBDIR
+	FS_AddGameDirectory(LIBDIR"/"BASEDIRNAME);
 #endif
 
 	if (writeToHomeDir) {
