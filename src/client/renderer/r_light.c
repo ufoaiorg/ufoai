@@ -170,7 +170,10 @@ static inline int R_LightDistCompare (const void *a, const void *b)
 {
 	const r_light_t *light1 = *(const r_light_t * const *)a;
 	const r_light_t *light2 = *(const r_light_t * const *)b;
-	return light1->loc[3] ? light2->loc[3] ? VectorDistSqr(light1->loc, origin) - VectorDistSqr(light2->loc, origin) : 1 : -1;
+	return
+		light1->loc[3] == 0 ? -1 :
+		light2->loc[3] == 0 ?  1 :
+		VectorDistSqr(light1->loc, origin) - VectorDistSqr(light2->loc, origin);
 }
 
 static inline void R_SortLightList_qsort (r_light_t **list)
