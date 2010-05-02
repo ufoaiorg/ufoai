@@ -46,10 +46,10 @@ vec4 LightFragment(in vec4 diffuse, in vec3 lightmap){
 	light = clamp(light, 0.0, 1.8);
 
 	// now modulate the diffuse sample with the modified lightmap
-	vec4 LightColor;
-	LightColor.rgb = diffuse.rgb * (lightmap + light);
+	vec4 lightColor;
+	lightColor.rgb = diffuse.rgb * (lightmap + light);
 	// lastly modulate the alpha channel by the color
-	LightColor.a = diffuse.a * gl_Color.a;
+	lightColor.a = diffuse.a * gl_Color.a;
 
-	return LightColor;
+	return lightColor;
 }
