@@ -40,7 +40,7 @@ $(PAK_FILES_OUT) :
 $(BASE_DIR)/0pics.pk3 : $(filter %.jpg %.tga %.png, $(shell $(call FIND, pics))) \
 	$(filter %.jpg %.tga %.png, $(shell $(call FIND, textures)))
 
-$(BASE_DIR)/0models.pk3 : $(filter %.md2 %.md3 %.dpm %.obj %.jpg %.png %.tga %.anm %.txt %.tag, $(shell $(call FIND, models)))
+$(BASE_DIR)/0models.pk3 : $(filter %.mdx %.md2 %.md3 %.dpm %.obj %.jpg %.png %.tga %.anm %.txt %.tag, $(shell $(call FIND, models)))
 
 $(BASE_DIR)/0snd.pk3 : $(filter %.txt %.ogg %.wav, $(shell $(call FIND, sound)))
 
