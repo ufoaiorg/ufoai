@@ -337,7 +337,7 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 
 static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
 {
-	char *buffer;
+	byte *buffer;
 	size_t i = 0;
 
 	/** @todo (arisian): don't GLSL compilers have built-in preprocessors that can handle this kind of stuff? */
@@ -480,6 +480,15 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 			}
 
 			Mem_Free(buffer);
+		}
+
+		if (!strncmp(in, "#replace", 8)) {
+			int r;
+			in += 8;
+			r = Cvar_GetValue(Com_Parse(&in));
+			Com_sprintf(out, len, "%d", r);
+			out += (r / 10) + 1;
+			len -= (r / 10) + 1;
 		}
 
 		/* general case is to copy so long as the buffer has room */
