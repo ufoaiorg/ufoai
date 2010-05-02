@@ -28,19 +28,16 @@ MDXS_MD2 := $(MODELS_MD2:.md2=.mdx)
 MDXS_MD3 := $(MODELS_MD3:.md3=.mdx)
 MDXS_OBJ := $(MODELS_OBJ:.obj=.mdx)
 MDXS_DPM := $(MODELS_DPM:.dpm=.mdx)
+MDXS     := $(MDXS_MD2) $(MDXS_MD3) $(MDXS_OBJ) $(MDXS_DPM)
 
-models: $(UFOMODEL_TARGET) $(MDXS_MD2) $(MDXS_MD3) $(MDXS_OBJ) $(MDXS_DPM)
+models: $(UFOMODEL_TARGET) $(MDXS)
 
 $(MDXS_MD2): %.mdx: %.md2
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
-
 $(MDXS_MD3): %.mdx: %.md3
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
-
 $(MDXS_OBJ): %.mdx: %.obj
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
-
 $(MDXS_DPM): %.mdx: %.dpm
+
+$(MDXS):
 	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
 
 clean-mdx:
