@@ -15,6 +15,15 @@ else
     MODELS_DPM := $(shell find $(MODELDIR) -name "*.dpm")
 endif
 
+# smoothing normals and tangents
+# * aircraft  0.7
+# * aliens    0.3
+# * animals   0.5
+# * civilians 0.5
+# * objects   0.2
+# * soldiers  0.0
+# * weapons   0.6
+
 MDXS_MD2 := $(MODELS_MD2:.md2=.mdx)
 MDXS_MD3 := $(MODELS_MD3:.md3=.mdx)
 MDXS_OBJ := $(MODELS_OBJ:.obj=.mdx)
