@@ -9,29 +9,29 @@
  */
 
 
-vec3 LightContribution(int i, vec3 N, vec3 V, float NdotV, float R_2, vec4 roughness, vec4 specular, vec4 diffuse){
+vec3 LightContribution(gl_LightSourceParameters lightSource, vec3 lightDir, vec3 N, vec3 V, float NdotV, float R_2, vec4 roughness, vec4 specular, vec4 diffuse){
 
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource 
 	 * settings for spot-light sources. */
-	float attenuate = gl_LightSource[i].constantAttenuation;
-	if (attenuate > 0.0 && gl_LightSource[i].position.w != 0.0){ /* directional sources don't get attenuated */
-		float dist = length((gl_LightSource[i].position).xyz - point);
-		attenuate = 1.0 / (gl_LightSource[i].constantAttenuation + 
-				gl_LightSource[i].linearAttenuation * dist +
-				gl_LightSource[i].quadraticAttenuation * dist * dist); 
+	float attenuate = lightSource.constantAttenuation;
+	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
+		float dist = length((lightSource.position).xyz - point);
+		attenuate = 1.0 / (lightSource.constantAttenuation + 
+				lightSource.linearAttenuation * dist +
+				lightSource.quadraticAttenuation * dist * dist); 
 	}
 
 	/* if we're out of range, ignore the light; else calculate its contribution */
 	if(attenuate < ATTENUATE_THRESH) {
 		return vec3(0.0);
 	}
-	vec3 ambientLight = gl_LightSource[i].ambient.rgb;
-	vec3 diffuseLight = gl_LightSource[i].diffuse.rgb;
-	vec3 specularLight = gl_LightSource[i].specular.rgb;
+	vec3 ambientLight = lightSource.ambient.rgb;
+	vec3 diffuseLight = lightSource.diffuse.rgb;
+	vec3 specularLight = lightSource.specular.rgb;
 
 	/* Normalize vectors and cache dot products */
-	vec3 L = normalize(lightDirs[i].rgb);
+	vec3 L = normalize(lightDir);
 	float NdotL = clamp(dot(N, -L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
@@ -121,7 +121,7 @@ vec4 IlluminateFragment(void){
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
-	totalColor += LightContribution($, N, V, NdotV, R_2, roughness, specular, diffuse);
+	totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
 #endunroll
 
 	return vec4(totalColor, 1.0);
