@@ -53,6 +53,8 @@ typedef struct modelConfig_s {
 	qboolean verbose;
 	char fileName[MAX_QPATH];
 	ufoModelAction_t action;
+	float smoothness;
+	char inputName[MAX_QPATH];
 } modelConfig_t;
 
 static modelConfig_t config;
@@ -318,8 +320,15 @@ static void Usage (void)
 	Com_Printf(" -mdx                     generate mdx files\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
+	Com_Printf(" -s <float>               sets the smoothness value for normal-smoothing (in the range -1.0 to 1.0)\n");
+	Com_Printf(" -f <filename>            build tangentspace for the specified model file\n");
 	Com_Printf(" -v --verbose             print debug messages\n");
 	Com_Printf(" -h --help                show this help screen\n");
+}
+
+static void UM_DefaultParameter (void)
+{
+	config.smoothness = 0.5;
 }
 
 /**
@@ -332,6 +341,14 @@ static void UM_Parameter (int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-overwrite")) {
 			config.overwrite = qtrue;
+		} else if (!strcmp(argv[i], "-f") && (i + 1 < argc)) {
+			Q_strncpyz(config.inputName, argv[++i], sizeof(config.inputName));
+		} else if (!strcmp(argv[i], "-s") && (i + 1 < argc)) {
+			config.smoothness = strtod(argv[++i], NULL);
+			if (config.smoothness < -1.0 || config.smoothness > 1.0){
+				Usage();
+				Exit(1);
+			}
 		} else if (!strcmp(argv[i], "-mdx")) {
 			config.action = ACTION_MDX;
 		} else if (!strcmp(argv[i], "-skinedit")) {
@@ -417,6 +434,7 @@ int main (int argc, const char **argv)
 	Com_Printf("---- ufomodel "VERSION" ----\n");
 	Com_Printf(BUILDSTRING"\n");
 
+	UM_DefaultParameter();
 	UM_Parameter(argc, argv);
 
 	if (config.action == ACTION_NONE) {
@@ -439,10 +457,14 @@ int main (int argc, const char **argv)
 
 	switch (config.action) {
 	case ACTION_MDX:
-		PrecalcNormalsAndTangents("**.md2");
-		PrecalcNormalsAndTangents("**.md3");
-		PrecalcNormalsAndTangents("**.dpm");
-		PrecalcNormalsAndTangents("**.obj");
+		if (config.inputName[0] == '\0') {
+			PrecalcNormalsAndTangents("**.md2");
+			PrecalcNormalsAndTangents("**.md3");
+			PrecalcNormalsAndTangents("**.dpm");
+			PrecalcNormalsAndTangents("**.obj");
+		} else {
+			PrecalcNormalsAndTangents(config.inputName);
+		}
 		break;
 
 	case ACTION_SKINEDIT:
