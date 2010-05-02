@@ -69,7 +69,7 @@ typedef	struct mAliasSkin_s {
 } mAliasSkin_t;
 
 typedef	struct mAliasMesh_s {
-	int	num_verts;
+	int32_t	num_verts;
 	char	name[MODEL_MAX_PATH];
 	mAliasVertex_t	*vertexes;
 	mAliasCoord_t	*stcoords;
@@ -131,8 +131,9 @@ typedef	struct	mAliasModel_s {
 } mAliasModel_t;
 
 void R_ModLoadAnims(mAliasModel_t *mod, void *buffer);
-void R_ModLoadMDX(struct model_s *mod);
-void R_ModCalcNormalsAndTangents(mAliasMesh_t *mesh, size_t offset);
-void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames);
-void R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh);
+qboolean R_ModLoadMDX(struct model_s *mod);
+void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames, float smoothness);
+#define R_ModLoadArrayDataForStaticModel(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qtrue);
+#define R_ModLoadArrayDataForStaticModel_NO_NORMALS(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qfalse);
+void _R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals);
 void R_FillArrayData(const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);

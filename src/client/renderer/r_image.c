@@ -670,6 +670,16 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			if (image->normalmap == r_noTexture)
 				image->normalmap = NULL;
 		}
+		if (image->type != it_specularmap) {
+			image->specularmap = R_FindImage(va("%s_sm", image->name), it_specularmap);
+			if (image->specularmap == r_noTexture)
+				image->specularmap = NULL;
+		}
+		if (image->type != it_roughnessmap) {
+			image->roughnessmap = R_FindImage(va("%s_rm", image->name), it_roughnessmap);
+			if (image->roughnessmap == r_noTexture)
+				image->roughnessmap = NULL;
+		}
 	}
 
 	/* no fitting texture found */

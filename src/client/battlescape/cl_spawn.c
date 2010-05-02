@@ -44,11 +44,13 @@ typedef struct {
 	vec3_t origin;
 	vec3_t angles;
 	vec3_t scale;
+	vec3_t color;
 	vec2_t wait;
 	int maxLevel;
 	int maxMultiplayerTeams;
 	int skin;
 	int frame;
+	int light;
 	int spawnflags;
 	float volume;
 	float angle;
@@ -70,6 +72,7 @@ static const value_t localEntityValues[] = {
 	{"wait", V_POS, offsetof(localEntityParse_t, wait), MEMBER_SIZEOF(localEntityParse_t, wait)},
 	{"angles", V_VECTOR, offsetof(localEntityParse_t, angles), MEMBER_SIZEOF(localEntityParse_t, angles)},
 	{"origin", V_VECTOR, offsetof(localEntityParse_t, origin), MEMBER_SIZEOF(localEntityParse_t, origin)},
+	{"color", V_VECTOR, offsetof(localEntityParse_t, color), MEMBER_SIZEOF(localEntityParse_t, color)},
 	{"modelscale_vec", V_VECTOR, offsetof(localEntityParse_t, scale), MEMBER_SIZEOF(localEntityParse_t, scale)},
 	{"wait", V_POS, offsetof(localEntityParse_t, wait), MEMBER_SIZEOF(localEntityParse_t, wait)},
 	{"classname", V_STRING, offsetof(localEntityParse_t, classname), 0},
@@ -80,6 +83,7 @@ static const value_t localEntityValues[] = {
 	{"tag", V_STRING, offsetof(localEntityParse_t, tagname), 0},
 	{"target", V_STRING, offsetof(localEntityParse_t, target), 0},
 	{"targetname", V_STRING, offsetof(localEntityParse_t, targetname), 0},
+	{"light", V_INT, offsetof(localEntityParse_t, light), MEMBER_SIZEOF(localEntityParse_t, light)},
 
 	{NULL, 0, 0, 0}
 };
@@ -88,6 +92,7 @@ static void SP_worldspawn(const localEntityParse_t *entData);
 static void SP_misc_model(const localEntityParse_t *entData);
 static void SP_misc_particle(const localEntityParse_t *entData);
 static void SP_misc_sound(const localEntityParse_t *entData);
+static void SP_light(const localEntityParse_t *entData);
 
 typedef struct {
 	const char *name;
@@ -99,6 +104,7 @@ static const spawn_t spawns[] = {
 	{"misc_model", SP_misc_model},
 	{"misc_particle", SP_misc_particle},
 	{"misc_sound", SP_misc_sound},
+	{"light", SP_light},
 
 	{NULL, NULL}
 };
@@ -195,6 +201,9 @@ void CL_SpawnParseEntitystring (void)
 
 static void SP_worldspawn (const localEntityParse_t *entData)
 {
+	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
+	r_light_t sun;
+
 	/* maximum level */
 	cl.mapMaxLevel = entData->maxLevel;
 
@@ -207,6 +216,31 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 			Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
 		}
 	}
+
+	/** @todo - make sun position/color vary based on local time at location? */
+	/** @todo see R_ModLoadLighting */
+	if (dayLightmap) {
+		/* set up "global" (ie. directional) light sources */
+		Vector4Set(sun.loc, 0, 0, -1, 0.0);
+		Vector4Set(sun.ambientColor, 0.3, 0.3, 0.3, 1);
+		Vector4Set(sun.diffuseColor, 0.8, 0.8, 0.8, 1);
+		Vector4Set(sun.specularColor, 1.0, 1.0, 0.9, 1);
+		sun.constantAttenuation = 1.0;
+		sun.linearAttenuation = 0.0;
+		sun.quadraticAttenuation = 0.0;
+		sun.enabled = qtrue;
+	} else {
+		Vector4Set(sun.loc, 0, 0, -1, 0.0);
+		Vector4Set(sun.ambientColor, 0.1, 0.1, 0.2, 1);
+		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
+		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
+		sun.constantAttenuation = 1.0;
+		sun.linearAttenuation = 0.0;
+		sun.quadraticAttenuation = 0.0;
+		sun.enabled = qtrue;
+	}
+	/* add the appropriate directional source to the list of active light sources*/
+	R_AddLightsource(&sun);
 }
 
 static void SP_misc_model (const localEntityParse_t *entData)
@@ -262,4 +296,20 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume);
+}
+
+/**
+ * @todo remove R_ModLoadBspLights?
+ * @param entData
+ */
+static void SP_light (const localEntityParse_t *entData)
+{
+#if 0
+	r_light_t light;
+	memset(&light, 0, sizeof(light));
+	VectorCopy(entData->color, light.diffuseColor);
+	light.diffuseColor[3] = 1.0;
+	light.enabled = qtrue;
+	R_AddLightsource(&light);
+#endif
 }

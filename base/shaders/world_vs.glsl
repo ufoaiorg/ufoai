@@ -14,7 +14,7 @@ attribute vec4 TANGENT;
 uniform int DYNAMICLIGHTS;
 
 varying vec3 eyedir;
-varying vec3 lightDirs[8];
+varying vec3 lightDirs[];
 varying vec3 staticLightDir;
 varying vec3 tangent;
 
@@ -44,7 +44,7 @@ void main(void){
 	LightVertex();
 
 #if r_bumpmap
-	if(BUMPMAP > 0)
+	if(BUMPMAP > 0 || DYNAMICLIGHTS > 0)
 		BumpVertex();
 #endif
 

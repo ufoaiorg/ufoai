@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_program.h"
 #include "r_material.h"
 #include "r_framebuffer.h"
+#include "r_light.h"
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
@@ -52,11 +53,13 @@ typedef struct gltexunit_s {
 #define texunit_3	        r_state.texunits[3]
 #define texunit_4	        r_state.texunits[4]
 
-#define texunit_diffuse		texunit_0
-#define texunit_lightmap	texunit_1
-#define texunit_deluxemap	texunit_2
-#define texunit_normalmap	texunit_3
-#define texunit_glowmap		texunit_4
+#define texunit_diffuse			texunit_0
+#define texunit_lightmap		texunit_1
+#define texunit_deluxemap		texunit_2
+#define texunit_normalmap		texunit_3
+#define texunit_glowmap			texunit_4
+#define texunit_specularmap		texunit_1
+#define texunit_roughnessmap	texunit_2
 
 
 #define DOWNSAMPLE_PASSES	5
@@ -81,6 +84,10 @@ typedef struct {
 
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];
+
+	/* lights */
+	r_light_t dynamicLights[MAX_DYNAMIC_LIGHTS];
+	int numActiveLights;
 
 	/* framebuffer objects*/
 	r_framebuffer_t *renderBuffer;
@@ -121,6 +128,9 @@ typedef struct {
 	qboolean blur_enabled;
 	qboolean glowmap_enabled;
 	qboolean draw_glow_enabled;
+	qboolean dynamic_lighting_enabled;
+	qboolean specularmap_enabled;
+	qboolean roughnessmap_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -156,5 +166,8 @@ void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
 void R_EnableGlowMap(const image_t *image, qboolean enable);
+void R_EnableDynamicLights(entity_t *ent, qboolean enable);
+void R_EnableSpecularMap(const image_t *image, qboolean enable);
+void R_EnableRoughnessMap(const image_t *image, qboolean enable);
 
 #endif

@@ -200,7 +200,7 @@ static model_t *LoadModel (const char *name)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		R_ModLoadAliasMD2Model(mod, buf, modfilelen);
+		R_ModLoadAliasMD2Model(mod, buf, modfilelen, qfalse);
 		break;
 
 	case DPMHEADER:
@@ -226,9 +226,10 @@ static model_t *LoadModel (const char *name)
 
 static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const char *fileName)
 {
-	int i;
+	int i, frame;
 	qFILE f;
 	uint32_t version = MDX_VERSION;
+	int32_t numIndexes, numVerts, idx;
 
 	Com_Printf("  \\ - writing to file '%s'\n", fileName);
 
@@ -242,31 +243,74 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	version = LittleLong(version);
 	FS_Write(&version, sizeof(version), &f);
 
-	for (i = 0; i < mesh->num_verts; i++) {
-		mAliasVertex_t *v = &mesh->vertexes[i];
-		int j;
-		for (j = 0; j < 3; j++) {
-			v->normal[j] = LittleFloat(v->normal[j]);
-			v->tangent[j] = LittleFloat(v->tangent[j]);
+	numIndexes = LittleLong(mesh->num_tris * 3);
+	numVerts = LittleLong(mesh->num_verts);
+	FS_Write(&mesh->num_verts, sizeof(int32_t), &f);
+	FS_Write(&numIndexes, sizeof(int32_t), &f);
+
+	for (i = 0; i < mesh->num_tris * 3; i++) {
+		idx = LittleLong(mesh->indexes[i]);
+		FS_Write(&idx, sizeof(int32_t), &f);
+	}
+
+	for (frame = 0; frame < mod->alias.num_frames; frame++) {
+		int32_t offset = mesh->num_verts * frame;
+		for (i = 0; i < mesh->num_verts; i++) {
+			mAliasVertex_t *v = &mesh->vertexes[i + offset];
+			int j;
+			for (j = 0; j < 3; j++) {
+				v->normal[j] = LittleFloat(v->normal[j]);
+				v->tangent[j] = LittleFloat(v->tangent[j]);
+			}
 		}
-	}
 
-	for (i = 0; i < mesh->num_verts; i++) {
-		const mAliasVertex_t *v = &mesh->vertexes[i];
-		const size_t length = sizeof(vec3_t);
-		FS_Write(v->normal, length, &f);
-	}
-
-	for (i = 0; i < mesh->num_verts; i++) {
-		const mAliasVertex_t *v = &mesh->vertexes[i];
-		const size_t length = sizeof(vec3_t);
-		FS_Write(v->tangent, length, &f);
+		for (i = 0; i < mesh->num_verts; i++) {
+			mAliasVertex_t *v = &mesh->vertexes[i + offset];
+			FS_Write(v->normal, sizeof(vec3_t), &f);
+			FS_Write(v->tangent, sizeof(vec4_t), &f);
+		}
 	}
 
 	FS_CloseFile(&f);
 }
 
-static void PrecalcNormalsAndTangents (const char *pattern)
+static int PrecalcNormalsAndTangents (const char *filename)
+{
+	char mdxFileName[MAX_QPATH];
+	model_t *mod;
+	int i;
+	int cntCalculated = 0;
+
+	Com_Printf("- model '%s'\n", filename);
+
+	Com_StripExtension(filename, mdxFileName, sizeof(mdxFileName));
+	Q_strcat(mdxFileName, ".mdx", sizeof(mdxFileName));
+
+	if (!config.overwrite && FS_CheckFile("%s", mdxFileName) != -1) {
+		Com_Printf("  \\ - mdx already exists\n");
+		return 0;
+	}
+
+	mod = LoadModel(filename);
+	if (!mod)
+		Com_Error(ERR_DROP, "Could not load %s", filename);
+
+	Com_Printf("  \\ - # meshes '%i', # frames '%i'\n", mod->alias.num_meshes, mod->alias.num_frames);
+
+	for (i = 0; i < mod->alias.num_meshes; i++) {
+		mAliasMesh_t *mesh = &mod->alias.meshes[i];
+		R_ModCalcUniqueNormalsAndTangents(mesh, mod->alias.num_frames, config.smoothness);
+		/** @todo currently md2 models only have one mesh - for
+		 * md3 files this would get overwritten for each mesh */
+		WriteToFile(mod, mesh, mdxFileName);
+
+		cntCalculated++;
+	}
+
+	return cntCalculated;
+}
+
+static void PrecalcNormalsAndTangentsBatch (const char *pattern)
 {
 	const char *filename;
 	int cntCalculated, cntAll;
@@ -276,39 +320,10 @@ static void PrecalcNormalsAndTangents (const char *pattern)
 	cntAll = cntCalculated = 0;
 
 	while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-		char mdxFileName[MAX_QPATH];
-		model_t *mod;
-		int i;
-
 		cntAll++;
-
-		Com_Printf("- model '%s'\n", filename);
-
-		Com_StripExtension(filename, mdxFileName, sizeof(mdxFileName));
-		Q_strcat(mdxFileName, ".mdx", sizeof(mdxFileName));
-
-		if (!config.overwrite && FS_CheckFile("%s", mdxFileName) != -1) {
-			Com_Printf("  \\ - mdx already exists\n");
-			continue;
-		}
-
-		mod = LoadModel(filename);
-
-		Com_Printf("  \\ - # meshes '%i'\n", mod->alias.num_meshes);
-
-		for (i = 0; i < mod->alias.num_meshes; i++) {
-			int j;
-			mAliasMesh_t *mesh = &mod->alias.meshes[i];
-			for (j = 0; j < mod->alias.num_frames; j++) {
-				R_ModCalcNormalsAndTangents(mesh, mesh->num_verts * j);
-			}
-			/** @todo currently md2 models only have one mesh - for
-			 * md3 files this would get overwritten for each mesh */
-			WriteToFile(mod, mesh, mdxFileName);
-
-			cntCalculated++;
-		}
+		cntCalculated += PrecalcNormalsAndTangents(filename);
 	}
+
 	FS_NextFileFromFileList(NULL);
 
 	Com_Printf("%i/%i\n", cntCalculated, cntAll);
@@ -458,10 +473,11 @@ int main (int argc, const char **argv)
 	switch (config.action) {
 	case ACTION_MDX:
 		if (config.inputName[0] == '\0') {
-			PrecalcNormalsAndTangents("**.md2");
-			PrecalcNormalsAndTangents("**.md3");
-			PrecalcNormalsAndTangents("**.dpm");
-			PrecalcNormalsAndTangents("**.obj");
+			PrecalcNormalsAndTangentsBatch("**.md2");
+			PrecalcNormalsAndTangentsBatch("**.md3");
+			PrecalcNormalsAndTangentsBatch("**.dpm");
+			/** @todo see https://sourceforge.net/tracker/?func=detail&aid=2993773&group_id=157793&atid=805242 */
+			PrecalcNormalsAndTangentsBatch("**.obj");
 		} else {
 			PrecalcNormalsAndTangents(config.inputName);
 		}

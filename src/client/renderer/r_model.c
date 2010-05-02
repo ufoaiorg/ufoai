@@ -146,7 +146,10 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		R_ModLoadAliasMD2Model(mod, buf, modfilelen);
+		if (r_lights->integer && r_programs->integer)
+			R_ModLoadAliasMD2Model(mod, buf, modfilelen, qtrue);
+		else /* if dynamic lights and GLSL aren't enabled, don't bother loading normal and tangent vectors */
+			R_ModLoadAliasMD2Model(mod, buf, modfilelen, qfalse);
 		break;
 
 	case DPMHEADER:

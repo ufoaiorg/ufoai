@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_ANIMLIST	8
 
+#include "r_light.h"
+
 typedef struct animState_s {
 	int frame, oldframe;
 	float backlerp;				/**< linear interpolation from previous frame */
@@ -87,6 +89,9 @@ typedef struct entity_s {
 	vec4_t shell;					/**< shell color */
 
 	static_lighting_t *lighting;	/**< cached static lighting info */
+
+	r_light_t *lights[MAX_DYNAMIC_LIGHTS];		/**< dynamic lights sorted by distance */
+	int numLights;
 
 	image_t *deathTexture;
 

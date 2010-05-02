@@ -25,9 +25,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LIGHT_H
 #define R_LIGHT_H
 
+struct entity_s;
+
+#include "r_entity.h"
+
+/* cap on number of light sources that can be in a scene; feel free to increase if necessary */
+#define MAX_DYNAMIC_LIGHTS 256
+
+typedef struct r_light_s {
+	vec4_t loc;
+	vec4_t ambientColor;
+	vec4_t diffuseColor;
+	vec4_t specularColor;
+
+	float constantAttenuation;
+	float linearAttenuation;
+	float quadraticAttenuation;
+
+	qboolean enabled;
+} r_light_t;
+
 void R_AddLight(const vec3_t origin, float radius, const vec3_t color);
 void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, float sustain);
 void R_EnableLights(void);
 void R_ShiftLights(const vec3_t offset);
+
+void R_AddLightsource(const r_light_t *source);
+void R_ClearActiveLights(void);
+qboolean R_EnableLightsource(r_light_t *light, qboolean enable);
+void R_SortLightList(r_light_t **list, vec3_t v);
+void R_InitLightList(r_light_t **list);
+void R_UpdateLightList(struct entity_s *ent);
 
 #endif

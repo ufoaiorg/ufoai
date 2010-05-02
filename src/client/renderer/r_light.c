@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_light.h"
 #include "r_entity.h"
+#include "r_state.h"
 
 #define LIGHT_RADIUS_FACTOR 80.0
 
@@ -133,4 +134,71 @@ void R_EnableLights (void)
 
 	for (; i < MAX_GL_LIGHTS; i++)  /* disable the rest */
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+}
+
+void R_AddLightsource (const r_light_t *source)
+{
+	if (r_state.numActiveLights >= MAX_DYNAMIC_LIGHTS) {
+		Com_Printf("Failed to add lightsource: MAX_DYNAMIC_LIGHTS exceeded\n");
+		return;
+	}
+
+	r_state.dynamicLights[r_state.numActiveLights++] = *source;
+}
+
+void R_ClearActiveLights (void)
+{
+	int i;
+
+	r_state.numActiveLights = 0;
+	glDisable(GL_LIGHTING);
+	for (i = 0; i < r_dynamic_lights->integer; i++) {
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+		glDisable(GL_LIGHT0 + i);
+	}
+}
+
+qboolean R_EnableLightsource (r_light_t *light, qboolean enable)
+{
+	return light->enabled = enable;
+}
+
+/* NOT THREAD SAFE */
+static vec3_t POINT;
+
+static inline int R_LightDistCompare (const void *a, const void *b)
+{
+	const r_light_t *light1 = *(const r_light_t * const *)a;
+	const r_light_t *light2 = *(const r_light_t * const *)b;
+	return light1->loc[3] ? light2->loc[3] ? VectorDistSqr(light1->loc, POINT) - VectorDistSqr(light2->loc, POINT) : 1 : -1;
+}
+
+static inline void R_SortLightList_qsort (r_light_t **list)
+{
+	qsort(list, r_state.numActiveLights, sizeof(*list), &R_LightDistCompare);
+}
+
+/**
+ * @todo qsort may not be the best thing to use here,
+ * given that the ordering of the list usually won't change
+ * much (if at all) between calls.  Something like bubble-sort
+ * might actually be more efficient in practice.
+ */
+void R_SortLightList (r_light_t **list, vec3_t v)
+{
+	VectorCopy(v, POINT);
+	R_SortLightList_qsort(list);
+}
+
+void R_UpdateLightList (entity_t *ent)
+{
+	if (ent->numLights > r_state.numActiveLights)
+		ent->numLights = 0;
+
+	while (ent->numLights < r_state.numActiveLights) {
+		ent->lights[ent->numLights] = &r_state.dynamicLights[ent->numLights];
+		ent->numLights++;
+	}
+
+	R_SortLightList(ent->lights, ent->origin);
 }

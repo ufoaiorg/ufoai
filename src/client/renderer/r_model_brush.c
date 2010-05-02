@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_lightmap.h"
 #include "../../shared/parse.h"
+#include "r_light.h"
 
 /*
 ===============================================================================
@@ -1163,6 +1164,9 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	/* already assembled maps via console command? Skip them */
 	else if (mapName[0] != '-')
 		R_LoadMaterials(mapName);
+
+	/* clear any lights leftover in the active list from previous maps */
+	R_ClearActiveLights();
 
 	/* init */
 	R_BeginBuildingLightmaps();

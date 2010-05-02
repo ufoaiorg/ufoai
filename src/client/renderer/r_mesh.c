@@ -98,7 +98,7 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 {
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
 	R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
-	if (r_state.bumpmap_enabled)
+	if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled)
 		R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mesh->tangents);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
 
@@ -108,7 +108,7 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 	R_BindDefaultArray(GL_NORMAL_ARRAY);
-	if (r_state.bumpmap_enabled)
+	if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled)
 		R_BindDefaultArray(GL_TANGENT_ARRAY);
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }
@@ -492,8 +492,17 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_EnableGlowMap(skin->glowmap, qtrue);
 
+	R_UpdateLightList(e);
+	R_EnableDynamicLights(e, qtrue);
+
 	if (skin->normalmap)
 		R_EnableBumpmap(skin->normalmap, qtrue);
+
+	if (skin->specularmap)
+		R_EnableSpecularMap(skin->specularmap, qtrue);
+
+	if (skin->roughnessmap)
+		R_EnableRoughnessMap(skin->roughnessmap, qtrue);
 
 	R_ResetArrayState();
 
@@ -503,6 +512,14 @@ void R_DrawAliasModel (entity_t *e)
 		R_DrawAliasStatic(lodMesh, e->shell);
 	else
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
+
+	if (r_state.specularmap_enabled)
+		R_EnableSpecularMap(NULL, qfalse);
+
+	if (r_state.roughnessmap_enabled)
+		R_EnableRoughnessMap(NULL, qfalse);
+
+	R_EnableDynamicLights(NULL, qfalse);
 
 	if (r_state.glowmap_enabled)
 		R_EnableGlowMap(NULL, qfalse);

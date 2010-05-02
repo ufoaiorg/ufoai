@@ -103,7 +103,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
-static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize)
+static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
 	int i, j;
 	const dMD2Triangle_t *pintri;
@@ -117,28 +117,10 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts;
-	int version;
 	double isw, ish;
 	const char *md2Path;
-	size_t size;
 
-	/* sanity checks */
-	version = LittleLong(md2->version);
-	if (version != MD2_ALIAS_VERSION)
-		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
-
-	if (bufSize != LittleLong(md2->ofs_end))
-		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
-
-	mod->alias.num_meshes++;
-	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
-
-	if (mod->alias.meshes == NULL)
-		mod->alias.meshes = outMesh = Mem_PoolAlloc(size, vid_modelPool, 0);
-	else {
-		mod->alias.meshes = Mem_ReAlloc(mod->alias.meshes, size);
-		outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
-	}
+	outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
 
 	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
 	outMesh->num_verts = LittleLong(md2->num_verts);
@@ -274,10 +256,175 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 	}
 
 	/* Calculate normals and tangents */
-	R_ModCalcUniqueNormalsAndTangents(outMesh, mod->alias.num_frames);
+	if (loadNormals)
+		R_ModCalcUniqueNormalsAndTangents(outMesh, mod->alias.num_frames, 0.5);
 
 	if (mod->alias.num_meshes > 1)
 		Mem_Free(outFrameTmp);
+}
+
+static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, int bufSize)
+{
+	int i, j;
+	const dMD2Triangle_t *pintri;
+	const dMD2Coord_t *pincoord;
+	mAliasMesh_t *outMesh;
+	mAliasFrame_t *outFrame, *outFrameTmp;
+	mAliasVertex_t *outVertex;
+	mAliasCoord_t *outCoord;
+	int32_t tempIndex[MD2_MAX_TRIANGLES * 3];
+	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
+	int32_t *outIndex;
+	int frameSize, numIndexes, numVerts;
+	double isw, ish;
+	const char *md2Path;
+	int md2Verts;
+
+	outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
+
+	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
+	md2Verts = LittleLong(md2->num_verts);
+	if (md2Verts <= 0 || md2Verts >= MD2_MAX_VERTS)
+		Com_Error(ERR_DROP, "model %s has too many (or no) vertices (%i/%i)",
+			mod->name, md2Verts, MD2_MAX_VERTS);
+	outMesh->num_tris = LittleLong(md2->num_tris);
+	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
+		Com_Error(ERR_DROP, "model %s has too many (or no) triangles", mod->name);
+	frameSize = LittleLong(md2->framesize);
+
+	if (mod->alias.num_meshes == 1) {
+		/* load the skins */
+		outMesh->num_skins = LittleLong(md2->num_skins);
+		if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
+			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
+
+		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
+		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+		for (i = 0; i < outMesh->num_skins; i++) {
+			outMesh->skins[i].skin = R_AliasModelGetSkin(mod, md2Path + i * MD2_MAX_SKINNAME);
+			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
+		}
+
+		outMesh->skinWidth = LittleLong(md2->skinwidth);
+		outMesh->skinHeight = LittleLong(md2->skinheight);
+
+		if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
+			Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
+					mod->name, outMesh->skinHeight, outMesh->skinWidth);
+	} else {
+		/* skin data must be the same for the lod meshes */
+		outMesh->num_skins = mod->alias.meshes[0].num_skins;
+		outMesh->skins = mod->alias.meshes[0].skins;
+		outMesh->skinWidth = mod->alias.meshes[0].skinWidth;
+		outMesh->skinHeight = mod->alias.meshes[0].skinHeight;
+	}
+
+	isw = 1.0 / (double)outMesh->skinWidth;
+	ish = 1.0 / (double)outMesh->skinHeight;
+
+	/* load triangle lists */
+	pintri = (const dMD2Triangle_t *) ((const byte *) md2 + LittleLong(md2->ofs_tris));
+	pincoord = (const dMD2Coord_t *) ((const byte *) md2 + LittleLong(md2->ofs_st));
+
+	for (i = 0; i < outMesh->num_tris; i++) {
+		for (j = 0; j < 3; j++) {
+			tempIndex[i * 3 + j] = (int32_t)LittleShort(pintri[i].index_verts[j]);
+			tempSTIndex[i * 3 + j] = (int32_t)LittleShort(pintri[i].index_st[j]);
+		}
+	}
+
+	/* build list of unique vertices */
+	numIndexes = outMesh->num_tris * 3;
+	numVerts = outMesh->num_verts;
+
+	if (outMesh->num_verts >= 4096)
+		Com_Printf("model %s has more than 4096 verts\n", mod->name);
+
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 8192)
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+			mod->name, outMesh->num_verts, outMesh->num_tris);
+
+	outMesh->stcoords = outCoord = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
+	outIndex = outMesh->indexes;
+	for (j = 0; j < numIndexes; j++) {
+		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].s) + 0.5) * isw);
+		outCoord[outIndex[j]][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].t) + 0.5) * isw);
+	}
+
+	/* load the frames */
+	outFrameTmp = outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
+	outVertex = outMesh->vertexes;
+	if (mod->alias.num_meshes == 1)
+		mod->alias.frames = outFrame;
+	else if (mod->alias.num_frames != LittleLong(md2->num_frames))
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of frames for lod model for '%s'\n", mod->name);
+
+	for (i = 0; i < mod->alias.num_frames; i++, outFrame++, outVertex += numVerts) {
+		const dMD2Frame_t *pinframe = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+
+		for (j = 0; j < 3; j++)
+			outFrame->scale[j] = LittleFloat(pinframe->scale[j]);
+
+		if (mod->alias.num_meshes == 1) {
+			for (j = 0; j < 3; j++)
+				outFrame->translate[j] = LittleFloat(pinframe->translate[j]);
+
+			VectorCopy(outFrame->translate, outFrame->mins);
+			VectorMA(outFrame->translate, 255, outFrame->scale, outFrame->maxs);
+
+			AddPointToBounds(outFrame->mins, mod->mins, mod->maxs);
+			AddPointToBounds(outFrame->maxs, mod->mins, mod->maxs);
+		}
+
+		for (j = 0; j < numIndexes; j++) {
+			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[j]].v[0] * outFrame->scale[0];
+			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[j]].v[1] * outFrame->scale[1];
+			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[j]].v[2] * outFrame->scale[2];
+		}
+	}
+
+	if (mod->alias.num_meshes > 1)
+		Mem_Free(outFrameTmp);
+}
+
+static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
+{
+	mAliasMesh_t *outMesh;
+	int version;
+	size_t size;
+
+	/* sanity checks */
+	version = LittleLong(md2->version);
+	if (version != MD2_ALIAS_VERSION)
+		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
+
+	if (bufSize != LittleLong(md2->ofs_end))
+		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", mod->name, bufSize, LittleLong(md2->ofs_end));
+
+	mod->alias.num_meshes++;
+	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
+
+	if (mod->alias.meshes == NULL)
+		mod->alias.meshes = outMesh = Mem_PoolAlloc(size, vid_modelPool, 0);
+	else {
+		mod->alias.meshes = Mem_ReAlloc(mod->alias.meshes, size);
+		outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
+	}
+
+	if (loadNormals) {
+		/* try to load normals and tangents */
+		if (R_ModLoadMDX(mod)) {
+			R_ModLoadAliasMD2MeshIndexed(mod, md2, bufSize);
+		} else {
+			/* compute normals and tangents */
+			Com_Printf("WARNING: no .mdx found for %s.  Generating tangent space on the fly is slow; please run ufomodel to pre-compute them.\n",
+					mod->name);
+			R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, qtrue);
+		}
+	} else {
+		/* don't load normals and tangents */
+		R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, qfalse);
+	}
 }
 
 /**
@@ -285,7 +432,7 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
  * @param mod The model to load the lod models for
  * @note We support three different levels here
  */
-static void R_ModLoadLevelOfDetailData (model_t* mod)
+static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)
 {
 	char base[MAX_QPATH];
 	int i;
@@ -310,7 +457,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod)
 			/* get the disk data */
 			md2 = (const dMD2Model_t *) buf;
 
-			R_ModLoadAliasMD2Mesh(mod, md2, bufSize);
+			R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 
 			FS_FreeFile(buf);
 		}
@@ -320,7 +467,7 @@ static void R_ModLoadLevelOfDetailData (model_t* mod)
 /**
  * @brief Load MD2 models from file.
  */
-void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
+void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean loadNormals)
 {
 	dMD2Model_t *md2;
 	int size;
@@ -340,7 +487,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 
 	ClearBounds(mod->mins, mod->maxs);
 
-	R_ModLoadAliasMD2Mesh(mod, md2, bufSize);
+	R_ModLoadAliasMD2Mesh(mod, md2, bufSize, loadNormals);
 
 	/* load the tags */
 	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));
@@ -369,7 +516,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize)
 		FS_FreeFile(animbuf);
 	}
 
-	R_ModLoadLevelOfDetailData(mod);
+	R_ModLoadLevelOfDetailData(mod, loadNormals);
 
-	R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes);
+	_R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes, loadNormals);
 }

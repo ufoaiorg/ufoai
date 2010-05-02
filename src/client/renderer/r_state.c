@@ -271,6 +271,66 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	return r_state.lighting_enabled;
 }
 
+void R_EnableDynamicLights (entity_t *ent, qboolean enable)
+{
+	int i, j;
+	r_light_t *l;
+	int maxLights = r_dynamic_lights->integer;
+
+	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0 || !ent) {
+		if (r_state.lighting_enabled)
+			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
+		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
+			R_DisableAttribute("TANGENT");
+		glDisable(GL_LIGHTING);
+		for (i = 0; i < maxLights; i++) {
+			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+			glDisable(GL_LIGHT0 + i);
+		}
+
+		r_state.dynamic_lighting_enabled = qfalse;
+		return;
+	}
+
+	r_state.dynamic_lighting_enabled = qtrue;
+
+	R_EnableAttribute("TANGENT");
+	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
+	R_ProgramParameter1i("STATICLIGHT", 0);
+
+	R_ProgramParameter1f("HARDNESS", 0.1);
+	R_ProgramParameter1f("SPECULAR", 0.25);
+
+	glEnable(GL_LIGHTING);
+
+	for (i = 0, j = 0; i < maxLights && (i + j) < ent->numLights; i++) {
+		l = ent->lights[i + j];
+		if (!l->enabled) {
+			j++;
+			continue;
+		}
+
+		glEnable(GL_LIGHT0 + i);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
+		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, l->linearAttenuation);
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
+
+		glLightfv(GL_LIGHT0 + i, GL_POSITION, l->loc);
+		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, l->ambientColor);
+		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, l->diffuseColor);
+		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, l->specularColor);
+	}
+
+	/* if there aren't enough active lights, turn off the rest */
+	while (i < maxLights) {
+		glDisable(GL_LIGHT0 + i);
+		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
+		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.0);
+		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0);
+		i++;
+	}
+}
+
 /**
  * @brief Enables bumpmapping and binds the given normalmap.
  * @note Don't forget to bind the deluxe map, too.
@@ -297,9 +357,10 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		R_EnableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default parameters to use if no material gets loaded */
-		R_ProgramParameter1f("HARDNESS", 0.5);
+		R_ProgramParameter1f("HARDNESS", 0.1);
+		R_ProgramParameter1f("SPECULAR", 0.25);
 		R_ProgramParameter1f("BUMP", 1.0);
-		R_ProgramParameter1f("PARALLAX", 0.0);
+		R_ProgramParameter1f("PARALLAX", 0.5);
 	} else {
 		R_DisableAttribute("TANGENT");
 		R_ProgramParameter1i("BUMPMAP", 0);
@@ -473,6 +534,36 @@ void R_EnableDrawAsGlow (qboolean enable)
 	}
 }
 
+void R_EnableSpecularMap (const image_t *image, qboolean enable)
+{
+	if (!r_state.dynamic_lighting_enabled)
+		return;
+
+	if (enable && image != NULL) {
+		R_BindTextureForTexUnit(image->texnum, &texunit_specularmap);
+		R_ProgramParameter1i("SPECULARMAP", 1);
+		r_state.specularmap_enabled = enable;
+	} else {
+		R_ProgramParameter1i("SPECULARMAP", 0);
+		r_state.specularmap_enabled = qfalse;
+	}
+}
+
+void R_EnableRoughnessMap (const image_t *image, qboolean enable)
+{
+	if (!r_state.dynamic_lighting_enabled)
+		return;
+
+	if (enable && image != NULL) {
+		R_BindTextureForTexUnit(image->texnum, &texunit_roughnessmap);
+		R_ProgramParameter1i("ROUGHMAP", 1);
+		r_state.roughnessmap_enabled = enable;
+	} else {
+		R_ProgramParameter1i("ROUGHMAP", 0);
+		r_state.roughnessmap_enabled = qfalse;
+	}
+}
+
 /**
  * @sa R_Setup3D
  */
@@ -640,6 +731,9 @@ void R_SetDefaultState (void)
 
 	/* alpha blend parameters */
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	/* make sure no dynamic lights are active */
+	R_ClearActiveLights();
 
 	/* reset gl error state */
 	R_CheckError();

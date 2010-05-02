@@ -97,6 +97,7 @@ extern cvar_t *r_parallax;
 extern cvar_t *r_fog;
 extern cvar_t *r_flares;
 extern cvar_t *r_coronas;
+extern cvar_t *r_dynamic_lights;
 
 /* private renderer variables */
 typedef struct rlocals_s {

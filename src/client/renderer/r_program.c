@@ -654,6 +654,8 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("ROUGHMAP", 0);
+	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("STATICLIGHT", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
