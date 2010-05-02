@@ -2509,9 +2509,9 @@ void MainFrame_Construct (void)
 	GlobalPreferenceSystem().registerPreference("Height", IntImportStringCaller(g_layout_globals.m_position.h),
 			IntExportStringCaller(g_layout_globals.m_position.h));
 
-#ifdef DATADIR
+#ifdef PKGDATADIR
 	StringOutputStream path(256);
-	path << DirectoryCleaned(DATADIR);
+	path << DirectoryCleaned(PKGDATADIR);
 	g_strEnginePath = path.c_str();
 #endif
 

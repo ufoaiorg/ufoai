@@ -459,9 +459,9 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	else
 		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
-#ifdef LIBDIR
+#ifdef PKGLIBDIR
 	/* then use s_libdir cvar or current dir */
-	Com_sprintf(libName, sizeof(libName), "%s/%s."SHARED_EXT, LIBDIR, name);
+	Com_sprintf(libName, sizeof(libName), PKGLIBDIR"%s."SHARED_EXT, name);
 	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
 	lib = dlopen(libName, flags|RTLD_LAZY);
 	if (lib)

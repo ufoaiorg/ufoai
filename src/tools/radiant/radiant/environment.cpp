@@ -19,8 +19,11 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "environment.h"
+#ifdef HAVE_CONFIG_H
+#include "../../../../config.h"
+#endif
 
+#include "environment.h"
 #include "stream/textstream.h"
 #include "stream/stringstream.h"
 #include "os/path.h"
@@ -60,10 +63,11 @@ void environment_init (void)
 	home_path = path.c_str();
 
 	path.clear();
-#ifdef DATADIR
-	if (g_file_test(DATADIR"/"RADIANT_DIRECTORY, (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())
-		app_path << DATADIR"/"RADIANT_DIRECTORY;
-	else
+#ifdef PKGDATADIR
+	const char *appPath = PKGDATADIR"/"RADIANT_DIRECTORY;
+	if (g_file_test(appPath, (GFileTest)G_FILE_TEST_IS_DIR) && g_path_is_absolute(path.c_str())) {
+		app_path = PKGDATADIR"/"RADIANT_DIRECTORY;
+	} else
 #endif
 	{
 		gchar *currentDir = g_get_current_dir();

@@ -833,13 +833,9 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 {
 	Com_Printf("\n---- filesystem initialization -----\n");
 
-#ifdef DATADIR
+#ifdef PKGDATADIR
 	/* add the system search path */
-	FS_AddGameDirectory(DATADIR"/"BASEDIRNAME);
-#endif
-
-#ifdef LIBDIR
-	FS_AddGameDirectory(LIBDIR"/"BASEDIRNAME);
+	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
 #endif
 
 	if (writeToHomeDir) {

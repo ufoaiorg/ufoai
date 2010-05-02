@@ -253,19 +253,19 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	HMODULE lib;
 
 	/* first try cpu string */
-	Com_sprintf(path, sizeof(path), "%s_"CPUSTRING".dll", name);
+	Com_sprintf(path, sizeof(path), "%s_"CPUSTRING"."SHARED_EXT, name);
 	lib = LoadLibrary(path);
 	if (lib)
 		return lib;
 
 	/* now the general lib */
-	Com_sprintf(path, sizeof(path), "%s.dll", name);
+	Com_sprintf(path, sizeof(path), "%s."SHARED_EXT, name);
 	lib = LoadLibrary(path);
 	if (lib)
 		return lib;
 
-#ifdef LIBDIR
-	Com_sprintf(path, sizeof(path), LIBDIR"%s.dll", name);
+#ifdef PKGLIBDIR
+	Com_sprintf(path, sizeof(path), PKGLIBDIR"%s."SHARED_EXT, name);
 	lib = LoadLibrary(path);
 	if (lib)
 		return lib;
