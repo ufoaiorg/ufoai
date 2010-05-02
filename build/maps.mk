@@ -4,12 +4,12 @@ UFO2MAP = ./ufo2map
 
 # Excludes "*tutorial*", "*prefab*" and "*autosave*" maps
 ifeq ($(USEWINDOWSCMD),1)
-    MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "tutorial" | findstr /V "autosave")
+    MAPSRCS := $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "tutorial" | findstr /V "autosave")
 else
-    MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' )
+    MAPSRCS := $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' )
 endif
 
-BSPS = $(MAPSRCS:.map=.bsp)
+BSPS := $(MAPSRCS:.map=.bsp)
 
 # Set NUMTHREADS to enable multi-threading in ufo2map. This
 # setting strongly depends on the OS and hardware, so need to
