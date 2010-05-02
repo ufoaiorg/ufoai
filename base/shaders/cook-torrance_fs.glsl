@@ -9,6 +9,7 @@
  */
 
 
+/** @todo does not compile on my ati x600 yet */
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
 
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
