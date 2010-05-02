@@ -52,7 +52,6 @@ void R_ShiftLights(const vec3_t offset);
 
 void R_AddLightsource(const r_light_t *source);
 void R_ClearActiveLights(void);
-qboolean R_EnableLightsource(r_light_t *light, qboolean enable);
 void R_UpdateLightList(struct entity_s *ent);
 
 #endif

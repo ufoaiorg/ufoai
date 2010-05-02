@@ -158,11 +158,6 @@ void R_ClearActiveLights (void)
 	}
 }
 
-qboolean R_EnableLightsource (r_light_t *light, qboolean enable)
-{
-	return light->enabled = enable;
-}
-
 /* NOT THREAD SAFE */
 static vec3_t origin;
 
