@@ -560,6 +560,7 @@ static void CL_Precache_f (void)
 /**
  * @brief Precache all menu models for faster access
  * @sa CL_PrecacheModels
+ * @todo Does not precache armoured models
  */
 static void CL_PrecacheCharacterModels (void)
 {
