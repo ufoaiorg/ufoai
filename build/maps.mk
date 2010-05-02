@@ -61,4 +61,5 @@ endif
 	@echo "done"
 
 $(BSPS): %.bsp: %.map
-	$(UFO2MAP) $(UFO2MAPFLAGS) $(subst base/,,$<)
+	$(UFO2MAP) $(UFO2MAPFLAGS) $(<:base/%=%)
+

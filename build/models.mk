@@ -23,16 +23,16 @@ MDXS_DPM := $(MODELS_DPM:.dpm=.mdx)
 models: $(UFOMODEL_TARGET) $(MDXS_MD2) $(MDXS_MD3) $(MDXS_OBJ) $(MDXS_DPM)
 
 $(MDXS_MD2): %.mdx: %.md2
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(subst base/,,$<)
+	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
 
 $(MDXS_MD3): %.mdx: %.md3
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(subst base/,,$<)
+	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
 
 $(MDXS_OBJ): %.mdx: %.obj
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(subst base/,,$<)
+	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
 
 $(MDXS_DPM): %.mdx: %.dpm
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(subst base/,,$<)
+	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
 
 clean-mdx:
 	@echo "Deleting cached normals and tangents (*.mdx)..."
