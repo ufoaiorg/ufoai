@@ -24,6 +24,24 @@ endif
 # * soldiers  0.0
 # * weapons   0.6
 
+define get-smooth-value
+    $(if $(filter $(dir $(1)),models/aircraft),0.7, \
+      $(if $(filter $(dir $(1)),models/aliens),0.3, \
+        $(if $(filter $(dir $(1)),models/animals),0.5, \
+          $(if $(filter $(dir $(1)),models/civilians),0.5, \
+            $(if $(filter $(dir $(1)),models/objects),0.2, \
+              $(if $(filter $(dir $(1)),models/soldiers),0.0, \
+                $(if $(filter $(dir $(1)),models/weapons),0.6, \
+                  0.5 \
+                ) \
+              ) \
+            ) \
+          ) \
+        ) \
+      ) \
+    )
+endef
+
 MDXS_MD2 := $(MODELS_MD2:.md2=.mdx)
 MDXS_MD3 := $(MODELS_MD3:.md3=.mdx)
 MDXS_OBJ := $(MODELS_OBJ:.obj=.mdx)
@@ -38,7 +56,7 @@ $(MDXS_OBJ): %.mdx: %.obj
 $(MDXS_DPM): %.mdx: %.dpm
 
 $(MDXS):
-	$(UFOMODEL) $(UFOMODEL_PARAMS) -s 0.6 -f $(<:base/%=%)
+	$(UFOMODEL) $(UFOMODEL_PARAMS) -s $(strip $(call get-smooth-value,$<)) -f $(<:base/%=%)
 
 clean-mdx:
 	@echo "Deleting cached normals and tangents (*.mdx)..."
