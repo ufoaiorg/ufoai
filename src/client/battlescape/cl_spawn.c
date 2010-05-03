@@ -152,6 +152,9 @@ void CL_SpawnParseEntitystring (void)
 	if (cl.numMapParticles || cl.numLMs)
 		return;
 
+	/* clear active light list before adding lights for the new map */
+	R_ClearActiveLights();
+
 	/* parse ents */
 	while (1) {
 		localEntityParse_t entData;
@@ -240,9 +243,6 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	/* scale it into a reasonable range, the clamp above ensures this will work */
 	while (VectorSum(sun.ambientColor) < MIN_AMBIENT_SUM)
 		VectorScale(sun.ambientColor, 1.25, sun.ambientColor);
-
-	/* clear active light list before adding lights for the new map */
-	R_ClearActiveLights();
 
 	/* set up "global" (ie. directional) light sources */
 	Vector4Set(sun.loc, 0, 0, -1, 0.0);
