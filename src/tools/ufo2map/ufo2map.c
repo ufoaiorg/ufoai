@@ -23,7 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+/*
+If you change VERSION or REVISION
+you will force a recompile of all maps by using compile_maps.bat
+*/
 #define VERSION "1.2.5"
+#define REVISION "1"
 
 /* valid -nolighting parameters */
 #define	LIGHTING_NONE			1
@@ -87,6 +92,8 @@ static const usagePair_t usageArray[] = {
 	{NULL, "0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname"},
 	{NULL, "2 - (check/fix) mapname if findings, 4 - normal output,"},
 	{NULL, "5 - extra output, 6 - dump (a lot extra from BSPing)"},
+	/* Do not change the -V output, you will break compile_maps.bat */
+	{" -V --version","return Version and Revision level"},
 	{" -material","generate a material (.mat) file, do not proceed to compilation"},
 	{"\nLighting options:", NULL},
 	{" -extra","extra light samples"},
@@ -461,6 +468,10 @@ static void U2M_Parameter (int argc, const char **argv)
 			} else {
 				Sys_Error("invalid parameter count\n");
 			}
+		} else if (!strcmp(argv[i], "-V") || !strcmp(argv[i], "--version")) {
+			/* Do not change the output, you will break compile_maps.bat */
+			Verb_Printf(VERB_LESS, "version:%s revision:%s\n", VERSION, REVISION);
+			exit(0);
 		} else if (i < (argc - 1)) {
 			/* Last param is the map path, every other param should have been caught by now. */
 			Verb_Printf(VERB_LESS, "*** parameter not understood: %s try --help for more info\n", argv[i]);
