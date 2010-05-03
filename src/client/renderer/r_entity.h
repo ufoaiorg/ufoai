@@ -87,6 +87,5 @@ typedef struct entity_s {
 int R_AddEntity(const entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
-void R_TransformForEntity(const entity_t *e, const vec3_t in, vec3_t out);
 
 #endif

@@ -34,24 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static entity_t r_entities[MAX_ENTITIES];
 
 /**
- * @brief Transforms a point by the inverse of the world-model matrix for the
- * specified entity.
- */
-void R_TransformForEntity (const entity_t *e, const vec3_t in, vec3_t out)
-{
-	matrix4x4_t tmp, mat;
-
-	Matrix4x4_CreateFromQuakeEntity(&tmp,
-			e->origin[0], e->origin[1], e->origin[2],
-			e->angles[0], e->angles[1], e->angles[2],
-			e->scale[0]);
-
-	Matrix4x4_Invert_Simple(&mat, &tmp);
-
-	Matrix4x4_Transform(&mat, in, out);
-}
-
-/**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
  * @sa RF_BOX
