@@ -1,8 +1,4 @@
-// default fragment shader
-
-#include "light_fs.glsl"
-#include "bump_fs.glsl"
-#include "fog_fs.glsl"
+// default battlescape fragment shader
 
 uniform int BUMPMAP;
 uniform int ROUGHMAP;
@@ -11,16 +7,16 @@ uniform int STATICLIGHT;
 uniform int DYNAMICLIGHTS;
 uniform float GLOWSCALE;
 
+/* diffuse texture */
 uniform sampler2D SAMPLER0;
-/* lightmap */
+/* lightmap or specularmap*/
 uniform sampler2D SAMPLER1;
-/* deluxemap */
+/* deluxemap or roughnessmap*/
 uniform sampler2D SAMPLER2;
 /* normalmap */
 uniform sampler2D SAMPLER3;
 /* glowmap */
 uniform sampler2D SAMPLER4;
-
 
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
@@ -29,8 +25,9 @@ varying vec3 lightpos;
 varying vec3 staticLightDir;
 varying vec3 lightDirs[#replace r_dynamic_lights ];
 
-varying vec3 tangent;
-
+#include "light_fs.glsl"
+#include "bump_fs.glsl"
+#include "fog_fs.glsl"
 #include "cook-torrance_fs.glsl"
 
 /**

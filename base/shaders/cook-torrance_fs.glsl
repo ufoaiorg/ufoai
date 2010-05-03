@@ -27,17 +27,14 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	if(attenuate < ATTENUATE_THRESH) {
 		return vec3(0.0);
 	}
-	vec3 ambientLight = lightSource.ambient.rgb;
-	vec3 diffuseLight = lightSource.diffuse.rgb;
-	vec3 specularLight = lightSource.specular.rgb;
 
 	/* Normalize vectors and cache dot products */
 	vec3 L = normalize(lightDir);
 	float NdotL = clamp(dot(N, -L), 0.0, 1.0);
 
 	/* Compute the final color contribution of the light */
-	vec3 ambientColor = diffuse.rgb * ambientLight * diffuse.a;
-	vec3 diffuseColor = diffuse.rgb * diffuse.a * diffuseLight * NdotL;
+	vec3 ambientColor = diffuse.rgb * diffuse.a * lightSource.ambient.rgb;
+	vec3 diffuseColor = diffuse.rgb * diffuse.a * lightSource.diffuse.rgb * NdotL;
 	vec3 specularColor;
 
 	/* Cook-Torrance shading */
@@ -62,9 +59,9 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		/* Compute the fresnel term for specularity using Schlick's approximation*/
 		float F = roughness.g + (1.0 - roughness.g) * pow(1.0 - VdotH, 5.0);
 
-		specularColor = roughness.b * specular.rgb * specularLight * NdotL * (F * R * G) / (NdotV * NdotL);
+		specularColor = lightSource.specular.rgb * specular.rgb * roughness.b * NdotL * (F * R * G) / (NdotV * NdotL);
 	} else { /* Phong shading */
-		specularColor = specularLight * specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
+		specularColor = lightSource.specular.rgb * specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
 	}
 
 	/* NOTE: should we attenuate ambient light or not? */
@@ -81,12 +78,12 @@ vec4 IlluminateFragment(void){
 	vec2 offset = vec2(0.0);
 
 	/* do per-fragment calculations */
+	vec3 V = -normalize(eyedir);
 	vec3 N;
 	if (BUMPMAP > 0) {
 #if r_bumpmap
-		//vec3 normalMap = normalize(( 2.0 * texture2D(SAMPLER3, coords).xyz) - vec3(1.0));
 		vec4 normalMap = texture2D(SAMPLER3, coords);
-		N = vec3(normalize(normalMap.xyz));
+		N = vec3((normalize(normalMap.xyz) * 2.0 - vec3(1.0)));
 		N.xy *= BUMP;
 		if (PARALLAX > 0.0){
 			offset = BumpTexcoord(normalMap.a);
@@ -104,21 +101,20 @@ vec4 IlluminateFragment(void){
 	} else {
 		specular = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 	}
+		specular.a *= 512.0;
+
 	vec4 roughness;
+	float R_2, NdotV;
 	if (ROUGHMAP > 0) {
 		roughness = texture2D(SAMPLER2, coords);
+		/* scale reflectance to a more useful range */
+		roughness.r = clamp(roughness.r, 0.05, 0.95);
+		roughness.g *= 3.0;
+		R_2 = roughness.r * roughness.r;
+		NdotV = dot(N, V);
 	} else {
 		roughness = vec4(0.0);
 	}
-
-	/* scale reflectance to a more useful range */
-	roughness.r = clamp(roughness.r, 0.05, 0.95);
-	roughness.g *= 3.0;
-	specular.a *= 512.0;
-
-	vec3 V = -normalize(eyedir);
-	float NdotV = dot(N, V);
-	float R_2 = roughness.r * roughness.r;
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
