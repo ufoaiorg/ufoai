@@ -79,6 +79,15 @@ void CL_CharacterSkillAndScoreCvars (const character_t *chr)
 	Cvar_Set("mn_vass", va("%i", chr->score.skills[SKILL_ASSAULT]));
 	Cvar_Set("mn_vsnp", va("%i", chr->score.skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->score.skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_vpwri", va("%i", chr->score.initialSkills[ABILITY_POWER]));
+	Cvar_Set("mn_vspdi", va("%i", chr->score.initialSkills[ABILITY_SPEED]));
+	Cvar_Set("mn_vacci", va("%i", chr->score.initialSkills[ABILITY_ACCURACY]));
+	Cvar_Set("mn_vmndi", va("%i", chr->score.initialSkills[ABILITY_MIND]));
+	Cvar_Set("mn_vclsi", va("%i", chr->score.initialSkills[SKILL_CLOSE]));
+	Cvar_Set("mn_vhvyi", va("%i", chr->score.initialSkills[SKILL_HEAVY]));
+	Cvar_Set("mn_vassi", va("%i", chr->score.initialSkills[SKILL_ASSAULT]));
+	Cvar_Set("mn_vsnpi", va("%i", chr->score.initialSkills[SKILL_SNIPER]));
+	Cvar_Set("mn_vexpi", va("%i", chr->score.initialSkills[SKILL_EXPLOSIVE]));
 	Cvar_Set("mn_vhp", va("%i", chr->HP));
 	Cvar_Set("mn_vhpmax", va("%i", chr->maxHP));
 

@@ -18,6 +18,39 @@ component cmpDefNamedTbar cmpNamedTbar {
 	}
 }
 
+component panel cmpNamedBar {
+	{
+		size	"450 20"
+	}
+	pic			bdr { 
+		pos "165 2"
+		image ui/bar_border 
+	}
+	bar		currbar {
+		pos "167 7"
+		size "255 6"
+		color		".5 .9 .5 1"
+		max 100
+	}
+	bar		initbar {
+		pos "167 7"
+		size "255 6"
+		color		"0 .8 0 1"
+		max 100
+	}
+	string	lbl {
+		pos "0 0"
+		size "180 20"
+		string ""
+	}
+	string	val {
+		pos "265 0"
+		size "150 20"
+		textalign ur
+	}
+}
+
+
 component cmpActorSelect cmpSoldierSelect {
 	{
 		num "0"
@@ -350,82 +383,90 @@ window team extends iaircraft
 		size	"440 264"
 		image	"ui/panel_green_tab"
 	}
-
-	cmpNamedTbar pwr {
+	cmpNamedBar pwr {
 		{
 			pos "9 27"
 		}
-		tbar bar   { current *cvar:mn_vpwr }
-		string lbl { string "_Strength:" }
-		string val { string *cvar:mn_tpwr }
+		bar currbar { current *cvar:mn_vpwr }
+		bar initbar { current *cvar:mn_vpwri }
+		string lbl  { string "_Strength:" }
+		string val  { string *cvar:mn_tpwr }
 	}
-	cmpNamedTbar spd {
+	cmpNamedBar spd {
 	{
 		pos "9 50"
 	}
-		tbar bar   { current *cvar:mn_vspd }
-		string lbl { string "_Speed:" }
-		string val { string *cvar:mn_tspd }
+		bar currbar { current *cvar:mn_vspd }
+		bar initbar { current *cvar:mn_vspdi }
+		string lbl  { string "_Speed:" }
+		string val  { string *cvar:mn_tspd }
 	}
-	cmpNamedTbar acc {
+	cmpNamedBar acc {
 	{
 		pos "9 73"
 	}
-		tbar bar   { current *cvar:mn_vacc }
-		string lbl { string "_Accuracy:" }
-		string val { string *cvar:mn_tacc }
+		bar currbar { current *cvar:mn_vacc }
+		bar initbar { current *cvar:mn_vacci }
+		string lbl  { string "_Accuracy:" }
+		string val  { string *cvar:mn_tacc }
 	}
-	cmpNamedTbar mnd {
+	cmpNamedBar mnd {
 	{
 		pos "9 96"
 	}
-		tbar bar   { current *cvar:mn_vmnd }
-		string lbl { string "_Mind:" }
-		string val { string *cvar:mn_tmnd }
+		bar currbar { current *cvar:mn_vmnd }
+		bar initbar { current *cvar:mn_vmndi }
+		string lbl  { string "_Mind:" }
+		string val  { string *cvar:mn_tmnd }
 	}
-	cmpNamedTbar cls {
+	cmpNamedBar cls {
 	{
 		pos "9 119"
 	}
-		tbar bar   { current *cvar:mn_vcls }
-		string lbl { string "_Close Combat:" }
-		string val { string *cvar:mn_tcls }
+		bar currbar { current *cvar:mn_vcls }
+		bar initbar { current *cvar:mn_vclsi }
+		string lbl  { string "_Close Combat:" }
+		string val  { string *cvar:mn_tcls }
 	}
 
-	cmpNamedTbar hvy {
+	cmpNamedBar hvy {
 	{
 		pos "9 142"
 	}
-		tbar bar   { current *cvar:mn_vhvy }
-		string lbl { string "_Heavy Weapons:" }
-		string val { string *cvar:mn_thvy }
+		bar currbar { current *cvar:mn_vhvy }
+		bar initbar { current *cvar:mn_vhvyi }
+		string lbl  { string "_Heavy Weapons:" }
+		string val  { string *cvar:mn_thvy }
 	}
 
-	cmpNamedTbar ass {
+	cmpNamedBar ass {
 	{
 		pos "9 165"
 	}
-		tbar bar   { current *cvar:mn_vass }
-		string lbl { string "_Assault Weapons:" }
-		string val { string *cvar:mn_tass }
+		bar currbar { current *cvar:mn_vass }
+		bar initbar { current *cvar:mn_vassi }
+		string lbl  { string "_Assault Weapons:" }
+		string val  { string *cvar:mn_tass }
 	}
 
-	cmpNamedTbar snp {
+	cmpNamedBar snp {
 	{
 		pos "9 188"
 	}
-		tbar bar   { current *cvar:mn_vsnp }
-		string lbl { string "_Sniper Rifles:" }
-		string val { string *cvar:mn_tsnp }
+		bar currbar { current *cvar:mn_vsnp }
+		bar initbar { current *cvar:mn_vsnpi }
+		string lbl  { string "_Sniper Rifles:" }
+		string val  { string *cvar:mn_tsnp }
 	}
 
-	cmpNamedTbar exp {
+	cmpNamedBar exp {
 	{
 		pos "9 211"
 	}
-		tbar bar   { current *cvar:mn_vexp }
-		string lbl { string "_High-Explosives:" }
-		string val { string *cvar:mn_texp }
+		bar currbar { current *cvar:mn_vexp }
+		bar initbar { current *cvar:mn_vexpi }
+		string lbl  { string "_High-Explosives:" }
+		string val  { string *cvar:mn_texp }
 	}
 
 	cmpNamedTbar hp {

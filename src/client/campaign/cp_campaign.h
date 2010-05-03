@@ -230,7 +230,7 @@ typedef struct battleParam_s {
 	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
 	char civTeam[MAX_VAR];							/**< Type of civilian (European, ...) */
 	qboolean day;									/**< Mission is played during day */
-	const char *zoneType;							/**< Terrain type (used for texture replacement in base missions) */
+	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
 } battleParam_t;

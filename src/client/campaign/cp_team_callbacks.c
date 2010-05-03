@@ -352,15 +352,25 @@ static void CL_ResertCharacterCvars (void)
 	Cvar_Set("mn_chrrank_img", "");
 
 	Cvar_Set("mn_vpwr", "");
+	Cvar_Set("mn_vpwri", "");
 	Cvar_Set("mn_vspd", "");
+	Cvar_Set("mn_vspdi", "");
 	Cvar_Set("mn_vacc", "");
+	Cvar_Set("mn_vacci", "");
 	Cvar_Set("mn_vmnd", "");
+	Cvar_Set("mn_vmndi", "");
 	Cvar_Set("mn_vcls", "");
+	Cvar_Set("mn_vclsi", "");
 	Cvar_Set("mn_vhvy", "");
+	Cvar_Set("mn_vhvyi", "");
 	Cvar_Set("mn_vass", "");
+	Cvar_Set("mn_vassi", "");
 	Cvar_Set("mn_vsnp", "");
+	Cvar_Set("mn_vsnpi", "");
 	Cvar_Set("mn_vexp", "");
+	Cvar_Set("mn_vexpi", "");
 	Cvar_Set("mn_vhp", "");
+	Cvar_Set("mn_vhpi", "");
 	Cvar_Set("mn_vhpmax", va("%i", MAX_HP));	/**< must be greater than mn_vhp */
 
 	Cvar_Set("mn_tpwr", "");
