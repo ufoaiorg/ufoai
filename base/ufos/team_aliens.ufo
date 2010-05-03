@@ -148,15 +148,17 @@ team ortnok
 
 	models {
 		neutral {
-			aliens/ortnok body01 head01 0
-			aliens/ortnok body01 head02 0
-			aliens/ortnok body01 head03 0
-			aliens/ortnok body01 head01 1
-			aliens/ortnok body01 head02 1
-			aliens/ortnok body01 head03 1
-			aliens/ortnok body01 head01 2
-			aliens/ortnok body01 head02 2
-			aliens/ortnok body01 head03 2
+			aliens/ortnok body01 head01 0 // No Armor, Body: Big open wound, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 1 // No Armor, Body: Big scar, Head: Big scar over the right eye
+			aliens/ortnok body01 head03 2 // No Armor, Body: Scared legs, Head: One-eyed Ortnok
+			aliens/ortnok body01 head01 1 // No Armor, Body: Big scar, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 2 // No Armor, Body: Scared legs, Head: Big scar over the right eye
+			aliens/ortnok body01 head03 0 // No Armor, Body: Big open wound, Head: One-eyed Ortnok
+			aliens/ortnok body01 head01 2 // No Armor, Body: Scared legs, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 0 // No Armor, Body: Big open wound, Head: One-eyed Ortnok
+			aliens/ortnok body01 head03 1 // No Armor, Body: Big scar, Head: Big scar over the right eye
+				// Light Armor, Body: Just one version available, Head: Just one version available (other head textures are the same)
+				// Medium Armor, Body: Just one version available, Head: Just one version available (other head textures are the same)
 		}
 	}
 
