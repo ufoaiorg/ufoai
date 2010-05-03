@@ -31,7 +31,9 @@ MDXS_MD2 := $(MODELS_MD2:.md2=.mdx)
 MDXS_MD3 := $(MODELS_MD3:.md3=.mdx)
 MDXS_OBJ := $(MODELS_OBJ:.obj=.mdx)
 MDXS_DPM := $(MODELS_DPM:.dpm=.mdx)
-MDXS     := $(MDXS_MD2) $(MDXS_MD3) $(MDXS_OBJ) $(MDXS_DPM)
+# TODO see https://sourceforge.net/tracker/?func=detail&aid=2993773&group_id=157793&atid=805242
+#MDXS     := $(MDXS_MD2) $(MDXS_MD3) $(MDXS_OBJ) $(MDXS_DPM)
+MDXS     := $(MDXS_MD2) $(MDXS_MD3) $(MDXS_DPM)
 
 models: $(UFOMODEL_TARGET) $(MDXS)
 
