@@ -219,25 +219,24 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 
 	/** @todo - make sun position/color vary based on local time at location? */
 	/** @todo see R_ModLoadLighting */
-	if (dayLightmap) {
-		/* set up "global" (ie. directional) light sources */
-		Vector4Set(sun.loc, 0, 0, -1, 0.0);
+
+	/* clear active light list before adding lights for the new map */
+	R_ClearActiveLights();
+
+	/* set up "global" (ie. directional) light sources */
+	Vector4Set(sun.loc, 0, 0, -1, 0.0);
+	sun.constantAttenuation = 1.0;
+	sun.linearAttenuation = 0.0;
+	sun.quadraticAttenuation = 0.0;
+	sun.enabled = qtrue;
+	if (dayLightmap) { /* sunlight color */
 		Vector4Set(sun.ambientColor, 0.3, 0.3, 0.3, 1);
 		Vector4Set(sun.diffuseColor, 0.8, 0.8, 0.8, 1);
 		Vector4Set(sun.specularColor, 1.0, 1.0, 0.9, 1);
-		sun.constantAttenuation = 1.0;
-		sun.linearAttenuation = 0.0;
-		sun.quadraticAttenuation = 0.0;
-		sun.enabled = qtrue;
-	} else {
-		Vector4Set(sun.loc, 0, 0, -1, 0.0);
+	} else { /* moonlight color */
 		Vector4Set(sun.ambientColor, 0.1, 0.1, 0.2, 1);
 		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
 		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
-		sun.constantAttenuation = 1.0;
-		sun.linearAttenuation = 0.0;
-		sun.quadraticAttenuation = 0.0;
-		sun.enabled = qtrue;
 	}
 	/* add the appropriate directional source to the list of active light sources*/
 	R_AddLightsource(&sun);
