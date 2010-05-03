@@ -45,6 +45,8 @@ typedef struct {
 	vec3_t angles;
 	vec3_t scale;
 	vec3_t color;
+	vec3_t ambientNightColor;
+	vec3_t ambientDayColor;
 	vec2_t wait;
 	int maxLevel;
 	int maxMultiplayerTeams;
@@ -84,6 +86,8 @@ static const value_t localEntityValues[] = {
 	{"target", V_STRING, offsetof(localEntityParse_t, target), 0},
 	{"targetname", V_STRING, offsetof(localEntityParse_t, targetname), 0},
 	{"light", V_INT, offsetof(localEntityParse_t, light), MEMBER_SIZEOF(localEntityParse_t, light)},
+	{"ambient_day", V_VECTOR, offsetof(localEntityParse_t, ambientDayColor), MEMBER_SIZEOF(localEntityParse_t, ambientDayColor)},
+	{"ambient_night", V_VECTOR, offsetof(localEntityParse_t, ambientNightColor), MEMBER_SIZEOF(localEntityParse_t, ambientNightColor)},
 
 	{NULL, 0, 0, 0}
 };
@@ -199,10 +203,14 @@ void CL_SpawnParseEntitystring (void)
 	LM_Think();
 }
 
+#define MIN_AMBIENT_COMPONENT 0.1
+#define MIN_AMBIENT_SUM 1.25
+
 static void SP_worldspawn (const localEntityParse_t *entData)
 {
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	r_light_t sun;
+	int i;
 
 	/* maximum level */
 	cl.mapMaxLevel = entData->maxLevel;
@@ -218,7 +226,20 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	}
 
 	/** @todo - make sun position/color vary based on local time at location? */
-	/** @todo see R_ModLoadLighting */
+
+	if (dayLightmap)
+		VectorCopy(entData->ambientDayColor, sun.ambientColor);
+	else
+		VectorCopy(entData->ambientNightColor, sun.ambientColor);
+
+	/* clamp it */
+	for (i = 0; i < 3; i++)
+		if (sun.ambientColor[i] < MIN_AMBIENT_COMPONENT)
+			sun.ambientColor[i] = MIN_AMBIENT_COMPONENT;
+
+	/* scale it into a reasonable range, the clamp above ensures this will work */
+	while (VectorSum(sun.ambientColor) < MIN_AMBIENT_SUM)
+		VectorScale(sun.ambientColor, 1.25, sun.ambientColor);
 
 	/* clear active light list before adding lights for the new map */
 	R_ClearActiveLights();
@@ -230,14 +251,13 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	sun.quadraticAttenuation = 0.0;
 	sun.enabled = qtrue;
 	if (dayLightmap) { /* sunlight color */
-		Vector4Set(sun.ambientColor, 0.3, 0.3, 0.3, 1);
 		Vector4Set(sun.diffuseColor, 0.8, 0.8, 0.8, 1);
 		Vector4Set(sun.specularColor, 1.0, 1.0, 0.9, 1);
 	} else { /* moonlight color */
-		Vector4Set(sun.ambientColor, 0.1, 0.1, 0.2, 1);
 		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
 		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
 	}
+
 	/* add the appropriate directional source to the list of active light sources*/
 	R_AddLightsource(&sun);
 }
@@ -308,6 +328,9 @@ static void SP_light (const localEntityParse_t *entData)
 	memset(&light, 0, sizeof(light));
 	VectorCopy(entData->color, light.diffuseColor);
 	light.diffuseColor[3] = 1.0;
+	VectorCopy(entData->origin, light.loc);
+	/** @todo set attenuation from entData->light */
+	light.loc[3] = 0.0;
 	light.enabled = qtrue;
 	R_AddLightsource(&light);
 #endif

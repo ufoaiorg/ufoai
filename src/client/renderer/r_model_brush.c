@@ -49,49 +49,11 @@ static ipos3_t shift;
  */
 static model_t *r_worldmodel;
 
-#define MIN_AMBIENT_COMPONENT 0.05
-#define MIN_AMBIENT_SUM 1.25
-
 /**
  * @brief Load the lightmap data
  */
 static void R_ModLoadLighting (const lump_t *l, qboolean day)
 {
-	const char *s;
-	const char *ambientLightString = day ? "\"ambient_day\"" : "\"ambient_night\"";
-
-	if (!l->filelen) {
-		r_worldmodel->bsp.lightdata = NULL;
-		r_worldmodel->bsp.lightquant = 4;
-		return;
-	}
-
-	/* resolve ambient light */
-	if ((s = strstr(CM_EntityString(), ambientLightString))) {
-		int i;
-		const char *c;
-
-		c = Com_Parse(&s);  /* parse the string itself */
-		c = Com_Parse(&s);  /* and then the value */
-
-		if (sscanf(c, "%f %f %f", &refdef.ambientLightColor[0],
-			&refdef.ambientLightColor[1], &refdef.ambientLightColor[2]) != 3)
-			Com_Printf("Invalid light vector given: '%s'\n", c);
-
-		for (i = 0; i < 3; i++) {  /* clamp it */
-			if (refdef.ambientLightColor[i] < MIN_AMBIENT_COMPONENT)
-				refdef.ambientLightColor[i] = MIN_AMBIENT_COMPONENT;
-		}
-
-		Com_DPrintf(DEBUG_RENDERER, "Resolved %s: %1.2f %1.2f %1.2f\n",
-			ambientLightString, refdef.ambientLightColor[0], refdef.ambientLightColor[1], refdef.ambientLightColor[2]);
- 	} else  /* ensure sane default */
-		VectorSet(refdef.ambientLightColor, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT, MIN_AMBIENT_COMPONENT);
-
-	/* scale it into a reasonable range, the clamp above ensures this will work */
-	while (VectorSum(refdef.ambientLightColor) < MIN_AMBIENT_SUM)
-		VectorScale(refdef.ambientLightColor, 1.25, refdef.ambientLightColor);
-
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
