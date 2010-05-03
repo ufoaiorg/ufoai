@@ -71,7 +71,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 			add.tagent = R_GetFreeEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
-			add.lighting = &le->lighting; /* values from the ugv */
 
 			R_AddEntity(&add);
 		}
@@ -85,7 +84,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
-			add.lighting = &le->lighting; /* values from the ugv */
 
 			R_AddEntity(&add);
 		}
@@ -101,7 +99,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	/** @todo */
 	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
-	add.lighting = &le->lighting; /* values from the ugv */
 
 	R_AddEntity(&add);
 

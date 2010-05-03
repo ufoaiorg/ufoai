@@ -184,14 +184,6 @@ typedef struct mBspLeaf_s {
 	struct model_s *model;
 } mBspLeaf_t;
 
-/** @brief static light sources from the entities string */
-typedef struct mbsplight_s {
-	vec3_t org;
-	float radius;
-
-	struct mbsplight_s* next;
-} mBspLight_t;
-
 /** @brief brush model */
 typedef struct mBspModel_s {
 	/* range of surface numbers in this (sub)model */
@@ -242,8 +234,6 @@ typedef struct mBspModel_s {
 
 	byte lightquant;
 	byte *lightdata;
-
-	mBspLight_t *bsplights;
 
 	/* sorted surfaces arrays */
 	mBspSurfaces_t *sorted_surfaces[NUM_SURFACES_ARRAYS];

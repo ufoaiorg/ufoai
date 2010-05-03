@@ -296,7 +296,6 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	R_EnableAttribute("TANGENT");
 	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
-	R_ProgramParameter1i("STATICLIGHT", 0);
 
 	R_ProgramParameter1f("HARDNESS", 0.1);
 	R_ProgramParameter1f("SPECULAR", 0.25);

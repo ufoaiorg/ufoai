@@ -94,7 +94,6 @@ typedef struct seqEnt_s {
 	vec3_t angles, omega;
 	vec3_t color;
 	float alpha;
-	static_lighting_t lighting;
 	char parent[MAX_VAR];
 	char tag[MAX_VAR];
 	animState_t as;
@@ -295,8 +294,6 @@ void CL_SequenceRender (void)
 			ent.skinnum = se->skin;
 			ent.as = se->as;
 			ent.alpha = se->alpha;
-			ent.lighting = &se->lighting;
-			VectorCopy(se->color, se->lighting.color);
 
 			VectorCopy(se->origin, ent.origin);
 			VectorCopy(se->origin, ent.oldorigin);

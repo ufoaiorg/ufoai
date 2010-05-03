@@ -51,7 +51,6 @@ void CL_EntAppear (const eventRegister_t *self, struct dbuffer *msg)
 	}
 
 	le->type = type;
-	le->lighting.dirty = qtrue;
 
 	/* the default is invisible - another event will follow which spawns not
 	 * only the le, but also the particle. The visibility is set there, too */

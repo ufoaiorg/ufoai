@@ -439,32 +439,6 @@ void R_DrawAliasModel (entity_t *e)
 	if (VectorNotEmpty(e->scale))
 		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
-	/* resolve lighting for coloring */
-	/* update static lighting info */
-	if (e->lighting) {
-		if (r_state.lighting_enabled) {
-			vec3_t lightpos;
-
-			if (e->lighting->dirty) {
-				if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-					/* tagged models are not handled, they share the static lighting
-					 * information with the parent anyway */
-					if (!e->tagent)
-						R_LightPoint(e->origin, e->lighting);
-				}
-			}
-
-			/* enable hardware light sources, transform the static light source vector */
-			R_TransformForEntity(e, e->lighting->position, lightpos);
-			R_ProgramParameter3fv("LIGHTPOS", lightpos);
-		}
-
-		/* we don't want black models */
-		if (VectorNotEmpty(e->lighting->color))
-			/* resolve the color, starting with the lighting result */
-			VectorCopy(e->lighting->color, color);
-	}
-
 	/* IR goggles override color for entities that are affected */
 	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
 		Vector4Set(e->shell, 1.0, 0.3, 0.3, 1.0);

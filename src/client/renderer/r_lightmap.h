@@ -61,6 +61,4 @@ typedef struct lightmaps_s {
 
 extern lightmaps_t r_lightmaps;
 
-void R_LightPoint(const vec3_t p, static_lighting_t *lighting);
-
 #endif

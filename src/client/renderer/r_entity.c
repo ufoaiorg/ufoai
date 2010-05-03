@@ -340,13 +340,9 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(r_state.world_program, qtrue);
-		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("STATICLIGHT", 1);
 	}
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("STATICLIGHT", 0);
 		R_EnableLighting(NULL, qfalse);
 	}
 }
@@ -361,15 +357,11 @@ static void R_DrawBlendMeshEntities (entity_t *ents)
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		R_EnableLighting(r_state.world_program, qtrue);
-		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("STATICLIGHT", 1);
 	}
 	R_EnableBlend(qtrue);
 	R_DrawMeshEntities(ents);
 	R_EnableBlend(qfalse);
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
-		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("STATICLIGHT", 0);
 		R_EnableLighting(NULL, qfalse);
 	}
 }

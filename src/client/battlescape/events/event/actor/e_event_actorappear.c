@@ -94,7 +94,6 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* maybe added via CL_ActorAdd before */
 	le->invis = qfalse;
-	le->lighting.dirty = qtrue;
 
 	/* get the info */
 	NET_ReadFormat(msg, self->formatString,

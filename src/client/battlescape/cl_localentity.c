@@ -125,18 +125,15 @@ static void LM_AddToSceneOrder (qboolean parents)
 				Com_Error(ERR_DROP, "Invalid entity num for local model (%s/%s): %i",
 						lm->model->name, lm->id, lm->parent->renderEntityNum);
 			ent.tagname = lm->tagname;
-			ent.lighting = &lm->parent->lighting;
 		} else {
 			VectorCopy(lm->origin, ent.origin);
 			VectorCopy(lm->origin, ent.oldorigin);
 			VectorCopy(lm->angles, ent.angles);
-			ent.lighting = &lm->lighting;
 
 			if (lm->animname[0] != '\0') {
 				ent.as = lm->as;
 				/* do animation */
 				R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
-				lm->lighting.dirty = qtrue;
 			} else {
 				ent.as.frame = lm->frame;
 			}
@@ -291,7 +288,6 @@ localModel_t *LM_AddModel (const char *model, const vec3_t origin, const vec3_t 
 	lm->entnum = entnum;
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
-	lm->lighting.dirty = qtrue;
 	lm->inuse = qtrue;
 	VectorCopy(scale, lm->scale);
 
@@ -615,7 +611,6 @@ void LE_DoEndPathMove (le_t *le)
 	if (floor)
 		FLOOR(le) = FLOOR(floor);
 
-	le->lighting.dirty = qtrue;
 	LE_SetThink(le, LET_StartIdle);
 	LE_ExecuteThink(le);
 	LE_Unlock(le);
@@ -672,8 +667,6 @@ static void LET_PathMove (le_t * le)
 	VectorSubtract(dest, start, delta);
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
-
-	le->lighting.dirty = qtrue;
 
 	/* calculate the new interpolated actor origin in the world */
 	VectorMA(start, frac, delta, le->origin);
@@ -1343,8 +1336,6 @@ void LE_AddToScene (void)
 			default:
 				break;
 			}
-
-			ent.lighting = &le->lighting;
 
 			/* call add function */
 			/* if it returns false, don't draw */

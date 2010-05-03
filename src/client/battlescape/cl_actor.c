@@ -379,7 +379,6 @@ void CL_ActorAddToTeamList (le_t * le)
 	if (actorIdx == -1) {
 		actorIdx = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
-		le->lighting.dirty = qtrue;
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		if (cl.numTeamList == 1)
@@ -1469,7 +1468,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2 + addRightHandWeapon;
 			add.tagname = "tag_lweapon";
-			add.lighting = &le->lighting; /* values from the actor */
 
 			R_AddEntity(&add);
 		}
@@ -1486,7 +1484,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2;
 			add.tagname = "tag_rweapon";
-			add.lighting = &le->lighting; /* values from the actor */
 
 			R_AddEntity(&add);
 		}
@@ -1504,7 +1501,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	/* point to the body ent which will be added last */
 	add.tagent = R_GetFreeEntity() + 1;
 	add.tagname = "tag_head";
-	add.lighting = &le->lighting; /* values from the actor */
 
 	if (le->team != cls.team)
 		add.flags |= RF_IRGOGGLES;

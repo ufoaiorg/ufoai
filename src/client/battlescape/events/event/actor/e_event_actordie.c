@@ -63,7 +63,6 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 	FLOOR(le) = NULL;
 
 	le->state = state;
-	le->lighting.dirty = qtrue;
 
 	/* play animation */
 	LE_SetThink(le, NULL);

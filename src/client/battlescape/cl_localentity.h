@@ -132,7 +132,6 @@ typedef struct le_s {
 
 	pathing_t *pathMap;	/**< This is where the data for TUS used to move and actor
 								 * locations go - only available for human controlled actors */
-	static_lighting_t lighting;
 
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
@@ -165,8 +164,6 @@ typedef struct localModel_s {
 	char animname[MAX_QPATH];	/**< is this an animated model */
 	int levelflags;
 	animState_t as;
-
-	static_lighting_t lighting;
 
 	/** is called every frame */
 	void (*think) (struct localModel_s * localModel);
