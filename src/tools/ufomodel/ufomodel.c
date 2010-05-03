@@ -477,7 +477,7 @@ int main (int argc, const char **argv)
 			PrecalcNormalsAndTangentsBatch("**.md3");
 			PrecalcNormalsAndTangentsBatch("**.dpm");
 			/** @todo see https://sourceforge.net/tracker/?func=detail&aid=2993773&group_id=157793&atid=805242 */
-			PrecalcNormalsAndTangentsBatch("**.obj");
+			/*PrecalcNormalsAndTangentsBatch("**.obj");*/
 		} else {
 			PrecalcNormalsAndTangents(config.inputName);
 		}
