@@ -50,7 +50,7 @@ stamps/build-arch: config.status
 	dh_testdir
 
 	$(MAKE)
-	$(MAKE) radiant
+	$(MAKE) uforadiant
 
 	mkdir -p stamps
 	touch $@
