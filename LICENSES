@@ -662,10 +662,15 @@ base/models/aliens/shevaar/head01.md2 | GNU General Public License 2.0 | Lukas "
 base/models/aliens/taman/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/taman/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/taman/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01a.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01b.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01c.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/body01d.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/taman/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head02.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head03.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head04.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
