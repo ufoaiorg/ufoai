@@ -184,4 +184,55 @@ window iaircraft
 	 * @brief Callback to update the GUI when the aircraft status change
 	 */
 	confunc aircraft_status_change { }
+
+/**
+ * @brief Reset the cvars for a character.
+ */
+	confunc reset_character_cvars {
+	*cvar:mn_name = ""
+	*cvar:mn_body = ""
+	*cvar:mn_head = ""
+	*cvar:mn_skin = ""
+	*cvar:mn_skinname = ""
+	*cvar:mn_rweapon = ""
+	*cvar:mn_lweapon = ""
+	*cvar:mn_chrmis = ""
+	*cvar:mn_chrkillalien = ""
+	*cvar:mn_chrkillcivilian = ""
+	*cvar:mn_chrkillteam = ""
+	*cvar:mn_chrrank = ""
+	*cvar:mn_chrrank_img = ""
+	*cvar:mn_vpwr = ""
+	*cvar:mn_vpwri = ""
+	*cvar:mn_vspd = ""
+	*cvar:mn_vspdi = ""
+	*cvar:mn_vacc = ""
+	*cvar:mn_vacci = ""
+	*cvar:mn_vmnd = ""
+	*cvar:mn_vmndi = ""
+	*cvar:mn_vcls = ""
+	*cvar:mn_vclsi = ""
+	*cvar:mn_vhvy = ""
+	*cvar:mn_vhvyi = ""
+	*cvar:mn_vass = ""
+	*cvar:mn_vassi = ""
+	*cvar:mn_vsnp = ""
+	*cvar:mn_vsnpi = ""
+	*cvar:mn_vexp = ""
+	*cvar:mn_vexpi = ""
+	*cvar:mn_vhp = ""
+	*cvar:mn_vhpi = ""
+	*cvar:mn_vhpmax = 100 /**< must be greater than mn_vhp */
+	*cvar:mn_tpwr = ""
+	*cvar:mn_tspd = ""
+	*cvar:mn_tacc = ""
+	*cvar:mn_tmnd = ""
+	*cvar:mn_tcls = ""
+	*cvar:mn_thvy = ""
+	*cvar:mn_tass = ""
+	*cvar:mn_tsnp = ""
+	*cvar:mn_texp = ""
+	*cvar:mn_thp = ""
+	}
+
 }
