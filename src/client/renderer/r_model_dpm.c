@@ -132,7 +132,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 
 		/* load skins */
 		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
-		outMesh->skins[0].skin = R_AliasModelGetSkin(mod, mesh->shadername);
+		outMesh->skins[0].skin = R_AliasModelGetSkin(mod->name, mesh->shadername);
 		Q_strncpyz(outMesh->skins[0].name, outMesh->skins[0].skin->name, sizeof(outMesh->skins[0].name));
 
 		/* load bone verts */

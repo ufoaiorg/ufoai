@@ -279,7 +279,7 @@ static void R_LoadObjSkin (model_t *mod)
 
 	mesh->num_skins = 1;
 	mesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
-	mesh->skins[0].skin = R_AliasModelGetSkin(mod, skinPath);
+	mesh->skins[0].skin = R_AliasModelGetSkin(mod->name, skinPath);
 	Q_strncpyz(mesh->skins[0].name, mesh->skins[0].skin->name, sizeof(mesh->skins[0].name));
 }
 

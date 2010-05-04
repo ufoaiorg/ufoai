@@ -160,7 +160,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 		poutmesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * poutmesh->num_skins, vid_modelPool, 0);
 
 		for (j = 0; j < mod->alias.meshes[i].num_skins; j++) {
-			mod->alias.meshes[i].skins[j].skin = R_AliasModelGetSkin(mod, pinskin->name);
+			mod->alias.meshes[i].skins[j].skin = R_AliasModelGetSkin(mod->name, pinskin->name);
 			Q_strncpyz(mod->alias.meshes[i].skins[j].name,
 				mod->alias.meshes[i].skins[j].skin->name, MODEL_MAX_PATH);
 		}

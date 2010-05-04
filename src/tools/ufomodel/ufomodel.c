@@ -46,7 +46,8 @@ typedef enum {
 
 	ACTION_MDX,
 	ACTION_SKINEDIT,
-	ACTION_SKINCHECK
+	ACTION_SKINCHECK,
+	ACTION_SKINFIX
 } ufoModelAction_t;
 
 typedef struct modelConfig_s {
@@ -334,6 +335,7 @@ static void Usage (void)
 {
 	Com_Printf("Usage:\n");
 	Com_Printf(" -mdx                     generate mdx files\n");
+	Com_Printf(" -skinfix                 fix skins for md2 models\n");
 	Com_Printf(" -skincheck               check the skins for every md2 model\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
@@ -368,6 +370,8 @@ static void UM_Parameter (int argc, const char **argv)
 			}
 		} else if (!strcmp(argv[i], "-mdx")) {
 			config.action = ACTION_MDX;
+		} else if (!strcmp(argv[i], "-skinfix")) {
+			config.action = ACTION_SKINFIX;
 		} else if (!strcmp(argv[i], "-skincheck")) {
 			config.action = ACTION_SKINCHECK;
 		} else if (!strcmp(argv[i], "-skinedit")) {
@@ -463,11 +467,77 @@ static void ModelWorker (modelWorker_t worker, const char *fileName, void *userD
 	FS_FreeFile(buf);
 }
 
+static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void *userData)
+{
+	const char *md2Path;
+	uint32_t numSkins;
+	int i;
+	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+	byte *model = NULL;
+
+	MD2Check(md2, fileName, bufSize);
+
+	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	numSkins = LittleLong(md2->num_skins);
+
+	for (i = 0; i < numSkins; i++) {
+		const char *extension;
+		int errors = 0;
+		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+
+		if (name[0] != '.')
+			errors++;
+		else
+			/* skip the . to not confuse the extension extraction below */
+			name++;
+
+		extension = Com_GetExtension(name);
+		if (extension != NULL)
+			errors++;
+
+		if (errors > 0) {
+			dMD2Model_t *fixedMD2;
+			char *skinPath;
+			char path[MD2_MAX_SKINNAME];
+			char pathBuf[MD2_MAX_SKINNAME];
+			const char *fixedPath;
+			if (model == NULL) {
+				model = Mem_Dup(buf, bufSize);
+				Com_Printf("model: %s\n", fileName);
+			}
+			fixedMD2 = (dMD2Model_t *)model;
+			skinPath = (char *) fixedMD2 + LittleLong(fixedMD2->ofs_skins) + i * MD2_MAX_SKINNAME;
+
+			memset(path, 0, sizeof(path));
+
+			if (extension != NULL) {
+				Com_StripExtension(name, pathBuf, sizeof(pathBuf));
+				fixedPath = pathBuf;
+			} else {
+				fixedPath = name;
+			}
+			if (name[0] != '.')
+				Com_sprintf(path, sizeof(path), ".%s", Com_SkipPath(fixedPath));
+			Com_Printf("Fixed to '%s'\n", path);
+			if (R_AliasModelGetSkin(fileName, path) == r_noTexture) {
+				Com_Printf("  \\ - could not load the skin with the new path '%s'\n", path);
+			} else {
+				memcpy(skinPath, path, sizeof(path));
+			}
+		}
+	}
+	if (model != NULL) {
+		FS_WriteFile(model, bufSize, fileName);
+		Mem_Free(model);
+	}
+}
+
 static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
 	const char *md2Path;
 	uint32_t numSkins;
 	int i;
+	qboolean headline = qfalse;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
 	MD2Check(md2, fileName, bufSize);
@@ -491,8 +561,10 @@ static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, vo
 			errors++;
 
 		if (errors > 0) {
-			if (i == 0)
+			if (!headline) {
 				Com_Printf("model: %s\n", fileName);
+				headline = qtrue;
+			}
 			Com_Printf("  \\ - skin %i: %s - %i errors/warnings\n", i, name, errors);
 			if (name[0] != '.')
 				Com_Printf("    \\ - skin contains full path\n");
@@ -502,7 +574,7 @@ static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, vo
 	}
 }
 
-static void SkinCheck (void)
+static void MD2Visitor (modelWorker_t worker, void *userData)
 {
 	const char *fileName;
 	const char *pattern = "**.md2";
@@ -510,9 +582,19 @@ static void SkinCheck (void)
 	FS_BuildFileList(pattern);
 
 	while ((fileName = FS_NextFileFromFileList(pattern)) != NULL)
-		ModelWorker(MD2SkinCheck, fileName, NULL);
+		ModelWorker(worker, fileName, userData);
 
 	FS_NextFileFromFileList(NULL);
+}
+
+static void SkinCheck (void)
+{
+	MD2Visitor(MD2SkinCheck, NULL);
+}
+
+static void SkinFix (void)
+{
+	MD2Visitor(MD2SkinFix, NULL);
 }
 
 int main (int argc, const char **argv)
@@ -560,6 +642,10 @@ int main (int argc, const char **argv)
 
 	case ACTION_SKINCHECK:
 		SkinCheck();
+		break;
+
+	case ACTION_SKINFIX:
+		SkinFix();
 		break;
 
 	default:

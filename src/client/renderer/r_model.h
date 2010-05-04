@@ -69,7 +69,7 @@ void R_ModClearAll(void);
 void R_ModModellist_f(void);
 void R_ModDrawNullModel(entity_t *e);
 image_t* R_AliasModelState(const model_t *mod, int *mesh, int *frame, int *oldFrame, int *skin);
-image_t* R_AliasModelGetSkin(const model_t* mod, const char *skin);
+image_t* R_AliasModelGetSkin(const char *modelFileName, const char *skin);
 void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(qboolean complete);
 void R_ModReloadSurfacesArrays(void);

@@ -141,7 +141,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
-			outMesh->skins[i].skin = R_AliasModelGetSkin(mod, md2Path + i * MD2_MAX_SKINNAME);
+			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
 			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
 		}
 
@@ -301,7 +301,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
-			outMesh->skins[i].skin = R_AliasModelGetSkin(mod, md2Path + i * MD2_MAX_SKINNAME);
+			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
 			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
 		}
 
