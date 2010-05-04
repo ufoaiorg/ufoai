@@ -144,10 +144,6 @@
 		</Unit>
 		<Unit filename="../../src/shared/byte.h" />
 		<Unit filename="../../src/shared/defines.h" />
-		<Unit filename="../../src/shared/entitiesdef.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/shared/entitiesdef.h" />
 		<Unit filename="../../src/shared/images.c">
 			<Option compilerVar="CC" />
 		</Unit>
