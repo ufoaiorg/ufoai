@@ -74,7 +74,21 @@ team taman
 	models {
 		neutral {
 			aliens/taman body01 head01 0
+			aliens/taman body01 head02 1
+			aliens/taman body01 head03 2
+			aliens/taman body01 head04 3
 			aliens/taman body01 head01 1
+			aliens/taman body01 head02 2
+			aliens/taman body01 head03 3
+			aliens/taman body01 head04 0
+			aliens/taman body01 head01 2
+			aliens/taman body01 head02 3
+			aliens/taman body01 head03 0
+			aliens/taman body01 head04 1
+			aliens/taman body01 head01 3
+			aliens/taman body01 head02 0
+			aliens/taman body01 head03 1
+			aliens/taman body01 head04 2
 		}
 	}
 

@@ -127,7 +127,7 @@ window research
 	// ==================
 	// list
 	// ==================
-	// buttons_small.tga - research icons
+	// buttons_small - research icons
 	//
 	// under research: 	texl	"32 0"	texh	"48 16"
 	// paused: 		texl	"48 0"	texh	"64 16"
