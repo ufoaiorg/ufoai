@@ -604,7 +604,7 @@ static void SkinFix (void)
 	MD2Visitor(MD2SkinFix, NULL);
 }
 
-int main (int argc, const char **argv)
+int main (int argc, char **argv)
 {
 	Com_Printf("---- ufomodel "VERSION" ----\n");
 
