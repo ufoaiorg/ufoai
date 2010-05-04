@@ -11,6 +11,16 @@ base alienb/a_
 // h: horizontal connection
 // v: vertical connection
 
+// 1,2,3,4: borders of whole map.
+// idea:
+//
+//    0 1 1 1 1 1 0
+//    4 + + + + + 2
+//    4 + + + + + 2
+//    4 + + + + + 2
+//    0 3 3 3 3 3 0
+
+
 // Warning: this tile is _not_ _empty_!
 tile +empty
 {
@@ -22,47 +32,51 @@ ah     +a     +a     ah
 0      av     av     0
 }
 
-// vertical connection
+
+///** tunnels:
+
+// vertical connection (|)
 tile +tunnel_h
 {
 4 4
 
-0      av    av    0
-v      +v    +v    v
-v      +v    +v    v
-0      av    av    0
+0      1av    1av    0
+v3     +v3    +v3    v3
+v1     +v1    +v1    v1
+0      3av    3av    0
 }
 
-// horizontal connection
+// horizontal connection (-)
 tile +tunnel_v
 {
 4 4
 
-0     h    h     0
-ah   +h   +h    ah
-ah   +h   +h    ah
-0     h    h     0
+0      h2      h4      0
+ah4    +h2    +h4    ah2
+ah4    +h2    +h4    ah2
+0      h2      h4      0
 }
 
 tile +tunnel_x
 {
 4 4
 
-0    av   av   0
-ah   +a   +a   ah
-ah   +a   +a   ah
-0    av   av   0
+0      av     av     0
+ah     +a     +a     ah
+ah     +a     +a     ah
+0      av     av     0
 }
 
+///** t-connectors:
 // t-connection, missed top side
 tile +tunnel_mt
 {
 4 4
 
-0     h    h   0
-ah   +h   +h   ah
-ah   +a   +a   ah
-0    av   av   0
+0      h2      4h      0
+a4h    +2    +4    ah2
+ah     +a     +a     ah
+0      av     av     0
 }
 
 // t-connection, missed right side
@@ -70,10 +84,10 @@ tile +tunnel_mr
 {
 4 4
 
-0    av   av   0
-ah   +a   +v   v
-ah   +a   +v   v
-0    av   av   0
+0      av     av1    0
+ah     +a     +3    v3
+ah     +a     +1    v1
+0      av     av3    0
 }
 
 // t-connection, missed bottom side
@@ -81,10 +95,10 @@ tile +tunnel_mb
 {
 4 4
 
-0    av   av   0
-ah   +a   +a   ah
-ah   +h   +h   ah
-0     h    h   0
+0      av     av     0
+ah     +a     +a     ah
+ah4    +2    +4    ah2
+0      h2      h4      0
 }
 
 // t-connection, missed left side
@@ -92,22 +106,62 @@ tile +tunnel_ml
 {
 4 4
 
-0    av   av   0
-v    +v   +a   ah
-v    +v   +a   ah
-0    av   av   0
+0      av1    av     0
+v3      +3    +a     ah
+v1      +1    +a     ah
+0      av3    av     0
 }
+
+///** Corners:
+
+tile +corner_tr
+{
+4 4
+0      1      av     0
+z      +3     +a     ah
+z      +vh    +4     2
+0      z      z      0
+}
+
+tile +corner_br
+{
+4 4
+0      z      z      0
+z      +vh    +4     2
+z      +1     +a     ah
+0      3      av     0
+}
+
+tile +corner_bl
+{
+4 4
+0      z      z      0
+4     +2      +vh    z
+ah     +a     +1     z
+0      av     3      0
+}
+
+tile +corner_tl
+{
+4 4
+0      av     1      0
+ah     +a     +3     z
+4      +2     +vh    z
+0      z      z      0
+}
+
+
 
 tile +entrance
 {
 4 6
 
-0     av      av      0
-r     +a     +a      ah
-r     +a     +a      ah
-r     +a     +a      ah
-r     +a     +a      ah
-0     av      av      0
+0      av     av     0
+ah     +a     +a     ah
+ah     +a     +a     ah
+ah     +a     +a     ah
+ah     +a     +a     ah
+0      av     av     0
 }
 
 
@@ -141,12 +195,12 @@ tile +wormhole
 {
 6 6
 
-0   av  av  av  av  0
-v   +a  +a  +a  +a ah
-v   +a  +a  +a  +a ah
-v   +a  +a  +a  +a ah
-v   +a  +a  +a  +a ah
-0   av  av  av  av  0
+0      av1    av     av     av     0
+v      +a3    +a     +a     +a     ah
+v      +a     +a     +a     +a     ah
+v      +a     +a     +a     +a     ah
+v      +a1    +a     +a     +a     ah
+0      av3    av     av     av     0
 }
 
 // incubation chamber
@@ -163,23 +217,83 @@ ah     +a    +a   ah
 
 // ########################################
 // ########### Maps for the game ###########
+/*
+assembly alienbase1
+{
+size                 "12 12"
+title                "_Alienbase"
+grid                 "2 2"
+
+fix +corner_tr       "0 0"
+fix +tunnel_mb       "2 0"
+fix +tunnel_mb       "4 0"
+fix +tunnel_mb       "6 0"
+fix +tunnel_mb       "8 0"
+fix +corner_tl       "10 0"
+fix +corner_br       "0 10"
+fix +corner_bl       "10 10"
++empty               "0 8"
++entrance            "1 1"
+ +hangar              "1 2"
++tunnel_h            "0 2"
++tunnel_v            "0 2"
++tunnel_mt           "0 3"
++tunnel_mr           "0 3"
++tunnel_mb           "0 3"
++tunnel_ml           "0 3"
++tunnel_x            "0 12"
++lab                 "0 2"
++wormhole            "1 1"
++incubation_small    "0 2"
+}
+*/
 
 assembly alienbase1
 {
-size			"10 10"
-title			"_Alienbase"
-grid			"2 2"
-+empty			"1 8"
-+entrance		"1 1"
-+hangar			"1 2"
-+tunnel_h		"0 2"
-+tunnel_v		"0 2"
-+tunnel_mt		"0 3"
-+tunnel_mr		"0 3"
-+tunnel_mb		"0 3"
-+tunnel_ml		"0 3"
-+tunnel_x		"1 12"
-+lab			"1 2"
-+wormhole		"1 1"
-+incubation_small	"1 2"
+size                 "14 8"
+// fixed tiles don`t take to calculation of assembly,
+// so it can "extend" the map without extra computing.
+title                "_Alienbase"
+grid                 "2 2"
+
+fix +corner_tr       "0   0"
+fix +corner_tl       "14  0"
+fix +corner_br       "0   8"
+fix +corner_bl       "14  8"
+
+fix +tunnel_mr       "14 2"
+fix +tunnel_mr       "14 4"
+fix +tunnel_mr       "14 6"
+//fix +tunnel_mr       "12 8"
+
+fix +tunnel_mb       "2  0"
+fix +tunnel_mb       "4  0"
+fix +tunnel_mb       "6  0"
+fix +tunnel_mb       "8  0"
+
+fix +tunnel_mt       "2  8"
+fix +tunnel_mt       "4  8"
+fix +tunnel_mt       "4  8"
+fix +tunnel_mt       "6  8"
+fix +tunnel_mt       "8  8"
+fix +tunnel_mt       "10 8"
+fix +tunnel_mt       "12 8"
+
++tunnel_mt           "0 10"
++tunnel_mr           "0 10"
++tunnel_mb           "0 10"
++tunnel_ml           "0 10"
+
+
++tunnel_h            "0 2"
++tunnel_v            "0 2"
++tunnel_x            "0 12"
+
+
++entrance            "1 1"
++empty               "0 3"
++hangar              "1 2"
++lab                 "0 2"
++wormhole            "1 1"
++incubation_small    "0 2"
 }
