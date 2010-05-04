@@ -518,9 +518,9 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			}
 			if (name[0] != '.')
 				Com_sprintf(path, sizeof(path), ".%s", Com_SkipPath(fixedPath));
-			Com_Printf("Fixed to '%s'\n", path);
+			Com_Printf("  \\ - skin %i: changed path to '%s'\n", i + 1, path);
 			if (R_AliasModelGetSkin(fileName, path) == r_noTexture) {
-				Com_Printf("  \\ - could not load the skin with the new path '%s'\n", path);
+				Com_Printf("    \\ - could not load the skin with the new path\n");
 			} else {
 				memcpy(skinPath, path, sizeof(path));
 			}
@@ -565,7 +565,7 @@ static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, vo
 				Com_Printf("model: %s\n", fileName);
 				headline = qtrue;
 			}
-			Com_Printf("  \\ - skin %i: %s - %i errors/warnings\n", i, name, errors);
+			Com_Printf("  \\ - skin %i: %s - %i errors/warnings\n", i + 1, name, errors);
 			if (name[0] != '.')
 				Com_Printf("    \\ - skin contains full path\n");
 			if (extension != NULL)
