@@ -125,14 +125,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/mem.h" />
-		<Unit filename="../../src/common/routing.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/common/routing.h" />
-		<Unit filename="../../src/common/tracing.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/common/tracing.h" />
 		<Unit filename="../../src/common/unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
