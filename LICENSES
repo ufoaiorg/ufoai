@@ -3584,17 +3584,17 @@ base/textures/tex_material/c_brown.jpg | GNU General Public License 2.0 | Werner
 base/textures/tex_material/c_gray050.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_gray230.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_gray255.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_green1.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_green1.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_lgreen.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_material/c_orange.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_orange2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_orange3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_red.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_red.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_white.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_material/c_yellow.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_yellow2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_material/c_yellow3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/circle_gray.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_material/circle_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/conc01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3609,10 +3609,10 @@ base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domai
 base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
-base/textures/tex_material/metall011_nm.tga | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
+base/textures/tex_material/metall011_nm.png | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
 base/textures/tex_material/shell002.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
-base/textures/tex_material/wood004_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_material/wood004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art002.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art003.png | GNU General Public License 2.0 or later | Martin Gerhardy
