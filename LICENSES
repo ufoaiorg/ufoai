@@ -4159,9 +4159,9 @@ base/textures/tex_nature/desert004.jpg | GNU General Public License 2.0 |  | htt
 base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_nature/dirt.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/drymud.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/data/textures/evil3_floors/bdirt.jpg
-base/textures/tex_nature/drymud_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/drymud_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/textures/tex_nature/grass.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/grass001.jpg | GNU General Public License 2.0 |  | grass_lash.tga
@@ -4177,7 +4177,7 @@ base/textures/tex_nature/grass003_way_u2r.jpg | GNU General Public License 2.0 |
 base/textures/tex_nature/grass003_way_vert.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/grass003_way_x_fork.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/grass004.jpg | GNU General Public License 2.0 | wotwot
-base/textures/tex_nature/grass_lush.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_nature/grass_lush.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/grass_mowed_dry_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/grass_mowed_dry_a_k1.jpg | GNU General Public License 2.0 | Kostia "Kildor" Romanov | grass_mowed_dry_a.jpg
 base/textures/tex_nature/grass_mowed_dry_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
@@ -4193,39 +4193,39 @@ base/textures/tex_nature/grass_tall_green_b.jpg | GNU General Public License 2.0
 base/textures/tex_nature/grass_tall_green_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_nature/hedge001.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0  - modified by eleazar
 base/textures/tex_nature/ice001.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_nature/ice001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/ice002_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/ice003.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_nature/ice003_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/ice001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/ice002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/ice003.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_nature/ice003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock16.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock21.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/railway_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/rock003_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/rock005_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/rock006_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/rock007_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/railway_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/rock003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/rock005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/rock006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/rock007_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/sand.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/snow001.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_nature/snow001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/snow002_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/snow003.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_nature/snow003_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/snow001.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_nature/snow001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/snow002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/snow003.png | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_nature/snow003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/snowey.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/snowey_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/snowey_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/sp_ground.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/tile_teracota.tga | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_nature/tile_teracota.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/tree_bark_001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/tree_bark_002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/water2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/water_dark_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/water_dark_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/water_green.jpg | GNU General Public License 2.0 | OpenArena GPLed Content | greenliqu1.jpg
-base/textures/tex_nature/water_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/water_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/wood_chips01.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_nature/wood_chips02.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_pics/art001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
