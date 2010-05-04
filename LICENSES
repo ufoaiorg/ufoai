@@ -668,8 +668,11 @@ base/models/aliens/taman/body01c.png | GNU General Public License 2.0 or later |
 base/models/aliens/taman/body01d.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head02.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head03.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
+base/models/aliens/taman/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/head04.png | GNU General Public License 2.0 or later | MCR | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -678,6 +681,9 @@ base/models/aliens/tamanlight/body01.md2 | GNU General Public License 2.0 | Luka
 base/models/aliens/tamanlight/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanlight/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanlight/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -685,6 +691,9 @@ base/models/aliens/tamanmedium/body01.md2 | GNU General Public License 2.0 | Luk
 base/models/aliens/tamanmedium/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/tamanmedium/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/animals/cow/cow.jpg |  | hullbr3ach
 base/models/animals/cow/cow.md2 |  | hullbr3ach
 base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
