@@ -408,7 +408,7 @@ static void MD2Check (const dMD2Model_t *md2, const char *fileName, int bufSize)
 		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", fileName, numSkins);
 }
 
-static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSize)
+static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSize, void *userData)
 {
 	const char *md2Path;
 	uint32_t numSkins;
@@ -426,7 +426,9 @@ static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSi
 	}
 }
 
-static void SkinEdit (const char *fileName)
+typedef void (*modelWorker_t) (const dMD2Model_t *md2, const char *fileName, int bufSize, void *userData);
+
+static void ModelWorker (modelWorker_t worker, const char *fileName, void *userData)
 {
 	byte *buf = NULL;
 	int modfilelen;
@@ -439,14 +441,14 @@ static void SkinEdit (const char *fileName)
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
-		MD2SkinEdit((const dMD2Model_t *)buf, fileName, modfilelen);
+		worker((const dMD2Model_t *)buf, fileName, modfilelen, userData);
 		break;
 	}
 
 	FS_FreeFile(buf);
 }
 
-static void MD2SkinCheck (const dMD2Model_t *md2, const char *fileName, int bufSize)
+static void MD2SkinCheck (const dMD2Model_t *md2, const char *fileName, int bufSize, void *userData)
 {
 	const char *md2Path;
 	uint32_t numSkins;
@@ -491,22 +493,7 @@ static void SkinCheckForPattern (const char *pattern)
 	FS_BuildFileList(pattern);
 
 	while ((fileName = FS_NextFileFromFileList(pattern)) != NULL) {
-		byte *buf = NULL;
-		int modfilelen;
-
-		/* load the file */
-		modfilelen = FS_LoadFile(fileName, &buf);
-		if (!buf)
-			Com_Error(ERR_FATAL, "%s not found", fileName);
-
-		/* call the appropriate loader */
-		switch (LittleLong(*(unsigned *) buf)) {
-		case IDALIASHEADER:
-			MD2SkinCheck((const dMD2Model_t *)buf, fileName, modfilelen);
-			break;
-		}
-
-		FS_FreeFile(buf);
+		ModelWorker(MD2SkinCheck, fileName, NULL);
 	}
 
 	FS_NextFileFromFileList(NULL);
@@ -557,7 +544,7 @@ int main (int argc, const char **argv)
 		break;
 
 	case ACTION_SKINEDIT:
-		SkinEdit(config.fileName);
+		ModelWorker(MD2SkinEdit, config.fileName, NULL);
 		break;
 
 	case ACTION_SKINCHECK:
