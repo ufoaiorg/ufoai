@@ -4379,15 +4379,15 @@ base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_tech/radio001.tga | GNU General Public License 2.0 or later
-base/textures/tex_tech/radio002.tga | GNU General Public License 2.0 or later
+base/textures/tex_tech/radio001.png | GNU General Public License 2.0 or later
+base/textures/tex_tech/radio002.png | GNU General Public License 2.0 or later
 base/textures/tex_tech/screen1.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/screen2.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/spec_analyser.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/tv0.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/tv1.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_tech/tv_news0.tga | GNU General Public License 2.0 or later
-base/textures/tex_tech/tv_news1.tga | GNU General Public License 2.0 or later
+base/textures/tex_tech/tv_news0.png | GNU General Public License 2.0 or later
+base/textures/tex_tech/tv_news1.png | GNU General Public License 2.0 or later
 base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_terrain/dummy.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
 base/textures/tex_terrain/grass.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
