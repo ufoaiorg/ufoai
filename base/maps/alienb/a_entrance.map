@@ -3079,7 +3079,7 @@
 "classname" "misc_model"
 "spawnflags" "508"
 "origin" "432 112 132"
-"model" "models/objects/alien/barrel/barrel.md2"
+"model" "models/objects/alien/box/box.md2"
 }
 // entity 28
 {
@@ -3094,7 +3094,7 @@
 "classname" "misc_model"
 "spawnflags" "508"
 "origin" "400 112 132"
-"model" "models/objects/alien/barrel/barrel.md2"
+"model" "models/objects/alien/box/box.md2"
 }
 // entity 30
 {
