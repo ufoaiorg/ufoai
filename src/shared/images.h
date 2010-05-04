@@ -27,8 +27,9 @@
 #ifndef IMAGES_H_
 #define IMAGES_H_
 
-#include "../common/common.h"
 #include "ufotypes.h"
+#include "byte.h"
+#include "../common/filesys.h"
 #include <SDL_image.h>
 
 const char** Img_GetImageTypes(void);

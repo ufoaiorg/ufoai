@@ -86,14 +86,12 @@ void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
 
 	png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
@@ -273,7 +271,7 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_set_defaults(&cinfo);
 	jpeg_set_quality(&cinfo, quality, TRUE);
 	jpeg_start_compress(&cinfo, qtrue);	/* start compression */
-	jpeg_write_marker(&cinfo, JPEG_COM, (const byte *) GAME_TITLE, (uint32_t) strlen(GAME_TITLE));
+	jpeg_write_marker(&cinfo, JPEG_COM, (const byte *) "UFOAI", (uint32_t) 5);
 
 	/* Feed scanline data */
 	w3 = cinfo.image_width * 3;
