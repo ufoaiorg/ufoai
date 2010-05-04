@@ -3551,14 +3551,14 @@ base/textures/tex_doors/metaldoor.jpg | GNU General Public License 2.0 | OpenAre
 base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
 base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
-base/textures/tex_furniture/kitchen001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table001_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table002_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table003_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table004_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table005_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table006_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_furniture/table007_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/table007_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_lights/light001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/light003_shell.png | GNU General Public License 2.0 or later | Nate Wright
