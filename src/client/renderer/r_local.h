@@ -152,6 +152,7 @@ typedef struct {
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;
+	int maxVertexAttribs;
 	int maxLights;
 	char lodDir[8];
 

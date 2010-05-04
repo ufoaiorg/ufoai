@@ -407,7 +407,7 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 		Cvar_SetValue(cvar->name, 0);
 		return qfalse;
 	}
-	return Cvar_AssertValue(cvar, 0, r_config.maxLights, qtrue);
+	return Cvar_AssertValue(cvar, 1, r_config.maxLights, qtrue);
 }
 
 static qboolean R_CvarPrograms (cvar_t *cvar)
@@ -769,6 +769,9 @@ static qboolean R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_TEXTURE_COORDS, &r_config.maxTextureCoords);
 	Com_Printf("max texture coords: %i\n", r_config.maxTextureCoords);
 	r_config.maxTextureCoords = max(r_config.maxTextureUnits, r_config.maxTextureCoords);
+
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
+	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
 
 	/* reset gl error state */
 	R_CheckError();
