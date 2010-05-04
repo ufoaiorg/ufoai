@@ -24,15 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../shared/ufotypes.h"
-#include "../../common/unzip.h"
 #include "../../common/mem.h"
-#include "../../common/filesys.h"
-#include "../../common/common.h"
 #include "../../shared/shared.h"
-#include "../../shared/mathlib.h"
-#include "../../shared/defines.h"
-#include "../../shared/typedefs.h"
-#include "../../shared/byte.h"
 #include "../../client/renderer/r_local.h"
 #include "../../shared/images.h"
 
