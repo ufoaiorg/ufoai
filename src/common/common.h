@@ -190,9 +190,7 @@ void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
 void Com_EndRedirect(void);
 void Com_MakeTimestamp(char* ts, const size_t tslen);
 void Com_vPrintf(const char *fmt, va_list);
-void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
-void Com_Error(int code, const char *fmt, ...) __attribute__((noreturn, format(printf, 2, 3)));
+
 void Com_Drop(void) __attribute__((noreturn));
 void Com_Quit(void);
 void Com_WriteConfigToFile(const char *filename);

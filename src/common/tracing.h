@@ -42,9 +42,6 @@ GLOBAL TYPES
   #define TR_LEAF_TYPE			dBspLeaf_t
   #define TR_BRUSH_TYPE			dBspBrush_t
   #define TR_BRUSHSIDE_TYPE		dBspBrushSide_t
-
-  #define MAX_MAPTILES	1
-
 #elif defined(COMPILE_UFO)
   #define TR_TILE_TYPE			mapTile_t
   #define TR_PLANE_TYPE			cBspPlane_t
@@ -53,9 +50,6 @@ GLOBAL TYPES
   #define TR_LEAF_TYPE			cBspLeaf_t
   #define TR_BRUSH_TYPE			cBspBrush_t
   #define TR_BRUSHSIDE_TYPE		cBspBrushSide_t
-
-  #define MAX_MAPTILES	256
-
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
 #endif

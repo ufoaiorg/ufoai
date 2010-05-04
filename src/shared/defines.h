@@ -197,6 +197,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* common/tracing.c */
 #define	MAX_LEAFS		1024
 
+#if defined(COMPILE_MAP)
+  #define MAX_MAPTILES	1
+#elif defined(COMPILE_UFO)
+  #define MAX_MAPTILES	256
+#endif
+
+#define MAX_MOD_KNOWN   512
+
 /** key / value pair sizes */
 /* ufo2map/common/bspfile.c, client/cl_input.c */
 #define	MAX_KEY		32

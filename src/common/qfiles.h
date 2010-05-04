@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/defines.h"
 #include "unzip.h"
 
-#define MAX_MOD_KNOWN   512
-
 #define IDMDXHEADER "UFOMDX"
 #define MDX_VERSION		1
 

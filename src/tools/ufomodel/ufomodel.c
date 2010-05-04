@@ -23,13 +23,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#if defined _WIN32
+#	include	<windows.h>
+#endif
+
 #include "../../shared/ufotypes.h"
 #include "../../common/mem.h"
 #include "../../shared/shared.h"
-#include "../../client/renderer/r_local.h"
+#include "../../game/q_shared.h"
+#include "../../common/filesys.h"
+#include "../../common/qfiles.h"
+#include "../../shared/typedefs.h"
+#include "../../common/mem.h"
+#include "../../client/renderer/r_material.h"
+#include "../../client/renderer/r_image.h"
+#include "../../client/renderer/r_model.h"
+#include "../../client/renderer/r_state.h"
 #include "../../shared/images.h"
 
-#define VERSION "0.1"
+#define VERSION "0.2"
 
 rstate_t r_state;
 image_t *r_noTexture;
@@ -595,7 +607,6 @@ static void SkinFix (void)
 int main (int argc, const char **argv)
 {
 	Com_Printf("---- ufomodel "VERSION" ----\n");
-	Com_Printf(BUILDSTRING"\n");
 
 	UM_DefaultParameter();
 	UM_Parameter(argc, argv);
