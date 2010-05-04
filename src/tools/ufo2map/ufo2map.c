@@ -23,10 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/*
-If you change VERSION or REVISION
-you will force a recompile of all maps by using compile_maps.bat
-*/
 #define VERSION "1.2.5"
 #define REVISION "1"
 
@@ -469,8 +465,7 @@ static void U2M_Parameter (int argc, const char **argv)
 				Sys_Error("invalid parameter count\n");
 			}
 		} else if (!strcmp(argv[i], "-V") || !strcmp(argv[i], "--version")) {
-			/* Do not change the output, you will break compile_maps.bat */
-			Verb_Printf(VERB_LESS, "version:%s revision:%s\n", VERSION, REVISION);
+			Verb_Printf(VERB_LESS, "version:"VERSION" revision:"REVISION"\n");
 			exit(0);
 		} else if (i < (argc - 1)) {
 			/* Last param is the map path, every other param should have been caught by now. */
