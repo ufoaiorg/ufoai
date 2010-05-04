@@ -3432,7 +3432,7 @@ base/textures/tex_ctp1/concrete_b_2.jpg | GNU General Public License 2.0 |  | ht
 base/textures/tex_ctp1/concrete_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_10.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_11.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/concrete_g_11_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ctp1/concrete_g_11_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ctp1/concrete_g_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/concrete_g_6.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
@@ -3454,33 +3454,33 @@ base/textures/tex_ctp1/door_b_1.jpg | GNU General Public License 2.0 |  | http:/
 base/textures/tex_ctp1/door_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/door_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/door_w_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/fence_b_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/fence_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/glass_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/grass_g_4.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/grass_g_7.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/grass_g_8.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/grate_b_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/grate_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/ground_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/ground_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/ground_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/ground_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/hedge01.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/hedge02.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/jailbars_b_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/jailbars_w_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/ladder_b_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/light_f_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/jailbars_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/jailbars_w_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/ladder_b_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/light_f_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/marble_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/metal_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/metal_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/metal_g_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/metal_g_3.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/metal_r_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/metal_r_1_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ctp1/metal_r_1_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ctp1/metal_r_2.jpg | GNU General Public License 2.0 |  | metal_r_1.jpg
-base/textures/tex_ctp1/metal_r_2_nm.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_ctp1/metal_r_2_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ctp1/misc_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/misc_y_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/misc_y_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/pebbles_m_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/rocks_w_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/roof_t_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
@@ -3508,7 +3508,7 @@ base/textures/tex_ctp1/tiles_w_1.jpg | GNU General Public License 2.0 |  | http:
 base/textures/tex_ctp1/tires_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/tires_d_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/tool_h_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_ctp1/tree_g_1.tga | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_ctp1/tree_g_1.png | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/volcano_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/wall_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/wall_b_2.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
