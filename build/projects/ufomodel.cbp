@@ -35,8 +35,8 @@
 				<Option object_output=".objs/ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="../../base/maps/mine.map" />
-				<Option host_application="../../ufomodel.exe" />
+				<Option parameters="-skincheck" />
+				<Option host_application="../../ufomodel" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />

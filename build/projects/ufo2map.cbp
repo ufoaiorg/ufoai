@@ -35,8 +35,8 @@
 				<Option object_output=".objs/ufo2map" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="../../base/maps/mine.map" />
-				<Option host_application="../../ufo2map.exe" />
+				<Option parameters="maps/mine" />
+				<Option host_application="../../ufo2map" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />
