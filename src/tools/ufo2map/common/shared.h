@@ -31,17 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/filesys.h"
 #include "../../../shared/shared.h"
 #include "../../../shared/mathlib.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <ctype.h>
-#include <time.h>
-#include <stdarg.h>
-#include <assert.h>
-#include <limits.h>
-
 #include "../../../shared/defines.h"
 #include "../../../shared/typedefs.h"
 #include "../../../shared/byte.h"
