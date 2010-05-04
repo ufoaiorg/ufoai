@@ -45,7 +45,8 @@ typedef enum {
 	ACTION_NONE,
 
 	ACTION_MDX,
-	ACTION_SKINEDIT
+	ACTION_SKINEDIT,
+	ACTION_SKINCHECK
 } ufoModelAction_t;
 
 typedef struct modelConfig_s {
@@ -333,6 +334,7 @@ static void Usage (void)
 {
 	Com_Printf("Usage:\n");
 	Com_Printf(" -mdx                     generate mdx files\n");
+	Com_Printf(" -skincheck               check the skins for every model\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
 	Com_Printf(" -s <float>               sets the smoothness value for normal-smoothing (in the range -1.0 to 1.0)\n");
@@ -366,6 +368,8 @@ static void UM_Parameter (int argc, const char **argv)
 			}
 		} else if (!strcmp(argv[i], "-mdx")) {
 			config.action = ACTION_MDX;
+		} else if (!strcmp(argv[i], "-skincheck")) {
+			config.action = ACTION_SKINCHECK;
 		} else if (!strcmp(argv[i], "-skinedit")) {
 			config.action = ACTION_SKINEDIT;
 			if (i + 1 == argc) {
@@ -387,13 +391,11 @@ static void UM_Parameter (int argc, const char **argv)
 	}
 }
 
-static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSize)
+static void MD2Check (const dMD2Model_t *md2, const char *fileName, int bufSize)
 {
 	/* sanity checks */
 	const uint32_t version = LittleLong(md2->version);
-	const char *md2Path;
 	uint32_t numSkins;
-	int i;
 
 	if (version != MD2_ALIAS_VERSION)
 		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", fileName, version, MD2_ALIAS_VERSION);
@@ -401,26 +403,26 @@ static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSi
 	if (bufSize != LittleLong(md2->ofs_end))
 		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", fileName, bufSize, LittleLong(md2->ofs_end));
 
-	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
 	if (numSkins < 0 || numSkins >= MD2_MAX_SKINS)
 		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", fileName, numSkins);
+}
+
+static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSize)
+{
+	const char *md2Path;
+	uint32_t numSkins;
+	int i;
+
+	MD2Check(md2, fileName, bufSize);
+
+	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	numSkins = LittleLong(md2->num_skins);
 
 	for (i = 0; i < numSkins; i++) {
-		char extension[4];
 		const char *name = md2Path + i * MD2_MAX_SKINNAME;
 		Com_Printf("  \\ - skin %i: %s\n", i, name);
-
-		if (name[0] == '.') {
-			char path[MAX_QPATH];
-
-			Com_ReplaceFilename(fileName, name + 1, path, sizeof(path));
-		}
-
-		Com_StripExtension(name, extension, sizeof(extension));
-		if (extension[0] != '\0') {
-			Com_Printf("    \\ - skin contains extension\n");
-		}
+		/** @todo: Implement this */
 	}
 }
 
@@ -442,6 +444,77 @@ static void SkinEdit (const char *fileName)
 	}
 
 	FS_FreeFile(buf);
+}
+
+static void MD2SkinCheck (const dMD2Model_t *md2, const char *fileName, int bufSize)
+{
+	const char *md2Path;
+	uint32_t numSkins;
+	int i;
+
+	MD2Check(md2, fileName, bufSize);
+
+	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+	numSkins = LittleLong(md2->num_skins);
+
+	for (i = 0; i < numSkins; i++) {
+		const char *extension;
+		int errors = 0;
+		const char *name = md2Path + i * MD2_MAX_SKINNAME;
+
+		if (name[0] != '.')
+			errors++;
+		else
+			/* skip the . to not confuse the extension extraction below */
+			name++;
+
+		extension = Com_GetExtension(name);
+		if (extension != NULL)
+			errors++;
+
+		if (errors > 0) {
+			if (i == 0)
+				Com_Printf("model: %s\n", fileName);
+			Com_Printf("  \\ - skin %i: %s - %i errors/warnings\n", i, name, errors);
+			if (name[0] != '.')
+				Com_Printf("    \\ - skin contains full path\n");
+			if (extension != NULL)
+				Com_Printf("    \\ - skin contains extension '%s'\n", extension);
+		}
+	}
+}
+
+static void SkinCheckForPattern (const char *pattern)
+{
+	const char *fileName;
+
+	FS_BuildFileList(pattern);
+
+	while ((fileName = FS_NextFileFromFileList(pattern)) != NULL) {
+		byte *buf = NULL;
+		int modfilelen;
+
+		/* load the file */
+		modfilelen = FS_LoadFile(fileName, &buf);
+		if (!buf)
+			Com_Error(ERR_FATAL, "%s not found", fileName);
+
+		/* call the appropriate loader */
+		switch (LittleLong(*(unsigned *) buf)) {
+		case IDALIASHEADER:
+			MD2SkinCheck((const dMD2Model_t *)buf, fileName, modfilelen);
+			break;
+		}
+
+		FS_FreeFile(buf);
+	}
+
+	FS_NextFileFromFileList(NULL);
+}
+
+static void SkinCheck (void)
+{
+	SkinCheckForPattern("**.md2");
 }
 
 int main (int argc, const char **argv)
@@ -485,6 +558,10 @@ int main (int argc, const char **argv)
 
 	case ACTION_SKINEDIT:
 		SkinEdit(config.fileName);
+		break;
+
+	case ACTION_SKINCHECK:
+		SkinCheck();
 		break;
 
 	default:

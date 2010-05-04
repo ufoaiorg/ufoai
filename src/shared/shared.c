@@ -229,6 +229,21 @@ void Com_StripExtension (const char *in, char *out, const size_t size)
 		*out = 0;
 }
 
+/**
+ * @param path The path resp. filename to extract the extension from
+ * @return @c NULL if the given path name does not contain an extension
+ */
+const char *Com_GetExtension (const char *path)
+{
+	const char *src = path + strlen(path) - 1;
+	while (*src != '/' && src != path) {
+		if (*src == '.')
+			return src + 1;
+		src--;
+	}
+
+	return NULL;
+}
 
 /**
  * @brief Sets a default extension if there is none
