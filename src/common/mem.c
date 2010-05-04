@@ -426,6 +426,18 @@ char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, con
 	return *out;
 }
 
+void *_Mem_PoolDup (const void *in, size_t size, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+{
+	void *copy;
+
+	assert(in != NULL);
+	assert(size > 0);
+
+	copy = _Mem_Alloc(size, qfalse, pool, tagNum, fileName, fileLine);
+	memcpy(copy, in, size);
+	return copy;
+}
+
 /**
  * @brief No need to null terminate the extra spot because Mem_Alloc returns zero-filled memory
  * @param[in] in String to store in the given pool
