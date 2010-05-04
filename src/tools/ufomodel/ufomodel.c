@@ -570,6 +570,8 @@ static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, vo
 				Com_Printf("    \\ - skin contains full path\n");
 			if (extension != NULL)
 				Com_Printf("    \\ - skin contains extension '%s'\n", extension);
+			if (R_AliasModelGetSkin(fileName, md2Path + i * MD2_MAX_SKINNAME) == r_noTexture)
+				Com_Printf("  \\ - could not load the skin\n");
 		}
 	}
 }
