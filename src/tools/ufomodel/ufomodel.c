@@ -334,7 +334,7 @@ static void Usage (void)
 {
 	Com_Printf("Usage:\n");
 	Com_Printf(" -mdx                     generate mdx files\n");
-	Com_Printf(" -skincheck               check the skins for every model\n");
+	Com_Printf(" -skincheck               check the skins for every md2 model\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
 	Com_Printf(" -s <float>               sets the smoothness value for normal-smoothing (in the range -1.0 to 1.0)\n");
@@ -408,11 +408,12 @@ static void MD2Check (const dMD2Model_t *md2, const char *fileName, int bufSize)
 		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", fileName, numSkins);
 }
 
-static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSize, void *userData)
+static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
 	const char *md2Path;
 	uint32_t numSkins;
 	int i;
+	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
 	MD2Check(md2, fileName, bufSize);
 
@@ -426,8 +427,14 @@ static void MD2SkinEdit (const dMD2Model_t *md2, const char *fileName, int bufSi
 	}
 }
 
-typedef void (*modelWorker_t) (const dMD2Model_t *md2, const char *fileName, int bufSize, void *userData);
+typedef void (*modelWorker_t) (const byte *buf, const char *fileName, int bufSize, void *userData);
 
+/**
+ * @brief The caller has to ensure that the model is from the expected format
+ * @param worker The worker callback
+ * @param fileName The file name of the model to load
+ * @param userData User data that is passed to the worker function
+ */
 static void ModelWorker (modelWorker_t worker, const char *fileName, void *userData)
 {
 	byte *buf = NULL;
@@ -438,21 +445,30 @@ static void ModelWorker (modelWorker_t worker, const char *fileName, void *userD
 	if (!buf)
 		Com_Error(ERR_FATAL, "%s not found", fileName);
 
-	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
-		worker((const dMD2Model_t *)buf, fileName, modfilelen, userData);
+	case DPMHEADER:
+	case IDMD3HEADER:
+	case IDBSPHEADER:
+		worker(buf, fileName, modfilelen, userData);
 		break;
+
+	default:
+		if (!Q_strcasecmp(fileName + strlen(fileName) - 4, ".obj"))
+			worker(buf, fileName, modfilelen, userData);
+		else
+			Com_Error(ERR_DROP, "ModelWorker: unknown fileid for %s", fileName);
 	}
 
 	FS_FreeFile(buf);
 }
 
-static void MD2SkinCheck (const dMD2Model_t *md2, const char *fileName, int bufSize, void *userData)
+static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
 	const char *md2Path;
 	uint32_t numSkins;
 	int i;
+	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
 	MD2Check(md2, fileName, bufSize);
 
@@ -486,22 +502,17 @@ static void MD2SkinCheck (const dMD2Model_t *md2, const char *fileName, int bufS
 	}
 }
 
-static void SkinCheckForPattern (const char *pattern)
+static void SkinCheck (void)
 {
 	const char *fileName;
+	const char *pattern = "**.md2";
 
 	FS_BuildFileList(pattern);
 
-	while ((fileName = FS_NextFileFromFileList(pattern)) != NULL) {
+	while ((fileName = FS_NextFileFromFileList(pattern)) != NULL)
 		ModelWorker(MD2SkinCheck, fileName, NULL);
-	}
 
 	FS_NextFileFromFileList(NULL);
-}
-
-static void SkinCheck (void)
-{
-	SkinCheckForPattern("**.md2");
 }
 
 int main (int argc, const char **argv)
