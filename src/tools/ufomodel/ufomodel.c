@@ -252,7 +252,7 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 
 	numIndexes = LittleLong(mesh->num_tris * 3);
 	numVerts = LittleLong(mesh->num_verts);
-	FS_Write(&mesh->num_verts, sizeof(int32_t), &f);
+	FS_Write(&numVerts, sizeof(int32_t), &f);
 	FS_Write(&numIndexes, sizeof(int32_t), &f);
 
 	for (i = 0; i < mesh->num_tris * 3; i++) {
