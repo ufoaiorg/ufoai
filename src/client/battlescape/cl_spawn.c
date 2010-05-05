@@ -320,7 +320,7 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 }
 
 /**
- * @todo remove R_ModLoadBspLights?
+ * @todo Add the lights
  * @param entData
  */
 static void SP_light (const localEntityParse_t *entData)
