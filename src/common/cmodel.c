@@ -2239,7 +2239,8 @@ pos_t Grid_Fall (const routing_t *map, const actorSizeEnum_t actorSize, const po
 	/* The tracing code will set locations without a floor to -1.  Compensate for that. */
 	if (z < 0)
 		z = 0;
-	assert(z >= 0 && z < PATHFINDING_HEIGHT);
+	else if (z >= PATHFINDING_HEIGHT)
+		z = PATHFINDING_HEIGHT - 1;
 	return z;
 }
 
