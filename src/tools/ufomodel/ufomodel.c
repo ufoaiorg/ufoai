@@ -51,7 +51,7 @@ typedef enum {
 
 	ACTION_MDX,
 	ACTION_SKINEDIT,
-	ACTION_SKINCHECK,
+	ACTION_CHECK,
 	ACTION_SKINFIX
 } ufoModelAction_t;
 
@@ -341,7 +341,7 @@ static void Usage (void)
 	Com_Printf("Usage:\n");
 	Com_Printf(" -mdx                     generate mdx files\n");
 	Com_Printf(" -skinfix                 fix skins for md2 models\n");
-	Com_Printf(" -skincheck               check the skins for every md2 model\n");
+	Com_Printf(" -check                   perform general checks for all the models\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
 	Com_Printf(" -s <float>               sets the smoothness value for normal-smoothing (in the range -1.0 to 1.0)\n");
@@ -358,7 +358,7 @@ static void UM_DefaultParameter (void)
 /**
  * @brief Parameter parsing
  */
-static void UM_Parameter (int argc, const char **argv)
+static void UM_Parameter (int argc, char **argv)
 {
 	int i;
 
@@ -377,8 +377,8 @@ static void UM_Parameter (int argc, const char **argv)
 			config.action = ACTION_MDX;
 		} else if (!strcmp(argv[i], "-skinfix")) {
 			config.action = ACTION_SKINFIX;
-		} else if (!strcmp(argv[i], "-skincheck")) {
-			config.action = ACTION_SKINCHECK;
+		} else if (!strcmp(argv[i], "-check")) {
+			config.action = ACTION_CHECK;
 		} else if (!strcmp(argv[i], "-skinedit")) {
 			config.action = ACTION_SKINEDIT;
 			if (i + 1 == argc) {
@@ -400,11 +400,13 @@ static void UM_Parameter (int argc, const char **argv)
 	}
 }
 
-static void MD2Check (const dMD2Model_t *md2, const char *fileName, int bufSize)
+static void MD2HeaderCheck (const dMD2Model_t *md2, const char *fileName, int bufSize)
 {
 	/* sanity checks */
 	const uint32_t version = LittleLong(md2->version);
-	uint32_t numSkins;
+	const uint32_t numSkins = LittleLong(md2->num_skins);
+	const uint32_t numTris = LittleLong(md2->num_tris);
+	const uint32_t numVerts = LittleLong(md2->num_verts);
 
 	if (version != MD2_ALIAS_VERSION)
 		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", fileName, version, MD2_ALIAS_VERSION);
@@ -412,9 +414,14 @@ static void MD2Check (const dMD2Model_t *md2, const char *fileName, int bufSize)
 	if (bufSize != LittleLong(md2->ofs_end))
 		Com_Error(ERR_DROP, "model %s broken offset values (%i, %i)", fileName, bufSize, LittleLong(md2->ofs_end));
 
-	numSkins = LittleLong(md2->num_skins);
-	if (numSkins < 0 || numSkins >= MD2_MAX_SKINS)
-		Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", fileName, numSkins);
+	if (numSkins == 0 || numSkins >= MD2_MAX_SKINS)
+		Com_Error(ERR_DROP, "model '%s' has invalid skin number: %i", fileName, numSkins);
+
+	if (numVerts == 0 || numVerts >= MD2_MAX_VERTS)
+		Com_Error(ERR_DROP, "model %s has too many (or no) vertices (%i/%i)", fileName, numVerts, MD2_MAX_VERTS);
+
+	if (numTris == 0 || numTris >= MD2_MAX_TRIANGLES)
+		Com_Error(ERR_DROP, "model %s has too many (or no) triangles (%i/%i)", fileName, numTris, MD2_MAX_TRIANGLES);
 }
 
 static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, void *userData)
@@ -424,7 +431,7 @@ static void MD2SkinEdit (const byte *buf, const char *fileName, int bufSize, voi
 	int i;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
-	MD2Check(md2, fileName, bufSize);
+	MD2HeaderCheck(md2, fileName, bufSize);
 
 	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
@@ -480,7 +487,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 	byte *model = NULL;
 
-	MD2Check(md2, fileName, bufSize);
+	MD2HeaderCheck(md2, fileName, bufSize);
 
 	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
@@ -537,7 +544,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 	}
 }
 
-static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, void *userData)
+static void MD2Check (const byte *buf, const char *fileName, int bufSize, void *userData)
 {
 	const char *md2Path;
 	uint32_t numSkins;
@@ -545,7 +552,7 @@ static void MD2SkinCheck (const byte *buf, const char *fileName, int bufSize, vo
 	qboolean headline = qfalse;
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
 
-	MD2Check(md2, fileName, bufSize);
+	MD2HeaderCheck(md2, fileName, bufSize);
 
 	md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 	numSkins = LittleLong(md2->num_skins);
@@ -594,9 +601,9 @@ static void MD2Visitor (modelWorker_t worker, void *userData)
 	FS_NextFileFromFileList(NULL);
 }
 
-static void SkinCheck (void)
+static void ModelCheck (void)
 {
-	MD2Visitor(MD2SkinCheck, NULL);
+	MD2Visitor(MD2Check, NULL);
 }
 
 static void SkinFix (void)
@@ -646,8 +653,8 @@ int main (int argc, char **argv)
 		ModelWorker(MD2SkinEdit, config.fileName, NULL);
 		break;
 
-	case ACTION_SKINCHECK:
-		SkinCheck();
+	case ACTION_CHECK:
+		ModelCheck();
 		break;
 
 	case ACTION_SKINFIX:

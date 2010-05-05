@@ -136,7 +136,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		/* load the skins */
 		outMesh->num_skins = LittleLong(md2->num_skins);
 		if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
-			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
+			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i", mod->name, outMesh->num_skins);
 
 		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
