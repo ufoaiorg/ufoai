@@ -23,7 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef R_MODEL_ALIAS_H
+#define R_MODEL_ALIAS_H
+
 #define MODEL_MAX_PATH 64
+#define MAX_ALIAS_TRIS 4096
+#define MAX_ALIAS_VERTS 8192
 
 #define mAliasCoord_t vec2_t
 
@@ -137,3 +142,5 @@ void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames, float sm
 #define R_ModLoadArrayDataForStaticModel_NO_NORMALS(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qfalse);
 void _R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals);
 void R_FillArrayData(const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);
+
+#endif
