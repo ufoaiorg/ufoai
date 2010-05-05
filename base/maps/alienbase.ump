@@ -125,11 +125,11 @@ z      +vh    +4     2
 
 tile +corner_br
 {
-4 4
-0      z      z      0
-z      +vh    +4     2
-z      +1     +a     ah
-0      3      av     0
+6 4
+0      z      z      z      z      0
+z      +vh    +h     +h     +4     ah2
+z      +1     +a     +a     +a     ah
+0      3      av     av     av     0
 }
 
 tile +corner_bl
@@ -271,7 +271,7 @@ fix +tunnel_mb       "4  0"
 fix +tunnel_mb       "6  0"
 fix +tunnel_mb       "8  0"
 
-fix +tunnel_mt       "2  8"
+//fix +tunnel_mt       "2  8"
 fix +tunnel_mt       "4  8"
 fix +tunnel_mt       "4  8"
 fix +tunnel_mt       "6  8"
@@ -293,7 +293,7 @@ fix +tunnel_mt       "12 8"
 +entrance            "1 1"
 +empty               "0 3"
 +hangar              "1 2"
-+lab                 "0 2"
++lab                 "1 2"
 +wormhole            "1 1"
 +incubation_small    "0 2"
 }
