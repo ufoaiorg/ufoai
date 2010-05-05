@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_spawn.h"
 #include "../../shared/parse.h"
 
+static r_light_t sun;
+
 /** position in the spawnflags */
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
@@ -154,6 +156,7 @@ void CL_SpawnParseEntitystring (void)
 
 	/* clear active light list before adding lights for the new map */
 	R_ClearActiveLights();
+	memset(&sun, 0, sizeof(sun));
 
 	/* parse ents */
 	while (1) {
@@ -201,6 +204,9 @@ void CL_SpawnParseEntitystring (void)
 		entnum++;
 	}
 
+	/* add the appropriate directional source to the list of active light sources*/
+	R_AddLightsource(&sun);
+
 	/* after we have parsed all the entities we can resolve the target, targetname
 	 * connections for the misc_model entities */
 	LM_Think();
@@ -212,7 +218,6 @@ void CL_SpawnParseEntitystring (void)
 static void SP_worldspawn (const localEntityParse_t *entData)
 {
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
-	r_light_t sun;
 	int i;
 
 	/* maximum level */
@@ -257,9 +262,6 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
 		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
 	}
-
-	/* add the appropriate directional source to the list of active light sources*/
-	R_AddLightsource(&sun);
 }
 
 static void SP_misc_model (const localEntityParse_t *entData)
