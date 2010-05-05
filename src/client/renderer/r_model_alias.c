@@ -114,7 +114,12 @@ qboolean R_ModLoadMDX (model_t *mod)
 			return qfalse;
 
 		buf = buffer;
+		if (strncmp((const char *)buf, IDMDXHEADER, strlen(IDMDXHEADER)))
+			Com_Error(ERR_DROP, "No mdx file buffer given");
 		buffer += strlen(IDMDXHEADER) * sizeof(char);
+		if (*(uint32_t*)buffer != MDX_VERSION)
+			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i",
+					MDX_VERSION, *(uint32_t*)buffer);
 		buffer += sizeof(uint32_t);
 
 		intbuf = (const int32_t *)buffer;
