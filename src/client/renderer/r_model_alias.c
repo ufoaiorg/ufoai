@@ -120,6 +120,8 @@ qboolean R_ModLoadMDX (model_t *mod)
 		intbuf = (const int32_t *)buffer;
 
 		mesh->num_verts = LittleLong(*intbuf);
+		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS)
+			Com_Error(ERR_DROP, "mdx file for %s has to many (or no) vertices: %i", mod->name, mesh->num_verts);
 		intbuf++;
 		numIndexes = LittleLong(*intbuf);
 		intbuf++;
@@ -164,13 +166,13 @@ qboolean R_ModLoadMDX (model_t *mod)
 static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset, float smoothness)
 {
 	int i, j;
-	vec3_t triangleNormals[MD2_MAX_TRIANGLES];
-	vec3_t triangleTangents[MD2_MAX_TRIANGLES];
-	vec3_t triangleBitangents[MD2_MAX_TRIANGLES];
+	vec3_t triangleNormals[MAX_ALIAS_TRIS];
+	vec3_t triangleTangents[MAX_ALIAS_TRIS];
+	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
 	mAliasVertex_t *vertexes = &mesh->vertexes[offset];
 	mAliasCoord_t *stcoords = mesh->stcoords;
-	mAliasVertex_t tmpVertexes[MD2_MAX_TRIANGLES * 3];
-	vec3_t tmpBitangents[MD2_MAX_TRIANGLES * 3];
+	mAliasVertex_t tmpVertexes[MAX_ALIAS_VERTS];
+	vec3_t tmpBitangents[MAX_ALIAS_VERTS];
 	const int numIndexes = mesh->num_tris * 3;
 	const int32_t *indexArray = mesh->indexes;
 
@@ -293,20 +295,20 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 {
 	/* count unique verts */
 	int i, j;
-	vec3_t triangleNormals[MD2_MAX_TRIANGLES];
-	vec3_t triangleTangents[MD2_MAX_TRIANGLES];
-	float triangleTangentsH[MD2_MAX_TRIANGLES];
-	vec3_t triangleBitangents[MD2_MAX_TRIANGLES];
+	vec3_t triangleNormals[MAX_ALIAS_TRIS];
+	vec3_t triangleTangents[MAX_ALIAS_TRIS];
+	float triangleTangentsH[MAX_ALIAS_TRIS];
+	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
 	const mAliasVertex_t *vertexes = mesh->vertexes;
 	mAliasCoord_t *stcoords = mesh->stcoords;
 	mAliasVertex_t *newVertexes;
-	mAliasVertex_t tmpVertexes[MD2_MAX_TRIANGLES * 3];
-	vec3_t tmpBitangents[MD2_MAX_TRIANGLES * 3];
+	mAliasVertex_t tmpVertexes[MAX_ALIAS_VERTS];
+	vec3_t tmpBitangents[MAX_ALIAS_VERTS];
 	mAliasCoord_t *newStcoords;
 	const int numIndexes = mesh->num_tris * 3;
 	const int32_t *indexArray = mesh->indexes;
 	int32_t *newIndexArray;
-	int indRemap[MD2_MAX_TRIANGLES * 3];
+	int indRemap[MAX_ALIAS_VERTS];
 	int numVerts = 0;
 
 	newIndexArray = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
@@ -548,9 +550,9 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 	const mAliasVertex_t *v, *ov;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
-	vec3_t r_mesh_verts[MD3_MAX_VERTS];
-	vec3_t r_mesh_norms[MD3_MAX_VERTS];
-	vec4_t r_mesh_tangents[MD3_MAX_VERTS];
+	vec3_t r_mesh_verts[MAX_ALIAS_VERTS];
+	vec3_t r_mesh_norms[MAX_ALIAS_VERTS];
+	vec4_t r_mesh_tangents[MAX_ALIAS_VERTS];
 	float *texcoord_array, *vertex_array_3d, *normal_array, *tangent_array;
 
 	frame = mod->frames + framenum;
@@ -589,7 +591,6 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 	vertex_array_3d = r_state.vertex_array_3d;
 	normal_array = r_state.normal_array;
 	tangent_array = r_state.tangent_array;
-
 
 	/** @todo damn slow - optimize this */
 	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */

@@ -201,12 +201,13 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		indRemap[i] = i;
 		outIndex[i] = numVerts++;
 	}
+
+	if (numVerts >= 4096)
+		Com_Printf("model %s has more than 4096 verts (original verts: %i and tris: %i)\n",
+				mod->name, outMesh->num_verts, outMesh->num_tris);
+
 	outMesh->num_verts = numVerts;
-
-	if (outMesh->num_verts >= 4096)
-		Com_Printf("model %s has more than 4096 verts\n", mod->name);
-
-	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 8192)
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MAX_ALIAS_VERTS)
 		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
 			mod->name, outMesh->num_verts, outMesh->num_tris);
 
@@ -289,8 +290,16 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 			mod->name, md2Verts, MD2_MAX_VERTS);
 	outMesh->num_tris = LittleLong(md2->num_tris);
 	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
-		Com_Error(ERR_DROP, "model %s has too many (or no) triangles", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) triangles (%i/%i)",
+			mod->name, outMesh->num_tris, MD2_MAX_TRIANGLES);
 	frameSize = LittleLong(md2->framesize);
+
+	if (outMesh->num_verts >= 4096)
+		Com_Printf("model %s has more than 4096 verts\n", mod->name);
+
+	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MAX_ALIAS_VERTS)
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+			mod->name, outMesh->num_verts, outMesh->num_tris);
 
 	if (mod->alias.num_meshes == 1) {
 		/* load the skins */
@@ -336,13 +345,6 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	/* build list of unique vertices */
 	numIndexes = outMesh->num_tris * 3;
 	numVerts = outMesh->num_verts;
-
-	if (outMesh->num_verts >= 4096)
-		Com_Printf("model %s has more than 4096 verts\n", mod->name);
-
-	if (outMesh->num_verts <= 0 || outMesh->num_verts >= 8192)
-		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
-			mod->name, outMesh->num_verts, outMesh->num_tris);
 
 	outMesh->stcoords = outCoord = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
 	outIndex = outMesh->indexes;
