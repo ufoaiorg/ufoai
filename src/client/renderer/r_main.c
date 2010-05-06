@@ -427,7 +427,7 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 static qboolean R_CvarPrograms (cvar_t *cvar)
 {
 	if (qglUseProgram) {
-		if (!cvar->integer)
+		if (!cvar->integer || !r_config.drawBuffers)
 			Cvar_SetValue("r_postprocess", 0);
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 	}
@@ -770,6 +770,13 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("max draw buffers: %i\n", r_config.maxDrawBuffers);
 			Com_Printf("max render buffer size: %i\n", r_config.maxRenderbufferSize);
 			Com_Printf("max color attachments: %i\n", r_config.maxColorAttachments);
+		}
+
+		if (strstr(r_config.extensionsString, "GL_ARB_draw_buffers") 
+		 || strstr(r_config.extensionsString, "GL_EXT_draw_buffers")) {
+			r_config.drawBuffers = qtrue;
+		} else {
+			r_config.drawBuffers = qfalse;
 		}
 	}
 

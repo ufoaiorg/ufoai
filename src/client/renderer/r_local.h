@@ -169,6 +169,7 @@ typedef struct {
 	int32_t maxAnisotropic;
 	qboolean anisotropic;
 	qboolean frameBufferObject;
+	qboolean drawBuffers;
 
 	int gl_solid_format;
 	int gl_alpha_format;
