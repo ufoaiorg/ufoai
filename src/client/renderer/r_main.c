@@ -713,6 +713,12 @@ static qboolean R_InitExtensions (void)
 		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
 	}
 
+	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100")) {
+		r_config.shadingLanguageVersion = (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION_ARB);
+		Com_Printf("using GL_ARB_shading_language_100\n");
+		Com_Printf("GLSL Version: %s\n", r_config.shadingLanguageVersion);
+	}
+
 	/* framebuffer objects */
 	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")
 	 || strstr(r_config.extensionsString, "GL_EXT_framebuffer_object")) {

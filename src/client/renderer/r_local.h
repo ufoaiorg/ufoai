@@ -150,6 +150,7 @@ typedef struct {
 	const char *vendorString;
 	const char *versionString;
 	const char *extensionsString;
+	const char *shadingLanguageVersion;
 	int maxTextureSize;
 	int maxTextureUnits;
 	int maxTextureCoords;
