@@ -92,7 +92,6 @@ void R_InitFBObjects (void)
 	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 	activeFramebuffer = &screenBuffer;
 
-	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &r_config.maxDrawBuffers);
 	colorAttachments = Mem_Alloc(sizeof(GLenum) * r_config.maxDrawBuffers);
 	for (i = 0; i < r_config.maxDrawBuffers; i++)
 		colorAttachments[i] = GL_COLOR_ATTACHMENT0_EXT + i;
@@ -178,7 +177,6 @@ void R_ShutdownFBObjects (void)
  */
 r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters)
 {
-	GLint maxDrawBuffers;
 	r_framebuffer_t *buf;
 	int i;
 
@@ -189,8 +187,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	buf = &frameBufferObjects[frameBufferObjectCount++];
 
-	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &maxDrawBuffers);
-	if (ntextures > maxDrawBuffers)
+	if (ntextures > r_config.maxDrawBuffers)
 		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
 
 	Vector4Clear(buf->clearColor);

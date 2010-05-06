@@ -106,9 +106,7 @@ static void R_Strings_f (void)
 	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
 	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
 	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
-	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i STRECH %i\n", vid_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer, vid_strech->integer);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
-	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
 }
 
 void R_SetupFrustum (void)
@@ -740,8 +738,16 @@ static qboolean R_InitExtensions (void)
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
 		 && qglCheckFramebufferStatusEXT) {
+			glGetIntegerv(GL_MAX_DRAW_BUFFERS, &r_config.maxDrawBuffers);
+			glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE_EXT, &r_config.maxRenderbufferSize);
+			glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS_EXT, &r_config.maxColorAttachments);
+
 			r_config.frameBufferObject = qtrue;
+
 			Com_Printf("using GL_ARB_framebuffer_object\n");
+			Com_Printf("max draw buffers: %i\n", r_config.maxDrawBuffers);
+			Com_Printf("max render buffer size: %i\n", r_config.maxRenderbufferSize);
+			Com_Printf("max color attachments: %i\n", r_config.maxColorAttachments);
 		}
 	}
 
@@ -886,6 +892,8 @@ static inline void R_VerifyDriver (void)
 		r_config.hardwareType = GLHW_NVIDIA;
 	} else if (R_SearchForVendor("ATI") || R_SearchForVendor("Advanced Micro Devices") || R_SearchForVendor("AMD")) {
 		r_config.hardwareType = GLHW_ATI;
+	} else if (R_SearchForVendor("mesa")) {
+		r_config.hardwareType = GLHW_MESA;
 	} else {
 		r_config.hardwareType = GLHW_GENERIC;
 	}
@@ -915,13 +923,10 @@ qboolean R_Init (void)
 
 	/* get our various GL strings */
 	r_config.vendorString = (const char *)glGetString(GL_VENDOR);
-	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
 	r_config.rendererString = (const char *)glGetString(GL_RENDERER);
-	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
 	r_config.versionString = (const char *)glGetString(GL_VERSION);
-	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
 	r_config.extensionsString = (const char *)glGetString(GL_EXTENSIONS);
-	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
+	R_Strings_f();
 
 	/* sanity checks and card specific hacks */
 	R_VerifyDriver();

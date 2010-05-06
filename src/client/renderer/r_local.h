@@ -138,6 +138,7 @@ void R_SetupFrustum(void);
 
 typedef enum {
 	GLHW_GENERIC,
+	GLHW_MESA,
 	GLHW_INTEL,
 	GLHW_ATI,
 	GLHW_NVIDIA
@@ -154,6 +155,10 @@ typedef struct {
 	int maxTextureCoords;
 	int maxVertexAttribs;
 	int maxLights;
+	int maxDrawBuffers;
+	int maxRenderbufferSize;
+	int maxColorAttachments;
+
 	char lodDir[8];
 
 	int videoMemory;
@@ -163,7 +168,6 @@ typedef struct {
 	int32_t maxAnisotropic;
 	qboolean anisotropic;
 	qboolean frameBufferObject;
-	GLint maxDrawBuffers;
 
 	int gl_solid_format;
 	int gl_alpha_format;
