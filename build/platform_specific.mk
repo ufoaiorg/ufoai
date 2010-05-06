@@ -14,8 +14,8 @@ USEWINDOWSCMD=
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
-	CLIENT_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32 -lopengl32
-	SERVER_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
+	CLIENT_LIBS+=-lws2_32 -lwinmm -lopengl32
+	SERVER_LIBS+=-lws2_32 -lwinmm
 	ifeq ($(PROFILING),1)
 		SERVER_LIBS += -lgmon
 	endif
@@ -35,6 +35,7 @@ ifeq ($(TARGET_OS),mingw32)
 		USEWINDOWSCMD=1
 	endif
 else
+	LNKFLAGS+=-rdynamic
 	ifneq ($(TARGET_OS),darwin)
 		CLIENT_LIBS+=-lGL
 	else
