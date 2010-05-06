@@ -98,15 +98,31 @@ cvar_t *r_fog;
 cvar_t *r_flares;
 cvar_t *r_coronas;
 
+static void R_PrintInfo (const char *pre, const char *msg)
+{
+	char buf[4096];
+	const size_t length = sizeof(buf);
+	const size_t maxLength = strlen(msg);
+	int i;
+
+	Com_Printf("%s: ", pre);
+	for (i = 0; i < maxLength; i += length) {
+		Q_strncpyz(buf, msg + i, sizeof(buf));
+		Com_Printf("%s", buf);
+	}
+	Com_Printf("\n");
+}
+
 /**
  * @brief Prints some OpenGL strings
  */
 static void R_Strings_f (void)
 {
-	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
-	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
-	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
-	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
+	R_PrintInfo("GL_VENDOR", r_config.vendorString);
+	R_PrintInfo("GL_VENDOR", r_config.vendorString);
+	R_PrintInfo("GL_RENDERER", r_config.rendererString);
+	R_PrintInfo("GL_VERSION", r_config.versionString);
+	R_PrintInfo("GL_EXTENSIONS", r_config.extensionsString);
 }
 
 void R_SetupFrustum (void)

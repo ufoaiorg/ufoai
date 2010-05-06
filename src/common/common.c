@@ -195,12 +195,18 @@ void Com_vPrintf (const char *fmt, va_list ap)
 		if (logfile) {
 			/* strip color codes */
 			const char *output = msg;
-			char timestamp[40];
-			Com_MakeTimestamp(timestamp, sizeof(timestamp));
 
 			if (output[0] < 32)
 				output++;
-			fprintf(logfile, "%s %s", timestamp, output);
+
+			if (output[strlen(output) - 1] == '\n') {
+				char timestamp[40];
+				Com_MakeTimestamp(timestamp, sizeof(timestamp));
+
+				fprintf(logfile, "%s %s", timestamp, output);
+			} else {
+				fprintf(logfile, "%s", output);
+			}
 
 			if (logfile_active->integer > 1)
 				fflush(logfile);	/* force it to save every time */
