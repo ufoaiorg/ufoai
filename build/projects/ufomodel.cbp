@@ -25,7 +25,6 @@
 					<Add library="winmm" />
 					<Add library="mingw32" />
 					<Add library="SDLmain" />
-					<Add library="SDL" />
 					<Add option="-mwindows" />
 				</Linker>
 				<ExtraCommands>
@@ -55,7 +54,6 @@
 					<Add library="winmm" />
 					<Add library="mingw32" />
 					<Add library="SDLmain" />
-					<Add library="SDL" />
 					<Add option="-mwindows" />
 				</Linker>
 				<ExtraCommands>
