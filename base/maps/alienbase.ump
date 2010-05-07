@@ -250,7 +250,7 @@ fix +corner_bl       "10 10"
 
 assembly alienbase1
 {
-size                 "14 8"
+size                 "14 10"
 // fixed tiles don`t take to calculation of assembly,
 // so it can "extend" the map without extra computing.
 title                "_Alienbase"
@@ -258,26 +258,26 @@ grid                 "2 2"
 
 fix +corner_tr       "0   0"
 fix +corner_tl       "14  0"
-fix +corner_br       "0   8"
-fix +corner_bl       "14  8"
+fix +corner_br       "0  10"
+fix +corner_bl       "14 10"
 
-fix +tunnel_mr       "14 2"
-fix +tunnel_mr       "14 4"
-fix +tunnel_mr       "14 6"
-//fix +tunnel_mr       "12 8"
+fix +tunnel_mr       "14  2"
+fix +tunnel_mr       "14  4"
+fix +tunnel_mr       "14  6"
+fix +tunnel_mr       "14  8"
 
-fix +tunnel_mb       "2  0"
-fix +tunnel_mb       "4  0"
-fix +tunnel_mb       "6  0"
-fix +tunnel_mb       "8  0"
+fix +tunnel_mb       "2   0"
+fix +tunnel_mb       "4   0"
+fix +tunnel_mb       "6   0"
+fix +tunnel_mb       "8   0"
 
-//fix +tunnel_mt       "2  8"
-fix +tunnel_mt       "4  8"
-fix +tunnel_mt       "4  8"
-fix +tunnel_mt       "6  8"
-fix +tunnel_mt       "8  8"
-fix +tunnel_mt       "10 8"
-fix +tunnel_mt       "12 8"
+
+fix +tunnel_mt       "4  10"
+fix +tunnel_mt       "6  10"
+fix +tunnel_mt       "8  10"
+fix +tunnel_mt       "10 10"
+fix +tunnel_mt       "12 10"
+
 
 +tunnel_mt           "0 10"
 +tunnel_mr           "0 10"
@@ -287,11 +287,11 @@ fix +tunnel_mt       "12 8"
 
 +tunnel_h            "0 2"
 +tunnel_v            "0 2"
-+tunnel_x            "0 12"
++tunnel_x            "0 4"
 
 
 +entrance            "1 1"
-+empty               "0 3"
++empty               "0 5"
 +hangar              "1 2"
 +lab                 "1 2"
 +wormhole            "1 1"
