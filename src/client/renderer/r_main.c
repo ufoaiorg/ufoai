@@ -772,8 +772,9 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("max color attachments: %i\n", r_config.maxColorAttachments);
 		}
 
-		if (strstr(r_config.extensionsString, "GL_ARB_draw_buffers") 
+		if (strstr(r_config.extensionsString, "GL_ARB_draw_buffers")
 		 || strstr(r_config.extensionsString, "GL_EXT_draw_buffers")) {
+			Com_Printf("using GL_ARB_draw_buffers\n");
 			r_config.drawBuffers = qtrue;
 		} else {
 			r_config.drawBuffers = qfalse;
