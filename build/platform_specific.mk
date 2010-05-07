@@ -18,6 +18,7 @@ ifeq ($(TARGET_OS),mingw32)
 	SERVER_LIBS+=-lws2_32 -lwinmm
 	ifeq ($(PROFILING),1)
 		SERVER_LIBS += -lgmon
+		CLIENT_LIBS += -lgmon
 	endif
 	RADIANT_LIBS+=-lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0
 	SHARED_EXT=dll

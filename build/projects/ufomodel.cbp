@@ -23,6 +23,9 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="winmm" />
+					<Add library="mingw32 " />					
+					<Add library="SDLmain " />
+					<Add option="-mwindows" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -49,6 +52,9 @@
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add library="winmm" />
+					<Add library="mingw32 " />					
+					<Add library="SDLmain " />
+					<Add option="-mwindows" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
