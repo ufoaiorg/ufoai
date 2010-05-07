@@ -8,9 +8,9 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../ufomodel" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufomodel" />
+				<Option output="..\..\ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -22,10 +22,11 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-mwindows" />
 					<Add library="winmm" />
 					<Add library="mingw32" />
 					<Add library="SDLmain" />
-					<Add option="-mwindows" />
+					<Add library="SDL" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -33,13 +34,13 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../ufomodel" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufomodel" />
+				<Option output="..\..\ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option parameters="-skincheck" />
-				<Option host_application="../../ufomodel" />
+				<Option host_application="..\..\ufomodel" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />
@@ -51,10 +52,10 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
+					<Add option="-mwindows" />
 					<Add library="winmm" />
 					<Add library="mingw32" />
 					<Add library="SDLmain" />
-					<Add option="-mwindows" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -62,9 +63,9 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../ufomodel" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufomodel" />
+				<Option output="..\..\ufomodel" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -76,18 +77,18 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="../../ufomodel" prefix_auto="0" extension_auto="0" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufomodel" />
+				<Option output="..\..\ufomodel" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add directory="/sw/include" />
-					<Add directory="/Library/Frameworks/SDL.framework/Versions/A/Headers" />
+					<Add directory="\sw\include" />
+					<Add directory="\Library\Frameworks\SDL.framework\Versions\A\Headers" />
 				</Compiler>
 				<Linker>
 					<Add option="-framework SDL" />
-					<Add directory="/sw/lib" />
+					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -102,72 +103,72 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
-		<Unit filename="../../src/client/renderer/r_model_alias.c">
+		<Unit filename="..\..\src\client\renderer\r_model_alias.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/renderer/r_model_dpm.c">
+		<Unit filename="..\..\src\client\renderer\r_model_dpm.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/renderer/r_model_md2.c">
+		<Unit filename="..\..\src\client\renderer\r_model_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/renderer/r_model_md3.c">
+		<Unit filename="..\..\src\client\renderer\r_model_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/renderer/r_model_obj.c">
+		<Unit filename="..\..\src\client\renderer\r_model_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/files.c">
+		<Unit filename="..\..\src\common\files.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/ioapi.c">
+		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/ioapi.h" />
-		<Unit filename="../../src/common/list.c">
+		<Unit filename="..\..\src\common\ioapi.h" />
+		<Unit filename="..\..\src\common\list.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/mem.c">
+		<Unit filename="..\..\src\common\mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/mem.h" />
-		<Unit filename="../../src/common/unzip.c">
+		<Unit filename="..\..\src\common\mem.h" />
+		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/unzip.h" />
-		<Unit filename="../../src/ports/unix/unix_main.c">
+		<Unit filename="..\..\src\common\unzip.h" />
+		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/windows/win_shared.c">
+		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/shared/byte.c">
+		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/byte.h" />
-		<Unit filename="../../src/shared/defines.h" />
-		<Unit filename="../../src/shared/images.c">
+		<Unit filename="..\..\src\shared\byte.h" />
+		<Unit filename="..\..\src\shared\defines.h" />
+		<Unit filename="..\..\src\shared\images.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/images.h" />
-		<Unit filename="../../src/shared/mathlib.c">
+		<Unit filename="..\..\src\shared\images.h" />
+		<Unit filename="..\..\src\shared\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/mathlib.h" />
-		<Unit filename="../../src/shared/parse.c">
+		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/parse.h" />
-		<Unit filename="../../src/shared/shared.c">
+		<Unit filename="..\..\src\shared\parse.h" />
+		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/shared.h" />
-		<Unit filename="../../src/shared/typedefs.h" />
-		<Unit filename="../../src/tools/ufomodel/ufomodel.c">
+		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\typedefs.h" />
+		<Unit filename="..\..\src\tools\ufomodel\ufomodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
