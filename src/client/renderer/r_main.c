@@ -641,6 +641,31 @@ static qboolean R_InitExtensions (void)
 	qglUniform3fv = NULL;
 	qglUniform4fv = NULL;
 
+	/* vertex attribute arrays */
+	qglEnableVertexAttribArray = NULL;
+	qglDisableVertexAttribArray = NULL;
+	qglVertexAttribPointer = NULL;
+
+	/* framebuffer objects */
+	qglIsRenderbufferEXT = NULL;
+	qglBindRenderbufferEXT = NULL;
+	qglDeleteRenderbuffersEXT = NULL;
+	qglGenRenderbuffersEXT = NULL;
+	qglRenderbufferStorageEXT = NULL;
+	qglGetRenderbufferParameterivEXT = NULL;
+	qglIsFramebufferEXT = NULL;
+	qglBindFramebufferEXT = NULL;
+	qglDeleteFramebuffersEXT = NULL;
+	qglGenFramebuffersEXT = NULL;
+	qglCheckFramebufferStatusEXT = NULL;
+	qglFramebufferTexture1DEXT = NULL;
+	qglFramebufferTexture2DEXT = NULL;
+	qglFramebufferTexture3DEXT = NULL;
+	qglFramebufferRenderbufferEXT = NULL;
+	qglGetFramebufferAttachmentParameterivEXT = NULL;
+	qglGenerateMipmapEXT = NULL;
+	qglDrawBuffers = NULL;
+
 	/* multitexture */
 	if (strstr(r_config.extensionsString, "GL_ARB_multitexture")) {
 		qglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
