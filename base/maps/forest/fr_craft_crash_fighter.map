@@ -1539,7 +1539,7 @@
 {
 "classname" "misc_model"
 "origin" "331.772 157.023 -170.313"
-"spawnflags" "254"
+"spawnflags" "255"
 "model" "models/objects/alien/ufo_crashed/acrash_hull_engine.md2"
 "angles" "-15.8749 9.8889 -65.1971"
 }
