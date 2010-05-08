@@ -13,6 +13,7 @@
 				<Option object_output=".objs\ufomodel" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-ffloat-store" />
@@ -26,7 +27,6 @@
 					<Add library="winmm" />
 					<Add library="mingw32" />
 					<Add library="SDLmain" />
-					<Add library="SDL" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
@@ -41,6 +41,7 @@
 				<Option compiler="gcc" />
 				<Option parameters="-skincheck" />
 				<Option host_application="..\..\ufomodel" />
+				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />
