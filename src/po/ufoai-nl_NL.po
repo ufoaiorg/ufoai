@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-23 16:21+0200\n"
+"POT-Creation-Date: 2010-05-08 17:51+0200\n"
 "PO-Revision-Date: 2009-07-06 22:04+0100\n"
 "Last-Translator: Peter Verhage <pverha10@cis.HZeeland.nl>\n"
 "Language-Team: Dutch <pverha10@cis.hzeeland.nl>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Africa"
 msgstr "Afrika"
 
-#: ../base/maps/alienbase.ump:170
+#: ../base/maps/alienbase.ump:224 ../base/maps/alienbase.ump:256
 msgid "Alienbase"
 msgstr "Buitenaardse Basis"
 
@@ -2047,7 +2047,7 @@ msgstr ""
 msgid "Phnom Penh"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1644
+#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1654
 msgid "Phoenix"
 msgstr "Phoenix"
 
@@ -3492,23 +3492,23 @@ msgstr "Een plaats waar mensen komen om te ontspannen en samen te zijn."
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "Een laboratorium, waar ze teruggevonden vergane UFO tegels onderzochten."
 
-#: ../base/ufos/maps.ufo:3479
+#: ../base/ufos/maps.ufo:3478
 msgid "A fuel depot the aliens try to destroy."
 msgstr "Een brandstof opslag die de buitenaardsen willen vernietigen."
 
-#: ../base/ufos/maps.ufo:3518
+#: ../base/ufos/maps.ufo:3517
 msgid "Wilderness terror mission."
 msgstr "Wildernis terreur missie."
 
-#: ../base/ufos/maps.ufo:3564
+#: ../base/ufos/maps.ufo:3563
 msgid "UFO Crashsite."
 msgstr "De plaats waar een UFO neergestort is."
 
-#: ../base/ufos/maps.ufo:3595
+#: ../base/ufos/maps.ufo:3594
 msgid "An alien base."
 msgstr "Een buitenaardse basis."
 
-#: ../base/ufos/maps.ufo:3610
+#: ../base/ufos/maps.ufo:3609
 msgid "Base is under attack."
 msgstr "Basis wordt aangevallen."
 
@@ -3520,22 +3520,22 @@ msgstr "Kruis"
 msgid "Coin"
 msgstr "Munt"
 
-#: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:567
+#: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:577
 #: client/campaign/cp_employee.c:166
 msgid "Scientist"
 msgstr "Onderzoeker"
 
-#: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:923
+#: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:933
 #: client/campaign/cp_employee.c:170
 msgid "Pilot"
 msgstr "Piloot"
 
-#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1641
-#: ../base/ufos/team_humans.ufo:1666 client/campaign/cp_employee.c:172
+#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1651
+#: ../base/ufos/team_humans.ufo:1676 client/campaign/cp_employee.c:172
 msgid "UGV"
 msgstr "Onbemand Grondvoertuig"
 
-#: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1281
+#: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1291
 #: client/campaign/cp_employee.c:168
 #, fuzzy
 msgid "Worker"
@@ -3736,7 +3736,7 @@ msgstr "Basis Faciliteiten"
 msgid "Research Reports"
 msgstr "Onderzoeksrapporten"
 
-#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:67
+#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:96
 #: ../base/ufos/ui/skirmish.ufo:87 ../base/ufos/ui/transfer.ufo:35
 #: ../base/ufos/ui/transfer.ufo:45 ../base/ufos/ui/transfer.ufo:612
 msgid "Equipment"
@@ -5003,7 +5003,7 @@ msgstr "<TODO>"
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1647
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
@@ -5015,7 +5015,7 @@ msgstr "<NOGDOEN>"
 msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1672
 msgid "Ares W (UGV)"
 msgstr "Ares W (OGV)"
 
@@ -5630,7 +5630,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "Of met de toetsen 1-8"
 
 #: ../base/ufos/seq_tutorials.ufo:474
-#: ../base/ufos/ui/aircraft_soldiers.ufo:514
+#: ../base/ufos/ui/aircraft_soldiers.ufo:370
 msgid "Physical stats"
 msgstr "Fysieke statistieken"
 
@@ -5770,15 +5770,15 @@ msgstr ""
 msgid "Taman"
 msgstr "Taman"
 
-#: ../base/ufos/team_aliens.ufo:99
+#: ../base/ufos/team_aliens.ufo:113
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:181
+#: ../base/ufos/team_aliens.ufo:197
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:225
+#: ../base/ufos/team_aliens.ufo:241
 msgid "Bloodspider"
 msgstr "Bloedspin"
 
@@ -5786,7 +5786,7 @@ msgstr "Bloedspin"
 msgid "Phalanx"
 msgstr "Phalanx"
 
-#: ../base/ufos/team_humans.ufo:1669
+#: ../base/ufos/team_humans.ufo:1679
 msgid "Ares W"
 msgstr "Ares W"
 
@@ -6050,58 +6050,62 @@ msgstr "U kunt de acties voor de volgende ronde voorbereiden terwijl u wacht. Tw
 msgid "Check to use this firemode for reaction fire"
 msgstr "Vink aan om deze vuurmodus te gebruiken voor reactievuur"
 
-#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:209
+#: ../base/ufos/ui/_menu.ufo:116 ../base/ufos/ui/geoscape.ufo:209
 #: ../base/ufos/ui/hospital.ufo:70
 #, fuzzy
 msgid "CREDITS"
 msgstr "KREDIETEN"
 
-#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:218
+#: ../base/ufos/ui/_menu.ufo:124 ../base/ufos/ui/geoscape.ufo:218
 #: ../base/ufos/ui/hospital.ufo:78
 msgid "Organisation capital"
 msgstr "Kapitaal van de organisatie"
 
-#: ../base/ufos/ui/_menu.ufo:121 ../base/ufos/ui/hospital.ufo:88
+#: ../base/ufos/ui/_menu.ufo:133 ../base/ufos/ui/hospital.ufo:88
 msgid "Back to baseview"
 msgstr "Terug naar basisoverzicht"
 
-#: ../base/ufos/ui/_menu.ufo:139 ../base/ufos/ui/bases.ufo:20
+#: ../base/ufos/ui/_menu.ufo:151 ../base/ufos/ui/bases.ufo:20
 #: ../base/ufos/ui/hospital.ufo:59
 msgid "Name of this base"
 msgstr "Naam van deze basis"
 
-#: ../base/ufos/ui/_menu.ufo:163 ../base/ufos/ui/transfer.ufo:594
+#: ../base/ufos/ui/_menu.ufo:177 ../base/ufos/ui/transfer.ufo:594
 #: client/campaign/cp_installation_callbacks.c:224
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: ../base/ufos/ui/_menu.ufo:164 ../base/ufos/ui/geoscape.ufo:1298
+#: ../base/ufos/ui/_menu.ufo:178 ../base/ufos/ui/geoscape.ufo:1298
 #: ../base/ufos/ui/geoscape.ufo:1511 ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "Sluit dit dialoogvenster"
 
-#: ../base/ufos/ui/aircraft.ufo:58 ../base/ufos/ui/ufopedia.ufo:79
+#: ../base/ufos/ui/aircraft.ufo:12 ../base/ufos/ui/aircraft_soldiers.ufo:72
+msgid "Add/remove this soldier"
+msgstr "Voeg deze soldaat toe/haal deze soldaat weg"
+
+#: ../base/ufos/ui/aircraft.ufo:87 ../base/ufos/ui/ufopedia.ufo:79
 msgid "Description"
 msgstr "Omschrijving"
 
-#: ../base/ufos/ui/aircraft.ufo:62 ../base/ufos/ui/hire.ufo:494
+#: ../base/ufos/ui/aircraft.ufo:91 ../base/ufos/ui/hire.ufo:494
 msgid "Pilots"
 msgstr "Piloten"
 
-#: ../base/ufos/ui/aircraft.ufo:71
+#: ../base/ufos/ui/aircraft.ufo:100
 msgid "Tanks"
 msgstr "Tanks"
 
-#: ../base/ufos/ui/aircraft.ufo:77 ../base/ufos/ui/hire.ufo:489
+#: ../base/ufos/ui/aircraft.ufo:106 ../base/ufos/ui/hire.ufo:489
 msgid "Soldiers"
 msgstr "Soldaten"
 
-#: ../base/ufos/ui/aircraft.ufo:82
+#: ../base/ufos/ui/aircraft.ufo:111
 msgid "Soldier equipment"
 msgstr "Soldaten uitrusting"
 
-#: ../base/ufos/ui/aircraft.ufo:136
+#: ../base/ufos/ui/aircraft.ufo:165
 #, fuzzy
 msgid "Rename aircraft"
 msgstr "Kies vliegtuig"
@@ -6172,7 +6176,7 @@ msgid "Select this slot"
 msgstr "Kies dit vak"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
-#: ../base/ufos/ui/aircraft_soldiers.ufo:58
+#: ../base/ufos/ui/aircraft_soldiers.ufo:121
 msgid "Team Members:"
 msgstr "Teamleden:"
 
@@ -6184,163 +6188,157 @@ msgstr "Start het vliegtuig"
 msgid "Call back"
 msgstr "Herroep"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:124
+#: ../base/ufos/ui/aircraft_pilots.ufo:11
+#, fuzzy
+msgid "Add/remove this pilot"
+msgstr "Voeg deze soldaat toe/haal deze soldaat weg"
+
+#: ../base/ufos/ui/aircraft_pilots.ufo:144
 #, fuzzy
 msgid "Pilot is assigned to another craft"
 msgstr "Piloot in vliegtuig"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:142
+#: ../base/ufos/ui/aircraft_pilots.ufo:162
 #, fuzzy
 msgid "A pilot is already assigned to this craft"
 msgstr "Geen munitie toegewezen aan dit wapen."
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:144
+#: ../base/ufos/ui/aircraft_pilots.ufo:164
 msgid "Assign pilot to this craft"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:155
+#: ../base/ufos/ui/aircraft_pilots.ufo:175
 #, fuzzy
 msgid "Remove pilot from this craft"
 msgstr "Verwijder onderdeel van het vak"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:198
-#: ../base/ufos/ui/aircraft_pilots.ufo:208
-#: ../base/ufos/ui/aircraft_pilots.ufo:218
-#: ../base/ufos/ui/aircraft_pilots.ufo:228
-#: ../base/ufos/ui/aircraft_pilots.ufo:238
-#: ../base/ufos/ui/aircraft_pilots.ufo:248
-#: ../base/ufos/ui/aircraft_pilots.ufo:258
-#: ../base/ufos/ui/aircraft_pilots.ufo:268
-msgid "Add/remove this soldier"
-msgstr "Voeg deze soldaat toe/haal deze soldaat weg"
-
-#: ../base/ufos/ui/aircraft_soldiers.ufo:80
-#: ../base/ufos/ui/aircraft_soldiers.ufo:692 ../base/ufos/ui/geoscape.ufo:769
+#: ../base/ufos/ui/aircraft_soldiers.ufo:143
+#: ../base/ufos/ui/aircraft_soldiers.ufo:556 ../base/ufos/ui/geoscape.ufo:769
 msgid "Equip soldiers"
 msgstr "Voorzie deze soldaat van uitrusting"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:108
+#: ../base/ufos/ui/aircraft_soldiers.ufo:171
 #, fuzzy
 msgid "Soldier is assigned to another craft"
 msgstr "Soldaat in vliegtuig"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:127
+#: ../base/ufos/ui/aircraft_soldiers.ufo:190
 #, fuzzy
 msgid "No more soldiers can be assigned to this craft"
 msgstr "Geen munitie toegewezen aan dit wapen."
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:129
+#: ../base/ufos/ui/aircraft_soldiers.ufo:192
 #, fuzzy
 msgid "Assign soldier to this craft"
 msgstr "Wijs eerst één of meerdere soldaten toe aan dit vliegtuig."
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:140
+#: ../base/ufos/ui/aircraft_soldiers.ufo:203
 #, fuzzy
 msgid "Remove soldier from this craft"
 msgstr "Kies een soldaat van de lijst"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:150
+#: ../base/ufos/ui/aircraft_soldiers.ufo:213
 msgid "Soldier carries equipment"
 msgstr "Soldaat draagt uitrusting"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:159
+#: ../base/ufos/ui/aircraft_soldiers.ufo:222
 msgid "Soldier carries no equipment"
 msgstr "Soldaat draagt geen uitrusting bij zich"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:518
+#: ../base/ufos/ui/aircraft_soldiers.ufo:374
 #, fuzzy
 msgid "Missions info"
 msgstr "Missies"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:536 ../base/ufos/ui/equipment.ufo:483
+#: ../base/ufos/ui/aircraft_soldiers.ufo:392 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "Kracht:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:492
+#: ../base/ufos/ui/aircraft_soldiers.ufo:401 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
-#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1147
+#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1170
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "Snelheid:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:552 ../base/ufos/ui/equipment.ufo:501
+#: ../base/ufos/ui/aircraft_soldiers.ufo:410 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "Nauwkeurigheid:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:560 ../base/ufos/ui/equipment.ufo:510
+#: ../base/ufos/ui/aircraft_soldiers.ufo:419 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "Verstand:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:568 ../base/ufos/ui/equipment.ufo:519
+#: ../base/ufos/ui/aircraft_soldiers.ufo:428 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "Man-tot-man Gevecht:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:577 ../base/ufos/ui/equipment.ufo:528
+#: ../base/ufos/ui/aircraft_soldiers.ufo:438 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "Zware Wapens:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:586 ../base/ufos/ui/equipment.ufo:537
+#: ../base/ufos/ui/aircraft_soldiers.ufo:448 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
 msgstr "Aanvalswapens:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:595 ../base/ufos/ui/equipment.ufo:546
+#: ../base/ufos/ui/aircraft_soldiers.ufo:458 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "Sluipschutter Geweren:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:604 ../base/ufos/ui/equipment.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:468 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
 msgstr "Zware Explosieven:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:617 ../base/ufos/ui/hire.ufo:383
+#: ../base/ufos/ui/aircraft_soldiers.ufo:481 ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
 msgstr "Gezondheid:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:639
+#: ../base/ufos/ui/aircraft_soldiers.ufo:503
 #, fuzzy
 msgid "Missions performed:"
 msgstr "Voltooid Aantal Missies:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:642
+#: ../base/ufos/ui/aircraft_soldiers.ufo:506
 #, fuzzy
 msgid "Enemies killed:"
 msgstr "Vijanden Gedood:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:645
+#: ../base/ufos/ui/aircraft_soldiers.ufo:509
 #, fuzzy
 msgid "Civilians killed:"
 msgstr "Een burger werd gedood.\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:648
+#: ../base/ufos/ui/aircraft_soldiers.ufo:512
 #, fuzzy
 msgid "Our team killed:"
 msgstr "%s werd gedood\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:661
+#: ../base/ufos/ui/aircraft_soldiers.ufo:525
 msgid "Assign tanks"
 msgstr "Wijs tanks toe"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:665
+#: ../base/ufos/ui/aircraft_soldiers.ufo:529
 msgid "Assign soldiers"
 msgstr "Wijs soldaten toe"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:695
+#: ../base/ufos/ui/aircraft_soldiers.ufo:559
 #, fuzzy
 msgid "No soldiers assigned"
 msgstr "Geen onderdeel toegewezen."
@@ -6450,7 +6448,7 @@ msgstr "Klik om langs de zichtbare vijanden te gaan"
 msgid "Finish round"
 msgstr "Beëindig ronde"
 
-#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:893
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:897
 msgid "Multiple-shot reaction fire"
 msgstr "Meerdere schoten reactievuur"
 
@@ -6458,7 +6456,7 @@ msgstr "Meerdere schoten reactievuur"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "Meerdere schoten reactievuur (niet mogelijk)"
 
-#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:905
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:909
 msgid "One-shot reaction fire"
 msgstr "Enkel schot reactievuur"
 
@@ -6466,11 +6464,11 @@ msgstr "Enkel schot reactievuur"
 msgid "One-shot reaction fire (not possible)"
 msgstr "Enkel schot reactievuur (niet mogelijk)"
 
-#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:917
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:921
 msgid "No reaction fire"
 msgstr "Geen reactie vuur"
 
-#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:873
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:877
 #: client/battlescape/cl_hud.c:814
 msgid "Reserve TUs for shooting."
 msgstr "Reserveer TE's voor schieten."
@@ -7034,7 +7032,7 @@ msgstr "Nieuwe basis"
 #: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
 #: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:357
-#: ../base/ufos/ui/options.ufo:750
+#: ../base/ufos/ui/options.ufo:773
 msgid "Name:"
 msgstr "Naam:"
 
@@ -7296,11 +7294,11 @@ msgstr "Primaire vuur modus"
 msgid "Physical stats of this soldier"
 msgstr "Fysieke statistieken van deze soldaat"
 
-#: ../base/ufos/ui/hud.ufo:899
+#: ../base/ufos/ui/hud.ufo:903
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "Meerdere schoten reactievuur (Onmogelijk)"
 
-#: ../base/ufos/ui/hud.ufo:911
+#: ../base/ufos/ui/hud.ufo:915
 msgid "One-shot reaction fire (Not possible)"
 msgstr "Enkel schot reactievuur (Onmogelijk)"
 
@@ -7476,15 +7474,15 @@ msgstr "Begin-instellingen"
 msgid "User Information"
 msgstr "Gebruikersinformatie"
 
-#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:574
+#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:597
 msgid "Volume Control"
 msgstr "Volume Regeling"
 
-#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:580
+#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:603
 msgid "Effects:"
 msgstr "Effecten:"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:601
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:624
 msgid "Music:"
 msgstr "Muziek:"
 
@@ -7492,7 +7490,7 @@ msgstr "Muziek:"
 msgid "Language"
 msgstr "Taal"
 
-#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:798
+#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:821
 msgid "Language:"
 msgstr "Taal:"
 
@@ -7768,7 +7766,7 @@ msgstr "Verbindt naar IP"
 msgid "Bookmarks"
 msgstr "Bladwijzers"
 
-#: ../base/ufos/ui/multiplayer.ufo:511 ../base/ufos/ui/skirmish.ufo:264
+#: ../base/ufos/ui/multiplayer.ufo:511
 msgid "Map"
 msgstr "Kaart"
 
@@ -7800,7 +7798,7 @@ msgstr "Kaart naam:"
 msgid "Allowed gametype:"
 msgstr "Toegestaan speltype:"
 
-#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:131
+#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:274
 msgid "Day version:"
 msgstr "Dag versie:"
 
@@ -7836,7 +7834,7 @@ msgstr "Specificeert het maximum aantal soldaten per speler wanneer in teamspel"
 msgid "Max. human players per team:"
 msgstr "Max. aantal menselijke spelers per team:"
 
-#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:131
 msgid "Max. AI actors:"
 msgstr "Max. aantal Computerspelers:"
 
@@ -8006,16 +8004,16 @@ msgstr "Nieuw"
 msgid "Save the current team"
 msgstr "Bewaar het huidige team"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:176
+#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:186
 msgid "Team:"
 msgstr "Team:"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:190
+#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:200
 #: client/cl_game_campaign.c:198
 msgid "Human"
 msgstr "Mens"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:194
+#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:204
 msgid "Alien"
 msgstr "Buitenaardse"
 
@@ -8132,209 +8130,213 @@ msgstr "Rek het scherm op met een verhouding van 4:3:"
 msgid "Enable post-processing shader effects:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:441 ../base/ufos/ui/options.ufo:466
+#: ../base/ufos/ui/options.ufo:435
+msgid "Max dynamic lights allowed:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:464 ../base/ufos/ui/options.ufo:489
 msgid "Low"
 msgstr "Laag"
 
-#: ../base/ufos/ui/options.ufo:445 ../base/ufos/ui/options.ufo:470
+#: ../base/ufos/ui/options.ufo:468 ../base/ufos/ui/options.ufo:493
 msgid "Medium"
 msgstr "Matig"
 
-#: ../base/ufos/ui/options.ufo:449 ../base/ufos/ui/options.ufo:474
+#: ../base/ufos/ui/options.ufo:472 ../base/ufos/ui/options.ufo:497
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "Normaal"
 
-#: ../base/ufos/ui/options.ufo:453 ../base/ufos/ui/options.ufo:478
+#: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:501
 msgid "High"
 msgstr "Hoog"
 
-#: ../base/ufos/ui/options.ufo:482 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:505 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "Uitzonderlijk"
 
-#: ../base/ufos/ui/options.ufo:486
+#: ../base/ufos/ui/options.ufo:509
 msgid "Extreme"
 msgstr "Extreem"
 
-#: ../base/ufos/ui/options.ufo:509
+#: ../base/ufos/ui/options.ufo:532
 #, fuzzy
 msgid "All ratios"
 msgstr "Installaties"
 
-#: ../base/ufos/ui/options.ufo:533
+#: ../base/ufos/ui/options.ufo:556
 #, fuzzy
 msgid "Others"
 msgstr "Other"
 
-#: ../base/ufos/ui/options.ufo:565
+#: ../base/ufos/ui/options.ufo:588
 msgid "Sound settings"
 msgstr "Geluid instellingen"
 
-#: ../base/ufos/ui/options.ufo:622
+#: ../base/ufos/ui/options.ufo:645
 msgid "Sound rate:"
 msgstr "Bemonsteringssnelheid geluid:"
 
-#: ../base/ufos/ui/options.ufo:628
+#: ../base/ufos/ui/options.ufo:651
 msgid "Restart sound to change the settings"
 msgstr "Herstart het geluid om de instellingen te wijzigen"
 
-#: ../base/ufos/ui/options.ufo:664
+#: ../base/ufos/ui/options.ufo:687
 msgid "Enable sound:"
 msgstr "Geluid aan:"
 
-#: ../base/ufos/ui/options.ufo:690
+#: ../base/ufos/ui/options.ufo:713
 msgid "Show key bindings"
 msgstr "Laat toetsbindingen zien"
 
-#: ../base/ufos/ui/options.ufo:738
+#: ../base/ufos/ui/options.ufo:761
 msgid "Game settings"
 msgstr "Spel instellingen"
 
-#: ../base/ufos/ui/options.ufo:772
+#: ../base/ufos/ui/options.ufo:795
 msgid "HUD Design:"
 msgstr "HUD Ontwerp:"
 
-#: ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/options.ufo:807
 msgid "Original HUD"
 msgstr "Originele HUD"
 
-#: ../base/ufos/ui/options.ufo:788
+#: ../base/ufos/ui/options.ufo:811
 msgid "Alternative HUD"
 msgstr "Alternatieve HUD"
 
-#: ../base/ufos/ui/options.ufo:836
+#: ../base/ufos/ui/options.ufo:859
 msgid "Tooltips:"
 msgstr "Hulpballonnen:"
 
-#: ../base/ufos/ui/options.ufo:843
+#: ../base/ufos/ui/options.ufo:866
 msgid "Activates tooltips"
 msgstr "Activeert hulpballonnen"
 
-#: ../base/ufos/ui/options.ufo:854
+#: ../base/ufos/ui/options.ufo:877
 msgid "Centre view:"
 msgstr "Centreer zicht:"
 
-#: ../base/ufos/ui/options.ufo:861
+#: ../base/ufos/ui/options.ufo:884
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "Centreren op soldaat selecteren, schieten en verschijnen"
 
-#: ../base/ufos/ui/options.ufo:872
+#: ../base/ufos/ui/options.ufo:895
 msgid "Cursor tooltips:"
 msgstr "Muisaanwijzer hulpballonnen:"
 
-#: ../base/ufos/ui/options.ufo:879
+#: ../base/ufos/ui/options.ufo:902
 msgid "Activates cursor tooltips"
 msgstr "Activeert muisaanwijzer hulpballonnen"
 
-#: ../base/ufos/ui/options.ufo:890
+#: ../base/ufos/ui/options.ufo:913
 msgid "3D Geoscape:"
 msgstr "3D Aardbol:"
 
-#: ../base/ufos/ui/options.ufo:897
+#: ../base/ufos/ui/options.ufo:920
 msgid "Use 3D geoscape"
 msgstr "Gebruik 3D aardbol"
 
-#: ../base/ufos/ui/options.ufo:908
+#: ../base/ufos/ui/options.ufo:931
 msgid "3D Geoscape ambient lighting:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:933
+#: ../base/ufos/ui/options.ufo:956
 msgid "Show tip of the day:"
 msgstr "Laat tip van de dag zien:"
 
-#: ../base/ufos/ui/options.ufo:951
+#: ../base/ufos/ui/options.ufo:974
 msgid "Precache models:"
 msgstr "Laadt modellen voor:"
 
-#: ../base/ufos/ui/options.ufo:958
+#: ../base/ufos/ui/options.ufo:981
 msgid "Precache models (faster menus)"
 msgstr "Laadt modellen voor (snellere menu's)"
 
-#: ../base/ufos/ui/options.ufo:969
+#: ../base/ufos/ui/options.ufo:992
 msgid "Actor speed:"
 msgstr "Snelheid van karakter:"
 
-#: ../base/ufos/ui/options.ufo:1003
+#: ../base/ufos/ui/options.ufo:1026
 msgid "Input settings"
 msgstr "Invoer instellingen"
 
-#: ../base/ufos/ui/options.ufo:1015
+#: ../base/ufos/ui/options.ufo:1038
 msgid "Camera"
 msgstr "Camera"
 
-#: ../base/ufos/ui/options.ufo:1021
+#: ../base/ufos/ui/options.ufo:1044
 msgid "Scroll Speed:"
 msgstr "Schuifsnelheid:"
 
-#: ../base/ufos/ui/options.ufo:1046
+#: ../base/ufos/ui/options.ufo:1069
 msgid "Rotation Speed:"
 msgstr "Draaisnelheid:"
 
-#: ../base/ufos/ui/options.ufo:1071
+#: ../base/ufos/ui/options.ufo:1094
 msgid "Move Acceleration:"
 msgstr "Bewegingsversnelling:"
 
-#: ../base/ufos/ui/options.ufo:1096
+#: ../base/ufos/ui/options.ufo:1119
 msgid "Joystick settings:"
 msgstr "Joystick instellingen:"
 
-#: ../base/ufos/ui/options.ufo:1103
+#: ../base/ufos/ui/options.ufo:1126
 #, fuzzy
 msgid "Enable:"
 msgstr "Activeer alles"
 
-#: ../base/ufos/ui/options.ufo:1111
+#: ../base/ufos/ui/options.ufo:1134
 msgid "Enables/Disables Joysticks"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1122
+#: ../base/ufos/ui/options.ufo:1145
 msgid "Threshold:"
 msgstr "Drempel:"
 
-#: ../base/ufos/ui/options.ufo:1172
+#: ../base/ufos/ui/options.ufo:1195
 msgid "Keys"
 msgstr "Toetsen"
 
-#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:99
+#: ../base/ufos/ui/options.ufo:1210 client/battlescape/cl_hud.c:99
 msgid "Autostand"
 msgstr "Automatisch opstaan"
 
-#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
+#: ../base/ufos/ui/options.ufo:1222 ../base/ufos/ui/options.ufo:1248
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Ja"
 
-#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
+#: ../base/ufos/ui/options.ufo:1226 ../base/ufos/ui/options.ufo:1252
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Nee"
 
-#: ../base/ufos/ui/options.ufo:1213
+#: ../base/ufos/ui/options.ufo:1236
 msgid "Confirm Actions:"
 msgstr "Bevestig Acties:"
 
-#: ../base/ufos/ui/options.ufo:1233
+#: ../base/ufos/ui/options.ufo:1256
 msgid "Only for moving"
 msgstr "Alleen voor bewegingen"
 
-#: ../base/ufos/ui/options.ufo:1243
+#: ../base/ufos/ui/options.ufo:1266
 msgid "Joystick:"
 msgstr "Joystick:"
 
-#: ../base/ufos/ui/options.ufo:1276
+#: ../base/ufos/ui/options.ufo:1299
 msgid "Maintain resolution"
 msgstr "Behoud resolutie"
 
-#: ../base/ufos/ui/options.ufo:1286
+#: ../base/ufos/ui/options.ufo:1309
 msgid "Want To Maintain resolution"
 msgstr "Wil resolutie behouden"
 
-#: ../base/ufos/ui/options.ufo:1293
+#: ../base/ufos/ui/options.ufo:1316
 msgid "Accept"
 msgstr "Accepteer"
 
-#: ../base/ufos/ui/options.ufo:1294
+#: ../base/ufos/ui/options.ufo:1317
 msgid "Change the resolution"
 msgstr "Verander de resolutie"
 
@@ -8428,28 +8430,38 @@ msgstr "Schermutseling-spel instellingen"
 msgid "Equipment AI"
 msgstr "Uitrusting"
 
-#: ../base/ufos/ui/skirmish.ufo:151
+#: ../base/ufos/ui/skirmish.ufo:134
 msgid "Max AI actors for this game"
 msgstr "Maximum aantal computerspelers voor dit spel"
 
-#: ../base/ufos/ui/skirmish.ufo:179
+#: ../base/ufos/ui/skirmish.ufo:158
+#, fuzzy
+msgid "Max. soldiers:"
+msgstr "Max. aantal soldaten:\t%i\n"
+
+#: ../base/ufos/ui/skirmish.ufo:159
+#, fuzzy
+msgid "Sets the amount of soldiers"
+msgstr "Herkies de huidige soldaat"
+
+#: ../base/ufos/ui/skirmish.ufo:189
 msgid "Select which side you want to play with"
 msgstr "Kies met welke zijde u wilt spelen"
 
-#: ../base/ufos/ui/skirmish.ufo:213
+#: ../base/ufos/ui/skirmish.ufo:223
 #, fuzzy
 msgid "UFO:"
 msgstr "UFO"
 
-#: ../base/ufos/ui/skirmish.ufo:216
+#: ../base/ufos/ui/skirmish.ufo:226
 msgid "Select the ufo that should be used"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:243
+#: ../base/ufos/ui/skirmish.ufo:253
 msgid "Dropship:"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:246
+#: ../base/ufos/ui/skirmish.ufo:256
 msgid "Select the dropship that should be used"
 msgstr ""
 
@@ -9102,54 +9114,54 @@ msgstr "Buitengewoon"
 msgid "Superhuman"
 msgstr "Bovenmenselijk"
 
-#: client/battlescape/cl_actor.c:697
+#: client/battlescape/cl_actor.c:696
 msgid "This isn't your round\n"
 msgstr "Dit is niet uw ronde\n"
 
-#: client/battlescape/cl_actor.c:959
+#: client/battlescape/cl_actor.c:958
 msgid "You cannot reload this unknown item.\n"
 msgstr "U kunt dit onbekende onderdeel niet herladen.\n"
 
-#: client/battlescape/cl_actor.c:1811
+#: client/battlescape/cl_actor.c:1802
 msgid "Unknown alien race"
 msgstr "Onbekend buitenaards ras"
 
-#: client/battlescape/cl_actor.c:2500
+#: client/battlescape/cl_actor.c:2491
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "Wissel naar de volgende soldaat"
 
-#: client/battlescape/cl_actor.c:2501
+#: client/battlescape/cl_actor.c:2492
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "Kies een soldaat van de lijst"
 
-#: client/battlescape/cl_actor.c:2502
+#: client/battlescape/cl_actor.c:2493
 #, fuzzy
 msgid "Update an actor"
 msgstr "Hernoem uw soldaat"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2495
 msgid "Toggle stand/crounch"
 msgstr "Wissel staan/sluipen"
 
-#: client/battlescape/cl_actor.c:2505
+#: client/battlescape/cl_actor.c:2496
 msgid "Toggle the headgear"
 msgstr "Wissel tussen de hoofddeksels"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2497
 msgid "Opens or closes a door"
 msgstr "Opent of sluit een deur"
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2498
 msgid "Confirm the current action"
 msgstr "Bevestig de huidige actie"
 
-#: client/battlescape/cl_actor.c:2508
+#: client/battlescape/cl_actor.c:2499
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Wissel naar de volgende zichtbare buitenaardse voor de gekozen persoon."
 
-#: client/battlescape/cl_actor.c:2510
+#: client/battlescape/cl_actor.c:2501
 msgid "Toggle to next alien"
 msgstr "Wissel naar de volgende buitenaardse"
 
@@ -9421,7 +9433,7 @@ msgstr "laadt %s"
 msgid "loading models..."
 msgstr "laadt modellen..."
 
-#: client/battlescape/cl_view.c:118 client/cl_main.c:971
+#: client/battlescape/cl_view.c:118 client/cl_main.c:973
 msgid "Awaiting game start"
 msgstr "Wacht op begin van het spel"
 
@@ -9429,59 +9441,59 @@ msgstr "Wacht op begin van het spel"
 msgid "Ends current round"
 msgstr "Beëindigd huidige ronde"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
+#: client/battlescape/events/event/actor/e_event_actorappear.c:158
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "Vijand gesignaleerd: %s!"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
+#: client/battlescape/events/event/actor/e_event_actorappear.c:161
 msgid "Enemy spotted!\n"
 msgstr "Vijand gesignaleerd!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
+#: client/battlescape/events/event/actor/e_event_actorappear.c:163
 msgid "Civilian spotted!\n"
 msgstr "Burger gesignaleerd!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
+#: client/battlescape/events/event/actor/e_event_actordie.c:79
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s werd verdoofd\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:82
+#: client/battlescape/events/event/actor/e_event_actordie.c:81
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s werd gedood\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
+#: client/battlescape/events/event/actor/e_event_actordie.c:89
 msgid "A civilian was stunned.\n"
 msgstr "Een burger werd verdoofd.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:92
+#: client/battlescape/events/event/actor/e_event_actordie.c:91
 msgid "A civilian was killed.\n"
 msgstr "Een burger werd gedood.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
+#: client/battlescape/events/event/actor/e_event_actordie.c:95
 msgid "An alien was stunned.\n"
 msgstr "Een buitenaardse werd verdoofd.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:98
+#: client/battlescape/events/event/actor/e_event_actordie.c:97
 msgid "An alien was killed.\n"
 msgstr "Een buitenaardse werd gedood.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
+#: client/battlescape/events/event/actor/e_event_actordie.c:101
 msgid "A soldier was stunned.\n"
 msgstr "Een soldaat werd verdoofd.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:104
+#: client/battlescape/events/event/actor/e_event_actordie.c:103
 msgid "A soldier was killed.\n"
 msgstr "Een soldaat werd gedood.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
+#: client/battlescape/events/event/actor/e_event_actordie.c:107
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Een lid van van team %i werd verdoofd.\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:110
+#: client/battlescape/events/event/actor/e_event_actordie.c:109
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Een lid van team %i werd gedood.\n"
@@ -12275,7 +12287,7 @@ msgstr "Aantal soldaten per speler lager dan het aantal soldaten per team"
 msgid "Settings doesn't make sense"
 msgstr "Instellingen zijn vreemd"
 
-#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:147
+#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:151
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -12285,7 +12297,7 @@ msgstr ""
 "\n"
 "Geen overlevenden over aan enige kant."
 
-#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:148
+#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:152
 msgid "Game Drawn!"
 msgstr "Gelijkspel!"
 
@@ -12302,19 +12314,19 @@ msgstr ""
 "Vijanden gedood:  %i\n"
 "Overlevenden van het team:  %i"
 
-#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:170
+#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:174
 msgid "You won the game!"
 msgstr "U hebt het spel gewonnen!"
 
-#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:171
+#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:175
 msgid "Congratulations"
 msgstr "Gefeliciteerd"
 
-#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:173
+#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:177
 msgid "You've lost the game!"
 msgstr "U hebt het spel verloren!"
 
-#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:174
+#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:178
 msgid "Better luck next time"
 msgstr "Volgende keer beter"
 
@@ -12322,7 +12334,7 @@ msgstr "Volgende keer beter"
 msgid "all"
 msgstr "alle"
 
-#: client/cl_game_skirmish.c:161
+#: client/cl_game_skirmish.c:165
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -12468,7 +12480,7 @@ msgstr "Script bestanden zijn niet hetzelfde"
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Lokale spelversie (%s) is anders dan die van de servers (%s)"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:857
 msgid "Target your shot to the ground"
 msgstr "Schiet het schot naar de grond"
 
@@ -12482,31 +12494,31 @@ msgstr "Haalt op [%s]"
 msgid "Loading Map [%s]"
 msgstr "Laadt Kaart [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:335 client/cl_team.c:346
+#: client/cl_team.c:50 client/cl_team.c:344 client/cl_team.c:355
 msgid "Urban"
 msgstr "Stads"
 
-#: client/cl_team.c:52 client/cl_team.c:336 client/cl_team.c:347
+#: client/cl_team.c:52 client/cl_team.c:345 client/cl_team.c:356
 msgid "Jungle"
 msgstr "Jungle"
 
-#: client/cl_team.c:54 client/cl_team.c:337 client/cl_team.c:348
+#: client/cl_team.c:54 client/cl_team.c:346 client/cl_team.c:357
 msgid "Desert"
 msgstr "Woestijn"
 
-#: client/cl_team.c:56 client/cl_team.c:338 client/cl_team.c:349
+#: client/cl_team.c:56 client/cl_team.c:347 client/cl_team.c:358
 msgid "Arctic"
 msgstr "Arctisch"
 
-#: client/cl_team.c:58 client/cl_team.c:350
+#: client/cl_team.c:58 client/cl_team.c:359
 msgid "Yellow"
 msgstr "Geel"
 
-#: client/cl_team.c:60 client/cl_team.c:351
+#: client/cl_team.c:60 client/cl_team.c:360
 msgid "CCCP"
 msgstr "Sovjetunie"
 
-#: client/cl_team.c:454
+#: client/cl_team.c:463
 msgid "Update the GUI with the selected item"
 msgstr "Waardeer de GUI op met het selecteerde onderdeel"
 
@@ -12787,11 +12799,11 @@ msgstr "NieuwTeam"
 msgid "Error saving team. Check free disk space!"
 msgstr "Fout bij opslaan van team. Controleer vrije schijfruimte!"
 
-#: game/g_actor.c:408
+#: game/g_actor.c:411
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Kon acite niet uitvoeren - niet genoeg TE's!\n"
 
-#: game/g_actor.c:412
+#: game/g_actor.c:415
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Kon actie niet uitvoeren - wapen is al volledig geladen met dezelfde munitie!\n"
 
@@ -13003,9 +13015,6 @@ msgstr "Aan het spelen"
 #, fuzzy
 #~ msgid "Can't activate reaction fire.\n"
 #~ msgstr "Enkel schot reactievuur"
-
-#~ msgid "Reselect the current soldier"
-#~ msgstr "Herkies de huidige soldaat"
 
 #, fuzzy
 #~ msgid "No weapon in right hand."

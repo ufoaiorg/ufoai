@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-23 16:21+0200\n"
+"POT-Creation-Date: 2010-05-08 17:51+0200\n"
 "PO-Revision-Date: 2009-03-27 18:25+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Africa"
 msgstr "非洲"
 
-#: ../base/maps/alienbase.ump:170
+#: ../base/maps/alienbase.ump:224 ../base/maps/alienbase.ump:256
 msgid "Alienbase"
 msgstr "外星人基地"
 
@@ -1917,7 +1917,7 @@ msgstr "费城"
 msgid "Phnom Penh"
 msgstr "金边"
 
-#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1644
+#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1654
 msgid "Phoenix"
 msgstr "凤凰"
 
@@ -3407,23 +3407,23 @@ msgstr "公园。"
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr "UFO坠落残骸。"
 
-#: ../base/ufos/maps.ufo:3479
+#: ../base/ufos/maps.ufo:3478
 msgid "A fuel depot the aliens try to destroy."
 msgstr "油库。"
 
-#: ../base/ufos/maps.ufo:3518
+#: ../base/ufos/maps.ufo:3517
 msgid "Wilderness terror mission."
 msgstr "荒野。"
 
-#: ../base/ufos/maps.ufo:3564
+#: ../base/ufos/maps.ufo:3563
 msgid "UFO Crashsite."
 msgstr "UFO坠落现场。"
 
-#: ../base/ufos/maps.ufo:3595
+#: ../base/ufos/maps.ufo:3594
 msgid "An alien base."
 msgstr "一个外星人基地。"
 
-#: ../base/ufos/maps.ufo:3610
+#: ../base/ufos/maps.ufo:3609
 msgid "Base is under attack."
 msgstr "基地受到攻击。"
 
@@ -3435,22 +3435,22 @@ msgstr "交叉路口"
 msgid "Coin"
 msgstr "硬币"
 
-#: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:567
+#: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:577
 #: client/campaign/cp_employee.c:166
 msgid "Scientist"
 msgstr "研究员"
 
-#: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:923
+#: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:933
 #: client/campaign/cp_employee.c:170
 msgid "Pilot"
 msgstr "飞行员"
 
-#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1641
-#: ../base/ufos/team_humans.ufo:1666 client/campaign/cp_employee.c:172
+#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1651
+#: ../base/ufos/team_humans.ufo:1676 client/campaign/cp_employee.c:172
 msgid "UGV"
 msgstr "无人战车"
 
-#: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1281
+#: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1291
 #: client/campaign/cp_employee.c:168
 msgid "Worker"
 msgstr "工人"
@@ -3650,7 +3650,7 @@ msgstr "基地设施"
 msgid "Research Reports"
 msgstr "研究报告"
 
-#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:67
+#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:96
 #: ../base/ufos/ui/skirmish.ufo:87 ../base/ufos/ui/transfer.ufo:35
 #: ../base/ufos/ui/transfer.ufo:45 ../base/ufos/ui/transfer.ufo:612
 msgid "Equipment"
@@ -8377,7 +8377,7 @@ msgstr ""
 "\n"
 "康纳博士"
 
-#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1647
 msgid "Phoenix UGV"
 msgstr "凤凰 无人战车"
 
@@ -8389,7 +8389,7 @@ msgstr "ugv_phoenix_txt"
 msgid "ugv_phoenix_pre_txt"
 msgstr "没有可用的资料。"
 
-#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1672
 msgid "Ares W (UGV)"
 msgstr "战神 W (无人战车)"
 
@@ -9857,7 +9857,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "用键盘1-8键或者TAB切换"
 
 #: ../base/ufos/seq_tutorials.ufo:474
-#: ../base/ufos/ui/aircraft_soldiers.ufo:514
+#: ../base/ufos/ui/aircraft_soldiers.ufo:370
 msgid "Physical stats"
 msgstr "生命状态"
 
@@ -9995,15 +9995,15 @@ msgstr ""
 msgid "Taman"
 msgstr "Taman"
 
-#: ../base/ufos/team_aliens.ufo:99
+#: ../base/ufos/team_aliens.ufo:113
 msgid "Ortnok"
 msgstr "Ortnok"
 
-#: ../base/ufos/team_aliens.ufo:181
+#: ../base/ufos/team_aliens.ufo:197
 msgid "Shevaar"
 msgstr "Shevaar"
 
-#: ../base/ufos/team_aliens.ufo:225
+#: ../base/ufos/team_aliens.ufo:241
 msgid "Bloodspider"
 msgstr "血蜘蛛"
 
@@ -10011,7 +10011,7 @@ msgstr "血蜘蛛"
 msgid "Phalanx"
 msgstr ""
 
-#: ../base/ufos/team_humans.ufo:1669
+#: ../base/ufos/team_humans.ufo:1679
 msgid "Ares W"
 msgstr "战神 W"
 
@@ -10284,57 +10284,61 @@ msgstr "你可以按[Enter]来结束你的回合。"
 msgid "Check to use this firemode for reaction fire"
 msgstr "使用此攻击方式为自动反应攻击方式"
 
-#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:209
+#: ../base/ufos/ui/_menu.ufo:116 ../base/ufos/ui/geoscape.ufo:209
 #: ../base/ufos/ui/hospital.ufo:70
 msgid "CREDITS"
 msgstr "资金"
 
-#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:218
+#: ../base/ufos/ui/_menu.ufo:124 ../base/ufos/ui/geoscape.ufo:218
 #: ../base/ufos/ui/hospital.ufo:78
 msgid "Organisation capital"
 msgstr "合计资金"
 
-#: ../base/ufos/ui/_menu.ufo:121 ../base/ufos/ui/hospital.ufo:88
+#: ../base/ufos/ui/_menu.ufo:133 ../base/ufos/ui/hospital.ufo:88
 msgid "Back to baseview"
 msgstr "返回基地浏览窗口"
 
-#: ../base/ufos/ui/_menu.ufo:139 ../base/ufos/ui/bases.ufo:20
+#: ../base/ufos/ui/_menu.ufo:151 ../base/ufos/ui/bases.ufo:20
 #: ../base/ufos/ui/hospital.ufo:59
 msgid "Name of this base"
 msgstr "本基地名称"
 
-#: ../base/ufos/ui/_menu.ufo:163 ../base/ufos/ui/transfer.ufo:594
+#: ../base/ufos/ui/_menu.ufo:177 ../base/ufos/ui/transfer.ufo:594
 #: client/campaign/cp_installation_callbacks.c:224
 msgid "Cancel"
 msgstr "取消"
 
-#: ../base/ufos/ui/_menu.ufo:164 ../base/ufos/ui/geoscape.ufo:1298
+#: ../base/ufos/ui/_menu.ufo:178 ../base/ufos/ui/geoscape.ufo:1298
 #: ../base/ufos/ui/geoscape.ufo:1511 ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "关闭窗口"
 
-#: ../base/ufos/ui/aircraft.ufo:58 ../base/ufos/ui/ufopedia.ufo:79
+#: ../base/ufos/ui/aircraft.ufo:12 ../base/ufos/ui/aircraft_soldiers.ufo:72
+msgid "Add/remove this soldier"
+msgstr "搭载/移除此士兵"
+
+#: ../base/ufos/ui/aircraft.ufo:87 ../base/ufos/ui/ufopedia.ufo:79
 msgid "Description"
 msgstr "描述"
 
-#: ../base/ufos/ui/aircraft.ufo:62 ../base/ufos/ui/hire.ufo:494
+#: ../base/ufos/ui/aircraft.ufo:91 ../base/ufos/ui/hire.ufo:494
 msgid "Pilots"
 msgstr "飞行员"
 
-#: ../base/ufos/ui/aircraft.ufo:71
+#: ../base/ufos/ui/aircraft.ufo:100
 msgid "Tanks"
 msgstr "坦克"
 
-#: ../base/ufos/ui/aircraft.ufo:77 ../base/ufos/ui/hire.ufo:489
+#: ../base/ufos/ui/aircraft.ufo:106 ../base/ufos/ui/hire.ufo:489
 msgid "Soldiers"
 msgstr "士兵"
 
-#: ../base/ufos/ui/aircraft.ufo:82
+#: ../base/ufos/ui/aircraft.ufo:111
 msgid "Soldier equipment"
 msgstr "士兵装备"
 
-#: ../base/ufos/ui/aircraft.ufo:136
+#: ../base/ufos/ui/aircraft.ufo:165
 msgid "Rename aircraft"
 msgstr "重新命名航空机"
 
@@ -10402,7 +10406,7 @@ msgid "Select this slot"
 msgstr "选择此部位"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
-#: ../base/ufos/ui/aircraft_soldiers.ufo:58
+#: ../base/ufos/ui/aircraft_soldiers.ufo:121
 msgid "Team Members:"
 msgstr "搭乘人数："
 
@@ -10414,156 +10418,150 @@ msgstr "出航"
 msgid "Call back"
 msgstr "航空机返回"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:124
+#: ../base/ufos/ui/aircraft_pilots.ufo:11
+#, fuzzy
+msgid "Add/remove this pilot"
+msgstr "搭载/移除此士兵"
+
+#: ../base/ufos/ui/aircraft_pilots.ufo:144
 msgid "Pilot is assigned to another craft"
 msgstr "飞行员已指派给另一架航空机"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:142
+#: ../base/ufos/ui/aircraft_pilots.ufo:162
 msgid "A pilot is already assigned to this craft"
 msgstr "此航空机已有飞行员。"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:144
+#: ../base/ufos/ui/aircraft_pilots.ufo:164
 msgid "Assign pilot to this craft"
 msgstr "指派此飞行员操控这架航空机"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:155
+#: ../base/ufos/ui/aircraft_pilots.ufo:175
 msgid "Remove pilot from this craft"
 msgstr "飞行员下岗待业"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:198
-#: ../base/ufos/ui/aircraft_pilots.ufo:208
-#: ../base/ufos/ui/aircraft_pilots.ufo:218
-#: ../base/ufos/ui/aircraft_pilots.ufo:228
-#: ../base/ufos/ui/aircraft_pilots.ufo:238
-#: ../base/ufos/ui/aircraft_pilots.ufo:248
-#: ../base/ufos/ui/aircraft_pilots.ufo:258
-#: ../base/ufos/ui/aircraft_pilots.ufo:268
-msgid "Add/remove this soldier"
-msgstr "搭载/移除此士兵"
-
-#: ../base/ufos/ui/aircraft_soldiers.ufo:80
-#: ../base/ufos/ui/aircraft_soldiers.ufo:692 ../base/ufos/ui/geoscape.ufo:769
+#: ../base/ufos/ui/aircraft_soldiers.ufo:143
+#: ../base/ufos/ui/aircraft_soldiers.ufo:556 ../base/ufos/ui/geoscape.ufo:769
 msgid "Equip soldiers"
 msgstr "装备士兵"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:108
+#: ../base/ufos/ui/aircraft_soldiers.ufo:171
 msgid "Soldier is assigned to another craft"
 msgstr "士兵已搭载另一架航空机"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:127
+#: ../base/ufos/ui/aircraft_soldiers.ufo:190
 msgid "No more soldiers can be assigned to this craft"
 msgstr "航空机已满员无法搭载更多的人了。"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:129
+#: ../base/ufos/ui/aircraft_soldiers.ufo:192
 msgid "Assign soldier to this craft"
 msgstr "指派该士兵搭载此航空机。"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:140
+#: ../base/ufos/ui/aircraft_soldiers.ufo:203
 msgid "Remove soldier from this craft"
 msgstr "不搭载此航空机"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:150
+#: ../base/ufos/ui/aircraft_soldiers.ufo:213
 msgid "Soldier carries equipment"
 msgstr "携带有装备"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:159
+#: ../base/ufos/ui/aircraft_soldiers.ufo:222
 msgid "Soldier carries no equipment"
 msgstr "没有携带装备"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:518
+#: ../base/ufos/ui/aircraft_soldiers.ufo:374
 #, fuzzy
 msgid "Missions info"
 msgstr "任务"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:536 ../base/ufos/ui/equipment.ufo:483
+#: ../base/ufos/ui/aircraft_soldiers.ufo:392 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "体力："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:492
+#: ../base/ufos/ui/aircraft_soldiers.ufo:401 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
-#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1147
+#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1170
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "速度："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:552 ../base/ufos/ui/equipment.ufo:501
+#: ../base/ufos/ui/aircraft_soldiers.ufo:410 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "精度："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:560 ../base/ufos/ui/equipment.ufo:510
+#: ../base/ufos/ui/aircraft_soldiers.ufo:419 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "精神力："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:568 ../base/ufos/ui/equipment.ufo:519
+#: ../base/ufos/ui/aircraft_soldiers.ufo:428 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "近距离作战："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:577 ../base/ufos/ui/equipment.ufo:528
+#: ../base/ufos/ui/aircraft_soldiers.ufo:438 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "大型武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:586 ../base/ufos/ui/equipment.ufo:537
+#: ../base/ufos/ui/aircraft_soldiers.ufo:448 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
 msgstr "射击武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:595 ../base/ufos/ui/equipment.ufo:546
+#: ../base/ufos/ui/aircraft_soldiers.ufo:458 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "阻击武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:604 ../base/ufos/ui/equipment.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:468 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
 msgstr "爆破武器："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:617 ../base/ufos/ui/hire.ufo:383
+#: ../base/ufos/ui/aircraft_soldiers.ufo:481 ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
 msgstr "生命力："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:639
+#: ../base/ufos/ui/aircraft_soldiers.ufo:503
 #, fuzzy
 msgid "Missions performed:"
 msgstr "任务参加数："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:642
+#: ../base/ufos/ui/aircraft_soldiers.ufo:506
 #, fuzzy
 msgid "Enemies killed:"
 msgstr "杀敌数："
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:645
+#: ../base/ufos/ui/aircraft_soldiers.ufo:509
 #, fuzzy
 msgid "Civilians killed:"
 msgstr "有个平民被杀了。\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:648
+#: ../base/ufos/ui/aircraft_soldiers.ufo:512
 #, fuzzy
 msgid "Our team killed:"
 msgstr "%s 被杀了\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:661
+#: ../base/ufos/ui/aircraft_soldiers.ufo:525
 msgid "Assign tanks"
 msgstr "分配坦克"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:665
+#: ../base/ufos/ui/aircraft_soldiers.ufo:529
 msgid "Assign soldiers"
 msgstr "分配士兵"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:695
+#: ../base/ufos/ui/aircraft_soldiers.ufo:559
 msgid "No soldiers assigned"
 msgstr "没有士兵可以分配"
 
@@ -10669,7 +10667,7 @@ msgstr "点击遍历发现的敌人"
 msgid "Finish round"
 msgstr "回合结束"
 
-#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:893
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:897
 msgid "Multiple-shot reaction fire"
 msgstr "预留多次自动反应攻击模式"
 
@@ -10677,7 +10675,7 @@ msgstr "预留多次自动反应攻击模式"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "预留多次自动反应攻击模式（无法实现）"
 
-#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:905
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:909
 msgid "One-shot reaction fire"
 msgstr "预留一次自动反应攻击模式"
 
@@ -10685,11 +10683,11 @@ msgstr "预留一次自动反应攻击模式"
 msgid "One-shot reaction fire (not possible)"
 msgstr "预留一次自动反应攻击模式 （无法实现）"
 
-#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:917
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:921
 msgid "No reaction fire"
 msgstr "无自动反应"
 
-#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:873
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:877
 #: client/battlescape/cl_hud.c:814
 msgid "Reserve TUs for shooting."
 msgstr "为射击保留活动时间。"
@@ -11221,7 +11219,7 @@ msgstr "新基地"
 #: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
 #: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:357
-#: ../base/ufos/ui/options.ufo:750
+#: ../base/ufos/ui/options.ufo:773
 msgid "Name:"
 msgstr "名称："
 
@@ -11482,11 +11480,11 @@ msgstr "首选进攻模式"
 msgid "Physical stats of this soldier"
 msgstr "士兵身体状况"
 
-#: ../base/ufos/ui/hud.ufo:899
+#: ../base/ufos/ui/hud.ufo:903
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "预留多次自动反应攻击模式 （无法实现）"
 
-#: ../base/ufos/ui/hud.ufo:911
+#: ../base/ufos/ui/hud.ufo:915
 msgid "One-shot reaction fire (Not possible)"
 msgstr "预留一次自动反应攻击模式 （无法实现）"
 
@@ -11658,15 +11656,15 @@ msgstr "初始化"
 msgid "User Information"
 msgstr "玩家信息"
 
-#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:574
+#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:597
 msgid "Volume Control"
 msgstr "音量"
 
-#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:580
+#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:603
 msgid "Effects:"
 msgstr "效果："
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:601
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:624
 msgid "Music:"
 msgstr "音乐："
 
@@ -11674,7 +11672,7 @@ msgstr "音乐："
 msgid "Language"
 msgstr "语言"
 
-#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:798
+#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:821
 msgid "Language:"
 msgstr "语言："
 
@@ -11956,7 +11954,7 @@ msgstr "IP地址"
 msgid "Bookmarks"
 msgstr "收藏"
 
-#: ../base/ufos/ui/multiplayer.ufo:511 ../base/ufos/ui/skirmish.ufo:264
+#: ../base/ufos/ui/multiplayer.ufo:511
 msgid "Map"
 msgstr "地图"
 
@@ -11988,7 +11986,7 @@ msgstr "地图名称："
 msgid "Allowed gametype:"
 msgstr "可用游戏模式："
 
-#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:131
+#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:274
 msgid "Day version:"
 msgstr "是否是白天："
 
@@ -12024,7 +12022,7 @@ msgstr "在团队模式下一个队伍最多允许多少个士兵"
 msgid "Max. human players per team:"
 msgstr "一个队伍最多玩家数："
 
-#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:131
 msgid "Max. AI actors:"
 msgstr "AI最多数量："
 
@@ -12185,16 +12183,16 @@ msgstr "新建"
 msgid "Save the current team"
 msgstr "保留当前团队"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:176
+#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:186
 msgid "Team:"
 msgstr "队伍："
 
-#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:190
+#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:200
 #: client/cl_game_campaign.c:198
 msgid "Human"
 msgstr "人类"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:194
+#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:204
 msgid "Alien"
 msgstr "外星人"
 
@@ -12310,208 +12308,212 @@ msgstr "用4:3比例扩展屏幕"
 msgid "Enable post-processing shader effects:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:441 ../base/ufos/ui/options.ufo:466
+#: ../base/ufos/ui/options.ufo:435
+msgid "Max dynamic lights allowed:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:464 ../base/ufos/ui/options.ufo:489
 msgid "Low"
 msgstr "低"
 
-#: ../base/ufos/ui/options.ufo:445 ../base/ufos/ui/options.ufo:470
+#: ../base/ufos/ui/options.ufo:468 ../base/ufos/ui/options.ufo:493
 msgid "Medium"
 msgstr "中"
 
-#: ../base/ufos/ui/options.ufo:449 ../base/ufos/ui/options.ufo:474
+#: ../base/ufos/ui/options.ufo:472 ../base/ufos/ui/options.ufo:497
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "一般"
 
-#: ../base/ufos/ui/options.ufo:453 ../base/ufos/ui/options.ufo:478
+#: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:501
 msgid "High"
 msgstr "高"
 
-#: ../base/ufos/ui/options.ufo:482 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:505 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "优秀"
 
-#: ../base/ufos/ui/options.ufo:486
+#: ../base/ufos/ui/options.ufo:509
 msgid "Extreme"
 msgstr "极致"
 
-#: ../base/ufos/ui/options.ufo:509
+#: ../base/ufos/ui/options.ufo:532
 #, fuzzy
 msgid "All ratios"
 msgstr "基站"
 
-#: ../base/ufos/ui/options.ufo:533
+#: ../base/ufos/ui/options.ufo:556
 #, fuzzy
 msgid "Others"
 msgstr "其它"
 
-#: ../base/ufos/ui/options.ufo:565
+#: ../base/ufos/ui/options.ufo:588
 msgid "Sound settings"
 msgstr "声音设定"
 
-#: ../base/ufos/ui/options.ufo:622
+#: ../base/ufos/ui/options.ufo:645
 msgid "Sound rate:"
 msgstr "声效频率："
 
-#: ../base/ufos/ui/options.ufo:628
+#: ../base/ufos/ui/options.ufo:651
 msgid "Restart sound to change the settings"
 msgstr "应用声音设定"
 
-#: ../base/ufos/ui/options.ufo:664
+#: ../base/ufos/ui/options.ufo:687
 msgid "Enable sound:"
 msgstr "开启音效："
 
-#: ../base/ufos/ui/options.ufo:690
+#: ../base/ufos/ui/options.ufo:713
 msgid "Show key bindings"
 msgstr "显示快捷键设定"
 
-#: ../base/ufos/ui/options.ufo:738
+#: ../base/ufos/ui/options.ufo:761
 msgid "Game settings"
 msgstr "游戏设定"
 
-#: ../base/ufos/ui/options.ufo:772
+#: ../base/ufos/ui/options.ufo:795
 msgid "HUD Design:"
 msgstr "战斗界面："
 
-#: ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/options.ufo:807
 msgid "Original HUD"
 msgstr "原始"
 
-#: ../base/ufos/ui/options.ufo:788
+#: ../base/ufos/ui/options.ufo:811
 msgid "Alternative HUD"
 msgstr "另一种"
 
-#: ../base/ufos/ui/options.ufo:836
+#: ../base/ufos/ui/options.ufo:859
 msgid "Tooltips:"
 msgstr "提示："
 
-#: ../base/ufos/ui/options.ufo:843
+#: ../base/ufos/ui/options.ufo:866
 msgid "Activates tooltips"
 msgstr "显示提示"
 
-#: ../base/ufos/ui/options.ufo:854
+#: ../base/ufos/ui/options.ufo:877
 msgid "Centre view:"
 msgstr "中心视角："
 
-#: ../base/ufos/ui/options.ufo:861
+#: ../base/ufos/ui/options.ufo:884
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "按选择的士兵为中心，操作射击"
 
-#: ../base/ufos/ui/options.ufo:872
+#: ../base/ufos/ui/options.ufo:895
 msgid "Cursor tooltips:"
 msgstr "鼠标提示："
 
-#: ../base/ufos/ui/options.ufo:879
+#: ../base/ufos/ui/options.ufo:902
 msgid "Activates cursor tooltips"
 msgstr "激活动态提示"
 
-#: ../base/ufos/ui/options.ufo:890
+#: ../base/ufos/ui/options.ufo:913
 msgid "3D Geoscape:"
 msgstr "3D 地球："
 
-#: ../base/ufos/ui/options.ufo:897
+#: ../base/ufos/ui/options.ufo:920
 msgid "Use 3D geoscape"
 msgstr "使用三维地球"
 
-#: ../base/ufos/ui/options.ufo:908
+#: ../base/ufos/ui/options.ufo:931
 msgid "3D Geoscape ambient lighting:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:933
+#: ../base/ufos/ui/options.ufo:956
 msgid "Show tip of the day:"
 msgstr "显示每日技巧："
 
-#: ../base/ufos/ui/options.ufo:951
+#: ../base/ufos/ui/options.ufo:974
 msgid "Precache models:"
 msgstr "缓冲模式："
 
-#: ../base/ufos/ui/options.ufo:958
+#: ../base/ufos/ui/options.ufo:981
 msgid "Precache models (faster menus)"
 msgstr "缓冲模式（快速菜单）"
 
-#: ../base/ufos/ui/options.ufo:969
+#: ../base/ufos/ui/options.ufo:992
 msgid "Actor speed:"
 msgstr "人物移动速度："
 
-#: ../base/ufos/ui/options.ufo:1003
+#: ../base/ufos/ui/options.ufo:1026
 msgid "Input settings"
 msgstr "操作设置"
 
-#: ../base/ufos/ui/options.ufo:1015
+#: ../base/ufos/ui/options.ufo:1038
 msgid "Camera"
 msgstr "视角"
 
-#: ../base/ufos/ui/options.ufo:1021
+#: ../base/ufos/ui/options.ufo:1044
 msgid "Scroll Speed:"
 msgstr "卷动速度："
 
-#: ../base/ufos/ui/options.ufo:1046
+#: ../base/ufos/ui/options.ufo:1069
 msgid "Rotation Speed:"
 msgstr "旋转速度："
 
-#: ../base/ufos/ui/options.ufo:1071
+#: ../base/ufos/ui/options.ufo:1094
 msgid "Move Acceleration:"
 msgstr "移动速度："
 
-#: ../base/ufos/ui/options.ufo:1096
+#: ../base/ufos/ui/options.ufo:1119
 msgid "Joystick settings:"
 msgstr "游戏杆设定："
 
-#: ../base/ufos/ui/options.ufo:1103
+#: ../base/ufos/ui/options.ufo:1126
 msgid "Enable:"
 msgstr "启用："
 
-#: ../base/ufos/ui/options.ufo:1111
+#: ../base/ufos/ui/options.ufo:1134
 msgid "Enables/Disables Joysticks"
 msgstr "切换游戏柄"
 
-#: ../base/ufos/ui/options.ufo:1122
+#: ../base/ufos/ui/options.ufo:1145
 msgid "Threshold:"
 msgstr "阈值："
 
-#: ../base/ufos/ui/options.ufo:1172
+#: ../base/ufos/ui/options.ufo:1195
 msgid "Keys"
 msgstr "快捷键"
 
-#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:99
+#: ../base/ufos/ui/options.ufo:1210 client/battlescape/cl_hud.c:99
 msgid "Autostand"
 msgstr "自动站立"
 
-#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
+#: ../base/ufos/ui/options.ufo:1222 ../base/ufos/ui/options.ufo:1248
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "是"
 
-#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
+#: ../base/ufos/ui/options.ufo:1226 ../base/ufos/ui/options.ufo:1252
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "否"
 
-#: ../base/ufos/ui/options.ufo:1213
+#: ../base/ufos/ui/options.ufo:1236
 msgid "Confirm Actions:"
 msgstr "操作确认："
 
-#: ../base/ufos/ui/options.ufo:1233
+#: ../base/ufos/ui/options.ufo:1256
 msgid "Only for moving"
 msgstr "移动的时候确认"
 
-#: ../base/ufos/ui/options.ufo:1243
+#: ../base/ufos/ui/options.ufo:1266
 msgid "Joystick:"
 msgstr "游戏杆："
 
-#: ../base/ufos/ui/options.ufo:1276
+#: ../base/ufos/ui/options.ufo:1299
 msgid "Maintain resolution"
 msgstr "解析度调整"
 
-#: ../base/ufos/ui/options.ufo:1286
+#: ../base/ufos/ui/options.ufo:1309
 msgid "Want To Maintain resolution"
 msgstr "调整解析度"
 
-#: ../base/ufos/ui/options.ufo:1293
+#: ../base/ufos/ui/options.ufo:1316
 msgid "Accept"
 msgstr "接受"
 
-#: ../base/ufos/ui/options.ufo:1294
+#: ../base/ufos/ui/options.ufo:1317
 msgid "Change the resolution"
 msgstr "改变分辨率"
 
@@ -12604,27 +12606,37 @@ msgstr "战斗模式设定"
 msgid "Equipment AI"
 msgstr "设定AI"
 
-#: ../base/ufos/ui/skirmish.ufo:151
+#: ../base/ufos/ui/skirmish.ufo:134
 msgid "Max AI actors for this game"
 msgstr "AI 满员"
 
-#: ../base/ufos/ui/skirmish.ufo:179
+#: ../base/ufos/ui/skirmish.ufo:158
+#, fuzzy
+msgid "Max. soldiers:"
+msgstr "最大士兵数：\t%i\n"
+
+#: ../base/ufos/ui/skirmish.ufo:159
+#, fuzzy
+msgid "Sets the amount of soldiers"
+msgstr "重新选择士兵"
+
+#: ../base/ufos/ui/skirmish.ufo:189
 msgid "Select which side you want to play with"
 msgstr "选择你要扮演的阵营"
 
-#: ../base/ufos/ui/skirmish.ufo:213
+#: ../base/ufos/ui/skirmish.ufo:223
 msgid "UFO:"
 msgstr "UFO:"
 
-#: ../base/ufos/ui/skirmish.ufo:216
+#: ../base/ufos/ui/skirmish.ufo:226
 msgid "Select the ufo that should be used"
 msgstr "选择UFO型号"
 
-#: ../base/ufos/ui/skirmish.ufo:243
+#: ../base/ufos/ui/skirmish.ufo:253
 msgid "Dropship:"
 msgstr "登陆机："
 
-#: ../base/ufos/ui/skirmish.ufo:246
+#: ../base/ufos/ui/skirmish.ufo:256
 msgid "Select the dropship that should be used"
 msgstr "选择使用的登陆机"
 
@@ -13277,51 +13289,51 @@ msgstr "杰出"
 msgid "Superhuman"
 msgstr "超人"
 
-#: client/battlescape/cl_actor.c:697
+#: client/battlescape/cl_actor.c:696
 msgid "This isn't your round\n"
 msgstr "这不是你的回合\n"
 
-#: client/battlescape/cl_actor.c:959
+#: client/battlescape/cl_actor.c:958
 msgid "You cannot reload this unknown item.\n"
 msgstr "不能装载未知物品。\n"
 
-#: client/battlescape/cl_actor.c:1811
+#: client/battlescape/cl_actor.c:1802
 msgid "Unknown alien race"
 msgstr "未知外星人种类"
 
-#: client/battlescape/cl_actor.c:2500
+#: client/battlescape/cl_actor.c:2491
 msgid "Toggle to next actor"
 msgstr "切换下一个士兵"
 
-#: client/battlescape/cl_actor.c:2501
+#: client/battlescape/cl_actor.c:2492
 msgid "Select an actor from list"
 msgstr "从列表里选择一个士兵"
 
-#: client/battlescape/cl_actor.c:2502
+#: client/battlescape/cl_actor.c:2493
 msgid "Update an actor"
 msgstr "更新一个士兵"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2495
 msgid "Toggle stand/crounch"
 msgstr "切换站姿/蹲姿"
 
-#: client/battlescape/cl_actor.c:2505
+#: client/battlescape/cl_actor.c:2496
 msgid "Toggle the headgear"
 msgstr "切换护目镜"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2497
 msgid "Opens or closes a door"
 msgstr "开关一扇门"
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2498
 msgid "Confirm the current action"
 msgstr "确认当前的操作"
 
-#: client/battlescape/cl_actor.c:2508
+#: client/battlescape/cl_actor.c:2499
 msgid "Toggle to next alien visible from selected actor."
 msgstr "切换当前选定士兵可见的外星人"
 
-#: client/battlescape/cl_actor.c:2510
+#: client/battlescape/cl_actor.c:2501
 msgid "Toggle to next alien"
 msgstr "切换下一个外星人"
 
@@ -13587,7 +13599,7 @@ msgstr "加载 %s"
 msgid "loading models..."
 msgstr "模块读取"
 
-#: client/battlescape/cl_view.c:118 client/cl_main.c:971
+#: client/battlescape/cl_view.c:118 client/cl_main.c:973
 msgid "Awaiting game start"
 msgstr "等待游戏开始"
 
@@ -13595,59 +13607,59 @@ msgstr "等待游戏开始"
 msgid "Ends current round"
 msgstr "结束当前回合"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
+#: client/battlescape/events/event/actor/e_event_actorappear.c:158
 #, c-format
 msgid "Enemy spotted: %s!"
 msgstr "发现敌人: %s！"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
+#: client/battlescape/events/event/actor/e_event_actorappear.c:161
 msgid "Enemy spotted!\n"
 msgstr "发现敌人！\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
+#: client/battlescape/events/event/actor/e_event_actorappear.c:163
 msgid "Civilian spotted!\n"
 msgstr "发现平民！\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
+#: client/battlescape/events/event/actor/e_event_actordie.c:79
 #, c-format
 msgid "%s was stunned\n"
 msgstr "%s 昏倒了\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:82
+#: client/battlescape/events/event/actor/e_event_actordie.c:81
 #, c-format
 msgid "%s was killed\n"
 msgstr "%s 被杀了\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
+#: client/battlescape/events/event/actor/e_event_actordie.c:89
 msgid "A civilian was stunned.\n"
 msgstr "一个平民晕倒在地。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:92
+#: client/battlescape/events/event/actor/e_event_actordie.c:91
 msgid "A civilian was killed.\n"
 msgstr "有个平民被杀了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
+#: client/battlescape/events/event/actor/e_event_actordie.c:95
 msgid "An alien was stunned.\n"
 msgstr "打倒一个外星人。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:98
+#: client/battlescape/events/event/actor/e_event_actordie.c:97
 msgid "An alien was killed.\n"
 msgstr "打死一个外星人。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
+#: client/battlescape/events/event/actor/e_event_actordie.c:101
 msgid "A soldier was stunned.\n"
 msgstr "有个士兵受伤倒地。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:104
+#: client/battlescape/events/event/actor/e_event_actordie.c:103
 msgid "A soldier was killed.\n"
 msgstr "有个士兵牺牲了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
+#: client/battlescape/events/event/actor/e_event_actordie.c:107
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "队伍%i的一个成员昏迷了。\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:110
+#: client/battlescape/events/event/actor/e_event_actordie.c:109
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "队伍%i的一个成员阵亡了。\n"
@@ -16398,7 +16410,7 @@ msgstr "设置为每个玩家的士兵少于每个队伍的士兵"
 msgid "Settings doesn't make sense"
 msgstr "无意义的设定"
 
-#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:147
+#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:151
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -16408,7 +16420,7 @@ msgstr ""
 "\n"
 "都没有幸存者。"
 
-#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:148
+#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:152
 msgid "Game Drawn!"
 msgstr "平手！"
 
@@ -16425,19 +16437,19 @@ msgstr ""
 "死亡：  %i\n"
 "幸存：  %i"
 
-#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:170
+#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:174
 msgid "You won the game!"
 msgstr "游戏胜利！"
 
-#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:171
+#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:175
 msgid "Congratulations"
 msgstr "恭喜"
 
-#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:173
+#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:177
 msgid "You've lost the game!"
 msgstr "游戏失败！"
 
-#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:174
+#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:178
 msgid "Better luck next time"
 msgstr "下次好运"
 
@@ -16445,7 +16457,7 @@ msgstr "下次好运"
 msgid "all"
 msgstr "全部"
 
-#: client/cl_game_skirmish.c:161
+#: client/cl_game_skirmish.c:165
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -16590,7 +16602,7 @@ msgstr "脚本文件不相同"
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "本地游戏版本（%s）不同于服务器（%s）"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:857
 msgid "Target your shot to the ground"
 msgstr "细微调整你射击的高度"
 
@@ -16604,31 +16616,31 @@ msgstr "下载 [%s]"
 msgid "Loading Map [%s]"
 msgstr "读取地图 [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:335 client/cl_team.c:346
+#: client/cl_team.c:50 client/cl_team.c:344 client/cl_team.c:355
 msgid "Urban"
 msgstr "都市"
 
-#: client/cl_team.c:52 client/cl_team.c:336 client/cl_team.c:347
+#: client/cl_team.c:52 client/cl_team.c:345 client/cl_team.c:356
 msgid "Jungle"
 msgstr "丛林"
 
-#: client/cl_team.c:54 client/cl_team.c:337 client/cl_team.c:348
+#: client/cl_team.c:54 client/cl_team.c:346 client/cl_team.c:357
 msgid "Desert"
 msgstr "沙漠"
 
-#: client/cl_team.c:56 client/cl_team.c:338 client/cl_team.c:349
+#: client/cl_team.c:56 client/cl_team.c:347 client/cl_team.c:358
 msgid "Arctic"
 msgstr "极地"
 
-#: client/cl_team.c:58 client/cl_team.c:350
+#: client/cl_team.c:58 client/cl_team.c:359
 msgid "Yellow"
 msgstr "黄"
 
-#: client/cl_team.c:60 client/cl_team.c:351
+#: client/cl_team.c:60 client/cl_team.c:360
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:454
+#: client/cl_team.c:463
 msgid "Update the GUI with the selected item"
 msgstr "更新GUI以及选定的项目"
 
@@ -16908,11 +16920,11 @@ msgstr "新的队伍"
 msgid "Error saving team. Check free disk space!"
 msgstr "保存发生错误，请检查磁盘空间。"
 
-#: game/g_actor.c:408
+#: game/g_actor.c:411
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "无法执行：活动时间不足！\n"
 
-#: game/g_actor.c:412
+#: game/g_actor.c:415
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "无法执行：武器已装同类型弹药！\n"
 
@@ -17125,9 +17137,6 @@ msgstr "游戏进行中"
 #, fuzzy
 #~ msgid "Can't activate reaction fire.\n"
 #~ msgstr "预留一次自动反应攻击模式"
-
-#~ msgid "Reselect the current soldier"
-#~ msgstr "重新选择士兵"
 
 #, fuzzy
 #~ msgid "No weapon in right hand."

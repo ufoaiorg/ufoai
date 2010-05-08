@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-04-23 16:21+0200\n"
+"POT-Creation-Date: 2010-05-08 17:51+0200\n"
 "PO-Revision-Date: 2008-07-22 14:30+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Africa"
 msgstr "อาฟริกาใหม่"
 
-#: ../base/maps/alienbase.ump:170
+#: ../base/maps/alienbase.ump:224 ../base/maps/alienbase.ump:256
 #, fuzzy
 msgid "Alienbase"
 msgstr "มนุษย์ต่างดาว"
@@ -2096,7 +2096,7 @@ msgstr ""
 msgid "Phnom Penh"
 msgstr ""
 
-#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1644
+#: ../base/ufos/cities.ufo:1947 ../base/ufos/team_humans.ufo:1654
 msgid "Phoenix"
 msgstr "Phoenix"
 
@@ -3563,26 +3563,26 @@ msgstr ""
 msgid "A laboratory where they examined found UFO wreck tiles."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3479
+#: ../base/ufos/maps.ufo:3478
 msgid "A fuel depot the aliens try to destroy."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:3518
+#: ../base/ufos/maps.ufo:3517
 #, fuzzy
 msgid "Wilderness terror mission."
 msgstr "ภารกิจการเคลื่อนย้าย"
 
-#: ../base/ufos/maps.ufo:3564
+#: ../base/ufos/maps.ufo:3563
 #, fuzzy
 msgid "UFO Crashsite."
 msgstr "จุดตก"
 
-#: ../base/ufos/maps.ufo:3595
+#: ../base/ufos/maps.ufo:3594
 #, fuzzy
 msgid "An alien base."
 msgstr "มนุษย์ต่างดาว"
 
-#: ../base/ufos/maps.ufo:3610
+#: ../base/ufos/maps.ufo:3609
 #, fuzzy
 msgid "Base is under attack."
 msgstr "ฐานถูกโจมตี"
@@ -3595,22 +3595,22 @@ msgstr "กางเขน"
 msgid "Coin"
 msgstr "เหรียญ"
 
-#: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:567
+#: ../base/ufos/medals.ufo:30 ../base/ufos/team_humans.ufo:577
 #: client/campaign/cp_employee.c:166
 msgid "Scientist"
 msgstr "นักวิทยาศาสตร์"
 
-#: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:923
+#: ../base/ufos/medals.ufo:38 ../base/ufos/team_humans.ufo:933
 #: client/campaign/cp_employee.c:170
 msgid "Pilot"
 msgstr ""
 
-#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1641
-#: ../base/ufos/team_humans.ufo:1666 client/campaign/cp_employee.c:172
+#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1651
+#: ../base/ufos/team_humans.ufo:1676 client/campaign/cp_employee.c:172
 msgid "UGV"
 msgstr "UGV"
 
-#: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1281
+#: ../base/ufos/medals.ufo:54 ../base/ufos/team_humans.ufo:1291
 #: client/campaign/cp_employee.c:168
 msgid "Worker"
 msgstr "คนงาน"
@@ -3817,7 +3817,7 @@ msgstr "สิ่งก่อสร้างในฐาน"
 msgid "Research Reports"
 msgstr "รายงานการวิจัย"
 
-#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:67
+#: ../base/ufos/research.ufo:112 ../base/ufos/ui/aircraft.ufo:96
 #: ../base/ufos/ui/skirmish.ufo:87 ../base/ufos/ui/transfer.ufo:35
 #: ../base/ufos/ui/transfer.ufo:45 ../base/ufos/ui/transfer.ufo:612
 msgid "Equipment"
@@ -8687,7 +8687,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1637
+#: ../base/ufos/research.ufo:4288 ../base/ufos/team_humans.ufo:1647
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
@@ -8699,7 +8699,7 @@ msgstr "<TODO>"
 msgid "ugv_phoenix_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1662
+#: ../base/ufos/research.ufo:4308 ../base/ufos/team_humans.ufo:1672
 msgid "Ares W (UGV)"
 msgstr ""
 
@@ -10246,7 +10246,7 @@ msgid "Or via the keys 1-8 or Tab"
 msgstr "หรือปุ่ม 1-8"
 
 #: ../base/ufos/seq_tutorials.ufo:474
-#: ../base/ufos/ui/aircraft_soldiers.ufo:514
+#: ../base/ufos/ui/aircraft_soldiers.ufo:370
 msgid "Physical stats"
 msgstr "ค่าพลังกาย"
 
@@ -10383,15 +10383,15 @@ msgstr ""
 msgid "Taman"
 msgstr "ทามาน"
 
-#: ../base/ufos/team_aliens.ufo:99
+#: ../base/ufos/team_aliens.ufo:113
 msgid "Ortnok"
 msgstr "ออร์ตนอค"
 
-#: ../base/ufos/team_aliens.ufo:181
+#: ../base/ufos/team_aliens.ufo:197
 msgid "Shevaar"
 msgstr "เชฟวาร์"
 
-#: ../base/ufos/team_aliens.ufo:225
+#: ../base/ufos/team_aliens.ufo:241
 msgid "Bloodspider"
 msgstr "แมงมุมโลหิต"
 
@@ -10399,7 +10399,7 @@ msgstr "แมงมุมโลหิต"
 msgid "Phalanx"
 msgstr ""
 
-#: ../base/ufos/team_humans.ufo:1669
+#: ../base/ufos/team_humans.ufo:1679
 msgid "Ares W"
 msgstr ""
 
@@ -10644,61 +10644,65 @@ msgstr ""
 msgid "Check to use this firemode for reaction fire"
 msgstr "เลือกเพื่อใช้รูปแบบนี้ในการยิงโต้ตอบ"
 
-#: ../base/ufos/ui/_menu.ufo:104 ../base/ufos/ui/geoscape.ufo:209
+#: ../base/ufos/ui/_menu.ufo:116 ../base/ufos/ui/geoscape.ufo:209
 #: ../base/ufos/ui/hospital.ufo:70
 #, fuzzy
 msgid "CREDITS"
 msgstr "เครดิต"
 
-#: ../base/ufos/ui/_menu.ufo:112 ../base/ufos/ui/geoscape.ufo:218
+#: ../base/ufos/ui/_menu.ufo:124 ../base/ufos/ui/geoscape.ufo:218
 #: ../base/ufos/ui/hospital.ufo:78
 msgid "Organisation capital"
 msgstr "เงินทุนขององค์กร"
 
-#: ../base/ufos/ui/_menu.ufo:121 ../base/ufos/ui/hospital.ufo:88
+#: ../base/ufos/ui/_menu.ufo:133 ../base/ufos/ui/hospital.ufo:88
 msgid "Back to baseview"
 msgstr "กลับไปหน้าฐาน"
 
-#: ../base/ufos/ui/_menu.ufo:139 ../base/ufos/ui/bases.ufo:20
+#: ../base/ufos/ui/_menu.ufo:151 ../base/ufos/ui/bases.ufo:20
 #: ../base/ufos/ui/hospital.ufo:59
 msgid "Name of this base"
 msgstr "ชื่อฐาน"
 
-#: ../base/ufos/ui/_menu.ufo:163 ../base/ufos/ui/transfer.ufo:594
+#: ../base/ufos/ui/_menu.ufo:177 ../base/ufos/ui/transfer.ufo:594
 #: client/campaign/cp_installation_callbacks.c:224
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: ../base/ufos/ui/_menu.ufo:164 ../base/ufos/ui/geoscape.ufo:1298
+#: ../base/ufos/ui/_menu.ufo:178 ../base/ufos/ui/geoscape.ufo:1298
 #: ../base/ufos/ui/geoscape.ufo:1511 ../base/ufos/ui/sys_popup.ufo:50
 #: ../base/ufos/ui/sys_popup.ufo:112
 msgid "Close this dialogue"
 msgstr "ปิดกรอบนี้"
 
-#: ../base/ufos/ui/aircraft.ufo:58 ../base/ufos/ui/ufopedia.ufo:79
+#: ../base/ufos/ui/aircraft.ufo:12 ../base/ufos/ui/aircraft_soldiers.ufo:72
+msgid "Add/remove this soldier"
+msgstr "เพิ่ม/ลด ทหารคนนี้"
+
+#: ../base/ufos/ui/aircraft.ufo:87 ../base/ufos/ui/ufopedia.ufo:79
 #, fuzzy
 msgid "Description"
 msgstr "คำอธิบาย:"
 
-#: ../base/ufos/ui/aircraft.ufo:62 ../base/ufos/ui/hire.ufo:494
+#: ../base/ufos/ui/aircraft.ufo:91 ../base/ufos/ui/hire.ufo:494
 msgid "Pilots"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft.ufo:71
+#: ../base/ufos/ui/aircraft.ufo:100
 #, fuzzy
 msgid "Tanks"
 msgstr "โยกย้าย"
 
-#: ../base/ufos/ui/aircraft.ufo:77 ../base/ufos/ui/hire.ufo:489
+#: ../base/ufos/ui/aircraft.ufo:106 ../base/ufos/ui/hire.ufo:489
 msgid "Soldiers"
 msgstr "ทหาร"
 
-#: ../base/ufos/ui/aircraft.ufo:82
+#: ../base/ufos/ui/aircraft.ufo:111
 #, fuzzy
 msgid "Soldier equipment"
 msgstr "ทหารมีอุปกรณ์"
 
-#: ../base/ufos/ui/aircraft.ufo:136
+#: ../base/ufos/ui/aircraft.ufo:165
 #, fuzzy
 msgid "Rename aircraft"
 msgstr "เลือกยาน"
@@ -10774,7 +10778,7 @@ msgid "Select this slot"
 msgstr "เลือกอุปกรณ์"
 
 #: ../base/ufos/ui/aircraft_info.ufo:63
-#: ../base/ufos/ui/aircraft_soldiers.ufo:58
+#: ../base/ufos/ui/aircraft_soldiers.ufo:121
 msgid "Team Members:"
 msgstr "สมาชิกทีม:"
 
@@ -10786,166 +10790,160 @@ msgstr "เริ่มใช้ยานบิน"
 msgid "Call back"
 msgstr "เรียกกลับ"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:124
+#: ../base/ufos/ui/aircraft_pilots.ufo:11
+#, fuzzy
+msgid "Add/remove this pilot"
+msgstr "เพิ่ม/ลด ทหารคนนี้"
+
+#: ../base/ufos/ui/aircraft_pilots.ufo:144
 #, fuzzy
 msgid "Pilot is assigned to another craft"
 msgstr "เลือกยาน"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:142
+#: ../base/ufos/ui/aircraft_pilots.ufo:162
 #, fuzzy
 msgid "A pilot is already assigned to this craft"
 msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:144
+#: ../base/ufos/ui/aircraft_pilots.ufo:164
 #, fuzzy
 msgid "Assign pilot to this craft"
 msgstr "จัดทีมในเครื่อง"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:155
+#: ../base/ufos/ui/aircraft_pilots.ufo:175
 #, fuzzy
 msgid "Remove pilot from this craft"
 msgstr "โหลดทีมจากชุดที่เลือกอยู่"
 
-#: ../base/ufos/ui/aircraft_pilots.ufo:198
-#: ../base/ufos/ui/aircraft_pilots.ufo:208
-#: ../base/ufos/ui/aircraft_pilots.ufo:218
-#: ../base/ufos/ui/aircraft_pilots.ufo:228
-#: ../base/ufos/ui/aircraft_pilots.ufo:238
-#: ../base/ufos/ui/aircraft_pilots.ufo:248
-#: ../base/ufos/ui/aircraft_pilots.ufo:258
-#: ../base/ufos/ui/aircraft_pilots.ufo:268
-msgid "Add/remove this soldier"
-msgstr "เพิ่ม/ลด ทหารคนนี้"
-
-#: ../base/ufos/ui/aircraft_soldiers.ufo:80
-#: ../base/ufos/ui/aircraft_soldiers.ufo:692 ../base/ufos/ui/geoscape.ufo:769
+#: ../base/ufos/ui/aircraft_soldiers.ufo:143
+#: ../base/ufos/ui/aircraft_soldiers.ufo:556 ../base/ufos/ui/geoscape.ufo:769
 #, fuzzy
 msgid "Equip soldiers"
 msgstr "ติดอุปกรณ์ให้ทหารคนนี้"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:108
+#: ../base/ufos/ui/aircraft_soldiers.ufo:171
 #, fuzzy
 msgid "Soldier is assigned to another craft"
 msgstr "เลือกยาน"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:127
+#: ../base/ufos/ui/aircraft_soldiers.ufo:190
 #, fuzzy
 msgid "No more soldiers can be assigned to this craft"
 msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:129
+#: ../base/ufos/ui/aircraft_soldiers.ufo:192
 #, fuzzy
 msgid "Assign soldier to this craft"
 msgstr "จัดการทหาร"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:140
+#: ../base/ufos/ui/aircraft_soldiers.ufo:203
 #, fuzzy
 msgid "Remove soldier from this craft"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:150
+#: ../base/ufos/ui/aircraft_soldiers.ufo:213
 msgid "Soldier carries equipment"
 msgstr "ทหารมีอุปกรณ์"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:159
+#: ../base/ufos/ui/aircraft_soldiers.ufo:222
 msgid "Soldier carries no equipment"
 msgstr "ทหารไม่มีอุปกรณ์"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:518
+#: ../base/ufos/ui/aircraft_soldiers.ufo:374
 #, fuzzy
 msgid "Missions info"
 msgstr "ภารกิจ"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:536 ../base/ufos/ui/equipment.ufo:483
+#: ../base/ufos/ui/aircraft_soldiers.ufo:392 ../base/ufos/ui/equipment.ufo:483
 #: ../base/ufos/ui/hire.ufo:302 ../base/ufos/ui/hospital.ufo:465
 #: ../base/ufos/ui/multiplayer_team.ufo:466 ../base/ufos/ui/physdat.ufo:80
 msgid "Strength:"
 msgstr "ความแข็งแกร่ง:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:544 ../base/ufos/ui/equipment.ufo:492
+#: ../base/ufos/ui/aircraft_soldiers.ufo:401 ../base/ufos/ui/equipment.ufo:492
 #: ../base/ufos/ui/hire.ufo:311 ../base/ufos/ui/hospital.ufo:474
-#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1147
+#: ../base/ufos/ui/multiplayer_team.ufo:475 ../base/ufos/ui/options.ufo:1170
 #: ../base/ufos/ui/physdat.ufo:89
 msgid "Speed:"
 msgstr "ความเร็ว:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:552 ../base/ufos/ui/equipment.ufo:501
+#: ../base/ufos/ui/aircraft_soldiers.ufo:410 ../base/ufos/ui/equipment.ufo:501
 #: ../base/ufos/ui/hire.ufo:320 ../base/ufos/ui/hospital.ufo:483
 #: ../base/ufos/ui/multiplayer_team.ufo:484 ../base/ufos/ui/physdat.ufo:98
 msgid "Accuracy:"
 msgstr "ความแม่นยำ:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:560 ../base/ufos/ui/equipment.ufo:510
+#: ../base/ufos/ui/aircraft_soldiers.ufo:419 ../base/ufos/ui/equipment.ufo:510
 #: ../base/ufos/ui/hire.ufo:329 ../base/ufos/ui/hospital.ufo:492
 #: ../base/ufos/ui/multiplayer_team.ufo:493 ../base/ufos/ui/physdat.ufo:107
 msgid "Mind:"
 msgstr "จิตใจ:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:568 ../base/ufos/ui/equipment.ufo:519
+#: ../base/ufos/ui/aircraft_soldiers.ufo:428 ../base/ufos/ui/equipment.ufo:519
 #: ../base/ufos/ui/hire.ufo:338 ../base/ufos/ui/hospital.ufo:501
 #: ../base/ufos/ui/multiplayer_team.ufo:502 ../base/ufos/ui/physdat.ufo:116
 msgid "Close Combat:"
 msgstr "ต่อสู้ประชิดตัว:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:577 ../base/ufos/ui/equipment.ufo:528
+#: ../base/ufos/ui/aircraft_soldiers.ufo:438 ../base/ufos/ui/equipment.ufo:528
 #: ../base/ufos/ui/hire.ufo:347 ../base/ufos/ui/hospital.ufo:510
 #: ../base/ufos/ui/multiplayer_team.ufo:511 ../base/ufos/ui/physdat.ufo:125
 msgid "Heavy Weapons:"
 msgstr "อาวุธหนัก:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:586 ../base/ufos/ui/equipment.ufo:537
+#: ../base/ufos/ui/aircraft_soldiers.ufo:448 ../base/ufos/ui/equipment.ufo:537
 #: ../base/ufos/ui/hire.ufo:356 ../base/ufos/ui/hospital.ufo:519
 #: ../base/ufos/ui/multiplayer_team.ufo:520 ../base/ufos/ui/physdat.ufo:134
 msgid "Assault Weapons:"
 msgstr "อาวุธจู่โจม:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:595 ../base/ufos/ui/equipment.ufo:546
+#: ../base/ufos/ui/aircraft_soldiers.ufo:458 ../base/ufos/ui/equipment.ufo:546
 #: ../base/ufos/ui/hire.ufo:365 ../base/ufos/ui/hospital.ufo:528
 #: ../base/ufos/ui/multiplayer_team.ufo:529 ../base/ufos/ui/physdat.ufo:143
 msgid "Sniper Rifles:"
 msgstr "ไรเฟิลซุ่มยิง:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:604 ../base/ufos/ui/equipment.ufo:555
+#: ../base/ufos/ui/aircraft_soldiers.ufo:468 ../base/ufos/ui/equipment.ufo:555
 #: ../base/ufos/ui/hire.ufo:374 ../base/ufos/ui/hospital.ufo:537
 #: ../base/ufos/ui/multiplayer_team.ufo:538 ../base/ufos/ui/physdat.ufo:152
 msgid "High-Explosives:"
 msgstr "ระเบิดแรงสูง:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:617 ../base/ufos/ui/hire.ufo:383
+#: ../base/ufos/ui/aircraft_soldiers.ufo:481 ../base/ufos/ui/hire.ufo:383
 #: ../base/ufos/ui/hospital.ufo:546
 msgid "Health:"
 msgstr "พลังชีวิต:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:639
+#: ../base/ufos/ui/aircraft_soldiers.ufo:503
 #, fuzzy
 msgid "Missions performed:"
 msgstr "เข้าร่วมภารกิจ:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:642
+#: ../base/ufos/ui/aircraft_soldiers.ufo:506
 #, fuzzy
 msgid "Enemies killed:"
 msgstr "ฆ่าศัตรู:"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:645
+#: ../base/ufos/ui/aircraft_soldiers.ufo:509
 #, fuzzy
 msgid "Civilians killed:"
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:648
+#: ../base/ufos/ui/aircraft_soldiers.ufo:512
 #, fuzzy
 msgid "Our team killed:"
 msgstr "ถูกฆ่าตาย\n"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:661
+#: ../base/ufos/ui/aircraft_soldiers.ufo:525
 msgid "Assign tanks"
 msgstr ""
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:665
+#: ../base/ufos/ui/aircraft_soldiers.ufo:529
 #, fuzzy
 msgid "Assign soldiers"
 msgstr "จัดการทหาร"
 
-#: ../base/ufos/ui/aircraft_soldiers.ufo:695
+#: ../base/ufos/ui/aircraft_soldiers.ufo:559
 #, fuzzy
 msgid "No soldiers assigned"
 msgstr "ไม่ได้ติดตั้งโล่"
@@ -11062,7 +11060,7 @@ msgstr "กดเพื่อดูศัตรูที่มองเห็น
 msgid "Finish round"
 msgstr "จบรอบ"
 
-#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:893
+#: ../base/ufos/ui/althud.ufo:1104 ../base/ufos/ui/hud.ufo:897
 msgid "Multiple-shot reaction fire"
 msgstr "ยิงโต้ตอบหลายนัด"
 
@@ -11071,7 +11069,7 @@ msgstr "ยิงโต้ตอบหลายนัด"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "ยิงโต้ตอบหลายนัด"
 
-#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:905
+#: ../base/ufos/ui/althud.ufo:1114 ../base/ufos/ui/hud.ufo:909
 msgid "One-shot reaction fire"
 msgstr "ยิงโต้ตอบหนึ่งนัด"
 
@@ -11080,11 +11078,11 @@ msgstr "ยิงโต้ตอบหนึ่งนัด"
 msgid "One-shot reaction fire (not possible)"
 msgstr "ยิงโต้ตอบหนึ่งนัด"
 
-#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:917
+#: ../base/ufos/ui/althud.ufo:1125 ../base/ufos/ui/hud.ufo:921
 msgid "No reaction fire"
 msgstr "ไม่ยิงโต้ตอบ"
 
-#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:873
+#: ../base/ufos/ui/althud.ufo:1134 ../base/ufos/ui/hud.ufo:877
 #: client/battlescape/cl_hud.c:814
 msgid "Reserve TUs for shooting."
 msgstr ""
@@ -11651,7 +11649,7 @@ msgstr "ฐานใหม่"
 #: ../base/ufos/ui/geoscape.ufo:1479 ../base/ufos/ui/geoscape.ufo:1738
 #: ../base/ufos/ui/geoscape.ufo:1810 ../base/ufos/ui/irc.ufo:200
 #: ../base/ufos/ui/main.ufo:107 ../base/ufos/ui/multiplayer.ufo:357
-#: ../base/ufos/ui/options.ufo:750
+#: ../base/ufos/ui/options.ufo:773
 msgid "Name:"
 msgstr "ชื่อ:"
 
@@ -11932,12 +11930,12 @@ msgstr "วิธีการยิงหลัก"
 msgid "Physical stats of this soldier"
 msgstr "ค่าสภาพร่างกายของทหารคนนี้"
 
-#: ../base/ufos/ui/hud.ufo:899
+#: ../base/ufos/ui/hud.ufo:903
 #, fuzzy
 msgid "Multiple-shot reaction fire (Not possible)"
 msgstr "ยิงโต้ตอบหลายนัด"
 
-#: ../base/ufos/ui/hud.ufo:911
+#: ../base/ufos/ui/hud.ufo:915
 #, fuzzy
 msgid "One-shot reaction fire (Not possible)"
 msgstr "ยิงโต้ตอบหนึ่งนัด"
@@ -12127,15 +12125,15 @@ msgstr "ตั้งค่าเกม"
 msgid "User Information"
 msgstr "ข้อมูลของฐาน"
 
-#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:574
+#: ../base/ufos/ui/main.ufo:130 ../base/ufos/ui/options.ufo:597
 msgid "Volume Control"
 msgstr "ควบคุมระดับเสียง"
 
-#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:580
+#: ../base/ufos/ui/main.ufo:137 ../base/ufos/ui/options.ufo:603
 msgid "Effects:"
 msgstr "เสียงประกอบ:"
 
-#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:601
+#: ../base/ufos/ui/main.ufo:156 ../base/ufos/ui/options.ufo:624
 msgid "Music:"
 msgstr "เพลง:"
 
@@ -12143,7 +12141,7 @@ msgstr "เพลง:"
 msgid "Language"
 msgstr ""
 
-#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:798
+#: ../base/ufos/ui/main.ufo:186 ../base/ufos/ui/options.ufo:821
 msgid "Language:"
 msgstr ""
 
@@ -12435,7 +12433,7 @@ msgstr "เชื่อมต่อ IP"
 msgid "Bookmarks"
 msgstr "เก็บไว้"
 
-#: ../base/ufos/ui/multiplayer.ufo:511 ../base/ufos/ui/skirmish.ufo:264
+#: ../base/ufos/ui/multiplayer.ufo:511
 msgid "Map"
 msgstr "แผนที่"
 
@@ -12469,7 +12467,7 @@ msgstr ""
 msgid "Allowed gametype:"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:131
+#: ../base/ufos/ui/multiplayer.ufo:693 ../base/ufos/ui/skirmish.ufo:274
 #, fuzzy
 msgid "Day version:"
 msgstr "เวอร์ชั่น:\t%s\n"
@@ -12506,7 +12504,7 @@ msgstr "ตั้งจำนวนทหารสูงสุดที่แต
 msgid "Max. human players per team:"
 msgstr "ผู้เล่นมนุษย์สูงสุดต่อทีม:"
 
-#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:148
+#: ../base/ufos/ui/multiplayer.ufo:842 ../base/ufos/ui/skirmish.ufo:131
 msgid "Max. AI actors:"
 msgstr "จำนวนผู้เล่นคอมพิวเตอร์สูงสุด:"
 
@@ -12681,17 +12679,17 @@ msgstr "เริ่มใหม่"
 msgid "Save the current team"
 msgstr "บันทึกทีมลงชุดที่เลือก"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:176
+#: ../base/ufos/ui/multiplayer_team.ufo:904 ../base/ufos/ui/skirmish.ufo:186
 #, fuzzy
 msgid "Team:"
 msgstr "ทีม"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:190
+#: ../base/ufos/ui/multiplayer_team.ufo:916 ../base/ufos/ui/skirmish.ufo:200
 #: client/cl_game_campaign.c:198
 msgid "Human"
 msgstr "มนุษย์"
 
-#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:194
+#: ../base/ufos/ui/multiplayer_team.ufo:920 ../base/ufos/ui/skirmish.ufo:204
 #, fuzzy
 msgid "Alien"
 msgstr "มนุษย์ต่างดาว"
@@ -12810,221 +12808,225 @@ msgstr ""
 msgid "Enable post-processing shader effects:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:441 ../base/ufos/ui/options.ufo:466
+#: ../base/ufos/ui/options.ufo:435
+msgid "Max dynamic lights allowed:"
+msgstr ""
+
+#: ../base/ufos/ui/options.ufo:464 ../base/ufos/ui/options.ufo:489
 #, fuzzy
 msgid "Low"
 msgstr "โยนสูง"
 
-#: ../base/ufos/ui/options.ufo:445 ../base/ufos/ui/options.ufo:470
+#: ../base/ufos/ui/options.ufo:468 ../base/ufos/ui/options.ufo:493
 #, fuzzy
 msgid "Medium"
 msgstr "เสนารักษ์"
 
-#: ../base/ufos/ui/options.ufo:449 ../base/ufos/ui/options.ufo:474
+#: ../base/ufos/ui/options.ufo:472 ../base/ufos/ui/options.ufo:497
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "ปกติ"
 
-#: ../base/ufos/ui/options.ufo:453 ../base/ufos/ui/options.ufo:478
+#: ../base/ufos/ui/options.ufo:476 ../base/ufos/ui/options.ufo:501
 #, fuzzy
 msgid "High"
 msgstr "กลางคืน"
 
-#: ../base/ufos/ui/options.ufo:482 client/battlescape/cl_actor.c:119
+#: ../base/ufos/ui/options.ufo:505 client/battlescape/cl_actor.c:119
 msgid "Excellent"
 msgstr "ยอดเยี่ยม"
 
-#: ../base/ufos/ui/options.ufo:486
+#: ../base/ufos/ui/options.ufo:509
 #, fuzzy
 msgid "Extreme"
 msgstr "Extreme Players"
 
-#: ../base/ufos/ui/options.ufo:509
+#: ../base/ufos/ui/options.ufo:532
 #, fuzzy
 msgid "All ratios"
 msgstr "ประเทศ"
 
-#: ../base/ufos/ui/options.ufo:533
+#: ../base/ufos/ui/options.ufo:556
 #, fuzzy
 msgid "Others"
 msgstr "เข้า"
 
-#: ../base/ufos/ui/options.ufo:565
+#: ../base/ufos/ui/options.ufo:588
 msgid "Sound settings"
 msgstr "ตั้งค่าเสียง"
 
-#: ../base/ufos/ui/options.ufo:622
+#: ../base/ufos/ui/options.ufo:645
 #, fuzzy
 msgid "Sound rate:"
 msgstr "การประมวลเสียง:"
 
-#: ../base/ufos/ui/options.ufo:628
+#: ../base/ufos/ui/options.ufo:651
 msgid "Restart sound to change the settings"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:664
+#: ../base/ufos/ui/options.ufo:687
 #, fuzzy
 msgid "Enable sound:"
 msgstr "จบตา"
 
-#: ../base/ufos/ui/options.ufo:690
+#: ../base/ufos/ui/options.ufo:713
 msgid "Show key bindings"
 msgstr "แสดง key bindings"
 
-#: ../base/ufos/ui/options.ufo:738
+#: ../base/ufos/ui/options.ufo:761
 msgid "Game settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/ui/options.ufo:772
+#: ../base/ufos/ui/options.ufo:795
 msgid "HUD Design:"
 msgstr "การออกแบบ HUD:"
 
-#: ../base/ufos/ui/options.ufo:784
+#: ../base/ufos/ui/options.ufo:807
 msgid "Original HUD"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:788
+#: ../base/ufos/ui/options.ufo:811
 msgid "Alternative HUD"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:836
+#: ../base/ufos/ui/options.ufo:859
 msgid "Tooltips:"
 msgstr "คำแนะนำ:"
 
-#: ../base/ufos/ui/options.ufo:843
+#: ../base/ufos/ui/options.ufo:866
 msgid "Activates tooltips"
 msgstr "เปิดคำแนะนำ"
 
-#: ../base/ufos/ui/options.ufo:854
+#: ../base/ufos/ui/options.ufo:877
 msgid "Centre view:"
 msgstr "ศูนย์กลางมุมมอง :"
 
-#: ../base/ufos/ui/options.ufo:861
+#: ../base/ufos/ui/options.ufo:884
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "เลื่อนไปที่ทหารที่ถูกเลือก ยิง  และปรากฏตัว"
 
-#: ../base/ufos/ui/options.ufo:872
+#: ../base/ufos/ui/options.ufo:895
 msgid "Cursor tooltips:"
 msgstr "คำแนะนำเคอร์เซอร์:"
 
-#: ../base/ufos/ui/options.ufo:879
+#: ../base/ufos/ui/options.ufo:902
 msgid "Activates cursor tooltips"
 msgstr "เปิดคำแนะนำเคอร์เซอร์"
 
-#: ../base/ufos/ui/options.ufo:890
+#: ../base/ufos/ui/options.ufo:913
 msgid "3D Geoscape:"
 msgstr "แผนที่ 3 มิติ:"
 
-#: ../base/ufos/ui/options.ufo:897
+#: ../base/ufos/ui/options.ufo:920
 msgid "Use 3D geoscape"
 msgstr "ใช้แผนที่ 3 มิติ"
 
-#: ../base/ufos/ui/options.ufo:908
+#: ../base/ufos/ui/options.ufo:931
 msgid "3D Geoscape ambient lighting:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:933
+#: ../base/ufos/ui/options.ufo:956
 msgid "Show tip of the day:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:951
+#: ../base/ufos/ui/options.ufo:974
 msgid "Precache models:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:958
+#: ../base/ufos/ui/options.ufo:981
 msgid "Precache models (faster menus)"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:969
+#: ../base/ufos/ui/options.ufo:992
 #, fuzzy
 msgid "Actor speed:"
 msgstr "ความเร็ว:"
 
-#: ../base/ufos/ui/options.ufo:1003
+#: ../base/ufos/ui/options.ufo:1026
 #, fuzzy
 msgid "Input settings"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/ui/options.ufo:1015
+#: ../base/ufos/ui/options.ufo:1038
 #, fuzzy
 msgid "Camera"
 msgstr "ชื่อ"
 
-#: ../base/ufos/ui/options.ufo:1021
+#: ../base/ufos/ui/options.ufo:1044
 #, fuzzy
 msgid "Scroll Speed:"
 msgstr "ความเร็ว:"
 
-#: ../base/ufos/ui/options.ufo:1046
+#: ../base/ufos/ui/options.ufo:1069
 msgid "Rotation Speed:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1071
+#: ../base/ufos/ui/options.ufo:1094
 msgid "Move Acceleration:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1096
+#: ../base/ufos/ui/options.ufo:1119
 #, fuzzy
 msgid "Joystick settings:"
 msgstr "ตั้งค่าเกม"
 
-#: ../base/ufos/ui/options.ufo:1103
+#: ../base/ufos/ui/options.ufo:1126
 #, fuzzy
 msgid "Enable:"
 msgstr "จบตา"
 
-#: ../base/ufos/ui/options.ufo:1111
+#: ../base/ufos/ui/options.ufo:1134
 msgid "Enables/Disables Joysticks"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1122
+#: ../base/ufos/ui/options.ufo:1145
 msgid "Threshold:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1172
+#: ../base/ufos/ui/options.ufo:1195
 msgid "Keys"
 msgstr "คีย์"
 
-#: ../base/ufos/ui/options.ufo:1187 client/battlescape/cl_hud.c:99
+#: ../base/ufos/ui/options.ufo:1210 client/battlescape/cl_hud.c:99
 #, fuzzy
 msgid "Autostand"
 msgstr "อัจฉริยะ"
 
-#: ../base/ufos/ui/options.ufo:1199 ../base/ufos/ui/options.ufo:1225
+#: ../base/ufos/ui/options.ufo:1222 ../base/ufos/ui/options.ufo:1248
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "ใช่"
 
-#: ../base/ufos/ui/options.ufo:1203 ../base/ufos/ui/options.ufo:1229
+#: ../base/ufos/ui/options.ufo:1226 ../base/ufos/ui/options.ufo:1252
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "ไม่"
 
-#: ../base/ufos/ui/options.ufo:1213
+#: ../base/ufos/ui/options.ufo:1236
 msgid "Confirm Actions:"
 msgstr "ยืนยันการกระทำ:"
 
-#: ../base/ufos/ui/options.ufo:1233
+#: ../base/ufos/ui/options.ufo:1256
 msgid "Only for moving"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1243
+#: ../base/ufos/ui/options.ufo:1266
 msgid "Joystick:"
 msgstr ""
 
-#: ../base/ufos/ui/options.ufo:1276
+#: ../base/ufos/ui/options.ufo:1299
 msgid "Maintain resolution"
 msgstr "ใช้ค่าความคมชัดเดิม"
 
-#: ../base/ufos/ui/options.ufo:1286
+#: ../base/ufos/ui/options.ufo:1309
 msgid "Want To Maintain resolution"
 msgstr "ต้องการใช้ค่าความคมชัดเดิม"
 
-#: ../base/ufos/ui/options.ufo:1293
+#: ../base/ufos/ui/options.ufo:1316
 msgid "Accept"
 msgstr "ตกลง"
 
-#: ../base/ufos/ui/options.ufo:1294
+#: ../base/ufos/ui/options.ufo:1317
 msgid "Change the resolution"
 msgstr "เปลี่ยนค่าความคมชัด"
 
@@ -13130,25 +13132,35 @@ msgstr "ตั้งค่าเกม"
 msgid "Equipment AI"
 msgstr "อุปกรณ์"
 
-#: ../base/ufos/ui/skirmish.ufo:151
+#: ../base/ufos/ui/skirmish.ufo:134
 #, fuzzy
 msgid "Max AI actors for this game"
 msgstr "จำนวนสูงสุดของผู้เล่นคอมพิวเตอร์ในแบบทีม"
 
-#: ../base/ufos/ui/skirmish.ufo:179
+#: ../base/ufos/ui/skirmish.ufo:158
+#, fuzzy
+msgid "Max. soldiers:"
+msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
+
+#: ../base/ufos/ui/skirmish.ufo:159
+#, fuzzy
+msgid "Sets the amount of soldiers"
+msgstr "เลือกทหาร"
+
+#: ../base/ufos/ui/skirmish.ufo:189
 msgid "Select which side you want to play with"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:213
+#: ../base/ufos/ui/skirmish.ufo:223
 #, fuzzy
 msgid "UFO:"
 msgstr "จานบิน"
 
-#: ../base/ufos/ui/skirmish.ufo:216
+#: ../base/ufos/ui/skirmish.ufo:226
 msgid "Select the ufo that should be used"
 msgstr ""
 
-#: ../base/ufos/ui/skirmish.ufo:243
+#: ../base/ufos/ui/skirmish.ufo:253
 #, fuzzy
 msgid "Dropship:"
 msgstr ""
@@ -13210,7 +13222,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Medium hardpoint (nose)"
 
-#: ../base/ufos/ui/skirmish.ufo:246
+#: ../base/ufos/ui/skirmish.ufo:256
 msgid "Select the dropship that should be used"
 msgstr ""
 
@@ -13883,59 +13895,59 @@ msgstr "อัจฉริยะ"
 msgid "Superhuman"
 msgstr "เกินมนุษย์"
 
-#: client/battlescape/cl_actor.c:697
+#: client/battlescape/cl_actor.c:696
 msgid "This isn't your round\n"
 msgstr "ไม่ใช่ตาของคุณ\n"
 
-#: client/battlescape/cl_actor.c:959
+#: client/battlescape/cl_actor.c:958
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "ยังใช้ของนี้ไม่ได้\n"
 "ต้องวิจัยก่อน\n"
 
-#: client/battlescape/cl_actor.c:1811
+#: client/battlescape/cl_actor.c:1802
 #, fuzzy
 msgid "Unknown alien race"
 msgstr "วิทยการที่ยังไม่รู้จัก วิจัยไม่ได้"
 
-#: client/battlescape/cl_actor.c:2500
+#: client/battlescape/cl_actor.c:2491
 #, fuzzy
 msgid "Toggle to next actor"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.c:2501
+#: client/battlescape/cl_actor.c:2492
 #, fuzzy
 msgid "Select an actor from list"
 msgstr "เลือกทหารจากรายชื่อ"
 
-#: client/battlescape/cl_actor.c:2502
+#: client/battlescape/cl_actor.c:2493
 #, fuzzy
 msgid "Update an actor"
 msgstr "เปลี่ยนชื่อทหาร"
 
-#: client/battlescape/cl_actor.c:2504
+#: client/battlescape/cl_actor.c:2495
 msgid "Toggle stand/crounch"
 msgstr "สลับ ยืน/ย่อตัว"
 
-#: client/battlescape/cl_actor.c:2505
+#: client/battlescape/cl_actor.c:2496
 #, fuzzy
 msgid "Toggle the headgear"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/battlescape/cl_actor.c:2506
+#: client/battlescape/cl_actor.c:2497
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2507
+#: client/battlescape/cl_actor.c:2498
 msgid "Confirm the current action"
 msgstr "ยืนยันการกระทำ"
 
-#: client/battlescape/cl_actor.c:2508
+#: client/battlescape/cl_actor.c:2499
 msgid "Toggle to next alien visible from selected actor."
 msgstr ""
 
-#: client/battlescape/cl_actor.c:2510
+#: client/battlescape/cl_actor.c:2501
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "สลับไปมนุษย์ต่างดาวตัวต่อไป"
@@ -14206,7 +14218,7 @@ msgstr "กำลังโหลด %s"
 msgid "loading models..."
 msgstr "โหลด รูปแบบ..."
 
-#: client/battlescape/cl_view.c:118 client/cl_main.c:971
+#: client/battlescape/cl_view.c:118 client/cl_main.c:973
 msgid "Awaiting game start"
 msgstr ""
 
@@ -14214,59 +14226,59 @@ msgstr ""
 msgid "Ends current round"
 msgstr "จบตา"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:159
+#: client/battlescape/events/event/actor/e_event_actorappear.c:158
 #, fuzzy, c-format
 msgid "Enemy spotted: %s!"
 msgstr "พบศัตรู!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:162
+#: client/battlescape/events/event/actor/e_event_actorappear.c:161
 msgid "Enemy spotted!\n"
 msgstr "พบศัตรู!\n"
 
-#: client/battlescape/events/event/actor/e_event_actorappear.c:164
+#: client/battlescape/events/event/actor/e_event_actorappear.c:163
 msgid "Civilian spotted!\n"
 msgstr "พบพลเรือน!\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:80
+#: client/battlescape/events/event/actor/e_event_actordie.c:79
 #, fuzzy, c-format
 msgid "%s was stunned\n"
 msgstr "ขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:82
+#: client/battlescape/events/event/actor/e_event_actordie.c:81
 #, fuzzy, c-format
 msgid "%s was killed\n"
 msgstr "ถูกฆ่าตาย\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:90
+#: client/battlescape/events/event/actor/e_event_actordie.c:89
 msgid "A civilian was stunned.\n"
 msgstr "พลเรือนขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:92
+#: client/battlescape/events/event/actor/e_event_actordie.c:91
 msgid "A civilian was killed.\n"
 msgstr "พลเรือนถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:96
+#: client/battlescape/events/event/actor/e_event_actordie.c:95
 msgid "An alien was stunned.\n"
 msgstr "มนุษย์ต่างดาวขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:98
+#: client/battlescape/events/event/actor/e_event_actordie.c:97
 msgid "An alien was killed.\n"
 msgstr "มนุษย์ต่างดาวถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:102
+#: client/battlescape/events/event/actor/e_event_actordie.c:101
 msgid "A soldier was stunned.\n"
 msgstr "ทหารขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:104
+#: client/battlescape/events/event/actor/e_event_actordie.c:103
 msgid "A soldier was killed.\n"
 msgstr "ทหารถูกฆ่า\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:108
+#: client/battlescape/events/event/actor/e_event_actordie.c:107
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "สมาชิกทีม %i ขยับตัวไม่ได้\n"
 
-#: client/battlescape/events/event/actor/e_event_actordie.c:110
+#: client/battlescape/events/event/actor/e_event_actordie.c:109
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "สมาชิกทีม %i ถูกฆ่า\n"
@@ -17127,7 +17139,7 @@ msgstr "ตั้งจำนวนทหารสูงสุดที่แต
 msgid "Settings doesn't make sense"
 msgstr "การตั้งค่าไม่สมเหตุผล"
 
-#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:147
+#: client/cl_game_multiplayer.c:190 client/cl_game_skirmish.c:151
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -17137,7 +17149,7 @@ msgstr ""
 "\n"
 "ไม่เหลือผู้มีชีวิตรอดทั้งสองฝ่าย"
 
-#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:148
+#: client/cl_game_multiplayer.c:191 client/cl_game_skirmish.c:152
 msgid "Game Drawn!"
 msgstr "เสมอ!"
 
@@ -17154,20 +17166,20 @@ msgstr ""
 "ฆ่าศัตรูได้:  %i\n"
 "ผู้รอดชีวิต:  %i"
 
-#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:170
+#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:174
 msgid "You won the game!"
 msgstr "คุณชนะ!"
 
-#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:171
+#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:175
 msgid "Congratulations"
 msgstr "ขอแสดงความยินดี"
 
-#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:173
+#: client/cl_game_multiplayer.c:208 client/cl_game_skirmish.c:177
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "คุณแพ้"
 
-#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:174
+#: client/cl_game_multiplayer.c:209 client/cl_game_skirmish.c:178
 msgid "Better luck next time"
 msgstr "ขอให้โชคดีคราวหน้า"
 
@@ -17176,7 +17188,7 @@ msgstr "ขอให้โชคดีคราวหน้า"
 msgid "all"
 msgstr "บอล"
 
-#: client/cl_game_skirmish.c:161
+#: client/cl_game_skirmish.c:165
 #, c-format
 msgid ""
 "Enemies killed:\t\t%i\n"
@@ -17359,7 +17371,7 @@ msgstr ""
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "เวอร์ชั่นเกม (%s) ต่างกับของเซอร์เวอร์ (%s)"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:857
 msgid "Target your shot to the ground"
 msgstr ""
 
@@ -17373,32 +17385,32 @@ msgstr "กำลังโหลด %s"
 msgid "Loading Map [%s]"
 msgstr "โหลดแผนที่ [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:335 client/cl_team.c:346
+#: client/cl_team.c:50 client/cl_team.c:344 client/cl_team.c:355
 msgid "Urban"
 msgstr "เมือง"
 
-#: client/cl_team.c:52 client/cl_team.c:336 client/cl_team.c:347
+#: client/cl_team.c:52 client/cl_team.c:345 client/cl_team.c:356
 msgid "Jungle"
 msgstr "ป่า"
 
-#: client/cl_team.c:54 client/cl_team.c:337 client/cl_team.c:348
+#: client/cl_team.c:54 client/cl_team.c:346 client/cl_team.c:357
 msgid "Desert"
 msgstr "ทะเลทราย"
 
-#: client/cl_team.c:56 client/cl_team.c:338 client/cl_team.c:349
+#: client/cl_team.c:56 client/cl_team.c:347 client/cl_team.c:358
 msgid "Arctic"
 msgstr "ขั้วโลก"
 
-#: client/cl_team.c:58 client/cl_team.c:350
+#: client/cl_team.c:58 client/cl_team.c:359
 #, fuzzy
 msgid "Yellow"
 msgstr "ช้า"
 
-#: client/cl_team.c:60 client/cl_team.c:351
+#: client/cl_team.c:60 client/cl_team.c:360
 msgid "CCCP"
 msgstr ""
 
-#: client/cl_team.c:454
+#: client/cl_team.c:463
 msgid "Update the GUI with the selected item"
 msgstr ""
 
@@ -17682,11 +17694,11 @@ msgstr "ทีมใหม่"
 msgid "Error saving team. Check free disk space!"
 msgstr "เกิดข้อผิดพลาดในการบันทึกทีม ตรวจที่ว่างในดิสค์!"
 
-#: game/g_actor.c:408
+#: game/g_actor.c:411
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "ทำไม่ได้ - ค่าเวลาไม่พอ!\n"
 
-#: game/g_actor.c:412
+#: game/g_actor.c:415
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "ทำไม่ได้ - อาวุธมีกระสุนแบบเดียวกันเต็มอยู่แล้ว!\n"
 
@@ -17903,10 +17915,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Can't activate reaction fire.\n"
 #~ msgstr "ยิงโต้ตอบหนึ่งนัด"
-
-#, fuzzy
-#~ msgid "Reselect the current soldier"
-#~ msgstr "เลือกทหาร"
 
 #, fuzzy
 #~ msgid "No weapon in right hand."
