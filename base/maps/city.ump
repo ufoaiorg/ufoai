@@ -244,6 +244,7 @@ tile +str_cross
 // Assembly definitions
 // --------------------
 
+
 assembly garage
 {
 	size "8 6"
@@ -270,8 +271,37 @@ assembly garage
 	fix +strv_rail_btm2a "5 1"
 	fix +craft_drop_firebird "5 2"
 	fix +str_rail_cross "5 5"
-
 }
+
+/*
+assembly test
+{
+	size "8 6"
+	fix +str_rail_cross "0 0"
+	fix +strv_rail_btm2a "0 1"
+	fix +craft_drop_firebird "0 2"
+	fix +str_rail_cross "0 5"
+
+	fix +strh_cwl_1a "3 0"
+	fix +strh_1a "4 0"
+	fix +strh_1a "5 0"
+	fix +strh_cwr_1a "6 0"
+
+	fix +bldr_4x4_2a "3 1"
+
+	fix +strh_cwl_1a "3 5"
+	fix +strh_1a "4 5"
+	fix +strh_1a "5 5"
+	fix +strh_cwr_1a "6 5"
+
+	fix +str_cross "7 0"
+	fix +strv_1a "7 1"
+	fix +strv_1a "7 2"
+	fix +strv_1a "7 3"
+	fix +strv_1a "7 4"
+	fix +str_cross "7 5"
+}
+*/
 /*
 	*rm_drop +craft_drop_firebird "1 1"
 
