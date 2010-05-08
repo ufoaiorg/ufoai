@@ -1710,8 +1710,8 @@ static GtkMenuItem* create_tools_menu (void)
 
 	create_menu_item_with_mnemonic(menu, _("Find/replace texture"), "FindReplaceTextures");
 	create_check_menu_item_with_mnemonic(menu, _("Play Sounds"), "PlaySounds");
-	create_menu_item_with_mnemonic(menu, _("One level up"), "BrushesUp");
-	create_menu_item_with_mnemonic(menu, _("One level down"), "BrushesDown");
+	create_menu_item_with_mnemonic(menu, _("One level up"), "ObjectsUp");
+	create_menu_item_with_mnemonic(menu, _("One level down"), "ObjectsDown");
 
 	return tools_menu_item;
 }

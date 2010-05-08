@@ -1759,7 +1759,7 @@ class BrushMoveLevel
 		}
 };
 
-class BrushMoveLevelWalker: public scene::Graph::Walker
+class MoveLevelWalker: public scene::Graph::Walker
 {
 	private:
 
@@ -1767,7 +1767,7 @@ class BrushMoveLevelWalker: public scene::Graph::Walker
 
 	public:
 
-		BrushMoveLevelWalker (bool up) :
+		MoveLevelWalker (bool up) :
 			_up(up)
 		{
 		}
@@ -1775,34 +1775,44 @@ class BrushMoveLevelWalker: public scene::Graph::Walker
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
 			if (path.top().get().visible()) {
-				Brush* brush = Node_getBrush(path.top());
-				if (brush != 0) {
-					Brush_forEachFace(*brush, BrushMoveLevel(_up));
+				if (Node_isBrush(path.top())) {
+					Brush* brush = Node_getBrush(path.top());
+					if (brush != 0) {
+						Brush_forEachFace(*brush, BrushMoveLevel(_up));
+					}
+				} else if (Node_isEntity(path.top())) {
+					Entity* entity = Node_getEntity(path.top());
+					if (entity != 0 && std::strcmp(entity->getKeyValue("classname"), "worldspawn")) {
+						// TODO:
+						//const char *spawnflags = entity->getKeyValue("spawnflags");
+					}
 				}
 			}
 			return true;
 		}
 };
 
-void BrushesDown (void)
+void ObjectsDown (void)
 {
-	if (GlobalSelectionSystem().countSelectedComponents() == 0) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("You have to select the brushes that you want to change"));
+	if (GlobalSelectionSystem().countSelected() == 0) {
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
+				_("You have to select the objects that you want to change"));
 		return;
 	}
-	UndoableCommand undo("brushDown");
-	GlobalSceneGraph().traverse(BrushMoveLevelWalker(false));
+	UndoableCommand undo("objectsDown");
+	GlobalSceneGraph().traverse(MoveLevelWalker(false));
 	SceneChangeNotify();
 }
 
-void BrushesUp (void)
+void ObjectsUp (void)
 {
-	if (GlobalSelectionSystem().countSelectedComponents() == 0) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("You have to select the brushes that you want to change"));
+	if (GlobalSelectionSystem().countSelected() == 0) {
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
+				_("You have to select the objects that you want to change"));
 		return;
 	}
-	UndoableCommand undo("brushUp");
-	GlobalSceneGraph().traverse(BrushMoveLevelWalker(true));
+	UndoableCommand undo("objectsUp");
+	GlobalSceneGraph().traverse(MoveLevelWalker(true));
 	SceneChangeNotify();
 }
 
@@ -1815,9 +1825,9 @@ bool g_bLoadLastMap = false;
 
 void Map_Construct (void)
 {
-	GlobalRadiant().commandInsert("BrushesUp", FreeCaller<BrushesUp> (), Accelerator(GDK_Prior,
+	GlobalRadiant().commandInsert("ObjectsUp", FreeCaller<ObjectsUp> (), Accelerator(GDK_Prior,
 			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("BrushesDown", FreeCaller<BrushesDown> (), Accelerator(GDK_Next,
+	GlobalRadiant().commandInsert("ObjectsDown", FreeCaller<ObjectsDown> (), Accelerator(GDK_Next,
 			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("RegionOff", FreeCaller<RegionOff> ());
 	GlobalCommands_insert("RegionSetXY", FreeCaller<RegionXY> ());
