@@ -156,18 +156,18 @@ class SelectionSystem
 				{
 				}
 
-		        /**
-		         * @brief Called by the selection system for each visited node.
-		         */
+				/**
+				 * @brief Called by the selection system for each visited node.
+				 */
 				virtual void visit (scene::Instance& instance) const = 0;
 		};
-	    /**
-	     * @brief Use the provided Visitor object to enumerate each selected node.
-	     */
+		/**
+		 * @brief Use the provided Visitor object to enumerate each selected node.
+		 */
 		virtual void foreachSelected (const Visitor& visitor) const = 0;
-	    /**
-	     * @brief Use the provided Visitor object to enumerate each selected component.
-	     */
+		/**
+		 * @brief Use the provided Visitor object to enumerate each selected component.
+		 */
 		virtual void foreachSelectedComponent (const Visitor& visitor) const = 0;
 
 		virtual void addSelectionChangeCallback (const SelectionChangeHandler& handler) = 0;
