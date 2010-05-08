@@ -60,44 +60,23 @@
 #include "gtkutil/container.h"
 #include "gtkutil/TreeModel.h"
 
-#include "entityinspector/EntityAttribute.h"
-
 #include "../qe3.h"
 #include "../gtkmisc.h"
 #include "../entity.h"
 #include "../mainframe.h"
 #include "../textureentry.h"
 
-static GtkEntry* numeric_entry_new (void)
-{
-	GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-	gtk_widget_show(GTK_WIDGET(entry));
-	widget_set_size(GTK_WIDGET(entry), 10, 0);
-	return entry;
-}
-
-namespace
-{
-	typedef std::list<std::string> Values;
-	typedef std::map<std::string, Values> KeyValues;
-	typedef std::map<std::string, KeyValues> ClassKeyValues;
-	ClassKeyValues g_selectedKeyValues; /**< all selected entities keyvalues */
-
-	const EntityClass* g_current_attributes = 0;
-	std::string g_currentSelectedKey;
-
-}
-
-/**
- * @brief Helper method returns value of the first list element
- * @param values value list to get first data element from
- * @return content of first list element
- */
-const std::string& Values_getFirstValue (const Values &values)
-{
-	ASSERT_MESSAGE(!values.empty(), "Values don't exist");
-	return *values.begin();
-}
+#include "entityinspector/EntityAttribute.h"
+#include "entityinspector/AngleAttribute.h"
+#include "entityinspector/AnglesAttribute.h"
+#include "entityinspector/BooleanAttribute.h"
+#include "entityinspector/DirectionAttribute.h"
+#include "entityinspector/ListAttribute.h"
+#include "entityinspector/ModelAttribute.h"
+#include "entityinspector/ParticleAttribute.h"
+#include "entityinspector/SoundAttribute.h"
+#include "entityinspector/StringAttribute.h"
+#include "entityinspector/Vector3Attribute.h"
 
 /**
  * @brief Helper method returns the first value in value list for given key for currently selected entity class or an empty string.
@@ -112,643 +91,13 @@ const std::string SelectedEntity_getValueForKey (const std::string& key)
 		KeyValues &possibleValues = (*it).second;
 		KeyValues::const_iterator i = possibleValues.find(key);
 		if (i != possibleValues.end()) {
-			return Values_getFirstValue((*i).second);
+			const Values &values = (*i).second;
+			ASSERT_MESSAGE(!values.empty(), "Values don't exist");
+			return *values.begin();
 		}
 	}
 	return "";
 }
-
-static void Scene_EntitySetKeyValue_Selected_Undoable (const std::string& classname, const std::string& key,
-		const std::string& value)
-{
-	std::string command = "entitySetKeyValue -classname \"" + classname + "\" -key \"" + key + "\" -value \"" + value
-			+ "\"";
-	UndoableCommand undo(command);
-	Scene_EntitySetKeyValue_Selected(classname.c_str(), key.c_str(), value.c_str());
-}
-
-// BooleanAttribute. A simple on/off keyval is represented by a checkbox.
-class BooleanAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		// The key that this BooleanAttribute is operating on.
-		std::string m_key;
-		// The visible checkbox
-		GtkCheckButton* m_check;
-
-		// Callback function to propagate the change to the keyval whenever the
-		// checkbox is toggled. This is passed an explicit "this" pointer because
-		// the GTK API is based on C not C++.
-		static gboolean toggled (GtkWidget *widget, BooleanAttribute* self)
-		{
-			self->apply();
-			return FALSE;
-		}
-	public:
-		// Constructor
-		BooleanAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_check(0)
-		{
-			GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new());
-
-			// Show the checkbutton
-			gtk_widget_show(GTK_WIDGET(check));
-
-			m_check = check;
-
-			// Connect up the callback function
-			guint handler = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(toggled), this);
-			g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler));
-
-			// Get the keyval after construction
-			update();
-		}
-		// Return the checkbox as a GtkWidget
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_check);
-		}
-
-		// Propagate GUI changes to the underlying keyval
-		void apply (void)
-		{
-			std::string value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(m_check)) ? "1" : "0";
-			// Set 1 for checkbox ticked, 0 otherwise
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value);
-		}
-
-		// Retrieve keyval and update GtkWidget accordingly
-		void update (void)
-		{
-			const std::string value = SelectedEntity_getValueForKey(m_key);
-			// Set checkbox to enabled for a keyval other than 0
-			if (value.length() > 0) {
-				toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(m_check), string::toInt(value) != 0);
-			} else {
-				// No keyval found, set self to inactive
-				toggle_button_set_active_no_signal(GTK_TOGGLE_BUTTON(m_check), false);
-			}
-		}
-};
-
-// The StringAttribute is used for editing simple strink keyvals
-class StringAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		// Name of the keyval we are wrapping
-		std::string m_key;
-		GtkEntry* m_entry;
-		NonModalEntry m_nonModal;
-	public:
-		// Constructor
-		StringAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
-		{
-			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-			gtk_widget_show(GTK_WIDGET(entry));
-			widget_set_size(GTK_WIDGET(entry), 50, 0);
-
-			m_entry = entry;
-			m_nonModal.connect(m_entry);
-		}
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_entry);
-		}
-		GtkEntry* getEntry () const
-		{
-			return m_entry;
-		}
-
-		void apply (void)
-		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value.c_str());
-		}
-		typedef MemberCaller<StringAttribute, &StringAttribute::apply> ApplyCaller;
-
-		void update (void)
-		{
-			const std::string& value = SelectedEntity_getValueForKey(m_key);
-			gtk_entry_set_text(m_entry, value.c_str());
-		}
-		typedef MemberCaller<StringAttribute, &StringAttribute::update> UpdateCaller;
-};
-
-class ModelAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		BrowsedPathEntry m_entry;
-		NonModalEntry m_nonModal;
-	public:
-		ModelAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this),
-					UpdateCaller(*this))
-		{
-			m_nonModal.connect(m_entry.m_entry.m_entry);
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_entry.m_entry.m_frame);
-		}
-		void apply (void)
-		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value.c_str());
-		}
-		typedef MemberCaller<ModelAttribute, &ModelAttribute::apply> ApplyCaller;
-		void update (void)
-		{
-			const std::string value = SelectedEntity_getValueForKey(m_key);
-			gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
-		}
-		typedef MemberCaller<ModelAttribute, &ModelAttribute::update> UpdateCaller;
-		void browse (const BrowsedPathEntry::SetPathCallback& setPath)
-		{
-			ui::ModelAndSkin modelAndSkin = ui::ModelSelector::chooseModel();
-			if (!modelAndSkin.model.empty()) {
-				if (modelAndSkin.skin != -1)
-					Scene_EntitySetKeyValue_Selected_Undoable(m_classname, "skin", string::toString(modelAndSkin.skin));
-				setPath(modelAndSkin.model);
-				apply();
-			}
-		}
-		typedef MemberCaller1<ModelAttribute, const BrowsedPathEntry::SetPathCallback&, &ModelAttribute::browse>
-				BrowseCaller;
-};
-
-class SoundAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		BrowsedPathEntry m_entry;
-		NonModalEntry m_nonModal;
-	public:
-		SoundAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this),
-					UpdateCaller(*this))
-		{
-			m_nonModal.connect(m_entry.m_entry.m_entry);
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_entry.m_entry.m_frame);
-		}
-		void apply (void)
-		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value.c_str());
-		}
-		typedef MemberCaller<SoundAttribute, &SoundAttribute::apply> ApplyCaller;
-		void update (void)
-		{
-			const std::string value = SelectedEntity_getValueForKey(m_key);
-			gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
-		}
-		typedef MemberCaller<SoundAttribute, &SoundAttribute::update> UpdateCaller;
-		void browse (const BrowsedPathEntry::SetPathCallback& setPath)
-		{
-			// Display the Sound Chooser to get a sound from the user
-			ui::SoundChooser sChooser;
-			std::string sound = sChooser.chooseSound();
-			if (sound.length() > 0) {
-				setPath(sound);
-				apply();
-			}
-		}
-		typedef MemberCaller1<SoundAttribute, const BrowsedPathEntry::SetPathCallback&, &SoundAttribute::browse>
-				BrowseCaller;
-};
-
-class ParticleAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		BrowsedPathEntry m_entry;
-		NonModalEntry m_nonModal;
-	public:
-		ParticleAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_entry(BrowseCaller(*this)), m_nonModal(ApplyCaller(*this),
-					UpdateCaller(*this))
-		{
-			m_nonModal.connect(m_entry.m_entry.m_entry);
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_entry.m_entry.m_frame);
-		}
-		void apply (void)
-		{
-			StringOutputStream value(64);
-			value << ConvertUTF8ToLocale(gtk_entry_get_text(GTK_ENTRY(m_entry.m_entry.m_entry)));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, value.c_str());
-		}
-		typedef MemberCaller<ParticleAttribute, &ParticleAttribute::apply> ApplyCaller;
-		void update (void)
-		{
-			const std::string value = SelectedEntity_getValueForKey(m_key);
-			gtk_entry_set_text(GTK_ENTRY(m_entry.m_entry.m_entry), value.c_str());
-		}
-		typedef MemberCaller<ParticleAttribute, &ParticleAttribute::update> UpdateCaller;
-		void browse (const BrowsedPathEntry::SetPathCallback& setPath)
-		{
-			const char *filename = misc_particle_dialog(gtk_widget_get_toplevel(GTK_WIDGET(m_entry.m_entry.m_frame)));
-			if (filename != 0) {
-				setPath(filename);
-				apply();
-			}
-		}
-		typedef MemberCaller1<ParticleAttribute, const BrowsedPathEntry::SetPathCallback&, &ParticleAttribute::browse>
-				BrowseCaller;
-};
-
-static inline double angle_normalised (double angle)
-{
-	return float_mod(angle, 360.0);
-}
-
-class AngleAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		GtkEntry* m_entry;
-		NonModalEntry m_nonModal;
-	public:
-		AngleAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
-		{
-			GtkEntry* entry = numeric_entry_new();
-			m_entry = entry;
-			m_nonModal.connect(m_entry);
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_entry);
-		}
-		void apply (void)
-		{
-			StringOutputStream angle(32);
-			angle << angle_normalised(entry_get_float(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, angle.c_str());
-		}
-		typedef MemberCaller<AngleAttribute, &AngleAttribute::apply> ApplyCaller;
-
-		void update (void)
-		{
-			const std::string value = SelectedEntity_getValueForKey(m_key);
-			if (value.length() > 0) {
-				StringOutputStream angle(32);
-				angle << angle_normalised(string::toFloat(value));
-				gtk_entry_set_text(m_entry, angle.c_str());
-			} else {
-				gtk_entry_set_text(m_entry, "0");
-			}
-		}
-		typedef MemberCaller<AngleAttribute, &AngleAttribute::update> UpdateCaller;
-};
-
-static const char* directionButtons[] = { "up", "down", "z-axis" };
-
-class DirectionAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		GtkEntry* m_entry;
-		NonModalEntry m_nonModal;
-		RadioHBox m_radio;
-		NonModalRadio m_nonModalRadio;
-		GtkHBox* m_hbox;
-	public:
-		DirectionAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_entry(0), m_nonModal(ApplyCaller(*this), UpdateCaller(*this)),
-					m_radio(RadioHBox_new(STRING_ARRAY_RANGE(directionButtons))), m_nonModalRadio(ApplyRadioCaller(
-							*this))
-		{
-			GtkEntry* entry = numeric_entry_new();
-			m_entry = entry;
-			m_nonModal.connect(m_entry);
-
-			m_nonModalRadio.connect(m_radio.m_radio);
-
-			m_hbox = GTK_HBOX(gtk_hbox_new(FALSE, 4));
-			gtk_widget_show(GTK_WIDGET(m_hbox));
-
-			gtk_box_pack_start(GTK_BOX(m_hbox), GTK_WIDGET(m_radio.m_hbox), TRUE, TRUE, 0);
-			gtk_box_pack_start(GTK_BOX(m_hbox), GTK_WIDGET(m_entry), TRUE, TRUE, 0);
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_hbox);
-		}
-		void apply (void)
-		{
-			StringOutputStream angle(32);
-			angle << angle_normalised(entry_get_float(m_entry));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, angle.c_str());
-		}
-		typedef MemberCaller<DirectionAttribute, &DirectionAttribute::apply> ApplyCaller;
-
-		void update (void)
-		{
-			const std::string& value = SelectedEntity_getValueForKey(m_key);
-			if (value.length() > 0) {
-				const float f = string::toFloat(value);
-				if (f == -1) {
-					gtk_widget_set_sensitive(GTK_WIDGET(m_entry), FALSE);
-					radio_button_set_active_no_signal(m_radio.m_radio, 0);
-					gtk_entry_set_text(m_entry, "");
-				} else if (f == -2) {
-					gtk_widget_set_sensitive(GTK_WIDGET(m_entry), FALSE);
-					radio_button_set_active_no_signal(m_radio.m_radio, 1);
-					gtk_entry_set_text(m_entry, "");
-				} else {
-					gtk_widget_set_sensitive(GTK_WIDGET(m_entry), TRUE);
-					radio_button_set_active_no_signal(m_radio.m_radio, 2);
-					StringOutputStream angle(32);
-					angle << angle_normalised(f);
-					gtk_entry_set_text(m_entry, angle.c_str());
-				}
-			} else {
-				gtk_entry_set_text(m_entry, "0");
-			}
-		}
-		typedef MemberCaller<DirectionAttribute, &DirectionAttribute::update> UpdateCaller;
-
-		void applyRadio (void)
-		{
-			const int index = radio_button_get_active(m_radio.m_radio);
-			if (index == 0) {
-				Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, "-1");
-			} else if (index == 1) {
-				Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, "-2");
-			} else if (index == 2) {
-				apply();
-			}
-		}
-		typedef MemberCaller<DirectionAttribute, &DirectionAttribute::applyRadio> ApplyRadioCaller;
-};
-
-class AnglesEntry
-{
-	public:
-		GtkEntry* m_roll;
-		GtkEntry* m_pitch;
-		GtkEntry* m_yaw;
-		AnglesEntry () :
-			m_roll(0), m_pitch(0), m_yaw(0)
-		{
-		}
-};
-
-typedef BasicVector3<double> DoubleVector3;
-
-class AnglesAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		AnglesEntry m_angles;
-		NonModalEntry m_nonModal;
-		GtkBox* m_hbox;
-	public:
-		AnglesAttribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
-		{
-			m_hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
-			gtk_widget_show(GTK_WIDGET(m_hbox));
-			{
-				GtkEntry* entry = numeric_entry_new();
-				gtk_box_pack_start(m_hbox, GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_angles.m_pitch = entry;
-				m_nonModal.connect(m_angles.m_pitch);
-			}
-			{
-				GtkEntry* entry = numeric_entry_new();
-				gtk_box_pack_start(m_hbox, GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_angles.m_yaw = entry;
-				m_nonModal.connect(m_angles.m_yaw);
-			}
-			{
-				GtkEntry* entry = numeric_entry_new();
-				gtk_box_pack_start(m_hbox, GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_angles.m_roll = entry;
-				m_nonModal.connect(m_angles.m_roll);
-			}
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_hbox);
-		}
-		void apply (void)
-		{
-			StringOutputStream angles(64);
-			angles << angle_normalised(entry_get_float(m_angles.m_pitch)) << " " << angle_normalised(entry_get_float(
-					m_angles.m_yaw)) << " " << angle_normalised(entry_get_float(m_angles.m_roll));
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, angles.c_str());
-		}
-		typedef MemberCaller<AnglesAttribute, &AnglesAttribute::apply> ApplyCaller;
-
-		void update (void)
-		{
-			StringOutputStream angle(32);
-			const std::string& value = SelectedEntity_getValueForKey(m_key);
-			if (value.length() > 0) {
-				DoubleVector3 pitch_yaw_roll;
-				if (!string_parse_vector3(value.c_str(), pitch_yaw_roll)) {
-					pitch_yaw_roll = DoubleVector3(0, 0, 0);
-				}
-
-				angle << angle_normalised(pitch_yaw_roll.x());
-				gtk_entry_set_text(m_angles.m_pitch, angle.c_str());
-				angle.clear();
-
-				angle << angle_normalised(pitch_yaw_roll.y());
-				gtk_entry_set_text(m_angles.m_yaw, angle.c_str());
-				angle.clear();
-
-				angle << angle_normalised(pitch_yaw_roll.z());
-				gtk_entry_set_text(m_angles.m_roll, angle.c_str());
-				angle.clear();
-			} else {
-				gtk_entry_set_text(m_angles.m_pitch, "0");
-				gtk_entry_set_text(m_angles.m_yaw, "0");
-				gtk_entry_set_text(m_angles.m_roll, "0");
-			}
-		}
-		typedef MemberCaller<AnglesAttribute, &AnglesAttribute::update> UpdateCaller;
-};
-
-class Vector3Entry
-{
-	public:
-		GtkEntry* m_x;
-		GtkEntry* m_y;
-		GtkEntry* m_z;
-		Vector3Entry () :
-			m_x(0), m_y(0), m_z(0)
-		{
-		}
-};
-
-class Vector3Attribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		Vector3Entry m_vector3;
-		NonModalEntry m_nonModal;
-		GtkBox* m_hbox;
-	public:
-		Vector3Attribute (const std::string& classname, const std::string& key) :
-			m_classname(classname), m_key(key), m_nonModal(ApplyCaller(*this), UpdateCaller(*this))
-		{
-			m_hbox = GTK_BOX(gtk_hbox_new(TRUE, 4));
-			gtk_widget_show(GTK_WIDGET(m_hbox));
-			{
-				GtkEntry* entry = numeric_entry_new();
-				gtk_box_pack_start(m_hbox, GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_vector3.m_x = entry;
-				m_nonModal.connect(m_vector3.m_x);
-			}
-			{
-				GtkEntry* entry = numeric_entry_new();
-				gtk_box_pack_start(m_hbox, GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_vector3.m_y = entry;
-				m_nonModal.connect(m_vector3.m_y);
-			}
-			{
-				GtkEntry* entry = numeric_entry_new();
-				gtk_box_pack_start(m_hbox, GTK_WIDGET(entry), TRUE, TRUE, 0);
-				m_vector3.m_z = entry;
-				m_nonModal.connect(m_vector3.m_z);
-			}
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_hbox);
-		}
-		void apply (void)
-		{
-			StringOutputStream vector3(64);
-			vector3 << entry_get_float(m_vector3.m_x) << " " << entry_get_float(m_vector3.m_y) << " "
-					<< entry_get_float(m_vector3.m_z);
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key, vector3.c_str());
-		}
-		typedef MemberCaller<Vector3Attribute, &Vector3Attribute::apply> ApplyCaller;
-
-		void update (void)
-		{
-			StringOutputStream buffer(32);
-			const std::string& value = SelectedEntity_getValueForKey(m_key);
-			if (value.length() > 0) {
-				DoubleVector3 x_y_z;
-				if (!string_parse_vector3(value.c_str(), x_y_z)) {
-					x_y_z = DoubleVector3(0, 0, 0);
-				}
-
-				buffer << x_y_z.x();
-				gtk_entry_set_text(m_vector3.m_x, buffer.c_str());
-				buffer.clear();
-
-				buffer << x_y_z.y();
-				gtk_entry_set_text(m_vector3.m_y, buffer.c_str());
-				buffer.clear();
-
-				buffer << x_y_z.z();
-				gtk_entry_set_text(m_vector3.m_z, buffer.c_str());
-				buffer.clear();
-			} else {
-				gtk_entry_set_text(m_vector3.m_x, "0");
-				gtk_entry_set_text(m_vector3.m_y, "0");
-				gtk_entry_set_text(m_vector3.m_z, "0");
-			}
-		}
-		typedef MemberCaller<Vector3Attribute, &Vector3Attribute::update> UpdateCaller;
-};
-
-class NonModalComboBox
-{
-		Callback m_changed;
-		guint m_changedHandler;
-
-		static gboolean changed (GtkComboBox *widget, NonModalComboBox* self)
-		{
-			self->m_changed();
-			return FALSE;
-		}
-
-	public:
-		NonModalComboBox (const Callback& changed) :
-			m_changed(changed), m_changedHandler(0)
-		{
-		}
-		void connect (GtkComboBox* combo)
-		{
-			m_changedHandler = g_signal_connect(G_OBJECT(combo), "changed", G_CALLBACK(changed), this);
-		}
-		void setActive (GtkComboBox* combo, int value)
-		{
-			g_signal_handler_disconnect(G_OBJECT(combo), m_changedHandler);
-			gtk_combo_box_set_active(combo, value);
-			connect(combo);
-		}
-};
-
-class ListAttribute: public EntityAttribute
-{
-		std::string m_classname;
-		std::string m_key;
-		GtkComboBox* m_combo;
-		NonModalComboBox m_nonModal;
-		const ListAttributeType& m_type;
-	public:
-		ListAttribute (const std::string& classname, const std::string& key, const ListAttributeType& type) :
-			m_classname(classname), m_key(key), m_combo(0), m_nonModal(ApplyCaller(*this)), m_type(type)
-		{
-			GtkComboBox* combo = GTK_COMBO_BOX(gtk_combo_box_new_text());
-
-			for (ListAttributeType::const_iterator i = type.begin(); i != type.end(); ++i) {
-				gtk_combo_box_append_text(GTK_COMBO_BOX(combo), i->first.c_str());
-			}
-
-			gtk_widget_show(GTK_WIDGET(combo));
-			m_nonModal.connect(combo);
-
-			m_combo = combo;
-		}
-
-		GtkWidget* getWidget () const
-		{
-			return GTK_WIDGET(m_combo);
-		}
-		void apply (void)
-		{
-			Scene_EntitySetKeyValue_Selected_Undoable(m_classname, m_key,
-					m_type[gtk_combo_box_get_active(m_combo)].second);
-		}
-		typedef MemberCaller<ListAttribute, &ListAttribute::apply> ApplyCaller;
-
-		void update (void)
-		{
-			const std::string& value = SelectedEntity_getValueForKey(m_key);
-			ListAttributeType::const_iterator i = m_type.findValue(value);
-			if (i != m_type.end()) {
-				m_nonModal.setActive(m_combo, static_cast<int> (std::distance(m_type.begin(), i)));
-			} else {
-				m_nonModal.setActive(m_combo, 0);
-			}
-		}
-		//typedef MemberCaller<ListAttribute, &ListAttribute::update> UpdateCaller;
-};
 
 /*
  * Entity Inspector Dialog
@@ -1171,7 +520,9 @@ static void EntityInspector_updateKeyValueList (void)
 			GtkTreeIter iter;
 			gtk_tree_store_append(store, &iter, &classTreeIter);
 			std::string key = i->first;
-			std::string value = Values_getFirstValue(i->second);
+			const Values &values = (*i).second;
+			ASSERT_MESSAGE(!values.empty(), "Values don't exist");
+			std::string value = *values.begin();
 			gtk_tree_store_set(store, &iter, KEYVALLIST_COLUMN_KEY, key.c_str(), KEYVALLIST_COLUMN_VALUE,
 					value.c_str(), KEYVALLIST_COLUMN_STYLE, PANGO_WEIGHT_NORMAL, KEYVALLIST_COLUMN_KEY_EDITABLE, FALSE,
 					KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(key.c_str()), -1);
@@ -1309,7 +660,7 @@ static void EntityInspector_clearKeyValue (GtkButton * button, gpointer user_dat
 
 static void EntityClassList_selection_changed (GtkTreeSelection* selection, gpointer data)
 {
-	EntityClass* eclass = (EntityClass*)gtkutil::TreeModel::getSelectedPointer(selection, 1);
+	EntityClass* eclass = (EntityClass*) gtkutil::TreeModel::getSelectedPointer(selection, 1);
 	if (eclass != 0)
 		SetComment(eclass);
 }
@@ -1414,8 +765,7 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		gtk_tree_model_get(model, &iter, KEYVALLIST_COLUMN_KEY, &oldvalue, KEYVALLIST_COLUMN_VALUE, &value, -1);
 		key = newValue;
 	}
-	if (std::string(oldvalue) == std::string(newValue))
-	{
+	if (std::string(oldvalue) == std::string(newValue)) {
 		g_debug("Old and new value are the same, aborting edit.");
 		return;
 	}
@@ -1451,9 +801,9 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	if (columnIndex == 0 && !keyConverted.empty()) {
 		if (valueConverted.empty())
 			valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
-		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(), KEYVALLIST_COLUMN_VALUE,
-				valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP, EntityInspector_getTooltipForKey(
-						keyConverted.c_str()), -1);
+		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, KEYVALLIST_COLUMN_KEY, keyConverted.c_str(),
+				KEYVALLIST_COLUMN_VALUE, valueConverted.c_str(), KEYVALLIST_COLUMN_TOOLTIP,
+				EntityInspector_getTooltipForKey(keyConverted.c_str()), -1);
 		g_currentSelectedKey = std::string(keyConverted.c_str());
 		GtkTreePath* currentPath = gtk_tree_model_get_path(model, &iter);
 		GtkTreeViewColumn *column = gtk_tree_view_get_column(view, KEYVALLIST_COLUMN_VALUE);
@@ -1469,8 +819,10 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		UndoableCommand undo(command);
 		Scene_EntitySetClassname_Selected(classnameConverted.c_str(), valueConverted.c_str());
 	} else {
-		Scene_EntitySetKeyValue_Selected_Undoable(classnameConverted.c_str(), keyConverted.c_str(),
-				valueConverted.c_str());
+		std::string command = "entitySetKeyValue -classname \"" + std::string(classnameConverted.c_str()) + "\" -key \""
+				+ std::string(keyConverted.c_str()) + "\" -value \"" + std::string(valueConverted.c_str()) + "\"";
+		UndoableCommand undo(command);
+		Scene_EntitySetKeyValue_Selected(classnameConverted.c_str(), keyConverted.c_str(), valueConverted.c_str());
 	}
 	gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 }
