@@ -279,7 +279,7 @@ void Map_SetWorldspawn (Map& map, scene::Node* node)
 	map.m_world_node.set(node);
 }
 
-// TTimo
+// TODO TTimo
 // need that in a variable, will have to tweak depending on the game
 float g_MaxWorldCoord = 64 * 1024;
 float g_MinWorldCoord = -64 * 1024;
@@ -333,8 +333,12 @@ Entity* Scene_FindEntityByClass (const char* name)
 Entity *Scene_FindPlayerStart (void)
 {
 	typedef const char* StaticString;
-	StaticString strings[] = { "info_player_start", "info_human_deathmatch", "team_civilian_start",
-			"info_alien_deathmatch", "info_ugv_deathmatch", };
+	StaticString strings[] = {
+			"info_player_start",
+			"info_human_deathmatch",
+			"team_civilian_start",
+			"info_alien_deathmatch",
+			"info_ugv_deathmatch", };
 	typedef const StaticString* StaticStringIterator;
 	for (StaticStringIterator i = strings, end = strings + (sizeof(strings) / sizeof(StaticString)); i != end; ++i) {
 		Entity* entity = Scene_FindEntityByClass(*i);
@@ -1430,7 +1434,8 @@ const std::string& getMapsPath (void)
 	return g_mapsPath;
 }
 
-namespace ui {
+namespace ui
+{
 
 	/* Display a GTK file chooser and select a map file to open or close. The last
 	 * path used is set as the default the next time the dialog is displayed.
@@ -1439,35 +1444,36 @@ namespace ui {
 	 * open -- true to open, false to save
 	 *
 	 */
-const std::string selectMapFile(const std::string& title, bool open)
-{
-	// Save the most recently-used path so that successive maps can be opened
-	// from the same directory.
-	static std::string lastPath = getMapsPath();
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/"map", "map");
-	/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
-	if (map::isUnnamed()) {
-		fileChooser.setCurrentPath(lastPath);
-	} else {
-		const std::string mapName = GlobalRadiant().getMapName();
-		fileChooser.setCurrentPath(os::stripFilename(mapName));
+	const std::string selectMapFile (const std::string& title, bool open)
+	{
+		// Save the most recently-used path so that successive maps can be opened
+		// from the same directory.
+		static std::string lastPath = getMapsPath();
+		gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), title, open, false, /*MapFormat::Name()*/
+		"map", "map");
+		/** @todo is this distinction still needed? lastPath should contain the name of the map if saved(named). */
+		if (map::isUnnamed()) {
+			fileChooser.setCurrentPath(lastPath);
+		} else {
+			const std::string mapName = GlobalRadiant().getMapName();
+			fileChooser.setCurrentPath(os::stripFilename(mapName));
+		}
+
+		// Instantiate a new preview object
+		// map::MapFileChooserPreview preview;
+
+		// attach the preview object
+		// fileChooser.attachPreview(&preview);
+
+		const std::string filePath = fileChooser.display();
+
+		// Update the lastPath static variable with the path to the last directory
+		// opened.
+		if (!filePath.empty())
+			lastPath = os::stripFilename(filePath);
+
+		return filePath;
 	}
-
-	// Instantiate a new preview object
-	// map::MapFileChooserPreview preview;
-
-	// attach the preview object
-	// fileChooser.attachPreview(&preview);
-
-	const std::string filePath = fileChooser.display();
-
-	// Update the lastPath static variable with the path to the last directory
-	// opened.
-	if (!filePath.empty())
-		lastPath = os::stripFilename(filePath);
-
-	return filePath;
-}
 
 } //namespace ui
 
@@ -1713,6 +1719,93 @@ class MapModuleObserver: public ModuleObserver
 		}
 };
 
+class BrushMoveLevel
+{
+	private:
+
+		bool _up;
+
+	public:
+
+		BrushMoveLevel (bool up) :
+			_up(up)
+		{
+		}
+
+		void operator() (Face& face) const
+		{
+			ContentsFlagsValue flags;
+			face.GetFlags(flags);
+
+			int levels = (flags.m_contentFlags >> 8) & 255;
+			if (_up) {
+				levels <<= 1;
+				if (!levels)
+					levels = 1;
+			} else {
+				const int newLevel = levels >> 1;
+				if (newLevel != (newLevel & 255))
+					return;
+				levels >>= 1;
+			}
+
+			levels &= 255;
+			levels <<= 8;
+
+			flags.m_contentFlags &= levels;
+			flags.m_contentFlags |= levels;
+
+			face.SetFlags(flags);
+		}
+};
+
+class BrushMoveLevelWalker: public scene::Graph::Walker
+{
+	private:
+
+		bool _up;
+
+	public:
+
+		BrushMoveLevelWalker (bool up) :
+			_up(up)
+		{
+		}
+
+		bool pre (const scene::Path& path, scene::Instance& instance) const
+		{
+			if (path.top().get().visible()) {
+				Brush* brush = Node_getBrush(path.top());
+				if (brush != 0) {
+					Brush_forEachFace(*brush, BrushMoveLevel(_up));
+				}
+			}
+			return true;
+		}
+};
+
+void BrushesDown (void)
+{
+	if (GlobalSelectionSystem().countSelectedComponents() == 0) {
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("You have to select the brushes that you want to change"));
+		return;
+	}
+	UndoableCommand undo("brushDown");
+	GlobalSceneGraph().traverse(BrushMoveLevelWalker(false));
+	SceneChangeNotify();
+}
+
+void BrushesUp (void)
+{
+	if (GlobalSelectionSystem().countSelectedComponents() == 0) {
+		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("You have to select the brushes that you want to change"));
+		return;
+	}
+	UndoableCommand undo("brushUp");
+	GlobalSceneGraph().traverse(BrushMoveLevelWalker(true));
+	SceneChangeNotify();
+}
+
 MapModuleObserver g_MapModuleObserver;
 
 #include "preferencesystem.h"
@@ -1722,6 +1815,10 @@ bool g_bLoadLastMap = false;
 
 void Map_Construct (void)
 {
+	GlobalRadiant().commandInsert("BrushesUp", FreeCaller<BrushesUp> (), Accelerator(GDK_Prior,
+			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalRadiant().commandInsert("BrushesDown", FreeCaller<BrushesDown> (), Accelerator(GDK_Next,
+			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("RegionOff", FreeCaller<RegionOff> ());
 	GlobalCommands_insert("RegionSetXY", FreeCaller<RegionXY> ());
 	GlobalCommands_insert("RegionSetBrush", FreeCaller<RegionBrush> ());

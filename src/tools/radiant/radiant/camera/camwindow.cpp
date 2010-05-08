@@ -1095,49 +1095,17 @@ CamWnd::~CamWnd ()
 	delete m_window_observer;
 }
 
-class FloorHeightWalker: public scene::Graph::Walker
-{
-		float m_current;
-		float& m_bestUp;
-		float& m_bestDown;
-	public:
-		FloorHeightWalker (float current, float& bestUp, float& bestDown) :
-			m_current(current), m_bestUp(bestUp), m_bestDown(bestDown)
-		{
-			bestUp = g_MaxWorldCoord;
-			bestDown = -g_MaxWorldCoord;
-		}
-		bool pre (const scene::Path& path, scene::Instance& instance) const
-		{
-			if (path.top().get().visible() && Node_isBrush(path.top())) { // this node is a floor
-				const AABB& aabb = instance.worldAABB();
-				float floorHeight = aabb.origin.z() + aabb.extents.z();
-				if (floorHeight > m_current && floorHeight < m_bestUp) {
-					m_bestUp = floorHeight;
-				}
-				if (floorHeight < m_current && floorHeight > m_bestDown) {
-					m_bestDown = floorHeight;
-				}
-			}
-			return true;
-		}
-};
-
 void CamWnd::Cam_ChangeFloor (bool up)
 {
-	float current = m_Camera.origin[2] - 48;
-	float bestUp;
-	float bestDown;
-	GlobalSceneGraph().traverse(FloorHeightWalker(current, bestUp, bestDown));
-
-	if (up && bestUp != g_MaxWorldCoord) {
-		current = bestUp;
-	}
-	if (!up && bestDown != -g_MaxWorldCoord) {
-		current = bestDown;
+	if (up) {
+		m_Camera.origin[2] += 64;
+	} else {
+		m_Camera.origin[2] -= 64;
 	}
 
-	m_Camera.origin[2] = current + 48;
+	if (m_Camera.origin[2] < 0)
+		m_Camera.origin[2] = 0;
+
 	Camera_updateModelview(getCamera());
 	CamWnd_Update(*this);
 	CameraMovedNotify();

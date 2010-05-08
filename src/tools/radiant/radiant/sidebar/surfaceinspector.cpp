@@ -1247,6 +1247,7 @@ void SurfaceInspector_Construct (void)
 
 	typedef FreeCaller1<const Selectable&, SurfaceInspector_SelectionChanged> SurfaceInspectorSelectionChangedCaller;
 	GlobalSelectionSystem().addSelectionChangeCallback(SurfaceInspectorSelectionChangedCaller());
+	GlobalSceneGraph().addSceneChangedCallback(FreeCaller<SurfaceInspector_updateSelection>());
 	typedef FreeCaller<SurfaceInspector_updateSelection> SurfaceInspectorUpdateSelectionCaller;
 	Brush_addTextureChangedCallback(SurfaceInspectorUpdateSelectionCaller());
 
