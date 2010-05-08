@@ -176,7 +176,6 @@ class GetKeyValueVisitor: public Entity::Visitor
 			}
 			(*keyIter).second.push_back(Values::value_type(std::string(value)));
 		}
-
 };
 
 /**
@@ -584,8 +583,9 @@ void EntityInspector_selectionChanged (const Selectable&)
 	EntityInspector_keyValueChanged();
 }
 
-// Creates a new entity based on the currently selected brush and entity type.
-//
+/**
+ * @brief Creates a new entity based on the currently selected brush and entity type.
+ */
 static void EntityClassList_createEntity (void)
 {
 	GtkTreeView* view = g_entityClassList;

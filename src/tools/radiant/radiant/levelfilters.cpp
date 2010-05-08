@@ -175,9 +175,15 @@ void filter_level (int flag)
 
 	if (currentActiveLevel) {
 		GlobalSceneGraph().traverse(BrushGetLevel(brushes, (currentActiveLevel << 8), true, true, false));
+		// TODO: get this info from entities.ufo
+		GlobalSceneGraph().traverse(EntityFindByName("func_rotating", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("func_door", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("func_breakable", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_item", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_mission", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_mission_alien", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("misc_model", entities, currentActiveLevel, false));
+		GlobalSceneGraph().traverse(EntityFindByName("misc_sound", entities, currentActiveLevel, false));
 		GlobalSceneGraph().traverse(EntityFindByName("misc_particle", entities, currentActiveLevel, false));
 		entities.erase(entities.begin(), entities.end());
 		brushes.erase(brushes.begin(), brushes.end());

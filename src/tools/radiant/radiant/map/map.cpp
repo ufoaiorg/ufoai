@@ -77,6 +77,7 @@
 #include "../brush/brush.h"
 #include "../brush/brushnode.h"
 #include "../ump.h"
+#include "string/string.h"
 
 #include "MapFileChooserPreview.h"
 
@@ -1782,9 +1783,25 @@ class MoveLevelWalker: public scene::Graph::Walker
 					}
 				} else if (Node_isEntity(path.top())) {
 					Entity* entity = Node_getEntity(path.top());
-					if (entity != 0 && std::strcmp(entity->getKeyValue("classname"), "worldspawn")) {
-						// TODO:
-						//const char *spawnflags = entity->getKeyValue("spawnflags");
+					if (entity != 0) {
+						std::string name = entity->getKeyValue("classname");
+						// TODO: get this info from entities.ufo
+						if (name == "func_rotating" || name == "func_door" || name == "func_breakable" || name
+								== "misc_item" || name == "misc_mission" || name == "misc_mission_alien" || name
+								== "misc_model" || name == "misc_sound" || name == "misc_particle") {
+							const char *spawnflags = entity->getKeyValue("spawnflags");
+							if (spawnflags != 0 && *spawnflags != '\0') {
+								int levels = atoi(spawnflags) & 255;
+								if (_up) {
+									levels <<= 1;
+								} else {
+									levels >>= 1;
+								}
+								if (levels == 0)
+									levels = 1;
+								entity->setKeyValue("spawnflags", string::toString(levels & 255));
+							}
+						}
 					}
 				}
 			}
