@@ -2235,13 +2235,17 @@ base/pics/icons/un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/loading.png | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/alienbase.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/bomber_city.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/bridge.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/bunker.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/cemetery.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/city_disco.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/city_train.jpg | GNU General Public License 2.0 or later
+base/pics/maps/loading/community_centre.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/construction.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/corrupter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/country.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/dam.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/default.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/desert.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2251,14 +2255,18 @@ base/pics/maps/loading/england.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/estate.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/excavation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/farm.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/ferry.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/fighter_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/forest.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/frozen.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/fueldump.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/gasstation.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/harbour.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/ice.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/industrial.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/italy.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/japan.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/laboratory.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/lake_ice.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/lake_ice_big.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/mart.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2267,20 +2275,27 @@ base/pics/maps/loading/mine.jpg | GNU General Public License 2.0 or later | Mart
 base/pics/maps/loading/office.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/oriental.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/oriental_mosque.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/pipes_const.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/resort.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/rivertown.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/scout_crash.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/shelter.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/spedition.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/stadium.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/subway.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/tower.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/transport.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/tropic.jpg | GNU General Public License 2.0 or later
+base/pics/maps/loading/ufocrash.jpg | GNU General Public License 2.0 or later
 base/pics/maps/loading/village.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/loading/wilderness.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/africa_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/alienbase.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/alienbase_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/alienbase_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bomber_city.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bomber_city_2.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/bomber_city_3.jpg | GNU General Public License 2.0 or later
@@ -2290,6 +2305,9 @@ base/pics/maps/shots/bridge_3.jpg | GNU General Public License 2.0 or later | Ma
 base/pics/maps/shots/bunker.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bunker_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/bunker_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/maps/shots/cemetery.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/cemetery_2.jpg | GNU General Public License 2.0 or later
+base/pics/maps/shots/cemetery_3.jpg | GNU General Public License 2.0 or later
 base/pics/maps/shots/city_disco.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/city_disco_2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/shots/city_disco_3.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
