@@ -233,7 +233,7 @@ static model_t *LoadModel (const char *name)
 
 static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const char *fileName)
 {
-	int i, frame;
+	int i;
 	qFILE f;
 	uint32_t version = MDX_VERSION;
 	int32_t numIndexes, numVerts, idx;
@@ -258,24 +258,6 @@ static void WriteToFile (const model_t *mod, const mAliasMesh_t *mesh, const cha
 	for (i = 0; i < mesh->num_tris * 3; i++) {
 		idx = LittleLong(mesh->indexes[i]);
 		FS_Write(&idx, sizeof(int32_t), &f);
-	}
-
-	for (frame = 0; frame < mod->alias.num_frames; frame++) {
-		int32_t offset = mesh->num_verts * frame;
-		for (i = 0; i < mesh->num_verts; i++) {
-			mAliasVertex_t *v = &mesh->vertexes[i + offset];
-			int j;
-			for (j = 0; j < 3; j++) {
-				v->normal[j] = LittleFloat(v->normal[j]);
-				v->tangent[j] = LittleFloat(v->tangent[j]);
-			}
-		}
-
-		for (i = 0; i < mesh->num_verts; i++) {
-			mAliasVertex_t *v = &mesh->vertexes[i + offset];
-			FS_Write(v->normal, sizeof(vec3_t), &f);
-			FS_Write(v->tangent, sizeof(vec4_t), &f);
-		}
 	}
 
 	FS_CloseFile(&f);

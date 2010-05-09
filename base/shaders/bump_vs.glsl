@@ -1,13 +1,11 @@
-// bumpmap vertex shader, requires light_vs.glsl
+// bumpmap vertex shader, requires light_vs.glsl and lerp_vs.glsl
 
 attribute vec4 TANGENT;
 uniform int DYNAMICLIGHTS;
 
 varying vec3 eyedir;
-/* @todo replace this 8 with r_dynamic_lights->integer */
 varying vec3 lightDirs[#replace r_dynamic_lights ];
 varying vec3 staticLightDir;
-varying vec3 tangent;
 
 /*
  * BumpVertex
@@ -15,10 +13,9 @@ varying vec3 tangent;
 void BumpVertex(void){
 
 	// load the tangent
-	tangent = normalize(gl_NormalMatrix * TANGENT.xyz );
+	vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz );
 	// compute the bitangent
-	//vec3 bitangent = normalize(cross(normal, tangent) * TANGENT.w);
-	vec3 bitangent = normalize(cross(normal, tangent));
+	vec3 bitangent = normalize(cross(normal, tangent)) * Tangent.w;
 
 	// transform the eye direction into tangent space
 	vec3 v;

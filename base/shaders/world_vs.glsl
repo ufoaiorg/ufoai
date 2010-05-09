@@ -2,7 +2,7 @@
 
 uniform float OFFSET;
 uniform int BUMPMAP;
-uniform vec3 LIGHTPOS;
+uniform int ANIMATE;
 
 varying vec3 lightpos;
 
@@ -13,15 +13,21 @@ varying vec3 normal;
 attribute vec4 TANGENT;
 uniform int DYNAMICLIGHTS;
 
+attribute vec4 NEXT_FRAME_VERTS;
+attribute vec4 NEXT_FRAME_NORMALS;
+attribute vec4 NEXT_FRAME_TANGENTS;
+uniform float TIME;
+varying vec4 Tangent;
+
 varying vec3 eyedir;
 varying vec3 lightDirs[];
 varying vec3 staticLightDir;
-varying vec3 tangent;
 
 varying float fog; 
 */
 
 
+#include "lerp_vs.glsl"
 #include "light_vs.glsl"
 #include "bump_vs.glsl"
 #include "fog_vs.glsl"
@@ -31,15 +37,22 @@ varying float fog;
  */
 void main(void){
 
+	if (ANIMATE > 0) {
+		lerpVertex();
+	} else {
+		Vertex = gl_Vertex;
+		Normal = gl_Normal;
+		Tangent = TANGENTS;
+	}
+
 	// mvp transform into clip space
-	gl_Position = ftransform();
+	//gl_Position = ftransform();
+	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(Vertex);
+
 
 	// pass texcoords through
 	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 	gl_TexCoord[1] = gl_MultiTexCoord1 + OFFSET;
-
-	// transform the static lighting direction into model space
-	lightpos = vec3(gl_ModelViewMatrix * vec4(LIGHTPOS, 1.0));
 
 	LightVertex();
 

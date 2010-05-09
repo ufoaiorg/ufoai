@@ -88,7 +88,8 @@ static void R_StageGlow (const mBspSurface_t *surf, const materialStage_t *stage
 {
 	if (stage->image->glowmap) {
 		R_EnableGlowMap(stage->image->glowmap, qtrue);
-		R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
+		if (r_state.glowmap_enabled)
+			R_ProgramParameter1f("GLOWSCALE", stage->glowscale);
 	} else {
 		R_EnableGlowMap(NULL, qfalse);
 	}
@@ -373,6 +374,9 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	R_EnableTexture(&texunit_lightmap, qtrue);
 
 	R_EnableLighting(r_state.world_program, qtrue);
+
+	/* @todo - integrate BSP lighting with dynamic lighting */
+	R_EnableDynamicLights(NULL, qfalse);
 
 	R_EnableColorArray(qtrue);
 

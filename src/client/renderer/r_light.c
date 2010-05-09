@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define LIGHT_RADIUS_FACTOR 80.0
 
+
+/** @todo - merge this stuff into the new lighitng system using r_light_t objects */
 static light_t r_lightsArray[MAX_GL_LIGHTS];
 static sustain_t r_sustainArray[MAX_GL_LIGHTS];
 
@@ -143,6 +145,8 @@ void R_AddLightsource (const r_light_t *source)
 		return;
 	}
 
+	Com_Printf("added light, ambient=%f\n", source->ambientColor[0]);
+
 	r_state.dynamicLights[r_state.numActiveLights++] = *source;
 }
 
@@ -158,7 +162,51 @@ void R_ClearActiveLights (void)
 	}
 }
 
-/* NOT THREAD SAFE */
+/** @todo - the updating of the per-entity list of nearest
+ * lights doesn't necessarily need to be updated before 
+ * every frame; if the list is a few frames (or even a few seconds)
+ * out of date, it would still probably look just fine. 
+ * Ideally, this updating could be done in the background
+ * by a separate, low-priority thread that constantly looped
+ * through all the entities and updated their light lists,
+ * while the high-priority rendering thread just used the most
+ * up to date version available.  The current version isn't really
+ * thread-safe because it uses a global variable, which is needed
+ * due to the way that the standard qsort() function works, but
+ * this would be easy to fix if we used our own sorting algorithm,
+ * which we should probably do anyway, since qsort() isn't actually
+ * likely to be very efficient given that the ordering of the list
+ * isn't likely to change very much between calls.  Bubble sort
+ * would probably be faster on average.
+ *
+ * In the long run, it would probably be highly beneficial to
+ * separate the rendering of the world from the updating of the
+ * world.  Having a "rendering" thread that was separate from a
+ * "thinking" thread (that was responsible for updating the
+ * sorted light list, updating models and textures based on
+ * animations or material properties, updating the state
+ * of the world based on user input, etc.).  It would require
+ * that care to be taken to ensure proper synchronization and 
+ * avoid race-conditions, but it would allow us to decouple the
+ * framerate of the renderer from the speed at which we can
+ * compute all the other stuff which isn't directly linked to
+ * the frame-by-frame rendering process (this includes anything
+ * that is supposed to change at a fixed rate of time, like
+ * animations; we don't want the animation speed to be linked 
+ * to the framerate). 
+ *
+ * Obviously, we would need to maintain compatibility with
+ * single-core systems, but multi-core systems are becoming
+ * so common that it would make sense to take advantage of 
+ * that extra power when it exists.  Additionally, this type
+ * of threaded structure can be effective even on a single
+ * processor system by allowing us to prioritize things which
+ * must be done in real-time (ie. rendering) from things which
+ * won't be noticable to the user if they happen a bit slower, or
+ * are updated a bit less often.  */
+
+
+/* global variable - NOT THREAD SAFE */
 static vec3_t origin;
 
 static inline int R_LightDistCompare (const void *a, const void *b)

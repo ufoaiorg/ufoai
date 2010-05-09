@@ -656,6 +656,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
 	R_ProgramParameter1i("SPECULARMAP", 0);
+	R_ProgramParameter1i("ANIMATE", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);

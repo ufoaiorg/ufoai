@@ -147,7 +147,9 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
 #define Vector4Set(v, r, g, b, a)   (v[0]=(r), v[1]=(g), v[2]=(b), v[3]=(a))
 #define VectorCompare(a,b)      (a[0]==b[0]?a[1]==b[1]?a[2]==b[2]?1:0:0:0)
+#define VectorEqual(a,b)      (equal(a[0],b[0])?equal(a[1],b[1])?equal(a[2],b[2])?1:0:0:0)
 #define Vector2Compare(a,b)     (a[0]==b[0]?a[1]==b[1]?1:0:0)
+#define Vector2Equal(a,b)      (equal(a[0],b[0])?equal(a[1],b[1])?1:0:0)
 #define VectorDistSqr(a,b)      ((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
 #define VectorDist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2])))
 #define Vector2Dist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])))
@@ -234,5 +236,8 @@ vec_t Q_rint(const vec_t in);
 vec_t ColorNormalize(const vec3_t in, vec3_t out);
 
 void TangentVectors(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent, vec3_t binormal);
+
+void Orthogonalize(vec3_t v1, vec3_t v2);
+void MatrixTranspose(vec3_t m[3], vec3_t t[3]);
 
 #endif

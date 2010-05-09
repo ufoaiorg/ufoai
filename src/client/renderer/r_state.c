@@ -115,7 +115,16 @@ void R_BindArray (GLenum target, GLenum type, const void *array)
 		glNormalPointer(type, 0, array);
 		break;
 	case GL_TANGENT_ARRAY:
-		R_AttributePointer("TANGENT", 4, array);
+		R_AttributePointer("TANGENTS", 4, array);
+		break;
+	case GL_NEXT_VERTEX_ARRAY:
+		R_AttributePointer("NEXT_FRAME_VERTS", 3, array);
+		break;
+	case GL_NEXT_NORMAL_ARRAY:
+		R_AttributePointer("NEXT_FRAME_NORMALS", 3, array);
+		break;
+	case GL_NEXT_TANGENT_ARRAY:
+		R_AttributePointer("NEXT_FRAME_TANGENTS", 4, array);
 		break;
 	}
 }
@@ -140,6 +149,15 @@ void R_BindDefaultArray (GLenum target)
 		break;
 	case GL_TANGENT_ARRAY:
 		R_BindArray(target, GL_FLOAT, r_state.tangent_array);
+		break;
+	case GL_NEXT_VERTEX_ARRAY:
+		R_BindArray(target, GL_FLOAT, r_state.next_vertex_array_3d);
+		break;
+	case GL_NEXT_NORMAL_ARRAY:
+		R_BindArray(target, GL_FLOAT, r_state.next_normal_array);
+		break;
+	case GL_NEXT_TANGENT_ARRAY:
+		R_BindArray(target, GL_FLOAT, r_state.next_tangent_array);
 		break;
 	}
 }
@@ -281,7 +299,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
-			R_DisableAttribute("TANGENT");
+			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
 		for (i = 0; i < maxLights; i++) {
 			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
@@ -294,7 +312,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	r_state.dynamic_lighting_enabled = qtrue;
 
-	R_EnableAttribute("TANGENT");
+	R_EnableAttribute("TANGENTS");
 	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
 
 	R_ProgramParameter1f("HARDNESS", 0.1);
@@ -330,6 +348,36 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	}
 }
 
+void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enable)
+{
+	if (!r_programs->integer || !r_state.lighting_enabled)
+		return;
+
+	r_state.animation_enabled = enable;
+	
+	if (enable) {
+		R_EnableAttribute("NEXT_FRAME_VERTS");
+		R_EnableAttribute("NEXT_FRAME_NORMALS");
+		R_EnableAttribute("NEXT_FRAME_TANGENTS");
+		R_ProgramParameter1i("ANIMATE", 1);
+
+		R_ProgramParameter1f("TIME", backlerp);
+
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
+		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
+		R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mesh->tangents);
+		R_BindArray(GL_NEXT_VERTEX_ARRAY, GL_FLOAT, mesh->next_verts);
+		R_BindArray(GL_NEXT_NORMAL_ARRAY, GL_FLOAT, mesh->next_normals);
+		R_BindArray(GL_NEXT_TANGENT_ARRAY, GL_FLOAT, mesh->next_tangents);
+	} else {
+		R_DisableAttribute("NEXT_FRAME_VERTS");
+		R_DisableAttribute("NEXT_FRAME_NORMALS");
+		R_DisableAttribute("NEXT_FRAME_TANGENTS");
+		R_ProgramParameter1i("ANIMATE", 0);
+	}
+}
+
 /**
  * @brief Enables bumpmapping and binds the given normalmap.
  * @note Don't forget to bind the deluxe map, too.
@@ -353,7 +401,7 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 
 	if (enable) {  /* toggle state */
 		assert(normalmap);
-		R_EnableAttribute("TANGENT");
+		R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default parameters to use if no material gets loaded */
 		R_ProgramParameter1f("HARDNESS", 0.1);
@@ -361,7 +409,7 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		R_ProgramParameter1f("BUMP", 1.0);
 		R_ProgramParameter1f("PARALLAX", 0.5);
 	} else {
-		R_DisableAttribute("TANGENT");
+		R_DisableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 0);
 	}
 }

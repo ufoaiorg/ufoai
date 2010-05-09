@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "../../shared/parse.h"
+#include "r_state.h"
 
 /*
 ==============================================================================
@@ -90,6 +91,114 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 	} while (mod->num_anims < MAX_ANIMS);
 }
 
+
+static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const vec3_t translate, qboolean backlerp)
+{
+	int i, j;
+	mAliasVertex_t *vertexes = &mesh->vertexes[framenum * mesh->num_verts];
+	mAliasCoord_t *stcoords = mesh->stcoords;
+	const int numIndexes = mesh->num_tris * 3;
+	const int32_t *indexArray = mesh->indexes;
+	vec3_t triangleNormals[MAX_ALIAS_TRIS];
+	vec3_t triangleTangents[MAX_ALIAS_TRIS];
+	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
+	float *texcoords, *verts, *normals, *tangents;
+
+	/* set up array pointers for either the previous keyframe or the next keyframe */
+	texcoords = mesh->texcoords;
+	if (backlerp) {
+		verts = mesh->verts;
+		normals = mesh->normals;
+		tangents = mesh->tangents;
+	} else {
+		verts = mesh->next_verts;
+		normals = mesh->next_normals;
+		tangents = mesh->next_tangents;
+	}
+
+
+	/* calculate per-triangle surface normals and tangents*/
+	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
+		vec3_t dir1, dir2;
+		vec2_t dir1uv, dir2uv;
+
+		/* calculate two mostly perpendicular edge directions */
+		VectorSubtract(vertexes[indexArray[i + 0]].point, vertexes[indexArray[i + 1]].point, dir1);
+		VectorSubtract(vertexes[indexArray[i + 2]].point, vertexes[indexArray[i + 1]].point, dir2);
+		Vector2Subtract(stcoords[indexArray[i + 0]], stcoords[indexArray[i + 1]], dir1uv);
+		Vector2Subtract(stcoords[indexArray[i + 2]], stcoords[indexArray[i + 1]], dir2uv);
+
+		/* we have two edge directions, we can calculate a third vector from
+		 * them, which is the direction of the surface normal */
+		CrossProduct(dir1, dir2, triangleNormals[j]);
+
+		/* then we use the texture coordinates to calculate a tangent space */
+		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
+			const float frac = 1.0 / (dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]);
+			vec3_t tmp1, tmp2;
+
+			/* calculate tangent */
+			VectorMul(-1.0 * dir2uv[1] * frac, dir1, tmp1);
+			VectorMul(dir1uv[1] * frac, dir2, tmp2);
+			VectorAdd(tmp1, tmp2, triangleTangents[j]);
+
+			/* calculate bitangent */
+			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
+			VectorMul(dir1uv[0] * frac, dir2, tmp2);
+			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
+		}
+
+
+		/* normalize */
+		VectorNormalize(triangleNormals[j]);
+		VectorNormalize(triangleTangents[j]);
+		VectorNormalize(triangleBitangents[j]);
+
+	}
+
+	/* for each vertex */
+	for(i = 0; i < mesh->num_verts; i++) {
+		vec3_t n, b, v;
+		vec4_t t;
+		const int len = mesh->revIndexes[i].length;
+		const int32_t *list = mesh->revIndexes[i].list;
+
+		VectorClear(n);
+		VectorClear(t);
+		VectorClear(b);
+
+		/* for each vertex that got mapped to this one (ie. for each triangle this vertex is a part of) */
+		for(j = 0; j < len; j++) {
+			const int32_t idx = list[j] / 3;
+			VectorAdd(n, triangleNormals[idx], n);
+			VectorAdd(t, triangleTangents[idx], t);
+			VectorAdd(b, triangleBitangents[idx], b);
+		}
+		
+		/* normalization here does shared-vertex smoothing */
+		VectorNormalize(n);
+		VectorNormalize(t);
+		VectorNormalize(b);
+
+		/* Grahm-Schmidt orthogonalization */
+		Orthogonalize(t, n);
+
+		/* calculate handedness */
+		CrossProduct(n, t, v);
+		t[3] = (DotProduct(v, b) < 0.0) ? -1.0 : 1.0;
+
+		/* copy this vertex's info to all the right places in the arrays */
+		for(j = 0; j < len; j++) {
+			const int32_t idx = list[j];
+			const int meshIndex = mesh->indexes[list[j]];
+			Vector2Copy(stcoords[meshIndex], (texcoords + (2 * idx)));
+			VectorAdd(vertexes[meshIndex].point, translate, (verts + (3 * idx)));
+			VectorCopy(n, (normals + (3 * idx)));
+			Vector4Copy(t, (tangents + (4 * idx)));
+		}
+	}
+}
+
 /**
  * @brief Tries to load a mdx file that contains the normals and the tangets for a model.
  * @sa R_ModCalcNormalsAndTangents
@@ -98,14 +207,14 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
  */
 qboolean R_ModLoadMDX (model_t *mod)
 {
-	int i, j, frame;
+	int i;
 	for (i = 0; i < mod->alias.num_meshes; i++) {
 		mAliasMesh_t *mesh = &mod->alias.meshes[i];
 		char mdxFileName[MAX_QPATH];
 		byte *buffer = NULL, *buf;
-		const float *dataBuf;
 		const int32_t *intbuf;
 		int32_t numIndexes;
+		int sharedTris[MAX_ALIAS_VERTS];
 
 		Com_StripExtension(mod->name, mdxFileName, sizeof(mdxFileName));
 		Com_DefaultExtension(mdxFileName, sizeof(mdxFileName), ".mdx");
@@ -132,162 +241,34 @@ qboolean R_ModLoadMDX (model_t *mod)
 		intbuf++;
 
 		mesh->indexes = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+		mesh->revIndexes = Mem_PoolAlloc(sizeof(mIndexList_t) * mesh->num_verts, vid_modelPool, 0);
 		mesh->vertexes = Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * mesh->num_verts, vid_modelPool, 0);
 
+		/* load index that maps triangle verts to Vertex objects */
 		for (i = 0; i < numIndexes; i++) {
 			mesh->indexes[i] = LittleLong(*intbuf);
 			intbuf++;
 		}
 
-		dataBuf = (const float *)intbuf;
+		for(i = 0; i < mesh->num_verts; i++)
+			sharedTris[i] = 0;
 
-		for (frame = 0; frame < mod->alias.num_frames; frame++) {
-			int32_t offset = frame * mesh->num_verts;
-			for (i = 0; i < mesh->num_verts; i++) {
-				mAliasVertex_t *v = &mesh->vertexes[i + offset];
-				for (j = 0; j < 3; j++) {
-					v->normal[j] = LittleFloat(*dataBuf);
-					dataBuf++;
-				}
-				for (j = 0; j < 4; j++) {
-					v->tangent[j] = LittleFloat(*dataBuf);
-					dataBuf++;
-				}
-			}
+		/* set up reverse-index that maps Vertex objects to a list of triangle verts */
+		for (i = 0; i < numIndexes; i++)
+			sharedTris[mesh->indexes[i]]++;
+
+		for(i = 0; i < mesh->num_verts; i++) {
+			mesh->revIndexes[i].length = 0;
+			mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 		}
+
+		for (i = 0; i < numIndexes; i++) 
+			mesh->revIndexes[mesh->indexes[i]].list[mesh->revIndexes[mesh->indexes[i]].length++] = i;
 
 		FS_FreeFile(buf);
 	}
 
 	return qtrue;
-}
-
-/**
- * @brief calculate normals and tangents for a frame at the given offset, assuming that vertex merging has been handled
- * @param mesh
- * @param offset
- * @param smoothness
- */
-static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset, float smoothness)
-{
-	int i, j;
-	vec3_t triangleNormals[MAX_ALIAS_TRIS];
-	vec3_t triangleTangents[MAX_ALIAS_TRIS];
-	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
-	mAliasVertex_t *vertexes = &mesh->vertexes[offset];
-	mAliasCoord_t *stcoords = mesh->stcoords;
-	mAliasVertex_t tmpVertexes[MAX_ALIAS_VERTS];
-	vec3_t tmpBitangents[MAX_ALIAS_VERTS];
-	const int numIndexes = mesh->num_tris * 3;
-	const int32_t *indexArray = mesh->indexes;
-
-	/* calculate per-triangle surface normals */
-	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
-		vec3_t dir1, dir2;
-		vec2_t dir1uv, dir2uv;
-
-		/* calculate two mostly perpendicular edge directions */
-		VectorSubtract(vertexes[indexArray[i + 0]].point, vertexes[indexArray[i + 1]].point, dir1);
-		VectorSubtract(vertexes[indexArray[i + 2]].point, vertexes[indexArray[i + 1]].point, dir2);
-		Vector2Subtract(stcoords[indexArray[i + 0]], stcoords[indexArray[i + 1]], dir1uv);
-		Vector2Subtract(stcoords[indexArray[i + 2]], stcoords[indexArray[i + 1]], dir2uv);
-
-		/* we have two edge directions, we can calculate a third vector from
-		 * them, which is the direction of the surface normal */
-		CrossProduct(dir1, dir2, triangleNormals[j]);
-
-		/* then we use the texture coordinates to calculate a tangent space */
-		/** @todo dangerrous float compare again 0 - checking for epsilon here? */
-		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
-			const float frac = 1.0 / (dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]);
-			vec3_t tmp1, tmp2;
-
-			/* calculate tangent */
-			VectorMul(-1.0 * dir2uv[1] * frac, dir1, tmp1);
-			VectorMul(dir1uv[1] * frac, dir2, tmp2);
-			VectorAdd(tmp1, tmp2, triangleTangents[j]);
-
-			/* calculate bitangent */
-			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
-			VectorMul(dir1uv[0] * frac, dir2, tmp2);
-			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
-		}
-
-		/* normalize */
-		VectorNormalize(triangleNormals[j]);
-		VectorNormalize(triangleTangents[j]);
-		VectorNormalize(triangleBitangents[j]);
-	}
-
-	for (i = 0; i < numIndexes; i++) {
-		vec3_t n, t, b, v;
-		const int idx = (i - i % 3) / 3;
-		VectorCopy(triangleNormals[idx], tmpVertexes[i].normal);
-		VectorCopy(triangleTangents[idx], tmpVertexes[i].tangent);
-		VectorCopy(triangleBitangents[idx], tmpBitangents[i]);
-
-		for (j = 0; j < numIndexes; j++) {
-			const int idx2 = (j - j % 3) / 3;
-			/* don't add a vertex with itself */
-			if (j == i)
-				continue;
-
-			/* only average normals if verticies have the same position
-			 * and the normals aren't too far appart to start with
-			 */
-			if (VectorCompare(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
-			 && DotProduct(triangleNormals[idx], triangleNormals[idx2]) > smoothness) {
-				/* average the normals */
-				VectorAdd(tmpVertexes[i].normal, triangleNormals[idx2], tmpVertexes[i].normal);
-
-				/* if the tangents match as well, average them too.
-				 * Note that having matching normals without matching tangents happens
-				 * when the order of verticies in two triangles sharing the vertex
-				 * in question is different.  This happens quite frequently if the
-				 * modeler does not go out of their way to avoid it. */
-				if ( Vector2Compare(stcoords[indexArray[i]], stcoords[indexArray[j]])
-						&& DotProduct(triangleTangents[idx], triangleTangents[idx2]) > smoothness
-						&& DotProduct(triangleBitangents[idx], triangleBitangents[idx2]) > smoothness) {
-
-					/* average the tangents */
-					VectorAdd(tmpVertexes[i].tangent, triangleTangents[idx2], tmpVertexes[i].tangent);
-					VectorAdd(tmpBitangents[i], triangleBitangents[idx2], tmpBitangents[i]);
-				}
-			}
-		}
-
-		VectorNormalize(tmpVertexes[i].normal);
-		VectorNormalize(tmpVertexes[i].tangent);
-		VectorNormalize(tmpBitangents[i]);
-
-		VectorCopy(tmpVertexes[i].normal, n);
-		VectorCopy(tmpVertexes[i].tangent, t);
-		VectorCopy(tmpBitangents[i], b);
-
-		/* normalization here does shared-vertex smoothing */
-		VectorNormalize(n);
-		VectorNormalize(t);
-		VectorNormalize(b);
-
-		/* Grahm-Schmidt orthogonalization */
-		VectorMul(DotProduct(t, n), n, v);
-		VectorSubtract(t, v, t);
-		VectorNormalize(t);
-
-		/* calculate handedness */
-		CrossProduct(n, t, v);
-		tmpVertexes[i].tangent[3] = (DotProduct(v, b) < 0.0) ? -1.0 : 1.0;
-		VectorCopy(n, tmpVertexes[i].normal);
-		VectorCopy(t, tmpVertexes[i].tangent);
-	}
-
-	/* merge identical vertexes, storing only unique ones */
-	for (i = 0; i < numIndexes; i++) {
-		const int idx = indexArray[i];
-
-		VectorCopy(tmpVertexes[i].normal, vertexes[idx].normal);
-		Vector4Copy(tmpVertexes[i].tangent, vertexes[idx].tangent);
-	}
 }
 
 /**
@@ -298,22 +279,21 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, size_t offset, floa
  */
 void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float smoothness)
 {
-	/* count unique verts */
 	int i, j;
 	vec3_t triangleNormals[MAX_ALIAS_TRIS];
 	vec3_t triangleTangents[MAX_ALIAS_TRIS];
-	float triangleTangentsH[MAX_ALIAS_TRIS];
 	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
 	const mAliasVertex_t *vertexes = mesh->vertexes;
 	mAliasCoord_t *stcoords = mesh->stcoords;
 	mAliasVertex_t *newVertexes;
-	mAliasVertex_t tmpVertexes[MAX_ALIAS_VERTS];
+	mAliasComplexVertex_t tmpVertexes[MAX_ALIAS_VERTS];
 	vec3_t tmpBitangents[MAX_ALIAS_VERTS];
 	mAliasCoord_t *newStcoords;
 	const int numIndexes = mesh->num_tris * 3;
 	const int32_t *indexArray = mesh->indexes;
 	int32_t *newIndexArray;
 	int indRemap[MAX_ALIAS_VERTS];
+	int sharedTris[MAX_ALIAS_VERTS];
 	int numVerts = 0;
 
 	newIndexArray = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
@@ -347,14 +327,31 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
 			VectorMul(dir1uv[0] * frac, dir2, tmp2);
 			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
+		} else {
+			const float frac = 1.0 / (0.00001);
+			vec3_t tmp1, tmp2;
+
+			/* calculate tangent */
+			VectorMul(-1.0 * dir2uv[1] * frac, dir1, tmp1);
+			VectorMul(dir1uv[1] * frac, dir2, tmp2);
+			VectorAdd(tmp1, tmp2, triangleTangents[j]);
+
+			/* calculate bitangent */
+			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
+			VectorMul(dir1uv[0] * frac, dir2, tmp2);
+			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
+
 		}
 
 		/* normalize */
 		VectorNormalize(triangleNormals[j]);
 		VectorNormalize(triangleTangents[j]);
 		VectorNormalize(triangleBitangents[j]);
+
+		Orthogonalize(triangleTangents[j], triangleBitangents[j]);
 	}
 
+	/* do smoothing */
 	for (i = 0; i < numIndexes; i++) {
 		const int idx = (i - i % 3) / 3;
 		VectorCopy(triangleNormals[idx], tmpVertexes[i].normal);
@@ -369,8 +366,8 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 			/* only average normals if verticies have the same position
 			 * and the normals aren't too far appart to start with */
-			if (VectorCompare(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
-			 && DotProduct(triangleNormals[idx], triangleNormals[idx2]) > smoothness) {
+			if (VectorEqual(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
+					&& DotProduct(triangleNormals[idx], triangleNormals[idx2]) > smoothness) {
 				/* average the normals */
 				VectorAdd(tmpVertexes[i].normal, triangleNormals[idx2], tmpVertexes[i].normal);
 
@@ -379,10 +376,11 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 				 * when the order of verticies in two triangles sharing the vertex
 				 * in question is different.  This happens quite frequently if the
 				 * modeler does not go out of their way to avoid it. */
-				if (Vector2Compare(stcoords[indexArray[i]], stcoords[indexArray[j]])
-				 && DotProduct(triangleTangents[idx], triangleTangents[idx2]) > smoothness
-				 && DotProduct(triangleBitangents[idx], triangleBitangents[idx2]) > smoothness) {
 
+
+				if (Vector2Equal(stcoords[indexArray[i]], stcoords[indexArray[j]])
+						&& DotProduct(triangleTangents[idx], triangleTangents[idx2]) > smoothness
+						&& DotProduct(triangleBitangents[idx], triangleBitangents[idx2]) > smoothness) {
 					/* average the tangents */
 					VectorAdd(tmpVertexes[i].tangent, triangleTangents[idx2], tmpVertexes[i].tangent);
 					VectorAdd(tmpBitangents[i], triangleBitangents[idx2], tmpBitangents[i]);
@@ -406,11 +404,11 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 			continue;
 
 		for (j = i + 1; j < numIndexes; j++) {
-			if (Vector2Compare(stcoords[indexArray[i]], stcoords[indexArray[j]])
-			 && VectorCompare(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
-			 && VectorCompare(tmpVertexes[i].normal, tmpVertexes[j].normal)
-			 && VectorCompare(tmpVertexes[i].tangent, tmpVertexes[j].tangent)
-			 && VectorCompare(tmpBitangents[i], tmpBitangents[j])) {
+			if (Vector2Equal(stcoords[indexArray[i]], stcoords[indexArray[j]])
+			 && VectorEqual(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
+			 && (DotProduct(tmpVertexes[i].normal, tmpVertexes[j].normal) > smoothness)
+			 && (DotProduct(tmpVertexes[i].tangent, tmpVertexes[j].tangent) > smoothness)
+			 ) {
 				indRemap[j] = i;
 				newIndexArray[j] = numVerts;
 			}
@@ -440,34 +438,30 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		indRemap[i] = i;
 	}
 
+	for(i = 0; i < numVerts; i++) 
+		sharedTris[i] = 0;
+
+	for (i = 0; i < numIndexes; i++)
+		sharedTris[newIndexArray[i]]++;
+
+	/* set up reverse-index that maps Vertex objects to a list of triangle verts */
+	mesh->revIndexes = Mem_PoolAlloc(sizeof(mIndexList_t) * numVerts, vid_modelPool, 0);
+	for(i = 0; i < numVerts; i++) {
+		mesh->revIndexes[i].length = 0;
+		mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
+	}
+
 	/* merge identical vertexes, storing only unique ones */
 	newVertexes = Mem_PoolAlloc(sizeof(mAliasVertex_t) * numVerts * nFrames, vid_modelPool, 0);
 	newStcoords = Mem_PoolAlloc(sizeof(mAliasCoord_t) * numVerts, vid_modelPool, 0);
 	for (i = 0; i < numIndexes; i++) {
 		const int idx = indexArray[indRemap[i]];
 		const int idx2 = newIndexArray[i];
-		const int idx3 = (i - i % 3) / 3;
 
 		/* add vertex to new vertex array */
 		VectorCopy(vertexes[idx].point, newVertexes[idx2].point);
 		Vector2Copy(stcoords[idx], newStcoords[idx2]);
-
-		VectorCopy(tmpVertexes[i].normal, newVertexes[idx2].normal);
-		VectorCopy(tmpVertexes[i].tangent, newVertexes[idx2].tangent);
-		newVertexes[idx2].tangent[3] = triangleTangentsH[idx3];
-
-#ifdef PARANOID
-		/* various checks for badly formed vectors */
-		if (fabs(DotProduct(newVertexes[idx2].tangent, newVertexes[idx2].normal)) > 0.01)
-			Com_Printf("Non-orthogonal basis! normal * tangent = %f (in %s)\n",
-					DotProduct(newVertexes[idx2].tangent, newVertexes[idx2].normal), mesh->name);
-		if (fabs(DotProduct(newVertexes[idx2].normal, newVertexes[idx2].normal)) < 0.9)
-			Com_Printf("Non-unit normal! normal * normal = %f (in %s)\n",
-					DotProduct(newVertexes[idx2].normal, newVertexes[idx2].normal), mesh->name);
-		if (fabs(DotProduct(newVertexes[idx2].tangent, newVertexes[idx2].tangent)) < 0.9)
-			Com_Printf("Non-unit tangent! tangent * tangent = %f (in %s)\n",
-					DotProduct(newVertexes[idx2].tangent, newVertexes[idx2].tangent), mesh->name);
-#endif
+		mesh->revIndexes[idx2].list[mesh->revIndexes[idx2].length++] = i;
 	}
 
 	/* copy over the points from successive frames */
@@ -489,10 +483,6 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	mesh->vertexes = newVertexes;
 	mesh->stcoords = newStcoords;
 	mesh->indexes = newIndexArray;
-
-	/* do tangent space calculation for successive frames */
-	for (i = 1; i < nFrames; i++)
-		R_ModCalcNormalsAndTangents(mesh, numVerts * i, smoothness);
 }
 
 
@@ -548,7 +538,7 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
  * @param prerender If this is @c true, all data is filled to the arrays. If @c false, then
  * e.g. the normals are only filled to the arrays if the lighting is activated.
  */
-void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
+void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
 {
 	int i, j;
 	const mAliasFrame_t *frame, *oldframe;
@@ -556,67 +546,62 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
 	vec3_t r_mesh_verts[MAX_ALIAS_VERTS];
-	vec3_t r_mesh_norms[MAX_ALIAS_VERTS];
-	vec4_t r_mesh_tangents[MAX_ALIAS_VERTS];
-	float *texcoord_array, *vertex_array_3d, *normal_array, *tangent_array;
+	float *texcoord_array, *vertex_array_3d;
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
 
-	for (i = 0; i < 3; i++)
-		move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
+	/* try to do keyframe-interpolation on the GPU if possible*/
+	if (r_state.lighting_enabled) {
 
-	v = &mesh->vertexes[framenum * mesh->num_verts];
-	ov = &mesh->vertexes[oldframenum * mesh->num_verts];
+		/* @todo - Handle cases where we don't need to do all the work.
+		 *
+		 * We only need to build both keyframes when we start a new animation;
+		 * most of the time, this iteration's "oldframe" should be the same as last
+		 * iteration's "frame", so we should be able to do a pointer swap and then just
+		 * update "frame".  In cases where an animation has only 2 keyframes, we should
+		 * never need to re-calculate anything; we can just keep swapping pointers
+		 * each time.*/
 
-	assert(mesh->num_verts < lengthof(r_mesh_verts));
 
-	for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
-		VectorSet(r_mesh_verts[i],
-				move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
-				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
-				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
-
-		if (r_state.lighting_enabled || prerender) {  /* and the norms */
-			VectorSet(r_mesh_norms[i],
-					v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
-					v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
-					v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
+		/* we only need to change the arrays if we've switched to a new keyframe */
+		if (mod->curFrame != framenum) {
+			mod->curFrame = framenum;
+			R_ModCalcNormalsAndTangents(mesh, oldframenum, oldframe->translate, qtrue);
+			R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
 		}
-		if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled || prerender) {  /* and the tangents */
-			Vector4Set(r_mesh_tangents[i],
-					v->tangent[0] + (ov->tangent[0] - v->tangent[0]) * backlerp,
-					v->tangent[1] + (ov->tangent[1] - v->tangent[1]) * backlerp,
-					v->tangent[2] + (ov->tangent[2] - v->tangent[2]) * backlerp,
-					v->tangent[3] + (ov->tangent[3] - v->tangent[3]) * backlerp);
+	} else { /* otherwise, we have to do it on the CPU */
+		assert(mesh->num_verts < lengthof(r_mesh_verts));
+		v = &mesh->vertexes[framenum * mesh->num_verts];
+		ov = &mesh->vertexes[oldframenum * mesh->num_verts];
+
+		R_ModCalcNormalsAndTangents(mesh, 0, oldframe->translate, qtrue);
+
+		for (i = 0; i < 3; i++)
+			move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
+
+
+		for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
+			VectorSet(r_mesh_verts[i],
+					move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
+					move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
+					move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
 		}
-	}
 
-	texcoord_array = texunit_diffuse.texcoord_array;
-	vertex_array_3d = r_state.vertex_array_3d;
-	normal_array = r_state.normal_array;
-	tangent_array = r_state.tangent_array;
+		texcoord_array = texunit_diffuse.texcoord_array;
+		vertex_array_3d = r_state.vertex_array_3d;
 
-	/** @todo damn slow - optimize this */
-	for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
-		for (j = 0; j < 3; j++) {
-			const int arrayIndex = 3 * i + j;
-			const int meshIndex = mesh->indexes[arrayIndex];
-			Vector2Copy(mesh->stcoords[meshIndex], texcoord_array);
-			VectorCopy(r_mesh_verts[meshIndex], vertex_array_3d);
+		/** @todo damn slow - optimize this */
+		for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
+			for (j = 0; j < 3; j++) {
+				const int arrayIndex = 3 * i + j;
+				const int meshIndex = mesh->indexes[arrayIndex];
+				Vector2Copy(mesh->stcoords[meshIndex], texcoord_array);
+				VectorCopy(r_mesh_verts[meshIndex], vertex_array_3d);
 
-			/* normal vectors for lighting */
-			if (r_state.lighting_enabled || prerender)
-				VectorCopy(r_mesh_norms[meshIndex], normal_array);
-
-			/* tangent vectors for bump mapping */
-			if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled || prerender)
-				Vector4Copy(r_mesh_tangents[meshIndex], tangent_array);
-
-			texcoord_array += 2;
-			vertex_array_3d += 3;
-			normal_array += 3;
-			tangent_array += 4;
+				texcoord_array += 2;
+				vertex_array_3d += 3;
+			}
 		}
 	}
 }
@@ -624,7 +609,7 @@ void R_FillArrayData (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float 
 /**
  * @brief Loads array data for models with only one frame. Only called once at loading time.
  */
-void _R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals)
+void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals)
 {
 	const int v = mesh->num_tris * 3 * 3;
 	const int t = mesh->num_tris * 3 * 4;
@@ -638,15 +623,37 @@ void _R_ModLoadArrayDataForStaticModel (const mAliasModel_t *mod, mAliasMesh_t *
 	assert(mesh->normals == NULL);
 	assert(mesh->tangents == NULL);
 
-	R_FillArrayData(mod, mesh, 0.0, 0, 0, loadNormals);
 
 	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
 	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
 
-	memcpy(mesh->verts, r_state.vertex_array_3d, sizeof(float) * v);
-	memcpy(mesh->normals, r_state.normal_array, sizeof(float) * v);
-	memcpy(mesh->tangents, r_state.tangent_array, sizeof(float) * t);
-	memcpy(mesh->texcoords, texunit_diffuse.texcoord_array, sizeof(float) * st);
+	R_FillArrayData(mod, mesh, 0.0, 0, 0, qtrue);
+}
+
+
+void R_ModLoadArrayDataForAnimatedModel (mAliasModel_t *mod, mAliasMesh_t *mesh)
+{
+	const int v = mesh->num_tris * 3 * 3;
+	const int t = mesh->num_tris * 3 * 4;
+	const int st = mesh->num_tris * 3 * 2;
+
+	assert(mesh->verts == NULL);
+	assert(mesh->texcoords == NULL);
+	assert(mesh->normals == NULL);
+	assert(mesh->tangents == NULL);
+	assert(mesh->next_verts == NULL);
+	assert(mesh->next_normals == NULL);
+	assert(mesh->next_tangents == NULL);
+
+	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
+	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
+	mesh->next_verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->next_normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+	mesh->next_tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
+
+	mod->curFrame = -1;
 }

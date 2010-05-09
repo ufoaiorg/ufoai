@@ -30,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* internally defined convenience constant */
 #define GL_TANGENT_ARRAY -1
+#define GL_NEXT_VERTEX_ARRAY -2
+#define GL_NEXT_NORMAL_ARRAY -3
+#define GL_NEXT_TANGENT_ARRAY -4
 
 /* multitexture */
 void (APIENTRY *qglActiveTexture)(GLenum texture);

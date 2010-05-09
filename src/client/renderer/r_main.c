@@ -61,6 +61,8 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
 cvar_t *r_lightmap;
+cvar_t *r_debug_normals;
+cvar_t *r_debug_tangents;
 static cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
@@ -474,6 +476,10 @@ static void R_RegisterSystemVars (void)
 	r_lightmap->modified = qfalse;
 	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");
 	r_deluxemap->modified = qfalse;
+	r_debug_normals = Cvar_Get("r_debug_normals", "0", CVAR_R_PROGRAMS, "Draw dot(normal, light_0 direction)");
+	r_debug_normals->modified = qfalse;
+	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
+	r_debug_tangents->modified = qfalse;
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");

@@ -991,3 +991,24 @@ void TangentVectors (const vec3_t normal, const vec3_t sdir, const vec3_t tdir, 
 
 	VectorScale(binormal, tangent[3], binormal);
 }
+
+
+void Orthogonalize (vec3_t v1, vec3_t v2)
+{
+	vec3_t tmp;
+	/* Grahm-Schmidt orthogonalization */
+	VectorMul(DotProduct(v1, v2), v2, tmp);
+	VectorSubtract(v1, tmp, v1);
+	VectorNormalize(v1);
+}
+
+void MatrixTranspose (vec3_t m[3], vec3_t t[3])
+{
+	int i, j;
+
+	for(i = 0; i < 3; i++) {
+		for(j = 0; j < 3; j++) {
+			t[i][j] = m[j][i];
+		}
+	}
+}

@@ -68,6 +68,8 @@ extern cvar_t *r_materials;
 extern cvar_t *r_screenshot_format;
 extern cvar_t *r_screenshot_jpeg_quality;
 extern cvar_t *r_lightmap;
+extern cvar_t *r_debug_normals;
+extern cvar_t *r_debug_tangents;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;

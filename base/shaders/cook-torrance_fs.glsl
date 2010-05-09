@@ -40,16 +40,16 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	/* Cook-Torrance shading */
 	if (ROUGHMAP > 0) {
 		vec3 H = normalize(L + V);
-		float NdotH = clamp(dot(N, -H), 0.0, 1.0);
-		float VdotH = clamp(dot(V, H), 0.0, 1.0);
+		float NdotH = dot(N, -H);
+		float VdotH = dot(V, H);
 		float NdotH_2 = NdotH * NdotH;
 
 		/* Compute the geometric term for specularity */
 		float G1 = (2.0 * NdotH * NdotV) / VdotH;
 		float G2 = (2.0 * NdotH * NdotL) / VdotH;
 		//float G = min(1.0, max(0.0, min(G1, G2)));
-		float G = min(1.0, min(G1, G2));
-		//G = clamp(min(G1, G2), 0.0, 1.0);
+		//float G = min(1.0, min(G1, G2));
+		float G = clamp(min(G1, G2), 0.0, 1.0);
 
 		/* Compute the roughness term for specularity */
 		float A = 1.0 / (4.0 * R_2 * NdotH_2 * NdotH_2);
@@ -111,7 +111,7 @@ vec4 IlluminateFragment(void){
 		roughness.r = clamp(roughness.r, 0.05, 0.95);
 		roughness.g *= 3.0;
 		R_2 = roughness.r * roughness.r;
-		NdotV = dot(N, V);
+		NdotV = dot(N, -V);
 	} else {
 		roughness = vec4(0.0);
 	}

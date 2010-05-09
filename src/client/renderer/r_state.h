@@ -81,6 +81,9 @@ typedef struct {
 	GLfloat color_array[MAX_GL_ARRAY_LENGTH * 4];
 	GLfloat normal_array[MAX_GL_ARRAY_LENGTH * 3];
 	GLfloat tangent_array[MAX_GL_ARRAY_LENGTH * 4];
+	GLfloat next_vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
+	GLfloat next_normal_array[MAX_GL_ARRAY_LENGTH * 3];
+	GLfloat next_tangent_array[MAX_GL_ARRAY_LENGTH * 4];
 
 	/* multitexture texunits */
 	gltexunit_t texunits[MAX_GL_TEXUNITS];
@@ -131,6 +134,7 @@ typedef struct {
 	qboolean dynamic_lighting_enabled;
 	qboolean specularmap_enabled;
 	qboolean roughnessmap_enabled;
+	qboolean animation_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -169,5 +173,6 @@ void R_EnableGlowMap(const image_t *image, qboolean enable);
 void R_EnableDynamicLights(entity_t *ent, qboolean enable);
 void R_EnableSpecularMap(const image_t *image, qboolean enable);
 void R_EnableRoughnessMap(const image_t *image, qboolean enable);
+void R_EnableAnimation(const mAliasMesh_t *mesh, float backlerp, qboolean enable);
 
 #endif

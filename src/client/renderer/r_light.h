@@ -29,8 +29,12 @@ struct entity_s;
 
 #include "r_entity.h"
 
-/* cap on number of light sources that can be in a scene; feel free to increase if necessary */
-#define MAX_DYNAMIC_LIGHTS 256
+/* cap on number of light sources that can be in a scene; feel free 
+ * to increase if necessary, but be aware that doing so will increase
+ * the time it takes for each entity to sort the light list at each
+ * frame (this is based on the number of lights actually used, not
+ * the max number allowed) */
+#define MAX_DYNAMIC_LIGHTS 64
 
 typedef struct r_light_s {
 	vec4_t loc;
@@ -45,6 +49,7 @@ typedef struct r_light_s {
 	qboolean enabled;
 } r_light_t;
 
+/** @todo - integrate the particle-based lights into the new dynamic light system */
 void R_AddLight(const vec3_t origin, float radius, const vec3_t color);
 void R_AddSustainedLight(const vec3_t org, float radius, const vec3_t color, float sustain);
 void R_EnableLights(void);

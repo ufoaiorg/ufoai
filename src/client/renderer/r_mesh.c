@@ -79,13 +79,17 @@ static void R_DrawMeshModelShell (const mAliasMesh_t *mesh, const vec4_t color)
  * @brief Animated model render function
  * @see R_DrawAliasStatic
  */
-static void R_DrawAliasFrameLerp (const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
+static void R_DrawAliasFrameLerp (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor)
 {
 	R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum, qfalse);
+
+	R_EnableAnimation(mesh, backlerp, qtrue);
 
 	glDrawArrays(GL_TRIANGLES, 0, mesh->num_tris * 3);
 
 	R_DrawMeshModelShell(mesh, shellColor);
+
+	R_EnableAnimation(NULL, 0.0, qfalse);
 
 	R_CheckError();
 }
@@ -187,7 +191,7 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
 {
 	image_t *skin;
-	const mAliasMesh_t *mesh;
+	mAliasMesh_t *mesh;
 
 	if (!mi->name || mi->name[0] == '\0')
 		return;
@@ -275,7 +279,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 void R_DrawModelParticle (modelInfo_t * mi)
 {
 	image_t *skin;
-	const mAliasMesh_t *mesh;
+	mAliasMesh_t *mesh;
 
 	/* check if the model exists */
 	if (!mi->model)
@@ -424,7 +428,7 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
  */
 void R_DrawAliasModel (entity_t *e)
 {
-	const mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
+	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
 	/* the values are sane here already - see R_DrawEntities */
 	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
 	int i;
@@ -482,9 +486,9 @@ void R_DrawAliasModel (entity_t *e)
 
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
 	refdef.aliasCount += lodMesh->num_tris;
-	if (lodMesh->verts != NULL)
+	if (mod->num_frames == 1) 
 		R_DrawAliasStatic(lodMesh, e->shell);
-	else
+	else 
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
 
 	if (r_state.specularmap_enabled)

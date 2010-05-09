@@ -35,8 +35,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct mAliasVertex_s {
 	vec3_t	point;
 	vec3_t	normal;
-	vec4_t	tangent;
 } mAliasVertex_t;
+
+typedef struct mAliasComplexVertex_s {
+	vec3_t	point;
+	vec3_t	normal;
+	vec4_t	tangent;
+} mAliasComplexVertex_t;
 
 typedef struct mAliasBoneMatrix_s {
 	vec4_t	matrix[3];
@@ -73,6 +78,11 @@ typedef	struct mAliasSkin_s {
 	image_t *skin;
 } mAliasSkin_t;
 
+typedef struct mIndexList_s {
+	int length;
+	int32_t *list;
+} mIndexList_t;
+
 typedef	struct mAliasMesh_s {
 	int32_t	num_verts;
 	char	name[MODEL_MAX_PATH];
@@ -84,9 +94,13 @@ typedef	struct mAliasMesh_s {
 	float *texcoords;
 	float *normals;
 	float *tangents;
+	float *next_verts;
+	float *next_normals;
+	float *next_tangents;
 
 	int	num_tris;
 	int32_t	*indexes;
+	mIndexList_t *revIndexes;
 
 	int		num_bones;
 	mAliasBoneVertex_t	*bonesVertexes;
@@ -115,6 +129,8 @@ typedef struct mAliasBone_s {
 typedef	struct	mAliasModel_s {
 	int		num_frames;
 	mAliasFrame_t	*frames;
+	int		curFrame;
+	int		oldFrame;
 
 	int		num_tags;
 	mAliasTag_t	*tags;
@@ -129,6 +145,7 @@ typedef	struct	mAliasModel_s {
 	char animname[MAX_QPATH];
 	int num_anims;
 	mAliasAnim_t *animdata;
+	int curAnim;
 
 	/** tag data */
 	char tagname[MAX_QPATH];
@@ -140,7 +157,7 @@ qboolean R_ModLoadMDX(struct model_s *mod);
 void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames, float smoothness);
 #define R_ModLoadArrayDataForStaticModel(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qtrue);
 #define R_ModLoadArrayDataForStaticModel_NO_NORMALS(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qfalse);
-void _R_ModLoadArrayDataForStaticModel(const mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals);
-void R_FillArrayData(const mAliasModel_t* mod, const mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);
-
+void _R_ModLoadArrayDataForStaticModel(mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals);
+void R_FillArrayData(mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);
+void R_ModLoadArrayDataForAnimatedModel(mAliasModel_t *mod, mAliasMesh_t *mesh);
 #endif
