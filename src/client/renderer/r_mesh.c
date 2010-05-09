@@ -486,9 +486,9 @@ void R_DrawAliasModel (entity_t *e)
 
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
 	refdef.aliasCount += lodMesh->num_tris;
-	if (mod->num_frames == 1) 
+	if (mod->num_frames == 1)
 		R_DrawAliasStatic(lodMesh, e->shell);
-	else 
+	else
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
 
 	if (r_state.specularmap_enabled)

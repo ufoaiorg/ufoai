@@ -51,7 +51,6 @@ int R_RunThread (void *p)
 		/* draw brushes on current worldlevel */
 		R_GetLevelSurfaceLists();
 
-
 		/** @todo - update per-model dynamic light list sorting here */
 
 		r_threadstate.state = THREAD_RENDERER;

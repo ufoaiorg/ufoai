@@ -237,7 +237,7 @@ vec_t ColorNormalize(const vec3_t in, vec3_t out);
 
 void TangentVectors(const vec3_t normal, const vec3_t sdir, const vec3_t tdir, vec4_t tangent, vec3_t binormal);
 
-void Orthogonalize(vec3_t v1, vec3_t v2);
-void MatrixTranspose(vec3_t m[3], vec3_t t[3]);
+void Orthogonalize(vec3_t v1, const vec3_t v2);
+void MatrixTranspose(const vec3_t m[3], vec3_t t[3]);
 
 #endif

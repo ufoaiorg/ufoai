@@ -116,7 +116,6 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		tangents = mesh->next_tangents;
 	}
 
-
 	/* calculate per-triangle surface normals and tangents*/
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
 		vec3_t dir1, dir2;
@@ -148,12 +147,10 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
 		}
 
-
 		/* normalize */
 		VectorNormalize(triangleNormals[j]);
 		VectorNormalize(triangleTangents[j]);
 		VectorNormalize(triangleBitangents[j]);
-
 	}
 
 	/* for each vertex */
@@ -174,7 +171,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 			VectorAdd(t, triangleTangents[idx], t);
 			VectorAdd(b, triangleBitangents[idx], b);
 		}
-		
+
 		/* normalization here does shared-vertex smoothing */
 		VectorNormalize(n);
 		VectorNormalize(t);
@@ -262,7 +259,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 			mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 		}
 
-		for (i = 0; i < numIndexes; i++) 
+		for (i = 0; i < numIndexes; i++)
 			mesh->revIndexes[mesh->indexes[i]].list[mesh->revIndexes[mesh->indexes[i]].length++] = i;
 
 		FS_FreeFile(buf);
@@ -340,7 +337,6 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
 			VectorMul(dir1uv[0] * frac, dir2, tmp2);
 			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
-
 		}
 
 		/* normalize */
@@ -376,7 +372,6 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 				 * when the order of verticies in two triangles sharing the vertex
 				 * in question is different.  This happens quite frequently if the
 				 * modeler does not go out of their way to avoid it. */
-
 
 				if (Vector2Equal(stcoords[indexArray[i]], stcoords[indexArray[j]])
 						&& DotProduct(triangleTangents[idx], triangleTangents[idx2]) > smoothness
@@ -438,7 +433,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		indRemap[i] = i;
 	}
 
-	for(i = 0; i < numVerts; i++) 
+	for (i = 0; i < numVerts; i++)
 		sharedTris[i] = 0;
 
 	for (i = 0; i < numIndexes; i++)
@@ -446,7 +441,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 	/* set up reverse-index that maps Vertex objects to a list of triangle verts */
 	mesh->revIndexes = Mem_PoolAlloc(sizeof(mIndexList_t) * numVerts, vid_modelPool, 0);
-	for(i = 0; i < numVerts; i++) {
+	for (i = 0; i < numVerts; i++) {
 		mesh->revIndexes[i].length = 0;
 		mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 	}
@@ -553,16 +548,13 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 
 	/* try to do keyframe-interpolation on the GPU if possible*/
 	if (r_state.lighting_enabled) {
-
-		/* @todo - Handle cases where we don't need to do all the work.
-		 *
+		/** @todo - Handle cases where we don't need to do all the work.
 		 * We only need to build both keyframes when we start a new animation;
 		 * most of the time, this iteration's "oldframe" should be the same as last
 		 * iteration's "frame", so we should be able to do a pointer swap and then just
 		 * update "frame".  In cases where an animation has only 2 keyframes, we should
 		 * never need to re-calculate anything; we can just keep swapping pointers
 		 * each time.*/
-
 
 		/* we only need to change the arrays if we've switched to a new keyframe */
 		if (mod->curFrame != framenum) {
@@ -579,7 +571,6 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 
 		for (i = 0; i < 3; i++)
 			move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
-
 
 		for (i = 0; i < mesh->num_verts; i++, v++, ov++) {  /* lerp the verts */
 			VectorSet(r_mesh_verts[i],
@@ -623,7 +614,6 @@ void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, 
 	assert(mesh->normals == NULL);
 	assert(mesh->tangents == NULL);
 
-
 	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
@@ -631,7 +621,6 @@ void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, 
 
 	R_FillArrayData(mod, mesh, 0.0, 0, 0, qtrue);
 }
-
 
 void R_ModLoadArrayDataForAnimatedModel (mAliasModel_t *mod, mAliasMesh_t *mesh)
 {
