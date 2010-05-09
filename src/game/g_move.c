@@ -296,11 +296,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 				break;
 			}
 
-			/* This is now a flag to indicate a change in crouching - we need this for
-			 * the stop in mid move call(s), because we need the updated entity position */
-			crouchFlag = 0;
-			PosAddDV(ent->pos, crouchFlag, dv);
-
 			/* decrease TUs */
 			div = gi.GetTUsForDirection(dir);
 			truediv = div;
@@ -309,6 +304,13 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			if ((int) (usedTUs + div) > ent->TU)
 				break;
 			usedTUs += div;
+
+			/* This is now a flag to indicate a change in crouching - we need this for
+			 * the stop in mid move call(s), because we need the updated entity position */
+			crouchFlag = 0;
+			/* Calculate the new  Position after the decrese in TUs, otherwise the game
+			 * remembers the false position if the time runs out */
+			PosAddDV(ent->pos, crouchFlag, dv);
 
 			/* slower if crouched */
 			if (G_IsCrouched(ent))
