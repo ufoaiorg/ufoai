@@ -334,7 +334,7 @@ def setup():
 		print 'you must have gnuplot installed'
 		sys.exit(1)
 
-	if os.system('convert -h > /dev/null'):
+	if os.system('convert -version > /dev/null'):
 		print 'you must have imagemagick\'s convert installed'
 		sys.exit(1)
 
