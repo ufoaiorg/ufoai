@@ -22,7 +22,8 @@ pdf-manual:
 	$(MAKE) -C src/docs/tex
 
 license-generate:
-	python contrib/licenses/generate.py -u licenseinfo
+	@mkdir -p licenses/html
+	@python contrib/licenses/generate.py -u $(readlink -f licenses/html)/
 
 help:
 	@echo "Makefile targets:"
