@@ -13,7 +13,7 @@ varying vec3 staticLightDir;
 void BumpVertex(void){
 
 	// load the tangent
-	vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz );
+	vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz);
 	// compute the bitangent
 	vec3 bitangent = normalize(cross(normal, tangent)) * Tangent.w;
 
