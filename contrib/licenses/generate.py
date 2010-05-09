@@ -32,10 +32,12 @@ HTML = u"""<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
-body {background-color: #fff;}
-li { margin-bottom: 8px;}
-span {font-size: 10px;}
-div {font-size: 10px;}
+body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; margin: 0; padding: 0; }
+html > body { font-size: 8.5pt; }
+a { color: #ffd800; background-color: transparent; text-decoration: none; }
+a:hover { color: #ffffff; background-color: transparent; text-decoration: none; }
+li { margin-bottom: 8px; }
+.author { }
 </style></head>
 
 <body>
