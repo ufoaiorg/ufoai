@@ -249,6 +249,8 @@ def generate(d, data, texture_map, map_texture):
             elif d == 'textures':
                 if kill_suffix(j) in texture_map:
                     content+= '<br/><div>Used in: %s </div>' % ', '.join(texture_map[kill_suffix(j)])
+                elif j.find('_nm.') or j.find('_gm.') or j.find('_sm.') or j.find('_rm.'):
+                    content+= '<br/><div>Special map - only indirectly used</div>'
                 else:
                     content+= '<br/><b>UNUSED</b> (at least no map uses it)'
 
@@ -293,7 +295,7 @@ def plot(d, data, times):
     cmds = 'set terminal png;\n'
     cmds+= 'set data style linespoints;\n'
     cmds+= 'set output "licenses/html/%s/plot.png";\n' % d
-    cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + (max(times)-min(times))*0.15)
+    cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
 
     cmds+= 'plot '
     p = []
