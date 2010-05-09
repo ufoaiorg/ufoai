@@ -2172,10 +2172,15 @@ base/pics/geoscape/circle.png | GNU General Public License 2.0
 base/pics/geoscape/circleactive.png | GNU General Public License 2.0
 base/pics/geoscape/defence.png | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
 base/pics/geoscape/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/pics/geoscape/map_earth_halo.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
 base/pics/geoscape/map_earth_nations_overlay.png | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
+base/pics/geoscape/map_earth_nations_overlay_glow.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_night.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
+base/pics/geoscape/map_earth_sun.jpg | GNU General Public License 2.0 or later
+base/pics/geoscape/map_earth_sun.png | GNU General Public License 2.0 or later
+base/pics/geoscape/map_earth_sun_overlay.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_xvi_overlay.png | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/map_sun.png | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/mission.png | GNU General Public License 2.0
@@ -2208,6 +2213,7 @@ base/pics/hud/checkbox.png | Creative Commons Attribution-Share Alike 3.0 | Wern
 base/pics/hud/close.png | GNU General Public License 2.0
 base/pics/hud/event_log.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/pics/hud/firemode.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/pics/hud/firemode_hover.png | GNU General Public License 2.0 or later
 base/pics/hud/phys_ekg.png | GNU General Public License 2.0
 base/pics/hud/phys_mor.png | GNU General Public License 2.0
 base/pics/icons/air.png | GNU General Public License 2.0 | Gerd Heisse
@@ -2221,6 +2227,12 @@ base/pics/icons/health_normal.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_unused.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/intelligence.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
+base/pics/icons/medic.png | GNU General Public License 2.0 or later
+base/pics/icons/off.png | GNU General Public License 2.0 or later
+base/pics/icons/on.png | GNU General Public License 2.0 or later
+base/pics/icons/pilot.png | GNU General Public License 2.0 or later
+base/pics/icons/scientist.png | GNU General Public License 2.0 or later
+base/pics/icons/soldier.png | GNU General Public License 2.0 or later
 base/pics/icons/surgery.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
@@ -2232,6 +2244,7 @@ base/pics/icons/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0
 base/pics/icons/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/un.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/worker.png | GNU General Public License 2.0 or later
 base/pics/loading.png | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
