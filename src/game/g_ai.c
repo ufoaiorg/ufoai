@@ -439,8 +439,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				/* search best target */
 				while ((check = G_EdictsGetNextLivingActor(check))) {
 					if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
-						if (!G_IsVisibleForTeam(check, ent->team))
-							continue;
 
 						/* don't shoot civilians in mp */
 						if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
