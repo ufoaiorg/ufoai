@@ -289,6 +289,11 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	return r_state.lighting_enabled;
 }
 
+/**  
+ * @brief Enable or disable realtime dynamic lighting
+ * @param ent The entity to enable/disable lighting for
+ * @param enable Whether to turn realtime lighting on or off
+ */
 void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 {
 	int i, j;
@@ -348,6 +353,12 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	}
 }
 
+/** 
+ * @brief Enables animation using keyframe interpolation on the GPU
+ * @param mesh The mesh to animate
+ * @param backlerp The temporal proximity to the previous keyframe (in the range 0.0 to 1.0)
+ * @param enable Whether to turn animation on or off
+ */
 void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enable)
 {
 	if (!r_programs->integer || !r_state.lighting_enabled)

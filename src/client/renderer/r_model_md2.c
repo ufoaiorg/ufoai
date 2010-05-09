@@ -103,6 +103,9 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 			read, size, pheader->num_tags, pheader->num_frames, mod->alias.num_frames);
 }
 
+/**
+ * @brief Assume that the indexArray is *NOT* filled, and load data for the model accordingly
+ */
 static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
 	int i, j;
@@ -264,6 +267,9 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		Mem_Free(outFrameTmp);
 }
 
+/**
+ * @brief Assume that the indexArray is already filled, and load data for the model accordingly
+ */
 static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, int bufSize)
 {
 	int i, j;
@@ -389,6 +395,9 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		Mem_Free(outFrameTmp);
 }
 
+/**
+ * @brief See if the model has an MDX file, and then load the model data appropriately for either case
+ */
 static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
 	mAliasMesh_t *outMesh;

@@ -47,8 +47,6 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		/* Compute the geometric term for specularity */
 		float G1 = (2.0 * NdotH * NdotV) / VdotH;
 		float G2 = (2.0 * NdotH * NdotL) / VdotH;
-		//float G = min(1.0, max(0.0, min(G1, G2)));
-		//float G = min(1.0, min(G1, G2));
 		float G = clamp(min(G1, G2), 0.0, 1.0);
 
 		/* Compute the roughness term for specularity */
@@ -64,7 +62,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		specularColor = lightSource.specular.rgb * specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
 	}
 
-	/* NOTE: should we attenuate ambient light or not? */
+	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
 	return (attenuate * (max(ambientColor, 0.0) + max(diffuseColor, 0.0) + max(specularColor, 0.0)));
 }
 

@@ -92,6 +92,14 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 }
 
 
+/** 
+ * @brief Calculates a per-vertex tangentspace basis and stores it in GL arrays attached to the mesh
+ * @param mesh The mesh to calculate normals for
+ * @param framenum The animation frame to calculate normals for
+ * @param translate The frame translation for the given animation frame
+ * @param backlerp Whether to store the results in the GL arrays for the previous keyframe or the next keyframe
+ * @sa R_ModCalcUniqueNormalsAndTangents
+ */
 static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const vec3_t translate, qboolean backlerp)
 {
 	int i, j;
@@ -270,9 +278,10 @@ qboolean R_ModLoadMDX (model_t *mod)
 
 /**
  * @brief Calculates normals and tangents for all frames and does vertex merging based on smoothness
- * @param mesh
- * @param nFrames
- * @param smoothness
+ * @param mesh The mesh to calculate normals for
+ * @param nFrames How many frames the mesh has
+ * @param smoothness How aggressively should normals be smoothed; value is compared with dotproduct of vectors to decide if they should be merged
+ * @sa R_ModCalcNormalsAndTangents
  */
 void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float smoothness)
 {
@@ -532,6 +541,9 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
  * @param oldframenum The old frame number (used to interpolate)
  * @param prerender If this is @c true, all data is filled to the arrays. If @c false, then
  * e.g. the normals are only filled to the arrays if the lighting is activated.
+ *
+ * @note If GLSL programs are enabled, the actual interpolation will be done on the GPU, but 
+ * this function is still needed to fill the GL arrays for the keyframes
  */
 void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
 {
@@ -606,13 +618,15 @@ void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, 
 	const int t = mesh->num_tris * 3 * 4;
 	const int st = mesh->num_tris * 3 * 2;
 
-	if (mod->num_frames != 1)
-		return;
+	assert(mod->num_frames == 1);
 
 	assert(mesh->verts == NULL);
 	assert(mesh->texcoords == NULL);
 	assert(mesh->normals == NULL);
 	assert(mesh->tangents == NULL);
+	assert(mesh->next_verts == NULL);
+	assert(mesh->next_normals == NULL);
+	assert(mesh->next_tangents == NULL);
 
 	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
@@ -622,6 +636,9 @@ void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, 
 	R_FillArrayData(mod, mesh, 0.0, 0, 0, qtrue);
 }
 
+/**
+ * @brief Allocates data arrays for animated models. Only called once at loading time.
+ */
 void R_ModLoadArrayDataForAnimatedModel (mAliasModel_t *mod, mAliasMesh_t *mesh)
 {
 	const int v = mesh->num_tris * 3 * 3;
