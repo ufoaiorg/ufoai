@@ -3327,6 +3327,7 @@ base/textures/tex_buildings/clangdark.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/clangdark_ow.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/clanggrate.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/clanggrate2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/clanggrate_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/con_block.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/con_block_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/con_trim.png | GNU General Public License 2.0 or later | Nate Wright
@@ -3446,7 +3447,9 @@ base/textures/tex_buildings/metalbridge6broke.jpg | GNU General Public License 2
 base/textures/tex_buildings/metceil1d.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/mtl_fnce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_fnce2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/mtl_fnce2_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/mtl_fnce4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/mtl_fnce4_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/mtl_fnce_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_gray.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_gray4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3485,7 +3488,7 @@ base/textures/tex_buildings/sfloor1_2_nm.png | GNU General Public License 2.0 | 
 base/textures/tex_buildings/sidewalk01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sidewalk01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_buildings/sp_stairs_nm.png |  | GNU General Public License 2.0 or later
+base/textures/tex_buildings/sp_stairs_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/streetbricks14.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/stripes.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -3499,6 +3502,7 @@ base/textures/tex_buildings/t_wll_fnctrm_ow.jpg | GNU General Public License 2.0
 base/textures/tex_buildings/t_wll_fnctrm_ow_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_sgn.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_sgn2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/t_wll_fnctrm_sign2_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/t_wll_fnctrm_sign_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/tile_teracotablue.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/tin_floor04ach.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -4171,6 +4175,7 @@ base/textures/tex_mattn/wood024.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wood024_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_misc/access_denied.jpg | GNU General Public License 2.0 or later
 base/textures/tex_misc/advert_back.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advert_back_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advertaa0.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4302,6 +4307,8 @@ base/textures/tex_misc/sign_parkblda1.png | GNU General Public License 2.0 or la
 base/textures/tex_misc/sign_parkblda2.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/sign_parkblda3.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/silo_a_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_misc/soft_drinks1_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_misc/soft_drinks2_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
@@ -4856,6 +4863,8 @@ base/textures/tex_ufo/ufo2_17a8.png | GNU General Public License 2.0 or later | 
 base/textures/tex_ufo/ufo2_17a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo2_medic01.png |  | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.png |  | "SparX" Beyeler
+base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later
+base/textures/tex_vehicles/car_e1.png | GNU General Public License 2.0 or later
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
