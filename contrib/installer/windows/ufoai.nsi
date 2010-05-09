@@ -87,7 +87,6 @@ SectionGroup /e "Game" SECGROUP01
 		SetOutPath "$INSTDIR"
 			File "..\..\..\COPYING"
 			File "..\..\..\README"
-			File "..\..\..\CONTRIBUTORS"
 			File /nonfatal "..\..\..\src\docs\tex\*.pdf"
 			File "..\..\dlls\*.dll"
 			File "..\..\..\ufo.exe"
