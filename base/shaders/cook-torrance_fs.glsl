@@ -119,6 +119,6 @@ vec4 IlluminateFragment(void){
 	totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
 #endunroll
 
-	return vec4(totalColor, 1.0);
+	return vec4(totalColor, diffuse.a);
 }
 
