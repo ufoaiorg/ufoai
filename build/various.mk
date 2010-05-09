@@ -21,8 +21,8 @@ deb:
 pdf-manual:
 	$(MAKE) -C src/docs/tex
 
-licenses:
-	python contrib/licenses/generate.py
+license-generate:
+	python contrib/licenses/generate.py -u licenseinfo
 
 help:
 	@echo "Makefile targets:"
