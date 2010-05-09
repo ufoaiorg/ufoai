@@ -227,7 +227,7 @@ def generate(d, data, texture_map, map_texture):
                     os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
                 img = '<img src="%s%s"/>' % (ABS_URL, thumb)
 
-            content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
+            content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s" title="Download">%s</a> - <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/%s/%s?view=log" title="History">%s</a>' % (img, d, j, j, d, j, j)
 
             copy =  copyright.get('base/%s/%s' % (d,j), 'UNKNOWN')
             content+= u' <span>by %s</span>' % unicode(copy.decode('utf-8'))
