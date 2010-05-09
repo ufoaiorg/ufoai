@@ -2101,6 +2101,8 @@ base/music/van_mission2.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethi
 base/music/van_mission3.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/pics/althud/bar_chat.png | GNU General Public License 2.0 or later
+base/pics/althud/bar_chat_choice.png | GNU General Public License 2.0 or later
 base/pics/althud/bar_floor.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/bar_right.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
 base/pics/althud/bar_selbox.png | GNU General Public License 2.0 |  | Based on the original menu artwork by SparX and Rasta
@@ -2152,8 +2154,12 @@ base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin G
 base/pics/base/workshop1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop2.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/conback.jpg | GNU General Public License 2.0
+base/pics/conchars.png | GNU General Public License 2.0 or later
+base/pics/cursors/cursor1.png | GNU General Public License 2.0 or later
+base/pics/cursors/ducked.png | GNU General Public License 2.0 or later
 base/pics/cursors/reactionfire.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/pics/cursors/reactionfiremany.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/cursors/wait.png | GNU General Public License 2.0 or later
 base/pics/envmaps/envmap_0.png | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/envmaps/envmap_1.png | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/flares/flare_3.png | GNU General Public License 2.0 or later | MCR
