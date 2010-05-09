@@ -2719,6 +2719,8 @@ base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena GPLed C
 base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/sfx/corona_y.jpg |  |  | corona.jpg
+base/pics/sfx/cross.png | GNU General Public License 2.0 or later
+base/pics/sfx/cross_no.png | GNU General Public License 2.0 or later
 base/pics/sfx/electricgrade3.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/electricslime.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/exhaust.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -2765,7 +2767,7 @@ base/pics/techs/alien_mind.jpg | Creative Commons Attribution-Share Alike 2.0 | 
 base/pics/techs/alien_oddbehaviour.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs
 base/pics/techs/anti_alien_gas.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs
 base/pics/techs/antimatter.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/techs/bloodspider_dead.png |  | Martin Gerhardy
+base/pics/techs/bloodspider_dead.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/techs/continuous_wave_laser_operation.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs
 base/pics/techs/enemy_on_earth.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs
 base/pics/techs/ortnok_autopsy.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
@@ -2796,6 +2798,7 @@ base/pics/tutorial/gameplay6b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay7a.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay8a.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
+base/pics/tutorial/skirmish1.png | GNU General Public License 2.0 or later
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
 base/pics/ui/airequip_element.png | GNU General Public License 2.0 or later
@@ -2814,6 +2817,7 @@ base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on
 base/pics/ui/button_autosell1.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_autosell2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_background.png | GNU General Public License 2.0 or later
+base/pics/ui/button_background2.png | GNU General Public License 2.0 or later
 base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/button_equip.png | GNU General Public License 2.0 or later | Gerd Heisse
@@ -2840,11 +2844,18 @@ base/pics/ui/geo_xvi.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_capture.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_child.png | GNU General Public License 2.0 or later
 base/pics/ui/icon_close.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_message.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_next.png | GNU General Public License 2.0 or later
 base/pics/ui/icon_open.png | GNU General Public License 2.0 or later
 base/pics/ui/icon_pack1.png | GNU General Public License 2.0 or later
 base/pics/ui/icon_pack2.png | GNU General Public License 2.0 or later
 base/pics/ui/icon_pack3.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_pack_hud.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_pack_hud2.png | GNU General Public License 2.0 or later
+base/pics/ui/icon_parent.png | GNU General Public License 2.0 or later
 base/pics/ui/irc_bg.jpg | GNU General Public License 2.0 or later
 base/pics/ui/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/lost_bg.png | GNU General Public License 2.0 or later
@@ -2865,6 +2876,7 @@ base/pics/ui/notify_sound.png | GNU General Public License 2.0 or later
 base/pics/ui/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_green.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later
+base/pics/ui/panel_green_tab.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_grey.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_grey_black.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_grey_green.png | GNU General Public License 2.0 or later
@@ -2872,9 +2884,11 @@ base/pics/ui/panel_grey_green_large.png | GNU General Public License 2.0 or late
 base/pics/ui/panel_grey_green_large2.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_grey_white.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_tab.png | GNU General Public License 2.0 or later
+base/pics/ui/panel_window.png | GNU General Public License 2.0 or later
 base/pics/ui/popup_alpha_tile.png | GNU General Public License 2.0 or later
 base/pics/ui/popup_button_hl.png | GNU General Public License 2.0 or later
 base/pics/ui/popup_tile.png | GNU General Public License 2.0 or later
+base/pics/ui/radar.png | GNU General Public License 2.0 or later
 base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later
 base/pics/ui/selectbox.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/selectbox_green.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2886,6 +2900,7 @@ base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/world_bg.png | GNU General Public License 2.0 or later
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
