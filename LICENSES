@@ -2177,12 +2177,20 @@ base/pics/geoscape/baseattack.png | Creative Commons Attribution-Share Alike 3.0
 base/pics/geoscape/circle.png | GNU General Public License 2.0
 base/pics/geoscape/circleactive.png | GNU General Public License 2.0
 base/pics/geoscape/defence.png | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
+base/pics/geoscape/docklet_bg.png | GNU General Public License 2.0 or later
+base/pics/geoscape/docklet_bg_hovered.png | GNU General Public License 2.0 or later
+base/pics/geoscape/low/map_earth_bump.png | GNU General Public License 2.0 or later
+base/pics/geoscape/map_earth_culture.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/geoscape/map_earth_halo.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_moon.jpg | Public Domain | NASA | http://maps.jpl.nasa.gov/textures/ear1ccc2.jpg
+base/pics/geoscape/map_earth_nations.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_nations_overlay.png | GNU General Public License 2.0 | John W. Bjerk (eleazar) | map_earth_nations.tga
+base/pics/geoscape/map_earth_nations_overlay_glow.jpg | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_nations_overlay_glow.png | GNU General Public License 2.0 or later
-base/pics/geoscape/map_earth_night.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/pics/geoscape/map_earth_night.jpg | Public Domain |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/pics/geoscape/map_earth_night_lights.png | GNU General Public License 2.0 or later
+base/pics/geoscape/map_earth_population.png | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_stars.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/pics/geoscape/map_earth_sun.jpg | GNU General Public License 2.0 or later
 base/pics/geoscape/map_earth_sun.png | GNU General Public License 2.0 or later
