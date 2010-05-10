@@ -428,8 +428,6 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 			R_ModLoadAliasMD2MeshIndexed(mod, md2, bufSize);
 		} else {
 			/* compute normals and tangents */
-			Com_Printf("WARNING: no .mdx found for %s.  Generating tangent space on the fly is slow; please run ufomodel to pre-compute them.\n",
-					mod->name);
 			R_ModLoadAliasMD2MeshUnindexed(mod, md2, bufSize, qtrue);
 		}
 	} else {
@@ -529,7 +527,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 
 	R_ModLoadLevelOfDetailData(mod, loadNormals);
 
-	if (mod->alias.num_frames == 1) 
+	if (mod->alias.num_frames == 1)
 		_R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes, loadNormals);
 	else
 		R_ModLoadArrayDataForAnimatedModel(&mod->alias, mod->alias.meshes);
