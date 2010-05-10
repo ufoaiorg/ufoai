@@ -624,7 +624,7 @@ class EntityKeyValues: public Entity
 		 * @param[in] key The property key to get the value for
 		 * @return The value for the given property key or the default value
 		 */
-		const char* getKeyValue (const char* key) const
+		const char* getKeyValue (const std::string& key) const
 		{
 			const char* value = getKeyValueOrNull(key);
 			if (value)

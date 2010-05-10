@@ -643,7 +643,7 @@ static void Map_StartPosition (void)
 	if (entity) {
 		Vector3 origin;
 		string_parse_vector3(entity->getKeyValue("origin"), origin);
-		FocusViews(origin, string_read_float(entity->getKeyValue("angle")));
+		FocusViews(origin, string::toFloat(entity->getKeyValue("angle")));
 	} else {
 		FocusViews(g_vector3_identity, 0);
 	}

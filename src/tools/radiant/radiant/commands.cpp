@@ -171,15 +171,6 @@ void connect_accelerator (const std::string& name)
 #include "stream/textfilestream.h"
 #include "stream/stringstream.h"
 
-static inline const char* stringrange_find (const char* first, const char* last, char c)
-{
-	const char* p = strchr(first, '+');
-	if (p == 0) {
-		return last;
-	}
-	return p;
-}
-
 namespace
 {
 	enum

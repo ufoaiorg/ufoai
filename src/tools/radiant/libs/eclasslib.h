@@ -181,11 +181,11 @@ class EntityClass
 		}
 };
 
-inline const char* EntityClass_valueForKey (const EntityClass& entityClass, const char* key)
+inline const char* EntityClass_valueForKey (const EntityClass& entityClass, const std::string& key)
 {
 	for (EntityClassAttributes::const_iterator i = entityClass.m_attributes.begin(); i
 			!= entityClass.m_attributes.end(); ++i) {
-		if (string_equal(key, (*i).first.c_str())) {
+		if (key == (*i).first) {
 			return (*i).second.m_value.c_str();
 		}
 	}

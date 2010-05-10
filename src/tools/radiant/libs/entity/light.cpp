@@ -310,14 +310,14 @@ class LightRadii
 
 		void primaryIntensityChanged (const std::string& value)
 		{
-			m_intensity = string_read_int(value.c_str());
+			m_intensity = string::toInt(value);
 			calculateRadii();
 		}
 		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::primaryIntensityChanged>
 				IntensityChangedCaller;
 		void flagsChanged (const std::string& value)
 		{
-			m_flags = string_read_int(value.c_str());
+			m_flags = string::toInt(value);
 			calculateRadii();
 		}
 		typedef MemberCaller1<LightRadii, const std::string&, &LightRadii::flagsChanged> FlagsChangedCaller;
@@ -395,11 +395,11 @@ class ShaderRef
 		Shader* m_shader;
 		void capture ()
 		{
-			m_shader = GlobalShaderCache().capture(m_name.c_str());
+			m_shader = GlobalShaderCache().capture(m_name);
 		}
 		void release ()
 		{
-			GlobalShaderCache().release(m_name.c_str());
+			GlobalShaderCache().release(m_name);
 		}
 	public:
 		ShaderRef ()
@@ -427,10 +427,9 @@ class LightShader
 		ShaderRef m_shader;
 		void setDefault ()
 		{
-			m_shader.setName(m_defaultShader);
+			m_shader.setName("");
 		}
 	public:
-		static const char* m_defaultShader;
 
 		LightShader ()
 		{
@@ -452,8 +451,6 @@ class LightShader
 			return m_shader.get();
 		}
 };
-
-const char* LightShader::m_defaultShader = "";
 
 inline const BasicVector4<double>& plane3_to_vector4 (const Plane3& self)
 {
@@ -832,8 +829,10 @@ class LightInstance: public TargetableInstance,
 
 		void evaluateTransform ()
 		{
-			m_contained.translate(getTranslation());
-			m_contained.rotate(getRotation());
+			if (getType() == TRANSFORM_PRIMITIVE) {
+				m_contained.translate(getTranslation());
+				m_contained.rotate(getRotation());
+			}
 		}
 		void applyTransform ()
 		{

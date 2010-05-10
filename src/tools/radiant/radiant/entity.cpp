@@ -295,8 +295,7 @@ void Entity_connectSelected ()
 
 static bool Entity_create (const std::string& name, const Vector3& origin)
 {
-	std::string command = "entityCreate -class " + name;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo("entityCreate -class " + name);
 
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
@@ -404,10 +403,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 
 void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 {
-	{
-		std::string command = "entityCreate -class " + name;
-		UndoableCommand undo(command);
-	}
+	UndoableCommand undo("entityCreate -class " + name);
 
 	bool revert = false;
 	try {

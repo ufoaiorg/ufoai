@@ -89,7 +89,7 @@ class Entity
 		 * @todo deprecate these
 		 */
 
-		virtual const char* getKeyValue (const char* key) const = 0;
+		virtual const char* getKeyValue (const std::string& key) const = 0;
 
 		virtual void addMandatoryKeyValues () = 0;
 		virtual bool isContainer () const = 0;

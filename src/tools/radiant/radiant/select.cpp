@@ -550,16 +550,15 @@ void FindReplaceTextures (const std::string& pFind, const std::string& pReplace,
 		return;
 	}
 
-	std::string command = "textureFindReplace -find " + pFind + " -replace " + pReplace;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo("textureFindReplace -find " + pFind + " -replace " + pReplace);
 
 	if (bSelected) {
 		if (GlobalSelectionSystem().Mode() != SelectionSystem::eComponent) {
-			Scene_BrushFindReplaceShader_Selected(GlobalSceneGraph(), pFind.c_str(), pReplace.c_str());
+			Scene_BrushFindReplaceShader_Selected(GlobalSceneGraph(), pFind, pReplace);
 		}
-		Scene_BrushFindReplaceShader_Component_Selected(GlobalSceneGraph(), pFind.c_str(), pReplace.c_str());
+		Scene_BrushFindReplaceShader_Component_Selected(GlobalSceneGraph(), pFind, pReplace);
 	} else {
-		Scene_BrushFindReplaceShader(GlobalSceneGraph(), pFind.c_str(), pReplace.c_str());
+		Scene_BrushFindReplaceShader(GlobalSceneGraph(), pFind, pReplace);
 	}
 }
 

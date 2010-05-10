@@ -251,7 +251,7 @@ void Scene_BrushSetDetail_Selected (scene::Graph& graph, bool detail)
 	SceneChangeNotify();
 }
 
-bool Face_FindReplaceShader (Face& face, const char* find, const char* replace)
+bool Face_FindReplaceShader (Face& face, const std::string& find, const std::string& replace)
 {
 	if (shader_equal(face.GetShader(), find)) {
 		face.SetShader(replace);
@@ -262,10 +262,10 @@ bool Face_FindReplaceShader (Face& face, const char* find, const char* replace)
 
 class FaceFindReplaceShader
 {
-		const char* m_find;
-		const char* m_replace;
+		const std::string& m_find;
+		const std::string& m_replace;
 	public:
-		FaceFindReplaceShader (const char* find, const char* replace) :
+		FaceFindReplaceShader (const std::string& find, const std::string& replace) :
 			m_find(find), m_replace(replace)
 		{
 		}
@@ -277,10 +277,9 @@ class FaceFindReplaceShader
 
 class FaceFindShader
 {
-		const char* m_find;
-		const char* m_replace;
+		const std::string& m_find;
 	public:
-		FaceFindShader (const char* find) :
+		FaceFindShader (const std::string& find) :
 			m_find(find)
 		{
 		}
@@ -292,12 +291,12 @@ class FaceFindShader
 		}
 };
 
-bool DoingSearch (const char *repl)
+bool DoingSearch (const std::string& repl)
 {
-	return (repl == NULL || (strcmp("textures/", repl) == 0));
+	return repl.empty() || repl == "textures/";
 }
 
-void Scene_BrushFindReplaceShader (scene::Graph& graph, const char* find, const char* replace)
+void Scene_BrushFindReplaceShader (scene::Graph& graph, const std::string& find, const std::string& replace)
 {
 	if (DoingSearch(replace)) {
 		Scene_ForEachBrush_ForEachFaceInstance(graph, FaceFindShader(find));
@@ -306,7 +305,7 @@ void Scene_BrushFindReplaceShader (scene::Graph& graph, const char* find, const 
 	}
 }
 
-void Scene_BrushFindReplaceShader_Selected (scene::Graph& graph, const char* find, const char* replace)
+void Scene_BrushFindReplaceShader_Selected (scene::Graph& graph, const std::string& find, const std::string& replace)
 {
 	if (DoingSearch(replace)) {
 		Scene_ForEachSelectedBrush_ForEachFaceInstance(graph, FaceFindShader(find));
@@ -317,11 +316,9 @@ void Scene_BrushFindReplaceShader_Selected (scene::Graph& graph, const char* fin
 
 // TODO: find for components
 // d1223m: dont even know what they are...
-void Scene_BrushFindReplaceShader_Component_Selected (scene::Graph& graph, const char* find, const char* replace)
+void Scene_BrushFindReplaceShader_Component_Selected (scene::Graph& graph, const std::string& find, const std::string& replace)
 {
-	if (DoingSearch(replace)) {
-
-	} else {
+	if (!DoingSearch(replace)) {
 		Scene_ForEachSelectedBrushFace(FaceFindReplaceShader(find, replace));
 	}
 }
