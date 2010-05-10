@@ -234,6 +234,8 @@ static void CL_ClearState (void)
 
 	/* wipe the particles with every new map */
 	r_numParticles = 0;
+	/* reset ir goggle state with every new map */
+	refdef.rendererFlags &= ~RDF_IRGOGGLES;
 }
 
 /**
