@@ -221,7 +221,7 @@ language nl_NL {
 }
 
 language pt_BR {
-	"Brazilian Portuguese"
+	"_Brazilian Portuguese"
 	{
 		pt_BR.UTF-8
 		pt_BR.utf8
