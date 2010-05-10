@@ -31,12 +31,12 @@ class LoadImageCallback;
 // describes a GL texture
 struct qtexture_t
 {
-		qtexture_t (const LoadImageCallback& load, const char* name) :
+		qtexture_t (const LoadImageCallback& load, const std::string& name) :
 			load(load), name(name)
 		{
 		}
 		const LoadImageCallback& load;
-		const char* name;
+		const std::string name;
 		std::size_t width, height;
 		GLuint texture_number; // gl bind number
 		Colour3 color; // for flat shade mode

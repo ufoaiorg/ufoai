@@ -306,7 +306,7 @@ class TexturesMap: public TexturesCache
 				}
 				qtexture_t* construct (const TextureKey& key)
 				{
-					qtexture_t* texture = new qtexture_t(key.first, key.second.c_str());
+					qtexture_t* texture = new qtexture_t(key.first, key.second);
 					if (m_cache->realised()) {
 						qtexture_realise(*texture, key);
 					}
@@ -347,22 +347,22 @@ class TexturesMap: public TexturesCache
 		{
 			return LoadImageCallback(0, QERApp_LoadImage);
 		}
-		Image* loadImage (const char* name)
+		Image* loadImage (const std::string& name)
 		{
 			return defaultLoader().loadImage(name);
 		}
-		qtexture_t* capture (const char* name)
+		qtexture_t* capture (const std::string& name)
 		{
 			return capture(defaultLoader(), name);
 		}
-		qtexture_t* capture (const LoadImageCallback& loader, const char* name)
+		qtexture_t* capture (const LoadImageCallback& loader, const std::string& name)
 		{
-			g_debug("textures capture: '%s'\n", name);
+			g_debug("textures capture: '%s'\n", name.c_str());
 			return m_qtextures.capture(TextureKey(loader, name)).get();
 		}
 		void release (qtexture_t* texture)
 		{
-			g_debug("textures release: '%s'\n", texture->name);
+			g_debug("textures release: '%s'\n", texture->name.c_str());
 			m_qtextures.release(TextureKey(texture->load, texture->name));
 		}
 		void attach (TexturesCacheObserver& observer)
@@ -638,8 +638,14 @@ void Textures_constructPreferences (PreferencesPage& page)
 	page.appendSpinner(_("Texture Gamma"), 1.0, 0.0, 1.0, FloatImportCallback(TextureGammaImportCaller(
 			g_texture_globals.fGamma)), FloatExportCallback(FloatExportCaller(g_texture_globals.fGamma)));
 	{
-		const char* texture_mode[] = { N_("Nearest"), N_("Nearest Mipmap"), N_("Linear"), N_("Bilinear"),
-				N_("Bilinear Mipmap"), N_("Trilinear"), N_("Anisotropy") };
+		const char* texture_mode[] = {
+				N_("Nearest"),
+				N_("Nearest Mipmap"),
+				N_("Linear"),
+				N_("Bilinear"),
+				N_("Bilinear Mipmap"),
+				N_("Trilinear"),
+				N_("Anisotropy") };
 		page.appendCombo(_("Texture Render Mode"), STRING_ARRAY_RANGE(texture_mode), IntImportCallback(
 				TextureModeImportCaller(g_texture_mode)), IntExportCallback(TextureModeExportCaller(g_texture_mode)));
 	}
@@ -647,7 +653,11 @@ void Textures_constructPreferences (PreferencesPage& page)
 		const char* compression_none[] = { N_("None") };
 		const char* compression_opengl[] = { N_("None"), N_("OpenGL ARB") };
 		const char* compression_s3tc[] = { N_("None"), N_("S3TC DXT1"), N_("S3TC DXT3"), N_("S3TC DXT5") };
-		const char* compression_opengl_s3tc[] = { N_("None"), N_("OpenGL ARB"), N_("S3TC DXT1"), N_("S3TC DXT3"),
+		const char* compression_opengl_s3tc[] = {
+				N_("None"),
+				N_("OpenGL ARB"),
+				N_("S3TC DXT1"),
+				N_("S3TC DXT3"),
 				N_("S3TC DXT5") };
 		StringArrayRange
 				compression(
