@@ -3113,8 +3113,8 @@
 "classname" "misc_model"
 "origin" "608 112 0"
 "model" "models/objects/trucks/truck/container_trailer.md2"
-"angle" "-180"
 "spawnflags" "255"
+"angles" "0 -180 0"
 }
 // entity 100
 {
@@ -3476,8 +3476,8 @@
 // entity 146
 {
 "classname" "misc_model"
-"origin" "446 324 54"
+"origin" "452 322 54"
 "model" "models/objects/trucks/truck2/truck.md2"
-"angle" "-90"
 "spawnflags" "255"
+"angles" "0 -90 0"
 }
