@@ -99,11 +99,11 @@ vec4 IlluminateFragment(void){
 	} else {
 		specular = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 	}
-		specular.a *= 512.0;
+	specular.a *= 512.0;
 
 	vec4 roughness;
-	float R_2=0.0;
-	float NdotV=0.0;
+	float R_2 = 0.0;
+	float NdotV = 0.0;
 	if (ROUGHMAP > 0) {
 		roughness = texture2D(SAMPLER2, coords);
 		/* scale reflectance to a more useful range */
