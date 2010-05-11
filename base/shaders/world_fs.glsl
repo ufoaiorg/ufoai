@@ -20,7 +20,6 @@ uniform sampler2D SAMPLER4;
 const vec3 two = vec3(2.0);
 const vec3 negHalf = vec3(-0.5);
 
-varying vec3 staticLightDir;
 varying vec3 lightDirs[#replace r_dynamic_lights ];
 
 #include "light_fs.glsl"

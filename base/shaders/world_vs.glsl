@@ -4,8 +4,6 @@ uniform float OFFSET;
 uniform int BUMPMAP;
 uniform int ANIMATE;
 
-varying vec3 lightpos;
-
 /* from includes:
 varying vec3 point;
 varying vec3 normal;

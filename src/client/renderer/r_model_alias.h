@@ -90,13 +90,13 @@ typedef	struct mAliasMesh_s {
 	mAliasCoord_t	*stcoords;
 
 	/* static meshes have vertex arrays */
-	float *verts;
-	float *texcoords;
-	float *normals;
-	float *tangents;
-	float *next_verts;
-	float *next_normals;
-	float *next_tangents;
+	vec_t *verts;
+	vec_t *texcoords;
+	vec_t *normals;
+	vec_t *tangents;
+	vec_t *next_verts;
+	vec_t *next_normals;
+	vec_t *next_tangents;
 
 	int	num_tris;
 	int32_t	*indexes;

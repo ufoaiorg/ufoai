@@ -553,33 +553,52 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
 	vec3_t r_mesh_verts[MAX_ALIAS_VERTS];
-	float *texcoord_array, *vertex_array_3d;
+	vec_t *texcoord_array, *vertex_array_3d;
 
 	frame = mod->frames + framenum;
 	oldframe = mod->frames + oldframenum;
 
 	/* try to do keyframe-interpolation on the GPU if possible*/
 	if (r_state.lighting_enabled) {
-		/** @todo - Handle cases where we don't need to do all the work.
-		 * We only need to build both keyframes when we start a new animation;
-		 * most of the time, this iteration's "oldframe" should be the same as last
-		 * iteration's "frame", so we should be able to do a pointer swap and then just
-		 * update "frame".  In cases where an animation has only 2 keyframes, we should
-		 * never need to re-calculate anything; we can just keep swapping pointers
-		 * each time.*/
-
-		/* we only need to change the arrays if we've switched to a new keyframe */
+		/* we only need to change the array data if we've switched to a new keyframe */
 		if (mod->curFrame != framenum) {
+			/* if we're rendering frames in order, the "next" keyframe from the previous
+			 * time through will be our "previous" keyframe now, so we can swap pointers
+			 * instead of generating it again from scratch */
+			if (mod->curFrame == oldframenum) {
+				const vec_t *tmp1 = mesh->verts;
+				mesh->verts = mesh->next_verts;
+				mesh->next_verts = tmp1;
+
+				const vec_t *tmp2 = mesh->normals;
+				mesh->normals = mesh->next_normals;
+				mesh->next_normals = tmp2;
+
+				const vec_t *tmp3 = mesh->tangents;
+				mesh->tangents = mesh->next_tangents;
+				mesh->next_tangents = tmp3;
+
+				/* if we're alternating between two keyframes, we don't need to generate
+				 * anything; otherwise, generate the "next" keyframe*/
+				if (mod->oldFrame != framenum) 
+					R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
+			} else {
+				/* if we're starting a new animation or otherwise not rendering keyframes
+				 * in order, we need to fill the arrays for both keyframes */
+				R_ModCalcNormalsAndTangents(mesh, oldframenum, oldframe->translate, qtrue);
+				R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
+			}
+			/* keep track of which keyframes are currently stored in our arrays */
+			mod->oldFrame = oldframenum;
 			mod->curFrame = framenum;
-			R_ModCalcNormalsAndTangents(mesh, oldframenum, oldframe->translate, qtrue);
-			R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
 		}
 	} else { /* otherwise, we have to do it on the CPU */
 		assert(mesh->num_verts < lengthof(r_mesh_verts));
 		v = &mesh->vertexes[framenum * mesh->num_verts];
 		ov = &mesh->vertexes[oldframenum * mesh->num_verts];
 
-		R_ModCalcNormalsAndTangents(mesh, 0, oldframe->translate, qtrue);
+		if (prerender)
+			R_ModCalcNormalsAndTangents(mesh, 0, oldframe->translate, qtrue);
 
 		for (i = 0; i < 3; i++)
 			move[i] = backlerp * oldframe->translate[i] + frontlerp * frame->translate[i];
@@ -633,7 +652,7 @@ void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, 
 	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
 	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
 
-	R_FillArrayData(mod, mesh, 0.0, 0, 0, qtrue);
+	R_FillArrayData(mod, mesh, 0.0, 0, 0, loadNormals);
 }
 
 /**
@@ -662,4 +681,5 @@ void R_ModLoadArrayDataForAnimatedModel (mAliasModel_t *mod, mAliasMesh_t *mesh)
 	mesh->next_tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
 
 	mod->curFrame = -1;
+	mod->oldFrame = -1;
 }

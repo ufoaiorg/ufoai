@@ -440,7 +440,7 @@ static qboolean R_CvarPrograms (cvar_t *cvar)
 
 static qboolean R_CvarPostProcess (cvar_t *cvar)
 {
-	if (r_config.frameBufferObject && r_programs->integer)
+	if (r_config.frameBufferObject && r_programs->integer && r_config.drawBuffers)
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 
 	Cvar_SetValue(cvar->name, 0);
@@ -803,8 +803,9 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("max color attachments: %i\n", r_config.maxColorAttachments);
 		}
 
-		if (strstr(r_config.extensionsString, "GL_ARB_draw_buffers")
-		 || strstr(r_config.extensionsString, "GL_EXT_draw_buffers")) {
+		if ((strstr(r_config.extensionsString, "GL_ARB_draw_buffers")
+		  || strstr(r_config.extensionsString, "GL_EXT_draw_buffers"))
+		  && r_config.maxDrawBuffers > 1) {
 			Com_Printf("using GL_ARB_draw_buffers\n");
 			r_config.drawBuffers = qtrue;
 		} else {
