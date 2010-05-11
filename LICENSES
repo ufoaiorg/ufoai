@@ -478,25 +478,25 @@ base/media/UnGraphicBold.ttf | GNU General Public License |  | http://kldp.net/p
 base/media/ume-pgo4.ttf | see umefont-readme_lisence.html | http://ume-font.sourceforge.jp
 base/media/wqy-zenhei.ttf | GNU General Public License 2.0 |  | http://sourceforge.net/projects/wqy/
 base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_arm_plate/plating.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_arm_plate/plating.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_arm_poly/polymer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_arm_poly/polymer.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_astro/astrogation.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_item_astro/astrogation.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_item_astro/astrogation.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_item_det/detection.tga | GNU General Public License 2.0 or later | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
+base/models/aircraft/craft_item_det/detection.png | GNU General Public License 2.0 or later | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
 base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/craft_item_fuel/fuel.tga | GNU General Public License 2.0 | David Townsend (Psawhn)
+base/models/aircraft/craft_item_fuel/fuel.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_prop/propulsion.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/craft_item_prop/propulsion.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/craft_item_raven_ecm/ecm.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_item_raven_ecm/ecm.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_item_raven_ecm/ecm.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_item_target/craft_item_target.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_alc/alc.md2 | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
-base/models/aircraft/craft_weapon_alc/alc.tga | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
+base/models/aircraft/craft_weapon_alc/alc.png | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
 base/models/aircraft/craft_weapon_antim/antimatter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_antim/antimatter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/craft_weapon_antim/antimatter.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_antim/launcher_a.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_antim/launcher_a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_antim/launcher_h.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -547,10 +547,10 @@ base/models/aircraft/drop_herakles/seats_2.md2 | GNU General Public License 2.0 
 base/models/aircraft/drop_herakles/wallbox.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_raptor/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_raptor/drop_raptor.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_raptor/drop_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_raptor/drop_raptor_landed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_raptor/drop_raptor_low.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_raptor/drop_raptor_nm.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/aircraft/drop_raptor/drop_raptor_nm.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -559,7 +559,7 @@ base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License 2.0 
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_starchaser/starchaser.md2 | GNU General Public License 2.0 | Willem Sitters
-base/models/aircraft/inter_starchaser/starchaser.tga | GNU General Public License 2.0 | Willem Sitters
+base/models/aircraft/inter_starchaser/starchaser.png | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_folded.md2 | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_nm.png | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_stiletto/stiletto.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -698,13 +698,13 @@ base/models/aliens/tamanmedium/head04.md2 | GNU General Public License 2.0 | Luk
 base/models/animals/cow/cow.jpg |  | hullbr3ach
 base/models/animals/cow/cow.md2 |  | hullbr3ach
 base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/crocodile/croc.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/crocodile/croc.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/dog/dog.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/dog/dog.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/dog/dog_death.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/dog/dog.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/dog/dog_death.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/fish2/fish.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/animals/fish2/fish.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/penguin/penguin.jpg |  | hullbr3ach
 base/models/animals/penguin/penguin.md2 |  | hullbr3ach
 base/models/animals/rat/rat.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -816,9 +816,9 @@ base/models/civilians/male/worker_body02.jpg | GNU General Public License 2.0 or
 base/models/civilians/male/worker_head.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/civilians/male/worker_head02.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/alienbase.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/alienbase.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/geoscape/alienbase.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/base.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/base.tga | GNU General Public License 2.0 or later | TimberDragon
+base/models/geoscape/base.png | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/base2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/base2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/crash.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -828,70 +828,70 @@ base/models/geoscape/drop_firebird.md2 | GNU General Public License 2.0 |  | Bas
 base/models/geoscape/drop_herakles.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
 base/models/geoscape/drop_herakles.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | herakles model by sitters
 base/models/geoscape/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/drop_raptor.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/geoscape/drop_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/inter_dragon.jpg | GNU General Public License 2.0
 base/models/geoscape/inter_dragon.md2 | GNU General Public License 2.0
 base/models/geoscape/inter_raptor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/inter_raptor.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/geoscape/inter_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
-base/models/geoscape/inter_saracen.tga | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
+base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/geoscape/inter_starchaser.tga | GNU General Public License 2.0 or later | Willem Sitters
+base/models/geoscape/inter_starchaser.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/inter_stiletto.jpg | GNU General Public License 2.0
 base/models/geoscape/inter_stiletto.md2 | GNU General Public License 2.0
 base/models/geoscape/inter_stingray.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
-base/models/geoscape/inter_stingray.tga | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
+base/models/geoscape/inter_stingray.png | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/missile.md2 | GNU General Public License 2.0
-base/models/geoscape/missile.tga | GNU General Public License 2.0
+base/models/geoscape/missile.png | GNU General Public License 2.0
 base/models/geoscape/missile_aa51.md2 |  | Manuel "ghosta" Gschrey
-base/models/geoscape/missile_aa51.tga |  | Manuel "ghosta" Gschrey
+base/models/geoscape/missile_aa51.png |  | Manuel "ghosta" Gschrey
 base/models/geoscape/missile_sparrow.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_sparrow.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/models/geoscape/mission.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/mission.tga | GNU General Public License 2.0 or later | TimberDragon
+base/models/geoscape/mission.png | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/radar.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/radar.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_bomber.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_bomber.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_bomber_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_carrier.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/ufo_carrier.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/geoscape/ufo_carrier.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
-base/models/geoscape/ufo_corrupter.tga | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
+base/models/geoscape/ufo_corrupter.png | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
-base/models/geoscape/ufo_fighter.tga | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/ufo_fighter.png | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_harvester.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
-base/models/geoscape/ufo_harvester.tga | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/ufo_harvester.png | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_scout.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
-base/models/geoscape/ufo_scout.tga | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/ufo_scout.png | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
-base/models/geoscape/ufo_supply.tga | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/geoscape/ufo_supply.png | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufoyard.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufoyard.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/abrams/abrams.obj | GNU General Public License 2.0 or later | feanix
-base/models/objects/abrams/abrams.tga | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or later | feanix
-base/models/objects/abrams/abrams_bump.tga | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_bump.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
-base/models/objects/abrams/abrams_spec.tga | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_spec.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
-base/models/objects/aircraft/airplane/airplane_1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/aircraft/airplane/airplane_2.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/aircraft/airplane/airplane_2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/airplane/airplane_b.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/airplane/airplane_w.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/fighter/fighter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/aircraft/fighter/fighter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/aircraft/fighter/fighter.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/heli/heli.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
 base/models/objects/aircraft/heli/heli.md2 | GNU General Public License 2.0 | Ingo Ruhnke <grumbel@gmx.de> with modifications by Werner Höhrer | 'heli_parented.blend' by Ingo Ruhnke <grumbel@gmx.de> released under the GPL and CC-by-sa
 base/models/objects/aircraft/heli/heli_military.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
-base/models/objects/aircraft/heli/heli_uvw.tga | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/models/objects/aircraft/heli/heli_uvw.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons attribution share-alike | Ingo Ruhnke <grumbel@gmx.de>
 base/models/objects/aircraft/heli_military/helicopter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/aircraft/heli_military/helicopter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/aircraft/heli_military/helicopter.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/aircraft/hheli/hheli.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/aircraft/hheli/hheli.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/aircraft/hheli/hheli.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/airpipe/airpipe.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/airpipe/airpipe.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/alien/barrel/barrel.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -975,16 +975,16 @@ base/models/objects/base/radar/radar_b.md2 | GNU General Public License 2.0 | Lu
 base/models/objects/base/radar/radar_c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/radar/radar_c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/turret/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/base/turret/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret/turret.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/base/turret2/turret.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/base/turret2/turret.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
 base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/canoe.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/boat/canoe.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/boat/canoe.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/boat/engine.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/boat/engine.md2 | GNU General Public License 2.0
 base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
@@ -996,15 +996,15 @@ base/models/objects/cars/buggy/buggy.png | GNU General Public License 2.0 or lat
 base/models/objects/cars/car2/car2a.jpg | GNU General Public License 2.0
 base/models/objects/cars/car2/car2a.md2 | GNU General Public License 2.0
 base/models/objects/cars/car2/car2b.md2 | GNU General Public License 2.0
-base/models/objects/cars/car2/car2b.tga | GNU General Public License 2.0
+base/models/objects/cars/car2/car2b.png | GNU General Public License 2.0
 base/models/objects/cars/car3/car3.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/car3/car3.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/car4/car.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/car4/car.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/car4/car.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/carcrashed/car1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/carcrashed/car1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/carcrashed/car1.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/carcrashed/car2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/carcrashed/car2.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/carcrashed/car2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/golf/car1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/car1_brown.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/car1_dmg.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1013,21 +1013,21 @@ base/models/objects/cars/golf/car1_white.jpg | GNU General Public License 2.0 | 
 base/models/objects/cars/golf/car1t.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/cars_tires.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/hummer/hummer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/hummer/hummer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/hummer/hummer_bright.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/hummer/hummer.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/hummer/hummer_bright.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/jeep/jeep.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/jeep/jeep_civ.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/jeep/jeep_mil.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/landy/landy.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/landy/landy.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/policecar/policecar.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/policecar/policecar.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/policecar/policecar.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/puma/puma.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/puma/puma_nm.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/cars/trailer/boxtrailer.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/trailer/boxtrailer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/transporter/transporter.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/transporter/transporter.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1.md2 | GNU General Public License 2.0
 base/models/objects/cars/van/van1_blue.jpg | GNU General Public License 2.0
@@ -1039,16 +1039,16 @@ base/models/objects/cars/van2/roof1.md2 | GNU General Public License 2.0 or late
 base/models/objects/cars/van2/roof2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/cars/van2/van2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/cars/van3/van.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/van3/van.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/cars/van3/van.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/arch/arch.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/city/arch/arch.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/bench/bench.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/city/bench/bench.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/city/bench/bench_l.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/city/bench/bench_s.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/city/fountain/fountain1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/city/fountain/fountain1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/city/fountain/fountain1.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/fountain/fountain2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/city/fountain/fountain2.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/city/fountain/fountain2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/garbagecan/garbagecan.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/garbagecan/garbagecan.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/garbagecan/garbagecan_nm.png | GNU General Public License 2.0 or later
@@ -1084,7 +1084,7 @@ base/models/objects/city/tombstones/ts5.jpg | GNU General Public License 2.0 or 
 base/models/objects/city/tombstones/ts5.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/tombstones/ts6.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/tombstones/ts6.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/city/trafficlights/trafficlight.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/city/trafficlights/trafficlight.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/trafficlights/trafficlight1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/trafficlights/trafficlight2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/city/trafficlights/trafficlight3.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1107,22 +1107,22 @@ base/models/objects/city/watertower/watertower.md2 | Creative Commons Attributio
 base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/city/watertower/watertower2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/construct/container/container.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/construct/container/container.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/construct/crane/crane.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/container/container.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/crane/crane.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/crane/crane_a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/crane/crane_b.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/crane/crane_c.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/crane/crane_d.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/crane/crane_e.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/construct/excavator/excavator.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/excavator/excavator.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/excavator/excavator_b.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/excavator/excavator_t.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/generator/generator.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/construct/generator/generator.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/generator/generator.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/generator_big/generator.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/generator_big/generator.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/mixer/mixer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/construct/mixer/mixer.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/construct/mixer/mixer.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/workbench/workbench.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/workbench/workbench.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/crane/crane.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1135,12 +1135,12 @@ base/models/objects/firehose/firehose.md2 | GNU General Public License 2.0 or la
 base/models/objects/firehose/firehose.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat_nm.tga | GNU General Public License 2.0 or later
+base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
 base/models/objects/furniture/bed/bed.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/bookshelf/bookshelf.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/bookshelf/bookshelf_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/campbed/campbed.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
@@ -1193,7 +1193,7 @@ base/models/objects/heating/heating.md2 | GNU General Public License 2.0 or late
 base/models/objects/heating/heating.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/hovercraft/hovercraft.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/hovercraft/hovercraft.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/cond.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/cond.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/cabels.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1202,9 +1202,9 @@ base/models/objects/industrial/console/console.png | GNU General Public License 
 base/models/objects/industrial/fan/fan.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/fan/fan.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/lamp/lamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/lamp/lamp.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/industrial/lamp/lamp.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/valve/valve.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/valve/valve.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/industrial/valve/valve.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitter
@@ -1213,7 +1213,7 @@ base/models/objects/liftingcart/liftingcart.png | GNU General Public License 2.0
 base/models/objects/lorry/lorry.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/lorry/lorry.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/money/money.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/money/money.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/money/money.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/money/moneycase.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/oiltank/oiltank.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/oiltank/oiltank.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1234,7 +1234,7 @@ base/models/objects/rubbish/bottle2.md2 | GNU General Public License 2.0 | Yoshi
 base/models/objects/rubbish/box1.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/box2.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/buffalo_scull.md2 | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/models/objects/rubbish/buffalo_scull.tga | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/models/objects/rubbish/buffalo_scull.png | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/models/objects/rubbish/car1.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/car2.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/container.md2 | GNU General Public License 2.0 | Yoshiboy
@@ -1242,9 +1242,9 @@ base/models/objects/rubbish/container_green.jpg | GNU General Public License 2.0
 base/models/objects/rubbish/container_grey.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/container_red.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/fence.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/fence.tga | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/fence.png | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/rubbish/gravel/gravel.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/rubbish/gravel/gravel.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/green_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/grey_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/grey_car.jpg | GNU General Public License 2.0 | Yoshiboy
@@ -1283,7 +1283,7 @@ base/models/objects/tanker/tanker.jpg | GNU General Public License 2.0 or later 
 base/models/objects/tanker/tanker_a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tanker/tanker_b.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/tent/tent.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/tent/tent.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/tent/tent.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/cement_trailer.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/cement_trailer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/container.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1298,51 +1298,51 @@ base/models/objects/trucks/truck/truck.jpg | GNU General Public License 2.0 or l
 base/models/objects/trucks/truck/truck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck/truck_old.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/fuel.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/truck2/fuel.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/trucks/truck2/fuel.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/load.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/truck2/load.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/trucks/truck2/load.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/truck2/truck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/truck2/truck.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/trucks/truck2/truck.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/trucks/watertruck/watertruck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/trucks/watertruck/watertruck.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/trucks/watertruck/watertruck.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/banana/banana.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/banana/banana.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/banana/banana.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/chestnut/chestnut_blaetter2.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/vegi/chestnut/chestnut_blaetter3.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/vegi/chestnut/chestnut_stamm1.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/vegi/chestnut/chestnut_stamm2.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/vegi/chestnut/chestnut_stamm3.md2 | GNU General Public License 2.0 | "SparX" Beyeler
-base/models/objects/vegi/chestnut/leaves1.tga | GNU General Public License 2.0 | "SparX" Beyeler
-base/models/objects/vegi/chestnut/leaves2.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/models/objects/vegi/chestnut/leaves3.tga | GNU General Public License 2.0 or later | Martin Gerhardy
-base/models/objects/vegi/chestnut/leaves4.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/models/objects/vegi/chestnut/leaves1.png | GNU General Public License 2.0 | "SparX" Beyeler
+base/models/objects/vegi/chestnut/leaves2.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/models/objects/vegi/chestnut/leaves3.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/models/objects/vegi/chestnut/leaves4.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/vegi/corn/corn1.jpg |  | hullbr3ach
 base/models/objects/vegi/corn/corn1.md2 |  | hullbr3ach
 base/models/objects/vegi/fern/fern.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/fern/fern.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/fern/fern.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/ficus/ficus.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/fir/fir.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/fir/fir.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/fir/fir.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/palm_v1/palm_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v1/palm_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v1/palm_v1.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v2/palm_v2.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v2/palm_v2.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v2/palm_v2.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v3/palm_v3.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v3/palm_v3.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v3/palm_v3.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/pino/pino.png | Creative Commons Attribution 3.0 Unported | Moser Juan José (modified by Martin Gerhardy) | http://opengameart.org/content/pine-lowpoly
 base/models/objects/vegi/pino/pino1.md2 | Creative Commons Attribution 3.0 Unported | Moser Juan José (modified by Martin Gerhardy) | http://opengameart.org/content/pine-lowpoly
 base/models/objects/vegi/pino/pino2.md2 | Creative Commons Attribution 3.0 Unported | Moser Juan José (modified by Martin Gerhardy) | http://opengameart.org/content/pine-lowpoly
 base/models/objects/vegi/pino/pino3.md2 | Creative Commons Attribution 3.0 Unported | Moser Juan José (modified by Martin Gerhardy) | http://opengameart.org/content/pine-lowpoly
 base/models/objects/vegi/plant/plant.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/plant/plant.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/plant/plant.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant/plant2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vegi/plant/plant2.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/plant/plant2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_hang/plant1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_hang/plant2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_hang/plant2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_hang/plant_hang.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/plant_v1/plant_v1.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plants/plant.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plants/plant.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/plants/plant1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1351,7 +1351,7 @@ base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Yo
 base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/vegi/plants/plants.tga | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plants.png | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/tree_dead/tree_dead.png | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1359,31 +1359,31 @@ base/models/objects/vegi/tree_dead/tree_dead1.md2 | GNU General Public License 2
 base/models/objects/vegi/water_lily/lily_bloom.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/models/objects/vegi/water_lily/lily_bloom.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vegi/water_lily/lily_leaf.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
-base/models/objects/vegi/water_lily/lily_leaf.tga | GNU General Public License 2.0 or later | Martin Gerhardy
+base/models/objects/vegi/water_lily/lily_leaf.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vegi/water_lily2/lily.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/water_lily2/lily.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/bicycle/bicycle.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vehicles/bicycle/bicycle.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/barrel1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/barrel2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/box.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/forktruck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/forktruck/forktruck.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vehicles/forktruck/forktruck.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/forktruck1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/forktruck2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/palette.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/forktruck/palette.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vehicles/forktruck/palette.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/palsingle.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/pipes.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/rounds.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/motorbike/motorbike.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/motorbike/motorbike.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vehicles/motorbike/motorbike.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/puma/puma.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/puma/puma.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/tractor/tractor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/tractor/tractor.tga | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/tractor/tractor1.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor.png | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor1.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/female/body.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/female/head01.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/pilots/male/body.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1575,10 +1575,10 @@ base/models/soldiers/femalemedium/head04_yellow.jpg | GNU General Public License
 base/models/soldiers/femalemedium/head04a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalemedium/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalepower/body.md2 | Creative Commons Attribution-Share Alike 3.0
-base/models/soldiers/femalepower/body.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/body_arctic.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/body_desert.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/femalepower/body_jungle.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/femalepower/body.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/femalepower/body_arctic.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/femalepower/body_desert.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/femalepower/body_jungle.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head01a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head01b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/head01c.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
@@ -1822,10 +1822,10 @@ base/models/soldiers/malemedium/head05a.md2 | GNU General Public License 2.0 | L
 base/models/soldiers/malemedium/head05b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malemedium/head05c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malepower/body.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/body.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/body_arctic.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/body_desert.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
-base/models/soldiers/malepower/body_jungle.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/malepower/body.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/malepower/body_arctic.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/malepower/body_desert.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/malepower/body_jungle.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/head01a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/head01b.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/head02a.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
@@ -1839,23 +1839,23 @@ base/models/soldiers/malepower/head05b.md2 | Creative Commons Attribution-Share 
 base/models/soldiers/malepower/head05c.md2 | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_ares/ares_h.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_h.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_t.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_ares/ares_t.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_t.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_w.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w.tag | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_ares/ares_w.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w_turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_heli/ugv_heli.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_heli/ugv_heli.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_phoenix/phoenix.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix.tag | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_phoenix/phoenix.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/phoenix_turret.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_phoenix/rocket_pods.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/soldiers/ugv_phoenix/rocket_pods.tga | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/soldiers/ugv_phoenix/rocket_pods.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_robot/robot.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_robot/robot.obj | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_wheel/ugv_wheel.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1895,9 +1895,9 @@ base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lu
 base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flare/flare.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
+base/models/weapons/flare/flare.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flashbang/flashbang.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
+base/models/weapons/flashbang/flashbang.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/fraggren/fraggren.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1913,7 +1913,7 @@ base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | L
 base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/incgren/incgren.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
+base/models/weapons/incgren/incgren.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/irgoggles/irgoggles_gm.png | GNU General Public License 2.0 or later | MCR
