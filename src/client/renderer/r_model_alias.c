@@ -92,7 +92,7 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 }
 
 
-/** 
+/**
  * @brief Calculates a per-vertex tangentspace basis and stores it in GL arrays attached to the mesh
  * @param mesh The mesh to calculate normals for
  * @param framenum The animation frame to calculate normals for
@@ -542,7 +542,7 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
  * @param prerender If this is @c true, all data is filled to the arrays. If @c false, then
  * e.g. the normals are only filled to the arrays if the lighting is activated.
  *
- * @note If GLSL programs are enabled, the actual interpolation will be done on the GPU, but 
+ * @note If GLSL programs are enabled, the actual interpolation will be done on the GPU, but
  * this function is still needed to fill the GL arrays for the keyframes
  */
 void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
@@ -567,20 +567,21 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 			 * instead of generating it again from scratch */
 			if (mod->curFrame == oldframenum) {
 				const vec_t *tmp1 = mesh->verts;
+				const vec_t *tmp2 = mesh->normals;
+				const vec_t *tmp3 = mesh->tangents;
+
 				mesh->verts = mesh->next_verts;
 				mesh->next_verts = tmp1;
 
-				const vec_t *tmp2 = mesh->normals;
 				mesh->normals = mesh->next_normals;
 				mesh->next_normals = tmp2;
 
-				const vec_t *tmp3 = mesh->tangents;
 				mesh->tangents = mesh->next_tangents;
 				mesh->next_tangents = tmp3;
 
 				/* if we're alternating between two keyframes, we don't need to generate
 				 * anything; otherwise, generate the "next" keyframe*/
-				if (mod->oldFrame != framenum) 
+				if (mod->oldFrame != framenum)
 					R_ModCalcNormalsAndTangents(mesh, framenum, frame->translate, qfalse);
 			} else {
 				/* if we're starting a new animation or otherwise not rendering keyframes
