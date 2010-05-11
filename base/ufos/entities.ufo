@@ -198,7 +198,6 @@ entity misc_model {
 
 	optional {
 		angles			"Direction of the model [pitch yaw roll]"
-		angle			"Direction of the model [yaw]"
 		modelscale_vec	"Scale of the model (vector of 3 values)"
 		skin			"Skin number"
 		frame			"Frame number - use frame or anim - but not both"
