@@ -3506,10 +3506,10 @@
 // entity 144
 {
 "classname" "misc_model"
-"origin" "608 290 46"
+"origin" "610 288 46"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 145
 {
@@ -3517,7 +3517,7 @@
 "origin" "448 320 54"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 146
 {

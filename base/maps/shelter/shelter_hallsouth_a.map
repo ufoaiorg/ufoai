@@ -2556,10 +2556,10 @@
 // entity 9
 {
 "classname" "misc_model"
-"origin" "516 348 176"
+"origin" "508 348 176"
 "model" "models/objects/trucks/watertruck/watertruck.md2"
-"angle" "45"
 "spawnflags" "252"
+"angles" "0 45 0"
 }
 // entity 10
 {
