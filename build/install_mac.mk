@@ -67,7 +67,6 @@ copydata-uforadiant:
 
 copynotes-ufoai: package-dir-ufoai
 	@cp README $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
-	@cp CONTRIBUTORS $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
 	@cp COPYING $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
 
 copynotes-uforadiant: package-dir-uforadiant
