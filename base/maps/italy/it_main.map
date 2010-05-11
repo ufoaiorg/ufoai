@@ -9789,7 +9789,7 @@
 "origin" "353.296 991.577 6.00947"
 "model" "models/objects/rubbish/bottle2.md2"
 "spawnflags" "1"
-"angles" "-36.1208 30.9926 6.60285e-07"
+"angles" "-36.1208 30.9926 0"
 }
 // entity 143
 {

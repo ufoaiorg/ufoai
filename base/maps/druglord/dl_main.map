@@ -7138,7 +7138,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
-"angle" "35"
+"angles" "0 35 0"
 }
 // entity 61
 {
@@ -7147,7 +7147,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "255"
-"angle" "35"
+"angles" "0 35 0"
 }
 // entity 62
 {
@@ -7156,7 +7156,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 63
 {
@@ -7165,7 +7165,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "255"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 64
 {
@@ -7174,7 +7174,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "25"
+"angles" "0 25 0"
 }
 // entity 65
 {
@@ -7183,7 +7183,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving3"
 "spawnflags" "255"
-"angle" "25"
+"angles" "0 25 0"
 }
 // entity 66
 {
@@ -7192,7 +7192,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "18"
+"angles" "0 18 0"
 }
 // entity 67
 {
@@ -7201,7 +7201,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving3"
 "spawnflags" "255"
-"angle" "18"
+"angles" "0 18 0"
 }
 // entity 68
 {
@@ -10080,7 +10080,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
-"angle" "35"
+"angles" "0 35 0"
 }
 // entity 206
 {
@@ -10089,7 +10089,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "255"
-"angle" "35"
+"angles" "0 35 0"
 }
 // entity 207
 {
@@ -10098,7 +10098,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 208
 {
@@ -10107,7 +10107,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving4"
 "spawnflags" "255"
-"angle" "5"
+"angles" "0 5 0"
 }
 // entity 209
 {
@@ -10116,7 +10116,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "25"
+"angles" "0 25 0"
 }
 // entity 210
 {
@@ -10125,7 +10125,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving3"
 "spawnflags" "255"
-"angle" "25"
+"angles" "0 25 0"
 }
 // entity 211
 {
@@ -10134,7 +10134,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "18"
+"angles" "0 18 0"
 }
 // entity 212
 {
@@ -10143,7 +10143,7 @@
 "model" "models/objects/vegi/palm_a/palm2.md2"
 "anim" "moving3"
 "spawnflags" "255"
-"angle" "18"
+"angles" "0 18 0"
 }
 // entity 213
 {

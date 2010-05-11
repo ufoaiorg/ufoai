@@ -72,5 +72,5 @@
 "origin" "194 190 16"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
-"angle" "-180"
+"angles" "0 -180 0"
 }

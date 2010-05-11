@@ -337,7 +337,7 @@
 "classname" "misc_model"
 "origin" "352.334 388.176 48"
 "model" "models/objects/alien/ufo_crashed/ufo_scout_engines.md2"
-"angle" "-32.3199"
+"angles" "0 -32.3199 0"
 "spawnflags" "255"
 }
 // entity 8

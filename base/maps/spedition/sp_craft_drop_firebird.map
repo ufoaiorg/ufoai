@@ -224,8 +224,8 @@
 ( 352 148 40 ) ( 352 300 40 ) ( 352 300 12 ) tex_common/actorclip -0 0 0 -0.5 0.5 65536 0 0
 ( 347 160 112 ) ( 379 160 112 ) ( 379 160 0 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
 ( 382 288 112 ) ( 350 288 112 ) ( 350 288 0 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
-( 136 148 4 ) ( 352 148 4 ) ( 352 300 4 ) tex_common/actorclip 7.83774e-15 0 180 0.5 0.5 65536 0 0
-( 352 300 8 ) ( 352 148 8 ) ( 136 148 8 ) tex_common/actorclip 7.83774e-15 0 180 0.5 0.5 65536 0 0
+( 136 148 4 ) ( 352 148 4 ) ( 352 300 4 ) tex_common/actorclip 0 0 180 0.5 0.5 65536 0 0
+( 352 300 8 ) ( 352 148 8 ) ( 136 148 8 ) tex_common/actorclip 0 0 180 0.5 0.5 65536 0 0
 }
 // brush 25
 {
@@ -349,8 +349,8 @@
 ( 448 148 40 ) ( 448 300 40 ) ( 448 300 12 ) tex_common/actorclip -0 0 0 -0.5 0.5 65536 0 0
 ( 443 148 112 ) ( 475 148 112 ) ( 475 148 0 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
 ( 478 300 112 ) ( 446 300 112 ) ( 446 300 0 ) tex_common/actorclip 0 0 0 -0.5 0.5 65536 0 0
-( 232 148 4 ) ( 448 148 4 ) ( 448 300 4 ) tex_common/actorclip 7.83774e-15 0 180 0.5 0.5 65536 0 0
-( 448 300 8 ) ( 448 148 8 ) ( 232 148 8 ) tex_common/actorclip 7.83774e-15 0 180 0.5 0.5 65536 0 0
+( 232 148 4 ) ( 448 148 4 ) ( 448 300 4 ) tex_common/actorclip 0 0 180 0.5 0.5 65536 0 0
+( 448 300 8 ) ( 448 148 8 ) ( 232 148 8 ) tex_common/actorclip 0 0 180 0.5 0.5 65536 0 0
 }
 }
 // entity 1
@@ -410,7 +410,6 @@
 // entity 11
 {
 "classname" "info_player_start"
-"angle" "-3.50835e-15"
 "team" "1"
 "origin" "720 112 28"
 }
@@ -438,14 +437,12 @@
 // entity 15
 {
 "classname" "info_player_start"
-"angle" "-1.40334e-14"
 "team" "1"
 "origin" "560 16 28"
 }
 // entity 16
 {
 "classname" "info_player_start"
-"angle" "-3.50835e-15"
 "team" "1"
 "origin" "720 240 28"
 }
@@ -468,7 +465,6 @@
 "classname" "info_player_start"
 "origin" "624 80 28"
 "team" "1"
-"angle" "-1.40334e-14"
 }
 // entity 20
 {
@@ -482,28 +478,24 @@
 "classname" "info_player_start"
 "origin" "656 16 28"
 "team" "1"
-"angle" "-1.40334e-14"
 }
 // entity 22
 {
 "classname" "info_player_start"
 "origin" "80 112 28"
 "team" "1"
-"angle" "-3.50835e-15"
 }
 // entity 23
 {
 "classname" "info_player_start"
 "origin" "144 112 28"
 "team" "1"
-"angle" "-3.50835e-15"
 }
 // entity 24
 {
 "classname" "info_player_start"
 "origin" "144 80 28"
 "team" "1"
-"angle" "-3.50835e-15"
 }
 // entity 25
 {
@@ -531,14 +523,12 @@
 "classname" "info_player_start"
 "origin" "80 48 28"
 "team" "1"
-"angle" "-3.50835e-15"
 }
 // entity 29
 {
 "classname" "info_player_start"
 "origin" "112 16 28"
 "team" "1"
-"angle" "-3.50835e-15"
 }
 // entity 30
 {

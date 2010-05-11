@@ -532,7 +532,7 @@
 "model" "models/animals/cow/cow.md2"
 "anim" "mampf1"
 "spawnflags" "255"
-"angle" "90"
+"angles" "0 90 0"
 }
 // entity 2
 {
@@ -547,6 +547,6 @@
 "classname" "misc_model"
 "origin" "154 64 40"
 "model" "models/objects/furniture/pitchfork/pitchfork.md2"
-"angles" "-9.99999 -90 -180"
+"angles" "-10 -90 -180"
 "spawnflags" "255"
 }

@@ -1165,19 +1165,16 @@
 {
 "classname" "info_alien_start"
 "origin" "848 400 28"
-"angle" "0"
 }
 // entity 24
 {
 "classname" "info_alien_start"
 "origin" "176 144 28"
-"angle" "0"
 }
 // entity 25
 {
 "classname" "info_alien_start"
 "origin" "464 336 96"
-"angle" "0"
 }
 // entity 26
 {

@@ -6265,7 +6265,6 @@
 "origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
-"angles" "0 0 0"
 }
 // entity 34
 {
@@ -6273,7 +6272,6 @@
 "origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
-"angles" "0 0 0"
 }
 // entity 35
 {
@@ -6281,7 +6279,6 @@
 "origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
-"angles" "0 0 0"
 }
 // entity 36
 {
@@ -6289,7 +6286,6 @@
 "origin" "834 546 168"
 "spawnflags" "252"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
-"angles" "0 0 0"
 }
 // entity 37
 {
@@ -6297,7 +6293,6 @@
 "origin" "834 546 168"
 "model" "models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
 "spawnflags" "248"
-"angles" "0 0 0"
 }
 // entity 38
 {

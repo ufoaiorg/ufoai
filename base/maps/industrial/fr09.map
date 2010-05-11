@@ -298,10 +298,10 @@
 // entity 1
 {
 "classname" "misc_model"
-"origin" "160 128 1.58912e-16"
+"origin" "160 128 0"
 "model" "models/objects/construct/crane/crane_a.md2"
 "spawnflags" "255"
-"angles" "0.032285 178.767 1.66753e-09"
+"angles" "0.032285 178.767 0"
 }
 // entity 2
 {
@@ -317,5 +317,5 @@
 "origin" "46 233 20"
 "model" "models/objects/construct/crane/crane_b.md2"
 "spawnflags" "255"
-"angles" "6.83245e-007 5.00896e-006 90"
+"angles" "0 0 90"
 }

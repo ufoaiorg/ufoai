@@ -2240,7 +2240,6 @@
 "classname" "misc_model"
 "model" "models/objects/alien/pstation/pstation03.md2"
 "origin" "626 432 199"
-"angles" "0 0 0"
 "spawnflags" "24"
 }
 // entity 60
@@ -2248,7 +2247,6 @@
 "classname" "misc_model"
 "model" "models/objects/alien/pstation/pstation04.md2"
 "origin" "626 432 199"
-"angles" "0 0 0"
 "spawnflags" "8"
 }
 // entity 61

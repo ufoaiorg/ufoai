@@ -471,7 +471,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "-5"
+"angles" "0 -5 0"
 "targetname" "misc_model1"
 }
 // entity 5
@@ -497,7 +497,7 @@
 "origin" "294.67 76.2275 10"
 "model" "models/objects/vegi/tropic/tropic03.md2"
 "spawnflags" "255"
-"angle" "-19.4155"
+"angles" "0 -19.4155 0"
 }
 // entity 8
 {
@@ -512,7 +512,7 @@
 "origin" "220.386 606.287 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
-"angle" "-37.1402"
+"angles" "0 -37.1402 0"
 }
 // entity 10
 {
@@ -520,7 +520,7 @@
 "origin" "450.053 404.567 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"
-"angle" "58.3775"
+"angles" "0 58.3775 0"
 }
 // entity 11
 {
@@ -545,5 +545,5 @@
 "model" "/models/objects/vegi/bush/bush01.md2"
 "origin" "46.4168 49.2221 18"
 "spawnflags" "255"
-"angle" "-37.6665"
+"angles" "0 -37.6665 0"
 }

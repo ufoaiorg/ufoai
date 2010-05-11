@@ -937,13 +937,11 @@
 {
 "classname" "info_alien_start"
 "origin" "400 624 28"
-"angle" "0"
 }
 // entity 4
 {
 "classname" "info_alien_start"
 "origin" "272 144 28"
-"angle" "0"
 }
 // entity 5
 {
@@ -967,7 +965,6 @@
 {
 "classname" "info_alien_start"
 "origin" "16 752 28"
-"angle" "0"
 }
 // entity 9
 {

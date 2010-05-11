@@ -532,7 +532,6 @@
 {
 "classname" "info_human_start"
 "origin" "304 336 28"
-"angle" "0"
 }
 // entity 2
 {
@@ -685,7 +684,6 @@
 // entity 24
 {
 "classname" "info_human_start"
-"angle" "0"
 "origin" "400 80 28"
 }
 // entity 25

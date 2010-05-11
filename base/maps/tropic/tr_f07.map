@@ -42,7 +42,6 @@
 // entity 1
 {
 "classname" "misc_model"
-"angles" "0 0 0"
 "origin" "144 68 10"
 "model" "models/objects/vegi/tropic/tropic03.md2"
 "spawnflags" "255"

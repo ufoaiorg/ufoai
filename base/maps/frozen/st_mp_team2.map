@@ -263,7 +263,7 @@
 "model" "models/objects/vegi/tree02/tree2_b.md2"
 "origin" "176 48 8"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 12
 {
@@ -280,7 +280,7 @@
 "spawnflags" "255"
 "origin" "144 400 8"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 14
 {
@@ -289,7 +289,7 @@
 "origin" "144 400 8"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 15
 {
@@ -298,7 +298,7 @@
 "origin" "80 272 8"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "skin" "1"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 16
 {
@@ -306,7 +306,7 @@
 "spawnflags" "255"
 "origin" "80 272 8"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 17
 {

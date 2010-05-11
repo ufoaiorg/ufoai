@@ -6971,8 +6971,8 @@
 {
 ( 576 16 48 ) ( 576 16 0 ) ( 576 -140 48 ) tex_common/nodraw 0 0 0 -0.5 0.5 3840 128 0
 ( 420 -140 0 ) ( 420 -140 48 ) ( 576 -140 0 ) tex_common/nodraw 24 0 0 0.5 0.5 3840 128 0
-( 576 16 0 ) ( 420 -140 0 ) ( 576 -140 0 ) tex_common/nodraw 64 0 -3.508355e-015 0.5 -0.5 3840 128 0
-( 576 -140 48 ) ( 420 -140 48 ) ( 576 16 48 ) tex_nature/desert004 256 0 -3.508355e-015 0.5 -0.5 3840 0 0
+( 576 16 0 ) ( 420 -140 0 ) ( 576 -140 0 ) tex_common/nodraw 64 0 0 0.5 -0.5 3840 128 0
+( 576 -140 48 ) ( 420 -140 48 ) ( 576 16 48 ) tex_nature/desert004 256 0 0 0.5 -0.5 3840 0 0
 ( 420 -140 48 ) ( 420 -140 0 ) ( 576 16 48 ) tex_buildings/wall020 0 224 0 -0.5 0.5 3840 0 0
 }
 // brush 738
@@ -7690,8 +7690,8 @@
 {
 ( 576 96 2 ) ( 576 96 66 ) ( 576 240 2 ) tex_common/nodraw 0 0 0 -0.5 0.5 3584 128 0
 ( 276 396 66 ) ( 276 396 2 ) ( 420 396 66 ) tex_common/nodraw 24 0 0 0.5 0.5 3584 128 0
-( 420 396 64 ) ( 576 96 64 ) ( 576 240 64 ) tex_common/nodraw 64 0 -3.508355e-015 0.5 -0.5 3584 128 0
-( 420 396 66 ) ( 576 96 66 ) ( 276 396 66 ) tex_nature/desert004 0 0 -3.508355e-015 0.5 -0.5 3584 0 0
+( 420 396 64 ) ( 576 96 64 ) ( 576 240 64 ) tex_common/nodraw 64 0 0 0.5 -0.5 3584 128 0
+( 420 396 66 ) ( 576 96 66 ) ( 276 396 66 ) tex_nature/desert004 0 0 0 0.5 -0.5 3584 0 0
 ( 576 96 66 ) ( 576 96 2 ) ( 276 396 66 ) tex_buildings/wall020 0 0 0 -0.5 0.5 3584 0 0
 ( 420 396 -62 ) ( 576 240 -62 ) ( 420 396 66 ) tex_common/nodraw 0 0 0 -0.25 0.25 3584 0 0
 ( 544 128 66 ) ( 560 128 -62 ) ( 544 128 -62 ) tex_common/nodraw 0 0 0 0.25 0.25 3584 0 0
@@ -7700,7 +7700,7 @@
 {
 ( 504 88 2 ) ( 504 168 60 ) ( 504 88 60 ) tex_buildings/wall020 0 224 0 0.5 0.5 3584 0 0
 ( 504 172 64 ) ( 504 92 64 ) ( 544 132 64 ) tex_common/nodraw 0 0 0 0.5 0.5 3584 128 0
-( 504 172 66 ) ( 544 132 66 ) ( 504 92 66 ) tex_nature/desert004 0 0 -3.508355e-015 0.5 -0.5 3584 0 0
+( 504 172 66 ) ( 544 132 66 ) ( 504 92 66 ) tex_nature/desert004 0 0 0 0.5 -0.5 3584 0 0
 ( 544 128 2 ) ( 504 88 60 ) ( 544 128 60 ) tex_common/nodraw 0 32 0 0.5 0.5 3584 128 0
 ( 504 168 -6 ) ( 544 128 52 ) ( 504 168 52 ) tex_common/nodraw 0 32 0 0.5 0.5 3584 128 0
 }
@@ -7717,8 +7717,8 @@
 {
 ( 576 16 2 ) ( 576 160 66 ) ( 576 160 2 ) tex_common/nodraw 0 0 0 -0.5 0.5 3584 128 0
 ( 420 -140 66 ) ( 276 -140 2 ) ( 276 -140 66 ) tex_common/nodraw 24 0 0 0.5 0.5 3584 128 0
-( 576 14 64 ) ( 576 158 64 ) ( 420 -142 64 ) tex_common/nodraw 64 0 -3.508355e-015 0.5 -0.5 3584 128 0
-( 276 -140 66 ) ( 576 160 66 ) ( 420 -140 66 ) tex_nature/desert004 0 0 -3.508355e-015 0.5 -0.5 3584 0 0
+( 576 14 64 ) ( 576 158 64 ) ( 420 -142 64 ) tex_common/nodraw 64 0 0 0.5 -0.5 3584 128 0
+( 276 -140 66 ) ( 576 160 66 ) ( 420 -140 66 ) tex_nature/desert004 0 0 0 0.5 -0.5 3584 0 0
 ( 276 -140 66 ) ( 576 160 2 ) ( 576 160 66 ) tex_buildings/wall020 0 0 0 -0.5 0.5 3584 0 0
 ( 420 -140 66 ) ( 576 16 -62 ) ( 420 -140 -62 ) tex_common/nodraw 0 0 0 -0.25 0.25 3584 0 0
 ( 544 128 -62 ) ( 560 128 -62 ) ( 544 128 66 ) tex_common/nodraw 0 0 0 0.25 0.25 3584 0 0
@@ -7736,8 +7736,8 @@
 {
 ( 576 96 0 ) ( 576 96 64 ) ( 576 240 0 ) tex_common/nodraw 0 0 0 -0.5 0.5 3840 128 0
 ( 276 396 64 ) ( 276 396 0 ) ( 420 396 64 ) tex_common/nodraw 24 0 0 0.5 0.5 3840 128 0
-( 420 396 0 ) ( 576 96 0 ) ( 576 240 0 ) tex_common/nodraw 64 0 -3.508355e-015 0.5 -0.5 3840 128 0
-( 420 396 64 ) ( 576 96 64 ) ( 276 396 64 ) tex_nature/desert004 0 0 -3.508355e-015 0.5 -0.5 3840 0 0
+( 420 396 0 ) ( 576 96 0 ) ( 576 240 0 ) tex_common/nodraw 64 0 0 0.5 -0.5 3840 128 0
+( 420 396 64 ) ( 576 96 64 ) ( 276 396 64 ) tex_nature/desert004 0 0 0 0.5 -0.5 3840 0 0
 ( 576 96 64 ) ( 576 96 0 ) ( 276 396 64 ) tex_buildings/wall020 0 0 0 -0.5 0.5 3840 0 0
 ( 420 396 -64 ) ( 576 240 -64 ) ( 420 396 64 ) tex_common/nodraw 0 0 0 -0.25 0.25 3840 0 0
 ( 544 128 64 ) ( 560 128 -64 ) ( 544 128 -64 ) tex_common/nodraw 0 0 0 0.25 0.25 3840 0 0
@@ -7746,7 +7746,7 @@
 {
 ( 504 88 0 ) ( 504 168 58 ) ( 504 88 58 ) tex_buildings/wall020 0 224 0 0.5 0.5 3840 0 0
 ( 504 168 0 ) ( 504 88 0 ) ( 544 128 0 ) tex_common/nodraw 0 0 0 0.5 0.5 3840 128 0
-( 504 172 64 ) ( 544 132 64 ) ( 504 92 64 ) tex_nature/desert004 0 0 -3.508355e-015 0.5 -0.5 3840 0 0
+( 504 172 64 ) ( 544 132 64 ) ( 504 92 64 ) tex_nature/desert004 0 0 0 0.5 -0.5 3840 0 0
 ( 544 128 0 ) ( 504 88 58 ) ( 544 128 58 ) tex_common/nodraw 0 32 0 0.5 0.5 3840 128 0
 ( 504 168 -8 ) ( 544 128 50 ) ( 504 168 50 ) tex_common/nodraw 0 32 0 0.5 0.5 3840 128 0
 }
@@ -7754,8 +7754,8 @@
 {
 ( 576 16 0 ) ( 576 160 64 ) ( 576 160 0 ) tex_common/nodraw 0 0 0 -0.5 0.5 3840 128 0
 ( 420 -140 64 ) ( 276 -140 0 ) ( 276 -140 64 ) tex_common/nodraw 24 0 0 0.5 0.5 3840 128 0
-( 576 16 0 ) ( 576 160 0 ) ( 420 -140 0 ) tex_common/nodraw 64 0 -3.508355e-015 0.5 -0.5 3840 128 0
-( 276 -140 64 ) ( 576 160 64 ) ( 420 -140 64 ) tex_nature/desert004 0 0 -3.508355e-015 0.5 -0.5 3840 0 0
+( 576 16 0 ) ( 576 160 0 ) ( 420 -140 0 ) tex_common/nodraw 64 0 0 0.5 -0.5 3840 128 0
+( 276 -140 64 ) ( 576 160 64 ) ( 420 -140 64 ) tex_nature/desert004 0 0 0 0.5 -0.5 3840 0 0
 ( 276 -140 64 ) ( 576 160 0 ) ( 576 160 64 ) tex_buildings/wall020 0 0 0 -0.5 0.5 3840 0 0
 ( 420 -140 64 ) ( 576 16 -64 ) ( 420 -140 -64 ) tex_common/nodraw 0 0 0 -0.25 0.25 3840 0 0
 ( 544 128 -64 ) ( 560 128 -64 ) ( 544 128 64 ) tex_common/nodraw 0 0 0 0.25 0.25 3840 0 0
@@ -9898,14 +9898,14 @@
 "origin" "653 884 71"
 "model" "models/weapons/assault/assault.md2"
 "spawnflags" "2"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 0 90"
 }
 // entity 109
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "2"
 "model" "models/weapons/assault/assault.md2"
 "origin" "653 871 71"
@@ -9914,7 +9914,7 @@
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "2"
 "model" "models/weapons/assault/assault.md2"
 "origin" "682 884 70"
@@ -9925,7 +9925,7 @@
 "origin" "682 871 70"
 "model" "models/weapons/assault/assault.md2"
 "spawnflags" "2"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 0 90"
 }
 // entity 112
@@ -9934,7 +9934,7 @@
 "origin" "1062 790 6"
 "model" "models/weapons/flamer/flamer.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 0 90"
 }
 // entity 113
@@ -9943,14 +9943,14 @@
 "origin" "1067 814 6"
 "model" "models/weapons/assault/assault.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 0 90"
 }
 // entity 114
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/assault/assault.md2"
 "origin" "1067 827 6"
@@ -9959,7 +9959,7 @@
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/assault/assault.md2"
 "origin" "1038 814 5"
@@ -9970,14 +9970,14 @@
 "origin" "1038 827 5"
 "model" "models/weapons/assault/assault.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 0 90"
 }
 // entity 117
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/flamer/flamer.md2"
 "origin" "1062 777 6"
@@ -9986,7 +9986,7 @@
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/flamer/flamer.md2"
 "origin" "1032 790 5"
@@ -9997,7 +9997,7 @@
 "origin" "1032 777 5"
 "model" "models/weapons/flamer/flamer.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 0 90"
 }
 // entity 120
@@ -10261,14 +10261,14 @@
 "origin" "943 786 45"
 "model" "models/weapons/sniper/sniper.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 90 90"
 }
 // entity 124
 {
 "classname" "misc_model"
 "angles" "0 90 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/rpg/rpg.md2"
 "origin" "949 813 30"
@@ -10279,14 +10279,14 @@
 "origin" "949 870 47"
 "model" "models/weapons/rpg/rpg.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 90 90"
 }
 // entity 126
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/flamer/flamer.md2"
 "origin" "1013 723 3"
@@ -10431,14 +10431,14 @@
 "origin" "944 104 28"
 "model" "models/weapons/smg/smg.md2"
 "spawnflags" "1"
-"angle" "360"
+"angles" "0 360 0"
 "angles" "0 90 90"
 }
 // entity 130
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/smg/smg.md2"
 "origin" "944 80 28"
@@ -10447,7 +10447,7 @@
 {
 "classname" "misc_model"
 "angles" "0 0 90"
-"angle" "360"
+"angles" "0 360 0"
 "spawnflags" "1"
 "model" "models/weapons/smg/smg.md2"
 "origin" "944 90 44"

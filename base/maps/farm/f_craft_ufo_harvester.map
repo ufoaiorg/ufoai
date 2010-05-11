@@ -3726,19 +3726,16 @@
 {
 "classname" "info_alien_start"
 "origin" "976 464 32"
-"angle" "0"
 }
 // entity 75
 {
 "classname" "info_alien_start"
 "origin" "880 432 96"
-"angle" "0"
 }
 // entity 76
 {
 "classname" "info_alien_start"
 "origin" "464 496 96"
-"angle" "0"
 }
 // entity 77
 {

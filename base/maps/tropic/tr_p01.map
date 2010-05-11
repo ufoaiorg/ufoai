@@ -15,7 +15,6 @@
 // entity 1
 {
 "classname" "misc_model"
-"angles" "0 0 0"
 "origin" "144 68 10"
 "model" "models/objects/vegi/tropic/tropic03.md2"
 "spawnflags" "255"
@@ -107,7 +106,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
-"angle" "10"
+"angles" "0 10 0"
 "targetname" "misc_model1"
 }
 // entity 13
@@ -127,7 +126,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "-5"
+"angles" "0 -5 0"
 "targetname" "misc_model5"
 }
 // entity 15
@@ -147,7 +146,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving4"
-"angle" "5"
+"angles" "0 5 0"
 "targetname" "misc_model3"
 }
 // entity 17
@@ -167,7 +166,7 @@
 "model" "models/objects/vegi/palm_a/palm1.md2"
 "spawnflags" "255"
 "anim" "moving3"
-"angle" "-15"
+"angles" "0 -15 0"
 "targetname" "misc_model2"
 }
 // entity 19

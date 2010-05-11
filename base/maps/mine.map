@@ -930,8 +930,8 @@
 ( 632 230 315 ) ( 622 240 368 ) ( 622 246 368 ) tex_common/weaponclip 10 59 0 1 1 33554432 0 0
 ( 632 230 315 ) ( 612 240 368 ) ( 622 240 368 ) tex_common/weaponclip 0 59 0 1 1 33554432 0 0
 ( 632 240 315 ) ( 622 246 368 ) ( 612 246 368 ) tex_common/weaponclip 62 59 0 1 1 33554432 0 0
-( 622 240 315 ) ( 632 230 315 ) ( 632 240 315 ) tex_common/weaponclip 62 54 -3.508355e-15 1 1 33554432 0 0
-( 612 240 368 ) ( 622 246 368 ) ( 622 240 368 ) tex_common/weaponclip 62 60 -3.508355e-15 1 1 33554432 0 0
+( 622 240 315 ) ( 632 230 315 ) ( 632 240 315 ) tex_common/weaponclip 62 54 0 1 1 33554432 0 0
+( 612 240 368 ) ( 622 246 368 ) ( 622 240 368 ) tex_common/weaponclip 62 60 0 1 1 33554432 0 0
 }
 // brush 97
 {
@@ -11551,7 +11551,7 @@
 "origin" "236 382 373"
 "model" "models/objects/vegi/palm7/palm1.md2"
 "spawnflags" "96"
-"angle" "270"
+"angles" "0 270 0"
 }
 // entity 124
 {
@@ -14942,6 +14942,6 @@
 "classname" "misc_model"
 "origin" "236 382 373"
 "model" "models/objects/vegi/palm7/palm2.md2"
-"angle" "270"
+"angles" "0 270 0"
 "spawnflags" "32"
 }

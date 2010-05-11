@@ -1631,7 +1631,7 @@
 "classname" "misc_model"
 "origin" "719 64 20.5"
 "model" "models/objects/city/trash/trash.md2"
-"angles" "2.50448e-006 -90 0"
+"angles" "0 -90 0"
 "spawnflags" "255"
 }
 // entity 2

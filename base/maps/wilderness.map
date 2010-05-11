@@ -6423,7 +6423,7 @@
 "classname" "misc_model"
 "origin" "352 416 152"
 "model" "models/objects/vegi/fern/fern.md2"
-"angles" "1.00179e-05 -30.5606 30.867"
+"angles" "0 -30.5606 30.867"
 "spawnflags" "255"
 }
 // entity 27
@@ -6456,7 +6456,7 @@
 "model" "models/animals/fish/fish.md2"
 "spawnflags" "255"
 "anim" "swim"
-"angle" "-180"
+"angle" "0 -180 0"
 }
 // entity 31
 {
@@ -6465,7 +6465,7 @@
 "model" "models/animals/fish2/fish.md2"
 "spawnflags" "255"
 "anim" "swim"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 32
 {
@@ -6482,7 +6482,7 @@
 "model" "models/animals/fish/fish.md2"
 "spawnflags" "255"
 "anim" "swim"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 34
 {
@@ -6499,7 +6499,7 @@
 "model" "models/animals/fish2/fish.md2"
 "spawnflags" "255"
 "anim" "swim"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 36
 {
@@ -6507,7 +6507,7 @@
 "origin" "1998 24 36"
 "model" "models/objects/tent/tent.md2"
 "spawnflags" "255"
-"angle" "-180"
+"angles" "0 -180 0"
 }
 // entity 37
 {
@@ -6717,7 +6717,7 @@
 "classname" "misc_model"
 "origin" "516 474 116"
 "model" "models/objects/vegi/plants/plant_a.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 "spawnflags" "255"
 }
 // entity 47
@@ -6743,7 +6743,7 @@
 "spawnflags" "255"
 "origin" "1744 944 88"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angle" "31.5204"
+"angles" "0 31.5204 0"
 "modelscale_vec" "1 1 1.25"
 }
 // entity 50
@@ -6752,7 +6752,7 @@
 "spawnflags" "254"
 "origin" "944 1168 260"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 51
 {
@@ -6760,7 +6760,7 @@
 "spawnflags" "255"
 "origin" "944 1168 248"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 52
 {
@@ -6862,7 +6862,7 @@
 "spawnflags" "254"
 "origin" "1264 1104 204"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 }
 // entity 66
 {
@@ -6870,7 +6870,7 @@
 "spawnflags" "255"
 "origin" "1264 1104 192"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale_vec" "1 1 1.13953"
 }
 // entity 67
@@ -6879,7 +6879,7 @@
 "spawnflags" "254"
 "origin" "400 1232 228"
 "model" "models/objects/vegi/tree02/tree2_b.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 68
 {
@@ -6887,7 +6887,7 @@
 "spawnflags" "255"
 "origin" "400 1232 216"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 69
 {
@@ -7010,7 +7010,7 @@
 "origin" "1712 480 32"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
-"angle" "-135"
+"angles" "0 -135 0"
 "modelscale_vec" "0.790698 0.803089 1"
 }
 // entity 86
@@ -7019,7 +7019,7 @@
 "origin" "1712 480 32"
 "model" "models/objects/vegi/water_lily/lily_stem.md2"
 "spawnflags" "255"
-"angle" "-135"
+"angles" "0 -135 0"
 }
 // entity 87
 {
@@ -7042,7 +7042,7 @@
 "origin" "1712 512 32"
 "model" "models/objects/vegi/water_lily/lily_stem.md2"
 "spawnflags" "255"
-"angle" "135"
+"angles" "0 135 0"
 }
 // entity 90
 {
@@ -7050,7 +7050,7 @@
 "origin" "1712 512 32"
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
-"angle" "135"
+"angles" "0 135 0"
 "modelscale_vec" "0.789474 0.774194 1"
 }
 // entity 91

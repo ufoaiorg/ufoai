@@ -792,7 +792,6 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "432 752 28"
-"angle" "0"
 }
 // entity 2
 {
@@ -806,7 +805,6 @@
 "classname" "info_player_start"
 "origin" "336 656 28"
 "team" "1"
-"angle" "0"
 }
 // entity 4
 {
@@ -826,14 +824,12 @@
 "classname" "info_player_start"
 "team" "1"
 "origin" "208 16 28"
-"angle" "0"
 }
 // entity 7
 {
 "classname" "info_player_start"
 "origin" "400 592 28"
 "team" "1"
-"angle" "0"
 }
 // entity 8
 {
@@ -847,7 +843,6 @@
 "classname" "info_player_start"
 "origin" "464 112 28"
 "team" "1"
-"angle" "0"
 }
 // entity 10
 {
@@ -1058,7 +1053,6 @@
 {
 "classname" "info_human_start"
 "origin" "368 48 28"
-"angle" "0"
 }
 // entity 41
 {

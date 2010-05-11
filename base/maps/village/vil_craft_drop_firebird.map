@@ -1090,20 +1090,17 @@
 // entity 8
 {
 "classname" "info_human_start"
-"angle" "0"
 "origin" "560 112 28"
 }
 // entity 9
 {
 "classname" "info_human_start"
 "origin" "272 80 28"
-"angle" "0"
 }
 // entity 10
 {
 "classname" "info_human_start"
 "origin" "144 368 28"
-"angle" "0"
 }
 // entity 11
 {

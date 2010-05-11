@@ -599,7 +599,7 @@
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
 "modelscale_vec" "0.75 0.75 1"
-"angle" "23.3823"
+"angles" "0 23.3823 0"
 }
 // entity 4
 {

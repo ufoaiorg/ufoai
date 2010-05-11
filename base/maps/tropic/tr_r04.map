@@ -555,12 +555,10 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "304 988 12"
-"angles" "0 0 0"
 }
 // entity 13
 {
 "classname" "misc_model"
-"angles" "0 0 0"
 "origin" "464 548 12"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "spawnflags" "255"

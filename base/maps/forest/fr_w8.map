@@ -451,6 +451,6 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropical1/tropical1.md2"
 "origin" "246.627 152.339 14"
-"angle" "31.1309"
+"angles" "0 31.1309 0"
 "modelscale_vec" "0.7 0.7 0.7"
 }

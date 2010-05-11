@@ -5396,7 +5396,7 @@
 // entity 71
 {
 "classname" "misc_model"
-"angle" "45"
+"angles" "0 45 0"
 "origin" "2220 144 80"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "spawnflags" "15"
@@ -5422,7 +5422,7 @@
 "spawnflags" "12"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "1359 723 110"
-"angle" "45"
+"angles" "0 45 0"
 }
 // entity 75
 {
@@ -5460,7 +5460,7 @@
 "spawnflags" "12"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
 "origin" "1060 120 80"
-"angle" "45"
+"angles" "0 45 0"
 }
 // entity 80
 {

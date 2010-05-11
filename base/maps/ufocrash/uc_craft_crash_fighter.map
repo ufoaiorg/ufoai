@@ -661,7 +661,7 @@
 "spawnflags" "255"
 "origin" "564 208 10"
 "model" "models/objects/alien/ufo_crashed/acrash_wing_2.md2"
-"angle" "90"
+"angles" "0 90 0"
 }
 // entity 4
 {

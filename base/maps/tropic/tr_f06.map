@@ -138,7 +138,6 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic03.md2"
 "origin" "436 60 10"
-"angles" "0 0 0"
 }
 // entity 2
 {

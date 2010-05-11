@@ -777,49 +777,41 @@
 {
 "classname" "info_alien_start"
 "origin" "400 624 26"
-"angle" "0"
 }
 // entity 5
 {
 "classname" "info_alien_start"
 "origin" "368 432 26"
-"angle" "0"
 }
 // entity 6
 {
 "classname" "info_alien_start"
 "origin" "48 400 26"
-"angle" "0"
 }
 // entity 7
 {
 "classname" "info_alien_start"
 "origin" "48 528 26"
-"angle" "0"
 }
 // entity 8
 {
 "classname" "info_alien_start"
 "origin" "432 720 26"
-"angle" "0"
 }
 // entity 9
 {
 "classname" "info_alien_start"
 "origin" "432 144 26"
-"angle" "0"
 }
 // entity 10
 {
 "classname" "info_alien_start"
 "origin" "48 80 26"
-"angle" "0"
 }
 // entity 11
 {
 "classname" "info_alien_start"
 "origin" "240 688 26"
-"angle" "0"
 }
 // entity 12
 {

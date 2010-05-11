@@ -63,7 +63,7 @@
 "origin" "178 202 16"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 2
 {
@@ -71,7 +71,7 @@
 "origin" "50 298 16"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 3
 {
@@ -79,5 +79,5 @@
 "origin" "202 138 16"
 "model" "models/objects/vegi/bush/bush01.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }

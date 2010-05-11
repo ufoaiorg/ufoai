@@ -209,5 +209,5 @@
 "origin" "128 256 64"
 "model" "models/aircraft/inter_stiletto/stiletto.md2"
 "spawnflags" "255"
-"angle" "90"
+"angles" "0 90 0"
 }

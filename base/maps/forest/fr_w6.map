@@ -468,7 +468,7 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "157 440 6"
-"angle" "40"
+"angles" "0 40 0"
 "modelscale_vec" "0.7 0.7 0.7"
 }
 // entity 7
@@ -516,7 +516,7 @@
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
 "modelscale_vec" "0.75 0.75 1"
-"angle" "12.629"
+"angles" "0 12.629 0"
 }
 // entity 13
 {
@@ -525,7 +525,7 @@
 "model" "models/objects/vegi/water_lily/lily_leaf.md2"
 "spawnflags" "255"
 "modelscale_vec" "0.6 0.6 1"
-"angle" "42.6713"
+"angles" "0 42.6713 0"
 }
 // entity 14
 {

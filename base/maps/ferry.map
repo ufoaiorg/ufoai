@@ -604,19 +604,19 @@
 {
 ( -256 -440 30.875 ) ( -256 -500 56.625 ) ( 256 -500 56.625 ) tex_material/shell002 0 80 0 0.5 0.1 65280 0 0
 ( 224 -440 34 ) ( 224 -500 56.625 ) ( 224 -500 60.625 ) tex_material/shell002 128 80 -90 0.5 0.1 65280 0 0
-( -256 -500 60.625 ) ( 256 -500 56.625 ) ( -256 -500 56.625 ) tex_material/shell002 3.91887e-14 128 3.508355e-15 0.5 -0.1 65280 0 0
+( -256 -500 60.625 ) ( 256 -500 56.625 ) ( -256 -500 56.625 ) tex_material/shell002 0 128 0 0.5 -0.1 65280 0 0
 ( -256 -440 34 ) ( 256 -500 60.625 ) ( -256 -500 60.625 ) tex_material/shell002 0 80 0 0.5 0.1 65280 0 0
 ( -224 -440 34 ) ( -224 -500 60.625 ) ( -224 -500 56.625 ) tex_material/shell002 128 80 -90 0.5 0.1 65280 0 0
-( -320 -440 -804 ) ( -320 -440 -800 ) ( -324 -440 -804 ) tex_material/shell002 0 128 3.508355e-15 0.5 -0.1 65280 0 0
+( -320 -440 -804 ) ( -320 -440 -800 ) ( -324 -440 -804 ) tex_material/shell002 0 128 0 0.5 -0.1 65280 0 0
 }
 // brush 64
 {
-( 256 -376 5.375 ) ( -256 -376 3.375 ) ( 256 -376 3.375 ) tex_material/shell002 3.91887e-14 128 3.508355e-15 0.5 -0.1 65280 0 0
+( 256 -376 5.375 ) ( -256 -376 3.375 ) ( 256 -376 3.375 ) tex_material/shell002 0 128 0 0.5 -0.1 65280 0 0
 ( 256 -440 31 ) ( 256 -376 3.375 ) ( -256 -376 3.375 ) tex_material/shell002 0 80 0 0.5 0.1 65280 0 0
 ( 224 -440 34 ) ( 224 -376 5.375 ) ( 224 -376 3.375 ) tex_material/shell002 128 80 -90 0.5 0.1 65280 0 0
 ( 256 -440 34 ) ( -256 -376 5.375 ) ( 256 -376 5.375 ) tex_material/shell002 0 80 0 0.5 0.1 65280 0 0
 ( -224 -440 31 ) ( -224 -376 3.375 ) ( -224 -376 5.375 ) tex_material/shell002 128 80 -90 0.5 0.1 65280 0 0
-( -260 -440 -1024 ) ( -140 -440 -1024 ) ( -260 -440 -1028 ) tex_material/shell002 0 128 3.508355e-15 0.5 -0.1 65280 0 0
+( -260 -440 -1024 ) ( -140 -440 -1024 ) ( -260 -440 -1028 ) tex_material/shell002 0 128 0 0.5 -0.1 65280 0 0
 }
 // brush 65
 {
@@ -4734,7 +4734,7 @@
 ( -20 666 7 ) ( -28 666 7 ) ( -28 662 4 ) tex_material/c_black 25 24 0 0.5 0.5 65280 0 0
 ( 164 -69 13 ) ( 172 -69 13 ) ( 172 -74 13 ) tex_common/nodraw 25 24 0 0.5 0.5 65280 0 0
 ( -28 666 7 ) ( -20 666 7 ) ( -20 667 13 ) tex_material/c_black 24 2 0 0.5 0.5 65280 0 0
-( 20 654 23 ) ( 20 638 23 ) ( 20 638 7 ) tex_vehicles/car_c 7.62939e-05 6 0 0.5 0.5 65280 0 0
+( 20 654 23 ) ( 20 638 23 ) ( 20 638 7 ) tex_vehicles/car_c 0 6 0 0.5 0.5 65280 0 0
 ( -76 662 23 ) ( -20 662 23 ) ( -20 662 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
 ( 28 194 158 ) ( 28 196 158 ) ( 28 196 156 ) tex_vehicles/car_c 76 6 0 -0.5 0.5 65280 0 0
 }
@@ -4743,7 +4743,7 @@
 ( -324 480 4 ) ( -320 480 4 ) ( -324 484 4 ) tex_common/nodraw 25 4 0 0.5 0.5 65280 0 0
 ( 164 -69 13 ) ( 172 -69 13 ) ( 172 -74 13 ) tex_common/nodraw 25 4 0 0.5 0.5 65280 0 0
 ( -20 662 23 ) ( -76 662 23 ) ( -76 662 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
-( 20 654 23 ) ( 20 638 23 ) ( 20 638 7 ) tex_vehicles/car_c 7.62939e-05 6 0 0.5 0.5 65280 0 0
+( 20 654 23 ) ( 20 638 23 ) ( 20 638 7 ) tex_vehicles/car_c 0 6 0 0.5 0.5 65280 0 0
 ( -76 656 23 ) ( -20 656 23 ) ( -20 656 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
 ( 28 194 158 ) ( 28 196 158 ) ( 28 196 156 ) tex_vehicles/car_c 76 6 0 -0.5 0.5 65280 0 0
 }
@@ -4752,7 +4752,7 @@
 ( -28 652 7 ) ( -20 652 7 ) ( -20 656 4 ) tex_material/c_black 25 16 0 0.5 0.5 65280 0 0
 ( 164 -69 13 ) ( 172 -69 13 ) ( 172 -74 13 ) tex_common/nodraw 25 16 0 0.5 0.5 65280 0 0
 ( -20 656 23 ) ( -76 656 23 ) ( -76 656 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
-( 20 654 23 ) ( 20 638 23 ) ( 20 638 7 ) tex_vehicles/car_c 7.62939e-05 6 0 0.5 0.5 65280 0 0
+( 20 654 23 ) ( 20 638 23 ) ( 20 638 7 ) tex_vehicles/car_c 0 6 0 0.5 0.5 65280 0 0
 ( -20 652 7 ) ( -28 652 7 ) ( -28 651 13 ) tex_material/c_black 24 2 0 0.5 0.5 65280 0 0
 ( 28 194 158 ) ( 28 196 158 ) ( 28 196 156 ) tex_vehicles/car_c 76 6 0 -0.5 0.5 65280 0 0
 }
@@ -4763,7 +4763,7 @@
 ( -20 656 23 ) ( -76 656 23 ) ( -76 656 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
 ( -28 644 29 ) ( -28 640 29 ) ( -28 640 13 ) tex_vehicles/car_c 76 6 0 -0.5 0.5 65280 0 0
 ( -20 652 7 ) ( -28 652 7 ) ( -28 651 13 ) tex_material/c_black 24 2 0 0.5 0.5 65280 0 0
-( -20 650 23 ) ( -20 666 23 ) ( -20 666 7 ) tex_vehicles/car_c 7.62939e-05 6 0 0.5 0.5 65280 0 0
+( -20 650 23 ) ( -20 666 23 ) ( -20 666 7 ) tex_vehicles/car_c 0 6 0 0.5 0.5 65280 0 0
 }
 // brush 14
 {
@@ -4772,7 +4772,7 @@
 ( -20 662 23 ) ( -76 662 23 ) ( -76 662 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
 ( -28 644 29 ) ( -28 640 29 ) ( -28 640 13 ) tex_vehicles/car_c 76 6 0 -0.5 0.5 65280 0 0
 ( -76 656 23 ) ( -20 656 23 ) ( -20 656 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
-( -20 650 23 ) ( -20 666 23 ) ( -20 666 7 ) tex_vehicles/car_c 7.62939e-05 6 0 0.5 0.5 65280 0 0
+( -20 650 23 ) ( -20 666 23 ) ( -20 666 7 ) tex_vehicles/car_c 0 6 0 0.5 0.5 65280 0 0
 }
 // brush 15
 {
@@ -4781,7 +4781,7 @@
 ( -28 666 7 ) ( -20 666 7 ) ( -20 667 13 ) tex_material/c_black 24 2 0 0.5 0.5 65280 0 0
 ( -28 644 29 ) ( -28 640 29 ) ( -28 640 13 ) tex_vehicles/car_c 76 6 0 -0.5 0.5 65280 0 0
 ( -76 662 23 ) ( -20 662 23 ) ( -20 662 7 ) tex_common/nodraw 24 2 0 0.5 0.5 65280 0 0
-( -20 650 23 ) ( -20 666 23 ) ( -20 666 7 ) tex_vehicles/car_c 7.62939e-05 6 0 0.5 0.5 65280 0 0
+( -20 650 23 ) ( -20 666 23 ) ( -20 666 7 ) tex_vehicles/car_c 0 6 0 0.5 0.5 65280 0 0
 }
 // brush 16
 {
@@ -5198,7 +5198,7 @@
 "origin" "0 17 35"
 "model" "models/objects/cars/4x4/4x4.md2"
 "spawnflags" "255"
-"angle" "180"
+"angles" "0 180 0"
 }
 // entity 11
 {
@@ -5206,7 +5206,7 @@
 "origin" "0 17 35"
 "model" "models/objects/cars/4x4/4x4_t.md2"
 "spawnflags" "255"
-"angle" "180"
+"angles" "0 180 0"
 }
 // entity 12
 {
@@ -5214,7 +5214,7 @@
 "origin" "-192 113 35"
 "model" "models/objects/cars/4x4/4x4.md2"
 "spawnflags" "255"
-"angle" "180"
+"angles" "0 180 0"
 }
 // entity 13
 {
@@ -5222,7 +5222,7 @@
 "origin" "-192 113 35"
 "model" "models/objects/cars/4x4/4x4_t.md2"
 "spawnflags" "255"
-"angle" "180"
+"angles" "0 180 0"
 }
 // entity 14
 {
@@ -8580,7 +8580,7 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 58
 {
@@ -8736,7 +8736,7 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 61
 {
@@ -8892,7 +8892,7 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 64
 {
@@ -9048,7 +9048,7 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 67
 {
@@ -9204,7 +9204,7 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 70
 {
@@ -9360,7 +9360,7 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 73
 {
@@ -9377,14 +9377,14 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 75
 {
 "classname" "misc_model"
 "origin" "-12 -10 132"
 "model" "models/objects/furniture/chair/chair.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale" "1.2"
 "spawnflags" "252"
 }
@@ -9395,14 +9395,14 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 77
 {
 "classname" "misc_model"
 "origin" "-12 86 132"
 "model" "models/objects/furniture/chair/chair.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale" "1.2"
 "spawnflags" "252"
 }
@@ -9413,14 +9413,14 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 79
 {
 "classname" "misc_model"
 "origin" "-12 182 132"
 "model" "models/objects/furniture/chair/chair.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale" "1.2"
 "spawnflags" "252"
 }
@@ -9431,14 +9431,14 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 81
 {
 "classname" "misc_model"
 "origin" "212 -10 132"
 "model" "models/objects/furniture/chair/chair.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale" "1.2"
 "spawnflags" "252"
 }
@@ -9449,14 +9449,14 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 83
 {
 "classname" "misc_model"
 "origin" "212 86 132"
 "model" "models/objects/furniture/chair/chair.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale" "1.2"
 "spawnflags" "252"
 }
@@ -9467,14 +9467,14 @@
 "model" "models/objects/furniture/campbed/campbed.md2"
 "modelscale_vec" "0.96 0.777778 1"
 "spawnflags" "252"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 85
 {
 "classname" "misc_model"
 "origin" "212 182 132"
 "model" "models/objects/furniture/chair/chair.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale" "1.2"
 "spawnflags" "252"
 }
@@ -12362,7 +12362,7 @@
 "classname" "misc_model"
 "origin" "100 550.75 164"
 "model" "models/objects/furniture/cupboard/cupboard01.md2"
-"angle" "90"
+"angles" "0 90 0"
 "modelscale_vec" "1.5 1 1"
 "spawnflags" "252"
 }
@@ -12372,7 +12372,7 @@
 "origin" "-33 635.25 129.5"
 "model" "models/objects/furniture/bed/bed.md2"
 "spawnflags" "252"
-"angle" "-180"
+"angles" "0 -180 0"
 }
 // entity 113
 {
@@ -12380,14 +12380,14 @@
 "origin" "-209 635.25 129.5"
 "model" "models/objects/furniture/bed/bed.md2"
 "spawnflags" "252"
-"angle" "-180"
+"angles" "0 -180 0"
 }
 // entity 114
 {
 "classname" "misc_model"
 "origin" "-100 537.25 164"
 "model" "models/objects/furniture/cupboard/cupboard01.md2"
-"angle" "-90"
+"angles" "0 -90 0"
 "modelscale_vec" "1.5 1 1"
 "spawnflags" "252"
 }
@@ -12396,7 +12396,7 @@
 "classname" "misc_model"
 "origin" "-34.125 480.167 164"
 "model" "models/objects/furniture/cupboard/cupboard01.md2"
-"angle" "-180"
+"angles" "0 -180 0"
 "modelscale_vec" "1.5 1 1"
 "spawnflags" "252"
 }

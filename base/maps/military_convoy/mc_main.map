@@ -8146,7 +8146,7 @@
 "origin" "1601.99 1200 72.3848"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
-"angles" "-2.20357 -180 1.00179e-05"
+"angles" "-2.20357 -180 0"
 }
 // entity 4
 {
@@ -8162,7 +8162,7 @@
 "origin" "1761.01 1200 56.6152"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
-"angles" "-2.20357 -180 1.00179e-05"
+"angles" "-2.20357 -180 0"
 }
 // entity 6
 {
@@ -8186,7 +8186,7 @@
 "origin" "768.993 1200 99.5109"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
-"angles" "-1.75174 -180 1.00179e-05"
+"angles" "-1.75174 -180 0"
 }
 // entity 9
 {
@@ -8194,7 +8194,7 @@
 "origin" "927.008 1200 84.4891"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
-"angles" "-1.75174 -180 1.00179e-05"
+"angles" "-1.75174 -180 0"
 }
 // entity 10
 {
@@ -8202,7 +8202,7 @@
 "origin" "1185.99 1200 85.4474"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
-"angles" "-1.97916 -180 1.00179e-05"
+"angles" "-1.97916 -180 0"
 }
 // entity 11
 {
@@ -8210,7 +8210,7 @@
 "origin" "1345.01 1200 70.5526"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
-"angles" "-1.97916 -180 1.00179e-05"
+"angles" "-1.97916 -180 0"
 }
 // entity 12
 {
@@ -8218,7 +8218,7 @@
 "origin" "559 1199 49"
 "model" "models/objects/cars/hummer/hummer.md2"
 "spawnflags" "255"
-"angles" "1.00179e-05 90 2.18633"
+"angles" "0 90 2.18633"
 }
 // entity 13
 {
@@ -8482,7 +8482,7 @@
 "origin" "1333.62 1420.41 4"
 "model" "models/objects/vegi/plant/plant.md2"
 "spawnflags" "255"
-"angle" "25.893"
+"angles" "0 25.893 0"
 }
 // entity 50
 {
@@ -8830,7 +8830,7 @@
 "origin" "1768.21 189 117.774"
 "model" "models/objects/vegi/plant_hang/plant2.md2"
 "spawnflags" "252"
-"angles" "9.33568e-06 90 21.2673"
+"angles" "0 90 21.2673"
 }
 // entity 101
 {

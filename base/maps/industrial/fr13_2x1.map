@@ -165,7 +165,7 @@
 "origin" "358 161 7"
 "model" "models/objects/rubbish/bottle1.md2"
 "spawnflags" "255"
-"angle" "-90"
+"angles" "0 -90 0"
 }
 // entity 5
 {

@@ -462,7 +462,6 @@
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic04.md2"
 "origin" "272 80 12"
-"angles" "0 0 0"
 }
 // entity 3
 {
@@ -758,49 +757,41 @@
 {
 "classname" "info_human_start"
 "origin" "560 272 51"
-"angle" "-1.40334e-14"
 }
 // entity 41
 {
 "classname" "info_human_start"
 "origin" "560 208 51"
-"angle" "-1.40334e-14"
 }
 // entity 42
 {
 "classname" "info_human_start"
 "origin" "496 272 51"
-"angle" "-1.40334e-14"
 }
 // entity 43
 {
 "classname" "info_human_start"
 "origin" "496 208 51"
-"angle" "-1.40334e-14"
 }
 // entity 44
 {
 "classname" "info_human_start"
 "origin" "432 272 51"
-"angle" "-1.40334e-14"
 }
 // entity 45
 {
 "classname" "info_human_start"
 "origin" "432 208 51"
-"angle" "-1.40334e-14"
 }
 // entity 46
 {
 "classname" "info_human_start"
 "origin" "368 272 51"
-"angle" "-1.40334e-14"
 }
 // entity 47
 {
 "classname" "info_human_start"
 "origin" "368 208 51"
-"angle" "-1.40334e-14"
 }
 // entity 48
 {
@@ -808,7 +799,6 @@
 "model" "models/aircraft/drop_herakles/herakles_int.md2"
 "origin" "346 238 44"
 "spawnflags" "255"
-"angles" "0 2.50448e-06 0"
 }
 // entity 49
 {
@@ -816,7 +806,6 @@
 "model" "models/aircraft/drop_herakles/herakles_int_top.md2"
 "origin" "346 238 44"
 "spawnflags" "254"
-"angles" "0 2.50448e-06 0"
 }
 // entity 50
 {
@@ -824,7 +813,6 @@
 "model" "models/aircraft/drop_herakles/seats.md2"
 "origin" "346 238 44"
 "spawnflags" "1"
-"angles" "0 2.50448e-06 0"
 }
 // entity 51
 {
@@ -832,7 +820,6 @@
 "model" "models/aircraft/drop_herakles/seats_2.md2"
 "origin" "346 238 44"
 "spawnflags" "1"
-"angles" "0 2.50448e-06 0"
 }
 // entity 52
 {
@@ -840,5 +827,4 @@
 "model" "models/aircraft/drop_herakles/herakles_pod_back.md2"
 "origin" "346 238 44"
 "spawnflags" "255"
-"angles" "0 2.50448e-06 0"
 }

@@ -21829,7 +21829,6 @@
 "origin" "977 180 -3"
 "model" "models/objects/cars/hummer/hummer.md2"
 "spawnflags" "255"
-"angles" "0 2.50448e-06 0"
 }
 // entity 251
 {
@@ -28839,13 +28838,11 @@
 {
 "classname" "info_alien_start"
 "origin" "1136 1744 92"
-"angle" "0"
 }
 // entity 436
 {
 "classname" "info_alien_start"
 "origin" "304 16 92"
-"angle" "0"
 }
 // entity 437
 {
