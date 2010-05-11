@@ -566,9 +566,9 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 			 * time through will be our "previous" keyframe now, so we can swap pointers
 			 * instead of generating it again from scratch */
 			if (mod->curFrame == oldframenum) {
-				const vec_t *tmp1 = mesh->verts;
-				const vec_t *tmp2 = mesh->normals;
-				const vec_t *tmp3 = mesh->tangents;
+				vec_t *tmp1 = mesh->verts;
+				vec_t *tmp2 = mesh->normals;
+				vec_t *tmp3 = mesh->tangents;
 
 				mesh->verts = mesh->next_verts;
 				mesh->next_verts = tmp1;
