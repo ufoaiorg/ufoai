@@ -1,0 +1,81 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 50 112 66 ) ( 50 112 72 ) ( 50 16 72 ) tex_common/nodraw -0 8 0 -0.25 0.25 65280 128 0
+( 82 16 2 ) ( 50 16 72 ) ( 92 16 2 ) tex_common/nodraw 16 0 0 -0.25 0.25 65280 128 0
+( 82 112 2 ) ( 50 112 66 ) ( 50 16 66 ) tex_common/nodraw 24 0 0 -0.25 0.25 65280 128 0
+( 92 112 2 ) ( 82 112 2 ) ( 82 16 2 ) tex_common/nodraw 16 0 180 0.25 0.25 65280 128 0
+( 92 112 2 ) ( 50 112 72 ) ( 82 112 2 ) tex_common/nodraw 16 0 0 -0.25 0.25 65280 128 0
+( 92 16 2 ) ( 50 16 72 ) ( 50 112 72 ) tex_common/nodraw 56 32 0 -0.25 0.25 65280 128 0
+}
+// brush 1
+{
+( 50 16 66 ) ( 50 16 72 ) ( 50 112 72 ) tex_common/nodraw 0 8 0 0.25 0.25 65280 128 0
+( 18 112 2 ) ( 50 112 72 ) ( 8 112 2 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
+( 18 16 2 ) ( 50 16 66 ) ( 50 112 66 ) tex_common/nodraw 24 0 0 0.25 0.25 65280 128 0
+( 8 16 2 ) ( 18 16 2 ) ( 18 112 2 ) tex_common/nodraw 0 -0 0 0.25 0.25 65280 128 0
+( 8 16 2 ) ( 50 16 72 ) ( 18 16 2 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
+( 8 112 2 ) ( 50 112 72 ) ( 50 16 72 ) tex_common/nodraw 56 32 0 0.25 0.25 65280 128 0
+}
+// brush 2
+{
+( 92 16 2 ) ( 50 16 72 ) ( 8 16 2 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 92 12 2 ) ( 50 12 72 ) ( 50 16 72 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 8 12 2 ) ( 92 12 2 ) ( 8 16 2 ) tex_common/actorclip 0 -0 0 0.25 0.25 130816 0 0
+( 8 12 72 ) ( 50 12 72 ) ( 8 12 2 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+( 8 16 2 ) ( 50 16 72 ) ( 8 -112 2 ) tex_common/actorclip 0 0 0 0.25 0.25 130816 0 0
+}
+// brush 3
+{
+( 92 16 2 ) ( 50 16 72 ) ( 8 16 2 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
+( 92 12 2 ) ( 50 12 72 ) ( 50 16 72 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
+( 8 12 2 ) ( 92 12 2 ) ( 8 16 2 ) tex_common/nodraw 0 -0 0 0.25 0.25 65280 128 0
+( 8 12 72 ) ( 50 12 72 ) ( 8 12 2 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
+( 8 16 2 ) ( 50 16 72 ) ( 8 -112 2 ) tex_common/nodraw 0 0 0 0.25 0.25 65280 128 0
+}
+// brush 4
+{
+( 48 64 48 ) ( 48 48 48 ) ( 32 64 48 ) tex_common/actorclip 0 -0 0 0.25 0.25
+( 48 112 32 ) ( 32 112 32 ) ( 48 112 -16 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 80 64 32 ) ( 80 64 -16 ) ( 80 48 32 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 32 48 0 ) ( 48 48 0 ) ( 32 64 0 ) tex_common/actorclip 0 -0 0 0.25 0.25
+( 32 16 -16 ) ( 32 16 32 ) ( 48 16 -16 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 64 64 -16 ) ( 64 80 -16 ) ( 64 64 32 ) tex_common/actorclip 0 0 0 0.25 0.25
+}
+// brush 5
+{
+( 32 64 64 ) ( 32 48 64 ) ( 16 64 64 ) tex_common/actorclip 0 -0 0 0.25 0.25
+( 32 112 48 ) ( 16 112 48 ) ( 32 112 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 32 80 48 ) ( 32 80 0 ) ( 32 64 48 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 16 48 0 ) ( 32 48 0 ) ( 16 64 0 ) tex_common/actorclip 0 -0 0 0.25 0.25
+( 16 16 0 ) ( 16 16 48 ) ( 32 16 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 16 48 0 ) ( 16 64 0 ) ( 16 48 48 ) tex_common/actorclip 0 0 0 0.25 0.25
+}
+// brush 6
+{
+( 48 64 64 ) ( 48 48 64 ) ( 32 64 64 ) tex_common/actorclip 0 -0 0 0.25 0.25
+( 48 112 48 ) ( 32 112 48 ) ( 48 112 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 80 64 48 ) ( 80 64 0 ) ( 80 48 48 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 32 48 48 ) ( 48 48 48 ) ( 32 64 48 ) tex_common/actorclip 0 -0 0 0.25 0.25
+( 32 16 0 ) ( 32 16 48 ) ( 48 16 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 32 64 0 ) ( 32 80 0 ) ( 32 64 48 ) tex_common/actorclip 0 0 0 0.25 0.25
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "50 40 3"
+"model" "models/objects/tent/tent.md2"
+"spawnflags" "511"
+"angles" "0 -180 0"
+}
+// entity 2
+{
+"classname" "light"
+"_color" "1 1 1"
+"light" "100"
+"origin" "64 94 28"
+}
