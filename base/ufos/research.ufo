@@ -51,15 +51,18 @@
 // ===============
 //	require_AND { type id [amount] }
 //		A list of requirements that ALL need to be met in order to be able to research it.
-//		"tech" type	-	e.g "tech rs_xxx"
-//			Another technology that has to be researched.
+//		"tech" type	    - e.g "tech rs_xxx"
+//		                  Another technology that has to be researched.
 //		"tech_not" type	-	e.g "tech rs_xxx"
-//			Another technology that must not be researched.
-//		"item" type	-	e.g "item inv_coolweapon 10"
-//			You need to collect at least 10 items of this thing so it can be researched.
-//		"alien"
-//		"alien_dead"
-//		"alienglobal"
+//			                Another technology that must not be researched.
+//		"item" type	    - e.g "item inv_coolweapon 10"
+//			                You need to collect at least 10 items of this thing so it can be researched.
+//		"alien"         - e.g "		alien evil_alien 1"
+//                      You need to collect at least 1 live alien of this race.
+//		"alien_dead"    - e.g "		alien_dead evil_alien 1"
+//                      You need to collect at least 1 dead alien of this race.
+//		"alienglobal"   - e.g "		alienglobal 3"
+//                      You need to have least 3 live aliens in your containments (in all bases).
 //		"event"
 //	require_OR { type id [amount] }
 //		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.
