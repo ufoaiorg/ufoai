@@ -32,16 +32,9 @@ set shutdownonfinish=false
 set quant=
 set md5=false
 
-
 :: shall we analyze arguments or not
 IF "%1"=="" (
-	@echo are you shure to run the build without a parameter?
-	@echo use /? for help
-	@echo press y to run the script with basic parameters
-	set /P coice=
-	if /I NOT "%coice%" == "y" (
-		exit /b 0
-	)
+	call :choice || exit /b 1
 )
 IF NOT "%1"=="" (
 	@echo work trought ufo2map_args
@@ -104,7 +97,16 @@ exit /b 0
 
 
 
-
+:choice
+	@echo are you shure to run the build without a parameter?
+	@echo use /? for help
+	@echo press y to run the script with basic parameters
+	set /P coice=
+	if /I NOT "%coice%" == "y" (
+		exit /b 1
+	)
+	exit /b 0
+goto :EOF
 
 
 :compilemap
@@ -134,6 +136,7 @@ exit /b 0
 		)
 	)
 	echo ...dir "%1" finished
+	exit /b 0
 goto :EOF
 
 
@@ -201,6 +204,7 @@ goto :EOF
 	if NOT "%1" == "" (
 		GOTO ufo2map_args
 	)
+	exit /b 0
 goto :EOF
 
 
@@ -339,6 +343,7 @@ goto :EOF
 
 	cscript "%tmp%\ufo2map_md5.vbs" %1
 	del /F /Q "%tmp%\ufo2map_md5.vbs"
+	exit /b 0
 goto :EOF
 
 
