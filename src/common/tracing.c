@@ -307,8 +307,8 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & corelevels))
 			continue;
-/*		if (level == LEVEL_LIGHTCLIP)
-			continue;*/
+		if (level == LEVEL_LIGHTCLIP)
+			continue;
 		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
