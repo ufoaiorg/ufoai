@@ -1143,6 +1143,12 @@ tech rs_weapon_monoknife
 		tech rs_skill_close
 		tech rs_damage_normal
 	}
+	
+	require_for_production
+	{
+	    item alienmaterials 50
+	}
+	
 	provides	knifemono
 	time	800
 	producetime	100
@@ -1412,6 +1418,12 @@ tech rs_weapon_kerrblade
 		tech rs_skill_close
 		tech rs_damage_normal
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 70
+	}
+	
 	provides	kerrblade
 	time	1000
 	producetime	-1
@@ -1669,6 +1681,11 @@ tech rs_weapon_plasatomizer
 		item plaspistol 1
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 90
+	}
+	
 	provides	plaspistol
 	time	3000
 	producetime	160
@@ -1687,6 +1704,12 @@ tech rs_weapon_plasatomizer_ammo
 		tech rs_damage_plasma
 		tech rs_weapon_plasatomizer
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 10
+	}
+	
 	provides	plaspistol_ammo
 	time	0
 	producetime	24
@@ -1727,6 +1750,12 @@ tech rs_weapon_plasblaster
 		tech rs_skill_heavy
 		item plasblaster 1
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 120
+	}
+	
 	provides	plasblaster
 	time	6500
 	producetime	240
@@ -1745,6 +1774,12 @@ tech rs_weapon_plasblaster_ammo
 		tech rs_damage_plasma
 		tech rs_weapon_plasblaster
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 15
+	}
+	
 	provides	plasblaster_ammo
 	time	0
 	producetime	30
@@ -1785,6 +1820,12 @@ tech rs_weapon_plasblade
 		tech rs_damage_plasma
 		item plasblade 1
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 50
+	}
+	
 	provides	plasblade
 	time	2000
 	producetime	150
@@ -1825,6 +1866,11 @@ tech rs_weapon_plasmagren
 		item plasmagrenade 1
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 30
+	}
+	
 	provides	plasmagrenade
 	time	2000
 	producetime	72
@@ -1866,6 +1912,11 @@ tech rs_weapon_plasrifle
 		item plasrifle 1
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 110
+	}
+	
 	provides	plasrifle
 	time	4250
 	producetime	200
@@ -1884,6 +1935,12 @@ tech rs_weapon_plasrifle_ammo
 		tech rs_damage_plasma
 		tech rs_weapon_plasrifle
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 13
+	}
+	
 	provides	plasrifle_ammo
 	time	0
 	producetime	40
@@ -1924,6 +1981,12 @@ tech rs_weapon_needlergun
 		tech rs_skill_assault
 		item needlergun 1
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 140
+	}
+	
 	provides	needlergun
 	time		5000
 	producetime	120
@@ -1964,6 +2027,12 @@ tech rs_weapon_needlerheavy
 		tech rs_skill_assault
 		item needlerheavy 1
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 160
+	}
+	
 	provides	needlerheavy
 	time	6000
 	producetime	150
@@ -1983,6 +2052,12 @@ tech rs_weapon_needlergun_ammo
 		tech rs_weapon_needlergun
 		item needlergun_ammo 1
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 20
+	}
+	
 	provides	needlergun_ammo
 	time		0
 	producetime	24
@@ -2021,6 +2096,12 @@ tech rs_weapon_coilgun
 		tech rs_weapon_bolterrifle
 		tech rs_weapon_needlergun
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 80
+	}
+	
 	provides	coilgun
 	time		6000
 	producetime	120
@@ -2038,6 +2119,12 @@ tech rs_weapon_coilgun_ammo
 		tech rs_damage_normal
 		tech rs_weapon_coilgun
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 10
+	}
+	
 	provides	coilgun_ammo
 	time		0
 	producetime	24
@@ -2386,6 +2473,11 @@ tech rs_weapon_pbeampistol
 		item pbeampistol 1
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 110
+	}
+	
 	provides	pbeampistol
 	time		4750
 	producetime	160
@@ -2405,6 +2497,11 @@ tech rs_weapon_pbeampistol_ammo
 		tech rs_weapon_pbeam_ammo
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 20
+	}
+	
 	provides	pbeampistol_ammo
 	time		0
 	producetime	-1
@@ -2446,6 +2543,11 @@ tech rs_weapon_pbeamcannon
 		item pbeamcannon 1
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 200
+	}
+	
 	provides	pbeamcannon
 	time		8000
 	producetime	220
@@ -2465,6 +2567,11 @@ tech rs_weapon_pbeamcannon_ammo
 		tech rs_weapon_pbeam_ammo
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 30
+	}
+	
 	provides	pbeamcannon_ammo
 	time		0
 	producetime	-1
@@ -2505,6 +2612,11 @@ tech rs_weapon_pbeamrifle
 		item pbeamrifle 1
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 180
+	}
+	
 	provides	pbeamrifle
 	time		7750
 	producetime	200
@@ -2524,6 +2636,11 @@ tech rs_weapon_pbeamrifle_ammo
 		tech rs_weapon_pbeam_ammo
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 20
+	}
+	
 	provides	pbeamrifle_ammo
 	time		0
 	producetime	-1
@@ -2566,6 +2683,11 @@ tech rs_weapon_pbeam_ammo
 		tech rs_weapon_pbeamrifle
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 30
+	}
+	
 	time		8000
 	producetime	-1
 }
@@ -2634,6 +2756,12 @@ tech rs_nano_armour
 	{
 		tech rs_alien_body_armour
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 350
+	}
+	
 	provides	armour_medium
 	time		8000
 	producetime	168
@@ -3435,6 +3563,14 @@ tech rs_craft_drop_raptor
 		tech rs_craft_inter_stingray
 	}
 
+	require_for_production
+	{
+	    item alienmaterials 12000
+		item	craft_alien_propulsion	4
+		item	craft_alien_astrogation	1
+		item	craft_alien_detection	1
+	}
+	
 	provides	craft_drop_raptor
 	time	13000
 	producetime	336
@@ -3507,6 +3643,14 @@ tech rs_craft_inter_dragon
 	time	10000
 	producetime	600
 
+	require_for_production
+	{
+	    item alienmaterials 5000
+		item	craft_alien_propulsion	2
+		item	craft_alien_astrogation	1
+		item	craft_alien_detection	1
+	}
+	
 	mdl		inter_dragon
 }
 
@@ -3543,6 +3687,14 @@ tech rs_craft_inter_starchaser
 	time	15000
 	producetime	600
 
+	require_for_production
+	{
+	    item alienmaterials 7000
+		item	craft_alien_propulsion	2
+		item	craft_alien_astrogation	1
+		item	craft_alien_detection	2
+	}
+	
 	mdl		inter_starchaser
 }
 
@@ -3576,6 +3728,16 @@ tech rs_craft_inter_stingray
 	require_OR {
 		tech rs_craft_inter_starchaser
 	}
+
+	require_for_production
+	{
+	    item alienmaterials 9000
+		item	craft_alien_propulsion	3
+		item	craft_alien_astrogation	1
+		item	craft_alien_detection	2
+	}
+	
+
 	time	20000
 	producetime	800
 
