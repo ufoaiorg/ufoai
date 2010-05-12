@@ -230,8 +230,9 @@ void S_Init (void)
 
 	MIX_VERSION(&version)
 	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
+	Com_Printf("... requested audio rate: %i\n", snd_rate->integer);
 
-	if (Mix_OpenAudio((int)snd_rate->value, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
 		Com_Printf("S_Init: %s\n", Mix_GetError());
 		return;
 	}
