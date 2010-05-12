@@ -34,10 +34,10 @@ woven in by Terry Thorsen 1/2003.
   version without encryption capabilities).
  */
 
+#include "unzip.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "unzip.h"
 
 #ifdef STDC
 #  include <stddef.h>
