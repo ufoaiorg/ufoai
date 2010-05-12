@@ -29,6 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_sample.h"
 #include "s_mix.h"
 
+#define COMPARE_VERSION(major,minor,micro) \
+	(SDL_MIXER_MAJOR_VERSION > (major) || \
+	(SDL_MIXER_MAJOR_VERSION == (major) && SDL_MIXER_MINOR_VERSION > (minor)) || \
+	(SDL_MIXER_MAJOR_VERSION == (major) && SDL_MIXER_MINOR_VERSION == (minor) && \
+	 SDL_MIXER_PATCHLEVEL >= (micro)))
+
 s_env_t s_env;
 
 cvar_t *snd_volume;
@@ -256,6 +262,13 @@ void S_Init (void)
 	Com_Printf("... audio rate: %i\n", s_env.rate);
 	Com_Printf("... audio channels: %i\n", s_env.numChannels);
 
+#if COMPARE_VERSION(1, 2, 10)
+	if (!(Mix_Init(MIX_INIT_OGG) & MIX_INIT_OGG))
+		Com_Printf("... could not load ogg vorbis support\n");
+	else
+		Com_Printf("... loaded ogg vorbis support\n");
+#endif
+
 	s_env.initialized = qtrue;
 
 	M_Init();
@@ -289,6 +302,10 @@ void S_Shutdown (void)
 
 	Cmd_RemoveCommand("snd_play");
 	Cmd_RemoveCommand("snd_restart");
+
+#if COMPARE_VERSION(1, 2, 10)
+	Mix_Quit();
+#endif
 
 	s_env.initialized = qfalse;
 }
