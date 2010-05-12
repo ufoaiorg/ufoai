@@ -257,7 +257,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	/* draw the model */
 	mesh = &mi->model->alias.meshes[0];
 	refdef.aliasCount += mesh->num_tris;
-	if (mesh->verts != NULL)
+	if (mi->model->alias.num_frames == 1)
 		R_DrawAliasStatic(mesh, vec4_origin);
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe, vec4_origin);
@@ -307,7 +307,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	/* draw the model */
 	mesh = &mi->model->alias.meshes[0];
 	refdef.aliasCount += mesh->num_tris;
-	if (mesh->verts != NULL)
+	if (mi->model->alias.num_frames == 1)
 		R_DrawAliasStatic(mesh, vec4_origin);
 	else
 		R_DrawAliasFrameLerp(&mi->model->alias, mesh, mi->backlerp, mi->frame, mi->oldframe, vec4_origin);
