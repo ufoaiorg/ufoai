@@ -121,7 +121,6 @@ static void R_PrintInfo (const char *pre, const char *msg)
 static void R_Strings_f (void)
 {
 	R_PrintInfo("GL_VENDOR", r_config.vendorString);
-	R_PrintInfo("GL_VENDOR", r_config.vendorString);
 	R_PrintInfo("GL_RENDERER", r_config.rendererString);
 	R_PrintInfo("GL_VERSION", r_config.versionString);
 	R_PrintInfo("GL_EXTENSIONS", r_config.extensionsString);
