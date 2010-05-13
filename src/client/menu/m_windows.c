@@ -587,14 +587,15 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 		window->behaviour->doLayout(window);
 
 		MN_GetNodeAbsPos(node, pos);
-		viddef.x = pos[0] * viddef.rx;
-		viddef.y = pos[1] * viddef.ry;
-		viddef.viewWidth = node->size[0] * viddef.rx;
-		viddef.viewHeight = node->size[1] * viddef.ry;
+		*x = pos[0] * viddef.rx;
+		*y = pos[1] * viddef.ry;
+		*width = node->size[0] * viddef.rx;
+		*height = node->size[1] * viddef.ry;
 	} else {
-		viddef.x = viddef.y = 0;
-		viddef.viewWidth = 0;
-		viddef.viewHeight = 0;
+		*x = 0;
+		*y = 0;
+		*width = 0;
+		*height = 0;
 	}
 }
 

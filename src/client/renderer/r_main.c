@@ -546,7 +546,7 @@ static void R_UpdateVidDef (const vidmode_t *vidmode)
 			viddef.virtualWidth = VID_NORM_WIDTH;
 			viddef.virtualHeight = VID_NORM_WIDTH / screenRatio;
 		/* 4:3 */
-		} else if (screenRatio == normRatio) {
+		} else {
 			viddef.virtualWidth = VID_NORM_WIDTH;
 			viddef.virtualHeight = VID_NORM_HEIGHT;
 		}
