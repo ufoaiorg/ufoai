@@ -491,7 +491,7 @@ static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize,
 		FS_WriteFile(fixedMD2, bufSize, fileName);
 		Mem_Free(fixedMD2);
 		*(size_t *)userData += delta;
-		Com_Printf("  \\ - removed %i glcmds from '%s' (save "UFO_SIZE_T" bytes\n",
+		Com_Printf("  \\ - removed %i glcmds from '%s' (save "UFO_SIZE_T" bytes)\n",
 				numGLCmds, fileName, delta);
 	}
 }
