@@ -43,7 +43,7 @@ void MN_CloseWindow(const char* name);
 struct menuNode_s* MN_GetActiveWindow(void);
 int MN_CompleteWithWindow(const char *partial, const char **match);
 qboolean MN_IsWindowOnStack(const char* name);
-qboolean MN_IsPointOnWindow(int x, int y);
+qboolean MN_IsPointOnWindow(void);
 void MN_InvalidateStack(void);
 void MN_InsertWindow(struct menuNode_s* window);
 void MN_MoveWindowOnTop (struct menuNode_s * window);

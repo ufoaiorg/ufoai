@@ -616,7 +616,7 @@ const char* MN_GetActiveWindowName (void)
  * @brief Check if a point is over a window from the stack
  * @sa IN_Parse
  */
-qboolean MN_IsPointOnWindow (int x, int y)
+qboolean MN_IsPointOnWindow (void)
 {
 	const menuNode_t *hovered;
 
