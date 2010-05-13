@@ -86,7 +86,7 @@ qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 	if (modeIndex < 0) {
 		modeInfo->width = vid_width->integer;
 		modeInfo->height = vid_height->integer;
-	} else if (modeIndex < r_sdl_config.numModes) {
+	} else if (modeIndex < VID_GetModeNums()) {
 		int width, height;
 		if (r_sdl_config.numModes > 0) {
 			width = r_sdl_config.modes[modeIndex]->w;
