@@ -52,7 +52,8 @@ typedef enum {
 	ACTION_MDX,
 	ACTION_SKINEDIT,
 	ACTION_CHECK,
-	ACTION_SKINFIX
+	ACTION_SKINFIX,
+	ACTION_GLCMDSREMOVE
 } ufoModelAction_t;
 
 typedef struct modelConfig_s {
@@ -323,6 +324,7 @@ static void Usage (void)
 	Com_Printf("Usage:\n");
 	Com_Printf(" -mdx                     generate mdx files\n");
 	Com_Printf(" -skinfix                 fix skins for md2 models\n");
+	Com_Printf(" -glcmds                  remove the unused glcmds from md2 models\n");
 	Com_Printf(" -check                   perform general checks for all the models\n");
 	Com_Printf(" -skinedit <filename>     edit skin of a model\n");
 	Com_Printf(" -overwrite               overwrite existing mdx files\n");
@@ -357,6 +359,8 @@ static void UM_Parameter (int argc, char **argv)
 			}
 		} else if (!strcmp(argv[i], "-mdx")) {
 			config.action = ACTION_MDX;
+		} else if (!strcmp(argv[i], "-glcmds")) {
+			config.action = ACTION_GLCMDSREMOVE;
 		} else if (!strcmp(argv[i], "-skinfix")) {
 			config.action = ACTION_SKINFIX;
 		} else if (!strcmp(argv[i], "-check")) {
@@ -459,6 +463,37 @@ static void ModelWorker (modelWorker_t worker, const char *fileName, void *userD
 	}
 
 	FS_FreeFile(buf);
+}
+
+static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize, void *userData)
+{
+	const char *md2Path;
+	uint32_t numGLCmds;
+	const dMD2Model_t *md2 = (const dMD2Model_t *)buf;
+
+	MD2HeaderCheck(md2, fileName, bufSize);
+
+	md2Path = (const char *) md2 + LittleLong(md2->ofs_glcmds);
+	numGLCmds = LittleLong(md2->num_glcmds);
+
+	if (numGLCmds > 0) {
+		dMD2Model_t *fixedMD2 = Mem_Dup(buf, bufSize);
+		const size_t delta = numGLCmds * sizeof(uint32_t);
+		const uint32_t offset = LittleLong(fixedMD2->ofs_glcmds);
+		bufSize -= delta;
+		fixedMD2->ofs_end = LittleLong(fixedMD2->ofs_end - delta);
+		if (LittleLong(fixedMD2->ofs_skins) > offset || LittleLong(fixedMD2->ofs_frames) > offset
+		 || LittleLong(fixedMD2->ofs_st) > offset || LittleLong(fixedMD2->ofs_tris) > offset) {
+			Com_Error(ERR_DROP, "Unexpected order of the different data lumps");
+		}
+		fixedMD2->ofs_glcmds = 0;
+		fixedMD2->num_glcmds = 0;
+		FS_WriteFile(fixedMD2, bufSize, fileName);
+		Mem_Free(fixedMD2);
+		*(size_t *)userData += delta;
+		Com_Printf("  \\ - removed %i glcmds from '%s' (save "UFO_SIZE_T" bytes\n",
+				numGLCmds, fileName, delta);
+	}
 }
 
 static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void *userData)
@@ -593,6 +628,13 @@ static void SkinFix (void)
 	MD2Visitor(MD2SkinFix, NULL);
 }
 
+static void GLCmdsRemove (void)
+{
+	size_t bytes = 0;
+	MD2Visitor(MD2GLCmdsRemove, &bytes);
+	Com_Printf("Saved "UFO_SIZE_T"bytes after removing all glcmds from the md2 files\n", bytes);
+}
+
 int main (int argc, char **argv)
 {
 	Com_Printf("---- ufomodel "VERSION" ----\n");
@@ -641,6 +683,10 @@ int main (int argc, char **argv)
 
 	case ACTION_SKINFIX:
 		SkinFix();
+		break;
+
+	case ACTION_GLCMDSREMOVE:
+		GLCmdsRemove();
 		break;
 
 	default:
