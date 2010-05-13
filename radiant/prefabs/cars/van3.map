@@ -1,0 +1,41 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( -928 -704 0 ) ( -864 -704 0 ) ( -928 -576 0 ) tex_common/actorclip 14 -0 0 0.5 0.5 65536 0 0
+( -764 -152 64 ) ( -740 -152 64 ) ( -740 -164 64 ) tex_common/actorclip 14 -0 0 0.5 0.5 65536 0 0
+( 4 0 40 ) ( 64 0 40 ) ( 64 0 4 ) tex_common/actorclip 6 0 0 0.5 0.5 65536 0 0
+( 64 59 40 ) ( 64 163 40 ) ( 64 163 4 ) tex_common/actorclip 2 0 0 0.5 0.5 65536 0 0
+( 60 160 40 ) ( 0 160 40 ) ( 0 160 4 ) tex_common/actorclip 14 0 0 0.5 0.5 65536 0 0
+( 0 -320 0 ) ( 0 -224 0 ) ( 0 -320 96 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
+}
+// brush 1
+{
+( -726 -202 12 ) ( -718 -202 12 ) ( -718 -194 12 ) tex_common/nodraw 14 8 0 0.5 0.5 0 128 0
+( -464 -118 48 ) ( -464 -120 48 ) ( -468 -120 48 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+( 3 1 46 ) ( 63 1 46 ) ( 63 1 10 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+( 62 61 70 ) ( 62 165 70 ) ( 62 165 34 ) tex_common/nodraw 0 12 0 0.5 0.5 0 128 0
+( 63 158 46 ) ( 3 158 46 ) ( 3 158 10 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+( 3 102 70 ) ( 3 -2 70 ) ( 3 -2 34 ) tex_common/nodraw 0 12 0 0.5 0.5 0 128 0
+( -64 136 48 ) ( -64 158 34 ) ( 64 136 48 ) tex_common/nodraw 0 0 0 0.25 0.25 0 128 0
+}
+// brush 2
+{
+( 3 2 48 ) ( 62 135 48 ) ( 3 135 48 ) tex_common/nodraw 14 6 0 0.5 0.5 0 128 0
+( 3 121 74 ) ( 62 4 74 ) ( 3 4 74 ) tex_common/nodraw 14 2 0 0.5 0.5 0 128 0
+( 62 2 48 ) ( 3 4 74 ) ( 62 4 74 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+( 62 135 48 ) ( 62 4 74 ) ( 62 121 74 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+( 62 121 74 ) ( 3 135 48 ) ( 62 135 48 ) tex_common/nodraw 14 22 0 0.5 0.5 0 128 0
+( 3 135 48 ) ( 3 4 74 ) ( 3 2 48 ) tex_common/nodraw 14 12 0 0.5 0.5 0 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "32 80 38"
+"model" "models/objects/cars/van3/van.md2"
+"skin" "0"
+}
