@@ -555,15 +555,18 @@ static void R_UpdateVidDef (void)
 qboolean R_SetMode (void)
 {
 	qboolean result;
+	unsigned prevWidth;
+	unsigned prevHeight;
+	int prevMode;
+	qboolean prevFullscreen;
 
 	Com_Printf("I: setting mode %d\n", vid_mode->integer);
 
 	/* store old values if new ones will fail */
-	viddef.prev_width = viddef.width;
-	viddef.prev_height = viddef.height;
-	viddef.prev_fullscreen = viddef.fullscreen;
-	viddef.prev_strech = viddef.strech;
-	viddef.prev_mode = viddef.mode;
+	prevWidth = viddef.width;
+	prevHeight = viddef.height;
+	prevFullscreen = viddef.fullscreen;
+	prevMode = viddef.mode;
 
 	/* new values */
 	viddef.mode = vid_mode->integer;
@@ -574,7 +577,7 @@ qboolean R_SetMode (void)
 		return qfalse;
 	}
 
-	result = R_InitGraphics();
+	result = R_InitGraphics(viddef.fullscreen, viddef.width, viddef.height);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateVidDef();
@@ -588,18 +591,17 @@ qboolean R_SetMode (void)
 			viddef.width, viddef.height,
 			(vid_fullscreen->integer ? "fullscreen" : "windowed"));
 
-	Cvar_SetValue("vid_width", viddef.prev_width);  /* failed, revert */
-	Cvar_SetValue("vid_height", viddef.prev_height);
-	Cvar_SetValue("vid_mode", viddef.prev_mode);
-	Cvar_SetValue("vid_fullscreen", viddef.prev_fullscreen);
-	Cvar_SetValue("vid_strech", viddef.prev_strech);
+	Cvar_SetValue("vid_width", prevWidth);  /* failed, revert */
+	Cvar_SetValue("vid_height", prevHeight);
+	Cvar_SetValue("vid_mode", prevMode);
+	Cvar_SetValue("vid_fullscreen", prevFullscreen);
 
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
 	if (!VID_GetModeInfo())
 		return qfalse;
 
-	result = R_InitGraphics();
+	result = R_InitGraphics(viddef.fullscreen, viddef.width, viddef.height);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateVidDef();
@@ -975,9 +977,6 @@ qboolean R_Init (void)
 	r_config.gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 	r_config.gl_filter_max = GL_LINEAR;
 	r_config.maxTextureSize = 256;
-
-	/* set our "safe" modes */
-	viddef.prev_mode = 6;
 
 	/* initialize OS-specific parts of OpenGL */
 	if (!Rimp_Init())

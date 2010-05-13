@@ -53,13 +53,6 @@ typedef struct {
 	qboolean fullscreen;	/**< currently in fullscreen mode? */
 	qboolean strech;		/**< currently strech mode? */
 
-	/** safe values for restoring a failed vid change */
-	unsigned prev_width;
-	unsigned prev_height;
-	int prev_mode;
-	qboolean prev_fullscreen;
-	qboolean prev_strech;
-
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
 

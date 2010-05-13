@@ -135,7 +135,7 @@ qboolean Rimp_Init (void)
 /**
  * @brief Init the SDL window
  */
-qboolean R_InitGraphics (void)
+qboolean R_InitGraphics (qboolean fullscreen, int width, int height)
 {
 	uint32_t flags;
 	int i;
@@ -163,22 +163,15 @@ qboolean R_InitGraphics (void)
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, i);
 
 	flags = SDL_OPENGL;
-	if (viddef.fullscreen)
+	if (fullscreen)
 		flags |= SDL_FULLSCREEN;
 	/*flags |= SDL_NOFRAME;*/
 
-	screen = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags);
+	screen = SDL_SetVideoMode(width, height, 0, flags);
 	if (!screen) {
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		return qfalse;
-	}
-	if (viddef.width != screen->w || viddef.height != screen->h) {
-		Com_Printf("I: video mode requested: %dx%d\nI: video mode used: %dx%d\n", viddef.width, viddef.height, screen->w, screen->h);
-		viddef.width = screen->w;
-		viddef.height = screen->h;
-		Cvar_SetValue("vid_width", viddef.width);
-		Cvar_SetValue("vid_height", viddef.height);
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);

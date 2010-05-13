@@ -199,6 +199,6 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
-qboolean R_InitGraphics(void);
+qboolean R_InitGraphics(qboolean fullscreen, int width, int height);
 
 #endif /* R_LOCAL_H */
