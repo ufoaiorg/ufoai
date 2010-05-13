@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "battlescape/cl_view.h"
 #include "renderer/r_main.h"
+#include "renderer/r_sdl.h"
 #include "menu/m_font.h"
 #include "cl_game.h"
 
@@ -75,19 +76,27 @@ static const vidmode_t vid_modes[] =
  */
 int VID_GetModeNums (void)
 {
+	if (r_sdl_config.numModes > 0)
+		return r_sdl_config.numModes;
 	return lengthof(vid_modes);
 }
 
 qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 {
-	if (modeIndex >= VID_GetModeNums())
-		return qfalse;
-	else if (modeIndex < 0) {
+	if (modeIndex < 0) {
 		modeInfo->width = vid_width->integer;
 		modeInfo->height = vid_height->integer;
 	} else {
-		modeInfo->width  = vid_modes[modeIndex].width;
-		modeInfo->height = vid_modes[modeIndex].height;
+		int width, height;
+		if (r_sdl_config.numModes > 0) {
+			width = r_sdl_config.modes[modeIndex]->w;
+			height = r_sdl_config.modes[modeIndex]->h;
+		} else {
+			width = vid_modes[modeIndex].width;
+			height = vid_modes[modeIndex].height;
+		}
+		modeInfo->width = width;
+		modeInfo->height = height;
 		Cvar_SetValue("vid_width", modeInfo->width);
 		Cvar_SetValue("vid_height", modeInfo->height);
 	}
@@ -127,7 +136,7 @@ void VID_Init (void)
 {
 	vid_strech = Cvar_Get("vid_strech", "0", CVAR_ARCHIVE, "Backward compatibility to stretch the screen with a 4:3 ratio");
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, "Run the game in fullscreen mode");
-	vid_mode = Cvar_Get("vid_mode", "6", CVAR_ARCHIVE, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
+	vid_mode = Cvar_Get("vid_mode", "-1", CVAR_ARCHIVE, "The video mode - set to -1 and use vid_width and vid_height to use a custom resolution");
 	Cvar_SetCheckFunction("vid_mode", CL_CvarCheckVidMode);
 	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, "Controls the gamma settings");

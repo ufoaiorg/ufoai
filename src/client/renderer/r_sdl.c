@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_main.h"
 #include "r_sdl.h"
 
+r_sdl_config_t r_sdl_config;
+
 #ifndef _WIN32
 static void R_SetSDLIcon (void)
 {
@@ -92,6 +94,23 @@ qboolean Rimp_Init (void)
 		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
 		r_config.videoMemory = info->video_mem;
 		Com_Printf("I: video memory: %i\n", r_config.videoMemory);
+		memcpy(&r_sdl_config.pixelFormat, info->vfmt, sizeof(r_sdl_config.pixelFormat));
+		memcpy(&r_sdl_config.videoInfo, info, sizeof(r_sdl_config.videoInfo));
+		r_sdl_config.videoInfo.vfmt = &r_sdl_config.pixelFormat;
+		r_sdl_config.modes = SDL_ListModes(r_sdl_config.videoInfo.vfmt, SDL_OPENGL | SDL_FULLSCREEN);
+		if (r_sdl_config.modes) {
+			char buf[4096] = "";
+			Q_strcat(buf, "I: Available resolutions:", sizeof(buf));
+			for (r_sdl_config.numModes = 0; r_sdl_config.modes[r_sdl_config.numModes]; r_sdl_config.numModes++) {
+				const char *modeStr = va(" %ix%i",
+						r_sdl_config.modes[r_sdl_config.numModes]->w,
+						r_sdl_config.modes[r_sdl_config.numModes]->h);
+				Q_strcat(buf, modeStr, sizeof(buf));
+			}
+			Com_Printf("%s (%i)\n", buf, r_sdl_config.numModes);
+		} else {
+			Com_Printf("I: Could not get list of available resolutions\n");
+		}
 	} else {
 		r_config.videoMemory = 0;
 	}
