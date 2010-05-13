@@ -74,7 +74,6 @@ extern struct memPool_s *vid_imagePool;
 extern struct memPool_s *vid_lightPool;
 extern struct memPool_s *vid_modelPool;
 
-extern const vidmode_t vid_modes[];
 extern viddef_t viddef;			/* global video state */
 
 extern cvar_t *vid_fullscreen;
@@ -88,6 +87,6 @@ extern cvar_t *vid_grabmouse;
 void VID_Init(void);
 int VID_GetModeNums(void);
 void VID_Restart_f(void);
-qboolean VID_GetModeInfo(void);
+qboolean VID_GetModeInfo(int modeIndex, vidmode_t *modeInfo);
 
 #endif /* CLIENT_VID_H */

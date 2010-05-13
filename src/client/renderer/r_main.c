@@ -525,8 +525,11 @@ static void R_RegisterImageVars (void)
 	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Apply blur to lightmap");
 }
 
-static void R_UpdateVidDef (void)
+static void R_UpdateVidDef (const vidmode_t *vidmode)
 {
+	viddef.width = vidmode->width;
+	viddef.height = vidmode->height;
+
 	if (viddef.strech) {
 		viddef.virtualWidth = VID_NORM_WIDTH;
 		viddef.virtualHeight = VID_NORM_HEIGHT;
@@ -559,6 +562,7 @@ qboolean R_SetMode (void)
 	unsigned prevHeight;
 	int prevMode;
 	qboolean prevFullscreen;
+	vidmode_t vidmode;
 
 	Com_Printf("I: setting mode %d\n", vid_mode->integer);
 
@@ -572,15 +576,15 @@ qboolean R_SetMode (void)
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
 	viddef.strech = vid_strech->integer;
-	if (!VID_GetModeInfo()) {
+	if (!VID_GetModeInfo(viddef.mode, &vidmode)) {
 		Com_Printf("I: invalid mode\n");
 		return qfalse;
 	}
 
-	result = R_InitGraphics(viddef.fullscreen, viddef.width, viddef.height);
+	result = R_InitGraphics(viddef.fullscreen, vidmode.width, vidmode.height);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
-	R_UpdateVidDef();
+	R_UpdateVidDef(&vidmode);
 	MN_InvalidateStack();
 
 	Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
@@ -598,13 +602,13 @@ qboolean R_SetMode (void)
 
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
-	if (!VID_GetModeInfo())
+	if (!VID_GetModeInfo(viddef.mode, &vidmode))
 		return qfalse;
 
-	result = R_InitGraphics(viddef.fullscreen, viddef.width, viddef.height);
+	result = R_InitGraphics(viddef.fullscreen, vidmode.width, vidmode.height);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
-	R_UpdateVidDef();
+	R_UpdateVidDef(&vidmode);
 	MN_InvalidateStack();
 	return result;
 }

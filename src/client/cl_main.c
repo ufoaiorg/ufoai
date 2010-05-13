@@ -719,9 +719,9 @@ void CL_InitAfter (void)
 
 	if (vidModesOptions == NULL) {
 		for (i = 0; i < VID_GetModeNums(); i++) {
-			MN_AddOption(&vidModesOptions, "",
-				va("%i x %i", vid_modes[i].width, vid_modes[i].height),
-				va("%i", vid_modes[i].mode));
+			vidmode_t vidmode;
+			if (VID_GetModeInfo(i, &vidmode))
+				MN_AddOption(&vidModesOptions, "", va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
 		}
 		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
 	}

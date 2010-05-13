@@ -43,7 +43,7 @@ static cvar_t *vid_width;
 /**
  * @brief All possible video modes
  */
-const vidmode_t vid_modes[] =
+static const vidmode_t vid_modes[] =
 {
 	{  320,  240,  0 },
 	{  400,  300,  1 },
@@ -78,18 +78,18 @@ int VID_GetModeNums (void)
 	return lengthof(vid_modes);
 }
 
-qboolean VID_GetModeInfo (void)
+qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 {
-	if (viddef.mode >= VID_GetModeNums())
+	if (modeIndex >= VID_GetModeNums())
 		return qfalse;
-	else if (viddef.mode < 0) {
-		viddef.width = vid_width->integer;
-		viddef.height = vid_height->integer;
+	else if (modeIndex < 0) {
+		modeInfo->width = vid_width->integer;
+		modeInfo->height = vid_height->integer;
 	} else {
-		viddef.width  = vid_modes[viddef.mode].width;
-		viddef.height = vid_modes[viddef.mode].height;
-		Cvar_SetValue("vid_width", viddef.width);
-		Cvar_SetValue("vid_height", viddef.height);
+		modeInfo->width  = vid_modes[modeIndex].width;
+		modeInfo->height = vid_modes[modeIndex].height;
+		Cvar_SetValue("vid_width", modeInfo->width);
+		Cvar_SetValue("vid_height", modeInfo->height);
 	}
 
 	return qtrue;
