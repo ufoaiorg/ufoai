@@ -223,6 +223,7 @@ window options
 		}
 		checkbox glsl
 		{
+			tooltip		"_May require restart to take effect"
 			current		*cvar:r_programs
 			pos			"463 365"
 			size		"20 18"
@@ -237,6 +238,7 @@ window options
 		}
 		checkbox light
 		{
+			tooltip		"_May require restart to take effect"
 			current		*cvar:r_lights
 			pos			"463 390"
 			size		"20 18"
@@ -424,6 +426,7 @@ window options
 		}
 		checkbox postprocess
 		{
+			tooltip		"_May require restart to take effect"
 			current		*cvar:r_postprocess
 			pos			"463 640"
 			size		"20 18"
@@ -438,6 +441,7 @@ window options
 		}
 		string dynamiclights_value
 		{
+			tooltip		"_May require restart to take effect"
 			string		*cvar:r_dynamic_lights
 			pos			"360 665"
 			size		"100 20"
