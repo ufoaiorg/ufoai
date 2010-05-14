@@ -1,4 +1,4 @@
-^AC_INIT(ufoai, 2.3-dev, tlh2000@users.sourceforge.net)
+^AC_INIT(ufoai, 2.4-dev, tlh2000@users.sourceforge.net)
 
 AC_CONFIG_SRCDIR([src/server/sv_main.c])
 

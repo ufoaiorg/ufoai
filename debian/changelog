@@ -1,3 +1,10 @@
+ufoai (2.4~~svn29925) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Version bump to 2.4
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Fri, 14 May 2009 19:18:00 -0100
+
 ufoai (2.3~~svn22894) intrepid; urgency=low
 
   [ Martin Gerhardy ]
