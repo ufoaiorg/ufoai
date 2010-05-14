@@ -115,8 +115,6 @@ typedef enum {
 	B_HANGAR,		/**< this building is a hangar */
 	B_ALIEN_CONTAINMENT,	/**< this building is an alien containment */
 	B_SMALL_HANGAR,		/**< this building is a small hangar */
-	B_UFO_HANGAR,		/**< this building is a UFO hangar */
-	B_UFO_SMALL_HANGAR,	/**< this building is a small UFO hangar */
 	B_POWER,		/**< this building is power plant */
 	B_COMMAND,		/**< this building is command centre */
 	B_ANTIMATTER,		/**< this building is antimatter storage */
@@ -124,7 +122,6 @@ typedef enum {
 	B_DEFENCE_MISSILE,		/**< this building is a missile rack */
 	B_DEFENCE_LASER,		/**< this building is a laser battery */
 	B_RADAR,			/**< this building is a radar */
-	B_TEAMROOM,			/**< this building is a Team Room */
 
 	MAX_BUILDING_TYPE
 } buildingType_t;
@@ -138,8 +135,6 @@ typedef enum {
 	CAP_ITEMS,		/**< Items in base. */
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
 	CAP_WORKSPACE,		/**< Space for workers in workshop. */
-	CAP_UFOHANGARS_SMALL,	/**< Space for small recovered UFOs. */
-	CAP_UFOHANGARS_LARGE,	/**< Space for small and large recovered UFOs. */
 	CAP_ANTIMATTER,		/**< Space for Antimatter Storage. */
 
 	MAX_CAP
@@ -200,6 +195,7 @@ typedef struct building_s {
 typedef struct baseBuildingTile_s {
 	building_t *building;	/**< NULL if free spot */
 	qboolean	blocked;	/**< qtrue if the tile is usable for buildings otherwise it's qfalse (blocked somehow). */
+	/* These are only used for baseTemplates: */
 	int posX;	/**< The x screen coordinate for the building on the basemap. */
 	int posY;	/**< The y screen coordinate for the building on the basemap. */
 } baseBuildingTile_t;
@@ -230,6 +226,7 @@ typedef struct base_s {
 
 	/** All aircraft in this base
 	  @todo make me a linked list (see cl_market.c aircraft selling) */
+	/* @todo move aircraft out from base structure */
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInBase;	/**< How many aircraft are in this base. */
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */

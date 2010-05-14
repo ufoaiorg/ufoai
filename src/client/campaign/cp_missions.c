@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
+#include "save/save_missions.h"
+#include "save/save_interest.h"
 
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
@@ -1440,7 +1442,7 @@ mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 	linkedList_t *list;
 
 	/* Some event are non-occurrence */
-	if (category == INTERESTCATEGORY_NONE)
+	if (category <= INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
 		return NULL;
 
 	memset(&mission, 0, sizeof(mission));
@@ -1710,6 +1712,215 @@ static void CP_SetAlienInterest_f (void)
 	ccs.overallInterest = max(0, atoi(Cmd_Argv(1)));
 }
 #endif
+
+/**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] parent XML Node structure, where we write the information to
+ */
+qboolean CP_SaveMissionsXML (mxml_node_t *parent)
+{
+	const linkedList_t *list = ccs.missions;
+
+	Com_RegisterConstList(saveInterestConstants);
+	Com_RegisterConstList(saveMissionConstants);
+	for (; list; list = list->next) {
+		const mission_t *mission = (mission_t *)list->data;
+		mxml_node_t *missionNode = mxml_AddNode(parent, SAVE_MISSIONS_MISSION);
+
+		mxml_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
+		mxml_AddString(missionNode, SAVE_MISSIONS_ID, mission->id);
+		if (mission->mapDef) {
+			mxml_AddString(missionNode, SAVE_MISSIONS_MAPDEF_ID, mission->mapDef->id);
+			mxml_AddInt(missionNode, SAVE_MISSIONS_MAPDEFTIMES, mission->mapDef->timesAlreadyUsed);
+		}
+		mxml_AddBool(missionNode, SAVE_MISSIONS_ACTIVE, mission->active);
+		mxml_AddBool(missionNode, SAVE_MISSIONS_POSASSIGNED, mission->posAssigned);
+		mxml_AddBool(missionNode, SAVE_MISSIONS_CRASHED, mission->crashed);
+		mxml_AddString(missionNode, SAVE_MISSIONS_ONWIN, mission->onwin);
+		mxml_AddString(missionNode, SAVE_MISSIONS_ONLOSE, mission->onlose);
+		mxml_AddString(missionNode, SAVE_MISSIONS_CATEGORY, Com_GetConstVariable(SAVE_INTERESTCAT_NAMESPACE, mission->category));
+		mxml_AddString(missionNode, SAVE_MISSIONS_STAGE, Com_GetConstVariable(SAVE_MISSIONSTAGE_NAMESPACE, mission->stage));
+		switch (mission->category) {
+		case INTERESTCATEGORY_BASE_ATTACK:
+			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
+				const base_t *base;
+				/* save IDX of base under attack if required */
+				base = (base_t*)mission->data;
+				assert(base);
+				mxml_AddShort(missionNode, SAVE_MISSIONS_BASEINDEX, base->idx);
+			}
+			break;
+		case INTERESTCATEGORY_INTERCEPT:
+			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_INTERCEPT) {
+				const installation_t *installation = (installation_t*)mission->data;
+				if (installation)
+					mxml_AddShort(missionNode, SAVE_MISSIONS_INSTALLATIONINDEX, installation->idx);
+			}
+			break;
+		case INTERESTCATEGORY_BUILDING:
+		case INTERESTCATEGORY_SUPPLY:
+			if (mission->stage >= STAGE_BUILD_BASE) {
+				/* save IDX of alien base if required */
+				const alienBase_t *base = (alienBase_t*)mission->data;
+				/* there may be no base is the mission is a subverting government */
+				if (base)
+					mxml_AddShort(missionNode, SAVE_MISSIONS_ALIENBASEINDEX, base->idx);
+			}
+			break;
+		default:
+			break;
+		}
+		mxml_AddString(missionNode, SAVE_MISSIONS_LOCATION, mission->location);
+		mxml_AddShort(missionNode, SAVE_MISSIONS_INITIALOVERALLINTEREST, mission->initialOverallInterest);
+		mxml_AddShort(missionNode, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, mission->initialIndividualInterest);
+		mxml_AddDate(missionNode, SAVE_MISSIONS_STARTDATE, mission->startDate.day, mission->startDate.sec);
+		mxml_AddDate(missionNode, SAVE_MISSIONS_FINALDATE, mission->finalDate.day, mission->finalDate.sec);
+		mxml_AddPos2(missionNode, SAVE_MISSIONS_POS, mission->pos);
+		if (mission->ufo)
+			mxml_AddShort(missionNode, SAVE_MISSIONS_UFO, mission->ufo - ccs.ufos);
+		mxml_AddBoolValue(missionNode, SAVE_MISSIONS_ONGEOSCAPE, mission->onGeoscape);
+	}
+	Com_UnregisterConstList(saveInterestConstants);
+	Com_UnregisterConstList(saveMissionConstants);
+
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames in XML Format
+ * @param[in] parent XML Node structure, where we get the information from
+ */
+qboolean CP_LoadMissionsXML (mxml_node_t *parent)
+{
+	mxml_node_t *node;
+	qboolean success = qtrue;
+
+	Com_RegisterConstList(saveInterestConstants);
+	Com_RegisterConstList(saveMissionConstants);
+	for (node = mxml_GetNode(parent, SAVE_MISSIONS_MISSION); node;
+			node = mxml_GetNextNode(node, parent, SAVE_MISSIONS_MISSION)) {
+		const char *name;
+		mission_t mission;
+		int ufoIdx;
+		qboolean defaultAssigned = qfalse;
+		const char *categoryId = mxml_GetString(node, SAVE_MISSIONS_CATEGORY);
+		const char *stageId = mxml_GetString(node, SAVE_MISSIONS_STAGE);
+
+		memset(&mission, 0, sizeof(mission));
+		Q_strncpyz(mission.id, mxml_GetString(node, SAVE_MISSIONS_ID), sizeof(mission.id));
+		mission.idx = mxml_GetInt(node, SAVE_MISSIONS_MISSION_IDX, 0);
+		if (mission.idx <= 0) {
+			Com_Printf("mission has invalid or no index\n");
+			success = qfalse;
+			break;
+		}
+		name = mxml_GetString(node, SAVE_MISSIONS_MAPDEF_ID);
+		if (name && name[0] != '\0') {
+			mission.mapDef = Com_GetMapDefinitionByID(name);
+			if (!mission.mapDef) {
+				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
+				success = qfalse;
+				break;
+			}
+			mission.mapDef->timesAlreadyUsed = mxml_GetInt(node, SAVE_MISSIONS_MAPDEFTIMES, 0);
+		} else
+			mission.mapDef = NULL;
+
+		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
+			Com_Printf("Invaild mission category '%s'\n", categoryId);
+			success = qfalse;
+			break;
+		}
+
+		if (!Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
+			Com_Printf("Invaild mission stage '%s'\n", stageId);
+			success = qfalse;
+			break;
+		}
+
+		mission.active = mxml_GetBool(node, SAVE_MISSIONS_ACTIVE, qfalse);
+		Q_strncpyz(mission.onwin, mxml_GetString(node, SAVE_MISSIONS_ONWIN), sizeof(mission.onwin));
+		Q_strncpyz(mission.onlose, mxml_GetString(node, SAVE_MISSIONS_ONLOSE), sizeof(mission.onlose));
+
+		mission.initialOverallInterest = mxml_GetInt(node, SAVE_MISSIONS_INITIALOVERALLINTEREST, 0);
+		mission.initialIndividualInterest = mxml_GetInt(node, SAVE_MISSIONS_INITIALINDIVIDUALINTEREST, 0);
+
+		switch (mission.category) {
+		case INTERESTCATEGORY_BASE_ATTACK:
+			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
+				/* Load IDX of base under attack */
+				const int baseidx = mxml_GetInt(node, SAVE_MISSIONS_BASEINDEX, BYTES_NONE);
+				if (baseidx != BYTES_NONE) {
+					base_t *base = B_GetBaseByIDX(baseidx);
+					assert(base);
+					if (mission.stage == STAGE_BASE_ATTACK && base->baseStatus != BASE_UNDER_ATTACK)
+						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
+					mission.data = (void *) base;
+				} else
+					Com_Printf("......warning: Missing BaseIndex\n");
+			}
+			break;
+		case INTERESTCATEGORY_INTERCEPT:
+			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_INTERCEPT) {
+				const int installationIdx = mxml_GetInt(node, SAVE_MISSIONS_INSTALLATIONINDEX, BYTES_NONE);
+				if (installationIdx != BYTES_NONE) {
+					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
+					if (installation)
+						mission.data = (void *) installation;
+					else {
+						Com_Printf("Mission on non-existent installation\n");
+						success = qfalse;
+					}
+				}
+			}
+			break;
+		case INTERESTCATEGORY_BUILDING:
+		case INTERESTCATEGORY_SUPPLY:
+			if (mission.stage >= STAGE_BUILD_BASE) {
+				int baseIDX = mxml_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
+				/* don't check baseidx value here: alien bases are not loaded yet */
+				if (baseIDX != BYTES_NONE) {
+					alienBase_t *alienBase = AB_GetBase(baseIDX, qfalse);
+					mission.data = (void *) alienBase;
+				}
+				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission)) {
+					Com_Printf("Error while loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i)\n",
+							mission.idx, baseIDX, mission.category, mission.stage);
+					success = qfalse;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+		if (!success)
+			break;
+
+		Q_strncpyz(mission.location, mxml_GetString(node, SAVE_MISSIONS_LOCATION), sizeof(mission.location));
+
+		mxml_GetDate(node, SAVE_MISSIONS_STARTDATE, &mission.startDate.day, &mission.startDate.sec);
+		mxml_GetDate(node, SAVE_MISSIONS_FINALDATE, &mission.finalDate.day, &mission.finalDate.sec);
+		mxml_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
+
+		ufoIdx = mxml_GetInt(node, SAVE_MISSIONS_UFO, -1);
+		if (ufoIdx <= -1)
+			mission.ufo = NULL;
+		else
+			mission.ufo = ccs.ufos + ufoIdx;
+
+		mission.crashed = mxml_GetBool(node, SAVE_MISSIONS_CRASHED, qfalse);
+		mission.onGeoscape = mxml_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, qfalse);
+
+		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
+			defaultAssigned = qtrue;
+		mission.posAssigned = mxml_GetBool(node, SAVE_MISSIONS_POSASSIGNED, defaultAssigned);
+		/* Add mission to global array */
+		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
+	}
+	Com_UnregisterConstList(saveInterestConstants);
+	Com_UnregisterConstList(saveMissionConstants);
+	return success;
+}
 
 void CP_MissionsInit (void)
 {

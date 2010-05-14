@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_messages.h"
 #include "cp_time.h"
+#include "save/save_messages.h"
 
 char cp_messageBuffer[MAX_MESSAGE_TEXT];
 message_t *cp_messageStack;
@@ -157,16 +158,18 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 }
 
 /**
- * @brief Saved the complete message stack in xml
- * @sa SAV_GameSaveXML
- * @sa MN_AddNewMessage
+ * @brief Save a list of messages to xml
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] message The first message to save
+ * @note this saves messages in reversed order
  */
-static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
+static void MS_MessageSaveXML (mxml_node_t *p, message_t *message)
 {
 	mxml_node_t *n;
 
 	if (!message)
 		return;
+
 	/* bottom up */
 	MS_MessageSaveXML(p, message->next);
 
@@ -174,29 +177,30 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
 	if (message->type == MSG_INFO)
 		return;
 
-	n = mxml_AddNode(p, "message");
-	mxml_AddString(n, "title", message->title);
-	mxml_AddString(n, "text", message->text);
-	mxml_AddInt(n, "type", message->type);
+	Com_RegisterConstList(saveMessageConstants);
+	n = mxml_AddNode(p, SAVE_MESSAGES_MESSAGE);
+	mxml_AddString(n, SAVE_MESSAGES_TYPE, Com_GetConstVariable(SAVE_MESSAGETYPE_NAMESPACE, message->type));
+	mxml_AddStringValue(n, SAVE_MESSAGES_TITLE, message->title);
+	mxml_AddStringValue(n, SAVE_MESSAGES_TEXT, message->text);
 	/* store script id of event mail */
 	if (message->type == MSG_EVENT) {
-		mxml_AddString(n, "eventmailid", message->eventMail->id);
-		mxml_AddBool(n, "eventmailread", message->eventMail->read);
+		mxml_AddString(n, SAVE_MESSAGES_EVENTMAILID, message->eventMail->id);
+		mxml_AddBoolValue(n, SAVE_MESSAGES_EVENTMAILREAD, message->eventMail->read);
 	}
 	if (message->pedia)
-		mxml_AddString(n, "id", message->pedia->id);
-	mxml_AddInt(n, "day", message->date.day);
-	mxml_AddInt(n, "sec", message->date.sec);
+		mxml_AddString(n, SAVE_MESSAGES_PEDIAID, message->pedia->id);
+	mxml_AddDate(n, SAVE_MESSAGES_DATE, message->date.day, message->date.sec);
+	Com_UnregisterConstList(saveMessageConstants);
 }
 
 /**
- * @sa MS_LoadXML
- * @sa MN_AddNewMessage
+ * @brief Save callback for messages
+ * @param[out] p XML Node structure, where we write the information to
  * @sa MS_MessageSaveXML
  */
 qboolean MS_SaveXML (mxml_node_t *p)
 {
-	mxml_node_t *n = mxml_AddNode(p, "messages");
+	mxml_node_t *n = mxml_AddNode(p, SAVE_MESSAGES_MESSAGES);
 
 	/* store message system items */
 	MS_MessageSaveXML(n, cp_messageStack);
@@ -204,6 +208,8 @@ qboolean MS_SaveXML (mxml_node_t *p)
 }
 
 /**
+ * @brief Load callback for messages
+ * @param[in] p XML Node structure, where we get the information from
  * @sa MS_SaveXML
  * @sa MN_AddNewMessageSound
  */
@@ -211,7 +217,8 @@ qboolean MS_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *sn;
-	n = mxml_GetNode(p, "messages");
+	n = mxml_GetNode(p, SAVE_MESSAGES_MESSAGES);
+
 	if (!n)
 		return qfalse;
 
@@ -220,18 +227,27 @@ qboolean MS_LoadXML (mxml_node_t *p)
 	 * nice */
 	S_SetSampleRepeatRate(500);
 
-	for (sn = mxml_GetNode(n, "message"), i = 0; sn; sn = mxml_GetNextNode(sn, n, "message"), i++) {
+	Com_RegisterConstList(saveMessageConstants);
+	for (sn = mxml_GetNode(n, SAVE_MESSAGES_MESSAGE), i = 0; sn; sn = mxml_GetNextNode(sn, n, SAVE_MESSAGES_MESSAGE), i++) {
 		eventMail_t *mail;
+		const char *type = mxml_GetString(sn, SAVE_MESSAGES_TYPE);
 		int mtype;
-		char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
+		char title[MAX_VAR];
+		char text[MAX_MESSAGE_TEXT];
+
+		if (!Com_GetConstIntFromNamespace(SAVE_MESSAGETYPE_NAMESPACE, type, (int*) &mtype)) {
+			Com_Printf("Invaild message type '%s'\n", type);
+			continue;
+		}
+
 		/* can contain high bits due to utf8 */
-		Q_strncpyz(title, mxml_GetString(sn, "title"), sizeof(title));
-		Q_strncpyz(text,  mxml_GetString(sn, "text"),  sizeof(text));
-		mtype = mxml_GetInt(sn, "type", MSG_DEBUG);
+		Q_strncpyz(title, mxml_GetString(sn, SAVE_MESSAGES_TITLE), sizeof(title));
+		Q_strncpyz(text,  mxml_GetString(sn, SAVE_MESSAGES_TEXT),  sizeof(text));
+
 		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(mxml_GetString(sn, "eventmailid"), qfalse);
+			mail = CL_GetEventMail(mxml_GetString(sn, SAVE_MESSAGES_EVENTMAILID), qfalse);
 			if (mail)
-				mail->read = mxml_GetBool(sn, "eventmailread", qfalse);
+				mail->read = mxml_GetBool(sn, SAVE_MESSAGES_EVENTMAILREAD, qfalse);
 		} else
 			mail = NULL;
 
@@ -239,29 +255,24 @@ qboolean MS_LoadXML (mxml_node_t *p)
 		/** @todo is this really meant to depend on DEBUG_ALL with NO individual bit like DEBUG_MSG ?? */
 		if (!((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1))) {
 			char id[MAX_VAR];
-			technology_t *tech;
+			technology_t *tech = NULL;
 			message_t *mess;
 
-			Q_strncpyz(id, mxml_GetString(sn, "id"), sizeof(id));
-			if (id[0] == '\0') {	/**< @todo: Fallback for old savegames. Remove it before release. */
-				const int idx = mxml_GetInt(sn, "idx", -1);
-				tech = RS_GetTechByIDX(idx);
-			} else {
+			Q_strncpyz(id, mxml_GetString(sn, SAVE_MESSAGES_PEDIAID), sizeof(id));
+			if (id[0] != '\0')
 				tech = RS_GetTechByID(id);
-			}
-
 			if (!tech && (mtype == MSG_RESEARCH_PROPOSAL || mtype == MSG_RESEARCH_FINISHED)) {
 				/** No tech found drop message. */
 				continue;
 			}
 			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, tech, qfalse);
 			mess->eventMail = mail;
-			mess->date.day = mxml_GetInt(sn, "day", 0);
-			mess->date.sec = mxml_GetInt(sn, "sec", 0);
+			mxml_GetDate(sn, SAVE_MESSAGES_DATE, &mess->date.day, &mess->date.sec);
 			/* redo timestamp text after setting date */
 			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 		}
 	}
+	Com_UnregisterConstList(saveMessageConstants);
 
 	/* reset the sample repeat rate */
 	S_SetSampleRepeatRate(0);

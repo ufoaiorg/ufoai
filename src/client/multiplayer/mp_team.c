@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"	/**< menuInventory */
 #include "mp_team.h"
+#include "save_multiplayer.h"
 
 #define MPTEAM_SAVE_FILE_VERSION 4
 
@@ -90,7 +91,7 @@ static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
 	Com_DPrintf(DEBUG_CLIENT, "Saving %i teammembers\n", chrDisplayList.num);
 	for (i = 0; i < chrDisplayList.num; i++) {
 		const character_t *chr = chrDisplayList.chr[i];
-		mxml_node_t *n = mxml_AddNode(p, "character");
+		mxml_node_t *n = mxml_AddNode(p, SAVE_MULTIPLAYER_CHARACTER);
 		CL_SaveCharacterXML(n, chr);
 	}
 }
@@ -106,7 +107,7 @@ static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 	mxml_node_t *n;
 
 	/* header */
-	for (i = 0, n = mxml_GetNode(p, "character"); n && i < MAX_MULTIPLAYER_CHARACTERS; i++, n = mxml_GetNextNode(n, p, "character")) {
+	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < MAX_MULTIPLAYER_CHARACTERS; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
 		CL_LoadCharacterXML(n, &multiplayerCharacters[i]);
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}
@@ -131,21 +132,23 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	equipDef_t *ed = GAME_GetEquipmentDefinition();
 
 	topNode = mxmlNewXML("1.0");
-	node = mxml_AddNode(topNode, "multiplayer");
+	node = mxml_AddNode(topNode, SAVE_MULTIPLAYER_ROOTNODE);
 	memset(&header, 0, sizeof(header));
 	header.version = LittleLong(MPTEAM_SAVE_FILE_VERSION);
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
-	snode = mxml_AddNode(node, "team");
+	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_TEAM);
 	MP_SaveTeamMultiplayerInfo(snode);
 
-	snode = mxml_AddNode(node, "equipment");
+	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
-		mxml_node_t *ssnode = mxml_AddNode(snode, "emission");
-		mxml_AddString(ssnode, "id", csi.ods[i].id);
-		mxml_AddInt(ssnode, "num", ed->numItems[i]);
-		mxml_AddInt(ssnode, "numloose", ed->numItemsLoose[i]);
+		if (ed->numItems[i] || ed->numItemsLoose[i]) {
+			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_MULTIPLAYER_ITEM);
+			mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, csi.ods[i].id);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[i]);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[i]);
+		}
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
 	/* required for storing compressed */
@@ -213,7 +216,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	uLongf len;
 	qFILE f;
 	byte *cbuf;
-	int i, clen;
+	int clen;
 	mxml_node_t *topNode, *node, *snode, *ssnode;
 	mpSaveFileHeader_t header;
 	equipDef_t *ed;
@@ -255,7 +258,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 		return qfalse;
 	}
 
-	node = mxml_GetNode(topNode, "multiplayer");
+	node = mxml_GetNode(topNode, SAVE_MULTIPLAYER_ROOTNODE);
 	if (!node) {
 		mxmlDelete(topNode);
 		Com_Printf("Error: Failure in loading the xml data! (node 'multiplayer' not found)\n");
@@ -263,7 +266,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	}
 	Cvar_Set("mn_teamname", header.name);
 
-	snode = mxml_GetNode(node, "team");
+	snode = mxml_GetNode(node, SAVE_MULTIPLAYER_TEAM);
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
@@ -272,7 +275,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	}
 	MP_LoadTeamMultiplayerInfo(snode);
 
-	snode = mxml_GetNode(node, "equipment");
+	snode = mxml_GetNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	if (!snode) {
 		mxmlDelete(topNode);
 		Mem_Free(cbuf);
@@ -281,12 +284,13 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	}
 
 	ed = GAME_GetEquipmentDefinition();
-	for (i = 0, ssnode = mxml_GetNode(snode, "emission"); ssnode && i < csi.numODs; i++, ssnode = mxml_GetNextNode(ssnode, snode, "emission")) {
-		const char *objID = mxml_GetString(ssnode, "id");
+	for (ssnode = mxml_GetNode(snode, SAVE_MULTIPLAYER_ITEM); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_MULTIPLAYER_ITEM)) {
+		const char *objID = mxml_GetString(ssnode, SAVE_MULTIPLAYER_ID);
 		const objDef_t *od = INVSH_GetItemByID(objID);
+
 		if (od) {
-			ed->numItems[od->idx] = mxml_GetInt(snode, "num", 0);
-			ed->numItemsLoose[od->idx] = mxml_GetInt(snode, "numloose", 0);
+			ed->numItems[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUM, 0);
+			ed->numItemsLoose[od->idx] = mxml_GetInt(snode, SAVE_MULTIPLAYER_NUMLOOSE, 0);
 		}
 	}
 

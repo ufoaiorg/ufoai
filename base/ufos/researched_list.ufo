@@ -7,7 +7,6 @@ researched rslist_phalanx
 	rs_building_storage
 	rs_building_powerplant
 	rs_building_quarters
-	rs_building_teamroom
 	rs_building_workshop
 	rs_building_large_hangar
 	rs_building_radar
@@ -15,8 +14,6 @@ researched rslist_phalanx
 	rs_building_small_hangar
 	rs_building_lab
 	rs_building_hospital
-	rs_building_small_ufo_hangar
-	rs_building_large_ufo_hangar
 	rs_building_aliencontainment
 
 	// WEAPONS & ITEMS

@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_nodes.h"
 #include "battlescape/events/e_main.h"
+#include "campaign/save/save_character.h"
+#include "campaign/save/save_inventory.h"
 
 /** @brief List of currently displayed or equipeable characters. */
 chrList_t chrDisplayList;
@@ -110,49 +112,62 @@ void CL_CharacterSkillAndScoreCvars (const character_t *chr)
  */
 qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 {
-	/* Store the character data */
-	mxml_node_t *s;
+	mxml_node_t *sScore;
+	mxml_node_t *sInventory;
 	int k;
-	const int count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
 
-	mxml_AddString(p, "name", chr->name);
-	mxml_AddString(p, "body", chr->body);
-	mxml_AddString(p, "path", chr->path);
-	mxml_AddString(p, "head", chr->head);
-	mxml_AddInt(p, "skin", chr->skin);
-	mxml_AddInt(p, "teamdefidx", chr->teamDef->idx);
-	mxml_AddInt(p, "gender", chr->gender);
-	mxml_AddInt(p, "state", chr->state);
-	mxml_AddInt(p, "ucn", chr->ucn);
-	mxml_AddInt(p, "maxhp", chr->maxHP);
-	mxml_AddInt(p, "hp", chr->HP);
-	mxml_AddInt(p, "stun", chr->STUN);
-	mxml_AddInt(p, "morale", chr->morale);
-	mxml_AddInt(p, "fieldsize", chr->fieldSize);
+	assert(chr);
+	Com_RegisterConstList(saveCharacterConstants);
+	/* Store the character data */
+	mxml_AddString(p, SAVE_CHARACTER_NAME, chr->name);
+	mxml_AddString(p, SAVE_CHARACTER_BODY, chr->body);
+	mxml_AddString(p, SAVE_CHARACTER_PATH, chr->path);
+	mxml_AddString(p, SAVE_CHARACTER_HEAD, chr->head);
+	mxml_AddInt(p, SAVE_CHARACTER_SKIN, chr->skin);
+	mxml_AddInt(p, SAVE_CHARACTER_TEAMDEFIDX, chr->teamDef->idx);
+	mxml_AddInt(p, SAVE_CHARACTER_GENDER, chr->gender);
+	mxml_AddInt(p, SAVE_CHARACTER_UCN, chr->ucn);
+	mxml_AddInt(p, SAVE_CHARACTER_MAXHP, chr->maxHP);
+	mxml_AddInt(p, SAVE_CHARACTER_HP, chr->HP);
+	mxml_AddInt(p, SAVE_CHARACTER_STUN, chr->STUN);
+	mxml_AddInt(p, SAVE_CHARACTER_MORALE, chr->morale);
+	mxml_AddInt(p, SAVE_CHARACTER_FIELDSIZE, chr->fieldSize);
+	mxml_AddIntValue(p, SAVE_CHARACTER_STATE, chr->state);
 
-	/* Store character stats/score */
-	for (k = 0; k < count; k++) {
-		s = mxml_AddNode(p, "score");
-		if (k < SKILL_NUM_TYPES)
-			mxml_AddInt(s, "skill", chr->score.skills[k]);
-		if (k < SKILL_NUM_TYPES + 1) {
-			mxml_AddInt(s, "experience", chr->score.experience[k]);
-			/** @todo There is a Bug in storing the initial skills. Fix it in loading */
-			mxml_AddInt(s, "initskill", chr->score.initialSkills[k]);
-		}
-		if (k < KILLED_NUM_TYPES) {
-			mxml_AddInt(s, "kills", chr->score.kills[k]);
-			mxml_AddInt(s, "stuns", chr->score.stuns[k]);
+	sScore = mxml_AddNode(p, SAVE_CHARACTER_SCORES);
+	/* Store skills */
+	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) {
+		mxml_node_t *sSkill;
+		
+		if ((k < SKILL_NUM_TYPES && chr->score.skills[k])
+		 || chr->score.experience[k] || chr->score.initialSkills[k]) {
+			sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);;
+
+			mxml_AddString(sSkill, SAVE_CHARACTER_SKILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, k));
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, chr->score.initialSkills[k]);
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, chr->score.experience[k]);
+			if (k < SKILL_NUM_TYPES)
+				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, chr->score.skills[k] - chr->score.initialSkills[k]);
 		}
 	}
-
-	mxml_AddInt(p, "score.assignedmissions", chr->score.assignedMissions);
-	mxml_AddInt(p, "score.rank", chr->score.rank);
+	/* Store kills */
+	for (k = 0; k < KILLED_NUM_TYPES; k++) {
+		mxml_node_t *sKill;
+		if (chr->score.kills[k] || chr->score.stuns[k]) {
+			sKill = mxml_AddNode(sScore, SAVE_CHARACTER_KILLS);
+			mxml_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_KILLED, chr->score.kills[k]);
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, chr->score.stuns[k]);
+		}
+	}
+	mxml_AddIntValue(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr->score.assignedMissions);
+	mxml_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, chr->score.rank);
 
 	/* Store inventories */
-	s = mxml_AddNode(p, "inventory");
-	CL_SaveInventoryXML(s, &chr->i);
+	sInventory = mxml_AddNode(p, SAVE_INVENTORY_INVENTORY);
+	CL_SaveInventoryXML(sInventory, &chr->i);
 
+	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
 }
 
@@ -163,85 +178,129 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
  */
 qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 {
-	mxml_node_t *s;
-	int td, k, count;
+	int td;
+	mxml_node_t *sScore;
+	mxml_node_t *sSkill;
+	mxml_node_t *sKill;
+	mxml_node_t *sInventory;
+	qboolean success = qtrue;
 
-	Q_strncpyz(chr->name, mxml_GetString(p, "name"), sizeof(chr->name));
-	Q_strncpyz(chr->body, mxml_GetString(p, "body"), sizeof(chr->body));
-	Q_strncpyz(chr->path, mxml_GetString(p, "path"), sizeof(chr->path));
-	Q_strncpyz(chr->head, mxml_GetString(p, "head"), sizeof(chr->head));
+	/* Load the character data */
+	Q_strncpyz(chr->name, mxml_GetString(p, SAVE_CHARACTER_NAME), sizeof(chr->name));
+	Q_strncpyz(chr->body, mxml_GetString(p, SAVE_CHARACTER_BODY), sizeof(chr->body));
+	Q_strncpyz(chr->path, mxml_GetString(p, SAVE_CHARACTER_PATH), sizeof(chr->path));
+	Q_strncpyz(chr->head, mxml_GetString(p, SAVE_CHARACTER_HEAD), sizeof(chr->head));
 
-	chr->skin = mxml_GetInt(p, "skin", 0);
+	chr->skin = mxml_GetInt(p, SAVE_CHARACTER_SKIN, 0);
+	chr->gender = mxml_GetInt(p, SAVE_CHARACTER_GENDER, 0);
+	chr->ucn = mxml_GetInt(p, SAVE_CHARACTER_UCN, 0);
+	chr->maxHP = mxml_GetInt(p, SAVE_CHARACTER_MAXHP, 0);
+	chr->HP = mxml_GetInt(p, SAVE_CHARACTER_HP, 0);
+	chr->STUN = mxml_GetInt(p, SAVE_CHARACTER_STUN, 0);
+	chr->morale = mxml_GetInt(p, SAVE_CHARACTER_MORALE, 0);
+	chr->fieldSize = mxml_GetInt(p, SAVE_CHARACTER_FIELDSIZE, 1);
+	chr->state = mxml_GetInt(p, SAVE_CHARACTER_STATE, 0);
 
 	chr->teamDef = NULL;
 	/* Team-definition index */
-	td = mxml_GetInt(p, "teamdefidx", -1);
+	td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, -1);
+
 	if (td != -1) {
 		assert(csi.numTeamDefs);
-		if (td >= csi.numTeamDefs)
+		if (td >= csi.numTeamDefs) {
+			Com_Printf("Invalid TeamDefIDX %i for %s (ucn: %i)\n", td, chr->name, chr->ucn);
 			return qfalse;
+		}
 		chr->teamDef = &csi.teamDef[td];
 	}
 
-	/* Load the character data */
-	chr->gender = mxml_GetInt(p, "gender", 0);
-	chr->state = mxml_GetInt(p, "state", 0);
-	chr->ucn = mxml_GetInt(p, "ucn", 0);
-	chr->maxHP = mxml_GetInt(p, "maxhp", 0);
-	chr->HP = mxml_GetInt(p, "hp", 0);
-	chr->STUN = mxml_GetInt(p, "stun", 0);
-	chr->morale = mxml_GetInt(p, "morale", 0);
-	chr->fieldSize = mxml_GetInt(p, "fieldsize", 1);
+	Com_RegisterConstList(saveCharacterConstants);
 
-	/** Load character stats/score
-	 * @sa chrScoreGlobal_t */
-	count = max(SKILL_NUM_TYPES + 1, KILLED_NUM_TYPES);
-	for (k = 0, s = mxml_GetNode(p, "score"); s && k < count; k++, s = mxml_GetNextNode(s, p, "score")) {
-		if (k < SKILL_NUM_TYPES)
-			chr->score.skills[k] = mxml_GetInt(s, "skill", 0);
-		if (k < SKILL_NUM_TYPES + 1) {
-			chr->score.experience[k] = mxml_GetInt(s, "experience", 0);
-			/** @todo There was a Bug in storing the initial skills. Zero Values will be set to max(hp,max_hp)*/
-			chr->score.initialSkills[k] = mxml_GetInt(s, "initskill", 0);
-			if (k == SKILL_NUM_TYPES && chr->score.initialSkills[k] == 0) {
-				Com_DPrintf(DEBUG_CLIENT, "Skill was zero!");
-				chr->score.initialSkills[k] = max(chr->HP, chr->maxHP);
-			}
+	sScore = mxml_GetNode(p, SAVE_CHARACTER_SCORES);
+	/* Load Skills */
+	for (sSkill = mxml_GetNode(sScore, SAVE_CHARACTER_SKILLS); sSkill; sSkill = mxml_GetNextNode(sSkill, sScore, SAVE_CHARACTER_SKILLS)) {
+		int idx;
+		const char *type = mxml_GetString(sSkill, SAVE_CHARACTER_SKILLTYPE);
+
+		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, type, &idx)) {
+			Com_Printf("Invalid skill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
+			success = qfalse;
+			break;
 		}
-		if (k < KILLED_NUM_TYPES) {
-			chr->score.kills[k] = mxml_GetInt(s, "kills", 0);
-			chr->score.stuns[k] = mxml_GetInt(s, "stuns", 0);
+
+		chr->score.initialSkills[idx] = mxml_GetInt(sSkill, SAVE_CHARACTER_INITSKILL, 0);
+		chr->score.experience[idx] = mxml_GetInt(sSkill, SAVE_CHARACTER_EXPERIENCE, 0);
+		if (idx < SKILL_NUM_TYPES) {
+			chr->score.skills[idx] = chr->score.initialSkills[idx];
+			chr->score.skills[idx] += mxml_GetInt(sSkill, SAVE_CHARACTER_SKILLIMPROVE, 0);
 		}
 	}
-	chr->score.assignedMissions = mxml_GetInt(p, "score.assignedmissions", 0);
-	chr->score.rank = mxml_GetInt(p, "score.rank", -1);
 
-	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
+	if (!success) {
+		Com_UnregisterConstList(saveCharacterConstants);
+		return qfalse;
+	}
+
+	/* Load kills */
+	for (sKill = mxml_GetNode(sScore, SAVE_CHARACTER_KILLS); sKill; sKill = mxml_GetNextNode(sKill, sScore, SAVE_CHARACTER_KILLS)) {
+		int idx;
+		const char *type = mxml_GetString(sKill, SAVE_CHARACTER_KILLTYPE);
+
+		if (!Com_GetConstIntFromNamespace(SAVE_CHARACTER_KILLTYPE_NAMESPACE, type, &idx)) {
+			Com_Printf("Invalid kill type '%s' for %s (ucn: %i)\n", type, chr->name, chr->ucn);
+			success = qfalse;
+			break;
+		}
+		chr->score.kills[idx] = mxml_GetInt(sKill, SAVE_CHARACTER_KILLED, 0);
+		chr->score.stuns[idx] = mxml_GetInt(sKill, SAVE_CHARACTER_STUNNED, 0);
+	}
+
+	if (!success) {
+		Com_UnregisterConstList(saveCharacterConstants);
+		return qfalse;
+	}
+
+	chr->score.assignedMissions = mxml_GetInt(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, 0);
+	chr->score.rank = mxml_GetInt(sScore, SAVE_CHARACTER_SCORE_RANK, -1);
+
 	cls.i.DestroyInventory(&cls.i, &chr->i);
-	s = mxml_GetNode(p, "inventory");
-	CL_LoadInventoryXML(s, &chr->i);
+	sInventory = mxml_GetNode(p, SAVE_INVENTORY_INVENTORY);
+	CL_LoadInventoryXML(sInventory, &chr->i);
 
+	Com_UnregisterConstList(saveCharacterConstants);
 	return qtrue;
 }
 
 /**
+ * @brief Save one item
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] item Pointer to the item to save
+ * @param[in] container Index of the container the item is in
+ * @param[in] x Horizontal coordinate of the item in the container
+ * @param[in] y Vertical coordinate of the item in the container
  * @sa CL_LoadItemXML
  */
 static void CL_SaveItemXML (mxml_node_t *p, item_t item, containerIndex_t container, int x, int y)
 {
 	assert(item.t);
-	mxml_AddInt(p, "ammo", item.a);
-	mxml_AddInt(p, "container", container);
-	mxml_AddInt(p, "x", x);
-	mxml_AddInt(p, "y", y);
-	mxml_AddInt(p, "rotated", item.rotated);
-	mxml_AddInt(p, "amount", item.amount);
-	mxml_AddString(p, "weaponid", item.t->id);
-	if (item.a > NONE_AMMO)
-		mxml_AddString(p, "munitionid", item.m->id);
+
+	mxml_AddString(p, SAVE_INVENTORY_CONTAINER, csi.ids[container].name);
+	mxml_AddInt(p, SAVE_INVENTORY_X, x);
+	mxml_AddInt(p, SAVE_INVENTORY_Y, y);
+	mxml_AddIntValue(p, SAVE_INVENTORY_ROTATED, item.rotated);
+	mxml_AddString(p, SAVE_INVENTORY_WEAPONID, item.t->id);
+	/** @todo: is there any case when amount != 1 for soldier inventory item? */
+	mxml_AddInt(p, SAVE_INVENTORY_AMOUNT, item.amount);
+	if (item.a > NONE_AMMO) {
+		mxml_AddString(p, SAVE_INVENTORY_MUNITIONID, item.m->id);
+		mxml_AddInt(p, SAVE_INVENTORY_AMMO, item.a);
+	}
 }
 
 /**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] i Pointerto the inventory to save
  * @sa CL_SaveItemXML
  * @sa CL_LoadInventoryXML
  */
@@ -252,43 +311,64 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 	for (container = 0; container < csi.numIDs; container++) {
 		invList_t *ic = i->c[container];
 
-#if 0
 		/* ignore items linked from any temp container */
 		if (INVDEF(container)->temp)
 			continue;
-#endif
 
 		for (; ic; ic = ic->next) {
-			mxml_node_t *s = mxml_AddNode(p, "item");
+			mxml_node_t *s = mxml_AddNode(p, SAVE_INVENTORY_ITEM);
 			CL_SaveItemXML(s, ic->item, container, ic->x, ic->y);
 		}
 	}
 }
 
 /**
+ * @brief Load one item
+ * @param[in] p XML Node structure, where we write the information to
+ * @param[out] item Pointer to the item
+ * @param[out] container Index of the container the item is in
+ * @param[out] x Horizontal coordinate of the item in the container
+ * @param[out] y Vertical coordinate of the item in the container
  * @sa CL_SaveItemXML
  */
 static void CL_LoadItemXML (mxml_node_t *n, item_t *item, containerIndex_t *container, int *x, int *y)
 {
-	const char *itemID;
+	const char *itemID = mxml_GetString(n, SAVE_INVENTORY_WEAPONID);
+	const char *contID = mxml_GetString(n, SAVE_INVENTORY_CONTAINER);
+	int i;
 
 	/* reset */
 	memset(item, 0, sizeof(*item));
-	item->a = mxml_GetInt(n, "ammo", NONE_AMMO);
-	item->rotated = mxml_GetInt(n, "rotated", 0);
-	item->amount = mxml_GetInt(n, "amount", 1);
-	*x = mxml_GetInt(n, "x", 0);
-	*y = mxml_GetInt(n, "y", 0);
-	*container = mxml_GetInt(n, "container", 0);
-	itemID = mxml_GetString(n, "weaponid");
+
+	for (i = 0; i < csi.numIDs; i++) {
+		if (!strcmp(csi.ids[i].name, contID))
+			break;
+	}
+	if (i >= csi.numIDs) {
+		Com_Printf("Invalid container id '%s'\n", contID);
+	}
+	*container = i;
+
 	item->t = INVSH_GetItemByID(itemID);
+	*x = mxml_GetInt(n, SAVE_INVENTORY_X, 0);
+	*y = mxml_GetInt(n, SAVE_INVENTORY_Y, 0);
+	item->rotated = mxml_GetInt(n, SAVE_INVENTORY_ROTATED, 0);
+	item->amount = mxml_GetInt(n, SAVE_INVENTORY_AMOUNT, 1);
+	item->a = mxml_GetInt(n, SAVE_INVENTORY_AMMO, NONE_AMMO);
 	if (item->a > NONE_AMMO) {
-		itemID = mxml_GetString(n, "munitionid");
+		itemID = mxml_GetString(n, SAVE_INVENTORY_MUNITIONID);
 		item->m = INVSH_GetItemByID(itemID);
+
+		/* reset ammo count if ammunition (item) not found */
+		if (!item->m)
+			item->a = NONE_AMMO;
 	}
 }
 
 /**
+ * @brief Load callback for savegames in XML Format
+ * @param[in] p XML Node structure, where we load the information from
+ * @param[out] i Pointerto the inventory
  * @sa CL_SaveInventoryXML
  * @sa CL_LoadItemXML
  * @sa I_AddToInventory
@@ -297,10 +377,11 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
 {
 	mxml_node_t *s;
 
-	for (s = mxml_GetNode(p, "item"); s; s = mxml_GetNextNode(s, p, "item")) {
+	for (s = mxml_GetNode(p, SAVE_INVENTORY_ITEM); s; s = mxml_GetNextNode(s, p, SAVE_INVENTORY_ITEM)) {
 		item_t item;
 		containerIndex_t container;
 		int x, y;
+
 		CL_LoadItemXML(s, &item, &container, &x, &y);
 		if (!cls.i.AddToInventory(&cls.i, i, item, INVDEF(container), x, y, 1))
 			Com_Printf("Could not add item '%s' to inventory\n", item.t ? item.t->id : "NULL");

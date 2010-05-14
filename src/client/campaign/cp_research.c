@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_research.h"
+#include "save/save_research.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];
@@ -1760,94 +1761,120 @@ void RS_RemoveScientistsExceedingCapacity (base_t *base)
 	}
 }
 
+/**
+ * @brief Save callback for research and technologies
+ * @param[out] parent XML Node structure, where we write the information to
+ * @sa RS_LoadXML
+ */
 qboolean RS_SaveXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t *node;
-	node = mxml_AddNode(parent, "research");
-	mxml_AddInt(node, "count", ccs.numTechnologies);
+
+	Com_RegisterConstList(saveResearchConstants);
+	node = mxml_AddNode(parent, SAVE_RESEARCH_RESEARCH);
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		int j;
 		const technology_t *t = RS_GetTechByIDX(i);
-		mxml_node_t * snode = mxml_AddNode(node, "tech");
-		mxml_AddString(snode, "id", t->id);
-		mxml_AddBool(snode, "statuscollected", t->statusCollected);
-		mxml_AddFloat(snode, "time", t->time);
-		mxml_AddShort(snode, "statusresearch", t->statusResearch);
+
+		mxml_node_t * snode = mxml_AddNode(node, SAVE_RESEARCH_TECH);
+		mxml_AddString(snode, SAVE_RESEARCH_ID, t->id);
+		mxml_AddBoolValue(snode, SAVE_RESEARCH_STATUSCOLLECTED, t->statusCollected);
+		mxml_AddFloatValue(snode, SAVE_RESEARCH_TIME, t->time);
+		mxml_AddString(snode, SAVE_RESEARCH_STATUSRESEARCH, Com_GetConstVariable(SAVE_RESEARCHSTATUS_NAMESPACE, t->statusResearch));
 		if (t->base)
-			mxml_AddInt(snode, "base", t->base->idx);
-		mxml_AddInt(snode, "scientists", t->scientists);
-		mxml_AddInt(snode, "statusresearchable", t->statusResearchable);
-		mxml_AddInt(snode, "preday", t->preResearchedDate.day);
-		mxml_AddInt(snode, "presec", t->preResearchedDate.sec);
-		mxml_AddInt(snode, "day", t->researchedDate.day);
-		mxml_AddInt(snode, "sec", t->researchedDate.sec);
-		mxml_AddInt(snode, "mailsent", t->mailSent);
+			mxml_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
+		mxml_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
+		mxml_AddInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
+		mxml_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
+		mxml_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
+		mxml_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
+
+		/* save which techMails were read */
+		/** @todo this should be handled by the mail system */
 		for (j = 0; j < TECHMAIL_MAX; j++) {
-			/* only save the already read mails */
 			if (t->mail[j].read) {
-				mxml_node_t * ssnode = mxml_AddNode(snode, "mail");
-				mxml_AddInt(ssnode, "id", j);
-				mxml_AddBool(ssnode, "read", t->mail[j].read);
+				mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_RESEARCH_MAIL);
+				mxml_AddInt(ssnode, SAVE_RESEARCH_MAIL_ID, j);
 			}
 		}
 	}
+	Com_UnregisterConstList(saveResearchConstants);
 
 	return qtrue;
 }
 
+/**
+ * @brief Load callback for research and technologies
+ * @param[in] parent XML Node structure, where we get the information from
+ * @sa RS_SaveXML
+ */
 qboolean RS_LoadXML (mxml_node_t *parent)
 {
-	int i, count;
-	mxml_node_t *topnode, *snode;
-	topnode = mxml_GetNode(parent, "research");
+	mxml_node_t *topnode;
+	mxml_node_t *snode;
+	qboolean success = qtrue;
+
+	topnode = mxml_GetNode(parent, SAVE_RESEARCH_RESEARCH);
 	if (!topnode)
 		return qfalse;
-	count = mxml_GetInt(topnode, "count", 0);
-	for (i = 0, snode = mxml_GetNode(topnode, "tech"); i < count && snode; i++, snode = mxml_GetNextNode(snode, topnode, "tech")) {
-		const char *techString = mxml_GetString(snode, "id");
+
+	Com_RegisterConstList(saveResearchConstants);
+	for (snode = mxml_GetNode(topnode, SAVE_RESEARCH_TECH); snode; snode = mxml_GetNextNode(snode, topnode, "tech")) {
+		const char *techString = mxml_GetString(snode, SAVE_RESEARCH_ID);
 		mxml_node_t * ssnode;
 		int baseIdx;
 		technology_t *t = RS_GetTechByID(techString);
+		const char *type = mxml_GetString(snode, SAVE_RESEARCH_STATUSRESEARCH);
+
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			continue;
 		}
-		t->statusCollected = mxml_GetBool(snode, "statuscollected", qfalse);
-		t->time = mxml_GetFloat(snode, "time", 0.0);
-		t->statusResearch = mxml_GetShort(snode, "statusresearch", 0);
+	
+		if (!Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
+			Com_Printf("Invaild research status '%s'\n", type);
+			success = qfalse;
+			break;
+		}
+
+		t->statusCollected = mxml_GetBool(snode, SAVE_RESEARCH_STATUSCOLLECTED, qfalse);
+		t->time = mxml_GetFloat(snode, SAVE_RESEARCH_TIME, 0.0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
-		baseIdx = mxml_GetInt(snode, "base", -1);
+		baseIdx = mxml_GetInt(snode, SAVE_RESEARCH_BASE, -1);
 		if (baseIdx >= 0)
 			/* even if the base is not yet loaded we can set the pointer already */
 			t->base = B_GetBaseByIDX(baseIdx);
-		t->scientists = mxml_GetInt(snode, "scientists", 0);
-		t->statusResearchable = mxml_GetInt(snode, "statusresearchable", 0);
-		t->preResearchedDate.day = mxml_GetInt(snode, "preday", 0);
-		t->preResearchedDate.sec = mxml_GetInt(snode, "presec", 0);
-		t->researchedDate.day = mxml_GetInt(snode, "day", 0);
-		t->researchedDate.sec = mxml_GetInt(snode, "sec", 0);
-		t->mailSent = mxml_GetInt(snode, "mailsent", 0);
+		t->scientists = mxml_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
+		t->statusResearchable = mxml_GetInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, 0);
+		mxml_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
+		mxml_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
+		t->mailSent = mxml_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
 
-		for (ssnode = mxml_GetNode(snode, "mail"); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, "mail")) {
-			int j= mxml_GetInt(ssnode, "id", TECHMAIL_MAX);
-			if (j  < TECHMAIL_MAX) {
+		/* load which techMails were read */
+		/** @todo this should be handled by the mail system */
+		for (ssnode = mxml_GetNode(snode, SAVE_RESEARCH_MAIL); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, SAVE_RESEARCH_MAIL)) {
+			const int j= mxml_GetInt(ssnode, SAVE_RESEARCH_MAIL_ID, TECHMAIL_MAX);
+			if (j < TECHMAIL_MAX) {
 				const techMailType_t mailType = j;
-				t->mail[mailType].read = mxml_GetBool(ssnode, "read", qtrue);
+				t->mail[mailType].read = qtrue;
 			} else
 				Com_Printf("......your save game contains unknown techmail ids... \n");
 		}
+
 #ifdef DEBUG
 		if (t->statusResearch == RS_RUNNING && t->scientists > 0) {
 			if (!t->base) {
 				Com_Printf("No base but research is running and scientists are assigned");
-				return qfalse;
+				success = qfalse;
+				break;
 			}
 		}
 #endif
 	}
+	Com_UnregisterConstList(saveResearchConstants);
 
-	return qtrue;
+	return success;
 }
 
 /**

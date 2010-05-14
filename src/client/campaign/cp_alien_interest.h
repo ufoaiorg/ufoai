@@ -30,5 +30,7 @@ void CL_ResetAlienInterest(void);
 void CP_IncreaseAlienInterest(void);
 void CL_ChangeIndividualInterest(float percentage, interestCategory_t category);
 
+qboolean CP_SaveInterestsXML(mxml_node_t *parent);
+qboolean CP_LoadInterestsXML(mxml_node_t *parent);
 #endif
 

@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_fightequip_callbacks.h"
 #include "cp_ufo.h"
 #include "cp_map.h"
+#include "save/save_fightequip.h"
 
 #define UFO_RELOAD_DELAY_MULTIPLIER 2
 #define AIRCRAFT_RELOAD_DELAY_MULTIPLIER 2
@@ -1389,5 +1390,84 @@ void AII_CorrectAircraftSlotPointers (aircraft_t *aircraft)
 	aircraft->shield.aircraft = aircraft;
 	aircraft->shield.base = NULL;
 	aircraft->shield.installation = NULL;
+}
+
+/**
+ * @brief Save callback for savegames in XML Format
+ * @param[out] p XML Node structure, where we write the information to
+ * @param[in] slot The aircraftslot to save
+ * @param[in] weapon True if this is a weapon slot
+ */
+void AII_SaveOneSlotXML (mxml_node_t *p, const aircraftSlot_t* slot, qboolean weapon)
+{
+	mxml_AddStringValue(p, SAVE_SLOT_ITEMID, slot->item ? slot->item->id : "");
+	mxml_AddStringValue(p, SAVE_SLOT_NEXTITEMID, slot->nextItem ? slot->nextItem->id : "");
+	mxml_AddIntValue(p, SAVE_SLOT_INSTALLATIONTIME, slot->installationTime);
+
+	/* everything below is only for weapon */
+	if (!weapon)
+		return;
+
+	mxml_AddIntValue(p, SAVE_SLOT_AMMOLEFT, slot->ammoLeft);
+	mxml_AddStringValue(p, SAVE_SLOT_AMMOID, slot->ammo ? slot->ammo->id : "");
+	mxml_AddStringValue(p, SAVE_SLOT_NEXTAMMOID, slot->nextAmmo ? slot->nextAmmo->id : "");
+	mxml_AddIntValue(p, SAVE_SLOT_DELAYNEXTSHOT, slot->delayNextShot);
+}
+
+/**
+ * @brief Loads one slot (base, installation or aircraft)
+ * @param[in] node XML Node structure, where we get the information from
+ * @param[out] slot Pointer to the slot where item should be added.
+ * @param[in] weapon True if the slot is a weapon slot.
+ * @sa B_Load
+ * @sa B_SaveAircraftSlots
+ */
+void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapon)
+{
+	const char *name;
+	name = mxml_GetString(node, SAVE_SLOT_ITEMID);
+	if (name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		/* base is NULL here to not check against the storage amounts - they
+		* are already loaded in the campaign load function and set to the value
+		* after the craftitem was already removed from the initial game - thus
+		* there might not be any of these items in the storage at this point.
+		* Furthermore, they have already be taken from storage during game. */
+		if (tech)
+			AII_AddItemToSlot(NULL, tech, slot, qfalse);
+	}
+
+	/* item to install after current one is removed */
+	name = mxml_GetString(node, SAVE_SLOT_NEXTITEMID);
+	if (name && name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		if (tech)
+			AII_AddItemToSlot(NULL, tech, slot, qtrue);
+	}
+
+	slot->installationTime = mxml_GetInt(node, SAVE_SLOT_INSTALLATIONTIME, 0);
+
+	/* everything below is weapon specific */
+	if (!weapon)
+		return;
+
+	/* current ammo */
+	/* load ammoLeft before adding ammo to avoid unnecessary auto-reloading */
+	slot->ammoLeft = mxml_GetInt(node, SAVE_SLOT_AMMOLEFT, 0);
+	name = mxml_GetString(node, SAVE_SLOT_AMMOID);
+	if (name && name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		/* next Item must not be loaded yet in order to install ammo properly */
+		if (tech)
+			AII_AddAmmoToSlot(NULL, tech, slot);
+	}
+	/* ammo to install after current one is removed */
+	name = mxml_GetString(node, SAVE_SLOT_NEXTAMMOID);
+	if (name && name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		if (tech)
+			AII_AddAmmoToSlot(NULL, tech, slot);
+	}
+	slot->delayNextShot = mxml_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
 }
 

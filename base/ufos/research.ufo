@@ -263,44 +263,6 @@ tech rs_item_antimatter
 	image		"techs/antimatter"
 }
 
-tech rs_craft_upgrade_am_engines
-{
-	type		tech
-	up_chapter	tech
-	name		"_Upgrade - Antimatter engines"
-	description {
-		default "_craft_upgrade_am_engines_txt"
-	}
-	pre_description {
-		default "_craft_upgrade_am_engines_pre_txt"
-	}
-
-	require_AND
-	{
-		tech rs_antimatter
-		tech rs_craft_alien_propulsion
-	}
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		// subject	defined by "name"
-		icon	icons/tech
-	}
-
-	time 3800
-	image	techs/antimatter_engine
-}
-
 tech rs_alien_live
 {
 	name	"_Live Alien"
@@ -3378,63 +3340,6 @@ tech rs_building_storage
 	time	0
 }
 
-// @todo Team Room is disabled, scheduled for removal
-tech rs_building_teamroom
-{
-	type	building
-	description {
-		default "_b_teamroom_txt"
-	}
-	// pre_description	"_b_teamroom_pre_txt"
-	// up_chapter	buildings
-
-	require_AND
-	{
-		tech rs_building_powerplant
-	}
-
-	provides	building_teamroom
-	time	0
-}
-
-// @todo Small UFO Hangar is disabled, scheduled for removal
-tech rs_building_small_ufo_hangar
-{
-	type	building
-	description {
-		default "_b_small_ufo_hangar_txt"
-	}
-	// pre_description	"_b_small_ufo_hangar_pre_txt"
-	// up_chapter	buildings
-
-	require_AND
-	{
-		tech rs_building_powerplant
-	}
-
-	provides	building_small_ufo_hangar
-	time	0
-}
-
-// @todo Large UFO Hangar is disabled, scheduled for removal
-tech rs_building_large_ufo_hangar
-{
-	type	building
-	description {
-		default "_b_large_ufo_hangar_txt"
-	}
-	// pre_description	"_b_large_ufo_hangar_pre_txt"
-	// up_chapter	buildings
-
-	require_AND
-	{
-		tech rs_building_powerplant
-	}
-
-	provides	building_large_ufo_hangar
-	time	0
-}
-
 tech rs_building_workshop
 {
 	type	building
@@ -3641,7 +3546,8 @@ tech rs_craft_inter_dragon
 
 	provides	craft_inter_dragon
 	require_AND {
-		tech rs_craft_upgrade_am_engines
+		tech rs_antimatter
+		tech rs_craft_alien_propulsion
 	}
 	time	10000
 	producetime	600

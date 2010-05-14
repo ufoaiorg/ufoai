@@ -259,7 +259,7 @@ typedef struct stats_s {
 	int missions;				/**< all missions (used for unique mission idx generation) */
 	int missionsWon;
 	int missionsLost;
-	int basesBuild;
+	int basesBuilt;
 	int basesAttacked;
 	int installationsBuild;
 	int interceptions;
@@ -420,7 +420,7 @@ typedef struct ccs_s {
 	qboolean autosell[MAX_OBJDEFS];
 
 	/* already paid in this month? */
-	qboolean fund;
+	qboolean paid;
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */
@@ -437,13 +437,15 @@ typedef struct ccs_s {
 	/* == bases == */
 	/* A list of _all_ bases ... even unbuilt ones. */
 	base_t bases[MAX_BASES];
-	/* used for unique aircraft ids */
-	int numAircraft;
 	/* Total number of built bases (how many are enabled). */
 	int numBases;
+
 	/* a list of all templates for building bases */
 	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
 	int numBaseTemplates;
+
+	/* used for unique aircraft ids */
+	int numAircraft;
 
 	alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
 	int numAlienBases;							/**< Number of alien bases in game */
@@ -473,6 +475,7 @@ typedef struct ccs_s {
 	int numStoredUFOs;
 
 	/* Alien Team Definitions. */
+	teamDef_t *alienTeams[MAX_TEAMDEFS];
 	int numAliensTD;
 
 	/* Alien Team Package used during battle */
@@ -575,9 +578,6 @@ extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;
 extern cvar_t *cp_start_employees;
-
-void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
-void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 
 void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(aircraft_t *ufo);

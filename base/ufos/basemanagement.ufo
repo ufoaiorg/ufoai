@@ -60,7 +60,6 @@ building building_entrance
 	pedia		rs_building_entrance
 	mandatory	true
 	type		entrance
-	visible		false //TODO: Why is this here?
 	max_count	1
 }
 
@@ -161,64 +160,6 @@ building building_intercept
 	ondestroy		"building_ondestroy"
 	capacity		1
 	type			smallhangar
-}
-
-// @todo Small UFO Hangar is disabled, scheduled for removal
-building building_small_ufo_hangar
-{
-	name			"_Small UFO Hangar"
-	image			base/adrop
-	fixcosts		71000
-	depends			building_powerplant
-	build_time		8
-	varcosts		6500
-	map_name		"ufohangar"
-	pedia			rs_building_small_ufo_hangar
-	ondestroy		"building_ondestroy"
-	capacity		1
-	type			smallufohangar
-	max_count	0
-}
-
-// @todo Large UFO Hangar disabled, scheduled for removal
-building building_large_ufo_hangar
-{
-	name			"_Large UFO Hangar"
-	image			base/adropl2
-	fixcosts		80000
-	depends			building_powerplant
-	build_time		11
-	varcosts		7600
-	map_name		"ufohangar_l"
-	capacity		1
-	ondestroy		"building_ondestroy"
-	pedia			rs_building_large_ufo_hangar
-	needs			building_large_ufo_hangar2
-	type			ufohangar
-	max_count	0
-}
-
-building building_large_ufo_hangar2
-{
-	name		"_Large UFO Hangar"
-	image		base/adropl1
-	pedia		rs_building_large_ufo_hangar
-	visible		false // no 'needs' field here!
-}
-
-// @todo Team room is disabled, scheduled for removal
-building building_teamroom
-{
-	name		"_Team Room"
-	image		base/teamroom
-	fixcosts	32000
-	depends		building_powerplant
-	build_time	3
-	varcosts	2600
-	map_name	"teamroom"
-	type		teamroom
-	pedia		rs_building_teamroom
-	max_count	0
 }
 
 building building_workshop
@@ -372,3 +313,4 @@ basetemplate balanced {
 	building_lab				"3 1"
 	building_hospital			"3 2"
 }
+

@@ -30,109 +30,6 @@ item alienmaterials
 	weapon		false
 }
 
-// ==========
-// UFO Crafts
-// ==========
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_scout
-{
-	name		"_UFO - Scout"
-	is_dummy	true
-	weapon		false
-	model		objects/alien/disassembled/ufo_scout
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_fighter
-{
-	name		"_UFO - Fighter"
-	is_dummy	true
-	weapon		false
-	model		objects/alien/disassembled/ufo_fighter
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_harvester
-{
-	name		"_UFO - Harvester"
-	is_dummy	true
-	weapon		false
-	model		objects/alien/disassembled/ufo_harvester
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_bomber
-{
-	name		"_UFO - Bomber"
-	is_dummy	true
-	weapon		false
-	notonmarket	true
-	model		geoscape/ufo_bomber
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_ripper
-{
-	name		"_UFO - Ripper"
-	is_dummy	true
-	weapon		false
-	model		objects/alien/disassembled/ufo_ripper
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_mothership
-{
-	name		"_UFO - Mothership"
-	is_dummy	true
-	weapon		false
-	model		objects/alien/disassembled/ufo_mothership
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_gunboat
-{
-	name		"_UFO - Gunboat"
-	is_dummy	true
-	weapon		false
-	model		objects/alien/disassembled/ufo_gunboat
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_corrupter
-{
-	name		"_UFO - Corrupter"
-	is_dummy	true
-	weapon		false
-	notonmarket	true
-	model		geoscape/ufo_corrupter
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_carrier
-{
-	name		"_UFO - Carrier"
-	is_dummy	true
-	weapon		false
-	notonmarket	true
-}
-
-// @todo UFO item definitions not needed anymore, scheduled for removal
-item craft_ufo_supply
-{
-	name		"_UFO - Supply Ship"
-	is_dummy	true
-	weapon		false
-	notonmarket	true
-	model		geoscape/ufo_supply
-}
-
 // ========================
 // weapons for melee actors
 // ========================
@@ -170,3 +67,4 @@ item bloodspider_weapon
 		}
 	}
 }
+

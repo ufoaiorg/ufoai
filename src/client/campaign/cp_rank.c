@@ -28,7 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 
 /**
- * @brief Get the index number of the given rankID
+ * @brief Get the index of the given rankID in ccs.ranks array
+ * @param[in] rankID Script id of the rank
+ * @return -1 if no rank with rankID found
  */
 int CL_GetRankIdx (const char* rankID)
 {
@@ -38,13 +40,21 @@ int CL_GetRankIdx (const char* rankID)
 		if (!strcmp(ccs.ranks[i].id, rankID))
 			return i;
 	}
-	Com_Error(ERR_DROP, "Could not find rank '%s'\n", rankID);
+
+	return -1;
 }
 
+/**
+ * @brief Returns a rank at an index
+ * @param[in] index Index of rank in ccs.ranks
+ * @return NULL on invalid index
+ * @return pointer to the rank definition otherwise
+ */
 rank_t *CL_GetRankByIdx (const int index)
 {
-	assert(index >= 0);
-	assert(index < ccs.numRanks);
+	if ((index < 0) || (index >= ccs.numRanks))
+		return NULL;
+
 	return &ccs.ranks[index];
 }
 

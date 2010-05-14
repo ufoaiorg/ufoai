@@ -15,12 +15,12 @@
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_REGISTER_BOOKKEEPING" value="false"/>
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_VARIABLE_BOOKKEEPING" value="false"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="radiant/uforadiant"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="ufoai-trunk"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="ufoai-hud"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value=""/>
-<stringAttribute key="org.eclipse.cdt.launch.WORKING_DIRECTORY" value="${workspace_loc:ufoai-trunk}/radiant"/>
+<stringAttribute key="org.eclipse.cdt.launch.WORKING_DIRECTORY" value="${workspace_loc:ufoai-hud}/radiant"/>
 <booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/ufoai-trunk"/>
+<listEntry value="/ufoai-hud"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>

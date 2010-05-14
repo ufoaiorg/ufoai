@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../common/common.h"
+#include "utf8.h"
 
 /**
  * @brief Returns just the filename from a given path
@@ -414,8 +415,16 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 
 	/* space for \0 terminating */
 	while (*src && destsize - 1) {
-		*dest++ = *src++;
+		*dest = *src++;
+		/* check for UTF8 multibyte sequences */
+		if ((*dest & 0xf0) >= 0xf0 && destsize <= 4)
+			break;
+		if ((*dest & 0xe0) >= 0xe0 && destsize <= 3)
+			break;
+		if ((*dest & 0xc0) >= 0xc0 && destsize <= 2)
+			break;
 		destsize--;
+		dest++;
 	}
 #ifdef PARANOID
 	if (*src)
@@ -451,7 +460,7 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
 qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 {
 	va_list ap;
-	int     len;
+	int len;
 
 	if (!fmt)
 		return qfalse;
@@ -459,6 +468,16 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	va_start(ap, fmt);
 	len = Q_vsnprintf(dest, size, fmt, ap);
 	va_end(ap);
+
+	/* check for UTF8 multibyte sequences */
+	if (dest[len - 1] > 0x80) {
+		int i = len - 1;
+		while ((i > 0) && dest[i] <= 0xc0)
+			i--;
+		if (UTF8_char_len(dest[i]) + i - 1 > len)
+			len = i + 1;
+		dest[len] = '\0';
+	}
 
 	return 0 <= len && (size_t)len < size;
 }
