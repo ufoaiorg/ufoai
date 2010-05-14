@@ -59,4 +59,17 @@
 	}
 }
 
+/* Special U.F.O.-Crash Stuff */
+
+/* ufo2_11: Destroyed UFO-Panel (Corrupter-Crash) */
+{
+	material tex_ufo/ufo2_11
+	{		
+		flare 1
+		color 0.1 0.3 0.0
+	}
+	{
+		lightmap
+	}
+}
 
