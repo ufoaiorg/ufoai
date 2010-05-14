@@ -384,6 +384,9 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 {
 	int i;
 
+	if (!s_env.initialized)
+		return;
+
 	if (rate != s_env.rate) {
 		const float scale = (float)rate / s_env.rate;
 		for (i = 0;; i++) {
