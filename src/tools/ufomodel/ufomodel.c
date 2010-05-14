@@ -480,16 +480,22 @@ static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize,
 		dMD2Model_t *fixedMD2 = Mem_Dup(buf, bufSize);
 		const size_t delta = numGLCmds * sizeof(uint32_t);
 		const uint32_t offset = LittleLong(fixedMD2->ofs_glcmds);
-		bufSize -= delta;
-		fixedMD2->ofs_end = LittleLong(fixedMD2->ofs_end - delta);
+
 		if (LittleLong(fixedMD2->ofs_skins) > offset || LittleLong(fixedMD2->ofs_frames) > offset
 		 || LittleLong(fixedMD2->ofs_st) > offset || LittleLong(fixedMD2->ofs_tris) > offset) {
 			Com_Error(ERR_DROP, "Unexpected order of the different data lumps");
 		}
+
+		fixedMD2->ofs_end = LittleLong(fixedMD2->ofs_end - delta);
 		fixedMD2->ofs_glcmds = 0;
 		fixedMD2->num_glcmds = 0;
+
+		bufSize -= delta;
+
 		FS_WriteFile(fixedMD2, bufSize, fileName);
+
 		Mem_Free(fixedMD2);
+
 		*(size_t *)userData += delta;
 		Com_Printf("  \\ - removed %i glcmds from '%s' (save "UFO_SIZE_T" bytes)\n",
 				numGLCmds, fileName, delta);
