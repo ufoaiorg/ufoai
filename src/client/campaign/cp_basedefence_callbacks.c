@@ -506,7 +506,7 @@ static void BDEF_RemoveBattery_f (void)
 
 	/* Check that the baseIdx exists */
 	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
+		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n", baseIdx, ccs.numBases);
 		return;
 	}
 
@@ -546,7 +546,7 @@ static void BDEF_RemoveBattery_f (void)
 			max = base->numLasers;
 			break;
 		default:
-			Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exists.\n", basedefType);
+			Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exist.\n", basedefType);
 			return;
 		}
 
@@ -599,13 +599,13 @@ static void BDEF_AddBattery_f (void)
 
 	/* Check that the baseIdx exists */
 	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
+		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n", baseIdx, ccs.numBases);
 		return;
 	}
 
 	/* Check that the basedefType exists */
 	if (basedefType != BASEDEF_MISSILE && basedefType != BASEDEF_LASER) {
-		Com_Printf("BDEF_AddBattery_f: base defence type %i doesn't exists.\n", basedefType);
+		Com_Printf("BDEF_AddBattery_f: base defence type %i doesn't exist.\n", basedefType);
 		return;
 	}
 
