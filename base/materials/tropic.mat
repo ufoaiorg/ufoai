@@ -55,4 +55,19 @@
 	}
 }
 
+/* Lights & LightFX (Corrupter) */
 
+/* land_li_green: Small Light (green) (Corrupter) */
+{
+	material tex_lights/land_li_green
+	{
+		texture tex_lights/land_li_orange
+		pulse 0.2
+		rotate 0.3
+	}
+	{
+		flare 2
+		color 0.7 0.7 0.5
+		scale.s 1.3
+	}
+}
