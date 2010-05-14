@@ -37,9 +37,35 @@ static cvar_t *cvarVarsHash[CVAR_HASH_SIZE];
 
 /**
  * @brief This is set each time a CVAR_USERINFO variable is changed
+ * so that the renderer knows to update stuff accordingly
+ */
+static qboolean renderModified;
+
+/**
+ * @brief This is set each time a CVAR_USERINFO variable is changed
  * so that the client knows to send it to the server
  */
-qboolean userinfoModified;
+static qboolean userinfoModified;
+
+void Com_SetUserinfoModified (qboolean modified)
+{
+	userinfoModified = modified;
+}
+
+qboolean Com_IsUserinfoModified (void)
+{
+	return userinfoModified;
+}
+
+void Com_SetRenderModified (qboolean modified)
+{
+	renderModified = modified;
+}
+
+qboolean Com_IsRenderModified (void)
+{
+	return renderModified;
+}
 
 /**
  * @brief Cvar list
@@ -565,6 +591,9 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 		}
 	}
 
+	if (var->flags & CVAR_R_MASK)
+		Com_SetRenderModified(qtrue);
+
 	if (!strcmp(value, var->string))
 		return var;				/* not changed */
 
@@ -574,7 +603,7 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
-		userinfoModified = qtrue;	/* transmit at next opportunity */
+		Com_SetUserinfoModified(qtrue);	/* transmit at next opportunity */
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
@@ -640,7 +669,7 @@ cvar_t *Cvar_FullSet (const char *varName, const char *value, int flags)
 
 	/* transmit at next opportunity */
 	if (var->flags & CVAR_USERINFO)
-		userinfoModified = qtrue;
+		Com_SetUserinfoModified(qtrue);
 
 	if (var->oldString)
 		Mem_Free(var->oldString);		/* free the old value string */

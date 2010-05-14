@@ -108,12 +108,6 @@ const char *Cvar_Userinfo(void);
 const char *Cvar_Serverinfo(void);
 
 /**
- * @brief this is set each time a CVAR_USERINFO variable is changed
- * so that the client knows to send it to the server
- */
-extern qboolean userinfoModified;
-
-/**
  * @brief this function checks cvar ranges and integral values
  */
 qboolean Cvar_AssertValue(cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral);
@@ -163,6 +157,14 @@ cvar_t *Cvar_FindVar(const char *var_name);
  * @return true if there are pending cvars, false otherwise
  */
 qboolean Cvar_PendingCvars(int flags);
+
+void Com_SetUserinfoModified(qboolean modified);
+
+qboolean Com_IsUserinfoModified(void);
+
+void Com_SetRenderModified(qboolean modified);
+
+qboolean Com_IsRenderModified(void);
 
 void Cvar_ClearVars(int flags);
 

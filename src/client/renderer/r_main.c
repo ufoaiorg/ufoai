@@ -210,9 +210,16 @@ void R_BeginFrame (void)
 		VID_Restart_f();
 #endif
 	}
-	/* we definitely need a restart here */
-	if (r_ext_texture_compression->modified)
-		VID_Restart_f();
+
+	if (Com_IsRenderModified()) {
+		Com_Printf("Modified render related cvars\n");
+		if (Cvar_PendingCvars(CVAR_R_CONTEXT))
+			VID_Restart_f();
+		else if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
+			R_RestartPrograms_f();
+
+		Com_SetRenderModified(qfalse);
+	}
 
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_config.maxAnisotropic) {
@@ -221,21 +228,6 @@ void R_BeginFrame (void)
 		}
 		/*R_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
-	}
-
-	if (r_lightmap->modified) {
-		R_RestartPrograms_f();
-		r_lightmap->modified = qfalse;
-	}
-
-	if (r_deluxemap->modified) {
-		R_RestartPrograms_f();
-		r_deluxemap->modified = qfalse;
-	}
-
-	if (r_programs->modified) {
-		R_RestartPrograms_f();
-		r_programs->modified = qfalse;
 	}
 
 	/* draw buffer stuff */
@@ -471,15 +463,15 @@ static void R_RegisterSystemVars (void)
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
-	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
+	r_lightmap = Cvar_Get("r_lightmap", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
 	r_lightmap->modified = qfalse;
-	r_deluxemap = Cvar_Get("r_deluxemap", "0", 0, "Draw only the deluxemap");
+	r_deluxemap = Cvar_Get("r_deluxemap", "0", CVAR_R_PROGRAMS, "Draw only the deluxemap");
 	r_deluxemap->modified = qfalse;
 	r_debug_normals = Cvar_Get("r_debug_normals", "0", CVAR_R_PROGRAMS, "Draw dot(normal, light_0 direction)");
 	r_debug_normals->modified = qfalse;
 	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
 	r_debug_tangents->modified = qfalse;
-	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
+	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, NULL);
 	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");

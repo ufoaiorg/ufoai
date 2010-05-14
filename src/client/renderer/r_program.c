@@ -676,10 +676,11 @@ static void R_InitWarpProgram (r_program_t *prog)
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER4", 4);
-
+	if (r_postprocess->integer) {
+		R_ProgramParameter1i("SAMPLER4", 4);
+		R_ProgramParameter1f("GLOWSCALE", 0.0);
+	}
 	R_ProgramParameter4fv("OFFSET", offset);
-	R_ProgramParameter1f("GLOWSCALE", 0.0);
 }
 
 static void R_UseWarpProgram (r_program_t *prog)
