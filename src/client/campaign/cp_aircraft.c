@@ -2748,7 +2748,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 #ifdef DEBUG
 		/* UFO HP can be < 0 if the UFO has been destroyed */
 		if (!(!craft->homebase && idx == AIR_STATS_DAMAGE) && craft->stats[idx] < 0)
-			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, l, craft->stats[idx]);
+			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, idx, craft->stats[idx]);
 #endif
 	}
 
@@ -2839,7 +2839,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 		cargo[l].amountAlive = mxml_GetInt(ssnode, SAVE_AIRCRAFT_ALIVE, 0);
 		cargo[l].amountDead  =	mxml_GetInt(ssnode, SAVE_AIRCRAFT_DEAD, 0);
 	}
-	AL_SetAircraftAlienCargoTypes(craft, l);	
+	AL_SetAircraftAlienCargoTypes(craft, l);
 
 	return qtrue;
 }
