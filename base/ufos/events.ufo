@@ -43,7 +43,7 @@ mail alienbreathing
 	from "_mail_from_paul_navarre"
 	to "_mail_to_base_commander"
 	subject "_Alien died"
-	body "_mail_alienbreathing"
+	body "_mail_stunned_alien_died"
 	model "characters/navarre"
 	icon icons/un
 }
