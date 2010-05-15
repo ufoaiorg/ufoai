@@ -7,7 +7,7 @@ inherit eutils games subversion
 
 DESCRIPTION="UFO: Alien Invasion - X-COM inspired strategy game"
 HOMEPAGE="http://ufoai.sourceforge.net/"
-ESVN_REPO_URI="https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/trunk"
+ESVN_REPO_URI="https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/branches/ufoai_2.3"
 
 LICENSE="GPL-2"
 SLOT="0"
