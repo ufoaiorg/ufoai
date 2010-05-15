@@ -56,9 +56,18 @@ sub get_textures {
 	return @textures;
 }
 
+sub get_models {
+	my @models = read_dir2("base/models/objects", ".md2");
+	push (@models, read_dir2("base/models/objects", ".md3"));
+	push (@models, read_dir2("base/models/objects", ".dpm"));
+	push (@models, read_dir2("base/models/objects", ".obj"));
+	return @models;
+}
+
 my @maps = get_maps();
 my @textures = get_textures();
 my @materials = get_materials();
+my @models = get_models();
 
 my @suffixlist = (".png", ".tga", ".jpg");
 
@@ -83,9 +92,10 @@ foreach my $texture (@textures) {
 			last;
 		}
 		if ($texture =~ /\d$/) {
-			my $anim =~ s/\d+$//;
+			my $anim = $texture;
+			$anim =~ s/\d+$//;
 			if (check_content($material, $anim)) {
-				print "$texture is used as animation\n";
+				print "$texture is used as animation $anim\n";
 				$used = 1;
 				last;
 			}
@@ -99,5 +109,19 @@ foreach my $texture (@textures) {
 		}
 	}
 	print STDERR "$texture is not used in materials or maps\n" unless $used;
+}
+
+foreach my $model (@models) {
+	my $used = 0;
+	$model =~ s/^base\/models\///;
+	$model =~ s/\..*$//;
+	foreach my $map (@maps) {
+		if (check_content($map, $model)) {
+			print "$model is used in a map\n";
+			$used = 1;
+			last;
+		}
+	}
+	print STDERR "$model is not used in any maps\n" unless $used;
 }
 
