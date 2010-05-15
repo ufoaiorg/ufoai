@@ -1449,7 +1449,6 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
-		/** @todo When there will be different possible installation weapon, range should change */
 		for (i = 0; i < tpl->maxBatteries; i++) {
 			const aircraftSlot_t const *slot = &installation->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
@@ -1491,7 +1490,6 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_BaseCanShoot(base)) {
-		/** @todo When there will be different possible base weapon, range should change */
 		for (i = 0; i < base->numBatteries; i++) {
 			const aircraftSlot_t const *slot = &base->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
