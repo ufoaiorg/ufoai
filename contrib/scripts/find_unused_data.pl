@@ -14,7 +14,7 @@ sub read_dir2 {
 	foreach (@files) {
 		next if ($_ =~ m/^\./);
 		if (-d $DIR."/".$_) {
-			push (@filter, read_dir2($DIR."/".$_));
+			push (@filter, read_dir2($DIR."/".$_, $EXT));
 			next;
 		}
 		next unless $_ =~ /$EXT$/;
@@ -72,8 +72,8 @@ my @models = get_models();
 my @suffixlist = (".png", ".tga", ".jpg");
 
 foreach my $texture (@textures) {
+	next if ($texture =~ /tex_common/ || $texture =~ /tex_terrain/);
 	my $used = 0;
-	#$texture = basename($texture, @suffixlist);
 	$texture =~ s/^base\/textures\///;
 	$texture =~ s/\..*$//;
 
