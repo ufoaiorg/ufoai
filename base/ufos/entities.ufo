@@ -509,6 +509,7 @@ entity func_breakable {
 
 	default {
 		spawnflags	"255"
+		material	"0"
 	}
 }
 
