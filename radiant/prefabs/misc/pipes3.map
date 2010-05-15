@@ -1,0 +1,46 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 14 53 20 ) ( 22 53 20 ) ( 22 5 20 ) tex_common/weaponclip 0 48 0 0.25 0.25 33554432 0 0
+( 22 53 20 ) ( 1 53 0 ) ( 35 53 0 ) tex_common/weaponclip 0 0 0 0.25 0.25 33554432 0 0
+( 35 53 5 ) ( 35 53 0 ) ( 35 5 0 ) tex_common/weaponclip 16 0 0 0.25 0.25 33554432 0 0
+( 35 53 0 ) ( 1 53 0 ) ( 1 5 0 ) tex_common/weaponclip 0 48 0 0.25 0.25 33554432 0 0
+( 14 5 20 ) ( 35 5 0 ) ( 1 5 0 ) tex_common/weaponclip 56 0 0 0.25 0.25 33554432 0 0
+( 1 5 5 ) ( 1 5 0 ) ( 1 53 0 ) tex_common/weaponclip 16 0 0 0.25 0.25 33554432 0 0
+( 14 53 20 ) ( 1 5 5 ) ( 1 53 5 ) tex_common/weaponclip 16 0 0 0.25 0.25 33554432 0 0
+( 22 5 20 ) ( 35 53 5 ) ( 35 5 5 ) tex_common/weaponclip 16 0 0 0.25 0.25 33554432 0 0
+}
+// brush 1
+{
+( 14 53 20 ) ( 22 53 20 ) ( 22 5 20 ) tex_common/nodraw 0 48 0 0.25 0.25
+( 22 53 20 ) ( 1 53 3 ) ( 35 53 3 ) tex_common/nodraw 0 0 0 0.25 0.25
+( 35 53 5 ) ( 35 53 3 ) ( 35 5 3 ) tex_common/nodraw 16 0 0 0.25 0.25
+( 35 53 3 ) ( 1 53 3 ) ( 1 5 3 ) tex_common/nodraw 0 48 0 0.25 0.25
+( 14 5 20 ) ( 35 5 3 ) ( 1 5 3 ) tex_common/nodraw 56 0 0 0.25 0.25
+( 1 5 5 ) ( 1 5 3 ) ( 1 53 3 ) tex_common/nodraw 16 0 0 0.25 0.25
+( 14 53 20 ) ( 1 5 5 ) ( 1 53 5 ) tex_common/nodraw 16 0 0 0.25 0.25 0 0 0
+( 22 5 20 ) ( 35 53 5 ) ( 35 5 5 ) tex_common/nodraw 16 0 0 0.25 0.25 0 0 0
+}
+// brush 2
+{
+( 14 53 20 ) ( 22 53 20 ) ( 22 5 20 ) tex_common/actorclip 0 48 0 0.25 0.25 65536 0 0
+( 22 53 20 ) ( 1 53 0 ) ( 35 53 0 ) tex_common/actorclip 0 0 0 0.25 0.25 65536 0 0
+( 35 53 5 ) ( 35 53 0 ) ( 35 5 0 ) tex_common/actorclip 16 0 0 0.25 0.25 65536 0 0
+( 35 53 0 ) ( 1 53 0 ) ( 1 5 0 ) tex_common/actorclip 0 48 0 0.25 0.25 65536 0 0
+( 14 5 20 ) ( 35 5 0 ) ( 1 5 0 ) tex_common/actorclip 56 0 0 0.25 0.25 65536 0 0
+( 1 5 5 ) ( 1 5 0 ) ( 1 53 0 ) tex_common/actorclip 16 0 0 0.25 0.25 65536 0 0
+( 14 53 20 ) ( 1 5 5 ) ( 1 53 5 ) tex_common/actorclip 16 0 0 0.25 0.25 65536 0 0
+( 22 5 20 ) ( 35 53 5 ) ( 35 5 5 ) tex_common/actorclip 16 0 0 0.25 0.25 65536 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "18 28 2"
+"model" "models/objects/vehicles/forktruck/pipes.md2"
+"skin" "0"
+}
