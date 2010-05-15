@@ -2492,7 +2492,8 @@ msgstr "Zurich"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/events.ufo:34
 #: ../base/ufos/events.ufo:44
@@ -2662,8 +2663,8 @@ msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
 #: ../base/ufos/research.ufo:5130
 #: ../base/ufos/research.ufo:5159
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
-
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 # l'année doit être en premier pour correspondre aux formats de date des autres emails
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2804,7 +2805,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4888
 #: ../base/ufos/research.ufo:4896
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2870,7 +2872,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2942,7 +2945,8 @@ msgstr "Base alienne découverte -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "mail_alien_base_discovered"
+msgstr ""
+"Monsieur, nos hommes ont découvert l'emplacement d'une grande construction alien sur Terre, dans un territoire appartenant à %s. Elle représente une menace sérieuse pour PHALANX et plus généralement pour l'humanité : nous devons l'éliminer le plus rapidement possible."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2970,7 +2974,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:5129
 #: ../base/ufos/research.ufo:5158
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -3002,7 +3007,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3949,7 +3955,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5094
 #: ../base/ufos/research.ufo:5101
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:346
 #: ../base/ufos/research.ufo:387
@@ -5763,7 +5770,6 @@ msgstr ""
 "Commandant, faites mois savoir quand vous serez prêt à poursuivre dans cette voie.\n"
 "\n"
 "--Cdt Navarre"
-
 # Pour les médailles
 #: ../base/ufos/research.ufo:2006
 #: ../base/ufos/research.ufo:2014
@@ -7535,7 +7541,8 @@ msgstr "inter_stingray_txt"
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -8205,7 +8212,8 @@ msgstr "ugv_weapon_autocannon_txt"
 
 #: ../base/ufos/research.ufo:4369
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "Par : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Par : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:4416
 msgid "'Raven' ECM Unit"
@@ -8921,31 +8929,31 @@ msgid "news_after_the_war_txt"
 msgstr ""
 "La République Asiatique:\n"
 "\n"
-"Dans les années qui suivirent, la République de Chine réformée, reprenant son ancien nom pré-communiste, réforma lentement les territoires qu'elle avait conquit. À chacun d'entre eux, y compris ceux annexés depuis plusieurs siècles, elle offrit le choix entre l'indépendance et un siège dans le conseil du nouveau gouvernement, en tant que membre égalitaire et respecté de la nouvelle République. Ayant combattu au côté des rebelles pendant la guerre civile, Taïwan fut la première à intégrer la nouvelle République, la réconciliation avec le continent étant possible depuis la défaite du gouvernement communiste. Taïwan devint rapidement un acteur majeur du nouveau conseil, et contribua à envoyer les dirigeants de l'ancien gouvernement capturés devant un tribunal de crime de guerre à La Hague. La Corée du Nord, autre nation rebelle, choisit également par scrutin de rester dans la République, espérant ainsi avoir de meilleures opportunités de croissance économique et espérant éviter le retour d'un dictateur. Les coréens se seront pas déçus.\n"
+"Durant les années qui suivirent, la République de Chine réformée, reprenant son ancien nom pré-communiste, réforma lentement les territoires qu'elle avait conquit. À chacun d'entre eux, y compris ceux annexés depuis plusieurs siècles, elle offrit le choix entre l'indépendance ou un siège dans le conseil du nouveau gouvernement, en tant que membre égalitaire et respecté de la nouvelle République. Ayant combattu au côté des rebelles pendant la guerre civile, Taïwan fut la première à intégrer la nouvelle République, la réconciliation avec le continent étant possible depuis la chute du gouvernement communiste. Taïwan devint rapidement un acteur majeur du nouveau conseil, et contribua à envoyer les dirigeants capturés de l'ancien gouvernement devant le tribunal de crimes de guerre à La Haye. La Corée du Nord, autre nation rebelle, choisit également par scrutin, de rester dans la République, espérant ainsi avoir de meilleures opportunités de croissance économique et espérant éviter le retour d'un dictateur. Les coréens ne seront pas déçus.\n"
 "\n"
-"La résurgence de l'économie chinoise est considérée comme miraculeuse par les historiens contemporains. Les premières percées dans le domaine des nanotechnologies furent accomplies par des chercheurs chinois, ce qui permit à la Chine de signer de nombreux contrat industriels médicaux avec le reste du monde. Malgré les vieilles rancunes et le manque de confiance, les autres nations d'Asie de l'est rejoignirent successivement la République, qui fut bientôt renommée République Asiatique en l'honneur de ses nouveaux membres. Le Japon finit également par la rejoindre pour renforcer son économie vacillante et sa démographie qui a chuté pendant la guerre. Depuis, la République Asiatique a mis un point d'honneur à traiter également les nations qui la compose, ce qui lui a valu d'établir la confiance et la solidarité nécessaire parmi ses membres pour pouvoir maintenant parler d'une seule voix pour les milliards d'habitants d'Asie du sud-est.\n"
+"La résurgence de l'économie chinoise est considérée comme miraculeuse par les historiens contemporains. Les premières percées dans le domaine des nanotechnologies furent accomplies par des chercheurs chinois, ce qui permit à la Chine de signer de nombreux contrat industriels médicaux avec le reste du monde. Malgré les vieilles rancunes et le manque de confiance, les autres nations d'Asie de l'est rejoignirent successivement la République, qui fut bientôt renommée République Asiatique en l'honneur de ses nouveaux membres. Le Japon finit également par la rejoindre afin de renforcer son économie vacillante et sa démographie pilonnée lors de la guerre. Depuis, la République Asiatique a mis un point d'honneur à traiter également les nations membres, ce qui lui a permis d'établir la confiance et la solidarité nécessaire au sein de ses représentants, lui permettant à ce jour, de s’exprimer d’une voix unique représentant les milliards d'habitants d'Asie du sud-est.\n"
 "\n"
-"Aujourd'hui, l'économie de la République Asiatique s'est complètement rétablie grâce à la commercialisation des nanotechnologies et de techniques holographiques. Elle possède encore une force militaire puissante et récente, mieux entraînée que celles des autres pays.\n"
+"Aujourd'hui, l'économie de la République Asiatique s'est complètement rétablie grâce à la commercialisation des nanotechnologies et de techniques holographiques. Elle possède encore une puissante et moderne force militaire, mieux entraînée que celles des autres pays.\n"
 "\n"
 "\n"
 "\n"
 "Les États Révolutionnaires:\n"
 "\n"
-"Avec les chutes successives des États-Unis et de la Chine, le socialisme connu une période mouvementée durant les années postérieures à la guerre. La mort de l'économie des États-Unis fut à l'origine de plusieurs mouvements révolutionnaires, destituant plusieurs gouvernements pro-capitalistes. Avec une structure démocratique déjà à moitié mise en place dans la plupart des états, l'idéal de diriger les citoyens pu enfin être mis en place sans corruption. Cette nouvelle vague proposa de rassembler les principes démocratiques aux idéaux socialistes.\n"
+"Avec la chute successive des États-Unis et de la Chine, le socialisme connu une période mouvementée durant les années postérieures à la guerre. La mort de l'économie des États-Unis fut à l'origine de plusieurs mouvements révolutionnaires, destituant plusieurs gouvernements pro-capitalistes. Avec une structure démocratique déjà à moitié mise en place dans la plupart des états, l'idéal de diriger les citoyens sans corruption pu enfin être mis en place. Cette nouvelle vague proposa de rassembler les principes démocratiques aux idéaux socialistes.\n"
 "\n"
-"Le continent entier regarda avec horreur le bombardement nucléaire de Shanghai pendant la Seconde Guerre Froide, diffusé sur toutes les chaînes du mondes jusqu'à la dernière seconde. La nouvelle vague souffrit une nouvelle fois de la chute de la Chine. Chacun pouvait y voir un exemple flagrant du devenir d'une révolution sombrant dans la dictature et le totalitarisme. Les dirigeants furent prompts à trouver une réponse.\n"
+"Le continent entier regarda avec horreur le bombardement nucléaire de Shanghai pendant la Seconde Guerre Froide, diffusé jusqu'à la dernière seconde, sur toutes les chaînes du mondes. La nouvelle vague souffrit une nouvelle fois de la chute de la Chine. Chacun pouvait y voir un exemple flagrant du devenir d'une révolution sombrant dans la dictature et le totalitarisme. Les dirigeants furent prompts à trouver une réponse.\n"
 "\n"
-"Plusieurs états dictatoriaux essayèrent alors de maintenir leur pouvoir, en matant les rebellions avant qu'elles ne commencent. Cela causa une réaction violente des plus grandes nations démocratiques, particulièrement Cuba, le Brésil ou l'Argentine. Soudainement, les derniers rois restants d'Amérique du Sud se retrouvèrent sans ami.\n"
+"Plusieurs états dictatoriaux essayèrent alors de maintenir leur pouvoir, matant les rebellions avant qu'elles ne commencent. Cela causa une réaction violente des plus grandes nations démocratiques, particulièrement de Cuba, du Brésil et de l'Argentine. Soudainement, les derniers rois restants d'Amérique du Sud se retrouvèrent sans allié.\n"
 "\n"
-"L'un après l'autre, les dictateurs cédèrent à la population et à la pression politique, et furent remplacés par des collèges élus. La révolution gagna en vitesse plutôt que de s'amoindrir, le commerce fut encouragé, l'intégration améliorée, et les frontières furent ouvertes en suivant l'exemple européen. Un nouveau réseau d'autoroute fleurit sur le continent et renforça l'économie, permettant une meilleure utilisation des terres arables. Les richesses naturelles d'Amérique du sud furent exploitées comme jamais auparavant, et le prix des exportations fut rehaussé atteignant enfin une valeur correcte.\n"
+"L'un après l'autre, les dictateurs cédèrent face à la population et à la pression politique, et furent remplacés par des collèges d’élus. Plutôt que de s'amoindrir, la révolution gagna en vitesse, le commerce fut encouragé, l'intégration améliorée, et les frontières furent ouvertes en suivant l'exemple européen. Un nouveau réseau d'autoroute fleurit sur le continent et renforça l'économie, permettant une meilleure utilisation des terres arables. Les richesses naturelles d'Amérique du sud furent exploitées comme jamais auparavant, et le prix des exportations fut rehaussé atteignant enfin une valeur correcte.\n"
 "\n"
-"Aujourd'hui, les nations membres se sont unies sous un même nom : les États Révolutionnaires. Un unique gouvernement représente le continent entier, devenant ainsi un colosse économique juste derrière l'Union Européenne Élargie. Leur force militaire est petite, mais dispose du meilleur équipement. Leur entraînement n'est pas exceptionnel.\n"
+"Aujourd'hui, les nations membres se sont unies sous un même nom : les États Révolutionnaires. Un unique gouvernement représente le continent entier, devenant ainsi un colosse économique, juste derrière l'Union Européenne Élargie. Leur force militaire est petite, mais dispose du meilleur équipement. Leur entraînement n'est pas exceptionnel.\n"
 "\n"
 "\n"
 "\n"
 "L'Amérique Unie:\n"
 "\n"
-"Alors que l'économie des États-Unis commençait à décliner à la fin des années 2020, un nombre croissant de personne commencèrent à abandonner le pays pour les terres plus attrayantes du Canada et, ironiquement, du Mexique. La valeur du dollar s'effondra jusqu'à des profondeur jamais atteintes, ruinant des millions de personnes jusqu'à ce que son cours soit fixé par le FMI et la communauté bancaire internationale. Un projet de réforme brutal fut mis en place pour sauver le pays, impliquant notamment la vente ou le retrait de plus de la moitié de l'arsenal militaire. Pour faire face au remboursement de seize milliards de dollars de dettes, ses taux d'intérêt furent bloqués et ses exportations recentrées sur les produits technologiques et de luxe. Une restructuration réussie de la NASA, ainsi qu'un prototype fonctionnel de vaisseau spatial, permit de transformer la conquête spatiale en source d'argent dans ce pays dévasté. Cap Canaveral proposa les offres de lancement les moins chères du monde, tout d'abord avec leur prototype, puis avec des vaisseaux de conception beaucoup plus avancée. Ceci aida considérablement le pays ruiné à se sortir peu à peu de sa misère.\n"
+"Alors que l'économie des États-Unis commençait à décliner à la fin des années 2020, un nombre croissant de personnes commencèrent à abandonner le pays pour les terres plus attrayantes du Canada et, ironiquement, du Mexique. La valeur du dollar s'effondra jusqu'à des profondeurs jamais atteintes, ruinant des millions de personnes jusqu'à ce que son cours soit fixé par le FMI et la communauté bancaire internationale. Un projet de réforme brutal fut mis en place pour sauver le pays, impliquant notamment la vente ou le retrait de plus de la moitié de l'arsenal militaire. Pour faire face au remboursement de seize milliards de dollars de dettes, ses taux d'intérêt furent bloqués et ses exportations recentrées sur des produits technologiques ou de luxe. Une restructuration réussie de la NASA, ainsi qu'un prototype fonctionnel de vaisseau spatial, permit de transformer la conquête spatiale en source d'argent dans ce pays dévasté. Cap Canaveral proposa les offres de lancement les moins chères du monde, tout d'abord avec leurs prototypes, puis avec des vaisseaux de conception beaucoup plus avancée. Ceci aida considérablement le pays ruiné à se sortir peu à peu de sa misère.\n"
 "\n"
 "La coopération entre les nations nord-américaines commença par une aide financière du Canada et du Mexique, qui virent leurs exportations vers les États-Unis chuter dangereusement et voulurent aider leur plus important partenaire à se rétablir. Le nombre croissant d'expatriés rapprocha également les nations entre elles. Puis, lors du plus surprenant revirement politique de 2042, le Mexique élut au poste de président l'américain expatrié Esteban Villa-Lobos Garcia.\n"
 "\n"
@@ -8953,7 +8961,7 @@ msgstr ""
 "\n"
 "Ce plan consistait à unir le Mexique, le Canada et les USA en une seule nation pour réveiller la toute-puissance nord-américaine. Après plusieurs votes controversés, la majorité de la population des trois pays concernés donna son approbation pour le Plan du Lendemain : 52 % aux États-Unis, 64% au Canada, et 71 % au Mexique. La fusion fut définitive en 2050, lorsque l'Amérique Unie pris sa place parmi les grands du Nouveau Monde. L'industrie spatiale en plein essor se répandit rapidement dans la nouvelle nation, et malgré quelques difficultés, l'Amérique du nord se remettait sur pied.\n"
 "\n"
-"Aujourd'hui, la dette de l'A.U. (l'Amérique Unie) est passée de seize à deux milliards, et le niveau de vie a presque rejoint celui d'avant le krach. Elle dispose de l'industrie spatiale la plus avancée de la planète, la NASA effectuant près de 70% des lancements mondiaux. Elle exporte en grandes quantités de nombreuses marchandises, et projette de combler ses dettes dans les trois années à venir. Militairement, l'A.U. est la plus faible de toutes les méga-nations. Elle n'a qu'une petite armée de volontaires, et un faible budget consacré à la défense en vertu des décisions du FMI. Cependant, les forces dont l'A.U. dispose sont très bien entraînées et peuvent atteindre n'importe quel endroit du pays en moins de deux heures.\n"
+"Aujourd'hui, la dette de l'A.U. (l'Amérique Unie) est passée de seize à deux milliards, et le niveau de vie a presque rejoint celui d'avant le crash. Elle dispose de l'industrie spatiale la plus avancée de la planète, la NASA effectuant près de 70% des lancements mondiaux. Elle exporte en grandes quantités de nombreuses marchandises, et projette de combler ses dettes dans les trois années à venir. Militairement, l'A.U. est la plus faible de toutes les méga-nations. Elle n'a qu'une petite armée de volontaires, et un faible budget consacré à la défense en vertu des décisions du FMI. Cependant, les forces dont l'A.U. dispose sont très bien entraînées et peuvent atteindre n'importe quel endroit du pays en moins de deux heures.\n"
 "\n"
 "\n"
 "\n"
@@ -8967,7 +8975,7 @@ msgstr ""
 "\n"
 "Après le Seconde Guerre Froide, l'U.E.E. a su se placer au premier plan des discussions politiques mondiales. Elle fut la seule nation occidentale à suivre l'Alliance du Moyen-Orient dans son vote de désapprobation des anciennes Nations Unies, après son échec total lors de l'expansion chinoise et de la guerre civile qui s'en suivie. l'U.E.E. approuva également vivement les efforts de l'Alliance pour créer de nouvelles Nations Unies, où chaque nation serait justement représentée, et qui disposeraient d'un pouvoir suffisant pour appliquer les principes pour lesquelles elles avaient été initialement créées.\n"
 "\n"
-"Aujourd'hui, l'U.E.E. est la plus grande puissance économique et financière mondiale. Cependant, sa bureaucratie encombrante et son grand nombre de pays membre, qui ne s'entendent pas toujours parfaitement, lui confèrent une inertie importante. Sa force militaire est importante et puissante, mais mal intégrée, chaque armée nationale continuant à employer sa propre langue et ses propres traditions. La coopération militaire entre ces forces est difficile à mettre en oeuvre, et nécessite un investissement bureaucratique colossal. L'U.E.E. contribue pour plus de la moitié aux forces des Nations Unies, mais ses forces ne sont jamais utilisées que pour le maintient de la paix. La question de savoir si les militaires de l'U.E.E. ont perdu leur efficacité est vivement débattue depuis plusieurs année à Bruxelles, mais aucune décision n'est jamais sortie de ces affrontements.\n"
+"Aujourd'hui, l'U.E.E. est la plus grande puissance économique et financière mondiale. Cependant, sa bureaucratie encombrante et son grand nombre de pays membre, qui ne s'entendent pas toujours parfaitement, lui confèrent une inertie importante. Sa force militaire est importante et puissante, mais mal intégrée, chaque armée nationale continuant d’employer sa propre langue et ses propres traditions. La coopération militaire entre ces forces est difficile à mettre en œuvre, et nécessite un investissement bureaucratique colossal. L'U.E.E. contribue, pour plus de la moitié, aux forces des Nations Unies, mais ses forces ne sont jamais utilisées en dehors du maintient de la paix. La question de savoir si les militaires de l'U.E.E. ont perdu leur efficacité est vivement débattue depuis plusieurs années à Bruxelles, mais aucune décision n'est jamais sortie de ces affrontements.\n"
 "\n"
 "\n"
 "\n"
@@ -8979,7 +8987,7 @@ msgstr ""
 "\n"
 "L'Alliance étendue, désormais reconnue par l'Union Européenne, s'avança alors sur la scène internationale, avec un moyen de pression : elle avait la mainmise sur la plupart du pétrole encore disponible et la volonté de l'exploiter.\n"
 "\n"
-"L'économie de l'Alliance gagna en puissance alors que les réserves mondiales de pétrole diminuait. De nombreux fabricants pharmaceutiques vinrent s'installer au Proche-Orient, seul endroit du monde où le pétrole restait à bon prix et en quantité. Ce mouvement, ainsi que celui d'autres industries du pétrole brut, permit au Moyen-Orient de survivre à la \"révolution nucléaire\" russe et à la migration aux énergies nucléaires qu'elle provoqua à travers le monde. L'Alliance continua son expansion avec l'Égypte, l'Ouzbékistan, le Turkménistan, et une partie disputée de l'Afrique aux abords de la mer Rouge. Toute la région de la mer Rouge fut rapidement pacifiée lorsque l'Alliance y déploya son armée pour renforcer ses nouveaux membres africains.\n"
+"L'économie de l'Alliance gagna en puissance alors que les réserves mondiales de pétrole diminuait. De nombreux fabricants pharmaceutiques vinrent s'installer au Proche-Orient, seul endroit du monde où le pétrole restait à bon prix et en quantité. Ce mouvement, ainsi que celui d'autres industries du pétrole brut, permit au Moyen-Orient de survivre à la \"révolution nucléaire\" russe et à la migration vers l’énergie nucléaire qu'elle provoqua à travers le monde. L'Alliance continua son expansion avec l'Égypte, l'Ouzbékistan, le Turkménistan, et une partie disputée de l'Afrique aux abords de la mer Rouge. Toute la région de la mer Rouge fut rapidement pacifiée lorsque l'Alliance y déploya son armée pour renforcer ses nouveaux membres africains.\n"
 "\n"
 "Aujourd'hui, la progression de la prospérité au Moyen-Orient a remplacé les dogmes par la loi séculaire et l'égalité des sexes. L'Alliance est toujours dirigée par des individus : Sultans, Émirs, Maliks, Présidents et Généraux, mais leur pouvoir personnel est limité par celui des autres membres de l'Alliance : aucun ne veut voir un autre dirigeant prendre trop d'ampleur. La contestation politique est tolérée grâce aux pressions de l'Union Européenne et d'autres pays, mais même en 2084 peu de nations membres de l'Alliance sont réellement démocratiques.\n"
 "\n"
@@ -8989,29 +8997,29 @@ msgstr ""
 "\n"
 "La Nouvelle Afrique:\n"
 "\n"
-"Née de la violence et des conflits, la Nouvelle Afrique a trouvé son unification dans la séparation. Les trois premières décennies du 21ème siècle ne furent que la continuation de son déclin, commencé depuis bien trop longtemps, avec ses guerres civiles, ses purges ethniques, et ses atrocités sans commune mesure. Cette triste période prit fin lorsque plusieurs nations de centre-Afrique mirent sur pied en 2039 le projet de supprimer les célèbres cartels de diamants et de puiser leur revenus dans le progrès national à long terme.\n"
+"Née de la violence et des conflits, la Nouvelle Afrique a trouvé son unification dans la séparation. Les trois premières décennies du 21ème siècle ne furent que la continuation de son déclin, commencé depuis bien trop longtemps, avec ses guerres civiles, ses purges ethniques, et ses atrocités sans commune mesure. Cette triste période prit fin lorsque plusieurs nations de Centre-Afrique mirent sur pied en 2039 le projet de supprimer les célèbres cartels de diamants et de puiser leurs revenus pour le progrès national à long terme.\n"
 "\n"
-"Les conséquences militaires et économiques furent sanglantes. Les Nations Unies tentèrent différentes mesures pour arrêter les conflits, mais étant encore moins puissantes qu'avant, elles ne purent rien accomplir. Cependant, ce premier groupe de nations africaines fut bientôt rejoint par plusieurs autres, fatiguées d'être les jouets des conglomérats occidentaux. Après plusieurs années d'âpre combat, il parvint finalement à faire tomber tous les cartels, et à conserver leurs mines d'or et de diamant, parmi les plus grandes et les plus développées du monde. Ce groupe devint ainsi le plus important exportateur de diamant naturel mondial : le coeur de la Nouvelle Afrique était né.\n"
+"Les conséquences militaires et économiques furent sanglantes. Les Nations Unies tentèrent différentes mesures pour arrêter les conflits, mais étant encore moins puissantes qu'avant, elles ne purent rien accomplir. Cependant, ce premier groupe de nations africaines fut bientôt rejoint par plusieurs autres, fatiguées d'être le jouet des conglomérats occidentaux. Après plusieurs années d'âpre combat, il parvint finalement à faire tomber tous les cartels, et à conserver les mines d'or et de diamant, parmi les plus grandes et les plus développées du monde. Ce groupe devint ainsi le plus important exportateur de diamant naturel mondial : le cœur de la Nouvelle Afrique était né.\n"
 "\n"
-"Toutes les nations ayant lutté dans cette guerre contre les cartels commencèrent à travailler main dans la main, à l'exception des territoires loyaux au Commonwealth d'Océanie ou à l'Alliance du Moyen-Orient. Elles s'inspirèrent des réformes sud-américaines et construisirent un vaste réseau routier permettant la circulation des biens et des communications. Cela leur permit également une bien meilleure distribution des denrées alimentaires. Au cours des trente années qui suivirent, la Nouvelle Afrique réussit à éradiquer la famine qui la rongeait depuis longtemps. Elle modifia également ses frontières pour s'adapter à ses contraintes ethniques et satisfaire au désir d'indépendance de ses membres. Elle mit enfin en place à grands frais une politique de santé sociale pour ses habitants. Par ailleurs, elle trouva un nouveau développement économique dans la culture et la commercialisation de bois tropical et de fruits exotiques. La nouvelle coopération entre les nations leur permirent pour la première fois d'accorder leurs prix à l'échelle du continent ; et comme les États Révolutionnaires avant eux, la Nouvelles Afrique força enfin le reste du monde à payer un prix équitable pour leurs exportations.\n"
+"Toutes les nations ayant lutté dans cette guerre contre les cartels commencèrent à travailler main dans la main, à l'exception des territoires loyaux au Commonwealth d'Océanie ou à l'Alliance du Moyen-Orient. Elles s'inspirèrent des réformes sud-américaines et construisirent un vaste réseau routier permettant la circulation des biens et des communications. Cela leur permit également une bien meilleure distribution des denrées alimentaires. Au cours des trente années qui suivirent, la Nouvelle Afrique réussit à éradiquer la famine qui la rongeait depuis longtemps. Elle modifia également ses frontières pour s'adapter à ses contraintes ethniques et satisfaire au désir d'indépendance de ses membres. Elle mit enfin en place, à grands frais, une politique de santé sociale pour ses habitants. Par ailleurs, elle trouva un nouveau développement économique dans la culture et la commercialisation de bois tropical et de fruits exotiques. La nouvelle coopération entre les nations leur permit pour la première fois d'accorder leurs prix à l'échelle du continent ; et comme les États Révolutionnaires avant eux, la Nouvelles Afrique força enfin le reste du monde à payer un prix équitable pour leurs exportations.\n"
 "\n"
-"Aujourd'hui, la Nouvelle Afrique reste la grande puissance la plus fragile économiquement, mais s'améliore rapidement. Elle dispose d'une grande armée motivée, mais ses troupes sont mal équipées, leurs armes provenant pour la plupart des anciens stocks américains ou d'équipement soviétique centenaire. À cause de leur équipement défaillant et la géographie difficile du continent, les soldats ont également des difficultés à se rendre sur les sites éloignés. La plupart du temps, l'armée ne parvient à détecter les OVNI que lors de leur atterrissage, par une de leurs milliers de patrouilles qui combattent la contrebande et le braconnage à travers le continent.\n"
+"Aujourd'hui, la Nouvelle Afrique reste la grande puissance la plus fragile économiquement, mais s'améliorant rapidement. Elle dispose d'une grande armée motivée, mais ses troupes sont mal équipées, leurs armes provenant pour la plupart des anciens stocks américains ou d'équipement soviétique centenaire. À cause de leur équipement défaillant et de la géographie difficile du continent, les soldats ont également des difficultés à se rendre sur les sites éloignés. La plupart du temps, l'armée ne parvient à détecter les OVNI que lors de l’atterrissage, par une de leurs milliers de patrouilles qui combattent la contrebande et le braconnage à travers le continent.\n"
 "\n"
 "\n"
 "\n"
 "La Russie:\n"
 "\n"
-"La Russie mit plusieurs décennies à se remettre de la chute de l'Union Soviétique et des ravages que le système soviétique fit sur l'économie du pays. La première moitié du 21ème siècle lui fut très douloureuse, alors qu'elle essayait de stopper les rébellions incessantes en Tchétchénie, de se réformer après 70 ans de domination par l'état, et de retrouver sa place de superpuissance mondiale.\n"
+"La Russie mit plusieurs décennies à se remettre de la chute de l'Union Soviétique et des ravages que le système soviétique fit sur l'économie du pays. La première moitié du 21ème siècle lui fut très douloureuse, alors qu'elle essayait simultanément, de stopper les rébellions incessantes en Tchétchénie, de se réformer après 70 ans de domination par l'état, et de retrouver une place de superpuissance mondiale.\n"
 "\n"
-"La situation commença à s'améliorer lorsque le premier ministre de l'époque Yevgeny Karamazov accorda à la Tchétchénie son indépendance totale en 2047. Pendant que la nouvelle République Tchétchène implosait sous les luttes internes pour savoir qui devait la gouverner, la Russie s'attela à résoudre ses propres problèmes laissant la Tchétchénie à elle-même, et aux Nations Unies réformées, qui s'intéressèrent immédiatement à tenter de stopper ce bain de sang.\n"
+"La situation commença à s'améliorer lorsque le premier ministre de l'époque Yevgeny Karamazov accorda à la Tchétchénie son indépendance totale en 2047. Pendant que la nouvelle République Tchétchène implosait sous les luttes internes pour savoir qui devait la gouverner, la Russie s'attela à résoudre ses propres problèmes laissant la Tchétchénie à elle-même, et aux Nations Unies réformées, qui tentèrent immédiatement de stopper ce bain de sang.\n"
 "\n"
 "Cette situation ne dura cependant pas longtemps, et la Tchétchénie due finalement se résoudre à retourner sous la sphère d'influence de la Russie. Pour la première fois, cependant, elle le fit de son propre gré.\n"
 "\n"
-"La relance économique de la Russie commença avec l'exploitation du pétrole sibérien, profitant de l'appauvrissement des réserves du Moyen-Orient. Des nouvelles techniques et des équipements spécifiques furent nécessaires pour résister aux conditions climatiques difficiles de la région. Par la suite, la Russie entama la construction d'une série de nouvelles centrale nucléaires, et investit des sommes considérables dans le développement de nouvelles centrales plus petites, plus sûres, et, plus important encore, plus écologiques. Cela nécessita le passage de l'Uranium enrichi au Thorium dans toutes les centrales russes nouvellement construites, et une conception plus avancée basée sur l' \"amplificateur énergétique\", un nouveau type de réacteur à fission dont le premier prototype fut construit près de Rome de 2004 à 2011. Deux des nouveaux réacteurs restèrent cependant alimentés par des déchets radioactifs de Plutonium pour faire disparaître les armes nucléaires inutilisées et les déchets des centrales plus anciennes.\n"
+"La relance économique de la Russie commença avec l'exploitation du pétrole sibérien, profitant de l'appauvrissement des réserves du Moyen-Orient. Des nouvelles techniques et des équipements spécifiques furent nécessaires pour résister aux conditions climatiques difficiles de la région. Par la suite, la Russie entama la construction d'une série de nouvelles centrale nucléaires, et investit des sommes considérables dans le développement de nouvelles centrales plus petites, plus sûres, et, plus important encore, plus écologiques. Cela nécessita le passage de l'Uranium enrichi au Thorium dans toutes les centrales russes nouvellement construites, basé sur une conception plus avancée d'\"amplificateur énergétique\", un nouveau type de réacteur à fission dont le premier prototype fut construit près de Rome de 2004 à 2011. Deux des nouveaux réacteurs restèrent cependant alimentés par des déchets radioactifs de Plutonium afin de faire disparaître les armes nucléaires inutilisées et les déchets des anciennes centrales.\n"
 "\n"
-"Puis, huit ans après l'indépendance tchétchène, la \"révolution nucléaire\" russe commença réellement avec l'invention du post-traitement des combustibles utilisés, qui permit de convertir 90 % des déchets d'un amplificateur énergétique en éléments radioactifs pendant quelques semaines contre plusieurs siècles auparavant. Les russes mirent ainsi fin à la crise énergétique : la fission nucléaire devint sûre, relativement propre, et les réserves mondiale de thorium étaient suffisantes pour durer un millénaire.\n"
+"Puis, huit ans après l'indépendance tchétchène, la \"révolution nucléaire\" russe commença réellement avec l'invention du post-traitement des combustibles utilisés, qui permit de convertir 90 % des déchets d'un amplificateur énergétique en éléments radioactifs ne nécessitants plus que quelques semaines, contre plusieurs siècles auparavant, pour perdre leur potentiel radioactif. Les russes mirent ainsi fin à la crise énergétique : la fission nucléaire devint sûre, relativement propre, et les réserves mondiale de thorium étaient suffisantes pour durer un millénaire.\n"
 "\n"
-"Aujourd'hui, la plupart des républiques anciennement soviétiques ont rejoint la Russie, suivant l'exemple des autres grandes nations, désirant prendre avantage des nouvelles technologies nucléaires et des exportations énergétiques de la Russie. La révolution nucléaire continue encore aujourd'hui avec le développement progressif et la commercialisation de l'énergie par fusion. Bien que son économie soit encore instable, le pays est maintenant en meilleure forme qu'il ne l'a été depuis des siècles, que ce soit sous les Khans, les Tsars, ou les Soviétiques. Son armée est ancienne, mais très bien entraînée, disciplinée et professionnelle. De plus, les nouvelles recrues sont faciles à trouver.\n"
+"Aujourd'hui, la plupart des républiques, anciennement soviétiques, ont rejoint la Russie, suivant l'exemple des autres grandes nations, désirant l’avantage des nouvelles technologies nucléaires et des exportations énergétiques de la Russie. La révolution nucléaire continue encore aujourd'hui avec le développement progressif et la commercialisation de l'énergie par fusion. Bien que son économie soit encore instable, le pays est maintenant en meilleure forme qu'il ne l'a été depuis des siècles, que ce soit sous les Khans, les Tsars, ou les Soviétiques. Son armée est ancienne, mais très bien entraînée, disciplinée et professionnelle. De plus, les nouvelles recrues sont faciles à trouver.\n"
 "\n"
 "\n"
 "\n"
@@ -9019,17 +9027,17 @@ msgstr ""
 "\n"
 "Le Commonwealth des Nations, organisation politique constituée de la plupart des pays de l'ancien empire britannique, perdit beaucoup de pouvoir lors de la Seconde Guerre Froide. Tout d'abord, le Pakistan coupa ses liens avec le Commonwealth pour rejoindre l'Alliance du Moyen-Orient. Puis, alors que les États-Unis s'écroulaient, l'Angleterre et le Canada ne s'occupèrent plus que d'eux mêmes, et leur participation diminua jusqu'à ce qu'en 2030, ils n'aient plus de membre que le nom.\n"
 "\n"
-"L'influence grandissante de la Chine pendant la guerre obligea l'Inde et l'Australie à augmenter considérablement leurs forces militaires, à des coûts difficilement supportables pour leurs budgets. En 2035, l'Inde devint un champ de bataille de plus pour la guerre civile chinoise. Les troupes gouvernementales chinoises expérimentées défirent facilement les militaires indiens en quelques escarmouches sanglantes, et prirent la plus grande partie du pays pendant que les rebellions naissaient.\n"
+"L'influence grandissante de la Chine pendant la guerre obligea l'Inde et l'Australie à augmenter considérablement leurs forces militaires, à des coûts difficilement supportables pour leurs budgets. En 2035, l'Inde devint un champ de bataille de plus de la guerre civile chinoise. Les troupes gouvernementales chinoises expérimentées défirent facilement les militaires indiens en quelques escarmouches sanglantes, et prirent la plus grande partie du pays pendant que les rebellions naissaient.\n"
 "\n"
-"L'Australie s'engagea à mettre sur pieds une intervention militaire à grande échelle avec l'aide de plusieurs autres membres du Commonwealth d'Afrique du sud. Après des semaines de combat brutal, les divisions australiennes parvinrent à rejoindre les forces rebelles chinoises et les régiments de l'armée indienne ayant survécu. Ensemble, ils annihilèrent la quasi-totalité de l'armée gouvernementale jusqu'à leur reddition en 2036.\n"
+"L'Australie s'engagea à mettre sur pieds une intervention militaire à grande échelle avec l'aide de plusieurs autres membres du Commonwealth d'Afrique du sud. Après des semaines de combat brutal, les divisions australiennes parvinrent à rejoindre les forces rebelles chinoises et les régiments survivants de l'armée indienne. Ensemble, ils annihilèrent la quasi-totalité de l'armée gouvernementale, signée par leur reddition en 2036.\n"
 "\n"
-"Le prix fut élevé. Les régions conquises de l'Inde étaient dévastées, le pays n'avait plus de gouvernement après le bombardement nucléaire de New Delhi, et la famine commençait déjà à ronger la population. L'Inde commença à céder ses régions les moins riches aux autres nations, et accorda leur indépendance à plusieurs zones proches de la frontière. Les nations restantes de Commonwealth entreprirent de reconstruire l'Inde, bien que nombreuses d'entres elles abandonnèrent le projet et le Commonwealth pour rejoindre une autre super-puissance.\n"
+"Le prix fut élevé. Les régions conquises de l'Inde étaient dévastées, le pays n'avait plus de gouvernement après le bombardement nucléaire de New Delhi, et la famine commençait déjà à ronger la population. L'Inde commença à céder ses régions les moins riches aux autres nations, et accorda leur indépendance à plusieurs zones proches de la frontière. Les nations restantes de Commonwealth entreprirent de reconstruire l'Inde, bien que nombre d'entres elles abandonnèrent le projet et le Commonwealth afin de rejoindre une autre super-puissance.\n"
 "\n"
-"La reconstruction de l'Inde eut pour effet d'unifier les membres du Commonwealth restants en une seule grande nation. Elle utilisa l'avantage de son emplacement géographique autour de l'océan Indien et le Pacifique sud pour imposer une taxe sur les bateaux passants dans leurs eaux. La flotte du Commonwealth, quant à elle, n'était pas taxée et s'imposa rapidement comme leader du marché maritime. Par la suite, lors de l'effondrement des cartels de diamants en Afrique, le Commonwealth fit main basse sur plusieurs mines dans ses terres et les exploita intensivement.\n"
+"La reconstruction de l'Inde eut pour effet d'unifier les membres du Commonwealth restants en une seule grande nation. Elle utilisa l'avantage de son emplacement géographique autour de l'océan Indien et le Pacifique sud pour imposer une taxe sur les bateaux circulants dans leurs eaux. La flotte du Commonwealth, quant à elle, n'était pas taxée et s'imposa rapidement comme leader du marché maritime. Par la suite, lors de l'effondrement des cartels de diamants en Afrique, le Commonwealth fit main basse sur plusieurs mines dans ses terres et les exploita intensivement.\n"
 "\n"
 "Aujourd'hui, le Commonwealth des Nations a changé de nom pour le \"Commonwealth d'Océanie\", ou même juste l' \"Océanie\". Depuis sa création, il a accueilli plusieurs pays qui ne faisaient pas parti du Commonwealth, comme Madagascar, le Zimbabwe ou l'Indonésie, étendant ainsi son pouvoir sur les eaux d'Océanie. Bien qu'il ne puisse rivaliser économiquement avec les autres nations, il a fait sa propre niche et espère y rester paisiblement.\n"
 "\n"
-"L'essentiel des forces militaire de l'Océanie réside dans sa flotte. Son armée terrestre est ridicule comparée à celle de toutes les autres nations, à l'exception de celle des États-Unis. Elle ne sert que de force de défense, avec un entraînement et un équipement de niveau moyen. Elle peut cependant répondre rapidement aux situations d'urgence."
+"L'essentiel des forces militaire de l'Océanie réside dans sa flotte. Son armée terrestre est ridicule comparée à celle de toutes les autres nations, à l'exception de celle des États-Unis. Elle ne se sert que de forces de défense, avec un entraînement et un équipement de niveau moyen. Elle peut cependant répondre rapidement aux situations d'urgence."
 
 #: ../base/ufos/research.ufo:4962
 msgid "PHALANX And The Mumbai Aftermath"
@@ -9564,35 +9572,43 @@ msgstr "seq_alienbase_sentence3"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, encore plus importantes et mortelles, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, encore plus importantes et mortelles, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens, en faisant de leur mieux à chaque fois. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens, en faisant de leur mieux à chaque fois. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
