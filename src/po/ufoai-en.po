@@ -2436,7 +2436,8 @@ msgstr "Zurich"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, United Nations, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2523,7 +2524,8 @@ msgstr "SecGen. Mahouf Serra, United Nations, New York City"
 #: ../base/ufos/research.ufo:5102 ../base/ufos/research.ufo:5130
 #: ../base/ufos/research.ufo:5159
 msgid "mail_to_base_commander"
-msgstr "Base Commander, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2607,7 +2609,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4804 ../base/ufos/research.ufo:4888
 #: ../base/ufos/research.ufo:4896
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2692,7 +2695,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
+msgstr ""
+"XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2764,7 +2768,8 @@ msgstr "Alien Base Discovered -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2788,7 +2793,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:5062 ../base/ufos/research.ufo:5129
 #: ../base/ufos/research.ufo:5158
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2825,7 +2831,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3614,7 +3621,7 @@ msgstr ""
 "\n"
 "The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.\n"
 "\n"
-"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a Scout UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
+"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
 "\n"
 "Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless.\n"
 "\n"
@@ -3648,7 +3655,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:215
 msgid "antimatter_pre_txt"
 msgstr ""
-"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
+"Commander, based on the extremely interesting findings we've made during our examination of the UFO we dismantled, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
 "\n"
 "Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
 "\n"
@@ -3724,7 +3731,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5023 ../base/ufos/research.ufo:5094
 #: ../base/ufos/research.ufo:5101
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:346 ../base/ufos/research.ufo:387
 msgid "alien_breathing_txt"
@@ -6955,7 +6963,7 @@ msgstr ""
 "\n"
 "Our Radar facility is not a large radar array in itself. It's actually a control centre for a series of camouflaged dishes placed on high ground around the base. There are between 8 and 12 dishes set up for each installation, depending on the available space and the dishes' individual coverage. Each dish is equipped with several means of detection rather than simply radar, as radar has trouble maintaining a lock on alien contacts. Supplemental systems include, but are not limited to, infrared and laser rangefinding.\n"
 "\n"
-"The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass off civilians. Instinct and experience count just as much as software intelligence.\n"
+"The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass of civilians. Instinct and experience count just as much as software intelligence.\n"
 "\n"
 "Building more than one Radar installation at a base will not increase the extent of our radar coverage. A single facility will cover its full range as effectively as possible, and the only way to increase performance and range is to upgrade our systems with future technology or to build further installations outside the base.\n"
 "\n"
@@ -7514,7 +7522,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3556
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3596
 msgid "ufo_scout_txt"
@@ -8150,7 +8159,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4369
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4416
 msgid "'Raven' ECM Unit"
@@ -8314,7 +8324,7 @@ msgstr ""
 "\n"
 "(UFO Theory) \"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"\n"
 "\n"
-"With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
+"With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up with. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
 "\n"
 "Some more research may be required to figure out antimatter storage and control, but the engine upgrades are self-contained units -- basically just an alien engine with adapters on it for human tech. We should be able to start retrofitting as soon as we acquire enough fuel to keep our airfleet in the sky.\n"
 "\n"
@@ -8787,8 +8797,6 @@ msgstr ""
 "\n"
 "Overview\n"
 "\n"
-"Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.\n"
-"\n"
 "We've determined that the modular equipment bays on our aircraft can be used to accept extra fuel reserves. By installing these special but very simple fuel pods, we can greatly increase the range of an aircraft by loading more fuel on board, and improve the craft's speed by allowing the engines enough juice to run on maximum all the way. It also lets pilots make far more liberal use of the afterburner, further upping the speed, allowing us to better compete with hostile UFOs.\n"
 "\n"
 "Take note, however, that installing a fuel pod will add a significant amount of weight to the craft. Care must be taken not to overload our airframes. If an aircraft is too heavy to safely launch, our Command Centre computers will automatically deny it launch clearance.\n"
@@ -8812,7 +8820,7 @@ msgstr ""
 "\n"
 "As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.\n"
 "\n"
-"When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the shape will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.\n"
+"When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the alloy will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.\n"
 "\n"
 "This means that the shape of a UFO fuselage (and anything else made with these materials) can be changed at will, either by a command from the operator or by automated electronics.\n"
 "\n"
@@ -8827,7 +8835,7 @@ msgid "alien_materials_pre_txt"
 msgstr ""
 "Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
 "\n"
-"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
+"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -9231,28 +9239,31 @@ msgid "The Alien Strategy"
 msgstr "The Alien Strategy"
 
 #: ../base/ufos/research.ufo:5124
-#, fuzzy
 msgid "alien_strategy_txt"
 msgstr ""
-"Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
+"Proposal\n"
 "\n"
-"The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look at it up close and personal -- and test the alien hull materials under laboratory conditions -- we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"-- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and to reduce the infrared signature. Engine heat is also used to supply the craft's electrical needs.\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"-- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when we found out what was in there. If a containment loss occurred on one of these tanks, even three tenths of a gramme of this antimatter would outstrip the explosive force of the Hiroshima atomic bomb. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that proton-antiproton explosions create little radioactive fallout.\n"
+"DATE: %02i %s %i\n"
 "\n"
-"-- The craft is extremely difficult to see with human detection equipment, regardless of any electronic warfare capability on the aliens' part. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with passive infrared and gamma radiation detection, as the antimatter-based engines produce quite a lot of both.\n"
+"SUB: Proposal: The Alien Strategy\n"
 "\n"
-"-- The slim design, generating poor lift and being difficult to handle in air, is partly due to the heavy weight of the hull materials. It would be impossible to create effective wings from the alien hull materials. Instead, every gramme of excess matter has been stripped off, and the craft moves at high speeds so as to need very little lift surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's stronger and tougher than any known material on Earth (barring pure carbon nanotubes) and far more versatile in aircraft design. More research is definitely required.\n"
+"Good morning, Sir.\n"
 "\n"
-"Armed with these facts, we can now begin to analyse the different components and roles of the UFO. I recommend that our engineers begin dismantling this craft for parts right away. Who knows what we'll discover with the individual bits and pieces in front of us?\n"
+"I'm afraid this isn't a social message; I'm writing you because of our pressing need for more information. We at DivIntel have been doing our part with tracking, logging and double-checking all reported alien activity on Earth, but we're increasingly being faced with our lack of data about the overarching goals of the alien invasion. We have no means of anticipating the aliens' next move because we have no clue as to what game plan they're following. That's why I am submitting a new project for your authorisation.\n"
 "\n"
-"More research on the UFO itself is also warranted. I think we can delve deeper into its intended function and perhaps gain some insight in how to counter its activities. I'll send you another proposal about it as soon as I can.\n"
+"I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.\n"
 "\n"
-"Whatever we end up learning from these craft, Commander, it can only help us in the fight for Earth.\n"
+"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formatulating new, more effective counterstrategies to the alien invasion.\n"
 "\n"
-"--Cdr. Navarre"
+"The proposal is in your queue, Sir. Please write back when you'd like us to start work.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5148
 msgid "Orbital UFO Activity"
@@ -9261,6 +9272,47 @@ msgstr "Orbital UFO Activity"
 #: ../base/ufos/research.ufo:5153
 msgid "orbital_ufo_activity_txt"
 msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Orbital UFO Activity\n"
+"\n"
+"Good morning, Sir.\n"
+"\n"
+"Let me begin by stating a few ugly realities.\n"
+"\n"
+"1) All of humanity's space-based assets have been evacuated after the initial attack on Earth. Only a few stations and outposts are still running, and they have been remanded to military control, with only skeleton crews of volunteer military and civilian personnel.\n"
+"\n"
+"2) We have just a handful of space-based weapons platforms, none of which are equipped to harm alien craft. The aliens have the ability to instantly exterminate any human endeavours in the solar system.\n"
+"\n"
+"3) Our satellite grid is wide open and could be wiped off the map in an instant. Emergency landlines exist, but only for military use. If the grid does come under attack, comms between PHALANX command centres and assets in the field -- aircraft and ground teams -- will be hamstrung.\n"
+"\n"
+"4) There is no doubt that there are alien craft moving in orbit, ferrying items and UFOs between Earth and the alien homeworld, and right now there is nothing we can do to stop them.\n"
+"\n"
+"This leads us to only one conclusion: The space around Earth is no longer under our control. The only reason humanity retains any space capability at all is because the aliens have chosen not to destroy it yet.\n"
+"\n"
+"Our shocking vulnerability from space is demonstrated in the fact that we've fought this war exclusively on the ground and in the air. We have no space-planes that can be adapted for combat, and designs for building them are years from completion. Not even PHALANX could create a workable combat plane in time to affect the outcome of the war with the technologies currently at our disposal.\n"
+"\n"
+"What little orbital weaponry we have is severely inadequate. There are nuclear missiles which the UN won't let us use, and which would be far too destructive to help our research efforts if one of the colossal things ever managed to score a hit. There are experimental laser and maser platforms which are too underpowered to put a dent in heavy UFO armour. If the aliens decide they want to bomb us into extinction, they can just walk right up and knock. This is a situation that has to be remedied.\n"
+"\n"
+"The only question we can ask about this orbital UFO activity is how we're going to counter it. Until now we've not been able to affect the situation, but with budget increases and our growing reputation in the UN, pieces are starting to fall into place for a new step to our strategy.\n"
+"\n"
+"By far the most promising idea for a short-term orbital response weapon is to adapt one of the 'space guns' used by NASA and the European Space Agency to launch satellites and -- before the invasion forced us to evacuate our extraplanetary installations -- fire resupply packages at Tranquility Base colony on the moon. These space guns are essentially giant railguns with enough power to send a satellite-sized payload into orbit. With our library of UN research on electromagnetic weaponry, we can upgrade one of these guns into an anti-orbital weapon capable of knocking alien ships out of the sky. We're confident we can convince at least one of Earth's space agencies to lend us a suitable gun for the job.\n"
+"\n"
+"There are problems, however. Obviously these guns can't move, being built into the side of a mountain, so the target would have to pass directly in front of the gun for us to have a chance to hit it. Since we can't count on the aliens to give us a point-blank shot, this has been a big stumbling block, but we believe there may be a solution: If the gun can't move in order to hit something, the bullets will have to move instead.\n"
+"\n"
+"The plan calls for development of a special shell that is able to adjust its own trajectory with a suite of onboard rockets. We're currently pushing the UN to let us use a miniature nuclear warhead -- no more than 3 kilotons -- to make sure that any hit will kill. This orbital shell will be large, heavy, and a hell of a challenge to load into the gun, but it's absolutely necessary to give the project a realistic chance of success.\n"
+"\n"
+"As you see, Sir, these problems can all be overcome, but we need to do some serious R&D and commit a good deal of funding to get it all working. Please lend your authorisation as soon as is feasible.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/seq_credits.ufo:132 ../base/ufos/seq_credits.ufo:165
 msgid "Project leader"
@@ -9482,35 +9534,43 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr ""
+"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "To many people on Earth, it seems like things are going all right."
+msgstr ""
+"To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr ""
+"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr ""
+"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

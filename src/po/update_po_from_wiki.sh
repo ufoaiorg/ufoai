@@ -10,7 +10,7 @@
 #   commands to update this entry is generated, and applied.
 # The variable 'debug' should be set to 1 if you encounter a problem : it makes the log
 #   far more verbose, and will help for debbugging.
-# The varaible 'elseenglish' should be set to 1 if you want to replace all untranslated msgstr with the english version
+# The variable 'elseenglish' should be set to 1 if you want to replace all untranslated msgstr with the english version
 
 
 language=$1
@@ -196,7 +196,7 @@ set_BEGIN_END()
 
 download_description()
 {
-# Procedure looking for the url of the description of $english. It download it, then return 0 if it's OK, 1 if the msgid is not on the wiki, and 2 if didn't find any translation in this language.
+# Procedure looking for the url of the description of $english. It downloads it, then return 0 if it's OK, 1 if the msgid is not on the wiki, and 2 if didn't find any translation in this language.
     number=`grep -iwnm 1 "<td> $english" ${index} | cut -d : -f 1`
     if [ $number -ge $FIRST_LINE ]
     then
@@ -234,6 +234,9 @@ download_description()
 				echo "   didn't find any associated translation"
 				return 2
 			fi
+		else
+				echo "   didn't find any associated translation"
+				return 2
 		fi
     fi
     return 1
@@ -722,7 +725,7 @@ do
 				else
 					update_txt 2 1 3 0
 				fi
-			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]]
+			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]] && [[ "$language" != "en" ]]
 			then
 			# This is the case when the msgid is in the wiki, but not the desired translation: check if we can use english text
 				language0=$language
@@ -735,10 +738,10 @@ do
 					clean_html
 					if [[ $pre_txt -eq 1 ]]
 					then
-					update_txt 3 0 0 $pre_txt
+					update_txt 3 0 0 1
 
 					english=${english:0:${#english}-4}_pre_txt
-					update_txt 2 0 0 $pre_txt
+					update_txt 2 0 0 1
 						if [[ $? -eq 0 ]]
 						then
 							set_BEGIN_END 0
@@ -746,8 +749,12 @@ do
 							apply_sed $english
 							pre_txt=0
 						fi
+					elif [[ "$english" = "b_antimatter_txt" ]]
+					then
+						# Exception: text is in e-mail type, but without pre_txt
+						update_txt 2 0 3 1
 					else
-						update_txt 2 1 3 $pre_txt
+						update_txt 2 1 3 0
 					fi
 				fi
 				language=$language0
