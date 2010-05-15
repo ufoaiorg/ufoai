@@ -5,7 +5,7 @@ Setup.Package
 {
 	id = "ufoai",
 	description = "UFO: Alien Invasion",
-	version = "2.3",
+	version = "2.4",
 
 	recommended_destinations =
 	{
