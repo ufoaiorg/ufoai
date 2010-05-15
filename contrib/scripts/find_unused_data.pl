@@ -53,6 +53,10 @@ sub get_materials {
 	return read_dir2("base/materials", ".mat");
 }
 
+sub get_ufo_scripts {
+	return read_dir2("base/ufos", ".ufo");
+}
+
 sub get_textures {
 	my @textures = read_dir2("base/textures", ".png");
 	push (@textures, read_dir2("base/textures", ".jpg"));
@@ -120,6 +124,7 @@ sub check_textures() {
 sub check_models() {
 	print "Checking models\n";
 	my @models = get_models();
+	my @ufos = get_ufo_scripts();
 
 	print "Found $#models models\n";
 
@@ -134,7 +139,16 @@ sub check_models() {
 				last;
 			}
 		}
-		print STDERR "$model is not used in any maps\n" unless $used;
+
+		foreach my $ufo (@ufos) {
+			if (check_content($ufo, $model)) {
+				print "$model is used in an ufo script file\n";
+				$used = 1;
+				last;
+			}
+		}
+
+		print STDERR "$model is not used in any map or script\n" unless $used;
 	}
 }
 
