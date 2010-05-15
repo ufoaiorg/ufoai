@@ -304,7 +304,6 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			Vector2Copy(pos, newBasePos);
 
-
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				CL_GameTimeStop();
 				MN_PushWindow("popup_newinstallation", NULL);
@@ -881,11 +880,10 @@ static float MAP_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t dir
 	CrossProduct(start3D, north3D, ortToPole);
 	VectorNormalize(ortToPole);
 
-
-/**
- * @todo Save the value angle instead of direction: we don't need a vector here,
-	we could just compare angle to current angle.
- */
+	/**
+	 * @todo Save the value angle instead of direction: we don't need a vector here,
+	 * we could just compare angle to current angle.
+	 */
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
 		VectorSubtract(ortToDest, direction, v);
@@ -960,7 +958,6 @@ static float MAP_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t dir
 	RotatePointAroundVector(v, rotationAxis, tangentVector, - start[0]);
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(tangentVector, rotationAxis, v, start[1] + 90.0f);
-
 
 	/* calculate the orientation angle of the model around axis perpendicular to the screen */
 	angle = todeg * atan(tangentVector[0] / tangentVector[1]);
@@ -1265,45 +1262,43 @@ void MAP_CenterOnPoint_f (void)
 static void MAP3D_SmoothRotate (void)
 {
 	vec3_t diff;
-	float diff_angle, diff_zoom;
-	const float epsilon = 0.1f;
-	const float epsilonZoom = 0.01f;
-
-	diff_zoom = smoothFinalZoom - ccs.zoom;
+	const float diffZoom = smoothFinalZoom - ccs.zoom;
 
 	VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
-	diff_angle = VectorLength(diff);
 
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		/* when we rotate (and zoom) */
 		float rotationSpeed;
-		if (diff_angle > epsilon) {
+		const float diffAngle = VectorLength(diff);
+		const float epsilon = 0.1f;
+		if (diffAngle > epsilon) {
 			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
 			 * This allows the globe to rotate at maximum speed when the button is held down. */
-			if (diff_angle / smoothDeltaLength > 0.5)
-				rotationSpeed = min(diff_angle, curRotationSpeed + sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle * 0.5);
+			if (diffAngle / smoothDeltaLength > 0.5)
+				rotationSpeed = min(diffAngle, curRotationSpeed + sin(3.05f * diffAngle / smoothDeltaLength) * diffAngle * 0.5);
 			else {
-				rotationSpeed = sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle;
+				rotationSpeed = sin(3.05f * diffAngle / smoothDeltaLength) * diffAngle;
 			}
 			curRotationSpeed = rotationSpeed;
-			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
+			VectorScale(diff, smoothAcceleration / diffAngle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
-			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
+			ccs.zoom = ccs.zoom + smoothAcceleration * diffZoom / diffAngle * rotationSpeed;
 			return;
 		}
 	} else {
+		const float epsilonZoom = 0.01f;
 		/* when we zoom only */
-		if (fabs(diff_zoom) > epsilonZoom) {
+		if (fabs(diffZoom) > epsilonZoom) {
 			float speed;
 			/* Append the old speed to the new speed if this is the first half of a new zoom operation, but never exceed the max speed.
 			 * This allows the globe to zoom at maximum speed when the button is held down. */
-			if (fabs(diff_zoom) / smoothDeltaZoom > 0.5)
-				speed = min(smoothAcceleration * 2.0, curZoomSpeed + sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration);
+			if (fabs(diffZoom) / smoothDeltaZoom > 0.5)
+				speed = min(smoothAcceleration * 2.0, curZoomSpeed + sin(3.05f * (fabs(diffZoom) / smoothDeltaZoom)) * smoothAcceleration);
 			else {
-				speed = sin(3.05f * (fabs(diff_zoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
+				speed = sin(3.05f * (fabs(diffZoom) / smoothDeltaZoom)) * smoothAcceleration * 2.0;
 			}
 			curZoomSpeed = speed;
-			ccs.zoom = ccs.zoom + diff_zoom * speed;
+			ccs.zoom = ccs.zoom + diffZoom * speed;
 			return;
 		}
 	}
