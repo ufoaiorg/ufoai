@@ -1538,7 +1538,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						}
 						break;
 					}
-				/*@todo escape "type weapon/tech/etc.." here */
+				/** @todo escape "type weapon/tech/etc.." here */
 				if (!vp->string)
 					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
@@ -1564,6 +1564,18 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->overallTime = tech->time;
 }
 
+static inline qboolean RS_IsValidTechIndex (int techIdx)
+{
+	if (techIdx == TECH_INVALID)
+		return qfalse;
+	if (techIdx < 0 || techIdx >= ccs.numTechnologies)
+		return qfalse;
+	if (techIdx >= MAX_TECHNOLOGIES)
+		return qfalse;
+
+	return qtrue;
+}
+
 /**
  * @brief Checks if the technology (tech-index) has been researched.
  * @param[in] techIdx index of the technology.
@@ -1572,10 +1584,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
  */
 qboolean RS_IsResearched_idx (int techIdx)
 {
-	if (techIdx == TECH_INVALID)
+	if (!RS_IsValidTechIndex(techIdx))
 		return qfalse;
 
-	if (ccs.technologies[techIdx].statusResearch == RS_FINISH && techIdx >= 0)
+	if (ccs.technologies[techIdx].statusResearch == RS_FINISH)
 		return qtrue;
 
 	return qfalse;
@@ -1607,19 +1619,14 @@ int RS_Collected_ (const technology_t * tech)
 }
 
 /**
- * @brief Returns the technology pointer fo a tech index.
+ * @brief Returns the technology pointer for a tech index.
  * You can use this instead of "&ccs.technologies[techIdx]" to avoid having to check valid indices.
  * @param[in] techIdx Index in the global ccs.technologies[] array.
- * @return technology_t pointer or NULL if an error occured.
+ * @return technology_t pointer or NULL if an error occurred.
  */
 technology_t* RS_GetTechByIDX (int techIdx)
 {
-	if (techIdx >= MAX_TECHNOLOGIES) {
-		Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: Index (%i) is bigger than MAX_TECHNOLOGIES (%i).\n", techIdx, MAX_TECHNOLOGIES);
-		return NULL;
-	}
-
-	if (techIdx == TECH_INVALID || techIdx >= ccs.numTechnologies)
+	if (!RS_IsValidTechIndex(techIdx))
 		return NULL;
 	else
 		return &ccs.technologies[techIdx];
@@ -1831,7 +1838,7 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			continue;
 		}
-	
+
 		if (!Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
 			Com_Printf("Invaild research status '%s'\n", type);
 			success = qfalse;
