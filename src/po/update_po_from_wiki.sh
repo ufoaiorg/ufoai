@@ -573,6 +573,17 @@ then
 		pre_txt=0
 	fi
 
+	english="news_new_twist_alt_txt"
+	download_description
+	test=$?
+	if [[ "$test" -eq 0 ]]
+	then
+		clean_html
+		pre_txt=1
+		update_txt 2 0 0 $pre_txt
+		pre_txt=0
+	fi
+
 	if [[ "$debug" = "1" ]]
 	then
 		echo "Checking news descriptions : done." >> $log_file
