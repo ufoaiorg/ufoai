@@ -93,7 +93,7 @@ endif
 
 # Say how to link the exe
 $(SERVER_TARGET): $(SERVER_OBJS)
-	@echo " * [DED] ... linking $(LNKFLAGS) ($(SERVER_LIBS))"; \
+	@echo " * [DED] ... linking $(LDFLAGS) ($(SERVER_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SERVER_LIBS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module

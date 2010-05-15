@@ -344,7 +344,7 @@ endif
 
 # Say how to link the exe
 $(CLIENT_TARGET): $(CLIENT_OBJS)
-	@echo " * [UFO] ... linking $(LNKFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS))"; \
+	@echo " * [UFO] ... linking $(LDFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module
