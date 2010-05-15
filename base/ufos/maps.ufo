@@ -64,15 +64,18 @@ mapdef oilpipes_small
 
 	terrains
 	{
+		mountain
+		grass
 	}
 
 	cultures
 	{
+		western
+		eastern
 	}
 
 	populations
 	{
-		village
 		suburban
 		urban
 	}
@@ -103,10 +106,14 @@ mapdef oilpipes_large
 
 	terrains
 	{
+		mountain
+		grass
 	}
 
 	cultures
 	{
+		western
+		eastern
 	}
 
 	populations
@@ -116,9 +123,6 @@ mapdef oilpipes_large
 		urban
 	}
 }
-
-
-/// city map (test)
 
 ///////////////////////
 // ORIENTAL RANDOM MAPS
@@ -143,6 +147,7 @@ mapdef or_small
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
@@ -182,6 +187,7 @@ mapdef or_medium
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
@@ -3401,9 +3407,11 @@ mapdef laboratory
 		craft_drop_raptor
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_fighter
+		craft_ufo_scout
+	}
 
 	terrains
 	{
@@ -3428,7 +3436,7 @@ mapdef laboratory
 mapdef wip_city_rma
 {
 	map		+city
-	description	"Big city"
+	description	"_Big city"
 	teams		4
 	multiplayer	false
 	maxaliens	8
