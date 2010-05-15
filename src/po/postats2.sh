@@ -16,12 +16,10 @@ function usage() {
 
 PO_DIR="${1:-./src/po}"
 POT_FILE="${2:-./src/po/ufoai.pot}"
-IMAGES_DIR="${3:-./src/po/stats}"
 MSGSTATS=$(dirname "${0}")/pomsgstats.sh
 
 echo "using po files from ${PO_DIR}"
 echo "against pot file ${POT_FILE}"
-echo "writing images into ${IMAGES_DIR}"
 echo "msgstats: ${MSGSTATS}"
 
 test -d "${PO_DIR}" || usage
