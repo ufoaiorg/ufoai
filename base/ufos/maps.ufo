@@ -228,6 +228,7 @@ mapdef or_medium_crash
 	ufos
 	{
 		craft_crash_fighter
+		craft_crash_scout
 	}
 
 	terrains
