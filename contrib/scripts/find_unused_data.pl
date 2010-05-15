@@ -99,7 +99,7 @@ sub check_textures() {
 			if ($texture =~ /\d$/) {
 				my $anim = $texture;
 				$anim =~ s/\d+$//;
-				if (check_content($material, $anim)) {
+				if (check_content($material, 'texture.*'.$anim.'.*0$')) {
 					print "$texture is used as animation $anim\n";
 					$used = 1;
 					last;
