@@ -3401,9 +3401,11 @@ mapdef laboratory
 		craft_drop_raptor
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_fighter
+		craft_ufo_scout
+	}
 
 	terrains
 	{
@@ -3428,7 +3430,7 @@ mapdef laboratory
 mapdef wip_city_rma
 {
 	map		+city
-	description	"Big city"
+	description	"_Big city"
 	teams		4
 	multiplayer	false
 	maxaliens	8

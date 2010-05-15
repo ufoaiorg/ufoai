@@ -9,6 +9,7 @@ base laboratory/lab_
 // +: tile contains something
 // a: main
 // b: dropship
+// u: ufo
 
 tile +main
 {
@@ -16,8 +17,8 @@ tile +main
 
 0      0      0      0      0      0      0      0      0      0      0
 0     +a     +a     +a     +a     +a     +a     +a     +a     +a      0
-0     +a     +a     +a     +a     +a     +a     +a     +a     +a      0
-0     +a     +a     +a     +a     +a     +a     +a     +a     +a      0
+0      u      u     +a     +a     +a     +a     +a     +a     +a      0
+0      u      u     +a     +a     +a     +a     +a     +a     +a      0
 0     +a     +a     +a     +a     +a     +a     +a     +a     +a      0
 0     +a     +a     +a     +a     +a     +a      b      b      b      0
 0     +a     +a     +a     +a     +a     +a      b      b      b      0
@@ -54,6 +55,26 @@ a     +b     +b     +b      0
 0      0      0      0      0
 }
 
+tile +craft_ufo_fighter
+{
+4 4
+
+0      a      a      a
+0     +u     +u      a
+0     +u     +u      a
+0      a      a      a
+}
+
+tile +craft_ufo_scout
+{
+4 4
+
+0      a      a      a
+0     +u     +u      a
+0     +u     +u      a
+0      a      a      a
+}
+
 // ########################################
 // ########### Maps for the game ##########
 
@@ -63,4 +84,5 @@ size "9 6"
 title "_Laboratory"
 +main "1 1"
 *rm_drop +craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_fighter 1 1
 }
