@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SCRIPTS_H
 #define SCRIPTS_H
 
+#include "common.h"
+
 #ifndef ALIGN_PTR
 #define ALIGN_PTR(value,size) (void*)(((uintptr_t)value + (size - 1)) & (~(size - 1)))
 #endif

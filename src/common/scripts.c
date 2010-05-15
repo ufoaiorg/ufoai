@@ -21,7 +21,6 @@
 */
 
 
-#include "common.h"
 #include "scripts.h"
 #include "../shared/parse.h"
 #include "../game/inventory.h"
