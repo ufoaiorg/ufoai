@@ -71,7 +71,7 @@ my @models = get_models();
 
 my @suffixlist = (".png", ".tga", ".jpg");
 
-foreach my $texture (@textures) {
+foreach my $texture (sort @textures) {
 	next if ($texture =~ /tex_common/ || $texture =~ /tex_terrain/);
 	my $used = 0;
 	$texture =~ s/^base\/textures\///;
@@ -111,7 +111,7 @@ foreach my $texture (@textures) {
 	print STDERR "$texture is not used in materials or maps\n" unless $used;
 }
 
-foreach my $model (@models) {
+foreach my $model (sort @models) {
 	my $used = 0;
 	$model =~ s/^base\/models\///;
 	$model =~ s/\..*$//;
