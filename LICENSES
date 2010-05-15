@@ -1021,74 +1021,30 @@ base/models/objects/construct/mixer/mixer.md2 | GNU General Public License 2.0 o
 base/models/objects/construct/mixer/mixer.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/construct/workbench/workbench.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/construct/workbench/workbench.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
-base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
 base/models/objects/furniture/bed/bed.jpg | GNU General Public License 2.0 or later | Nate Wright
-base/models/objects/furniture/bookshelf/bookshelf.png | GNU General Public License 2.0 or later | Nate Wright
-base/models/objects/furniture/bookshelf/bookshelf_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/comptable/comptable.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/comptable/comptable.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/deerhead/deerhead.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | http://species.wikimedia.org/wiki/Image:Rothirsch.jpg
 base/models/objects/furniture/deerhead/deerhead.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62   This file comes from the Worldforge Media Repository, for details check out: http://www.worldforge.org/media/
-base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/desklamp/desklamp.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/desklamp/desklamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/cup.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/dishes.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/fork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/knive.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/plate.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/emergencyexit/emergencyexit.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/emergencyexit/emergencyexit.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/fireext/fireext.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/fireext/fireext.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext2/fireext2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext2/fireext2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext3/fireext3.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/fireext3/fireext3.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/flowerpot2/flowerpot2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/flowerpot2/flowerpot2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/locker/locker2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/locker/locker2.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/objects/furniture/sunprot/sun_prot.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/furniture/sunprot/sun_prot.md2 | GNU General Public License 2.0 | "SparX" Beyeler
-base/models/objects/furniture/water_dispenser/waterf.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/water_dispenser/waterf.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/water_dispenser/waterk.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/furniture/water_dispenser/waterk.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/gascylinder/gascylinder.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/gascylinder/gascylinder.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hover_down.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/hovercraft/hovercraft.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/industrial/cond.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/industrial/cond.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/cabels.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/console.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/industrial/console/console.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/industrial/fan/fan.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/industrial/fan/fan.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/industrial/lamp/lamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/lamp/lamp.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/valve/valve.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/valve/valve.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitter
@@ -1099,39 +1055,14 @@ base/models/objects/money/money.png | GNU General Public License 2.0 or later | 
 base/models/objects/money/moneycase.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/pharaoh/pharaoh.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/pharaoh/pharaoh.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/rubbish/barrel.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/barrel2.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/rubbish/barrel2.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/rubbish/blue_car.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/bottle1.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/bottle2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/box1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/box2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/buffalo_scull.md2 | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/models/objects/rubbish/buffalo_scull.png | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/models/objects/rubbish/car1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/car2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container_green.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/container_grey.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container_red.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/fence.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/fence.png | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/rubbish/gravel/gravel.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/green_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/grey_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/grey_car.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/oil_can.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/rusty_bar.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/scrap.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/scrap1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap3.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap4.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/tire.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/woodern_plank1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/woodern_plank2.md2 | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/rubbish/yellow_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
 base/models/objects/samlauncher/samlauncher.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/samlauncher/samlauncher.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1206,8 +1137,6 @@ base/models/objects/vegi/water_lily/lily_leaf.png | GNU General Public License 2
 base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vegi/water_lily2/lily.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vegi/water_lily2/lily.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/vehicles/bicycle/bicycle.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/forktruck.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/forktruck.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/forktruck1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
