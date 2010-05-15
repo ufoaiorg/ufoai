@@ -592,7 +592,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 		B_UpdateStorageCap(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
-		base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
+		base->capacities[CAP_LABSPACE].cur = RS_CountScientistsInBase(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_WORKSPACE)))
 		PR_UpdateProductionCap(base);

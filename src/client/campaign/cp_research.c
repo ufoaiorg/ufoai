@@ -1714,7 +1714,6 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 /**
  * @brief Returns the index (idx) of a "tech" entry given it's name.
  * @param[in] name the name of the tech
- * @todo this method is extremely inefficient... it could be dramatically improved
  */
 int RS_GetTechIdxByName (const char *name)
 {
@@ -1735,7 +1734,7 @@ int RS_GetTechIdxByName (const char *name)
  * @sa B_ResetAllStatusAndCapacities_f
  * @note must not return 0 if hasBuilding[B_LAB] is qfalse: used to update capacity
  */
-int RS_CountInBase (const base_t *base)
+int RS_CountScientistsInBase (const base_t *base)
 {
 	int i, counter = 0;
 
@@ -1753,14 +1752,13 @@ int RS_CountInBase (const base_t *base)
 /**
  * @brief Remove all exceeding scientist.
  * @param[in] base Pointer to base where a scientist should be removed.
- * @note function called
  */
 void RS_RemoveScientistsExceedingCapacity (base_t *base)
 {
 	assert(base);
 
 	/* Make sure base->capacities[CAP_LABSPACE].cur is set to proper value */
-	base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
+	base->capacities[CAP_LABSPACE].cur = RS_CountScientistsInBase(base);
 
 	while (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max) {
 		technology_t *tech = RS_GetTechWithMostScientists(base);
