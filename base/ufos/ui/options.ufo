@@ -166,7 +166,7 @@ window options
 		}
 		checkbox fullscreen
 		{
-			tooltip		"_Check if you want to play in fullscreen. ATTENTION: Windows users might have to restart."
+			tooltip		"_Play UFO:AI in fullscreen. ATTENTION: Windows users might have to restart."
 			current		*cvar:vid_fullscreen
 			pos			"463 240"
 			size		"20 18"
@@ -182,7 +182,7 @@ window options
 		}
 		checkbox compression
 		{
-			tooltip		"_Check if you want to enable texture compression."
+			tooltip		"_Enable texture compression."
 			current		*cvar:r_ext_texture_compression
 			pos			"463 265"
 			size		"20 18"
@@ -198,7 +198,7 @@ window options
 		}
 		checkbox fps
 		{
-			tooltip		"_Check if you want to see how many frames per second are rendered."			
+			tooltip		"_Display number of frames per second are rendered."
 			current		*cvar:cl_fps
 			pos			"463 290"
 			size		"20 18"
@@ -214,7 +214,7 @@ window options
 		}
 		checkbox lod
 		{
-			tooltip		"_Check if you want high texture detail."
+			tooltip		"_Enable use of high texture detail."
 			current		*cvar:r_texture_lod
 			pos			"463 315"
 			size		"20 18"
@@ -230,7 +230,7 @@ window options
 		}
 		checkbox isomode
 		{
-			tooltip		"_Check if you want to enable the isometric 3d rendering mode for the battlescape."
+			tooltip		"_Enable the isometric 3d rendering mode for the battlescape."
 			current		*cvar:r_isometric
 			pos			"463 340"
 			size		"20 18"
@@ -246,7 +246,7 @@ window options
 		}
 		checkbox glsl
 		{
-			tooltip		"_Check if you want to enable OpenGL GLSL Shaders, uncheck if you experience graphical problems. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable OpenGL GLSL Shaders, uncheck if you experience graphical problems. ATTENTION: May require restart to take effect."
 			current		*cvar:r_programs
 			pos			"463 365"
 			size		"20 18"
@@ -262,7 +262,7 @@ window options
 		}
 		checkbox light
 		{
-			tooltip		"_Check if you want to enable real-time lightning. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable real-time lightning. ATTENTION: May require restart to take effect."
 			current		*cvar:r_lights
 			pos			"463 390"
 			size		"20 18"
@@ -278,7 +278,7 @@ window options
 		}
 		checkbox ptlweather
 		{
-			tooltip		"_Check if you want to enable weather effects."
+			tooltip		"_Enable weather effects."
 			current		*cvar:cl_particleweather
 			pos			"463 415"
 			size		"20 18"
@@ -294,7 +294,7 @@ window options
 		}
 		checkbox vbo
 		{
-			tooltip		"_Check if you want to enable Vertex Buffers for better 3d performance (requires OpenGL capable hardware)."
+			tooltip		"_Enable Vertex Buffers for better 3d performance (requires OpenGL capable hardware)."
 			current		*cvar:r_vertexbuffers
 			pos			"463 440"
 			size		"20 18"
@@ -455,7 +455,7 @@ window options
 		}
 		checkbox strech
 		{
-			tooltip		"_Check if you want the screen stretched with a ratio of 4:3."
+			tooltip		"_Stretch the screen to a ratio of 4:3."
 			current		*cvar:vid_strech
 			pos			"463 615"
 			size		"20 18"
@@ -471,7 +471,7 @@ window options
 		}
 		checkbox postprocess
 		{
-			tooltip		"_Check if you want to enable post processing shader effects. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable post processing shader effects. ATTENTION: May require restart to take effect."
 			current		*cvar:r_postprocess
 			pos			"463 640"
 			size		"20 18"
@@ -940,7 +940,7 @@ window options
 		checkbox centerview_value
 		{
 			current		*cvar:cl_centerview
-			tooltip		"_Check to center the camera view at the actor when selecting it, or at the enemy when he is shooting or appearing."
+			tooltip		"_Center the camera view at the actor when selecting it, or at the enemy when he is shooting or appearing."
 			pos			"425 480"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -957,7 +957,7 @@ window options
 		}
 		checkbox c_tooltip
 		{
-			tooltip		"_Check to activate cursor tooltips."
+			tooltip		"_Activate cursor tooltips."
 			current		*cvar:cl_show_cursor_tooltips
 			pos			"425 505"
 			size		"20 18"
@@ -976,7 +976,7 @@ window options
 		}
 		checkbox 3dmap
 		{
-			tooltip		"_Check to use 3d geoscape."
+			tooltip		"_Use 3D geoscape."
 			current		*cvar:cl_3dmap
 			pos			"425 530"
 			size		"20 18"
@@ -1022,7 +1022,7 @@ window options
 		}
 		checkbox tipoftheday
 		{
-			tooltip		"_Check this if you want to enable the 'tip of the day'."
+			tooltip		"_Enable the 'tip of the day'."
 			current		*cvar:cl_showTipOfTheDay
 			pos			"425 580"
 			size		"20 18"
@@ -1041,7 +1041,7 @@ window options
 		}
 		checkbox precache
 		{
-			tooltip		"_Check to enable precaching of models (faster menus)."
+			tooltip		"_Enable precaching of models (faster menus)."
 			current		*cvar:cl_precache
 			pos			"425 605"
 			size		"20 18"
