@@ -2732,6 +2732,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 		mxml_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
 	} else if (craft->status == AIR_MISSION) {
 		craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
+		craft->mission = CP_GetMissionByIDSilent(s);
 	}
 
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);
