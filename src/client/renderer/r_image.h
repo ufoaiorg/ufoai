@@ -116,7 +116,7 @@ qboolean R_ImageExists(const char *pname);
 #define MAX_ENVMAPTEXTURES 2
 extern image_t *r_envmaptextures[MAX_ENVMAPTEXTURES];
 
-#define NUM_FLARETEXTURES 3
+#define NUM_FLARETEXTURES 10
 extern image_t *r_flaretextures[NUM_FLARETEXTURES];
 
 extern image_t *shadow;	/**< draw this when actor is alive */
