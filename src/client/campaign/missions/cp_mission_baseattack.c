@@ -64,7 +64,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	base = (base_t *)mission->data;
 
 	if (base)
-		B_BaseResetStatus(base);
+		base->baseStatus = BASE_WORKING;
 	ccs.mapAction = MA_NONE;
 
 	/* we really don't want to use the fake aircraft anywhere */
