@@ -260,7 +260,7 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 	if (sphere->normalMap)
 		R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
 
-	if (r_dynamic_lights->integer) {
+	if (r_lights->integer) {
 		if (sphere->blendScale >= 0)
 			R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
 		if (r_postprocess->integer && sphere->glowScale >= 0)
