@@ -1339,10 +1339,10 @@ static void MAP_SmoothTranslate (void)
 		ccs.zoom = smoothFinalZoom;
 		smoothRotation = qfalse;
 	} else {
-		const float diff_zoom = smoothFinalZoom - ccs.zoom;
+		const float diffZoom = smoothFinalZoom - ccs.zoom;
 		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * dist1 / length;
 		ccs.center[1] = ccs.center[1] + SMOOTHING_STEP_2D * dist2 / length;
-		ccs.zoom = ccs.zoom + SMOOTHING_STEP_2D * diff_zoom;
+		ccs.zoom = ccs.zoom + SMOOTHING_STEP_2D * diffZoom;
 	}
 }
 
