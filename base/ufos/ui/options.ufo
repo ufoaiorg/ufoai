@@ -573,7 +573,6 @@ window options
 			texh		"47 16"
 			mousefx		true
 			onClick		{ cmd "mn_push popup_maintain_resolution;" }
-			onClick		{ }
 		}
 
 		selectbox select_ratio
