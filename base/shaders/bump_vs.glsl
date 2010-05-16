@@ -4,7 +4,10 @@ attribute vec4 TANGENT;
 uniform int DYNAMICLIGHTS;
 
 varying vec3 eyedir;
+
+#if r_dynamic_lights
 varying vec3 lightDirs[#replace r_dynamic_lights ];
+#endif
 
 /*
  * BumpVertex
