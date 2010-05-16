@@ -62,10 +62,6 @@
 /* ufo2_11: Destroyed UFO-Panel (Corrupter-Crash) */
 {
 	material tex_ufo/ufo2_11
-	bump 5.0
-	hardness 10.0
-	parallax 1.0
-	specular 6.0
 	{		
 		flare 1
 		scale.s 2.2
