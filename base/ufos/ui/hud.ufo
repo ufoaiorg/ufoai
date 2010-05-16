@@ -33,26 +33,26 @@ window hud extends ahud
 	panel floor {
 		{
 			pos		"0 128"
-			size	"40 346"
+			size	"40 363"
 			align	LAYOUTALIGN_LEFT
 			excluderect	{ pos "0 0" size "40 4" }
-			excluderect	{ pos "6 341" size "35 6" }
-			excluderect	{ pos "32 333" size "8 8" }
+			excluderect	{ pos "6 358" size "35 6" }
+			excluderect	{ pos "32 350" size "8 8" }
 		}
 
 		pic bar_floor
 		{
 			image	hud/bar_floor
 			pos		"0 0"
-			size	"40 346"
-			texh	"40 346"
+			size	"40 363"
+			texh	"40 363"
 			ghost	true
 		}
 
 		radiobutton bt0
 		{
 			tooltip	"_Level 1"
-			pos		"6 293"
+			pos		"6 310"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	0
@@ -63,7 +63,7 @@ window hud extends ahud
 		radiobutton bt1
 		{
 			tooltip	"_Level 2"
-			pos		"6 253"
+			pos		"6 270"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	1
@@ -74,7 +74,7 @@ window hud extends ahud
 		radiobutton bt2
 		{
 			tooltip	"_Level 3"
-			pos		"6 213"
+			pos		"6 230"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	2
@@ -85,7 +85,7 @@ window hud extends ahud
 		radiobutton bt3
 		{
 			tooltip	"_Level 4"
-			pos		"6 173"
+			pos		"6 190"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	3
@@ -96,7 +96,7 @@ window hud extends ahud
 		radiobutton bt4
 		{
 			tooltip	"_Level 5"
-			pos		"6 133"
+			pos		"6 150"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	4
@@ -107,7 +107,7 @@ window hud extends ahud
 		radiobutton bt5
 		{
 			tooltip	"_Level 6"
-			pos		"6 93"
+			pos		"6 110"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	5
@@ -118,7 +118,7 @@ window hud extends ahud
 		radiobutton bt6
 		{
 			tooltip	"_Level 7"
-			pos		"6 53"
+			pos		"6 70"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	6
@@ -129,7 +129,7 @@ window hud extends ahud
 		radiobutton bt7
 		{
 			tooltip	"_Level 8"
-			pos		"6 13"
+			pos		"6 30"
 			size	"27 35"
 			image	"ui/button_background2"
 			value	7
@@ -192,7 +192,7 @@ window hud extends ahud
 	panel team_selection {
 		{
 			pos		"415 0"
-			size	"264 56"
+			size	"275 56"
 			align	LAYOUTALIGN_TOP
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
@@ -203,15 +203,15 @@ window hud extends ahud
 		{
 			image	hud/bar_teammember
 			pos		"0 0"
-			size	"501 56"
-			texh	"501 56"
+			size	"275 56"
+			texh	"275 56"
 			ghost	true
 		}
 
 		radiobutton bt_actor0
 		{
 			tooltip		*cvar:mn_soldier0_tt
-			pos			"11 10"
+			pos			"29 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		0
@@ -223,7 +223,7 @@ window hud extends ahud
 		radiobutton bt_actor1
 		{
 			tooltip		*cvar:mn_soldier1_tt
-			pos			"42 10"
+			pos			"59 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		1
@@ -235,7 +235,7 @@ window hud extends ahud
 		radiobutton bt_actor2
 		{
 			tooltip		*cvar:mn_soldier2_tt
-			pos			"73 10"
+			pos			"89 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		2
@@ -247,7 +247,7 @@ window hud extends ahud
 		radiobutton bt_actor3
 		{
 			tooltip		*cvar:mn_soldier3_tt
-			pos			"104 10"
+			pos			"119 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		3
@@ -259,7 +259,7 @@ window hud extends ahud
 		radiobutton bt_actor4
 		{
 			tooltip		*cvar:mn_soldier4_tt
-			pos			"135 10"
+			pos			"149 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		4
@@ -271,7 +271,7 @@ window hud extends ahud
 		radiobutton bt_actor5
 		{
 			tooltip		*cvar:mn_soldier5_tt
-			pos			"166 10"
+			pos			"179 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		5
@@ -283,7 +283,7 @@ window hud extends ahud
 		radiobutton bt_actor6
 		{
 			tooltip		*cvar:mn_soldier6_tt
-			pos			"197 10"
+			pos			"209 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		6
@@ -295,7 +295,7 @@ window hud extends ahud
 		radiobutton bt_actor7
 		{
 			tooltip		*cvar:mn_soldier7_tt
-			pos			"228 10"
+			pos			"239 10"
 			size		"27 35"
 			image		"ui/button_background2"
 			value		7
