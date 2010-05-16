@@ -2406,15 +2406,15 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
  * @param[out] p XML Node structure, where we write the information to
  * @param[in] route Aircraft route plan
  */
-static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t route)
+static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t *route)
 {
 	int j;
 	mxml_node_t *subnode;
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_ROUTE);
-	mxml_AddFloatValue(subnode, SAVE_AIRCRAFT_ROUTE_DISTANCE, route.distance);
-	for (j = 0; j < route.numPoints; j++) {
-		mxml_AddPos2(subnode, SAVE_AIRCRAFT_ROUTE_POINT, route.point[j]);
+	mxml_AddFloatValue(subnode, SAVE_AIRCRAFT_ROUTE_DISTANCE, route->distance);
+	for (j = 0; j < route->numPoints; j++) {
+		mxml_AddPos2(subnode, SAVE_AIRCRAFT_ROUTE_POINT, route->point[j]);
 	}
 }
 
@@ -2473,7 +2473,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_ELECTRONICS);
 	AIR_SaveAircraftSlotsXML(aircraft->electronics, aircraft->maxElectronics, subnode, qfalse);
 
-	AIR_SaveRouteXML(node, aircraft->route);
+	AIR_SaveRouteXML(node, &aircraft->route);
 
 	if (isUfo) {
 #ifdef DEBUG
@@ -2658,7 +2658,7 @@ static qboolean AIR_LoadRouteXML (mxml_node_t *p, mapline_t *route)
 		return qfalse;
 	}
 	route->numPoints = count;
-	route->distance = mxml_GetFloat(p, SAVE_AIRCRAFT_ROUTE_DISTANCE, 0.0);
+	route->distance = mxml_GetFloat(snode, SAVE_AIRCRAFT_ROUTE_DISTANCE, 0.0);
 	return qtrue;
 }
 
