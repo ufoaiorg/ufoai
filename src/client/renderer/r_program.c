@@ -651,7 +651,8 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 	R_ProgramParameter1i("SAMPLER3", 3);
-	R_ProgramParameter1i("SAMPLER4", 4);
+	if (r_postprocess->integer)
+		R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
@@ -662,7 +663,8 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("HARDNESS", 0.2);
 	R_ProgramParameter1f("SPECULAR", 1.0);
-	R_ProgramParameter1f("GLOWSCALE", 1.0);
+	if (r_postprocess->integer)
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
 static void R_UseWorldProgram (r_program_t *prog)
