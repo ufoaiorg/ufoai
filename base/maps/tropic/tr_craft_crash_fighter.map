@@ -598,7 +598,7 @@
 // entity 5
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "150.417 673.222 18"
 "spawnflags" "255"
 "angles" "0 -37.6665 0"
@@ -885,7 +885,7 @@
 // entity 43
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "46.4168 49.2221 18"
 "spawnflags" "255"
 "angles" "0 -37.6665 0"
