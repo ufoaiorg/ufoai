@@ -5,8 +5,9 @@ uniform int DYNAMICLIGHTS;
 
 varying vec3 eyedir;
 
+#define R_DYNAMIC_LIGHTS #replace r_dynamic_lights
 #if r_dynamic_lights
-varying vec3 lightDirs[#replace r_dynamic_lights ];
+varying vec3 lightDirs[R_DYNAMIC_LIGHTS];
 #endif
 
 /*
