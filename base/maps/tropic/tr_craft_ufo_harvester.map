@@ -3106,14 +3106,14 @@
 // entity 15
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "46 304 18"
 "spawnflags" "255"
 }
 // entity 16
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "974 560 18"
 "spawnflags" "255"
 }
