@@ -236,14 +236,14 @@ window options
 		// ===============
 		string isomode_str
 		{
-			tooltip		"_Isometric Mode means the 3d world will be rendered without perspective correction (will look unnatural)."
+			tooltip		"_Isometric Mode means the 3D world will be rendered without perspective correction."
 			string		"_Isometric Mode:"
 			pos			"85 340"
 			size		"240 20"
 		}
 		checkbox isomode
 		{
-			tooltip		"_Enable the isometric 3d rendering mode for the battlescape."
+			tooltip		"_Enable the isometric 3D rendering mode for the battlescape."
 			current		*cvar:r_isometric
 			pos			"485 340"
 			size		"20 18"
@@ -272,7 +272,7 @@ window options
 		// ===================
 		string light_str
 		{
-			tooltip		"_Realtime lightning of the 3d world in UFO:AI."
+			tooltip		"_Realtime lightning of the 3D world in UFO:AI."
 			string		"_Realtime Lighting:"
 			pos			"85 390"
 			size		"240 20"
@@ -315,7 +315,7 @@ window options
 		}
 		checkbox vbo
 		{
-			tooltip		"_Enable Vertex Buffers for better 3d performance (requires OpenGL capable hardware)."
+			tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 			current		*cvar:r_vertexbuffers
 			pos			"485 440"
 			size		"20 18"
@@ -991,7 +991,7 @@ window options
 		}
 		checkbox 3dmap
 		{
-			tooltip		"_Use the 3d geoscape. To enable this option you have to start a new campaign first."
+			tooltip		"_Use the 3D geoscape. To enable this option you have to start a new campaign first."
 			current		*cvar:cl_3dmap
 			pos			"485 440"
 			size		"20 18"
