@@ -703,7 +703,7 @@ window options
 		string volume_str
 		{
 			tooltip		"_The more of this the louder it gets."
-			string		"_* Volume Control"
+			string		"_Volume Control"
 			pos			"70 140"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -764,7 +764,7 @@ window options
 		string other_sound_opt
 		{
 			tooltip		"_Find more detailed settings here."
-			string		"_* Advanced Audio Options"
+			string		"_Advanced Audio Options"
 			pos			"70 275"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -910,7 +910,7 @@ window options
 		string current_name
 		{
 			tooltip		"_Your name."
-			string 		"_* Name"
+			string 		"_Name"
 			pos			"70 330"
 			size		"256 20"
 			color		"1.0 0.75 0 1"				
@@ -934,7 +934,7 @@ window options
 		string language_str
 		{
 			tooltip		"_Choose your language."
-			string		"_* Language Settings  -->>"
+			string		"_Language Settings"
 			pos			"70 140"
 			size		"312 20"
 			color		"1.0 0.75 0 1"			
@@ -974,7 +974,7 @@ window options
 		string geoscape_options
 		{
 			tooltip		"_Stuff happening 'on the global scale'."
-			string 		"_* Geoscape Options"
+			string 		"_Geoscape Options"
 			pos			"70 410"
 			size		"256 20"
 			color		"1.0 0.75 0 1"			
@@ -1030,7 +1030,7 @@ window options
 		string several_tips
 		{
 			tooltip		"_Just here to help."
-			string 		"_* Several Tips"
+			string 		"_Several Tips"
 			pos			"70 545"
 			size		"256 20"
 			color		"1.0 0.75 0 1"			
@@ -1097,7 +1097,7 @@ window options
 		string menu_options
 		{
 			tooltip		"_Everything that you can find nowhere else."
-			string 		"_* Menu Option(s)"
+			string 		"_Menu Option(s)"
 			pos			"70 650"
 			size		"256 20"
 			color		"1.0 0.75 0 1"			
@@ -1148,7 +1148,7 @@ window options
 		string camera_str
 		{
 			tooltip		"_The camera is the thing you move around all the time and that makes you see."
-			string		"_* Battlescape Camera Settings"
+			string		"_Battlescape Camera Settings"
 			pos			"70 140"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -1236,7 +1236,7 @@ window options
 		string gameplaysettings
 		{
 			tooltip		"_The battlescape is where the ground forces meet."
-			string		"_* Battlescape Gameplay Settings"
+			string		"_Battlescape Gameplay Settings"
 			pos			"70 305"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -1272,7 +1272,7 @@ window options
 		string joystick_settings_str
 		{
 			tooltip		"_The joystick is a old-school input device for computers."
-			string		"_* Joystick Settings"
+			string		"_Joystick Settings"
 			pos			"70 470"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -1425,7 +1425,7 @@ window options
 		string centerview_str
 		{
 			tooltip		"_Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-			string		"_& Center View:"
+			string		"_Center View:"
 			pos			"85 245"
 			size		"250 20"
 		}
@@ -1443,7 +1443,7 @@ window options
 		string hud_str
 		{		
 			tooltip		"_Select the Head-Up-Display for the battlescape."
-			string		"_& HUD Design:"
+			string		"_HUD Design:"
 			pos			"85 410"
 			size		"250 20"
 		}
