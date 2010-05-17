@@ -198,7 +198,7 @@ window options
 		}
 		checkbox fps
 		{
-			tooltip		"_Check to display the number of rendered frames per second."
+			tooltip		"_Display the number of rendered frames per second."
 			current		*cvar:cl_fps
 			pos			"485 290"
 			size		"20 18"
@@ -214,7 +214,7 @@ window options
 		}
 		checkbox lod
 		{
-			tooltip		"_Check to enable high texture detail."
+			tooltip		"_Enable high texture detail."
 			current		*cvar:r_texture_lod
 			pos			"485 315"
 			size		"20 18"
@@ -230,7 +230,7 @@ window options
 		}
 		checkbox isomode
 		{
-			tooltip		"_Check to enable the isometric 3d rendering mode for the battlescape."
+			tooltip		"_Enable the isometric 3d rendering mode for the battlescape."
 			current		*cvar:r_isometric
 			pos			"485 340"
 			size		"20 18"
@@ -246,7 +246,7 @@ window options
 		}
 		checkbox glsl
 		{
-			tooltip		"_Check to enable OpenGL GLSL Shaders, uncheck if you experience graphical problems. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable OpenGL GLSL Shaders, uncheck if you experience graphical problems. ATTENTION: May require restart to take effect."
 			current		*cvar:r_programs
 			pos			"485 365"
 			size		"20 18"
@@ -262,7 +262,7 @@ window options
 		}
 		checkbox light
 		{
-			tooltip		"_Check to enable real-time lightning. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable real-time lightning. ATTENTION: May require restart to take effect."
 			current		*cvar:r_lights
 			pos			"485 390"
 			size		"20 18"
@@ -278,7 +278,7 @@ window options
 		}
 		checkbox ptlweather
 		{
-			tooltip		"_Check to enable weather effects."
+			tooltip		"_Enable weather effects."
 			current		*cvar:cl_particleweather
 			pos			"485 415"
 			size		"20 18"
@@ -294,7 +294,7 @@ window options
 		}
 		checkbox vbo
 		{
-			tooltip		"_Check to enable Vertex Buffers for better 3d performance (requires OpenGL capable hardware)."
+			tooltip		"_Enable Vertex Buffers for better 3d performance (requires OpenGL capable hardware)."
 			current		*cvar:r_vertexbuffers
 			pos			"485 440"
 			size		"20 18"
@@ -318,7 +318,7 @@ window options
 		}
 		spinner samplebuf_change
 		{
-			tooltip		"_Click to change the amount of multisample buffers."
+			tooltip		"_Change the amount of multisample buffers."
 			current		*cvar:r_multisample
 			image		ui/spinner_blue
 			pos			"466 464"
@@ -345,7 +345,7 @@ window options
 
 		spinner swapinterval_change
 		{
-			tooltip		"_Click to change the swap interval."
+			tooltip		"_Change the swap interval."
 			current		*cvar:r_swapinterval
 			image		ui/spinner_blue
 			pos			"466 485"
@@ -495,7 +495,7 @@ window options
 		}
 		spinner dynamiclights_change
 		{
-			tooltip		"_Click to change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."		
+			tooltip		"_Change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."		
 			current		*cvar:r_dynamic_lights
 			image		ui/spinner_blue
 			pos			"466 665"
@@ -711,7 +711,7 @@ window options
 		}
 		pic rate_test_pic
 		{
-			tooltip		"_Click to restart the sound-engine and apply your settings."
+			tooltip		"_Restart the sound-engine and apply your settings."
 			image		ui/buttons_small
 			pos			"486 247"
 			texl		"32 0"
@@ -755,7 +755,7 @@ window options
 		}
 		checkbox sound_init
 		{
-			tooltip		"_Check to enable sound."		
+			tooltip		"_Enable sound."		
 			current		*cvar:snd_init
 			pos			"485 270"
 			size		"20 18"
@@ -846,7 +846,7 @@ window options
 		}
 		textentry slot_name
 		{
-			tooltip		"_Click to change your name."
+			tooltip		"_Change your name."
 			string		*cvar:cl_name
 			image		ui/button_green_verysmall
 			color 		"0 .78 0 1"
@@ -910,7 +910,7 @@ window options
 		}
 		checkbox 3dmap
 		{
-			tooltip		"_Check to use the 3d geoscape."
+			tooltip		"_Use the 3d geoscape."
 			current		*cvar:cl_3dmap
 			pos			"485 465"
 			size		"20 18"
@@ -956,7 +956,7 @@ window options
 		}
 		checkbox tooltip
 		{
-			tooltip		"_Uncheck to deactivate mouseover tooltips and make me disappear."
+			tooltip		"_Make me disappear."
 			current		*cvar:mn_show_tooltips
 			pos			"485 525"
 			size		"20 18"
@@ -975,7 +975,7 @@ window options
 		}
 		checkbox c_tooltip
 		{
-			tooltip		"_Check to activate cursor tooltips."
+			tooltip		"_Activate cursor tooltips."
 			current		*cvar:cl_show_cursor_tooltips
 			pos			"485 550"
 			size		"20 18"
@@ -1014,7 +1014,7 @@ window options
 		}
 		checkbox precache
 		{
-			tooltip		"_Check to enable precaching of models and have faster menus."
+			tooltip		"_Enable precaching of models and have faster menus."
 			current		*cvar:cl_precache
 			pos			"485 610"
 			size		"20 18"
@@ -1189,7 +1189,7 @@ window options
 
 		checkbox joystick_enable
 		{
-			tooltip		"_Check to enable your joystick or joypad."
+			tooltip		"_Enable your joystick or joypad."
 			current		*cvar:in_joystick
 			pos			"485 505"
 			size		"20 18"
@@ -1338,7 +1338,7 @@ window options
 		}
 		checkbox centerview_value
 		{
-			tooltip		"_Check to center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
+			tooltip		"_Center the camera view automatically at the soldier when selecting it, or at the enemy when he is shooting or appearing."
 			current		*cvar:cl_centerview
 			pos			"485 245"
 			size		"20 18"
