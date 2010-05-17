@@ -693,7 +693,7 @@ window options
 		}
 		bar music_bar
 		{
-			tooltip		"_The current volume of the sound effects."
+			tooltip		"_The current volume of the music."
 			current		*cvar:snd_music_volume
 			pos			"239 205"
 			size		"238 6"
