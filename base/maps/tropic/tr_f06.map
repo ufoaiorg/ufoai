@@ -172,7 +172,7 @@
 // entity 7
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "174 16 18"
 "spawnflags" "255"
 }
@@ -181,13 +181,13 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 100 0"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "174 16 42"
 }
 // entity 9
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "208 241 38"
 "spawnflags" "255"
 "angles" "0 -90 0"
@@ -197,7 +197,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 30 0"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "110 176 18"
 }
 // entity 11
@@ -205,7 +205,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "angles" "0 -60 0"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "110 176 42"
 }
 // entity 12
@@ -227,7 +227,7 @@
 // entity 14
 {
 "classname" "misc_model"
-"model" "/models/objects/vegi/bush/bush01.md2"
+"model" "models/objects/vegi/bush/bush01.md2"
 "origin" "206 240 18"
 "spawnflags" "255"
 }
