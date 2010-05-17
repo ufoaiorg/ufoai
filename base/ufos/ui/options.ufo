@@ -261,7 +261,7 @@ window options
 		}
 		checkbox glsl
 		{
-			tooltip		"_Enable OpenGL GLSL Shaders, uncheck if you experience graphical problems. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable OpenGL GLSL Shaders. Disable it if you experience graphical problems. ATTENTION: May require restart to take effect."
 			current		*cvar:r_programs
 			pos			"485 365"
 			size		"20 18"
@@ -610,7 +610,7 @@ window options
 		// ==================
 		pic res_test_pic
 		{
-			tooltip		"_Click here to switch to the selected resolution. ATTENTION: Windows users might have to restart to make this work correctly."
+			tooltip		"_Switch to the selected resolution. ATTENTION: Windows users might have to restart to make this work correctly."
 			image		ui/buttons_small
 			pos			"486 144"
 			texl		"32 0"
