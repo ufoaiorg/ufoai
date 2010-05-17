@@ -1426,7 +1426,7 @@ window options
 		{
 			tooltip		"_Select whether the game should automatically center the camera view at the actors on the battlescape or not."
 			string		"_Center View:"
-			pos			"85 245"
+			pos			"95 245"
 			size		"250 20"
 		}
 		checkbox centerview_value
@@ -1444,7 +1444,7 @@ window options
 		{		
 			tooltip		"_Select the Head-Up-Display for the battlescape."
 			string		"_HUD Design:"
-			pos			"85 410"
+			pos			"95 410"
 			size		"250 20"
 		}
 		selectbox select_hud
