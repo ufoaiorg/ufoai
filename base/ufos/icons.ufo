@@ -5,42 +5,42 @@
 //
 
 icon system_expand {
-	image "ui/icon_open"
+	image "icons/system_expand"
 	texl	"0 0"
 	size	"16 16"
 	single	true
 }
 
 icon system_collapse {
-	image "ui/icon_close"
+	image "icons/system_collapse"
 	texl	"0 0"
 	size	"16 16"
 	single	true
 }
 
 icon system_child {
-	image "ui/icon_child"
+	image "icons/system_child"
 	texl	"0 0"
 	size	"16 16"
 	single	true
 }
 
 icon system_parent {
-	image "ui/icon_parent"
+	image "icons/system_parent"
 	texl	"0 0"
 	size	"16 16"
 	single	true
 }
 
 icon system_next {
-	image "ui/icon_next"
+	image "icons/system_next"
 	texl	"0 0"
 	size	"16 16"
 	single	true
 }
 
 icon system_capture {
-	image "ui/icon_capture"
+	image "icons/system_capture"
 	texl	"0 0"
 	size	"16 16"
 	single	true
@@ -52,85 +52,85 @@ icon system_capture {
 //
 
 icon geoscape {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "0 0"
 	size "42 42"
 }
 
 icon check {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "48 0"
 	size "42 42"
 }
 
 icon return {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "101 36"
 	size "25 24"
 }
 
 icon research_stop {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "112 0"
 	size "43 34"
 }
 
 icon research_start {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "160 0"
 	size "49 34"
 }
 
 icon mail {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "225 5"
 	size "30 23"
 }
 
 icon garbage {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl "229 35"
 	size "22 25"
 }
 
 icon next {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"130 38"
 	size	"13 20"
 }
 
 icon prev {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"145 38"
 	size	"13 20"
 }
 
 icon list {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"162 35"
 	size	"23 26"
 }
 
 icon autopsyalien {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"1 1"
 	size	"44 48"
 }
 
 icon killalien {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"80 1"
 	size	"29 25"
 }
 
 icon question {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"80 0"
 	size	"27 46"
 }
 
 icon change_height {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"96 32"
 	size	"15 15"
 }
@@ -138,31 +138,31 @@ icon change_height {
 // small employee
 
 icon smallhead_soldier {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"116 0"
 	size	"28 28"
 }
 
 icon smallhead_pilot {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"144 0"
 	size	"28 28"
 }
 
 icon smallhead_worker {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"172 0"
 	size	"28 28"
 }
 
 icon smallhead_scientist {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"200 0"
 	size	"28 28"
 }
 
 icon smallhead_medic {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"228 0"
 	size	"28 28"
 }
@@ -170,19 +170,19 @@ icon smallhead_medic {
 // vertical arrows
 
 icon varrow_top_bottom {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"202 32"
 	size	"11 15"
 }
 
 icon varrow_swap {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"218 32"
 	size	"19 15"
 }
 
 icon varrow_bottom_top {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"242 32"
 	size	"11 15"
 }
@@ -190,35 +190,35 @@ icon varrow_bottom_top {
 // big employee
 
 icon bighead_soldier {
-	image "icons/soldier"
+	image "icons/bighead_soldier"
 	texl	"0 0"
 	size	"42 42"
 	single	true
 }
 
 icon bighead_pilot {
-	image "icons/pilot"
+	image "icons/bighead_pilot"
 	texl	"0 0"
 	size	"42 42"
 	single	true
 }
 
 icon bighead_worker {
-	image "icons/worker"
+	image "icons/bighead_worker"
 	texl	"0 0"
 	size	"42 42"
 	single	true
 }
 
 icon bighead_scientist {
-	image "icons/scientist"
+	image "icons/bighead_scientist"
 	texl	"0 0"
 	size	"42 42"
 	single	true
 }
 
 icon bighead_medic {
-	image "icons/medic"
+	image "icons/bighead_medic"
 	texl	"0 0"
 	size	"42 42"
 	single	true
@@ -227,31 +227,31 @@ icon bighead_medic {
 // delay time
 
 icon speed_stop {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"115 33"
 	size	"10 15"
 }
 
 icon speed_play1 {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"130 33"
 	size	"8 15"
 }
 
 icon speed_play2 {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"143 33"
 	size	"14 15"
 }
 
 icon speed_play3 {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"162 33"
 	size	"20 15"
 }
 
 icon speed_dot {
-	image "ui/icon_pack2"
+	image "icons/pack2"
 	texl	"187 37"
 	size	"7 7"
 }
@@ -259,91 +259,91 @@ icon speed_dot {
 // geoscape
 
 icon geo_messagelog {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"2 2"
 	size	"22 21"
 }
 
 icon geo_radar {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"32 2"
 	size	"18 20"
 }
 
 icon geo_option {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"57 2"
 	size	"21 20"
 }
 
 icon geo_center {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"82 3"
 	size	"18 18"
 }
 
 icon geo_messageoption {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"108 3"
 	size	"22 21"
 }
 
 icon geo_map {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"131 2"
 	size	"22 20"
 }
 
 icon plus {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"64 33"
 	size	"18 20"
 }
 
 icon minus {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"85 33"
 	size	"18 20"
 }
 
 icon del {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"107 32"
 	size	"22 23"
 }
 
 icon uvc {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"1 34"
 	size	"28 16"
 }
 
 icon soldier {
-	image "ui/icon_pack3"
+	image "icons/pack3"
 	texl	"33 33"
 	size	"24 23"
 }
 
 icon bordered_magnifying_glass {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"1 46"
 	size	"16 16"
 }
 
 icon bordered_sleep {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"19 46"
 	size	"16 16"
 }
 
 icon bordered_question {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"37 46"
 	size	"16 16"
 }
 
 icon bordered_cross {
-	image "ui/icon_pack1"
+	image "icons/pack1"
 	texl	"55 46"
 	size	"16 16"
 }
@@ -413,63 +413,63 @@ icon ufopedia_news {
 //
 
 icon message_debug {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"0 16"
 	size	"15 15"
 	single	true
 }
 
 icon message_info {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"16 16"
 	size	"15 15"
 	single	true
 }
 
 icon message_research {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"16 0"
 	size	"15 15"
 	single	true
 }
 
 icon message_construction {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"0 0"
 	size	"15 15"
 	single	true
 }
 
 icon message_transfer {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"48 0"
 	size	"15 15"
 	single	true
 }
 
 icon message_promotion {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"48 16"
 	size	"15 15"
 	single	true
 }
 
 icon message_production {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"32 0"
 	size	"15 15"
 	single	true
 }
 
 icon message_death {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"32 16"
 	size	"15 15"
 	single	true
 }
 
 icon message_ufo {
-	image "ui/icon_message"
+	image "icons/pack_message"
 	texl	"32 16"
 	size	"15 15"
 	single	true
@@ -480,49 +480,49 @@ icon message_ufo {
 //
 
 icon number_1 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"0 0"
 	size	"17 26"
 }
 
 icon number_2 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"17 0"
 	size	"17 26"
 }
 
 icon number_3 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"36 0"
 	size	"17 26"
 }
 
 icon number_4 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"53 0"
 	size	"17 26"
 }
 
 icon number_5 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"72 0"
 	size	"17 26"
 }
 
 icon number_6 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"92 0"
 	size	"17 26"
 }
 
 icon number_7 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"110 0"
 	size	"17 26"
 }
 
 icon number_8 {
-	image "ui/icon_pack_hud"
+	image "icons/pack_hud"
 	texl	"129 0"
 	size	"17 26"
 }
