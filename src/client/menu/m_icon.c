@@ -40,10 +40,10 @@ const value_t mn_iconProperties[] = {
 	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image), 0},
 	{"single", V_BOOL, offsetof(menuIcon_t, single), 0},
 	{"blend", V_BOOL, offsetof(menuIcon_t, blend), 0},
-	{"normalcolor", V_COLOR, offsetof(menuIcon_t, normalColor), MEMBER_SIZEOF(menuIcon_t, normalColor)},
-	{"selectedcolor", V_COLOR, offsetof(menuIcon_t, selectedColor), MEMBER_SIZEOF(menuIcon_t, selectedColor)},
-	{"disabledcolor", V_COLOR, offsetof(menuIcon_t, disabledColor), MEMBER_SIZEOF(menuIcon_t, disabledColor)},
-	{"clickColor", V_COLOR, offsetof(menuIcon_t, clickColor), MEMBER_SIZEOF(menuIcon_t, clickColor)},
+	{"normalcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_NORMAL])},
+	{"selectedcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_HOVER])},
+	{"disabledcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_DISABLED])},
+	{"clickColor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_CLICKED])},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -113,7 +113,7 @@ menuIcon_t* MN_GetIconByName (const char* name)
 menuIcon_t* MN_AllocStaticIcon (const char* name)
 {
 	menuIcon_t* result;
-	assert(MN_IconExists(name) == NULL);
+	assert(!MN_IconExists(name));
 	if (mn.numIcons >= MAX_MENUICONS)
 		Com_Error(ERR_FATAL, "MN_AllocStaticIcon: MAX_MENUICONS hit");
 
@@ -151,22 +151,9 @@ void MN_DrawIconInBox (const menuIcon_t* icon, iconStatus_t status, int posX, in
 
 	if (icon->blend) {
 		const vec_t *color;
-		switch (status) {
-		case ICON_STATUS_NORMAL:
-			color = icon->normalColor;
-			break;
-		case ICON_STATUS_HOVER:
-			color = icon->selectedColor;
-			break;
-		case ICON_STATUS_DISABLED:
-			color = icon->disabledColor;
-			break;
-		case ICON_STATUS_CLICKED:
-			color = icon->clickColor;
-			break;
-		default:
+		if (status < 0 && status >= ICON_STATUS_MAX)
 			return;
-		}
+		color = icon->color[status];
 		R_Color(color);
 	}
 

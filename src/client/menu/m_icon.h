@@ -27,19 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_MENUICONS 128
 
-typedef struct menuIcon_s {
-	char name[MAX_VAR];
-	char* image;
-	vec2_t pos;
-	vec2_t size;
-	qboolean single;
-	qboolean blend;
-	vec4_t normalColor;
-	vec4_t selectedColor;
-	vec4_t disabledColor;
-	vec4_t clickColor;
-} menuIcon_t;
-
 typedef enum {
 	ICON_STATUS_NORMAL = 0,
 	ICON_STATUS_HOVER = 1,
@@ -48,6 +35,16 @@ typedef enum {
 
 	ICON_STATUS_MAX
 } iconStatus_t;
+
+typedef struct menuIcon_s {
+	char name[MAX_VAR];
+	char* image;
+	vec2_t pos;
+	vec2_t size;
+	qboolean single;
+	qboolean blend;
+	vec4_t color[ICON_STATUS_MAX];
+} menuIcon_t;
 
 extern const value_t mn_iconProperties[];
 
