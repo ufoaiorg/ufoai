@@ -8,7 +8,7 @@ component panel cmpResearchItem {
 	}
 
 	pic img_status {
-		image		ui/buttons_small
+		image		icons/pack_smallbutton
 		pos			"0 0"
 		texl		"32 16"
 		texh		"48 32"

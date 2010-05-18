@@ -266,7 +266,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		menuNode_t *button = MN_AllocNode("close_window_button", "pic", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		button->root = node;
-		button->image = "ui/close";
+		button->image = "icons/system_close";
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;

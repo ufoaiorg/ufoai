@@ -163,7 +163,7 @@ window iaircraft
 	pic air_nameedit
 	{
 		tooltip		"_Rename aircraft"
-		image		ui/buttons_small
+		image		icons/pack_smallbutton
 		pos			"380 116"
 		size		"16 16"
 		texl		"0 48"

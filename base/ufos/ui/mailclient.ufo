@@ -165,7 +165,7 @@ window mailclient
 
 	pic mail_allread
 	{
-		image		ui/mailclient
+		image		icons/pack_mailclient
 		tooltip		"_Mark all messages read"
 		pos			"50 50"
 		texl		"0 32"

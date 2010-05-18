@@ -611,7 +611,7 @@ window options
 		pic res_test_pic
 		{
 			tooltip		"_Switch to the selected resolution. ATTENTION: Windows users might have to restart to make this work correctly."
-			image		ui/buttons_small
+			image		icons/pack_smallbutton
 			pos			"486 144"
 			texl		"32 0"
 			texh		"47 16"
@@ -782,7 +782,7 @@ window options
 		pic rate_test_pic
 		{
 			tooltip		"_Restart the sound-engine and apply your settings."
-			image		ui/buttons_small
+			image		icons/pack_smallbutton
 			pos			"486 307"
 			texl		"32 0"
 			texh		"47 16"

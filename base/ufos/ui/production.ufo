@@ -411,7 +411,7 @@ window production
 	pic prod_stop
 	{
 		tooltip		"_Stop production"
-		image		ui/buttons_small
+		image		icons/pack_smallbutton
 		pos			"900 505"
 		texl		"48 16"
 		texh		"64 32"
@@ -421,7 +421,7 @@ window production
 	pic prod_up
 	{
 		tooltip		"_Increase priority"
-		image		ui/button_produce
+		image		icons/pack_produce
 		pos			"615 400"
 		texl		"0 0"
 		texh		"16 16"
@@ -433,7 +433,7 @@ window production
 	pic prod_down
 	{
 		tooltip		"_Decrease priority"
-		image		ui/button_produce
+		image		icons/pack_produce
 		pos			"615 420"
 		texl		"0 16"
 		texh		"16 32"

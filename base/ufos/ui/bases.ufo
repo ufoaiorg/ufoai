@@ -38,7 +38,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 	pic bt_edit
 	{
 		tooltip	"_Rename your base"
-		image	ui/buttons_small
+		image	icons/pack_smallbutton
 		pos	"570 40"
 		texl	"0 48"
 		texh	"16 64"

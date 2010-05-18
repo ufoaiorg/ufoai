@@ -513,7 +513,7 @@ window geoscape
 		pic bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			image		ui/geo_nations_highlight
+			image		icons/geo_nations_highlight
 			pos			"40 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -525,7 +525,7 @@ window geoscape
 		pic bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			image		ui/geo_radar
+			image		icons/geo_radar
 			pos			"70 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -538,7 +538,7 @@ window geoscape
 		{
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			image		ui/geo_xvi
+			image		icons/geo_xvi
 			pos			"100 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -957,7 +957,7 @@ window popup_newbase
 	pic bt_nameedit
 	{
 		tooltip		"_Rename your base"
-		image		ui/buttons_small
+		image		icons/pack_smallbutton
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"

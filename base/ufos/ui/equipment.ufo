@@ -399,7 +399,7 @@ window equipment extends objectinfo
 	
 		custombutton action_dec
 		{
-			image	ui/buttons_small
+			image	icons/pack_smallbutton
 			pos		"120 290"
 			icon	prev
 			size	"16 16"
@@ -417,7 +417,7 @@ window equipment extends objectinfo
 
 		custombutton action_inc
 		{
-			image	ui/buttons_small
+			image	icons/pack_smallbutton
 			pos		"334 290"
 			icon	next
 			size	"16 16"
@@ -439,7 +439,7 @@ window equipment extends objectinfo
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
-			image	ui/buttons_small
+			image	icons/pack_smallbutton
 			pos		"120 314"
 			icon	prev
 			size	"16 16"
@@ -458,7 +458,7 @@ window equipment extends objectinfo
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
-			image	ui/buttons_small
+			image	icons/pack_smallbutton
 			pos		"334 314"
 			icon	next
 			size	"16 16"
@@ -619,7 +619,7 @@ window equipment extends objectinfo
 	pic bt_edit
 	{
 		tooltip		"_Rename your unit"
-		image		ui/buttons_small
+		image		icons/pack_smallbutton
 		pos			"780 24"
 		size		"16 16"
 		texl		"0 48"

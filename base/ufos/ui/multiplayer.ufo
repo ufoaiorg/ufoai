@@ -1335,7 +1335,7 @@ window multiplayer_wait extends levelbuttons
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Next free team"
-			image		ui/buttons_small
+			image		icons/pack_smallbutton
 			pos			"298 82"
 			texl		"0 0"
 			texh		"16 16"
@@ -1346,7 +1346,7 @@ window multiplayer_wait extends levelbuttons
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
-			image		ui/buttons_small
+			image		icons/pack_smallbutton
 			pos			"314 82"
 			texl		"16 0"
 			texh		"32 16"

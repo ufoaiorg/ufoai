@@ -350,7 +350,7 @@ window hospital
 	pic hos_button_scrollup
 	{
 		tooltip "_Scroll up"
-		image	ui/buttons_small
+		image	icons/pack_smallbutton
 		mousefx true
 		pos		"980 95"
 		texh	"48 48"
@@ -363,7 +363,7 @@ window hospital
 	pic hos_button_scrolldown
 	{
 		tooltip "_Scroll down"
-		image	ui/buttons_small
+		image	icons/pack_smallbutton
 		mousefx true
 		pos		"980 733"
 		texl	"32 48"

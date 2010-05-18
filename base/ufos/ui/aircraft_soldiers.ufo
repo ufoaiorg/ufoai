@@ -59,7 +59,7 @@ component cmpActorSelect cmpSoldierSelect {
 	pic bt_equip
 	{
 		pos			"0 10"
-		image		ui/button_equip
+		image		icons/pack_equip
 		mousefx		false
 		texl		"0 0"
 		texh		"16 16"

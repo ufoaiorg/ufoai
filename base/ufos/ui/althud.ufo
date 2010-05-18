@@ -791,7 +791,7 @@ window althud extends ahud
 		pic switch_to_right_hand
 		{
 			tooltip		"_Switch to right hand weapon"
-			image		ui/buttons_small
+			image		icons/pack_smallbutton
 			pos			"196 400"
 			texl		"0 0"
 			texh		"16 16"
@@ -803,7 +803,7 @@ window althud extends ahud
 		pic switch_to_left_hand
 		{
 			tooltip		"_Switch to left hand weapon"
-			image		ui/buttons_small
+			image		icons/pack_smallbutton
 			pos			"212 400"
 			texl		"16 0"
 			texh		"32 16"
