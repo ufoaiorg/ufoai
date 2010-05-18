@@ -99,7 +99,7 @@ tile +craft_ufo_fighter
 }
 
 // UFO Supply (an open park tile on right side of street with no underground)
-tile +craft_ufo_supply+
+tile +craft_ufo_supply
 {
 	6 6
 	0		fg		f		f		fh		0
