@@ -1,3 +1,4 @@
+#version 110
 // world vertex shader
 
 uniform float OFFSET;
@@ -8,8 +9,9 @@ uniform int ANIMATE;
 varying vec3 point;
 varying vec3 normal;
 
+uniform mat4 SHADOW_TRANSFORM;
+
 attribute vec4 TANGENT;
-uniform int DYNAMICLIGHTS;
 
 attribute vec4 NEXT_FRAME_VERTS;
 attribute vec4 NEXT_FRAME_NORMALS;
@@ -25,16 +27,28 @@ varying float fog;
 */
 
 
-#include "lerp_vs.glsl"
+attribute vec3 NEXT_FRAME_VERTS;
+attribute vec3 NEXT_FRAME_NORMALS;
+attribute vec4 TANGENTS;
+attribute vec4 NEXT_FRAME_TANGENTS;
+uniform float TIME;
+
+varying vec4 vertPos;
+varying vec3 Normal;
+varying vec4 Vertex;
+varying vec4 Tangent;
+
 #include "light_vs.glsl"
 #include "bump_vs.glsl"
 #include "fog_vs.glsl"
+#include "shadowmap_vs.glsl"
 
 /**
  * main
  */
 void main(void){
 
+/*
 	if (ANIMATE > 0) {
 		lerpVertex();
 	} else {
@@ -42,10 +56,19 @@ void main(void){
 		Normal = gl_Normal;
 		Tangent = TANGENTS;
 	}
+	*/
+
+
+	float lerp = (1.0 - TIME) * float(ANIMATE);
+	Vertex = mix(gl_Vertex, vec4(NEXT_FRAME_VERTS, 1.0), lerp);
+	Normal = mix(gl_Normal, NEXT_FRAME_NORMALS, lerp);
+	Tangent = mix(TANGENTS, NEXT_FRAME_TANGENTS, lerp);
+
 
 	// mvp transform into clip space
 	//gl_Position = ftransform();
-	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(Vertex);
+	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * Vertex;
+	vertPos = gl_Position;
 
 
 	// pass texcoords through
@@ -55,8 +78,12 @@ void main(void){
 	LightVertex();
 
 #if r_bumpmap
-	if(BUMPMAP > 0 || DYNAMICLIGHTS > 0)
-		BumpVertex();
+	BumpVertex();
+#endif
+
+#if r_shadowmapping
+	if(SHADOWMAP > 0)
+		ShadowVertex();
 #endif
 
 #if r_fog

@@ -1369,12 +1369,12 @@ static inline void R_DrawQuad (void)
  * @brief does 1D filter convolution to blur a framebuffer texture.
  * dir=0 for horizontal, dir=1 for vertical
  */
-static void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int tex, int dir)
+void R_Blur (r_framebuffer_t * source, r_framebuffer_t * dest, int texnum, int dir)
 {
 	R_EnableBlur(r_state.convolve_program, qtrue, source, dest, dir);
 
 	/* draw new texture onto a flat surface */
-	R_BindTextureForTexUnit(source->textures[tex], &texunit_0);
+	R_BindTextureForTexUnit(source->textures[texnum], &texunit(0));
 	R_UseViewport(source);
 	R_DrawQuad();
 
@@ -1393,9 +1393,9 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 
 		R_UseProgram(i == 0 ? default_program : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
-		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit_0);
+		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit(0));
 		if (i != 0)
-			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &texunit_1);
+			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &texunit(1));
 
 		R_UseViewport(sources[l]);
 		R_DrawQuad();
@@ -1407,6 +1407,9 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 
 /**
  * @brief handle post-processing bloom
+ * @todo this is doing bad things to our framerates at the moment;
+ * it seems like it's more expensive than it should be.  Figure out
+ * why and fix it.
  */
 void R_DrawBloom (void)
 {
@@ -1435,14 +1438,14 @@ void R_DrawBloom (void)
 
 	/* downsample into image pyramid */
 	R_BindTexture(fbo_render->textures[1]);
-	qglGenerateMipmapEXT(GL_TEXTURE_2D);
+	//qglGenerateMipmapEXT(GL_TEXTURE_2D);
 
 	R_Blur(fbo_render, fbo_bloom0, 1, 0);
 	R_Blur(fbo_bloom0, fbo_bloom1, 0, 1);
 
 	R_UseFramebuffer(r_state.buffers0[0]);
 	R_BindTexture(fbo_bloom1->textures[0]);
-	qglGenerateMipmapEXT(GL_TEXTURE_2D);
+	//qglGenerateMipmapEXT(GL_TEXTURE_2D);
 	R_UseViewport(r_state.buffers0[0]);
 	R_DrawQuad();
 
@@ -1461,8 +1464,8 @@ void R_DrawBloom (void)
 	/* re-combine the blurred version with the original "glow" image */
 	R_UseProgram(r_state.combine2_program);
 	R_UseFramebuffer(fbo_bloom0);
-	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit_0);
-	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit_1);
+	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit(0));
+	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit(1));
 
 	R_UseViewport(fbo_screen);
 	R_DrawQuad();
@@ -1470,8 +1473,8 @@ void R_DrawBloom (void)
 	/* draw final result to the screenbuffer */
 	R_UseFramebuffer(fbo_screen);
 	R_UseProgram(r_state.combine2_program);
-	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit_0);
-	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit_1);
+	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit(0));
+	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit(1));
 
 	R_DrawQuad();
 

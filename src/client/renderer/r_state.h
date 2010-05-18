@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_material.h"
 #include "r_framebuffer.h"
 #include "r_light.h"
+#include "r_entity.h"
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
@@ -44,22 +45,19 @@ typedef struct gltexunit_s {
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 } gltexunit_t;
 
-#define MAX_GL_TEXUNITS		5
+#define MAX_GL_TEXUNITS		8
 
 /* these are defined for convenience */
-#define texunit_0	        r_state.texunits[0]
-#define texunit_1	        r_state.texunits[1]
-#define texunit_2	        r_state.texunits[2]
-#define texunit_3	        r_state.texunits[3]
-#define texunit_4	        r_state.texunits[4]
+#define texunit(x)			r_state.texunits[(x)]
 
-#define texunit_diffuse			texunit_0
-#define texunit_lightmap		texunit_1
-#define texunit_deluxemap		texunit_2
-#define texunit_normalmap		texunit_3
-#define texunit_glowmap			texunit_4
-#define texunit_specularmap		texunit_1
-#define texunit_roughnessmap	texunit_2
+#define texunit_diffuse			texunit(0)
+#define texunit_lightmap		texunit(1)
+#define texunit_deluxemap		texunit(2)
+#define texunit_normalmap		texunit(3)
+#define texunit_glowmap			texunit(4)
+#define texunit_specularmap		texunit(5)
+#define texunit_roughnessmap	texunit(6)
+#define texunit_shadowmap		texunit(7)
 
 
 #define DOWNSAMPLE_PASSES	5
@@ -92,6 +90,9 @@ typedef struct {
 	r_light_t dynamicLights[MAX_DYNAMIC_LIGHTS];
 	int numActiveLights;
 
+	entity_t world_entity;
+	entity_t *active_entity;
+
 	/* framebuffer objects*/
 	r_framebuffer_t *renderBuffer;
 	r_framebuffer_t *bloomBuffer0;
@@ -99,6 +100,9 @@ typedef struct {
 	r_framebuffer_t *buffers0[DOWNSAMPLE_PASSES];
 	r_framebuffer_t *buffers1[DOWNSAMPLE_PASSES];
 	r_framebuffer_t *buffers2[DOWNSAMPLE_PASSES];
+	r_framebuffer_t *shadowmapBuffer;
+	r_framebuffer_t *shadowmapBlur1;
+	r_framebuffer_t *shadowmapBlur2;
 
 	/* texunit in use */
 	gltexunit_t *active_texunit;
@@ -112,6 +116,8 @@ typedef struct {
 	r_program_t *combine2_program;
 	r_program_t *atmosphere_program;
 	r_program_t *simple_glow_program;
+	r_program_t *build_shadowmap_program;
+	r_program_t *battlescape_program;
 	r_program_t *active_program;
 
 	/* blend function */
@@ -125,6 +131,7 @@ typedef struct {
 	qboolean color_array_enabled;
 	qboolean alpha_test_enabled;
 	qboolean lighting_enabled;
+	qboolean lightmap_enabled;
 	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
 	qboolean fog_enabled;
@@ -135,6 +142,8 @@ typedef struct {
 	qboolean specularmap_enabled;
 	qboolean roughnessmap_enabled;
 	qboolean animation_enabled;
+	qboolean build_shadowmap_enabled;
+	qboolean use_shadowmap_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -163,6 +172,7 @@ void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableColorArray(qboolean enable);
 qboolean R_EnableLighting(r_program_t *program, qboolean enable);
+void R_EnableLightmap(qboolean enable);
 void R_EnableBumpmap(const image_t *normalmap, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
 void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
@@ -174,5 +184,7 @@ void R_EnableDynamicLights(entity_t *ent, qboolean enable);
 void R_EnableSpecularMap(const image_t *image, qboolean enable);
 void R_EnableRoughnessMap(const image_t *image, qboolean enable);
 void R_EnableAnimation(const mAliasMesh_t *mesh, float backlerp, qboolean enable);
+void R_EnableBuildShadowmap(qboolean enable, const r_light_t *light);
+void R_EnableUseShadowmap(qboolean enable);
 
 #endif

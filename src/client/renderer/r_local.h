@@ -67,9 +67,6 @@ extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_materials;
 extern cvar_t *r_screenshot_format;
 extern cvar_t *r_screenshot_jpeg_quality;
-extern cvar_t *r_lightmap;
-extern cvar_t *r_debug_normals;
-extern cvar_t *r_debug_tangents;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_checkerror;
 extern cvar_t *r_showbox;
@@ -100,6 +97,16 @@ extern cvar_t *r_fog;
 extern cvar_t *r_flares;
 extern cvar_t *r_coronas;
 extern cvar_t *r_dynamic_lights;
+extern cvar_t *r_shadowmapping;
+extern cvar_t *r_shadowmap_width;
+
+/* cvars used in GLSL shaders to enable/disable debugging views */
+extern cvar_t *r_debug_normals;
+extern cvar_t *r_debug_tangents;
+extern cvar_t *r_debug_normalmaps;
+extern cvar_t *r_debug_lightmaps;
+extern cvar_t *r_debug_deluxemaps;
+extern cvar_t *r_debug_shadows;
 
 /* private renderer variables */
 typedef struct rlocals_s {
@@ -113,8 +120,10 @@ typedef struct rlocals_s {
 
 	int frame;
 	int tracenum;
+	qboolean framecheck;
 
 	float world_matrix[16];
+	GLfloat shadow_matrix[16];
 
 	/**
 	 * @brief this is the currently handled bsp model
@@ -133,6 +142,7 @@ void R_DrawBspNormals(int tile);
 qboolean R_CullBspModel(const entity_t *e);
 qboolean R_CullSphere(const vec3_t centre, const float radius, const unsigned int clipflags);
 void R_GetLevelSurfaceLists(void);
+void R_GetAllSurfaceLists(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 void R_DrawParticles(void);
@@ -155,6 +165,7 @@ typedef struct {
 	const char *shadingLanguageVersion;
 	int maxTextureSize;
 	int maxTextureUnits;
+	int maxTextureImageUnits;
 	int maxTextureCoords;
 	int maxVertexAttribs;
 	int maxLights;

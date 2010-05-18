@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "r_framebuffer.h"
+
 #ifndef R_DRAW_H
 #define R_DRAW_H
 
@@ -50,6 +52,7 @@ void R_CleanupDepthBuffer(int x, int y, int width, int height);
 void R_DrawBoundingBox(const vec3_t mins, const vec3_t maxs);
 
 void R_DrawBloom(void);
+void R_Blur(r_framebuffer_t *source, r_framebuffer_t *dest, int texnum, int dir);
 
 extern cvar_t *r_geoscape_overlay;
 

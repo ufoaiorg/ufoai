@@ -47,8 +47,9 @@ typedef struct {
 
 void R_InitFBObjects(void);
 void R_ShutdownFBObjects(void);
+void R_RestartFBObjects_f(void);
 
-r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters);
+r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, GLenum *filters);
 void R_DeleteFBObject(r_framebuffer_t *buf);
 
 void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);
@@ -59,6 +60,8 @@ void R_DrawBuffers(int n);
 void R_BindColorAttachments(int n, GLenum *Attachments);
 qboolean R_EnableRenderbuffer(qboolean enable);
 qboolean R_RenderbufferEnabled(void);
+qboolean R_EnableShadowbuffer(qboolean enable);
+qboolean R_ShadowbufferEnabled(void);
 
 #endif /* R_FRAMEBUFFER_H_ */
 

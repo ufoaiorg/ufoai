@@ -60,10 +60,6 @@ cvar_t *r_anisotropic;
 cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot_format;
 cvar_t *r_screenshot_jpeg_quality;
-cvar_t *r_lightmap;
-cvar_t *r_debug_normals;
-cvar_t *r_debug_tangents;
-static cvar_t *r_deluxemap;
 cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
 static cvar_t *r_ext_nonpoweroftwo;
@@ -99,6 +95,17 @@ cvar_t *r_parallax;
 cvar_t *r_fog;
 cvar_t *r_flares;
 cvar_t *r_coronas;
+cvar_t *r_shadowmapping;
+cvar_t *r_shadowmap_width;
+cvar_t *r_map_maxlevel;
+cvar_t *cl_worldlevel;
+
+cvar_t *r_debug_normals;
+cvar_t *r_debug_tangents;
+cvar_t *r_debug_lightmaps;
+cvar_t *r_debug_deluxemaps;
+cvar_t *r_debug_normalmaps;
+cvar_t *r_debug_shadows;
 
 static void R_PrintInfo (const char *pre, const char *msg)
 {
@@ -230,6 +237,55 @@ void R_BeginFrame (void)
 		r_anisotropic->modified = qfalse;
 	}
 
+	if (r_debug_lightmaps->modified) {
+		R_RestartPrograms_f();
+		r_debug_lightmaps->modified = qfalse;
+	}
+
+	if (r_debug_deluxemaps->modified) {
+		R_RestartPrograms_f();
+		r_debug_deluxemaps->modified = qfalse;
+	}
+
+	if (r_debug_normalmaps->modified) {
+		R_RestartPrograms_f();
+		r_debug_normalmaps->modified = qfalse;
+	}
+
+	if (r_debug_shadows->modified) {
+		R_RestartPrograms_f();
+		r_debug_shadows->modified = qfalse;
+	}
+
+	if (r_debug_normals->modified) {
+		R_RestartPrograms_f();
+		r_debug_normals->modified = qfalse;
+	}
+
+	if (r_debug_tangents->modified) {
+		R_RestartPrograms_f();
+		r_debug_tangents->modified = qfalse;
+	}
+
+	if (r_postprocess->modified) {
+		/** @todo: need to restart framebuffers here as well */
+		R_RestartPrograms_f();
+		R_RestartFBObjects_f();
+		r_postprocess->modified = qfalse;
+	}
+
+	if (r_dynamic_lights->modified) {
+		R_RestartPrograms_f();
+		R_RestartFBObjects_f();
+		r_dynamic_lights->modified = qfalse;
+	}
+
+	if (r_programs->modified) {
+		R_RestartPrograms_f();
+		R_RestartFBObjects_f();
+		r_programs->modified = qfalse;
+	}
+
 	/* draw buffer stuff */
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
@@ -281,7 +337,49 @@ void R_RenderFrame (void)
 {
 	int tile;
 
+	/* build shadowmaps */
+	if (r_shadowmapping->integer) {
+		int curLevel;
+		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
+
+		Cvar_SetValue("r_nocull", 1);
+
+		/* draw brushes on all worldlevels for shadows */
+		r_locals.framecheck = qfalse;
+		R_GetAllSurfaceLists();
+
+		R_EnableBlend(qfalse);
+		for (tile = 0; tile < r_numMapTiles; tile++) {
+			R_UpdateLightList(&r_state.world_entity);
+			R_EnableDynamicLights(&r_state.world_entity, qtrue);
+			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
+		}
+		r_locals.framecheck = qtrue;
+
+
+		R_DrawEntities();
+
+		R_EnableBlend(qtrue);
+
+		R_DrawParticles();
+
+		R_EnableBlend(qfalse);
+
+		R_EnableBuildShadowmap(qfalse, NULL);
+
+		Cvar_SetValue("r_nocull", 0);
+
+		//R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
+		//R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+
+		R_ResetArrayState();
+	}
+
+	R_CheckError();
 	R_Setup3D();
+	R_EnableUseShadowmap(qtrue);
+
+	/* render scene */
 
 	/* activate wire mode */
 	if (r_wire->integer)
@@ -304,10 +402,18 @@ void R_RenderFrame (void)
 
 		R_CheckError();
 
+		/* @todo: this is sort of a hack so we have something to be an "entity"
+		 * for models which otherwise lack one (eg. map tiles); there may be
+		 * a better way of handling this */
+		R_UpdateLightList(&r_state.world_entity);
+
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			R_EnableFog(qtrue);
 
+			R_EnableDynamicLights(&r_state.world_entity, qtrue);
+
 			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
+
 			R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
 
 			R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
@@ -330,6 +436,7 @@ void R_RenderFrame (void)
 			R_DrawBspNormals(tile);
 		}
 	}
+	R_CheckError();
 
 	R_DrawEntities();
 
@@ -339,6 +446,10 @@ void R_RenderFrame (void)
 
 	R_EnableBlend(qfalse);
 
+	R_EnableDynamicLights(NULL, qfalse);
+
+	R_EnableUseShadowmap(qfalse);
+
 	R_DrawBloom();
 
 	/* leave wire mode again */
@@ -346,6 +457,56 @@ void R_RenderFrame (void)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	R_ResetArrayState();
+
+
+#if 0
+		glMatrixMode(GL_TEXTURE);
+		glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(0, viddef.width, viddef.height, 0, -1000.0f, 10000.0f);
+
+		glDisable(GL_LIGHTING);
+		glDisable(GL_DEPTH_TEST);
+
+		R_UseProgram(default_program);
+		R_UseFramebuffer(fbo_screen);
+
+		glColor4f(1,1,1,1);
+		glActiveTextureARB(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
+		//glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->depth);
+		glEnable(GL_TEXTURE_2D);
+		//glTranslated(0,0,-1);
+
+		R_UseViewport(fbo_render);
+
+		glBegin(GL_QUADS);
+		glTexCoord2i(0, 1);
+		glVertex2i(0, 0);
+		glTexCoord2i(1, 1);
+		glVertex2i(fbo_render->width, 0);
+		glTexCoord2i(1, 0);
+		glVertex2i(fbo_render->width, fbo_render->height);
+		glTexCoord2i(0, 0);
+		glVertex2i(0, fbo_render->height);
+		glEnd();
+
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		glMatrixMode(GL_TEXTURE);
+		glPopMatrix();
+		R_CheckError();
+#endif
+
+
 
 	/* go back into 2D mode for hud and the like */
 	R_Setup2D();
@@ -417,11 +578,23 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 1, r_config.maxLights, qtrue);
 }
 
-static qboolean R_CvarPrograms (cvar_t *cvar)
+
+static qboolean R_CvarCheckShadowmapping (cvar_t *cvar)
+{
+	if (!r_dynamic_lights->integer){
+		Cvar_SetValue(cvar->name, 0);
+		return qfalse;
+	}
+	return Cvar_AssertValue(cvar, 0, 1, qtrue);
+}
+
+static qboolean R_CvarCheckPrograms (cvar_t *cvar)
 {
 	if (qglUseProgram) {
-		if (!cvar->integer || !r_config.drawBuffers)
+		if (!cvar->integer || !r_config.drawBuffers) {
 			Cvar_SetValue("r_postprocess", 0);
+			Cvar_SetValue("r_shadowmapping", 0);
+		}
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 	}
 
@@ -429,7 +602,7 @@ static qboolean R_CvarPrograms (cvar_t *cvar)
 	return qtrue;
 }
 
-static qboolean R_CvarPostProcess (cvar_t *cvar)
+static qboolean R_CvarCheckPostProcess (cvar_t *cvar)
 {
 	if (r_config.frameBufferObject && r_programs->integer && r_config.drawBuffers)
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
@@ -463,15 +636,19 @@ static void R_RegisterSystemVars (void)
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
-	r_lightmap = Cvar_Get("r_lightmap", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
-	r_lightmap->modified = qfalse;
-	r_deluxemap = Cvar_Get("r_deluxemap", "0", CVAR_R_PROGRAMS, "Draw only the deluxemap");
-	r_deluxemap->modified = qfalse;
+	r_debug_lightmaps = Cvar_Get("r_debug_lightmaps", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
+	r_debug_lightmaps->modified = qfalse;
+	r_debug_deluxemaps = Cvar_Get("r_debug_deluxemaps", "0", CVAR_R_PROGRAMS, "Draw only the deluxemap");
+	r_debug_deluxemaps->modified = qfalse;
 	r_debug_normals = Cvar_Get("r_debug_normals", "0", CVAR_R_PROGRAMS, "Draw dot(normal, light_0 direction)");
 	r_debug_normals->modified = qfalse;
+	r_debug_normalmaps = Cvar_Get("r_debug_normalmaps", "0", CVAR_R_PROGRAMS, "Draw dot(normalmap, light_0 direction)");
+	r_debug_normalmaps->modified = qfalse;
 	r_debug_tangents = Cvar_Get("r_debug_tangents", "0", CVAR_R_PROGRAMS, "Draw tangent, bitangent, and normal dotted with light dir as RGB espectively");
 	r_debug_tangents->modified = qfalse;
-	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE | CVAR_R_CONTEXT, NULL);
+	r_debug_shadows = Cvar_Get("r_debug_shadows", "0", CVAR_R_PROGRAMS, "Draw shadowmap values only");
+	r_debug_shadows->modified = qfalse;
+	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_nonpoweroftwo = Cvar_Get("r_ext_nonpoweroftwo", "1", CVAR_ARCHIVE, "Enable or disable the non power of two extension");
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, "Also see r_ext_texture_compression");
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
@@ -646,6 +823,7 @@ static qboolean R_InitExtensions (void)
 	qglUniform2fv = NULL;
 	qglUniform3fv = NULL;
 	qglUniform4fv = NULL;
+	qglUniformMatrix4fv = NULL;
 
 	/* vertex attribute arrays */
 	qglEnableVertexAttribArray = NULL;
@@ -671,6 +849,8 @@ static qboolean R_InitExtensions (void)
 	qglGetFramebufferAttachmentParameterivEXT = NULL;
 	qglGenerateMipmapEXT = NULL;
 	qglDrawBuffers = NULL;
+	qglDrawBuffer = NULL;
+	qglReadBuffer = NULL;
 
 	/* multitexture */
 	if (strstr(r_config.extensionsString, "GL_ARB_multitexture")) {
@@ -752,6 +932,7 @@ static qboolean R_InitExtensions (void)
 		qglUniform2fv = SDL_GL_GetProcAddress("glUniform2fv");
 		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
 		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
+		qglUniformMatrix4fv = SDL_GL_GetProcAddress("glUniformMatrix4fv");
 		qglGetAttribLocation = SDL_GL_GetProcAddress("glGetAttribLocation");
 
 		/* vertex attribute arrays */
@@ -787,6 +968,8 @@ static qboolean R_InitExtensions (void)
 		qglGetFramebufferAttachmentParameterivEXT = SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
 		qglGenerateMipmapEXT = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
 		qglDrawBuffers = SDL_GL_GetProcAddress("glDrawBuffers");
+		qglDrawBuffer = SDL_GL_GetProcAddress("glDrawBuffer");
+		qglReadBuffer = SDL_GL_GetProcAddress("glReadBuffer");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
@@ -815,10 +998,11 @@ static qboolean R_InitExtensions (void)
 
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Use GLSL shaders");
 	r_programs->modified = qfalse;
-	Cvar_SetCheckFunction("r_programs", R_CvarPrograms);
+	Cvar_SetCheckFunction("r_programs", R_CvarCheckPrograms);
 
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
-	Cvar_SetCheckFunction("r_postprocess", R_CvarPostProcess);
+	r_postprocess->modified = qfalse;
+	Cvar_SetCheckFunction("r_postprocess", R_CvarCheckPostProcess);
 
 	/* reset gl error state */
 	R_CheckError();
@@ -827,7 +1011,13 @@ static qboolean R_InitExtensions (void)
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
 
 	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "4", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
+	r_dynamic_lights->modified = qfalse;
 	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
+
+	r_shadowmapping = Cvar_Get("r_shadowmapping", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate shadowmapping");
+	r_shadowmapping->modified = qfalse;
+	Cvar_SetCheckFunction("r_shadowmapping", R_CvarCheckShadowmapping);
+
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
 	Com_Printf("max texture units: %i\n", r_config.maxTextureUnits);
@@ -837,6 +1027,10 @@ static qboolean R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_TEXTURE_COORDS, &r_config.maxTextureCoords);
 	Com_Printf("max texture coords: %i\n", r_config.maxTextureCoords);
 	r_config.maxTextureCoords = max(r_config.maxTextureUnits, r_config.maxTextureCoords);
+
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &r_config.maxTextureImageUnits);
+	Com_Printf("max combined texture image units: %i\n", r_config.maxTextureImageUnits);
+	r_config.maxTextureCoords = max(r_config.maxTextureImageUnits, r_config.maxTextureCoords);
 
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
@@ -864,6 +1058,11 @@ static qboolean R_InitExtensions (void)
 			r_config.maxTextureSize = r_maxtexres->integer;
 		}
 	}
+
+	r_shadowmap_width = Cvar_Get("r_shadowmap_width", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Set shadowmap resolution");
+	r_shadowmap_width->modified = qfalse;
+	Cvar_SetCheckFunction("r_shadowmap_width", R_CvarCheckMaxLightmap);
+
 
 	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {
 		Q_strncpyz(r_config.lodDir, "high", sizeof(r_config.lodDir));

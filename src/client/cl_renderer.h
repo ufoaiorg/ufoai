@@ -3,7 +3,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2010 UFO: Alien Invasion.
+All original material Copyright (C) 2002-2009 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -230,6 +230,8 @@ typedef struct renderer_threadstate_s {
 } renderer_threadstate_t;
 
 extern renderer_threadstate_t r_threadstate;
+
+extern cvar_t *r_map_maxlevel;
 
 struct model_s *R_RegisterModelShort(const char *name);
 const image_t *R_RegisterImage(const char *name);

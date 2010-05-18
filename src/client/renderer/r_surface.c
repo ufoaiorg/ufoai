@@ -93,6 +93,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	const model_t* mod = r_mapTiles[surf->tile];
 	image_t *image;
 
+	R_CheckError();
 	if (r_state.blend_enabled) {  /* alpha blend */
 		vec4_t color = {1.0, 1.0, 1.0, 1.0};
 		switch (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
@@ -151,11 +152,15 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 {
 	int i;
 
+	/* @todo: at the moment, all BSP surfaces should have lightmaps, but that might change */
+	R_EnableLightmap(qtrue);
+
 	for (i = 0; i < surfs->count; i++) {
-		if (surfs->surfaces[i]->frame != r_locals.frame)
+		if (r_locals.framecheck && surfs->surfaces[i]->frame != r_locals.frame)
 			continue;
 
 		R_SetSurfaceState(surfs->surfaces[i]);
+
 		R_DrawSurface(surfs->surfaces[i]);
 	}
 
@@ -165,6 +170,8 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 
 	if (r_state.glowmap_enabled)
 		R_EnableGlowMap(NULL, qfalse);
+
+	R_EnableLightmap(qfalse);
 
 	/* and restore array pointers */
 	R_ResetArrayState();
@@ -182,7 +189,6 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 		return;
 
 	R_EnableTexture(&texunit_lightmap, qtrue);
-
 	R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(NULL, qfalse);

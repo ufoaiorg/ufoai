@@ -192,9 +192,9 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value)
 }
 
 #ifdef DEBUG
-void R_ProgramParameter4fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+void R_ProgramParameterMat4fv_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter4fv (const char *name, GLfloat *value)
+void R_ProgramParameterMat4fv (const char *name, GLint size, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
@@ -202,7 +202,23 @@ void R_ProgramParameter4fv (const char *name, GLfloat *value)
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniform4fv(v->location, 1, value);
+	qglUniformMatrix4fv(v->location, size, value);
+}
+
+#ifdef DEBUG
+void R_ProgramParameter4fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
+#else
+void R_ProgramParameter4fvs (const char *name, GLint size, GLfloat *value)
+#endif
+{
+	r_progvar_t *v;
+
+	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
+		return;
+
+	R_CheckError();
+	qglUniform4fv(v->location, size, value);
+	R_CheckError();
 }
 
 #ifdef DEBUG
@@ -322,8 +338,8 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 
 	i = 0;
 
-	defines = "#version 110\n";
-	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	//defines = "#version 110\n";
+	//i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.width);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
@@ -647,13 +663,18 @@ r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 
 static void R_InitWorldProgram (r_program_t *prog)
 {
-	R_ProgramParameter1i("SAMPLER0", 0);
-	R_ProgramParameter1i("SAMPLER1", 1);
-	R_ProgramParameter1i("SAMPLER2", 2);
-	R_ProgramParameter1i("SAMPLER3", 3);
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
+	R_ProgramParameter1i("SAMPLER_DELUXEMAP", 2);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
 	if (r_postprocess->integer)
-		R_ProgramParameter1i("SAMPLER4", 4);
+		R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
+	R_ProgramParameter1i("SAMPLER_SPECMAP", 5);
+	R_ProgramParameter1i("SAMPLER_ROUGHMAP", 6);
 
+	R_ProgramParameter1i("SAMPLER_SHADOW0", 7);
+
+	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
 	R_ProgramParameter1i("SPECULARMAP", 0);
@@ -667,6 +688,33 @@ static void R_InitWorldProgram (r_program_t *prog)
 		R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
+static void R_InitBattlescapeProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
+	R_ProgramParameter1i("SAMPLER_DELUXEMAP", 2);
+	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
+	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
+	R_ProgramParameter1i("SAMPLER_SPECMAP", 5);
+	R_ProgramParameter1i("SAMPLER_ROUGHMAP", 6);
+
+	R_ProgramParameter1i("SAMPLER_SHADOW0", 7);
+
+	R_ProgramParameter1i("LIGHTMAP", 0);
+	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("ROUGHMAP", 0);
+	R_ProgramParameter1i("SPECULARMAP", 0);
+	R_ProgramParameter1i("ANIMATE", 0);
+	R_ProgramParameter1i("WARP", 0);
+	R_ProgramParameter1i("BUILD_SHADOWMAP", 0);
+
+	R_ProgramParameter1f("BUMP", 1.0);
+	R_ProgramParameter1f("PARALLAX", 1.0);
+	R_ProgramParameter1f("HARDNESS", 0.2);
+	R_ProgramParameter1f("SPECULAR", 1.0);
+	R_ProgramParameter1f("GLOWSCALE", 1.0);
+}
+
 static void R_UseWorldProgram (r_program_t *prog)
 {
 	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
@@ -678,11 +726,12 @@ static void R_InitWarpProgram (r_program_t *prog)
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
-	if (r_postprocess->integer) {
+	if (r_postprocess->integer)
 		R_ProgramParameter1i("SAMPLER4", 4);
-		R_ProgramParameter1f("GLOWSCALE", 0.0);
-	}
+
 	R_ProgramParameter4fv("OFFSET", offset);
+	if (r_postprocess->integer)
+		R_ProgramParameter1f("GLOWSCALE", 0.0);
 }
 
 static void R_UseWarpProgram (r_program_t *prog)
@@ -826,6 +875,7 @@ void R_InitPrograms (void)
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
+	//r_state.battlescape_program = R_LoadProgram("battlescape", R_InitBattlescapeProgram, NULL);
 }
 
 /**

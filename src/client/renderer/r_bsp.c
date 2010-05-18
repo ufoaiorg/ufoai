@@ -146,6 +146,9 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 			surf->frame = r_locals.frame;
 	}
 
+
+	R_EnableDynamicLights(e, qtrue);
+
 	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
 
 	R_DrawOpaqueWarpSurfaces(e->model->bsp.opaque_warp_surfaces);
@@ -220,6 +223,7 @@ WORLD MODEL
 /**
  * @brief Developer tool for viewing BSP vertex normals. Only Phong interpolated
  * surfaces show their normals when r_shownormals > 1.
+ * @note This can also be done in the GLSL shaders by using the r_debug_normals Cvar
  */
 void R_DrawBspNormals (int tile)
 {
@@ -385,6 +389,23 @@ void R_GetLevelSurfaceLists (void)
 			if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
 				continue;
 
+			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
+		}
+	}
+}
+
+void R_GetAllSurfaceLists (void)
+{
+	int i, tile;
+
+	if (!r_drawworld->integer)
+		return;
+
+	for (tile = 0; tile < r_numMapTiles; tile++) {
+		/* don't draw weaponclip, actorclip and stepon */
+		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
+			if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
+				continue;
 			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
 		}
 	}

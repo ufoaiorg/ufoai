@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+Copyright (C) 2002-2009 UFO: Alien Invasion.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -27,8 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_particle.h"
 #include "cl_spawn.h"
 #include "../../shared/parse.h"
+#include "../cl_renderer.h"
 
 static r_light_t sun;
+
+cvar_t *r_map_maxlevel;
 
 /** position in the spawnflags */
 #define MISC_MODEL_GLOW 9
@@ -175,6 +178,10 @@ void CL_SpawnParseEntitystring (void)
 		VectorSet(entData.scale, 1, 1, 1);
 		entData.volume = SND_VOLUME_DEFAULT;
 		entData.maxLevel = maxLevel;
+
+		//r_map_maxlevel->integer = maxLevel;
+		r_map_maxlevel = Cvar_Get("r_map_maxlevel", "1", 0, "max level of current map");
+		Cvar_SetValue("r_map_maxlevel", cl.mapMaxLevel-1);
 		entData.entStringPos = es;
 		entData.entnum = entnum;
 		entData.maxMultiplayerTeams = TEAM_MAX_HUMAN;

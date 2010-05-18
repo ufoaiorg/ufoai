@@ -443,6 +443,9 @@ void R_DrawAliasModel (entity_t *e)
 	if (VectorNotEmpty(e->scale))
 		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
+	/** @todo: building the shadowmap doesn't require all these textures, lights, etc. */
+
+
 	/* IR goggles override color for entities that are affected */
 	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
 		Vector4Set(e->shell, 1.0, 0.3, 0.3, 1.0);
@@ -470,7 +473,6 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_EnableGlowMap(skin->glowmap, qtrue);
 
-	R_UpdateLightList(e);
 	R_EnableDynamicLights(e, qtrue);
 
 	if (skin->normalmap)
@@ -496,8 +498,6 @@ void R_DrawAliasModel (entity_t *e)
 
 	if (r_state.roughnessmap_enabled)
 		R_EnableRoughnessMap(NULL, qfalse);
-
-	R_EnableDynamicLights(NULL, qfalse);
 
 	if (r_state.glowmap_enabled)
 		R_EnableGlowMap(NULL, qfalse);

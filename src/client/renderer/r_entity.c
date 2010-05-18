@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_mesh.h"
 #include "r_mesh_anim.h"
 #include "r_draw.h"
+#include "r_error.h"
+#include "r_state.h"
 
 #define	MAX_ENTITIES	2048
 
@@ -209,6 +211,11 @@ static void R_DrawEntityEffects (void)
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 			if (e->flags & RF_SHADOW) {
+				/* don't use static drop-shadows if we're rendering dynamic shadows */
+				if (r_shadowmapping->integer) {
+					glPopMatrix();
+					return;
+				}
 				R_BindTexture(shadow->texnum);
 			} else {
 				assert(e->deathTexture);
@@ -529,6 +536,8 @@ void R_DrawEntities (void)
 
 		R_CalcTransform(e);
 
+		R_UpdateLightList(e);
+
 		if (!e->model) {
 			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
 				chain = &r_special_entities;
@@ -561,6 +570,8 @@ void R_DrawEntities (void)
 		e->next = *chain;
 		*chain = e;
 	}
+
+	R_CheckError();
 
 	R_DrawBspEntities(r_bsp_entities);
 	R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);

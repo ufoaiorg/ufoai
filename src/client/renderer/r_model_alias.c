@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "../../shared/parse.h"
 #include "r_state.h"
+#include <xmmintrin.h>
 
 /*
 ==============================================================================
@@ -91,7 +92,6 @@ void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
 	} while (mod->num_anims < MAX_ANIMS);
 }
 
-
 /**
  * @brief Calculates a per-vertex tangentspace basis and stores it in GL arrays attached to the mesh
  * @param mesh The mesh to calculate normals for
@@ -110,7 +110,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 	vec3_t triangleNormals[MAX_ALIAS_TRIS];
 	vec3_t triangleTangents[MAX_ALIAS_TRIS];
 	vec3_t triangleBitangents[MAX_ALIAS_TRIS];
-	float *texcoords, *verts, *normals, *tangents;
+	vec_t *texcoords, *verts, *normals, *tangents;
 
 	/* set up array pointers for either the previous keyframe or the next keyframe */
 	texcoords = mesh->texcoords;

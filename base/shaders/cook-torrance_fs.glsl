@@ -1,4 +1,4 @@
-/* NOTE: based on D3D9 source from Jack Hoxley */
+/* NOTE: portions loosly based on D3D9 source from Jack Hoxley */
 
 #define ATTENUATE_THRESH 0.05 
 
@@ -7,6 +7,55 @@
  * based model which uses two "roughness" parameters to describe
  * the shape and distribution of micro-facets on the surface.
  */
+
+uniform int SHADOWMAP;
+varying vec4 shadowCoord;
+
+uniform sampler2D SAMPLER_SHADOW0;
+
+
+float chebyshevUpperBound(vec4 shadow)
+{
+	//if (shadow.x < 0.0 || shadow.x > 1.0 ||shadow.x < 0.0 || shadow.x > 1.0){
+	//	return 0.0;
+	//}
+
+	//shadow.z += 0.001;
+
+	vec2 moments = texture2D(SAMPLER_SHADOW0, shadow.xy).rg;
+
+	float dx = dFdx(moments.r);
+	float dy = dFdy(moments.r);
+	float grad = 10000.0 * pow((dx*dx + dy*dy), 1.0);
+	//float grad = 100000.0 * pow((dx*dx + dy*dy), 0.5);
+	//return grad;
+
+
+	//if (abs(dFdx(moments.g)) > 0.001 || abs(dFdy(moments.g)) > 0.001)
+	//	return 1.0;
+	
+	// Surface is fully lit. as the current fragment is before the light occluder
+	//if (shadow.z <= moments.x || grad > 0.5)
+	if (shadow.z <= moments.x)
+		return 1.0 ;
+
+	//	return 0.0;
+
+
+	// The fragment is either in shadow or penumbra. We now use chebyshev's upperBound to check
+	// How likely this pixel is to be lit (p_max)
+	float variance = moments.y - (moments.x * moments.x);
+	//float variance = moments.y;
+	variance = max(variance, 0.0002);
+	//variance = max(variance, grad);
+
+	float d = shadow.z - moments.x;
+	float p_max = variance / (variance + d * d);
+
+	//return moments.x;
+	//return moments.y;
+	return p_max;
+}
 
 
 /** @todo does not compile on my ati x600 yet */
@@ -28,12 +77,33 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		return vec3(0.0);
 	}
 
+	vec3 ambientColor = diffuse.rgb * diffuse.a * lightSource.ambient.rgb;
 	/* Normalize vectors and cache dot products */
 	vec3 L = normalize(lightDir);
 	float NdotL = clamp(dot(N, -L), 0.0, 1.0);
 
+#if r_debug_shadows
+	vec4 shadowCoordDivW = shadowCoord / shadowCoord.w;
+	//if (abs(NdotL) < 0.001)
+	//	return vec3(0.0, 0.0, 1.0);
+	return vec3(chebyshevUpperBound(shadowCoordDivW));
+#endif
+
+	float shadow = 1.0;
+#if r_shadowmapping
+	if (SHADOWMAP > 0) {
+		vec4 shadowCoordDivW = shadowCoord / shadowCoord.w;
+		shadow = chebyshevUpperBound(shadowCoordDivW);
+		/* if the fragment is completely shadowed, we don't need 
+		 * to calculate anything but ambient */
+		if (shadow < ATTENUATE_THRESH) {
+			return (0.2 * attenuate * ambientColor);
+		}
+	}
+#endif
+
+
 	/* Compute the final color contribution of the light */
-	vec3 ambientColor = diffuse.rgb * diffuse.a * lightSource.ambient.rgb;
 	vec3 diffuseColor = diffuse.rgb * diffuse.a * lightSource.diffuse.rgb * NdotL;
 	vec3 specularColor;
 
@@ -63,7 +133,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	}
 
 	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
-	return (attenuate * (max(ambientColor, 0.0) + max(diffuseColor, 0.0) + max(specularColor, 0.0)));
+	return (attenuate * (max(shadow, 0.2) * max(ambientColor, 0.0) + shadow * max(diffuseColor, 0.0) + shadow * max(specularColor, 0.0)));
 }
 
 
@@ -80,7 +150,7 @@ vec4 IlluminateFragment(void){
 	vec3 N;
 	if (BUMPMAP > 0) {
 #if r_bumpmap
-		vec4 normalMap = texture2D(SAMPLER3, coords);
+		vec4 normalMap = texture2D(SAMPLER_NORMALMAP, coords);
 		N = vec3((normalize(normalMap.xyz) * 2.0 - vec3(1.0)));
 		N.xy *= BUMP;
 		if (PARALLAX > 0.0){
@@ -92,10 +162,10 @@ vec4 IlluminateFragment(void){
 		N = vec3(0.0, 0.0, 1.0);
 	}
 
-	vec4 diffuse = texture2D(SAMPLER0, coords);
+	vec4 diffuse = texture2D(SAMPLER_DIFFUSE, coords);
 	vec4 specular;
 	if (SPECULARMAP > 0) {
-		specular = texture2D(SAMPLER1, coords);
+		specular = texture2D(SAMPLER_SPECMAP, coords);
 	} else {
 		specular = vec4(HARDNESS, HARDNESS, HARDNESS, SPECULAR);
 	}
@@ -105,7 +175,7 @@ vec4 IlluminateFragment(void){
 	float R_2 = 0.0;
 	float NdotV = 0.0;
 	if (ROUGHMAP > 0) {
-		roughness = texture2D(SAMPLER2, coords);
+		roughness = texture2D(SAMPLER_ROUGHMAP, coords);
 		/* scale reflectance to a more useful range */
 		roughness.r = clamp(roughness.r, 0.05, 0.95);
 		roughness.g *= 3.0;

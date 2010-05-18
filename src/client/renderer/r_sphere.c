@@ -256,20 +256,18 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 
 	R_BindTexture(sphere->texture->texnum);
 	if (sphere->blendTexture)
-		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit_1);
+		R_BindTextureForTexUnit(sphere->blendTexture->texnum, &texunit(1));
 	if (sphere->normalMap)
-		R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
+		R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit(2));
 
-	if (r_lights->integer) {
-		if (sphere->blendScale >= 0)
-			R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
-		if (r_postprocess->integer && sphere->glowScale >= 0)
-			R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
-	}
+	if (sphere->blendScale >= 0)
+		R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
+	if (sphere->glowScale >= 0 && r_postprocess->integer)
+		R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
 
 	/* set up pointers */
-	R_SphereActivateTextureUnit(&texunit_1, sphere->texes);
-	R_SphereActivateTextureUnit(&texunit_2, sphere->texes);
+	R_SphereActivateTextureUnit(&texunit(1), sphere->texes);
+	R_SphereActivateTextureUnit(&texunit(2), sphere->texes);
 
 	R_SelectTexture(&texunit_diffuse);
 	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, sphere->verts);
@@ -278,8 +276,8 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 
 	R_SphereRenderTris(sphere);
 
-	R_SphereDeactivateTextureUnit(&texunit_1);
-	R_SphereDeactivateTextureUnit(&texunit_2);
+	R_SphereDeactivateTextureUnit(&texunit(1));
+	R_SphereDeactivateTextureUnit(&texunit(2));
 
 	/* deactivate the shader program */
 	R_EnableLighting(NULL, qfalse);

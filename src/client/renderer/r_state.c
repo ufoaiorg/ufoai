@@ -60,7 +60,9 @@ static void R_BindTexture_ (int texnum)
 	r_state.active_texunit->texnum = texnum;
 
 	glBindTexture(GL_TEXTURE_2D, texnum);
+#ifdef PARANOID
 	R_CheckError();
+#endif
 }
 
 void R_BindTextureDebug (int texnum, const char *file, int line, const char *function)
@@ -232,7 +234,7 @@ void R_EnableTexture (gltexunit_t *texunit, qboolean enable)
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		if (texunit == &texunit_lightmap) {
-			if (r_lightmap->integer)
+			if (r_debug_lightmaps->integer)
 				R_TexEnv(GL_REPLACE);
 			else
 				R_TexEnv(GL_MODULATE);
@@ -266,7 +268,7 @@ void R_EnableColorArray (qboolean enable)
 qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 {
 	if (!r_programs->integer)
-		return r_state.lighting_enabled;
+		return qfalse;
 
 	if (enable && (!program || !program->id))
 		return r_state.lighting_enabled;
@@ -280,13 +282,34 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 		R_UseProgram(program);
 
 		glEnableClientState(GL_NORMAL_ARRAY);
+
+		if (r_state.active_program == r_state.world_program) {
+			R_EnableDynamicLights(r_state.active_entity, qtrue);
+			if (r_state.build_shadowmap_enabled)
+				R_ProgramParameter1i("BUILD_SHADOWMAP", 1);
+			else 
+				R_ProgramParameter1i("BUILD_SHADOWMAP", 0);
+		}
 	} else {
 		glDisableClientState(GL_NORMAL_ARRAY);
+
+		if (r_state.active_program == r_state.world_program)
+			R_EnableDynamicLights(NULL, qfalse);
 
 		R_UseProgram(NULL);
 	}
 
 	return r_state.lighting_enabled;
+}
+
+void R_EnableLightmap (qboolean enable)
+{
+	if (!r_state.lighting_enabled)
+		return;
+	if (enable)
+		R_ProgramParameter1i("LIGHTMAP", 1);
+	else
+		R_ProgramParameter1i("LIGHTMAP", 0);
 }
 
 /**  
@@ -300,10 +323,14 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	r_light_t *l;
 	int maxLights = r_dynamic_lights->integer;
 
+	if (enable)
+		r_state.active_entity = ent;
+
 	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0 || !ent) {
-		if (r_state.lighting_enabled)
-			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
-		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
+		if (r_state.lighting_enabled && r_shadowmapping->integer) {
+			R_ProgramParameter1i("SHADOWMAP", 0);
+		}
+		if (!r_state.bumpmap_enabled && r_state.lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 		glDisable(GL_LIGHTING);
 		for (i = 0; i < maxLights; i++) {
@@ -315,13 +342,21 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		return;
 	}
 
+	if (!ent)
+		ent = &r_state.world_entity;
+
 	r_state.dynamic_lighting_enabled = qtrue;
 
 	R_EnableAttribute("TANGENTS");
-	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
 
 	R_ProgramParameter1f("HARDNESS", 0.1);
 	R_ProgramParameter1f("SPECULAR", 0.25);
+
+	if (r_state.use_shadowmap_enabled) {
+		R_ProgramParameter1i("SHADOWMAP", 1);
+		R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
+		//R_BindTextureForTexUnit(r_state.shadowmapBuffer->depth, &texunit_shadowmap);
+	}
 
 	glEnable(GL_LIGHTING);
 
@@ -361,6 +396,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
  */
 void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enable)
 {
+	/* @todo fix this for shadowmaps */
 	if (!r_programs->integer || !r_state.lighting_enabled)
 		return;
 
@@ -454,16 +490,12 @@ void R_EnableWarp (r_program_t *program, qboolean enable)
 
 void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
 {
-	if (!r_programs->integer)
+	if (!r_programs->integer || !r_postprocess->integer)
 		return;
 
 	if (enable && (!program || !program->id))
 		return;
 
-	if (!r_postprocess->integer || r_state.blur_enabled == enable)
-		return;
-
-	r_state.blur_enabled = enable;
 
 	R_SelectTexture(&texunit_lightmap);
 
@@ -478,6 +510,7 @@ void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *sourc
 	}
 
 	R_SelectTexture(&texunit_diffuse);
+	r_state.blur_enabled = enable;
 }
 
 void R_EnableShell (qboolean enable)
@@ -538,7 +571,7 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
-	if (!r_postprocess->integer)
+	if (!r_postprocess->integer || r_state.build_shadowmap_enabled)
 		return;
 
 	if (enable && image != NULL)
@@ -576,7 +609,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
-	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
+	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable || r_state.build_shadowmap_enabled)
 		return;
 
 	r_state.draw_glow_enabled = enable;
@@ -594,7 +627,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 
 void R_EnableSpecularMap (const image_t *image, qboolean enable)
 {
-	if (!r_state.dynamic_lighting_enabled)
+	if (!r_state.lighting_enabled)
 		return;
 
 	if (enable && image != NULL) {
@@ -609,7 +642,7 @@ void R_EnableSpecularMap (const image_t *image, qboolean enable)
 
 void R_EnableRoughnessMap (const image_t *image, qboolean enable)
 {
-	if (!r_state.dynamic_lighting_enabled)
+	if (!r_state.lighting_enabled)
 		return;
 
 	if (enable && image != NULL) {
@@ -622,8 +655,10 @@ void R_EnableRoughnessMap (const image_t *image, qboolean enable)
 	}
 }
 
+
 /**
  * @sa R_Setup3D
+ * @sa R_EnableBuildShadowmap
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
@@ -641,6 +676,286 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 		glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
 	}
 }
+
+
+/**
+ * @sa R_EnableBuildShadowmap
+ */
+static void MYgluLookAt (const vec3_t eye, const vec3_t center, const vec3_t up)
+{
+	GLfloat m[16];
+	vec3_t x, y, z;
+
+	/* Make rotation matrix */
+	VectorSubtract(eye, center, z);
+	VectorNormalize(z);
+	CrossProduct(up, z, x);
+	VectorNormalize(x);
+	CrossProduct(z, x, y);
+	VectorNormalize(y);
+
+	/* build 4x4 transform matrix*/
+#define M(row,col)  m[col*4+row]
+	M(0, 0) = x[0];
+	M(0, 1) = x[1];
+	M(0, 2) = x[2];
+	M(0, 3) = 0.0;
+	M(1, 0) = y[0];
+	M(1, 1) = y[1];
+	M(1, 2) = y[2];
+	M(1, 3) = 0.0;
+	M(2, 0) = z[0];
+	M(2, 1) = z[1];
+	M(2, 2) = z[2];
+	M(2, 3) = 0.0;
+	M(3, 0) = 0.0;
+	M(3, 1) = 0.0;
+	M(3, 2) = 0.0;
+	M(3, 3) = 1.0;
+#undef M
+	glMultMatrixf(m);
+
+	/* Translate Eye to Origin */
+	glTranslatef(-eye[0], -eye[1], -eye[2]);
+}
+
+#define MAX_SHADOW_SIZE 1600
+#define MAT_I4  { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 }
+
+void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
+	static vec3_t viewOriginCamera;
+	int i, j;
+
+	if (!r_shadowmapping->integer)
+		return;
+
+	if (r_state.lighting_enabled) {
+		Com_Printf("Error: R_EnableBuildShadowmap called when lighting was active!\n");
+		return;
+	}
+
+	if (r_state.build_shadowmap_enabled == enable)
+		return;
+
+	r_state.build_shadowmap_enabled = enable;
+
+	if (enable) {
+		float modelView[16];
+		float projection[16];
+		float M1[16] = MAT_I4;
+		float M2[16] = MAT_I4;
+		float M3[16] = MAT_I4;
+		const GLfloat bias[16] = {	0.5, 0.0, 0.0, 0.0, 
+									0.0, 0.5, 0.0, 0.0,
+									0.0, 0.0, 0.5, 0.0,
+									0.5, 0.5, 0.5, 1.0 };
+		vec3_t up = {0.0, 0.0, 1.0};
+		vec3_t target, lightDir, lightPos;
+		vec3_t left, right, midpoint, v;
+		float scale, dist;
+		vec3_t R1[3];
+		vec3_t R2[3];
+
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+
+		glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
+		glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
+		glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
+		glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
+		glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
+		glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
+
+		/* retrieve the resulting matrix for other manipulations  */
+		glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
+		glPopMatrix();
+
+
+
+		R_EnableShadowbuffer(qtrue);
+		//R_UseProgram(r_state.build_shadowmap_program);
+		glEnable(GL_DEPTH_TEST);
+		/* don't render front faces to reduce aliasing artifacts */
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+
+		scale = - refdef.viewOrigin[2] / r_locals.frustum[0].normal[2];
+		for (i = 0; i < 3; i++) 
+			right[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[0].normal[i];
+
+		scale = - refdef.viewOrigin[2] / r_locals.frustum[1].normal[2];
+		for (i = 0; i < 3; i++) 
+			left[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[1].normal[i];
+
+		scale = - refdef.viewOrigin[2] / r_locals.frustum[3].normal[2];
+		for (i = 0; i < 3; i++) 
+			midpoint[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[3].normal[i];
+
+		scale = - refdef.viewOrigin[2] / r_locals.forward[2];
+		for (i = 0; i < 3; i++) 
+			target[i] = refdef.viewOrigin[i] + scale * r_locals.forward[i];
+
+		VectorSubtract(right, left, v);
+		dist = VectorLength(v) / 3.0;
+
+		dist = (dist > MAX_SHADOW_SIZE) ? MAX_SHADOW_SIZE : dist;
+
+		VectorSubtract(target, midpoint, v);
+		VectorNormalize(v);
+		VectorMul(dist, v, target);
+		VectorAdd(midpoint, target, target);
+		
+		/* set up matrixes for the light source as viewpoint */
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		if (light->loc[3] == 0) {
+			//glOrtho(-1000, 1000, -0000, 2000,  -1000, 1000);
+			//glOrtho(-MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH,  -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH);
+			//glOrtho(-dist, dist, -dist, dist,  -dist/4.0, dist/4.0);
+			glOrtho(-dist, dist, -dist, dist,  -200.0, 10.0);
+			glRotatef(90.0 - refdef.viewAngles[1], 0.0, 0.0, 1.0);
+		} else {
+			MYgluPerspective(4.0, MAX_WORLD_WIDTH);
+		}
+
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		VectorCopy(light->loc, lightPos);
+		if (light->loc[3] == 0) {
+			VectorMul(-1.0, lightPos, lightPos);
+			VectorNormalize2(lightPos, lightDir);
+			VectorAdd(lightPos, target, lightPos);
+		} else {
+			VectorSubtract(target, lightPos, lightDir);
+			VectorNormalize(lightDir);
+		}
+
+		if (DotProduct(lightDir, up) > 0.75)
+			VectorSet(up, 0.0, 1.0, 0.0);
+		MYgluLookAt(lightPos, target, up); 
+
+		/* save the camera origin, and then use the light position as the effective view origin */
+		VectorCopy(refdef.viewOrigin, viewOriginCamera);
+		VectorCopy(lightPos, refdef.viewOrigin);
+
+		//VectorCopy(lightDir, r_locals.forward);
+
+
+		/* @todo fix frustum stuff */
+		VectorSet(r_locals.frustum[0].normal, 1.0, 0.0, 0.0);
+		r_locals.frustum[0].type = PLANE_ANYZ;
+		VectorSet(r_locals.frustum[1].normal, -1.0, 0.0, 0.0);
+		r_locals.frustum[1].type = PLANE_ANYZ;
+		VectorSet(r_locals.frustum[2].normal, 0.0, 1.0, 0.0);
+		r_locals.frustum[2].type = PLANE_ANYZ;
+		VectorSet(r_locals.frustum[3].normal, 0.0, -1.0, 0.0);
+		r_locals.frustum[3].type = PLANE_ANYZ;
+
+		//VectorScale(r_locals.right, +1, r_locals.frustum[0].normal);
+		//VectorScale(r_locals.right, -1, r_locals.frustum[1].normal);
+		//VectorScale(r_locals.up, +1, r_locals.frustum[2].normal);
+		//VectorScale(r_locals.up, -1, r_locals.frustum[3].normal);
+
+		VectorSet(up, 0.0, 0.0, 1.0);
+		for (i = 0; i < 4; i++) {
+			RotatePointAroundVector(r_locals.frustum[i].normal, lightDir, r_locals.frustum[i].normal, -(90 - refdef.viewAngles[1]));
+			//r_locals.frustum[i].dist = -DotProduct(target, r_locals.frustum[i].normal);
+			r_locals.frustum[i].dist = -DotProduct(target, r_locals.frustum[i].normal);
+			//r_locals.frustum[i].dist = 0.0001;
+			//r_locals.frustum[i].dist = -dist;
+			//r_locals.frustum[i].dist = -MAX_WORLD_WIDTH;
+		}
+		
+		/* @todo make modelView be the mat. to take camera coords to light coords */
+
+		glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
+		glGetFloatv(GL_PROJECTION_MATRIX, projection);
+
+		//Com_Printf("M1=:\n");
+		for (i = 0; i < 3; i++) {
+			for (j = 0; j < 3; j++) {
+				M1[i*4+j] = r_locals.world_matrix[j*4+i];
+				M2[i*4+j] = modelView[i*4+j];
+				R1[i][j] = r_locals.world_matrix[j*4+i];
+				R2[i][j] = modelView[i*4+j];
+				//Com_Printf("%f, ", M1[i*4+j]);
+			}
+			//Com_Printf("\n");
+		}
+
+		//GLMatrixMultiply(M1, M2, M3);
+
+		//VectorSubtract(lightPos, viewOriginCamera, v);
+		for (i = 0; i < 3; i++) {
+			//M1[(i*4)-1] = v[i];
+			//M1[12+i] = v[i];
+			M1[12+i] = viewOriginCamera[i];
+		}
+		
+		/*
+		for (i = 0; i < 4; i++) {
+			for (j = 0; j < 4; j++) {
+				M3[4*i+j] = r_locals.world_matrix[j*4+i];
+			}
+		}
+		*/
+
+
+		/* @todo we don't really need to use GL_TEXTURE7 here */
+		glActiveTexture(GL_TEXTURE7);
+		glMatrixMode(GL_TEXTURE);
+		//glPushMatrix();
+		glLoadIdentity();
+		glLoadMatrixf(bias);
+		glMultMatrixf(projection);
+		glMultMatrixf(modelView);
+		glMultMatrixf(M1);
+		//glMultMatrixf(M3);
+		//glPopMatrix();
+		glActiveTexture(GL_TEXTURE0);
+		glMatrixMode(GL_MODELVIEW);
+
+	} else {
+		/* Re-enable standard rendering */
+		//glCullFace(GL_BACK);
+		//glDisable(GL_CULL_FACE);
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+
+		/* restore camera as the view origin */
+		VectorCopy(viewOriginCamera, refdef.viewOrigin);
+		R_UseProgram(default_program);
+		R_EnableShadowbuffer(qfalse);
+	}
+
+	R_CheckError();
+}
+
+void R_EnableUseShadowmap (qboolean enable)
+{
+	if (!r_shadowmapping->integer)
+		return;
+
+	if (r_state.use_shadowmap_enabled == enable)
+		return;
+
+	r_state.use_shadowmap_enabled = enable;
+
+	if (r_state.lighting_enabled) {
+		if (enable) {
+			R_ProgramParameter1i("SHADOWMAP", 1);
+			R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
+		} else {
+			R_ProgramParameter1i("SHADOWMAP", 0);
+		}
+	}
+}
+
 
 /**
  * @sa R_Setup2D
@@ -763,7 +1078,7 @@ void R_SetDefaultState (void)
 	/* setup texture units */
 	for (i = 0; i < r_config.maxTextureCoords && i < MAX_GL_TEXUNITS; i++) {
 		gltexunit_t *tex = &r_state.texunits[i];
-		tex->texture = GL_TEXTURE0_ARB + i;
+		tex->texture = GL_TEXTURE0 + i;
 
 		R_EnableTexture(tex, qtrue);
 
@@ -816,6 +1131,9 @@ const vec4_t color_white = {1, 1, 1, 1};
 void R_Color (const vec4_t rgba)
 {
 	const float *color;
+	if (r_state.build_shadowmap_enabled)
+		return;
+
 	if (rgba)
 		color = rgba;
 	else

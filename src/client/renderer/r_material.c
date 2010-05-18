@@ -375,8 +375,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableLighting(r_state.world_program, qtrue);
 
-	/* @todo - integrate BSP lighting with dynamic lighting */
-	R_EnableDynamicLights(NULL, qfalse);
+	/* @todo - right now, all BSP surfaces have lightmaps, but that could change */
+	R_EnableLightmap(qtrue);
 
 	R_EnableColorArray(qtrue);
 
@@ -434,6 +434,8 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	R_EnableBumpmap(NULL, qfalse);
 
 	R_EnableGlowMap(NULL, qfalse);
+
+	R_EnableLightmap(qfalse);
 
 	R_EnableLighting(NULL, qfalse);
 
