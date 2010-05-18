@@ -8,84 +8,98 @@ icon geoscape {
 	image "icons/pack1"
 	texl "0 0"
 	size "42 42"
+	pack64 true
 }
 
 icon check {
 	image "icons/pack1"
 	texl "48 0"
 	size "42 42"
+	pack64 true
 }
 
 icon return {
 	image "icons/pack1"
 	texl "101 36"
 	size "25 24"
+	pack64 true
 }
 
 icon research_stop {
 	image "icons/pack1"
 	texl "112 0"
 	size "43 34"
+	pack64 true
 }
 
 icon research_start {
 	image "icons/pack1"
 	texl "160 0"
 	size "49 34"
+	pack64 true
 }
 
 icon mail {
 	image "icons/pack1"
 	texl "225 5"
 	size "30 23"
+	pack64 true
 }
 
 icon garbage {
 	image "icons/pack1"
 	texl "229 35"
 	size "22 25"
+	pack64 true
 }
 
 icon next {
 	image "icons/pack1"
 	texl	"130 38"
 	size	"13 20"
+	pack64 true
 }
 
 icon prev {
 	image "icons/pack1"
 	texl	"145 38"
 	size	"13 20"
+	pack64 true
 }
 
 icon list {
 	image "icons/pack1"
 	texl	"162 35"
 	size	"23 26"
+	pack64 true
 }
 
 icon autopsyalien {
 	image "icons/pack2"
 	texl	"1 1"
 	size	"44 48"
+	pack64 true
 }
 
 icon killalien {
 	image "icons/pack2"
 	texl	"80 1"
 	size	"29 25"
+	pack64 true
 }
 
 icon question {
 	image "icons/pack2"
 	texl	"80 0"
 	size	"27 46"
+	pack64 true
 }
 
 icon change_height {
 	image "icons/pack2"
 	texl	"96 32"
 	size	"15 15"
+	pack64 true
 }
 
 // small employee
@@ -94,30 +108,35 @@ icon smallhead_soldier {
 	image "icons/pack2"
 	texl	"116 0"
 	size	"28 28"
+	pack64 true
 }
 
 icon smallhead_pilot {
 	image "icons/pack2"
 	texl	"144 0"
 	size	"28 28"
+	pack64	true
 }
 
 icon smallhead_worker {
 	image "icons/pack2"
 	texl	"172 0"
 	size	"28 28"
+	pack64	true
 }
 
 icon smallhead_scientist {
 	image "icons/pack2"
 	texl	"200 0"
 	size	"28 28"
+	pack64	true
 }
 
 icon smallhead_medic {
 	image "icons/pack2"
 	texl	"228 0"
 	size	"28 28"
+	pack64	true
 }
 
 // vertical arrows
@@ -126,18 +145,21 @@ icon varrow_top_bottom {
 	image "icons/pack2"
 	texl	"202 32"
 	size	"11 15"
+	pack64	true
 }
 
 icon varrow_swap {
 	image "icons/pack2"
 	texl	"218 32"
 	size	"19 15"
+	pack64	true
 }
 
 icon varrow_bottom_top {
 	image "icons/pack2"
 	texl	"242 32"
 	size	"11 15"
+	pack64	true
 }
 
 // delay time
@@ -146,30 +168,35 @@ icon speed_stop {
 	image "icons/pack2"
 	texl	"115 33"
 	size	"10 15"
+	pack64	true
 }
 
 icon speed_play1 {
 	image "icons/pack2"
 	texl	"130 33"
 	size	"8 15"
+	pack64	true
 }
 
 icon speed_play2 {
 	image "icons/pack2"
 	texl	"143 33"
 	size	"14 15"
+	pack64	true
 }
 
 icon speed_play3 {
 	image "icons/pack2"
 	texl	"162 33"
 	size	"20 15"
+	pack64	true
 }
 
 icon speed_dot {
 	image "icons/pack2"
 	texl	"187 37"
 	size	"7 7"
+	pack64	true
 }
 
 // geoscape
@@ -178,90 +205,105 @@ icon geo_messagelog {
 	image "icons/pack3"
 	texl	"2 2"
 	size	"22 21"
+	pack64	true
 }
 
 icon geo_radar {
 	image "icons/pack3"
 	texl	"32 2"
 	size	"18 20"
+	pack64	true
 }
 
 icon geo_option {
 	image "icons/pack3"
 	texl	"57 2"
 	size	"21 20"
+	pack64	true
 }
 
 icon geo_center {
 	image "icons/pack3"
 	texl	"82 3"
 	size	"18 18"
+	pack64	true
 }
 
 icon geo_messageoption {
 	image "icons/pack3"
 	texl	"108 3"
 	size	"22 21"
+	pack64	true
 }
 
 icon geo_map {
 	image "icons/pack3"
 	texl	"131 2"
 	size	"22 20"
+	pack64	true
 }
 
 icon plus {
 	image "icons/pack3"
 	texl	"64 33"
 	size	"18 20"
+	pack64	true
 }
 
 icon minus {
 	image "icons/pack3"
 	texl	"85 33"
 	size	"18 20"
+	pack64	true
 }
 
 icon del {
 	image "icons/pack3"
 	texl	"107 32"
 	size	"22 23"
+	pack64	true
 }
 
 icon uvc {
 	image "icons/pack3"
 	texl	"1 34"
 	size	"28 16"
+	pack64	true
 }
 
 icon soldier {
 	image "icons/pack3"
 	texl	"33 33"
 	size	"24 23"
+	pack64	true
 }
 
 icon bordered_magnifying_glass {
 	image "icons/pack1"
 	texl	"1 46"
 	size	"16 16"
+	pack64	true
 }
 
 icon bordered_sleep {
 	image "icons/pack1"
 	texl	"19 46"
 	size	"16 16"
+	pack64	true
 }
 
 icon bordered_question {
 	image "icons/pack1"
 	texl	"37 46"
 	size	"16 16"
+	pack64	true
 }
 
 icon bordered_cross {
 	image "icons/pack1"
 	texl	"55 46"
 	size	"16 16"
+	pack64	true
 }
 
 //
@@ -339,46 +381,54 @@ icon number_1 {
 	image "icons/pack_hud"
 	texl	"0 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_2 {
 	image "icons/pack_hud"
 	texl	"17 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_3 {
 	image "icons/pack_hud"
 	texl	"36 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_4 {
 	image "icons/pack_hud"
 	texl	"53 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_5 {
 	image "icons/pack_hud"
 	texl	"72 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_6 {
 	image "icons/pack_hud"
 	texl	"92 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_7 {
 	image "icons/pack_hud"
 	texl	"110 0"
 	size	"17 26"
+	pack64	true
 }
 
 icon number_8 {
 	image "icons/pack_hud"
 	texl	"129 0"
 	size	"17 26"
+	pack64	true
 }

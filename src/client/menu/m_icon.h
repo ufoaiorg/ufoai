@@ -38,12 +38,14 @@ typedef enum {
 
 typedef struct menuIcon_s {
 	char name[MAX_VAR];
-	char* image;
-	vec2_t pos;
 	vec2_t size;
 	qboolean single;
 	qboolean blend;
+	qboolean pack64;
+
 	vec4_t color[ICON_STATUS_MAX];
+	char* image[ICON_STATUS_MAX];
+	vec2_t pos[ICON_STATUS_MAX];
 } menuIcon_t;
 
 extern const value_t mn_iconProperties[];
