@@ -1,53 +1,6 @@
 // icon definitions for GUI
 
 //
-// icons hard coded into the ui code 
-//
-
-icon system_expand {
-	image "icons/system_expand"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon system_collapse {
-	image "icons/system_collapse"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon system_child {
-	image "icons/system_child"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon system_parent {
-	image "icons/system_parent"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon system_next {
-	image "icons/system_next"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon system_capture {
-	image "icons/system_capture"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-
-//
 // icons scripted into ui scrips
 //
 
@@ -187,43 +140,6 @@ icon varrow_bottom_top {
 	size	"11 15"
 }
 
-// big employee
-
-icon bighead_soldier {
-	image "icons/bighead_soldier"
-	texl	"0 0"
-	size	"42 42"
-	single	true
-}
-
-icon bighead_pilot {
-	image "icons/bighead_pilot"
-	texl	"0 0"
-	size	"42 42"
-	single	true
-}
-
-icon bighead_worker {
-	image "icons/bighead_worker"
-	texl	"0 0"
-	size	"42 42"
-	single	true
-}
-
-icon bighead_scientist {
-	image "icons/bighead_scientist"
-	texl	"0 0"
-	size	"42 42"
-	single	true
-}
-
-icon bighead_medic {
-	image "icons/bighead_medic"
-	texl	"0 0"
-	size	"42 42"
-	single	true
-}
-
 // delay time
 
 icon speed_stop {
@@ -346,66 +262,6 @@ icon bordered_cross {
 	image "icons/pack1"
 	texl	"55 46"
 	size	"16 16"
-}
-
-//
-// ufopedia icons
-//
-
-icon ufopedia_aliens {
-	image "icons/ufopedia_aliens"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_artifacts {
-	image "icons/ufopedia_artifacts"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_buildings {
-	image "icons/ufopedia_buildings"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_crafts {
-	image "icons/ufopedia_crafts"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_equipment {
-	image "icons/ufopedia_equipment"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_tech {
-	image "icons/ufopedia_tech"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_threat {
-	image "icons/ufopedia_threat"
-	texl	"0 0"
-	size	"16 16"
-	single	true
-}
-
-icon ufopedia_news {
-	image "icons/ufopedia_news"
-	texl	"0 0"
-	size	"16 16"
-	single	true
 }
 
 //

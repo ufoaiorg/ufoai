@@ -71,6 +71,23 @@ static menuIcon_t* MN_AutoGenerateIcon (const char* name)
 }
 
 /**
+ * @brief Check if an icon name exists
+ * @param[in] name Name of the icon
+ * @return True if the icon exists
+ * @note not very fast; if we use it often we should improve the search
+ */
+static qboolean MN_IconExists (const char* name)
+{
+	int i;
+	for (i = 0; i < mn.numIcons; i++) {
+		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
+			continue;
+		return qtrue;
+	}
+	return qfalse;
+}
+
+/**
  * @brief Return an icon by is name
  * @param[in] name Name of the icon
  * @return The requested icon, else NULL
@@ -84,11 +101,7 @@ menuIcon_t* MN_GetIconByName (const char* name)
 			continue;
 		return &mn.icons[i];
 	}
-#if 0
 	return MN_AutoGenerateIcon(name);
-#else
-	return NULL;
-#endif
 }
 
 /**
@@ -100,7 +113,7 @@ menuIcon_t* MN_GetIconByName (const char* name)
 menuIcon_t* MN_AllocStaticIcon (const char* name)
 {
 	menuIcon_t* result;
-	assert(MN_GetIconByName(name) == NULL);
+	assert(MN_IconExists(name) == NULL);
 	if (mn.numIcons >= MAX_MENUICONS)
 		Com_Error(ERR_FATAL, "MN_AllocStaticIcon: MAX_MENUICONS hit");
 
