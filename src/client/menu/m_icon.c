@@ -48,6 +48,29 @@ const value_t mn_iconProperties[] = {
 };
 
 /**
+ * @brief Search a file name inside pics/icons/ according to the icon name
+ * If it exists, generate a "single" icon using the size of the image
+ * @param name Name of the icon
+ * @return An icon, else NULL
+ */
+static menuIcon_t* MN_AutoGenerateIcon (const char* name)
+{
+	menuIcon_t* icon = NULL;
+
+	const char *picName = va("icons/%s", name);
+	const image_t *pic = MN_LoadImage(picName);
+	if (pic == NULL)
+		return NULL;
+
+	icon = MN_AllocStaticIcon(name);
+	icon->single = qtrue;
+	icon->image = MN_AllocStaticString(picName, 0);
+	icon->size[0] = pic->width;
+	icon->size[1] = pic->height;
+	return icon;
+}
+
+/**
  * @brief Return an icon by is name
  * @param[in] name Name of the icon
  * @return The requested icon, else NULL
@@ -56,13 +79,16 @@ const value_t mn_iconProperties[] = {
 menuIcon_t* MN_GetIconByName (const char* name)
 {
 	int i;
-
 	for (i = 0; i < mn.numIcons; i++) {
 		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
 			continue;
 		return &mn.icons[i];
 	}
+#if 0
+	return MN_AutoGenerateIcon(name);
+#else
 	return NULL;
+#endif
 }
 
 /**
