@@ -25,6 +25,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_BAR_H
 #define CLIENT_MENU_M_NODE_BAR_H
 
-void MN_RegisterBarNode(nodeBehaviour_t *behaviour);
+#include "m_node_abstractvalue.h"
+
+/* prototype */
+struct nodeBehaviour_s;
+
+/**
+ * @brief extradata for the panel node
+ */
+typedef struct {
+	abstractValueExtraData_t super;
+	byte orientation;	/**< Orientation of the bar (left, right, top, down) */
+	qboolean readOnly;	/**< True if the user can't edit the content */
+} barExtraData_t;
+
+void MN_RegisterBarNode(struct nodeBehaviour_s *behaviour);
 
 #endif

@@ -39,6 +39,7 @@ struct menuCallContext_s;
 #include "node/m_node_abstractscrollable.h"
 #include "node/m_node_abstractscrollbar.h"
 #include "node/m_node_abstractvalue.h"
+#include "node/m_node_bar.h"
 #include "node/m_node_base.h"
 #include "node/m_node_container.h"
 #include "node/m_node_ekg.h"
@@ -147,6 +148,7 @@ typedef struct menuNode_s {
 		abstractValueExtraData_t abstractvalue;
 		abstractScrollableExtraData_t abstractscrollable;
 		abstractScrollbarExtraData_t abstractscrollbar;
+		barExtraData_t bar;
 		baseExtraData_t base;
 		containerExtraData_t container;
 		ekgExtraData_t ekg;
