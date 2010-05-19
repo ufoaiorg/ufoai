@@ -7,12 +7,11 @@ component panel cmpResearchItem {
 		size		"590 25"
 	}
 
-	pic img_status {
-		image		icons/pack_smallbutton
+	button img_status {
+		icon		bordered_question
 		pos			"0 0"
-		texl		"32 16"
-		texh		"48 32"
-		mousefx		true
+		size		"16 16"
+		padding		0
 	}
 
 	string txt_item	{

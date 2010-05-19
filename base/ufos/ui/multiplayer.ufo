@@ -1331,26 +1331,24 @@ window multiplayer_wait extends levelbuttons
 			size		"40 20"
 			textalign	ur
 		}
-		pic teamnum_inc
+		button teamnum_inc
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Next free team"
-			image		icons/pack_smallbutton
+			icon		next
 			pos			"298 82"
-			texl		"0 0"
-			texh		"16 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onClick		{ cmd "teamnum_inc;" }
 		}
 		pic teamnum_dec
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"
-			image		icons/pack_smallbutton
+			icon		prev
 			pos			"314 82"
-			texl		"16 0"
-			texh		"32 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onClick		{ cmd "teamnum_dec;" }
 		}
 

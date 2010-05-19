@@ -408,13 +408,13 @@ window production
 		onClick		{ cmd "prod_inc;" }
 	}
 
-	pic prod_stop
+	button prod_stop
 	{
 		tooltip		"_Stop production"
-		image		icons/pack_smallbutton
+		icon		bordered_cross
 		pos			"900 505"
-		texl		"48 16"
-		texh		"64 32"
+		size		"16 16"
+		padding		0
 		onClick		{ cmd "prod_stop;" }
 	}
 

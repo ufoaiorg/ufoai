@@ -347,30 +347,24 @@ window hospital
 		}
 	}
 
-	pic hos_button_scrollup
+	button hos_button_scrollup
 	{
 		tooltip "_Scroll up"
-		image	icons/pack_smallbutton
-		mousefx true
+		icon	scroll_top
 		pos		"980 95"
-		texh	"48 48"
-		texl	"32 32"
+		size		"16 16"
+		padding		0
 		onClick	{ cmd "hosp_list_up;" }
-		onMouseLeave		{ *node:this@texl = "32 32" *node:this@texh = "48 48" }
-		onMouseEnter		{ *node:this@texl = "48 32" *node:this@texh = "64 48" }
 	}
 
-	pic hos_button_scrolldown
+	button hos_button_scrolldown
 	{
 		tooltip "_Scroll down"
-		image	icons/pack_smallbutton
-		mousefx true
+		icon	scroll_bottom
 		pos		"980 733"
-		texl	"32 48"
-		texh	"48 64"
+		size		"16 16"
+		padding		0
 		onClick	{ cmd "hosp_list_down;" }
-		onMouseLeave		{ *node:this@texl = "32 48" *node:this@texh = "48 64" }
-		onMouseEnter		{ *node:this@texl = "48 48" *node:this@texh = "64 64" }
 	}
 
 	// ==================

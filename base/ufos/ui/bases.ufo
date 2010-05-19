@@ -35,13 +35,13 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		onWheelDown	{ cmd "mn_base_prev;" }
 	}
 
-	pic bt_edit
+	button bt_edit
 	{
 		tooltip	"_Rename your base"
-		image	icons/pack_smallbutton
+		icon	pen
 		pos	"570 40"
-		texl	"0 48"
-		texh	"16 64"
+		size "16 16"
+		padding 0
 		onClick
 		{
 			call *node:(textentry)parent.name@edit

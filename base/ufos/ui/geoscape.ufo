@@ -954,13 +954,13 @@ window popup_newbase
 		font		f_big
 	}
 
-	pic bt_nameedit
+	button bt_nameedit
 	{
 		tooltip		"_Rename your base"
-		image		icons/pack_smallbutton
+		icon		pen
 		pos			"26 78"
-		texl		"0 48"
-		texh		"16 64"
+		size		"16 16"
+		padding		0
 		onClick		{ call *node:root.name@edit }
 	}
 

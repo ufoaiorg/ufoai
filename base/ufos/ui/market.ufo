@@ -421,7 +421,6 @@ window market extends objectinfo
 	
 		custombutton action_dec
 		{
-			image	icons/pack_smallbutton
 			pos		"142 390"
 			icon	prev
 			size	"16 16"
@@ -439,7 +438,6 @@ window market extends objectinfo
 
 		custombutton action_inc
 		{
-			image	icons/pack_smallbutton
 			pos		"356 390"
 			icon	next
 			size	"16 16"
@@ -461,7 +459,6 @@ window market extends objectinfo
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
-			image	icons/pack_smallbutton
 			pos		"142 414"
 			icon	prev
 			size	"16 16"
@@ -480,7 +477,6 @@ window market extends objectinfo
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
-			image	icons/pack_smallbutton
 			pos		"356 414"
 			icon	next
 			size	"16 16"

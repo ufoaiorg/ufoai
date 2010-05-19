@@ -608,14 +608,13 @@ window options
 		// ==================
 		// SWITCH RESOLUTION
 		// ==================
-		pic res_test_pic
+		button res_test_pic
 		{
 			tooltip		"_Switch to the selected resolution. ATTENTION: Windows users might have to restart to make this work correctly."
-			image		icons/pack_smallbutton
+			icon		bordered_question
 			pos			"486 144"
-			texl		"32 0"
-			texh		"47 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onClick		{ cmd "mn_push popup_maintain_resolution;" }
 		}
 		// ===============================
@@ -779,14 +778,13 @@ window options
 			pos			"85 305"
 			size		"240 20"
 		}
-		pic rate_test_pic
+		button rate_test_pic
 		{
 			tooltip		"_Restart the sound-engine and apply your settings."
-			image		icons/pack_smallbutton
+			icon		bordered_question
 			pos			"486 307"
-			texl		"32 0"
-			texh		"47 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onClick		{ cmd "snd_restart;" }
 		}
 		selectbox rate_box

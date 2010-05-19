@@ -788,26 +788,24 @@ window althud extends ahud
 			*right.bt_reloadleft@invis = false
 		}
 	
-		pic switch_to_right_hand
+		button switch_to_right_hand
 		{
 			tooltip		"_Switch to right hand weapon"
-			image		icons/pack_smallbutton
+			icon		next
 			pos			"196 400"
-			texl		"0 0"
-			texh		"16 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
 			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 		}
-		pic switch_to_left_hand
+		button switch_to_left_hand
 		{
 			tooltip		"_Switch to left hand weapon"
-			image		icons/pack_smallbutton
+			image		prev
 			pos			"212 400"
-			texl		"16 0"
-			texh		"32 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
