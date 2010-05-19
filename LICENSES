@@ -2272,13 +2272,14 @@ base/pics/icons/on.png | GNU General Public License 2.0 or later
 base/pics/icons/pack1.png | GNU General Public License 2.0 or later
 base/pics/icons/pack2.png | GNU General Public License 2.0 or later
 base/pics/icons/pack3.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_equip.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_mailclient.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pack_message.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_produce.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pack_smallbutton.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/soldier_holdequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
+base/pics/icons/soldier_noequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/surgery.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/system_capture.png | GNU General Public License 2.0 or later
 base/pics/icons/system_child.png | GNU General Public License 2.0 or later
