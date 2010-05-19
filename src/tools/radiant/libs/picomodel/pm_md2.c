@@ -58,18 +58,6 @@
 #define byte unsigned char
 #endif
 
-typedef struct index_LUT_s
-{
-	short Vert;
-	short ST;
-} index_LUT_t;
-
-typedef struct index_DUP_LUT_s
-{
-	short ST;
-	short OldVert;
-} index_DUP_LUT_t;
-
 typedef struct
 {
 	short s;
@@ -217,9 +205,6 @@ static int _md2_canload (PM_PARAMS_CANLOAD)
 static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 {
 	int i, j;
-	short tot_numVerts;
-	index_LUT_t *p_index_LUT;
-	md2Triangle_t *p_md2Triangle;
 
 	char skinname[MD2_MAX_SKINNAME];
 	md2_t *md2;
@@ -232,9 +217,14 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	picoModel_t *picoModel;
 	picoSurface_t *picoSurface;
 	picoShader_t *picoShader;
-	picoVec3_t xyz, normal;
-	picoVec2_t st;
 	picoColor_t color;
+
+	int numIndexes, numVerts;
+	double isw, ish;
+	int32_t tempIndex[MD2_MAX_TRIANGLES * 3];
+	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
+	int indRemap[MD2_MAX_TRIANGLES * 3];
+	int32_t *outIndex;
 
 	/* set as md2 */
 	bb = (picoByte_t*) buffer;
@@ -280,7 +270,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	}
 
 	/* Setup Frame */
-	frame = (md2Frame_t *) (bb + md2->ofsFrames + (sizeof(md2Frame_t) * frameNum));
+	frame = (md2Frame_t *) (bb + md2->ofsFrames);
 
 	/* swap frame scale and translation */
 	for (i = 0; i < 3; i++) {
@@ -366,59 +356,87 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	/* associate current surface with newly created shader */
 	PicoSetSurfaceShader(picoSurface, PicoGetModelShader(picoModel, 0));
 
-	/* Init LUT for Verts */
-	p_index_LUT = (index_LUT_t *) _pico_alloc(sizeof(index_LUT_t) * md2->numXYZ);
-	for (i = 0; i < md2->numXYZ; i++) {
-		p_index_LUT[i].Vert = -1;
-		p_index_LUT[i].ST = -1;
-	}
+	/* Build Picomodel */
+	_pico_set_color(color, 255, 255, 255, 255);
 
-	/* Fill in Look Up Table, and allocate/fill Linked List from vert array as needed for dup STs per Vert. */
-	tot_numVerts = md2->numXYZ;
+	isw = 1.0 / (double)md2->skinWidth;
+	ish = 1.0 / (double)md2->skinHeight;
+
+	/* load triangle lists */
+	triangle = (md2Triangle_t *) ((picoByte_t *) bb + md2->ofsTris);
+	texCoord = (md2St_t *) ((picoByte_t *) bb + md2->ofsST);
+
 	for (i = 0; i < md2->numTris; i++) {
-		p_md2Triangle = (md2Triangle_t *) (bb + md2->ofsTris + (sizeof(md2Triangle_t) * i));
 		for (j = 0; j < 3; j++) {
-			if (p_index_LUT[p_md2Triangle->index_xyz[j]].ST == -1) /* No Main Entry */
-				p_index_LUT[p_md2Triangle->index_xyz[j]].ST = p_md2Triangle->index_st[j];
+			tempIndex[i * 3 + j] = triangle[i].index_xyz[j];
+			tempSTIndex[i * 3 + j] = triangle[i].index_st[j];
 		}
 	}
 
-	/* Build Picomodel */
-	triangle = (md2Triangle_t *) ((picoByte_t *) (bb + md2->ofsTris));
-	for (j = 0; j < md2->numTris; j++, triangle++) {
-		PicoSetSurfaceIndex(picoSurface, j * 3, triangle->index_xyz[0]);
-		PicoSetSurfaceIndex(picoSurface, j * 3 + 1, triangle->index_xyz[1]);
-		PicoSetSurfaceIndex(picoSurface, j * 3 + 2, triangle->index_xyz[2]);
+	/* build list of unique vertices */
+	numIndexes = md2->numTris * 3;
+	numVerts = 0;
+	outIndex = (int32_t *) _pico_alloc(sizeof(int32_t) * numIndexes);
+
+	for (i = 0; i < numIndexes; i++)
+		indRemap[i] = -1;
+
+	for (i = 0; i < numIndexes; i++) {
+		if (indRemap[i] != -1)
+			continue;
+
+		/* remap duplicates */
+		for (j = i + 1; j < numIndexes; j++) {
+			if (tempIndex[j] != tempIndex[i])
+				continue;
+			if (texCoord[tempSTIndex[j]].s != texCoord[tempSTIndex[i]].s
+			 || texCoord[tempSTIndex[j]].t != texCoord[tempSTIndex[i]].t)
+				continue;
+
+			indRemap[j] = i;
+			outIndex[j] = numVerts;
+		}
+
+		/* add unique vertex */
+		indRemap[i] = i;
+		outIndex[i] = numVerts++;
 	}
 
-	_pico_set_color(color, 255, 255, 255, 255);
+	for (i = 0; i < numIndexes; i++) {
+		if (indRemap[i] == i)
+			continue;
 
-	texCoord = (md2St_t*) ((picoByte_t *) (bb + md2->ofsST));
+		outIndex[i] = outIndex[indRemap[i]];
+	}
+
 	vertex = (md2XyzNormal_t*) ((picoByte_t*) (frame->verts));
-	for (i = 0; i < md2->numXYZ; i++, vertex++) {
-		/* set vertex origin */
-		xyz[0] = vertex->v[0] * frame->scale[0] + frame->translate[0];
-		xyz[1] = vertex->v[1] * frame->scale[1] + frame->translate[1];
-		xyz[2] = vertex->v[2] * frame->scale[2] + frame->translate[2];
-		PicoSetSurfaceXYZ(picoSurface, i, xyz);
+	for (j = 0; j < numIndexes; j++) {
+		const int index = outIndex[j];
+		picoVec3_t xyz, normal;
+		picoVec2_t st;
+
+		st[0] = (float)(((double)texCoord[tempSTIndex[indRemap[j]]].s) + 0.5) * isw;
+		st[1] = (float)(((double)texCoord[tempSTIndex[indRemap[j]]].t) + 0.5) * isw;
+
+		xyz[0] = (int16_t)frame->verts[tempIndex[indRemap[j]]].v[0] * frame->scale[0] + frame->translate[0];
+		xyz[1] = (int16_t)frame->verts[tempIndex[indRemap[j]]].v[1] * frame->scale[1] + frame->translate[1];
+		xyz[2] = (int16_t)frame->verts[tempIndex[indRemap[j]]].v[2] * frame->scale[2] + frame->translate[2];
 
 		/* set normal */
-		normal[0] = md2_normals[vertex->lightnormalindex][0];
-		normal[1] = md2_normals[vertex->lightnormalindex][1];
-		normal[2] = md2_normals[vertex->lightnormalindex][2];
-		PicoSetSurfaceNormal(picoSurface, i, normal);
+		normal[0] = md2_normals[frame->verts[tempIndex[indRemap[j]]].lightnormalindex][0];
+		normal[1] = md2_normals[frame->verts[tempIndex[indRemap[j]]].lightnormalindex][1];
+		normal[2] = md2_normals[frame->verts[tempIndex[indRemap[j]]].lightnormalindex][2];
 
-		/* set st coords */
-		st[0] = (float) texCoord[p_index_LUT[i].ST].s / (float) md2->skinWidth;
-		st[1] = (float) texCoord[p_index_LUT[i].ST].t / (float) md2->skinHeight;
-		PicoSetSurfaceST(picoSurface, 0, i, st);
-
+		PicoSetSurfaceIndex(picoSurface, j, index);
+		PicoSetSurfaceXYZ(picoSurface, index, xyz);
+		PicoSetSurfaceNormal(picoSurface, index, normal);
+		PicoSetSurfaceST(picoSurface, 0, index, st);
 		/* set color */
-		PicoSetSurfaceColor(picoSurface, 0, i, color);
+		PicoSetSurfaceColor(picoSurface, 0, index, color);
 	}
 
 	/* Free malloc'ed LUTs */
-	_pico_free(p_index_LUT);
+	_pico_free(outIndex);
 
 	/* return the new pico model */
 	return picoModel;
