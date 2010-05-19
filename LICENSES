@@ -2243,6 +2243,9 @@ base/pics/hud/firemode.png | GNU General Public License 2.0 | Werner "hoehrer" H
 base/pics/hud/firemode_hover.png | GNU General Public License 2.0 or later
 base/pics/hud/phys_ekg.png | GNU General Public License 2.0
 base/pics/hud/phys_mor.png | GNU General Public License 2.0
+base/pics/icons/alien_kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
+base/pics/icons/alien_surgery.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/alien_unused.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/bighead_medic.png | GNU General Public License 2.0 or later
 base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later
 base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later
@@ -2256,7 +2259,6 @@ base/pics/icons/health_critical.png | GNU General Public License 2.0 | Gerd Heis
 base/pics/icons/health_medium.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_normal.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_unused.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
 base/pics/icons/mail_air.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
@@ -2280,7 +2282,6 @@ base/pics/icons/pack_produce.png | GNU General Public License 2.0 or later |  | 
 base/pics/icons/pack_smallbutton.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/soldier_holdequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/soldier_noequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
-base/pics/icons/surgery.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/system_capture.png | GNU General Public License 2.0 or later
 base/pics/icons/system_child.png | GNU General Public License 2.0 or later
 base/pics/icons/system_close.png | GNU General Public License 2.0 or later
