@@ -41,9 +41,9 @@ const value_t mn_iconProperties[] = {
 	{"pack64", V_BOOL, offsetof(menuIcon_t, pack64), 0},
 
 	{"texl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_NORMAL])},
-	{"hoveredtexl", V_REF_OF_STRING, offsetof(menuIcon_t, pos[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_HOVER])},
-	{"disabledtexl", V_REF_OF_STRING, offsetof(menuIcon_t, pos[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_DISABLED])},
-	{"clickedtexl", V_REF_OF_STRING, offsetof(menuIcon_t, pos[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_CLICKED])},
+	{"hoveredtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_HOVER])},
+	{"disabledtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_DISABLED])},
+	{"clickedtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_CLICKED])},
 
 	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_NORMAL]), 0},
 	{"hoveredimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_HOVER]), 0},
