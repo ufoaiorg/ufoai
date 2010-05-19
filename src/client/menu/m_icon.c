@@ -67,7 +67,7 @@ const value_t mn_iconProperties[] = {
 static menuIcon_t* MN_AutoGenerateIcon (const char* name)
 {
 	menuIcon_t* icon = NULL;
-	const char* suffix[ICON_STATUS_MAX] = {"", "_hover", "_disabled", "_clicked"};
+	const char* suffix[ICON_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
 	int i;
 
 	const char *picName = va("icons/%s", name);
