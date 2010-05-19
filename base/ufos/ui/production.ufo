@@ -421,10 +421,10 @@ window production
 	pic prod_up
 	{
 		tooltip		"_Increase priority"
-		image		icons/pack_produce
+		icon		arrow_top
 		pos			"615 400"
-		texl		"0 0"
-		texh		"16 16"
+		size		"16 16"
+		padding		"0"
 		onClick		{ cmd "prod_up;" }
 		onWheelUp	{ cmd "prod_up;" }
 		onWheelDown	{ cmd "prod_down;" }
@@ -433,10 +433,10 @@ window production
 	pic prod_down
 	{
 		tooltip		"_Decrease priority"
-		image		icons/pack_produce
+		image		arrow_bottom
 		pos			"615 420"
-		texl		"0 16"
-		texh		"16 32"
+		size		"16 16"
+		padding		0
 		onClick		{ cmd "prod_down;" }
 		onWheelUp	{ cmd "prod_up;" }
 		onWheelDown	{ cmd "prod_down;" }
