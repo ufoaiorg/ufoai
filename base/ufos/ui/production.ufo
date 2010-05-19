@@ -418,7 +418,7 @@ window production
 		onClick		{ cmd "prod_stop;" }
 	}
 
-	pic prod_up
+	button prod_up
 	{
 		tooltip		"_Increase priority"
 		icon		arrow_top
@@ -430,10 +430,10 @@ window production
 		onWheelDown	{ cmd "prod_down;" }
 	}
 
-	pic prod_down
+	button prod_down
 	{
 		tooltip		"_Decrease priority"
-		image		arrow_bottom
+		icon		arrow_bottom
 		pos			"615 420"
 		size		"16 16"
 		padding		0
