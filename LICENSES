@@ -2268,6 +2268,8 @@ base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_event.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_intelligence.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_read.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
@@ -2280,7 +2282,6 @@ base/pics/icons/pack2.png | GNU General Public License 2.0 or later
 base/pics/icons/pack3.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_mailclient.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pack_message.png | GNU General Public License 2.0 or later
 base/pics/icons/pen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
