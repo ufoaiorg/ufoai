@@ -76,7 +76,6 @@ static menuIcon_t* MN_AutoGenerateIcon (const char* name)
 		return NULL;
 
 	icon = MN_AllocStaticIcon(name);
-	icon->single = qtrue;
 	icon->image[ICON_STATUS_NORMAL] = MN_AllocStaticString(picName, 0);
 	icon->size[0] = pic->width;
 	icon->size[1] = pic->height;
