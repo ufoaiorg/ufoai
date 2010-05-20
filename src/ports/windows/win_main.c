@@ -113,6 +113,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
+#ifndef HARD_LINKED_GAME
 	/* run through the search paths */
 	path = NULL;
 	while (1) {
@@ -140,6 +141,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		Com_Printf("Could not load game lib '%s'\n", name);
 		return NULL;
 	}
+#endif
 
 	return GetGameAPI(parms);
 }
