@@ -106,9 +106,11 @@ void Sys_UnloadGame (void)
  */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
+#ifndef HARD_LINKED_GAME
 	void *(*GetGameAPI) (void *);
 	char name[MAX_OSPATH];
 	const char *path;
+#endif
 
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
