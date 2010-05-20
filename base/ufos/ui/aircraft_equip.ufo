@@ -67,7 +67,6 @@ window aircraft_equip extends iaircraft
 		pos		"482 106"
 		size	"522 259"
 		angles	"0 0 180"
-		view	"aircraft_equip"
 		autoscale	true
 	}
 
@@ -104,7 +103,6 @@ window aircraft_equip extends iaircraft
 			autoscale	true
 			pos		"14 76"
 			size	"225 96"
-			view	aircraft_equip
 			angles	"-120 120 -30"
 		}
 
@@ -367,7 +365,6 @@ window aircraft_equip extends iaircraft
 		size		"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot1
@@ -387,7 +384,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot2
@@ -407,7 +403,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot3
@@ -427,7 +422,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot4
@@ -447,7 +441,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot5
@@ -467,7 +460,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot6
@@ -487,7 +479,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	pic airequip_slot7
@@ -507,7 +498,6 @@ window aircraft_equip extends iaircraft
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
-		view		item
 	}
 
 	// ==================
