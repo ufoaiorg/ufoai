@@ -1830,11 +1830,10 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			return qfalse;
 		}
 		mxml_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
-		if (!transfer->srcBase) {
-			Com_Printf("Could not save transfer, no srcBase is set\n");
-			return qfalse;
-		}
-		mxml_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
+		/* scrBase can be NULL if this is alien (mission->base) transport 
+		 * @sa TR_TransferAlienAfterMissionStart */
+		if (transfer->srcBase)
+			mxml_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
 		/* save items */
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
@@ -1917,10 +1916,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 			return qfalse;
 		}
 		transfer->srcBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_SRCBASE, BYTES_NONE));
-		if (!transfer->srcBase) {
-			Com_Printf("Error: Transfer has no srcBase set\n");
-			return qfalse;
-		}
+
 		transfer->event.day = mxml_GetInt(s, SAVE_TRANSFER_DAY, 0);
 		transfer->event.sec = mxml_GetInt(s, SAVE_TRANSFER_SEC, 0);
 		transfer->active = qtrue;
