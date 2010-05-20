@@ -379,8 +379,9 @@ void CL_ActorAddToTeamList (le_t * le)
 	if (actorIdx == -1) {
 		actorIdx = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
-		cl.teamList[cl.numTeamList++] = le;
+		cl.teamList[cl.numTeamList] = le;
 		MN_ExecuteConfunc("hudenable %i", cl.numTeamList);
+		cl.numTeamList++;
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}

@@ -159,7 +159,7 @@ window althud extends ahud
 		
 		func hudenable_floor
 		{
-			*cvar:tmp = "<1>"
+			*cvar:tmp = ( <1> + 1 )
 			*cvar:i = 1
 			while ( *cvar:i < *cvar:tmp ) {
 				*floor.bar_teambox<cvar:i>@invis = false  *floor.bar_teamsep<cvar:i>@invis = false  *floor.head<cvar:i>@invis = false
@@ -171,11 +171,10 @@ window althud extends ahud
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 			
-			*cvar:i = ( <1> - 1 )
-			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<cvar:i>@left + *node:root.floor.bar_teambox<cvar:i>@width )
-
 			delete *cvar:tmp
 			delete *cvar:i
+			
+			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<1>@left + *node:root.floor.bar_teambox<1>@width )
 		}
 			
 		pic bar_selbox
