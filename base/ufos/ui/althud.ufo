@@ -802,7 +802,7 @@ window althud extends ahud
 		button switch_to_left_hand
 		{
 			tooltip		"_Switch to left hand weapon"
-			image		prev
+			icon		prev
 			pos			"212 400"
 			size		"16 16"
 			padding		0
