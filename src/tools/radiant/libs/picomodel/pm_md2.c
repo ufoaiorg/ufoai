@@ -41,6 +41,7 @@
 
 /* dependencies */
 #include "picointernal.h"
+#include "../../../shared/byte.h"
 
 /* md2 model format */
 #define MD2_MAGIC				"IDP2"
