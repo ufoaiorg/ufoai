@@ -1489,7 +1489,7 @@ window options
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
 		call *node:root.hidepanels
 		cmd "mn_init_keylist;"
-		*(panel)options_input@invis = false
+		*(panel)options_game@invis = false
 	}
 
 }
