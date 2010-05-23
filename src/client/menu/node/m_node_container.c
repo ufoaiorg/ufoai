@@ -54,7 +54,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
-#define EXTRADATA(node) (node->u.container)
+#define EXTRADATA(node) MN_EXTRADATA(node, containerExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, containerExtraData_t)
 
 /**
  * self cache for drag item
@@ -88,7 +89,7 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATA(node).container, NONE, NONE, item, filterType);
+	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
 
 /**
@@ -181,26 +182,26 @@ static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
 	iterator->itemID = -1;
 	iterator->groupID = 0;
 	iterator->node = node;
-	iterator->filterEquipType = EXTRADATA(node).filterEquipType;
+	iterator->filterEquipType = EXTRADATACONST(node).filterEquipType;
 
-	if (EXTRADATA(node).displayAvailableOnTop) {
+	if (EXTRADATACONST(node).displayAvailableOnTop) {
 		/* available items */
-		if (EXTRADATA(node).displayWeapon)
+		if (EXTRADATACONST(node).displayWeapon)
 			iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_AVAILABLEONLY;
-		if (EXTRADATA(node).displayAmmo)
+		if (EXTRADATACONST(node).displayAmmo)
 			iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_AVAILABLEONLY;
 		/* unavailable items */
-		if (EXTRADATA(node).displayUnavailableItem) {
-			if (EXTRADATA(node).displayWeapon)
+		if (EXTRADATACONST(node).displayUnavailableItem) {
+			if (EXTRADATACONST(node).displayWeapon)
 				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
-			if (EXTRADATA(node).displayAmmo)
+			if (EXTRADATACONST(node).displayAmmo)
 				iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_NOTAVAILABLEONLY;
 		}
 	} else {
-		const int filter = (EXTRADATA(node).displayUnavailableItem) ? 0 : CII_AVAILABLEONLY;
-		if (EXTRADATA(node).displayWeapon)
+		const int filter = (EXTRADATACONST(node).displayUnavailableItem) ? 0 : CII_AVAILABLEONLY;
+		if (EXTRADATACONST(node).displayWeapon)
 			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
-		if (EXTRADATA(node).displayAmmo)
+		if (EXTRADATACONST(node).displayAmmo)
 			iterator->groupSteps[groupID++] = CII_AMMOONLY | filter;
 	}
 	iterator->groupSteps[groupID++] = CII_END;
@@ -237,7 +238,7 @@ static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 
 static inline qboolean MN_IsScrollContainerNode (const menuNode_t* const node)
 {
-	return EXTRADATA(node).container && EXTRADATA(node).container->scroll;
+	return EXTRADATACONST(node).container && EXTRADATACONST(node).container->scroll;
 }
 
 /**
@@ -958,7 +959,7 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 	vec2_t nodepos;
 	int items = 0;
 	int rowHeight = 0;
-	const int cellWidth = node->size[0] / EXTRADATA(node).columns;
+	const int cellWidth = node->size[0] / EXTRADATACONST(node).columns;
 	int tempX, tempY;
 	containerItemIterator_t iterator;
 	int currentHeight = 0;
@@ -976,13 +977,13 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 		objDef_t *obj = &csi.ods[id];
 		vec2_t pos;
 		vec2_t ammopos;
-		const int col = items % EXTRADATA(node).columns;
+		const int col = items % EXTRADATACONST(node).columns;
 		int cellHeight = 0;
 		invList_t *icItem = iterator.itemFound;
 		int height;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || currentHeight < EXTRADATA(node).scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATACONST(node).scrollCur) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
@@ -990,8 +991,8 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 			if (height > rowHeight)
 				rowHeight = height;
 
-			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
-				if (col == EXTRADATA(node).columns - 1) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).scrollCur) {
+				if (col == EXTRADATACONST(node).columns - 1) {
 					currentHeight += rowHeight;
 					rowHeight = 0;
 				}
@@ -1002,7 +1003,7 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += currentHeight - EXTRADATA(node).scrollCur;
+		pos[1] += currentHeight - EXTRADATACONST(node).scrollCur;
 
 		/* check item */
 		if (mouseY < pos[1])
@@ -1030,7 +1031,7 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 		cellHeight += height;
 
 		/* draw ammos of weapon */
-		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
+		if (obj->weapon && EXTRADATACONST(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
 				objDef_t *objammo = obj->ammos[ammoIdx];
@@ -1040,7 +1041,7 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 					continue;
 
 				/* find and skip none existing ammo */
-				icItem = MN_ContainerNodeGetExistingItem(node, objammo, EXTRADATA(node).filterEquipType);
+				icItem = MN_ContainerNodeGetExistingItem(node, objammo, EXTRADATACONST(node).filterEquipType);
 				if (!icItem)
 					continue;
 
@@ -1063,10 +1064,10 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 		}
 
 		/* add a margin between rows */
-		if (col == EXTRADATA(node).columns - 1) {
+		if (col == EXTRADATACONST(node).columns - 1) {
 			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATACONST(node).scrollCur >= node->size[1])
 				return NULL;
 		}
 
@@ -1107,7 +1108,7 @@ static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const nod
 		if (contY)
 			*contY = fromY;
 
-		result = INVSH_SearchInInventory(menuInventory, EXTRADATA(node).container, fromX, fromY);
+		result = INVSH_SearchInInventory(menuInventory, EXTRADATACONST(node).container, fromX, fromY);
 	}
 	return result;
 }
@@ -1485,10 +1486,10 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		const menuNode_t *target = MN_DNDGetTargetNode();
 		assert(EXTRADATA(source).container);
 		assert(target);
-		assert(EXTRADATA(target).container);
+		assert(EXTRADATACONST(target).container);
 		assert(selActor);
 		CL_ActorInvMove(selActor, EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
-			EXTRADATA(target).container->id, dragInfoToX, dragInfoToY);
+			EXTRADATACONST(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
 		menuNode_t *target = MN_DNDGetTargetNode();
 		if (target) {

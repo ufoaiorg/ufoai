@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-#define EXTRADATA(node) (node->u.abstractvalue)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
 
 #define TEXTURE_WIDTH 250.0
 

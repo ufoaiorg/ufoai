@@ -65,6 +65,11 @@ typedef struct {
 void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 
 qboolean MN_WindowIsFullScreen(const struct menuNode_s* const menu);
+qboolean MN_WindowIsDropDown(const struct menuNode_s* const menu);
+qboolean MN_WindowIsModal(const struct menuNode_s* const menu);
+void MN_WindowNodeRegisterKeyBinding(struct menuNode_s* menu, struct menuKeyBinding_s *binding);
+struct menuKeyBinding_s *MN_WindowNodeGetKeyBinding(const struct menuNode_s* const node, unsigned int key);
 void MN_WindowNodeSetRenderNode(struct menuNode_s *node, struct menuNode_s *renderNode);
+vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node);
 
 #endif

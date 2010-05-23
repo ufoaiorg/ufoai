@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) (node->u.option)
+#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1

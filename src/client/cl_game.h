@@ -58,7 +58,7 @@ void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMemb
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_Drop(void);
 void GAME_Frame(void);
-const char* GAME_GetModelForItem(const objDef_t *od, menuModel_t** menuModel);
+const char* GAME_GetModelForItem(const objDef_t *od, struct menuModel_s** menuModel);
 
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"

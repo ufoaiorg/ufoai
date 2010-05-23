@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_game.h"
 #include "../../renderer/r_draw.h"
 
-#define EXTRADATA(node) (node->u.model)
+#define EXTRADATA(node) MN_EXTRADATA(node, modelExtraData_t)
 
 /**
  * @brief Draw an item node

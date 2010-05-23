@@ -49,11 +49,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_draw.h"
 #include "../m_render.h"
 #include "m_node_selectbox.h"
-#include "m_node_abstractnode.h"
+#include "m_node_abstractoption.h"
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) (node->u.option)
+#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
 
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 

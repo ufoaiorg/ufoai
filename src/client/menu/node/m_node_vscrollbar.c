@@ -47,7 +47,7 @@ static int oldMouseY;
 static menuTimer_t *capturedTimer;
 static int capturedElement;
 
-#define EXTRADATA(node) (node->u.abstractscrollbar)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractScrollbarExtraData_t)
 
 /**
  * @brief Return size of all elements of the scrollbar

@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_SPACER 2.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 
-#define EXTRADATA(node) (node->u.option)
+#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
 
 /**
  * @brief Sort options by alphabet

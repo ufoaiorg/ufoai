@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../renderer/r_draw.h"
 
-#define EXTRADATA(node) (node->u.linechart)
+#define EXTRADATA(node) MN_EXTRADATA(node, lineChartExtraData_t)
 
 static void MN_LineChartNodeDraw (menuNode_t *node)
 {

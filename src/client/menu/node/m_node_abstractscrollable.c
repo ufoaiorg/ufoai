@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) (node->u.abstractscrollable)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractScrollableExtraData_t)
 
 /**
  * @brief return true if the node size change and update the cache

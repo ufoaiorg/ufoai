@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/utf8.h"
 
-#define EXTRADATA(node) (node->u.textentry)
+#define EXTRADATA(node) MN_EXTRADATA(node, textEntryExtraData_t)
 
 #define TILE_SIZE 64
 #define CORNER_SIZE 17

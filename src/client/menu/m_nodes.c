@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "node/m_node_abstractnode.h"
 #include "node/m_node_abstractscrollbar.h"
+#include "node/m_node_abstractoption.h"
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_bar.h"
 #include "node/m_node_base.h"
@@ -325,23 +326,29 @@ menuNode_t* MN_GetNodeByPath (const char* path)
 static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, qboolean isDynamic)
 {
 	menuNode_t* node;
+	nodeBehaviour_t *behaviour;
+	int nodeSize;
+
+	behaviour = MN_GetNodeBehaviour(type);
+	if (behaviour == NULL)
+		Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: Node behaviour '%s' doesn't exist", type);
+
+	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		if (mn.curadata + sizeof(*node) > mn.adata + mn.adataize)
-			Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: MAX_MENUNODES hit");
+		if (mn.curadata + nodeSize > mn.adata + mn.adataize)
+			Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: No more memory to allocate a new node");
 		node = (menuNode_t*) mn.curadata;
-		mn.curadata += sizeof(*node);
+		mn.curadata += nodeSize;
 		mn.numNodes++;
-		memset(node, 0, sizeof(*node));
+		memset(node, 0, nodeSize);
 	} else {
-		node = (menuNode_t*)Mem_PoolAlloc(sizeof(*node), mn_dynPool, 0);
-		memset(node, 0, sizeof(*node));
+		node = (menuNode_t*)Mem_PoolAlloc(nodeSize, mn_dynPool, 0);
+		memset(node, 0, nodeSize);
 		node->dynamic = qtrue;
 	}
 
-	node->behaviour = MN_GetNodeBehaviour(type);
-	if (node->behaviour == NULL)
-		Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: Node behaviour '%s' doesn't exist", type);
+	node->behaviour = behaviour;
 #ifdef DEBUG
 	node->behaviour->count++;
 #endif
@@ -468,9 +475,9 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 			return find;
 
 		/* we must not search anymore */
-		if (menu->u.window.dropdown)
+		if (MN_WindowIsDropDown(menu))
 			break;
-		if (menu->u.window.modal)
+		if (MN_WindowIsModal(menu))
 			break;
 		if (MN_WindowIsFullScreen(menu))
 			break;

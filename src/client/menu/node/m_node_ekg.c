@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
-#define EXTRADATA(node) (node->u.ekg)
+#define EXTRADATA(node) MN_EXTRADATA(node, ekgExtraData_t)
 
 static void MN_EKGNodeDraw (menuNode_t *node)
 {

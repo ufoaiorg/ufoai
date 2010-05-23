@@ -38,7 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) node->u.window
+#define EXTRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, windowExtraData_t)
 
 /* constants defining all tile of the texture */
 
@@ -73,7 +74,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 qboolean MN_WindowIsFullScreen (const menuNode_t* const node)
 {
 	assert(MN_NodeInstanceOf(node, "window"));
-	return EXTRADATA(node).isFullScreen;
+	return EXTRADATACONST(node).isFullScreen;
 }
 
 static void MN_WindowNodeDraw (menuNode_t *node)
@@ -289,9 +290,9 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
 {
 	/** @todo anyway we should remove soon renderNode */
-	if (source->u.window.renderNode != NULL) {
+	if (EXTRADATACONST(source).renderNode != NULL) {
 		Com_Printf("MN_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", MN_GetPath(clone));
-		clone->u.window.renderNode = NULL;
+		EXTRADATA(clone).renderNode = NULL;
 	}
 }
 
@@ -343,6 +344,69 @@ static const value_t windowNodeProperties[] = {
 
 	{NULL, V_NULL, 0, 0}
 };
+
+/**
+ * @brief Get the noticePosition from a window node.
+ * @param node A window node
+ * @return A position, else NULL if no notice position
+ */
+vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node)
+{
+	if (EXTRADATA(node).noticePos[0] == 0 && EXTRADATA(node).noticePos[1] == 0)
+		return NULL;
+	return EXTRADATA(node).noticePos;
+}
+
+/**
+ * @brief True if the window is a drop down.
+ * @param node A window node
+ * @return True if the window is a drop down.
+ */
+qboolean MN_WindowIsDropDown(const struct menuNode_s* const node)
+{
+	return EXTRADATACONST(node).dropdown;
+}
+
+/**
+ * @brief True if the window is a modal.
+ * @param node A window node
+ * @return True if the window is a modal.
+ */
+qboolean MN_WindowIsModal(const struct menuNode_s* const node)
+{
+	return EXTRADATACONST(node).modal;
+}
+
+/**
+ * @brief Add a key binding to a window node.
+ * Window node store key bindings for his node child.
+ * @param node A window node
+ */
+void MN_WindowNodeRegisterKeyBinding (menuNode_t* node, menuKeyBinding_t *binding)
+{
+	assert(MN_NodeInstanceOf(node, "window"));
+	binding->next = EXTRADATA(node).keyList;
+	EXTRADATA(node).keyList = binding;
+}
+
+const menuKeyBinding_t *binding;
+
+/**
+ * @brief Search a a key binding fromp a window node.
+ * Window node store key bindings for his node child.
+ * @param node A window node
+ */
+menuKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct menuNode_s* const node, unsigned int key)
+{
+	menuKeyBinding_t *binding = EXTRADATACONST(node).keyList;
+	assert(MN_NodeInstanceOf(node, "window"));
+	while (binding) {
+		if (binding->key == key)
+			break;
+		binding = binding->next;
+	}
+	return binding;
+}
 
 void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {

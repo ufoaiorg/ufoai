@@ -36,7 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) (node->u.text)
+#define EXTRADATA(node) MN_EXTRADATA(node, textExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, textExtraData_t)
 
 /**
  * @brief Get the line number under an absolute position
@@ -47,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int MN_TextListNodeGetLine (const menuNode_t *node, int x, int y)
 {
-	int lineHeight = EXTRADATA(node).lineHeight;
+	int lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
 		const char *font = MN_GetFontFromNode(node);
 		lineHeight = MN_FontGetHeight(font);
@@ -55,7 +56,7 @@ static int MN_TextListNodeGetLine (const menuNode_t *node, int x, int y)
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 	y -= node->padding;
-	return (int) (y / lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
+	return (int) (y / lineHeight) + EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
 static void MN_TextListNodeMouseMove (menuNode_t *node, int x, int y)

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
 
-#define EXTRADATA(node) (node->u.base)
+#define EXTRADATA(node) MN_EXTRADATA(node, baseExtraData_t)
 
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)

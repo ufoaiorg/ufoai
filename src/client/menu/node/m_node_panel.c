@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_panel.h"
 #include "../../../common/scripts.h"
 
-#define EXTRADATA(node) node->u.panel
+#define EXTRADATA(node) MN_EXTRADATA(node, panelExtraData_t)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1

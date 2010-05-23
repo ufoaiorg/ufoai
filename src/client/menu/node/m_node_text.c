@@ -35,7 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) (node->u.text)
+#define EXTRADATA(node) MN_EXTRADATA(node, textExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, textExtraData_t)
 
 static void MN_TextUpdateCache(menuNode_t *node);
 
@@ -101,7 +102,7 @@ static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 	int line;
 	assert(MN_NodeInstanceOf(node, "text"));
 
-	lineHeight = EXTRADATA(node).lineHeight;
+	lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
 		const char *font = MN_GetFontFromNode(node);
 		lineHeight = MN_FontGetHeight(font);
@@ -113,10 +114,10 @@ static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 	/* skip position over the first line */
 	if (y < 0)
 		 return -1;
-	line = (int) (y / lineHeight) + EXTRADATA(node).super.scrollY.viewPos;
+	line = (int) (y / lineHeight) + EXTRADATACONST(node).super.scrollY.viewPos;
 
 	/* skip position under the last line */
-	if (line >= EXTRADATA(node).super.scrollY.fullSize)
+	if (line >= EXTRADATACONST(node).super.scrollY.fullSize)
 		return -1;
 
 	return line;

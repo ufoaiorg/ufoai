@@ -296,10 +296,12 @@ static void MN_DrawNotice (void)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 	int x, y;
+	vec_t *noticePosition;
 
-	if (noticeMenu->u.window.noticePos[0] || noticeMenu->u.window.noticePos[1]) {
-		x = noticeMenu->u.window.noticePos[0];
-		y = noticeMenu->u.window.noticePos[1];
+	noticePosition = MN_WindowNodeGetNoticePosition(noticeMenu);
+	if (noticePosition) {
+		x = noticePosition[0];
+		y = noticePosition[1];
 	} else {
 		x = 500;
 		y = 110;

@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh.h"
 #include "../../renderer/r_mesh_anim.h"
 
-#define EXTRADATA(node) (node->u.model)
+#define EXTRADATA(node) MN_EXTRADATA(node, modelExtraData_t)
 
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR

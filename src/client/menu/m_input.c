@@ -265,8 +265,7 @@ void MN_SetKeyBinding (const char* path, int key)
 	binding->property = property;
 	binding->key = key;
 	node->key = binding;
-	binding->next = node->root->u.window.keyList;
-	node->root->u.window.keyList = binding;
+	MN_WindowNodeRegisterKeyBinding(node->root, binding);
 }
 
 /**
@@ -275,16 +274,10 @@ void MN_SetKeyBinding (const char* path, int key)
 static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *window)
 {
 	menuNode_t *node;
-	menuKeyBinding_t *binding;
+	const menuKeyBinding_t *binding;
 
 	/* search requested key binding */
-	binding = window->u.window.keyList;
-	while (binding) {
-		if (binding->key == key)
-			break;
-		binding = binding->next;
-
-	}
+	binding = MN_WindowNodeGetKeyBinding(window, key);
 	if (!binding)
 		return qfalse;
 
@@ -360,7 +353,7 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 			return qfalse;
 		if (MN_KeyPressedInWindow(key, window))
 			return qtrue;
-		if (window->u.window.modal)
+		if (MN_WindowIsModal(window))
 			break;
 	}
 
@@ -513,7 +506,8 @@ static void MN_LeftClick (int x, int y)
 	/** @todo need to refactoring it with the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && mn.windowStackPos != 0) {
-		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown) {
+		menuNode_t *menu = mn.windowStack[mn.windowStackPos - 1];
+		if (MN_WindowIsDropDown(menu)) {
 			MN_PopWindow(qfalse);
 		}
 	}
