@@ -690,7 +690,7 @@ void CL_CampaignRun (void)
 		CP_CheckMissionEnd();
 		CP_CheckLostCondition();
 		/* Check if there is a base attack mission */
-		CP_CheckBaseAttacks_f();
+		Cmd_ExecuteString("check_baseattacks");
 		BDEF_AutoSelectTarget();
 
 		/* set time cvars */
