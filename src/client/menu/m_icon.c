@@ -173,11 +173,16 @@ void MN_DrawIconInBox (const menuIcon_t* icon, iconStatus_t status, int posX, in
 		image = icon->image[ICON_STATUS_NORMAL];
 	} else {
 		texX = icon->pos[status][0];
-		texY = icon->pos[status][1] + (TILE_HEIGHT * status);
+		texY = icon->pos[status][1];
 		image = icon->image[status];
-		if (!image)
-			image = icon->image[0];
+		if (!image) {
+			texX = icon->pos[ICON_STATUS_NORMAL][0];
+			texY = icon->pos[ICON_STATUS_NORMAL][1];
+			image = icon->image[ICON_STATUS_NORMAL];
+		}
 	}
+	if (!image)
+		return;
 
 	posX += (sizeX - icon->size[0]) / 2;
 	posY += (sizeY - icon->size[1]) / 2;
