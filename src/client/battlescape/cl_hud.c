@@ -245,6 +245,24 @@ static qboolean HUD_CheckFiremodeReservation (void)
 	return qfalse;
 }
 
+
+/**
+ * @brief Sets TU-reservation and firemode
+ * @param[in] le The local entity of the actor to change the tu reservation for.
+ * @param[in] tus How many TUs to set.
+ * @param[in] hand Store the given hand.
+ * @param[in] fireModeIndex Store the given firemode for this hand.
+ * @param[in] weapon Pointer to weapon in the hand.
+ */
+static void HUD_SetShootReservation (const le_t* le, const int tus, const actorHands_t hand, const int fireModeIndex, const objDef_t *weapon)
+{
+	character_t* chr = CL_ActorGetChr(le);
+	assert(chr);
+
+	CL_ActorReserveTUs(le, RES_SHOT, tus);
+	CL_ActorSetShotSettings(chr, hand, fireModeIndex, weapon);
+}
+
 static linkedList_t* popupListData;
 static menuNode_t* popupListNode;
 
@@ -264,17 +282,12 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	int selectedEntry;
 	linkedList_t* popupListText = NULL;
 	reserveShot_t reserveShotData;
-	character_t* chr;
 
 	if (!selActor)
 		return;
 
-	chr = CL_ActorGetChr(selActor);
-	assert(chr);
-
 	if (reset) {
-		CL_ActorReserveTUs(selActor, RES_SHOT, 0);
-		CL_ActorSetShotSettings(chr, ACTOR_HAND_NOT_SET, -1, NULL);
+		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
 		return;
 	}
 
@@ -294,6 +307,8 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 
 	do {	/* Loop for the 2 hands (l/r) to avoid unnecessary code-duplication and abstraction. */
 		const fireDef_t *fd = HUD_GetFireDefinitionForHand(selActor, hand);
+		character_t* chr = CL_ActorGetChr(selActor);
+		assert(chr);
 
 		if (fd) {
 			const objDef_t *ammo = fd->obj;
@@ -379,18 +394,17 @@ static void HUD_ShotReserve_f (void)
 	if (!reserveShotData)
 		return;
 
-	if (reserveShotData->weaponIndex == NONE)
+	if (reserveShotData->weaponIndex == NONE) {
+		HUD_SetShootReservation(selActor, 0, ACTOR_HAND_NOT_SET, -1, NULL);
 		return;
+	}
 
 	/** @todo do this on the server */
 	/* Check if we have enough TUs (again) */
 	if (CL_ActorUsableTUs(selActor) + CL_ActorReservedTUs(selActor, RES_SHOT) >= reserveShotData->TUs) {
 		const objDef_t *od = INVSH_GetItemByIDX(reserveShotData->weaponIndex);
-		character_t* chr = CL_ActorGetChr(selActor);
-		assert(chr);
 		if (GAME_ItemIsUseable(od)) {
-			CL_ActorReserveTUs(selActor, RES_SHOT, max(0, reserveShotData->TUs));
-			CL_ActorSetShotSettings(chr, reserveShotData->hand, reserveShotData->fireModeIndex, od);
+			HUD_SetShootReservation(selActor, max(0, reserveShotData->TUs), reserveShotData->hand, reserveShotData->fireModeIndex, od);
 			if (popupListNode)
 				MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 		}
