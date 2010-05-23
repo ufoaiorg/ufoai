@@ -407,13 +407,13 @@ window research
 		longlines	prettychop
 	}
 
-	pic image_top
-	{
-		image		*cvar:mn_research_imagetop
-		pos			"730 235"
-		size		"220 380"
-		preventratio	true
-	}
+//	pic image_top
+//	{
+//		image		*cvar:mn_research_imagetop
+//		pos			"730 235"
+//		size		"220 380"
+//		preventratio	true
+//	}
 
 	string txt_selected_status
 	{
