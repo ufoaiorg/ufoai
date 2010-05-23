@@ -202,13 +202,13 @@ static void MN_Memory_f (void)
 	size_t size;
 	Com_Printf("^BAllocation:\n");
 	Com_Printf("\t-Option allocation: %i/%i\n", mn.numOptions, MAX_MENUOPTIONS);
-	Com_Printf("\t-Node allocation: %i/%i\n", mn.numNodes, MAX_MENUNODES);
 	Com_Printf("\t-Window allocation: %i/%i\n", mn.numWindows, MAX_WINDOWS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
 	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
 	Com_Printf("\t-Exclude rect allocation: %i/%i\n", mn.numExcludeRect, MAX_EXLUDERECTS);
 	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(mn.curadata - mn.adata), mn.adataize);
+	Com_Printf("\t -Node allocation: %i\n", mn.numNodes);
 	Com_Printf("\t-Node per behaviour: ");
 	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
 		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
@@ -279,7 +279,7 @@ void MN_Shutdown (void)
 	mn.adataize = 0;
 }
 
-#define MENU_HUNK_SIZE 0x40000
+#define MENU_HUNK_SIZE 4*1024*1024
 
 void MN_Init (void)
 {

@@ -327,9 +327,11 @@ static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, q
 	menuNode_t* node;
 
 	if (!isDynamic) {
-		if (mn.numNodes >= MAX_MENUNODES)
-			Com_Error(ERR_FATAL, "MN_AllocStaticNode: MAX_MENUNODES hit");
-		node = &mn.nodes[mn.numNodes++];
+		if (mn.curadata + sizeof(*node) > mn.adata + mn.adataize)
+			Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: MAX_MENUNODES hit");
+		node = (menuNode_t*) mn.curadata;
+		mn.curadata += sizeof(*node);
+		mn.numNodes++;
 		memset(node, 0, sizeof(*node));
 	} else {
 		node = (menuNode_t*)Mem_PoolAlloc(sizeof(*node), mn_dynPool, 0);
@@ -339,17 +341,17 @@ static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, q
 
 	node->behaviour = MN_GetNodeBehaviour(type);
 	if (node->behaviour == NULL)
-		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
+		Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: Node behaviour '%s' doesn't exist", type);
 #ifdef DEBUG
 	node->behaviour->count++;
 #endif
 	if (node->behaviour->isAbstract)
-		Com_Error(ERR_FATAL, "MN_AllocNode: Node behavior '%s' is abstract. We can't instantiate it.", type);
+		Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: Node behavior '%s' is abstract. We can't instantiate it.", type);
 
 	if (name != NULL) {
 		Q_strncpyz(node->name, name, sizeof(node->name));
 		if (strlen(node->name) != strlen(name))
-			Com_Printf("MN_AllocNode: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
+			Com_Printf("MN_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
 
 	/* initialize default properties */
