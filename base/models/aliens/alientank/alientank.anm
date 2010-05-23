@@ -1,0 +1,40 @@
+// character animations
+// frames_in_ufoai = frames_in_blender-1
+
+
+// name				start	end	fps
+
+
+stand0				0	0	1
+stand1				0	0	1
+stand2				0	0	1
+cstand3				0	0	1
+cstand0				0	0	1
+cstand1				0	0	1
+cstand2				0	0	1
+cstand3				0	0	1
+
+walk0				22	54	24
+walk1				22	54	24
+walk2				22	54	24
+walk3				22	54	24
+cwalk0				22	54	24
+cwalk1				22	54	24
+cwalk2				22	54	24
+cwalk3				22	54	24
+
+panic0				0	0	1
+stand_still			0	0	1
+stand_menu			0	0	1
+
+shoot_melee			0	21	12
+move_melee			22	54	24
+
+
+death1				55	77	20
+death2				55	77	20
+death3				55	77	20
+
+dead1				77	77	1
+dead2				77	77	1
+dead3				77	77	1
