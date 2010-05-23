@@ -9286,8 +9286,7 @@ msgstr ""
 "\n"
 "Mit freundlichen Grüßen\n"
 "\n"
-"Col. Falkland\n"
-"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5219
 msgid "Orbital UFO Activity"
