@@ -279,7 +279,7 @@ void MN_Shutdown (void)
 	mn.adataize = 0;
 }
 
-#define MENU_HUNK_SIZE 4*1024*1024
+#define MENU_HUNK_SIZE 2*1024*1024
 
 void MN_Init (void)
 {
