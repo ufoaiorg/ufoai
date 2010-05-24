@@ -31,7 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../renderer/r_draw.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, lineChartExtraData_t)
+#define EXTRADATA_TYPE lineChartExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 static void MN_LineChartNodeDraw (menuNode_t *node)
 {
@@ -95,5 +96,5 @@ void MN_RegisterLineChartNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "linechart";
 	behaviour->draw = MN_LineChartNodeDraw;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

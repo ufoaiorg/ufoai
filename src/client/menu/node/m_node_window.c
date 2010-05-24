@@ -38,8 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, windowExtraData_t)
+#define EXTRADATA_TYPE windowExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /* constants defining all tile of the texture */
 
@@ -420,5 +421,5 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->doLayout = MN_WindowNodeDoLayout;
 	behaviour->clone = MN_WindowNodeClone;
 	behaviour->properties = windowNodeProperties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

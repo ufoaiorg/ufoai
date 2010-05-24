@@ -30,7 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_panel.h"
 #include "../../../common/scripts.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, panelExtraData_t)
+#define EXTRADATA_TYPE panelExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -425,7 +426,7 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->draw = MN_PanelNodeDraw;
 	behaviour->loaded = MN_PanelNodeLoaded;
 	behaviour->doLayout = MN_PanelNodeDoLayout;

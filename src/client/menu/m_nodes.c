@@ -722,19 +722,30 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 
 	/* property must not overwrite another property */
 	if (behaviour->super && behaviour->properties) {
-		const value_t* current = behaviour->properties;
-		while (current->string != NULL) {
-			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, current->string);
+		const value_t* property = behaviour->properties;
+		while (property->string != NULL) {
+			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, property->string);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			const nodeBehaviour_t *b = MN_GetNodeBehaviour(current->string);
 #endif
 			if (p != NULL)
-				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", current->string, behaviour->name);
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", property->string, behaviour->name);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			if (b != NULL)
-				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", current->string, behaviour->name);
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", property->string, behaviour->name);
 #endif
-			current++;
+			property++;
+		}
+	}
+
+	/* Sanity: A property must not be outside the node memory */
+	if (behaviour->properties) {
+		const int size = sizeof(menuNode_t) + behaviour->extraDataSize;
+		const value_t* property = behaviour->properties;
+		while (property->string != NULL) {
+			if (property->type != V_UI_NODEMETHOD && property->ofs + property->size > size)
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' is outside the node memory. The C code need a fix.", property->string, behaviour->name);
+			property++;
 		}
 	}
 

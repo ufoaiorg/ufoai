@@ -54,8 +54,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
-#define EXTRADATA(node) MN_EXTRADATA(node, containerExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, containerExtraData_t)
+#define EXTRADATA_TYPE containerExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
  * self cache for drag item
@@ -1582,7 +1583,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 	behaviour->mouseWheel = MN_ContainerNodeWheel;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	Com_RegisterConstInt("FILTER_S_PRIMARY", FILTER_S_PRIMARY);
 	Com_RegisterConstInt("FILTER_S_SECONDARY", FILTER_S_SECONDARY);

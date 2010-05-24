@@ -41,7 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh.h"
 #include "../../renderer/r_mesh_anim.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, modelExtraData_t)
+#define EXTRADATA_TYPE modelExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
@@ -548,7 +549,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->delete = MN_ModelNodeDelete;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }

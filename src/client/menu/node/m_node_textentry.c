@@ -43,7 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/utf8.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, textEntryExtraData_t)
+#define EXTRADATA_TYPE textEntryExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define TILE_SIZE 64
 #define CORNER_SIZE 17
@@ -352,5 +353,5 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

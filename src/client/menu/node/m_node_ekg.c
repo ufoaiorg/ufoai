@@ -31,7 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, ekgExtraData_t)
+#define EXTRADATA_TYPE ekgExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 static void MN_EKGNodeDraw (menuNode_t *node)
 {
@@ -123,5 +124,5 @@ void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 	behaviour->extends = "pic";
 	behaviour->draw = MN_EKGNodeDraw;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

@@ -53,8 +53,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MN_CUSTOMBUTTON_TEX_HEIGHT 64
 #define MN_CUSTOMBUTTON_TEX_WIDTH 256
 
-#define EXTRADATA(node) MN_EXTRADATA(node, customButtonExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, customButtonExtraData_t)
+#define EXTRADATA_TYPE customButtonExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
  * @brief Handles CustomButton draw
@@ -121,5 +122,5 @@ void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "button";
 	behaviour->draw = MN_CustomButtonNodeDraw;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

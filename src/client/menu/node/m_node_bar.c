@@ -37,7 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../input/cl_keys.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, barExtraData_t)
+#define EXTRADATA_TYPE barExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 static void MN_BarNodeDraw (menuNode_t *node)
 {
@@ -184,5 +185,5 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_BarNodeMouseDown;
 	behaviour->mouseUp = MN_BarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

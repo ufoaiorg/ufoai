@@ -29,8 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, tbarExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, tbarExtraData_t)
+#define EXTRADATA_TYPE tbarExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #define TEXTURE_WIDTH 250.0
 
@@ -84,5 +85,5 @@ void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = MN_TBarNodeDraw;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

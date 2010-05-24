@@ -46,7 +46,7 @@ qboolean MN_SetScroll(menuScroll_t *scroll, int viewPos, int viewSize, int fullS
 typedef struct {
 	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */
 
-	/** yet implemented nowhere */
+	/** not yet implemented */
 	menuScroll_t scrollX;
 	menuScroll_t scrollY;
 

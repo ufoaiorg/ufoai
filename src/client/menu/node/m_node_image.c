@@ -44,8 +44,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, imageExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, imageExtraData_t)
+#define EXTRADATA_TYPE imageExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
@@ -162,5 +163,5 @@ void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

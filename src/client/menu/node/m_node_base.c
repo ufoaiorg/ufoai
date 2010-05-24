@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
 
+#define EXTRADATA_TYPE baseExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, baseExtraData_t)
 
 /**
@@ -404,6 +405,7 @@ void MN_RegisterAbstractBaseNode (nodeBehaviour_t *behaviour)
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 	behaviour->loaded = MN_AbstractBaseNodeLoaded;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
 
 void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
@@ -423,5 +425,4 @@ void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractbase";
 	behaviour->draw = MN_BaseLayoutNodeDraw;
 	behaviour->loading = MN_BaseLayoutNodeLoading;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

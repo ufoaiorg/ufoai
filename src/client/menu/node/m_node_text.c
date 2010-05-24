@@ -35,8 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, textExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, textExtraData_t)
+#define EXTRADATA_TYPE textExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 static void MN_TextUpdateCache(menuNode_t *node);
 
@@ -539,5 +540,5 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_TextNodeLoading;
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(EXTRADATA(0));
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
