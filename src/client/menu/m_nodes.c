@@ -339,6 +339,8 @@ static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, q
 		if (mn.curadata + nodeSize > mn.adata + mn.adataize)
 			Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: No more memory to allocate a new node");
 		node = (menuNode_t*) mn.curadata;
+		/** @todo fix this hard coded '8' value */
+		mn.curadata = ALIGN_PTR(mn.curadata, 8);
 		mn.curadata += nodeSize;
 		mn.numNodes++;
 		memset(node, 0, nodeSize);
