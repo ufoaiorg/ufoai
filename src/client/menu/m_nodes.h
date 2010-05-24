@@ -96,10 +96,6 @@ typedef struct menuNode_s {
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 
-	/** @todo move it into window node, or think about a node way (i.e. Doom3 onTime) */
-	int timeOut;				/**< ms value until calling onTimeOut (see cl.time) */
-	int lastTime;				/**< when a menu was pushed this value is set to cl.time */
-
 	/* common color */
 	vec4_t color;				/**< rgba */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */

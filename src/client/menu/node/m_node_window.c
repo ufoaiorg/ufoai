@@ -123,11 +123,11 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 		MN_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 
 	/* embedded timer */
-	if (EXTRADATA(node).onTimeOut && node->timeOut) {
-		if (node->lastTime == 0)
-			node->lastTime = cls.realtime;
-		if (node->lastTime + node->timeOut < cls.realtime) {
-			node->lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
+	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
+		if (EXTRADATA(node).lastTime == 0)
+			EXTRADATA(node).lastTime = cls.realtime;
+		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < cls.realtime) {
+			EXTRADATA(node).lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
 			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
 			MN_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
 		}
@@ -180,7 +180,7 @@ static void MN_WindowNodeInit (menuNode_t *node)
 	menuNode_t *child;
 
 	/* init the embeded timer */
-	node->lastTime = cls.realtime;
+	EXTRADATA(node).lastTime = cls.realtime;
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
@@ -334,7 +334,7 @@ static const value_t windowNodeProperties[] = {
 	 * If value is 0 (the default value) nothing is called. We can change the
 	 * value at the runtime.
 	 */
-	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
+	{"timeout", V_INT,MN_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
 
 	/* Called when the window is puched into the active window stack. */
 	{"oninit", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},

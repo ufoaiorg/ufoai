@@ -48,6 +48,9 @@ typedef struct {
 	qboolean fill;					/**< If true, use all the screen space allowed */
 	qboolean starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
+	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
+	int lastTime;					/**< when a menu was pushed this value is set to cl.time */
+
 	struct menuNode_s *parent;	/**< to create child window */
 
 	/** @todo we can remove it if we create a node for the battlescape */
