@@ -634,36 +634,9 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 }
 
 /**
- * @brief Loads array data for models with only one frame. Only called once at loading time.
- */
-void _R_ModLoadArrayDataForStaticModel (mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals)
-{
-	const int v = mesh->num_tris * 3 * 3;
-	const int t = mesh->num_tris * 3 * 4;
-	const int st = mesh->num_tris * 3 * 2;
-
-	assert(mod->num_frames == 1);
-
-	assert(mesh->verts == NULL);
-	assert(mesh->texcoords == NULL);
-	assert(mesh->normals == NULL);
-	assert(mesh->tangents == NULL);
-	assert(mesh->next_verts == NULL);
-	assert(mesh->next_normals == NULL);
-	assert(mesh->next_tangents == NULL);
-
-	mesh->verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
-	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
-
-	R_FillArrayData(mod, mesh, 0.0, 0, 0, loadNormals);
-}
-
-/**
  * @brief Allocates data arrays for animated models. Only called once at loading time.
  */
-void R_ModLoadArrayDataForAnimatedModel (mAliasModel_t *mod, mAliasMesh_t *mesh)
+void R_ModLoadArrayData (mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals)
 {
 	const int v = mesh->num_tris * 3 * 3;
 	const int t = mesh->num_tris * 3 * 4;
@@ -681,10 +654,14 @@ void R_ModLoadArrayDataForAnimatedModel (mAliasModel_t *mod, mAliasMesh_t *mesh)
 	mesh->normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
 	mesh->tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
 	mesh->texcoords = (float *)Mem_PoolAlloc(sizeof(float) * st, vid_modelPool, 0);
-	mesh->next_verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->next_normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
-	mesh->next_tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
+	if (mod->num_frames == 1) {
+		R_FillArrayData(mod, mesh, 0.0, 0, 0, loadNormals);
+	} else {
+		mesh->next_verts = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+		mesh->next_normals = (float *)Mem_PoolAlloc(sizeof(float) * v, vid_modelPool, 0);
+		mesh->next_tangents = (float *)Mem_PoolAlloc(sizeof(float) * t, vid_modelPool, 0);
 
-	mod->curFrame = -1;
-	mod->oldFrame = -1;
+		mod->curFrame = -1;
+		mod->oldFrame = -1;
+	}
 }

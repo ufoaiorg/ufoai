@@ -533,8 +533,5 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 
 	R_ModLoadLevelOfDetailData(mod, loadNormals);
 
-	if (mod->alias.num_frames == 1)
-		_R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes, loadNormals);
-	else
-		R_ModLoadArrayDataForAnimatedModel(&mod->alias, mod->alias.meshes);
+	R_ModLoadArrayData(&mod->alias, mod->alias.meshes, loadNormals);
 }

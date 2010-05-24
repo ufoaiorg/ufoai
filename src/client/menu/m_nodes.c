@@ -601,7 +601,7 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	menuNode_t* newNode = MN_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
 
 	/* clone all data */
-	memcpy(newNode, node, sizeof(menuNode_t) + node->behaviour->extraDataSize);
+	memcpy(newNode, node, sizeof(*node) + node->behaviour->extraDataSize);
 	newNode->dynamic = isDynamic;
 
 	/* custom name */
