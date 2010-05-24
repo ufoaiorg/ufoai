@@ -216,7 +216,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(menuNode_t), mn.numNodes);
 	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
 		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
-		Com_Printf("\t -Behaviour % 20s structure size: %d (+% 4d B) x% 4d\n", b->name, sizeof(menuNode_t) + b->extraDataSize, b->extraDataSize, b->count);
+		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4ui\n", b->name, sizeof(menuNode_t) + b->extraDataSize, b->extraDataSize, b->count);
 	}
 
 	size = 0;
