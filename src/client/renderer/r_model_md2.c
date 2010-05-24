@@ -122,18 +122,21 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	int frameSize, numIndexes, numVerts;
 	double isw, ish;
 	const char *md2Path;
+	int md2Verts;
 
 	outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
 
 	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
-	outMesh->num_verts = LittleLong(md2->num_verts);
-	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
+	md2Verts = LittleLong(md2->num_verts);
+	if (md2Verts <= 0 || md2Verts >= MD2_MAX_VERTS)
 		Com_Error(ERR_DROP, "model %s has too many (or no) vertices (%i/%i)",
-			mod->name, outMesh->num_verts, MD2_MAX_VERTS);
+			mod->name, md2Verts, MD2_MAX_VERTS);
 	outMesh->num_tris = LittleLong(md2->num_tris);
 	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
-		Com_Error(ERR_DROP, "model %s has too many (or no) triangles", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) triangles (%i/%i)",
+			mod->name, outMesh->num_tris, MD2_MAX_TRIANGLES);
 	frameSize = LittleLong(md2->framesize);
+	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
 		/* load the skins */

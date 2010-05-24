@@ -345,7 +345,7 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *head
 	 * Often an occluding node will be found in the same thead
 	 * as the last trace, so test that one first. */
 	if (mapTiles[0].theadlevel[lastthead] <= LEVEL_LASTLIGHTBLOCKING
-	    && TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[lastthead], start, stop))
+		&& TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[lastthead], start, stop))
 		return qtrue;
 
 	for (i = 0; i < mapTiles[0].numtheads; i++) {
