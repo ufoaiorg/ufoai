@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_WINDOWS			128
 #define MAX_COMPONENTS		64
-#define MAX_MENUNODES		8192
 #define MAX_MENUSTACK		32
 #define MAX_MENUACTIONS		2*8192
 
@@ -60,7 +59,6 @@ typedef struct menuGlobal_s {
 	menuOption_t options[MAX_MENUOPTIONS];
 	int numOptions;
 
-	menuNode_t nodes[MAX_MENUNODES];
 	int numNodes;
 
 	menuNode_t* windows[MAX_WINDOWS];

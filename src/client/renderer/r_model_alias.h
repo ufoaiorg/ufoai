@@ -155,9 +155,6 @@ typedef	struct	mAliasModel_s {
 void R_ModLoadAnims(mAliasModel_t *mod, void *buffer);
 qboolean R_ModLoadMDX(struct model_s *mod);
 void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames, float smoothness);
-#define R_ModLoadArrayDataForStaticModel(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qtrue);
-#define R_ModLoadArrayDataForStaticModel_NO_NORMALS(x, y) _R_ModLoadArrayDataForStaticModel(x, y, qfalse);
-void _R_ModLoadArrayDataForStaticModel(mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals);
 void R_FillArrayData(mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);
-void R_ModLoadArrayDataForAnimatedModel(mAliasModel_t *mod, mAliasMesh_t *mesh);
+void R_ModLoadArrayData(mAliasModel_t *mod, mAliasMesh_t *mesh, qboolean loadNormals);
 #endif

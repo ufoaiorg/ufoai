@@ -35,17 +35,75 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TILE_HEIGHT 64
 
 const value_t mn_iconProperties[] = {
-	{"texl", V_POS, offsetof(menuIcon_t, pos), MEMBER_SIZEOF(menuIcon_t, pos)},
 	{"size", V_POS, offsetof(menuIcon_t, size), MEMBER_SIZEOF(menuIcon_t, size)},
-	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image), 0},
 	{"single", V_BOOL, offsetof(menuIcon_t, single), 0},
 	{"blend", V_BOOL, offsetof(menuIcon_t, blend), 0},
-	{"normalcolor", V_COLOR, offsetof(menuIcon_t, normalColor), MEMBER_SIZEOF(menuIcon_t, normalColor)},
-	{"selectedcolor", V_COLOR, offsetof(menuIcon_t, selectedColor), MEMBER_SIZEOF(menuIcon_t, selectedColor)},
-	{"disabledcolor", V_COLOR, offsetof(menuIcon_t, disabledColor), MEMBER_SIZEOF(menuIcon_t, disabledColor)},
-	{"clickColor", V_COLOR, offsetof(menuIcon_t, clickColor), MEMBER_SIZEOF(menuIcon_t, clickColor)},
+	{"pack64", V_BOOL, offsetof(menuIcon_t, pack64), 0},
+
+	{"texl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_NORMAL])},
+	{"hoveredtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_HOVER])},
+	{"disabledtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_DISABLED])},
+	{"clickedtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_CLICKED])},
+
+	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_NORMAL]), 0},
+	{"hoveredimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_HOVER]), 0},
+	{"disabledimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_DISABLED]), 0},
+	{"clickedimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_CLICKED]), 0},
+
+	{"color", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_NORMAL])},
+	{"hoveredcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_HOVER])},
+	{"disabledcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_DISABLED])},
+	{"clickedcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_CLICKED])},
+
 	{NULL, V_NULL, 0, 0}
 };
+
+/**
+ * @brief Search a file name inside pics/icons/ according to the icon name
+ * If it exists, generate a "single" icon using the size of the image
+ * @param name Name of the icon
+ * @return An icon, else NULL
+ */
+static menuIcon_t* MN_AutoGenerateIcon (const char* name)
+{
+	menuIcon_t* icon = NULL;
+	const char* suffix[ICON_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
+	int i;
+
+	const char *picName = va("icons/%s", name);
+	const image_t *pic = MN_LoadImage(picName);
+	if (pic == NULL)
+		return NULL;
+
+	icon = MN_AllocStaticIcon(name);
+	icon->image[ICON_STATUS_NORMAL] = MN_AllocStaticString(picName, 0);
+	icon->size[0] = pic->width;
+	icon->size[1] = pic->height;
+	for (i = 1; i < ICON_STATUS_MAX; i++) {
+		picName = va("icons/%s%s", name, suffix[i]);
+		pic = MN_LoadImage(picName);
+		if (pic != NULL)
+			icon->image[i] = MN_AllocStaticString(picName, 0);
+	}
+	return icon;
+}
+
+/**
+ * @brief Check if an icon name exists
+ * @param[in] name Name of the icon
+ * @return True if the icon exists
+ * @note not very fast; if we use it often we should improve the search
+ */
+static qboolean MN_IconExists (const char* name)
+{
+	int i;
+	for (i = 0; i < mn.numIcons; i++) {
+		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
+			continue;
+		return qtrue;
+	}
+	return qfalse;
+}
 
 /**
  * @brief Return an icon by is name
@@ -56,13 +114,12 @@ const value_t mn_iconProperties[] = {
 menuIcon_t* MN_GetIconByName (const char* name)
 {
 	int i;
-
 	for (i = 0; i < mn.numIcons; i++) {
 		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
 			continue;
 		return &mn.icons[i];
 	}
-	return NULL;
+	return MN_AutoGenerateIcon(name);
 }
 
 /**
@@ -74,7 +131,7 @@ menuIcon_t* MN_GetIconByName (const char* name)
 menuIcon_t* MN_AllocStaticIcon (const char* name)
 {
 	menuIcon_t* result;
-	assert(MN_GetIconByName(name) == NULL);
+	assert(!MN_IconExists(name));
 	if (mn.numIcons >= MAX_MENUICONS)
 		Com_Error(ERR_FATAL, "MN_AllocStaticIcon: MAX_MENUICONS hit");
 
@@ -97,42 +154,47 @@ menuIcon_t* MN_AllocStaticIcon (const char* name)
  */
 void MN_DrawIconInBox (const menuIcon_t* icon, iconStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
-	const int texX = icon->pos[0];
+	int texX;
 	int texY;
-	assert(icon->image != NULL);
+	const char* image;
 
-	if (icon->single || icon->blend)
-		texY = icon->pos[1];
-	else
-		/** @todo use an enum for status and document what the expected image format is */
-		texY = icon->pos[1] + (TILE_HEIGHT * status);
+	/** @todo Add warning */
+	if (status < 0 && status >= ICON_STATUS_MAX)
+		return;
+
+	/** @todo merge all this cases */
+	if (icon->single || icon->blend) {
+		texX = icon->pos[ICON_STATUS_NORMAL][0];
+		texY = icon->pos[ICON_STATUS_NORMAL][1];
+		image = icon->image[ICON_STATUS_NORMAL];
+	} else if (icon->pack64) {
+		texX = icon->pos[ICON_STATUS_NORMAL][0];
+		texY = icon->pos[ICON_STATUS_NORMAL][1] + (TILE_HEIGHT * status);
+		image = icon->image[ICON_STATUS_NORMAL];
+	} else {
+		texX = icon->pos[status][0];
+		texY = icon->pos[status][1];
+		image = icon->image[status];
+		if (!image) {
+			texX = icon->pos[ICON_STATUS_NORMAL][0];
+			texY = icon->pos[ICON_STATUS_NORMAL][1];
+			image = icon->image[ICON_STATUS_NORMAL];
+		}
+	}
+	if (!image)
+		return;
 
 	posX += (sizeX - icon->size[0]) / 2;
 	posY += (sizeY - icon->size[1]) / 2;
 
 	if (icon->blend) {
 		const vec_t *color;
-		switch (status) {
-		case ICON_STATUS_NORMAL:
-			color = icon->normalColor;
-			break;
-		case ICON_STATUS_HOVER:
-			color = icon->selectedColor;
-			break;
-		case ICON_STATUS_DISABLED:
-			color = icon->disabledColor;
-			break;
-		case ICON_STATUS_CLICKED:
-			color = icon->clickColor;
-			break;
-		default:
-			return;
-		}
+		color = icon->color[status];
 		R_Color(color);
 	}
 
 	MN_DrawNormImageByName(posX, posY, icon->size[0], icon->size[1],
-		texX + icon->size[0], texY + icon->size[1], texX, texY, icon->image);
+		texX + icon->size[0], texY + icon->size[1], texX, texY, image);
 	if (icon->blend)
 		R_Color(NULL);
 }

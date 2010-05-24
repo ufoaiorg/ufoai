@@ -517,6 +517,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 				if (base)
 					B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 				slot->ammo = NULL;
+				slot->ammoLeft = 0;
 			}
 		}
 	} else if (slot->item) {
@@ -541,6 +542,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 				/* make sure nextAmmo is removed too
 				 * virtual ammos cannot be removed without the weapon itself */
 				slot->ammo = NULL;
+				slot->ammoLeft = 0;
 				slot->installationTime = 0;
 			}
 		}

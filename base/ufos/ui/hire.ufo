@@ -229,14 +229,14 @@ window employees
 		onChange	{ cmd "employee_changename;" }
 	}
 
-	pic bt_edit
+	button bt_edit
 	{
 		visiblewhen "*cvar:mn_employee_hired == 1"
 		tooltip		"_Rename your employee"
-		image		ui/buttons_small
+		icon		pen
 		pos			"865 322"
-		texl		"0 48"
-		texh		"16 64"
+		size		"16 16"
+		padding		0
 		onClick		{ call *node:root.name@edit }
 	}
 

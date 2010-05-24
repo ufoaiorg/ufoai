@@ -56,13 +56,11 @@ component cmpActorSelect cmpSoldierSelect {
 		num "0"
 	}
 
-	pic bt_equip
+	button bt_equip
 	{
 		pos			"0 10"
-		image		ui/button_equip
-		mousefx		false
-		texl		"0 0"
-		texh		"16 16"
+		size		"16 16"
+		padding		0
 		invis		true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
@@ -112,7 +110,6 @@ window team extends iaircraft
 		size		"529 260"
 		origin		"-45 25 0"
 		angles		"160 20 -120"
-		view		"aircraft"
 		autoscale	true
 	}
 
@@ -211,8 +208,7 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_holdsequip {
 		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
-		*(pic)actor_select<1>.bt_equip@texl = "16 0"
-		*(pic)actor_select<1>.bt_equip@texh = "32 16"
+		*(pic)actor_select<1>.bt_equip@icon = "soldier_holdequipment"
 	}
 
 	/**
@@ -220,8 +216,7 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_holdsnoequip {
 		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
-		*(pic)actor_select<1>.bt_equip@texl = "0 0"
-		*(pic)actor_select<1>.bt_equip@texh = "16 16"
+		*(pic)actor_select<1>.bt_equip@icon = "soldier_noequipment"
 	}
 
 	/**
@@ -248,11 +243,11 @@ window team extends iaircraft
 	}
 
 	cmpSoldierSelect actor_select0 {
-  	pos "38 470"
+		pos "38 470"
 	}
 
 	cmpSoldierSelect actor_select1 {
-  	pos "38 505"
+		pos "38 505"
 	}
 
 	cmpSoldierSelect actor_select2

@@ -71,29 +71,35 @@ window messageoptions
 		font		f_small_bold
 	}
 
-	pic header_notify
+	button header_notify
 	{
 		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
 		pos			"356 60"
-		image		ui/notify_notice
+		size		"26 20"
+		padding		0
+		icon		notify_notice
 		onClick		{ cmd "msgoptions_setall notify 1;" }
 		onRClick		{ cmd "msgoptions_setall notify 0;" }
 	}
 
-	pic header_pause
+	button header_pause
 	{
 		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
 		pos			"386 60"
-		image		ui/notify_pause
+		size		"26 20"
+		icon		notify_pause
+		padding		0
 		onClick		{ cmd "msgoptions_setall pause 1;" }
 		onRClick		{ cmd "msgoptions_setall pause 0;" }
 	}
 
-	pic header_sound
+	button header_sound
 	{
 		tooltip		"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
 		pos			"416 60"
-		image		ui/notify_sound
+		size		"26 20"
+		icon		notify_sound
+		padding		0
 		onClick		{ cmd "msgoptions_setall sound 1;" }
 		onRClick		{ cmd "msgoptions_setall sound 0;" }
 	}

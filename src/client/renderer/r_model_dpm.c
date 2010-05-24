@@ -219,5 +219,5 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 		R_ModelLoadDPMVertsForFrame(mod, i);
 
 	for (i = 0; i < mod->alias.num_meshes; i++)
-		R_ModLoadArrayDataForStaticModel(&mod->alias, &mod->alias.meshes[i]);
+		R_ModLoadArrayData(&mod->alias, &mod->alias.meshes[i], qtrue);
 }

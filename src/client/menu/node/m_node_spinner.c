@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 #include "../../input/cl_keys.h"
 
-#define EXTRADATA(node) (node->u.abstractvalue)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
 
 static const nodeBehaviour_t const *localBehaviour;
 

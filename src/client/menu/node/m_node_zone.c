@@ -39,7 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../input/cl_keys.h"
 
-#define EXTRADATA(node) node->u.zone
+#define EXTRADATA_TYPE zoneExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 static menuTimer_t *capturedTimer;
 
@@ -116,5 +117,5 @@ void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseUp = MN_ZoneNodeUp;
 	behaviour->capturedMouseLost = MN_ZoneNodeCapturedMouseLost;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(zoneExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

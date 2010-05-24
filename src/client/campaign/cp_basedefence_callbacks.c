@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../menu/m_main.h"
 #include "../menu/node/m_node_abstractnode.h"
+#include "../menu/node/m_node_text.h"
 #include "cp_campaign.h"
 #include "cp_basedefence_callbacks.h"
 #include "cp_fightequip_callbacks.h"

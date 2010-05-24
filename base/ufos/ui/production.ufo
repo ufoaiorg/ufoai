@@ -408,35 +408,35 @@ window production
 		onClick		{ cmd "prod_inc;" }
 	}
 
-	pic prod_stop
+	button prod_stop
 	{
 		tooltip		"_Stop production"
-		image		ui/buttons_small
+		icon		bordered_cross
 		pos			"900 505"
-		texl		"48 16"
-		texh		"64 32"
+		size		"16 16"
+		padding		0
 		onClick		{ cmd "prod_stop;" }
 	}
 
-	pic prod_up
+	button prod_up
 	{
 		tooltip		"_Increase priority"
-		image		ui/button_produce
+		icon		arrow_top
 		pos			"615 400"
-		texl		"0 0"
-		texh		"16 16"
+		size		"16 16"
+		padding		"0"
 		onClick		{ cmd "prod_up;" }
 		onWheelUp	{ cmd "prod_up;" }
 		onWheelDown	{ cmd "prod_down;" }
 	}
 
-	pic prod_down
+	button prod_down
 	{
 		tooltip		"_Decrease priority"
-		image		ui/button_produce
+		icon		arrow_bottom
 		pos			"615 420"
-		texl		"0 16"
-		texh		"16 32"
+		size		"16 16"
+		padding		0
 		onClick		{ cmd "prod_down;" }
 		onWheelUp	{ cmd "prod_up;" }
 		onWheelDown	{ cmd "prod_down;" }

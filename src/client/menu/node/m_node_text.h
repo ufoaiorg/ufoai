@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_node_abstractscrollable.h"
 
+/** TODO nothing to do here */
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
 
@@ -49,6 +50,7 @@ typedef struct {
 	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */
 	byte longlines;				/**< what to do with long lines */
+	qboolean mousefx;
 
 } textExtraData_t;
 

@@ -79,8 +79,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node, node->image);
 	if (image) {
-		const int texX = rint(node->texl[0]);
-		texY += node->texl[1];
+		const int texX = 0;
 		MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}

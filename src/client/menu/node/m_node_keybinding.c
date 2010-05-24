@@ -42,7 +42,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-#define EXTRADATA(node) (node->u.keybinding)
+#define EXTRADATA_TYPE keyBindingExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 /**
  * @brief Called when the user click with the right mouse button
@@ -200,5 +201,5 @@ void MN_RegisterKeyBindingNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_KeyBindingNodeDraw;
 	behaviour->loading = MN_KeyBindingNodeLoading;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(keyBindingExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

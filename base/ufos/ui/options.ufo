@@ -236,14 +236,14 @@ window options
 		// ===============
 		string isomode_str
 		{
-			tooltip		"_Isometric Mode means the 3d world will be rendered without perspective correction (will look unnatural)."
+			tooltip		"_Isometric Mode means the 3D world will be rendered without perspective correction."
 			string		"_Isometric Mode:"
 			pos			"85 340"
 			size		"240 20"
 		}
 		checkbox isomode
 		{
-			tooltip		"_Enable the isometric 3d rendering mode for the battlescape."
+			tooltip		"_Enable the isometric 3D rendering mode for the battlescape."
 			current		*cvar:r_isometric
 			pos			"485 340"
 			size		"20 18"
@@ -261,7 +261,7 @@ window options
 		}
 		checkbox glsl
 		{
-			tooltip		"_Enable OpenGL GLSL Shaders, uncheck if you experience graphical problems. ATTENTION: May require restart to take effect."
+			tooltip		"_Enable OpenGL GLSL Shaders. Disable it if you experience graphical problems. ATTENTION: May require restart to take effect."
 			current		*cvar:r_programs
 			pos			"485 365"
 			size		"20 18"
@@ -272,7 +272,7 @@ window options
 		// ===================
 		string light_str
 		{
-			tooltip		"_Realtime lightning of the 3d world in UFO:AI."
+			tooltip		"_Realtime lightning of the 3D world in UFO:AI."
 			string		"_Realtime Lighting:"
 			pos			"85 390"
 			size		"240 20"
@@ -315,7 +315,7 @@ window options
 		}
 		checkbox vbo
 		{
-			tooltip		"_Enable Vertex Buffers for better 3d performance (requires OpenGL capable hardware)."
+			tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 			current		*cvar:r_vertexbuffers
 			pos			"485 440"
 			size		"20 18"
@@ -608,14 +608,13 @@ window options
 		// ==================
 		// SWITCH RESOLUTION
 		// ==================
-		pic res_test_pic
+		button res_test_pic
 		{
-			tooltip		"_Click here to switch to the selected resolution. ATTENTION: Windows users might have to restart to make this work correctly."
-			image		ui/buttons_small
+			tooltip		"_Switch to the selected resolution. ATTENTION: Windows users might have to restart to make this work correctly."
+			icon		bordered_question
 			pos			"486 144"
-			texl		"32 0"
-			texh		"47 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onClick		{ cmd "mn_push popup_maintain_resolution;" }
 		}
 		// ===============================
@@ -703,7 +702,7 @@ window options
 		string volume_str
 		{
 			tooltip		"_The more of this the louder it gets."
-			string		"_* Volume Control"
+			string		"_Volume Control"
 			pos			"70 140"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -764,7 +763,7 @@ window options
 		string other_sound_opt
 		{
 			tooltip		"_Find more detailed settings here."
-			string		"_* Advanced Audio Options"
+			string		"_Advanced Audio Options"
 			pos			"70 275"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -779,14 +778,13 @@ window options
 			pos			"85 305"
 			size		"240 20"
 		}
-		pic rate_test_pic
+		button rate_test_pic
 		{
 			tooltip		"_Restart the sound-engine and apply your settings."
-			image		ui/buttons_small
+			icon		bordered_question
 			pos			"486 307"
-			texl		"32 0"
-			texh		"47 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onClick		{ cmd "snd_restart;" }
 		}
 		selectbox rate_box
@@ -910,7 +908,7 @@ window options
 		string current_name
 		{
 			tooltip		"_Your name."
-			string 		"_* Name"
+			string 		"_Name"
 			pos			"70 330"
 			size		"256 20"
 			color		"1.0 0.75 0 1"				
@@ -934,7 +932,7 @@ window options
 		string language_str
 		{
 			tooltip		"_Choose your language."
-			string		"_* Language Settings  -->>"
+			string		"_Language Settings"
 			pos			"70 140"
 			size		"312 20"
 			color		"1.0 0.75 0 1"			
@@ -974,7 +972,7 @@ window options
 		string geoscape_options
 		{
 			tooltip		"_Stuff happening 'on the global scale'."
-			string 		"_* Geoscape Options"
+			string 		"_Geoscape Options"
 			pos			"70 410"
 			size		"256 20"
 			color		"1.0 0.75 0 1"			
@@ -991,7 +989,7 @@ window options
 		}
 		checkbox 3dmap
 		{
-			tooltip		"_Use the 3d geoscape. To enable this option you have to start a new campaign first."
+			tooltip		"_Use the 3D geoscape. To enable this option you have to start a new campaign first."
 			current		*cvar:cl_3dmap
 			pos			"485 440"
 			size		"20 18"
@@ -1030,7 +1028,7 @@ window options
 		string several_tips
 		{
 			tooltip		"_Just here to help."
-			string 		"_* Several Tips"
+			string 		"_Several Tips"
 			pos			"70 545"
 			size		"256 20"
 			color		"1.0 0.75 0 1"			
@@ -1097,7 +1095,7 @@ window options
 		string menu_options
 		{
 			tooltip		"_Everything that you can find nowhere else."
-			string 		"_* Menu Option(s)"
+			string 		"_Menu Option(s)"
 			pos			"70 650"
 			size		"256 20"
 			color		"1.0 0.75 0 1"			
@@ -1148,7 +1146,7 @@ window options
 		string camera_str
 		{
 			tooltip		"_The camera is the thing you move around all the time and that makes you see."
-			string		"_* Battlescape Camera Settings"
+			string		"_Battlescape Camera Settings"
 			pos			"70 140"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -1236,7 +1234,7 @@ window options
 		string gameplaysettings
 		{
 			tooltip		"_The battlescape is where the ground forces meet."
-			string		"_* Battlescape Gameplay Settings"
+			string		"_Battlescape Gameplay Settings"
 			pos			"70 305"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -1272,7 +1270,7 @@ window options
 		string joystick_settings_str
 		{
 			tooltip		"_The joystick is a old-school input device for computers."
-			string		"_* Joystick Settings"
+			string		"_Joystick Settings"
 			pos			"70 470"
 			size		"240 20"
 			color		"1.0 0.75 0 1"			
@@ -1425,8 +1423,8 @@ window options
 		string centerview_str
 		{
 			tooltip		"_Select whether the game should automatically center the camera view at the actors on the battlescape or not."
-			string		"_& Center View:"
-			pos			"85 245"
+			string		"_Center View:"
+			pos			"95 245"
 			size		"250 20"
 		}
 		checkbox centerview_value
@@ -1443,8 +1441,8 @@ window options
 		string hud_str
 		{		
 			tooltip		"_Select the Head-Up-Display for the battlescape."
-			string		"_& HUD Design:"
-			pos			"85 410"
+			string		"_HUD Design:"
+			pos			"95 410"
 			size		"250 20"
 		}
 		selectbox select_hud
@@ -1491,7 +1489,7 @@ window options
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
 		call *node:root.hidepanels
 		cmd "mn_init_keylist;"
-		*(panel)options_input@invis = false
+		*(panel)options_game@invis = false
 	}
 
 }

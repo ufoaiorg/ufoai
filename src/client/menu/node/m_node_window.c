@@ -38,7 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) node->u.window
+#define EXTRADATA_TYPE windowExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /* constants defining all tile of the texture */
 
@@ -73,7 +75,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 qboolean MN_WindowIsFullScreen (const menuNode_t* const node)
 {
 	assert(MN_NodeInstanceOf(node, "window"));
-	return EXTRADATA(node).isFullScreen;
+	return EXTRADATACONST(node).isFullScreen;
 }
 
 static void MN_WindowNodeDraw (menuNode_t *node)
@@ -121,11 +123,11 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 		MN_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 
 	/* embedded timer */
-	if (EXTRADATA(node).onTimeOut && node->timeOut) {
-		if (node->lastTime == 0)
-			node->lastTime = cls.realtime;
-		if (node->lastTime + node->timeOut < cls.realtime) {
-			node->lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
+	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
+		if (EXTRADATA(node).lastTime == 0)
+			EXTRADATA(node).lastTime = cls.realtime;
+		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < cls.realtime) {
+			EXTRADATA(node).lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
 			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
 			MN_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
 		}
@@ -178,7 +180,7 @@ static void MN_WindowNodeInit (menuNode_t *node)
 	menuNode_t *child;
 
 	/* init the embeded timer */
-	node->lastTime = cls.realtime;
+	EXTRADATA(node).lastTime = cls.realtime;
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
@@ -266,7 +268,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		menuNode_t *button = MN_AllocNode("close_window_button", "pic", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		button->root = node;
-		button->image = "ui/close";
+		button->image = "icons/system_close";
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;
@@ -289,9 +291,9 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
 {
 	/** @todo anyway we should remove soon renderNode */
-	if (source->u.window.renderNode != NULL) {
+	if (EXTRADATACONST(source).renderNode != NULL) {
 		Com_Printf("MN_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", MN_GetPath(clone));
-		clone->u.window.renderNode = NULL;
+		EXTRADATA(clone).renderNode = NULL;
 	}
 }
 
@@ -332,7 +334,7 @@ static const value_t windowNodeProperties[] = {
 	 * If value is 0 (the default value) nothing is called. We can change the
 	 * value at the runtime.
 	 */
-	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
+	{"timeout", V_INT,MN_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
 
 	/* Called when the window is puched into the active window stack. */
 	{"oninit", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
@@ -343,6 +345,69 @@ static const value_t windowNodeProperties[] = {
 
 	{NULL, V_NULL, 0, 0}
 };
+
+/**
+ * @brief Get the noticePosition from a window node.
+ * @param node A window node
+ * @return A position, else NULL if no notice position
+ */
+vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node)
+{
+	if (EXTRADATA(node).noticePos[0] == 0 && EXTRADATA(node).noticePos[1] == 0)
+		return NULL;
+	return EXTRADATA(node).noticePos;
+}
+
+/**
+ * @brief True if the window is a drop down.
+ * @param node A window node
+ * @return True if the window is a drop down.
+ */
+qboolean MN_WindowIsDropDown(const struct menuNode_s* const node)
+{
+	return EXTRADATACONST(node).dropdown;
+}
+
+/**
+ * @brief True if the window is a modal.
+ * @param node A window node
+ * @return True if the window is a modal.
+ */
+qboolean MN_WindowIsModal(const struct menuNode_s* const node)
+{
+	return EXTRADATACONST(node).modal;
+}
+
+/**
+ * @brief Add a key binding to a window node.
+ * Window node store key bindings for his node child.
+ * @param node A window node
+ */
+void MN_WindowNodeRegisterKeyBinding (menuNode_t* node, menuKeyBinding_t *binding)
+{
+	assert(MN_NodeInstanceOf(node, "window"));
+	binding->next = EXTRADATA(node).keyList;
+	EXTRADATA(node).keyList = binding;
+}
+
+const menuKeyBinding_t *binding;
+
+/**
+ * @brief Search a a key binding fromp a window node.
+ * Window node store key bindings for his node child.
+ * @param node A window node
+ */
+menuKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct menuNode_s* const node, unsigned int key)
+{
+	menuKeyBinding_t *binding = EXTRADATACONST(node).keyList;
+	assert(MN_NodeInstanceOf(node, "window"));
+	while (binding) {
+		if (binding->key == key)
+			break;
+		binding = binding->next;
+	}
+	return binding;
+}
 
 void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
@@ -356,5 +421,5 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->doLayout = MN_WindowNodeDoLayout;
 	behaviour->clone = MN_WindowNodeClone;
 	behaviour->properties = windowNodeProperties;
-	behaviour->extraDataSize = sizeof(windowExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

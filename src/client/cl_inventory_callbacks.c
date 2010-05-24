@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_nodes.h"
 #include "cl_game.h"
+#include "menu/node/m_node_text.h"
 
 static const objDef_t *currentDisplayedObject;
 static int itemIndex;

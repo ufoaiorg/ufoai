@@ -124,7 +124,7 @@ aircraft craft_drop_herakles
 		maxspeed	13
 		shield		5
 		ecm			80
-		damage		300
+		damage		400
 		accuracy	70
 		range		240
 	}
@@ -209,7 +209,7 @@ aircraft craft_inter_stiletto
 		maxspeed	14
 		shield		0
 		ecm			100
-		damage		100
+		damage		120
 		accuracy	100
 		range		80
 	}
@@ -254,7 +254,7 @@ aircraft craft_inter_saracen
 		maxspeed	18
 		shield		3
 		ecm			80
-		damage		150
+		damage		200
 		accuracy	70
 		range		110
 	}
@@ -294,7 +294,7 @@ aircraft craft_inter_dragon
 		maxspeed	23
 		shield		5
 		ecm			100
-		damage		120
+		damage		500
 		accuracy	80
 		range		146
 		antimatter	120
@@ -335,7 +335,7 @@ aircraft craft_inter_starchaser
 		maxspeed	14
 		shield		7
 		ecm			100
-		damage		180
+		damage		700
 		accuracy	100
 		range		150
 		antimatter	130
@@ -381,7 +381,7 @@ aircraft craft_inter_stingray
 		maxspeed	30
 		shield		7
 		ecm			100
-		damage		250
+		damage		900
 		accuracy	100
 		range		156
 		antimatter	145
@@ -434,7 +434,7 @@ aircraft craft_ufo_scout
 		maxspeed	13
 		shield		0
 		ecm			70
-		damage		100
+		damage		120
 		accuracy	50
 		range		208
 	}
@@ -457,7 +457,7 @@ aircraft craft_ufo_fighter
 		maxspeed	14
 		shield		0
 		ecm			90
-		damage		150
+		damage		160
 		accuracy	80
 		range		236
 	}
@@ -474,8 +474,8 @@ aircraft craft_ufo_fighter
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	interestlevel 0
 }
@@ -487,7 +487,7 @@ aircraft craft_ufo_harvester
 		maxspeed	18
 		shield		3
 		ecm			100
-		damage		250
+		damage		300
 		accuracy	100
 		range		278
 	}
@@ -503,20 +503,20 @@ aircraft craft_ufo_harvester
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	slot {
 		type		weapon
 		size		heavy
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	interestlevel 0
 }
@@ -568,7 +568,7 @@ aircraft craft_ufo_corrupter
 		maxspeed	17
 		shield		4
 		ecm			100
-		damage		300
+		damage		500
 		accuracy	80
 		range		347
 	}
@@ -584,8 +584,14 @@ aircraft craft_ufo_corrupter
 	slot {
 		type		weapon
 		size		light
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	interestlevel	400
 }
@@ -597,7 +603,7 @@ aircraft craft_ufo_supply
 		maxspeed	16
 		shield		5
 		ecm			80
-		damage		200
+		damage		250
 		accuracy	50
 		range		208
 	}
@@ -619,7 +625,7 @@ aircraft craft_ufo_ripper
 		maxspeed	14
 		shield		3
 		ecm			100
-		damage		500
+		damage		600
 		accuracy	80
 		range		500
 	}
@@ -635,8 +641,26 @@ aircraft craft_ufo_ripper
 	slot {
 		type		weapon
 		size		light
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 }
 
@@ -647,7 +671,7 @@ aircraft craft_ufo_bomber
 		maxspeed	27
 		shield		7
 		ecm			100
-		damage		500
+		damage		900
 		accuracy	80
 		range		347
 	}
@@ -663,8 +687,20 @@ aircraft craft_ufo_bomber
 	slot {
 		type		weapon
 		size		light
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
+	}
+	slot {
+		type		weapon
+		size		light
+		contains	rs_craft_weapon_particle
+		ammo		rs_craft_ammo_particle
 	}
 	interestlevel	500
 }
@@ -746,12 +782,12 @@ craftitem craft_ammo_alc
 	virtual				true
 
 	beamcolor			"1 .874 .294 1"
-	ammo				10
+	ammo				20
 	wdamage				10
 	accuracy			0.7
 	wrange				1.8
 	wspeed				900
-	delay				30
+	delay				200
 	size				10 // light
 }
 
@@ -773,7 +809,7 @@ craftitem craft_ammo_shiva_API
 	craftweapon	craft_weapon_shiva
 	price		600
 
-	ammo		20
+	ammo		30
 	wdamage		8
 	accuracy	0.3
 	wrange		1.07
@@ -789,12 +825,12 @@ craftitem craft_ammo_shiva_HEI
 	craftweapon		craft_weapon_shiva
 	price			640
 
-	ammo		20
+	ammo		30
 	wdamage		10
 	accuracy	0.2
 	wrange		1.07
 	wspeed		62
-	delay		3
+	delay		60
 	size		10 // light
 }
 
@@ -830,11 +866,11 @@ craftitem craft_ammo_sparrowhawk
 	model		"geoscape/missile_sparrow"
 
 	ammo		7
-	wdamage		15
+	wdamage		30
 	accuracy	0.4
 	wrange		2.5
 	wspeed		25
-	delay		45
+	delay		400
 }
 
 craftitem craft_weapon_tr20
@@ -862,11 +898,11 @@ craftitem craft_ammo_tr20
 // The value (12) below is a workaround until we can display (or fake) high numbers of projectiles in interception
 	size		10 // light
 	ammo		12
-	wdamage		13
+	wdamage		15
 	accuracy	0.4
 	wrange		1.07
 	wspeed		19
-	delay		10
+	delay		120
 }
 
 craftitem craft_weapon_particle_beam
@@ -890,12 +926,12 @@ craftitem craft_ammo_particle_beam
 	virtual				true
 
 	beamcolor			".590 .762 .738 1"
-	ammo				7
-	wdamage				21
-	accuracy			0.7
+	ammo				10
+	wdamage				20
+	accuracy			0.6
 	wrange				3
 	wspeed				900
-	delay				30
+	delay				200
 	size				10 // light
 }
 
@@ -1039,11 +1075,11 @@ craftitem baselaser_ammo
 
 	beamcolor			"1 .874 .294 1"
 	ammo				10
-	wdamage				10
+	wdamage				8
 	accuracy			0.7
 	wrange				5
 	wspeed				900
-	delay				100
+	delay				200
 	size				10 // light
 }
 

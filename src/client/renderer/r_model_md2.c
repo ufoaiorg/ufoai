@@ -122,18 +122,21 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	int frameSize, numIndexes, numVerts;
 	double isw, ish;
 	const char *md2Path;
+	int md2Verts;
 
 	outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
 
 	Q_strncpyz(outMesh->name, mod->name, sizeof(outMesh->name));
-	outMesh->num_verts = LittleLong(md2->num_verts);
-	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MD2_MAX_VERTS)
+	md2Verts = LittleLong(md2->num_verts);
+	if (md2Verts <= 0 || md2Verts >= MD2_MAX_VERTS)
 		Com_Error(ERR_DROP, "model %s has too many (or no) vertices (%i/%i)",
-			mod->name, outMesh->num_verts, MD2_MAX_VERTS);
+			mod->name, md2Verts, MD2_MAX_VERTS);
 	outMesh->num_tris = LittleLong(md2->num_tris);
 	if (outMesh->num_tris <= 0 || outMesh->num_tris >= MD2_MAX_TRIANGLES)
-		Com_Error(ERR_DROP, "model %s has too many (or no) triangles", mod->name);
+		Com_Error(ERR_DROP, "model %s has too many (or no) triangles (%i/%i)",
+			mod->name, outMesh->num_tris, MD2_MAX_TRIANGLES);
 	frameSize = LittleLong(md2->framesize);
+	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
 		/* load the skins */
@@ -253,9 +256,12 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		}
 
 		for (j = 0; j < numIndexes; j++) {
-			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[0] * outFrame->scale[0];
-			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[1] * outFrame->scale[1];
-			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[2] * outFrame->scale[2];
+			const int index = tempIndex[indRemap[j]];
+			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
+			float* ov = outVertex[outIndex[j]].point;
+			ov[0] = (int16_t)v->v[0] * outFrame->scale[0];
+			ov[1] = (int16_t)v->v[1] * outFrame->scale[1];
+			ov[2] = (int16_t)v->v[2] * outFrame->scale[2];
 		}
 	}
 
@@ -304,7 +310,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		Com_Printf("model %s has more than 4096 verts\n", mod->name);
 
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MAX_ALIAS_VERTS)
-		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)",
 			mod->name, outMesh->num_verts, outMesh->num_tris);
 
 	if (mod->alias.num_meshes == 1) {
@@ -385,9 +391,12 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		}
 
 		for (j = 0; j < numIndexes; j++) {
-			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[j]].v[0] * outFrame->scale[0];
-			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[j]].v[1] * outFrame->scale[1];
-			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[j]].v[2] * outFrame->scale[2];
+			const int index = tempIndex[j];
+			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
+			float* ov = outVertex[outIndex[j]].point;
+			ov[0] = (int16_t)v->v[0] * outFrame->scale[0];
+			ov[1] = (int16_t)v->v[1] * outFrame->scale[1];
+			ov[2] = (int16_t)v->v[2] * outFrame->scale[2];
 		}
 	}
 
@@ -527,8 +536,5 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 
 	R_ModLoadLevelOfDetailData(mod, loadNormals);
 
-	if (mod->alias.num_frames == 1)
-		_R_ModLoadArrayDataForStaticModel(&mod->alias, mod->alias.meshes, loadNormals);
-	else
-		R_ModLoadArrayDataForAnimatedModel(&mod->alias, mod->alias.meshes);
+	R_ModLoadArrayData(&mod->alias, mod->alias.meshes, loadNormals);
 }

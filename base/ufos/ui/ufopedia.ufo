@@ -246,7 +246,6 @@ window ufopedia extends objectinfo
 	
 		custombutton action_dec
 		{
-			image	ui/buttons_small
 			pos		"120 0"
 			icon	prev
 			size	"16 16"
@@ -264,7 +263,6 @@ window ufopedia extends objectinfo
 
 		custombutton action_inc
 		{
-			image	ui/buttons_small
 			pos		"334 0"
 			icon	next
 			size	"16 16"
@@ -286,7 +284,6 @@ window ufopedia extends objectinfo
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
-			image	ui/buttons_small
 			pos		"120 20"
 			icon	prev
 			size	"16 16"
@@ -305,7 +302,6 @@ window ufopedia extends objectinfo
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
-			image	ui/buttons_small
 			pos		"334 20"
 			icon	next
 			size	"16 16"

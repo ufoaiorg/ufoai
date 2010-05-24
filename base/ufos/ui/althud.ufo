@@ -159,7 +159,7 @@ window althud extends ahud
 		
 		func hudenable_floor
 		{
-			*cvar:tmp = "<1>"
+			*cvar:tmp = ( <1> + 1 )
 			*cvar:i = 1
 			while ( *cvar:i < *cvar:tmp ) {
 				*floor.bar_teambox<cvar:i>@invis = false  *floor.bar_teamsep<cvar:i>@invis = false  *floor.head<cvar:i>@invis = false
@@ -171,11 +171,10 @@ window althud extends ahud
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 			
-			*cvar:i = ( <1> - 1 )
-			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<cvar:i>@left + *node:root.floor.bar_teambox<cvar:i>@width )
-
 			delete *cvar:tmp
 			delete *cvar:i
+			
+			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<1>@left + *node:root.floor.bar_teambox<1>@width )
 		}
 			
 		pic bar_selbox
@@ -788,26 +787,24 @@ window althud extends ahud
 			*right.bt_reloadleft@invis = false
 		}
 	
-		pic switch_to_right_hand
+		button switch_to_right_hand
 		{
 			tooltip		"_Switch to right hand weapon"
-			image		ui/buttons_small
+			icon		next
 			pos			"196 400"
-			texl		"0 0"
-			texh		"16 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
 			onClick		{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 		}
-		pic switch_to_left_hand
+		button switch_to_left_hand
 		{
 			tooltip		"_Switch to left hand weapon"
-			image		ui/buttons_small
+			icon		prev
 			pos			"212 400"
-			texl		"16 0"
-			texh		"32 16"
-			mousefx		true
+			size		"16 16"
+			padding		0
 			onWheelUp	{ call *node:root.right.show_rightweapon cmd "hud_switchfiremodelist r;" }
 			onWheelDown	{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }
 			onClick		{ call *node:root.right.show_leftweapon cmd "hud_switchfiremodelist l;" }

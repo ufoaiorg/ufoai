@@ -33,7 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) (node->u.abstractscrollable)
+#define EXTRADATA_TYPE abstractScrollableExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 /**
  * @brief return true if the node size change and update the cache
@@ -167,13 +168,13 @@ qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
 
 static const value_t properties[] = {
 	/* position of the vertical view (into the full number of elements the node contain) */
-	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.viewPos)},
+	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewPos),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewPos)},
 	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
-	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.viewSize)},
+	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewSize)},
 	/* full vertical size (proportional to the number of elements the node contain) */
-	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(abstractScrollableExtraData_t, scrollY.fullSize)},
+	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.fullSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.fullSize)},
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(abstractScrollableExtraData_t, onViewChange), MEMBER_SIZEOF(abstractScrollableExtraData_t, onViewChange)},
+	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
 
 	/* Call it to vertically scroll the document up */
 	{"pageup", V_UI_NODEMETHOD, ((size_t) MN_AbstractScrollableNodePageUp), 0},
@@ -196,5 +197,5 @@ void MN_RegisterAbstractScrollableNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(abstractScrollableExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

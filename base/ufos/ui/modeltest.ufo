@@ -20,6 +20,7 @@ window model_test
 		angles	"0 0 0"
 		pos		"0 0"
 		size	"1024 768"
+		rotatewithmouse	true
 	}
 
 	func onInit

@@ -74,8 +74,32 @@ tile +craft_drop_raptor
 // UFOs
 
 
+// UFO Scout (an open park tile on right side of street with no underground)
+tile +craft_ufo_scout
+{
+	6 6
+	0		fg		f		f		fh		0
+	a		+j		+j		+j		+j		a
+	a		+j		+j		+j		+j		a
+	a		+j		+j		+j		+j		a
+	a		+j		+j		+j		+j		a
+	0		fg		f		f		fh		0
+}
+
 // UFO Fighter (an open park tile on right side of street with no underground)
 tile +craft_ufo_fighter
+{
+	6 6
+	0		fg		f		f		fh		0
+	a		+j		+j		+j		+j		a
+	a		+j		+j		+j		+j		a
+	a		+j		+j		+j		+j		a
+	a		+j		+j		+j		+j		a
+	0		fg		f		f		fh		0
+}
+
+// UFO Supply (an open park tile on right side of street with no underground)
+tile +craft_ufo_supply
 {
 	6 6
 	0		fg		f		f		fh		0
@@ -301,6 +325,7 @@ assembly garage
 	fix +str_rail_cross "5 5"
 }
 
+
 /*
 assembly test
 {
@@ -326,6 +351,7 @@ assembly test
 	fix +str_rail_cross "5 5"
 }
 */
+
 /*
 	*rm_drop +craft_drop_firebird "1 1"
 

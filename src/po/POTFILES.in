@@ -29,8 +29,8 @@
 ./client/campaign/cp_market_callbacks.c
 ./client/campaign/cp_messageoptions.c
 ./client/campaign/cp_messages.c
-./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c
+./client/campaign/cp_missions.c
 ./client/campaign/cp_nation.c
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_popup.c

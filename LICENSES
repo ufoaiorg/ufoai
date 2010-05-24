@@ -91,6 +91,8 @@ base/maps/city/citycraft_drop_herakles.map | GNU General Public License 2.0 or l
 base/maps/city/citycraft_drop_raptor.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citycraft_ufo_fighter.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citycraft_ufo_harvester.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citycraft_ufo_scout.map | GNU General Public License 2.0 or later | Nate Wright
+base/maps/city/citycraft_ufo_supply.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystr_cross.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystr_rail_cross.map | GNU General Public License 2.0 or later | Nate Wright
 base/maps/city/citystrc_sw_1a.map | GNU General Public License 2.0 or later | Nate Wright
@@ -610,6 +612,12 @@ base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License
 base/models/aircraft/ufo_supply/ufo_supply_wing_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/alientank/alientank.anm | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.md2 | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank_gm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/weapon.md2 | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
@@ -2241,25 +2249,62 @@ base/pics/hud/firemode.png | GNU General Public License 2.0 | Werner "hoehrer" H
 base/pics/hud/firemode_hover.png | GNU General Public License 2.0 or later
 base/pics/hud/phys_ekg.png | GNU General Public License 2.0
 base/pics/hud/phys_mor.png | GNU General Public License 2.0
-base/pics/icons/air.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/alien.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/artifact.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/event.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/alien_kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
+base/pics/icons/alien_surgery.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/alien_unused.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/arrow_bottom.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_bottom_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_top.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/arrow_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/bighead_medic.png | GNU General Public License 2.0 or later
+base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later
+base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later
+base/pics/icons/bighead_soldier.png | GNU General Public License 2.0 or later
+base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later
+base/pics/icons/geo_nations_highlight.png | GNU General Public License 2.0 or later | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_radar.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/pics/icons/geo_xvi.png | GNU General Public License 2.0 or later
 base/pics/icons/healing.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_critical.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_medium.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_normal.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/health_unused.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/intelligence.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/kill.png | GNU General Public License 2.0 or later | Martin Gerhardy | Icons by Gerd Heisse
-base/pics/icons/medic.png | GNU General Public License 2.0 or later
+base/pics/icons/mail_air.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_alien.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_artifact.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_event.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_intelligence.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_read.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_read_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/mail_tech.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
+base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
+base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later
 base/pics/icons/off.png | GNU General Public License 2.0 or later
 base/pics/icons/on.png | GNU General Public License 2.0 or later
-base/pics/icons/pilot.png | GNU General Public License 2.0 or later
-base/pics/icons/scientist.png | GNU General Public License 2.0 or later
-base/pics/icons/soldier.png | GNU General Public License 2.0 or later
-base/pics/icons/surgery.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/tech.png | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/pack1.png | GNU General Public License 2.0 or later
+base/pics/icons/pack2.png | GNU General Public License 2.0 or later
+base/pics/icons/pack3.png | GNU General Public License 2.0 or later
+base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
+base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
+base/pics/icons/pack_message.png | GNU General Public License 2.0 or later
+base/pics/icons/pen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/pen_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_bottom.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_bottom_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_top.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/scroll_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/icons/soldier_holdequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
+base/pics/icons/soldier_noequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
+base/pics/icons/system_capture.png | GNU General Public License 2.0 or later
+base/pics/icons/system_child.png | GNU General Public License 2.0 or later
+base/pics/icons/system_close.png | GNU General Public License 2.0 or later
+base/pics/icons/system_collapse.png | GNU General Public License 2.0 or later
+base/pics/icons/system_expand.png | GNU General Public License 2.0 or later
+base/pics/icons/system_next.png | GNU General Public License 2.0 or later
+base/pics/icons/system_parent.png | GNU General Public License 2.0 or later
 base/pics/icons/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_artifacts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_buildings.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
@@ -2268,8 +2313,6 @@ base/pics/icons/ufopedia_equipment.jpg | Creative Commons Attribution-Share Alik
 base/pics/icons/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/icons/un.png | GNU General Public License 2.0 | Gerd Heisse
-base/pics/icons/worker.png | GNU General Public License 2.0 or later
 base/pics/loading.png | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2851,54 +2894,30 @@ base/pics/ui/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/ui/base_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_autosell1.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_autosell2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_background.png | GNU General Public License 2.0 or later
 base/pics/ui/button_background2.png | GNU General Public License 2.0 or later
 base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_blue.png | GNU General Public License 2.0 or later
-base/pics/ui/button_equip.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/ui/button_geoscape.png | GNU General Public License 2.0 or later
 base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later
 base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later
 base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later
 base/pics/ui/button_pack1.png | GNU General Public License 2.0 or later
-base/pics/ui/button_produce.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/buttons_combatzoom.png | GNU General Public License 2.0 or later
-base/pics/ui/buttons_small.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/buttons_time.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later
-base/pics/ui/close.png | GNU General Public License 2.0 or later
 base/pics/ui/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
-base/pics/ui/geo_nations_highlight.png | GNU General Public License 2.0 or later | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
-base/pics/ui/geo_radar.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
-base/pics/ui/geo_xvi.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_capture.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_child.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_close.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_message.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_next.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_open.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_pack1.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_pack2.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_pack3.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_pack_hud.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_pack_hud2.png | GNU General Public License 2.0 or later
-base/pics/ui/icon_parent.png | GNU General Public License 2.0 or later
 base/pics/ui/irc_bg.jpg | GNU General Public License 2.0 or later
 base/pics/ui/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/lost_bg.png | GNU General Public License 2.0 or later
 base/pics/ui/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/mail_button.png | GNU General Public License 2.0 or later
-base/pics/ui/mailclient.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/mailclient_bg.png | GNU General Public License 2.0 or later
 base/pics/ui/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ll.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2907,9 +2926,6 @@ base/pics/ui/map_ul.png | GNU General Public License 2.0 or later |  | Based on 
 base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/mp_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/ui/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/notify_notice.png | GNU General Public License 2.0 or later
-base/pics/ui/notify_pause.png | GNU General Public License 2.0 or later
-base/pics/ui/notify_sound.png | GNU General Public License 2.0 or later
 base/pics/ui/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_green.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later

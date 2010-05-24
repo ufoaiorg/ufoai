@@ -53,6 +53,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MN_CUSTOMBUTTON_TEX_HEIGHT 64
 #define MN_CUSTOMBUTTON_TEX_WIDTH 256
 
+#define EXTRADATA_TYPE customButtonExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
 /**
  * @brief Handles CustomButton draw
  */
@@ -85,8 +89,8 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 	image = MN_GetReferenceString(node, node->image);
 	if (image) {
-		const int texX = rint(node->texl[0]);
-		texY += node->texl[1];
+		const int texX = rint(EXTRADATA(node).texl[0]);
+		texY += EXTRADATA(node).texl[1];
 		MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
@@ -108,7 +112,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* Skin position. Define the top-left position of the skin we will used from the image. Y should not be bigger than 64. To compute the high corner we use the node size. */
-	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(customButtonExtraData_t, texl), MEMBER_SIZEOF(customButtonExtraData_t, texl)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -118,4 +122,5 @@ void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "button";
 	behaviour->draw = MN_CustomButtonNodeDraw;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

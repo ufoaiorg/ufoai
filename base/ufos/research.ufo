@@ -140,7 +140,7 @@ tech rs_laser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -148,7 +148,7 @@ tech rs_laser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	time	6000
@@ -173,7 +173,7 @@ tech rs_baselaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -181,7 +181,7 @@ tech rs_baselaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -224,7 +224,7 @@ tech rs_antimatter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -232,7 +232,7 @@ tech rs_antimatter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -281,7 +281,7 @@ tech rs_alien_live
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -289,7 +289,7 @@ tech rs_alien_live
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -319,7 +319,7 @@ tech rs_alien_breathing
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -327,7 +327,7 @@ tech rs_alien_breathing
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_OR
@@ -382,7 +382,7 @@ tech rs_alien_mind
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -390,7 +390,7 @@ tech rs_alien_mind
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -420,7 +420,7 @@ tech rs_alien_oddbehaviour
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -428,7 +428,7 @@ tech rs_alien_oddbehaviour
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -458,7 +458,7 @@ tech rs_alien_communication
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -466,7 +466,7 @@ tech rs_alien_communication
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -496,7 +496,7 @@ tech rs_alien_base
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	time 0
@@ -521,7 +521,7 @@ tech rs_universal_serum
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -529,7 +529,7 @@ tech rs_universal_serum
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -559,7 +559,7 @@ tech rs_alien_origins
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 
 	mail
@@ -568,7 +568,7 @@ tech rs_alien_origins
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 
 	time		5700
@@ -593,7 +593,7 @@ tech rs_alien_ufo_theory
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -601,7 +601,7 @@ tech rs_alien_ufo_theory
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_OR
@@ -1014,7 +1014,7 @@ tech rs_weapon_bolterrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1022,7 +1022,7 @@ tech rs_weapon_bolterrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1090,7 +1090,7 @@ tech rs_weapon_monoknife
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1098,7 +1098,7 @@ tech rs_weapon_monoknife
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1307,7 +1307,7 @@ tech rs_weapon_grenl_plasma_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1315,7 +1315,7 @@ tech rs_weapon_grenl_plasma_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1366,7 +1366,7 @@ tech rs_weapon_kerrblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -1374,7 +1374,7 @@ tech rs_weapon_kerrblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -1411,7 +1411,7 @@ tech rs_weapon_laserpistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1419,7 +1419,7 @@ tech rs_weapon_laserpistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1449,7 +1449,7 @@ tech rs_weapon_laserrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1457,7 +1457,7 @@ tech rs_weapon_laserrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1488,7 +1488,7 @@ tech rs_weapon_heavylaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1496,7 +1496,7 @@ tech rs_weapon_heavylaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1527,7 +1527,7 @@ tech rs_weapon_electrolaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1535,7 +1535,7 @@ tech rs_weapon_electrolaser
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1571,7 +1571,7 @@ tech rs_weapon_laserammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1579,7 +1579,7 @@ tech rs_weapon_laserammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	require_AND
 	{
@@ -1627,7 +1627,7 @@ tech rs_weapon_plasatomizer
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -1635,7 +1635,7 @@ tech rs_weapon_plasatomizer
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -1698,7 +1698,7 @@ tech rs_weapon_plasblaster
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -1706,7 +1706,7 @@ tech rs_weapon_plasblaster
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -1768,7 +1768,7 @@ tech rs_weapon_plasblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -1776,7 +1776,7 @@ tech rs_weapon_plasblade
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -1814,7 +1814,7 @@ tech rs_weapon_plasmagren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -1822,7 +1822,7 @@ tech rs_weapon_plasmagren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -1859,7 +1859,7 @@ tech rs_weapon_plasrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -1867,7 +1867,7 @@ tech rs_weapon_plasrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -1929,7 +1929,7 @@ tech rs_weapon_needlergun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1937,7 +1937,7 @@ tech rs_weapon_needlergun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -1975,7 +1975,7 @@ tech rs_weapon_needlerheavy
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -1983,7 +1983,7 @@ tech rs_weapon_needlerheavy
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2044,7 +2044,7 @@ tech rs_weapon_coilgun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		subject	"_Coilgun"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2052,7 +2052,7 @@ tech rs_weapon_coilgun
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		subject	"_Coilgun"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2291,7 +2291,7 @@ tech rs_weapon_stungren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2299,7 +2299,7 @@ tech rs_weapon_stungren
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2338,7 +2338,7 @@ tech rs_weapon_stungren_alien
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2346,7 +2346,7 @@ tech rs_weapon_stungren_alien
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2380,7 +2380,7 @@ tech rs_weapon_stunrod
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2388,7 +2388,7 @@ tech rs_weapon_stunrod
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2421,7 +2421,7 @@ tech rs_weapon_pbeampistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -2429,7 +2429,7 @@ tech rs_weapon_pbeampistol
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -2490,7 +2490,7 @@ tech rs_weapon_pbeamcannon
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -2498,7 +2498,7 @@ tech rs_weapon_pbeamcannon
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -2560,7 +2560,7 @@ tech rs_weapon_pbeamrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	mail
@@ -2568,7 +2568,7 @@ tech rs_weapon_pbeamrifle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/artifact
+		icon	icons/mail_artifact
 	}
 
 	require_AND
@@ -2630,7 +2630,7 @@ tech rs_weapon_pbeam_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2638,7 +2638,7 @@ tech rs_weapon_pbeam_ammo
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_OR
@@ -2706,7 +2706,7 @@ tech rs_nano_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2714,7 +2714,7 @@ tech rs_nano_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2750,7 +2750,7 @@ tech rs_power_armour
 //		from	"_mail_from_paul_navarre"
 //		to	"_mail_to_base_commander"
 //		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-//		icon	icons/tech
+//		icon	icons/mail_tech
 //	}
 
 //	mail
@@ -2758,7 +2758,7 @@ tech rs_power_armour
 //		from	"_mail_from_paul_navarre"
 //		to	"_mail_to_base_commander"
 //		// subject	defined by "name"
-//		icon	icons/tech
+//		icon	icons/mail_tech
 //	}
 
 	require_AND	// todo:fixme
@@ -2790,7 +2790,7 @@ tech rs_alien_body_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2798,7 +2798,7 @@ tech rs_alien_body_armour
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -2827,7 +2827,7 @@ tech rs_alien_medium_armour
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from armour*.ufo files)
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -2835,7 +2835,7 @@ tech rs_alien_medium_armour
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -3378,7 +3378,7 @@ tech rs_building_antimatter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	provides	building_amstorage
@@ -3419,14 +3419,14 @@ tech rs_craft_drop_herakles
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3456,14 +3456,14 @@ tech rs_craft_drop_raptor
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND {
@@ -3534,14 +3534,14 @@ tech rs_craft_inter_dragon
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	provides	craft_inter_dragon
@@ -3579,14 +3579,14 @@ tech rs_craft_inter_starchaser
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	provides	craft_inter_starchaser
@@ -3623,14 +3623,14 @@ tech rs_craft_inter_stingray
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	provides	craft_inter_stingray
@@ -3675,7 +3675,7 @@ tech rs_craft_ufo_scout
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3683,7 +3683,7 @@ tech rs_craft_ufo_scout
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -3717,7 +3717,7 @@ tech rs_craft_ufo_fighter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3725,7 +3725,7 @@ tech rs_craft_ufo_fighter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3760,7 +3760,7 @@ tech rs_craft_ufo_supply
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3768,7 +3768,7 @@ tech rs_craft_ufo_supply
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3803,7 +3803,7 @@ tech rs_craft_ufo_carrier
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3811,7 +3811,7 @@ tech rs_craft_ufo_carrier
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3846,7 +3846,7 @@ tech rs_craft_ufo_bomber
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3854,7 +3854,7 @@ tech rs_craft_ufo_bomber
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3889,7 +3889,7 @@ tech rs_craft_ufo_corrupter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3897,7 +3897,7 @@ tech rs_craft_ufo_corrupter
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3932,7 +3932,7 @@ tech rs_craft_ufo_gunboat
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3940,7 +3940,7 @@ tech rs_craft_ufo_gunboat
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -3975,7 +3975,7 @@ tech rs_craft_ufo_ripper
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -3983,7 +3983,7 @@ tech rs_craft_ufo_ripper
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -4018,7 +4018,7 @@ tech rs_craft_ufo_harvester
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -4026,7 +4026,7 @@ tech rs_craft_ufo_harvester
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -4061,7 +4061,7 @@ tech rs_craft_ufo_mothership
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -4069,7 +4069,7 @@ tech rs_craft_ufo_mothership
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	// FIXME
@@ -4132,7 +4132,7 @@ tech rs_alien_bloodspider_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -4140,7 +4140,7 @@ tech rs_alien_bloodspider_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -4191,7 +4191,7 @@ tech rs_alien_ortnok_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -4199,7 +4199,7 @@ tech rs_alien_ortnok_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -4233,7 +4233,7 @@ tech rs_alien_taman_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -4241,7 +4241,7 @@ tech rs_alien_taman_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -4275,7 +4275,7 @@ tech rs_alien_shevaar_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	mail
@@ -4283,7 +4283,7 @@ tech rs_alien_shevaar_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/alien
+		icon	icons/mail_alien
 	}
 
 	require_AND
@@ -4530,14 +4530,14 @@ tech rs_craft_shield_plating
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	provides	craft_shield_plating
@@ -4567,14 +4567,14 @@ tech rs_craft_alien_astrogation
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	provides	craft_alien_astrogation
@@ -4605,14 +4605,14 @@ tech rs_craft_alien_propulsion
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	provides	craft_alien_propulsion
 	require_AND {
@@ -4642,14 +4642,14 @@ tech rs_craft_alien_detection
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 	provides	craft_alien_detection
 	require_AND {
@@ -4684,7 +4684,7 @@ tech rs_craft_weapon_alc
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -4692,7 +4692,7 @@ tech rs_craft_weapon_alc
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	provides	craft_weapon_alc
@@ -4867,7 +4867,7 @@ tech rs_craft_weapon_particle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -4875,7 +4875,7 @@ tech rs_craft_weapon_particle
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_OR
@@ -4959,7 +4959,7 @@ tech rs_alien_materials
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	mail
@@ -4967,7 +4967,7 @@ tech rs_alien_materials
 		from	"_mail_from_paul_navarre"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/tech
+		icon	icons/mail_tech
 	}
 
 	require_AND
@@ -5087,14 +5087,14 @@ tech rs_enemy_on_earth
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 	mail_pre
 	{
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 	require_AND
 	{
@@ -5125,7 +5125,7 @@ tech rs_xvi_census
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 
 	mail
@@ -5134,7 +5134,7 @@ tech rs_xvi_census
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 
 	require_AND
@@ -5165,14 +5165,14 @@ tech rs_enemy_on_earth_revisited
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 	mail_pre
 	{
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 	require_AND
 	{
@@ -5201,7 +5201,7 @@ tech rs_alien_strategy
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 	require_OR
 	{
@@ -5230,7 +5230,7 @@ tech rs_orbital_ufo_activity
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
 		model	"characters/falkland"
-		icon	icons/intelligence
+		icon	icons/mail_intelligence
 	}
 	require_AND
 	{

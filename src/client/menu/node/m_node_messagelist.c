@@ -38,7 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../campaign/cp_messages.h" /**< message_t */
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) (node->u.abstractscrollable)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractScrollableExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, abstractScrollableExtraData_t)
 
 /** @todo use the font height? */
 static const int LINEHEIGHT	= 20;
@@ -142,7 +143,7 @@ static void MN_MessageDraw (const menuNode_t *node, message_t *message, const ch
 
 	/* display the date */
 	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
-		MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, LINEHEIGHT, message->timestamp, EXTRADATA(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
 
 	x += DATETIME_COLUMN_SIZE + node->padding;
 
@@ -154,7 +155,7 @@ static void MN_MessageDraw (const menuNode_t *node, message_t *message, const ch
 	}
 
 	/* draw the message */
-	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, LINEHEIGHT, message->text, EXTRADATA(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	*screenLines = max(lines1, lines2);
 	lastDate = message->timestamp;
 }

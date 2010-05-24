@@ -382,7 +382,6 @@ window mp_team_edit extends objectinfo
 	
 		custombutton action_dec
 		{
-			image	ui/buttons_small
 			pos		"120 290"
 			icon	prev
 			size	"16 16"
@@ -400,7 +399,6 @@ window mp_team_edit extends objectinfo
 
 		custombutton action_inc
 		{
-			image	ui/buttons_small
 			pos		"334 290"
 			icon	next
 			size	"16 16"
@@ -422,7 +420,6 @@ window mp_team_edit extends objectinfo
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
-			image	ui/buttons_small
 			pos		"120 314"
 			icon	prev
 			size	"16 16"
@@ -441,7 +438,6 @@ window mp_team_edit extends objectinfo
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
-			image	ui/buttons_small
 			pos		"334 314"
 			icon	next
 			size	"16 16"

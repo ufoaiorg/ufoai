@@ -58,7 +58,6 @@ typedef struct modelExtraData_s {
 	void* tag;					/**< the tag to place the model onto */
 	void* animationState;		/**< holds then anim state for the current model */
 	void* animation;			/**< Anim string from the *.anm files */
-	char *viewName;				/**< view name to use, if it exists (item, ufopedia, buy...) @sa base/ufos/models.ufo */
 	qboolean autoscale;			/**< If true autoscale the model when we drw it */
 	qboolean rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
 	qboolean clipOverflow;		/**< If true (default) model outside the node are clipped */

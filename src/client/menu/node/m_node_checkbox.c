@@ -38,8 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_render.h"
 #include "m_node_checkbox.h"
 #include "m_node_abstractnode.h"
+#include "m_node_abstractvalue.h"
 
-#define EXTRADATA(node) (node->u.abstractvalue)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
 
 static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
@@ -130,7 +131,7 @@ static void MN_CheckBoxNodeLoading (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* @override image
-	 * Texture used for the widget. Its a 128×128 template image with all
+	 * Texture used for the widget. Its a 128ï¿½128 template image with all
 	 * three status according to the value, and four status according to the
 	 * interaction. From left to right: unchecked, checked, and invalidate.
 	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.

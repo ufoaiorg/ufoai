@@ -33,11 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_tooltip.h"
 #include "m_node_tab.h"
 #include "m_node_abstractnode.h"
+#include "m_node_abstractoption.h"
 
 #include "../../client.h" /* gettext _() */
 #include "../../input/cl_input.h"
 
-#define EXTRADATA(node) (node->u.option)
+#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, optionExtraData_t)
 
 typedef enum {
 	MN_TAB_NOTHING = 0,
@@ -70,7 +72,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/** @todo this dont work when an option is hidden */
-	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
+	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
 
 	/* Bounded box test (shound not need, but there are problem) */
 	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
@@ -79,7 +81,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	font = MN_GetFontFromNode(node);
 
 	/* Text box test */
-	for (option = EXTRADATA(node).first; option; option = option->next) {
+	for (option = EXTRADATACONST(node).first; option; option = option->next) {
 		int tabWidth;
 
 		/* skip hidden options */

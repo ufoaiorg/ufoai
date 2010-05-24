@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "node/m_node_abstractnode.h"
 #include "node/m_node_abstractscrollbar.h"
+#include "node/m_node_abstractoption.h"
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_bar.h"
 #include "node/m_node_base.h"
@@ -325,31 +326,41 @@ menuNode_t* MN_GetNodeByPath (const char* path)
 static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, qboolean isDynamic)
 {
 	menuNode_t* node;
+	nodeBehaviour_t *behaviour;
+	int nodeSize;
+
+	behaviour = MN_GetNodeBehaviour(type);
+	if (behaviour == NULL)
+		Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: Node behaviour '%s' doesn't exist", type);
+
+	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		if (mn.numNodes >= MAX_MENUNODES)
-			Com_Error(ERR_FATAL, "MN_AllocStaticNode: MAX_MENUNODES hit");
-		node = &mn.nodes[mn.numNodes++];
-		memset(node, 0, sizeof(*node));
+		if (mn.curadata + nodeSize > mn.adata + mn.adataize)
+			Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: No more memory to allocate a new node");
+		node = (menuNode_t*) mn.curadata;
+		/** @todo fix this hard coded '8' value */
+		mn.curadata = ALIGN_PTR(mn.curadata, 8);
+		mn.curadata += nodeSize;
+		mn.numNodes++;
+		memset(node, 0, nodeSize);
 	} else {
-		node = (menuNode_t*)Mem_PoolAlloc(sizeof(*node), mn_dynPool, 0);
-		memset(node, 0, sizeof(*node));
+		node = (menuNode_t*)Mem_PoolAlloc(nodeSize, mn_dynPool, 0);
+		memset(node, 0, nodeSize);
 		node->dynamic = qtrue;
 	}
 
-	node->behaviour = MN_GetNodeBehaviour(type);
-	if (node->behaviour == NULL)
-		Com_Error(ERR_FATAL, "MN_AllocNode: Node behaviour '%s' doesn't exist", type);
+	node->behaviour = behaviour;
 #ifdef DEBUG
 	node->behaviour->count++;
 #endif
 	if (node->behaviour->isAbstract)
-		Com_Error(ERR_FATAL, "MN_AllocNode: Node behavior '%s' is abstract. We can't instantiate it.", type);
+		Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: Node behavior '%s' is abstract. We can't instantiate it.", type);
 
 	if (name != NULL) {
 		Q_strncpyz(node->name, name, sizeof(node->name));
 		if (strlen(node->name) != strlen(name))
-			Com_Printf("MN_AllocNode: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
+			Com_Printf("MN_AllocNodeWithoutNew: Node name \"%s\" truncated. New name is \"%s\"\n", name, node->name);
 	}
 
 	/* initialize default properties */
@@ -466,9 +477,9 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 			return find;
 
 		/* we must not search anymore */
-		if (menu->u.window.dropdown)
+		if (MN_WindowIsDropDown(menu))
 			break;
-		if (menu->u.window.modal)
+		if (MN_WindowIsModal(menu))
 			break;
 		if (MN_WindowIsFullScreen(menu))
 			break;
@@ -590,7 +601,7 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	menuNode_t* newNode = MN_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
 
 	/* clone all data */
-	*newNode = *node;
+	memcpy(newNode, node, sizeof(*node) + node->behaviour->extraDataSize);
 	newNode->dynamic = isDynamic;
 
 	/* custom name */
@@ -713,19 +724,30 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 
 	/* property must not overwrite another property */
 	if (behaviour->super && behaviour->properties) {
-		const value_t* current = behaviour->properties;
-		while (current->string != NULL) {
-			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, current->string);
+		const value_t* property = behaviour->properties;
+		while (property->string != NULL) {
+			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, property->string);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			const nodeBehaviour_t *b = MN_GetNodeBehaviour(current->string);
 #endif
 			if (p != NULL)
-				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", current->string, behaviour->name);
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", property->string, behaviour->name);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
 			if (b != NULL)
-				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", current->string, behaviour->name);
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' use the name of an existing node behaviour", property->string, behaviour->name);
 #endif
-			current++;
+			property++;
+		}
+	}
+
+	/* Sanity: A property must not be outside the node memory */
+	if (behaviour->properties) {
+		const int size = sizeof(menuNode_t) + behaviour->extraDataSize;
+		const value_t* property = behaviour->properties;
+		while (property->string != NULL) {
+			if (property->type != V_UI_NODEMETHOD && property->ofs + property->size > size)
+				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' is outside the node memory. The C code need a fix.", property->string, behaviour->name);
+			property++;
 		}
 	}
 

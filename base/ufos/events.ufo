@@ -35,7 +35,7 @@ mail prolog
 	date "_2084 Mar 21"
 	subject "_Good Luck"
 	body "_mail_prolog"
-	icon icons/un
+	icon icons/mail_un
 }
 
 mail alienbreathing
@@ -45,7 +45,7 @@ mail alienbreathing
 	subject "_Alien died"
 	body "_mail_stunned_alien_died"
 	model "characters/navarre"
-	icon icons/un
+	icon icons/mail_un
 }
 
 // FIXME: Use these and remove the MN_AddNewMessage stuff for these
@@ -57,7 +57,7 @@ mail ufo_crashed_report
 	subject "_Recovery Report -- %s"
 	body "_mail_alien_ufo_crashed"
 	model "characters/navarre"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail ufo_recovery_report
@@ -68,7 +68,7 @@ mail ufo_recovery_report
 	subject "_Recovery Report -- %s"
 	body "_mail_alien_ufo_recovered"
 	model "characters/navarre"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail not_enough_money
@@ -79,7 +79,7 @@ mail not_enough_money
 	subject "_Not Enough Money -- %s"
 	body "_mail_not_enough_money"
 	model "characters/navarre"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail not_enough_ressources
@@ -90,7 +90,7 @@ mail not_enough_ressources
 	subject "_Not Enough Resources -- %s"
 	body "_mail_not_enough_ressources"
 	model "characters/navarre"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail production_finished
@@ -101,7 +101,7 @@ mail production_finished
 	subject "_Production Finished -- %s"
 	body "_mail_production_finished"
 	model "characters/navarre"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail monthly_report
@@ -112,7 +112,7 @@ mail monthly_report
 	subject "_Monthly Report -- %s"
 	body "_mail_monthly_report"
 	model "characters/howard"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail ufo_in_hangar
@@ -123,7 +123,7 @@ mail ufo_in_hangar
 	subject "_UFO Stored In Hangar -- %s"
 	body "_mail_ufo_in_hangar"
 	model "characters/navarre"
-	icon icons/tech
+	icon icons/mail_tech
 }
 
 mail transfer_received
@@ -134,7 +134,7 @@ mail transfer_received
 	subject "_Transfer Received -- %s"
 	body "_mail_transfer_received"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail equipment_order_received
@@ -145,7 +145,7 @@ mail equipment_order_received
 	subject "_Equipment Order Received -- %s"
 	body "_mail_equipment_order_received"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail construction_finished
@@ -156,7 +156,7 @@ mail construction_finished
 	subject "_Construction Finished -- %s"
 	body "_mail_construction_finished"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail new_base_ready
@@ -167,7 +167,7 @@ mail new_base_ready
 	subject "_New Base Ready -- %s"
 	body "_mail_new_base_ready"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail base_attack_report
@@ -178,7 +178,7 @@ mail base_attack_report
 	subject "_Base Attack Report -- %s"
 	body "_mail_base_attack_report"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail mission_summary
@@ -189,7 +189,7 @@ mail mission_summary
 	subject "_Mission Summary -- %s"
 	body "_mail_mission_summary"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail alien_base_discovered
@@ -200,7 +200,7 @@ mail alien_base_discovered
 	subject "_Alien Base Discovered -- %s"
 	body "_mail_alien_base_discovered"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail lost_radar_tracking
@@ -211,7 +211,7 @@ mail lost_radar_tracking
 	subject "_Lost Radar Tracking -- %s"
 	body "_mail_lost_radar_tracking"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail new_radar_contact
@@ -222,7 +222,7 @@ mail new_radar_contact
 	subject "_New Radar Contact -- %s"
 	body "_mail_new_radar_contact"
 	model "characters/howard"
-	icon icons/world
+	icon icons/mail_world
 }
 
 mail response_too_late
@@ -233,7 +233,7 @@ mail response_too_late
 	subject "_Response Too Late -- %s"
 	body "_mail_response_too_late"
 	model "characters/falkland"
-	icon icons/intelligence
+	icon icons/mail_intelligence
 }
 
 mail ufo_shot_down
@@ -244,7 +244,7 @@ mail ufo_shot_down
 	subject "_UFO Shot Down -- %s"
 	body "_mail_ufo_shot_down"
 	model "characters/falkland"
-	icon icons/intelligence
+	icon icons/mail_intelligence
 }
 
 mail alien_activity_reported
@@ -255,7 +255,7 @@ mail alien_activity_reported
 	subject "_Alien Activity Reported -- %s"
 	body "_mail_alien_activity_reported"
 	model "characters/falkland"
-	icon icons/intelligence
+	icon icons/mail_intelligence
 }
 
 mail new_aircraft_arrived
@@ -266,7 +266,7 @@ mail new_aircraft_arrived
 	subject "_New Aircraft Arrived -- %s"
 	body "_mail_new_aircraft_arrived"
 	model "characters/al_kuhar"
-	icon icons/air
+	icon icons/mail_air
 }
 
 mail aircraft_lost_target
@@ -277,7 +277,7 @@ mail aircraft_lost_target
 	subject "_Aircraft Lost Target -- %s"
 	body "_mail_aircraft_lost_target"
 	model "characters/al_kuhar"
-	icon icons/air
+	icon icons/mail_air
 }
 
 mail aircraft_ready
@@ -288,7 +288,7 @@ mail aircraft_ready
 	subject "_Aircraft Ready -- %s"
 	body "_mail_aircraft_ready"
 	model "characters/al_kuhar"
-	icon icons/air
+	icon icons/mail_air
 }
 
 mail aircraft_bingo_fuel
@@ -299,7 +299,7 @@ mail aircraft_bingo_fuel
 	subject "_Aircraft Bingo Fuel -- %s"
 	body "_mail_aircraft_bingo_fuel"
 	model "characters/al_kuhar"
-	icon icons/air
+	icon icons/mail_air
 }
 
 mail aircraft_landed
@@ -310,5 +310,5 @@ mail aircraft_landed
 	subject "_Aircraft Landed -- %s"
 	body "_mail_aircraft_landed"
 	model "characters/al_kuhar"
-	icon icons/air
+	icon icons/mail_air
 }

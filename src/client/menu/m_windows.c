@@ -26,9 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_internal.h"
 #include "m_input.h"
 #include "node/m_node_abstractnode.h"
+#include "node/m_node_window.h"
 
 #include "../client.h"
 #include "../cinematic/cl_cinematic.h"
+
+#define WINDOWETRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
+#define WINDOWETRADATACONST(node)  MN_EXTRADATACONST(node, windowExtraData_t)
 
 /**
  * @brief Window name use as alternative for option
@@ -80,7 +84,7 @@ void MN_MoveWindowOnTop (menuNode_t * window)
 	for (j = i; j < mn.windowStackPos; j++) {
 		if (MN_WindowIsFullScreen(mn.windowStack[j]))
 			break;
-		if (window->u.window.parent != mn.windowStack[j]->u.window.parent)
+		if (WINDOWETRADATA(window).parent != WINDOWETRADATA(mn.windowStack[j]).parent)
 			break;
 	}
 	if (i + 1 == j)
@@ -185,7 +189,7 @@ static menuNode_t* MN_PushWindowDelete (const char *name, const char *parent, qb
 				return NULL;
 			}
 			MN_InsertWindowIntoStack(window, parentPos + 1);
-			window->u.window.parent = mn.windowStack[parentPos];
+			WINDOWETRADATA(window).parent = mn.windowStack[parentPos];
 		} else
 			mn.windowStack[mn.windowStackPos++] = window;
 	else
@@ -375,7 +379,7 @@ static void MN_CloseAllWindow (void)
 			window->behaviour->close(window);
 
 		/* safe: unlink window */
-		window->u.window.parent = NULL;
+		WINDOWETRADATA(window).parent = NULL;
 		mn.windowStackPos--;
 		mn.windowStack[mn.windowStackPos] = NULL;
 	}
@@ -439,19 +443,19 @@ static void MN_CloseWindowByRef (menuNode_t *window)
 	/* close child */
 	while (i + 1 < mn.windowStackPos) {
 		menuNode_t *m = mn.windowStack[i + 1];
-		if (m->u.window.parent != window) {
+		if (WINDOWETRADATA(m).parent != window) {
 			break;
 		}
 		if (window->behaviour->close)
 			window->behaviour->close(window);
-		m->u.window.parent = NULL;
+		WINDOWETRADATA(m).parent = NULL;
 		MN_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
 	if (window->behaviour->close)
 		window->behaviour->close(window);
-	window->u.window.parent = NULL;
+	WINDOWETRADATA(window).parent = NULL;
 	MN_RemoveWindowAtPositionFromStack(i);
 
 	MN_InvalidateMouse();
@@ -484,8 +488,8 @@ void MN_PopWindow (qboolean all)
 		menuNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
 		if (!mn.windowStackPos)
 			return;
-		if (mainMenu->u.window.parent)
-			mainMenu = mainMenu->u.window.parent;
+		if (WINDOWETRADATA(mainMenu).parent)
+			mainMenu = WINDOWETRADATA(mainMenu).parent;
 		MN_CloseWindowByRef(mainMenu);
 
 		if (mn.windowStackPos == 0) {
@@ -537,7 +541,7 @@ void MN_PopWindowWithEscKey (void)
 		return;
 
 	/* some window can prevent escape */
-	if (window->u.window.preventTypingEscape)
+	if (WINDOWETRADATACONST(window).preventTypingEscape)
 		return;
 
 	MN_PopWindow(qfalse);
@@ -575,12 +579,12 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 	menuNode_t *window = MN_GetActiveWindow();
 
 	/** @todo the better way is to add a 'battlescape' node */
-	if (!window || !window->u.window.renderNode)
+	if (!window || !WINDOWETRADATA(window).renderNode)
 		if (MN_IsWindowOnStack(mn_hud->string))
 			window = MN_GetWindow(mn_hud->string);
 
-	if (window && window->u.window.renderNode) {
-		menuNode_t* node = window->u.window.renderNode;
+	if (window && WINDOWETRADATA(window).renderNode) {
+		menuNode_t* node = WINDOWETRADATA(window).renderNode;
 		vec2_t pos;
 
 		/* update the layout */
@@ -624,14 +628,14 @@ qboolean MN_IsPointOnWindow (void)
 		return qtrue;
 
 	if (mn.windowStackPos != 0) {
-		if (mn.windowStack[mn.windowStackPos - 1]->u.window.dropdown)
+		if (WINDOWETRADATA(mn.windowStack[mn.windowStackPos - 1]).dropdown)
 			return qtrue;
 	}
 
 	hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered->root && hovered == hovered->root->u.window.renderNode) {
+		if (hovered->root && hovered == WINDOWETRADATACONST(hovered).renderNode) {
 			return qfalse;
 		}
 		return qtrue;
@@ -761,8 +765,8 @@ static void MN_FireInit_f (void)
 
 	/* initialize it */
 	if (window) {
-		if (window->u.window.onInit)
-			MN_ExecuteEventActions(window, window->u.window.onInit);
+		if (WINDOWETRADATACONST(window).onInit)
+			MN_ExecuteEventActions(window, WINDOWETRADATACONST(window).onInit);
 		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", window->name);
 	}
 }

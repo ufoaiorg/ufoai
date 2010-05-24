@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODES_H
 
 #include "../../shared/ufotypes.h"
+#include "../../common/scripts.h"
 
 /* prototype */
 struct menuIcon_s;
@@ -33,23 +34,8 @@ struct menuCondition_s;
 struct value_s;
 struct nodeKeyBinding_s;
 struct menuCallContext_s;
-
-/* extradata struct */
-#include "node/m_node_abstractoption.h"
-#include "node/m_node_abstractscrollable.h"
-#include "node/m_node_abstractscrollbar.h"
-#include "node/m_node_abstractvalue.h"
-#include "node/m_node_base.h"
-#include "node/m_node_container.h"
-#include "node/m_node_ekg.h"
-#include "node/m_node_keybinding.h"
-#include "node/m_node_linechart.h"
-#include "node/m_node_model.h"
-#include "node/m_node_panel.h"
-#include "node/m_node_text.h"
-#include "node/m_node_textentry.h"
-#include "node/m_node_window.h"
-#include "node/m_node_zone.h"
+struct menuNode_s;
+struct menuModel_s;
 
 /* exclude rect */
 #define MAX_EXLUDERECTS	64
@@ -106,14 +92,9 @@ typedef struct menuNode_s {
 	void* image;
 	void* cvar;
 	qboolean state;				/**< is node hovered */
-	int mousefx;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
-
-	/** @todo move it into window node, or think about a node way (i.e. Doom3 onTime) */
-	int timeOut;				/**< ms value until calling onTimeOut (see cl.time) */
-	int lastTime;				/**< when a menu was pushed this value is set to cl.time */
 
 	/* common color */
 	vec4_t color;				/**< rgba */
@@ -133,35 +114,21 @@ typedef struct menuNode_s {
 	/* temporary, and/or for testing */
 	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
 
-	/* image, and more */
-	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
-	vec2_t texl;				/**< upper left texture coordinates */
-	qboolean preventRatio;
-
 	/* text */
 	/** @todo remove it  from 'string node', need to full implement MN_DrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
-
-	/** union will contain all extradata for a node */
-	union {
-		abstractValueExtraData_t abstractvalue;
-		abstractScrollableExtraData_t abstractscrollable;
-		abstractScrollbarExtraData_t abstractscrollbar;
-		baseExtraData_t base;
-		containerExtraData_t container;
-		ekgExtraData_t ekg;
-		keyBindingExtraData_t keybinding;
-		lineChartExtraData_t linechart;
-		modelExtraData_t model;
-		optionExtraData_t option;
-		panelExtraData_t panel;
-		textEntryExtraData_t textentry;
-		textExtraData_t text;
-		windowExtraData_t window;
-		zoneExtraData_t zone;
-	} u;
-
 } menuNode_t;
+
+
+/**
+ * @brief Return extradata structure from a node
+ * @param TYPE Extradata type
+ * @param NODE Pointer to the node
+ */
+#define MN_EXTRADATA_POINTER(NODE, TYPE) ((TYPE*)((char*)NODE + sizeof(menuNode_t)))
+#define MN_EXTRADATA(NODE, TYPE) (*MN_EXTRADATA_POINTER(NODE, TYPE))
+#define MN_EXTRADATACONST_POINTER(NODE, TYPE) ((TYPE*)((const char*)NODE + sizeof(menuNode_t)))
+#define MN_EXTRADATACONST(NODE, TYPE) (*MN_EXTRADATACONST_POINTER(NODE, const TYPE))
 
 /**
  * @brief Return the offset of an extradata node attribute
@@ -169,7 +136,7 @@ typedef struct menuNode_s {
  * @param MEMBER Attribute name
  * @sa offsetof
  */
-#define MN_EXTRADATA_OFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)(&((menuNode_t *)0)->u))->MEMBER)
+#define MN_EXTRADATA_OFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)(MN_EXTRADATA_POINTER(0, TYPE)))->MEMBER)
 
 /**
  * @brief node behaviour, how a node work

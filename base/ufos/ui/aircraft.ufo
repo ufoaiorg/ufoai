@@ -160,14 +160,13 @@ window iaircraft
 		onChange	{ cmd "aircraft_namechange; mn_pop; mn_push aircraft;" }
 	}
 
-	pic air_nameedit
+	button air_nameedit
 	{
 		tooltip		"_Rename aircraft"
-		image		ui/buttons_small
+		icon		pen
 		pos			"380 116"
 		size		"16 16"
-		texl		"0 48"
-		texh		"16 64"
+		padding		0
 		onClick		{ call *node:root.aircraft_selected@edit }
 	}
 

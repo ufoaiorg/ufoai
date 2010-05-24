@@ -408,7 +408,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 			/* do we ALREADY know this node? and his type */
 			MN_ReadNodePath(path, source, &node, &property);
 			if (!node)
-				Com_Printf("MN_ParseSetAction: node \"%s\" not yet known (in event), you can try to cast it\n", path);
+				Com_Printf("MN_ParseValueExpression: node \"%s\" not yet known (in event), you can try to cast it\n", path);
 		}
 
 		if (property && property->type) {
@@ -440,7 +440,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 		return expression;
 	}
 
-	Com_Error(ERR_FATAL, "MN_ParseSetAction: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
+	Com_Error(ERR_FATAL, "MN_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
 menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const menuNode_t *source)

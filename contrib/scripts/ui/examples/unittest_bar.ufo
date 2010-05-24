@@ -1,0 +1,79 @@
+window unittest_bar
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest bar"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	bar default {
+		current *cvar:foo
+		min 	0
+		max		100
+		color	"1 1 1 1"
+		pos "100 100"
+		size "50 50"
+	}
+
+	// readonly
+
+	bar readonly {
+		current *cvar:foo
+		min 	0
+		max		100
+		color	"1 1 1 1"
+		pos "160 100"
+		size "50 50"
+		readonly true
+	}
+
+	// orientation
+	
+	bar left {
+		current *cvar:foo
+		min 	0
+		max		100
+		color	"1 1 0 1"
+		pos "100 220"
+		size "50 50"
+		orientation cl
+	}
+
+	bar right {
+		current *cvar:foo
+		min 	0
+		max		100
+		color	"0 1 0 1"
+		pos "160 160"
+		size "50 50"
+		orientation cr
+	}
+
+	bar top {
+		current *cvar:foo
+		min 	0
+		max		100
+		color	"0 0 1 1"
+		pos "100 160"
+		size "50 50"
+		orientation uc
+	}
+
+	bar down {
+		current *cvar:foo
+		min 	0
+		max		100
+		color	"1 0 0 1"
+		pos "160 220"
+		size "50 50"
+		orientation lc
+	}
+	
+	func onInit {
+		*cvar:foo = 50
+	}
+}

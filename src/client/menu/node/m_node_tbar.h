@@ -25,6 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_TBAR_H
 #define CLIENT_MENU_M_NODE_TBAR_H
 
+#include "m_node_abstractvalue.h"
+
 void MN_RegisterTBarNode(nodeBehaviour_t *behaviour);
+
+typedef struct tbarExtraData_s {
+	abstractValueExtraData_t super;
+	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
+	vec2_t texl;				/**< upper left texture coordinates */
+} tbarExtraData_t;
 
 #endif

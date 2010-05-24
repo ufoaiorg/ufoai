@@ -8,9 +8,11 @@ component pic cmpAlienContainment {
 		onClick			{ cmd "aliencont_click <num>;" }
 		onRClick		{ cmd "aliencont_pedia <num>;" }
 	}
-	pic icon			{
-		pos "247  11"
-		image icons/health_unused
+	button icon			{
+		pos		"247  11"
+		size	"40 40"
+		padding	0
+		icon 	"alien_unused"
 	}
 	zone kill_zone		{
 		pos			"247  11"
@@ -84,7 +86,7 @@ window aliencont
 		*cvar:i = 0
 		while ( *cvar:i < 12 ) {
 			*ac.ac<cvar:i>@image = ui/hosp_button_green
-			*ac.ac<cvar:i>.icon@image = icons/health_unused
+			*(button)ac.ac<cvar:i>.icon@icon = "alien_unused"
 			*ac.ac<cvar:i>.kill_zone@invis = true
 			*ac.ac<cvar:i>.autopsy_zone@invis = true
 			*cvar:i = ( *cvar:i + 1 )
@@ -97,7 +99,7 @@ window aliencont
 	 */
 	confunc aliencontneedautopsy {
 		*ac.ac<1>@image = ui/hosp_button_light
-		*ac.ac<1>.icon@image = icons/surgery
+		*(button)ac.ac<1>.icon@icon = "alien_surgery"
 		*ac.ac<1>.icon@tooltip = "_Start autopsy"
 
 		/* hide kill */
@@ -110,7 +112,7 @@ window aliencont
 	 */
 	confunc aliencontkill
 	{
-		*ac.ac<1>.icon@image = icons/kill
+		*(button)ac.ac<1>.icon@icon = "alien_kill"
 		*ac.ac<1>.icon@tooltip = "_Kill this alien"
 		*ac.ac<1>@image = ui/hosp_button_light
 

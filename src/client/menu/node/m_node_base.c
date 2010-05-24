@@ -34,7 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../campaign/cp_campaign.h"
 
-#define EXTRADATA(node) (node->u.base)
+#define EXTRADATA_TYPE baseExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, baseExtraData_t)
 
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
@@ -198,7 +199,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 				case B_STATUS_UNDER_CONSTRUCTION:
 				{
 					const int time = building->buildTime - (ccs.date.day - building->timeStart);
-					MN_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+					MN_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
 				}
 				default:
@@ -404,6 +405,7 @@ void MN_RegisterAbstractBaseNode (nodeBehaviour_t *behaviour)
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 	behaviour->loaded = MN_AbstractBaseNodeLoaded;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
 
 void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
@@ -423,5 +425,4 @@ void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractbase";
 	behaviour->draw = MN_BaseLayoutNodeDraw;
 	behaviour->loading = MN_BaseLayoutNodeLoading;
-	behaviour->extraDataSize = sizeof(baseExtraData_t);
 }

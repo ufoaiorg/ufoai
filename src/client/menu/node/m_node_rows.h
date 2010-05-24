@@ -27,6 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
+typedef struct rowsExtraData_s {
+	int lineHeight;
+	int current;
+} rowsExtraData_t;
+
 void MN_RegisterRowsNode(nodeBehaviour_t *behaviour);
 
 #endif

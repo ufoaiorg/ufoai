@@ -41,7 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh.h"
 #include "../../renderer/r_mesh_anim.h"
 
-#define EXTRADATA(node) (node->u.model)
+#define EXTRADATA_TYPE modelExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
@@ -517,11 +518,6 @@ static const value_t properties[] = {
 	{"scale", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
 	/* Submodel only. A tag name to link the model to the parent model. */
 	{"tag", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, tag), 0},
-	/* Main model only. A way to use a custom scripted POV into the model. Check <code>base/ufos/models.ufo</code> for the list of allowed string.
-	 * For example "ufopedia", "aircraft", "aircraft_equip", "item". It is also called "menumodel", but have no more link with windows name (aka menu name).
-	 * @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar)
-	 */
-	{"view", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, viewName), 0},
 	/* Main model only. Auto compute the "better" scale for the model. The function dont work
 	 * very well at the moment because it dont check the angle and no more submodel bounding box.
 	 */
@@ -553,7 +549,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->delete = MN_ModelNodeDelete;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(modelExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }

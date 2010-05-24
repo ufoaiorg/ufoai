@@ -48,6 +48,9 @@ typedef struct {
 	qboolean fill;					/**< If true, use all the screen space allowed */
 	qboolean starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
+	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
+	int lastTime;					/**< when a menu was pushed this value is set to cl.time */
+
 	struct menuNode_s *parent;	/**< to create child window */
 
 	/** @todo we can remove it if we create a node for the battlescape */
@@ -65,6 +68,11 @@ typedef struct {
 void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 
 qboolean MN_WindowIsFullScreen(const struct menuNode_s* const menu);
+qboolean MN_WindowIsDropDown(const struct menuNode_s* const menu);
+qboolean MN_WindowIsModal(const struct menuNode_s* const menu);
+void MN_WindowNodeRegisterKeyBinding(struct menuNode_s* menu, struct menuKeyBinding_s *binding);
+struct menuKeyBinding_s *MN_WindowNodeGetKeyBinding(const struct menuNode_s* const node, unsigned int key);
 void MN_WindowNodeSetRenderNode(struct menuNode_s *node, struct menuNode_s *renderNode);
+vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node);
 
 #endif

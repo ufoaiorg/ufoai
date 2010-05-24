@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_model.h"
 #include "m_node_material_editor.h"
 
-#define EXTRADATA(node) (node->u.abstractscrollable)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractScrollableExtraData_t)
 
 /*#define ANYIMAGES*/
 /** @todo Replace magic number 64 by some script definition */

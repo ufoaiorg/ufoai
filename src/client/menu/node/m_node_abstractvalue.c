@@ -29,7 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_internal.h"
 #include "m_node_abstractvalue.h"
 
-#define EXTRADATA(node) (node->u.abstractvalue)
+#define EXTRADATA_TYPE abstractValueExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 static const nodeBehaviour_t const *localBehaviour;
 
@@ -92,10 +94,10 @@ static void MN_CloneCvarOrFloat (const menuNode_t *source, menuNode_t *clone, co
 static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).value, (float**)&EXTRADATA(clone).value);
-	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).delta, (float**)&EXTRADATA(clone).delta);
-	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).max, (float**)&EXTRADATA(clone).max);
-	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATA(source).min, (float**)&EXTRADATA(clone).min);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).value, (float**)&EXTRADATA(clone).value);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).delta, (float**)&EXTRADATA(clone).delta);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).max, (float**)&EXTRADATA(clone).max);
+	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).min, (float**)&EXTRADATA(clone).min);
 }
 
 static const value_t properties[] = {
@@ -125,5 +127,5 @@ void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 	behaviour->delete = MN_AbstractValueDelete;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(abstractValueExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
