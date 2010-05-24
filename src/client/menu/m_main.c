@@ -262,6 +262,36 @@ void MN_ExecuteConfunc (const char *fmt, ...)
  */
 void MN_Shutdown (void)
 {
+	int i;
+	nodeBehaviour_t *confunc = MN_GetNodeBehaviour("confunc");
+
+	/* remove all confunc commands */
+	for (i = 0; i < mn.numWindows; i++) {
+		menuNode_t *node = mn.windows[i];
+		while (node) {
+
+			/* remove the command */
+			if (node->behaviour == confunc) {
+				/* many nodes to one command is allowed */
+				if (Cmd_Exists(node->name))
+					Cmd_RemoveCommand(node->name);
+			}
+
+			/* recursive next */
+			if (node->firstChild != NULL)
+				node = node->firstChild;
+			else {
+				while (node) {
+					if (node->next != NULL) {
+						node = node->next;
+						break;
+					}
+					node = node->parent;
+				}
+			}
+		}
+	}
+
 	if (mn.adataize)
 		Mem_Free(mn.adata);
 	mn.adata = NULL;
