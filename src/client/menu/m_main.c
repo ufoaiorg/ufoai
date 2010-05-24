@@ -296,6 +296,14 @@ void MN_Shutdown (void)
 		Mem_Free(mn.adata);
 	mn.adata = NULL;
 	mn.adataize = 0;
+
+	/* release pools */
+	Mem_FreePool(mn_sysPool);
+	Mem_FreePool(mn_dynStringPool);
+	Mem_FreePool(mn_dynPool);
+	mn_sysPool = NULL;
+	mn_dynStringPool = NULL;
+	mn_dynPool = NULL;
 }
 
 #define MENU_HUNK_SIZE 2*1024*1024
