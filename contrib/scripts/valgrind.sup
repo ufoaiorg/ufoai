@@ -121,4 +121,30 @@
    Memcheck:Cond
    obj:/usr/lib/dri/fglrx_dri.so
 }
+{
+   nv_uninit
+   Memcheck:Cond
+   obj:/usr/lib/nvidia-current/libGLcore.so.195.36.15
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+   obj:*
+}
+{
+   nv_gi_strlen
+   Memcheck:Cond
+   fun:__GI_strlen
+   obj:/usr/lib/nvidia-current/libGLcore.so.195.36.15
+   obj:*
+}
+{
+   nv_strcpy
+   Memcheck:Cond
+   fun:strcpy
+   obj:/usr/lib/nvidia-current/libGLcore.so.195.36.15
+   obj:*
+}
 
