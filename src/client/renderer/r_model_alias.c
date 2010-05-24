@@ -138,6 +138,8 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		/* we have two edge directions, we can calculate a third vector from
 		 * them, which is the direction of the surface normal */
 		CrossProduct(dir1, dir2, triangleNormals[j]);
+		/* normalize */
+		VectorNormalize(triangleNormals[j]);
 
 		/* then we use the texture coordinates to calculate a tangent space */
 		if ((dir1uv[1] * dir2uv[0] - dir1uv[0] * dir2uv[1]) != 0.0) {
@@ -153,16 +155,18 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 			VectorMul(-1.0 * dir2uv[0] * frac, dir1, tmp1);
 			VectorMul(dir1uv[0] * frac, dir2, tmp2);
 			VectorAdd(tmp1, tmp2, triangleBitangents[j]);
-		}
 
-		/* normalize */
-		VectorNormalize(triangleNormals[j]);
-		VectorNormalize(triangleTangents[j]);
-		VectorNormalize(triangleBitangents[j]);
+			/* normalize */
+			VectorNormalize(triangleTangents[j]);
+			VectorNormalize(triangleBitangents[j]);
+		} else {
+			VectorClear(triangleTangents[j]);
+			VectorClear(triangleBitangents[j]);
+		}
 	}
 
 	/* for each vertex */
-	for(i = 0; i < mesh->num_verts; i++) {
+	for (i = 0; i < mesh->num_verts; i++) {
 		vec3_t n, b, v;
 		vec4_t t;
 		const int len = mesh->revIndexes[i].length;
@@ -173,7 +177,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		VectorClear(b);
 
 		/* for each vertex that got mapped to this one (ie. for each triangle this vertex is a part of) */
-		for(j = 0; j < len; j++) {
+		for (j = 0; j < len; j++) {
 			const int32_t idx = list[j] / 3;
 			VectorAdd(n, triangleNormals[idx], n);
 			VectorAdd(t, triangleTangents[idx], t);
@@ -193,7 +197,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 		t[3] = (DotProduct(v, b) < 0.0) ? -1.0 : 1.0;
 
 		/* copy this vertex's info to all the right places in the arrays */
-		for(j = 0; j < len; j++) {
+		for (j = 0; j < len; j++) {
 			const int32_t idx = list[j];
 			const int meshIndex = mesh->indexes[list[j]];
 			Vector2Copy(stcoords[meshIndex], (texcoords + (2 * idx)));
@@ -228,15 +232,15 @@ qboolean R_ModLoadMDX (model_t *mod)
 			return qfalse;
 
 		buf = buffer;
-		if (strncmp((const char *)buf, IDMDXHEADER, strlen(IDMDXHEADER)))
+		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER)))
 			Com_Error(ERR_DROP, "No mdx file buffer given");
 		buffer += strlen(IDMDXHEADER) * sizeof(char);
-		if (*(uint32_t*)buffer != MDX_VERSION)
-			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i",
-					MDX_VERSION, *(uint32_t*)buffer);
+		if (*(uint32_t*) buffer != MDX_VERSION)
+			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i", MDX_VERSION,
+					*(uint32_t*) buffer);
 		buffer += sizeof(uint32_t);
 
-		intbuf = (const int32_t *)buffer;
+		intbuf = (const int32_t *) buffer;
 
 		mesh->num_verts = LittleLong(*intbuf);
 		if (mesh->num_verts <= 0 || mesh->num_verts > MAX_ALIAS_VERTS)
@@ -255,14 +259,14 @@ qboolean R_ModLoadMDX (model_t *mod)
 			intbuf++;
 		}
 
-		for(i = 0; i < mesh->num_verts; i++)
+		for (i = 0; i < mesh->num_verts; i++)
 			sharedTris[i] = 0;
 
 		/* set up reverse-index that maps Vertex objects to a list of triangle verts */
 		for (i = 0; i < numIndexes; i++)
 			sharedTris[mesh->indexes[i]]++;
 
-		for(i = 0; i < mesh->num_verts; i++) {
+		for (i = 0; i < mesh->num_verts; i++) {
 			mesh->revIndexes[i].length = 0;
 			mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 		}
@@ -409,10 +413,9 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 		for (j = i + 1; j < numIndexes; j++) {
 			if (Vector2Equal(stcoords[indexArray[i]], stcoords[indexArray[j]])
-			 && VectorEqual(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
-			 && (DotProduct(tmpVertexes[i].normal, tmpVertexes[j].normal) > smoothness)
-			 && (DotProduct(tmpVertexes[i].tangent, tmpVertexes[j].tangent) > smoothness)
-			 ) {
+					&& VectorEqual(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
+					&& (DotProduct(tmpVertexes[i].normal, tmpVertexes[j].normal) > smoothness)
+					&& (DotProduct(tmpVertexes[i].tangent, tmpVertexes[j].tangent) > smoothness)) {
 				indRemap[j] = i;
 				newIndexArray[j] = numVerts;
 			}
@@ -527,7 +530,8 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
 		Com_Error(ERR_DROP, "Model with no skins");
 
 	if (mod->alias.meshes[*mesh].skins[*skin].skin->texnum <= 0)
-		Com_Error(ERR_DROP, "Texture is already freed and no longer uploaded, texnum is invalid for model %s", mod->name);
+		Com_Error(ERR_DROP, "Texture is already freed and no longer uploaded, texnum is invalid for model %s",
+				mod->name);
 
 	return mod->alias.meshes[*mesh].skins[*skin].skin;
 }
