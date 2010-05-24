@@ -612,11 +612,12 @@ base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License
 base/models/aircraft/ufo_supply/ufo_supply_wing_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/alientank/alientank.anm |  | Creative Commons Attribution-ShareAlike 3.0 Unported
-base/models/aliens/alientank/alientank.md2 |  | Creative Commons Attribution-ShareAlike 3.0 Unported
-base/models/aliens/alientank/alientank.png |  | Creative Commons Attribution-ShareAlike 3.0 Unported
-base/models/aliens/alientank/alientank_gm.png |  | Creative Commons Attribution-ShareAlike 3.0 Unported
-base/models/aliens/alientank/alientank_nm.png |  | Creative Commons Attribution-ShareAlike 3.0 Unported
+base/models/aliens/alientank/alientank.anm | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.md2 | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank_gm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/weapon.md2 | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
