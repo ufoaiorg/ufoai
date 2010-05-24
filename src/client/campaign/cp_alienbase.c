@@ -176,6 +176,8 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 
 	if (!RS_MarkStoryLineEventResearched(ALIENBASE_DISCOVERED_TECH))
 		Com_DPrintf(DEBUG_CLIENT, ALIENBASE_DISCOVERED_TECH" is not marked as researched\n");
+	else
+		Cmd_ExecuteString("addeventmail alien_base_discovered");
 }
 
 /**

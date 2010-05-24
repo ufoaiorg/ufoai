@@ -10,7 +10,7 @@
 #   commands to update this entry is generated, and applied.
 # The variable 'debug' should be set to 1 if you encounter a problem : it makes the log
 #   far more verbose, and will help for debbugging.
-# The varaible 'elseenglish' should be set to 1 if you want to replace all untranslated msgstr with the english version
+# The variable 'elseenglish' should be set to 1 if you want to replace all untranslated msgstr with the english version
 
 
 language=$1
@@ -196,7 +196,7 @@ set_BEGIN_END()
 
 download_description()
 {
-# Procedure looking for the url of the description of $english. It download it, then return 0 if it's OK, 1 if the msgid is not on the wiki, and 2 if didn't find any translation in this language.
+# Procedure looking for the url of the description of $english. It downloads it, then return 0 if it's OK, 1 if the msgid is not on the wiki, and 2 if didn't find any translation in this language.
     number=`grep -iwnm 1 "<td> $english" ${index} | cut -d : -f 1`
     if [ $number -ge $FIRST_LINE ]
     then
@@ -234,6 +234,9 @@ download_description()
 				echo "   didn't find any associated translation"
 				return 2
 			fi
+		else
+				echo "   didn't find any associated translation"
+				return 2
 		fi
     fi
     return 1
@@ -309,7 +312,7 @@ update_news()
 			h3 == news && $0 ~ /<h4>/ {
 				h4++
 				if (h4>max_h4) {exit}
-				match($0,"<h4>")
+				match($0,/<h4> <span class="mw-headline">/)
 				$0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
 				if (h4>1) {$0="\\n\n\\n\n"$0}
 				gsub (/[ \t]*$/,":")
@@ -570,6 +573,17 @@ then
 		pre_txt=0
 	fi
 
+	english="news_new_twist_alt_txt"
+	download_description
+	test=$?
+	if [[ "$test" -eq 0 ]]
+	then
+		clean_html
+		pre_txt=1
+		update_txt 2 0 0 $pre_txt
+		pre_txt=0
+	fi
+
 	if [[ "$debug" = "1" ]]
 	then
 		echo "Checking news descriptions : done." >> $log_file
@@ -598,7 +612,7 @@ if [[ $? -eq 0 ]]
 then
 	clean_html
 
-	for english in "mail_alien_ufo_crashed" "mail_alien_ufo_recovered" "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog"
+	for english in "mail_alien_ufo_crashed" "mail_alien_ufo_recovered" "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog" "mail_stunned_alien_died"
 	do
 		update_one_sentence "1"
 	done
@@ -722,7 +736,7 @@ do
 				else
 					update_txt 2 1 3 0
 				fi
-			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]]
+			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]] && [[ "$language" != "en" ]]
 			then
 			# This is the case when the msgid is in the wiki, but not the desired translation: check if we can use english text
 				language0=$language
@@ -735,10 +749,10 @@ do
 					clean_html
 					if [[ $pre_txt -eq 1 ]]
 					then
-					update_txt 3 0 0 $pre_txt
+					update_txt 3 0 0 1
 
 					english=${english:0:${#english}-4}_pre_txt
-					update_txt 2 0 0 $pre_txt
+					update_txt 2 0 0 1
 						if [[ $? -eq 0 ]]
 						then
 							set_BEGIN_END 0
@@ -746,8 +760,12 @@ do
 							apply_sed $english
 							pre_txt=0
 						fi
+					elif [[ "$english" = "b_antimatter_txt" ]]
+					then
+						# Exception: text is in e-mail type, but without pre_txt
+						update_txt 2 0 3 1
 					else
-						update_txt 2 1 3 $pre_txt
+						update_txt 2 1 3 0
 					fi
 				fi
 				language=$language0
