@@ -253,9 +253,12 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		}
 
 		for (j = 0; j < numIndexes; j++) {
-			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[0] * outFrame->scale[0];
-			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[1] * outFrame->scale[1];
-			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[indRemap[j]]].v[2] * outFrame->scale[2];
+			const int index = tempIndex[indRemap[j]];
+			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
+			float* ov = outVertex[outIndex[j]].point;
+			ov[0] = (int16_t)v->v[0] * outFrame->scale[0];
+			ov[1] = (int16_t)v->v[1] * outFrame->scale[1];
+			ov[2] = (int16_t)v->v[2] * outFrame->scale[2];
 		}
 	}
 
@@ -385,9 +388,12 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		}
 
 		for (j = 0; j < numIndexes; j++) {
-			outVertex[outIndex[j]].point[0] = (int16_t)pinframe->verts[tempIndex[j]].v[0] * outFrame->scale[0];
-			outVertex[outIndex[j]].point[1] = (int16_t)pinframe->verts[tempIndex[j]].v[1] * outFrame->scale[1];
-			outVertex[outIndex[j]].point[2] = (int16_t)pinframe->verts[tempIndex[j]].v[2] * outFrame->scale[2];
+			const int index = tempIndex[j];
+			const dMD2TriangleVertex_t *v = &pinframe->verts[index];
+			float* ov = outVertex[outIndex[j]].point;
+			ov[0] = (int16_t)v->v[0] * outFrame->scale[0];
+			ov[1] = (int16_t)v->v[1] * outFrame->scale[1];
+			ov[2] = (int16_t)v->v[2] * outFrame->scale[2];
 		}
 	}
 

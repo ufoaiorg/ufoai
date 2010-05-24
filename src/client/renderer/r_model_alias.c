@@ -549,7 +549,6 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 {
 	int i, j;
 	const mAliasFrame_t *frame, *oldframe;
-	const mAliasVertex_t *v, *ov;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
 	vec3_t r_mesh_verts[MAX_ALIAS_VERTS];
@@ -594,6 +593,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 			mod->curFrame = framenum;
 		}
 	} else { /* otherwise, we have to do it on the CPU */
+		const mAliasVertex_t *v, *ov;
 		assert(mesh->num_verts < lengthof(r_mesh_verts));
 		v = &mesh->vertexes[framenum * mesh->num_verts];
 		ov = &mesh->vertexes[oldframenum * mesh->num_verts];
