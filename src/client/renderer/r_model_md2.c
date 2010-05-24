@@ -307,7 +307,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		Com_Printf("model %s has more than 4096 verts\n", mod->name);
 
 	if (outMesh->num_verts <= 0 || outMesh->num_verts >= MAX_ALIAS_VERTS)
-		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)\n",
+		Com_Error(ERR_DROP, "R_ModLoadAliasMD2Mesh: invalid amount of verts for model '%s' (verts: %i, tris: %i)",
 			mod->name, outMesh->num_verts, outMesh->num_tris);
 
 	if (mod->alias.num_meshes == 1) {
