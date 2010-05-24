@@ -7,11 +7,13 @@ component panel cmpResearchItem {
 		size		"590 25"
 	}
 
+	// use a node icon, instead of a button
 	button img_status {
 		icon		bordered_question
 		pos			"0 0"
 		size		"16 16"
 		padding		0
+		onClick { }
 	}
 
 	string txt_item	{
@@ -244,27 +246,21 @@ window research
 	 * @param[in] <1> Item row
 	 */
 	confunc research_normal {
-//		*item<1>.txt_item@color = "0 .78 0 1"
-		*(pic)item<1>.img_status@texl	= "32 16"
-		*(pic)item<1>.img_status@texh	= "48 32"
+		*(button)item<1>.img_status@icon = "bordered_magnifying_glass"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_running {
-//		*item<1>.txt_item@color = "0 1 0 1"
-		*(pic)item<1>.img_status@texl	= "32 0"
-		*(pic)item<1>.img_status@texh	= "48 16"
+		*(button)item<1>.img_status@icon	= "bordered_magnifying_glass"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_paused {
-//		*item<1>.txt_item@color = ".78 .78 0 1"
-		*(pic)item<1>.img_status@texl	= "48 0"
-		*(pic)item<1>.img_status@texh	= "64 16"
+		*(button)item<1>.img_status@icon	= "bordered_sleep"
 	}
 
 	/**
