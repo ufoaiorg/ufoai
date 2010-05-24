@@ -29,7 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
+#define EXTRADATA(node) MN_EXTRADATA(node, tbarExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, tbarExtraData_t)
 
 #define TEXTURE_WIDTH 250.0
 
@@ -50,30 +51,30 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 	{
 		float ps;
-		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).min);
-		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).max);
-		float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
+		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).super.min);
+		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).super.max);
+		float value = MN_GetReferenceFloat(node, EXTRADATA(node).super.value);
 		/* clamp the value */
 		if (value > max)
 			value = max;
 		if (value < min)
 			value = min;
 		ps = (value - min) / (max - min) * 100;
-		shx = node->texl[0];	/* left gap to the texture */
+		shx = EXTRADATA(node).texl[0];	/* left gap to the texture */
 		shx += round(ps * pointWidth); /* add size from 0..TEXTURE_WIDTH */
 	}
 
 	width = (shx * node->size[0]) / TEXTURE_WIDTH;
 
 	MN_DrawNormImageByName(nodepos[0], nodepos[1], width, node->size[1],
-		shx, node->texh[1], node->texl[0], node->texl[1], ref);
+		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 
 static const value_t properties[] = {
 	/* @todo Need documentation */
-	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"texh", V_POS, MN_EXTRADATA_OFFSETOF(tbarExtraData_t, texh), MEMBER_SIZEOF(tbarExtraData_t, texh)},
 	/* @todo Need documentation */
-	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(tbarExtraData_t, texl), MEMBER_SIZEOF(tbarExtraData_t, texl)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -83,4 +84,5 @@ void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = MN_TBarNodeDraw;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

@@ -126,5 +126,5 @@ void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 	behaviour->delete = MN_AbstractValueDelete;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(abstractValueExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

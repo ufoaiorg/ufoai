@@ -184,5 +184,5 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_BarNodeMouseDown;
 	behaviour->mouseUp = MN_BarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
-	behaviour->extraDataSize = sizeof(barExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

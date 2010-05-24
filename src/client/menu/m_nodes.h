@@ -92,7 +92,6 @@ typedef struct menuNode_s {
 	void* image;
 	void* cvar;
 	qboolean state;				/**< is node hovered */
-	int mousefx;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
@@ -118,11 +117,6 @@ typedef struct menuNode_s {
 
 	/* temporary, and/or for testing */
 	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
-
-	/* image, and more */
-	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
-	vec2_t texl;				/**< upper left texture coordinates */
-	qboolean preventRatio;
 
 	/* text */
 	/** @todo remove it  from 'string node', need to full implement MN_DrawStringInBox */

@@ -425,7 +425,7 @@ void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(panelExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 	behaviour->draw = MN_PanelNodeDraw;
 	behaviour->loaded = MN_PanelNodeLoaded;
 	behaviour->doLayout = MN_PanelNodeDoLayout;

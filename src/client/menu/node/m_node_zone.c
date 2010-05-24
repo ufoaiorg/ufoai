@@ -116,5 +116,5 @@ void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseUp = MN_ZoneNodeUp;
 	behaviour->capturedMouseLost = MN_ZoneNodeCapturedMouseLost;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(zoneExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

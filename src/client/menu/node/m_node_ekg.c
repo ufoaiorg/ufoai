@@ -69,10 +69,10 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 
 		ekgValue = min(current, ekgMaxValue);
 
-		node->texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
-		node->texh[1] = node->texl[1] + ekgHeight;
-		node->texl[0] = -(int) (EXTRADATA(node).scrollSpeed * cls.realtime) % ekgWidth;
-		node->texh[0] = node->texl[0] + node->size[0];
+		EXTRADATA(node).super.texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
+		EXTRADATA(node).super.texh[1] = EXTRADATA(node).super.texl[1] + ekgHeight;
+		EXTRADATA(node).super.texl[0] = -(int) (EXTRADATA(node).scrollSpeed * cls.realtime) % ekgWidth;
+		EXTRADATA(node).super.texh[0] = EXTRADATA(node).super.texl[0] + node->size[0];
 		/** @todo code is duplicated in the image node code */
 		if (node->size[0] && !node->size[1]) {
 			const float scale = image->width / node->size[0];
@@ -81,7 +81,7 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 			const float scale = image->height / node->size[1];
 			Vector2Set(size, image->width / scale, node->size[1]);
 		} else {
-			if (node->preventRatio) {
+			if (EXTRADATA(node).super.preventRatio) {
 				/* maximize the image into the bounding box */
 				const float ratio = (float) image->width / (float) image->height;
 				if (node->size[1] * ratio > node->size[0]) {
@@ -94,7 +94,7 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 			}
 		}
 		MN_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
-			node->texh[0], node->texh[1], node->texl[0], node->texl[1], image);
+				EXTRADATA(node).super.texh[0], EXTRADATA(node).super.texh[1], EXTRADATA(node).super.texl[0], EXTRADATA(node).super.texl[1], image);
 	}
 }
 
@@ -123,5 +123,5 @@ void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 	behaviour->extends = "pic";
 	behaviour->draw = MN_EKGNodeDraw;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(ekgExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

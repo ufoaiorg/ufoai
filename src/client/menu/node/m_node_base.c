@@ -198,7 +198,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 				case B_STATUS_UNDER_CONSTRUCTION:
 				{
 					const int time = building->buildTime - (ccs.date.day - building->timeStart);
-					MN_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+					MN_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
 				}
 				default:
@@ -423,5 +423,5 @@ void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 	behaviour->extends = "abstractbase";
 	behaviour->draw = MN_BaseLayoutNodeDraw;
 	behaviour->loading = MN_BaseLayoutNodeLoading;
-	behaviour->extraDataSize = sizeof(baseExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

@@ -200,50 +200,39 @@ static void MN_Memory_f (void)
 	int i;
 	const size_t nodeSize = sizeof(menuNode_t);
 	size_t size;
-	Com_Printf("^BAllocation:\n");
+	Com_Printf("Allocation:\n");
 	Com_Printf("\t-Option allocation: %i/%i\n", mn.numOptions, MAX_MENUOPTIONS);
 	Com_Printf("\t-Window allocation: %i/%i\n", mn.numWindows, MAX_WINDOWS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
 	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
 	Com_Printf("\t-Exclude rect allocation: %i/%i\n", mn.numExcludeRect, MAX_EXLUDERECTS);
-	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(mn.curadata - mn.adata), mn.adataize);
 	Com_Printf("\t -Node allocation: %i\n", mn.numNodes);
-	Com_Printf("\t-Node per behaviour: ");
-	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
-		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
-		if (b->count == 0)
-			continue;
-		Com_Printf("%s (%d), ", b->name, b->count);
-	}
-	Com_Printf("\n");
 
-	Com_Printf("\tMemory:\n");
+	Com_Printf("Memory:\n");
 	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(menuOption_t));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
-	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
-	Com_Printf("\t-Node structure size (without extradata): "UFO_SIZE_T" B\n", nodeSize);
-	Com_Printf("\t-Node extradata size: "UFO_SIZE_T" B\n", sizeof(menuNode_t) - nodeSize);
-	Com_Printf("\t-Node extradata per behaviour: ");
+	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(menuNode_t), mn.numNodes);
 	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
 		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
-		if (b->extraDataSize == 0)
-			continue;
-		Com_Printf("%s ("UFO_SIZE_T" B), ", b->name, b->extraDataSize);
+		Com_Printf("\t -Behaviour % 20s structure size: %d (+% 4d B) x% 4d\n", b->name, sizeof(menuNode_t) + b->extraDataSize, b->extraDataSize, b->count);
 	}
-	Com_Printf("\n");
 
 	size = 0;
 	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
 		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
 		size += nodeSize * b->count + b->extraDataSize * b->count;
 	}
-	Com_Printf("\tGlobal memory:");
-	Com_Printf("\t-Node size used: "UFO_SIZE_T" B\n", sizeof(menuNode_t) * mn.numNodes);
-	Com_Printf("\t-Node size really used: "UFO_SIZE_T" B\n", size);
-	Com_Printf("\t-AData size: %i B\n", mn.adataize);
-	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
+	Com_Printf("Global memory:\n");
+	Com_Printf("\t-System pool: %ui B\n", _Mem_PoolSize(mn_sysPool));
+	Com_Printf("\t -AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(mn.curadata - mn.adata), mn.adataize);
+	Com_Printf("\t -AData used by nodes: "UFO_SIZE_T" B\n", size);
+	Com_Printf("\t-Dynamic node/data pool: %ui B\n", _Mem_PoolSize(mn_dynPool));
+	Com_Printf("\t-Dynamic strings pool: %ui B\n", _Mem_PoolSize(mn_dynStringPool));
+
+	size = _Mem_PoolSize(mn_sysPool) + _Mem_PoolSize(mn_dynPool) + _Mem_PoolSize(mn_dynStringPool);
+	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", size);
 }
 #endif
 

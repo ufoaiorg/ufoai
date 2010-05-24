@@ -25,7 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_EKG_H
 #define CLIENT_MENU_M_NODE_EKG_H
 
+#include "m_node_image.h"
+
 typedef struct ekgExtraData_s {
+	imageExtraData_t super;
 	float scrollSpeed;
 	float scaleCvarValue;
 } ekgExtraData_t;

@@ -548,7 +548,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->delete = MN_ModelNodeDelete;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(modelExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
 }

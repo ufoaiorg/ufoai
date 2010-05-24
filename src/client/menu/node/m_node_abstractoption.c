@@ -152,6 +152,6 @@ void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "abstractoption";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(optionExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 	Cmd_AddCommand("mn_updateoption", MN_UpdateOption_f, "Update some option status");
 }

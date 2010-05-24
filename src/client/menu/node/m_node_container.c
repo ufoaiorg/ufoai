@@ -1582,7 +1582,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 	behaviour->mouseWheel = MN_ContainerNodeWheel;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(containerExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 
 	Com_RegisterConstInt("FILTER_S_PRIMARY", FILTER_S_PRIMARY);
 	Com_RegisterConstInt("FILTER_S_SECONDARY", FILTER_S_SECONDARY);

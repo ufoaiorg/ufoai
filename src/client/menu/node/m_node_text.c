@@ -240,7 +240,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			R_Color(node->color);
 		}
 
-		if (node->state && node->mousefx && fullSizeY == EXTRADATA(node).lineUnderMouse) {
+		if (node->state && EXTRADATA(node).mousefx && fullSizeY == EXTRADATA(node).lineUnderMouse) {
 			/* Highlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
 			if (fullSizeY == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
@@ -312,7 +312,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 			}
 		}
 
-		if (node->mousefx)
+		if (EXTRADATA(node).mousefx)
 			R_Color(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
@@ -523,7 +523,7 @@ static const value_t properties[] = {
 	/** Highlight each node elements when the mouse move over the node.
 	 * @todo delete it went its possible (need to create a textlist...)
 	 */
-	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
+	{"mousefx", V_BOOL, MN_EXTRADATA_OFFSETOF(textExtraData_t, mousefx), MEMBER_SIZEOF(textExtraData_t, mousefx)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -539,5 +539,5 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_TextNodeLoading;
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(textExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

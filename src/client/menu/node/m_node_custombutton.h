@@ -29,4 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void MN_RegisterCustomButtonNode(nodeBehaviour_t *behaviour);
 
+typedef struct customButtonExtraData_s {
+	vec2_t texl;				/**< upper left texture coordinates */
+} customButtonExtraData_t;
+
 #endif

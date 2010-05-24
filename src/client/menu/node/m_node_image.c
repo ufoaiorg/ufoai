@@ -44,6 +44,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 
+#define EXTRADATA(node) MN_EXTRADATA(node, imageExtraData_t)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, imageExtraData_t)
+
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
@@ -51,9 +54,9 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
 {
 	/* update the size when its possible */
 	if (node->size[0] == 0 && node->size[1] == 0) {
-		if (node->texl[0] != 0 || node->texh[0]) {
-			node->size[0] = node->texh[0] - node->texl[0];
-			node->size[1] = node->texh[1] - node->texl[1];
+		if (EXTRADATA(node).texl[0] != 0 || EXTRADATA(node).texh[0]) {
+			node->size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
+			node->size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
 		} else if (node->image) {
 			const image_t *image = MN_LoadImage(node->image);
 			if (image) {
@@ -111,7 +114,7 @@ void MN_ImageNodeDraw (menuNode_t *node)
 		const float scale = image->height / node->size[1];
 		Vector2Set(size, image->width / scale, node->size[1]);
 	} else {
-		if (node->preventRatio) {
+		if (EXTRADATA(node).preventRatio) {
 			/* maximize the image into the bounding box */
 			const float ratio = (float) image->width / (float) image->height;
 			if (node->size[1] * ratio > node->size[0]) {
@@ -124,7 +127,7 @@ void MN_ImageNodeDraw (menuNode_t *node)
 		}
 	}
 	MN_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
-		node->texh[0], node->texh[1], node->texl[0], node->texl[1], image);
+		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
 
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx
@@ -138,16 +141,16 @@ void MN_ImageNodeDraw (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* Do not change the image ratio. The image will be proportionally stretched. */
-	{"preventratio", V_BOOL, offsetof(menuNode_t, preventRatio), MEMBER_SIZEOF(menuNode_t, preventRatio)},
+	{"preventratio", V_BOOL, MN_EXTRADATA_OFFSETOF(imageExtraData_t, preventRatio), MEMBER_SIZEOF(imageExtraData_t, preventRatio)},
 	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
 	 * @todo delete it when its possible (use more button instead of image)
 	 */
-	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
+	{"mousefx", V_BOOL, MN_EXTRADATA_OFFSETOF(imageExtraData_t, mousefx), MEMBER_SIZEOF(imageExtraData_t, mousefx)},
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
-	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"texh", V_POS, MN_EXTRADATA_OFFSETOF(imageExtraData_t, texh), MEMBER_SIZEOF(imageExtraData_t, texh)},
 	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
-	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -159,4 +162,5 @@ void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

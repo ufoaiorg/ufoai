@@ -200,5 +200,5 @@ void MN_RegisterKeyBindingNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_KeyBindingNodeDraw;
 	behaviour->loading = MN_KeyBindingNodeLoading;
 	behaviour->properties = properties;
-	behaviour->extraDataSize = sizeof(keyBindingExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }

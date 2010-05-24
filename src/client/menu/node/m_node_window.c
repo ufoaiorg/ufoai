@@ -420,5 +420,5 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->doLayout = MN_WindowNodeDoLayout;
 	behaviour->clone = MN_WindowNodeClone;
 	behaviour->properties = windowNodeProperties;
-	behaviour->extraDataSize = sizeof(windowExtraData_t);
+	behaviour->extraDataSize = sizeof(EXTRADATA(0));
 }
