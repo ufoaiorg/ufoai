@@ -1,4 +1,4 @@
-/* NOTE: based on D3D9 source from Jack Hoxley */
+/* NOTE: portions based on D3D9 source from Jack Hoxley */
 
 #define ATTENUATE_THRESH 0.05 
 
@@ -12,10 +12,17 @@
 /** @todo does not compile on my ati x600 yet */
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
 
+
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
 	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource 
 	 * settings for spot-light sources. */
 	float attenuate = lightSource.constantAttenuation;
+  
+  /* HACK - for some reason, ATI cards return 0.0 for attenuation for directional sources */
+  if (lightSource.position.w == 0.0) {
+    attenuate = 1.0;
+  }
+
 	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
 		attenuate = 1.0 / (lightSource.constantAttenuation + 
@@ -64,6 +71,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
 	return (attenuate * (max(ambientColor, 0.0) + max(diffuseColor, 0.0) + max(specularColor, 0.0)));
+
 }
 
 
