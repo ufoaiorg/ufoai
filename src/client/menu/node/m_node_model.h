@@ -61,6 +61,7 @@ typedef struct modelExtraData_s {
 	qboolean autoscale;			/**< If true autoscale the model when we drw it */
 	qboolean rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
 	qboolean clipOverflow;		/**< If true (default) model outside the node are clipped */
+	qboolean containerLike;		/**< Display an item like an item from the container */
 } modelExtraData_t;
 
 menuModel_t *MN_GetMenuModel(const char *menuModel);
