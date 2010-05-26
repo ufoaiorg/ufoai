@@ -463,9 +463,38 @@ void MN_MouseMove (int x, int y)
 
 	/* update nodes: send 'in' and 'out' event */
 	if (oldHoveredNode != hoveredNode) {
-		if (oldHoveredNode) {
-			MN_ExecuteEventActions(oldHoveredNode, oldHoveredNode->onMouseLeave);
+		menuNode_t *commonNode = hoveredNode;
+		menuNode_t *node;
+
+		/* search the common node */
+		while (commonNode) {
+			node = oldHoveredNode;
+			while (node) {
+				if (node == commonNode)
+					break;
+				node = node->parent;
+			}
+			if (node != NULL)
+				break;
+			commonNode = commonNode->parent;
+		}
+
+		/* send 'leave' event from old node to common node */
+		node = oldHoveredNode;
+		while (node != commonNode) {
+			MN_ExecuteEventActions(node, node->onMouseLeave);
+			node = node->parent;
+		}
+		if (oldHoveredNode)
 			oldHoveredNode->state = qfalse;
+
+		/* send 'enter' event from common node to new node */
+		while (commonNode != hoveredNode) {
+			node = hoveredNode;
+			while (node->parent != commonNode)
+				node = node->parent;
+			commonNode = node;
+			MN_ExecuteEventActions(node, node->onMouseEnter);
 		}
 		if (hoveredNode) {
 			hoveredNode->state = qtrue;
