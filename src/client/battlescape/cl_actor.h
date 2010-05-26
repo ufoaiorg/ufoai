@@ -74,7 +74,6 @@ void CL_ActorSetMode(le_t *actor, actorModes_t actorMode);
 qboolean CL_ActorFireModeActivated(const actorModes_t mode);
 void CL_ActorConditionalMoveCalc(le_t *le);
 qboolean CL_ActorSelect(le_t *le);
-qboolean CL_ActorGetCvarDataList(int num, const char* cvarPrefix);
 qboolean CL_ActorSelectList(int num);
 qboolean CL_ActorSelectNext(void);
 void CL_ActorAddToTeamList(le_t *le);

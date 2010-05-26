@@ -500,45 +500,6 @@ qboolean CL_ActorSelect (le_t * le)
 }
 
 /**
- *  @param num The index value from the list of actors
- *  @param cvarPrefix Cvar prefix we want to use
- */
-qboolean CL_ActorGetCvarDataList (int num, const char* cvarPrefix)
-{
-	le_t *le;
-	character_t *chr;
-
-	/* check if actor exists */
-	if (num >= cl.numTeamList || num < 0)
-		return qfalse;
-
-	/* select actor */
-	le = cl.teamList[num];
-	if (!le)
-		return qfalse;
-
-	chr = CL_ActorGetChr(le);
-	if (!chr) {
-		Com_Error(ERR_DROP, "No character given for local entity");
-		return qfalse;
-	}
-
-	switch (le->fieldSize) {
-	case ACTOR_SIZE_NORMAL:
-		CL_ActorCvars(chr, cvarPrefix);
-		break;
-	case ACTOR_SIZE_2x2:
-		CL_UGVCvars(chr, cvarPrefix);
-		break;
-	default:
-		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
-		return qfalse;
-	}
-
-	return qtrue;
-}
-
-/**
  * @brief Selects an actor from a list.
  *
  * This function is used to select an actor from the lists that are
