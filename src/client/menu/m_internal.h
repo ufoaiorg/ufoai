@@ -33,13 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MENUACTIONS		2*8192
 
 #include "node/m_node_window.h"
+#include "node/m_node_model.h"
 #include "m_actions.h"
 #include "m_nodes.h"
 #include "m_icon.h"
 #include "m_input.h"
 #include "m_expression.h"
 #include "m_data.h"
-#include "node/m_node_model.h"
 
 /**
  * @brief Global data shared into all menu code
