@@ -490,6 +490,7 @@ void MN_MouseMove (int x, int y)
 
 		/* send 'enter' event from common node to new node */
 		while (commonNode != hoveredNode) {
+			/** TODO we can remove that loop with an array allocation */
 			node = hoveredNode;
 			while (node->parent != commonNode)
 				node = node->parent;
