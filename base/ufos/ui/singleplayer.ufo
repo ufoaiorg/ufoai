@@ -1,6 +1,6 @@
-// ===================
+// ==================
 // SINGLE PLAYER MENU
-// ===================
+// ==================
 
 window singleplayer
 {
@@ -29,7 +29,6 @@ window singleplayer
 		string		"_Campaign"
 		pos			"640 170"
 		onClick		{ cmd "mn_push campaigns;" }
-		color		"0 1 0 1"
 	}
 
 	cmpMenuButton button_skirmish
@@ -37,7 +36,6 @@ window singleplayer
 		string	"_Skirmish"
 		pos	"640 240"
 		onClick	{ cmd "mn_push skirmish;" }
-		color		"0 0.93 0 1"
 	}
 
 	cmpMenuButton button_back
@@ -45,7 +43,6 @@ window singleplayer
 		string		"_Back"
 		pos			"640 520"
 		onClick		{ cmd "mn_pop;" }
-		color		"0 0.72 0 1"
 	}
 }
 
@@ -80,7 +77,6 @@ window singleplayermission
 		string		"_Continue"
 		pos			"640 170"
 		onClick		{ cmd "mn_pop;" }
-		color		"0 1 0 1"
 	}
 
 	cmpMenuButton button_abort
@@ -88,7 +84,6 @@ window singleplayermission
 		string		"_Abort"
 		pos			"640 240"
 		onClick		{ cmd "game_abort;" }
-		color		"0 0.93 0 1"			
 	}
 
 	cmpMenuButton button_retry
@@ -96,7 +91,6 @@ window singleplayermission
 		string		"_Retry"
 		pos			"640 310"
 		onClick		{ cmd "game_go;" }
-		color		"0 0.86 0 1"			
 	}
 
 	cmpMenuButton button_options
@@ -104,7 +98,6 @@ window singleplayermission
 		string		"_Options"
 		pos			"640 380"
 		onClick		{ cmd "mn_push options;" }
-		color		"0 0.79 0 1"			
 	}
 
 	cmpMenuButton button_exit
@@ -112,7 +105,6 @@ window singleplayermission
 		string		"_Exit"
 		pos			"640 520"
 		onClick		{ cmd "game_exit;mn_pop;" }
-		color		"0 0.72 0 1"
 	}
 }
 
