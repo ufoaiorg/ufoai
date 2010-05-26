@@ -350,6 +350,9 @@ static void MN_ClientLayout (menuNode_t *node)
 
 static void MN_PanelNodeDoLayout (menuNode_t *node)
 {
+	if (!node->invalidated)
+		return;
+
 	switch (EXTRADATA(node).layout) {
 	case LAYOUT_NONE:
 		break;
