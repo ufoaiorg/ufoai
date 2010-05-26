@@ -32,7 +32,6 @@ window options
 		tooltip		"_Overall game settings like your name and language or menu settings." 
 		string		"_Overall"
 		pos			"80 170"
-		color		"0 1 0 1"
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_game@invis = false
@@ -43,7 +42,6 @@ window options
 		tooltip		"_Video settings." 
 		string		"_Video"
 		pos			"80 240"
-		color		"0 0.93 0 1"		
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_video@invis = false
@@ -55,7 +53,6 @@ window options
 		tooltip		"_Sound settings." 
 		string		"_Audio"
 		pos			"80 310"
-		color		"0 0.86 0 1"
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_sound@invis = false
@@ -66,7 +63,6 @@ window options
 		tooltip		"_Input, battlescape camera and battlescape gameplay settings." 
 		string		"_Gameplay"
 		pos			"80 380"
-		color		"0 0.79 0 1"		
 		onClick		{
 			call *node:root.hidepanels
 			*(panel)options_input@invis = false
@@ -77,7 +73,6 @@ window options
 		tooltip		"_Leave the options menu." 
 		string		"_Back"
 		pos			"80 470"
-		color		"0 0.7 0 1"		
 		onClick		{ cmd "mn_pop;" }
 	}
 	// ===================
