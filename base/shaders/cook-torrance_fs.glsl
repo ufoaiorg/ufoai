@@ -17,12 +17,12 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	 * settings for spot-light sources. */
 	float attenuate = lightSource.constantAttenuation;
 
-#ifdef ATI
+//#ifdef ATI
 	/* HACK - for some reason, ATI cards return 0.0 for attenuation for directional sources */
 	if (lightSource.position.w == 0.0) {
 		attenuate = 1.0;
 	}
-#endif
+//#endif
 
 	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
