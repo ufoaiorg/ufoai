@@ -3,14 +3,17 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-19 11:31+0700\n"
-"PO-Revision-Date: 2010-05-22 19:31+0100\n"
-"Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
+"PO-Revision-Date: 2010-05-26 15:01+0600\n"
+"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-Basepath: ../\n"
 
 #: ../base/maps/africa.ump:225
 #: ../base/maps/africa.ump:246
@@ -2464,8 +2467,7 @@ msgstr "Zurych"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr ""
-"Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
+msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
 
 #: ../base/ufos/events.ufo:34
 #: ../base/ufos/events.ufo:44
@@ -2633,8 +2635,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:5201
 #: ../base/ufos/research.ufo:5230
 msgid "mail_to_base_commander"
-msgstr ""
-"Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2762,8 +2763,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4959
 #: ../base/ufos/research.ufo:4967
 msgid "mail_from_paul_navarre"
-msgstr ""
-"mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2821,8 +2821,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr ""
-"Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2922,8 +2921,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:5200
 #: ../base/ufos/research.ufo:5229
 msgid "mail_from_col_falkland"
-msgstr ""
-"płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2955,8 +2953,7 @@ msgstr ""
 #: ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr ""
-"mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3895,8 +3892,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:5165
 #: ../base/ufos/research.ufo:5172
 msgid "mail_from_dr_connor"
-msgstr ""
-"Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:311
 #: ../base/ufos/research.ufo:352
@@ -7323,8 +7319,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3617
 msgid "inter_stingray_pre_txt"
-msgstr ""
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3667
 msgid "ufo_scout_txt"
@@ -7952,8 +7947,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4440
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr ""
-"Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "Przez: Mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:4487
 msgid "'Raven' ECM Unit"
@@ -9119,43 +9113,35 @@ msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr ""
-"Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, żeby o niej zapomnieć. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem przeszłości, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
+msgstr "Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, żeby o niej zapomnieć. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem przeszłości, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr ""
-"Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe -- jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych Świata."
+msgstr "Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe -- jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych Świata."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr ""
-"Dla wielu ludzi na Ziemi oznacza to, że w końcu nastały spokojne czasy."
+msgstr "Dla wielu ludzi na Ziemi oznacza to, że w końcu nastały spokojne czasy."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr ""
-"Celem pierwszego ataku staje się Bombaj w dniu 3 marca 2084 roku. Sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie znikąd, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
+msgstr "Celem pierwszego ataku staje się Bombaj w dniu 3 marca 2084 roku. Sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie znikąd, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr ""
-"Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio -- tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu -- choć nikt już nie wątpi, że pojawią się ponownie."
+msgstr "Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio -- tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu -- choć nikt już nie wątpi, że pojawią się ponownie."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr ""
-"Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
+msgstr "Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr ""
-"W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych, założona do walki z istotami pozaziemskimi -- PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
+msgstr "W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych, założona do walki z istotami pozaziemskimi -- PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr ""
-"Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek -- PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdzcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
+msgstr "Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek -- PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdzcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 #: ../base/ufos/ui/options.ufo:67
@@ -14186,11 +14172,12 @@ msgid "Costs:\t%i c\n"
 msgstr "Koszta:\t%i c\n"
 
 #: client/campaign/cp_base.c:1526
-#, c-format
+#, fuzzy, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i dzień do ukończenia\n"
 msgstr[1] "%i dni do ukończenia\n"
+msgstr[2] ""
 
 #: client/campaign/cp_base.c:1529
 #: client/campaign/cp_ufopedia.c:233
@@ -14243,11 +14230,12 @@ msgid "By selling %s you gathered %i credits."
 msgstr "Ze sprzedaży %s uzyskano %i kredytów."
 
 #: client/campaign/cp_base.c:2573
-#, c-format
+#, fuzzy, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i zebranej rzeczy"
 msgstr[1] "%i zebranych rzeczy"
+msgstr[2] ""
 
 #: client/campaign/cp_base.c:2577
 #, c-format
@@ -14255,11 +14243,12 @@ msgid "Not enough storage space in %s. %s"
 msgstr "Zabrakło miejsca do przechowywania w %s. %s"
 
 #: client/campaign/cp_base.c:2578
-#, c-format
+#, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "Sprzedano %i obiekt za %i kredytów."
 msgstr[1] "Sprzedano %i obiektów za %i kredytów."
+msgstr[2] ""
 
 #: client/campaign/cp_base.c:3239
 #, c-format
@@ -14329,7 +14318,7 @@ msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Do korzystania ze statku powietrznego potrzebny jest sprawny Hangar."
 
 #: client/campaign/cp_base_callbacks.c:615
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
 "Please wait to enter."
@@ -14338,6 +14327,7 @@ msgid_plural ""
 "Please wait to enter."
 msgstr[0] "Konstrukcja modułu zajmie jeszcze %i dzień."
 msgstr[1] "Konstrukcja modułu zajmie jeszcze %i dni."
+msgstr[2] ""
 
 #: client/campaign/cp_base_callbacks.c:626
 #, c-format
@@ -14382,10 +14372,12 @@ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BModuły\t\t\t\t\t\tWykorzystane\t\t\t\tSztuk w bazie\n"
 
 #: client/campaign/cp_base_callbacks.c:742
+#, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dzień"
 msgstr[1] "dni"
+msgstr[2] ""
 
 #: client/campaign/cp_base_callbacks.c:752
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
@@ -14816,11 +14808,12 @@ msgstr "%d c"
 
 #: client/campaign/cp_installation.c:531
 #: client/campaign/cp_installation_callbacks.c:92
-#, c-format
+#, fuzzy, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dzień"
 msgstr[1] "%d dni"
+msgstr[2] ""
 
 #: client/campaign/cp_installation_callbacks.c:49
 #: client/campaign/cp_map.c:358
@@ -15265,31 +15258,39 @@ msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Uzyskano %i %s, %i %s, %i %s, oraz %i %s od kraju %s (%s)"
 
 #: client/campaign/cp_nations.c:83
+#, fuzzy
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "kredyt"
 msgstr[1] "kredytów"
+msgstr[2] ""
 
 #: client/campaign/cp_nations.c:84
 #: client/cl_game_campaign.c:208
+#, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "naukowca"
 msgstr[1] "naukowców"
+msgstr[2] ""
 
 #: client/campaign/cp_nations.c:85
 #: client/cl_game_campaign.c:207
+#, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "żołnierza"
 msgstr[1] "żołnierzy"
+msgstr[2] ""
 
 #: client/campaign/cp_nations.c:86
 #: client/cl_game_campaign.c:209
+#, fuzzy
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "technika"
 msgstr[1] "techników"
+msgstr[2] ""
 
 #: client/campaign/cp_nations.c:98
 #, c-format
@@ -16117,11 +16118,12 @@ msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Misja transportowa rozpoczęta, ładunek zostanie przetransportowany do %s"
 
 #: client/campaign/cp_transfer.c:952
-#, c-format
+#, fuzzy, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
 msgstr[0] "(może przechować %i żywego Obcego)"
 msgstr[1] "(może przechować %i żywych Obcych)"
+msgstr[2] ""
 
 #: client/campaign/cp_transfer.c:971
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
@@ -16273,11 +16275,12 @@ msgid "Error - could not find building"
 msgstr "Błąd - nie można znaleźć modułu"
 
 #: client/campaign/cp_ufopedia.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Czas budowy:\t%i dzień\n"
 msgstr[1] "Czas produkcji:\t%i dni\n"
+msgstr[2] ""
 
 #: client/campaign/cp_ufopedia.c:232
 #, c-format
@@ -16890,11 +16893,12 @@ msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Ukryj HUD (ESC by przywrócić HUD)"
 
 #: client/menu/node/m_node_base.c:201
-#, c-format
+#, fuzzy, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "pozostał %i dzień"
 msgstr[1] "pozostało %i dni"
+msgstr[2] ""
 
 #: client/menu/node/m_node_base.c:274
 msgid "not operational, depends on"
