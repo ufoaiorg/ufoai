@@ -189,6 +189,173 @@ window hud extends ahud
 		}
 	}
 
+	/**
+	 * TODO remove bt_actor7 tooltip from script and C code
+	 * TODO update hovered actor content
+	 * 
+	 */
+	panel popup_soldier_hovered {
+		{
+			align	LAYOUTALIGN_TOP
+			size	"520 300"
+			ghost	true
+			invis	true
+		}
+
+		panel bg {
+			{
+				pos		"0 80"
+				size	"520 200"
+				image	"ui/panel_rounded_green"
+			}
+
+			pic right_bg
+			{
+				image			hud/weapon_box
+				pos				"106 103"
+				size 			"150 80"
+				texh 			"150 80"
+			}
+
+			item right
+			{
+				pos				"106 103"
+				size 			"150 80"
+				scale			"3.5 3.5 3.5"
+				model			*cvar:mn_hovered_rweapon_item
+				containerLike	true
+			}
+	
+			pic left_bg
+			{
+				image			hud/weapon_box
+				pos				"285 103"
+				size 			"150 80"
+				texh 			"150 80"
+			}
+
+			item left
+			{
+				pos				"285 103"
+				size 			"150 80"
+				scale			"3.5 3.5 3.5"
+				model			*cvar:mn_hovered_lweapon_item
+				containerLike	true
+			}
+	
+			pic head_bg
+			{
+				image		hud/head_box
+				pos			"20 16"
+				size 		"87 79"
+			}
+
+			model head
+			{
+				model		*cvar:mn_hovered_head
+				skin		*cvar:mn_hovered_skin
+				angles		"0 60 90"
+				autoscale	true
+				pos			"26 22"
+				size		"74 66"
+				origin		"0 0 0"
+			}
+
+			string actorname
+			{
+				string		*cvar:mn_hovered_name
+				pos			"150 14"
+				size		"255 20"
+			}
+
+			string tus
+			{
+				string		*cvar:mn_hovered_tu
+				pos			"105 35"
+				size		"40 20"
+				textalign	ur
+			}
+
+			bar timeall
+			{
+				pos			"150 40"
+				size		"298 10"
+				color		".1 .1 .7 1"
+				current		*cvar:mn_hovered_tu
+				max			*cvar:mn_hovered_tumax
+				readonly	true
+			}
+
+			bar timeremain
+			{
+				pos			"150 40"
+				size		"298 10"
+				color		".2 .2 1 1"
+				current		*cvar:mn_hovered_turemain
+				max			*cvar:mn_hovered_tumax
+				readonly	true
+			}
+
+			bar timereserved
+			{
+				pos			"150 45"
+				size		"298 5"
+				color		"0 .5 0 1"
+				current		*cvar:mn_hovered_tureserved
+				max			*cvar:mn_hovered_tumax
+				readonly	true
+			}
+	
+			string hp
+			{
+				string		*cvar:mn_hovered_hp
+				pos			"105 50"
+				size		"40 20"
+				textalign	ur
+			}
+
+			bar health
+			{
+				pos			"150 55"
+				size		"298 10"
+				color		"1 0 0 1"
+				current		*cvar:mn_hovered_hp
+				max			*cvar:mn_hovered_hpmax
+				readonly	true
+			}
+
+			bar stun
+			{
+				pos			"150 55"
+				size		"298 10"
+				color		".3 .3 .3 .9"
+				current		*cvar:mn_hovered_stun
+				max			*cvar:mn_hovered_hpmax
+				readonly	true
+			}
+	
+			string moral_text
+			{
+				string		*cvar:mn_hovered_morale
+				pos			"105 65"
+				size		"40 20"
+				textalign	ur
+			}
+	
+			bar morale
+			{
+				pos			"150 70"
+				size		"298 10"
+				color		"1 1 0.5 1"
+				current		*cvar:mn_hovered_morale
+				max			*cvar:mn_hovered_moralemax
+				readonly	true
+			}
+
+		}
+
+	}
+
 	panel team_selection {
 		{
 			pos		"415 0"
@@ -197,6 +364,7 @@ window hud extends ahud
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
 			excluderect { pos	"308 28"	size	"193 28" }
+			onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
 		}
 
 		pic background
@@ -210,7 +378,6 @@ window hud extends ahud
 
 		radiobutton bt_actor0
 		{
-			tooltip		*cvar:mn_soldier0_tt
 			pos			"29 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -218,11 +385,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_1
 			onClick		{ cmd "actor_select 0;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 0 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor1
 		{
-			tooltip		*cvar:mn_soldier1_tt
 			pos			"59 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -230,11 +397,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_2
 			onClick		{ cmd "actor_select 1;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 1 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor2
 		{
-			tooltip		*cvar:mn_soldier2_tt
 			pos			"89 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -242,11 +409,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_3
 			onClick		{ cmd "actor_select 2;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 2 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor3
 		{
-			tooltip		*cvar:mn_soldier3_tt
 			pos			"119 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -254,11 +421,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_4
 			onClick		{ cmd "actor_select 3;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 3 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor4
 		{
-			tooltip		*cvar:mn_soldier4_tt
 			pos			"149 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -266,11 +433,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_5
 			onClick		{ cmd "actor_select 4;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 4 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor5
 		{
-			tooltip		*cvar:mn_soldier5_tt
 			pos			"179 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -278,11 +445,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_6
 			onClick		{ cmd "actor_select 5;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 5 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor6
 		{
-			tooltip		*cvar:mn_soldier6_tt
 			pos			"209 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -290,11 +457,11 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_7
 			onClick		{ cmd "actor_select 6;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 6 mn_hovered_;" }
 		}
 
 		radiobutton bt_actor7
 		{
-			tooltip		*cvar:mn_soldier7_tt
 			pos			"239 10"
 			size		"27 35"
 			image		"ui/button_background2"
@@ -302,6 +469,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_8
 			onClick		{ cmd "actor_select 7;" }
+			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 7 mn_hovered_;" }
 		}
 	}
 

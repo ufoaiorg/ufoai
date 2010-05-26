@@ -230,7 +230,7 @@ static void HOS_EmployeeInit_f (void)
 
 	c = &currentEmployeeInHospital->chr;
 	assert(c);
-	CL_ActorCvars(c);
+	CL_ActorCvars(c, "mn_");
 
 	Cvar_SetValue("mn_hp", c->HP);
 	Cvar_SetValue("mn_hpmax", c->maxHP);

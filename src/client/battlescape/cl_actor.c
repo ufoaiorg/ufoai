@@ -168,7 +168,7 @@ int CL_ActorMoveMode (const le_t *le, int length)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-void CL_ActorCvars (const character_t * chr)
+void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
 {
 	invList_t *weapon;
 	assert(chr);
@@ -177,19 +177,19 @@ void CL_ActorCvars (const character_t * chr)
 	weapon = RIGHT(chr);
 	if (weapon) {
 		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
-		Cvar_Set("mn_rweapon", weapon->item.t->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
 	} else
-		Cvar_Set("mn_rweapon", "");
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
 	weapon = LEFT(chr);
 	if (weapon) {
 		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
-		Cvar_Set("mn_lweapon", weapon->item.t->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
 	} else
-		Cvar_Set("mn_lweapon", "");
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
 
 	GAME_CharacterCvars(chr);
 
-	CL_CharacterSkillAndScoreCvars(chr);
+	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
 }
 
 /**
@@ -485,16 +485,55 @@ qboolean CL_ActorSelect (le_t * le)
 
 	switch (le->fieldSize) {
 	case ACTOR_SIZE_NORMAL:
-		CL_ActorCvars(chr);
+		CL_ActorCvars(chr, "mn_");
 		break;
 	case ACTOR_SIZE_2x2:
-		CL_UGVCvars(chr);
+		CL_UGVCvars(chr, "mn_");
 		break;
 	default:
 		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
 	}
 
 	CL_ActorConditionalMoveCalc(le);
+
+	return qtrue;
+}
+
+/**
+ *  @param num The index value from the list of actors
+ *  @param cvarPrefix Cvar prefix we want to use
+ */
+qboolean CL_ActorGetCvarDataList (int num, const char* cvarPrefix)
+{
+	le_t *le;
+	character_t *chr;
+
+	/* check if actor exists */
+	if (num >= cl.numTeamList || num < 0)
+		return qfalse;
+
+	/* select actor */
+	le = cl.teamList[num];
+	if (!le)
+		return qfalse;
+
+	chr = CL_ActorGetChr(le);
+	if (!chr) {
+		Com_Error(ERR_DROP, "No character given for local entity");
+		return qfalse;
+	}
+
+	switch (le->fieldSize) {
+	case ACTOR_SIZE_NORMAL:
+		CL_ActorCvars(chr, cvarPrefix);
+		break;
+	case ACTOR_SIZE_2x2:
+		CL_UGVCvars(chr, cvarPrefix);
+		break;
+	default:
+		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
+		return qfalse;
+	}
 
 	return qtrue;
 }
@@ -2279,9 +2318,9 @@ static void CL_ActorEquipmentSelect_f (void)
 
 	/* set info cvars */
 	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr);
+		CL_UGVCvars(chr, "mn_");
 	else
-		CL_ActorCvars(chr);
+		CL_ActorCvars(chr, "mn_");
 }
 
 /**
@@ -2313,9 +2352,9 @@ static void CL_ActorUpdate_f (void)
 	if (num < chrDisplayList.num) {
 		assert(chrDisplayList.chr[num]);
 		if (chrDisplayList.chr[num]->teamDef->race == RACE_ROBOT)
-			CL_UGVCvars(chrDisplayList.chr[num]);
+			CL_UGVCvars(chrDisplayList.chr[num], "mn_");
 		else
-			CL_ActorCvars(chrDisplayList.chr[num]);
+			CL_ActorCvars(chrDisplayList.chr[num], "mn_");
 	}
 }
 

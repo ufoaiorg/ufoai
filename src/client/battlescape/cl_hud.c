@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_localentity.h"
 #include "cl_actor.h"
+#include "cl_ugv.h"
 #include "cl_hud.h"
 #include "cl_hud_callbacks.h"
 #include "../cl_game.h"
@@ -1176,40 +1177,123 @@ static int HUD_UpdateActorMove (const le_t *actor)
 	return actor->actorMoveLength;
 }
 
+static void HUD_UpdateActorCvar (le_t *actor, const char *cvarPrefix)
+{
+	const invList_t* invList;
+	const char *animName;
+	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
+
+	Cvar_SetValue(va("%s%s", cvarPrefix, "hp"), actor->HP);
+	Cvar_SetValue(va("%s%s", cvarPrefix, "hpmax"), actor->maxHP);
+	Cvar_SetValue(va("%s%s", cvarPrefix, "tu"), actor->TU);
+	Cvar_SetValue(va("%s%s", cvarPrefix, "tumax"), actor->maxTU);
+	Cvar_SetValue(va("%s%s", cvarPrefix, "tureserved"), CL_ActorReservedTUs(actor, RES_ALL_ACTIVE));
+	Cvar_SetValue(va("%s%s", cvarPrefix, "morale"), actor->morale);
+	Cvar_SetValue(va("%s%s", cvarPrefix, "moralemax"), actor->maxMorale);
+	Cvar_SetValue(va("%s%s", cvarPrefix, "stun"), actor->STUN);
+
+	Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
+		_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
+				actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
+	Cvar_Set(va("%s%s", cvarPrefix, "tu_tooltips"), tuTooltipText);
+
+	/* animation and weapons */
+	animName = R_AnimGetName(&actor->as, actor->model1);
+	if (animName)
+		Cvar_Set(va("%s%s", cvarPrefix, "anim"), animName);
+	if (RIGHT(actor)) {
+		const invList_t *i = RIGHT(actor);
+		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), i->item.t->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), i->item.t->id);
+	} else {
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), "");
+	}
+	if (LEFT(actor)) {
+		const invList_t *i = LEFT(actor);
+		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), i->item.t->model);
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), i->item.t->id);
+	} else {
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), "");
+	}
+
+	/* print ammo */
+	invList = RIGHT(actor);
+	if (invList)
+		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoright"), invList->item.a);
+	else
+		Cvar_Set(va("%s%s", cvarPrefix, "ammoright"), "");
+
+	invList = HUD_GetLeftHandWeapon(actor, NULL);
+	if (invList)
+		Cvar_SetValue(va("%s%s", cvarPrefix, "ammoleft"), invList->item.a);
+	else
+		Cvar_Set(va("%s%s", cvarPrefix, "ammoleft"), "");
+}
+
+/**
+ * @brief Update cvars according to a soldier from a list while we are on battlescape
+ */
+static void HUD_ActorGetCvarData_f (void)
+{
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <soldiernum> <cvarprefix>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* check whether we are connected (tactical mission) */
+	if (CL_BattlescapeRunning()) {
+		const int num = atoi(Cmd_Argv(1));
+		const char *cvarPrefix = Cmd_Argv(2);
+		le_t *le;
+		character_t *chr;
+
+		/* check if actor exists */
+		if (num >= cl.numTeamList || num < 0)
+			return;
+
+		/* select actor */
+		le = cl.teamList[num];
+		if (!le)
+			return;
+
+		chr = CL_ActorGetChr(le);
+		if (!chr) {
+			Com_Error(ERR_DROP, "No character given for local entity");
+			return;
+		}
+
+		switch (le->fieldSize) {
+		case ACTOR_SIZE_NORMAL:
+			CL_ActorCvars(chr, cvarPrefix);
+			break;
+		case ACTOR_SIZE_2x2:
+			CL_UGVCvars(chr, cvarPrefix);
+			break;
+		default:
+			Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
+			return;
+		}
+
+		/* override some cvar with HUD data */
+		HUD_UpdateActorCvar(le, cvarPrefix);
+
+		return;
+	}
+}
+
 /**
  * @brief Updates the hud for one actor
  * @param actor The actor to update the hud values for
  */
 static void HUD_UpdateActor (le_t *actor)
 {
-	const invList_t* invList;
-	const char *animName;
 	int time;
-	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
 
-	MN_ExecuteConfunc("updateselectedactorvalues %i %i %i %i %i %i %i %i",
-			actor->HP, actor->maxHP, actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE),
-			actor->morale, actor->maxMorale, actor->STUN);
-
-	Com_sprintf(tuTooltipText, lengthof(tuTooltipText),
-		_("Time Units\n- Available: %i (of %i)\n- Reserved:  %i\n- Remaining: %i\n"),
-				actor->TU, actor->maxTU, CL_ActorReservedTUs(actor, RES_ALL_ACTIVE), CL_ActorUsableTUs(actor));
-	Cvar_Set("mn_tu_tooltips", tuTooltipText);
-
-	/* animation and weapons */
-	animName = R_AnimGetName(&actor->as, actor->model1);
-	if (animName)
-		Cvar_Set("mn_anim", animName);
-	if (RIGHT(actor)) {
-		const invList_t *i = RIGHT(actor);
-		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
-		Cvar_Set("mn_rweapon", i->item.t->model);
-	}
-	if (LEFT(actor)) {
-		const invList_t *i = LEFT(actor);
-		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
-		Cvar_Set("mn_lweapon", i->item.t->model);
-	}
+	HUD_UpdateActorCvar(actor, "mn_");
 
 	/* write info */
 	time = 0;
@@ -1251,25 +1335,12 @@ static void HUD_UpdateActor (le_t *actor)
 		time = HUD_UpdateActorMove(actor);
 	}
 
-	HUD_MapDebugCursor(actor);
-
-	/* print ammo */
-	invList = RIGHT(actor);
-	if (invList)
-		Cvar_SetValue("mn_ammoright", invList->item.a);
-	else
-		Cvar_Set("mn_ammoright", "");
-
-	invList = HUD_GetLeftHandWeapon(actor, NULL);
-	if (invList)
-		Cvar_SetValue("mn_ammoleft", invList->item.a);
-	else
-		Cvar_Set("mn_ammoleft", "");
-
 	/* Calculate remaining TUs. */
 	/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
 	time = max(0, actor->TU - time);
 	Cvar_Set("mn_turemain", va("%i", time));
+
+	HUD_MapDebugCursor(actor);
 }
 
 /**
@@ -1313,7 +1384,14 @@ void HUD_Update (void)
 		HUD_UpdateActor(selActor);
 	} else if (!cl.numTeamList) {
 		/* This will stop the drawing of the bars over the whole screen when we test maps. */
-		MN_ExecuteConfunc("updateselectedactorvalues 0 100 0 100 0 0 100 0");
+		Cvar_SetValue("mn_hp", 0);
+		Cvar_SetValue("mn_hpmax", 100);
+		Cvar_SetValue("mn_tu", 0);
+		Cvar_SetValue("mn_tumax", 100);
+		Cvar_SetValue("mn_tureserved", 0);
+		Cvar_SetValue("mn_morale", 0);
+		Cvar_SetValue("mn_moralemax", 100);
+		Cvar_SetValue("mn_stun", 0);
 	}
 
 	/* display special message */
@@ -1397,6 +1475,7 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("hud_switchfiremodelist", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("hud_selectreactionfiremode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 	Cmd_AddCommand("hud_listfiremodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("hud_getactorcvar", HUD_ActorGetCvarData_f, _("Update cvars from actor from list"));
 
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	Cvar_SetCheckFunction("cl_worldlevel", CL_CvarWorldLevel);
