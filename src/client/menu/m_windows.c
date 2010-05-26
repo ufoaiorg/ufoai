@@ -583,11 +583,6 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 		if (MN_IsWindowOnStack(mn_hud->string))
 			window = MN_GetWindow(mn_hud->string);
 
-	if (!strcmp(window->name, "hud")) {
-		windowExtraData_t w = WINDOWEXTRADATA(window);
-		w.fill = qtrue;
-	}
-
 	if (window && WINDOWEXTRADATA(window).renderNode) {
 		menuNode_t* node = WINDOWEXTRADATA(window).renderNode;
 		vec2_t pos;
