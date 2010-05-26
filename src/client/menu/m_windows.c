@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cinematic/cl_cinematic.h"
 
-#define WINDOWETRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
-#define WINDOWETRADATACONST(node)  MN_EXTRADATACONST(node, windowExtraData_t)
+#define WINDOWEXTRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
+#define WINDOWEXTRADATACONST(node)  MN_EXTRADATACONST(node, windowExtraData_t)
 
 /**
  * @brief Window name use as alternative for option
@@ -84,7 +84,7 @@ void MN_MoveWindowOnTop (menuNode_t * window)
 	for (j = i; j < mn.windowStackPos; j++) {
 		if (MN_WindowIsFullScreen(mn.windowStack[j]))
 			break;
-		if (WINDOWETRADATA(window).parent != WINDOWETRADATA(mn.windowStack[j]).parent)
+		if (WINDOWEXTRADATA(window).parent != WINDOWEXTRADATA(mn.windowStack[j]).parent)
 			break;
 	}
 	if (i + 1 == j)
@@ -189,7 +189,7 @@ static menuNode_t* MN_PushWindowDelete (const char *name, const char *parent, qb
 				return NULL;
 			}
 			MN_InsertWindowIntoStack(window, parentPos + 1);
-			WINDOWETRADATA(window).parent = mn.windowStack[parentPos];
+			WINDOWEXTRADATA(window).parent = mn.windowStack[parentPos];
 		} else
 			mn.windowStack[mn.windowStackPos++] = window;
 	else
@@ -379,7 +379,7 @@ static void MN_CloseAllWindow (void)
 			window->behaviour->close(window);
 
 		/* safe: unlink window */
-		WINDOWETRADATA(window).parent = NULL;
+		WINDOWEXTRADATA(window).parent = NULL;
 		mn.windowStackPos--;
 		mn.windowStack[mn.windowStackPos] = NULL;
 	}
@@ -443,19 +443,19 @@ static void MN_CloseWindowByRef (menuNode_t *window)
 	/* close child */
 	while (i + 1 < mn.windowStackPos) {
 		menuNode_t *m = mn.windowStack[i + 1];
-		if (WINDOWETRADATA(m).parent != window) {
+		if (WINDOWEXTRADATA(m).parent != window) {
 			break;
 		}
 		if (window->behaviour->close)
 			window->behaviour->close(window);
-		WINDOWETRADATA(m).parent = NULL;
+		WINDOWEXTRADATA(m).parent = NULL;
 		MN_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
 	if (window->behaviour->close)
 		window->behaviour->close(window);
-	WINDOWETRADATA(window).parent = NULL;
+	WINDOWEXTRADATA(window).parent = NULL;
 	MN_RemoveWindowAtPositionFromStack(i);
 
 	MN_InvalidateMouse();
@@ -488,8 +488,8 @@ void MN_PopWindow (qboolean all)
 		menuNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
 		if (!mn.windowStackPos)
 			return;
-		if (WINDOWETRADATA(mainMenu).parent)
-			mainMenu = WINDOWETRADATA(mainMenu).parent;
+		if (WINDOWEXTRADATA(mainMenu).parent)
+			mainMenu = WINDOWEXTRADATA(mainMenu).parent;
 		MN_CloseWindowByRef(mainMenu);
 
 		if (mn.windowStackPos == 0) {
@@ -541,7 +541,7 @@ void MN_PopWindowWithEscKey (void)
 		return;
 
 	/* some window can prevent escape */
-	if (WINDOWETRADATACONST(window).preventTypingEscape)
+	if (WINDOWEXTRADATACONST(window).preventTypingEscape)
 		return;
 
 	MN_PopWindow(qfalse);
@@ -579,12 +579,17 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 	menuNode_t *window = MN_GetActiveWindow();
 
 	/** @todo the better way is to add a 'battlescape' node */
-	if (!window || !WINDOWETRADATA(window).renderNode)
+	if (!window || !WINDOWEXTRADATA(window).renderNode)
 		if (MN_IsWindowOnStack(mn_hud->string))
 			window = MN_GetWindow(mn_hud->string);
 
-	if (window && WINDOWETRADATA(window).renderNode) {
-		menuNode_t* node = WINDOWETRADATA(window).renderNode;
+	if (!strcmp(window->name, "hud")) {
+		windowExtraData_t w = WINDOWEXTRADATA(window);
+		w.fill = qtrue;
+	}
+
+	if (window && WINDOWEXTRADATA(window).renderNode) {
+		menuNode_t* node = WINDOWEXTRADATA(window).renderNode;
 		vec2_t pos;
 
 		/* update the layout */
@@ -628,14 +633,14 @@ qboolean MN_IsPointOnWindow (void)
 		return qtrue;
 
 	if (mn.windowStackPos != 0) {
-		if (WINDOWETRADATA(mn.windowStack[mn.windowStackPos - 1]).dropdown)
+		if (WINDOWEXTRADATA(mn.windowStack[mn.windowStackPos - 1]).dropdown)
 			return qtrue;
 	}
 
 	hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered->root && hovered == WINDOWETRADATACONST(hovered).renderNode) {
+		if (hovered->root && hovered == WINDOWEXTRADATACONST(hovered->root).renderNode) {
 			return qfalse;
 		}
 		return qtrue;
@@ -765,8 +770,8 @@ static void MN_FireInit_f (void)
 
 	/* initialize it */
 	if (window) {
-		if (WINDOWETRADATACONST(window).onInit)
-			MN_ExecuteEventActions(window, WINDOWETRADATACONST(window).onInit);
+		if (WINDOWEXTRADATACONST(window).onInit)
+			MN_ExecuteEventActions(window, WINDOWEXTRADATACONST(window).onInit);
 		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", window->name);
 	}
 }
