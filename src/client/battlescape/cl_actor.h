@@ -58,7 +58,7 @@ void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void ACTOR_InitStartup(void);
 
-void CL_ActorCvars(const character_t *chr);
+void CL_ActorCvars(const character_t *chr, const char* cvarPrefix);
 const char *CL_ActorGetSkillString(const int skill);
 
 int CL_ActorCheckAction(const le_t *le);

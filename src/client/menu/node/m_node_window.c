@@ -136,8 +136,6 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 static void MN_WindowNodeDoLayout (menuNode_t *node)
 {
-	qboolean resized = qfalse;
-
 	if (!node->invalidated)
 		return;
 
@@ -145,11 +143,9 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 	if (EXTRADATA(node).fill) {
 		if (node->size[0] != viddef.virtualWidth) {
 			node->size[0] = viddef.virtualWidth;
-			resized = qtrue;
 		}
 		if (node->size[1] != viddef.virtualHeight) {
 			node->size[1] = viddef.virtualHeight;
-			resized = qtrue;
 		}
 	}
 
@@ -161,10 +157,8 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 
 	/** @todo check and fix here window outside the screen */
 
-	if (resized) {
-		if (EXTRADATA(node).starLayout) {
-			MN_StarLayout(node);
-		}
+	if (EXTRADATA(node).starLayout) {
+		MN_StarLayout(node);
 	}
 
 	/* super */
@@ -281,6 +275,9 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	EXTRADATA(node).isFullScreen = node->size[0] == VID_NORM_WIDTH
 			&& node->size[1] == VID_NORM_HEIGHT;
+
+	if (EXTRADATA(node).starLayout)
+		MN_Invalidate(node);
 
 #ifdef DEBUG
 	if (node->size[0] < LEFT_WIDTH + MID_WIDTH + RIGHT_WIDTH || node->size[1] < TOP_HEIGHT + MID_HEIGHT + BOTTOM_HEIGHT)

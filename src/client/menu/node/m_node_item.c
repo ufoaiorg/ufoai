@@ -59,7 +59,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		vec3_t pos;
 		item.t = &csi.ods[od->idx];
 
-		if (INV_IsArmour(item.t)) {
+		if (EXTRADATA(node).containerLike || INV_IsArmour(item.t)) {
 			/* We position the model of the item ourself (in the middle of the item
 			 * node). See the "-1, -1" parameter of MN_DrawItem. */
 			MN_GetNodeAbsPos(node, pos);
@@ -76,9 +76,18 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 	}
 }
 
+/** @brief valid properties for model */
+static const value_t properties[] = {
+	/* Display an item like a container node do it */
+	{"containerlike", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, containerLike), MEMBER_SIZEOF(modelExtraData_t, containerLike)},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterItemNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
+	behaviour->properties = properties;
 	behaviour->extends = "model";
 	behaviour->draw = MN_ItemNodeDraw;
 }

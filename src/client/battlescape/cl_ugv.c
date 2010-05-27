@@ -38,13 +38,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_ActorCvars
  * @sa CL_ActorSelect
  */
-void CL_UGVCvars (const character_t *chr)
+void CL_UGVCvars (const character_t *chr, const char* cvarPrefix)
 {
 	assert(chr);
 
 	GAME_CharacterCvars(chr);
 
-	CL_CharacterSkillAndScoreCvars(chr);
+	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
 
 	Cvar_Set("mn_lweapon", "");
 	Cvar_Set("mn_rweapon", "");

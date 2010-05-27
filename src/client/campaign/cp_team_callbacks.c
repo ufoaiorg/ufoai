@@ -372,7 +372,7 @@ static void CL_ActorPilotSelect_f (void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	CL_ActorCvars(chr);
+	CL_ActorCvars(chr, "mn_");
 	MN_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
 }
 
@@ -418,9 +418,9 @@ static void CL_ActorTeamSelect_f (void)
 
 	/* set info cvars */
 	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr);
+		CL_UGVCvars(chr, "mn_");
 	else
-		CL_ActorCvars(chr);
+		CL_ActorCvars(chr, "mn_");
 	MN_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
 }
 

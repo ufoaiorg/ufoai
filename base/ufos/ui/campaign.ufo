@@ -34,7 +34,6 @@ window campaigns
 		pos	"80 170"
 		onClick	{ cmd "cp_start;" }
 		string	"_Start campaign"
-		color		"0 1 0 1"			
 	}
 
 	cmpMenuButton button_load
@@ -42,7 +41,6 @@ window campaigns
 		string		"_Load"
 		pos			"80 240"
 		onClick		{ cmd "mn_push load;" }
-		color		"0 0.93 0 1"			
 	}
 
 	cmpMenuButton button_continue
@@ -53,7 +51,6 @@ window campaigns
 		tooltip		"_Load last saved game or continue playing"
 		pos			"640 380"
 		onClick		{ cmd "game_continue;" }
-		color		"0 0.86 0 1"			
 	}
 
 	cmpMenuButton c_button_exit
@@ -61,7 +58,6 @@ window campaigns
 		pos	"80 470"
 		onClick	{ cmd "mn_pop;" }
 		string	"_Back"
-		color		"0 0.79 0 1"			
 	}
 
 	textlist campaignlist
@@ -152,7 +148,6 @@ window campaign_main
 		string		"_Continue"
 		pos			"640 170"
 		onClick		{ cmd "game_continue;" }
-		color		"0 1 0 1"			
 	}
 
 	cmpMenuButton button_load
@@ -160,7 +155,6 @@ window campaign_main
 		string		"_Load"
 		pos			"640 240"
 		onClick		{ cmd "mn_push load;" }
-		color		"0 0.93 0 1"			
 	}
 
 	cmpMenuButton button_save
@@ -168,7 +162,6 @@ window campaign_main
 		string		"_Save"
 		pos			"640 310"
 		onClick		{ cmd "mn_push save;" }
-		color		"0 0.86 0 1"			
 	}
 
 	cmpMenuButton button_options
@@ -176,7 +169,6 @@ window campaign_main
 		string		"_Options"
 		pos			"640 380"
 		onClick		{ cmd "mn_push options;" }
-		color		"0 0.79 0 1"			
 	}
 
 	cmpMenuButton button_back
@@ -184,7 +176,6 @@ window campaign_main
 		string		"_Exit"
 		pos			"640 520"
 		onClick		{ cmd "game_exit;" }
-		color		"0 0.72 0 1"			
 	}
 }
 

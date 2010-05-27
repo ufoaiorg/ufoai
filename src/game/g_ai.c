@@ -413,42 +413,46 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	/* shooting */
-	maxDmg = 0.0;
-	for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-		const item_t *item;
-		fireDefIndex_t fdIdx;
-		const fireDef_t *fdArray;
+	/* search best target */
+	while ((check = G_EdictsGetNextLivingActor(check))) {
+		if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
+			qboolean visChecked = qfalse;	/* only check visibily once for an actor */
 
-		item = AI_GetItemForShootType(shootType, ent);
-		if (!item)
-			continue;
+			/* don't shoot civilians in mp */
+			if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
+				continue;
 
-		fdArray = FIRESH_FiredefForWeapon(item);
-		if (fdArray == NULL)
-			continue;
+			/* shooting */
+			maxDmg = 0.0;
+			for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+				const item_t *item;
+				fireDefIndex_t fdIdx;
+				const fireDef_t *fdArray;
 
-		/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
-		for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-			const fireDef_t *fd = &fdArray[fdIdx];
-			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
-				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
-			/* how many shoots can this actor do */
-			const int shots = tu / fd->time;
-			if (shots) {
-				/* search best target */
-				while ((check = G_EdictsGetNextLivingActor(check))) {
-					if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
+				item = AI_GetItemForShootType(shootType, ent);
+				if (!item)
+					continue;
 
-						/* don't shoot civilians in mp */
-						if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
-							continue;
+				fdArray = FIRESH_FiredefForWeapon(item);
+				if (fdArray == NULL)
+					continue;
 
+				/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
+				for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+					const fireDef_t *fd = &fdArray[fdIdx];
+					const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
+						GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
+					/* how many shoots can this actor do */
+					const int shots = tu / fd->time;
+					if (shots) {
 						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 							continue;
 
 						/* check how good the target is visible */
-						vis = G_ActorVis(ent->origin, check, qtrue);
+						if (!visChecked) {	/* only do this once per actor ! */
+							vis = G_ActorVis(ent->origin, check, qtrue);
+							visChecked = qtrue;
+						}
 						if (vis == ACTOR_VIS_0)
 							continue;
 
