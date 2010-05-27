@@ -202,6 +202,24 @@ window hud extends ahud
 			invis	true
 		}
 
+		pic cursor
+		{
+			image			hud/popup_cursor
+			pos				"106 56"
+			size 			"47 24"
+			texh 			"47 24"
+		}
+
+		/**
+		 * @param <1> number of the soldier from 0..7 
+		 */
+		func select
+		{
+			cmd "hud_getactorcvar <1> mn_hovered_;"
+			*node:parent.cursor@left = ( 141 + ( 30 * <1> ) )
+			*node:root.popup_soldier_hovered@invis = false
+		}
+
 		panel bg {
 			{
 				pos		"0 80"
@@ -385,7 +403,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_1
 			onClick		{ cmd "actor_select 0;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 0 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
 		}
 
 		radiobutton bt_actor1
@@ -397,7 +415,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_2
 			onClick		{ cmd "actor_select 1;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 1 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
 		}
 
 		radiobutton bt_actor2
@@ -409,7 +427,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_3
 			onClick		{ cmd "actor_select 2;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 2 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
 		}
 
 		radiobutton bt_actor3
@@ -421,7 +439,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_4
 			onClick		{ cmd "actor_select 3;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 3 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
 		}
 
 		radiobutton bt_actor4
@@ -433,7 +451,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_5
 			onClick		{ cmd "actor_select 4;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 4 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
 		}
 
 		radiobutton bt_actor5
@@ -445,7 +463,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_6
 			onClick		{ cmd "actor_select 5;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 5 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
 		}
 
 		radiobutton bt_actor6
@@ -457,7 +475,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_7
 			onClick		{ cmd "actor_select 6;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 6 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
 		}
 
 		radiobutton bt_actor7
@@ -469,7 +487,7 @@ window hud extends ahud
 			cvar		*cvar:selected_soldier
 			icon		number_8
 			onClick		{ cmd "actor_select 7;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 7 mn_hovered_;" }
+			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
 		}
 	}
 
