@@ -382,7 +382,6 @@ window hud extends ahud
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
 			excluderect { pos	"308 28"	size	"193 28" }
-			onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
 		}
 
 		pic background
@@ -394,100 +393,109 @@ window hud extends ahud
 			ghost	true
 		}
 
-		radiobutton bt_actor0
-		{
-			pos			"29 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		0
-			cvar		*cvar:selected_soldier
-			icon		number_1
-			onClick		{ cmd "actor_select 0;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
-		}
+		panel buttonList {
+			{
+				pos "29 10"
+				size "275 35"
+				onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
+			}
 
-		radiobutton bt_actor1
-		{
-			pos			"59 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		1
-			cvar		*cvar:selected_soldier
-			icon		number_2
-			onClick		{ cmd "actor_select 1;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
-		}
-
-		radiobutton bt_actor2
-		{
-			pos			"89 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		2
-			cvar		*cvar:selected_soldier
-			icon		number_3
-			onClick		{ cmd "actor_select 2;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
-		}
-
-		radiobutton bt_actor3
-		{
-			pos			"119 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		3
-			cvar		*cvar:selected_soldier
-			icon		number_4
-			onClick		{ cmd "actor_select 3;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
-		}
-
-		radiobutton bt_actor4
-		{
-			pos			"149 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		4
-			cvar		*cvar:selected_soldier
-			icon		number_5
-			onClick		{ cmd "actor_select 4;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
-		}
-
-		radiobutton bt_actor5
-		{
-			pos			"179 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		5
-			cvar		*cvar:selected_soldier
-			icon		number_6
-			onClick		{ cmd "actor_select 5;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
-		}
-
-		radiobutton bt_actor6
-		{
-			pos			"209 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		6
-			cvar		*cvar:selected_soldier
-			icon		number_7
-			onClick		{ cmd "actor_select 6;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
-		}
-
-		radiobutton bt_actor7
-		{
-			pos			"239 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		7
-			cvar		*cvar:selected_soldier
-			icon		number_8
-			onClick		{ cmd "actor_select 7;" }
-			onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
+			radiobutton bt_actor0
+			{
+				pos			"0 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		0
+				cvar		*cvar:selected_soldier
+				icon		number_1
+				onClick		{ cmd "actor_select 0;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
+			}
+	
+			radiobutton bt_actor1
+			{
+				pos			"29 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		1
+				cvar		*cvar:selected_soldier
+				icon		number_2
+				onClick		{ cmd "actor_select 1;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
+			}
+	
+			radiobutton bt_actor2
+			{
+				pos			"59 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		2
+				cvar		*cvar:selected_soldier
+				icon		number_3
+				onClick		{ cmd "actor_select 2;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
+			}
+	
+			radiobutton bt_actor3
+			{
+				pos			"89 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		3
+				cvar		*cvar:selected_soldier
+				icon		number_4
+				onClick		{ cmd "actor_select 3;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
+			}
+	
+			radiobutton bt_actor4
+			{
+				pos			"119 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		4
+				cvar		*cvar:selected_soldier
+				icon		number_5
+				onClick		{ cmd "actor_select 4;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
+			}
+	
+			radiobutton bt_actor5
+			{
+				pos			"149 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		5
+				cvar		*cvar:selected_soldier
+				icon		number_6
+				onClick		{ cmd "actor_select 5;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
+			}
+	
+			radiobutton bt_actor6
+			{
+				pos			"179 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		6
+				cvar		*cvar:selected_soldier
+				icon		number_7
+				onClick		{ cmd "actor_select 6;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
+			}
+	
+			radiobutton bt_actor7
+			{
+				pos			"209 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		7
+				cvar		*cvar:selected_soldier
+				icon		number_8
+				onClick		{ cmd "actor_select 7;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
+			}
+		
 		}
 	}
 
@@ -1014,10 +1022,10 @@ window hud extends ahud
 		*cvar:selected_soldier = <1>
 	}
 	confunc hudenable {
-		*team_selection.bt_actor<1>@disabled = false
+		*team_selection.buttonList.bt_actor<1>@disabled = false
 	}
 	confunc huddisable {
-		*team_selection.bt_actor<1>@disabled = true
+		*team_selection.buttonList.bt_actor<1>@disabled = true
 	}
 
 	// CROUCH/STAND UP BUTTON
