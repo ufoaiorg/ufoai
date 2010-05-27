@@ -34,7 +34,8 @@ float chebyshevUpperBound(in vec4 shadow)
 	//	return 1.0;
 	
 	// Surface is fully lit. as the current fragment is before the light occluder
-	if (shadow.z <= moments.x || grad > 0.5)
+	//if (shadow.z <= moments.x || grad > 0.5)
+	if (shadow.z <= moments.x)
 		return 1.0 ;
 
 	//	return 0.0;
@@ -44,13 +45,12 @@ float chebyshevUpperBound(in vec4 shadow)
 	// How likely this pixel is to be lit (p_max)
 	float variance = moments.y - (moments.x * moments.x);
 	//float variance = moments.y;
-	variance = max(variance, 0.002);
+	variance = max(variance, 0.0002);
 	variance = max(variance, grad);
 
 	float d = shadow.z - moments.x;
 	float p_max = variance / (variance + d * d);
 
-	return 1.0;
 	return moments.x;
 	//return moments.y;
 	return p_max;

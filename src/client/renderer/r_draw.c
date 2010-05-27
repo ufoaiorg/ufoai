@@ -1454,6 +1454,7 @@ void R_DrawBloom (void)
 		R_Blur(r_state.buffers1[i - 1], r_state.buffers2[i - 1], 0, 1);
 		R_UseFramebuffer(r_state.buffers0[i]);
 		R_BindTexture(r_state.buffers2[i - 1]->textures[0]);
+		//qglGenerateMipmapEXT(GL_TEXTURE_2D);
 		R_UseViewport(r_state.buffers0[i]);
 		R_DrawQuad();
 	}

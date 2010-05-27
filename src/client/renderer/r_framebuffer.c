@@ -110,11 +110,11 @@ void R_InitFBObjects (void)
 	filters[1] = GL_NEAREST;
 
 	/* setup main 3D render target */
-	r_state.renderBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 2, qtrue, qfalse, qfalse, filters);
+	r_state.renderBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 2, qtrue, qfalse, qfalse, qfalse, filters);
 
 	/* setup bloom render targets */
-	fbo_bloom0 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, filters);
-	fbo_bloom1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, filters);
+	fbo_bloom0 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, qfalse, filters);
+	fbo_bloom1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, qfalse, filters);
 
 	//filters[0] = GL_LINEAR;
 	filters[0] = GL_NEAREST;
@@ -122,17 +122,17 @@ void R_InitFBObjects (void)
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
 		const int h = (int)((float)viddef.height / scales[i]);
 		const int w = (int)((float)viddef.width / scales[i]);
-		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, filters);
-		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, filters);
-		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, filters);
+		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, qfalse, filters);
+		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, qfalse, filters);
+		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, qfalse, filters);
 
 		R_CheckError();
 	}
 
 	/* setup shadowbuffer */
-	filters[0] = GL_LINEAR;
-	r_state.shadowmapBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 1, qtrue, qtrue, qtrue, filters);
-	r_state.shadowmapBlur1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qtrue, qtrue, qtrue, filters);
+	filters[0] = GL_LINEAR_MIPMAP_LINEAR;
+	r_state.shadowmapBuffer = R_CreateFramebuffer(viddef.width * 2, viddef.height * 2, 1, qtrue, qtrue, qtrue, qtrue, filters);
+	r_state.shadowmapBlur1 = R_CreateFramebuffer(viddef.width * 2, viddef.height * 2, 1, qtrue, qtrue, qtrue, qtrue, filters);
 #if 0
 	r_state.shadowmapBuffer = R_CreateFramebuffer(r_shadowmap_width->integer, r_shadowmap_width->integer, 1, qtrue, qfalse, qtrue, filters);
 	r_state.shadowmapBlur1 = R_CreateFramebuffer(r_shadowmap_width->integer, r_shadowmap_width->integer, 1, qfalse, qfalse, qtrue, filters);
@@ -203,7 +203,7 @@ void R_RestartFBObjects_f (void)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, GLenum *filters)
+r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, qboolean mipmap, GLenum *filters)
 {
 	r_framebuffer_t *buf;
 	int i;
@@ -228,7 +228,7 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 	if (ntextures > 0) {
 		buf->textures = Mem_Alloc(sizeof(GLuint) * ntextures);
 
-		buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA16F_ARB : GL_RGBA8;
+		buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA32F_ARB : GL_RGBA8;
 		//buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 		buf->byteFormat = (halfFloat == qtrue) ? GL_FLOAT : GL_UNSIGNED_BYTE;
 
@@ -248,11 +248,14 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 			vec4_t border = {10000.0, 10000.0, 0.0, 0.0};
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
 #endif
-			/* turn off mipmapping by default; it can always be turned on later if we want it */
-			glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, 0);
+			if (mipmap) {
+				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+			} else {
+				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, 0);
+			}
 
 			R_CheckError();
 		}
@@ -275,8 +278,9 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 			/* we use GL_LINEAR for PFC with shadowmapping */
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
 			/* No need to force GL_DEPTH_COMPONENT24, drivers usually give you the max precision if available */
 			glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, buf->width, buf->height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);

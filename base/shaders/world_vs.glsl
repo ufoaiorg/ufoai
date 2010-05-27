@@ -1,4 +1,4 @@
-#version 110
+#version 120
 // world vertex shader
 
 uniform float OFFSET;

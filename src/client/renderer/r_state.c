@@ -273,6 +273,10 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	if (enable && (!program || !program->id))
 		return r_state.lighting_enabled;
 
+	//if (program == r_state.world_program)
+	//	program = r_state.battlescape_program;
+
+
 	if (!r_lights->integer || (r_state.lighting_enabled == enable && r_state.active_program == program))
 		return r_state.lighting_enabled;
 
@@ -283,7 +287,7 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 
 		glEnableClientState(GL_NORMAL_ARRAY);
 
-		if (r_state.active_program == r_state.world_program) {
+		if (r_state.active_program == r_state.world_program || r_state.battlescape_program) {
 			R_EnableDynamicLights(r_state.active_entity, qtrue);
 			if (r_state.build_shadowmap_enabled)
 				R_ProgramParameter1i("BUILD_SHADOWMAP", 1);
@@ -293,7 +297,7 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	} else {
 		glDisableClientState(GL_NORMAL_ARRAY);
 
-		if (r_state.active_program == r_state.world_program)
+		if (r_state.active_program == r_state.world_program || r_state.battlescape_program)
 			R_EnableDynamicLights(NULL, qfalse);
 
 		R_UseProgram(NULL);
@@ -816,6 +820,7 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 			//glOrtho(-dist, dist, -dist, dist,  -dist/4.0, dist/4.0);
 			glOrtho(-dist, dist, -dist, dist,  -200.0, 10.0);
 			glRotatef(90.0 - refdef.viewAngles[1], 0.0, 0.0, 1.0);
+			R_UseViewport(r_state.shadowmapBuffer);
 		} else {
 			MYgluPerspective(4.0, MAX_WORLD_WIDTH);
 		}
@@ -946,10 +951,12 @@ void R_EnableUseShadowmap (qboolean enable)
 
 	r_state.use_shadowmap_enabled = enable;
 
+
 	if (r_state.lighting_enabled) {
 		if (enable) {
 			R_ProgramParameter1i("SHADOWMAP", 1);
 			R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
+			//R_BindTextureForTexUnit(r_state.shadowmapBuffer->depth, &texunit_shadowmap);
 		} else {
 			R_ProgramParameter1i("SHADOWMAP", 0);
 		}

@@ -1,4 +1,4 @@
-#version 110
+#version 120
 // default battlescape fragment shader
 
 uniform int BUMPMAP;
@@ -40,27 +40,29 @@ varying vec3 lightDirs[#replace r_dynamic_lights ];
 void main(void){
 
 	if (BUILD_SHADOWMAP > 0) {
-		float depth = vertPos.z / vertPos.w ;
-
-		/* move away from unit cube ([-1,1]) to [0,1] coordinate system used by textures */
-		depth = depth * 0.5 + 0.5;			
+		/* scale depth to [0,1] */
+		float depth = (vertPos.z / vertPos.w) * 0.5 + 0.5;
 
 		float moment1 = depth;
 		float moment2 = depth * depth;
-
-		/* bias moments using derivative */
 		float dx = dFdx(depth);
 		float dy = dFdy(depth);
+
+		/* bias moments using derivative */
 		moment2 += 0.25*(dx*dx+dy*dy);
-		//moment2 += 20.0 * (dx*dx+dy*dy) ;
+		//moment2 += 2.0*pow(dx*dx+dy*dy, 4.0);
+		//moment2 += sqrt(dx*dx+dy*dy);
+		//moment2 += 20.0 * sqrt(dx*dx+dy*dy) ;
 		//moment2 = 1000.0 * (abs(dx)+abs(dy));
 
-		//moment2 = 100.0 * sqrt(dx*dx + dy*dy);
+		//moment2 = 10.0 * sqrt(dx*dx + dy*dy);
+		//gl_FragData[0] = vec4(moment2, moment2, moment2, 1.0);
+		//return;
 
 #if r_postprocess
-		gl_FragData[0] = vec4(moment1, moment2, 0.0, 1.0 );
+		gl_FragData[0] = vec4(moment1, moment2, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
 #else 
-		gl_FragColor = vec4(moment1, moment2, 0.0, 1.0 );
+		gl_FragColor = vec4(moment1, moment2, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
 #endif
 		return;
 	}
@@ -97,7 +99,7 @@ void main(void){
 		// sample the diffuse texture, honoring the parallax offset
 		vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
 		// add light from lightmap
-		finalColor += 0.4 * vec4(diffuse.rgb * lightmap * bump, diffuse.a * gl_Color.a);
+		finalColor += 0.0 * vec4(diffuse.rgb * lightmap * bump, diffuse.a * gl_Color.a);
 	}
 
 #if r_fog

@@ -769,7 +769,7 @@ static int R_PascalTriangle (int row, int col)
 }
 
 /** @brief width of convolution filter (for blur/bloom effects) */
-#define FILTER_SIZE 3
+#define FILTER_SIZE 9
 
 static void R_InitConvolveProgram (r_program_t *prog)
 {
@@ -781,6 +781,7 @@ static void R_InitConvolveProgram (r_program_t *prog)
 	/* approximate a Gaussian by normalizing the Nth row of Pascale's Triangle */
 	for (i = 0; i < size; i++) {
 		filter[i] = (float)R_PascalTriangle(size, i + 1);
+		//filter[i] = (float)1.0;
 		sum += filter[i];
 	}
 
@@ -875,7 +876,7 @@ void R_InitPrograms (void)
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
-	//r_state.battlescape_program = R_LoadProgram("battlescape", R_InitBattlescapeProgram, NULL);
+	r_state.battlescape_program = R_LoadProgram("battlescape", R_InitBattlescapeProgram, NULL);
 }
 
 /**

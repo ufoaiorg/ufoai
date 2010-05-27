@@ -237,54 +237,6 @@ void R_BeginFrame (void)
 		r_anisotropic->modified = qfalse;
 	}
 
-	if (r_debug_lightmaps->modified) {
-		R_RestartPrograms_f();
-		r_debug_lightmaps->modified = qfalse;
-	}
-
-	if (r_debug_deluxemaps->modified) {
-		R_RestartPrograms_f();
-		r_debug_deluxemaps->modified = qfalse;
-	}
-
-	if (r_debug_normalmaps->modified) {
-		R_RestartPrograms_f();
-		r_debug_normalmaps->modified = qfalse;
-	}
-
-	if (r_debug_shadows->modified) {
-		R_RestartPrograms_f();
-		r_debug_shadows->modified = qfalse;
-	}
-
-	if (r_debug_normals->modified) {
-		R_RestartPrograms_f();
-		r_debug_normals->modified = qfalse;
-	}
-
-	if (r_debug_tangents->modified) {
-		R_RestartPrograms_f();
-		r_debug_tangents->modified = qfalse;
-	}
-
-	if (r_postprocess->modified) {
-		/** @todo: need to restart framebuffers here as well */
-		R_RestartPrograms_f();
-		R_RestartFBObjects_f();
-		r_postprocess->modified = qfalse;
-	}
-
-	if (r_dynamic_lights->modified) {
-		R_RestartPrograms_f();
-		R_RestartFBObjects_f();
-		r_dynamic_lights->modified = qfalse;
-	}
-
-	if (r_programs->modified) {
-		R_RestartPrograms_f();
-		R_RestartFBObjects_f();
-		r_programs->modified = qfalse;
-	}
 
 	/* draw buffer stuff */
 	if (r_drawbuffer->modified) {
@@ -369,8 +321,32 @@ void R_RenderFrame (void)
 
 		Cvar_SetValue("r_nocull", 0);
 
-		//R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
-		//R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+
+		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
+
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBlur1->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+#if 0
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBlur1->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBlur1->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+#endif
+
+		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
+		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+
 
 		R_ResetArrayState();
 	}
