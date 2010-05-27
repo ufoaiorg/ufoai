@@ -417,12 +417,24 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 	while (*src && destsize - 1) {
 		*dest = *src++;
 		/* check for UTF8 multibyte sequences */
-		if ((*dest & 0xf0) >= 0xf0 && destsize <= 4)
-			break;
-		if ((*dest & 0xe0) >= 0xe0 && destsize <= 3)
-			break;
-		if ((*dest & 0xc0) >= 0xc0 && destsize <= 2)
-			break;
+		if (*dest >= 0x80) {
+			if (*dest < 0xc0) {
+				if (destsize <= 2)
+					break;
+			} else if (*dest < 0xe0) {
+				if (destsize <= 3)
+					break;
+			} else if (*dest < 0xf0) {
+				if (destsize <= 4)
+					break;
+			} else if (*dest < 0xf8) {
+				if (destsize <= 5)
+					break;
+			} else {
+				/* invalid character */
+				break;
+			}
+		}
 		destsize--;
 		dest++;
 	}
