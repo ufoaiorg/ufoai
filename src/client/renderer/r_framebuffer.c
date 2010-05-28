@@ -68,7 +68,7 @@ void R_InitFBObjects (void)
 	float scales[DOWNSAMPLE_PASSES];
 	int i;
 
-	if (!r_config.frameBufferObject)
+	if (!r_config.frameBufferObject || !r_programs->integer)
 		return;
 
 	frameBufferObjectCount = 0;
