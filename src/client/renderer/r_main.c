@@ -321,14 +321,7 @@ void R_RenderFrame (void)
 
 		Cvar_SetValue("r_nocull", 0);
 
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
-#if 1
-
 		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
-
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBlur1->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
 		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
 #if 0
 		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
@@ -344,11 +337,6 @@ void R_RenderFrame (void)
 		qglGenerateMipmapEXT(GL_TEXTURE_2D);
 		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
 #endif
-
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
-#endif
-
 
 		R_ResetArrayState();
 	}
@@ -1037,9 +1025,12 @@ static qboolean R_InitExtensions (void)
 		}
 	}
 
-	r_shadowmap_width = Cvar_Get("r_shadowmap_width", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Set shadowmap resolution");
+#if 0
+	/* @note - currently we use r_maxlightmap for this */
+	r_shadowmap_width = Cvar_Get("r_shadowmap_width", "1024", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Set shadowmap resolution");
 	r_shadowmap_width->modified = qfalse;
 	Cvar_SetCheckFunction("r_shadowmap_width", R_CvarCheckMaxLightmap);
+#endif
 
 
 	if (r_config.maxTextureSize > 4096 && R_ImageExists(va("pics/geoscape/%s/map_earth_season_00", "high"))) {

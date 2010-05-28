@@ -47,31 +47,17 @@ varying vec4 Tangent;
  * main
  */
 void main(void){
-
-/*
-	if (ANIMATE > 0) {
-		lerpVertex();
-	} else {
-		Vertex = gl_Vertex;
-		Normal = gl_Normal;
-		Tangent = TANGENTS;
-	}
-	*/
-
-
 	float lerp = (1.0 - TIME) * float(ANIMATE);
 	Vertex = mix(gl_Vertex, vec4(NEXT_FRAME_VERTS, 1.0), lerp);
 	Normal = mix(gl_Normal, NEXT_FRAME_NORMALS, lerp);
 	Tangent = mix(TANGENTS, NEXT_FRAME_TANGENTS, lerp);
 
 
-	// mvp transform into clip space
-	//gl_Position = ftransform();
 	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * Vertex;
 	vertPos = gl_Position;
 
 
-	// pass texcoords through
+	/* pass texcoords through */
 	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 	gl_TexCoord[1] = gl_MultiTexCoord1 + OFFSET;
 

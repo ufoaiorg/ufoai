@@ -260,13 +260,9 @@ void R_InitFBObjects (void)
 	}
 
 	/* setup shadowbuffer */
-	filters[0] = GL_LINEAR_MIPMAP_LINEAR;
-	r_state.shadowmapBuffer = R_CreateFramebuffer(viddef.width * 2, viddef.height * 2, 1, qtrue, qtrue, qtrue, qtrue, filters);
-	r_state.shadowmapBlur1 = R_CreateFramebuffer(viddef.width * 2, viddef.height * 2, 1, qtrue, qtrue, qtrue, qtrue, filters);
-#if 0
-	r_state.shadowmapBuffer = R_CreateFramebuffer(r_shadowmap_width->integer, r_shadowmap_width->integer, 1, qtrue, qfalse, qtrue, filters);
-	r_state.shadowmapBlur1 = R_CreateFramebuffer(r_shadowmap_width->integer, r_shadowmap_width->integer, 1, qfalse, qfalse, qtrue, filters);
-#endif
+	filters[0] = GL_LINEAR;
+	r_state.shadowmapBuffer = R_CreateFramebuffer(r_maxlightmap->integer, r_maxlightmap->integer, 1, qtrue, qtrue, qtrue, qfalse, filters);
+	r_state.shadowmapBlur1 = R_CreateFramebuffer(r_maxlightmap->integer, r_maxlightmap->integer, 1, qtrue, qtrue, qtrue, qfalse, filters);
 }
 
 

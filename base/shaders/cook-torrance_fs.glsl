@@ -12,39 +12,7 @@ uniform int SHADOWMAP;
 varying vec4 shadowCoord;
 varying vec4 Vertex;
 
-//uniform sampler2D SAMPLER_SHADOW0;
 uniform sampler2DShadow SAMPLER_SHADOW0;
-
-const float xPixelOffset = 1.0 / 1024.0;
-const float yPixelOffset = 1.0 / 768.0;
-
-#define SAMPLES 16
-#define INV_SAMPLES 1.0 / 16.0
-vec2 poissondisk[SAMPLES] = vec2[SAMPLES]( 
-		vec2(0.170017, 0.949476), 
-		vec2(-0.856682, 0.834597), 
-		vec2(0.884173, 0.407126), 
-		vec2(0.564079, -0.647807), 
-		vec2(-0.187066, -0.481096), 
-		vec2(-0.737872, 0.151191), 
-		vec2(0.301019, 0.258782), 
-		vec2(-0.344032, 0.516536), 
-		vec2(0.872586, 0.953879), 
-		vec2(-0.958830, -0.575161), 
-		vec2(-0.119198, -0.943774), 
-		vec2(-0.215994, 0.034261), 
-		vec2(0.902534, -0.281495), 
-		vec2(0.909580, -0.972526), 
-		vec2(-0.591030, -0.939582), 
-		vec2(0.236135, -0.222607) );
-
-
-float lookup( vec2 offSet)
-{
-	return shadow2DProj(SAMPLER_SHADOW0, shadowCoord + vec4(offSet.x * xPixelOffset * shadowCoord.w, offSet.y * yPixelOffset * shadowCoord.w, 0.05, 0.0) ).r;
-}
-
-
 
 float chebyshevUpperBound(vec4 shadow)
 {
@@ -123,16 +91,6 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		if (shadow < ATTENUATE_THRESH) {
 			return attenuate * ambientColor;
 		}
-
-/*
-		shadow = 0.0;
-		int i;
-		for (i = 0; i < SAMPLES; i++) {
-				vec4 sampleCoord = shadowCoord + vec4(poissondisk[i].x * xPixelOffset * shadowCoord.w, poissondisk[i].y * yPixelOffset * shadowCoord.w, 0.0, 0.0);
-				shadow += chebyshevUpperBound(sampleCoord);
-		}
-		shadow *= INV_SAMPLES;
-		*/
 	}
 #endif
 
