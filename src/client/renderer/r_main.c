@@ -323,6 +323,7 @@ void R_RenderFrame (void)
 
 		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
 		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+#if 1
 
 		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
 
@@ -346,6 +347,7 @@ void R_RenderFrame (void)
 
 		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
 		qglGenerateMipmapEXT(GL_TEXTURE_2D);
+#endif
 
 
 		R_ResetArrayState();

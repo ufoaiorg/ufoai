@@ -92,8 +92,8 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 
 	if (v->location == -1) {
 #ifdef DEBUG
-		Com_Printf("R_ProgramVariable: Could not find %s in program %s. (%s: line %d)\n",
-			name, r_state.active_program->name, file, line);
+		//Com_Printf("R_ProgramVariable: Could not find %s in program %s. (%s: line %d)\n",
+		//	name, r_state.active_program->name, file, line);
 #else
 		Com_Printf("R_ProgramVariable: Could not find parameter in program.\n");
 #endif
@@ -178,9 +178,9 @@ void R_ProgramParameter2fvs (const char *name, GLint size, GLfloat *value)
 }
 
 #ifdef DEBUG
-void R_ProgramParameter3fv_Debug (const char *name, GLfloat *value , const char *file, int line)
+void R_ProgramParameter3fvs_Debug (const char *name, GLint size, GLfloat *value , const char *file, int line)
 #else
-void R_ProgramParameter3fv (const char *name, GLfloat *value)
+void R_ProgramParameter3fvs (const char *name, GLint size, GLfloat *value)
 #endif
 {
 	r_progvar_t *v;
@@ -188,7 +188,7 @@ void R_ProgramParameter3fv (const char *name, GLfloat *value)
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniform3fv(v->location, 1, value);
+	qglUniform3fv(v->location, size, value);
 }
 
 #ifdef DEBUG

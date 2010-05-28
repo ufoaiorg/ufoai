@@ -8,6 +8,10 @@ uniform int LIGHTMAP;
 uniform int BUILD_SHADOWMAP;
 uniform float GLOWSCALE;
 
+/* @todo - use a Cvar here */
+uniform vec3 SHADOW_SPLIT_MINS[5]; 
+uniform vec3 SHADOW_SPLIT_MAXS[5]; 
+
 /* diffuse texture */
 uniform sampler2D SAMPLER_DIFFUSE;
 /* lightmap */
@@ -42,25 +46,15 @@ void main(void){
 	if (BUILD_SHADOWMAP > 0) {
 		/* scale depth to [0,1] */
 		float depth = (vertPos.z / vertPos.w) * 0.5 + 0.5;
-
 		float moment1 = depth;
 		float moment2 = depth * depth;
 		float dx = dFdx(depth);
 		float dy = dFdy(depth);
-
-		/* bias moments using derivative */
+		/* bias second moment using gradient */
 		moment2 += 0.25*(dx*dx+dy*dy);
-		//moment2 += 2.0*pow(dx*dx+dy*dy, 4.0);
-		//moment2 += sqrt(dx*dx+dy*dy);
-		//moment2 += 20.0 * sqrt(dx*dx+dy*dy) ;
-		//moment2 = 1000.0 * (abs(dx)+abs(dy));
-
-		//moment2 = 10.0 * sqrt(dx*dx + dy*dy);
-		//gl_FragData[0] = vec4(moment2, moment2, moment2, 1.0);
-		//return;
 
 #if r_postprocess
-		gl_FragData[0] = vec4(moment1, moment2, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
+		gl_FragData[0] = vec4(moment1, moment2, 0.0 * texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
 #else 
 		gl_FragColor = vec4(moment1, moment2, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
 #endif

@@ -75,7 +75,8 @@ void R_InitPrograms(void);
 #define R_ProgramParameter1i(x, y) R_ProgramParameter1i_Debug(x, y, __FILE__, __LINE__)
 #define R_ProgramParameter2fv(x, y) R_ProgramParameter2fv_Debug(x, y, __FILE__, __LINE__)
 #define R_ProgramParameter2fvs(x, y, z) R_ProgramParameter2fvs_Debug(x, y, z, __FILE__, __LINE__)
-#define R_ProgramParameter3fv(x, y) R_ProgramParameter3fv_Debug(x, y, __FILE__, __LINE__)
+#define R_ProgramParameter3fvs(x, y, z) R_ProgramParameter3fvs_Debug(x, y, z, __FILE__, __LINE__)
+#define R_ProgramParameter3fv(x, y) R_ProgramParameter3fvs_Debug(x, 1, y, __FILE__, __LINE__)
 #define R_ProgramParameter4fv(x, y) R_ProgramParameter4fvs_Debug(x, 1, y, __FILE__, __LINE__)
 #define R_ProgramParameter4fvs(x, y, z) R_ProgramParameter4fvs_Debug(x, y, z, __FILE__, __LINE__)
 #define R_ProgramParameterMat4fv(x, y, z) R_ProgramParameterMat4fv_Debug(x, y, z, __FILE__, __LINE__)
@@ -89,7 +90,7 @@ void R_ProgramParameter1fvs_Debug(const char *name, GLint size, GLfloat *value ,
 void R_ProgramParameter1i_Debug(const char *name, GLint value , const char *file, int line);
 void R_ProgramParameter2fv_Debug(const char *name, GLfloat *value , const char *file, int line);
 void R_ProgramParameter2fvs_Debug(const char *name, GLint size, GLfloat *value , const char *file, int line);
-void R_ProgramParameter3fv_Debug(const char *name, GLfloat *value , const char *file, int line);
+void R_ProgramParameter3fvs_Debug(const char *name, GLint size, GLfloat *value , const char *file, int line);
 void R_ProgramParameter4fv_Debug(const char *name, GLfloat *value , const char *file, int line);
 void R_ProgramParameter4fvs_Debug(const char *name, GLint size, GLfloat *value , const char *file, int line);
 void R_ProgramParameterMat4fv_Debug(const char *name, GLint size, GLfloat *value , const char *file, int line);
@@ -105,7 +106,8 @@ void R_ProgramParameter1fvs(const char *name, GLint size, GLfloat *value);
 void R_ProgramParameter1i(const char *name, GLint value);
 void R_ProgramParameter2fv(const char *name, GLfloat *value);
 void R_ProgramParameter2fvs(const char *name, GLint size, GLfloat *value);
-void R_ProgramParameter3fv(const char *name, GLfloat *value);
+#define R_ProgramParameter3fv(x, y) R_ProgramParameter3fvs(x, 1, y)
+void R_ProgramParameter3fvs(const char *name, GLfloat *value);
 #define R_ProgramParameter4fv(x, y) R_ProgramParameter4fvs(x, 1, y)
 void R_ProgramParameter4fvs(const char *name, GLint size, GLfloat *value);
 void R_ProgramParameterMat4fv(const char *name, GLfloat *value);

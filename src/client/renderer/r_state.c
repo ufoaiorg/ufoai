@@ -724,11 +724,12 @@ static void MYgluLookAt (const vec3_t eye, const vec3_t center, const vec3_t up)
 }
 
 #define MAX_SHADOW_SIZE 1600
+#define SHADOW_SPLITS 5
 #define MAT_I4  { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 }
 
 void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 	static vec3_t viewOriginCamera;
-	int i, j;
+	int i, j, k;
 
 	if (!r_shadowmapping->integer)
 		return;
@@ -759,6 +760,10 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		float scale, dist;
 		vec3_t R1[3];
 		vec3_t R2[3];
+		GLdouble zNear, zFar;
+		vec3_t maxs[SHADOW_SPLITS];
+		vec3_t mins[SHADOW_SPLITS];
+		float clip;
 
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
@@ -775,6 +780,57 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
 		glPopMatrix();
 
+
+		if (r_isometric->integer) {
+			//glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
+			/* @todo - handle this case */
+			Com_Printf("TODO: handle isometric case for shadowmaps\n");
+		} else {
+			zNear = 4.0;
+			zFar = MAX_WORLD_WIDTH; /*< @todo - try to make this tighter if possible */
+
+			for (i = 0; i < SHADOW_SPLITS; i++) {
+				float Clin = zNear + (zFar - zNear) * ((float)i / (SHADOW_SPLITS - 1.0));
+				float Clog = zNear * pow((zFar / zNear), (float)i / (SHADOW_SPLITS - 1.0));
+				float weight = 0.9;
+				vec3_t point;
+
+				clip = weight * Clin + (1.0 - weight) * Clog;
+
+				VectorSet(maxs[i], -HUGE_VAL, -HUGE_VAL, -HUGE_VAL);
+				VectorSet(mins[i], HUGE_VAL, HUGE_VAL, HUGE_VAL);
+				VectorMul(zNear, r_locals.frustum[j].normal, point);
+				for (k = 0; k < 3; k++) {
+					maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
+					mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
+					maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
+					mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
+				}
+
+				for (j = 0; j < 4; j++) {
+					VectorMul(clip, r_locals.frustum[j].normal, point);
+					for (k = 0; k < 3; k++) {
+						maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
+						mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
+						maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
+						mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
+					}
+					
+				}
+
+				
+				//Com_Printf("clip=%f\n", clip);
+				//Print3Vector(mins[i]);
+				//Print3Vector(maxs[i]);
+				//glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
+
+			}
+		}
+
+
+		R_UseProgram(r_state.world_program);
+		R_ProgramParameter3fvs("SHADOW_SPLIT_MINS", SHADOW_SPLITS, mins);
+		R_ProgramParameter2fvs("SHADOW_SPLIT_MAXS", SHADOW_SPLITS, maxs);
 
 
 		R_EnableShadowbuffer(qtrue);
@@ -819,6 +875,7 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 			//glOrtho(-MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH,  -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH);
 			//glOrtho(-dist, dist, -dist, dist,  -dist/4.0, dist/4.0);
 			glOrtho(-dist, dist, -dist, dist,  -200.0, 10.0);
+			//glOrtho(mins[4][0], maxs[4][0], mins[4][1], maxs[4][1], mins[4][2], maxs[4][2]);
 			glRotatef(90.0 - refdef.viewAngles[1], 0.0, 0.0, 1.0);
 			R_UseViewport(r_state.shadowmapBuffer);
 		} else {
@@ -883,9 +940,9 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
 				M1[i*4+j] = r_locals.world_matrix[j*4+i];
-				M2[i*4+j] = modelView[i*4+j];
-				R1[i][j] = r_locals.world_matrix[j*4+i];
-				R2[i][j] = modelView[i*4+j];
+				//M2[i*4+j] = modelView[i*4+j];
+				//R1[i][j] = r_locals.world_matrix[j*4+i];
+				//R2[i][j] = modelView[i*4+j];
 				//Com_Printf("%f, ", M1[i*4+j]);
 			}
 			//Com_Printf("\n");
@@ -908,6 +965,8 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		}
 		*/
 
+		//Matrix4x4_Invert_Full(r_locals.world_matrix, M2);
+		//Matrix4x4_Invert_Full(r_locals.proj_matrix, M3);
 
 		/* @todo we don't really need to use GL_TEXTURE7 here */
 		glActiveTexture(GL_TEXTURE7);
@@ -918,8 +977,11 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		glMultMatrixf(projection);
 		glMultMatrixf(modelView);
 		glMultMatrixf(M1);
+
+		//glMultMatrixf(M2);
 		//glMultMatrixf(M3);
 		//glPopMatrix();
+		
 		glActiveTexture(GL_TEXTURE0);
 		glMatrixMode(GL_MODELVIEW);
 
@@ -987,6 +1049,7 @@ void R_Setup3D (void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	MYgluPerspective(4.0, MAX_WORLD_WIDTH);
+	glGetFloatv(GL_PROJECTION_MATRIX, r_locals.proj_matrix);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

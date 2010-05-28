@@ -48,46 +48,26 @@ float lookup( vec2 offSet)
 
 float chebyshevUpperBound(vec4 shadow)
 {
-	//vec2 moments = texture2D(SAMPLER_SHADOW0, shadow.xy).rg;
 	vec3 moments = shadow2DProj(SAMPLER_SHADOW0, shadow).rgb;
-	//vec2 moments = vec2(0.0);
 
-	//float shadowZ = (shadow.z / shadow.w);
 	float shadowZ = (shadow.z / shadow.w) - 0.05;
 
-	float dx = dFdx(moments.r);
-	float dy = dFdy(moments.r);
-	float grad = 100.0 * pow((dx*dx + dy*dy), 1.0);
-	//float grad = 100000.0 * pow((dx*dx + dy*dy), 0.5);
-	//return grad;
-
-	//shadowZ -= 1.0*(dx*dx+dy*dy);
-
-
-	//if (abs(dFdx(moments.g)) > 0.001 || abs(dFdy(moments.g)) > 0.001)
-	//	return 1.0;
-	
-	// Surface is fully lit. as the current fragment is before the light occluder
-	//if (shadow.z <= moments.x || grad > 0.5)
+	/* early return if fragment is fully lit */
 	if (shadowZ <= moments.x)
 		return 1.0;
 
-	//	return 0.0;
-
-
-	// The fragment is either in shadow or penumbra. We now use chebyshev's upperBound to check
-	// How likely this pixel is to be lit (p_max)
+	/* otherwise, the fragment is either in shadow or penumbra. We now use
+	 * chebyshev's upper-bound to check How likely this pixel is to be lit */
 	float variance = moments.y - (moments.x * moments.x);
-	//float variance = moments.y;
 	variance = max(variance, 0.000002);
-	//variance = max(variance, grad);
 
 	float d = shadowZ - moments.x;
 	float p_max = variance / (variance + d * d);
 
-	//return moments.x;
-	//return moments.y;
-	return p_max * moments.z;
+	return p_max;
+	/* moments.z stores the alpha value from the texture so translucent
+	 * objects cast translucent shadows (note: this could lead to light-bleed) */
+	//return p_max * (1.0 - moments.z);
 }
 
 
@@ -99,12 +79,14 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	 * settings for spot-light sources. */
 	float attenuate = lightSource.constantAttenuation;
 
-//#ifdef ATI
+#ifdef ATI
 	/* HACK - for some reason, ATI cards return 0.0 for attenuation for directional sources */
+	/* @todo - this could break things if lights are de-activated by setting 
+	attenuation to 0 as is common*/
 	if (lightSource.position.w == 0.0) {
 		attenuate = 1.0;
 	}
-//#endif
+#endif
 
 	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
@@ -121,59 +103,36 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	vec3 ambientColor = diffuse.rgb * diffuse.a * lightSource.ambient.rgb;
 	/* Normalize vectors and cache dot products */
 	vec3 L = normalize(lightDir);
-	float NdotL = clamp(dot(N, -L), 0.0, 1.0);
+	float NdotL = dot(N, -L);
+	if (NdotL < 0.0) {
+		return attenuate * ambientColor;
+	}
 
 #if r_debug_shadows
-	//vec4 shadowCoordDivW = shadowCoord / shadowCoord.w;
-	//if (abs(NdotL) < 0.001)
-	//	return vec3(0.0, 0.0, 1.0);
-	//return vec3(chebyshevUpperBound(shadowCoordDivW));
-
-	//return vec3(shadow2DProj(SAMPLER_SHADOW0, shadowCoord).r);
-	//return vec3( (lookup(vec2(0.0, 0.0)) );
-	//return vec3(1.0 - (  (shadowCoord.z / shadowCoord.w) - (lookup(vec2(0.0, 0.0))) ));
-	return vec3(chebyshevUpperBound(shadowCoord));
+	return vec3(shadow2DProj(SAMPLER_SHADOW0, shadowCoord).r * NdotL);
+	//return shadow2DProj(SAMPLER_SHADOW0, shadowCoord).rgb;
 #endif
 
 	float shadow = 1.0;
 #if r_shadowmapping
 	if (SHADOWMAP > 0) {
-		//shadow = chebyshevUpperBound(shadowCoord2);
-		//shadow = chebyshevUpperBound(shadowCoord);
-		//return vec3(shadow);
+		shadow = chebyshevUpperBound(shadowCoord) * NdotL;
 
-		//vec4 shadowCoordDivW = shadowCoord / shadowCoord.w;
-		//shadow = chebyshevUpperBound(shadowCoordDivW);
 		/* if the fragment is completely shadowed, we don't need 
 		 * to calculate anything but ambient */
-		//if (shadow < ATTENUATE_THRESH) {
-		//	return (0.2 * attenuate * ambientColor);
-		//}
-
-		shadow = 0.0;
-		/*
-		float x,y;
-		for (y = -3.5 ; y <=3.5 ; y+=1.0) {
-			for (x = -3.5 ; x <=3.5 ; x+=1.0) {
-				//vec4 sampleCoord = shadowCoord + vec4(x * xPixelOffset * shadowCoord.w, y * yPixelOffset * shadowCoord.w, 0.0, 0.0);
-				vec4 sampleCoord = shadowCoord + vec4(x * xPixelOffset * shadowCoord.w, y * yPixelOffset * shadowCoord.w, 0.0, 0.0);
-				shadow += chebyshevUpperBound(sampleCoord);
-				//shadow += ( shadowCoordDivW.z - lookup(vec2(x,y)) > 0.05 ? 0.0 : 1.0 ) ;
-				//shadow += lookup(vec2(x,y));
-			}
+		if (shadow < ATTENUATE_THRESH) {
+			return attenuate * ambientColor;
 		}
-		shadow /= 64.0 ;
-		*/
 
-
+/*
+		shadow = 0.0;
 		int i;
 		for (i = 0; i < SAMPLES; i++) {
 				vec4 sampleCoord = shadowCoord + vec4(poissondisk[i].x * xPixelOffset * shadowCoord.w, poissondisk[i].y * yPixelOffset * shadowCoord.w, 0.0, 0.0);
 				shadow += chebyshevUpperBound(sampleCoord);
 		}
 		shadow *= INV_SAMPLES;
-
-		//return vec3( shadow );
+		*/
 	}
 #endif
 
@@ -208,7 +167,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	}
 
 	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
-	return (attenuate * (max(shadow, 0.2) * max(ambientColor, 0.0) + shadow * max(diffuseColor, 0.0) + shadow * max(specularColor, 0.0)));
+	return (attenuate * (max(ambientColor, 0.0) + shadow * max(diffuseColor, 0.0) + shadow * max(specularColor, 0.0)));
 }
 
 

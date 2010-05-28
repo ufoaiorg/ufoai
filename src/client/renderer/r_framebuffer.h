@@ -49,7 +49,6 @@ void R_InitFBObjects(void);
 void R_ShutdownFBObjects(void);
 void R_RestartFBObjects_f(void);
 
-r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, qboolean mipmap, GLenum *filters);
 void R_DeleteFBObject(r_framebuffer_t *buf);
 
 void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);

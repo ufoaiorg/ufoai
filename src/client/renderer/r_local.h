@@ -123,6 +123,7 @@ typedef struct rlocals_s {
 	qboolean framecheck;
 
 	float world_matrix[16];
+	float proj_matrix[16];
 	GLfloat shadow_matrix[16];
 
 	/**

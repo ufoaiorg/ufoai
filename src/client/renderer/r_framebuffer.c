@@ -71,6 +71,136 @@ static void R_FreeFBOTexture (int texnum)
 	frameBufferTextures[i] = 0;
 }
 
+/**
+ * @brief create a new framebuffer object
+ * @param[in] width The width of the framebuffer
+ * @param[in] height The height of the framebuffer
+ * @param[in] ntextures The amount of textures for this framebuffer. See also the filters array.
+ * @param[in] depth Also generate a depth buffer
+ * @param[in] halfFloat Use half float pixel format
+ * @param[in] filters Filters for the textures. Must have @c ntextures entries
+ */
+static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, qboolean mipmap, GLenum *filters)
+{
+	r_framebuffer_t *buf;
+	int i;
+
+	if (!frameBufferObjectsInitialized) {
+		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
+		return 0;
+	}
+
+	buf = &frameBufferObjects[frameBufferObjectCount++];
+
+	if (ntextures > r_config.maxDrawBuffers)
+		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
+
+	Vector4Clear(buf->clearColor);
+
+	buf->width = width;
+	buf->height = height;
+	R_SetupViewport(buf, 0, 0, width, height);
+
+	buf->nTextures = ntextures;
+	if (ntextures > 0) {
+		buf->textures = Mem_Alloc(sizeof(GLuint) * ntextures);
+
+		buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA32F_ARB : GL_RGBA8;
+		//buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
+		buf->byteFormat = (halfFloat == qtrue) ? GL_FLOAT : GL_UNSIGNED_BYTE;
+
+		for (i = 0 ; i < buf->nTextures; i++) {
+			buf->textures[i] = R_GetFreeFBOTexture();
+			glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+			glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+#if 0
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+#else
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+			vec4_t border = {0.0, 1.0, 0.0, 1.0};
+			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
+#endif
+			if (mipmap) {
+				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+			} else {
+				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, 0);
+			}
+
+			R_CheckError();
+		}
+	} else { /* we might not want any textures (eg. for basic shadowmapping) */
+		buf->textures = NULL;
+		buf->pixelFormat = GL_NONE;
+		buf->byteFormat = GL_NONE;
+	}
+
+	/* create depth renderbuffer or texture if requested */
+	if (depth) {
+		if (!depthTexture) {
+			qglGenRenderbuffersEXT(1, &buf->depth);
+			qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
+			qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, buf->width, buf->height);
+		} else {
+			buf->depth = R_GetFreeFBOTexture();
+			glBindTexture(GL_TEXTURE_2D, buf->depth);
+
+			/* we use GL_LINEAR for PFC with shadowmapping */
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
+			/* No need to force GL_DEPTH_COMPONENT24, drivers usually give you the max precision if available */
+			glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, buf->width, buf->height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+		R_CheckError();
+	} else {
+		buf->depth = 0;
+	}
+
+	/* create FBO itself */
+	qglGenFramebuffersEXT(1, &buf->fbo);
+	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
+
+	/* bind textures to FBO */
+	if (buf->nTextures > 0) {
+		for (i = 0; i < buf->nTextures; i++) {
+			glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+			qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
+		}
+	} else {
+		qglDrawBuffer(GL_NONE);
+		qglReadBuffer(GL_NONE);
+	}
+
+	/* bind depthbuffer to FBO */
+	if (depth) {
+		if (!depthTexture) {
+			qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
+		} else { 
+			glBindTexture(GL_TEXTURE_2D, buf->depth);
+			qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, buf->depth, 0);
+		}
+	}
+
+	R_CheckError();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+	return buf;
+}
+
+
 void R_InitFBObjects (void)
 {
 	GLenum filters[2];
@@ -194,134 +324,7 @@ void R_RestartFBObjects_f (void)
 	R_InitFBObjects();
 }
 
-/**
- * @brief create a new framebuffer object
- * @param[in] width The width of the framebuffer
- * @param[in] height The height of the framebuffer
- * @param[in] ntextures The amount of textures for this framebuffer. See also the filters array.
- * @param[in] depth Also generate a depth buffer
- * @param[in] halfFloat Use half float pixel format
- * @param[in] filters Filters for the textures. Must have @c ntextures entries
- */
-r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, qboolean mipmap, GLenum *filters)
-{
-	r_framebuffer_t *buf;
-	int i;
 
-	if (!frameBufferObjectsInitialized) {
-		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
-		return 0;
-	}
-
-	buf = &frameBufferObjects[frameBufferObjectCount++];
-
-	if (ntextures > r_config.maxDrawBuffers)
-		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
-
-	Vector4Clear(buf->clearColor);
-
-	buf->width = width;
-	buf->height = height;
-	R_SetupViewport(buf, 0, 0, width, height);
-
-	buf->nTextures = ntextures;
-	if (ntextures > 0) {
-		buf->textures = Mem_Alloc(sizeof(GLuint) * ntextures);
-
-		buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA32F_ARB : GL_RGBA8;
-		//buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
-		buf->byteFormat = (halfFloat == qtrue) ? GL_FLOAT : GL_UNSIGNED_BYTE;
-
-		for (i = 0 ; i < buf->nTextures; i++) {
-			buf->textures[i] = R_GetFreeFBOTexture();
-			glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
-			glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-#if 1
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-#else
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-			vec4_t border = {10000.0, 10000.0, 0.0, 0.0};
-			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
-#endif
-			if (mipmap) {
-				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-			} else {
-				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, 0);
-			}
-
-			R_CheckError();
-		}
-	} else { /* we might not want any textures (eg. for basic shadowmapping) */
-		buf->textures = NULL;
-		buf->pixelFormat = GL_NONE;
-		buf->byteFormat = GL_NONE;
-	}
-
-	/* create depth renderbuffer or texture if requested */
-	if (depth) {
-		if (!depthTexture) {
-			qglGenRenderbuffersEXT(1, &buf->depth);
-			qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->depth);
-			qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, buf->width, buf->height);
-		} else {
-			buf->depth = R_GetFreeFBOTexture();
-			glBindTexture(GL_TEXTURE_2D, buf->depth);
-
-			/* we use GL_LINEAR for PFC with shadowmapping */
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
-			/* No need to force GL_DEPTH_COMPONENT24, drivers usually give you the max precision if available */
-			glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, buf->width, buf->height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
-		R_CheckError();
-	} else {
-		buf->depth = 0;
-	}
-
-	/* create FBO itself */
-	qglGenFramebuffersEXT(1, &buf->fbo);
-	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf->fbo);
-
-	/* bind textures to FBO */
-	if (buf->nTextures > 0) {
-		for (i = 0; i < buf->nTextures; i++) {
-			glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
-			qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
-		}
-	} else {
-		qglDrawBuffer(GL_NONE);
-		qglReadBuffer(GL_NONE);
-	}
-
-	/* bind depthbuffer to FBO */
-	if (depth) {
-		if (!depthTexture) {
-			qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, buf->depth);
-		} else { 
-			glBindTexture(GL_TEXTURE_2D, buf->depth);
-			qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, buf->depth, 0);
-		}
-	}
-
-	R_CheckError();
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-
-	return buf;
-}
 
 /**
  * @brief bind specified framebuffer object so we render to it
