@@ -395,11 +395,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	pos_t move;
 	shoot_types_t shootType;
 	float dist, minDist;
-	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
+	float bestActionPoints, dmg, maxDmg, bestTime = -1;
 	const objDef_t *ad;
 
-	bestActionPoints = 0.0;
-	memset(aia, 0, sizeof(*aia));
 	move = gi.MoveLength(gi.pathingMap, to,
 			G_IsCrouched(ent) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
@@ -408,11 +406,15 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
+	bestActionPoints = 0.0;
+	memset(aia, 0, sizeof(*aia));
+
 	/* set basic parameters */
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
+	maxDmg = 0.0;
 	/* search best target */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
@@ -445,6 +447,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					/* how many shoots can this actor do */
 					const int shots = tu / fd->time;
 					if (shots) {
+						float vis = ACTOR_VIS_0;
 						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 							continue;
 
