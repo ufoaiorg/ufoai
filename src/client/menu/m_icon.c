@@ -88,6 +88,7 @@ static menuIcon_t* MN_AutoGenerateIcon (const char* name)
 	return icon;
 }
 
+#ifdef DEBUG
 /**
  * @brief Check if an icon name exists
  * @param[in] name Name of the icon
@@ -104,6 +105,7 @@ static qboolean MN_IconExists (const char* name)
 	}
 	return qfalse;
 }
+#endif
 
 /**
  * @brief Return an icon by is name

@@ -58,8 +58,11 @@ static void MN_BarNodeDraw (menuNode_t *node)
 		color[3] = node->color[3];
 	}
 
+	/* shoud it return an error? */
 	if (max > min)
 		fac = (value - min) / (max - min);
+	else
+		fac = 1;
 	if (fac <= 0 || fac > 1)
 		return;
 
@@ -123,6 +126,7 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 			frac = (node->size[0] - (float) x) / node->size[0];
 			break;
 		default:
+			frac = 0;
 			Com_Printf("MN_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
 		}
 		MN_SetCvar(&var[6], NULL, min + frac * (max - min));
