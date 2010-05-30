@@ -291,7 +291,7 @@ window hud extends ahud
 				string		*cvar:mn_hovered_tu
 				pos			"105 35"
 				size		"40 20"
-				textalign	ur
+				textalign	ALIGN_UR
 			}
 
 			bar timeall
@@ -329,7 +329,7 @@ window hud extends ahud
 				string		*cvar:mn_hovered_hp
 				pos			"105 50"
 				size		"40 20"
-				textalign	ur
+				textalign	ALIGN_UR
 			}
 
 			bar health
@@ -357,7 +357,7 @@ window hud extends ahud
 				string		*cvar:mn_hovered_morale
 				pos			"105 65"
 				size		"40 20"
-				textalign	ur
+				textalign	ALIGN_UR
 			}
 	
 			bar morale
@@ -532,7 +532,7 @@ window hud extends ahud
 			tooltip	"_Click to cycle through spotted enemies"
 			pos		"8 11"
 			size	"48 34"
-			textalign	cc
+			textalign	ALIGN_CC
 			onClick	{ cmd "nextalien;" }
 		}
 	}
@@ -587,7 +587,7 @@ window hud extends ahud
 			string	*cvar:mn_ammoright
 			pos		"17 112"
 			size	"65 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		container right
@@ -653,7 +653,7 @@ window hud extends ahud
 			string	*cvar:mn_ammoleft
 			pos		"171 112"
 			size	"65 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		container left
@@ -733,7 +733,7 @@ window hud extends ahud
 			string	*cvar:mn_tu
 			pos		"82 11"
 			size	"40 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		string hp
@@ -741,7 +741,7 @@ window hud extends ahud
 			string	*cvar:mn_hp
 			pos		"82 25"
 			size	"40 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
@@ -807,7 +807,7 @@ window hud extends ahud
 			string	*cvar:mn_morale
 			pos		"82 38"
 			size	"40 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		bar morale

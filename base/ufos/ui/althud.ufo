@@ -641,7 +641,7 @@ window althud extends ahud
 			string		*cvar:mn_hp
 			pos			"113 301"
 			size		"40 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			tooltip		"_Health"
 		}
 		string str_tu
@@ -649,7 +649,7 @@ window althud extends ahud
 			string		*cvar:mn_tu
 			pos			"141 301"
 			size		"40 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			tooltip		"_TUs"
 		}
 		string str_morale
@@ -657,7 +657,7 @@ window althud extends ahud
 			string		*cvar:mn_morale
 			pos			"170 301"
 			size		"40 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
 	
@@ -968,7 +968,7 @@ window althud extends ahud
 			string		*cvar:cl_worldlevel
 			pos			"1 49"
 			size		"40 20"
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 	}
 	
@@ -1012,7 +1012,7 @@ window althud extends ahud
 			pos			"78 13"
 			size	    "48 34"
 			onClick		{ cmd "nextalien;" }
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 		pic nextround
 		{

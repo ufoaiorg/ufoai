@@ -60,7 +60,7 @@ window hospital
 		string	*cvar:mn_base_title
 		pos	"60 30"
 		size "500 32"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding	8
 		font	"f_big"
 	}
@@ -80,7 +80,7 @@ window hospital
 		pos			"780 30"
 		size		"130 30"
 		font		"f_big"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	custombutton bt_continue

@@ -90,7 +90,7 @@ window transfer
 			string		"_Amount/Transfer"
 			pos			"300 18"
 			size		"200 25"
-			textalign	uc
+			textalign	ALIGN_UC
 			font		"f_small_bold"
 		}
 
@@ -516,7 +516,7 @@ window transfer
 			string		"_Destination base"
 			pos			"64 22"
 			size		"288 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			color		"0.7 0.7 0.7 1"
 			font		"f_small"
 		}

@@ -43,7 +43,7 @@ component panel cmpDefNamedTbar {
 	string	val {
 		pos "190 0"
 		size "130 20"
-		textalign ur
+		textalign ALIGN_UR
 	}
 }
 
@@ -71,7 +71,7 @@ component panel cmpMapSlot
 			color 		"0 .78 0 1"
 			string		*cvar:mn_svmapname
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			pos			"32 0"
@@ -126,7 +126,7 @@ size "1024 90"
 		pos			"780 30"
 		size		"130 30"
 		font		"f_big"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 	custombutton bt_back
 	{
@@ -151,7 +151,7 @@ component cmpDefBaseHeader cmpBaseHeader
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"500 32"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_big"
 	}

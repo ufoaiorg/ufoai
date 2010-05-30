@@ -47,14 +47,14 @@ component panel cmpFiremodeEntry {
 	{ 
 		pos "27 4"	
 		size "183 25"	
-		textalign cl	
+		textalign ALIGN_CL	
 		ghost true
 	}
 	string tu	
 	{ 
 		pos "27 32"	
 		size "69 28"	
-		textalign cc	
+		textalign ALIGN_CC	
 		ghost true 
 		font		"f_verysmall"
 	}
@@ -62,7 +62,7 @@ component panel cmpFiremodeEntry {
 	{
 		pos "99 32"	
 		size "111 28"	
-		textalign cc	
+		textalign ALIGN_CC	
 		ghost true 
 		font		"f_verysmall"
 	}
@@ -271,9 +271,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 0;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name0	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu0	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot0	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name0	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu0	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot0	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm1
@@ -300,9 +300,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 1;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name1	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu1	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot1	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name1	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu1	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot1	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm2
@@ -329,9 +329,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 2;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name2	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu2	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot2	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name2	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu2	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot2	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm3
@@ -358,9 +358,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 3;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name3	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu3	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot3	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name3	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu3	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot3	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm4
@@ -387,9 +387,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 4;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name4	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu4	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot4	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name4	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu4	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot4	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm5
@@ -416,9 +416,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 5;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name5	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu5	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot5	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name5	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu5	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot5	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm6
@@ -445,9 +445,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 6;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name6	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu6	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot6	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name6	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu6	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot6	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_left_fm7
@@ -474,9 +474,9 @@ window firemode_left {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode l 7;" }
 		}
-		string name	{ string *cvar:mn_l_fm_name7	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_l_fm_tu7	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_l_fm_shot7	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_l_fm_name7	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_l_fm_tu7	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_l_fm_shot7	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	/* Firemode console functions ===================================*/
@@ -560,9 +560,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 0;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name0	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu0	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot0	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name0	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu0	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot0	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm1
@@ -589,9 +589,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 1;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name1	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu1	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot1	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name1	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu1	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot1	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm2
@@ -618,9 +618,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 2;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name2	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu2	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot2	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name2	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu2	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot2	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm3
@@ -647,9 +647,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 3;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name3	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu3	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot3	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name3	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu3	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot3	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm4
@@ -676,9 +676,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 4;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name4	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu4	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot4	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name4	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu4	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot4	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm5
@@ -705,9 +705,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 5;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name5	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu5	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot5	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name5	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu5	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot5	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm6
@@ -734,9 +734,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 6;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name6	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu6	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot6	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name6	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu6	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot6	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	pic bt_right_fm7
@@ -763,9 +763,9 @@ window firemode_right {
 			texh	"31 31"
 			onClick	{ cmd "hud_selectreactionfiremode r 7;" }
 		}
-		string name	{ string *cvar:mn_r_fm_name7	pos "27 4"	size "183 25"	textalign cl	ghost true }
-		string tu	{ string *cvar:mn_r_fm_tu7	pos "27 32"	size "69 28"	textalign cc	ghost true font		"f_verysmall" }
-		string shot	{ string *cvar:mn_r_fm_shot7	pos "99 32"	size "111 28"	textalign cc	ghost true font		"f_verysmall" }
+		string name	{ string *cvar:mn_r_fm_name7	pos "27 4"	size "183 25"	textalign ALIGN_CL	ghost true }
+		string tu	{ string *cvar:mn_r_fm_tu7	pos "27 32"	size "69 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
+		string shot	{ string *cvar:mn_r_fm_shot7	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
 	/* Firemode console functions ===================================*/

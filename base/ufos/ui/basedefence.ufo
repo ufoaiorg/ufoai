@@ -238,7 +238,7 @@ window basedefence extends objectinfo
 				string		"_Selected Item"
 				pos			"10 5"
 				size		"314 25"
-				textalign	uc
+				textalign	ALIGN_UC
 				font		"f_small_bold"
 			}
 			string item_name
@@ -246,7 +246,7 @@ window basedefence extends objectinfo
 				string		*cvar:mn_itemname
 				pos			"10 25"
 				size		"314 25"
-				textalign	uc
+				textalign	ALIGN_UC
 			}
 	
 			model item_model
@@ -314,7 +314,7 @@ window basedefence extends objectinfo
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			onChange	{ }

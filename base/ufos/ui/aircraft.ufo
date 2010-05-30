@@ -24,7 +24,7 @@ component panel cmpActorSelect {
 		string	*cvar:mn_ename<node:parent@num>
 		pos		"22 0"
 		size	"190 35"
-		textalign cl
+		textalign ALIGN_CL
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom

@@ -159,7 +159,7 @@ window geoscape
 			string		*cvar:mn_mapdaytime
 			pos			"31 304"
 			size		"195 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		text description
@@ -199,7 +199,7 @@ window geoscape
 			string		"*cvar:mn_mapdate *cvar:mn_maptime"
 			pos			"31 30"
 			size		"195 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			color		"1 1 1 1"
 			font		"f_small"
 		}
@@ -219,7 +219,7 @@ window geoscape
 			pos			"112 54"
 			size		"100 25"
 			font		"f_small"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		panel time_panel {
@@ -338,7 +338,7 @@ window geoscape
 				string		*cvar:mn_timelapse
 				pos			"31 32"
 				size		"195 20"
-				textalign	uc
+				textalign	ALIGN_UC
 				color		"0 .78 0 1"
 			}
 
@@ -1002,7 +1002,7 @@ window popup_newbase
 		string		"_Start with buildings"
 		pos			"270 98"
 		size		"180 20"
-		textalign	ul
+		textalign	ALIGN_UL
 		onClick		{ call *node:root.start_building@toggle }
 	}
 
@@ -1020,7 +1020,7 @@ window popup_newbase
 		string		"_Start with employees"
 		pos			"270 123"
 		size		"180 20"
-		textalign	ul
+		textalign	ALIGN_UL
 		onClick		{ call *node:root.start_employees@toggle }
 	}
 
@@ -1084,7 +1084,7 @@ window popup_newinstallation_type
 		string		"_Build Time"
 		pos			"226 50"
 		size		"130 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_normal"
 	}
 	string cost_label
@@ -1092,7 +1092,7 @@ window popup_newinstallation_type
 		string		"_Cost"
 		pos			"356 50"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_normal"
 	}
 
@@ -1119,7 +1119,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_radartower_buildtime
 		pos			"256 78"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	string radar_cost
@@ -1127,7 +1127,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_radartower_cost
 		pos			"356 78"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_radar
@@ -1161,7 +1161,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_samsite_buildtime
 		pos			"256 98"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	string sam_cost
@@ -1169,7 +1169,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_samsite_cost
 		pos			"356 98"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_sam
@@ -1203,7 +1203,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_ufoyard_buildtime
 		pos			"256 118"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	string ufoyard_cost
@@ -1211,7 +1211,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_installation_ufoyard_cost
 		pos			"356 118"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_ufoyard
@@ -1251,7 +1251,7 @@ window popup_newinstallation_type
 		string		"_0 day"
 		pos			"256 138"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	string base_cost
@@ -1259,7 +1259,7 @@ window popup_newinstallation_type
 		string		*cvar:mn_base_cost
 		pos			"356 138"
 		size		"100 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	zone click_base
@@ -1370,7 +1370,7 @@ window popup_newinstallation
 		string		"_Name:"
 		pos			"25 60"
 		size		"120 25"
-		textalign	cl
+		textalign	ALIGN_CL
 	}
 	textentry name
 	{
@@ -1479,7 +1479,7 @@ window popup_installationstatus
 		string		"_Name:"
 		pos			"25 60"
 		size		"120 25"
-		textalign	cl
+		textalign	ALIGN_CL
 	}
 	textentry name
 	{

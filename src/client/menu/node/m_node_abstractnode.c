@@ -777,7 +777,7 @@ static const value_t properties[] = {
 	/* Text color the node will use when something is selected. */
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	/* Alignement of the text into the node, or elements into blocks. */
-	{"textalign", V_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
+	{"textalign", V_UI_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
 	/* When <code>invis</code> property is false (default value), this condition say if the node is visible or not. It use a script expression. */
 	{"visiblewhen", V_UI_IF, offsetof(menuNode_t, visibilityCondition), 0},
 
@@ -846,6 +846,17 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->sizeChanged = MN_AbstractNodeSizeChanged;
 	behaviour->init = MN_AbstractNodeInit;
 	behaviour->close = MN_AbstractNodeClose;
+
+	/** TODO move it into common? */
+	Com_RegisterConstInt("ALIGN_UL", ALIGN_UL);
+	Com_RegisterConstInt("ALIGN_UC", ALIGN_UC);
+	Com_RegisterConstInt("ALIGN_UR", ALIGN_UR);
+	Com_RegisterConstInt("ALIGN_CL", ALIGN_CL);
+	Com_RegisterConstInt("ALIGN_CC", ALIGN_CC);
+	Com_RegisterConstInt("ALIGN_CR", ALIGN_CR);
+	Com_RegisterConstInt("ALIGN_LL", ALIGN_LL);
+	Com_RegisterConstInt("ALIGN_LC", ALIGN_LC);
+	Com_RegisterConstInt("ALIGN_LR", ALIGN_LR);
 
 	/* some commands */
 #ifdef DEBUG

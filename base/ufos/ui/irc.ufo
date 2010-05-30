@@ -19,7 +19,7 @@ window irc
 		string		"_Lobby"
 		pos			"45 17"
 		size		"933 35"
-		textalign	cc
+		textalign	ALIGN_CC
 		font		"f_big"
 	}
 
@@ -51,7 +51,7 @@ window irc
 		string		"_Users"
 		pos			"735 80"
 		size		"270 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 
@@ -111,7 +111,7 @@ window irc
 		string		*cvar:irc_server
 		pos			"412 44"
 		size		"200 16"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_verysmall"
 	}
 
@@ -120,7 +120,7 @@ window irc
 		string		*cvar:irc_topic
 		pos			"84 80"
 		size		"512 16"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_verysmall"
 	}
 
@@ -129,7 +129,7 @@ window irc
 		string		*cvar:irc_channel
 		pos			"730 44"
 		size		"240 16"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_verysmall"
 	}
 
@@ -139,7 +139,7 @@ window irc
 		image		"ui/button_green_verysmall"
 		color 		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"30 710"
@@ -208,7 +208,7 @@ window irc_changename
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"170 122"

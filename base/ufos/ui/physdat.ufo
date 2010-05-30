@@ -162,7 +162,7 @@ window physdata
 		string		*cvar:mn_hp
 		pos			"415 373"
 		size		"50 20"
-		textalign	uc
+		textalign	ALIGN_UC
 	}
 	ekg hp
 	{
@@ -176,7 +176,7 @@ window physdata
 		string		*cvar:mn_morale
 		pos			"415 413"
 		size		"50 20"
-		textalign	uc
+		textalign	ALIGN_UC
 	}
 	ekg morale
 	{

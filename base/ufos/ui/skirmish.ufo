@@ -54,7 +54,7 @@ window skirmish
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"500 140"
@@ -95,7 +95,7 @@ window skirmish
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"500 210"
@@ -138,7 +138,7 @@ window skirmish
 		string		*cvar:ai_numaliens
 		pos			"810 275"
 		size		"50 20"
-		textalign	cc
+		textalign	ALIGN_CC
 	}
 	spinner ai_numactors_change
 	{
@@ -165,7 +165,7 @@ window skirmish
 		string		*cvar:sv_maxsoldiersperplayer
 		pos			"810 250"
 		size		"50 20"
-		textalign	uc
+		textalign	ALIGN_UC
 	}
 	spinner maxsoldierperplayer_change
 	{

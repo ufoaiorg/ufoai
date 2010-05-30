@@ -94,7 +94,7 @@ window aircraft_pilots extends iaircraft
 		string		*cvar:mn_pilot_name
 		pos			"480 185"
 		size		"200 20"
-		textalign	ul
+		textalign	ALIGN_UL
 	}
 
 	// ==================

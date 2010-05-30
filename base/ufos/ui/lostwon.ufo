@@ -188,7 +188,7 @@ window uforecovery
 		pos			"30 70"
 		size		"610 40"
 		font		"f_small"
-		textalign	ul
+		textalign	ALIGN_UL
 	}
 
 	//
@@ -220,7 +220,7 @@ window uforecovery
 			pos			"325 30"
 			size		"290 20"
 			font		"f_small_bold"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		textlist ur_ufoyards
@@ -252,7 +252,7 @@ window uforecovery
 			selectcolor	"1 1 1 1"
 			lineheight	16
 			rows		"8"
-			textalign	ur
+			textalign	ALIGN_UR
 			onClick		{
 				*(textlist)store_panel.ur_ufoyards@lineselected = <lineselected>
 			}

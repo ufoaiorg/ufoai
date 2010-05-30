@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_PARSE_H
 #define CLIENT_MENU_M_PARSE_H
 
+#include "../../common/scripts.h"
+
 struct menuNode_s;
 struct menuAction_s;
 
@@ -54,6 +56,9 @@ struct menuAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_resu
 #define V_UI_CVAR			(V_UI + 0x0100) /**< Property is a CVAR string (mix this flag with base type, see bellow) */
 #define V_UI_REF			(V_UI + 0x0200) /**< Property is a ref into a value (mix this flag with base type, see bellow) */
 #define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */
+
+/* alias */
+#define V_UI_ALIGN			V_CHAR
 
 /* composite special type */
 #define V_CVAR_OR_FLOAT			(V_UI_CVAR + V_FLOAT)

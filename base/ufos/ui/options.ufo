@@ -91,7 +91,7 @@ window options
 			pos			"55 75"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	cc
+			textalign	ALIGN_CC
 			color		"0 0.93 0 1"			
 		}
 		// ==================
@@ -141,7 +141,7 @@ window options
 			string		*cvar:r_anisotropic
 			pos			"360 215"
 			size		"100 20"
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 		/* @todo update max with GL max anisotropic */
 		spinner aniso_change
@@ -332,7 +332,7 @@ window options
 			string		*cvar:r_multisample
 			pos			"360 465"
 			size		"100 20"
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 		spinner samplebuf_change
 		{
@@ -360,7 +360,7 @@ window options
 			string		*cvar:r_swapinterval
 			pos			"360 485"
 			size		"100 20"
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 		spinner swapinterval_change
 		{
@@ -524,7 +524,7 @@ window options
 			string		*cvar:r_dynamic_lights
 			pos			"360 665"
 			size		"100 20"
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 		spinner dynamiclights_change
 		{
@@ -688,7 +688,7 @@ window options
 			pos			"55 75"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	cc
+			textalign	ALIGN_CC
 			color		"0 0.86 0 1"
 		}
 	// ===============
@@ -843,7 +843,7 @@ window options
 			pos			"55 65"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	cc
+			textalign	ALIGN_CC
 			color		"0 0.79 0 1"			
 		}
 
@@ -894,7 +894,7 @@ window options
 			pos			"55 75"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	cc
+			textalign	ALIGN_CC
 			color		"0 1 0 1"						
 		}
 	// =====
@@ -915,7 +915,7 @@ window options
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cc
+			textalign	ALIGN_CC
 			padding		8
 			font		"f_verysmall"
 			pos			"85 352"
@@ -943,7 +943,7 @@ window options
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			padding		6
-			textalign	cc
+			textalign	ALIGN_CC
 			onViewchange	{
 				*(vscrollbar)options_game.select_language_scroll@current = <viewpos>
 				*(vscrollbar)options_game.select_language_scroll@fullsize = <fullsize>
@@ -1131,7 +1131,7 @@ window options
 			pos			"55 75"
 			size		"465 35"
 			font		"f_menubig"
-			textalign	cc
+			textalign	ALIGN_CC
 			color		"0 0.79 0 1"
 		}
 

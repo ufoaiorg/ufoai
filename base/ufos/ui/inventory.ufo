@@ -26,7 +26,7 @@ window inventory
 	string s_backpack
 	{
 		pos "340 25"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -35,7 +35,7 @@ window inventory
 	string s_left
 	{
 		pos "340 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -44,7 +44,7 @@ window inventory
 	string s_right
 	{
 		pos "18 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -53,7 +53,7 @@ window inventory
 	string s_extension
 	{
 		pos "18 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -62,7 +62,7 @@ window inventory
 	string s_headgear
 	{
 		pos "108 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -71,7 +71,7 @@ window inventory
 	string s_holster
 	{
 		pos "340 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -80,7 +80,7 @@ window inventory
 	string s_belt
 	{
 		pos "18 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -89,7 +89,7 @@ window inventory
 	string s_floor
 	{
 		pos "24 360"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Floor"
 		color "0 0.6 0 1"
 		size "76 25"

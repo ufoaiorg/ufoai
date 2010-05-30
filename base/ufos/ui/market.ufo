@@ -145,7 +145,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		pos			"330 177"
 		rows		"22"
 		size		"40 550"
@@ -158,7 +158,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		pos			"406 177"
 		rows		"22"
 		size		"40 550"
@@ -171,7 +171,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		rows		"22"
 		size		"80 550"
 		lineheight	"25"
@@ -345,7 +345,7 @@ window market extends objectinfo
 			string		*cvar:mn_itemname
 			pos			"22 35"
 			size		"365 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 		string aircraftname
 		{
@@ -353,7 +353,7 @@ window market extends objectinfo
 			string		*cvar:mn_aircraftname
 			pos			"22 35"
 			size		"365 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		custombutton ufopedia_link
@@ -432,7 +432,7 @@ window market extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"162 390"
 			size	"190 16"
-			textalign	cc
+			textalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -470,7 +470,7 @@ window market extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"162 414"
 			size	"190 16"
-			textalign	cc
+			textalign	ALIGN_CC
 			font	"f_small"
 		}
 			

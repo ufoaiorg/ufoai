@@ -28,14 +28,14 @@ component panel cmpResearchItem {
 		pos			"405 0"
 		size		"40 20"
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	string txt_rsstatus	{
 		pos			"480 0"
 		size		"60 20"
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	spinner bt_rs_change {

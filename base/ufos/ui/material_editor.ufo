@@ -286,7 +286,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -310,7 +310,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -341,7 +341,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -365,7 +365,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -389,7 +389,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 65"
@@ -413,7 +413,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 95"
@@ -444,7 +444,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -468,7 +468,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -499,7 +499,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -523,7 +523,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -547,7 +547,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 65"
@@ -571,7 +571,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 95"
@@ -602,7 +602,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -626,7 +626,7 @@ window material_editor {
 				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"

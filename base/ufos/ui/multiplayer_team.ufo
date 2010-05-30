@@ -16,7 +16,7 @@ window mp_team_edit extends objectinfo
 	string s_backpack
 	{
 		pos "852 25"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -25,7 +25,7 @@ window mp_team_edit extends objectinfo
 	string s_left
 	{
 		pos "852 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -34,7 +34,7 @@ window mp_team_edit extends objectinfo
 	string s_right
 	{
 		pos "530 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -43,7 +43,7 @@ window mp_team_edit extends objectinfo
 	string s_extension
 	{
 		pos "530 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -52,7 +52,7 @@ window mp_team_edit extends objectinfo
 	string s_headgear
 	{
 		pos "620 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -61,7 +61,7 @@ window mp_team_edit extends objectinfo
 	string s_holster
 	{
 		pos "852 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -70,7 +70,7 @@ window mp_team_edit extends objectinfo
 	string s_belt
 	{
 		pos "530 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -193,7 +193,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name0
 		pos		"90 13"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 0;" }
 	}
 	string txt_actor1
@@ -201,7 +201,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name1
 		pos		"90 54"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 1;" }
 	}
 	string txt_actor2
@@ -209,7 +209,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name2
 		pos		"90 95"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 2;" }
 	}
 	string txt_actor3
@@ -217,7 +217,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name3
 		pos		"90 136"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 3;" }
 	}
 	string txt_actor4
@@ -225,7 +225,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name4
 		pos		"90 177"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 4;" }
 	}
 	string txt_actor5
@@ -233,7 +233,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name5
 		pos		"90 218"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 5;" }
 	}
 	string txt_actor6
@@ -241,7 +241,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name6
 		pos		"90 259"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 6;" }
 	}
 	string txt_actor7
@@ -249,7 +249,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name7
 		pos		"90 300"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 7;" }
 	}
 
@@ -327,7 +327,7 @@ window mp_team_edit extends objectinfo
 			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 	
 		item itemmodel
@@ -393,7 +393,7 @@ window mp_team_edit extends objectinfo
 			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
-			textalign	cc
+			textalign	ALIGN_CC
 			font	"f_small"
 		}
 
@@ -431,7 +431,7 @@ window mp_team_edit extends objectinfo
 			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
-			textalign	cc
+			textalign	ALIGN_CC
 			font	"f_small"
 		}
 			
@@ -750,7 +750,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -765,7 +765,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -780,7 +780,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -795,7 +795,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -810,7 +810,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -825,7 +825,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -840,7 +840,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -855,7 +855,7 @@ window mp_team extends abstract_multiplayer
 			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -954,7 +954,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 130"
@@ -968,7 +968,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 165"
@@ -982,7 +982,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 200"
@@ -996,7 +996,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 235"
@@ -1010,7 +1010,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 270"
@@ -1024,7 +1024,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 305"
@@ -1038,7 +1038,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 340"
@@ -1052,7 +1052,7 @@ window mp_team_save_popup
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 375"

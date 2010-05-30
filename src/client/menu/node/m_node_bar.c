@@ -170,7 +170,7 @@ static const value_t properties[] = {
 	/**
 	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
 	 */
-	{"orientation", V_ALIGN, MN_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
+	{"direction", V_UI_ALIGN, MN_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
 	/**
 	 *  if true, the user can't edit the content
 	 */

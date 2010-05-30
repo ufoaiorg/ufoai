@@ -46,7 +46,7 @@ component panel cmpNamedBar {
 	string	val {
 		pos "265 0"
 		size "150 20"
-		textalign ur
+		textalign ALIGN_UR
 	}
 }
 
@@ -125,7 +125,7 @@ window team extends iaircraft
 		string		*cvar:mn_hired
 		pos			"619 107"
 		size		"62 20"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	func listen_close_equipment
@@ -493,19 +493,19 @@ window team extends iaircraft
 		image *cvar:mn_chrrank_img
 	}
 
-	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign uc font "f_normal_bold" }
+	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign ALIGN_UC font "f_normal_bold" }
 
 	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
-	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ur }
+	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ALIGN_UR }
 
 	string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
-	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ur }
+	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ALIGN_UR }
 
 	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
-	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ur }
+	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ALIGN_UR }
 
 	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
-	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ur }
+	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ALIGN_UR }
 
 	}  
 

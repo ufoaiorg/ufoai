@@ -115,7 +115,7 @@ window checkcvars
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"170 82"

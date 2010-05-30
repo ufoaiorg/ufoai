@@ -28,7 +28,7 @@ window stats
 		string		"_Statistics"
 		pos			"55 25"
 		size		"915 35"
-		textalign	cc
+		textalign	ALIGN_CC
 		font		"f_big"
 	}
 
@@ -37,7 +37,7 @@ window stats
 		string		"_Missions"
 		pos			"40 86"
 		size		"200 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	text mission_stats
@@ -56,7 +56,7 @@ window stats
 		string		"_Bases"
 		pos			"250 86"
 		size		"200 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	text base_stats
@@ -75,7 +75,7 @@ window stats
 		string		"_Installations"
 		pos			"460 86"
 		size		"200 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	text ins_stats
@@ -94,7 +94,7 @@ window stats
 		string		"_Employees"
 		pos			"670 86"
 		size		"200 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	text empl_stats
@@ -113,7 +113,7 @@ window stats
 		string		"_Costs"
 		pos			"40 260"
 		size		"470 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	text costs_stats
@@ -132,7 +132,7 @@ window stats
 		string		"_Nations"
 		pos			"518 260"
 		size		"470 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	
@@ -156,7 +156,7 @@ window stats
 		string		"_Campaign"
 		pos			"518 550"
 		size		"470 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	text campaign_stats
@@ -205,7 +205,7 @@ window nations
 		string		"_Nation Statistics"
 		pos			"55 25"
 		size		"915 35"
-		textalign	cc
+		textalign	ALIGN_CC
 		font		"f_big"
 	}
 
@@ -365,7 +365,7 @@ window nations
 		string		"_Month (Relative to current)"
 		pos			"600 330"
 		size		"300 20"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_small"
 	}
 	/** @todo better display of real month-text (year+month?) */
@@ -446,21 +446,21 @@ window nations
 		string		"_Funding"
 		pos			"450 200"
 		size		"140 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	string graph_funding_zero {
 		string		"0"				/** @todo *cvar:mn_nat_fund_zero */
 		pos			"550 290"
 		size		"40 20"
-		textalign	ur
+		textalign	ALIGN_UR
 		font		"f_small"
 	}
 	string graph_funding_max {
 		string		"_max"			/*< @todo *cvar:mn_nat_fund_max */
 		pos			"550 100"
 		size		"40 20"
-		textalign	lr
+		textalign	ALIGN_LR
 		font		"f_small"
 	}
 

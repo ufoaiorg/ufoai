@@ -238,7 +238,7 @@ window load
 		string		"_Load"
 		pos			"610 170"
 		size		"310 30"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_big"
 	}
 
@@ -255,7 +255,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot0; game_timestop;" }
 	}
@@ -268,7 +268,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot1; game_timestop;" }
 	}
@@ -281,7 +281,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot2; game_timestop;" }
 	}
@@ -294,7 +294,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot3; game_timestop;" }
 	}
@@ -307,7 +307,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot4; game_timestop;" }
 	}
@@ -320,7 +320,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot5; game_timestop;" }
 	}
@@ -333,7 +333,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot6; game_timestop;" }
 	}
@@ -346,7 +346,7 @@ window load
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot7; game_timestop;" }
 	}
@@ -408,7 +408,7 @@ window save
 		string		"_Save"
 		pos			"610 170"
 		size		"310 30"
-		textalign	uc
+		textalign	ALIGN_UC
 		font		"f_big"
 	}
 
@@ -424,7 +424,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 0;" }
@@ -440,7 +440,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 1;" }
@@ -456,7 +456,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 2;" }
@@ -472,7 +472,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 3;" }
@@ -488,7 +488,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 4;" }
@@ -504,7 +504,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 5;" }
@@ -520,7 +520,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 6;" }
@@ -536,7 +536,7 @@ window save
 		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 7;" }
@@ -579,7 +579,7 @@ window lostgame
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
-		textalign	uc
+		textalign	ALIGN_UC
 		color		"0 0.8 0 1"
 	}
 
@@ -589,7 +589,7 @@ window lostgame
 		pos			"814 750"
 		size		"200 20"
 		font		"f_verysmall"
-		textalign	ur
+		textalign	ALIGN_UR
 		color		"0 0.8 0 0.9"
 		ghost		true
 	}
@@ -609,7 +609,7 @@ window lostgame
 		dataid	TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
-		textalign	uc
+		textalign	ALIGN_UC
 		pos			"30 600"
 		size		"960 140"
 		lineheight	"20"
@@ -652,7 +652,7 @@ window endgame
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
-		textalign	uc
+		textalign	ALIGN_UC
 		color		"0 0.8 0 1"
 	}
 
@@ -662,7 +662,7 @@ window endgame
 		pos			"814 750"
 		size		"200 20"
 		font		"f_verysmall"
-		textalign	ur
+		textalign	ALIGN_UR
 		color		"0 0.8 0 0.9"
 		ghost		true
 		onClick {
@@ -684,7 +684,7 @@ window endgame
 		dataid		TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
-		textalign	uc
+		textalign	ALIGN_UC
 		pos			"30 500"
 		size		"960 240"
 		lineheight	"20"
