@@ -1,0 +1,37 @@
+package net.sourceforge.ufoai.ufoscripteditor.parser.parsers.subparser.ui;
+
+import net.sourceforge.ufoai.ufoscripteditor.parser.IParserContext;
+import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.subparser.IUFOSubParser;
+import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.subparser.IUFOSubParserFactory;
+
+public class ###JAVAID###SubParser extends NodeUFOSubParser {
+	public static final IUFOSubParserFactory[] EVENT_PROPERTY_PARSERS = new IUFOSubParserFactory[] {
+			###EVENTPROPERTIES###};
+	public static final IUFOSubParserFactory FACTORY = new UFONodeParserFactoryAdapter() {
+		@Override
+		public String getID() {
+			return "###TOKEN###";
+		}
+
+		@Override
+		public IUFOSubParser create(IParserContext ctx) {
+			return new ###JAVAID###SubParser(ctx);
+		}
+
+	};
+
+	@Override
+	public IUFOSubParserFactory getNodeSubParserFactory() {
+		return FACTORY;
+	}
+
+	@Override
+	public IUFOSubParserFactory[] getEventPropertyParsers() {
+		return EVENT_PROPERTY_PARSERS;
+	}
+
+	public ###JAVAID###SubParser(IParserContext ctx) {
+		super(ctx);
+	}
+}
+
