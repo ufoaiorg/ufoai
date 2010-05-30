@@ -4,7 +4,7 @@ import net.sourceforge.ufoai.ufoscripteditor.parser.IParserContext;
 import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.subparser.IUFOSubParser;
 import net.sourceforge.ufoai.ufoscripteditor.parser.parsers.subparser.IUFOSubParserFactory;
 
-public class ###JAVAID###SubParser extends NodeUFOSubParser {
+public class ###JAVAID###SubParser extends ###EXTENDSJAVAID###SubParser {
 	public static final IUFOSubParserFactory FACTORY = new UFONodeParserFactoryAdapter() {
 		@Override
 		public String getID() {

@@ -99,16 +99,20 @@ def genNodeParserRegistration(package):
 			continue
 		if token == "window":
 			continue
-		data += "registerSubParser(" + javaID + "SubParser.FACTORY, FACTORY);\n"
+		data += "registerSubParser(" + javaID + "SubParser.FACTORY, factory);\n"
 
 	file = open(getOutputPath() + "/nodeRegistration.txt", "wt")
 	file.write(data)
 	file.close()
 
-def genBehaviourParser(package, node):
+def genBehaviourParser(node):
 	global eventpropertiesparsers, nodebehaviourparsers
 
 	javaID = classNameTypo(node.name)
+	extendsJavaID = "UFONode"
+	if node.extends != None:
+		extendsJavaID = classNameTypo(node.extends)
+
 	token = node.name
 	print javaID + " \"" + token + "\"..."
 	if token == "null":
@@ -118,26 +122,36 @@ def genBehaviourParser(package, node):
 
 	template = getTemplate(token)
 
+	registration = False
+	eventProperties = ""
+	eventPropertiesRegistration = ""
+	list = node.callbacks.keys()
+	if len(list) != 0:
+		list.sort()
+		for name in list:
+			e = node.callbacks[name]
+			factory = "EventPropertySubParser." + e.name.upper()
+			if eventProperties != "":
+				eventProperties += ',\n\t\t\t'
+			eventProperties += factory
+			if eventPropertiesRegistration != "":
+				eventPropertiesRegistration += '\n\t\t'
+			eventPropertiesRegistration += "registerSubParser(" + factory + ", factory);"
+			registration = True
+			pass
 
-	behaviour = node
-	eventproperties = ""
-	while behaviour != None:
-		list = behaviour.callbacks.keys()
-		if len(list) != 0:
-			list.sort()
-			for name in list:
-				e = behaviour.callbacks[name]
-				if eventproperties != "":
-					eventproperties += ',\n\t\t\t'
-				eventproperties += "EventPropertySubParser." + e.name.upper()
-				pass
-		if behaviour.extends == None:
-			break
-		behaviour =  package.getBehaviour(behaviour.extends)
+	getFactory = "IUFOSubParserFactory factory = getNodeSubParserFactory();"
 
+	hideRegistration = '// '
+	if registration:	
+		hideRegistration = ''
+
+	template = template.replace("###HIDEREGISTRATION###", hideRegistration)
 	template = template.replace("###JAVAID###", javaID)
+	template = template.replace("###EXTENDSJAVAID###", extendsJavaID)
 	template = template.replace("###TOKEN###", token)
-	template = template.replace("###EVENTPROPERTIES###", eventproperties)
+	template = template.replace("###EVENTPROPERTIES###", eventProperties)
+	template = template.replace("###EVENTPROPERTIESREGISTRATION###", eventPropertiesRegistration)
 
 	className = javaID + "SubParser"
 	file = open(getOutputPath() + "/" + className + ".java", "wt")
@@ -148,7 +162,7 @@ def genParsers(package):
 	list = package.getBehaviourNames()
 	list.sort()
 	for name in list:
-		genBehaviourParser(package, package.getBehaviour(name))
+		genBehaviourParser(package.getBehaviour(name))
 
 extract = ExtractNodeBehaviour()
 package = extract.getPackage()
