@@ -627,23 +627,23 @@ window options
 				label	"_All ratios"
 				value	"all"
 			}
-			option 5_4 {
+			option r5_4 {
 				label	"5:4"
 				value	"1.25"
 			}
-			option 4_3 {
+			option r4_3 {
 				label	"4:3"
 				value	"1.3333333"
 			}
-			option 3_2 {
+			option r3_2 {
 				label	"3:2"
 				value	"1.5"
 			}
-			option 16_10 {
+			option r16_10 {
 				label	"16:10"
 				value	"1.6"
 			}
-			option 16_9 {
+			option r16_9 {
 				label	"16:9"
 				value	"1.7777777"
 			}
