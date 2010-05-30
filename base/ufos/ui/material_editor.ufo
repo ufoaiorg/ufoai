@@ -8,7 +8,7 @@ window material_editor {
 		size "600 580"
 		dragbutton	true
 		closebutton true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Material editor"
 	}
 
@@ -30,7 +30,7 @@ window material_editor {
 	}
 
 	vscrollbar editor_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"250 55"
 		height		210
 		hidewhenunused true
@@ -75,7 +75,7 @@ window material_editor {
 		}
 		pic hardness_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"90 5"
 			size		"108 16"
 		}
@@ -98,7 +98,7 @@ window material_editor {
 		}
 		pic bump_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"90 25"
 			size		"108 16"
 		}
@@ -121,7 +121,7 @@ window material_editor {
 		}
 		pic specular_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"90 45"
 			size		"108 16"
 		}
@@ -144,7 +144,7 @@ window material_editor {
 		}
 		pic parallax_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"90 65"
 			size		"108 16"
 		}
@@ -228,7 +228,7 @@ window material_editor {
 		}
 
 		vscrollbar stage_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"165 0"
 			height		90
 			hidewhenunused true
@@ -241,8 +241,8 @@ window material_editor {
 			string		"_+"
 			pos			"0 100"
 			size		"40 28"
-			image		ui/button_green_verysmall
-			font		f_verysmall
+			image		"ui/button_green_verysmall"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ cmd "mn_materialeditor_newstage <cvar:me_image_id>;" }
@@ -252,8 +252,8 @@ window material_editor {
 			string		"_-"
 			pos			"50 100"
 			size		"40 28"
-			image		ui/button_green_verysmall
-			font		f_verysmall
+			image		"ui/button_green_verysmall"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ cmd "mn_materialeditor_removestage <cvar:me_image_id> <cvar:me_stage_id>;" }
@@ -283,7 +283,7 @@ window material_editor {
 			textentry scale_s
 			{
 				string		*cvar:me_scale_s
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -307,7 +307,7 @@ window material_editor {
 			textentry scale_t
 			{
 				string		*cvar:me_scale_t
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -338,7 +338,7 @@ window material_editor {
 			textentry scroll_ds
 			{
 				string		*cvar:me_scroll_ds
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -362,7 +362,7 @@ window material_editor {
 			textentry scroll_dt
 			{
 				string		*cvar:me_scroll_dt
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -386,7 +386,7 @@ window material_editor {
 			textentry scroll_s
 			{
 				string		*cvar:me_scroll_s
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -410,7 +410,7 @@ window material_editor {
 			textentry scroll_t
 			{
 				string		*cvar:me_scroll_t
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -441,7 +441,7 @@ window material_editor {
 			textentry pulse_hz
 			{
 				string		*cvar:me_pulse_hz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -465,7 +465,7 @@ window material_editor {
 			textentry pulse_dhz
 			{
 				string		*cvar:me_pulse_dhz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -496,7 +496,7 @@ window material_editor {
 			textentry stretch_hz
 			{
 				string		*cvar:me_stretch_hz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -520,7 +520,7 @@ window material_editor {
 			textentry stretch_dhz
 			{
 				string		*cvar:me_stretch_dhz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -544,7 +544,7 @@ window material_editor {
 			textentry stretch_amp
 			{
 				string		*cvar:me_stretch_amp
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -568,7 +568,7 @@ window material_editor {
 			textentry stretch_damp
 			{
 				string		*cvar:me_stretch_damp
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -599,7 +599,7 @@ window material_editor {
 			textentry rotate_hz
 			{
 				string		*cvar:me_rotate_hz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl
@@ -623,7 +623,7 @@ window material_editor {
 			textentry rotate_deg
 			{
 				string		*cvar:me_rotate_deg
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
 				textalign	cl

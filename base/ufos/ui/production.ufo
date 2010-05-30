@@ -9,7 +9,7 @@ window production
 
 	pic background
 	{
-		image		ui/base_bg
+		image		"ui/base_bg"
 	}
 	cmpBaseHeader baseHeader {
 	}
@@ -116,7 +116,7 @@ window production
 	panel itemlist {
 		pos		"12 160"
 		size	"553 597"
-		image	ui/panel_grey_green_large2
+		image	"ui/panel_grey_green_large2"
 	}
 
 	// ==================
@@ -127,7 +127,7 @@ window production
 		{
 			pos		"580 160"
 			size	"420 145"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		// ==================
@@ -139,7 +139,7 @@ window production
 			string		"_Workers (ready/all):"
 			pos			"30 25"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_workers
@@ -148,7 +148,7 @@ window production
 			pos			"295 25"
 			size		"100 20"
 			textalign	ur
-			font		f_small
+			font		"f_small"
 		}
 
 		// ==================
@@ -160,7 +160,7 @@ window production
 			string		"_Workshop capacity:"
 			pos			"30 50"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_basecap
@@ -169,7 +169,7 @@ window production
 			pos			"295 50"
 			size		"100 20"
 			textalign	ur
-			font		f_small
+			font		"f_small"
 		}
 
 		// ==================
@@ -181,7 +181,7 @@ window production
 			string		"_Storage capacity:"
 			pos			"30 75"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_storage
@@ -190,7 +190,7 @@ window production
 			pos			"295 75"
 			size		"100 20"
 			textalign	ur
-			font		f_small
+			font		"f_small"
 		}
 
 		// ==================
@@ -202,7 +202,7 @@ window production
 			string		"_Production limit:"
 			pos			"30 100"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_limit
@@ -211,7 +211,7 @@ window production
 			pos			"295 100"
 			size		"100 20"
 			textalign	ur
-			font		f_small
+			font		"f_small"
 		}
 	}
 
@@ -303,7 +303,7 @@ window production
 	}
 
 	vscrollbar prodlist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"428 180"
 		height		"550"
 		current		0
@@ -329,7 +329,7 @@ window production
 		{
 			pos		"580 310"
 			size	"420 447"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		item itemmodel
@@ -353,7 +353,7 @@ window production
 		pos			"730 505"
 		size		"40 20"
 		color		"0 .78 0 1"
-		font		f_small
+		font		"f_small"
 		textalign	ur
 	}
 
@@ -362,7 +362,7 @@ window production
 		pos			"786 505"
 		size		"24 20"
 		color		"0 .78 0 1"
-		font		f_small
+		font		"f_small"
 		textalign	ur
 	}
 
@@ -371,13 +371,13 @@ window production
 		pos			"824 505"
 		size		"36 20"
 		color		"0 .78 0 1"
-		font		f_small
+		font		"f_small"
 		textalign	ur
 	}
 
 	spinner prod_change {
 		tooltip		"_Change the production amount"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"810 505"
 		min			1
 		current		*cvar:mn_production_amount
@@ -388,7 +388,7 @@ window production
 
 	spinner prod_change_10 {
 		tooltip		"_Change the production amount"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"860 505"
 		min			1
 		current		*cvar:mn_production_amount
@@ -400,10 +400,10 @@ window production
 	button prod_new
 	{
 		string		"_Start this production"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		pos			"670 480"
 		size		"250 32"
-		font		f_small
+		font		"f_small"
 		color		"0 .78 0 1"
 		onClick		{ cmd "prod_inc;" }
 	}
@@ -510,7 +510,7 @@ window production
 	}
 
 	vscrollbar description_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"960 528"
 		height		"100"
 		current		0

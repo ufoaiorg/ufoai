@@ -10,19 +10,19 @@ window buildings
 
 	pic back_ul
 	{
-		image		ui/base_ul
+		image		"ui/base_ul"
 		pos			"0 0"
 	}
 
 	pic back_ur
 	{
-		image		ui/base_ur
+		image		"ui/base_ur"
 		pos			"512 0"
 	}
 
 	pic back_lr
 	{
-		image		ui/base_lr
+		image		"ui/base_lr"
 		pos			"512 256"
 	}
 
@@ -56,7 +56,7 @@ window buildings
 	}
 
 	vscrollbar buildings_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"976 120"
 		height		"570"
 		current		0
@@ -71,7 +71,7 @@ window buildings
 	checkbox building_preview
 	{
 		tooltip		"_Open/close Building preview window"
-		image		ui/checkbox_green
+		image		"ui/checkbox_green"
 		pos			"770 700"
 		size		"20 20"
 		current		1
@@ -126,7 +126,7 @@ window popup_buildingpreview
 		size		"526 237"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Building preview"
 	}
 
@@ -147,7 +147,7 @@ window popup_buildingpreview
 		string		*cvar:mn_building_name
 		pos			"30 58"
 		size		"300 25"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string status_building
@@ -155,7 +155,7 @@ window popup_buildingpreview
 		string		*cvar:mn_building_status
 		pos			"30 190"
 		size		"260 20"
-		font		f_small
+		font		"f_small"
 	}
 
 	/* text using tabbed text */

@@ -19,14 +19,14 @@ component panel cmpMarketItem
 	spinner bt_buysell
 	{
 		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"346 0"
 		onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
 	}
 	checkbox bt_autosell
 	{
 		current		0
-		image		ui/checkbox_blue
+		image		"ui/checkbox_blue"
 //		pos			"30 180"
 		pos			"0 0"
 		size		"16 16"
@@ -43,7 +43,7 @@ window market extends objectinfo
 
 	pic background
 	{
-		image		ui/base_bg
+		image		"ui/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -126,7 +126,7 @@ window market extends objectinfo
 	panel itemlist {
 		pos		"12 160"
 		size	"553 597"
-		image	ui/panel_grey_green_large2
+		image	"ui/panel_grey_green_large2"
 	}
 
 	textlist market
@@ -310,7 +310,7 @@ window market extends objectinfo
 			string 		"_Storage (used/all):"
 			pos			"62 50"
 			size		"200 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_storage_value
@@ -319,7 +319,7 @@ window market extends objectinfo
 			string 		*cvar:mn_bs_storage
 			pos			"267 50"
 			size		"100 20"
-			font		f_small
+			font		"f_small"
 		}
 	}
 
@@ -395,7 +395,7 @@ window market extends objectinfo
 			}
 		}
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"370 257"
 			height		"120"
 			current		0
@@ -416,7 +416,7 @@ window market extends objectinfo
 			string	"_With:"
 			pos		"32 390"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 	
 		custombutton action_dec
@@ -433,7 +433,7 @@ window market extends objectinfo
 			pos		"162 390"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -453,7 +453,7 @@ window market extends objectinfo
 			string	"_Firemode:"
 			pos		"32 414"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 		
 		custombutton firemode_dec
@@ -471,7 +471,7 @@ window market extends objectinfo
 			pos		"162 414"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 			
 		custombutton firemode_inc

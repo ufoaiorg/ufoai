@@ -10,7 +10,7 @@ window main
 
 	pic background
 	{
-		image	ui/main_bg
+		image	"ui/main_bg"
 	}
 
 	string version
@@ -87,7 +87,7 @@ window checkcvars
 		size		"777 402"
 		dragbutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Initial settings"
 	}
 
@@ -112,7 +112,7 @@ window checkcvars
 	textentry slot_name
 	{
 		string		*cvar:cl_name
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -140,7 +140,7 @@ window checkcvars
 	}
 	pic effects_rahmen
 	{
-		image		ui/bar_rahmen
+		image		"ui/bar_rahmen"
 		pos			"161 203"
 	}
 	bar effects_bar
@@ -159,7 +159,7 @@ window checkcvars
 	}
 	pic music_rahmen
 	{
-		image		ui/bar_rahmen
+		image		"ui/bar_rahmen"
 		pos			"161 228"
 	}
 	bar music_bar
@@ -204,7 +204,7 @@ window checkcvars
 	}
 
 	vscrollbar select_language_scroll {
-		image			ui/scrollbar_v_green
+		image			"ui/scrollbar_v_green"
 		pos				"692 78"
 		height			"226"
 		current			0
@@ -251,7 +251,7 @@ window popup_tipoftheday
 		pos			"38 456"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Tip of the day"
 	}
 
@@ -268,7 +268,7 @@ window popup_tipoftheday
 		string		"_Show tip of the day"
 		pos			"58 194"
 		size		"200 25"
-		font		f_small
+		font		"f_small"
 		onClick		{
 			call *node:root.activate@toggle
 		}
@@ -288,10 +288,10 @@ window popup_tipoftheday
 	{
 		string		"_Next"
 		tooltip		"_Next tip"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		width		"176"
 		pos			"266 188"
-		font		f_menu
+		font		"f_menu"
 		color		"0 0.5 0 1"
 		onClick		{ cmd "tipoftheday;" }
 	}

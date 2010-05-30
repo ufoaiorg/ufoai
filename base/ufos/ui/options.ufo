@@ -11,7 +11,7 @@ window options
 	// ===========
 	pic background
 	{
-		image		ui/options_bg
+		image		"ui/options_bg"
 	}
 	// ============
 	// HIDE PANELS
@@ -148,7 +148,7 @@ window options
 		{
 			tooltip		"_Very high values are only recommended when playing in high resolutions."		
 			current		*cvar:r_anisotropic
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"466 214"
 			min			0
 			max			16
@@ -338,7 +338,7 @@ window options
 		{
 			tooltip		"_Change the amount of multisample buffers."
 			current		*cvar:r_multisample
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"466 464"
 			min			0
 			max			4
@@ -366,7 +366,7 @@ window options
 		{
 			tooltip		"_Change the swap interval."
 			current		*cvar:r_swapinterval
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"466 485"
 			min			0
 			max			2
@@ -384,7 +384,7 @@ window options
 		}
 		pic gamma_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 517"
 		}
 		bar gamma_bar
@@ -409,7 +409,7 @@ window options
 		}
 		pic contrast_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 542"
 		}
 		bar contrast_bar
@@ -434,7 +434,7 @@ window options
 		}
 		pic brightness_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 567"
 		}
 		bar brightness_bar
@@ -459,7 +459,7 @@ window options
 		}
 		pic lightmap_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 592"
 		}
 		bar lightmap_bar
@@ -530,7 +530,7 @@ window options
 		{
 			tooltip		"_Change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."		
 			current		*cvar:r_dynamic_lights
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"466 665"
 			min			0
 			max			8
@@ -714,7 +714,7 @@ window options
 		}
 		pic effects_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 197"
 		}
 		bar effects_bar
@@ -739,7 +739,7 @@ window options
 		}
 		pic music_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 222"
 		}
 		bar music_bar
@@ -866,7 +866,7 @@ window options
 		}
 
 		vscrollbar keyscroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"508 110"
 			height		"560"
 			current		0
@@ -912,7 +912,7 @@ window options
 		{
 			tooltip		"_Change your name."
 			string		*cvar:cl_name
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cc
@@ -951,7 +951,7 @@ window options
 			}
 		}
 		vscrollbar select_language_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"485 140"
 			height		"242"
 			current		0
@@ -1003,7 +1003,7 @@ window options
 		}
 		pic 3dmapambient_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"240 467"
 		}
 		bar 3dmapambient_bar
@@ -1074,7 +1074,7 @@ window options
 			string		"_Show 'Tip of the Day':"
 			pos			"85 620"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 		checkbox tipoftheday
 		{
@@ -1155,7 +1155,7 @@ window options
 		}
 		pic camspeed_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 172"
 		}
 		bar camspeed_bar
@@ -1182,7 +1182,7 @@ window options
 		}
 		pic camrot_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 197"
 		}
 		bar camrot_bar
@@ -1209,7 +1209,7 @@ window options
 		}
 		pic cammoveaccel_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 222"
 		}
 		bar cammoveaccel_bar
@@ -1246,7 +1246,7 @@ window options
 		}
 		pic actorsspeed_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 337"
 		}
 		bar actorsspeed_bar
@@ -1297,7 +1297,7 @@ window options
 		}
 		pic joystick_threshold_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 552"
 		}
 		bar joystick_threshold_bar
@@ -1323,7 +1323,7 @@ window options
 		}
 		pic joystick_speed_rahmen
 		{
-			image		ui/bar_rahmen
+			image		"ui/bar_rahmen"
 			pos			"244 577"
 		}
 		bar joystick_speed_bar
@@ -1495,7 +1495,7 @@ window popup_maintain_resolution
 {
 	{
 		string		"_Maintain Resolution"
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		pos			"264 262"
 		size		"486 247"
 		dragbutton	true

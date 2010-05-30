@@ -14,7 +14,7 @@ component panel myAllocatedPanel {
 	spinner changeValue
 	{
 		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"40 0"
 		min			0
 		max			10
@@ -52,7 +52,7 @@ window unittest_nodeallocation
 	}
 
 	vscrollbar dyn_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"310 140"
 		height		"350"
 		onChange		{ *node:root.dyn@viewpos = <current> }

@@ -10,7 +10,7 @@ window multiplayerInGame
 
 	pic background
 	{
-		image	ui/main_bg
+		image	"ui/main_bg"
 	}
 
 	string version

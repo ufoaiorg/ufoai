@@ -733,7 +733,7 @@ window althud extends ahud
 	
 		pic bt_shot_reservation
 		{
-			tooltip	*cvar:mn_shot_reservation_tt
+			tooltip		*cvar:mn_shot_reservation_tt
 			image		"althud/buttons_althud1g"
 			pos			"222 433"
 			texl		"108 74"
@@ -1085,14 +1085,14 @@ window althud extends ahud
 		*upperright.nextround@image = "althud/buttons_althud1g"
 	}
 
-	confunc deselect_primaryleft { *right.bt_primaryleft@image	= "althud/buttons_althud1" }
+	confunc deselect_primaryleft { *right.bt_primaryleft@image		= "althud/buttons_althud1" }
 	confunc deselect_primaryright { *right.bt_primaryright@image	= "althud/buttons_althud1" }
 	confunc deselect_reloadleft { *right.bt_reloadleft@image		= "althud/buttons_althud1" }
-	confunc deselect_reloadright { *right.bt_reloadright@image	= "althud/buttons_althud1" }
+	confunc deselect_reloadright { *right.bt_reloadright@image		= "althud/buttons_althud1" }
 
 	confunc disable_primaryleft { *right.bt_primaryleft@image	= "althud/buttons_althud1g" }
 	confunc disable_primaryright { *right.bt_primaryright@image	= "althud/buttons_althud1g" }
-	confunc disable_reloadleft { *right.bt_reloadleft@image	= "althud/buttons_althud1g" }
+	confunc disable_reloadleft { *right.bt_reloadleft@image		= "althud/buttons_althud1g" }
 	confunc disable_reloadright { *right.bt_reloadright@image	= "althud/buttons_althud1g" }
 
 	confunc startreactionmany
@@ -1107,29 +1107,29 @@ window althud extends ahud
 	}
 	confunc startreactiononce
 	{
-		*right.bt_reaction_a@image = "althud/buttons_althud1a"
-		*right.bt_reaction_a@tooltip = "_One-shot reaction fire"
+		*right.bt_reaction_a@image		= "althud/buttons_althud1a"
+		*right.bt_reaction_a@tooltip	= "_One-shot reaction fire"
 	}
 	confunc startreactiononce_impos
 	{
-		*right.bt_reaction_a@image = "althud/buttons_althud1ar"
-		*right.bt_reaction_a@tooltip = "_One-shot reaction fire (not possible)"
+		*right.bt_reaction_a@image		= "althud/buttons_althud1ar"
+		*right.bt_reaction_a@tooltip	= "_One-shot reaction fire (not possible)"
 	}
 
 	confunc deselect_reaction
 	{
-		*right.bt_reaction_a@image = "althud/buttons_althud1"
-		*right.bt_reaction_a@tooltip = "_No reaction fire"
+		*right.bt_reaction_a@image		= "althud/buttons_althud1"
+		*right.bt_reaction_a@tooltip	= "_No reaction fire"
 	}
 	confunc disable_reaction {
-		*right.bt_reaction_a@image = "althud/buttons_althud1g"
+		*right.bt_reaction_a@image		= "althud/buttons_althud1g"
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
-		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		*right.bt_shot_reservation@image = "althud/buttons_althud1"
+		*cvar:mn_shot_reservation_tt		= "_Reserve TUs for shooting."
+		*right.bt_shot_reservation@image	= "althud/buttons_althud1"
 	}
 	confunc reserve_shot_check
 	{

@@ -6,7 +6,7 @@ component checkbox cmpSelect
 {
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		ui/checkbox_green
+		image		"ui/checkbox_green"
 		size		"20 20"
 		onChange	{ cmd "employee_hire <num>;" }
 		onRClick		{ cmd "employee_delete <num>;" }
@@ -20,7 +20,7 @@ window employees
 
 	pic background
 	{
-		image		ui/base_bg
+		image		"ui/base_bg"
 	}
 
 	// ==================
@@ -44,7 +44,7 @@ window employees
 	panel list_border {
 		pos		"13 155"
 		size	"393 605"
-		image	ui/panel_grey_green_large2
+		image	"ui/panel_grey_green_large2"
 	}
 
 	/**
@@ -196,7 +196,7 @@ window employees
 
 	vscrollbar scroll
 	{
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"368 175"
 		height		"560"
 		current		0
@@ -216,7 +216,7 @@ window employees
 		{
 			pos		"451 300"
 			size	"448 60"
-			image	ui/panel_grey_green
+			image	"ui/panel_grey_green"
 		}
 	}
 
@@ -244,7 +244,7 @@ window employees
 		{
 			pos		"451 364"
 			size	"561 388"
-			image	ui/panel_grey_green
+			image	"ui/panel_grey_green"
 		}
 	}
 
@@ -379,7 +379,7 @@ window employees
 			{
 				pos "5 283"
 			}
-			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image ui/bar_health }
+			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image "ui/bar_health" }
 			string lbl { string "_Health:" }
 			string val { string *cvar:mn_thp }
 		}

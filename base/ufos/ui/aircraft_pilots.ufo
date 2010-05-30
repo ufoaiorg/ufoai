@@ -62,7 +62,7 @@ window aircraft_pilots extends iaircraft
 
 	pic aircraft_slot
 	{
-		image	ui/button_square
+		image	"ui/button_square"
 		pos		"494 120"
 		size	"64 64"
 		texh	"64 64"
@@ -250,7 +250,7 @@ window aircraft_pilots extends iaircraft
 
 	vscrollbar scroll_employees
 	{
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "310 463"	height	"282"
 		current 0
 		viewsize 8

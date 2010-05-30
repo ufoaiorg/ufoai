@@ -15,7 +15,7 @@ window popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_sys_popup_title
 	}
 
@@ -35,7 +35,7 @@ window popup
 	}
 
 	vscrollbar popup_text_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"457 58"
 		height		"128"
 		current		0
@@ -48,10 +48,10 @@ window popup
 	{
 		string		"_OK"
 		tooltip		"_Close this dialogue"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		pos			"260 180"
 		width		"200"
-		font		f_menu
+		font		"f_menu"
 		color		"0 0.5 0 1"
 		onClick		{ cmd "mn_close popup;" }
 	}
@@ -68,7 +68,7 @@ window popup_list
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_sys_popup_title
 	}
 
@@ -96,7 +96,7 @@ window popup_list
 		}
 	}
 	vscrollbar popup_list_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"457 96"
 		height		"96"
 		current		0
@@ -126,7 +126,7 @@ window popup_button
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_sys_popup_title
 	}
 
@@ -146,7 +146,7 @@ window popup_button
 	}
 
 	vscrollbar popup_text_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"457 58"
 		height		"128"
 		current		0

@@ -20,7 +20,7 @@ window inventory
 
 	pic bar_inventory
 	{
-		image	hud/bar_inventory
+		image	"hud/bar_inventory"
 		pos		"0 0"
 	}
 	string s_backpack
@@ -152,7 +152,7 @@ window inventory
 
 	custombutton bt_exit
 	{
-		image	ui/button_background
+		image	"ui/button_background"
 		texl	"192 0"	size "64 37"
 		pos		"428 458"
 		icon return

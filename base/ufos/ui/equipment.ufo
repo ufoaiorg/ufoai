@@ -10,7 +10,7 @@ window equipment extends objectinfo
 
 	pic background
 	{
-		image	ui/equipment_bg
+		image	"ui/equipment_bg"
 	}
 
 	string s_backpack
@@ -373,7 +373,7 @@ window equipment extends objectinfo
 			}
 		}
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"325 140"
 			height		"150"
 			current		0
@@ -394,7 +394,7 @@ window equipment extends objectinfo
 			string	"_With:"
 			pos		"10 290"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 	
 		custombutton action_dec
@@ -411,7 +411,7 @@ window equipment extends objectinfo
 			pos		"140 290"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -431,7 +431,7 @@ window equipment extends objectinfo
 			string	"_Firemode:"
 			pos		"10 314"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 		
 		custombutton firemode_dec
@@ -449,7 +449,7 @@ window equipment extends objectinfo
 			pos		"140 314"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 			
 		custombutton firemode_inc
@@ -707,7 +707,7 @@ window equipment extends objectinfo
 	}
 
 	vscrollbar equip_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -716,7 +716,7 @@ window equipment extends objectinfo
 	}
 
 	vscrollbar equip_ammo_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -731,7 +731,7 @@ window equipment extends objectinfo
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	ui/button_background
+		image	"ui/button_background"
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return

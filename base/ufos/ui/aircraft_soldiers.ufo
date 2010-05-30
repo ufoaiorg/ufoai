@@ -24,7 +24,7 @@ component panel cmpNamedBar {
 	}
 	pic			bdr { 
 		pos "165 2"
-		image ui/bar_border 
+		image "ui/bar_border" 
 	}
 	bar		currbar {
 		pos "167 7"
@@ -140,7 +140,7 @@ window team extends iaircraft
 		string "_Equip soldiers"
 		pos		"483 129"
 		size	"198 43"
-		image	ui/button_blue
+		image	"ui/button_blue"
 		onClick	{
 			*cvar:cl_selected2 = <cvar:cl_selected>
 			cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment;"
@@ -281,7 +281,7 @@ window team extends iaircraft
 	}
 	vscrollbar scroll_employees
 	{
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "310 463"	height	"282"
 		current 0
 		viewsize 8
@@ -471,7 +471,7 @@ window team extends iaircraft
 		tbar bar   {
 			current *cvar:mn_vhp
 			max *cvar:mn_vhpmax
-			image ui/bar_health
+			image "ui/bar_health"
 			}
 		string lbl { string "_Health:" }
 		string val { string *cvar:mn_thp }
@@ -493,7 +493,7 @@ window team extends iaircraft
 		image *cvar:mn_chrrank_img
 	}
 
-	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign uc font f_normal_bold }
+	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign uc font "f_normal_bold" }
 
 	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
 	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ur }

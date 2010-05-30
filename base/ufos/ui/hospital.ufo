@@ -19,7 +19,7 @@ component panel cmpHospitalPanel {
 	size "300 85"
 	}
 	pic button {
-		image ui/hosp_button_green
+		image "ui/hosp_button_green"
 		pos "0 0"
 	}
 
@@ -47,7 +47,7 @@ window hospital
 
 	pic background
 	{
-		image	ui/base_bg
+		image	"ui/base_bg"
 	}
 
 	// ==================
@@ -62,7 +62,7 @@ window hospital
 		size "500 32"
 		textalign	cl
 		padding	8
-		font	f_big
+		font	"f_big"
 	}
 
 	string txt_credits_caption
@@ -70,7 +70,7 @@ window hospital
 		string		"_CREDITS"
 		pos			"675 30"
 		size		"100 30"
-		font		f_big
+		font		"f_big"
 	}
 
 	string txt_credits
@@ -79,14 +79,14 @@ window hospital
 		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
-		font		f_big
+		font		"f_big"
 		textalign	ur
 	}
 
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	ui/button_background
+		image	"ui/button_background"
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -101,7 +101,7 @@ window hospital
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>.button@image = ui/hosp_button_green
+			*hos<cvar:i>.button@image = "ui/hosp_button_green"
 			*hos<cvar:i>.click_button@tooltip = "_Unused"
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -110,22 +110,22 @@ window hospital
 
 	confunc hospitalserious	{
 		*hos<1>.icon@image				= icons/health_critical
-		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.button@image			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
 		*hos<1>.icon@image				= icons/health_medium
-		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.button@image			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
 		*hos<1>.icon@image				= icons/health_normal
-		*hos<1>.button@image			= ui/hosp_button_light
+		*hos<1>.button@image			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
 		*hos<1>.icon@image				= icons/health_unused
-		*hos<1>.button@image			= ui/hosp_button_green
+		*hos<1>.button@image			= "ui/hosp_button_green"
 		*hos<1>.click_button@tooltip	= "_Unused"
 	}
 
@@ -399,7 +399,7 @@ window hospital_employee
 
 	pic background
 	{
-		image	ui/base_bg
+		image	"ui/base_bg"
 	}
 
 	// ==================
@@ -416,7 +416,7 @@ window hospital_employee
 	panel actorinfo {
 		pos		"457 101"
 		size	"555 471"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	string txt_name
@@ -536,9 +536,9 @@ window hospital_employee
 		{
 			pos "690 476"
 		}
-		tbar bar   { current *cvar:mn_hp max *cvar:mn_hpmax image ui/bar_health }
-		string lbl { string "_Health:" font f_normal longlines prettychop }
-		string val { string *cvar:mn_hp  font f_normal longlines prettychop }
+		tbar bar   { current *cvar:mn_hp max *cvar:mn_hpmax image "ui/bar_health" }
+		string lbl { string "_Health:" font "f_normal" longlines prettychop }
+		string val { string *cvar:mn_hp  font "f_normal" longlines prettychop }
 	}
 
 	// ==================
@@ -548,17 +548,17 @@ window hospital_employee
 	panel buttonpanel {
 		pos		"26 101"
 		size	"276 471"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	button button_hosp_bionic_start
 	{
 		string		"_Implants"
 		color		"0 0.8 0 1"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		pos			"60 270"
 		size		"207 48"
-		font		f_menu
+		font		"f_menu"
 		tooltip		"_Not implemented"
 		disabled	true
 	}

@@ -9,7 +9,7 @@ window ufopedia extends objectinfo
 		size		"1000 619"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_uptitle
 		modal		true				// we can't click out
 	}
@@ -32,7 +32,7 @@ window ufopedia extends objectinfo
 			cvar		*cvar:up_summary_selection
 			dataid		OPTION_UFOPEDIA
 			align		LAYOUTALIGN_MIDDLE
-			font		f_small
+			font		"f_small"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			onChange	{
@@ -49,7 +49,7 @@ window ufopedia extends objectinfo
 		}
 
 		vscrollbar list_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			align		LAYOUTALIGN_RIGHT
 			current		0
 			viewsize	16
@@ -133,7 +133,7 @@ window ufopedia extends objectinfo
 			dataid		TEXT_UFOPEDIA
 			pos			"14 55"
 			size		"406 473"
-			font		f_small
+			font		"f_small"
 			lineheight	18
 			tabwidth	100
 			rows		26
@@ -145,7 +145,7 @@ window ufopedia extends objectinfo
 		}
 
 		vscrollbar ufopedia_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"603 50"
 			height		"473"
 			current		0
@@ -170,7 +170,7 @@ window ufopedia extends objectinfo
 		}
 
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"405 61"
 			height		"400"
 			current		0
@@ -190,7 +190,7 @@ window ufopedia extends objectinfo
 			string label {
 				pos "5 5"
 				size "120 20"
-				font	f_small
+				font	"f_small"
 				string "_Requirement:"
 			}
 
@@ -199,7 +199,7 @@ window ufopedia extends objectinfo
 				dataid		TEXT_UFOPEDIA_REQUIREMENT
 				pos			"5 31"
 				size		"156 92"
-				font		f_verysmall
+				font		"f_verysmall"
 				color		"0 .78 0 1"
 				selectcolor	"0 .78 0 1"
 				onChange		{ cmd "techtree_click <lineselected>" }
@@ -211,7 +211,7 @@ window ufopedia extends objectinfo
 			}
 
 			vscrollbar techtree_scroll {
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				invis		true
 				pos			"142 7"
 				height		"117"
@@ -241,7 +241,7 @@ window ufopedia extends objectinfo
 			string	"_With:"
 			pos		"10 0"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 	
 		custombutton action_dec
@@ -258,7 +258,7 @@ window ufopedia extends objectinfo
 			pos		"140 0"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -278,7 +278,7 @@ window ufopedia extends objectinfo
 			string	"_Firemode:"
 			pos		"10 20"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 		
 		custombutton firemode_dec
@@ -296,7 +296,7 @@ window ufopedia extends objectinfo
 			pos		"140 20"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 			
 		custombutton firemode_inc

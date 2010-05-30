@@ -4,7 +4,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	precache pics
 	{
-		ui/options_bg
+		"ui/options_bg"
 		phalanx_badge
 		geoscape/map_earth_night
 		geoscape/mission

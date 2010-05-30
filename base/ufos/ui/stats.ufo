@@ -10,12 +10,12 @@ window stats
 
 	pic background
 	{
-		image		ui/stats_bg
+		image		"ui/stats_bg"
 	}
 
 	custombutton button_exit
 	{
-		image		ui/button_background
+		image		"ui/button_background"
 		pos			"950 720"
 		texl		"192 0"
 		size		"64 37"
@@ -29,7 +29,7 @@ window stats
 		pos			"55 25"
 		size		"915 35"
 		textalign	cc
-		font		f_big
+		font		"f_big"
 	}
 
 	string mission_string
@@ -38,7 +38,7 @@ window stats
 		pos			"40 86"
 		size		"200 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	text mission_stats
 	{
@@ -57,7 +57,7 @@ window stats
 		pos			"250 86"
 		size		"200 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	text base_stats
 	{
@@ -76,7 +76,7 @@ window stats
 		pos			"460 86"
 		size		"200 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	text ins_stats
 	{
@@ -95,7 +95,7 @@ window stats
 		pos			"670 86"
 		size		"200 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	text empl_stats
 	{
@@ -114,7 +114,7 @@ window stats
 		pos			"40 260"
 		size		"470 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	text costs_stats
 	{
@@ -133,7 +133,7 @@ window stats
 		pos			"518 260"
 		size		"470 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	
 	/* textlist using tabbed text */
@@ -157,7 +157,7 @@ window stats
 		pos			"518 550"
 		size		"470 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	text campaign_stats
 	{
@@ -187,12 +187,12 @@ window nations
 
 	pic background
 	{
-		image		ui/stats_bg
+		image		"ui/stats_bg"
 	}
 
 	custombutton button_exit
 	{
-		image		ui/button_background
+		image		"ui/button_background"
 		texl		"192 0"
 		pos			"950 720"
 		size		"64 37"
@@ -206,7 +206,7 @@ window nations
 		pos			"55 25"
 		size		"915 35"
 		textalign	cc
-		font		f_big
+		font		"f_big"
 	}
 
 	/**
@@ -366,80 +366,80 @@ window nations
 		pos			"600 330"
 		size		"300 20"
 		textalign	uc
-		font		f_small
+		font		"f_small"
 	}
 	/** @todo better display of real month-text (year+month?) */
 	string graph_month0	{
 		string		"0"
 		pos			"600 300"
 		size		"30 20"
-		font f_small
+		font "f_small"
 	}
 	string graph_month1	{
 		string		"-1"
 		pos			"625 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month2	{
 		string		"-2"
 		pos			"650 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month3	{
 		string		"-3"
 		pos			"675 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month4	{
 		string		"-4"
 		pos			"700 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month5	{
 		string		"-5"
 		pos			"725 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month6	{
 		string		"-6"
 		pos			"750 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month7	{
 		string		"-7"
 		pos			"775 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month8	{
 		string		"-8"
 		pos			"800 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month9	{
 		string		"-9"
 		pos			"825 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month10	{
 		string		"-10"
 		pos			"850 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 	string graph_month11	{
 		string		"-11"
 		pos			"875 300"
 		size		"30 20"
-		font		f_small
+		font		"f_small"
 	}
 
 	string graph_funding {
@@ -447,21 +447,21 @@ window nations
 		pos			"450 200"
 		size		"140 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	string graph_funding_zero {
 		string		"0"				/** @todo *cvar:mn_nat_fund_zero */
 		pos			"550 290"
 		size		"40 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	string graph_funding_max {
 		string		"_max"			/*< @todo *cvar:mn_nat_fund_max */
 		pos			"550 100"
 		size		"40 20"
 		textalign	lr
-		font		f_small
+		font		"f_small"
 	}
 
 	pic nation_symbol

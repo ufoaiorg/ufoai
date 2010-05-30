@@ -26,7 +26,7 @@ window unittest_optiontree
 	}
 
 	vscrollbar scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"270 50"
 		height		"430"
 		current		0

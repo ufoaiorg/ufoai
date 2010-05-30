@@ -127,7 +127,7 @@ window geoscape
 
 		pic back
 		{
-			image		ui/geo_menu
+			image		"ui/geo_menu"
 			pos			"0 0"
 		}
 
@@ -178,7 +178,7 @@ window geoscape
 		}
 
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"205 151"
 			height		"144"
 			current		0
@@ -201,7 +201,7 @@ window geoscape
 			size		"195 20"
 			textalign	uc
 			color		"1 1 1 1"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_credits_caption
@@ -209,7 +209,7 @@ window geoscape
 			string		"_CREDITS"
 			pos			"40 54"
 			size		"75 25"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_credits
@@ -218,7 +218,7 @@ window geoscape
 			tooltip		"_Organisation capital"
 			pos			"112 54"
 			size		"100 25"
-			font		f_small
+			font		"f_small"
 			textalign	ur
 		}
 
@@ -356,7 +356,7 @@ window geoscape
 				pos		"0 0"
 				size	"164 164"
 				texh	"164 164"
-				image	ui/geo_miniglobe
+				image	"ui/geo_miniglobe"
 			}
 
 			zone panel_scroll_up
@@ -423,11 +423,11 @@ window geoscape
 			string		"_Message settings"
 			tooltip		"_Change message and pause settings"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			pos			"41 560"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push messageoptions;" }
 		}
@@ -439,11 +439,11 @@ window geoscape
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
 			color		"1 1 1 1"
-			font	 	f_small
+			font	 	"f_small"
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push mailclient;" }
 		}
@@ -455,11 +455,11 @@ window geoscape
 			string		"_Mailclient"
 			tooltip		"_INBOX"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push mailclient;" }
 		}
@@ -471,9 +471,9 @@ window geoscape
 			pos			"41 630"
 			size		"175 34"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push stats;" }
 		}
@@ -485,9 +485,9 @@ window geoscape
 			pos			"41 665"
 			size		"175 34"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push ufopedia;" }
 		}
@@ -499,9 +499,9 @@ window geoscape
 			color		"0 0.5 0 1"
 			pos			"41 700"
 			size		"175 34"
-			font	 	f_small
+			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push popup_newinstallation_type;" }
 		}
@@ -550,7 +550,7 @@ window geoscape
 		custombutton bt_mapcenter
 		{
 			tooltip		"_Center objects on the map"
-			image		ui/button_background
+			image		"ui/button_background"
 			icon		geo_center
 			pos			"145 520"
 			size		"28 25"
@@ -561,7 +561,7 @@ window geoscape
 		custombutton bt_menu
 		{
 			tooltip		"_Go to Options"
-			image		ui/button_background
+			image		"ui/button_background"
 			icon		geo_option
 			pos			"190 520"
 			size		"28 25"
@@ -600,7 +600,7 @@ window geoscape
 			vscrollbar scroll {
 				align		LAYOUTALIGN_RIGHT
 				invis		true
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				bgcolor		"0 0 0 .5"
 				pos			"749 0"
 				height		"768"
@@ -679,7 +679,7 @@ window popup_intercept_ready
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Ready"
 		modal		true
 	}
@@ -744,7 +744,7 @@ window popup_baseattack
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Base is under attack"
 	}
 
@@ -896,7 +896,7 @@ window popup_transferbaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Select base to transfer to"
 	}
 
@@ -936,7 +936,7 @@ window popup_newbase
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_New base"
 	}
 
@@ -951,7 +951,7 @@ window popup_newbase
 		string		*cvar:mn_base_title
 		pos			"46 73"
 		size		"420 25"
-		font		f_big
+		font		"f_big"
 	}
 
 	button bt_nameedit
@@ -975,7 +975,7 @@ window popup_newbase
 		string		*cvar:mn_base_cost
 		pos			"26 113"
 		size		"200 25"
-		font		f_big
+		font		"f_big"
 	}
 
 	func chk_checkboxes {
@@ -1068,7 +1068,7 @@ window popup_newinstallation_type
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_New installation"
 	}
 
@@ -1077,7 +1077,7 @@ window popup_newinstallation_type
 		string		"_Type"
 		pos			"86 50"
 		size		"140 20"
-		font		f_normal
+		font		"f_normal"
 	}
 	string buildtime_label
 	{
@@ -1085,7 +1085,7 @@ window popup_newinstallation_type
 		pos			"226 50"
 		size		"130 20"
 		textalign	ur
-		font		f_normal
+		font		"f_normal"
 	}
 	string cost_label
 	{
@@ -1093,7 +1093,7 @@ window popup_newinstallation_type
 		pos			"356 50"
 		size		"100 20"
 		textalign	ur
-		font		f_normal
+		font		"f_normal"
 	}
 
 	pic bt_highlight
@@ -1112,7 +1112,7 @@ window popup_newinstallation_type
 		string		"_Radar tower"
 		pos			"86 78"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 	string radar_buildtime
 	{
@@ -1120,7 +1120,7 @@ window popup_newinstallation_type
 		pos			"256 78"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	string radar_cost
 	{
@@ -1128,7 +1128,7 @@ window popup_newinstallation_type
 		pos			"356 78"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	zone click_radar
 	{
@@ -1154,7 +1154,7 @@ window popup_newinstallation_type
 		string		"_SAM Site"
 		pos			"86 98"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 	string sam_buildtime
 	{
@@ -1162,7 +1162,7 @@ window popup_newinstallation_type
 		pos			"256 98"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	string sam_cost
 	{
@@ -1170,7 +1170,7 @@ window popup_newinstallation_type
 		pos			"356 98"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	zone click_sam
 	{
@@ -1196,7 +1196,7 @@ window popup_newinstallation_type
 		string		"_UFO Yard"
 		pos			"86 118"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 	string ufoyard_buildtime
 	{
@@ -1204,7 +1204,7 @@ window popup_newinstallation_type
 		pos			"256 118"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	string ufoyard_cost
 	{
@@ -1212,7 +1212,7 @@ window popup_newinstallation_type
 		pos			"356 118"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	zone click_ufoyard
 	{
@@ -1243,7 +1243,7 @@ window popup_newinstallation_type
 		string		"_Base"
 		pos			"86 138"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 
 	string base_buildtime
@@ -1252,7 +1252,7 @@ window popup_newinstallation_type
 		pos			"256 138"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	string base_cost
 	{
@@ -1260,7 +1260,7 @@ window popup_newinstallation_type
 		pos			"356 138"
 		size		"100 20"
 		textalign	ur
-		font		f_small
+		font		"f_small"
 	}
 	zone click_base
 	{
@@ -1355,14 +1355,14 @@ window popup_newinstallation
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 	}
 
 	string title
 	{
 		pos			"26 18"
 		size		"420 25"
-		font		f_big
+		font		"f_big"
 	}
 
 	string name_label
@@ -1379,7 +1379,7 @@ window popup_newinstallation
 		size		"330 25"
 		border		3
 		bordercolor	"0 0.5 0 1"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string cost_label
@@ -1421,7 +1421,7 @@ window popup_newinstallation
 	}
 	vscrollbar description_scroll
 	{
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"470 140"
 		height		"80"
 		current		0
@@ -1470,7 +1470,7 @@ window popup_installationstatus
 		pos			"264 262"
 		size		"496 220"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Installation Status"
 	}
 
@@ -1488,7 +1488,7 @@ window popup_installationstatus
 		size		"310 25"
 		border		3
 		bordercolor	"0 0.5 0 1"
-		font		f_normal
+		font		"f_normal"
 		onChange	{ cmd "mn_installation_changename;" }
 	}
 
@@ -1563,7 +1563,7 @@ window popup_intercept
 		pos			"124 192"
 		size		"548 459"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Anti-UFO defence"
 	}
 
@@ -1633,7 +1633,7 @@ window popup_intercept
 		}
 
 		vscrollbar ships_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1678,7 +1678,7 @@ window popup_intercept
 		}
 
 		vscrollbar bases_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1729,7 +1729,7 @@ window popup_mission
 		pos			"124 192"
 		size		"777 402"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Select aircraft"
 	}
 
@@ -1793,7 +1793,7 @@ window popup_multi_selection
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Select item"
 	}
 
@@ -1802,7 +1802,7 @@ window popup_multi_selection
 		string		"_Type:"
 		pos			"26 48"
 		size		"150 20"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string name_label
@@ -1810,7 +1810,7 @@ window popup_multi_selection
 		string		"_Name:"
 		pos			"176 48"
 		size		"150 20"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	text multi_select
@@ -1830,7 +1830,7 @@ window popup_multi_selection
 		}
 	}
 	vscrollbar multi_select_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"446 78"
 		height		"100"
 		current		0
@@ -1860,7 +1860,7 @@ window popup_aircraft
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Aircraft"
 	}
 
@@ -1869,7 +1869,7 @@ window popup_aircraft
 		string		"_Action:"
 		pos			"26 48"
 		size		"150 25"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string description_label
@@ -1877,7 +1877,7 @@ window popup_aircraft
 		string		"_Description:"
 		pos			"176 48"
 		size		"200 25"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	text popup_aircraft_action
@@ -1897,7 +1897,7 @@ window popup_aircraft
 		}
 	}
 	vscrollbar popup_aircraft_action_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"446 78"
 		height		"100"
 		current		0
@@ -1928,7 +1928,7 @@ window geoscape_options {
 		size		"350 300"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Geoscape options"
 	}
 

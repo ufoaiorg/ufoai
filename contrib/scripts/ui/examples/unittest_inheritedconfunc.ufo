@@ -38,7 +38,7 @@ window unittest_inheritedConfunc {
 	}
 
 	vscrollbar moveMyValue {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"100 0"
 		height		"330"
 		current		0

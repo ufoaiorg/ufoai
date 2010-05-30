@@ -12,7 +12,7 @@ component panel cmpActorSelect {
 		tooltip	"_Add/remove this soldier"
 		pos	"242 10"
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		size "20 20"
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
@@ -41,7 +41,7 @@ window iaircraft
 	// ==================
 
 	pic background	{
-		image	ui/base_bg
+		image	"ui/base_bg"
 	}
 
 	panel model_background {
@@ -139,7 +139,7 @@ window iaircraft
 	}
 
 	vscrollbar aircraft_list_scroll {
-		image			ui/scrollbar_v_green
+		image			"ui/scrollbar_v_green"
 		pos				"413 151"
 		height			"220"
 		current			0
@@ -156,7 +156,7 @@ window iaircraft
 		string		*cvar:mn_aircraftname
 		pos			"46 114"
 		size		"317 21"
-		font		f_normal_bold
+		font		"f_normal_bold"
 		onChange	{ cmd "aircraft_namechange; mn_pop; mn_push aircraft;" }
 	}
 

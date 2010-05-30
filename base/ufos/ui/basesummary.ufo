@@ -22,7 +22,7 @@ window basesummary
 
 	pic background
 	{
-		image	ui/base_bg
+		image	"ui/base_bg"
 	}
 
 	func reset_color {
@@ -113,7 +113,7 @@ window basesummary
 	panel base_summary_bg {
 		pos	"12 103"
 		size	"551 655"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	text txt_base_summary
@@ -123,7 +123,7 @@ window basesummary
 		size		"485 608"
 		lineheight	16
 		tabwidth	42
-		font		f_small
+		font		"f_small"
 		rows		"38"
 		longlines	prettychop
 		onViewChange	{
@@ -134,7 +134,7 @@ window basesummary
 	}
 
 	vscrollbar base_summary_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"525 124"
 		height		"608"
 		current		0
@@ -151,14 +151,14 @@ window basesummary
 	panel info_bg {
 		pos	"588 337"
 		size	"408 423"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	text txt_info
 	{
 		pos			"615 362"
 		size		"330 370"
-		font		f_small
+		font		"f_small"
 		lineheight		16
 		tabwidth	50
 		rows		"23"
@@ -171,7 +171,7 @@ window basesummary
 	}
 
 	vscrollbar info_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"950 362"
 		height		"370"
 		current		0

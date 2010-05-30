@@ -10,14 +10,14 @@ window tutorials
 
 	pic background
 	{
-		image	ui/main_bg
+		image	"ui/main_bg"
 	}
 
 	string headline
 	{
 		string  "_Tutorials"
 		pos             "630 170"
-		font f_big
+		font "f_big"
 	}
 
 	cmpMenuButton button_back
@@ -43,7 +43,7 @@ window tutorials
 	}
 
 	vscrollbar tutoriallist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"885 220"
 		height		"280"
 		current		0

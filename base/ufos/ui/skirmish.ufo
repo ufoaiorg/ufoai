@@ -10,7 +10,7 @@ window skirmish
 
 	pic background
 	{
-		image		ui/skirmish_bg
+		image		"ui/skirmish_bg"
 	}
 
 	cmpMenuButton button_back
@@ -35,7 +35,7 @@ window skirmish
 		string		"_Skirmish game settings"
 		pos			"500 80"
 		size		"450 30"
-		font		f_big
+		font		"f_big"
 	}
 
 	// ===================
@@ -51,7 +51,7 @@ window skirmish
 	textentry slot_alien_equipment
 	{
 		string		*cvar:ai_equipment
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -92,7 +92,7 @@ window skirmish
 	textentry slot_equipment
 	{
 		string		*cvar:cl_equip
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -143,7 +143,7 @@ window skirmish
 	spinner ai_numactors_change
 	{
 		current		*cvar:ai_numaliens
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"868 274"
 		min			1
 		max			30
@@ -170,7 +170,7 @@ window skirmish
 	spinner maxsoldierperplayer_change
 	{
 		current		*cvar:sv_maxsoldiersperplayer
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"868 249"
 		min			1
 		max			8

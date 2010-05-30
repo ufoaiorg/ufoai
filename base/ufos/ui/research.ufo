@@ -40,7 +40,7 @@ component panel cmpResearchItem {
 
 	spinner bt_rs_change {
 		tooltip		"_Add and remove scientist"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"450 0"
 		min			0
 		current		10000
@@ -62,7 +62,7 @@ window research
 
 	pic background
 	{
-		image	ui/base_bg
+		image	"ui/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -79,13 +79,13 @@ window research
 	panel techlist {
 		pos			"29 93"
 		size		"587 597"
-		image		ui/panel_grey_green_large2
+		image		"ui/panel_grey_green_large2"
 	}
 
 	panel infopanel {
 		pos			"645 93"
 		size		"353 660"
-		image		ui/panel_grey_green_large
+		image		"ui/panel_grey_green_large"
 	}
 
 	// ==================
@@ -95,7 +95,7 @@ window research
 	custombutton bt_start
 	{
 		tooltip		"_Start research"
-		image		ui/button_background
+		image		"ui/button_background"
 		icon		research_start
 		pos			"725 674"
 		size		"59 55"
@@ -106,7 +106,7 @@ window research
 	custombutton bt_stop
 	{
 		tooltip		"_Stop research"
-		image		ui/button_background
+		image		"ui/button_background"
 		icon		research_stop
 		pos			"795 674"
 		size		"59 55"
@@ -117,7 +117,7 @@ window research
 	custombutton bt_pedia
 	{
 		tooltip		"_Show research proposal"
-		image		ui/button_background
+		image		"ui/button_background"
 		icon		mail
 		pos			"865 674"
 		size		"59 55"
@@ -441,7 +441,7 @@ window research
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
 		pos			"684 657"
-		image		ui/bar_rahmen
+		image		"ui/bar_rahmen"
 	}
 	bar progress_bar
 	{

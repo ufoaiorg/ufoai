@@ -42,7 +42,7 @@ window hud extends ahud
 
 		pic bar_floor
 		{
-			image	hud/bar_floor
+			image	"hud/bar_floor"
 			pos		"0 0"
 			size	"40 363"
 			texh	"40 363"
@@ -163,7 +163,7 @@ window hud extends ahud
 
 		pic background
 		{
-			image	hud/bar_head
+			image	"hud/bar_head"
 			pos		"0 0"
 			size	"504 104"
 			texh	"504 104"
@@ -204,7 +204,7 @@ window hud extends ahud
 
 		pic cursor
 		{
-			image			hud/popup_cursor
+			image			"hud/popup_cursor"
 			pos				"106 56"
 			size 			"47 24"
 			texh 			"47 24"
@@ -229,7 +229,7 @@ window hud extends ahud
 
 			pic right_bg
 			{
-				image			hud/weapon_box
+				image			"hud/weapon_box"
 				pos				"106 103"
 				size 			"150 80"
 				texh 			"150 80"
@@ -246,7 +246,7 @@ window hud extends ahud
 	
 			pic left_bg
 			{
-				image			hud/weapon_box
+				image			"hud/weapon_box"
 				pos				"285 103"
 				size 			"150 80"
 				texh 			"150 80"
@@ -263,7 +263,7 @@ window hud extends ahud
 	
 			pic head_bg
 			{
-				image		hud/head_box
+				image		"hud/head_box"
 				pos			"20 16"
 				size 		"87 79"
 			}
@@ -386,7 +386,7 @@ window hud extends ahud
 
 		pic background
 		{
-			image	hud/bar_teammember
+			image	"hud/bar_teammember"
 			pos		"0 0"
 			size	"275 56"
 			texh	"275 56"
@@ -508,7 +508,7 @@ window hud extends ahud
 
 		pic bar_nextround
 		{
-			image	hud/bar_nextround
+			image	"hud/bar_nextround"
 			pos		"0 0"
 			size	"216 56"
 			texh	"216 56"
@@ -518,7 +518,7 @@ window hud extends ahud
 		custombutton bt_nextround
 		{
 			tooltip	"_Finish round"
-			image	ui/button_background
+			image	"ui/button_background"
 			pos		"142 10"
 			size	"64 37"
 			texl	"192 0"
@@ -552,7 +552,7 @@ window hud extends ahud
 
 		pic background
 		{
-			image	hud/bar_leftweapon
+			image	"hud/bar_leftweapon"
 			pos		"0 0"
 			size	"256 152"
 			texh	"256 152"
@@ -572,7 +572,7 @@ window hud extends ahud
 		pic bt_reload
 		{
 			tooltip	*cvar:mn_reloadright_tt
-			image	hud/buttons2g
+			image	"hud/buttons2g"
 			pos		"103 104"
 			texl	"0 38"
 			texh	"64 74"
@@ -598,7 +598,7 @@ window hud extends ahud
 		pic hud_bt_use_headgear
 		{
 			tooltip	"_Use headgear"
-			image	hud/buttons2g
+			image	"hud/buttons2g"
 			pos		"180 104"
 			texl	"64 0"
 			texh	"128 37"
@@ -618,7 +618,7 @@ window hud extends ahud
 
 		pic background
 		{
-			image	hud/bar_rightweapon
+			image	"hud/bar_rightweapon"
 			pos		"0 0"
 			size	"256 152"
 			texh	"256 152"
@@ -638,7 +638,7 @@ window hud extends ahud
 		pic bt_reload
 		{
 			tooltip	*cvar:mn_reloadleft_tt
-			image	hud/buttons2g
+			image	"hud/buttons2g"
 			pos		"89 104"
 			texl	"0 38"
 			texh	"64 74"
@@ -665,7 +665,7 @@ window hud extends ahud
 		{
 			tooltip	*cvar:mn_crouchstand_tt
 
-			image	hud/buttons2g
+			image	"hud/buttons2g"
 			pos		"8 107"
 			texl	"0 75"
 			texh	"52 112"
@@ -699,7 +699,7 @@ window hud extends ahud
 
 		pic background
 		{
-			image	hud/bar_infoscreen
+			image	"hud/bar_infoscreen"
 			pos		"0 0"
 			size	"457 119"
 			texh	"457 119"
@@ -709,7 +709,7 @@ window hud extends ahud
 		pic bt_shot_reservation
 		{
 			tooltip	*cvar:mn_shot_reservation_tt
-			image hud/button_reserve_shot
+			image "hud/button_reserve_shot"
 			pos		"11 32"
 			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
 			texh	"115 64"
@@ -720,7 +720,7 @@ window hud extends ahud
 
 		pic bt_reaction_s
 		{
-			image	hud/button_guard
+			image	"hud/button_guard"
 			pos		"11 74"
 			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
@@ -846,7 +846,7 @@ window hud extends ahud
 
 		pic background
 		{
-			image	hud/bar_popup
+			image	"hud/bar_popup"
 			pos		"0 0"
 			size	"47 335"
 			texh	"47 335"
@@ -856,7 +856,7 @@ window hud extends ahud
 		pic bt_game
 		{
 			tooltip	"_Options"
-			image	hud/buttons1
+			image	"hud/buttons1"
 			mousefx true
 			pos		"6 10"
 			texl	"165 0"
@@ -867,7 +867,7 @@ window hud extends ahud
 		pic bt_physdata
 		{
 			tooltip	"_Physical stats of this soldier"
-			image	hud/buttons1
+			image	"hud/buttons1"
 			mousefx true
 			pos		"6 137"
 			texl	"202 0"
@@ -878,7 +878,7 @@ window hud extends ahud
 		pic bt_inventory
 		{
 			tooltip	"_Inventory"
-			image	hud/buttons1
+			image	"hud/buttons1"
 			mousefx true
 			pos		"6 247"
 			texl	"128 0"
@@ -897,7 +897,7 @@ window hud extends ahud
 		dataid		TEXT_CHAT_WINDOW
 		pos			"130 70"
 		size		"690 48"
-		font		f_verysmall
+		font		"f_verysmall"
 		rows		"3"
 		lineheight	"16"
 		padding		5
@@ -917,7 +917,7 @@ window hud extends ahud
 
 		pic bar_chat_bg
 		{
-			image		hud/bar_chat
+			image		"hud/bar_chat"
 			pos			"192 0"
 			size		"64 64"
 		}
@@ -926,7 +926,7 @@ window hud extends ahud
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 
 			tooltip		"_Chat"
-			image		hud/button_chat
+			image		"hud/button_chat"
 			pos			"176 12"
 			size		"32 32"
 			texl		"0 0"
@@ -937,7 +937,7 @@ window hud extends ahud
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Teamchat"
-			image		hud/button_chat
+			image		"hud/button_chat"
 			pos			"138 12"
 			size		"32 32"
 			texl		"32 0"
@@ -948,7 +948,7 @@ window hud extends ahud
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Show chat history"
-			image		hud/button_chat
+			image		"hud/button_chat"
 			pos			"100 12"
 			size		"32 32"
 			texl		"64 0"
@@ -969,7 +969,7 @@ window hud extends ahud
 		pic button_chat
 		{
 			tooltip		"_Chat messages"
-			image		hud/event_log
+			image		"hud/event_log"
 			pos			"217 6"
 			texl		"0 0"
 			texh		"32 36"
@@ -983,12 +983,12 @@ window hud extends ahud
 			}
 			onClick		{
 				if ( *cvar:mn_showchatbuttons != 0 ) {
-					*node:parent.bar_chat_bg@image = hud/bar_chat
+					*node:parent.bar_chat_bg@image = "hud/bar_chat"
 					*node:parent.bar_chat_bg@pos = "192 0"
 					*node:parent.bar_chat_bg@size = "64 64"
 					*cvar:mn_showchatbuttons = 0
 				} else {
-					*node:parent.bar_chat_bg@image = hud/bar_chat_choice
+					*node:parent.bar_chat_bg@image = "hud/bar_chat_choice"
 					*node:parent.bar_chat_bg@pos = "0 0"
 					*node:parent.bar_chat_bg@size = "256 64"
 					*cvar:mn_showchatbuttons = 1
@@ -1029,23 +1029,23 @@ window hud extends ahud
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
-	confunc deselect_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
-	confunc disable_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
-	confunc disable_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
+	confunc deselect_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = "hud/buttons2" }
+	confunc deselect_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = "hud/buttons2" }
+	confunc disable_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = "hud/buttons2g" }
+	confunc disable_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = "hud/buttons2g" }
 
-	confunc deselect_primaryleft { *left.bt_pfire@image = hud/buttons1 }
-	confunc deselect_primaryright { *right.bt_pfire@image = hud/buttons1 }
-	confunc deselect_reloadleft { *left.bt_reload@image = hud/buttons2 }
-	confunc deselect_reloadright { *right.bt_reload@image = hud/buttons2 }
+	confunc deselect_primaryleft { *left.bt_pfire@image = "hud/buttons1" }
+	confunc deselect_primaryright { *right.bt_pfire@image = "hud/buttons1" }
+	confunc deselect_reloadleft { *left.bt_reload@image = "hud/buttons2" }
+	confunc deselect_reloadright { *right.bt_reload@image = "hud/buttons2" }
 
-	confunc disable_primaryleft { *left.bt_pfire@image = hud/buttons1g }
-	confunc disable_primaryright { *right.bt_pfire@image = hud/buttons1g }
-	confunc disable_reloadleft { *left.bt_reload@image = hud/buttons2g }
-	confunc disable_reloadright { *right.bt_reload@image = hud/buttons2g }
+	confunc disable_primaryleft { *left.bt_pfire@image = "hud/buttons1g" }
+	confunc disable_primaryright { *right.bt_pfire@image = "hud/buttons1g" }
+	confunc disable_reloadleft { *left.bt_reload@image = "hud/buttons2g" }
+	confunc disable_reloadright { *right.bt_reload@image = "hud/buttons2g" }
 
-	confunc deselect_headgear { *right.hud_bt_use_headgear@image = hud/buttons2 }
-	confunc disable_headgear { *right.hud_bt_use_headgear@image = hud/buttons2g }
+	confunc deselect_headgear { *right.hud_bt_use_headgear@image = "hud/buttons2" }
+	confunc disable_headgear { *right.hud_bt_use_headgear@image = "hud/buttons2g" }
 
 	// ==================
 	// round events

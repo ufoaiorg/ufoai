@@ -28,7 +28,7 @@ window physdata
 
 	pic bar_physdata
 	{
-		image		hud/bar_phys
+		image		"hud/bar_phys"
 		pos			"0 0"
 	}
 
@@ -166,7 +166,7 @@ window physdata
 	}
 	ekg hp
 	{
-		image		hud/phys_ekg
+		image		"hud/phys_ekg"
 		pos			"78 369"
 		size		"324 32"
 	}
@@ -180,7 +180,7 @@ window physdata
 	}
 	ekg morale
 	{
-		image		hud/phys_mor
+		image		"hud/phys_mor"
 		pos			"78 408"
 		size		"324 32"
 		scrollspeed	0.12
@@ -193,7 +193,7 @@ window physdata
 
 	custombutton button_exit
 	{
-		image		ui/button_background
+		image		"ui/button_background"
 		pos			"428 458"
 		size		"64 37"
 		icon		return

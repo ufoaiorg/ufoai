@@ -6,7 +6,7 @@ window basedefence extends objectinfo
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Equip Defence Weapons"
 	}
 
@@ -104,7 +104,7 @@ window basedefence extends objectinfo
 				string		"_Weapon slots"
 				pos			"5 5"
 				size		"400 25"
-				font		f_small_bold
+				font		"f_small_bold"
 			}
 			rows slotback {
 				pos			"5 30"
@@ -138,7 +138,7 @@ window basedefence extends objectinfo
 			}
 			vscrollbar slotlist_scroll
 			{
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				pos			"410 30"
 				height		"80"
 				current		0
@@ -154,7 +154,7 @@ window basedefence extends objectinfo
 			icon		varrow_swap
 			string		"_Add"
 			tooltip		"_Equip the selected slot with this weapon"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"10 130"
 			size		"200 32"
 			onClick		{
@@ -166,7 +166,7 @@ window basedefence extends objectinfo
 			icon		varrow_top_bottom
 			string		"_Remove"
 			tooltip		"_Remove weapon from the selected slot"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"230 130"
 			size		"200 32"
 			onClick		{
@@ -185,7 +185,7 @@ window basedefence extends objectinfo
 				string		"_Stores"
 				pos			"5 5"
 				size		"400 25"
-				font		f_small_bold
+				font		"f_small_bold"
 			}
 			rows storeback {
 				pos			"5 30"
@@ -215,7 +215,7 @@ window basedefence extends objectinfo
 			}
 			vscrollbar storelist_scroll
 			{
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				pos			"410 30"
 				height		"80"
 				current		0
@@ -230,7 +230,7 @@ window basedefence extends objectinfo
 			{
 				pos		"455 5"
 				size	"334 285"
-				image	ui/panel_green
+				image	"ui/panel_green"
 			}
 	
 			string description_title
@@ -239,7 +239,7 @@ window basedefence extends objectinfo
 				pos			"10 5"
 				size		"314 25"
 				textalign	uc
-				font		f_small_bold
+				font		"f_small_bold"
 			}
 			string item_name
 			{
@@ -273,7 +273,7 @@ window basedefence extends objectinfo
 			}
 			vscrollbar description_scroll
 			{
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				pos			"304 195"
 				height		"80"
 				current		0
@@ -296,7 +296,7 @@ window basedefence extends objectinfo
 			string		"_Surface to Air defences"
 			pos			"50 30"
 			size		"570 35"
-			font		f_normal_bold
+			font		"f_normal_bold"
 		}
 
 		string name_title
@@ -304,14 +304,14 @@ window basedefence extends objectinfo
 			string		"Name:"
 			pos			"50 95"
 			size		"250 25"
-			font		f_small_bold
+			font		"f_small_bold"
 		}
 		textentry name
 		{
 			string		*cvar:mn_installation_title
 			pos			"310 90"
 			size		"256 34"
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -355,7 +355,7 @@ window basedefence extends objectinfo
 		}
 		checkbox autofire
 		{
-			image		ui/checkbox_green
+			image		"ui/checkbox_green"
 			pos			"310 200"
 			size		"20 20"
 			current		0
@@ -368,8 +368,8 @@ window basedefence extends objectinfo
 			string		"_Destroy"
 			tooltip		"_Destroy installation"
 			color		"0 0.5 0 1"
-			font		f_menu
-			image		ui/button_green_small
+			font		"f_menu"
+			image		"ui/button_green_small"
 			pos			"50 250"
 			size		"200 32"
 			onClick		{ cmd "mn_pop; mn_installation_destroy;" }
@@ -378,8 +378,8 @@ window basedefence extends objectinfo
 		{
 			string		"_Close"
 			color		"0 0.5 0 1"
-			font		f_menu
-			image		ui/button_green_small
+			font		"f_menu"
+			image		"ui/button_green_small"
 			pos			"549 250"
 			size		"200 32"
 			onClick		{ cmd "mn_pop;" }

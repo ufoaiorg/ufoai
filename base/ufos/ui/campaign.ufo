@@ -10,7 +10,7 @@ window campaigns
 
 	pic background
 	{
-		image	ui/options_bg
+		image	"ui/options_bg"
 	}
 
 	string version
@@ -23,7 +23,7 @@ window campaigns
 	{
 		string	"_Campaigns"
 		pos	"640 80"
-		font	f_big
+		font	"f_big"
 	}
 
 	// ==================
@@ -78,7 +78,7 @@ window campaigns
 	}
 
 	vscrollbar campaignlist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"905 140"
 		height		"120"
 		current		0
@@ -103,7 +103,7 @@ window campaigns
 	}
 
 	vscrollbar campaign_desc_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"923 320"
 		height		360
 		current		0
@@ -129,7 +129,7 @@ window campaign_main
 
 	pic background
 	{
-		image		ui/main_bg
+		image		"ui/main_bg"
 	}
 
 	string version
@@ -189,7 +189,7 @@ window quickload
 		string		"_Reload campaign"
 		pos			"264 262"
 		size		"496 247"
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		dragbutton	true
 		closebutton	true
 	}
@@ -223,7 +223,7 @@ window load
 
 	pic background
 	{
-		image		ui/main_bg
+		image		"ui/main_bg"
 	}
 
 	string version
@@ -239,7 +239,7 @@ window load
 		pos			"610 170"
 		size		"310 30"
 		textalign	uc
-		font		f_big
+		font		"f_big"
 	}
 
 	// ==================
@@ -249,7 +249,7 @@ window load
 	button slot0
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 200"
 		size		"256 32"
 		font		"f_verysmall"
@@ -262,7 +262,7 @@ window load
 	button slot1
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 235"
 		size		"256 34"
 		font		"f_verysmall"
@@ -275,7 +275,7 @@ window load
 	button slot2
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 270"
 		size		"256 34"
 		font		"f_verysmall"
@@ -288,7 +288,7 @@ window load
 	button slot3
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 305"
 		size		"256 34"
 		font		"f_verysmall"
@@ -301,7 +301,7 @@ window load
 	button slot4
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 340"
 		size		"256 34"
 		font		"f_verysmall"
@@ -314,7 +314,7 @@ window load
 	button slot5
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 375"
 		size		"256 34"
 		font		"f_verysmall"
@@ -327,7 +327,7 @@ window load
 	button slot6
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 410"
 		size		"256 34"
 		font		"f_verysmall"
@@ -340,7 +340,7 @@ window load
 	button slot7
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 445"
 		size		"256 34"
 		font		"f_verysmall"
@@ -393,7 +393,7 @@ window save
 
 	pic background
 	{
-		image		ui/main_bg
+		image		"ui/main_bg"
 	}
 
 	string version
@@ -409,7 +409,7 @@ window save
 		pos			"610 170"
 		size		"310 30"
 		textalign	uc
-		font		f_big
+		font		"f_big"
 	}
 
 	// ==================
@@ -421,7 +421,7 @@ window save
 		string		*cvar:mn_slot0
 		pos			"640 200"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -437,7 +437,7 @@ window save
 		string		*cvar:mn_slot1
 		pos			"640 235"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -453,7 +453,7 @@ window save
 		string		*cvar:mn_slot2
 		pos			"640 270"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -469,7 +469,7 @@ window save
 		string		*cvar:mn_slot3
 		pos			"640 305"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -485,7 +485,7 @@ window save
 		string		*cvar:mn_slot4
 		pos			"640 340"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -501,7 +501,7 @@ window save
 		string		*cvar:mn_slot5
 		pos			"640 375"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -517,7 +517,7 @@ window save
 		string		*cvar:mn_slot6
 		pos			"640 410"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -533,7 +533,7 @@ window save
 		string		*cvar:mn_slot7
 		pos			"640 445"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -570,7 +570,7 @@ window lostgame
 {
 	pic background
 	{
-		image		ui/losegame_bg
+		image		"ui/losegame_bg"
 	}
 
 	string title
@@ -623,7 +623,7 @@ window lostgame
 	}
 
 	vscrollbar reason_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"992 600"
 		height		"140"
 		current		0
@@ -643,7 +643,7 @@ window endgame
 {
 	pic background
 	{
-		image		ui/wingame_bg
+		image		"ui/wingame_bg"
 	}
 
 	string title
@@ -698,7 +698,7 @@ window endgame
 	}
 
 	vscrollbar reason_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"992 500"
 		height		"240"
 		current		0

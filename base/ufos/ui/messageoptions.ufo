@@ -44,7 +44,7 @@ window messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Pause/message settings"
 	}
 
@@ -68,7 +68,7 @@ window messageoptions
 		string		"_Notify types:"
 		pos			"30 60"
 		size		"300 25"
-		font		f_small_bold
+		font		"f_small_bold"
 	}
 
 	button header_notify
@@ -131,7 +131,7 @@ window messageoptions
 	}
 
 	vscrollbar messagetypes_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"455 90"
 		height		"325"
 		current		0

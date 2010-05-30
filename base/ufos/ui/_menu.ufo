@@ -8,8 +8,8 @@
  */
 component button cmpMenuButton {
 	size "256 64"
-	image	ui/button_green_big
-	font	f_menubig
+	image	"ui/button_green_big"
+	font	"f_menubig"
 	color	"0 0.5 0 1"
 	selectcolor "1 1 1 1"
 }
@@ -26,12 +26,12 @@ component panel cmpDefNamedTbar {
 	}
 	pic			bdr { 
 		pos "25 18"
-		image ui/bar_border 
+		image "ui/bar_border" 
 	}
 	tbar		bar {
 		pos "27 18"
 		texl "3 0"
-		image ui/bar_attribute
+		image "ui/bar_attribute"
 		size "250 16"
 		max 100
 	}
@@ -67,7 +67,7 @@ component panel cmpMapSlot
 	}
 		textentry slot_map
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			string		*cvar:mn_svmapname
 			selectcolor	"1 1 1 1"
@@ -116,7 +116,7 @@ size "1024 90"
 		string		"_CREDITS"
 		pos			"675 30"
 		size		"100 30"
-		font		f_big
+		font		"f_big"
 	}
 
 	string txt_credits
@@ -125,13 +125,13 @@ size "1024 90"
 		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
-		font		f_big
+		font		"f_big"
 		textalign	ur
 	}
 	custombutton bt_back
 	{
 		tooltip		"_Back to baseview"
-		image		ui/button_background
+		image		"ui/button_background"
 		pos			"950 20"
 		size		"59 55"
 		texl		"1 1"
@@ -153,7 +153,7 @@ component cmpDefBaseHeader cmpBaseHeader
 		size		"500 32"
 		textalign	cl
 		padding		8
-		font		f_big
+		font		"f_big"
 	}
 }
 
@@ -164,8 +164,8 @@ component button cmpPopupButton
 {
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		font		f_menu
-		image		ui/button_green_small
+		font		"f_menu"
+		image		"ui/button_green_small"
 		size		"176 32"
 }
 

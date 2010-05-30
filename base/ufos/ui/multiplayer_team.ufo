@@ -10,7 +10,7 @@ window mp_team_edit extends objectinfo
 
 	pic background
 	{
-		image	ui/mp_team_edit_bg
+		image	"ui/mp_team_edit_bg"
 	}
 
 	string s_backpack
@@ -89,7 +89,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor0
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 23"
 		size "20 20"
 		onChange { }
@@ -98,7 +98,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor1
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 64"
 		size "20 20"
 		onChange { }
@@ -107,7 +107,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor2
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 105"
 		size "20 20"
 		onChange { }
@@ -116,7 +116,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor3
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 146"
 		size "20 20"
 		onChange { }
@@ -125,7 +125,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor4
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 187"
 		size "20 20"
 		onChange { }
@@ -134,7 +134,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor5
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 228"
 		size "20 20"
 		onChange { }
@@ -143,7 +143,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor6
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 269"
 		size "20 20"
 		onChange { }
@@ -152,7 +152,7 @@ window mp_team_edit extends objectinfo
 	checkbox bt_actor7
 	{
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		pos	"60 310"
 		size "20 20"
 		onChange { }
@@ -356,7 +356,7 @@ window mp_team_edit extends objectinfo
 			}
 		}
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"325 140"
 			height		"150"
 			current		0
@@ -377,7 +377,7 @@ window mp_team_edit extends objectinfo
 			string	"_With:"
 			pos		"10 290"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 	
 		custombutton action_dec
@@ -394,7 +394,7 @@ window mp_team_edit extends objectinfo
 			pos		"140 290"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -414,7 +414,7 @@ window mp_team_edit extends objectinfo
 			string	"_Firemode:"
 			pos		"10 314"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
 		
 		custombutton firemode_dec
@@ -432,7 +432,7 @@ window mp_team_edit extends objectinfo
 			pos		"140 314"
 			size	"190 16"
 			textalign	cc
-			font	f_small
+			font	"f_small"
 		}
 			
 		custombutton firemode_inc
@@ -678,7 +678,7 @@ window mp_team_edit extends objectinfo
 	}
 
 	vscrollbar equip_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -687,7 +687,7 @@ window mp_team_edit extends objectinfo
 	}
 
 	vscrollbar equip_ammo_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -702,7 +702,7 @@ window mp_team_edit extends objectinfo
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	ui/button_background
+		image	"ui/button_background"
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return
@@ -747,7 +747,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team0
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -762,7 +762,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team1
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -777,7 +777,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team2
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -792,7 +792,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team3
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -807,7 +807,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team4
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -822,7 +822,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team5
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -837,7 +837,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team6
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -852,7 +852,7 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team7
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			textalign	cl
@@ -875,8 +875,8 @@ window mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Generate a new random team"
 			onClick	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
-			image	ui/button_green_small
-			font	f_menusmall
+			image	"ui/button_green_small"
+			font	"f_menusmall"
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
 			string	"_New"
@@ -888,8 +888,8 @@ window mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Save the current team"
 			onClick	{ cmd "mn_push mp_team_save_popup;" }
-			image	ui/button_green_small
-			font	f_menusmall
+			image	"ui/button_green_small"
+			font	"f_menusmall"
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
 			string	"_Save"
@@ -940,7 +940,7 @@ window mp_team_save_popup
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Save your team"
 	}
 
@@ -951,7 +951,7 @@ window mp_team_save_popup
 
 	textentry slot_team0
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -965,7 +965,7 @@ window mp_team_save_popup
 
 	textentry slot_team1
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -979,7 +979,7 @@ window mp_team_save_popup
 
 	textentry slot_team2
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -993,7 +993,7 @@ window mp_team_save_popup
 
 	textentry slot_team3
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1007,7 +1007,7 @@ window mp_team_save_popup
 
 	textentry slot_team4
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1021,7 +1021,7 @@ window mp_team_save_popup
 
 	textentry slot_team5
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1035,7 +1035,7 @@ window mp_team_save_popup
 
 	textentry slot_team6
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl
@@ -1049,7 +1049,7 @@ window mp_team_save_popup
 
 	textentry slot_team7
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		textalign	cl

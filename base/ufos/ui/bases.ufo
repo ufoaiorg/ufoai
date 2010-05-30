@@ -20,7 +20,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"500 32"
-		font		f_big
+		font		"f_big"
 		onChange {
 			// stores the value of the cvar in the base structure
 			cmd	"base_changename"
@@ -75,11 +75,11 @@ component cmpDefBaseHeader cmpBaseviewHeader
 
 	component button cmpBaseButton
 	{
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		size		"230 56"
 		color		"0 0.8 0 1"
 		selectcolor "1 1 1 1"
-		font		f_menu
+		font		"f_menu"
 	}
 
 window bases
@@ -91,19 +91,19 @@ window bases
 
 	pic back_ul
 	{
-		image		ui/base_ul
+		image		"ui/base_ul"
 		pos			"0 0"
 	}
 
 	pic back_ur
 	{
-		image		ui/base_ur
+		image		"ui/base_ur"
 		pos			"512 0"
 	}
 
 	pic back_lr
 	{
-		image		ui/base_lr
+		image		"ui/base_lr"
 		pos			"512 256"
 	}
 

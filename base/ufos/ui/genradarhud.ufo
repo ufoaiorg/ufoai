@@ -51,8 +51,8 @@ window genradarhud extends ahud
 		{
 			pos			"5 5"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Reinit"
@@ -66,8 +66,8 @@ window genradarhud extends ahud
 		{
 			pos			"5 40"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Preview"
@@ -82,8 +82,8 @@ window genradarhud extends ahud
 		{
 			pos			"5 75"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Gen this level"
@@ -97,8 +97,8 @@ window genradarhud extends ahud
 		{
 			pos			"5 110"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Gen all levels"

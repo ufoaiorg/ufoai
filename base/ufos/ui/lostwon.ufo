@@ -10,7 +10,7 @@ window won
 
 	pic background
 	{
-		image	ui/won_bg
+		image	"ui/won_bg"
 	}
 
 	// ==================
@@ -92,7 +92,7 @@ window lost
 
 	pic background
 	{
-		image	ui/lost_bg
+		image	"ui/lost_bg"
 	}
 
 	// ==================
@@ -161,7 +161,7 @@ window uforecovery
 		dragbutton	true
 		modal		true
 		preventtypingescape true		// we can't use ESC
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_UFO recovery"
 	}
 
@@ -187,7 +187,7 @@ window uforecovery
 		string		*cvar:mn_uforecovery_actualufo
 		pos			"30 70"
 		size		"610 40"
-		font		f_small
+		font		"f_small"
 		textalign	ul
 	}
 
@@ -264,7 +264,7 @@ window uforecovery
 			}
 		}
 		vscrollbar ur_ufoyards_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"620 50"
 			height		"128"
 			current		0
@@ -302,7 +302,7 @@ window uforecovery
 			tooltip		"_Sort nations by name"
 			pos			"25 30"
 			size		"250 20"
-			font		f_small_bold
+			font		"f_small_bold"
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort nation;" }
 		}
@@ -313,7 +313,7 @@ window uforecovery
 			tooltip		"_Sort nations by price"
 			pos			"275 30"
 			size		"125 20"
-			font		f_small_bold
+			font		"f_small_bold"
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort price;" }
 		}
@@ -324,7 +324,7 @@ window uforecovery
 			tooltip		"_Sort nations by relation"
 			pos			"450 30"
 			size		"175 20"
-			font		f_small_bold
+			font		"f_small_bold"
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort happiness;" }
 		}
@@ -358,7 +358,7 @@ window uforecovery
 			}
 		}
 		vscrollbar cp_ur_nationlist_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"620 50"
 			height		"128"
 			current		0

@@ -85,7 +85,7 @@ window aircraft_equip extends iaircraft
 			string		"_Selected item:"
 			pos			"14 20"
 			size		"224 25"
-			font		f_big
+			font		"f_big"
 			textalign	cc
 		}
 
@@ -121,7 +121,7 @@ window aircraft_equip extends iaircraft
 		}
 
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"218 182"
 			height		"85"
 			hidewhenunused	true
@@ -133,12 +133,12 @@ window aircraft_equip extends iaircraft
 		string warning
 		{
 			string		*cvar:mn_aircraft_item_warning
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"19 269"
 			size		"215 32"
 			padding		0
 			textalign	uc
-			font		f_small
+			font		"f_small"
 			color		"1 0 0 1"
 			onClick		{ cmd "mn_close popup;" }
 			longlines	wrap
@@ -147,7 +147,7 @@ window aircraft_equip extends iaircraft
 		button button_add
 		{
 			string		"_Equip this item"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"26 271"
 			size		"200 25"
 			color		"0 0.5 0 1"
@@ -164,7 +164,7 @@ window aircraft_equip extends iaircraft
 		button button_remove
 		{
 			string		"_Remove this item"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"26 271"
 			size		"200 25"
 			onClick		{
@@ -190,7 +190,7 @@ window aircraft_equip extends iaircraft
 			string		"_Available equipment:"
 			pos			"14 20"
 			size		"264 25"
-			font		f_big
+			font		"f_big"
 			textalign	cc
 		}
 
@@ -262,7 +262,7 @@ window aircraft_equip extends iaircraft
 		}
 
 		vscrollbar airequip_list_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"259 87"
 			height		"215"
 			hidewhenunused	true
@@ -286,7 +286,7 @@ window aircraft_equip extends iaircraft
 	{
 		tooltip	"_Select this zone"
 		pos			"654 485"
-		image		ui/airequip_selected_element
+		image		"ui/airequip_selected_element"
 		texl		"0 83"
 		texh		"458 190"
 		onClick		{ cmd "airequip_select zone1" }
@@ -305,7 +305,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_zone_select2
 	{
 		tooltip		"_Select this zone"
-		image		ui/airequip_selected_element
+		image		"ui/airequip_selected_element"
 		pos			"654 648"
 		texl		"0 0"
 		texh		"458 82"
@@ -327,7 +327,7 @@ window aircraft_equip extends iaircraft
 		string		"_Current item in slot"
 		pos			"670 495"
 		size		"275 20"
-		font		f_small
+		font		"f_small"
 		color		"0 .78 0 1"
 		textalign	cl
 		ghost		true
@@ -338,7 +338,7 @@ window aircraft_equip extends iaircraft
 		string		"_Ammo fitting this weapon"
 		pos			"670 659"
 		size		"275 20"
-		font		f_small
+		font		"f_small"
 		color		"0 .78 0 1"
 		textalign	cl
 		ghost		true
@@ -351,7 +351,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot0
 	{
 		tooltip		"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx		true
 		pos			"909 121"
 		texl		"0 0"
@@ -370,7 +370,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot1
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"909 201"
 		texl	"0 0"
@@ -389,7 +389,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot2
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"909 281"
 		texl	"0 0"
@@ -408,7 +408,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot3
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"709 121"
 		texl	"0 0"
@@ -427,7 +427,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot4
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"709 281"
 		texl	"0 0"
@@ -446,7 +446,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot5
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"509 121"
 		texl	"0 0"
@@ -465,7 +465,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot6
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"509 201"
 		texl	"0 0"
@@ -484,7 +484,7 @@ window aircraft_equip extends iaircraft
 	pic airequip_slot7
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		image		"ui/button_square"
 		mousefx	true
 		pos		"509 281"
 		texl	"0 0"
