@@ -522,7 +522,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_CHAR:
-		*(char *) b = *token;
+		if (token[0] == '\0') {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Char expected, but end of string found");
+			return RESULT_ERROR;
+		}
+		if (token[1] != '\0') {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal end of string. '\\0' explected but 0x%x found", token[1]);
+			return RESULT_ERROR;
+		}
+		*(char *) b = token[0];
 		*writtenBytes = sizeof(char);
 		break;
 
