@@ -58,7 +58,7 @@ struct menuAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_resu
 #define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */
 
 /* alias */
-#define V_UI_ALIGN			V_CHAR
+#define V_UI_ALIGN			V_INT
 
 /* composite special type */
 #define V_CVAR_OR_FLOAT			(V_UI_CVAR + V_FLOAT)

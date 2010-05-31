@@ -1196,7 +1196,7 @@ window multiplayer_wait extends levelbuttons
 			string		*cvar:mn_svmapname
 			pos			"50 50"
 			size		"300 20"
-			textalign	"cc"
+			textalign	ALIGN_CC
 		}
 
 		pic mappic

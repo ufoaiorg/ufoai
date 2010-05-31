@@ -71,7 +71,7 @@ typedef struct menuNode_s {
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
 	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
-	byte textalign;
+	int textalign;
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean disabled;			/**< true if the node is inactive */
 	qboolean invalidated;		/**< true if we need to update the layout */

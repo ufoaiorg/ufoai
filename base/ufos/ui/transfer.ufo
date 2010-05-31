@@ -121,7 +121,7 @@ window transfer
 			pos			"350 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	"cr"
+			textalign	ALIGN_CR
 			onViewChange	{
 				*(textlist)itemlist.trans_list@viewpos = <viewpos>
 				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
@@ -138,7 +138,7 @@ window transfer
 			pos			"425 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	"cr"
+			textalign	ALIGN_CR
 			onViewChange	{
 				*(textlist)itemlist.trans_list@viewpos = <viewpos>
 				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
@@ -474,7 +474,7 @@ window transfer
 			pos			"320 16"
 			size		"50 225"
 			lineheight	"25"
-			textalign	"cr"
+			textalign	ALIGN_CR
 			onViewChange	{
 				*(textlist)transfer_cargolist.trans_cargolist@viewpos = <viewpos>
 				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
