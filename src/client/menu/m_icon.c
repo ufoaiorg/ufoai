@@ -133,7 +133,10 @@ menuIcon_t* MN_GetIconByName (const char* name)
 menuIcon_t* MN_AllocStaticIcon (const char* name)
 {
 	menuIcon_t* result;
+	/** TODO understand why we must hide this assert in release build with mingw */
+#ifdef DEBUG
 	assert(!MN_IconExists(name));
+#endif
 	if (mn.numIcons >= MAX_MENUICONS)
 		Com_Error(ERR_FATAL, "MN_AllocStaticIcon: MAX_MENUICONS hit");
 
