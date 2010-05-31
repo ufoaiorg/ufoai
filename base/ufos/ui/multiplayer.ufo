@@ -56,14 +56,14 @@ window abstract_multiplayer {
 	cmpMenuButton button_join
 	{
 		string		"_Join"
-		pos			"80 225"
+		pos			"80 230"
 		onClick		{ cmd "mn_pop; mn_push mp_serverbrowser;" }
 	}
 
 	cmpMenuButton button_create
 	{
 		string		"_Create"
-		pos			"80 290"
+		pos			"80 300"
 		onClick		{ cmd "mn_pop; mn_push mp_create_server;" }
 	}
 
@@ -78,7 +78,7 @@ window abstract_multiplayer {
 	cmpMenuButton button_exit
 	{
 		string		"_Back"
-		pos			"80 480"
+		pos			"80 470"
 		onClick		{ cmd "mn_pop;" }
 	}
 
