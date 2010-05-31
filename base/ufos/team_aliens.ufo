@@ -73,22 +73,22 @@ team taman
 
 	models {
 		neutral {
-			aliens/taman body01 head01 0
-			aliens/taman body01 head02 1
-			aliens/taman body01 head03 2
-			aliens/taman body01 head04 3
-			aliens/taman body01 head01 1
-			aliens/taman body01 head02 2
-			aliens/taman body01 head03 3
-			aliens/taman body01 head04 0
-			aliens/taman body01 head01 2
-			aliens/taman body01 head02 3
-			aliens/taman body01 head03 0
-			aliens/taman body01 head04 1
-			aliens/taman body01 head01 3
-			aliens/taman body01 head02 0
-			aliens/taman body01 head03 1
-			aliens/taman body01 head04 2
+			aliens/taman body01 head01 0 // Body: very high rank, Head: yellow eyes
+			aliens/taman body01 head02 1 // Body: high rank, Head: green eyes
+			aliens/taman body01 head03 2 // Body: medium rank, Head: red eyes
+			aliens/taman body01 head04 3 // Body: low rank, Head: blue eyes
+			aliens/taman body01 head01 1 // Body: high rank, Head: yellow eyes
+			aliens/taman body01 head02 2 // Body: medium rank, Head: green eyes
+			aliens/taman body01 head03 3 // Body: low rank, Head: red eyes
+			aliens/taman body01 head04 0 // Body: very high rank, Head: blue eyes
+			aliens/taman body01 head01 2 // Body: medium rank, Head: yellow eyes
+			aliens/taman body01 head02 3 // Body: low rank, Head: green eyes
+			aliens/taman body01 head03 0 // Body: very high rank, Head: red eyes
+			aliens/taman body01 head04 1 // Body: high rank, Head: blue eyes
+			aliens/taman body01 head01 3 // Body: low rank, Head: yellow eyes
+			aliens/taman body01 head02 0 // Body: very high rank, Head: green eyes
+			aliens/taman body01 head03 1 // Body: high rank, Head: red eyes
+			aliens/taman body01 head04 2 // Body: medium rank, Head: blue eyes
 		}
 	}
 
@@ -119,60 +119,57 @@ team ortnok
 
 	names {
 		neutral {
-			Akrokk
-			Mkeek
-			Rniuk
-			Tranok
-			Kronuk
-			Trenakk
-			Zrokk
-			Kraerak
-			Mnookk
-			Zmolukk
-			Abtrenek
-			Uonak
-			Ktrukk
-			Onukark
-			Ebnuzuk
-			Krrnaak
-			Zmuknesk
+			Oorgh
+			Ourhg
+			Uoghr
+			Uurgh
+			Morgh
+			Mrorg
+			Muurgh
+			Uoorgh
+			Moorgh
+			Muorgh
+			Oohnz
+			Ouhrz
+			Uorgz
+			Urgoz
+			Uurunz
+			Uuorgh
 		}
 
 		lastname {
-			"Uk Kronok"
-			"Np Zlrok"
-			"T Zruujk"
-			"Kr Zrrosk"
-			"Mt Trekluk"
-			"H Hrkakk"
-			"Pt Mrlkuk"
-			"Tsk Hrekk"
-			"Kkr Kraukk"
-			"Tkr Hruk"
-			"Ts Srulok"
-			"K Krokk"
-			"Zt Hrmokuk"
-			"H Nhrokekk"
-			"Tt Treknk"
-			"Ok Orokk"
-			"Sk Trevuk"
-			"Zr Znaztrk"
+			"Uk Ohm Umhpf"
+			"Ok Uhm Uurrp"
+			"Uz Oor Ruogh"
+			"Ur Uor Umhfm"
+			"Or Hom Mohrm"
+			"Zo Ooz Ruzsu"
+			"Zr Zus Soufz"
+			"Zu Sou Uorou"
+			"Zk Zok Suomf"
+			"Sr Sor Umpfh"
+			"Ts Sru Hmpfr"
+			"Ks Ksr Ouurz"
+			"Kr Hrm Uorpf"
+			"Hs Nhs Oorgh"
+			"Ws Our Hfmzs"
+			"Wr Oro Uoroh"
+			"Fz Oru Fzsmo"
+			"Fs Ksf Urmpf"
 		}
 	}
 
 	models {
 		neutral {
-			aliens/ortnok body01 head01 0 // No Armor, Body: Big open wound, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 1 // No Armor, Body: Big scar, Head: Big scar over the right eye
-			aliens/ortnok body01 head03 2 // No Armor, Body: Scared legs, Head: One-eyed Ortnok
-			aliens/ortnok body01 head01 1 // No Armor, Body: Big scar, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 2 // No Armor, Body: Scared legs, Head: Big scar over the right eye
-			aliens/ortnok body01 head03 0 // No Armor, Body: Big open wound, Head: One-eyed Ortnok
-			aliens/ortnok body01 head01 2 // No Armor, Body: Scared legs, Head: 2 small scars over the left eye
-			aliens/ortnok body01 head02 0 // No Armor, Body: Big open wound, Head: One-eyed Ortnok
-			aliens/ortnok body01 head03 1 // No Armor, Body: Big scar, Head: Big scar over the right eye
-				// Light Armor, Body: Just one version available, Head: Just one version available (other head textures are the same)
-				// Medium Armor, Body: Just one version available, Head: Just one version available (other head textures are the same)
+			aliens/ortnok body01 head01 0 // Body: Big open wound, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 1 // Body: Big scar, Head: Big scar over the right eye
+			aliens/ortnok body01 head03 2 // Body: Scared legs, Head: One-eyed Ortnok
+			aliens/ortnok body01 head01 1 // Body: Big scar, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 2 // Body: Scared legs, Head: Big scar over the right eye
+			aliens/ortnok body01 head03 0 // Body: Big open wound, Head: One-eyed Ortnok
+			aliens/ortnok body01 head01 2 // Body: Scared legs, Head: 2 small scars over the left eye
+			aliens/ortnok body01 head02 0 // Body: Big open wound, Head: One-eyed Ortnok
+			aliens/ortnok body01 head03 1 // Body: Big scar, Head: Big scar over the right eye
 		}
 	}
 
@@ -203,20 +200,46 @@ team shevaar
 
 	names {
 		neutral {
-			Akrokk
-			Mkeek
-			Rniuk
+			Fsshw
+			Fhzwh
+			Fzszh
+			Sszwh
+			Swhzf
+			Szsfh
+			Whssf
+			Wwzhs
+			Wzszh
+			Zssfh
+			Zsfwz
+			Zwfss
 		}
 		lastname {
-			"Uk Kronok"
-			"Np Zlrok"
+			"Vso Zhozf"
+			"Vso Zshff"
+			"Vso Zwfwz"
+			"Vso Zzhwf"
+			"Vze Hwzsf"
+			"Vze Hzwzf"
+			"Vze Wfszs"
+			"Vzs Wzshf"
+			"Vzs Hzswf"
+			"Vzs Hzffs"
+			"Vzs Wszfs"
+			"Vzs Wfzsh"
 		}
 	}
 
 	models {
 		neutral {
-			aliens/shevaar body01 head01 0
-			aliens/shevaar body01 head01 1
+			aliens/shevaar body01 head01 0 // Body: Original brown skin, blue trousers, Head: Original brown skin
+			aliens/shevaar body01 head01 1 // Body: Dark red skin, light cyan trousers, Head: Original brown skin
+			aliens/shevaar body01 head01 2 // Body: Dark green skin, red trousers, Head: Original brown skin
+			aliens/shevaar body01 head02 0 // Body: Original brown skin, blue trousers, Head: dual-colored red skin
+			aliens/shevaar body01 head02 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored red skin
+			aliens/shevaar body01 head02 2 // Body: Dark green skin, red trousers, Head: dual-colored red skin
+			aliens/shevaar body01 head03 0 // Body: Original brown skin, blue trousers, Head: dual-colored green skin
+			aliens/shevaar body01 head03 1 // Body: Dark red skin, light cyan trousers, Head: dual-colored green skin
+			aliens/shevaar body01 head03 2 // Body: Dark green skin, red trousers, Head: dual-colored green skin
 		}
 	}
 

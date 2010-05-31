@@ -622,27 +622,38 @@ base/models/aliens/ortnok/body01.anm | GNU General Public License 2.0 | Lukas "R
 base/models/aliens/ortnok/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01a.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01b.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/body01c.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head02.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnok/head03.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/body.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head02.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnoklight/head03.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/ortnokmedium/body.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -657,6 +668,7 @@ base/models/aliens/shevaar/body01.md2 | GNU General Public License 2.0 | Lukas "
 base/models/aliens/shevaar/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/aliens/shevaar/body01b.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/taman/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -760,6 +772,7 @@ base/models/civilians/female/head04c.jpg | GNU General Public License 2.0 | Luka
 base/models/civilians/female/head04c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/head05a.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/civilians/female/head05a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/civilians/female/head05a.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/civilians/female/scientist01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/scientist01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/scientist01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
